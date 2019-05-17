@@ -1,5 +1,5 @@
 # ReactNative for Windows (vnext)
-![Hero Image with Logo](../.github/hero2.png)
+![Hero Image with Logo](https://raw.githubusercontent.com/microsoft/react-native-windows/master/.github/hero2.png)
 
 See the official [React Native website](https://facebook.github.io/react-native/) for an introduction to React Native. See [main landing page](https://github.com/microsoft/react-native-windows) for more details on overall direction of `react-native-windows`. 
 
@@ -10,7 +10,7 @@ In this `vnext` sub-folder, we are working on a rewrite of `react-native-windows
 ## Status and roadmap
 The development of the React Native Windows `vnext` implementation is ongoing. You can take a look at [Milestones](https://github.com/microsoft/react-native-windows/milestones) and [Projects](https://github.com/microsoft/react-native-windows/projects) for a view on the work streams and tasks. 
 
-The `vnext` package currently supports `v0.58` of corresponding `react-native` major version. See [releases](docs/releases.md) for more information on `vnext` release strategy.
+The `vnext` package currently supports `v0.58` of corresponding `react-native` major version. See [releases](./docs/releases.md) for more information on `vnext` release strategy.
 
 ## Documentation
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
@@ -20,12 +20,12 @@ Coming soon - we will be publishing more documentation including some of the fol
 - Guides on how to extend native Windows capabilties in C# and C++ using `vnext` 
 
 ## Getting Started
-See [Getting Started Guide for React Native Windows C++](docs/GettingStarted.md).
+See [Getting Started Guide for React Native Windows C++](./docs/GettingStarted.md).
 
 ## Opening issues
-If you encounter a bug with the React Native Windows C++ implementation or have a feature request, we would like to hear about it. Search the [existing issues](https://github.com/microsoft/react-native-windows/issues?label%3Avnext) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
+If you encounter a bug with the React Native Windows C++ implementation or have a feature request, we would like to hear about it. Search the [existing issues](https://github.com/microsoft/react-native-windows/issues?q=is%3Aissue+is%3Aopen+label%3Avnext) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too.
 
 Please make sure to use the [correct template](https://github.com/microsoft/react-native-windows/issues/new?labels=vnext&template=vnext.md) for issues related to the vnext `react-native-windows` implementation.
 
 ## Contributing
-See [Contributing guidelines](docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows C++. 
+See [Contributing guidelines](./docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows C++. 
