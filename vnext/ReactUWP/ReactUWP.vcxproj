@@ -194,6 +194,8 @@
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
+    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
@@ -265,6 +267,8 @@
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />
     <ClCompile Include="Views\RawTextViewManager.cpp" />

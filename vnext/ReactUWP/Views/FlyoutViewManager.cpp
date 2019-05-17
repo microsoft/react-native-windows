@@ -38,9 +38,45 @@ struct json_type_traits<winrt::FlyoutPlacementMode>
     {
       placement = winrt::FlyoutPlacementMode::Right;
     }
-    else
+    else if (json == "top-edge-aligned-left")
+    {
+      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedLeft;
+    }
+    else if (json == "top-edge-aligned-right")
+    {
+      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedRight;
+    }
+    else if (json == "bottom-edge-aligned-left")
+    {
+      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft;
+    }
+    else if (json == "bottom-edge-aligned-right")
+    {
+      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedRight;
+    }
+    else if (json == "left-edge-aligned-top")
+    {
+      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedTop;
+    }
+    else if (json == "right-edge-aligned-top")
+    {
+      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedTop;
+    }
+    else if (json == "left-bottom")
+    {
+      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom;
+    }
+    else if (json == "right-edge-aligned-bottom")
+    {
+      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedBottom;
+    }
+    else if (json == "full")
     {
       placement = winrt::FlyoutPlacementMode::Full;
+    }
+    else
+    {
+    placement = winrt::FlyoutPlacementMode::Top;
     }
 
     return placement;
