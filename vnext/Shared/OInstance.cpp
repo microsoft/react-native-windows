@@ -157,7 +157,14 @@ public:
     std::shared_ptr<ExecutorDelegate> delegate,
     std::shared_ptr<MessageQueueThread> jsQueue) override {
 
-    auto logger = [](const std::string& message, unsigned int logLevel) {};
+    // TODO :: Ensure the logLevels are mapped properly.
+    JSIExecutor::Logger logger;
+
+    if (loggingHook_) {
+      logger = [loggingHook = std::move(loggingHook_)](const std::string& message, unsigned int logLevel) {
+        loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
+      };
+    }
 
     return std::make_unique<JSIExecutor>(runtimeHolder_->getRuntime(),
       std::move(delegate),
@@ -166,11 +173,12 @@ public:
       nullptr);
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit>&& runtimeHolder) noexcept
-    : runtimeHolder_(std::move(runtimeHolder)) {}
+  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook) noexcept
+    : runtimeHolder_{ std::move(runtimeHolder) }, loggingHook_{ std::move(loggingHook) }{}
 
 private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  NativeLoggingHook loggingHook_;
 };
 
 }
@@ -373,7 +381,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
 
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
-      jsef = std::make_shared<OJSIExecutorFactory>(std::move(m_devSettings->jsiRuntimeHolder));
+      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     }
     else {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of now. This will go away once we completely move to JSI flow.
@@ -415,7 +423,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
 
   // All JSI runtimes do support host objects and hence the native modules proxy.
   const bool isNativeModulesProxyAvailable = m_devSettings->jsiRuntimeHolder != nullptr;
-  if (isNativeModulesProxyAvailable)
+  if (!isNativeModulesProxyAvailable)
   {
     folly::dynamic configArray = folly::dynamic::array;
     for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
