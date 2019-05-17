@@ -7,6 +7,7 @@ set(SOURCES
 	ABI/idl/ReactControl.idl
 	ABI/Instance_rt.cpp
 	ABI/ReactControl_rt.cpp
+	Base/ChakraJSIRuntimeHolder.cpp
 	Base/InstanceFactory.cpp
 	Base/UwpReactInstance.cpp
 	CxxReactUWP/JSBigString.cpp
