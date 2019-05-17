@@ -41,24 +41,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
-      - task: CmdLine@2
-        displayName: Ensure yarn
-        inputs:
-          script: npm install -g yarn
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: vnext
+      - template: npm-install-and-build.yml
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
@@ -114,7 +97,7 @@ jobs:
           script: del SampleApp.uwp.bundle
           workingDirectory: vnext
 
-  - job: WindowsVSPR
+  - job: RnwNativePRBuild
     displayName: Windows Visual Studio with Win32 PR
     strategy:
       matrix:
@@ -149,102 +132,12 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - task: PowerShell@2
-        displayName: Cleanup any packagers left over from other builds
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            echo "ports:{"
-            echo ${env:RNTester.PackagerPort}
-            echo "}"
-            Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-            Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+      - template: npm-install-and-build.yml
 
-      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
-      - task: CmdLine@2
-        displayName: Ensure yarn
-        inputs:
-          script: npm install -g yarn
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: vnext
-
-      - task: PowerShell@2
-        displayName: Cleanup any packagers left over from other builds
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            echo "ports:{"
-            echo ${env:RNTester.PackagerPort}
-            echo "}"
-            Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-            Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: vnext
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore - ReactWindows
-        inputs:
-          command: restore
-          restoreSolution: vnext/ReactWindows.sln
-          feedsToUse: config
-          #vstsFeed: # Required when feedsToUse == Select
-          #includeNuGetOrg: true # Required when feedsToUse == Select
-          nugetConfigPath: vnext/NuGet.config
-          #externalFeedCredentials: # Optional
-          #noCache: false
-          #disableParallelProcessing: false
-          restoreDirectory: packages/
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-          #packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg' # Required when command == Push
-          #nuGetFeedType: 'internal' # Required when command == Push# Options: internal, external
-          #publishVstsFeed: # Required when command == Push && NuGetFeedType == Internal
-          #publishPackageMetadata: true # Optional
-          #allowPackageConflicts: # Optional
-          #publishFeedCredentials: # Required when command == Push && NuGetFeedType == External
-          #verbosityPush: 'Detailed' # Options: quiet, normal, detailed
-          #packagesToPack: '**/*.csproj' # Required when command == Pack
-          #configuration: '$(BuildConfiguration)' # Optional
-          #packDestination: '$(Build.ArtifactStagingDirectory)' # Optional
-          #versioningScheme: 'off' # Options: off, byPrereleaseNumber, byEnvVar, byBuildNumber
-          #includeReferencedProjects: false # Optional
-          #versionEnvVar: # Required when versioningScheme == ByEnvVar
-          #majorVersion: '1' # Required when versioningScheme == ByPrereleaseNumber
-          #minorVersion: '0' # Required when versioningScheme == ByPrereleaseNumber
-          #patchVersion: '0' # Required when versioningScheme == ByPrereleaseNumber
-          #packTimezone: 'utc' # Required when versioningScheme == ByPrereleaseNumber# Options: utc, local
-          #includeSymbols: false # Optional
-          #toolPackage: # Optional
-          #buildProperties: # Optional
-          #basePath: # Optional
-          #verbosityPack: 'Detailed' # Options: quiet, normal, detailed
-          #arguments: # Required when command == Custom
-
-      - task: MSBuild@1
-        displayName: MSBuild - ReactWindows
-        inputs:
-          solution: vnext/ReactWindows.sln
-          #msbuildLocationMethod: 'version' # Optional. Options: version, location
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
-          #msbuildLocation: # Optional
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
-          #maximumCpuCount: false # Optional
-          #restoreNugetPackages: false # Optional
-          #logProjectEvents: false # Optional
-          #createLogFile: false # Optional
-          #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
+      - template: templates/vs-build.yml
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildPlatform: $(BuildPlatform)
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -340,14 +233,18 @@ jobs:
           #rerunFailedTestCasesMaxLimit: '5' # Optional
           #rerunMaxAttempts: '3' # Optional
 
-      - task: PowerShell@2
-        displayName: Cleanup any packagers left over from other builds
-        condition: and(always(), ne(variables['BuildPlatform'], 'ARM'))
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            echo "ports:{"
-            echo ${env:RNTester.PackagerPort}
-            echo "}"
-            Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-            Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+
+      - template: templates/stop-packagers.yml
+
+      - template: templates/publish-build-artifacts-for-nuget.yml
+
+
+  - job: RNWNugetPR
+    dependsOn: RnwNativePRBuild
+    displayName: React-Native-Windows Build and Pack Nuget
+    pool:
+      name: OE Standard Pool
+    steps:
+      - checkout: none #skip checking out the default repository resource
+
+      - template: templates/prep-and-pack-nuget.yml

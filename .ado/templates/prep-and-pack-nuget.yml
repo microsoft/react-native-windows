@@ -1,0 +1,84 @@
+
+steps:
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download debug arm Artifact'
+    inputs:
+      artifactName: ReactWindows-debug-arm
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download ship arm Artifact'
+    inputs:
+      artifactName: ReactWindows-ship-arm
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download debug x86 Artifact'
+    inputs:
+      artifactName: ReactWindows-debug-x86
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download ship x86 Artifact'
+    inputs:
+      artifactName: ReactWindows-ship-x86
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download debug x64 Artifact'
+    inputs:
+      artifactName: ReactWindows-debug-x64
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download ship x64 Artifact'
+    inputs:
+      artifactName: ReactWindows-ship-x64
+      downloadPath: $(System.DefaultWorkingDirectory)
+  - task: DownloadBuildArtifacts@0
+    displayName: 'Download source Artifact'
+    inputs:
+      artifactName: ReactWindows-source
+      downloadPath: $(System.DefaultWorkingDirectory)
+
+  - task: CopyFiles@2
+    displayName: 'Copy Win32 debug x64 files'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-x64'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x64/Debug'
+  - task: CopyFiles@2
+    displayName: 'Copy Win32 debug x86 files'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-x86'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x86/Debug'
+  - task: CopyFiles@2
+    displayName: 'Copy Win32 ship x64 files'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-x64'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x64/ship'
+  - task: CopyFiles@2
+    displayName: 'Copy Win32 ship x86 files'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-x86'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x86/ship'
+  - task: CopyFiles@2
+    displayName: 'Copy arm debug'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-arm'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/arm/debug'
+  - task: CopyFiles@2
+    displayName: 'Copy arm ship'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-arm'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/arm/ship'
+  - task: CopyFiles@2
+    displayName: 'Copy Nuget source files'
+    inputs:
+      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-source'
+      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot'
+  - task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
+    displayName: 'Replace branch name in nuspec'
+    inputs:
+      filePattern: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
+      secretTokens: 'BuildBuildNumber:$(Build.BuildNumber)'
+  - task: NuGetCommand@2
+    displayName: 'NuGet pack'
+    inputs:
+      command: pack
+      packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
+      packDestination: '$(System.DefaultWorkingDirectory)/NugetRoot/'
