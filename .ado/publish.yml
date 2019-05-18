@@ -32,30 +32,20 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
-      - task: CmdLine@2
-        displayName: Ensure yarn
-        inputs:
-          script: npm install -g yarn
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: vnext
+      - template: templates/npm-install-and-build.yml
 
       - task: CmdLine@2
         displayName: Update package version
         inputs:
           script: node ../.ado/updateVersion.js
           workingDirectory: vnext
+
+      # since the above task will update the package.json, we want to ensure that we use the correct version for the nuget
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish updated package.json for nuget'
+        inputs:
+          PathtoPublish: 'vnext\package.json'
+          ArtifactName: 'UpdatedPackageJson'
 
       - task: Npm@1
         displayName: npm public publish (vnext)
@@ -99,158 +89,14 @@ jobs:
 
     steps:
 
-    - task: NuGetCommand@2
-      displayName: NuGet restore - ReactWindows
-      inputs:
-        command: restore
-        restoreSolution: vnext/ReactWindows.sln
-        feedsToUse: config
-        #vstsFeed: # Required when feedsToUse == Select
-        #includeNuGetOrg: true # Required when feedsToUse == Select
-        nugetConfigPath: vnext/NuGet.config
-        #externalFeedCredentials: # Optional
-        #noCache: false
-        #disableParallelProcessing: false
-        restoreDirectory: packages/
-        verbosityRestore: Detailed # Options: quiet, normal, detailed
-        #packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg' # Required when command == Push
-        #nuGetFeedType: 'internal' # Required when command == Push# Options: internal, external
-        #publishVstsFeed: # Required when command == Push && NuGetFeedType == Internal
-        #publishPackageMetadata: true # Optional
-        #allowPackageConflicts: # Optional
-        #publishFeedCredentials: # Required when command == Push && NuGetFeedType == External
-        #verbosityPush: 'Detailed' # Options: quiet, normal, detailed
-        #packagesToPack: '**/*.csproj' # Required when command == Pack
-        #configuration: '$(BuildConfiguration)' # Optional
-        #packDestination: '$(Build.ArtifactStagingDirectory)' # Optional
-        #versioningScheme: 'off' # Options: off, byPrereleaseNumber, byEnvVar, byBuildNumber
-        #includeReferencedProjects: false # Optional
-        #versionEnvVar: # Required when versioningScheme == ByEnvVar
-        #majorVersion: '1' # Required when versioningScheme == ByPrereleaseNumber
-        #minorVersion: '0' # Required when versioningScheme == ByPrereleaseNumber
-        #patchVersion: '0' # Required when versioningScheme == ByPrereleaseNumber
-        #packTimezone: 'utc' # Required when versioningScheme == ByPrereleaseNumber# Options: utc, local
-        #includeSymbols: false # Optional
-        #toolPackage: # Optional
-        #buildProperties: # Optional
-        #basePath: # Optional
-        #verbosityPack: 'Detailed' # Options: quiet, normal, detailed
-        #arguments: # Required when command == Custom
+    - template: templates/npm-install-and-build.yml
 
-    # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
-    - task: CmdLine@2
-      displayName: Ensure yarn
-      inputs:
-        script: npm install -g yarn
-        workingDirectory: vnext
+    - template: templates/vs-build.yml
+      parameters:
+        BuildConfiguration: $(BuildConfiguration)
+        BuildPlatform: $(BuildPlatform)
 
-    - task: CmdLine@2
-      displayName: yarn install
-      inputs:
-        script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-        workingDirectory: vnext
-
-    - task: CmdLine@2
-      displayName: yarn build
-      inputs:
-        script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-        workingDirectory: vnext
-
-    - task: MSBuild@1
-      displayName: MSBuild - ReactWindows
-      inputs:
-        solution: vnext/ReactWindows.sln
-        #msbuildLocationMethod: 'version' # Optional. Options: version, location
-        msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-        msbuildArchitecture: 'x64' # Optional. Options: x86, x64
-        #msbuildLocation: # Optional
-        platform: $(BuildPlatform) # Optional
-        configuration: $(BuildConfiguration) # Optional
-        msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-        clean: true # Optional
-        #maximumCpuCount: false # Optional
-        #restoreNugetPackages: false # Optional
-        #logProjectEvents: false # Optional
-        #createLogFile: false # Optional
-        #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
-
-    - task: BatchScript@1
-      displayName: 'Copy Nuget source files'
-      inputs:
-        filename: 'vnext\ReactWindows-CopyToStaging2.bat'
-        arguments: '$(build.artifactstagingdirectory)'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
-
-    - task: PowerShell@2
-      displayName: 'Stage Sources'
-      inputs:
-        targetType: filePath
-        filePath: 'vnext\Scripts\Tfs\Layout-Headers.ps1'
-        arguments: '-TargetRoot $(Build.ArtifactStagingDirectory)'
-      enabled: false
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: debug arm'
-      inputs:
-        PathtoPublish: 'vnext\target\ARM\Debug'
-        ArtifactName: 'ReactWindows-debug-arm'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'arm'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: ship arm'
-      inputs:
-        PathtoPublish: 'vnext\target\ARM\Release'
-        ArtifactName: 'ReactWindows-ship-arm'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'arm'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts debug x86'
-      inputs:
-        PathtoPublish: 'vnext\target\x86\Debug'
-        ArtifactName: 'ReactWindows-debug-x86'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts ship x86'
-      inputs:
-        PathtoPublish: 'vnext\target\x86\Release'
-        ArtifactName: 'ReactWindows-ship-x86'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x86'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts debug x64'
-      inputs:
-        PathtoPublish: 'vnext\target\x64\debug'
-        ArtifactName: 'ReactWindows-debug-x64'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts ship x64'
-      inputs:
-        PathtoPublish: 'vnext\target\x64\Release'
-        ArtifactName: 'ReactWindows-ship-x64'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x64'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts - Nuget Source files'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: 'ReactWindows-source'
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Build Artifacts'
-      inputs:
-        PathtoPublish: 'vnext\ReactWindows\target'
-        ArtifactName: ReactWindows
-      enabled: false
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Sources'
-      inputs:
-        ArtifactName: ReactWindows
-      enabled: false
-      condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
+    - template: templates/publish-build-artifacts-for-nuget.yml
 
     - task: PublishSymbols@2
       displayName: 'Publish symbols path'
@@ -266,88 +112,15 @@ jobs:
       name: OE Standard Pool
     steps:
       - checkout: none #skip checking out the default repository resource
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download debug arm Artifact'
-        inputs:
-          artifactName: ReactWindows-debug-arm
-          downloadPath: $(System.DefaultWorkingDirectory)
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download ship arm Artifact'
-        inputs:
-          artifactName: ReactWindows-ship-arm
-          downloadPath: $(System.DefaultWorkingDirectory)
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download debug x86 Artifact'
-        inputs:
-          artifactName: ReactWindows-debug-x86
-          downloadPath: $(System.DefaultWorkingDirectory)
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download ship x86 Artifact'
-        inputs:
-          artifactName: ReactWindows-ship-x86
-          downloadPath: $(System.DefaultWorkingDirectory)
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download debug x64 Artifact'
-        inputs:
-          artifactName: ReactWindows-debug-x64
-          downloadPath: $(System.DefaultWorkingDirectory)
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download ship x64 Artifact'
-        inputs:
-          artifactName: ReactWindows-ship-x64
-          downloadPath: $(System.DefaultWorkingDirectory)
+
       - task: DownloadBuildArtifacts@0
         displayName: 'Download source Artifact'
         inputs:
-          artifactName: ReactWindows-source
+          artifactName: UpdatedPackageJson
           downloadPath: $(System.DefaultWorkingDirectory)
 
-      - task: CopyFiles@2
-        displayName: 'Copy Win32 debug x64 files'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-x64'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x64/Debug'
-      - task: CopyFiles@2
-        displayName: 'Copy Win32 debug x86 files'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-x86'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x86/Debug'
-      - task: CopyFiles@2
-        displayName: 'Copy Win32 ship x64 files'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-x64'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x64/ship'
-      - task: CopyFiles@2
-        displayName: 'Copy Win32 ship x86 files'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-x86'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x86/ship'
-      - task: CopyFiles@2
-        displayName: 'Copy arm debug'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-arm'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/arm/debug'
-      - task: CopyFiles@2
-        displayName: 'Copy arm ship'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-arm'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/arm/ship'
-      - task: CopyFiles@2
-        displayName: 'Copy Nuget source files'
-        inputs:
-          SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-source'
-          TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot'
-      - task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
-        displayName: 'Replace branch name in nuspec'
-        inputs:
-          filePattern: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
-          secretTokens: 'BuildBuildNumber:$(Build.BuildNumber)'
-      - task: NuGetCommand@2
-        displayName: 'NuGet pack'
-        inputs:
-          command: pack
-          packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
-          packDestination: '$(System.DefaultWorkingDirectory)/NugetRoot/'
+      - template: templates/prep-and-pack-nuget.yml
+
       - task: NuGetCommand@2
         displayName: 'NuGet push'
         inputs:
