@@ -422,7 +422,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     m_moduleRegistry);
 
   // All JSI runtimes do support host objects and hence the native modules proxy.
-  const bool isNativeModulesProxyAvailable = m_devSettings->jsiRuntimeHolder != nullptr;
+  const bool isNativeModulesProxyAvailable = m_devSettings->jsiRuntimeHolder != nullptr && !m_devSettings->useWebDebugger;
   if (!isNativeModulesProxyAvailable)
   {
     folly::dynamic configArray = folly::dynamic::array;
