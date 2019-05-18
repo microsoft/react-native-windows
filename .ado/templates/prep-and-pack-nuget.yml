@@ -78,7 +78,7 @@ steps:
       script: |
         $npmVersion = $env:npmPackageVersion
         if (!$npmVersion) {
-          $lines = Get-Content ($env:SYSTEM_DEFAULTWORKINGDIRECTORY) + / vnext/package.json | Where {$_ -match '^\s*"version":.*'} 
+          $lines = Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/vnext/package.json | Where {$_ -match '^\s*"version":.*'} 
           $npmVersion = $lines.Trim().Split()[1].Trim('",');
         }
         (Get-Content vnext/ReactWin32.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content ReactWin32.nuspec
