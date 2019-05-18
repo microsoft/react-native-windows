@@ -32,11 +32,12 @@ TEST_CLASS(WebSocketIntegrationTest)
       connected = true;
     });
     server->Start();
+
     auto ws = IWebSocket::Make("ws://localhost:5556");
     ws->Connect();
+    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
 
     server->Stop();
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
 
     Assert::IsTrue(connected);
   }
