@@ -113,6 +113,12 @@ jobs:
     steps:
       - checkout: none #skip checking out the default repository resource
 
+      - task: DownloadBuildArtifacts@0
+        displayName: 'Download source Artifact'
+        inputs:
+          artifactName: UpdatedPackageJson
+          downloadPath: $(System.DefaultWorkingDirectory)
+
       - template: templates/prep-and-pack-nuget.yml
 
       - task: NuGetCommand@2

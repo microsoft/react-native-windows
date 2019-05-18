@@ -35,11 +35,6 @@ steps:
     inputs:
       artifactName: ReactWindows-source
       downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download source Artifact'
-    inputs:
-      artifactName: UpdatedPackageJson
-      downloadPath: $(System.DefaultWorkingDirectory)
 
   - task: CopyFiles@2
     displayName: 'Copy Win32 debug x64 files'
@@ -81,7 +76,12 @@ steps:
     inputs:
       targetType: inline # filePath | inline
       script: |
-        $lines = Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/UpdatedPackageJson/package.json | Where {$_ -match '^\s*"version":.*'} 
+        if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY/UpdatedPackageJson/package.json) {
+          $lines = Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/UpdatedPackageJson/package.json | Where {$_ -match '^\s*"version":.*'} 
+          $npmVersion = $lines.Trim().Split()[1].Trim('",');
+        } else {
+          $npmVersion = "0.0.1-pr"
+        }
         (Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactWin32.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactWin32.nuspec
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
