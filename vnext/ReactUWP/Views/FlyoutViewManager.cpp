@@ -198,7 +198,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "target")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
         m_targetTag = propertyValue.asInt();
         updateTargetElement = true;

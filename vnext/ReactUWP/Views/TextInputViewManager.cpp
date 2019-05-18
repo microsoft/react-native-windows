@@ -243,7 +243,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "maxLength")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         textBox.MaxLength(static_cast<int32_t>(propertyValue.asInt()));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::MaxLengthProperty());
@@ -259,7 +259,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (textBox.try_as<winrt::ITextBlock6>())
       {
-        if (propertyValue.isInt())
+        if (propertyValue.isNumber())
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         else if (propertyValue.isNull())
           textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
@@ -286,7 +286,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "selectionColor")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         textBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::SelectionHighlightColorProperty());
