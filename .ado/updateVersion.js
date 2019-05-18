@@ -58,7 +58,6 @@ function updateVersion() {
     }
   }
 
-  console.log(`##vso[task.setvariable variable=npmPublishVersion]${releaseVersion}`);
   pkgJson.version = releaseVersion;
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);

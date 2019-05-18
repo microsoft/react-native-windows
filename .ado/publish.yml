@@ -40,6 +40,13 @@ jobs:
           script: node ../.ado/updateVersion.js
           workingDirectory: vnext
 
+      # since the above task will update the package.json, we want to ensure that we use the correct version for the nuget
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish updated package.json for nuget'
+        inputs:
+          PathtoPublish: 'vnext\package.json'
+          ArtifactName: 'UpdatedPackageJson'
+
       - task: Npm@1
         displayName: npm public publish (vnext)
         inputs:

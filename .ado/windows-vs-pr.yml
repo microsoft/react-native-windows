@@ -141,6 +141,7 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
+        timeoutInMinutes: 10 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
