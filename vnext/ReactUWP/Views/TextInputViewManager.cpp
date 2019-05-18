@@ -201,7 +201,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
   for (auto& pair : props.items())
   {
     const std::string& propertyName = pair.first.getString();
-    const folly::dynamic& propertyValue = propertyName;
+    const folly::dynamic& propertyValue = pair.second;
 
     if (TryUpdateFontProperties(control, propertyName, propertyValue))
     {
