@@ -17,7 +17,7 @@ struct WebSocketServiceCallbacks
   std::function<void(IWebSocket::Error&&)> OnError;
 };
 
-class WebSocketSession : std::enable_shared_from_this<WebSocketSession>
+class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>
 {
   boost::beast::websocket::stream<boost::asio::ip::tcp::socket> m_stream;
   boost::asio::strand<boost::asio::io_context::executor_type> m_strand;
