@@ -46,6 +46,11 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
   JsSetCurrentContext(m_ctx);
 
+#if defined(USE_EDGEMODE_JSRT)
+  if (args.enableDebugging)
+    JsStartDebugging();
+#endif
+
   setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
