@@ -66,24 +66,7 @@
 
 #include <tuple>
 
-namespace {
-
-  struct UwpDevSettings
-  {
-    bool UseWebDebugger { false };
-    bool UseLiveReload { false };
-    bool ReuseReactInstances { false };
-  };
-
-  static UwpDevSettings g_devSettings;
-}
-
 namespace react { namespace uwp {
-
-bool ShouldReuseReactInstancesWhenPossible()
-{
-  return g_devSettings.ReuseReactInstances;
-}
 
 // TODO: This function is just a stand-in for a system that allows an individual host to provide a
 //  different set of view managers and native ui manager. Having all of this in one place will simply
@@ -236,11 +219,11 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
     devSettings->debugBundlePath = settings.DebugBundlePath;
-    devSettings->useWebDebugger = g_devSettings.UseWebDebugger || settings.UseWebDebugger;
+    devSettings->useWebDebugger = settings.UseWebDebugger;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
 
-    if (g_devSettings.UseLiveReload || settings.UseLiveReload)
+    if (settings.UseLiveReload)
     {
       devSettings->liveReloadCallback = [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept
       {
@@ -279,7 +262,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
 
     std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
-    devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+    if (settings.UseJsi)
+      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
     try
     {
@@ -453,13 +437,6 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
   // Invoke every callback registered
   for (auto const& current : m_errorCallbacks)
     current.second();
-}
-
-void UpdateDevSettings(bool useWebDebugger, bool useLiveReload, bool reuseReactInstances)
-{
-  g_devSettings.UseWebDebugger = useWebDebugger;
-  g_devSettings.UseLiveReload = useLiveReload;
-  g_devSettings.ReuseReactInstances = reuseReactInstances;
 }
 
 } }
