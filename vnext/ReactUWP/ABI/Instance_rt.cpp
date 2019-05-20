@@ -6,7 +6,8 @@
 #include "comTemplateLibrary.h"
 #include "HStringHelper.h"
 #include "Instance_rt.h"
-#include <Windows.Foundation.h>
+
+#include "XamlView.h"
 
 namespace ABI {
 namespace react {
@@ -104,6 +105,22 @@ HRESULT Instance::RegisterModule(ABI::react::uwp::IModule* pModule)
 
   Microsoft::WRL::ComPtr<ABI::react::uwp::IModule> spModule(pModule);
   m_spModuleProvider->RegisterModule(spModule);
+  return S_OK;
+}
+
+HRESULT Instance::SetTestHook(HSTRING testHookName, ABI::react::uwp::IXamlTestHookDelegate* pXamlTestHookDelegate)
+{
+  if (m_instance == nullptr)
+    return E_FAIL;
+
+  std::function<void(::react::uwp::XamlView)> f = [pXamlTestHookDelegate](::react::uwp::XamlView params)
+  {
+    auto spParams = params.as<ABI::Windows::UI::Xaml::IDependencyObject>();
+    pXamlTestHookDelegate->Invoke(spParams.get());
+  };
+
+  m_instance->SetTestHook(HSTRINGToString(testHookName), f);
+
   return S_OK;
 }
 

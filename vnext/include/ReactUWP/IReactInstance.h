@@ -7,6 +7,7 @@
 
 #include <Folly/dynamic.h>
 #include <DevSettings.h>
+#include <XamlView.h>
 
 #include <functional>
 #include <string>
@@ -71,8 +72,14 @@ struct IReactInstance
   virtual const std::string& LastErrorMessage() const noexcept = 0;
 
   virtual void loadBundle(std::string&& jsBundleRelativePath) = 0;
-};
 
-void UpdateDevSettings(bool useWebDebugger, bool useLiveReload, bool reuseReactInstances);
+  // Test Hooks
+  virtual void SetTestHook(std::string&& testHookName, std::function<void()> testHook) = 0;
+  virtual void CallTestHook(std::string&& testHookName) = 0;
+  virtual void SetTestHook(std::string&& testHookName, std::function<void(folly::dynamic&&)> testHook) = 0;
+  virtual void CallTestHook(std::string&& testHookName, folly::dynamic&& params) = 0;
+  virtual void SetTestHook(std::string&& testHookName, std::function<void(react::uwp::XamlView)> testHook) = 0;
+  virtual void CallTestHook(std::string&& testHookName, react::uwp::XamlView params) = 0;
+};
 
 } }

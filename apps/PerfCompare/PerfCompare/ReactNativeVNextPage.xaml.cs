@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 
 using react.uwp;
@@ -32,6 +34,14 @@ namespace PerfCompare
                 UseLiveReload = false,
             });
 
+            _instance.SetTestHook("OnViewCreated", (obj) =>
+            {
+                if (obj is FrameworkElement fe)
+                {
+                    fe.Loaded += View_Loaded;
+                }
+            });
+
             RootElement.Instance = _instance;
             RootElement.InitialProps = "{ \"messageCount\": \"" + App.TotalMessages +"\" }";
             RootElement.JsComponentName = JSCOMPONENTNAME;
@@ -46,6 +56,18 @@ namespace PerfCompare
                 App.PerfStats.Stop(false);
                 App.ShowStats("RNW VNext");
             });
+        }
+
+        private async void View_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Panel pn && (pn.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
+            {
+                await Dispatcher.RunIdleAsync((args) =>
+                {
+                    App.PerfStats.Stop(true);
+                    App.ShowStats("RNW VNext");
+                });
+            }
         }
     }
 }

@@ -174,6 +174,10 @@ XamlView ViewManagerBase::CreateView(int64_t tag)
   // Set the tag if the element type supports it
   SetTag(view, tag);
 
+  auto instance = m_wkReactInstance.lock();
+  if (instance != nullptr)
+    instance->CallTestHook("OnViewCreated", view);
+
   return view;
 }
 

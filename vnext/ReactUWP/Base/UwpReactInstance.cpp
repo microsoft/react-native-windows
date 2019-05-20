@@ -440,4 +440,40 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
     current.second();
 }
 
+void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void()> testHook)
+{
+  m_voidTestHooks[testHookName] = testHook;
+}
+
+void UwpReactInstance::CallTestHook(std::string&& testHookName)
+{
+  auto testHook = m_voidTestHooks.find(testHookName);
+  if (testHook != m_voidTestHooks.end())
+    testHook->second();
+}
+
+void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void(folly::dynamic&&)> testHook)
+{
+  m_dynamicTestHooks[testHookName] = testHook;
+}
+
+void UwpReactInstance::CallTestHook(std::string&& testHookName, folly::dynamic&& params)
+{
+  auto testHook = m_dynamicTestHooks.find(testHookName);
+  if (testHook != m_dynamicTestHooks.end())
+    testHook->second(std::move(params));
+}
+
+void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void(react::uwp::XamlView)> testHook)
+{
+  m_viewTestHooks[testHookName] = testHook;
+}
+
+void UwpReactInstance::CallTestHook(std::string&& testHookName, react::uwp::XamlView params)
+{
+  auto testHook = m_viewTestHooks.find(testHookName);
+  if (testHook != m_viewTestHooks.end())
+    testHook->second(params);
+}
+
 } }
