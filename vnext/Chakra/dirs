@@ -1,4 +1,3 @@
 DIRS = \
 	jsicore{!arm} \
 	win32{!arm} \
-	winrt{arm,x64,x86} \

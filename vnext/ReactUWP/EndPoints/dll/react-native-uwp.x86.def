@@ -30,7 +30,6 @@ EXPORTS
 ?toJson@folly@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABUdynamic@1@@Z
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YGXPAUINativeTraceHandler@12@@Z
-?ShouldReuseReactInstancesWhenPossible@uwp@react@@YG_NXZ
 ?CreateWorkerMessageQueue@uwp@react@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?CreateMemoryTracker@react@facebook@@YG?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?callJSFunction@Instance@react@facebook@@UAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
@@ -40,7 +39,6 @@ EXPORTS
 ?update@DeviceInfo@uwp@react@@QAEXXZ
 ??0DeviceInfoModule@uwp@react@@QAE@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
 
-?UpdateDevSettings@uwp@react@@YGX_N00@Z
 ??1DevSupportManager@uwp@react@@QAE@XZ
 ??0LocationObserverModule@uwp@react@@QAE@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
 ??0WebSocketModule@uwp@react@@QAE@XZ

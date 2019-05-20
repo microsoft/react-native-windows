@@ -42,7 +42,6 @@ void EnsureExportedFunctions(bool createThings)
   // React.UWP as a DLL
 
   facebook::react::InitializeTracing(nullptr);
-  react::uwp::ShouldReuseReactInstancesWhenPossible();
 
   if (createThings)
   {
