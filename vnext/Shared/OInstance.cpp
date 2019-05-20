@@ -10,17 +10,13 @@
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/Platform.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"
 #include "../Chakra/ChakraUtils.h"
 
 #if (defined(_MSC_VER) && !defined(WINRT))
 #include "Sandbox/SandboxJSExecutor.h"
-#endif
-
-#if !defined(NOJSC)
-#include <cxxreact/JSCExecutor.h>
 #endif
 
 #include <cxxreact/ModuleRegistry.h>
@@ -45,14 +41,10 @@
 #include <Shlwapi.h>
 
 #include <cxxreact/JSExecutor.h>
+
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
-
-#include "../Chakra/ChakraRuntime.h"
-
-#if (defined(_MSC_VER) && !defined(WINRT))
-#include <jsi/V8Runtime.h>
-#endif
+#include <jsi/RuntimeHolder.h>
 
 namespace {
 
@@ -84,7 +76,7 @@ std::string GetJSBundleDirectory(const std::string& jsBundleBasePath, const std:
     if (!succeeded)
       return jsBundleRelativePath;
 
-    std::string jsBundlePath = facebook::react::UnicodeConversion::Utf16ToUtf8(modulePath, wcslen(modulePath));
+    std::string jsBundlePath = facebook::react::unicode::utf16ToUtf8(modulePath, wcslen(modulePath));
     if (!jsBundlePath.empty() && jsBundlePath.back() != '\\')
       jsBundlePath += '\\';
 
@@ -131,7 +123,7 @@ std::string GetJSBundleFilePath(const std::string& jsBundleBasePath, const std::
 
 bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
 {
-  std::wstring fileNameUtf16 = facebook::react::UnicodeConversion::Utf8ToUtf16(fileName);
+  std::wstring fileNameUtf16 = facebook::react::unicode::utf8ToUtf16(fileName);
 
   std::unique_ptr<void, decltype(&CloseHandle)> handle { CreateFileW(
     static_cast<LPCWSTR>(fileNameUtf16.c_str()), GENERIC_READ, FILE_SHARE_READ,
@@ -158,79 +150,39 @@ bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
 
 namespace facebook { namespace react {
 
-#if (defined(_MSC_VER) && !defined(WINRT)  && !defined(_M_ARM))
-class ChakraJSIExecutorFactory : public JSExecutorFactory {
+namespace {
+class OJSIExecutorFactory : public JSExecutorFactory {
 public:
   std::unique_ptr<JSExecutor> createJSExecutor(
     std::shared_ptr<ExecutorDelegate> delegate,
     std::shared_ptr<MessageQueueThread> jsQueue) override {
 
-    auto logger = [](const std::string& message, unsigned int logLevel) {};
+    // TODO :: Ensure the logLevels are mapped properly.
+    JSIExecutor::Logger logger;
 
-    return std::make_unique<JSIExecutor>(facebook::react::chakra::makeChakraRuntime(std::move(args_), std::move(jsQueue), logger),
+    if (loggingHook_) {
+      logger = [loggingHook = std::move(loggingHook_)](const std::string& message, unsigned int logLevel) {
+        loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
+      };
+    }
+
+    return std::make_unique<JSIExecutor>(runtimeHolder_->getRuntime(),
       std::move(delegate),
       logger,
       JSIExecutor::defaultTimeoutInvoker,
       nullptr);
   }
 
-  ChakraJSIExecutorFactory(facebook::react::ChakraInstanceArgs&& args)
-    : args_(std::move(args)) {}
+  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook) noexcept
+    : runtimeHolder_{ std::move(runtimeHolder) }, loggingHook_{ std::move(loggingHook) }{}
+
 private:
-  facebook::react::ChakraInstanceArgs args_;
+  std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  NativeLoggingHook loggingHook_;
 };
 
-#if defined(USE_V8)
-class V8JSIExecutorFactory : public JSExecutorFactory {
-public:
-  std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override {
+}
 
-    auto cacheProvider = std::make_shared<facebook::v8runtime::CacheProvider>([](const std::string& sourceUrl) {return nullptr; });
-    auto logger = std::make_shared<facebook::v8runtime::Logger>([](const std::string& message, unsigned int logLevel) { });
-
-    return std::make_unique<JSIExecutor>(
-      facebook::v8runtime::makeV8Runtime(nullptr, std::move(logger), std::move(jsQueue), std::move(cacheProvider), nullptr, nullptr, nullptr, nullptr),
-      delegate,
-      *logger.get(),
-      JSIExecutor::defaultTimeoutInvoker,
-      nullptr);
-  }
-};
-#endif // USE_V8
-
-#else
-
-class ChakraJSIExecutorFactory : public JSExecutorFactory {
-public:
-  std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override {
-      std::abort();
-  }
-
-  ChakraJSIExecutorFactory(facebook::react::ChakraInstanceArgs&& args)
-    : args_(std::move(args)) { std::abort(); }
-private:
-  facebook::react::ChakraInstanceArgs args_;
-};
-
-#if defined(USE_V8)
-class V8JSIExecutorFactory : public JSExecutorFactory {
-public:
-  std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override {
-      std::abort();
-  }
-
-  V8JSIExecutorFactory() { std::abort(); }
-};
-#endif // USE_V8
-
-
-#endif
 
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
@@ -426,41 +378,37 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     }
   }
   else {
-    ChakraInstanceArgs instanceArgs;
 
-    instanceArgs.DebuggerBreakOnNextLine = m_devSettings->debuggerBreakOnNextLine;
-    instanceArgs.DebuggerPort = m_devSettings->debuggerPort;
-    instanceArgs.DebuggerRuntimeName = m_devSettings->debuggerRuntimeName;
-
-    instanceArgs.EnableDebugging = m_devSettings->useDirectDebugger;
-    instanceArgs.LoggingCallback = m_devSettings->loggingCallback;
-
-    instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
-
-    if (!m_devSettings->useJITCompilation)
-    {
-#if (defined(_MSC_VER) && !defined(WINRT))
-      instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration | JsRuntimeAttributeDisableExecutablePageAllocation);
-#else
-      instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration);
-#endif
+    // If the consumer gives us a JSI runtime, then  use it.
+    if (m_devSettings->jsiRuntimeHolder) {
+      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     }
+    else {
+      // We use the older non-JSI ChakraExecutor pipeline as a fallback as of now. This will go away once we completely move to JSI flow.
+      ChakraInstanceArgs instanceArgs;
 
-    instanceArgs.MemoryTracker = m_devSettings->memoryTracker ? m_devSettings->memoryTracker : CreateMemoryTracker(std::shared_ptr<MessageQueueThread>{m_nativeQueue});
+      instanceArgs.DebuggerBreakOnNextLine = m_devSettings->debuggerBreakOnNextLine;
+      instanceArgs.DebuggerPort = m_devSettings->debuggerPort;
+      instanceArgs.DebuggerRuntimeName = m_devSettings->debuggerRuntimeName;
 
-    switch (m_devSettings->jsiMode) {
-    case JSIMode::None:
-      // TODO: What should we use here for the first and second param, cacheDir and jscConfig respectively
+      instanceArgs.EnableDebugging = m_devSettings->useDirectDebugger;
+      instanceArgs.LoggingCallback = m_devSettings->loggingCallback;
+
+      instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
+      instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
+      
+      if (!m_devSettings->useJITCompilation)
+      {
+#if (defined(_MSC_VER) && !defined(WINRT))
+        instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration | JsRuntimeAttributeDisableExecutablePageAllocation);
+#else
+        instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(instanceArgs.RuntimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration);
+#endif
+      }
+
+      instanceArgs.MemoryTracker = m_devSettings->memoryTracker ? m_devSettings->memoryTracker : CreateMemoryTracker(std::shared_ptr<MessageQueueThread>{m_nativeQueue});
+
       jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
-      break;
-    case JSIMode::ChakraJSI:
-      jsef = std::make_shared<ChakraJSIExecutorFactory>(std::move(instanceArgs));
-      break;
-#if defined(USE_V8)
-    case JSIMode::V8JSI:
-      jsef = std::make_shared<V8JSIExecutorFactory>();
-      break;
-#endif // USE_V8
     }
 
   }
@@ -473,15 +421,20 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     m_jsThread,
     m_moduleRegistry);
 
-  folly::dynamic configArray = folly::dynamic::array;
-  for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
-    auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-    if (moduleConfig) {
-      configArray.push_back(std::move(moduleConfig->config));
+  // All JSI runtimes do support host objects and hence the native modules proxy.
+  const bool isNativeModulesProxyAvailable = m_devSettings->jsiRuntimeHolder != nullptr && !m_devSettings->useWebDebugger;
+  if (!isNativeModulesProxyAvailable)
+  {
+    folly::dynamic configArray = folly::dynamic::array;
+    for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
+      auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
+      if (moduleConfig) {
+        configArray.push_back(std::move(moduleConfig->config));
+      }
     }
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+    m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
-  folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
-  m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
 }
 
 void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)
@@ -501,6 +454,19 @@ void InstanceImpl::loadBundleInternal(std::string&& jsBundleRelativePath, bool s
   // load JS
   if (m_devSettings->useWebDebugger)
   {
+    // First attempt to get download the Js locally, to catch any bundling errors before
+    // attempting to load the actual script.
+    auto jsBundleString = m_devManager->GetJavaScriptFromServer(
+      m_devSettings->debugHost,
+      m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
+      m_devSettings->platformName);
+
+    if (m_devManager->HasException())
+    {
+      m_devSettings->errorCallback(jsBundleString);
+      return;
+    }
+
     try
     {
       auto bundleUrl = DevServerHelper::get_BundleUrl(

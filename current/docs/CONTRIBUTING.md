@@ -2,12 +2,22 @@
 
 This doc is a work in progress! Check back for updates.
 
+Check out the React Native Windows code itself and install npm dependencies
+
+```
+git clone --recursive https://github.com/microsoft/react-native-windows.git
+cd react-native-windows\current
+npm install
+```
+
+Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to [run the unit tests in Visual Studio](#running-unit-tests-in-visual-studio) and verify they are passing before submitting pull requests. For extra credit, [verify the examples in RNTester](#using-rntester) continue to work properly.
+
 ## Running unit tests in Visual Studio
 Before submitting a PR to React Native Windows, make sure the unit tests pass locally in Visual Studio.
 
 #### But how?
-![Run All Tests](RNWCS/docs/img/RunTests.png)
-1. Open ReactNative solution file (react-native-windows\RNWCS\ReactWindows\ReactNative.sln)
+![Run All Tests](img/RunTests.png)
+1. Open ReactNative solution file (react-native-windows\current\ReactWindows\ReactNative.sln)
 2. Set the Solution Configuration to "Debug" and the Solution Platforms to "x86"
 3. In the top toolbar, click "Test"
 4. Select "Run"

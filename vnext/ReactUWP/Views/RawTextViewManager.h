@@ -16,7 +16,7 @@ public:
   RawTextViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
   const char* GetName() const override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
 
   void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height) override;
   bool RequiresYogaNode() const override;

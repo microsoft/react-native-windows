@@ -98,10 +98,10 @@ dynamic ViewManagerBase::GetConstants() const
 
   const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
   if (!bubblingEventTypesConstants.empty())
-    constants["bubblingEventTypes"] = bubblingEventTypesConstants;
+    constants["bubblingEventTypes"] = std::move(bubblingEventTypesConstants);
   const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
   if (!directEventTypesConstants.empty())
-    constants["directEventTypes"] = directEventTypesConstants;
+    constants["directEventTypes"] = std::move(directEventTypesConstants);
 
   return constants;
 }
@@ -199,7 +199,7 @@ void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView 
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, dynamic reactDiffMap)
+void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, const dynamic& reactDiffMap)
 {
   // Directly dirty this node since non-layout changes like the text property do not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate the ancestors which
@@ -209,9 +209,9 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, dynamic rea
   if (instance != nullptr)
     static_cast<NativeUIManager*>(instance->NativeUIManager())->DirtyYogaNode(tag);
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "onLayout")

@@ -57,20 +57,20 @@ XamlView IconViewManager::CreateViewCore(int64_t tag)
   return glyphs;
 }
 
-void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto glyphs = nodeToUpdate->GetView().as<winrt::Glyphs>();
   if (glyphs == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "color")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         glyphs.Fill(BrushFrom(propertyValue));
 #if FUTURE
       else if (propertyValue.isNull())

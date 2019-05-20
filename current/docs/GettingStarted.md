@@ -61,7 +61,7 @@ react-native windows
 
 #### *Note on Requirements*
 
-Make sure you have installed all [requirements](https://github.com/Microsoft/react-native-windows#system-requirements) for React Native Windows. These requirements are necessary to build and run your application.
+Make sure you have installed all [requirements](https://github.com/microsoft/react-native-windows#system-requirements) for React Native Windows. These requirements are necessary to build and run your application.
 
 #### *Note On Expo*
 
@@ -86,7 +86,7 @@ React Native Windows is not currently supported by Expo. If you have a React Nat
 - Run `react-native start` from your project directory, and wait for the React Native packager to report success.
 - Click the `Run` button to the right of the platform combo box control, or select the `Debug`->`Start without Debugging` menu item. You now see your new app! :tada:
 
-*Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](http://github.com/Microsoft/react-native-windows#extending-react-native)
+*Note:* You should **only** modify the project and source files for your app (e.g. `AwesomeProject`). The files for the "ReactNative" and other projects shown in the Visual Studio solution are in the `node_modules` directory (which will not be committed to your source repository since it is ignored in `.gitignore`). Any changes to files in `node_modules` will be overwritten when doing an `npm install` or `npm update`. If you need to add a new native module or override some React Native behavior, see [Extending React Native](http://github.com/microsoft/react-native-windows#extending-react-native)
 
 #### Without Visual Studio
 

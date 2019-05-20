@@ -1,9 +1,9 @@
-# Getting Started Guide for React Native Windows C++
+# Getting Started Guide for React Native Windows (vnext)
 
-This is a summary of setup steps needed to install and work with React Native for Windows10 (C++). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details.
+This is a summary of setup steps needed to install and work with React Native for Windows (vnext). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details and see [Getting Started Guide - current](https://github.com/microsoft/react-native-windows/blob/master/current/docs/GettingStarted.md) for working with the `current` React Native for Windows implementation.
 
 ## System requirements
-* You can run React-Native for Windows10 apps only on Windows 10 devices; sdk version: 10.0.14393.795 or higher.
+* You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.16299.0 or higher.
 * [Visual Studio 2017](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
@@ -13,7 +13,7 @@ This is a summary of setup steps needed to install and work with React Native fo
     * Development activities
       * Node.js development support
     * SDKs, libraries, and frameworks
-      * Windows 10 SDK (10.0.14393.0)
+      * Windows 10 SDK (10.0.16299.0)
       * Windows 10 SDK (10.0.17763.0)
 
 ## Dependencies
@@ -23,7 +23,14 @@ choco install nodejs
 ```
 * Install [Chrome](https://www.google.com/chrome/) (*optional*, but needed for JS debugging)
 
-## Installing React Native
+## Installing React Native for Windows (vnext)
+There are two ways to install and work with React Native for Windows (vnext):
+1. [Simple](#simple-install-method) : Using our simple CLI that does all of the work for you behind the scenes.
+2. [Advanced](#advanced-install-method) : Manually by cloning the repo and running all install steps yourself.
+
+### 1. Simple install method
+
+#### Installing React Native
 
 * Install React Native command line interface using NPM:
 ```
@@ -40,7 +47,7 @@ Navigate into this newly created directory:
 cd <project name>
 ```
 
-## Installing React Native Windows C++
+#### Installing React Native Windows (vnext)
 
 * Install the React Native Windows command line interface ([rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows)).
 If you are using NPM, run
@@ -52,30 +59,107 @@ If you are using Yarn, run
 yarn add rnpm-plugin-windows
 ```
 
-* Next, initialize your React Native Windows C++ project in the project directory by running:
+* Next, initialize your React Native Windows `vnext` in the project directory. This step may take a while during first run due to dependency download.
 ```
 react-native windows --template vnext
 ```
 
-## Running a React Native Windows App
+#### Running a React Native Windows App
 
 *Note: Make sure Chrome is launched and running before running a React Native Windows app.*
 
-### Without Visual Studio
+- Without Visual Studio
 
 In your React Native Windows project directory, run:
 ```
 react-native run-windows
 ```
-A new Command Prompt window will open with the React packager as well as a React Native Windows app. You can now start developing! :tada:
+A new Command Prompt window will open with the React packager as well as a `react-native-windows` app. This step may take a while during first run since it involves building the entire project and all dependencies. You can now start developing! :tada:
 
-### With Visual Studio
+- With Visual Studio
 
-- Open the solution file in the application folder in Visual Studio (e.g., `AwesomeProject/windows/AwesomeProject.sln`)
-- Select the `Debug` configuration and the `x64` platform from the combo box controls to the left of the `Run` button and underneath the `Team` and `Tools` menu item.
-- Run `yarn start` from your project directory, and wait for the React Native packager to report success.
-- Click the `Run` button to the right of the platform combo box control in VS, or select the `Debug`->`Start without Debugging` menu item. You now see your new app! :tada:
+   - Open the solution file in the application folder in Visual Studio (e.g., `AwesomeProject/windows/AwesomeProject.sln`)
+   - Select the `Debug` configuration and the `x64` platform from the combo box controls to the left of the `Run` button and underneath the `Team` and `Tools` menu item.
+   - Run `yarn start` from your project directory, and wait for the React Native packager to report success.
+   - Click the `Run` button to the right of the platform combo box control in VS, or select the `Debug`->`Start without Debugging` menu item. You now see your new app and Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
+
+### 2. Advanced install method
+
+- Make sure you have installed [dependencies](#dependencies)
+- Install [Git](https://git-scm.com/download/win) if you don't have it installed in your development machine
+
+#### Build Steps	
+* Clone the repo	
+    ```cmd	
+    git clone https://github.com/microsoft/react-native-windows.git	
+    cd react-native-windows	
+    ```	
+
+* Install dependencies. This step may take a while on the first run due to dependency download.	
+    ```cmd	
+    cd vnext	
+    npm install	
+    ```	
+
+* Run `npm run build` in the vnext folder.	
+
+* Run `Scripts\launchPackager.bat`.	This is needed to ensure the JS files can be packaged and bundled to the UWP app.
+
+* Make sure Chrome is running if you're not already running it
+
+#### Running the Playground app
+* Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS. 
+    ```cmd
+    cd Playground
+    ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory packages
+    ```
+
+* Build solution.
+    * Using MSBuild	
+    ```cmd	
+    MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]	
+    ```	
+
+    * Using Visual Studio IDE	
+      1. Open `Playground.sln`.	
+      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.	
+      3. Select `Project / Build Solution (Ctrl+Shift+B)`
+
+* In Visual Studio, set Playground as the StartUp Project.		
+
+* Run project (`F5` or `Debug / Start Debugging`).	
+
+You now see your new app and Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
+
+#### Running the Sample Universal Windows App	
+* Build solution.	
+    * Using MSBuild	
+    ```cmd	
+    MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]	
+    ```	
+
+    * Using Visual Studio IDE	
+      1. Open `ReactWindows-UWP.sln`.	
+      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.	
+      3. Select `Project / Build Solution (Ctrl+Shift+B)`
+
+
+* In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.	
+
+* If you didn't already, make sure to set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.	
+
+* Run project (`F5` or `Debug / Start Debugging`).	
+
+* Press the "Load" button on the left side of the Windows 10 application window that appears.	
+
+ The selected React Native component (defaulted to `Bootstrap`) should get loaded in the bottom of the application window. Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:	
+
+ Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window before pressing "Load":	
+   - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`	
+   - RNTester: JavaScript file: `lib\RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`	
+      
 ## Troubleshooting
-* Use VS 2017. Issue [#2320](https://github.com/Microsoft/react-native-windows/issues/2320) tracks support for CLI with VS 2019.
-* If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/Microsoft/react-native-windows/issues/2311) is tracking a known issue on this.
+* Use VS 2017 when using the CLI. Issue [#2320](https://github.com/microsoft/react-native-windows/issues/2320) tracks support for CLI with VS 2019.
+* If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/microsoft/react-native-windows/issues/2311) is tracking a known issue on this.
+* If you get a red error box in your UWP app window with the error message : `ERROR: Instance failed to start. A connection with the server cannot be established`, make sure you have the packager running using `yarn start` and run the app again. 

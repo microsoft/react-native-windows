@@ -101,11 +101,11 @@ void SetBorderBrush(const T& element, const winrt::Windows::UI::Xaml::Media::Bru
 }
 
 template <class T>
-bool TryUpdateBackgroundBrush(T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateBackgroundBrush(T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "backgroundColor")
   {
-    if (propertyValue.isInt())
+    if (propertyValue.isNumber())
       element.Background(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BackgroundProperty());
@@ -125,11 +125,11 @@ void UpdateCornerRadius(ShadowNodeBase* node, T& element, ShadowCorners corner, 
 }
 
 template <class T>
-bool TryUpdateForeground(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateForeground(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "color")
   {
-    if (propertyValue.isInt())
+    if (propertyValue.isNumber())
       element.Foreground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::ForegroundProperty());
@@ -141,13 +141,13 @@ bool TryUpdateForeground(const T& element, const folly::dynamic& propertyName, c
 }
 
 template <class T>
-bool TryUpdateBorderProperties(ShadowNodeBase* node, T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateBorderProperties(ShadowNodeBase* node, T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor")
   {
-    if (propertyValue.isInt())
+    if (propertyValue.isNumber())
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BorderBrushProperty());
@@ -196,7 +196,7 @@ bool TryUpdateBorderProperties(ShadowNodeBase* node, T& element, const folly::dy
 }
 
 template <class T>
-bool TryUpdatePadding(ShadowNodeBase* node, const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdatePadding(ShadowNodeBase* node, const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   bool isPaddingProperty = true;
 
@@ -254,7 +254,7 @@ bool TryUpdatePadding(ShadowNodeBase* node, const T& element, const folly::dynam
 }
 
 template <class T>
-bool TryUpdateCornerRadius(ShadowNodeBase* node, T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateCornerRadius(ShadowNodeBase* node, T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "borderTopLeftRadius")
   {
@@ -310,14 +310,14 @@ bool TryUpdateCornerRadius(ShadowNodeBase* node, T& element, const folly::dynami
 }
 
 template <class T>
-bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateFontProperties(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   bool isFontProperty = true;
 
   if (propertyName == "fontSize")
   {
     if (propertyValue.isNumber())
-      element.FontSize(static_cast<double>(propertyValue.getInt()));
+      element.FontSize(static_cast<double>(propertyValue.asInt()));
     else if (propertyValue.isNull())
       element.ClearValue(T::FontSizeProperty());
   }
@@ -332,7 +332,7 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
   {
     if (propertyValue.isString())
     {
-      const std::string value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       winrt::Windows::UI::Text::FontWeight fontWeight;
       if (value == "normal")
         fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
@@ -371,7 +371,7 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
   {
     if (propertyValue.isString())
     {
-      element.FontStyle((propertyValue.asString() == "italic")
+      element.FontStyle((propertyValue.getString() == "italic")
         ? winrt::Windows::UI::Text::FontStyle::Italic
         : winrt::Windows::UI::Text::FontStyle::Normal);
     }
@@ -405,13 +405,13 @@ void SetTextAlignment(const T& element, const std::string& value)
 }
 
 template <class T>
-bool TryUpdateTextAlignment(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateTextAlignment(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "textAlign")
   {
     if (propertyValue.isString())
     {
-      auto value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       SetTextAlignment(element, value);
     }
     else if (propertyValue.isNull())
@@ -441,13 +441,13 @@ void SetTextTrimming(const T& element, const std::string& value)
 }
 
 template <class T>
-bool TryUpdateTextTrimming(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateTextTrimming(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "ellipsizeMode")
   {
     if (propertyValue.isString())
     {
-      auto value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       SetTextTrimming(element, value);
     }
     else if (propertyValue.isNull())
@@ -462,7 +462,7 @@ bool TryUpdateTextTrimming(const T& element, const folly::dynamic& propertyName,
 }
 
 template <class T>
-bool TryUpdateTextDecorationLine(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateTextDecorationLine(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "textDecorationLine")
   {
@@ -475,7 +475,7 @@ bool TryUpdateTextDecorationLine(const T& element, const folly::dynamic& propert
     {
       using winrt::Windows::UI::Text::TextDecorations;
 
-      const std::string value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       TextDecorations decorations = TextDecorations::None;
       if (value == "none")
         decorations = TextDecorations::None;
@@ -511,13 +511,13 @@ void SetFlowDirection(const T& element, const std::string& value)
 }
 
 template <class T>
-bool TryUpdateFlowDirection(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateFlowDirection(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if ((propertyName == "writingDirection") || (propertyName == "direction"))
   {
     if (propertyValue.isString())
     {
-      auto value = propertyValue.asString();
+      const std::string& value = propertyValue.getString();
       SetFlowDirection(element, value);
     }
     else if (propertyValue.isNull())
@@ -532,7 +532,7 @@ bool TryUpdateFlowDirection(const T& element, const folly::dynamic& propertyName
 }
 
 template <class T>
-bool TryUpdateCharacterSpacing(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateCharacterSpacing(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "letterSpacing" || propertyName == "characterSpacing")
   {
@@ -548,7 +548,7 @@ bool TryUpdateCharacterSpacing(const T& element, const folly::dynamic& propertyN
 }
 
 template <class T>
-bool TryUpdateOrientation(const T& element, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateOrientation(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "orientation")
   {
@@ -558,7 +558,7 @@ bool TryUpdateOrientation(const T& element, const folly::dynamic& propertyName, 
     }
     else if (propertyValue.isString())
     {
-      auto valueString = propertyValue.asString();
+      const std::string& valueString = propertyValue.getString();
       if (valueString == "horizontal")
         element.Orientation(Orientation::Horizontal);
       else if (valueString == "vertical")
@@ -571,7 +571,7 @@ bool TryUpdateOrientation(const T& element, const folly::dynamic& propertyName, 
   return false;
 }
 
-inline bool TryUpdateMouseEvents(ShadowNodeBase* node, const folly::dynamic& propertyName, const folly::dynamic& propertyValue)
+inline bool TryUpdateMouseEvents(ShadowNodeBase* node, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "onMouseEnter")
     node->m_onMouseEnter = !propertyValue.isNull() && propertyValue.asBool();

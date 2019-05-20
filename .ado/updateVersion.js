@@ -1,3 +1,4 @@
+// @ts-check
 // Used to update the package version 
 
 const fs = require("fs");
@@ -18,8 +19,17 @@ function exec(command) {
 }
 
 function updateVersion() {
-  const publishBranchName = process.env.publishBranchName;
-  const tempPublishBranch = `publish-${Date.now()}`;
+  const publishBranchName = process.env.BUILD_SOURCEBRANCH.match(/refs\/heads\/(.*)/)[1];
+
+  // Set env variable to allow npm publish task to publish to correct tag
+  console.log(`##vso[task.setvariable variable=npmTag]${publishBranchName === 'master' ? 'vnext' : publishBranchName}`);
+  console.log(`Target branch to publish to: ${publishBranchName}`);
+
+  const tempPublishBranch = `publish-temp-${Date.now()}`;
+
+  console.log(`Using ${`(.*-microsoft)(-${publishBranchName})?\\.([0-9]*)`} to match version`);
+  const branchVersionSuffix = (publishBranchName.match(/(fb.*merge)|(fabric)/) ? `-${publishBranchName}` : '');
+
 
   exec(`npm install -g yarn`);
 
@@ -30,20 +40,21 @@ function updateVersion() {
   
   exec(`git checkout -b ${tempPublishBranch}`);
 
-  const pkgJsonPath = path.resolve(__dirname, "../package.json");
+  const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
   let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
   let releaseVersion = pkgJson.version;
-
-  const versionGroups = /(.*-vnext\.)([0-9]*)/.exec(releaseVersion);
+  
+  const versionStringRegEx = new RegExp(`(.*-vnext)(-${publishBranchName})?\\.([0-9]*)`);
+  const versionGroups = versionStringRegEx.exec(releaseVersion);
   if (versionGroups) {
-    releaseVersion = versionGroups[1] + (parseInt(versionGroups[2]) + 1);
+    releaseVersion = versionGroups[1] + branchVersionSuffix + '.' + (parseInt(versionGroups[3]) + 1);
   } else {
     if (releaseVersion.indexOf("-") === -1) {
-      releaseVersion = releaseVersion + "-vnext.0";
+      releaseVersion = releaseVersion + `-vnext${branchVersionSuffix}.0`;
     } else {
       console.log("Invalid version to publish");
-      exit(1);
+      process.exit(1);
     }
   }
 
@@ -51,7 +62,7 @@ function updateVersion() {
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
 
-  process.chdir(path.resolve(__dirname, ".."));
+  process.chdir(path.resolve(__dirname, "../vnext"));
   exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
   exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd build`);
 

@@ -41,7 +41,7 @@ namespace react { namespace uwp {
     return winrt::WebView();
   }
 
-  void WebViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+  void WebViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
   {
     XamlView view = nodeToUpdate->GetView();
     UpdatePropertiesInternal(view, reactDiffMap);

@@ -16,7 +16,7 @@
 #include <CxxMessageQueue.h>
 #include <NativeModuleProvider.h>
 
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
@@ -62,9 +62,9 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
-#include <tuple>
+#include "ChakraJSIRuntimeHolder.h"
 
-using namespace winrt;
+#include <tuple>
 
 namespace {
 
@@ -219,7 +219,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
   assert(m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr && m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
@@ -278,6 +278,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
+    std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+    devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+
     try
     {
       // Create the react instance
@@ -285,7 +288,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
         std::string(), // bundleRootPath
         std::move(cxxModules),
         m_uiManager,
-        CreateAndStartJSQueueThread(),
+        jsQueue,
         m_defaultNativeThread,
         std::move(devSettings));
     }
@@ -296,7 +299,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
     catch (winrt::hresult_error const & e)
     {
-      OnHitError(facebook::react::UnicodeConversion::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+      OnHitError(facebook::react::unicode::utf16ToUtf8(e.message().c_str(), e.message().size()));
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     }
     catch (...)
@@ -383,6 +386,56 @@ facebook::react::INativeUIManager* UwpReactInstance::NativeUIManager() const noe
   return m_uiManager->getNativeUIManager();
 }
 
+static std::string PrettyError(const std::string& error) noexcept
+{
+  std::string prettyError = error;
+  if (prettyError.length() > 0 && prettyError[0] == '{')
+  {
+    // if starting with {, assume JSONy
+
+    // Replace escape characters with actuals
+    size_t pos = prettyError.find('\\');
+    while (pos != std::wstring::npos && pos + 2 <= prettyError.length())
+    {
+      if (prettyError[pos + 1] == 'n')
+      {
+        prettyError.replace(pos, 2, "\r\n", 2);
+      }
+      else if (prettyError[pos + 1] == 'b')
+      {
+        prettyError.replace(pos, 2, "\b", 2);
+      }
+      else if (prettyError[pos + 1] == 't')
+      {
+        prettyError.replace(pos, 2, "\t", 2);
+      }
+      else if (prettyError[pos + 1] == 'u' && pos + 6 <= prettyError.length())
+      {
+        // Convert 4 hex digits
+        auto hexVal = [&](int c) -> uint16_t {
+          return uint16_t(
+            c >= '0' && c <= '9' ? c - '0' :
+            c >= 'a' && c <= 'f' ? c - 'a' + 10 :
+            c >= 'A' && c <= 'F' ? c - 'A' + 10 :
+            0);
+        };
+        wchar_t replWide = 0;
+        replWide += hexVal(prettyError[pos + 2]) << 12;
+        replWide += hexVal(prettyError[pos + 3]) << 8;
+        replWide += hexVal(prettyError[pos + 4]) << 4;
+        replWide += hexVal(prettyError[pos + 5]);
+        std::string repl = facebook::react::unicode::utf16ToUtf8(&replWide, 1);
+
+        prettyError.replace(pos, 6, repl);
+      }
+
+      pos = prettyError.find('\\', pos + 2);
+    }
+  }
+
+  return prettyError;
+}
+
 void UwpReactInstance::OnHitError(const std::string& error) noexcept
 {
   m_isInError = true;
@@ -391,7 +444,7 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
   if (!m_errorMessage.empty())
     m_errorMessage += "\n";
   m_errorMessage += " -- ";
-  m_errorMessage += error;
+  m_errorMessage += PrettyError(error);
 
   OutputDebugStringA("UwpReactInstance Error Hit ...\n");
   OutputDebugStringA(m_errorMessage.c_str());

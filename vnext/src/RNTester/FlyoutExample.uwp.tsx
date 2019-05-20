@@ -6,14 +6,31 @@
 import React = require('react');
 import { Button, Text, TextInput, View } from 'react-native';
 import { CheckBox, Flyout, Picker } from '../../src/index.uwp';
+import { Placement  } from '../../src/Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;
   buttonTitle: string;
   isLightDismissEnabled: boolean;
   popupCheckBoxState: boolean;
-  placementOptions: 'top' | 'bottom' | 'left' | 'right' | 'full';
+  placementOptions: Placement;
 }
+
+let placementValues: string[] = [
+  'top',
+  'bottom',
+  'left',
+  'right',
+  'full',
+  'top-edge-aligned-left',
+  'top-edge-aligned-right',
+  'bottom-edge-aligned-left',
+  'bottom-edge-aligned-right',
+  'left-edge-aligned-top',
+  'right-edge-aligned-top',
+  'left-edge-aligned-bottom',
+  'right-edge-aligned-bottom'
+]
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
@@ -41,11 +58,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           <Picker
             style={ { width: 200, height: 35 } } selectedValue={ this.state.placementOptions }
             onValueChange={ value => this.setState({ placementOptions: value }) }>
-            <Picker.Item label='top' value='top' />
-            <Picker.Item label='bottom' value='bottom' />
-            <Picker.Item label='left' value='left' />
-            <Picker.Item label='right' value='right' />
-            <Picker.Item label='full' value='full' />
+            { placementValues.map(item => <Picker.Item key={item} label={item} value={item} /> ) }
           </Picker>
         </View>
         <View style={ { justifyContent: 'center', padding: 20, width: 200 } }>

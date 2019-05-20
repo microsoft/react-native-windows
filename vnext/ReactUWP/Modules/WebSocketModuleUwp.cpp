@@ -7,7 +7,8 @@
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include "UnicodeConversion.h"
+#include "utilities.h"
+#include "unicode.h"
 #include <future>
 
 #pragma warning(push)
@@ -137,7 +138,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
       auto name = header.first.getString();
       auto value = header.second.getString();
 
-      socket.SetRequestHeader(facebook::react::UnicodeConversion::Utf8ToUtf16(name), facebook::react::UnicodeConversion::Utf8ToUtf16(value));
+      socket.SetRequestHeader(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
     }
   }
 
@@ -147,7 +148,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
     for (auto& protocol : protocols)
     {
       auto protocolStr = protocol.getString();
-      supportedProtocols.Append(facebook::react::UnicodeConversion::Utf8ToUtf16(protocolStr));
+      supportedProtocols.Append(facebook::react::unicode::utf8ToUtf16(protocolStr));
     }
   }
 
@@ -165,14 +166,14 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
         std::vector<uint8_t> data(len);
         reader.ReadBytes(data);
 
-        response = std::string(reinterpret_cast<char*>(data.data()), data.size());
+        response = std::string(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
       }
       else
       {
         auto buffer = reader.ReadBuffer(len);
         winrt::hstring data = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToBase64String(buffer);
 
-        response = facebook::react::UnicodeConversion::Utf16ToUtf8(std::wstring_view(data));
+        response = facebook::react::unicode::utf16ToUtf8(std::wstring_view(data));
       }
 
       folly::dynamic params = folly::dynamic::object("id", id)("data", response)("type", args.MessageType() == winrt::SocketMessageType::Utf8 ? "text" : "binary");
@@ -185,7 +186,7 @@ void WebSocketModule::WebSocket::connect(const std::string& url, folly::dynamic 
     }
   });
 
-  winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(url));
 
   HRESULT hr = S_OK;
   try
@@ -226,7 +227,7 @@ void WebSocketModule::WebSocket::send(const std::string& message, int64_t id)
     auto dataWriter = m_dataWriters[id];
     socket.Control().MessageType(winrt::SocketMessageType::Utf8);
 
-    winrt::array_view<const uint8_t> arr(reinterpret_cast<const uint8_t*>(message.c_str()), reinterpret_cast<const uint8_t*>(message.c_str()) + message.length());
+    winrt::array_view<const uint8_t> arr(facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()), facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
     dataWriter.WriteBytes(arr);
     dataWriter.StoreAsync();
   }
@@ -245,7 +246,7 @@ void WebSocketModule::WebSocket::sendBinary(const std::string& base64String, int
     auto dataWriter = m_dataWriters[id];
     socket.Control().MessageType(winrt::SocketMessageType::Binary);
 
-    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(facebook::react::UnicodeConversion::Utf8ToUtf16(base64String));
+    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(facebook::react::unicode::utf8ToUtf16(base64String));
     dataWriter.WriteBuffer(buffer);
     dataWriter.StoreAsync();
   }
@@ -265,7 +266,7 @@ void WebSocketModule::WebSocket::ping(int64_t id)
     socket.Control().MessageType(winrt::SocketMessageType::Utf8);
 
     std::string s("");
-    winrt::array_view<const uint8_t> arr(reinterpret_cast<const uint8_t*>(s.c_str()), reinterpret_cast<const uint8_t*>(s.c_str()) + s.length());
+    winrt::array_view<const uint8_t> arr(facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(s.c_str()), facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(s.c_str()) + s.length());
     dataWriter.WriteBytes(arr);
     dataWriter.StoreAsync();
   }

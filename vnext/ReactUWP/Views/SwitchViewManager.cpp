@@ -92,25 +92,25 @@ XamlView SwitchViewManager::CreateViewCore(int64_t tag)
   return toggleSwitch;
 }
 
-void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void SwitchViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto toggleSwitch = nodeToUpdate->GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-   if (propertyName.asString() == "disabled")
+   if (propertyName == "disabled")
    {
       if (propertyValue.isBool())
         toggleSwitch.IsEnabled(!propertyValue.asBool());
       else if (pair.second.isNull())
         toggleSwitch.ClearValue(winrt::Control::IsEnabledProperty());
    }
-   else if (propertyName.asString() == "value")
+   else if (propertyName == "value")
    {
      if (propertyValue.isBool())
        toggleSwitch.IsOn(propertyValue.asBool());

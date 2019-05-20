@@ -8,9 +8,12 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 #define STRING_(s) #s
 #define STRING(s) STRING_(s)
+
+namespace facebook { namespace jsi { struct RuntimeHolderLazyInit; } }
 
 namespace facebook { namespace react {
 
@@ -26,12 +29,6 @@ struct JSExceptionInfo
   std::string exceptionMessage;
   uint32_t exceptionId;
   std::vector<std::string> callstack;
-};
-
-enum class JSIMode {
-  None,
-  ChakraJSI,
-  V8JSI
 };
 
 struct DevSettings
@@ -70,10 +67,16 @@ struct DevSettings
   /// Debugging will start as soon as the react native instance is loaded.
   bool useWebDebugger{ false };
 
+  // Enables ChakraCore console redirection to debugger
+  bool debuggerConsoleRedirection{ false };
+
   /// Dispatcher for notifications about JS engine memory consumption.
   std::shared_ptr<MemoryTracker> memoryTracker;
 
-  JSIMode jsiMode;
+  /// A factory and holder of jsi::Runtime instance to be used for this react instance.
+  /// This object should in general be used only from the JS engine thread, 
+  /// unless the specific runtime implementation explicitly guarantees reentrancy.
+  std::shared_ptr<jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
 };
 
 } }

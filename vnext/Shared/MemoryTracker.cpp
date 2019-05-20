@@ -5,43 +5,78 @@
 
 #include <cassert>
 #include <limits>
+#include <unordered_map>
 
 #include <MemoryTracker.h>
 
 namespace facebook { namespace react {
 
-MemoryTracker::MemoryTracker(std::shared_ptr<MessageQueueThread>&& callbackMessageQueueThread) noexcept
+class MemoryTrackerImpl : public MemoryTracker
+{
+public:
+	MemoryTrackerImpl(std::shared_ptr<MessageQueueThread>&& callbackMessageQueueThread) noexcept;
+	size_t GetCurrentMemoryUsage() const noexcept override;
+	size_t GetPeakMemoryUsage() const noexcept override;
+	std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread() const noexcept override;
+	void SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread>&& messageQueueThread) noexcept override;
+	CallbackRegistrationCookie AddThresholdCallback(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept override;
+	bool RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept override;
+	void Initialize(size_t initialMemoryUsage) noexcept override;
+	void OnAllocation(size_t size) noexcept override;
+	void OnDeallocation(size_t size) noexcept override;
+
+private:
+	struct ThresholdCallbackRecord
+	{
+		ThresholdCallbackRecord(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept;
+
+		const size_t Threshold;
+		const std::chrono::milliseconds MinCallbackInterval;
+		const MemoryThresholdCallback Callback;
+		std::chrono::steady_clock::time_point LastNotificationTime;
+	};
+
+	bool m_isInitialized = false;
+	mutable std::recursive_mutex m_mutex;
+	size_t m_currentMemoryUsage = 0;
+	size_t m_peakMemoryUsage = 0;
+	CallbackRegistrationCookie m_nextCookie = 0;
+	std::unordered_map<CallbackRegistrationCookie, ThresholdCallbackRecord> m_thresholdCallbackRecords;
+	std::shared_ptr<MessageQueueThread> m_callbackMessageQueueThread;
+};
+
+MemoryTrackerImpl::MemoryTrackerImpl(std::shared_ptr<MessageQueueThread>&& callbackMessageQueueThread) noexcept
 	: m_callbackMessageQueueThread { std::move(callbackMessageQueueThread) }
 {
 }
 
-size_t MemoryTracker::GetCurrentMemoryUsage() const noexcept
+size_t MemoryTrackerImpl::GetCurrentMemoryUsage() const noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard { m_mutex };
 	assert(m_isInitialized);
 	return m_currentMemoryUsage;
 }
 
-size_t MemoryTracker::GetPeakMemoryUsage() const noexcept
+size_t MemoryTrackerImpl::GetPeakMemoryUsage() const noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard { m_mutex };
 	assert(m_isInitialized);
 	return m_peakMemoryUsage;
 }
 
-std::shared_ptr<MessageQueueThread> MemoryTracker::GetCallbackMessageQueueThread() const noexcept
+std::shared_ptr<MessageQueueThread> MemoryTrackerImpl::GetCallbackMessageQueueThread() const noexcept
 {
 	return m_callbackMessageQueueThread;
 }
 
-void MemoryTracker::SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread>&& messageQueueThread) noexcept
+void MemoryTrackerImpl::SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread>&& messageQueueThread) noexcept
 {
 	assert(messageQueueThread);
 	assert(!m_isInitialized);
 	m_callbackMessageQueueThread = std::move(messageQueueThread);
 }
 
-CallbackRegistrationCookie MemoryTracker::AddThresholdCallback(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept
+CallbackRegistrationCookie MemoryTrackerImpl::AddThresholdCallback(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard { m_mutex };
 	assert(m_nextCookie < std::numeric_limits<decltype(m_nextCookie)>::max());
@@ -57,13 +92,13 @@ CallbackRegistrationCookie MemoryTracker::AddThresholdCallback(size_t threshold,
 	return cookie;
 }
 
-bool MemoryTracker::RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept
+bool MemoryTrackerImpl::RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard{ m_mutex };
 	return m_thresholdCallbackRecords.erase(cookie) == 1;
 }
 
-void MemoryTracker::Initialize(size_t initialMemoryUsage) noexcept
+void MemoryTrackerImpl::Initialize(size_t initialMemoryUsage) noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard { m_mutex };
 	assert(!m_isInitialized);
@@ -71,7 +106,7 @@ void MemoryTracker::Initialize(size_t initialMemoryUsage) noexcept
 	OnAllocation(initialMemoryUsage);
 }
 
-void MemoryTracker::OnAllocation(size_t size) noexcept
+void MemoryTrackerImpl::OnAllocation(size_t size) noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard{ m_mutex };
 	// detect overflow
@@ -100,7 +135,7 @@ void MemoryTracker::OnAllocation(size_t size) noexcept
 	}
 }
 
-void MemoryTracker::OnDeallocation(size_t size) noexcept
+void MemoryTrackerImpl::OnDeallocation(size_t size) noexcept
 {
 	std::lock_guard<std::recursive_mutex> lockGuard{ m_mutex };
 	assert(m_isInitialized);
@@ -108,7 +143,7 @@ void MemoryTracker::OnDeallocation(size_t size) noexcept
 	m_currentMemoryUsage -= size;
 }
 
-MemoryTracker::ThresholdCallbackRecord::ThresholdCallbackRecord(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept
+MemoryTrackerImpl::ThresholdCallbackRecord::ThresholdCallbackRecord(size_t threshold, std::chrono::milliseconds minCallbackInterval, MemoryThresholdCallback&& callback) noexcept
 	: Threshold{ threshold}
 	, MinCallbackInterval{ minCallbackInterval }
 	, Callback{std::move(callback) }
@@ -117,7 +152,7 @@ MemoryTracker::ThresholdCallbackRecord::ThresholdCallbackRecord(size_t threshold
 
 std::shared_ptr<MemoryTracker> CreateMemoryTracker(std::shared_ptr<MessageQueueThread>&& callbackMessageQueueThread) noexcept
 {
-	return std::make_shared<MemoryTracker>(std::move(callbackMessageQueueThread));
+	return std::make_shared<MemoryTrackerImpl>(std::move(callbackMessageQueueThread));
 }
 
 }}

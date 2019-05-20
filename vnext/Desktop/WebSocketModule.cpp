@@ -5,7 +5,7 @@
 
 #include <WebSocketModule.h>
 
-#include "UnicodeConversion.h"
+#include "unicode.h"
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include "../ReactWindowsCore/Utils.h"
@@ -15,7 +15,8 @@ using namespace folly;
 
 using std::string;
 
-namespace facebook { namespace react {
+namespace Microsoft {
+namespace React {
 
 WebSocketModule::WebSocketModule()
 {
@@ -54,7 +55,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           dynamic headersDynamic = optionsDynamic["headers"];
           for (const auto& header : headersDynamic.items())
           {
-            options.emplace(UnicodeConversion::Utf8ToUtf16(header.first.getString()), header.second.getString());
+            options.emplace(facebook::react::unicode::utf8ToUtf16(header.first.getString()), header.second.getString());
           }
         }
 
@@ -142,4 +143,4 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noex
 	return std::make_unique<WebSocketModule>();
 }
 
-} } // facebook::react
+} } // Microsoft::React

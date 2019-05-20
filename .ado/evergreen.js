@@ -49,7 +49,7 @@ while (myArgs.length) {
 // Create a new VSO PR
 function createPr() {
   console.log('Creating PR...');
-  const url = 'https://api.github.com/repos/Microsoft/react-native-windows/pulls';
+  const url = 'https://api.github.com/repos/microsoft/react-native-windows/pulls';
   request.post(
     {
       url: url,
@@ -83,7 +83,7 @@ function createPr() {
       // Trigger automation
       request.post(
         {
-          url: `https://api.github.com/repos/Microsoft/react-native-windows/issues/${prId}/comments`,
+          url: `https://api.github.com/repos/microsoft/react-native-windows/issues/${prId}/comments`,
           json:true,
           headers:{
             Authorization: "Basic " + gitHubToken,
@@ -100,7 +100,7 @@ function createPr() {
         // Trigger AutoMerge
         request.post(
           {
-            url:`https://api.github.com/repos/Microsoft/react-native-windows/issues/${prId}/labels`,
+            url:`https://api.github.com/repos/microsoft/react-native-windows/issues/${prId}/labels`,
             json:true,
             headers:{
               Authorization: "Basic " + gitHubToken,
@@ -117,7 +117,7 @@ function createPr() {
       });
     }
 
-request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/package.json', function(error, response, body) {
+request.get('https://raw.githubusercontent.com/microsoft/react-native/master/package.json', function(error, response, body) {
   console.log(`Get react-native's package.json request result: `);
   console.log('error:', error); // Print the error if one occurred
   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
@@ -133,12 +133,12 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   }
 
   const pkgJson = JSON.parse(body);
-  const pkgJsonPath = path.resolve(__dirname, '../package.json');
+  const pkgJsonPath = path.resolve(__dirname, '../vnext/package.json');
   rnVersion = pkgJson.version;
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
 
-  const rnDependency = `${pkgJson.version} || https://github.com/Microsoft/react-native/archive/v${pkgJson.version}.tar.gz`;
+  const rnDependency = `${pkgJson.version} || https://github.com/microsoft/react-native/archive/v${pkgJson.version}.tar.gz`;
 
   if (existingPkgJson.peerDependencies['react-native'] === rnDependency) {
     console.log(`Already at latest react-native version: ${pkgJson.version}.`);
@@ -150,7 +150,7 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
   // Collect log of changes included in this sync
   // Fetch older version so that we can get the log from there to here..
   try {
-    exec(`git remote add msrn https://github.com/Microsoft/react-native.git`);
+    exec(`git remote add msrn https://github.com/microsoft/react-native.git`);
   } catch (e) {
   }
   exec(`git fetch msrn`);
@@ -164,13 +164,16 @@ request.get('https://raw.githubusercontent.com/Microsoft/react-native/master/pac
 
   exec(`npm install -g yarn`);
 
-  exec(`git checkout --track origin/${finalTargetBranchName}`);
-  exec(`git checkout -b ${branchName}`);
+  exec(`git checkout -b ${branchName} --track origin/${finalTargetBranchName}`);
+  exec(`git pull`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
-    // Run yarn install to update yarn.lock
-    exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
+  
+  process.chdir(path.resolve(__dirname, '../vnext'));
+  
+  // Run yarn install to update yarn.lock
+  exec(`${process.env.APPDATA}\\npm\\node_modules\\yarn\\bin\\yarn.cmd install`);
 
-  exec(`git add ${path.resolve(__dirname, '../yarn.lock')}`);
+  exec(`git add ${path.resolve(__dirname, '../vnext/yarn.lock')}`);
   exec(`git add ${pkgJsonPath}`);
   exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
   exec(`git push origin ${branchName}`);

@@ -11,7 +11,7 @@ param(
 	[string] $Configuration = 'Debug',
 	[string[]] $Tests,
 	$Assembly = "$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll",
-	$VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
+	$VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 	[UInt32] $Delay = 10,
 	[switch] $List,
 	[switch] $Preload,

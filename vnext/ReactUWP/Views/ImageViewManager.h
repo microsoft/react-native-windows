@@ -20,7 +20,7 @@ namespace react { namespace uwp {
     ImageViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
     const char* GetName() const override;
-    void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+    void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
 
     folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
     folly::dynamic GetNativeProps() const override;
@@ -29,7 +29,7 @@ namespace react { namespace uwp {
     XamlView CreateViewCore(int64_t tag) override;
 
   private:
-    void setSource(winrt::Windows::UI::Xaml::Controls::Image image, folly::dynamic& sources);
+    void setSource(winrt::Windows::UI::Xaml::Controls::Image image, const folly::dynamic& sources);
   };
 
   class ImageViewManagerModule : public facebook::xplat::module::CxxModule

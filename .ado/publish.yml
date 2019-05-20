@@ -1,12 +1,24 @@
-name: $(Date:yyyyMMdd).$(Rev:.r)
+name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
-trigger: none # will disable CI builds entirely
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+      - fb59merge
+      - fabric
+  paths:
+    include:
+      - vnext/*
+    exclude:
+      - vnext/package.json
+      - vnext/yarn.lock
 
 pr: none
 
 jobs:
-  - job: RNWGithubPublish
-    displayName: React-Native-Windows GitHub Publish
+  - job: RnwNpmPublish
+    displayName: React-Native-Windows Npm Build Rev Publish
     pool:
       name: OE Standard Pool
       demands: ['VisualStudio_15.0', 'OnPrem -equals False']
@@ -20,30 +32,20 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
-      - task: CmdLine@2
-        displayName: Ensure yarn
-        inputs:
-          script: npm install -g yarn
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: vnext
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: vnext
+      - template: templates/npm-install-and-build.yml
 
       - task: CmdLine@2
         displayName: Update package version
         inputs:
-          script: node .ado/updateVersion.js
+          script: node ../.ado/updateVersion.js
           workingDirectory: vnext
+
+      # since the above task will update the package.json, we want to ensure that we use the correct version for the nuget
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish updated package.json for nuget'
+        inputs:
+          PathtoPublish: 'vnext\package.json'
+          ArtifactName: 'UpdatedPackageJson'
 
       - task: Npm@1
         displayName: npm public publish (vnext)
@@ -51,6 +53,77 @@ jobs:
           command: custom
           workingDir: vnext
           verbose: false
-          customCommand: 'publish --access public --tag vnext'
+          customCommand: publish --access public --tag $(npmTag)
           customEndpoint: 'React-Native-Windows NPM'
           publishEndpoint: 'React-Native-Windows NPM'
+
+  - job: RnwNativeBuild
+    displayName: React-Native-Windows Native Build
+    dependsOn: RnwNpmPublish
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      name: OE Standard Pool
+      demands:
+      - OnPrem -equals False
+      - msbuild
+      - Cmd
+
+    steps:
+
+    - template: templates/npm-install-and-build.yml
+
+    - template: templates/vs-build.yml
+      parameters:
+        BuildConfiguration: $(BuildConfiguration)
+        BuildPlatform: $(BuildPlatform)
+
+    - template: templates/publish-build-artifacts-for-nuget.yml
+
+    - task: PublishSymbols@2
+      displayName: 'Publish symbols path'
+      inputs:
+        SearchPattern: 'vnext/target/**/*.pdb'
+        SymbolServerType: TeamServices
+
+
+  - job: RNWNuget
+    dependsOn: RnwNativeBuild
+    displayName: React-Native-Windows Build and Publish Nuget
+    pool:
+      name: OE Standard Pool
+    steps:
+      - checkout: none #skip checking out the default repository resource
+
+      - task: DownloadBuildArtifacts@0
+        displayName: 'Download source Artifact'
+        inputs:
+          artifactName: UpdatedPackageJson
+          downloadPath: $(System.DefaultWorkingDirectory)
+
+      - template: templates/prep-and-pack-nuget.yml
+
+      - task: NuGetCommand@2
+        displayName: 'NuGet push'
+        inputs:
+          command: push
+          packagesToPush: '$(System.DefaultWorkingDirectory)/NugetRoot/*.nupkg'
+          publishVstsFeed: '86ec7889-a365-4cd1-90df-6e18cc2ea59f'
