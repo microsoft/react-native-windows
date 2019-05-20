@@ -26,6 +26,7 @@ struct ReactInstanceSettings
 {
   bool UseWebDebugger { false };
   bool UseLiveReload { false };
+  bool UseDirectDebugger{ false };
   bool UseJsi { true };
   std::string DebugBundlePath;
   facebook::react::NativeLoggingHook LoggingCallback;
