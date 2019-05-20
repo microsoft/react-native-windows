@@ -368,7 +368,10 @@ void ChakraExecutor::initOnJSVMThread()
   // Add a pointer to ourselves so we can retrieve it later in our hooks
   JsSetContextData(m_context, this);
 
-#if !defined(USE_EDGEMODE_JSRT)
+#if defined(USE_EDGEMODE_JSRT)
+  if (enableDebugging)
+    JsStartDebugging();
+#else
   if (enableDebugging && m_instanceArgs.DebuggerConsoleRedirection) {
     JsValueRef debuggerConsoleObject;
     tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
