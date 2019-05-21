@@ -1,5 +1,5 @@
 # Component & Module API Parity Status
-This doc reports the status progress of core components modules/APIs integration for vnext. The components and modules tracked here will be in alignment with the React Native [Lean Core](https://github.com/facebook/react-native/issues/23313) effort.
+This doc reports the status progress of core components modules/APIs integration for vnext. The components and modules tracked here will be in alignment with the [React Native Lean Core](https://github.com/facebook/react-native/issues/23313) effort.
 
 Ones in **bold** are in the milestone we're currently targetting.
 
@@ -22,7 +22,9 @@ Below are a list of components and their status towards parity between the lean 
 |VirtualizedList|Partial|No Issues Logged|No|TBD|
 
 ### Modules
-lorem
+Below are a list of modules and their status towards parity between the lean core components you'd find on iOS and Android and the functionality we have today.
+
+Also tracked are NativeModules, as they are essential, even if not part of the core set.
 
 |Module| Status | Issues | Milestone 2| Milestone 3 |
 |:-|:-|:-|:-:|:-|
