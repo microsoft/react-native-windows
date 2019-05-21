@@ -20,8 +20,8 @@ We are in **Milestone 2.**
 |Switch|Partial|[2161](https://github.com/microsoft/react-native-windows/issues/2161), [2140](https://github.com/microsoft/react-native-windows/issues/2140)|No|Yes|
 |Text|Partial|[2484](https://github.com/microsoft/react-native-windows/issues/2484), [2162](https://github.com/microsoft/react-native-windows/issues/2162), [2121](https://github.com/microsoft/react-native-windows/issues/2121), [2161](https://github.com/microsoft/react-native-windows/issues/2161)| No |Yes|
 |TextInput|Partial|**[2469](https://github.com/microsoft/react-native-windows/issues/2469)**, **[2198](https://github.com/microsoft/react-native-windows/issues/2198)**, **[2148](https://github.com/microsoft/react-native-windows/issues/2148)**, [2136](https://github.com/microsoft/react-native-windows/issues/2136)|**Yes**|*Remaining Work*|
-|View|n/a|n/a|n/a|n/a|
-|VirtualizedList|n/a|n/a|n/a|n/a|
+|View|Partial|**[2102](https://github.com/microsoft/react-native-windows/issues/2102)**, [2492](https://github.com/microsoft/react-native-windows/issues/2492), [2245](https://github.com/microsoft/react-native-windows/issues/2245), [2349](https://github.com/microsoft/react-native-windows/issues/2349), [2098](https://github.com/microsoft/react-native-windows/issues/2098)|**Yes**|*Remaining Work*|
+|VirtualizedList|Partial|No Issues Logged|No|TBD|
 
 ### Modules
 lorem
