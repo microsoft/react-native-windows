@@ -65,10 +65,10 @@ struct json_type_traits;
 template<typename T>
 struct json_type_traits<std::vector<T>>
 {
-  static std::vector<T> parseJson(folly::dynamic& obj)
+  static std::vector<T> parseJson(const folly::dynamic& obj)
   {
     std::vector<T> result;
-    for (auto& item : obj)
+    for (const auto& item : obj)
     {
       result.push_back(json_type_traits<T>::parseJson(item));
     }
@@ -79,7 +79,7 @@ struct json_type_traits<std::vector<T>>
 template<>
 struct json_type_traits<folly::dynamic>
 {
-  static folly::dynamic& parseJson(folly::dynamic& obj)
+  static const folly::dynamic& parseJson(const folly::dynamic& obj)
   {
     return obj;
   }
@@ -88,7 +88,7 @@ struct json_type_traits<folly::dynamic>
 template<>
 struct json_type_traits<double>
 {
-  static double parseJson(folly::dynamic& obj)
+  static double parseJson(const folly::dynamic& obj)
   {
     return obj.asDouble();
   }
@@ -97,14 +97,14 @@ struct json_type_traits<double>
 template<>
 struct json_type_traits<std::string>
 {
-  static std::string parseJson(folly::dynamic& obj)
+  static std::string parseJson(const folly::dynamic& obj)
   {
     return obj.asString();
   }
 };
 
 #define RCT_BEGIN_PROPERTY_MAP(className) \
-  std::unordered_map<std::string, std::function<void(react::uwp::XamlView&, folly::dynamic&)>> m_propertyHandlers;\
+  std::unordered_map<std::string, std::function<void(react::uwp::XamlView&, const folly::dynamic&)>> m_propertyHandlers;\
   void SetupPropertyHandlersInternal() { \
   typedef className class_name;
 
@@ -112,7 +112,7 @@ struct json_type_traits<std::string>
   { \
     typedef typename get_argument_type<1, decltype(&class_name::handler)>::type second_argument_t; \
     typedef typename std::remove_const_t<std::remove_reference_t<second_argument_t>> argument_type_t; \
-    m_propertyHandlers[name] = [this](react::uwp::XamlView& view, folly::dynamic& prop){ \
+    m_propertyHandlers[name] = [this](react::uwp::XamlView& view, const folly::dynamic& prop){ \
       typedef decltype(json_type_traits<argument_type_t>::parseJson(prop)) value_type_t; \
       value_type_t value = json_type_traits<argument_type_t>::parseJson(prop); \
       handler(view, value); \
@@ -121,7 +121,7 @@ struct json_type_traits<std::string>
 
 
 #define RCT_END_PROPERTY_MAP() } \
-  void UpdatePropertiesInternal(react::uwp::XamlView& view, folly::dynamic& diffMap) { \
+  void UpdatePropertiesInternal(react::uwp::XamlView& view, const folly::dynamic& diffMap) { \
     for (auto& pair : diffMap.items()) \
     { \
       auto propHandler = m_propertyHandlers.find(pair.first.asString()); \

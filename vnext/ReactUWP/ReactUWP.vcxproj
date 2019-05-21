@@ -158,6 +158,7 @@
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Animated\NativeAnimatedModule.h" />
     <ClInclude Include="Animated\NativeAnimatedNodesManager.h" />
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
@@ -195,6 +196,8 @@
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
+    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
@@ -227,6 +230,7 @@
     <ClCompile Include="..\Shared\OInstance.cpp" />
     <ClCompile Include="Animated\NativeAnimatedModule.cpp" />
     <ClCompile Include="Animated\NativeAnimatedNodesManager.cpp" />
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
@@ -267,6 +271,8 @@
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />
     <ClCompile Include="Views\RawTextViewManager.cpp" />

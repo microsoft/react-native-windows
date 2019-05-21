@@ -2,18 +2,13 @@
 // Licensed under the MIT License.
 
 #pragma once
-
 #include <jsi/jsi.h>
+#include <jsi/ScriptStore.h>
 
-namespace facebook { 
+namespace facebook {
 namespace react {
 class MemoryTracker;
 class MessageQueueThread;
-}}
-
-namespace facebook { namespace jsi {
-struct ScriptStore;
-struct PreparedScriptStore;
 }}
 
 namespace facebook {
@@ -31,11 +26,6 @@ enum class LogLevel
 
 using Logger = std::function<void(const char* message, LogLevel logLevel)>;
 
-struct IPromiseContinuation
-{
-  virtual void registerPromise(facebook::jsi::Function&& func) = 0;
-};
-
 struct ChakraJsiRuntimeArgs
 {
   bool enableJITCompilation { true };
@@ -46,6 +36,7 @@ struct ChakraJsiRuntimeArgs
   bool enableDebugging { false };
   bool debuggerBreakOnNextLine { false };
   bool enableNativePerformanceNow { true };
+  bool enableNativePromiseSupport { false };
   uint16_t debuggerPort { 9229 };
   std::string debuggerRuntimeName;
 
@@ -58,8 +49,6 @@ struct ChakraJsiRuntimeArgs
   // Script store which manages script and prepared script storage and versioning.
   std::unique_ptr<jsi::ScriptStore> scriptStore;
   std::unique_ptr<jsi::PreparedScriptStore> preparedScriptStore;
-
-  std::unique_ptr<IPromiseContinuation> promiseContinuation { nullptr };
 };
 
 }}}
