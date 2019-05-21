@@ -95,6 +95,16 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           continue;
         }
       }
+      if (propertyName == "transform")
+      {
+        if (propertyValue.isArray())
+        {
+          assert(propertyValue.size() == 16);
+        }
+        else if (propertyValue.isNull())
+        {
+        }
+      }
       else if (propertyName == "width")
       {
         if (propertyValue.isNumber())
