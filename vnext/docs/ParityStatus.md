@@ -29,9 +29,10 @@ lorem
 |Module| Status | Issues | Milestone 2| Milestone 3 |
 |:-|:-|:-|:-:|:-|
 |Accessibility|Not Started|**[2088](https://github.com/microsoft/react-native-windows/issues/2088)**, [2326](https://github.com/microsoft/react-native-windows/issues/2326)|**Yes**|*Remaining Work*|
-|LayoutProps|**Completed**|[2143](https://github.com/Microsoft/react-native-windows/issues/2143)|No|No|
+|LayoutProps|**Completed**|[2143](https://github.com/Microsoft/react-native-windows/issues/2143)|-|-|
 |Alert|Not Started|[2071](https://github.com/microsoft/react-native-windows/issues/2071)|No|TBD|
 |AppState|Not Started|[2144](https://github.com/microsoft/react-native-windows/issues/2144)|No|TBD|
-|Keyboard|Started|**[2085](https://github.com/microsoft/react-native-windows/issues/2085)**, **[2469](https://github.com/microsoft/react-native-windows/issues/2469)**, **[2107](https://github.com/microsoft/react-native-windows/issues/2107)**, [2276](https://github.com/microsoft/react-native-windows/issues/2276)|**Yes**|*Remaining Work*|
+|Keyboard|Partial|**[2085](https://github.com/microsoft/react-native-windows/issues/2085)**, **[2469](https://github.com/microsoft/react-native-windows/issues/2469)**, **[2107](https://github.com/microsoft/react-native-windows/issues/2107)**, [2276](https://github.com/microsoft/react-native-windows/issues/2276)|**Yes**|*Remaining Work*|
 |LayoutAnimation|Not Started|**[2315](https://github.com/microsoft/react-native-windows/issues/2315)**, **[2297](https://github.com/microsoft/react-native-windows/issues/2297)**, [2494](https://github.com/microsoft/react-native-windows/issues/2494), [2126](https://github.com/microsoft/react-native-windows/issues/2126)|**Yes**|*Remaining Work*|
 |Networking|Not Started|[2460](https://github.com/microsoft/react-native-windows/issues/2460)|No|TBD|
+|NativeModules|Partial|[2393](https://github.com/microsoft/react-native-windows/issues/2393), [2388](https://github.com/microsoft/react-native-windows/issues/2388), [2387](https://github.com/microsoft/react-native-windows/issues/2387), [2271](https://github.com/microsoft/react-native-windows/issues/2271), [2130](https://github.com/microsoft/react-native-windows/issues/2130), [2103](https://github.com/microsoft/react-native-windows/issues/2103), [2104](https://github.com/microsoft/react-native-windows/issues/2104)|No|TBD|
