@@ -4,6 +4,7 @@
 #pragma once
 #include <exception>
 #include <string>
+#include <stdexcept>
 #if _HAS_CXX17
 #include <string_view>
 #endif

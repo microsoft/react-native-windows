@@ -13,6 +13,7 @@
 #include "TestMessageQueueThread.h"
 #include "TestModule.h"
 #include "TestRootView.h"
+#include "ChakraJSIRuntimeHolder.h"
 
 using namespace facebook::react;
 using namespace facebook::xplat::module;
@@ -45,6 +46,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto uiManager = createIUIManager(move(viewManagers), new TestNativeUIManager());
   auto nativeQueue = make_shared<TestMessageQueueThread>();
   auto jsQueue = make_shared<TestMessageQueueThread>();
+
+  devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules
   {

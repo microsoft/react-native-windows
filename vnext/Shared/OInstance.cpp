@@ -157,7 +157,14 @@ public:
     std::shared_ptr<ExecutorDelegate> delegate,
     std::shared_ptr<MessageQueueThread> jsQueue) override {
 
-    auto logger = [](const std::string& message, unsigned int logLevel) {};
+    // TODO :: Ensure the logLevels are mapped properly.
+    JSIExecutor::Logger logger;
+
+    if (loggingHook_) {
+      logger = [loggingHook = std::move(loggingHook_)](const std::string& message, unsigned int logLevel) {
+        loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
+      };
+    }
 
     return std::make_unique<JSIExecutor>(runtimeHolder_->getRuntime(),
       std::move(delegate),
@@ -166,11 +173,12 @@ public:
       nullptr);
   }
 
-  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit>&& runtimeHolder) noexcept
-    : runtimeHolder_(std::move(runtimeHolder)) {}
+  OJSIExecutorFactory(std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder, NativeLoggingHook loggingHook) noexcept
+    : runtimeHolder_{ std::move(runtimeHolder) }, loggingHook_{ std::move(loggingHook) }{}
 
 private:
   std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  NativeLoggingHook loggingHook_;
 };
 
 }
@@ -373,7 +381,7 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
 
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
-      jsef = std::make_shared<OJSIExecutorFactory>(std::move(m_devSettings->jsiRuntimeHolder));
+      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     }
     else {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of now. This will go away once we completely move to JSI flow.
@@ -387,7 +395,8 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
       instanceArgs.LoggingCallback = m_devSettings->loggingCallback;
 
       instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
-
+      instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
+      
       if (!m_devSettings->useJITCompilation)
       {
 #if (defined(_MSC_VER) && !defined(WINRT))
@@ -412,15 +421,20 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     m_jsThread,
     m_moduleRegistry);
 
-  folly::dynamic configArray = folly::dynamic::array;
-  for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
-    auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
-    if (moduleConfig) {
-      configArray.push_back(std::move(moduleConfig->config));
+  // All JSI runtimes do support host objects and hence the native modules proxy.
+  const bool isNativeModulesProxyAvailable = m_devSettings->jsiRuntimeHolder != nullptr && !m_devSettings->useWebDebugger;
+  if (!isNativeModulesProxyAvailable)
+  {
+    folly::dynamic configArray = folly::dynamic::array;
+    for (auto const& moduleName : m_moduleRegistry->moduleNames()) {
+      auto moduleConfig = m_moduleRegistry->getConfig(moduleName);
+      if (moduleConfig) {
+        configArray.push_back(std::move(moduleConfig->config));
+      }
     }
+    folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
+    m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
   }
-  folly::dynamic configs = folly::dynamic::object("remoteModuleConfig", configArray);
-  m_innerInstance->setGlobalVariable("__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(folly::toJson(configs)));
 }
 
 void InstanceImpl::loadBundle(std::string&& jsBundleRelativePath)

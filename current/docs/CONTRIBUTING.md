@@ -5,7 +5,7 @@ This doc is a work in progress! Check back for updates.
 Check out the React Native Windows code itself and install npm dependencies
 
 ```
-git clone --recursive https://github.com/Microsoft/react-native-windows.git
+git clone --recursive https://github.com/microsoft/react-native-windows.git
 cd react-native-windows\current
 npm install
 ```

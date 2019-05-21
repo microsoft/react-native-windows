@@ -17,7 +17,7 @@ public:
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
