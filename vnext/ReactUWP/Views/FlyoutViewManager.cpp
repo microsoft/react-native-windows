@@ -102,6 +102,7 @@ public:
 private:
   void SetTargetFrameworkElement();
   void AdjustDefaultFlyoutStyle();
+  winrt::Popup GetFlyoutParentPopup() const;
 
   winrt::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
@@ -182,6 +183,12 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
         m_isLightDismissEnabled = propertyValue.asBool();
       else if (propertyValue.isNull())
         m_isLightDismissEnabled = true;
+      if (m_targetElement != nullptr)
+      {
+        auto popup = GetFlyoutParentPopup();
+        if (popup != nullptr)
+          popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+      }
     }
     else if (propertyName == "isOpen")
     {
@@ -220,6 +227,11 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     {
       AdjustDefaultFlyoutStyle();
       winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+      {
+        auto popup = GetFlyoutParentPopup();
+        if (popup != nullptr)
+          popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+      }
     }
     else
     {
@@ -264,6 +276,18 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle()
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
+
+winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const
+{
+  // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against RS6
+  winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups = winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
+  for (auto popup : popups)
+  {
+    return popup;
+  };
+  return nullptr;
+}
+
 
 FlyoutViewManager::FlyoutViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
