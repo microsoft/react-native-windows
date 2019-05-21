@@ -31,9 +31,9 @@ namespace PerfCompare
             return messages;
         }
 
-        private async void Message_Loaded(object sender, RoutedEventArgs e)
+        private async void Image_Loaded(object sender, RoutedEventArgs e)
         {
-            if (sender is StackPanel sp && (sp.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
+            if (sender is Image img && (img.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
             {
                 await Dispatcher.RunIdleAsync((args) =>
                 {

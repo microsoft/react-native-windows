@@ -36,9 +36,9 @@ namespace PerfCompare
 
             _instance.SetTestHook("OnViewCreated", (obj) =>
             {
-                if (obj is FrameworkElement fe)
+                if (obj is Image img)
                 {
-                    fe.Loaded += View_Loaded;
+                    img.Loaded += Image_Loaded;
                 }
             });
 
@@ -58,9 +58,9 @@ namespace PerfCompare
             });
         }
 
-        private async void View_Loaded(object sender, RoutedEventArgs e)
+        private async void Image_Loaded(object sender, RoutedEventArgs e)
         {
-            if (sender is Panel pn && (pn.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
+            if (sender is Image img && (img.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
             {
                 await Dispatcher.RunIdleAsync((args) =>
                 {

@@ -120,8 +120,8 @@ function LoadMessages(count) {
 class MessageView extends Component {
   render() {
     return (
-      <View style={styles.message} testID={this.props.message.messageId}>
-        <Image style={styles.messageAvatar} source={this.props.message.Avatar} />
+      <View style={styles.message}>
+        <Image style={styles.messageAvatar} source={this.props.message.Avatar} testID={this.props.message.messageId} />
         <View style={styles.messageContents}>
           <View style={styles.messageHeader}>
             <Text style={styles.messageUserName}>{this.props.message.UserName}</Text>
