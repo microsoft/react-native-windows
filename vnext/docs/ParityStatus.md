@@ -4,15 +4,15 @@ This doc reports the status progress of core components modules/APIs integration
 ## Lean Core
 The components and modules tracked here will be in alignment with the React Native [Lean Core](https://github.com/facebook/react-native/issues/23313) effort.
 
-### Components
-Below are a list of components and their status towards parity between the lean core components you'd find on iOS and Android and the functionality we have today.
-
 Ones in **bold** are in the milestone we're currently targetting.<br><br>
 We are in **Milestone 2.**
 
+### Components
+Below are a list of components and their status towards parity between the lean core components you'd find on iOS and Android and the functionality we have today.
+
 |Component| Status | Issues | Milestone 2| Milestone 3 |
 |:-|:-|:-|:-:|:-|
-|ActivityIndicator|**Complete**|n/a|n/a|n/a|
+|ActivityIndicator|**Complete**|-|-|-|
 |Button|Partial|**[2182](https://github.com/microsoft/react-native-windows/issues/2182)**, **[2099](https://github.com/microsoft/react-native-windows/issues/2099)**, **[2085](https://github.com/microsoft/react-native-windows/issues/2085)** *(Completed for Button)*, [2163](https://github.com/microsoft/react-native-windows/issues/2163)|**Yes**|*Remaining Work*|
 |FlatList|Partial|**[2099](https://github.com/microsoft/react-native-windows/issues/2099)**|**Yes**|No|
 |Image|Partial|**[2111](https://github.com/microsoft/react-native-windows/issues/2111)**|**Yes**|No|
@@ -26,6 +26,13 @@ We are in **Milestone 2.**
 ### Modules
 lorem
 
-|Module | Status | Issue | Milestone | Doc Link |
-|:-|:-|:-|:-|:-|
-|lorem|lorem|lorem |lorem|lorem|
+|Module| Status | Issues | Milestone 2| Milestone 3 |
+|:-|:-|:-|:-:|:-|
+|Accessibility|-|-|-|-|
+|LayoutProps|**Completed**|[2143](https://github.com/Microsoft/react-native-windows/issues/2143)|No|No|
+|Alert|-|-|-|-|
+|AppState|-|-|-|-|
+|Keyboard|-|-|-|-|
+|LayoutAnimation|-|-|-|-|
+|Networking|-|-|-|-|
+|StyleSheet|-|-|-|-|
