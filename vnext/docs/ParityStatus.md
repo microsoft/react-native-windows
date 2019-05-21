@@ -1,7 +1,5 @@
 # Component & Module API Parity Status
-This doc reports the status progress of core components modules/APIs integration for vnext.
-
-The components and modules tracked here will be in alignment with the React Native [Lean Core](https://github.com/facebook/react-native/issues/23313) effort.
+This doc reports the status progress of core components modules/APIs integration for vnext. The components and modules tracked here will be in alignment with the React Native [Lean Core](https://github.com/facebook/react-native/issues/23313) effort.
 
 Ones in **bold** are in the milestone we're currently targetting.
 
