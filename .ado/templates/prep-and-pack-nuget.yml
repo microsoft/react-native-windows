@@ -83,9 +83,10 @@ steps:
           $npmVersion = "0.0.1-pr"
         }
         (Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactWin32.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactWin32.nuspec
+        (Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactUwp.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactUwp.nuspec
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
     inputs:
       command: pack
-      packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/ReactWin32.nuspec'
+      packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/React*.nuspec'
       packDestination: '$(System.DefaultWorkingDirectory)/NugetRoot/'
