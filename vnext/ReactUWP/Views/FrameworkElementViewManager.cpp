@@ -96,7 +96,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           continue;
         }
       }
-      if (propertyName == "transform")
+      else if (propertyName == "transform")
       {
         if (element.try_as<winrt::IUIElement9>()) // Works on RS5+
         {
