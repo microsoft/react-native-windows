@@ -183,7 +183,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
         m_isLightDismissEnabled = propertyValue.asBool();
       else if (propertyValue.isNull())
         m_isLightDismissEnabled = true;
-      if (m_targetElement != nullptr)
+      if (m_isOpen)
       {
         auto popup = GetFlyoutParentPopup();
         if (popup != nullptr)
@@ -281,10 +281,8 @@ winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const
 {
   // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against RS6
   winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups = winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
-  for (auto popup : popups)
-  {
-    return popup;
-  };
+  if (popups.Size() > 0)
+    return popups.GetAt(0);
   return nullptr;
 }
 
