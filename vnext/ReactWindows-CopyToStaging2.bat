@@ -65,5 +65,7 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\ReactUWP\*.h                                         %DESTROOT%\inc\ReactUWP
 %COPYCMD%  %SRCROOT%\include                                              %DESTROOT%\inc\include
 
+%COPYCMD%  %SRCROOT%\Desktop.DLL\react-native-win32.*.def                 %DESTROOT%\inc
+
 %COPYCMD%  %SRCROOT%\ReactWin32.nuspec                                    %DESTROOT%
 
