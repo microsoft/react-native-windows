@@ -11,8 +11,8 @@
 
     <Page.Resources>
         <DataTemplate x:Name="MessageTemplate" x:DataType="local:Message">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="20 10" AutomationProperties.AutomationId="{x:Bind MessageID}">
-                <Image Source="{x:Bind Avatar}" Width="50" Height="50" Margin="0 0 10 0" Loaded="Image_Loaded" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="20 10">
+                <Image Source="{x:Bind Avatar}" Width="50" Height="50" Margin="0 0 10 0" Loaded="Image_Loaded" AutomationProperties.AutomationId="{x:Bind MessageID}" />
                 <StackPanel Orientation="Vertical" Padding="20 10" Background="#ffffff">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Bind UserName}" Foreground="#333333" FontWeight="Bold" FontSize="12" />

@@ -41,7 +41,7 @@ namespace PerfCompare
 
         private async void View_Loaded(object sender, RoutedEventArgs e)
         {
-            if (sender is Image img && (img.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
+            if (sender is Border img && (img.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
             {
                 await Dispatcher.RunIdleAsync((args) =>
                 {

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics;
+using Windows.System;
 
 namespace PerfCompare
 {
@@ -47,7 +48,8 @@ namespace PerfCompare
 
         public void Start()
         {
-            EndCommitInBytes = StartCommitInBytes = GC.GetTotalMemory(true);
+            GC.GetTotalMemory(true);
+            EndCommitInBytes = StartCommitInBytes = (long)MemoryManager.AppMemoryUsage;
             Timer = Stopwatch.StartNew();
         }
 
@@ -56,7 +58,8 @@ namespace PerfCompare
             Timer.Stop();
             if (finalStop)
             {
-                EndCommitInBytes = GC.GetTotalMemory(true);
+                GC.GetTotalMemory(true);
+                EndCommitInBytes = (long)MemoryManager.AppMemoryUsage;
             }
             else
             {
