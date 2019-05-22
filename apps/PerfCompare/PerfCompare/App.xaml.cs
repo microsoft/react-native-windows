@@ -15,7 +15,7 @@ namespace PerfCompare
     {
         public static PerfStats PerfStats = new PerfStats();
 
-        public const int TotalMessages = 10;
+        public static int TotalMessages = 10;
 
         public static void ShowStats(string title)
         {

@@ -16,9 +16,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button Content="XAML Markup" x:Name="xamlMarkupBtn" Click="Button_Click" Width="200" Margin="20" />
-            <Button Content="RNW Current" x:Name="rnwcsBtn" Click="Button_Click" Width="200" Margin="20" />
-            <Button Content="RNW VNext" x:Name="rnwcppBtn" Click="Button_Click" Width="200" Margin="20" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Margin="20" VerticalAlignment="Center">Total Messages:</TextBlock>
+                <TextBox Margin="20" Text="{x:Bind TotalMessages, Mode=TwoWay}" Width="150" HorizontalContentAlignment="Right" />
+            </StackPanel>
+            <Button Content="XAML Markup" x:Name="xamlMarkupBtn" Click="Button_Click" Width="200" Margin="20" HorizontalAlignment="Center" />
+            <Button Content="RNW Current" x:Name="rnwcsBtn" Click="Button_Click" Width="200" Margin="20" HorizontalAlignment="Center" />
+            <Button Content="RNW VNext" x:Name="rnwcppBtn" Click="Button_Click" Width="200" Margin="20" HorizontalAlignment="Center" />
         </StackPanel>
     </Grid>
 </Page>

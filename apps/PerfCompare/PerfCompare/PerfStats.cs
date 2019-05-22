@@ -69,17 +69,13 @@ namespace PerfCompare
 
         private static string GetTimeSpanReadable(TimeSpan timeSpan)
         {
-            if (timeSpan.TotalHours >= 1.0)
+            if (timeSpan.TotalMinutes >= 10.0)
             {
-                return timeSpan.ToString(@"h \h m \m s \s");
-            }
-            else if (timeSpan.TotalMinutes >= 1.0)
-            {
-                return timeSpan.ToString(@"m \m s \s");
+                return $"{timeSpan.TotalMinutes:0.00} m";
             }
             else if (timeSpan.TotalSeconds >= 10.0)
             {
-                return $"{timeSpan.TotalSeconds:0} s";
+                return $"{timeSpan.TotalSeconds:0.00} s";
             }
 
             return $"{timeSpan.TotalMilliseconds:0} ms";
