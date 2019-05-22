@@ -10,7 +10,7 @@ We are currently in [**Milestone 2**](https://github.com/microsoft/react-native-
 ### Components
 Below are a list of components and their status towards parity between the lean core components you'd find on iOS and Android and the functionality we have today.
 
-|Component| Status | Issues | C# Status |
+|Component| vnext Status | Issues | Current Status |
 |:-|:-|:-|:-|
 |ActivityIndicator|**Complete**|-|**Complete**|
 |Button|Partial|**[2182](https://github.com/microsoft/react-native-windows/issues/2182)**, **[2099](https://github.com/microsoft/react-native-windows/issues/2099)**, **[2085](https://github.com/microsoft/react-native-windows/issues/2085)** *(Completed for Button)*, [2163](https://github.com/microsoft/react-native-windows/issues/2163)|**Complete**|
@@ -28,7 +28,7 @@ Below are a list of modules and their status towards parity between the lean cor
 
 Also tracked are NativeModules, as they are essential, even if not part of the core set.
 
-|Module| Status | Issues | C# Status|
+|Module| vnext Status | Issues | Current Status|
 |:-|:-|:-|:-|
 |Accessibility|Not Started|**[2088](https://github.com/microsoft/react-native-windows/issues/2088)**, [2326](https://github.com/microsoft/react-native-windows/issues/2326)|Partial|
 |LayoutProps|**Completed**|[2143](https://github.com/Microsoft/react-native-windows/issues/2143)|Partial|
@@ -44,7 +44,7 @@ These set of components and modules are packages we intend to ship separately bu
 
 ### Components
 
-|Component| Status | Issues | C# Status |
+|Component| vnext Status | Issues | Current Status |
 |:-|:-|:-|:-|
 |Modal|Not Started|*nothing logged*|Partial (Beta)|
 |Navigator|Not Started|*nothing logged*|**Complete**|
@@ -56,7 +56,7 @@ These set of components and modules are packages we intend to ship separately bu
 
 ### Modules
 
-|Module| Status | Issues | C# Status|
+|Module| vnext Status | Issues | Current Status|
 |:-|:-|:-|:-|
 |AsyncStorage|Partial|[2271](https://github.com/microsoft/react-native-windows/issues/2271)|**Complete**|
 |BackAndroid|Partial|*nothing logged*|Partial|
