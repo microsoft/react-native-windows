@@ -40,7 +40,7 @@ Also tracked are NativeModules, as they are essential, even if not part of the c
 |NativeModules|Partial|[2393](https://github.com/microsoft/react-native-windows/issues/2393), [2388](https://github.com/microsoft/react-native-windows/issues/2388), [2387](https://github.com/microsoft/react-native-windows/issues/2387), [2271](https://github.com/microsoft/react-native-windows/issues/2271), [2130](https://github.com/microsoft/react-native-windows/issues/2130), [2103](https://github.com/microsoft/react-native-windows/issues/2103), [2104](https://github.com/microsoft/react-native-windows/issues/2104)|Partial|
 
 ## Packages to be Refactored Separately
-These set of components and modules are packages we intend to ship separately but deliver ourselves. All of this work is schedules for [Milestone 3](https://github.com/microsoft/react-native-windows/milestone/17).
+These set of components and modules are packages we intend to ship separately but deliver ourselves. All of this work is scheduled for [Milestone 3](https://github.com/microsoft/react-native-windows/milestone/17).
 
 ### Components
 
