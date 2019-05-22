@@ -288,7 +288,6 @@ winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const
   return nullptr;
 }
 
-
 FlyoutViewManager::FlyoutViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
   : Super(reactInstance)
 {
