@@ -23,7 +23,7 @@ react-native-windows.build.log
 ReactWin32.nuspec
 ReactWindows-CopyToStaging.bat
 ReactWindows-TestNuspec.bat
-ReactWindows.nuspec
+ReactUwp.nuspec
 ReactWindows.sln
 ReactWindows-UWP.sln
 **/*.inc

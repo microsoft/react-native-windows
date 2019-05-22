@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>OfficeReact.Win32</id>
+    <id>OfficeReact.Uwp</id>
     <version>__BuildBuildNumber__</version>
     <description>Contains Windows Implementation of React-Native</description>
     <authors>Microsoft</authors>
@@ -9,11 +9,6 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
   </metadata>
   <files>
-    <file src="target\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\x64\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\x86\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\x64\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-
     <file src="inc\cxxreact\*" target="inc\cxxreact"/>
     <file src="inc\jsi\*" target="inc\jsi"/>
     <file src="inc\Yoga\*.*" target="inc\Yoga"/>
@@ -36,12 +31,6 @@
     <file src="inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Tracing.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
-
-    <!-- Required for win32 -->
-    <file src="inc\ReactWindowsCore\DevServerHelper.h" target="inc"/>
-    <file src="inc\ReactWin32\JSBigStringResourceDll.h" target="inc"/>
-    <file src="inc\react-native-win32.x64.def" target="inc"/>
-    <file src="inc\react-native-win32.x86.def" target="inc"/>
 
     <file src="inc\include\**\*.*" target="inc\include" />
 
