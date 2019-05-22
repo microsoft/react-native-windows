@@ -22,6 +22,7 @@ mkdir %DESTROOT% >nul 2>&1
 mkdir %DESTROOT%\inc >nul 2>&1
 mkdir %DESTROOT%\inc\cxxreact >nul 2>&1
 mkdir %DESTROOT%\inc\jschelpers >nul 2>&1
+mkdir %DESTROOT%\inc\jsi >nul 2>&1
 mkdir %DESTROOT%\inc\yoga >nul 2>&1
 mkdir %DESTROOT%\inc\ReactWin32 >nul 2>&1
 mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
@@ -40,6 +41,14 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\cxxreact\NativeModule.h             %DESTROOT%\inc\cxxreact
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\cxxreact\PlatformBundleInfo.h       %DESTROOT%\inc\cxxreact
 
+%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\jsi.h                           %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\jsi-inl.h                       %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\ScriptStore.h                   %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native\ReactCommon\jsi\V8Runtime.h                     %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraCoreDebugger.h                 %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeArgs.h               %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\react-native-win\Chakra\ChakraJsiRuntimeFactory.h            %DESTROOT%\inc\jsi
+
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\Yoga.h                    %DESTROOT%\inc\yoga
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\YGMacros.h                %DESTROOT%\inc\yoga
 %COPYCMD%  %SRCROOT%\react-native\ReactCommon\Yoga\Yoga\YGNodeList.h              %DESTROOT%\inc\yoga
@@ -53,4 +62,5 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\react-native-win\include                                     %DESTROOT%\inc\include
 
 %COPYCMD%  %SRCROOT%\react-native-win\ReactWin32.nuspec                           %DESTROOT%
+%COPYCMD%  %SRCROOT%\react-native-win\ReactUwp.nuspec                             %DESTROOT%
 

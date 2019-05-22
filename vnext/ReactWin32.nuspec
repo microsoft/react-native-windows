@@ -24,6 +24,8 @@
     <file src="inc\ReactWindowsCore\AbiSafe.h" target="inc"/>
     <file src="inc\ReactWindowsCore\DevSettings.h" target="inc"/>
     <file src="inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\IUIManager.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\IWebSocket.h" target="inc"/>
     <file src="inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
     <file src="inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
     <file src="inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
@@ -34,6 +36,12 @@
     <file src="inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Tracing.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
+
+    <!-- Required for win32 -->
+    <file src="inc\ReactWindowsCore\DevServerHelper.h" target="inc"/>
+    <file src="inc\ReactWin32\JSBigStringResourceDll.h" target="inc"/>
+    <file src="inc\react-native-win32.x64.def" target="inc"/>
+    <file src="inc\react-native-win32.x86.def" target="inc"/>
 
     <file src="inc\include\**\*.*" target="inc\include" />
 

@@ -54,6 +54,7 @@ EXPORTS
 ??1Value@jsi@facebook@@QAE@XZ
 ??1Buffer@jsi@facebook@@UAE@XZ
 ?makeChakraJsiRuntime@chakraruntime@jsi@facebook@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraJsiRuntimeArgs@123@@Z
+?makeV8Runtime@v8runtime@facebook@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@XZ
 
 
 YGLog

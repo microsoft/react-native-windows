@@ -17,11 +17,15 @@
 #include <mutex>
 #include <sstream>
 
-namespace facebook {
-namespace jsi {
+#if defined(USE_EDGEMODE_JSRT)
+typedef JsValueRef JsWeakRef;
+#endif
+
+namespace facebook { 
+namespace jsi { 
 namespace chakraruntime {
 
-class ByteArrayBuffer : public jsi::Buffer {
+class ByteArrayBuffer final : public jsi::Buffer {
 public:
   size_t size() const override {
     return size_;
@@ -98,6 +102,9 @@ private:
   static uint64_t s_runtimeVersion;
   static constexpr const char* s_runtimeType = "ChakraJsiRuntime";
 
+  static constexpr const char* const s_proxyGetHostObjectTargetPropName = "$$ProxyGetHostObjectTarget$$";
+  static constexpr const char* const s_proxyIsHostObjectPropName = "$$ProxyIsHostObject$$";
+
   static void initRuntimeVersion()  noexcept;
   static uint64_t getRuntimeVersion() { return s_runtimeVersion; }
 
@@ -173,6 +180,16 @@ private:
   protected:
     friend class ChakraJsiRuntime;
     JsValueRef m_obj;
+  };
+
+  class ChakraWeakRefValue final : public PointerValue {
+    ChakraWeakRefValue(JsWeakRef obj);
+    ~ChakraWeakRefValue();
+
+    void invalidate() override;
+  protected:
+    friend class ChakraJsiRuntime;
+    JsWeakRef m_obj;
   };
 
 private:
@@ -257,6 +274,10 @@ private:
   static JsValueRef stringRef(const jsi::String& str);
   static JsPropertyIdRef propIdRef(const jsi::PropNameID& sym);
   static JsValueRef objectRef(const jsi::Object& obj);
+  static JsWeakRef objectRef(const jsi::WeakObject& obj);
+
+  static JsWeakRef newWeakObjectRef(const jsi::Object& obj);
+  static JsValueRef strongObjectRef(const jsi::WeakObject& obj);
 
   // Factory methods for creating String/Object
   jsi::String createString(JsValueRef stringRef) const;
@@ -274,6 +295,8 @@ private:
   jsi::Runtime::PointerValue* makeObjectValue(JsValueRef obj) const;
 
   jsi::Runtime::PointerValue* makePropertyIdValue(JsPropertyIdRef propId) const;
+
+  jsi::Runtime::PointerValue* makeWeakRefValue(JsWeakRef obj) const;
 
   inline void checkException(JsErrorCode res);
   inline void checkException(JsErrorCode res, const char* msg);

@@ -66,7 +66,7 @@ namespace react {
 template<>
 struct json_type_traits<react::uwp::ImageSource>
 {
-  static react::uwp::ImageSource parseJson(folly::dynamic& json)
+  static react::uwp::ImageSource parseJson(const folly::dynamic& json)
   {
     react::uwp::ImageSource source;
     for (auto& item : json.items())
@@ -94,7 +94,7 @@ struct json_type_traits<react::uwp::ImageSource>
 template<>
 struct json_type_traits<winrt::Windows::UI::Xaml::Media::Stretch>
 {
-  static winrt::Windows::UI::Xaml::Media::Stretch parseJson(folly::dynamic& json)
+  static winrt::Windows::UI::Xaml::Media::Stretch parseJson(const folly::dynamic& json)
   {
     winrt::Windows::UI::Xaml::Media::Stretch stretch;
     if (json == "cover")
@@ -134,21 +134,24 @@ namespace react { namespace uwp {
     return image;
   }
 
-  void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+  void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
   {
     auto image = nodeToUpdate->GetView().as<winrt::Image>();
     if (image == nullptr)
       return;
 
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      if (pair.first == "source")
+      const std::string& propertyName = pair.first.getString();
+      const folly::dynamic& propertyValue = pair.second;
+
+      if (propertyName == "source")
       {
-        setSource(image, pair.second);
+        setSource(image, propertyValue);
       }
-      else if (pair.first == "resizeMode")
+      else if (propertyName == "resizeMode")
       {
-        auto stretch = json_type_traits<winrt::Windows::UI::Xaml::Media::Stretch>::parseJson(pair.second);
+        auto stretch = json_type_traits<winrt::Windows::UI::Xaml::Media::Stretch>::parseJson(propertyValue);
         image.Stretch(stretch);
       }
 
@@ -197,8 +200,10 @@ namespace react { namespace uwp {
         {
           auto& name = header.first.getString();
           auto& value = header.second.getString();
-
-          request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
+          if (_stricmp(name.c_str(), "authorization") == 0)
+            request.Headers().TryAppendWithoutValidation(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
+          else
+            request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
         }
       }
 
@@ -231,7 +236,7 @@ namespace react { namespace uwp {
     EmitImageEvent(instanceWeak.lock(), image, "topLoadEnd", source);
   }
 
-  void ImageViewManager::setSource(winrt::Image image, folly::dynamic& data)
+  void ImageViewManager::setSource(winrt::Image image, const folly::dynamic& data)
   {
     auto instance = m_wkReactInstance.lock();
     if (instance == nullptr)
