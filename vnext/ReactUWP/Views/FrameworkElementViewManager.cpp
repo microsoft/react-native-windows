@@ -39,6 +39,13 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
   // Render Properties
   TransferProperty(oldView, newView, winrt::UIElement::OpacityProperty());
 
+  if (oldView.try_as<winrt::IUIElement9>())
+  {
+    auto oldElement = oldView.as<winrt::UIElement>();
+    auto newElement = newView.as<winrt::UIElement>();
+    newElement.TransformMatrix(oldElement.TransformMatrix());
+  }
+
   // Layout Properties
   TransferProperty(oldView, newView, winrt::FrameworkElement::WidthProperty());
   TransferProperty(oldView, newView, winrt::FrameworkElement::HeightProperty());
