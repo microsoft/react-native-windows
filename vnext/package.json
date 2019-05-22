@@ -27,6 +27,7 @@
     "pack-nuget",
     "publish-nuget",
     "react-test",
+    "trickle",
     "ts:amd",
     "webpack"
   ],
