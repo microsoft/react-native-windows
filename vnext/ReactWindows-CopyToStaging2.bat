@@ -66,4 +66,5 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\include                                              %DESTROOT%\inc\include
 
 %COPYCMD%  %SRCROOT%\ReactWin32.nuspec                                    %DESTROOT%
+%COPYCMD%  %SRCROOT%\ReactUwp.nuspec                                      %DESTROOT%
 
