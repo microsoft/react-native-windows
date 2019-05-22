@@ -159,6 +159,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/RTLExample'),
   },
   {
+    key: 'TransformExample',
+    module: require('react-native/RNTester/js/TransformExample'),
+  },
+  {
     key: 'TimerExample',
     module: require('react-native/RNTester/js/TimerExample'),
   },

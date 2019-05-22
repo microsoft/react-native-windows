@@ -12,6 +12,7 @@
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Automation.h>
+#include <WindowsNumerics.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;
@@ -97,12 +98,34 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       }
       if (propertyName == "transform")
       {
-        if (propertyValue.isArray())
+        if (element.try_as<winrt::IUIElement9>()) // Works on RS5+
         {
-          assert(propertyValue.size() == 16);
-        }
-        else if (propertyValue.isNull())
-        {
+          if (propertyValue.isArray())
+          {
+            assert(propertyValue.size() == 16);
+            winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
+            transformMatrix.m11 = static_cast<float>(propertyValue[0].asDouble());
+            transformMatrix.m12 = static_cast<float>(propertyValue[1].asDouble());
+            transformMatrix.m13 = static_cast<float>(propertyValue[2].asDouble());
+            transformMatrix.m14 = static_cast<float>(propertyValue[3].asDouble());
+            transformMatrix.m21 = static_cast<float>(propertyValue[4].asDouble());
+            transformMatrix.m22 = static_cast<float>(propertyValue[5].asDouble());
+            transformMatrix.m23 = static_cast<float>(propertyValue[6].asDouble());
+            transformMatrix.m24 = static_cast<float>(propertyValue[7].asDouble());
+            transformMatrix.m31 = static_cast<float>(propertyValue[8].asDouble());
+            transformMatrix.m32 = static_cast<float>(propertyValue[9].asDouble());
+            transformMatrix.m33 = static_cast<float>(propertyValue[10].asDouble());
+            transformMatrix.m34 = static_cast<float>(propertyValue[11].asDouble());
+            transformMatrix.m41 = static_cast<float>(propertyValue[12].asDouble());
+            transformMatrix.m42 = static_cast<float>(propertyValue[13].asDouble());
+            transformMatrix.m43 = static_cast<float>(propertyValue[14].asDouble());
+            transformMatrix.m44 = static_cast<float>(propertyValue[15].asDouble());
+            element.TransformMatrix(transformMatrix);
+          }
+          else if (propertyValue.isNull())
+          {
+            element.TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4::identity());
+          }
         }
       }
       else if (propertyName == "width")
