@@ -4111,9 +4111,9 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.49.tar.gz":
-  version "0.58.6-microsoft.49"
-  resolved "https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.49.tar.gz#6cbe33001d92e7e8adf88155b83a02f41f3b611f"
+"react-native@https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.51.tar.gz":
+  version "0.58.6-microsoft.51"
+  resolved "https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.51.tar.gz#0f3928d5139343aafdbef79cdf9389b9bbeae392"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
