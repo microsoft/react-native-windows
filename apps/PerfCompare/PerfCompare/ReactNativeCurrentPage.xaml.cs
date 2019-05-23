@@ -39,6 +39,15 @@ namespace PerfCompare
             this.Content = root;
         }
 
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            await Dispatcher.RunIdleAsync((args) =>
+            {
+                App.PerfStats.Stop(false);
+                App.ShowStats("RNW Current");
+            });
+        }
+
         private async void View_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is Border img && (img.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
@@ -49,15 +58,6 @@ namespace PerfCompare
                     App.ShowStats("RNW Current");
                 });
             }
-        }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            await Dispatcher.RunIdleAsync((args) =>
-            {
-                App.PerfStats.Stop(false);
-                App.ShowStats("RNW Current");
-            });
         }
     }
 

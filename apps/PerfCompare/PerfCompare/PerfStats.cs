@@ -9,6 +9,14 @@ namespace PerfCompare
 {
     public class PerfStats
     {
+        public bool IsRunning
+        {
+            get
+            {
+                return Timer?.IsRunning ?? false;
+            }
+        }
+
         public long ElapsedTimeMs
         {
             get

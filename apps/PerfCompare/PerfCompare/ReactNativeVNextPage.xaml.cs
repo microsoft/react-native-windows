@@ -38,7 +38,7 @@ namespace PerfCompare
             {
                 if (obj is Image img)
                 {
-                    img.Loaded += Image_Loaded;
+                    img.Loaded += View_Loaded;
                 }
             });
 
@@ -58,7 +58,7 @@ namespace PerfCompare
             });
         }
 
-        private async void Image_Loaded(object sender, RoutedEventArgs e)
+        private async void View_Loaded(object sender, RoutedEventArgs e)
         {
             if (sender is Image img && (img.GetValue(AutomationProperties.AutomationIdProperty) as string) == $"m{App.TotalMessages}")
             {

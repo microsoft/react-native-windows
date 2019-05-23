@@ -19,7 +19,7 @@ namespace PerfCompare
 
         public static void ShowStats(string title)
         {
-            ApplicationView.GetForCurrentView().Title = $"[{title}] Elapsed: {PerfStats.ElapsedTimeReadable}, Commit: +{PerfStats.TotalCommitReadable}";
+            ApplicationView.GetForCurrentView().Title = $"[{title}] Elapsed: {PerfStats.ElapsedTimeReadable}, Commit: +{PerfStats.TotalCommitReadable}" + (PerfStats.IsRunning ? " (Still Running)" : "");
         }
 
         public App()
