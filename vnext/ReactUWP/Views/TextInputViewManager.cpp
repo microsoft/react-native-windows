@@ -329,24 +329,24 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (m_mostRecentEventCount == m_nativeEventCount)
       {     
-        if (pair.second.isString())
+        if (propertyValue.isString())
         {
           auto oldValue = textBox.Text();
-          auto newValue = asHstring(pair.second);
+          auto newValue = asHstring(propertyValue);
           if (oldValue != newValue)
           {
             textBox.Text(newValue);
           }
         }
-        else if (pair.second.isNull())
+        else if (propertyValue.isNull())
           textBox.ClearValue(winrt::TextBox::TextProperty());
       }
     }
-    else if (pair.first == "mostRecentEventCount")
+    else if (propertyName == "mostRecentEventCount")
     {
-      if (pair.second.isInt())
+      if (propertyValue.isNumber())
       {
-        m_mostRecentEventCount = static_cast<uint32_t>(pair.second.asInt());
+        m_mostRecentEventCount = static_cast<uint32_t>(propertyValue.asInt());
       }
     }
   }
