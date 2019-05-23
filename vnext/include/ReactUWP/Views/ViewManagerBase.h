@@ -57,7 +57,7 @@ public:
   virtual void RemoveChildAt(XamlView parent, int64_t index);
   virtual void ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild);
 
-  virtual void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap);
+  virtual void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap);
 
   virtual void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs);
 

@@ -8,6 +8,7 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <vector>
 
 #define STRING_(s) #s
 #define STRING(s) STRING_(s)
@@ -65,6 +66,9 @@ struct DevSettings
   /// using http://localhost:8081/debugger-ui from the React Native packager (Metro / Haul).
   /// Debugging will start as soon as the react native instance is loaded.
   bool useWebDebugger{ false };
+
+  // Enables ChakraCore console redirection to debugger
+  bool debuggerConsoleRedirection{ false };
 
   /// Dispatcher for notifications about JS engine memory consumption.
   std::shared_ptr<MemoryTracker> memoryTracker;

@@ -52,6 +52,7 @@ find_package(VSCppUnitTest REQUIRED)
 add_definitions(-DREACTWINDOWS_STATIC)
 
 # The Visual Studio builds are a complete spaghetti crapshoot of interdependencies; please let's kill it so we can start cleaning up the code
+target_include_directories(ReactWindows.Universal.UnitTests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../shared")
 target_include_directories(ReactWindows.Universal.UnitTests PRIVATE ${VC_UNITTEST_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}
 	"./../ReactUWP"
 	"./../ReactWindowsCore"
