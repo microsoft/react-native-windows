@@ -122,8 +122,9 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic&& reactDiffMap)
 
   for (const auto& pair : reactDiffMap.items())
   {
-    const auto propertyName = pair.first;
-    const auto propertyValue = pair.second;
+    const std::string& propertyName = pair.first.getString();
+    const folly::dynamic& propertyValue = pair.second;
+  
     if (propertyName == "horizontal")
     {
       const auto [valid, horizontal] = getPropertyAndValidity(propertyValue, false);

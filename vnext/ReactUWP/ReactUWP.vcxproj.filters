@@ -13,6 +13,9 @@
     <ClCompile Include="Base\InstanceFactory.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -206,6 +209,7 @@
     <ClCompile Include="Views\FlyoutViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
@@ -266,6 +270,9 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="Base\UwpReactInstance.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\XamlView.h">
@@ -418,6 +425,7 @@
     <ClInclude Include="Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
+    
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>

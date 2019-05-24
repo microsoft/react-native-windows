@@ -107,25 +107,25 @@ react::uwp::XamlView CustomFrameworkElementViewManager::CreateViewCore(int64_t t
   return checkbox;
 }
 
-void CustomFrameworkElementViewManager::UpdateProperties(react::uwp::ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void CustomFrameworkElementViewManager::UpdateProperties(react::uwp::ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto checkbox = nodeToUpdate->GetView().as<winrt::CheckBox>();
   if (checkbox == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "disabled")
+    if (propertyName == "disabled")
     {
       if (propertyValue.isBool())
         checkbox.IsEnabled(!propertyValue.asBool());
       else if (propertyValue.isNull())
         checkbox.ClearValue(winrt::Control::IsEnabledProperty());
     }
-    else if (propertyName.asString() == "test")
+    else if (propertyName == "test")
     {
       if (propertyValue.isBool())
       {

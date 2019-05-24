@@ -23,7 +23,6 @@ EXPORTS
 ??0ReactRootView@uwp@react@@QAA@UDependencyObject@Xaml@UI@Windows@winrt@@@Z
 ?InitializeLogging@react@facebook@@YAX$$QAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPAUINativeTraceHandler@12@@Z
-?ShouldReuseReactInstancesWhenPossible@uwp@react@@YA_NXZ
 ?CreateWorkerMessageQueue@uwp@react@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?CreateMemoryTracker@react@facebook@@YA?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?callJSFunction@Instance@react@facebook@@UAAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z

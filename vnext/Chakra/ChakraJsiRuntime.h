@@ -25,7 +25,7 @@ namespace facebook {
 namespace jsi { 
 namespace chakraruntime {
 
-class ByteArrayBuffer : public jsi::Buffer {
+class ByteArrayBuffer final : public jsi::Buffer {
 public:
   size_t size() const override {
     return size_;
