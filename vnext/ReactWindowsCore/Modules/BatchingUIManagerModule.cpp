@@ -197,9 +197,19 @@ std::vector<facebook::xplat::module::CxxModule::Method> BatchingUIManagerModule:
   {
     Method("getConstantsForViewManager", [manager](dynamic argsJson) -> dynamic
     {
-      auto args = folly::parseJson(argsJson.asString());
+      dynamic args;
+      if (argsJson.isString())
+      {
+        args = folly::parseJson(argsJson.asString());
+      }
+      else
+      {
+        // In JSI mode this is an array
+        assert(argsJson.isArray());
+        args = argsJson;
+      }
       return manager->getConstantsForViewManager(jsArgAsString(args, 0));
-    }, SyncTag),
+   }, SyncTag),
     Method("removeRootView", [manager](dynamic args)
     {
       manager->removeRootView(std::move(args));
