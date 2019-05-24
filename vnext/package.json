@@ -18,16 +18,17 @@
     "watch": "node node_modules/@office-iss/sdx-build-tools/watch.js"
   },
   "disabledTasks": [
+    "api-doc",
     "copy",
-    "reka",
     "jest",
     "native-bundle:filtered",
-    "verify-ts-api",
-    "api-doc",
     "pack-nuget",
     "publish-nuget",
     "react-test",
+    "reka",
+    "trickle",
     "ts:amd",
+    "verify-ts-api",
     "webpack"
   ],
   "rnpm": {
