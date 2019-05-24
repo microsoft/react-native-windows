@@ -46,6 +46,11 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
   JsSetCurrentContext(m_ctx);
 
+#if defined(USE_EDGEMODE_JSRT)
+  if (args.enableDebugging)
+    JsStartDebugging();
+#endif
+
   setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
@@ -975,9 +980,8 @@ std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Obje
 }
 
 jsi::Object ChakraJsiRuntime::createProxy(jsi::Object&& target, jsi::Object&& handler) noexcept {
-  // Note: We are lazy initializing and cachine the constructor.
-  static jsi::Function proxyConstructor = createProxyConstructor();
-
+  // TODO :: Avoid creating the constuctor on each call.
+  jsi::Function proxyConstructor = createProxyConstructor();
   jsi::Value hostObjectProxy = proxyConstructor.call(*this, target, handler);
 
   if (!hostObjectProxy.isObject())

@@ -22,7 +22,7 @@ public:
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   facebook::react::ShadowNode* createShadow() const override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
 
   // Yoga Layout
   void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height) override;

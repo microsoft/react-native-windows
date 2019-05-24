@@ -1,4 +1,5 @@
 set(SOURCES
+	ChakraJSIRuntimeHolder.cpp
 	DesktopTestInstance.cpp
 	HttpResourceIntegrationTests.cpp
 	RNTesterIntegrationTests.cpp

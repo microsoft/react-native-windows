@@ -25,7 +25,7 @@ function updateVersion() {
   console.log(`##vso[task.setvariable variable=npmTag]${publishBranchName === 'master' ? 'vnext' : publishBranchName}`);
   console.log(`Target branch to publish to: ${publishBranchName}`);
 
-  const tempPublishBranch = `publish-temp-${Date.now()}`;
+  const tempPublishBranch = `auto-update-version-publish-temp-${Date.now()}`;
 
   console.log(`Using ${`(.*-microsoft)(-${publishBranchName})?\\.([0-9]*)`} to match version`);
   const branchVersionSuffix = (publishBranchName.match(/(fb.*merge)|(fabric)/) ? `-${publishBranchName}` : '');

@@ -1,0 +1,11 @@
+steps:
+  - task: PowerShell@2
+    displayName: Cleanup any packagers left over from other builds
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        echo "ports:{"
+        echo ${env:RNTester.PackagerPort}
+        echo "}"
+        Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+        Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }

@@ -306,6 +306,7 @@ const TextInput = createReactClass({
       <RCTTextInput
         ref={this._setNativeRef}
         {...props}
+        mostRecentEventCount={0}
         onChange={this._onChange}
         onBlur={this._onBlur}
         onFocus={this._onFocus}
