@@ -40,6 +40,11 @@ public:
 
   void onBatchComplete() override;
 
+private:
+  void dispatchFunction(std::function<void()> func);
+  void processQueue();
+
+private:
   std::shared_ptr<folly::ProducerConsumerQueue<std::function<void()>>> m_queue;
 };
 
