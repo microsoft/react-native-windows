@@ -21,6 +21,13 @@
 typedef JsValueRef JsWeakRef;
 #endif
 
+#if !defined(USE_EDGEMODE_JSRT)
+#include "ChakraCoreDebugger.h"
+#else
+class DebugProtocolHandler {};
+class DebugService {};
+#endif
+
 namespace facebook { 
 namespace jsi { 
 namespace chakraruntime {
@@ -46,7 +53,7 @@ private:
   std::unique_ptr<uint8_t[]> byteArray_;
 };
 
-class ChakraJsiRuntime : public jsi::Runtime {
+class ChakraJsiRuntime final : public jsi::Runtime {
 public:
   ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept;
   ~ChakraJsiRuntime() noexcept;
@@ -301,10 +308,27 @@ private:
   inline void checkException(JsErrorCode res);
   inline void checkException(JsErrorCode res, const char* msg);
 
+  void startDebuggingIfNeeded();
+  void stopDebuggingIfNeeded();
+
+  JsErrorCode enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port, std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService);
+  void ProcessDebuggerCommandQueue();
+
+private:
   JsRuntimeHandle m_runtime;
   JsContextRef m_ctx;
   std::string m_desc;
 
+  std::string m_debugRuntimeName;
+  int m_debugPort{ 0 };
+  std::unique_ptr<DebugProtocolHandler> m_debugProtocolHandler;
+  std::unique_ptr<DebugService> m_debugService;
+
+private:
+  constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
+  constexpr static int DebuggerDefaultPort = 9229;
+
+  static void CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
   static JsValueRef CALLBACK HostFunctionCall(JsValueRef callee, bool isConstructCall, JsValueRef *argumentsIncThis, unsigned short argumentCountIncThis, void *callbackState);
 
   // String helpers
@@ -313,8 +337,6 @@ private:
 
   static JsValueRef createJSString(const char*data, size_t length);
   static JsValueRef createJSPropertyId(const char*data, size_t length);
-
-  friend class ChakraJsiRuntimeWithDebugger;
 };
 
 }}} // namespace facebook::jsi::chakraruntime

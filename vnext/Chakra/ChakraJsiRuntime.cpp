@@ -46,19 +46,21 @@ ChakraJsiRuntime::ChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept
   // Note :: We currently assume that the runtime will be created and exclusively used in a single thread.
   JsSetCurrentContext(m_ctx);
 
-#if defined(USE_EDGEMODE_JSRT)
-  if (args.enableDebugging)
-    JsStartDebugging();
-#endif
-
+  startDebuggingIfNeeded();
+  
   setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
 }
 
 ChakraJsiRuntime::~ChakraJsiRuntime() noexcept {
+
+  stopDebuggingIfNeeded();
+
   JsSetCurrentContext(JS_INVALID_REFERENCE);
   JsRelease(m_ctx, nullptr);
+
+  JsSetRuntimeMemoryAllocationCallback(m_runtime, nullptr, nullptr);
 
   JsDisposeRuntime(m_runtime);
 }
@@ -1067,5 +1069,10 @@ jsi::Object ChakraJsiRuntime::createHostObjectProxyHandler() noexcept {
 
   return handlerObj;
 }
+
+std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept {
+  return std::make_unique<ChakraJsiRuntime>(std::move(args));
+}
+
 
 }}} // facebook::jsi::chakraruntime
