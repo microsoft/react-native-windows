@@ -273,21 +273,13 @@ void ChakraJsiRuntime::ProcessDebuggerCommandQueue() {
 }
 
 void ChakraJsiRuntime::startDebuggingIfNeeded() {
-
-  if (runtimeArgs().enableDebugging)
+  auto& args = runtimeArgs();
+  if (args.enableDebugging)
   {
-    std::string runtimeName = runtimeArgs().debuggerRuntimeName;
-    int port = runtimeArgs().debuggerPort;
+    auto port = args.debuggerPort == 0 ? DebuggerDefaultPort : args.debuggerPort;
+    auto runtimeName = args.debuggerRuntimeName.empty() ? DebuggerDefaultRuntimeName : args.debuggerRuntimeName;
 
-    if (runtimeName.empty()) {
-      runtimeName = DebuggerDefaultRuntimeName;
-    }
-
-    if (port == 0) {
-      port = DebuggerDefaultPort;
-    }
-
-    JsErrorCode result = this->enableDebugging(m_runtime, runtimeName, runtimeArgs().debuggerBreakOnNextLine, static_cast<uint16_t>(port), m_debugProtocolHandler, m_debugService);
+    JsErrorCode result = enableDebugging(m_runtime, runtimeName, args.debuggerBreakOnNextLine, static_cast<uint16_t>(port), m_debugProtocolHandler, m_debugService);
 
     if (result == JsNoError) {
       m_debugPort = port;
@@ -295,14 +287,14 @@ void ChakraJsiRuntime::startDebuggingIfNeeded() {
     }
   }
 
-  if (runtimeArgs().debuggerBreakOnNextLine && m_debugProtocolHandler) {
-    if (runtimeArgs().loggingCallback)
-      runtimeArgs().loggingCallback("Waiting for debugger to connect...", facebook::jsi::chakraruntime::LogLevel::Info);
+  if (args.debuggerBreakOnNextLine && m_debugProtocolHandler) {
+    if (args.loggingCallback)
+      args.loggingCallback("Waiting for debugger to connect...", facebook::jsi::chakraruntime::LogLevel::Info);
 
     m_debugProtocolHandler->WaitForDebugger();
 
-    if (runtimeArgs().loggingCallback)
-      runtimeArgs().loggingCallback("Debugger connected", facebook::jsi::chakraruntime::LogLevel::Info);
+    if (args.loggingCallback)
+      args.loggingCallback("Debugger connected", facebook::jsi::chakraruntime::LogLevel::Info);
   }
 }
 
