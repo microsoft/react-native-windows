@@ -70,7 +70,7 @@ void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
 
     if (propertyName == "color")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         glyphs.Fill(BrushFrom(propertyValue));
 #if FUTURE
       else if (propertyValue.isNull())

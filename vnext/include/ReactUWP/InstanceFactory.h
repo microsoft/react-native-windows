@@ -14,9 +14,6 @@ namespace react { namespace uwp {
 struct IReactInstance;
 struct IXamlRootView;
 
-// Old methods, to be removed in next update
-bool ShouldReuseReactInstancesWhenPossible();
-
 struct IReactInstanceCreator
 {
   virtual std::shared_ptr<IReactInstance> getInstance() = 0;

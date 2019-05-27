@@ -94,8 +94,8 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
     }
     else if (propertyName == "numberOfLines")
     {
-      if (propertyValue.isInt())
-        textBlock.MaxLines(static_cast<int32_t>(propertyValue.getInt()));
+      if (propertyValue.isNumber())
+        textBlock.MaxLines(static_cast<int32_t>(propertyValue.asInt()));
       else if (propertyValue.isNull())
         textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
     }
@@ -122,7 +122,7 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
     }
     else if (propertyName == "selectionColor")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
         textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       }

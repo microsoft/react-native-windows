@@ -92,14 +92,14 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "firstDayOfWeek")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(propertyValue.asInt()));
       else if (propertyValue.isNull())
         datePicker.ClearValue(winrt::CalendarDatePicker::FirstDayOfWeekProperty());
     }
     else if (propertyName == "maxDate")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
         m_maxTime = propertyValue.asInt();
         updateMaxDate = true;
@@ -111,7 +111,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "minDate")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
         m_minTime = propertyValue.asInt();
         updateMinDate = true;
@@ -130,7 +130,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "selectedDate")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
         m_selectedTime = propertyValue.asInt();
         updateSelectedDate = true;
@@ -142,7 +142,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "timeZoneOffsetInSeconds")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         m_timeZoneOffsetInSeconds = propertyValue.asInt();
       else if (propertyValue.isNull())
         m_timeZoneOffsetInSeconds = 0;
