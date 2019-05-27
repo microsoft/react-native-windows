@@ -62,9 +62,9 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
-#include <tuple>
+#include "ChakraJSIRuntimeHolder.h"
 
-using namespace winrt;
+#include <tuple>
 
 namespace {
 
@@ -219,7 +219,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
   assert(m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr && m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
@@ -278,6 +278,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
+    std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+    devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+
     try
     {
       // Create the react instance
@@ -285,7 +288,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
         std::string(), // bundleRootPath
         std::move(cxxModules),
         m_uiManager,
-        CreateAndStartJSQueueThread(),
+        jsQueue,
         m_defaultNativeThread,
         std::move(devSettings));
     }

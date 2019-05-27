@@ -10,19 +10,22 @@
 #endif
 
 #include "ChakraJsiRuntimeArgs.h"
-#include "unicode.h"
 
 #include <jsi/jsi.h>
 
 #include <memory>
-#include <mutex> 
+#include <mutex>
 #include <sstream>
+
+#if defined(USE_EDGEMODE_JSRT)
+typedef JsValueRef JsWeakRef;
+#endif
 
 namespace facebook { 
 namespace jsi { 
 namespace chakraruntime {
 
-class ByteArrayBuffer : public jsi::Buffer {
+class ByteArrayBuffer final : public jsi::Buffer {
 public:
   size_t size() const override {
     return size_;
@@ -70,7 +73,10 @@ protected:
 
 private:
   static void CALLBACK PromiseContinuationCallback(JsValueRef funcRef, void* callbackState) noexcept;
-  void promiseContinuation(JsValueRef value)  noexcept;
+  static void CALLBACK PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void* callbackState);
+
+  void PromiseContinuation(JsValueRef value) noexcept;
+  void PromiseRejectionTracker(JsValueRef promise, JsValueRef reason, bool handled);
 
   void setupNativePromiseContinuation() noexcept;
   void setupMemoryTracker() noexcept;
@@ -79,7 +85,7 @@ private:
   // Arguments shared by the specializations ..
   ChakraJsiRuntimeArgs m_args;
 
-  // Note :: For simplicity, We are pinning the script and serialized script buffers in the JSI::Runtime instance assuming as these buffers 
+  // Note :: For simplicity, We are pinning the script and serialized script buffers in the JSI::Runtime instance assuming as these buffers
   // are needed to stay alive for the lifetime of the JSI::Runtime implementation. This approach doesn't make sense
   // for other external buffers which may get created during the execution as that will stop the backing buffer from getting released
   // when the JSValue gets collected.
@@ -95,6 +101,9 @@ private:
 
   static uint64_t s_runtimeVersion;
   static constexpr const char* s_runtimeType = "ChakraJsiRuntime";
+
+  static constexpr const char* const s_proxyGetHostObjectTargetPropName = "$$ProxyGetHostObjectTarget$$";
+  static constexpr const char* const s_proxyIsHostObjectPropName = "$$ProxyIsHostObject$$";
 
   static void initRuntimeVersion()  noexcept;
   static uint64_t getRuntimeVersion() { return s_runtimeVersion; }
@@ -171,6 +180,16 @@ private:
   protected:
     friend class ChakraJsiRuntime;
     JsValueRef m_obj;
+  };
+
+  class ChakraWeakRefValue final : public PointerValue {
+    ChakraWeakRefValue(JsWeakRef obj);
+    ~ChakraWeakRefValue();
+
+    void invalidate() override;
+  protected:
+    friend class ChakraJsiRuntime;
+    JsWeakRef m_obj;
   };
 
 private:
@@ -255,6 +274,10 @@ private:
   static JsValueRef stringRef(const jsi::String& str);
   static JsPropertyIdRef propIdRef(const jsi::PropNameID& sym);
   static JsValueRef objectRef(const jsi::Object& obj);
+  static JsWeakRef objectRef(const jsi::WeakObject& obj);
+
+  static JsWeakRef newWeakObjectRef(const jsi::Object& obj);
+  static JsValueRef strongObjectRef(const jsi::WeakObject& obj);
 
   // Factory methods for creating String/Object
   jsi::String createString(JsValueRef stringRef) const;
@@ -272,6 +295,8 @@ private:
   jsi::Runtime::PointerValue* makeObjectValue(JsValueRef obj) const;
 
   jsi::Runtime::PointerValue* makePropertyIdValue(JsPropertyIdRef propId) const;
+
+  jsi::Runtime::PointerValue* makeWeakRefValue(JsWeakRef obj) const;
 
   inline void checkException(JsErrorCode res);
   inline void checkException(JsErrorCode res, const char* msg);

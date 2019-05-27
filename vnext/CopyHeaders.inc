@@ -904,4 +904,8 @@ COPYFILES_PASS0 = \
 	$(COPYFILES_PASS0) \
 	ReactCommon\jsi\jsi.h, jsi; \
 	ReactCommon\jsi\jsi-inl.h, jsi; \
+	ReactCommon\jsi\scriptstore.h, jsi; \
 	ReactCommon\jsi\V8Runtime.h, jsi; \
+	ReactWindows\Chakra\ChakraCoreDebugger.h, jsi; \
+	ReactWindows\Chakra\ChakraJsiRuntimeArgs.h, jsi; \
+	ReactWindows\Chakra\ChakraJsiRuntimeFactory.h, jsi; \
