@@ -18,7 +18,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile>PerfCompare_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>FBBDAAAD53D1DBF6BF5834906D875E833F228C97</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>74FFFE4E769FAB2D3A998F5D1FE4FFF6B63AE38B</PackageCertificateThumbprint>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
