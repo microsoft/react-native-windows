@@ -113,13 +113,14 @@ HRESULT Instance::SetTestHook(HSTRING testHookName, ABI::react::uwp::IXamlTestHo
   if (m_instance == nullptr)
     return E_FAIL;
 
-  std::function<void(::react::uwp::XamlView)> f = [pXamlTestHookDelegate](::react::uwp::XamlView params)
+  Microsoft::WRL::ComPtr<ABI::react::uwp::IXamlTestHookDelegate> spXamlTestHookDelegate(pXamlTestHookDelegate);
+  std::function<void(::react::uwp::XamlView)> f = [spXamlTestHookDelegate](::react::uwp::XamlView params)
   {
     auto spParams = params.as<ABI::Windows::UI::Xaml::IDependencyObject>();
-    pXamlTestHookDelegate->Invoke(spParams.get());
+    spXamlTestHookDelegate->Invoke(spParams.get());
   };
 
-  m_instance->SetTestHook(HSTRINGToString(testHookName), f);
+  m_instance->SetTestHook(HSTRINGToString(testHookName), std::move(f));
 
   return S_OK;
 }

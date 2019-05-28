@@ -9,6 +9,8 @@ echo Building index.windows.bundle
 
 set CurrentRoot=%AppRoot%..\..\..\current
 
+mkdir %AppRoot%ReactAssets
+
 pushd %CurrentRoot%
 
 rmdir /s /q %AppName%
@@ -27,6 +29,8 @@ popd
 echo Building index.uwp.bundle
 
 set VNextRoot=%AppRoot%..\..\..\vnext
+
+mkdir %AppRoot%Bundle
 
 pushd %VNextRoot%
 
