@@ -2,6 +2,11 @@
   "name": "react-native-windows",
   "version": "0.58.0-vnext-fb59merge.92",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "vnext"
+  },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -13,16 +18,17 @@
     "watch": "node node_modules/@office-iss/sdx-build-tools/watch.js"
   },
   "disabledTasks": [
+    "api-doc",
     "copy",
-    "reka",
     "jest",
     "native-bundle:filtered",
-    "verify-ts-api",
-    "api-doc",
     "pack-nuget",
     "publish-nuget",
     "react-test",
+    "reka",
+    "trickle",
     "ts:amd",
+    "verify-ts-api",
     "webpack"
   ],
   "rnpm": {
@@ -59,10 +65,10 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
     "typescript": "3.3.3",
-    "react-native": "0.59.0-microsoft-fb59merge.12"
+    "react-native": "0.59.0-microsoft-fb59merge.14"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "0.59.0-microsoft-fb59merge.12  || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.12.tar.gz"
+    "react-native": "0.59.0-microsoft-fb59merge.14  || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.14.tar.gz"
   }
 }

@@ -4,6 +4,7 @@ EXPORTS
 ??0TypeError@folly@@QEAA@$$QEAU01@@Z
 ??0ColdClass@cold_detail@folly@@QEAA@XZ
 ?get_ptrImpl@dynamic@folly@@AEGBAPEBU12@AEBU12@@Z
+?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
@@ -50,7 +51,11 @@ EXPORTS
 ?updateProperties@ShadowNode@react@facebook@@UEAAX$$QEBUdynamic@folly@@@Z
 ?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?asFunction@Object@jsi@facebook@@QEHAA?AVFunction@23@AEAVRuntime@23@@Z
+??1Value@jsi@facebook@@QEAA@XZ
 ??1Buffer@jsi@facebook@@UEAA@XZ
+?makeChakraJsiRuntime@chakraruntime@jsi@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QEAUChakraJsiRuntimeArgs@123@@Z
+?makeV8Runtime@v8runtime@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@XZ
 
 
 YGNodeNew

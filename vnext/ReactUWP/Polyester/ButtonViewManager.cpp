@@ -70,18 +70,18 @@ XamlView ButtonViewManager::CreateViewCore(int64_t tag)
   return button;
 }
 
-void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ButtonViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto button = nodeToUpdate->GetView().as<winrt::Button>();
   if (button == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName.asString() == "disabled")
+    if (propertyName == "disabled")
     {
       if (propertyValue.isBool())
         button.IsEnabled(!propertyValue.asBool());

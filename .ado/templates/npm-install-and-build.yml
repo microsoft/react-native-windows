@@ -1,0 +1,21 @@
+steps:
+  # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
+  - task: CmdLine@2
+    displayName: Ensure yarn
+    inputs:
+      script: npm install -g yarn
+      workingDirectory: vnext
+
+  - task: CmdLine@2
+    displayName: yarn install
+    inputs:
+      script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
+      workingDirectory: vnext
+
+  - template: stop-packagers.yml
+
+  - task: CmdLine@2
+    displayName: yarn build
+    inputs:
+      script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
+      workingDirectory: vnext

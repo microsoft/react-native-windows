@@ -368,16 +368,6 @@ void UIManager::onBatchComplete()
   m_nativeUIManager->onBatchComplete();
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
-	: m_manager(std::move(manager))
-{
-}
-
-std::string UIManagerModule::getName()
-{
-	return "UIManager";
-}
-
 int64_t UIManager::AddMeasuredRootView(IReactRootView* rootView)
 {
 	auto tag = m_nextRootTag;
@@ -424,6 +414,16 @@ ShadowNode& UIManager::GetShadowNodeForTag(int64_t tag)
   return m_nodeRegistry.getNode(tag);
 }
 
+UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
+	: m_manager(std::move(manager))
+{
+}
+
+std::string UIManagerModule::getName()
+{
+	return "UIManager";
+}
+
 std::map<std::string, folly::dynamic> UIManagerModule::getConstants()
 {
 	std::map<std::string, folly::dynamic> constants {};
@@ -440,7 +440,17 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
 	{
 		Method("getConstantsForViewManager", [manager](dynamic argsJson) -> dynamic
 		{
-			auto args = folly::parseJson(argsJson.asString());
+      dynamic args;
+      if (argsJson.isString())
+      {
+        args = folly::parseJson(argsJson.asString());
+      }
+      else
+      {
+        // In JSI mode this is an array
+        assert(argsJson.isArray());
+        args = argsJson;
+      }
 			return manager->getConstantsForViewManager(jsArgAsString(args, 0));
 		}, SyncTag),
 		Method("removeRootView", [manager](dynamic args)
