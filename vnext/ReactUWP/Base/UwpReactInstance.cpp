@@ -447,9 +447,12 @@ void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<voi
 
 void UwpReactInstance::CallTestHook(std::string&& testHookName)
 {
-  auto testHook = m_voidTestHooks.find(testHookName);
-  if (testHook != m_voidTestHooks.end())
-    testHook->second();
+  if (!m_voidTestHooks.empty())
+  {
+    auto testHook = m_voidTestHooks.find(testHookName);
+    if (testHook != m_voidTestHooks.end())
+      testHook->second();
+  }
 }
 
 void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void(folly::dynamic&&)> testHook)
@@ -459,9 +462,12 @@ void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<voi
 
 void UwpReactInstance::CallTestHook(std::string&& testHookName, folly::dynamic&& params)
 {
-  auto testHook = m_dynamicTestHooks.find(testHookName);
-  if (testHook != m_dynamicTestHooks.end())
-    testHook->second(std::move(params));
+  if (!m_dynamicTestHooks.empty())
+  {
+    auto testHook = m_dynamicTestHooks.find(testHookName);
+    if (testHook != m_dynamicTestHooks.end())
+      testHook->second(std::move(params));
+  }
 }
 
 void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void(react::uwp::XamlView)> testHook)
@@ -471,9 +477,12 @@ void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<voi
 
 void UwpReactInstance::CallTestHook(std::string&& testHookName, react::uwp::XamlView params)
 {
-  auto testHook = m_viewTestHooks.find(testHookName);
-  if (testHook != m_viewTestHooks.end())
-    testHook->second(params);
+  if (!m_viewTestHooks.empty())
+  {
+    auto testHook = m_viewTestHooks.find(testHookName);
+    if (testHook != m_viewTestHooks.end())
+      testHook->second(params);
+  }
 }
 
 } }
