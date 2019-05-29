@@ -20,7 +20,7 @@ BatchingUIManager::BatchingUIManager(std::vector<std::unique_ptr<IViewManager>>&
   m_queue = std::make_unique<folly::ProducerConsumerQueue<std::function<void()>>>(2048);
 }
 
-#define TRACK_QUEUE
+//#define TRACK_QUEUE
 #ifdef TRACK_QUEUE
   static uint32_t cBatches = 0;
   static uint32_t cCalls = 0;

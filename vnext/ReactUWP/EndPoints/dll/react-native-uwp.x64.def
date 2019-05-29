@@ -8,7 +8,7 @@ EXPORTS
 ?asanPendingSafeInserts@detail@f14@folly@@3_KA
 ?asanRehashState@detail@f14@folly@@3_KA
 ?logTaggedMarker@ReactMarker@react@facebook@@3P6AXW4ReactMarkerId@123@PEBD@ZEA
-
+?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ?destroy@dynamic@folly@@AEAAXXZ
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
 ??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z

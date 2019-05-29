@@ -4,6 +4,7 @@ EXPORTS
 ??0TypeError@folly@@QAE@$$QAU01@@Z
 ??0ColdClass@cold_detail@folly@@QAE@XZ
 ?get_ptrImpl@dynamic@folly@@AGBEPBU12@ABU12@@Z
+?get_ptr@dynamic@folly@@QGBEPBU12@V?$Range@PBD@2@@Z
 ??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YG?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YG?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
