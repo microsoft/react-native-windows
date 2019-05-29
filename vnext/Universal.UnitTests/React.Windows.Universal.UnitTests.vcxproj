@@ -54,8 +54,6 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup>
-    <OutDir>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</OutDir>
-    <IntDir>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <PackageCertificateThumbprint>63B3B5D575C3DE72218E4A75BFE5661B129042E8</PackageCertificateThumbprint>
   </PropertyGroup>
   <ItemDefinitionGroup>
