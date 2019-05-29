@@ -37,10 +37,16 @@ class MSBuildTools {
       '/p:AppxBundle=Never'
     ];
 
-    // Set platform toolset for VS2017 (this way we can keep the base sln file working for vs2015)
+    // Set platform toolset for VS 2017 (this way we can keep the base sln file working for VS 2015)
     if (this.version === '15.0') {
       args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=15.0');
+    }
+
+    // Set platform toolset for VS 2019
+    if (this.version === '16.0') {
+      args.push('/p:PlatformToolset=v142');
+      args.push('/p:VisualStudioVersion=16.0');
     }
 
     if (config) {
