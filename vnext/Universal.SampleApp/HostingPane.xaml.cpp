@@ -42,7 +42,6 @@ void EnsureExportedFunctions(bool createThings)
   // React.UWP as a DLL
 
   facebook::react::InitializeTracing(nullptr);
-  react::uwp::ShouldReuseReactInstancesWhenPossible();
 
   if (createThings)
   {
@@ -59,6 +58,7 @@ void EnsureExportedFunctions(bool createThings)
     dy.asInt();
     dy.asString();
     dy.asBool();
+    dy.get_ptr("test");
     dy[0];
     dy["test"];
     const folly::dynamic& cdy = dy;

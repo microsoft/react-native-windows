@@ -113,6 +113,7 @@
     <ClInclude Include="Logging.h" />
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
+    <ClInclude Include="Modules\BatchingUIManagerModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
@@ -133,6 +134,7 @@
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
+    <ClCompile Include="Modules\BatchingUIManagerModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />

@@ -200,8 +200,10 @@ namespace react { namespace uwp {
         {
           auto& name = header.first.getString();
           auto& value = header.second.getString();
-
-          request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
+          if (_stricmp(name.c_str(), "authorization") == 0)
+            request.Headers().TryAppendWithoutValidation(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
+          else
+            request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
         }
       }
 

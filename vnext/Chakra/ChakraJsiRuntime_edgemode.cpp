@@ -13,6 +13,15 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
+void ChakraJsiRuntime::startDebuggingIfNeeded() {
+  if (runtimeArgs().enableDebugging)
+    JsStartDebugging();
+}
+
+void ChakraJsiRuntime::stopDebuggingIfNeeded() {
+  // NOP AFAIK
+}
+
 JsWeakRef ChakraJsiRuntime::newWeakObjectRef(const jsi::Object& obj) {
   return objectRef(obj);
 }
@@ -92,10 +101,6 @@ void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept {
 
 void ChakraJsiRuntime::initRuntimeVersion()  noexcept {
   // NOP
-}
-
-std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args)  noexcept {
-  return std::make_unique<ChakraJsiRuntime>(std::move(args));
 }
 
 }}}
