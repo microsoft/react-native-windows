@@ -70,7 +70,7 @@ public:
 private:
   void Remove(winrt::Windows::UI::Xaml::UIElement element) const;
 
-  void UpdateClip();
+  void UpdateClip(winrt::Windows::Foundation::Size& finalSize);
 
 private:
   // Properties: Background is not managed as a DP so it won't conflict with the parent Background property.
