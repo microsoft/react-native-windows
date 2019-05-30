@@ -58,14 +58,11 @@ void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
   if (ec)
     return;//TODO: fail instead
 
-  //TODO: Enable overriding output message.
-  //auto messageIn = buffers_to_string(m_buffer.data());
-  //m_buffer.consume(m_buffer.size());
-  //auto messageOut = m_callbacks.MessageFactory(std::move(messageIn));
-  //string messageOut = "MESSAGEOUT";
+  m_message = m_callbacks.MessageFactory(buffers_to_string(m_buffer.data()));
+  m_buffer.consume(m_buffer.size());
 
   m_stream.text(m_stream.got_text());
-  m_stream.async_write(m_buffer.data()/*buffer(messageOut)*/, bind_executor(m_strand, std::bind(
+  m_stream.async_write(buffer(m_message), bind_executor(m_strand, std::bind(
     &WebSocketSession::OnWrite,
     shared_from_this(),
     _1, // ec
@@ -78,7 +75,8 @@ void WebSocketSession::OnWrite(error_code ec, size_t /*transferred*/)
   if (ec)
     return; //TODO: fail
 
-  m_buffer.consume(m_buffer.size());
+  // Clear outgoing message contents.
+  m_message.clear();
 
   Read();
 }

@@ -45,23 +45,24 @@ TEST_CLASS(WebSocketIntegrationTest)
   TEST_METHOD(SendReceiveInProcServer)
   {
     auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetOnMessage([](string s)
-    {
-    });
     server->SetMessageFactory([](string&& message)
     {
       return message + "_suffix";
     });
     server->Start();
 
+    promise<void> prom;
     string response;
     auto ws = IWebSocket::Make("ws://localhost:5556");
-    ws->SetOnMessage([&response](size_t, const string& message)
+    ws->SetOnMessage([&response, &prom](size_t, const string& message)
     {
       response = message;
+      prom.set_value();
     });
     ws->Connect();
+
     ws->Send("prefix");
+    prom.get_future().wait();//TODO: Find a way not to require this.
     ws->Close(IWebSocket::CloseCode::Normal, "Closing");
 
     server->Stop();
