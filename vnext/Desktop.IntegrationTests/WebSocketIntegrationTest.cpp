@@ -51,23 +51,22 @@ TEST_CLASS(WebSocketIntegrationTest)
     });
     server->Start();
 
-    promise<void> prom;
-    string response;
+    promise<string> response;
+    auto result = response.get_future();
     auto ws = IWebSocket::Make("ws://localhost:5556");
-    ws->SetOnMessage([&response, &prom](size_t, const string& message)
+    ws->SetOnMessage([&response](size_t, const string& message)
     {
-      response = message;
-      prom.set_value();
+      response.set_value(message);
     });
-    ws->Connect();
 
+    ws->Connect();
     ws->Send("prefix");
-    prom.get_future().wait();//TODO: Find a way not to require this.
+    result.wait();
     ws->Close(IWebSocket::CloseCode::Normal, "Closing");
 
     server->Stop();
 
-    Assert::AreEqual({ "prefix_suffix" }, response);
+    Assert::AreEqual({ "prefix_suffix" }, result.get());
   }
 
   TEST_METHOD(ConnectClose)
