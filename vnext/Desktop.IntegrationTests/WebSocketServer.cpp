@@ -24,6 +24,10 @@ WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallb
 {
 }
 
+WebSocketSession::~WebSocketSession()
+{
+}
+
 void WebSocketSession::Start()
 {
   m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), /*ec*/ _1)));
@@ -88,6 +92,7 @@ void WebSocketSession::OnWrite(error_code ec, size_t /*transferred*/)
 WebSocketServer::WebSocketServer(uint16_t port)
   : m_acceptor{ m_context }
   , m_socket{ m_context }
+  , m_sessions{}
 {
   ip::tcp::endpoint ep{ip::make_address("0.0.0.0"), port };
   error_code ec;
@@ -156,7 +161,9 @@ void WebSocketServer::OnAccept(error_code ec)
   }
   else
   {
-    std::make_shared<WebSocketSession>(std::move(m_socket), m_callbacks)->Start();
+    auto session = std::make_shared<WebSocketSession>(std::move(m_socket), m_callbacks);
+    m_sessions.push_back(session);
+    session->Start();
   }
 
   //TODO: Accept again.

@@ -29,6 +29,7 @@ class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>
 
 public:
   WebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks);
+  ~WebSocketSession();
 
   void Start();
   void Read();
@@ -45,6 +46,7 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>
   boost::asio::ip::tcp::acceptor m_acceptor;
   boost::asio::ip::tcp::socket m_socket;
   WebSocketServiceCallbacks m_callbacks;
+  std::vector<std::shared_ptr<WebSocketSession>> m_sessions;
 
   void Accept();
 
