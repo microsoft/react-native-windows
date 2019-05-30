@@ -27,6 +27,7 @@
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/RootViewManager.h>
+#include <Views/ScrollContentViewManager.h>
 #include <Views/ScrollViewManager.h>
 #include <Views/SwitchViewManager.h>
 #include <Views/TextInputViewManager.h>
@@ -93,6 +94,7 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
   viewManagers.push_back(std::make_unique<RootViewManager>(instance));
+  viewManagers.push_back(std::make_unique<ScrollContentViewManager>(instance));
   viewManagers.push_back(std::make_unique<ScrollViewManager>(instance));
   viewManagers.push_back(std::make_unique<SwitchViewManager>(instance));
   viewManagers.push_back(std::make_unique<TextViewManager>(instance));
