@@ -13,7 +13,7 @@ struct WebSocketServiceCallbacks
 {
   std::function<void()> OnConnection;
   std::function<void(std::string)> OnMessage;
-  std::function<std::string(bool)> MessageFactory;
+  std::function<std::string(std::string&&)> MessageFactory;
   std::function<void(IWebSocket::Error&&)> OnError;
 };
 
@@ -58,7 +58,7 @@ public:
 
   void SetOnConnection(std::function<void()>&& func);
   void SetOnMessage(std::function<void(std::string)>&& func);
-  void SetMessageFactory(std::function<std::string(bool)>&& func);
+  void SetMessageFactory(std::function<std::string(std::string&&)>&& func);
   void SetOnError(std::function<void(IWebSocket::Error&&)>&& func);
 };
 

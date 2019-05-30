@@ -42,6 +42,33 @@ TEST_CLASS(WebSocketIntegrationTest)
     Assert::IsTrue(connected);
   }
 
+  TEST_METHOD(SendReceiveInProcServer)
+  {
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetOnMessage([](string s)
+    {
+    });
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_suffix";
+    });
+    server->Start();
+
+    string response;
+    auto ws = IWebSocket::Make("ws://localhost:5556");
+    ws->SetOnMessage([&response](size_t, const string& message)
+    {
+      response = message;
+    });
+    ws->Connect();
+    ws->Send("prefix");
+    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+
+    server->Stop();
+
+    Assert::AreEqual({ "prefix_suffix" }, response);
+  }
+
   TEST_METHOD(ConnectClose)
   {
     auto ws = IWebSocket::Make("ws://localhost:5555/");

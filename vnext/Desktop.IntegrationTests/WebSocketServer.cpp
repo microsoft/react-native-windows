@@ -1,11 +1,14 @@
 #include "WebSocketServer.h"
 
 #include <boost/asio/bind_executor.hpp>
+#include <boost/beast/core/buffers_to_string.hpp>
 
 using namespace boost::asio;
 
 using boost::system::error_code;
 using std::function;
+using std::placeholders::_1;
+using std::placeholders::_2;
 using std::string;
 
 namespace Microsoft {
@@ -23,7 +26,7 @@ WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallb
 
 void WebSocketSession::Start()
 {
-  m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), std::placeholders::_1)));
+  m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), /*ec*/ _1)));
 }
 
 void WebSocketSession::OnAccept(error_code ec)
@@ -42,8 +45,8 @@ void WebSocketSession::Read()
   m_stream.async_read(m_buffer, bind_executor(m_strand, std::bind(
     &WebSocketSession::OnRead,
     shared_from_this(),
-    std::placeholders::_1,
-    std::placeholders::_2
+    _1, // ec
+    _2  // transferred
   )));
 }
 
@@ -55,12 +58,18 @@ void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
   if (ec)
     return;//TODO: fail instead
 
+  //TODO: Enable overriding output message.
+  //auto messageIn = buffers_to_string(m_buffer.data());
+  //m_buffer.consume(m_buffer.size());
+  //auto messageOut = m_callbacks.MessageFactory(std::move(messageIn));
+  //string messageOut = "MESSAGEOUT";
+
   m_stream.text(m_stream.got_text());
-  m_stream.async_write(m_buffer.data(), bind_executor(m_strand, std::bind(
+  m_stream.async_write(m_buffer.data()/*buffer(messageOut)*/, bind_executor(m_strand, std::bind(
     &WebSocketSession::OnWrite,
     shared_from_this(),
-    std::placeholders::_1,
-    std::placeholders::_2
+    _1, // ec
+    _2  // transferred
   )));
 }
 
@@ -130,7 +139,7 @@ void WebSocketServer::Start()
 
 void WebSocketServer::Accept()
 {
-  m_acceptor.async_accept(m_socket, std::bind(&WebSocketServer::OnAccept, shared_from_this(), std::placeholders::_1));
+  m_acceptor.async_accept(m_socket, std::bind(&WebSocketServer::OnAccept, shared_from_this(), /*ec*/ _1));
 }
 
 void WebSocketServer::Stop()
@@ -166,7 +175,7 @@ void WebSocketServer::SetOnMessage(function<void(string)>&& func)
   m_callbacks.OnMessage = std::move(func);
 }
 
-void WebSocketServer::SetMessageFactory(function<string(bool)>&& func)
+void WebSocketServer::SetMessageFactory(function<string(string&&)>&& func)
 {
   m_callbacks.MessageFactory = std::move(func);
 }
