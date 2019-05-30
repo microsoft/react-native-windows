@@ -88,6 +88,7 @@
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>

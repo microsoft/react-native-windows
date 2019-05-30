@@ -74,6 +74,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
