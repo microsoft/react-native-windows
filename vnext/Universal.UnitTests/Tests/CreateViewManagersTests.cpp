@@ -67,10 +67,10 @@ TEST_CLASS(CreateViewManagers)
     Assert::IsFalse(viewManager == nullptr);
   }
 
-  TEST_METHOD(CreateViewManagers_Web)
-  {
-    auto viewManager = std::make_unique<WebViewManager>(nullptr);
+  //TEST_METHOD(CreateViewManagers_Web)
+  //{
+  //  auto viewManager = std::make_unique<WebViewManager>(nullptr);
 
-    Assert::IsFalse(viewManager == nullptr);
-  }
+  //  Assert::IsFalse(viewManager == nullptr);
+  //}
 };

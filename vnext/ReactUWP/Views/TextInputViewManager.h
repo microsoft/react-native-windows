@@ -7,7 +7,7 @@
 
 namespace react { namespace uwp {
 
-class TextInputViewManager : public ControlViewManager
+class REACTWINDOWS_EXPORT TextInputViewManager : public ControlViewManager
 {
   using Super = ControlViewManager;
 public:

@@ -13,7 +13,7 @@ namespace facebook { namespace react {
 
 namespace react { namespace uwp {
 
-  class ImageViewManager : public FrameworkElementViewManager
+  class REACTWINDOWS_EXPORT ImageViewManager : public FrameworkElementViewManager
   {
     using Super = FrameworkElementViewManager;
   public:

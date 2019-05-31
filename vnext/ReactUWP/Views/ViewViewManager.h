@@ -10,7 +10,7 @@ namespace react { namespace uwp {
 class ViewShadowNode;
 struct ViewPanel;
 
-class ViewViewManager : public FrameworkElementViewManager
+class REACTWINDOWS_EXPORT ViewViewManager : public FrameworkElementViewManager
 {
   using Super = FrameworkElementViewManager;
 public:

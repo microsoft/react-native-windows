@@ -11,6 +11,8 @@
 #include <functional>
 #include <string>
 
+#include <ReactWindowsCore/ReactWindowsAPI.h>
+
 namespace facebook { namespace react {
 struct INativeUIManager;
 } }
@@ -33,7 +35,7 @@ struct ReactInstanceSettings
   std::function<void(facebook::react::JSExceptionInfo&&)> JsExceptionCallback;
 };
 
-struct IReactInstance
+struct REACTWINDOWS_EXPORT IReactInstance
 {
   virtual ~IReactInstance() = default;
 

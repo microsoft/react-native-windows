@@ -8,9 +8,11 @@
 #include <map>
 #include <vector>
 
+#include <ReactWindowsCore/ReactWindowsAPI.h>
+
 namespace facebook { namespace react {
 
-class AppState
+class REACTWINDOWS_EXPORT AppState
 {
 public:
   AppState();
@@ -19,7 +21,10 @@ public:
   virtual const char* getState();
 };
 
-class AppStateModule : public facebook::xplat::module::CxxModule
+#pragma warning(push)
+#pragma warning(disable: 4275) // base is not DLL exported
+#pragma warning(disable: 4251) // member is not DLL exported
+class REACTWINDOWS_EXPORT AppStateModule : public facebook::xplat::module::CxxModule
 {
 public:
   AppStateModule(std::shared_ptr<AppState>&& appState);
@@ -34,5 +39,6 @@ public:
 private:
   std::shared_ptr<AppState> m_appState;
 };
+#pragma warning(pop)
 
 } } // namespace facebook::react

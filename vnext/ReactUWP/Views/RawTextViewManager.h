@@ -9,7 +9,7 @@
 
 namespace react { namespace uwp {
 
-class RawTextViewManager : public ViewManagerBase
+class REACTWINDOWS_EXPORT RawTextViewManager : public ViewManagerBase
 {
   using Super = ViewManagerBase;
 public:

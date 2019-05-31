@@ -7,7 +7,7 @@
 
 namespace react { namespace uwp {
 
-class TextViewManager : public FrameworkElementViewManager
+class REACTWINDOWS_EXPORT TextViewManager : public FrameworkElementViewManager
 {
   using Super = FrameworkElementViewManager;
 public:

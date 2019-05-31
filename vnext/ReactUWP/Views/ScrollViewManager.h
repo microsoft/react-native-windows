@@ -10,7 +10,7 @@
 
 namespace react { namespace uwp {
 
-class ScrollViewManager : public ControlViewManager
+class REACTWINDOWS_EXPORT ScrollViewManager : public ControlViewManager
 {
   using Super = ControlViewManager;
 public:
