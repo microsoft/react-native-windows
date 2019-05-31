@@ -45,26 +45,11 @@
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\IViewManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\IUIManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h">
-      <Filter>include</Filter>
+      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Modules</Filter>
@@ -98,7 +83,7 @@
     <ClInclude Include="..\Chakra\ChakraNativeModules.h">
       <Filter>Chakra</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraPlatform.h">
+    <ClInclude Include="..\Chakra\ChakraPlatform.h">
       <Filter>Chakra</Filter>
     </ClInclude>
     <ClInclude Include="..\Chakra\ChakraUtils.h">
