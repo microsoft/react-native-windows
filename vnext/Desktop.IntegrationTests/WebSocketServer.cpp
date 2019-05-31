@@ -22,7 +22,6 @@ WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallb
   , m_strand{ m_stream.get_executor() }
   , m_callbacks{ callbacks }
   , m_state{ State::Stopped }
-  , m_reading{ false }
 {
 }
 
@@ -70,8 +69,6 @@ void WebSocketSession::Read()
   if (State::Stopped == m_state)
     return;
 
-  m_reading = true;
-
   m_stream.async_read(m_buffer, bind_executor(m_strand, std::bind(
     &WebSocketSession::OnRead,
     shared_from_this(),
@@ -82,8 +79,6 @@ void WebSocketSession::Read()
 
 void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
 {
-  m_reading = false;
-
   if (boost::beast::websocket::error::closed == ec)
     return;
 

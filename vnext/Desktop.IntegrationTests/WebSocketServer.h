@@ -33,7 +33,6 @@ class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>
   std::string m_message;
   WebSocketServiceCallbacks& m_callbacks;
   State m_state;//TODO: Used at all?
-  std::atomic_bool m_reading;//TODO: Remove?
 
   std::function<void(IWebSocket::Error&&)> m_errorHandler;
 
