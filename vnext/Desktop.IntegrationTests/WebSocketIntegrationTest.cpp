@@ -39,7 +39,7 @@ TEST_CLASS(WebSocketIntegrationTest)
 
     server->Start();
     ws->Connect();
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+    ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
     Assert::IsTrue(connected);
@@ -89,50 +89,12 @@ TEST_CLASS(WebSocketIntegrationTest)
     auto pingFuture = pingPromise.get_future();
     pingFuture.wait();
     bool pinged = pingFuture.get();
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
 
     server->Stop();
 
     Assert::IsTrue(pinged);
     Assert::AreEqual({}, errorString);
-  }
-
-  //TODO: Remove this test.
-  TEST_METHOD(SendReceiveNoClose)
-  {
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message + "_response";
-    });
-    server->Start();
-
-    auto ws = IWebSocket::Make("ws://localhost:5556/");
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string& message)
-    {
-      response.set_value(message);
-    });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocket::Error err)
-    {
-      errorMessage = err.Message;
-    });
-
-    ws->Connect();
-    ws->Send("suffixme");
-
-    // Block until respone is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
-    future.wait();
-    string result = future.get();
-
-    ws->Close(CloseCode::Normal, "Closing");
-
-    server->Stop();
-
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual({ "suffixme_response" }, result);
   }
 
   // Emulate promise/future functionality.
@@ -216,7 +178,7 @@ TEST_CLASS(WebSocketIntegrationTest)
     string received = receivedFuture.get();
     Assert::AreEqual({}, errorMessage);
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
     Assert::AreEqual({}, errorMessage);
@@ -262,7 +224,7 @@ TEST_CLASS(WebSocketIntegrationTest)
     future.wait();
     string result = future.get();
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
@@ -286,7 +248,7 @@ TEST_CLASS(WebSocketIntegrationTest)
    Test passes, otherwise.
   */
   BEGIN_TEST_METHOD_ATTRIBUTE(AdditionalHeaders)
-    //TEST_IGNORE()
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AdditionalHeaders)
   {
@@ -308,7 +270,7 @@ TEST_CLASS(WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect({}, {{ L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }});//TODO: rename back to Cookie.
+    ws->Connect({}, {{ L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }});
     ws->Send("");
 
     auto future = response.get_future();
@@ -317,7 +279,7 @@ TEST_CLASS(WebSocketIntegrationTest)
 
     Assert::AreEqual({ "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }, result);
 
-    ws->Close(IWebSocket::CloseCode::Normal, "No reason");
+    ws->Close(CloseCode::Normal, "No reason");
     server->Stop();
   }
 
@@ -368,7 +330,7 @@ httpsServer.listen(443);
 
     ws->Connect();
     ws->Send("suffixme");
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
 
     Assert::AreEqual(string("hello"), message);
   }
@@ -428,7 +390,7 @@ httpsServer.listen(443);
       Assert::AreEqual(messages[i], response);
     }
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
 
     Assert::AreEqual({}, errorMessage);
   }
@@ -470,7 +432,7 @@ httpsServer.listen(443);
     future.wait();
     string result = future.get();
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+    ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
     Assert::AreEqual({}, errorMessage);

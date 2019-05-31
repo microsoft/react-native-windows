@@ -32,16 +32,6 @@ WebSocketSession::~WebSocketSession()
 
 void WebSocketSession::Start()
 {
-/*
-ws.accept_ex(
-    [](response_type& m)
-    {
-        m.insert(http::field::server, "MyServer");
-    });
-*/
-
-  //m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), /*ec*/ _1)));
-
   m_stream.async_accept_ex(
     bind_executor(m_strand, std::bind(
       &WebSocketSession::OnHandshake,
@@ -58,11 +48,6 @@ ws.accept_ex(
 
 void WebSocketSession::OnHandshake(boost::beast::websocket::response_type& response)
 {
-  for (const auto& x : response)
-  {
-    int xx = 99;//TODO:Remove!
-  }
-
   if (m_callbacks.OnHandshake)
     m_callbacks.OnHandshake(response);
 }
@@ -134,26 +119,6 @@ void WebSocketSession::OnWrite(error_code ec, size_t /*transferred*/)
   Read();
 }
 
-void WebSocketSession::Stop()
-{
-  m_state = State::Stopped;
-
-  //TODO: Re-enable or discard.
-  //if (m_reading)
-  //  m_stream.async_close(boost::beast::websocket::close_code::normal, bind_executor(m_strand, std::bind(
-  //    &WebSocketSession::OnClose,
-  //    shared_from_this(),
-  //    _1 // ec
-  //  )));
-}
-
-//TODO: Re-enable or discard.
-//void WebSocketSession::OnClose(error_code ec)
-//{
-//  if (ec)
-//    return;//TODO: Error
-//}
-
 #pragma endregion // WebSocketSession
 
 #pragma region WebSocketServer
@@ -189,7 +154,7 @@ WebSocketServer::WebSocketServer(uint16_t port)
   {
     return; //
   }
-} // constructor(uint16_t)
+}
 
 WebSocketServer::WebSocketServer(int port)
   : WebSocketServer(static_cast<uint16_t>(port))
@@ -218,9 +183,6 @@ void WebSocketServer::Stop()
 {
   if (m_acceptor.is_open())
     m_acceptor.close();
-
-  for (auto session : m_sessions)
-    session->Stop();
 
   m_contextThread.join();
 }

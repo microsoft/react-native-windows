@@ -43,14 +43,12 @@ class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>
   void OnHandshake(boost::beast::websocket::response_type& response);
   void OnRead(boost::system::error_code ec, std::size_t transferred);
   void OnWrite(boost::system::error_code ec, std::size_t transferred);
-  void OnClose(boost::system::error_code ec);
 
 public:
   WebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks);
   ~WebSocketSession();
 
   void Start();
-  void Stop();
 };
 
 class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>
