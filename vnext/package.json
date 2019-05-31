@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.123",
+  "version": "0.58.0-vnext.136",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,17 +18,17 @@
     "watch": "node node_modules/@office-iss/sdx-build-tools/watch.js"
   },
   "disabledTasks": [
+    "api-doc",
     "copy",
-    "reka",
     "jest",
     "native-bundle:filtered",
-    "verify-ts-api",
-    "api-doc",
     "pack-nuget",
     "publish-nuget",
     "react-test",
+    "reka",
     "trickle",
     "ts:amd",
+    "verify-ts-api",
     "webpack"
   ],
   "rnpm": {
@@ -65,10 +65,10 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.5.0",
     "typescript": "3.3.3",
-    "react-native": "0.58.6-microsoft.54"
+    "react-native": "0.58.6-microsoft.58"
   },
   "peerDependencies": {
     "react": "16.6.3",
-    "react-native": "0.58.6-microsoft.54 || https://github.com/microsoft/react-native/archive/v0.58.6-microsoft.54.tar.gz"
+    "react-native": "0.58.6-microsoft.58 || https://github.com/microsoft/react-native/archive/v0.58.6-microsoft.58.tar.gz"
   }
 }

@@ -13,6 +13,7 @@ EXPORTS
 ??0TypeError@folly@@QAA@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ??0TypeError@folly@@QAA@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??1TypeError@folly@@UAA@XZ
+?get_ptr@dynamic@folly@@QGBAPBU12@V?$Range@PBD@2@@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PBD@1@@Z
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
 ?size@dynamic@folly@@QBAIXZ
