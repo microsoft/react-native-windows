@@ -209,12 +209,12 @@
     <ClCompile Include="Views\FlyoutViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="SnapPointManagingContentControl.cpp">
-      <Filter>Views\Impl</Filter>
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Views\ScrollContentViewManager.cpp">
+      <Filter>Views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,12 +425,12 @@
     <ClInclude Include="Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="SnapPointManagingContentControl.h">
-      <Filter>Views\Impl</Filter>
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\ScrollContentViewManager.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
