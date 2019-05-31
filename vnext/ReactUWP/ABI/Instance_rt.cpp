@@ -108,7 +108,7 @@ HRESULT Instance::RegisterModule(ABI::react::uwp::IModule* pModule)
   return S_OK;
 }
 
-HRESULT Instance::SetTestHook(HSTRING testHookName, ABI::react::uwp::IXamlTestHookDelegate* pXamlTestHookDelegate)
+HRESULT Instance::SetXamlViewCreatedTestHook(ABI::react::uwp::IXamlTestHookDelegate* pXamlTestHookDelegate)
 {
   if (m_instance == nullptr)
     return E_FAIL;
@@ -120,7 +120,7 @@ HRESULT Instance::SetTestHook(HSTRING testHookName, ABI::react::uwp::IXamlTestHo
     spXamlTestHookDelegate->Invoke(spParams.get());
   };
 
-  m_instance->SetTestHook(HSTRINGToString(testHookName), std::move(f));
+  m_instance->SetXamlViewCreatedTestHook(std::move(f));
 
   return S_OK;
 }

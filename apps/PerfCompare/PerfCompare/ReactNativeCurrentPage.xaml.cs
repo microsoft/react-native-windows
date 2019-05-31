@@ -29,7 +29,13 @@ namespace PerfCompare
         private void InitializeReactNative()
         {
             ViewManagerTestHooks.Enabled = true;
-            ViewManagerTestHooks.ViewLoaded += View_Loaded;
+            ViewManagerTestHooks.ViewCreatedTestHook = (view) =>
+            {
+                if (view is Border)
+                {
+                    view.Loaded += View_Loaded;
+                }
+            };
 
             _host.OnResume(null);
             _host.ApplyArguments(null);

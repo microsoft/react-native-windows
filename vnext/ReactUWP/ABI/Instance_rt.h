@@ -34,7 +34,7 @@ public:
   virtual HRESULT STDMETHODCALLTYPE Start(InstanceSettings settings) override;
   virtual HRESULT STDMETHODCALLTYPE RegisterModule(ABI::react::uwp::IModule * pModule) override;
 
-  virtual HRESULT STDMETHODCALLTYPE SetTestHook(HSTRING testHookName, ABI::react::uwp::IXamlTestHookDelegate* pXamlTestHookDelegate) override;
+  virtual HRESULT STDMETHODCALLTYPE SetXamlViewCreatedTestHook(ABI::react::uwp::IXamlTestHookDelegate* pXamlTestHookDelegate) override;
 
   const ::react::uwp::ReactInstanceCreator& GetReactInstanceCreator();
 

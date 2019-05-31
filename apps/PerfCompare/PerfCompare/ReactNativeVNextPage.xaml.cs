@@ -34,7 +34,7 @@ namespace PerfCompare
                 UseLiveReload = false,
             });
 
-            _instance.SetTestHook("OnViewCreated", (obj) =>
+            _instance.SetXamlViewCreatedTestHook((obj) =>
             {
                 if (obj is Image img)
                 {

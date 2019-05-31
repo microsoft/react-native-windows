@@ -3,6 +3,8 @@
 // Copyright (c) 2015-present, Facebook, Inc.
 // Licensed under the MIT License.
 
+using System;
+
 #if WINDOWS_UWP
 using Windows.UI.Xaml;
 #else
@@ -22,18 +24,8 @@ namespace ReactNative.UIManager
         public static bool Enabled { get; set; } = false;
 
         /// <summary>
-        /// Occurs when when View.Loaded fires.
+        /// Called when a FrameworkElement is created
         /// </summary>
-        public static event RoutedEventHandler ViewLoaded;
-
-        /// <summary>
-        /// Invokes the ViewLoaded event handler.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event args.</param>
-        public static void OnViewLoaded(object sender, RoutedEventArgs e)
-        {
-            ViewLoaded?.Invoke(sender, e);
-        }
+        public static Action<FrameworkElement> ViewCreatedTestHook { get; set; } = null;
     }
 }

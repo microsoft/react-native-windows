@@ -183,7 +183,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag)
 
   auto instance = m_wkReactInstance.lock();
   if (instance != nullptr)
-    instance->CallTestHook("OnViewCreated", view);
+    instance->CallXamlViewCreatedTestHook(view);
 
   return view;
 }

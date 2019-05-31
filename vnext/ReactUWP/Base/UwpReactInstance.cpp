@@ -440,48 +440,16 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
     current.second();
 }
 
-void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void()> testHook)
+void UwpReactInstance::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook)
 {
-  m_voidTestHooks[testHookName] = testHook;
+  m_xamlViewCreatedTestHook = testHook;
 }
 
-void UwpReactInstance::CallTestHook(std::string&& testHookName)
+void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view)
 {
-  if (!m_voidTestHooks.empty())
+  if (m_xamlViewCreatedTestHook != nullptr)
   {
-    auto testHook = m_voidTestHooks.find(testHookName);
-    if (testHook != m_voidTestHooks.end())
-      testHook->second();
-  }
-}
-
-void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void(folly::dynamic&&)> testHook)
-{
-  m_dynamicTestHooks[testHookName] = testHook;
-}
-
-void UwpReactInstance::CallTestHook(std::string&& testHookName, folly::dynamic&& params)
-{
-  if (!m_dynamicTestHooks.empty())
-  {
-    auto testHook = m_dynamicTestHooks.find(testHookName);
-    if (testHook != m_dynamicTestHooks.end())
-      testHook->second(std::move(params));
-  }
-}
-
-void UwpReactInstance::SetTestHook(std::string&& testHookName, std::function<void(react::uwp::XamlView)> testHook)
-{
-  m_viewTestHooks[testHookName] = testHook;
-}
-
-void UwpReactInstance::CallTestHook(std::string&& testHookName, react::uwp::XamlView params)
-{
-  if (!m_viewTestHooks.empty())
-  {
-    auto testHook = m_viewTestHooks.find(testHookName);
-    if (testHook != m_viewTestHooks.end())
-      testHook->second(params);
+    m_xamlViewCreatedTestHook(view);
   }
 }
 

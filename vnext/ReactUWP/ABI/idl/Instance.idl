@@ -33,7 +33,7 @@ namespace react{
     // We should really use a pull model like RN does, issue #2391
     HRESULT RegisterModule([in] IModule* pModule);
 
-    HRESULT SetTestHook([in] HSTRING testHookName, [in] react.uwp.XamlTestHookDelegate* xamlTestHookDelegate);
+    HRESULT SetXamlViewCreatedTestHook([in] react.uwp.XamlTestHookDelegate* xamlTestHookDelegate);
   }
 
   [exclusiveto(Instance)]

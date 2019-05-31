@@ -53,12 +53,8 @@ public:
   void loadBundle(std::string&& jsBundleRelativePath) override { if (!m_isInError) m_instanceWrapper->loadBundle(std::move(jsBundleRelativePath)); };
 
   // Test hooks
-  void SetTestHook(std::string&& testHookName, std::function<void()> testHook) override;
-  void CallTestHook(std::string&& testHookName) override;
-  void SetTestHook(std::string&& testHookName, std::function<void(folly::dynamic&&)> testHook) override;
-  void CallTestHook(std::string&& testHookName, folly::dynamic&& params) override;
-  void SetTestHook(std::string&& testHookName, std::function<void(react::uwp::XamlView)> testHook) override;
-  void CallTestHook(std::string&& testHookName, react::uwp::XamlView params) override;
+  void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
+  void CallXamlViewCreatedTestHook(react::uwp::XamlView view) override;
 
   // Public functions
   std::shared_ptr<facebook::react::MessageQueueThread> GetNewUIMessageQueue() const;
@@ -82,9 +78,7 @@ private:
   std::atomic_bool m_isInError{ false };
   std::string m_errorMessage;
 
-  std::map<std::string, std::function<void()>> m_voidTestHooks;
-  std::map<std::string, std::function<void(folly::dynamic&&)>> m_dynamicTestHooks;
-  std::map<std::string, std::function<void(XamlView)>> m_viewTestHooks;
+  std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 };
 
 } }

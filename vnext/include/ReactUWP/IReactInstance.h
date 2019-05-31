@@ -74,12 +74,8 @@ struct IReactInstance
   virtual void loadBundle(std::string&& jsBundleRelativePath) = 0;
 
   // Test Hooks
-  virtual void SetTestHook(std::string&& testHookName, std::function<void()> testHook) = 0;
-  virtual void CallTestHook(std::string&& testHookName) = 0;
-  virtual void SetTestHook(std::string&& testHookName, std::function<void(folly::dynamic&&)> testHook) = 0;
-  virtual void CallTestHook(std::string&& testHookName, folly::dynamic&& params) = 0;
-  virtual void SetTestHook(std::string&& testHookName, std::function<void(react::uwp::XamlView)> testHook) = 0;
-  virtual void CallTestHook(std::string&& testHookName, react::uwp::XamlView params) = 0;
+  virtual void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) = 0;
+  virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
 };
 
 } }
