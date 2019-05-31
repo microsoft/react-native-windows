@@ -19,24 +19,36 @@ struct WebSocketServiceCallbacks
 
 class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>
 {
+  //TODO: Used at all?
+  enum class State : std::size_t
+  {
+    Started,
+    Stopped
+  };
+
   boost::beast::websocket::stream<boost::asio::ip::tcp::socket> m_stream;
   boost::asio::strand<boost::asio::io_context::executor_type> m_strand;
   boost::beast::multi_buffer m_buffer;
   std::string m_message;
   WebSocketServiceCallbacks& m_callbacks;
+  State m_state;//TODO: Used at all?
+  std::atomic_bool m_reading;//TODO: Remove?
 
   std::function<void(IWebSocket::Error&&)> m_errorHandler;
+
+  void Read();
+
+  void OnAccept(boost::system::error_code ec);
+  void OnRead(boost::system::error_code ec, std::size_t transferred);
+  void OnWrite(boost::system::error_code ec, std::size_t transferred);
+  void OnClose(boost::system::error_code ec);
 
 public:
   WebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks);
   ~WebSocketSession();
 
   void Start();
-  void Read();
-
-  void OnAccept(boost::system::error_code ec);
-  void OnRead(boost::system::error_code ec, std::size_t transferred);
-  void OnWrite(boost::system::error_code ec, std::size_t transferred);
+  void Stop();
 };
 
 class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>

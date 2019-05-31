@@ -21,6 +21,8 @@ WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallb
   : m_stream{ std::move(socket) }
   , m_strand{ m_stream.get_executor() }
   , m_callbacks{ callbacks }
+  , m_state{ State::Stopped }
+  , m_reading{ false }
 {
 }
 
@@ -33,10 +35,31 @@ void WebSocketSession::Start()
   m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), /*ec*/ _1)));
 }
 
+void WebSocketSession::Stop()
+{
+  m_state = State::Stopped;
+
+  //TODO: Re-enable or discard.
+  //if (m_reading)
+  //  m_stream.async_close(boost::beast::websocket::close_code::normal, bind_executor(m_strand, std::bind(
+  //    &WebSocketSession::OnClose,
+  //    shared_from_this(),
+  //    _1 // ec
+  //  )));
+}
+
+void WebSocketSession::OnClose(error_code ec)
+{
+  if (ec)
+    return;//TODO: Error
+}
+
 void WebSocketSession::OnAccept(error_code ec)
 {
   if (ec)
     return;//TODO: fail
+
+  m_state = State::Started;
 
   if (m_callbacks.OnConnection)
     m_callbacks.OnConnection();
@@ -46,6 +69,11 @@ void WebSocketSession::OnAccept(error_code ec)
 
 void WebSocketSession::Read()
 {
+  if (State::Stopped == m_state)
+    return;
+
+  m_reading = true;
+
   m_stream.async_read(m_buffer, bind_executor(m_strand, std::bind(
     &WebSocketSession::OnRead,
     shared_from_this(),
@@ -56,6 +84,8 @@ void WebSocketSession::Read()
 
 void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
 {
+  m_reading = false;
+
   if (boost::beast::websocket::error::closed == ec)
     return;
 
@@ -149,6 +179,9 @@ void WebSocketServer::Stop()
 {
   if (m_acceptor.is_open())
     m_acceptor.close();
+
+  for (auto session : m_sessions)
+    session->Stop();
 
   m_contextThread.join();
 }

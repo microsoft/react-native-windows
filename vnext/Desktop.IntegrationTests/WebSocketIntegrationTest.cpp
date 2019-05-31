@@ -21,57 +21,14 @@ using std::lock_guard;
 using std::promise;
 using std::string;
 
+using CloseCode = IWebSocket::CloseCode;
+
 TEST_CLASS(WebSocketIntegrationTest)
 {
-  TEST_METHOD(ConnectCloseInProcServer)
-  {
-    bool connected = false;
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetOnConnection([&connected]()
-    {
-      connected = true;
-    });
-    server->Start();
-
-    auto ws = IWebSocket::Make("ws://localhost:5556");
-    ws->Connect();
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
-
-    server->Stop();
-
-    Assert::IsTrue(connected);
-  }
-
-  TEST_METHOD(SendReceiveInProcServer)
-  {
-    auto server = make_shared<Test::WebSocketServer>(5556);
-    server->SetMessageFactory([](string&& message)
-    {
-      return message + "_suffix";
-    });
-    server->Start();
-
-    promise<string> response;
-    auto result = response.get_future();
-    auto ws = IWebSocket::Make("ws://localhost:5556");
-    ws->SetOnMessage([&response](size_t, const string& message)
-    {
-      response.set_value(message);
-    });
-
-    ws->Connect();
-    ws->Send("prefix");
-    result.wait();
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
-
-    server->Stop();
-
-    Assert::AreEqual({ "prefix_suffix" }, result.get());
-  }
-
   TEST_METHOD(ConnectClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
     string message;
@@ -80,8 +37,10 @@ TEST_CLASS(WebSocketIntegrationTest)
       connected = true;
     });
 
+    server->Start();
     ws->Connect();
     ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+    server->Stop();
 
     Assert::IsTrue(connected);
   }
@@ -89,10 +48,12 @@ TEST_CLASS(WebSocketIntegrationTest)
   TEST_METHOD(ConnectNoClose)
   {
     bool connected = false;
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
 
     // IWebSocket scope. Ensures object is closed implicitly by destructor.
     {
-      auto ws = IWebSocket::Make("ws://localhost:5555/");
+      auto ws = IWebSocket::Make("ws://localhost:5556/");
       ws->SetOnConnect([&connected]()
       {
         connected = true;
@@ -101,12 +62,17 @@ TEST_CLASS(WebSocketIntegrationTest)
       ws->Connect();
     }
 
+    server->Stop();
+
     Assert::IsTrue(connected);
   }
 
   TEST_METHOD(PingClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
+
+    auto ws = IWebSocket::Make("ws://localhost:5556");
     promise<bool> pingPromise;
     ws->SetOnPing([&pingPromise]()
     {
@@ -123,23 +89,28 @@ TEST_CLASS(WebSocketIntegrationTest)
     auto pingFuture = pingPromise.get_future();
     pingFuture.wait();
     bool pinged = pingFuture.get();
-
     ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+
+    server->Stop();
 
     Assert::IsTrue(pinged);
     Assert::AreEqual({}, errorString);
   }
 
+  //TODO: Remove this test.
   TEST_METHOD(SendReceiveNoClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
+    server->Start();
+
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string& message)
     {
-      // Ignore greeting message.
-      if (message == "hello")
-        return;
-
       response.set_value(message);
     });
     string errorMessage;
@@ -156,8 +127,12 @@ TEST_CLASS(WebSocketIntegrationTest)
     future.wait();
     string result = future.get();
 
+    ws->Close(CloseCode::Normal, "Closing");
+
+    server->Stop();
+
     Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(string("suffixme_response"), result);
+    Assert::AreEqual({ "suffixme_response" }, result);
   }
 
   // Emulate promise/future functionality.
@@ -205,7 +180,12 @@ TEST_CLASS(WebSocketIntegrationTest)
 
   TEST_METHOD(SendReceiveClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+        return message + "_response";
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
     {
@@ -214,10 +194,6 @@ TEST_CLASS(WebSocketIntegrationTest)
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
     {
-      // Ignore greeting message
-      if (message == "hello")
-        return;
-
       receivedPromise.set_value(message);
     });
     string errorMessage;
@@ -226,7 +202,8 @@ TEST_CLASS(WebSocketIntegrationTest)
       errorMessage = err.Message;
     });
 
-    string sent = "suffixme";
+    server->Start();
+    string sent = "prefix";
     ws->Connect();
     ws->Send(sent);
 
@@ -240,22 +217,24 @@ TEST_CLASS(WebSocketIntegrationTest)
     Assert::AreEqual({}, errorMessage);
 
     ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(sent.length(), sentSize);
-    Assert::AreEqual(string("suffixme_response"), received);
+    Assert::AreEqual({ "prefix_response" }, received);
   }
 
   TEST_METHOD(SendReceiveLargeMessage)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string& message)
     {
-      // Ignore greeting message
-      if (message == "hello")
-        return;
-
       response.set_value(message);
     });
     ws->SetOnError([](IWebSocket::Error err)
@@ -264,6 +243,7 @@ TEST_CLASS(WebSocketIntegrationTest)
       Assert::Fail(message.c_str());
     });
 
+    server->Start();
     ws->Connect();
 
     char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
@@ -283,6 +263,7 @@ TEST_CLASS(WebSocketIntegrationTest)
     string result = future.get();
 
     ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    server->Stop();
 
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
   }
@@ -380,6 +361,7 @@ httpsServer.listen(443);
     Assert::AreEqual(string("hello"), message);
   }
 
+  //TODO: Use Test::WebSocketServer!!!
   BEGIN_TEST_METHOD_ATTRIBUTE(SendBinary)
     //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
@@ -441,16 +423,17 @@ httpsServer.listen(443);
 
   TEST_METHOD(SendConsecutive)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     const int writes = 10;
     int count = 0;
     ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
     {
-      // Ignore greeting message.
-      if (message == "hello")
-        return;
-
       if (++count < writes)
         return;
 
@@ -462,6 +445,7 @@ httpsServer.listen(443);
       errorMessage = err.Message;
     });
 
+    server->Start();
     ws->Connect();
 
     // Consecutive immediate writes should be enqueued.
@@ -475,7 +459,10 @@ httpsServer.listen(443);
     string result = future.get();
 
     ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+    server->Stop();
+
     Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(string("suffixme_response"), result);
+    Assert::AreEqual(writes, count);
+    Assert::AreEqual({ "suffixme_response" }, result);
   }
 };
