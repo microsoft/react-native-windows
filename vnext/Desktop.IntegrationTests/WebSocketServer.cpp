@@ -32,26 +32,39 @@ WebSocketSession::~WebSocketSession()
 
 void WebSocketSession::Start()
 {
-  m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), /*ec*/ _1)));
+/*
+ws.accept_ex(
+    [](response_type& m)
+    {
+        m.insert(http::field::server, "MyServer");
+    });
+*/
+
+  //m_stream.async_accept(bind_executor(m_strand, std::bind(&WebSocketSession::OnAccept, shared_from_this(), /*ec*/ _1)));
+
+  m_stream.async_accept_ex(
+    bind_executor(m_strand, std::bind(
+      &WebSocketSession::OnHandshake,
+      shared_from_this(),
+      _1 // response
+    )),
+    bind_executor(m_strand, std::bind(
+      &WebSocketSession::OnAccept,
+      shared_from_this(),
+      _1 // ec
+    ))
+  );
 }
 
-void WebSocketSession::Stop()
+void WebSocketSession::OnHandshake(boost::beast::websocket::response_type& response)
 {
-  m_state = State::Stopped;
+  for (const auto& x : response)
+  {
+    int xx = 99;//TODO:Remove!
+  }
 
-  //TODO: Re-enable or discard.
-  //if (m_reading)
-  //  m_stream.async_close(boost::beast::websocket::close_code::normal, bind_executor(m_strand, std::bind(
-  //    &WebSocketSession::OnClose,
-  //    shared_from_this(),
-  //    _1 // ec
-  //  )));
-}
-
-void WebSocketSession::OnClose(error_code ec)
-{
-  if (ec)
-    return;//TODO: Error
+  if (m_callbacks.OnHandshake)
+    m_callbacks.OnHandshake(response);
 }
 
 void WebSocketSession::OnAccept(error_code ec)
@@ -92,6 +105,12 @@ void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
   if (ec)
     return;//TODO: fail instead
 
+  if (!m_callbacks.MessageFactory)
+  {
+    m_buffer.consume(m_buffer.size());
+    return Read();
+  }
+
   m_message = m_callbacks.MessageFactory(buffers_to_string(m_buffer.data()));
   m_buffer.consume(m_buffer.size());
 
@@ -114,6 +133,26 @@ void WebSocketSession::OnWrite(error_code ec, size_t /*transferred*/)
 
   Read();
 }
+
+void WebSocketSession::Stop()
+{
+  m_state = State::Stopped;
+
+  //TODO: Re-enable or discard.
+  //if (m_reading)
+  //  m_stream.async_close(boost::beast::websocket::close_code::normal, bind_executor(m_strand, std::bind(
+  //    &WebSocketSession::OnClose,
+  //    shared_from_this(),
+  //    _1 // ec
+  //  )));
+}
+
+//TODO: Re-enable or discard.
+//void WebSocketSession::OnClose(error_code ec)
+//{
+//  if (ec)
+//    return;//TODO: Error
+//}
 
 #pragma endregion // WebSocketSession
 
@@ -206,6 +245,11 @@ void WebSocketServer::OnAccept(error_code ec)
 void WebSocketServer::SetOnConnection(function<void()>&& func)
 {
   m_callbacks.OnConnection = std::move(func);
+}
+
+void WebSocketServer::SetOnHandshake(function<void(boost::beast::websocket::response_type&)>&& func)
+{
+  m_callbacks.OnHandshake = std::move(func);
 }
 
 void WebSocketServer::SetOnMessage(function<void(string)>&& func)

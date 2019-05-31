@@ -12,6 +12,7 @@ namespace Test {
 struct WebSocketServiceCallbacks
 {
   std::function<void()> OnConnection;
+  std::function<void(boost::beast::websocket::response_type&)> OnHandshake;
   std::function<void(std::string)> OnMessage;
   std::function<std::string(std::string&&)> MessageFactory;
   std::function<void(IWebSocket::Error&&)> OnError;
@@ -39,6 +40,7 @@ class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>
   void Read();
 
   void OnAccept(boost::system::error_code ec);
+  void OnHandshake(boost::beast::websocket::response_type& response);
   void OnRead(boost::system::error_code ec, std::size_t transferred);
   void OnWrite(boost::system::error_code ec, std::size_t transferred);
   void OnClose(boost::system::error_code ec);
@@ -72,6 +74,7 @@ public:
   void Stop();
 
   void SetOnConnection(std::function<void()>&& func);
+  void SetOnHandshake(std::function<void(boost::beast::websocket::response_type&)>&& func);
   void SetOnMessage(std::function<void(std::string)>&& func);
   void SetMessageFactory(std::function<std::string(std::string&&)>&& func);
   void SetOnError(std::function<void(IWebSocket::Error&&)>&& func);

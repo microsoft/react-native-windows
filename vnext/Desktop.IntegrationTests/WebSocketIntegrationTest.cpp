@@ -286,27 +286,39 @@ TEST_CLASS(WebSocketIntegrationTest)
    Test passes, otherwise.
   */
   BEGIN_TEST_METHOD_ATTRIBUTE(AdditionalHeaders)
-    TEST_IGNORE()
+    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AdditionalHeaders)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    string cookie;
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetOnHandshake([server](boost::beast::websocket::response_type& response)
+    {
+      auto cookie = response[boost::beast::http::field::cookie].to_string();
+      server->SetMessageFactory([cookie](string&&)
+      {
+        return cookie;
+      });
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string& message)
     {
       response.set_value(message);
     });
 
-    ws->Connect({}, {{ L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }});
+    server->Start();
+    ws->Connect({}, {{ L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }});//TODO: rename back to Cookie.
     ws->Send("");
 
     auto future = response.get_future();
     future.wait();
     string result = future.get();
 
-    Assert::AreEqual(string("JSESSIONID=AD9A320CC4034641997FF903F1D10906"), result);
+    Assert::AreEqual({ "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }, result);
 
     ws->Close(IWebSocket::CloseCode::Normal, "No reason");
+    server->Stop();
   }
 
   ///
@@ -363,7 +375,7 @@ httpsServer.listen(443);
 
   //TODO: Use Test::WebSocketServer!!!
   BEGIN_TEST_METHOD_ATTRIBUTE(SendBinary)
-    //TEST_IGNORE()
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendBinary)
   {
