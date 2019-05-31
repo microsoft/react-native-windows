@@ -10,6 +10,11 @@ SnapPointManagingContentControl::SnapPointManagingContentControl()
 
 }
 
+/*static*/ winrt::com_ptr<SnapPointManagingContentControl> SnapPointManagingContentControl::Create()
+{
+  return winrt::make_self<SnapPointManagingContentControl>();
+}
+
 void SnapPointManagingContentControl::SnapToInterval(float interval)
 {
   if (interval != m_interval)
