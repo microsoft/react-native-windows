@@ -71,6 +71,12 @@
       <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>OSS_RN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -167,7 +173,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" Condition="'$(OSS_RN)' != 'true'"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCHelpers.cpp" Condition="'$(NOJSC)' != 'true'" />
