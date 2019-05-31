@@ -1,0 +1,22 @@
+
+namespace facebook.react {
+
+interface INativeTraceHandler
+{
+	void JSBeginSection(String profileName, String args);
+	void JSEndSection();
+	void JSBeginAsyncSection(String profileName, UInt32 cookie);
+	void JSEndAsyncSection(String profileName, UInt32 cookie);
+	void JSCounter(String profileName, UInt32 value);
+
+	void NativeBeginSection(String profileName, String args);
+	void NativeEndSection(String profileName, String args, Int64 durationInNanoseconds);
+};
+
+static runtimeclass NativeTraceEventSource
+{
+	// REVIEW: A better idiom would a set of delegates and events.
+	static void InitializeTracing(INativeTraceHandler handler);
+}
+
+}

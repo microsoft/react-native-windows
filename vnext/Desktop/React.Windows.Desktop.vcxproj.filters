@@ -50,6 +50,8 @@
     </ClCompile>
     <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="LegacyWebSocket.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="NativeTraceEventSource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TimingModule.h" />
@@ -76,8 +78,13 @@
     <ClInclude Include="NativeModuleFactories.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
+    <ClInclude Include="ABI.h" />
+    <ClInclude Include="NativeTraceEventSource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="ABI.idl" />
   </ItemGroup>
 </Project>
