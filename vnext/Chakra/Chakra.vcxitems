@@ -27,7 +27,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Utf8DebugExtensions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreDebugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraHelpers.h" />
@@ -40,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraTracing.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraValue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utf8DebugExtensions.h" />
   </ItemGroup>
 </Project>
