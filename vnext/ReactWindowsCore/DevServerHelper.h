@@ -42,7 +42,7 @@ private:
 	}
 
 	static constexpr const char s_DeviceLocalhost[] = "localhost:8081";
-	static constexpr const char BundleUrlFormat[] = "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s";
+	static constexpr const char BundleUrlFormat[] = "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=true";
 	static constexpr const char SourceMapUrlFormat[] = "http://%s/%s.map?platform=%s&dev=%s&hot=%s";
 	static constexpr const char LaunchDevToolsCommandUrlFormat[] = "http://%s/launch-js-devtools";
 	static constexpr const char OnChangeEndpointUrlFormat[] = "http://%s/onchange";

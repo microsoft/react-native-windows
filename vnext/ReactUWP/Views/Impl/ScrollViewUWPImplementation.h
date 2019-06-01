@@ -28,24 +28,17 @@ class ScrollViewUWPImplementation
 {
 public:
   ScrollViewUWPImplementation(const winrt::ScrollViewer& scrollViewer);
-  static void ConvertScrollViewer(const winrt::ScrollViewer& scrollViewer);
-
-  void AddView(const XamlView& child, uint32_t index);
-  void RemoveAllChildren();
-  void RemoveChildAt(uint32_t index);
 
   void SetHorizontal(bool isHorizontal);
   void SnapToInterval(float interval);
   void SnapToOffsets(const winrt::IVectorView<float>& offsets);
 
-  void UpdateScrollableSize();
+  void UpdateScrollableSize() const;
 
-  winrt::ScrollViewer ScrollViewer();
-  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager();
+  winrt::ScrollViewer ScrollViewer() const;
+  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager() const;
 
 private:
-  winrt::StackPanel ScrollViewerContent();
-
   winrt::weak_ref<winrt::ScrollViewer> m_scrollViewer{};
 };
 
