@@ -19,50 +19,50 @@ namespace Test {
 
 #pragma region BaseWebSocketSession
 
-template<typename NextLayer>
-BaseWebSocketSession<NextLayer>::BaseWebSocketSession(WebSocketServiceCallbacks& callbacks)
+template<typename SocketLayer>
+BaseWebSocketSession<SocketLayer>::BaseWebSocketSession(WebSocketServiceCallbacks& callbacks)
   : m_callbacks{ callbacks }
   , m_state{ State::Stopped }
 {
 }
 
-template<typename NextLayer>
-BaseWebSocketSession<NextLayer>::~BaseWebSocketSession()
+template<typename SocketLayer>
+BaseWebSocketSession<SocketLayer>::~BaseWebSocketSession()
 {
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::Start()
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::Start()
 {
   Accept();
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::Accept()
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::Accept()
 {
   m_stream->async_accept_ex(
     bind_executor(*m_strand, std::bind(
-      &BaseWebSocketSession<NextLayer>::OnHandshake,
-      this->shared_from_this(),
+      &BaseWebSocketSession<SocketLayer>::OnHandshake,
+      this->SharedFromThis(),
       _1 // response
     )),
     bind_executor(*m_strand, std::bind(
-      &BaseWebSocketSession<NextLayer>::OnAccept,
-      this->shared_from_this(),
+      &BaseWebSocketSession<SocketLayer>::OnAccept,
+      this->SharedFromThis(),
       _1 // ec
     ))
   );
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::OnHandshake(websocket::response_type& response)
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::OnHandshake(websocket::response_type& response)
 {
   if (m_callbacks.OnHandshake)
     m_callbacks.OnHandshake(response);
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::OnAccept(error_code ec)
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::OnAccept(error_code ec)
 {
   if (ec)
     return;//TODO: fail
@@ -75,22 +75,22 @@ void BaseWebSocketSession<NextLayer>::OnAccept(error_code ec)
   Read();
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::Read()
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::Read()
 {
   if (State::Stopped == m_state)
     return;
 
   m_stream->async_read(m_buffer, bind_executor(*m_strand, std::bind(
-    &BaseWebSocketSession<NextLayer>::OnRead,
-    this->shared_from_this(),
+    &BaseWebSocketSession<SocketLayer>::OnRead,
+    this->SharedFromThis(),
     _1, // ec
     _2  // transferred
   )));
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::OnRead(error_code ec, size_t /*transferred*/)
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferred*/)
 {
   if (websocket::error::closed == ec)
     return;
@@ -109,15 +109,15 @@ void BaseWebSocketSession<NextLayer>::OnRead(error_code ec, size_t /*transferred
 
   m_stream->text(m_stream->got_text());
   m_stream->async_write(buffer(m_message), bind_executor(*m_strand, std::bind(
-    &BaseWebSocketSession<NextLayer>::OnWrite,
-    this->shared_from_this(),
+    &BaseWebSocketSession<SocketLayer>::OnWrite,
+    this->SharedFromThis(),
     _1, // ec
     _2  // transferred
   )));
 }
 
-template<typename NextLayer>
-void BaseWebSocketSession<NextLayer>::OnWrite(error_code ec, size_t /*transferred*/)
+template<typename SocketLayer>
+void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transferred*/)
 {
   if (ec)
     return; //TODO: fail
@@ -141,6 +141,15 @@ WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallb
 
 WebSocketSession::~WebSocketSession() {}
 
+#pragma region BaseWebSocketSession
+
+std::shared_ptr<BaseWebSocketSession<boost::asio::ip::tcp::socket>> WebSocketSession::SharedFromThis() /*override*/
+{
+  return this->shared_from_this();
+}
+
+#pragma endregion // BaseWebSocketSession
+
 #pragma endregion // WebSocketSession
 
 #pragma region SecureWebSocketSession
@@ -148,28 +157,112 @@ WebSocketSession::~WebSocketSession() {}
 SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
   : BaseWebSocketSession(callbacks)
 {
-  auto context = ssl::context(ssl::context::sslv23_client);
+  // Initialize SSL context.
+  string const cert =
+    "-----BEGIN CERTIFICATE-----\n"
+    "MIIDhjCCAm6gAwIBAgIJAPh+egUebaStMA0GCSqGSIb3DQEBCwUAMFgxCzAJBgNV\n"
+    "BAYTAlVTMRMwEQYDVQQIDApXYXNoaW5ndG9uMRAwDgYDVQQHDAdSZWRtb25kMRIw\n"
+    "EAYDVQQKDAlNaWNyb3NvZnQxDjAMBgNVBAsMBVJlYWN0MB4XDTE5MDYwMTA4MDcx\n"
+    "M1oXDTI5MDUyOTA4MDcxM1owWDELMAkGA1UEBhMCVVMxEzARBgNVBAgMCldhc2hp\n"
+    "bmd0b24xEDAOBgNVBAcMB1JlZG1vbmQxEjAQBgNVBAoMCU1pY3Jvc29mdDEOMAwG\n"
+    "A1UECwwFUmVhY3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCgHKC9\n"
+    "XC+1FjDg2Xdmbpf3ILiJQtGFiD3WFb+duNXThOA0LY6gytVBY6LitAzB7Jm7spvx\n"
+    "BbA46kw8Dsmv02hI0diVzFKCB5bTTs0N8bgAsem6qvDpo/mvp2TtDU2J8o4RhMQ3\n"
+    "BQvdZUGgtH4VR2W4vIHufNjVUvN9hTL2eOBz0EYElsMSogG8f97N+m/7L6JeyjPo\n"
+    "kFwXYTFMjv3ihJmev/cBNkxuchLUT7NAc7bMCtmv5lzsKMKe6g0lUxDSBYxXztqU\n"
+    "l3huo2g990VbvTWH/lhz3bgdnon/AUKWBmS2eRmK9hH/rGlm1NeMCjexMZrYC3m8\n"
+    "vvfIR25plGmNjyQJAgMBAAGjUzBRMB0GA1UdDgQWBBTNLE3Nl0s3O40wDEXf9t/7\n"
+    "r6Y1QjAfBgNVHSMEGDAWgBTNLE3Nl0s3O40wDEXf9t/7r6Y1QjAPBgNVHRMBAf8E\n"
+    "BTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQAbRL+69uZLW3Q6JIQ9qg3CPjm6574o\n"
+    "cOiyJ9DX49i23AyYNsCYulvLApHgrmltMJHrC4U7EasQCTtwpAMyLJDLIDdujSSs\n"
+    "ynSe5PcNeElLmEkH4PxyAFsb/2oWI2PSJh0vseuugUpeKTHJv5MPkLUm7WMLHYj5\n"
+    "uOQzYDwJ+IuveVzX5TRXtkY8jF9ErL4iF8eYTyp0ANeY11vJOAbd2FcAy5baYjB3\n"
+    "JVczHy7eegwfOQJFM9mIZE7+Ac0SaknC0Jun9486cJ0mvbdrMSd+vgF85OrpWwYU\n"
+    "ISfux0NDVN1gjvSgdkEB+CWnV1rNKsVKlg4psDkpq33AJEwnx3qNxtKG\n"
+    "-----END CERTIFICATE-----\n";
+
+  string const key =
+    "-----BEGIN RSA PRIVATE KEY-----\n"
+    "MIIEowIBAAKCAQEAoBygvVwvtRYw4Nl3Zm6X9yC4iULRhYg91hW/nbjV04TgNC2O\n"
+    "oMrVQWOi4rQMweyZu7Kb8QWwOOpMPA7Jr9NoSNHYlcxSggeW007NDfG4ALHpuqrw\n"
+    "6aP5r6dk7Q1NifKOEYTENwUL3WVBoLR+FUdluLyB7nzY1VLzfYUy9njgc9BGBJbD\n"
+    "EqIBvH/ezfpv+y+iXsoz6JBcF2ExTI794oSZnr/3ATZMbnIS1E+zQHO2zArZr+Zc\n"
+    "7CjCnuoNJVMQ0gWMV87alJd4bqNoPfdFW701h/5Yc924HZ6J/wFClgZktnkZivYR\n"
+    "/6xpZtTXjAo3sTGa2At5vL73yEduaZRpjY8kCQIDAQABAoIBAA/bpgP7THJYF1E9\n"
+    "2LiZfY2pfP2DU7MxEkbQ8qCRfQQtJfOlC3pbfJG0Z56ijJzsbTGM+CsAEDsi4ZgV\n"
+    "Mt6qRqrntdboXMeqLsMRC/g0l6/h7y9g3OmXJxTBtJpR9fsSvgV4K+LzKgCslbpw\n"
+    "BgjfgHCyov/W97bxN1KYTbrhsAFoWFwyTglDIkTYo/92suwsyYt14pxnK54QyNrM\n"
+    "tWKS0K9rZmSMjaVYW+nnSLelFVAOAzW4SOt8CE1V0usjIkmD5smdadjT14exWnxV\n"
+    "zVMhsbrfUFi3oBfW8X+TuWQjBnVfX0akZALY6vmnmOEWLz4pXJBLmazSGpXyM5o2\n"
+    "JpxSUS0CgYEAywE9MhWqKhZXpOwGWbNe1Nibh4l8vt+pTDs2TpFdHXNT8UfuUk03\n"
+    "ycCxGKrDPUAUPdVGygvmqdKHpXLbWalPGdFR6Xcn5YjVxM7L37jGl28oQOdNLI5u\n"
+    "Lw7hJ5L84M0LZqMI5589jA63WrgkLNQ9eKnuFn9N/3n9r/uZqtGVjLsCgYEAyejc\n"
+    "I/St33V0CNDtfEZ8dBDztXhx1WjDzv+JgNiy7pLUB+8yW0/iU2Y8ptpmfQ0nRDDv\n"
+    "sGK5myuBv85PRgWQnPskL3V5+L+DK40hyYnrL4bKhxT8az2CQdWI23sS4Nq5b59A\n"
+    "ylUyGIUXv3P62nUgMq3kM7L6mMgz/cCxeVeQyAsCgYAlZAIIgpMIE3trJgn5ZZ9W\n"
+    "5tqmuT0fzwRYxSM4j2+uJ/rTGyObRxu6bmJwH6u8UVwpE2ppdo2yw9M2NxSNzDCE\n"
+    "mdhTfx37Ghv9lvVYLKlvZQruAWxmg4lp43y3FEy9fybVbbwLJXppnKBK9lW7aBA2\n"
+    "dF4lCKeuIaMHUfk4zEeWVwKBgF81HXEa9E4VfUSW+BUMy6yTPcgJZmwCParDFlya\n"
+    "Ui1rMO4Y3X7vOUKoR9tJyuAWrrhZ9vwOYYUIy+Lc7saO4zUSu2phk8U20SxdHVyC\n"
+    "W1MK1T9DJw+ObniKr0EHVMyQdrZqusttxvSG9b7Cerw+VJNxKdUzBTW72cBC96zH\n"
+    "HK8nAoGBAMGKiSm4a1O5SpSiiZ6kNZHw9wB98Jtic7ozoUrlVEPSeRrXq/BzsyyH\n"
+    "md/sN/1v/Qq4SPlUtnzRakcPa2sntDb4SEt/Lrr97ouX1C/qfWljh69jRDLPBBez\n"
+    "cAlHdEzualsWQsACr7I71UebXvha+v0XXAKiIRqAKRrFLmPPCFrP\n"
+    "-----END RSA PRIVATE KEY-----\n";
+
+  string dh =
+    "-----BEGIN DH PARAMETERS-----\n"
+    "MIIBCAKCAQEA5VbTCtf4s2qPpqTtk2pXsYcqo7cLF0LVQaXMhOZNmif0TKDyclSV\n"
+    "NQANJcl0K9C5cGfh/1oEZs30A+Ww1zCtjkwJFvQdUAhCy/1U/qhRO2swXtz+CGZL\n"
+    "7PL0yu0Xht3EqGRS4z98LPCALVYvuqbNKTnFHUZl8oYJT0Xx0lzzZ+r5uFYYghQU\n"
+    "nCohXf/O0VLCPJMnd/oLY70CcPEL9V1KDb80oTzlYzrVPAHidcOXkiZpmOHgdiA/\n"
+    "LLG0h495hZhL5OqqDrLM7IWxHNmzgwhQ04PdGa6zPP4fnt7L4Ia5/lYOolvdmNkx\n"
+    "XgdewtScX7P5ltOMhhcWS4Og+qZn18a3kwIBAg==\n"
+    "-----END DH PARAMETERS-----\n";
+
+  auto context = ssl::context(ssl::context::sslv23);
+
+  //TODO: Remove if not used.
+  context.set_password_callback([](size_t, ssl::context_base::password_purpose)
+  {
+    return "test";
+  });
+
+  context.set_options(ssl::context::default_workarounds | ssl::context::no_sslv2 | ssl::context::single_dh_use);
+  context.use_certificate_chain(buffer(cert.data(), cert.size()));
+  context.use_private_key(buffer(key.data(), key.size()), ssl::context::file_format::pem);
+  context.use_tmp_dh(buffer(dh.data(), dh.size()));
+
   m_stream = std::make_shared<websocket::stream<ssl::stream<ip::tcp::socket>>>(std::move(socket), context);
   m_strand = std::make_shared<strand<io_context::executor_type>>(m_stream->get_executor());
 }
 
 SecureWebSocketSession::~SecureWebSocketSession() {}
 
+#pragma region BaseWebSocketSession
+
+std::shared_ptr<BaseWebSocketSession<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>> SecureWebSocketSession::SharedFromThis() /*override*/
+{
+  return this->shared_from_this();
+}
+
+#pragma endregion // BaseWebSocketSession
+
 #pragma region IWebSocketSession
 
 void SecureWebSocketSession::Start() /*override*/
 {
-  //m_stream->next_layer().async_handshake(ssl::stream_base::server, bind_executor(*m_strand, std::bind(
-  //  &SecureWebSocketSession::OnSslHandshake,
-  //  this->shared_from_this(),
-  //  _1 // ec
-  //)));
+  m_stream->next_layer().async_handshake(ssl::stream_base::server, bind_executor(*m_strand, std::bind(
+    &SecureWebSocketSession::OnSslHandshake,
+    this->shared_from_this(),
+    _1 // ec
+  )));
 }
 
 void SecureWebSocketSession::OnSslHandshake(error_code ec)
 {
   if (ec)
-    return;//TODO: Handle error
+    return;
 
   Accept();
 }
@@ -180,10 +273,11 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec)
 
 #pragma region WebSocketServer
 
-WebSocketServer::WebSocketServer(uint16_t port)
+WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
   : m_acceptor{ m_context }
   , m_socket{ m_context }
   , m_sessions{}
+  , m_isSecure{ isSecure }
 {
   ip::tcp::endpoint ep{ip::make_address("0.0.0.0"), port };
   error_code ec;
@@ -191,30 +285,30 @@ WebSocketServer::WebSocketServer(uint16_t port)
   m_acceptor.open(ep.protocol(), ec);
   if (ec)
   {
-    return; //
+    return; //TODO: handle
   }
 
   m_acceptor.set_option(socket_base::reuse_address(true), ec);
   if (ec)
   {
-    return; //
+    return; //TODO: handle
   }
 
   m_acceptor.bind(ep, ec);
   if (ec)
   {
-    return; //
+    return; //TODO: handle
   }
 
   m_acceptor.listen(socket_base::max_listen_connections, ec);
   if (ec)
   {
-    return; //
+    return; //TODO: handle
   }
 }
 
-WebSocketServer::WebSocketServer(int port)
-  : WebSocketServer(static_cast<uint16_t>(port))
+WebSocketServer::WebSocketServer(int port, bool isSecure)
+  : WebSocketServer(static_cast<uint16_t>(port), isSecure)
 {
 }
 
@@ -252,7 +346,12 @@ void WebSocketServer::OnAccept(error_code ec)
   }
   else
   {
-    auto session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(m_socket), m_callbacks));
+    std::shared_ptr<IWebSocketSession> session;
+    if (m_isSecure)
+      session = std::shared_ptr<IWebSocketSession>(new SecureWebSocketSession(std::move(m_socket), m_callbacks));
+    else
+      session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(m_socket), m_callbacks));
+   
     m_sessions.push_back(session);
     session->Start();
   }

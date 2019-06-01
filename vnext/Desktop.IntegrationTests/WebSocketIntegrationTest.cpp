@@ -283,56 +283,31 @@ TEST_CLASS(WebSocketIntegrationTest)
     server->Stop();
   }
 
-  ///
-  // Run this test against a valid WebSocket server runing on SSL.
-  // See sample below.
-  ///
-  /*
-const WebSocket = require('ws');
-const fs = require('fs');
-const https = require('https');
-
-const httpsServer = https.createServer({
-  key:  fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-});
-const server = new WebSocket.Server({
-  server:httpsServer
-});
-
-server.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    console.log('Received message:', message);
-    if (message === 'exit') {
-      console.log('WebSocket integration test server exit');
-      process.exit(0);
-    }
-    console.log('Cookie:', ws.upgradeReq.headers.cookie);
-    ws.send(message + '_response');
-  });
-
-  ws.send('hello');
-});
-
-httpsServer.listen(443);
-  */
-  BEGIN_TEST_METHOD_ATTRIBUTE(SendAndReceiveSsl)
-    TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SendAndReceiveSsl)
+  TEST_METHOD(SendReceiveSsl)
   {
-    auto ws = IWebSocket::Make("wss://localhost/");
-    string message;
-    ws->SetOnMessage([&message](size_t size, const string& messageIn)
+    auto server = make_shared<Test::WebSocketServer>(5556, /*isSecure*/ true);
+    server->SetMessageFactory([](string&& message)
     {
-      message = messageIn;
+      return message + "_response";
+    });
+    auto ws = IWebSocket::Make("wss://localhost:5556");
+    promise<string> response;
+    ws->SetOnMessage([&response](size_t size, const string& messageIn)
+    {
+      response.set_value(messageIn);
     });
 
+    server->Start();
     ws->Connect();
     ws->Send("suffixme");
-    ws->Close(CloseCode::Normal, "Closing after reading");
 
-    Assert::AreEqual(string("hello"), message);
+    auto result = response.get_future();
+    result.wait();
+
+    ws->Close(CloseCode::Normal, "Closing after reading");
+    server->Stop();
+
+    Assert::AreEqual({ "suffixme_response" }, result.get());
   }
 
   //TODO: Use Test::WebSocketServer!!!
