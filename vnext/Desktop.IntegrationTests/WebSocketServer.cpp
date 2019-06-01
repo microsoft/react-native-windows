@@ -11,47 +11,58 @@ using std::placeholders::_1;
 using std::placeholders::_2;
 using std::string;
 
+namespace websocket = boost::beast::websocket;
+
 namespace Microsoft {
 namespace React {
 namespace Test {
 
-#pragma region WebSocketSession
+#pragma region BaseWebSocketSession
 
-WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
-  : m_stream{ std::move(socket) }
-  , m_strand{ m_stream.get_executor() }
-  , m_callbacks{ callbacks }
+template<typename NextLayer>
+BaseWebSocketSession<NextLayer>::BaseWebSocketSession(WebSocketServiceCallbacks& callbacks)
+  : m_callbacks{ callbacks }
   , m_state{ State::Stopped }
 {
 }
 
-WebSocketSession::~WebSocketSession()
+template<typename NextLayer>
+BaseWebSocketSession<NextLayer>::~BaseWebSocketSession()
 {
 }
 
-void WebSocketSession::Start()
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::Start()
 {
-  m_stream.async_accept_ex(
-    bind_executor(m_strand, std::bind(
-      &WebSocketSession::OnHandshake,
-      shared_from_this(),
+  Accept();
+}
+
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::Accept()
+{
+  m_stream->async_accept_ex(
+    bind_executor(*m_strand, std::bind(
+      &BaseWebSocketSession<NextLayer>::OnHandshake,
+      this->shared_from_this(),
       _1 // response
     )),
-    bind_executor(m_strand, std::bind(
-      &WebSocketSession::OnAccept,
-      shared_from_this(),
+    bind_executor(*m_strand, std::bind(
+      &BaseWebSocketSession<NextLayer>::OnAccept,
+      this->shared_from_this(),
       _1 // ec
     ))
   );
 }
 
-void WebSocketSession::OnHandshake(boost::beast::websocket::response_type& response)
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::OnHandshake(websocket::response_type& response)
 {
   if (m_callbacks.OnHandshake)
     m_callbacks.OnHandshake(response);
 }
 
-void WebSocketSession::OnAccept(error_code ec)
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::OnAccept(error_code ec)
 {
   if (ec)
     return;//TODO: fail
@@ -64,22 +75,24 @@ void WebSocketSession::OnAccept(error_code ec)
   Read();
 }
 
-void WebSocketSession::Read()
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::Read()
 {
   if (State::Stopped == m_state)
     return;
 
-  m_stream.async_read(m_buffer, bind_executor(m_strand, std::bind(
-    &WebSocketSession::OnRead,
-    shared_from_this(),
+  m_stream->async_read(m_buffer, bind_executor(*m_strand, std::bind(
+    &BaseWebSocketSession<NextLayer>::OnRead,
+    this->shared_from_this(),
     _1, // ec
     _2  // transferred
   )));
 }
 
-void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::OnRead(error_code ec, size_t /*transferred*/)
 {
-  if (boost::beast::websocket::error::closed == ec)
+  if (websocket::error::closed == ec)
     return;
 
   if (ec)
@@ -94,16 +107,17 @@ void WebSocketSession::OnRead(error_code ec, size_t /*transferred*/)
   m_message = m_callbacks.MessageFactory(buffers_to_string(m_buffer.data()));
   m_buffer.consume(m_buffer.size());
 
-  m_stream.text(m_stream.got_text());
-  m_stream.async_write(buffer(m_message), bind_executor(m_strand, std::bind(
-    &WebSocketSession::OnWrite,
-    shared_from_this(),
+  m_stream->text(m_stream->got_text());
+  m_stream->async_write(buffer(m_message), bind_executor(*m_strand, std::bind(
+    &BaseWebSocketSession<NextLayer>::OnWrite,
+    this->shared_from_this(),
     _1, // ec
     _2  // transferred
   )));
 }
 
-void WebSocketSession::OnWrite(error_code ec, size_t /*transferred*/)
+template<typename NextLayer>
+void BaseWebSocketSession<NextLayer>::OnWrite(error_code ec, size_t /*transferred*/)
 {
   if (ec)
     return; //TODO: fail
@@ -114,7 +128,55 @@ void WebSocketSession::OnWrite(error_code ec, size_t /*transferred*/)
   Read();
 }
 
+#pragma endregion // BaseWebSocketSession
+
+#pragma region WebSocketSession
+
+WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
+  : BaseWebSocketSession(callbacks)
+{
+  m_stream = std::make_shared<websocket::stream<boost::asio::ip::tcp::socket>>(std::move(socket));
+  m_strand = std::make_shared<strand<io_context::executor_type>>(m_stream->get_executor());
+}
+
+WebSocketSession::~WebSocketSession() {}
+
 #pragma endregion // WebSocketSession
+
+#pragma region SecureWebSocketSession
+
+SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks)
+  : BaseWebSocketSession(callbacks)
+{
+  auto context = ssl::context(ssl::context::sslv23_client);
+  m_stream = std::make_shared<websocket::stream<ssl::stream<ip::tcp::socket>>>(std::move(socket), context);
+  m_strand = std::make_shared<strand<io_context::executor_type>>(m_stream->get_executor());
+}
+
+SecureWebSocketSession::~SecureWebSocketSession() {}
+
+#pragma region IWebSocketSession
+
+void SecureWebSocketSession::Start() /*override*/
+{
+  //m_stream->next_layer().async_handshake(ssl::stream_base::server, bind_executor(*m_strand, std::bind(
+  //  &SecureWebSocketSession::OnSslHandshake,
+  //  this->shared_from_this(),
+  //  _1 // ec
+  //)));
+}
+
+void SecureWebSocketSession::OnSslHandshake(error_code ec)
+{
+  if (ec)
+    return;//TODO: Handle error
+
+  Accept();
+}
+
+#pragma endregion // IWebSocketSession
+
+#pragma endregion // SecureWebSocketSession
 
 #pragma region WebSocketServer
 
@@ -190,7 +252,7 @@ void WebSocketServer::OnAccept(error_code ec)
   }
   else
   {
-    auto session = std::make_shared<WebSocketSession>(std::move(m_socket), m_callbacks);
+    auto session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(m_socket), m_callbacks));
     m_sessions.push_back(session);
     session->Start();
   }
@@ -204,7 +266,7 @@ void WebSocketServer::SetOnConnection(function<void()>&& func)
   m_callbacks.OnConnection = std::move(func);
 }
 
-void WebSocketServer::SetOnHandshake(function<void(boost::beast::websocket::response_type&)>&& func)
+void WebSocketServer::SetOnHandshake(function<void(websocket::response_type&)>&& func)
 {
   m_callbacks.OnHandshake = std::move(func);
 }
