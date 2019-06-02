@@ -3,7 +3,7 @@
 This is a summary of setup steps needed to install and work with React Native for Windows (vnext). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details and see [Getting Started Guide - current](https://github.com/microsoft/react-native-windows/blob/master/current/docs/GettingStarted.md) for working with the `current` React Native for Windows implementation.
 
 ## System requirements
-* You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.16299.0 or higher.
+* You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.15063.0 or higher.
 * [Visual Studio 2017](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
@@ -12,7 +12,8 @@ This is a summary of setup steps needed to install and work with React Native fo
   * Individual Components
     * Development activities
       * Node.js development support
-    * SDKs, libraries, and frameworks
+    * SDKs, libraries, and frameworks per your versioning needs
+      * Windows 10 SDK (10.0.15063.0)
       * Windows 10 SDK (10.0.16299.0)
       * Windows 10 SDK (10.0.17763.0)
 
@@ -160,6 +161,6 @@ You now see your new app and Chrome should have loaded `http://localhost:8081/de
    - RNTester: JavaScript file: `lib\RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`	
       
 ## Troubleshooting
-* Use VS 2017 when using the CLI. Issue [#2320](https://github.com/microsoft/react-native-windows/issues/2320) tracks support for CLI with VS 2019.
 * If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/microsoft/react-native-windows/issues/2311) is tracking a known issue on this.
 * If you get a red error box in your UWP app window with the error message : `ERROR: Instance failed to start. A connection with the server cannot be established`, make sure you have the packager running using `yarn start` and run the app again. 
+* If you are trying to run your `react-native` app on iOS/Android while using this `vnext` implementation for developing/running on Windows, you will encounter errors while running the app for other platforms. This will be fixed once we address Issues [#2264](https://github.com/microsoft/react-native-windows/issues/2264) and [#2535](https://github.com/microsoft/react-native-windows/issues/2535). Until this is fixed, please refer to [this comment](https://github.com/microsoft/react-native-windows/issues/2515#issuecomment-497375198) which describes the workaround for running on other platforms while developing for windows using `vnext`.
