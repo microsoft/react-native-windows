@@ -209,12 +209,33 @@
     <ClCompile Include="Views\FlyoutViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="SnapPointManagingContentControl.cpp">
-      <Filter>Views\Impl</Filter>
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodesManager.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,12 +446,33 @@
     <ClInclude Include="Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="SnapPointManagingContentControl.h">
-      <Filter>Views\Impl</Filter>
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodesManager.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -559,6 +601,9 @@
     </Filter>
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{101c2d4a-d343-4771-969f-29af0c9f46b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Animated">
+      <UniqueIdentifier>{a1f1513e-a549-4c09-a278-617a564ec13c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

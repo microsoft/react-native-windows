@@ -1,9 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#include <ReactContextNativeModuleBase>
 
-namespace react {
-  namespace uwp {
+#pragma once
+
+#include "pch.h"
+#include <folly/dynamic.h>
+#include <cxxreact/CxxModule.h>
+#include "NativeAnimatedNodesManager.h"
+
   /// <summary>
   /// Module that exposes interface for creating and managing animated nodes 
   /// on the "native" side.
@@ -56,28 +60,47 @@ namespace react {
   /// may be caused by concurrent updates of animated graph while UI thread 
   /// is "executing" the animation loop.
   /// </remarks>
-  class NativeAnimatedModule : ReactContextNativeModuleBase, ILifecycleEventListener
-  {
-      private readonly object _operationsGate = new object();
+namespace react {
+  namespace uwp {
 
-      private EventHandler<FrameEventArgs> _animatedFrameCallback;
+    class NativeAnimatedModule final : public facebook::xplat::module::CxxModule
+    {
+    public:
+      NativeAnimatedModule(const std::shared_ptr<IReactInstance> & reactInstance);
+      virtual ~NativeAnimatedModule();
 
-      private List<Action<NativeAnimatedNodesManager>> _operations =
-          new List<Action<NativeAnimatedNodesManager>>();
-      private List<Action<NativeAnimatedNodesManager>> _preOperations =
-          new List<Action<NativeAnimatedNodesManager>>();
+      // CxxModule
+      std::string getName() override;
+      std::map<std::string, folly::dynamic> getConstants() override;
+      auto getMethods()->std::vector<Method> override;
 
-      private NativeAnimatedNodesManager _nodesManager;
+      void createAnimatedNode(int64_t tag, const folly::dynamic& config);
+      void connectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag);
+      void disconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag);
+      void connectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
+      void disconnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
+      void startAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, Callback endCallback);
+      void stopAnimation(int64_t animationId);
+      void dropAnimatedNode(int64_t tag);
+      void setAnimatedNodeValue(int64_t tag, double value);
+      void setAnimatedNodeOffset(int64_t tag, double offset);
+      void flattenAnimatedNodeOffset(int64_t tag);
+      void extractAnimatedNodeOffset(int64_t tag);
+      void addAnimatedEventToView(int64_t tag, const std::string& eventName, const folly::dynamic& eventMapping);
+      void removeAnimatedEventFromView(int64_t tag, const std::string& eventName, int64_t animatedValueTag);
+      void startListeningToAnimatedNodeValue(int64_t tag);
+      void stopListeningToAnimatedNodeValue(int64_t tag);
 
-      /// <summary>
-      /// Instantiates the <see cref="NativeAnimatedModule"/>. 
-      /// </summary>
-      /// <param name="reactContext">The React context.</param>
-      public NativeAnimatedModule(ReactContext reactContext)
-          : base(reactContext)
-      {
-      }
+      static const char* name;
 
+
+
+    private:
+      std::shared_ptr<NativeAnimatedNodesManager> _nodesManager{};
+      std::weak_ptr<IReactInstance> m_wkReactInstance;
+    };
+  }
+}/*
       /// <summary>
       /// The name of the module.
       /// </summary>
@@ -439,4 +462,4 @@ namespace react {
                 }
             }
         }
-}
+}*/
