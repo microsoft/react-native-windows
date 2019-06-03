@@ -12,39 +12,8 @@ ScrollViewUWPImplementation::ScrollViewUWPImplementation(const winrt::ScrollView
   assert(scrollViewContent);
   const auto snapPointManager = scrollViewContent.as<SnapPointManagingContentControl>();
   assert(snapPointManager);
-  assert(snapPointManager->Content().as<winrt::StackPanel>());
 
   m_scrollViewer = winrt::make_weak(scrollViewer);
-}
-
-void ScrollViewUWPImplementation::ConvertScrollViewer(const winrt::ScrollViewer& scrollViewer)
-{
-  if (scrollViewer)
-  {
-    const auto snapPointManager = new SnapPointManagingContentControl();
-    snapPointManager->Content(winrt::StackPanel{});
-
-    scrollViewer.Content(*snapPointManager);
-  }
-}
-
-void ScrollViewUWPImplementation::AddView(const XamlView& child, uint32_t index)
-{
-  const auto contentCollection = ScrollViewerContent().Children();
-  assert(index <= contentCollection.Size());
-  contentCollection.InsertAt(index, child.as<winrt::UIElement>());
-}
-
-void ScrollViewUWPImplementation::RemoveAllChildren()
-{
-  ScrollViewerContent().Children().Clear();
-}
-
-void ScrollViewUWPImplementation::RemoveChildAt(uint32_t index)
-{
-  const auto contentCollection = ScrollViewerContent().Children();
-  assert(index < contentCollection.Size());
-  contentCollection.RemoveAt(index);
 }
 
 void ScrollViewUWPImplementation::SetHorizontal(bool horizontal)
@@ -62,7 +31,7 @@ void ScrollViewUWPImplementation::SnapToOffsets(const winrt::IVectorView<float>&
   ScrollViewerSnapPointManager()->SnapToOffsets(offsets);
 }
 
-void ScrollViewUWPImplementation::UpdateScrollableSize()
+void ScrollViewUWPImplementation::UpdateScrollableSize() const
 {
   if (const auto scrollViewer = m_scrollViewer.get())
   {
@@ -94,32 +63,20 @@ void ScrollViewUWPImplementation::UpdateScrollableSize()
   }
 }
 
-winrt::ScrollViewer ScrollViewUWPImplementation::ScrollViewer()
+winrt::ScrollViewer ScrollViewUWPImplementation::ScrollViewer() const
 {
   return m_scrollViewer.get();
 }
 
 // privates //
 
-winrt::com_ptr<SnapPointManagingContentControl>ScrollViewUWPImplementation::ScrollViewerSnapPointManager()
+winrt::com_ptr<SnapPointManagingContentControl> ScrollViewUWPImplementation::ScrollViewerSnapPointManager() const
 {
-  if (const auto scrollViewer = m_scrollViewer.get())
+  if (const auto scrollViewer = ScrollViewer())
   {
     if (const auto content = scrollViewer.Content())
     {
       return content.as<SnapPointManagingContentControl>();
-    }
-  }
-  return nullptr;
-}
-
-winrt::StackPanel ScrollViewUWPImplementation::ScrollViewerContent()
-{
-  if (const auto snapPointManagingContentControl = ScrollViewerSnapPointManager())
-  {
-    if (const auto content = snapPointManagingContentControl->Content())
-    {
-      return content.as<winrt::StackPanel>();
     }
   }
   return nullptr;

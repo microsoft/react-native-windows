@@ -202,6 +202,7 @@
     <ClInclude Include="Views\RawTextViewManager.h" />
     <ClInclude Include="Views\ReactControl.h" />
     <ClInclude Include="Views\RootViewManager.h" />
+    <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Views\ReactControl.cpp" />
     <ClCompile Include="Views\ReactRootView.cpp" />
     <ClCompile Include="Views\RootViewManager.cpp" />
+    <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
     <ClCompile Include="Views\SwitchViewManager.cpp" />

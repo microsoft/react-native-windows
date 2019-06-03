@@ -250,8 +250,8 @@ namespace react { namespace uwp {
       return;
     }
 
-    if (sources[0].packagerAsset && uriString.find("assets") == 0)
-      uriString.replace(0, 6, "ms-appx://");
+    if (sources[0].packagerAsset && uriString.find("file://") == 0)
+      uriString.replace(0, 7, "ms-appx:///Bundle/");
 
     bool needsDownload = false;
 
@@ -328,6 +328,7 @@ public:
 
   void getSize(std::string uri, Callback successCallback, Callback errorCallback);
   void prefetchImage(std::string uri, Callback successCallback, Callback errorCallback);
+  void queryCache(const folly::dynamic& requests, Callback successCallback, Callback errorCallback);
 
 private:
   ImageViewManagerModule *m_parent;
@@ -352,8 +353,7 @@ winrt::fire_and_forget GetImageSizeAsync(std::string uri, facebook::xplat::modul
     auto bitmap = image.Source().try_as<winrt::BitmapImage>();
     if (bitmap)
     {
-      folly::dynamic sizes = folly::dynamic::object("width", bitmap.PixelWidth())("height", bitmap.PixelHeight());
-      successCallback({ sizes });
+      successCallback({ bitmap.PixelWidth(), bitmap.PixelHeight() });
       succeeded = true;
     }
   }
@@ -377,6 +377,12 @@ void ImageViewManagerModule::ImageViewManagerModuleImpl::prefetchImage(std::stri
 {
   // NotYetImplemented
   successCallback({});
+}
+
+void ImageViewManagerModule::ImageViewManagerModuleImpl::queryCache(const folly::dynamic& requests, Callback successCallback, Callback /*errorCallback*/)
+{
+  // NotYetImplemented
+  successCallback({ folly::dynamic::object() });
 }
 
 
@@ -411,10 +417,14 @@ auto ImageViewManagerModule::getMethods() -> std::vector<Method>
     Method("getSize", [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback)
     {
       imageViewManager->getSize(facebook::xplat::jsArgAsString(args, 0), successCallback, errorCallback);
-    }),
+    }, AsyncTag),
     Method("prefetchImage", [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback)
     {
       imageViewManager->prefetchImage(facebook::xplat::jsArgAsString(args, 0), successCallback, errorCallback);
+    }),
+    Method("queryCache", [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback)
+    {
+      imageViewManager->queryCache(args[0], successCallback, errorCallback);
     }),
   };
 }
