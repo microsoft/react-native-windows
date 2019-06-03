@@ -69,6 +69,6 @@
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "0.59.0-microsoft-fb59merge.14  || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.14.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft-fb59merge.14 || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft-fb59merge.14.tar.gz"
   }
 }

@@ -320,4 +320,25 @@
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
+  <Target Name="InstallFollyIfNotUseMicrosoftReactNative"  BeforeTargets="PrepareForBuild">
+    <Warning
+      Text="Folly required to build without microsoft/react-native. - Downloading folly..."
+      Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.03.00.zip')" />
+    <DownloadFile
+      Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.03.00.zip')"
+      SourceUrl="https://github.com/facebook/folly/archive/v2019.06.03.00.zip"
+      DestinationFolder="$(SolutionDir)node_modules\.follyzip"/>
+    <Warning
+      Text="Folly required to build without microsoft/react-native. - Unzipping folly..."
+      Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" />
+    <Unzip
+      Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')"
+      SourceFiles="$(SolutionDir)node_modules\.follyzip\folly-2019.06.03.00.zip"
+      DestinationFolder="$(SolutionDir)node_modules\.folly"
+      OverwriteReadOnlyFiles="true"
+    />
+  </Target>
+  <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(OSS_RN)'!='true' AND !Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
+  </Target>
 </Project>
