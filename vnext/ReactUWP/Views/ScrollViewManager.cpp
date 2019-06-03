@@ -83,14 +83,15 @@ void ScrollViewShadowNode::createView()
   Super::createView();
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
-  const auto scrollViewUWPImplementation = new ScrollViewUWPImplementation(scrollViewer);
+  const auto scrollViewUWPImplementation = ScrollViewUWPImplementation(scrollViewer);
+  scrollViewUWPImplementation.ScrollViewerSnapPointManager();
 
   AddHandlers(scrollViewer);
 
   m_scrollViewerSizeChangedRevoker = scrollViewer.SizeChanged(winrt::auto_revoke,
     [scrollViewUWPImplementation](const auto&, const auto&)
     {
-      scrollViewUWPImplementation->UpdateScrollableSize();
+      scrollViewUWPImplementation.UpdateScrollableSize();
     });
 
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(winrt::auto_revoke,
@@ -101,14 +102,14 @@ void ScrollViewShadowNode::createView()
       if (m_zoomFactor != zoomFactor)
       {
         m_zoomFactor = zoomFactor;
-        scrollViewUWPImplementation->UpdateScrollableSize();
+        scrollViewUWPImplementation.UpdateScrollableSize();
       }
     });
 
-  m_contentSizeChangedRevoker = scrollViewUWPImplementation->ScrollViewerSnapPointManager()->SizeChanged(winrt::auto_revoke,
+  m_contentSizeChangedRevoker = scrollViewUWPImplementation.ScrollViewerSnapPointManager()->SizeChanged(winrt::auto_revoke,
     [this, scrollViewUWPImplementation](const auto&, const auto&)
     {
-      scrollViewUWPImplementation->UpdateScrollableSize();
+      scrollViewUWPImplementation.UpdateScrollableSize();
     });
 }
 
@@ -472,59 +473,40 @@ folly::dynamic ScrollViewManager::GetExportedCustomDirectEventTypeConstants() co
 
 XamlView ScrollViewManager::CreateViewCore(int64_t tag)
 {
-  const auto scrollViewer = [this]()
-  {
-    const auto scrollViewer = winrt::ScrollViewer{};
+  const auto scrollViewer = winrt::ScrollViewer{};
 
-    scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
-    scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
-    scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
-    scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
-    scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
+  scrollViewer.HorizontalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+  scrollViewer.VerticalScrollBarVisibility(winrt::ScrollBarVisibility::Visible);
+  scrollViewer.VerticalSnapPointsAlignment(winrt::SnapPointsAlignment::Near);
+  scrollViewer.VerticalSnapPointsType(winrt::SnapPointsType::Mandatory);
+  scrollViewer.HorizontalSnapPointsType(winrt::SnapPointsType::Mandatory);
 
-    return scrollViewer;
-  }();
+  const auto snapPointManager = SnapPointManagingContentControl::Create();
+  scrollViewer.Content(*snapPointManager);
 
-  const auto scrollViewUWPImplementation = [scrollViewer]()
-  {
-    ScrollViewUWPImplementation::ConvertScrollViewer(scrollViewer);
-    return new ScrollViewUWPImplementation(scrollViewer);
-  }();
-    
   return scrollViewer;
 }
 
 void ScrollViewManager::AddView(XamlView parent, XamlView child, int64_t index)
 {
-  if (parent && child && index >= 0)
-  {
-    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
-    {
-      ScrollViewUWPImplementation(scrollViewer).AddView(child, static_cast<uint32_t>(index));
-    }
-  }
+  assert(index == 0);
+
+  auto scrollViewer = parent.as<winrt::ScrollViewer>();
+  auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
+  snapPointManager->Content(child);
 }
 
 void ScrollViewManager::RemoveAllChildren(XamlView parent)
 {
-  if (parent)
-  {
-    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
-    {
-      ScrollViewUWPImplementation(scrollViewer).RemoveAllChildren();
-    }
-  }
+  auto scrollViewer = parent.as<winrt::ScrollViewer>();
+  auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
+  snapPointManager->Content(nullptr);
 }
 
 void ScrollViewManager::RemoveChildAt(XamlView parent, int64_t index)
 {
-  if (parent && index >= 0)
-  {
-    if (const auto scrollViewer = parent.as<winrt::ScrollViewer>())
-    {
-      ScrollViewUWPImplementation(scrollViewer).RemoveChildAt(static_cast<uint32_t>(index));
-    }
-  }
+  assert(index == 0);
+  RemoveAllChildren(parent);
 }
 
 void ScrollViewManager::SnapToInterval(XamlView parent, float interval)

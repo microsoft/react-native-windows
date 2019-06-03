@@ -4,7 +4,7 @@ EXPORTS
 ?str_to_bool@detail@folly@@YG?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
 ??0ColdClass@cold_detail@folly@@QAE@XZ
 ??4dynamic@folly@@QAEAAU01@ABU01@@Z
-
+?get_ptr@dynamic@folly@@QGBEPBU12@V?$Range@PBD@2@@Z
 ??4dynamic@folly@@QAEAAU01@$$QAU01@@Z
 ?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
 ??Adynamic@folly@@QGAEAAU01@V?$Range@PBD@1@@Z

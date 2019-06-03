@@ -54,13 +54,13 @@ See the official [React Native website](https://facebook.github.io/react-native/
 ## System Requirements
 
 - You can run React Native Windows UWP apps only on Windows 10 devices
-   - React Native Windows -[current](https://github.com/microsoft/react-native-windows/tree/master/current) supports Windows 10 SDK > [14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive) and Windows 8.1
-   - React Native Windows -[vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) currently supports Windows 10 SDK > [16299](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
+   - React Native Windows -[current](https://github.com/microsoft/react-native-windows/tree/master/current) supports Windows 10 SDK >= [14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive) and Windows 8.1
+   - React Native Windows -[vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) currently supports Windows 10 SDK >= [15063](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
 - You can run React Native Windows WPF apps using the [current](https://github.com/microsoft/react-native-windows/tree/master/current) implementation on Windows 7-10 so long as .NET 4.6 is installed on the end user's machine
 - Download [Visual Studio 2017 Community or Greater](https://www.visualstudio.com/downloads/). (Visual Studio 2015 support has been deprecated.)
 	- You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
 
-*Note*: Development on React Native Windows itself currently requires Visual Studio 2017. It is not supported with VS Code, but we will gladly accept pull requests to enable a great developer experience in those environments.
+*Note*: Development on React Native Windows itself currently requires Visual Studio 2017 or higher. It is not currently supported with VS Code, but work is ongoing as tracked [here](https://github.com/microsoft/vscode-react-native/issues/1007). 
 
 ## Getting Started
 
@@ -77,7 +77,7 @@ You can also begin to prototype or try out the [vnext](https://github.com/micros
 
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
-For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation. We are working on publishing a similar parity status for `vnext` shortly.
+For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation and [here](vnext/docs/ParityStatus.md) for `vnext`.
 
 ## Extending React Native
 

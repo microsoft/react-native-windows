@@ -15,8 +15,9 @@ The `vnext` package currently supports `v0.58` of corresponding `react-native` m
 ## Documentation
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
 
+For a live document for information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, see [Parity Status](./docs/ParityStatus.md).
+
 Coming soon - we will be publishing more documentation including some of the following shortly:
-- A live document that captures the ongoing parity status of this `vnext` implementation with Android and iOS.
 - Guides on how to extend native Windows capabilties in C# and C++ using `vnext` 
 
 ## Getting Started
@@ -28,4 +29,4 @@ If you encounter a bug with the React Native Windows C++ implementation or have 
 Please make sure to use the [correct template](https://github.com/microsoft/react-native-windows/issues/new?labels=vnext&template=vnext.md) for issues related to the vnext `react-native-windows` implementation.
 
 ## Contributing
-See [Contributing guidelines](./docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows C++. 
+See [Contributing guidelines](./docs/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native Windows vNext. 
