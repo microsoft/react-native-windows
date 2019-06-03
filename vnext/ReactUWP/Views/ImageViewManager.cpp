@@ -250,8 +250,8 @@ namespace react { namespace uwp {
       return;
     }
 
-    if (sources[0].packagerAsset && uriString.find("assets") == 0)
-      uriString.replace(0, 6, "ms-appx://");
+    if (sources[0].packagerAsset && uriString.find("file://") == 0)
+      uriString.replace(0, 7, "ms-appx:///Bundle/");
 
     bool needsDownload = false;
 

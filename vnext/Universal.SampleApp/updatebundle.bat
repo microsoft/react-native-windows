@@ -6,8 +6,10 @@ setlocal
 
 pushd %~dp0\..\
 
+set BundlePath=Universal.SampleApp\Bundle\Universal.SampleApp
+
 echo Bundling Bootstrap
-call react-native bundle --platform uwp --entry-file Universal.SampleApp\index.uwp.js --bundle-output Universal.SampleApp\Bundle\Universal.SampleApp\index.uwp.bundle --assets-dest Universal.SampleApp\Bundle\Universal.SampleApp
+call react-native bundle --platform uwp --entry-file Universal.SampleApp\index.uwp.js --bundle-output %BundlePath%\index.uwp.bundle --assets-dest %BundlePath%
 
 popd
 
