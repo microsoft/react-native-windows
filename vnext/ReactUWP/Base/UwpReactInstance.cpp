@@ -27,6 +27,7 @@
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/RootViewManager.h>
+#include <Views/ScrollContentViewManager.h>
 #include <Views/ScrollViewManager.h>
 #include <Views/SwitchViewManager.h>
 #include <Views/TextInputViewManager.h>
@@ -52,7 +53,7 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
-#include <Modules/UIManagerModule.h>
+#include <Modules/BatchingUIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactWindowsCore/IUIManager.h>
 #include <Threading/UIMessageQueueThread.h>
@@ -93,6 +94,7 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
   viewManagers.push_back(std::make_unique<RootViewManager>(instance));
+  viewManagers.push_back(std::make_unique<ScrollContentViewManager>(instance));
   viewManagers.push_back(std::make_unique<ScrollViewManager>(instance));
   viewManagers.push_back(std::make_unique<SwitchViewManager>(instance));
   viewManagers.push_back(std::make_unique<TextViewManager>(instance));
@@ -108,7 +110,7 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
   viewManagers.push_back(std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager());
+  return createBatchingUIManager(std::move(viewManagers), new NativeUIManager());
 }
 
 UwpReactInstance::UwpReactInstance(
@@ -133,7 +135,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
     "UIManager",
-    [uiManager = std::move(uiManager)]() { return facebook::react::createUIManagerModule(uiManager); },
+    [uiManager = std::move(uiManager)]() { return facebook::react::createBatchingUIManagerModule(uiManager); },
     messageQueue);
 
   modules.emplace_back(
@@ -438,6 +440,19 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
   // Invoke every callback registered
   for (auto const& current : m_errorCallbacks)
     current.second();
+}
+
+void UwpReactInstance::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook)
+{
+  m_xamlViewCreatedTestHook = testHook;
+}
+
+void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view)
+{
+  if (m_xamlViewCreatedTestHook != nullptr)
+  {
+    m_xamlViewCreatedTestHook(view);
+  }
 }
 
 } }

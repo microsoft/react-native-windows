@@ -121,12 +121,15 @@ void ReactControl::AttachRoot() noexcept
     });
   });
 
-  // Schedule initialization that must happen on the UI thread
-  m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([this]() {
-    m_touchEventHandler->AddTouchHandlers(m_xamlRootView);
-    auto initialProps = m_initialProps;
-    m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
-  });
+  // We assume Attach has been called from the UI thread
+#ifdef DEBUG
+  auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
+  assert(coreWindow != nullptr);
+#endif
+
+  m_touchEventHandler->AddTouchHandlers(m_xamlRootView);
+  auto initialProps = m_initialProps;
+  m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
 
   m_isAttached = true;
 }

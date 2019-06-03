@@ -48,10 +48,17 @@ YGSize DefaultYogaSelfMeasureFunc(YGNodeRef node, float width, YGMeasureMode wid
     winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
 
     // Clear out current size so it doesn't constrain the measurement
-    element.ClearValue(winrt::FrameworkElement::WidthProperty());
-    element.ClearValue(winrt::FrameworkElement::HeightProperty());
+    auto widthProp = winrt::FrameworkElement::WidthProperty();
+    auto heightProp = winrt::FrameworkElement::HeightProperty();
+    auto origWidth = element.GetValue(widthProp);
+    auto origHeight = element.GetValue(heightProp);
+    element.ClearValue(widthProp);
+    element.ClearValue(heightProp);
 
     element.Measure(availableSpace);
+
+    element.SetValue(widthProp, origWidth);
+    element.SetValue(heightProp, origHeight);
   }
   catch (winrt::hresult_error const& )
   {
@@ -173,6 +180,10 @@ XamlView ViewManagerBase::CreateView(int64_t tag)
 
   // Set the tag if the element type supports it
   SetTag(view, tag);
+
+  auto instance = m_wkReactInstance.lock();
+  if (instance != nullptr)
+    instance->CallXamlViewCreatedTestHook(view);
 
   return view;
 }
