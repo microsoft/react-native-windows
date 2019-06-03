@@ -442,4 +442,17 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
     current.second();
 }
 
+void UwpReactInstance::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook)
+{
+  m_xamlViewCreatedTestHook = testHook;
+}
+
+void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view)
+{
+  if (m_xamlViewCreatedTestHook != nullptr)
+  {
+    m_xamlViewCreatedTestHook(view);
+  }
+}
+
 } }

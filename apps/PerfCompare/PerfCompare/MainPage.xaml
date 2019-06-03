@@ -1,0 +1,28 @@
+<Page
+    x:Class="PerfCompare.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PerfCompare"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Margin="20" VerticalAlignment="Center">Total Messages:</TextBlock>
+                <TextBox Margin="20" Text="{x:Bind TotalMessages, Mode=TwoWay}" Width="150" HorizontalContentAlignment="Right" />
+            </StackPanel>
+            <Button Content="XAML Markup" x:Name="xamlMarkupBtn" Click="Button_Click" Width="200" Margin="20" HorizontalAlignment="Center" />
+            <Button Content="RNW Current" x:Name="rnwcsBtn" Click="Button_Click" Width="200" Margin="20" HorizontalAlignment="Center" />
+            <Button Content="RNW VNext" x:Name="rnwcppBtn" Click="Button_Click" Width="200" Margin="20" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Page>

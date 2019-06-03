@@ -53,5 +53,14 @@ namespace ReactNative.UIManager
             view.Width = dimensions.Width;
             view.Height = dimensions.Height;
         }
+
+        internal override void OnViewInstanceCreated(ThemedReactContext reactContext, TFrameworkElement view)
+        {
+            base.OnViewInstanceCreated(reactContext, view);
+            if (ViewManagerTestHooks.Enabled)
+            {
+                ViewManagerTestHooks.ViewCreatedTestHook?.Invoke(view);
+            }
+        }
     }
 }
