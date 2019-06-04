@@ -36,16 +36,19 @@
 
 #include <cxxreact/JsArgumentHelpers.h>
 
+#include "BorderEffect.h"
+
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize( "", off )
 #endif
 
 namespace winrt {
-using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::UI::Xaml::Media::Imaging;
+  using namespace Microsoft::UI::Composition::Effects;
+  using namespace Windows::Foundation;
+  using namespace Windows::UI::Xaml::Controls;
+  using namespace Windows::UI::Xaml::Media;
+  using namespace Windows::UI::Xaml::Media::Imaging;
 }
 
 namespace react {
