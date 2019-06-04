@@ -29,7 +29,7 @@ namespace react { namespace uwp {
     XamlView CreateViewCore(int64_t tag) override;
 
   private:
-    void setSource(winrt::Windows::UI::Xaml::Controls::Image image, const folly::dynamic& sources);
+    void setSource(winrt::Windows::UI::Xaml::Controls::Canvas canvas, const folly::dynamic& sources);
   };
 
   class ImageViewManagerModule : public facebook::xplat::module::CxxModule

@@ -216,6 +216,9 @@
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -448,6 +451,24 @@
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\Image\BorderEffect.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\react.uwp.image.ReactImageBrush.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.image.h">
+      <Filter>Views\cppwinrt\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.image.0.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.image.1.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.image.2.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImageBrush.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
   </ItemGroup>

@@ -36,7 +36,7 @@
 
 #include <cxxreact/JsArgumentHelpers.h>
 
-#include "BorderEffect.h"
+#include "ReactImageBrush.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -44,14 +44,13 @@
 #endif
 
 namespace winrt {
-  using namespace Microsoft::UI::Composition::Effects;
+  using namespace winrt::react::uwp::image;
   using namespace Windows::Foundation;
   using namespace Windows::Storage::Streams;
   using namespace Windows::UI::Xaml::Controls;
   using namespace Windows::UI::Xaml::Media;
   using namespace Windows::UI::Xaml::Media::Imaging;
   using namespace Windows::Web::Http;
-
 }
 
 namespace react {
@@ -98,25 +97,33 @@ struct json_type_traits<react::uwp::ImageSource>
 
 
 template<>
-struct json_type_traits<winrt::Stretch>
+struct json_type_traits<winrt::ResizeMode>
 {
-  static winrt::Stretch parseJson(const folly::dynamic& json)
+  static winrt::ResizeMode parseJson(const folly::dynamic& json)
   {
-    winrt::Stretch stretch;
+    winrt::ResizeMode resizeMode;
     if (json == "cover")
     {
-      stretch = winrt::Stretch::UniformToFill;
+      resizeMode = winrt::ResizeMode::Cover;
     }
     else if (json == "contain")
     {
-      stretch = winrt::Stretch::Uniform;
+      resizeMode = winrt::ResizeMode::Contain;
     }
-    else
+    else if (json == "stretch")
     {
-      stretch = winrt::Stretch::Fill;
+      resizeMode = winrt::ResizeMode::Stretch;
+    }
+    else if (json == "center")
+    {
+      resizeMode = winrt::ResizeMode::Center;
+    }
+    else if (json == "repeat")
+    {
+      resizeMode = winrt::ResizeMode::Repeat;
     }
 
-    return stretch;
+    return resizeMode;
   }
 };
 
@@ -156,8 +163,9 @@ namespace react { namespace uwp {
       }
       else if (propertyName == "resizeMode")
       {
-        auto stretch = json_type_traits<winrt::Stretch>::parseJson(propertyValue);
-        // image.Stretch(stretch);
+        auto resizeMode = json_type_traits<winrt::ResizeMode>::parseJson(propertyValue);
+        auto brush = canvas.Background().as<winrt::ReactImageBrush>();
+        brush.ResizeMode(resizeMode);
       }
 
       // TODO: overflow
@@ -284,13 +292,17 @@ namespace react { namespace uwp {
       }
       else
       {
-        winrt::BitmapImage bitmap;
-        bitmap.UriSource(uri);
-
-        winrt::ImageBrush brush;
-        brush.ImageSource(bitmap);
-
+        auto brush = winrt::make<winrt::react::uwp::image::implementation::ReactImageBrush>();
+        brush.SourceUri(uri);
         canvas.Background(brush);
+
+        //winrt::BitmapImage bitmap;
+        //bitmap.UriSource(uri);
+
+        //winrt::ImageBrush brush;
+        //brush.ImageSource(bitmap);
+
+        //canvas.Background(brush);
 
         EmitImageEvent(instance, canvas, "topLoad", sources[0]);
       }
