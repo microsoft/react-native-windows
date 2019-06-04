@@ -53,75 +53,78 @@ XamlView TextViewManager::CreateViewCore(int64_t tag)
   return textBlock;
 }
 
-void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
   if (textBlock == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    if (TryUpdateForeground(textBlock, pair.first, pair.second))
+    const std::string& propertyName = pair.first.getString();
+    const folly::dynamic& propertyValue = pair.second;
+
+    if (TryUpdateForeground(textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (TryUpdateFontProperties(textBlock, pair.first, pair.second))
+    else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (TryUpdatePadding(nodeToUpdate, textBlock, pair.first, pair.second))
+    else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (TryUpdateTextAlignment(textBlock, pair.first, pair.second))
+    else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (TryUpdateTextTrimming(textBlock, pair.first, pair.second))
+    else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (TryUpdateTextDecorationLine(textBlock, pair.first, pair.second))
+    else if (TryUpdateTextDecorationLine(textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (TryUpdateCharacterSpacing(textBlock, pair.first, pair.second))
+    else if (TryUpdateCharacterSpacing(textBlock, propertyName, propertyValue))
     {
       continue;
     }
-    else if (pair.first == "numberOfLines")
+    else if (propertyName == "numberOfLines")
     {
-      if (pair.second.isNumber())
-        textBlock.MaxLines(static_cast<int32_t>(pair.second.asDouble()));
-      else if (pair.second.isNull())
+      if (propertyValue.isNumber())
+        textBlock.MaxLines(static_cast<int32_t>(propertyValue.asDouble()));
+      else if (propertyValue.isNull())
         textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
     }
-    else if (pair.first == "lineHeight")
+    else if (propertyName == "lineHeight")
     {
-      if (pair.second.isNumber())
-        textBlock.LineHeight(static_cast<int32_t>(pair.second.asDouble()));
-      else if (pair.second.isNull())
+      if (propertyValue.isNumber())
+        textBlock.LineHeight(static_cast<int32_t>(propertyValue.asDouble()));
+      else if (propertyValue.isNull())
         textBlock.ClearValue(winrt::TextBlock::LineHeightProperty());
     }
-    else if (pair.first == "selectable")
+    else if (propertyName == "selectable")
     {
-      if (pair.second.isBool())
-        textBlock.IsTextSelectionEnabled(pair.second.asBool());
-      else if (pair.second.isNull())
+      if (propertyValue.isBool())
+        textBlock.IsTextSelectionEnabled(propertyValue.asBool());
+      else if (propertyValue.isNull())
         textBlock.ClearValue(winrt::TextBlock::IsTextSelectionEnabledProperty());
     }
-    else if (pair.first == "allowFontScaling")
+    else if (propertyName == "allowFontScaling")
     {
-      if (pair.second.isBool())
-        textBlock.IsTextScaleFactorEnabled(pair.second.asBool());
+      if (propertyValue.isBool())
+        textBlock.IsTextScaleFactorEnabled(propertyValue.asBool());
       else
         textBlock.ClearValue(winrt::TextBlock::IsTextScaleFactorEnabledProperty());
     }
-    else if (pair.first == "selectionColor")
+    else if (propertyName == "selectionColor")
     {
-      if (pair.second.isNumber())
+      if (propertyValue.isNumber())
       {
-        textBlock.SelectionHighlightColor(SolidColorBrushFrom(static_cast<int>(pair.second.asDouble())));
+        textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       }
       else
         textBlock.ClearValue(winrt::TextBlock::SelectionHighlightColorProperty());

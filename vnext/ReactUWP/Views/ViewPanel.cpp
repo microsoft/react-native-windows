@@ -29,7 +29,6 @@ const winrt::TypeName viewPanelTypeName{
 
 ViewPanel::ViewPanel()
 {
-  LayoutUpdated([=](auto &&, auto &&args) { UpdateClip(); });
 }
 
 /*static*/ winrt::com_ptr<ViewPanel> ViewPanel::Create()
@@ -210,6 +209,8 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize)
     child.Arrange(winrt::Rect((float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), (float)childWidth, (float)childHeight));
   }
 
+  UpdateClip(finalSize);
+
   return finalSize;
 }
 
@@ -370,8 +371,6 @@ void ViewPanel::FinalizeProperties()
       ClearValue(winrt::Panel::BackgroundProperty());
   }
 
-  UpdateClip();
-
   m_propertiesChanged = false;
 }
 
@@ -383,13 +382,13 @@ winrt::Border ViewPanel::GetOuterBorder()
     return winrt::Border(nullptr);
 }
 
-void ViewPanel::UpdateClip()
+void ViewPanel::UpdateClip(winrt::Size& finalSize)
 {
   // When an outer Border is used it will handle the clipping, otherwise this panel must do so
   if (!m_hasOuterBorder && ClipChildren())
   {
     winrt::RectangleGeometry clipGeometry;
-    clipGeometry.Rect(winrt::Rect(0, 0, static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())));
+    clipGeometry.Rect(winrt::Rect(0, 0, static_cast<float>(finalSize.Width), static_cast<float>(finalSize.Height)));
 
     Clip(clipGeometry);
   }

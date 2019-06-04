@@ -61,11 +61,11 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynami
   // 1. an exception message string.
   // 2. an array containing stack information.
   // 3. an exceptionID int.
-  assert(args.type() == folly::dynamic::ARRAY);
+  assert(args.isArray());
   assert(args.size() == 3);
-  assert(args[0].type() == folly::dynamic::STRING);
-  assert(args[1].type() == folly::dynamic::ARRAY);
-  assert(args[2].type() == folly::dynamic::INT64);
+  assert(args[0].isString());
+  assert(args[1].isArray());
+  assert(args[2].isNumber());
   assert(facebook::xplat::jsArgAsInt(args, 2) <= std::numeric_limits<uint32_t>::max());
 
   JSExceptionInfo jsExceptionInfo;
@@ -81,7 +81,7 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(const folly::dynami
   {
     // Each dynamic object is a map containing information about the stack frame:
     // method (string), arguments (array), filename(string), line number (int) and column number (int).
-    assert(stackFrame.type() == folly::dynamic::OBJECT);
+    assert(stackFrame.isObject());
     assert(stackFrame.size() >= 4); // 4 in 0.57, 5 in 0.58+ (arguments added)
 
     std::stringstream stackFrameInfo;
@@ -106,13 +106,13 @@ std::string ExceptionsManagerModule::RetrieveValueFromMap(const folly::dynamic &
   auto iterator = map.find(key);
   if (iterator != map.items().end())
   {
-    assert(iterator->second.type() == type);
     if (type == folly::dynamic::STRING)
     {
       value = iterator->second.asString();
     }
     else
     {
+      assert(iterator->second.isNumber());
       std::stringstream stream;
       stream << static_cast<int64_t>(iterator->second.asDouble());
       value = stream.str();

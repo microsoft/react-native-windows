@@ -10,7 +10,8 @@
 #include <folly/dynamic.h>
 #include <folly/json.h>
 
-#include "UnicodeConversion.h"
+#include "utilities.h"
+#include "unicode.h"
 
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -44,7 +45,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(std::shared_ptr<facebook::react::Execut
         std::vector<uint8_t> data(len);
         reader.ReadBytes(data);
 
-        std::string str(reinterpret_cast<char*>(data.data()), data.size());
+        std::string str(facebook::react::utilities::checkedReinterpretCast<char*>(data.data()), data.size());
         OnMessageReceived(str);
       }
       else
@@ -54,7 +55,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(std::shared_ptr<facebook::react::Execut
     }
     catch (winrt::hresult_error const & e)
     {
-      OnHitError(facebook::react::UnicodeConversion::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+      OnHitError(facebook::react::unicode::utf16ToUtf8(e.message().c_str(), e.message().size()));
     }
     catch (std::exception& e)
     {
@@ -208,7 +209,7 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(const
 {
   m_errorCallback = errorCallback;
 
-  winrt::Windows::Foundation::Uri uri(facebook::react::UnicodeConversion::Utf8ToUtf16(webSocketServerUrl));
+  winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(webSocketServerUrl));
   co_await m_socket.ConnectAsync(uri);
 
   SetState(State::Connected);
@@ -254,7 +255,7 @@ std::future<std::string> WebSocketJSExecutor::SendMessageAsync(int requestId, co
   {
     m_socket.Control().MessageType(winrt::Windows::Networking::Sockets::SocketMessageType::Utf8);
 
-    winrt::array_view<const uint8_t> arr(reinterpret_cast<const uint8_t*>(message.c_str()), reinterpret_cast<const uint8_t*>(message.c_str()) + message.length());
+    winrt::array_view<const uint8_t> arr(facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()), facebook::react::utilities::checkedReinterpretCast<const uint8_t*>(message.c_str()) + message.length());
     m_socketDataWriter.WriteBytes(arr);
     m_socketDataWriter.StoreAsync();
   }

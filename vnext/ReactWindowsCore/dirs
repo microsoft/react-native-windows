@@ -1,5 +1,4 @@
 DIRS = \
 	modules \
 	win32{!arm} \
-    winrt{arm,x64,x86} \
-
+	uniconv{!arm} \

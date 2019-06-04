@@ -7,6 +7,7 @@
 
 #include <Folly/dynamic.h>
 #include <DevSettings.h>
+#include <XamlView.h>
 
 #include <functional>
 #include <string>
@@ -26,6 +27,8 @@ struct ReactInstanceSettings
 {
   bool UseWebDebugger { false };
   bool UseLiveReload { false };
+  bool UseDirectDebugger{ false };
+  bool UseJsi { true };
   std::string DebugBundlePath;
   facebook::react::NativeLoggingHook LoggingCallback;
   std::function<void(facebook::react::JSExceptionInfo&&)> JsExceptionCallback;
@@ -69,8 +72,10 @@ struct IReactInstance
   virtual const std::string& LastErrorMessage() const noexcept = 0;
 
   virtual void loadBundle(std::string&& jsBundleRelativePath) = 0;
-};
 
-void UpdateDevSettings(bool useWebDebugger, bool useLiveReload, bool reuseReactInstances);
+  // Test Hooks
+  virtual void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) = 0;
+  virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
+};
 
 } }

@@ -35,11 +35,24 @@ static int YogaLog(
   const char* format,
   va_list args)
 {
-  char buffer[16384];
-  int c = vsnprintf_s(buffer, _countof(buffer), _TRUNCATE, format, args);
-  if (c == -1)
-    OutputDebugString(L"YogaLog: output is truncated\n");
-  OutputDebugStringA(buffer);
+  int len = _scprintf(format, args);
+  std::string buffer(len + 1, '\0');
+  int c = vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
+  buffer.resize(len);
+
+  // OutputDebugString will truncate output around 4k, here
+  // we output a 1000 characters at a time.
+  int start = 0;
+  while (len - start > 1000)
+  {
+    char tmp = buffer[start + 1000];
+    buffer[start + 1000] = '\0';
+    OutputDebugStringA(&buffer[start]);
+    buffer[start + 1000] = tmp;
+    start += 1000;
+  }
+  OutputDebugStringA(&buffer[start]);
+  OutputDebugStringA("\n");
 
   return 0;
 }
@@ -84,7 +97,11 @@ NativeUIManager::NativeUIManager()
 {
 #if defined(_DEBUG)
   YGConfigSetLogger(YGConfigGetDefault(), &YogaLog);
-  // Set 'gPrintTree' in Yoga.c to true so they print their node tree to the logger.
+
+  // To Debug Yoga layout, uncomment the following line.
+  // YGConfigSetPrintTreeFlag(YGConfigGetDefault(), true);
+
+  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges, gPrintSkips)
 #endif
 }
 
@@ -205,7 +222,7 @@ static YGValue YGValueOrDefault(const folly::dynamic& value, YGValue defaultValu
 
   if (value.isString())
   {
-    std::string str = value.asString();
+    std::string str = value.getString();
     if (str == "auto")
       return YGValue{ YGUndefined, YGUnitAuto };
     if (str.length() > 0 && str.back() == '%')
@@ -303,7 +320,7 @@ static void StyleYogaNode(ShadowNodeBase& shadowNode, const YGNodeRef yogaNode, 
     return;
 
   for (const auto& pair : props.items()) {
-    const auto& key = pair.first;
+    const std::string& key = pair.first.getString();
     const auto& value = pair.second;
 
     if (key == "flexDirection") {
@@ -842,6 +859,10 @@ void NativeUIManager::DoLayout()
     for (auto& tagToYogaNode : m_tagsToYogaNodes) {
       int64_t tag = tagToYogaNode.first;
       YGNodeRef yogaNode = tagToYogaNode.second.get();
+
+      if (!YGNodeGetHasNewLayout(yogaNode))
+        continue;
+      YGNodeSetHasNewLayout(yogaNode, false);
 
       float left = YGNodeLayoutGetLeft(yogaNode);
       float top = YGNodeLayoutGetTop(yogaNode);

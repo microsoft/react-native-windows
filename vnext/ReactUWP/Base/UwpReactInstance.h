@@ -52,6 +52,10 @@ public:
   const std::string& LastErrorMessage() const noexcept override { return m_errorMessage; }
   void loadBundle(std::string&& jsBundleRelativePath) override { if (!m_isInError) m_instanceWrapper->loadBundle(std::move(jsBundleRelativePath)); };
 
+  // Test hooks
+  void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
+  void CallXamlViewCreatedTestHook(react::uwp::XamlView view) override;
+
   // Public functions
   std::shared_ptr<facebook::react::MessageQueueThread> GetNewUIMessageQueue() const;
 
@@ -73,6 +77,8 @@ private:
   bool m_started{ false };
   std::atomic_bool m_isInError{ false };
   std::string m_errorMessage;
+
+  std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 };
 
 } }

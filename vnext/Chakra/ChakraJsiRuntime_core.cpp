@@ -4,58 +4,31 @@
 #include "pch.h"
 
 #include "ChakraJsiRuntime.h"
-#include "UnicodeConversion.h"
+#include "unicode.h"
+#include "ChakraJsiRuntimeFactory.h"
 
 #include <cxxreact/MessageQueueThread.h>
 
 // This file contains non-edge-mode (or win32) implementations.
 #if !defined(USE_EDGEMODE_JSRT)
 #include <ChakraCore.h>
-
-#if !defined(JSI_CORE)
-#define CHAKRART_HAS_DEBUGGER
-#endif
-
-#if defined(CHAKRART_HAS_DEBUGGER)
 #include "ChakraCoreDebugger.h"
-#endif
 
-namespace facebook { 
+namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-bool ChakraJsiRuntime::isHostObject(const jsi::Object& obj) const {
-  bool isProxy;
-  JsValueRef target, handler;
-  JsGetProxyProperties(objectRef(obj), &isProxy, &target, &handler);
-
-  if (isProxy) {
-    ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(const_cast<ChakraJsiRuntime&>(*this), createObject(target));
-    if (extObject.getExternalData()) {
-      return true;
-    }
-  }
-
-  return false;
+JsWeakRef ChakraJsiRuntime::newWeakObjectRef(const jsi::Object& obj) {
+  JsWeakRef weakRef;
+  JsCreateWeakReference(objectRef(obj), &weakRef);
+  return weakRef;
 }
 
-std::shared_ptr<jsi::HostObject> ChakraJsiRuntime::getHostObject(const jsi::Object& obj) {
-
-  bool isProxy;
-  JsValueRef target, handler;
-
-  JsGetProxyProperties(objectRef(obj), &isProxy, &target, &handler);
-
-  ObjectWithExternalData<HostObjectProxy> extObject = ObjectWithExternalData<HostObjectProxy>::fromExisting(*this, createObject(target));
-  HostObjectProxy* externalData = extObject.getExternalData();
-  if (externalData) {
-    return externalData->getHostObject();
-  }
-  else {
-    return nullptr;
-  }
+JsValueRef ChakraJsiRuntime::strongObjectRef(const jsi::WeakObject& obj) {
+  JsValueRef strongRef;
+  JsGetWeakReferenceValue(objectRef(obj), &strongRef);
+  return strongRef;
 }
-
 
 Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, const std::string& sourceURL) {
   JsValueRef sourceRef;
@@ -108,7 +81,7 @@ bool ChakraJsiRuntime::evaluateSerializedScript(const jsi::Buffer& scriptBuffer,
 }
 
 std::unique_ptr<const jsi::Buffer> ChakraJsiRuntime::generatePreparedScript(const std::string& sourceURL, const jsi::Buffer& sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 = facebook::react::UnicodeConversion::Utf8ToUtf16(reinterpret_cast<const char*>(sourceBuffer.data()), sourceBuffer.size());
+  const std::wstring scriptUTF16 = facebook::react::unicode::utf8ToUtf16(reinterpret_cast<const char*>(sourceBuffer.data()), sourceBuffer.size());
 
   unsigned int bytecodeSize = 0;
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError)
@@ -138,18 +111,71 @@ JsValueRef ChakraJsiRuntime::createJSPropertyId(const char*data, size_t length) 
 }
 
 // ES6 Promise callback
-void CALLBACK ChakraJsiRuntime::PromiseContinuationCallback(JsValueRef funcRef, void* callbackState)  noexcept {
+void CALLBACK ChakraJsiRuntime::PromiseContinuationCallback(JsValueRef funcRef, void* callbackState) noexcept {
   ChakraJsiRuntime* runtime = static_cast<ChakraJsiRuntime*>(callbackState);
-  runtime->promiseContinuation(funcRef);
+  runtime->PromiseContinuation(funcRef);
 }
 
-void ChakraJsiRuntime::promiseContinuation(JsValueRef funcRef)  noexcept {
-  runtimeArgs().promiseContinuation->registerPromise(createObject(funcRef).getFunction(*this));
+void CALLBACK ChakraJsiRuntime::PromiseRejectionTrackerCallback(JsValueRef promise, JsValueRef reason, bool handled, void* callbackState) {
+  ChakraJsiRuntime* runtime = static_cast<ChakraJsiRuntime*>(callbackState);
+  runtime->PromiseRejectionTracker(promise, reason, handled);
+}
+
+void ChakraJsiRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
+  if (runtimeArgs().jsQueue) {
+    JsAddRef(funcRef, nullptr);
+    runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
+      JsValueRef undefinedValue;
+      JsGetUndefinedValue(&undefinedValue);
+      checkException(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      JsRelease(funcRef, nullptr);
+    });
+  }
+}
+
+void ChakraJsiRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef reason, bool handled) {
+  if (!handled)
+  {
+    std::ostringstream errorStream;
+    errorStream << "ChakraCore uncaught promise rejection: ";
+
+    JsPropertyIdRef stackPropertyID;
+    JsErrorCode error = JsGetPropertyIdFromName(L"stack", &stackPropertyID);
+    if (error == JsNoError)
+    {
+      JsValueRef stack;
+      error = JsGetProperty(reason, stackPropertyID, &stack);
+      if (error == JsNoError)
+      {
+        JsValueRef stackStrValue;
+        error = JsConvertValueToString(stack, &stackStrValue);
+        if (error == JsNoError)
+        {
+          errorStream << JSStringToSTLString(stackStrValue);
+        }
+      }
+    }
+
+    if (error != JsNoError)
+    {
+      // weren't able to print stack, so just convert reason to a string
+      JsValueRef strValue;
+      error = JsConvertValueToString(reason, &strValue);
+      if (error == JsNoError)
+      {
+        errorStream << JSStringToSTLString(strValue);
+      }
+    }
+
+    std::string errorString = errorStream.str();
+    throw jsi::JSError(*this, createStringFromAscii(errorString.c_str(), errorString.length()));
+  }
 }
 
 void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept{
-  if (m_args.promiseContinuation) {
+  if (runtimeArgs().enableNativePromiseSupport) {
     JsSetPromiseContinuationCallback(PromiseContinuationCallback, this);
+    JsSetHostPromiseRejectionTracker(PromiseRejectionTrackerCallback, this);
   }
 }
 
@@ -198,82 +224,7 @@ struct FileVersionInfoResource {
   s_runtimeVersion |= chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
 }
 
-#ifdef CHAKRART_HAS_DEBUGGER
-class ChakraJsiRuntimeWithDebugger : public ChakraJsiRuntime {
-public:
-  ChakraJsiRuntimeWithDebugger(ChakraJsiRuntimeArgs&& args);
-  ~ChakraJsiRuntimeWithDebugger();
-
-private:
-  JsErrorCode enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port, std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService);
-  void ProcessDebuggerCommandQueue();
-
-  static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void* callbackState);
-
-  constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
-  constexpr static int DebuggerDefaultPort = 9229;
-
-  std::string debugRuntimeName_;
-  int debugPort_ { 0 };
-  std::unique_ptr<DebugProtocolHandler> debugProtocolHandler_;
-  std::unique_ptr<DebugService> debugService_;
-};
-
-ChakraJsiRuntimeWithDebugger::ChakraJsiRuntimeWithDebugger(ChakraJsiRuntimeArgs&& args)
-  : ChakraJsiRuntime{ std::move(args) } {
-  bool enableDebugging = runtimeArgs().enableDebugging;
-  bool breakOnNextLine = runtimeArgs().debuggerBreakOnNextLine;
-
-  if (enableDebugging)
-  {
-    std::string runtimeName = runtimeArgs().debuggerRuntimeName;
-    int port = runtimeArgs().debuggerPort;
-
-    if (runtimeName.empty()) {
-      runtimeName = DebuggerDefaultRuntimeName;
-    }
-
-    if (port == 0) {
-      port = DebuggerDefaultPort;
-    }
-
-    JsErrorCode result = this->enableDebugging(m_runtime, runtimeName, breakOnNextLine, static_cast<uint16_t>(port), debugProtocolHandler_, debugService_);
-
-    if (result == JsNoError) {
-      debugPort_ = port;
-      debugRuntimeName_ = runtimeName;
-    }
-  }
-
-  if (breakOnNextLine && debugProtocolHandler_) {
-    if(runtimeArgs().loggingCallback) 
-      runtimeArgs().loggingCallback("Waiting for debugger to connect...", facebook::jsi::chakraruntime::LogLevel::Info);
-    
-    debugProtocolHandler_->WaitForDebugger();
-    
-    if (runtimeArgs().loggingCallback) 
-      runtimeArgs().loggingCallback("Debugger connected", facebook::jsi::chakraruntime::LogLevel::Info);
-  }
-}
-
-ChakraJsiRuntimeWithDebugger::~ChakraJsiRuntimeWithDebugger() {
-  if (debugService_)
-  {
-    JsErrorCode result = debugService_->Close();
-
-    if (result == JsNoError)
-    {
-      result = debugService_->UnregisterHandler(debugRuntimeName_);
-    }
-  }
-  debugService_ = nullptr;
-  debugProtocolHandler_ = nullptr;
-
-  // TODO: Does order matter here? Should this be after release context and before disposeruntime?
-  JsSetRuntimeMemoryAllocationCallback(m_runtime, nullptr, nullptr);
-}
-
-JsErrorCode ChakraJsiRuntimeWithDebugger::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
+JsErrorCode ChakraJsiRuntime::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
   std::unique_ptr<DebugProtocolHandler>& debugProtocolHandler, std::unique_ptr<DebugService>& debugService) {
   JsErrorCode result = JsNoError;
   auto protocolHandler = std::make_unique<DebugProtocolHandler>(runtime);
@@ -303,32 +254,62 @@ JsErrorCode ChakraJsiRuntimeWithDebugger::enableDebugging(JsRuntimeHandle runtim
   return result;
 }
 
-/* static */ void ChakraJsiRuntimeWithDebugger::ProcessDebuggerCommandQueueCallback(void* callbackState) {
-  ChakraJsiRuntimeWithDebugger* runtime= reinterpret_cast<ChakraJsiRuntimeWithDebugger*>(callbackState);
+/* static */ void ChakraJsiRuntime::ProcessDebuggerCommandQueueCallback(void* callbackState) {
+  ChakraJsiRuntime* runtime = reinterpret_cast<ChakraJsiRuntime*>(callbackState);
 
   if (runtime) {
     runtime->ProcessDebuggerCommandQueue();
   }
 }
 
-void ChakraJsiRuntimeWithDebugger::ProcessDebuggerCommandQueue() {
+void ChakraJsiRuntime::ProcessDebuggerCommandQueue() {
   if (runtimeArgs().jsQueue) {
     runtimeArgs().jsQueue->runOnQueue([this]() {
-      if (debugProtocolHandler_) {
-        debugProtocolHandler_->ProcessCommandQueue();
+      if (m_debugProtocolHandler) {
+        m_debugProtocolHandler->ProcessCommandQueue();
       }
     });
   }
 }
 
-#endif
+void ChakraJsiRuntime::startDebuggingIfNeeded() {
+  auto& args = runtimeArgs();
+  if (args.enableDebugging)
+  {
+    auto port = args.debuggerPort == 0 ? DebuggerDefaultPort : args.debuggerPort;
+    auto runtimeName = args.debuggerRuntimeName.empty() ? DebuggerDefaultRuntimeName : args.debuggerRuntimeName;
 
-std::unique_ptr<jsi::Runtime> makeChakraRuntime(ChakraJsiRuntimeArgs&& args) noexcept {
-#ifdef CHAKRART_HAS_DEBUGGER
-  return std::make_unique<ChakraJsiRuntimeWithDebugger>(std::move(args));
-#else
-  return std::make_unique<ChakraJsiRuntime>(std::move(args));
-#endif
+    JsErrorCode result = enableDebugging(m_runtime, runtimeName, args.debuggerBreakOnNextLine, static_cast<uint16_t>(port), m_debugProtocolHandler, m_debugService);
+
+    if (result == JsNoError) {
+      m_debugPort = port;
+      m_debugRuntimeName = runtimeName;
+    }
+  }
+
+  if (args.debuggerBreakOnNextLine && m_debugProtocolHandler) {
+    if (args.loggingCallback)
+      args.loggingCallback("Waiting for debugger to connect...", facebook::jsi::chakraruntime::LogLevel::Info);
+
+    m_debugProtocolHandler->WaitForDebugger();
+
+    if (args.loggingCallback)
+      args.loggingCallback("Debugger connected", facebook::jsi::chakraruntime::LogLevel::Info);
+  }
+}
+
+void ChakraJsiRuntime::stopDebuggingIfNeeded() {
+  if (m_debugService)
+  {
+    JsErrorCode result = m_debugService->Close();
+
+    if (result == JsNoError)
+    {
+      result = m_debugService->UnregisterHandler(m_debugRuntimeName);
+    }
+  }
+  m_debugService = nullptr;
+  m_debugProtocolHandler = nullptr;
 }
 
 }}} // namespace facebook::jsi::chakraruntime

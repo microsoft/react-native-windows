@@ -5,7 +5,7 @@
 #include "ClipboardModule.h"
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -55,7 +55,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> ClipboardModule::getMeth
 /*static*/ void ClipboardModule::SetClipboardText(const std::string& text)
 {
   winrt::Windows::ApplicationModel::DataTransfer::DataPackage data;
-  data.SetText(facebook::react::UnicodeConversion::Utf8ToUtf16(text));
+  data.SetText(facebook::react::unicode::utf8ToUtf16(text));
   winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(data);
 }
 
@@ -66,7 +66,7 @@ winrt::fire_and_forget GetClipboardTextAsync(facebook::xplat::module::CxxModule:
   try
   {
     std::wstring text = std::wstring(co_await data.GetTextAsync());
-    cbSuccess({ facebook::react::UnicodeConversion::Utf16ToUtf8(text) });
+    cbSuccess({ facebook::react::unicode::utf16ToUtf8(text) });
   }
   catch (...)
   {

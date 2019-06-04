@@ -43,4 +43,6 @@ mkdir %DESTROOT%\target\%%p\ship >nul 2>&1
 
 @echo on
 sed s/__BuildBuildNumber__/%VERSION%/g %DESTROOT%\ReactWin32.nuspec > %DESTROOT%\ReactWin32.versioned.nuspec
+sed s/__BuildBuildNumber__/%VERSION%/g %DESTROOT%\ReactUwp.nuspec > %DESTROOT%\ReactUwp.versioned.nuspec
 nuget.exe pack %DESTROOT%\ReactWin32.versioned.nuspec -NonInteractive -OutputDirectory %DESTROOT% -Verbosity Detailed
+nuget.exe pack %DESTROOT%\ReactUwp.versioned.nuspec -NonInteractive -OutputDirectory %DESTROOT% -Verbosity Detailed

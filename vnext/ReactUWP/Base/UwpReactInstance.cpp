@@ -16,7 +16,7 @@
 #include <CxxMessageQueue.h>
 #include <NativeModuleProvider.h>
 
-#include "UnicodeConversion.h"
+#include "unicode.h"
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
@@ -27,6 +27,7 @@
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/RootViewManager.h>
+#include <Views/ScrollContentViewManager.h>
 #include <Views/ScrollViewManager.h>
 #include <Views/SwitchViewManager.h>
 #include <Views/TextInputViewManager.h>
@@ -52,7 +53,7 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
-#include <Modules/UIManagerModule.h>
+#include <Modules/BatchingUIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactWindowsCore/IUIManager.h>
 #include <Threading/UIMessageQueueThread.h>
@@ -62,28 +63,11 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#include "ChakraJSIRuntimeHolder.h"
+
 #include <tuple>
 
-using namespace winrt;
-
-namespace {
-
-  struct UwpDevSettings
-  {
-    bool UseWebDebugger { false };
-    bool UseLiveReload { false };
-    bool ReuseReactInstances { false };
-  };
-
-  static UwpDevSettings g_devSettings;
-}
-
 namespace react { namespace uwp {
-
-bool ShouldReuseReactInstancesWhenPossible()
-{
-  return g_devSettings.ReuseReactInstances;
-}
 
 // TODO: This function is just a stand-in for a system that allows an individual host to provide a
 //  different set of view managers and native ui manager. Having all of this in one place will simply
@@ -110,6 +94,7 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
   viewManagers.push_back(std::make_unique<RootViewManager>(instance));
+  viewManagers.push_back(std::make_unique<ScrollContentViewManager>(instance));
   viewManagers.push_back(std::make_unique<ScrollViewManager>(instance));
   viewManagers.push_back(std::make_unique<SwitchViewManager>(instance));
   viewManagers.push_back(std::make_unique<TextViewManager>(instance));
@@ -125,7 +110,7 @@ REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(
   viewManagers.push_back(std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager());
+  return createBatchingUIManager(std::move(viewManagers), new NativeUIManager());
 }
 
 UwpReactInstance::UwpReactInstance(
@@ -150,7 +135,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
     "UIManager",
-    [uiManager = std::move(uiManager)]() { return facebook::react::createUIManagerModule(uiManager); },
+    [uiManager = std::move(uiManager)]() { return facebook::react::createBatchingUIManagerModule(uiManager); },
     messageQueue);
 
   modules.emplace_back(
@@ -219,7 +204,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
   assert(m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr && m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
@@ -236,11 +221,12 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
     devSettings->debugBundlePath = settings.DebugBundlePath;
-    devSettings->useWebDebugger = g_devSettings.UseWebDebugger || settings.UseWebDebugger;
+    devSettings->useWebDebugger = settings.UseWebDebugger;
+    devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
 
-    if (g_devSettings.UseLiveReload || settings.UseLiveReload)
+    if (settings.UseLiveReload)
     {
       devSettings->liveReloadCallback = [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept
       {
@@ -278,6 +264,10 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
+    std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+    if (settings.UseJsi)
+      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+
     try
     {
       // Create the react instance
@@ -285,7 +275,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
         std::string(), // bundleRootPath
         std::move(cxxModules),
         m_uiManager,
-        CreateAndStartJSQueueThread(),
+        jsQueue,
         m_defaultNativeThread,
         std::move(devSettings));
     }
@@ -296,7 +286,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
     catch (winrt::hresult_error const & e)
     {
-      OnHitError(facebook::react::UnicodeConversion::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+      OnHitError(facebook::react::unicode::utf16ToUtf8(e.message().c_str(), e.message().size()));
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     }
     catch (...)
@@ -421,7 +411,7 @@ static std::string PrettyError(const std::string& error) noexcept
         replWide += hexVal(prettyError[pos + 3]) << 8;
         replWide += hexVal(prettyError[pos + 4]) << 4;
         replWide += hexVal(prettyError[pos + 5]);
-        std::string repl = facebook::react::UnicodeConversion::Utf16ToUtf8(&replWide, 1);
+        std::string repl = facebook::react::unicode::utf16ToUtf8(&replWide, 1);
 
         prettyError.replace(pos, 6, repl);
       }
@@ -452,11 +442,17 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
     current.second();
 }
 
-void UpdateDevSettings(bool useWebDebugger, bool useLiveReload, bool reuseReactInstances)
+void UwpReactInstance::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook)
 {
-  g_devSettings.UseWebDebugger = useWebDebugger;
-  g_devSettings.UseLiveReload = useLiveReload;
-  g_devSettings.ReuseReactInstances = reuseReactInstances;
+  m_xamlViewCreatedTestHook = testHook;
+}
+
+void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view)
+{
+  if (m_xamlViewCreatedTestHook != nullptr)
+  {
+    m_xamlViewCreatedTestHook(view);
+  }
 }
 
 } }

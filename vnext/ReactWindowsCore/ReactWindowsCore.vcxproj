@@ -93,7 +93,7 @@
     <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
     <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\UnicodeConversion.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="AbiSafe.h" />
     <ClInclude Include="AsyncStorageModule.h" />
@@ -113,6 +113,7 @@
     <ClInclude Include="Logging.h" />
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
+    <ClInclude Include="Modules\BatchingUIManagerModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
@@ -123,6 +124,7 @@
     <ClInclude Include="ShadowNodeRegistry.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tracing.h" />
+    <ClInclude Include="utilities.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
     <ClInclude Include="WebSocketModule.h" />
@@ -132,13 +134,14 @@
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
+    <ClCompile Include="Modules\BatchingUIManagerModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="UnicodeConversion.cpp" />
+    <ClCompile Include="unicode.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="ViewManager.cpp" />
   </ItemGroup>

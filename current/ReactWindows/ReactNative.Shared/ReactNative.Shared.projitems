@@ -182,6 +182,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\Events\KeyEvent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IPropSetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\IUIBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)UIManager\ViewManagerTestHooks.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\PropSetter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ReactShadowNodeVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)UIManager\ThicknessManager.cs" />

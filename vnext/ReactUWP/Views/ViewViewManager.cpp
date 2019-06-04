@@ -285,7 +285,7 @@ folly::dynamic ViewViewManager::GetNativeProps() const
   return props;
 }
 
-void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto* pViewShadowNode = static_cast<ViewShadowNode*>(nodeToUpdate);
   bool shouldBeControl = pViewShadowNode->IsControl();
@@ -293,9 +293,9 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
   auto pPanel = pViewShadowNode->GetViewPanel();
   if (pPanel != nullptr)
   {
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      const folly::dynamic& propertyName = pair.first;
+      const std::string& propertyName = pair.first.getString();
       const folly::dynamic& propertyValue = pair.second;
 
       if (TryUpdateBackgroundBrush(*pPanel, propertyName, propertyValue))
@@ -323,7 +323,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       {
         if (propertyValue.isString())
         {
-          bool clipChildren = propertyValue.asString() == "hidden";
+          bool clipChildren = propertyValue.getString() == "hidden";
           pPanel->ClipChildren(clipChildren);
         }
       }
@@ -331,14 +331,14 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       {
         if (propertyValue.isString())
         {
-          bool hitTestable = propertyValue.asString() != "none";
+          bool hitTestable = propertyValue.getString() != "none";
           pPanel->IsHitTestVisible(hitTestable);
         }
       }
       else if (propertyName == "acceptsKeyboardFocus")
       {
         if (propertyValue.isBool())
-          shouldBeControl = propertyValue.asBool();
+          shouldBeControl = propertyValue.getBool();
       }
       else if (propertyName == "accessibilityRole")
       {
@@ -346,7 +346,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
         // non-Touchable scenarios
         if (propertyValue.isString())
         {
-          auto role = propertyValue.asString();
+          const std::string& role = propertyValue.getString();
           if (role == "none")
             pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
           else if (role == "button")
@@ -402,7 +402,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       else if (propertyName == "enableFocusRing")
       {
         if (propertyValue.isBool())
-          pViewShadowNode->EnableFocusRing(propertyValue.asBool());
+          pViewShadowNode->EnableFocusRing(propertyValue.getBool());
         else if (propertyValue.isNull())
           pViewShadowNode->EnableFocusRing(false);
       }

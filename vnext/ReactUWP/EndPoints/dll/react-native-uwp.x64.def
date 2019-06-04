@@ -8,7 +8,7 @@ EXPORTS
 ?asanPendingSafeInserts@detail@f14@folly@@3_KA
 ?asanRehashState@detail@f14@folly@@3_KA
 ?logTaggedMarker@ReactMarker@react@facebook@@3P6AXW4ReactMarkerId@123@PEBD@ZEA
-
+?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ?destroy@dynamic@folly@@AEAAXXZ
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
 ??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
@@ -31,7 +31,6 @@ EXPORTS
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?InitializeLogging@react@facebook@@YAX$$QEAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PEBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPEAUINativeTraceHandler@12@@Z
-?ShouldReuseReactInstancesWhenPossible@uwp@react@@YA_NXZ
 ?CreateWorkerMessageQueue@uwp@react@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?CreateMemoryTracker@react@facebook@@YA?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QEAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?callJSFunction@Instance@react@facebook@@UEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
@@ -47,7 +46,6 @@ EXPORTS
 
 ?CreateTimingModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
-?UpdateDevSettings@uwp@react@@YAX_N00@Z
 
 ??1DevSupportManager@uwp@react@@QEAA@XZ
 ?LoadJavaScriptInProxyMode@DevSupportManager@uwp@react@@UEAA?AV?$function@$$A6A?AV?$unique_ptr@VJSExecutor@react@facebook@@U?$default_delete@VJSExecutor@react@facebook@@@std@@@std@@V?$shared_ptr@VExecutorDelegate@react@facebook@@@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@Z@std@@AEBUDevSettings@3facebook@@@Z
@@ -65,9 +63,8 @@ EXPORTS
 ??0ViewViewManager@uwp@react@@QEAA@AEBV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0WebViewManager@uwp@react@@QEAA@AEBV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?Utf16ToUtf8@UnicodeConversion@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
-?Utf8ToUtf16@UnicodeConversion@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
 
 ?JsPointerToStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEBD_KPEAPEAX@Z
 ?JsStringToStdStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z

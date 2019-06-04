@@ -20,7 +20,7 @@
 #include <codecvt>
 #include <folly/dynamic.h>
 #include <Tracing.h>
-#include <UnicodeConversion.h>
+#include <unicode.h>
 #include <cxxReact/Instance.h>
 
 #include "CustomViewManager.h"
@@ -42,7 +42,6 @@ void EnsureExportedFunctions(bool createThings)
   // React.UWP as a DLL
 
   facebook::react::InitializeTracing(nullptr);
-  react::uwp::ShouldReuseReactInstancesWhenPossible();
 
   if (createThings)
   {
@@ -59,6 +58,7 @@ void EnsureExportedFunctions(bool createThings)
     dy.asInt();
     dy.asString();
     dy.asBool();
+    dy.get_ptr("test");
     dy[0];
     dy["test"];
     const folly::dynamic& cdy = dy;
@@ -227,7 +227,7 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance()
       OutputDebugStringA("in JsExceptionCallback");
     };
     m_instance->Start(m_instance, settings);
-    m_instance->loadBundle(facebook::react::UnicodeConversion::Utf16ToUtf8(m_loadedBundleFileName));
+    m_instance->loadBundle(facebook::react::unicode::utf16ToUtf8(m_loadedBundleFileName));
   }
   return m_instance;
 }

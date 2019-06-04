@@ -33,11 +33,14 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="JSBigAbiString.cpp" />
-    <ClCompile Include="UnicodeConversion.cpp" />
+    <ClCompile Include="unicode.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="LayoutAnimation.cpp" />
+    <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />
@@ -122,8 +125,12 @@
     </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\UnicodeConversion.h" />
+    <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
     <ClInclude Include="LayoutAnimation.h" />
+    <ClInclude Include="utilities.h" />
+    <ClInclude Include="Modules\BatchingUIManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

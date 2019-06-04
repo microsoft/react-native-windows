@@ -32,7 +32,7 @@ folly::dynamic ControlViewManager::GetNativeProps() const
   return props;
 }
 
-void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
+void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
 {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
 
@@ -40,9 +40,9 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::d
 
   if (control != nullptr)
   {
-    for (auto& pair : reactDiffMap.items())
+    for (const auto& pair : reactDiffMap.items())
     {
-      const folly::dynamic& propertyName = pair.first;
+      const std::string& propertyName = pair.first.getString();
       const folly::dynamic& propertyValue = pair.second;
 
       if (TryUpdateBackgroundBrush(control, propertyName, propertyValue))

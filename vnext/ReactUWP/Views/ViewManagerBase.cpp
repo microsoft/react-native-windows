@@ -48,10 +48,17 @@ YGSize DefaultYogaSelfMeasureFunc(YGNodeRef node, float width, YGMeasureMode wid
     winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
 
     // Clear out current size so it doesn't constrain the measurement
-    element.ClearValue(winrt::FrameworkElement::WidthProperty());
-    element.ClearValue(winrt::FrameworkElement::HeightProperty());
+    auto widthProp = winrt::FrameworkElement::WidthProperty();
+    auto heightProp = winrt::FrameworkElement::HeightProperty();
+    auto origWidth = element.GetValue(widthProp);
+    auto origHeight = element.GetValue(heightProp);
+    element.ClearValue(widthProp);
+    element.ClearValue(heightProp);
 
     element.Measure(availableSpace);
+
+    element.SetValue(widthProp, origWidth);
+    element.SetValue(heightProp, origHeight);
   }
   catch (winrt::hresult_error const& )
   {
@@ -98,10 +105,10 @@ dynamic ViewManagerBase::GetConstants() const
 
   const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
   if (!bubblingEventTypesConstants.empty())
-    constants["bubblingEventTypes"] = bubblingEventTypesConstants;
+    constants["bubblingEventTypes"] = std::move(bubblingEventTypesConstants);
   const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
   if (!directEventTypesConstants.empty())
-    constants["directEventTypes"] = directEventTypesConstants;
+    constants["directEventTypes"] = std::move(directEventTypesConstants);
 
   return constants;
 }
@@ -174,6 +181,10 @@ XamlView ViewManagerBase::CreateView(int64_t tag)
   // Set the tag if the element type supports it
   SetTag(view, tag);
 
+  auto instance = m_wkReactInstance.lock();
+  if (instance != nullptr)
+    instance->CallXamlViewCreatedTestHook(view);
+
   return view;
 }
 
@@ -199,7 +210,7 @@ void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView 
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, dynamic reactDiffMap)
+void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, const dynamic& reactDiffMap)
 {
   // Directly dirty this node since non-layout changes like the text property do not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate the ancestors which
@@ -209,9 +220,9 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, dynamic rea
   if (instance != nullptr)
     static_cast<NativeUIManager*>(instance->NativeUIManager())->DirtyYogaNode(tag);
 
-  for (auto& pair : reactDiffMap.items())
+  for (const auto& pair : reactDiffMap.items())
   {
-    const folly::dynamic& propertyName = pair.first;
+    const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
     if (propertyName == "onLayout")
