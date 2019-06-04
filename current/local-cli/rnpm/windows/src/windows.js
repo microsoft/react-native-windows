@@ -9,6 +9,7 @@ const chalk = require('chalk');
 const execSync = require('child_process').execSync;
 const path = require('path');
 const fs = require('fs');
+const semver = require('semver');
 
 const REACT_NATIVE_WINDOWS_GENERATE_PATH = function () {
   return path.resolve(
@@ -30,6 +31,24 @@ const getLatestVnextVersion = function (pkgmgr, isYarn) {
   response = isYarn ? response.data : response;
   const version = response["dist-tags"].vnext;
   return version;
+}
+
+/**
+ * Returns version of react-native-windows tagged with 'current-*' matching react-native dependency
+ * @param {boolean} isYarn
+ */
+const getMatchingCurrentVersion = function (pkgmgr, isYarn) {
+  const { major, minor } = Common.getReactNativeMajorMinorVersion();
+  console.log(`Checking for react-native-windows version matching ${major}.${minor}.*...`);
+  return new Promise((resolve, reject) =>
+    Common.getDistTagVersion(`current-${major}.${minor}`)
+      .then(resolve)
+      .catch(() => Common.getDistTagVersion('latest')
+        .then(latestVersion =>
+          reject(new Error(`Could not find react-native-windows@${major}.${minor}.*. ` +
+            `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
+            `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`)))
+        .catch(() => reject(new Error(`Could not find react-native-windows@${major}.${minor}.*.`)))));
 }
 
 module.exports = function windows(config, args, options) {
@@ -73,8 +92,9 @@ module.exports = function windows(config, args, options) {
     });
   }
   else {
-    const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
-    return Common.getInstallPackage(version)
+    const versionPromise = options.windowsVersion ? Promise.resolve(options.windowsVersion) : getMatchingCurrentVersion();
+    return versionPromise
+      .then(version => Common.getInstallPackage(version))
       .then(rnwPackage => {
         console.log(`Installing ${rnwPackage}...`);
         const pkgmgr = isYarn ? 'yarn add' : 'npm install --save';

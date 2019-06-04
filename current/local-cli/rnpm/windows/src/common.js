@@ -28,9 +28,9 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
 
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-function getLatestVersion() {
+function getDistTagVersion(distTag) {
   return new Promise(function (resolve, reject) {
-    npm.packages.release('react-native-windows', 'latest', (err, releases) => {
+    npm.packages.release('react-native-windows', distTag, (err, releases) => {
       if (err) {
         reject(err);
       } else if (!releases || releases.length === 0) {
@@ -47,7 +47,7 @@ function getMatchingVersion(version) {
   return new Promise(function (resolve, reject) {
     npm.packages.range('react-native-windows', version, (err, release) => {
       if (err || !release) {
-        return getLatestVersion()
+        return getDistTagVersion('latest')
           .then(latestVersion => {
             reject(new Error(`Could not find react-native-windows@${version}. ` +
               `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
@@ -73,21 +73,33 @@ const getInstallPackage = function (version) {
     process.exit(1);
   }
 
-  if (validVersion || validRange) {
+  if (validVersion) {
+    return Promise.resolve(`${packageToInstall}@${validVersion}`);
+  } else if (validRange) {
     return getMatchingVersion(version)
-      .then(resultVersion => packageToInstall + '@' + resultVersion);
+      .then(resultVersion => `${packageToInstall}@${resultVersion}`);
   } else {
     return Promise.resolve(version);
   }
 };
 
-const getReactNativeVersion = function () {
+const getReactNativeMajorMinorVersion = function () {
   console.log('Reading react-native version from node_modules...');
   if (fs.existsSync(REACT_NATIVE_PACKAGE_JSON_PATH())) {
     const version = JSON.parse(fs.readFileSync(REACT_NATIVE_PACKAGE_JSON_PATH(), 'utf-8')).version;
-    return `${semver.major(version)}.${semver.minor(version)}.*`;
+    return {
+      major: semver.major(version),
+      minor: semver.minor(version),
+    };
   }
 };
+
+const getReactNativeVersion = function() {
+  const { major, minor } = getReactNativeMajorMinorVersion();
+  if (version) {
+    return `${major}.${minor}.*`;
+  }
+}
 
 const getReactNativeAppName = function () {
   console.log('Reading application name from package.json...');
@@ -128,7 +140,9 @@ const unzipFile = function (file, dir) {
 }
 
 module.exports = {
+  getDistTagVersion,
   getInstallPackage,
+  getReactNativeMajorMinorVersion,
   getReactNativeVersion,
   getReactNativeAppName,
   isGlobalCliUsingYarn,
