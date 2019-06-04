@@ -91,8 +91,8 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
     }
     else if (pair.first == "numberOfLines")
     {
-      if (pair.second.isInt())
-        textBlock.MaxLines(static_cast<int32_t>(pair.second.getInt()));
+      if (pair.second.isNumber())
+        textBlock.MaxLines(static_cast<int32_t>(pair.second.asDouble()));
       else if (pair.second.isNull())
         textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
     }
@@ -119,9 +119,9 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
     }
     else if (pair.first == "selectionColor")
     {
-      if (pair.second.isInt())
+      if (pair.second.isNumber())
       {
-        textBlock.SelectionHighlightColor(SolidColorBrushFrom(pair.second));
+        textBlock.SelectionHighlightColor(SolidColorBrushFrom(static_cast<int>(pair.second.asDouble())));
       }
       else
         textBlock.ClearValue(winrt::TextBlock::SelectionHighlightColorProperty());

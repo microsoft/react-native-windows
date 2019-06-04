@@ -92,16 +92,16 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName.asString() == "firstDayOfWeek")
     {
-      if (propertyValue.isInt())
-        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(propertyValue.asInt()));
+      if (propertyValue.isNumber())
+        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(static_cast<int64_t>(propertyValue.asDouble())));
       else if (propertyValue.isNull())
         datePicker.ClearValue(winrt::CalendarDatePicker::FirstDayOfWeekProperty());
     }
     else if (propertyName.asString() == "maxDate")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
-        m_maxTime = propertyValue.asInt();
+        m_maxTime = static_cast<int64_t>(propertyValue.asDouble());
         updateMaxDate = true;
       }
       else if (propertyValue.isNull())
@@ -111,9 +111,9 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName.asString() == "minDate")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
-        m_minTime = propertyValue.asInt();
+        m_minTime = static_cast<int64_t>(propertyValue.asDouble());
         updateMinDate = true;
       }
       else if (propertyValue.isNull())
@@ -130,9 +130,9 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName.asString() == "selectedDate")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
       {
-        m_selectedTime = propertyValue.asInt();
+        m_selectedTime = static_cast<int64_t>(propertyValue.asDouble());
         updateSelectedDate = true;
       }
       else if (propertyValue.isNull())
@@ -142,8 +142,8 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName.asString() == "timeZoneOffsetInSeconds")
     {
-      if (propertyValue.isInt())
-        m_timeZoneOffsetInSeconds = propertyValue.asInt();
+      if (propertyValue.isNumber())
+        m_timeZoneOffsetInSeconds = static_cast<int64_t>(propertyValue.asDouble());
       else if (propertyValue.isNull())
         m_timeZoneOffsetInSeconds = 0;
     }

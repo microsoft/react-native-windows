@@ -105,7 +105,7 @@ bool TryUpdateBackgroundBrush(T& element, const folly::dynamic& propertyName, co
 {
   if (propertyName == "backgroundColor")
   {
-    if (propertyValue.isInt())
+    if (propertyValue.isNumber())
       element.Background(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BackgroundProperty());
@@ -129,7 +129,7 @@ bool TryUpdateForeground(const T& element, const folly::dynamic& propertyName, c
 {
   if (propertyName == "color")
   {
-    if (propertyValue.isInt())
+    if (propertyValue.isNumber())
       element.Foreground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::ForegroundProperty());
@@ -147,7 +147,7 @@ bool TryUpdateBorderProperties(ShadowNodeBase* node, T& element, const folly::dy
 
   if (propertyName == "borderColor")
   {
-    if (propertyValue.isInt())
+    if (propertyValue.isNumber())
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BorderBrushProperty());
@@ -317,7 +317,7 @@ bool TryUpdateFontProperties(const T& element, const folly::dynamic& propertyNam
   if (propertyName == "fontSize")
   {
     if (propertyValue.isNumber())
-      element.FontSize(static_cast<double>(propertyValue.getInt()));
+      element.FontSize(propertyValue.asDouble());
     else if (propertyValue.isNull())
       element.ClearValue(T::FontSizeProperty());
   }
@@ -537,7 +537,7 @@ bool TryUpdateCharacterSpacing(const T& element, const folly::dynamic& propertyN
   if (propertyName == "letterSpacing" || propertyName == "characterSpacing")
   {
     if (propertyValue.isNumber())
-      element.CharacterSpacing(static_cast<int32_t>(propertyValue.asInt()));
+      element.CharacterSpacing(static_cast<int32_t>(propertyValue.asDouble()));
     else if (propertyValue.isNull())
       element.ClearValue(T::CharacterSpacingProperty());
 

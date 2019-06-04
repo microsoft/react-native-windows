@@ -257,7 +257,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       {
         if (propertyValue.isNumber())
         {
-          auto value = static_cast<int>(propertyValue.asInt());
+          auto value = static_cast<int>(propertyValue.asDouble());
           auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
 
           element.SetValue(winrt::Canvas::ZIndexProperty(), boxedValue);

@@ -402,7 +402,7 @@ auto NetworkingModule::getMethods() -> std::vector<Method>
           params["data"],
           params["responseType"].asString(),
           params["incrementalUpdates"].asBool(),
-          params["timeout"].asInt(),
+          static_cast<int64_t>(params["timeout"].asDouble()),
           cb);
       }),
     Method("abortRequest", [networking](folly::dynamic args) noexcept

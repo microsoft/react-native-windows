@@ -410,7 +410,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dyna
       {
         if (propertyValue.isNumber())
         {
-          auto tabIndex = propertyValue.asInt();
+          auto tabIndex = propertyValue.asDouble();
           if (tabIndex == static_cast<int32_t>(tabIndex))
           {
             pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));

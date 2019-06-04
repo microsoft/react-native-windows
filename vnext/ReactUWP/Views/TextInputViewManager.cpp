@@ -56,13 +56,13 @@ struct json_type_traits<react::uwp::Selection>
     {
       if (item.first == "start")
       {
-        auto start = item.second.asInt();
+        auto start = item.second.asDouble();
         if (start == static_cast<int>(start))
           selection.start = static_cast<int>(start);
       }
       else if (item.first == "end")
       {
-        auto end = item.second.asInt();
+        auto end = item.second.asDouble();
         if (end == static_cast<int>(end))
           selection.end = static_cast<int>(end);
       }
@@ -240,8 +240,8 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (pair.first == "maxLength")
     {
-      if (pair.second.isInt())
-        textBox.MaxLength(static_cast<int32_t>(pair.second.asInt()));
+      if (pair.second.isNumber())
+        textBox.MaxLength(static_cast<int32_t>(pair.second.asDouble()));
       else if (pair.second.isNull())
         textBox.ClearValue(winrt::TextBox::MaxLengthProperty());
     }
@@ -256,7 +256,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (textBox.try_as<winrt::ITextBlock6>())
       {
-        if (pair.second.isInt())
+        if (pair.second.isNumber())
           textBox.PlaceholderForeground(SolidColorBrushFrom(pair.second));
         else if (pair.second.isNull())
           textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
@@ -283,7 +283,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (pair.first == "selectionColor")
     {
-      if (pair.second.isInt())
+      if (pair.second.isNumber())
         textBox.SelectionHighlightColor(SolidColorBrushFrom(pair.second));
       else if (pair.second.isNull())
         textBox.ClearValue(winrt::TextBox::SelectionHighlightColorProperty());

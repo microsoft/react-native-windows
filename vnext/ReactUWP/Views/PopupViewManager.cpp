@@ -95,8 +95,8 @@ void PopupShadowNode::updateProperties(const folly::dynamic&& props)
 
     if (propertyName.asString() == "target")
     {
-      if (propertyValue.isInt())
-        m_targetTag = propertyValue.asInt();
+      if (propertyValue.isNumber())
+        m_targetTag = static_cast<int64_t>(propertyValue.asDouble());
       else
         m_targetTag = -1;
     }
@@ -116,14 +116,14 @@ void PopupShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName.asString() == "horizontalOffset")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         popup.HorizontalOffset(propertyValue.asDouble());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::HorizontalOffsetProperty());
     }
     else if (propertyName.asString() == "verticalOffset")
     {
-      if (propertyValue.isInt())
+      if (propertyValue.isNumber())
         popup.VerticalOffset(propertyValue.asDouble());
       else if (propertyValue.isNull())
         popup.ClearValue(winrt::Popup::VerticalOffsetProperty());
