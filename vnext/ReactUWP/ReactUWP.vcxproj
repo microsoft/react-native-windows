@@ -194,7 +194,7 @@
     <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
-    <ClInclude Include="Views\ImageViewManager.h" />
+    <ClInclude Include="Views\Image\ImageViewManager.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
@@ -268,7 +268,7 @@
     <ClCompile Include="Views\DatePickerViewManager.cpp" />
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
-    <ClCompile Include="Views\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Image\ImageViewManager.cpp" />
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
