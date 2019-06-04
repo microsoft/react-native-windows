@@ -43,11 +43,13 @@
     "plugin": "./local-cli/index.js"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.0",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
     "react-timer-mixin": "^0.13.2",
     "react-native-local-cli": "^1.0.0-alpha.5",
+    "regenerator-runtime": "^0.13.2",
     "username": "^3.0.0",
     "shelljs": "^0.7.8",
     "uuid": "^2.0.1",
