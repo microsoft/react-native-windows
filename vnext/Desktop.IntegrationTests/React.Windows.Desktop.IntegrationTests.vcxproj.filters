@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{858e83fd-2806-4740-83f5-cecd131aaf54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c08b611b-1128-41c6-bb62-307c5c1cf6b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{0dc8da26-2d94-492c-a3b5-580585e27286}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Integration Tests">
+      <UniqueIdentifier>{d16575e1-76eb-4fd5-a7b1-8a0f061e6fa9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="WebSocketIntegrationTest.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketJSExecutorIntegrationTest.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketModuleIntegrationTest.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="RNTesterIntegrationTests.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopTestInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HttpResourceIntegrationTests.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestMessageQueueThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopTestRunner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebSocketResourcePerformanceTests.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DesktopTestInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestMessageQueueThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChakraJSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+LIBLET_WIN32 = 1
+LIBLET_DEF_NOEXPORTS = 1
+LIBLET_PREFIX = jsicore
+
+!include ..\sources.inc
+
+SOURCES = $(SOURCES_JSICORE)

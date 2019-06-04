@@ -1,0 +1,80 @@
+
+steps:
+
+  - task: BatchScript@1
+    displayName: 'Copy Nuget source files'
+    inputs:
+      filename: 'vnext\ReactWindows-CopyToStaging2.bat'
+      arguments: '$(build.artifactstagingdirectory)'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
+
+  - task: PowerShell@2
+    displayName: 'Stage Sources'
+    inputs:
+      targetType: filePath
+      filePath: 'vnext\Scripts\Tfs\Layout-Headers.ps1'
+      arguments: '-TargetRoot $(Build.ArtifactStagingDirectory)'
+    enabled: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: debug arm'
+    inputs:
+      PathtoPublish: 'vnext\target\ARM\Debug'
+      ArtifactName: 'ReactWindows-debug-arm'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'arm'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: ship arm'
+    inputs:
+      PathtoPublish: 'vnext\target\ARM\Release'
+      ArtifactName: 'ReactWindows-ship-arm'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'arm'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts debug x86'
+    inputs:
+      PathtoPublish: 'vnext\target\x86\Debug'
+      ArtifactName: 'ReactWindows-debug-x86'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts ship x86'
+    inputs:
+      PathtoPublish: 'vnext\target\x86\Release'
+      ArtifactName: 'ReactWindows-ship-x86'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x86'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts debug x64'
+    inputs:
+      PathtoPublish: 'vnext\target\x64\debug'
+      ArtifactName: 'ReactWindows-debug-x64'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts ship x64'
+    inputs:
+      PathtoPublish: 'vnext\target\x64\Release'
+      ArtifactName: 'ReactWindows-ship-x64'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x64'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts - Nuget Source files'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+      ArtifactName: 'ReactWindows-source'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Build Artifacts'
+    inputs:
+      PathtoPublish: 'vnext\ReactWindows\target'
+      ArtifactName: ReactWindows
+    enabled: false
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Sources'
+    inputs:
+      ArtifactName: ReactWindows
+    enabled: false
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
