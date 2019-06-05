@@ -11,7 +11,7 @@ namespace winrt::react::uwp::image::implementation
     void ResizeMode(react::uwp::image::ResizeMode value);
 
     Windows::Foundation::Uri SourceUri() { return m_sourceUri; }
-    void SourceUri(Windows::Foundation::Uri const& value) { m_sourceUri = value; }
+    void SourceUri(Windows::Foundation::Uri const& value);
 
     // XamlCompositionBaseBrush
     void OnConnected();

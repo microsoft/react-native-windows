@@ -16,6 +16,15 @@ using namespace winrt::react::uwp;
 
 namespace winrt::react::uwp::image::implementation
 {
+  void ReactImageBrush::SourceUri(Windows::Foundation::Uri const& value)
+  {
+    if (m_sourceUri != value)
+    {
+      m_sourceUri = value;
+      UpdateCompositionBrush();
+    }
+  }
+
   void ReactImageBrush::ResizeMode(image::ResizeMode value)
   {
     if (m_resizeMode != value)
@@ -27,9 +36,7 @@ namespace winrt::react::uwp::image::implementation
 
   void ReactImageBrush::OnConnected()
   {
-    if (SourceUri()) {
-      UpdateCompositionBrush();
-    }
+    UpdateCompositionBrush();
   }
 
   void ReactImageBrush::OnDisconnected()
@@ -43,19 +50,22 @@ namespace winrt::react::uwp::image::implementation
 
   void ReactImageBrush::UpdateCompositionBrush()
   {
-    winrt::CompositionSurfaceBrush surfaceBrush{ GetOrCreateSurfaceBrush() };
-    surfaceBrush.Stretch(ResizeModeToStretch());
-
-    auto compositionBrush{ surfaceBrush.as<winrt::CompositionBrush>() };
-    if (ResizeMode() == image::ResizeMode::Repeat)
+    if (SourceUri())
     {
-      compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
-    }
+      winrt::CompositionSurfaceBrush surfaceBrush{ GetOrCreateSurfaceBrush() };
+      surfaceBrush.Stretch(ResizeModeToStretch());
 
-    // Only switch CompositionBrush if we are switching to/from ResizeMode::Repeat
-    if (ShouldSwitchCompositionBrush())
-    {
-      CompositionBrush(compositionBrush);
+      auto compositionBrush{ surfaceBrush.as<winrt::CompositionBrush>() };
+      if (ResizeMode() == image::ResizeMode::Repeat)
+      {
+        compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
+      }
+
+      // Only switch CompositionBrush if we are switching to/from ResizeMode::Repeat
+      if (ShouldSwitchCompositionBrush())
+      {
+        CompositionBrush(compositionBrush);
+      }
     }
   }
 
@@ -72,6 +82,10 @@ namespace winrt::react::uwp::image::implementation
 
       auto effectFactory{ winrt::Window::Current().Compositor().CreateEffectFactory(borderEffect) };
       m_effectBrush = effectFactory.CreateBrush();
+
+      surfaceBrush.HorizontalAlignmentRatio(0.0f);
+      surfaceBrush.VerticalAlignmentRatio(0.0f);
+
       m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
     }
 
@@ -84,6 +98,7 @@ namespace winrt::react::uwp::image::implementation
     if (!CompositionBrush())
     {
       auto surfaceBrush{ winrt::Window::Current().Compositor().CreateSurfaceBrush() };
+      auto uri{ SourceUri() };
       auto loadedSurface{ winrt::LoadedImageSurface::StartLoadFromUri(SourceUri()) };
 
       surfaceBrush.Surface(loadedSurface);
@@ -106,18 +121,19 @@ namespace winrt::react::uwp::image::implementation
 
   bool ReactImageBrush::ShouldSwitchCompositionBrush()
   {
-    bool effectToSurfaceBrushSwitch =
+    bool effectToSurfaceBrushSwitch{
       ResizeMode() != image::ResizeMode::Repeat &&
-      !CompositionBrush().try_as<winrt::CompositionSurfaceBrush>();
+      !CompositionBrush().try_as<winrt::CompositionSurfaceBrush>() };
 
-    bool surfaceToEffectBrushSwitch = ResizeMode() == image::ResizeMode::Repeat;
+    bool surfaceToEffectBrushSwitch{ ResizeMode() == image::ResizeMode::Repeat };
 
     return effectToSurfaceBrushSwitch || surfaceToEffectBrushSwitch;
   }
 
   bool ReactImageBrush::IsImageLargerThanView()
   {
-    return true;
+    bool value = false;
+    return value;
   }
 
   winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch()

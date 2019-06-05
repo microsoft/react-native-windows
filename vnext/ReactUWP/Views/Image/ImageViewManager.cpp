@@ -101,7 +101,8 @@ struct json_type_traits<winrt::ResizeMode>
 {
   static winrt::ResizeMode parseJson(const folly::dynamic& json)
   {
-    winrt::ResizeMode resizeMode;
+    auto resizeMode = winrt::ResizeMode::Contain;
+
     if (json == "cover")
     {
       resizeMode = winrt::ResizeMode::Cover;
@@ -142,15 +143,26 @@ namespace react { namespace uwp {
 
   XamlView ImageViewManager::CreateViewCore(int64_t tag)
   {
+    auto brush{ winrt::make<winrt::react::uwp::image::implementation::ReactImageBrush>() };
+
     winrt::Canvas canvas;
+    canvas.Background(brush);
+
     return canvas;
   }
 
   void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
   {
     auto canvas = nodeToUpdate->GetView().as<winrt::Canvas>();
+
     if (canvas == nullptr)
       return;
+
+    auto width{ canvas.Width() };
+    auto heigth{ canvas.Height() };
+
+    auto actualWidth{ canvas.ActualWidth() };
+    auto actualHeight{ canvas.ActualHeight() };
 
     for (const auto& pair : reactDiffMap.items())
     {
@@ -286,13 +298,18 @@ namespace react { namespace uwp {
       EmitImageEvent(instance, canvas, "topLoadStart", sources[0]);
       if (needsDownload)
       {
+        auto brush{ canvas.Background().as<winrt::ReactImageBrush>() };
+        brush.SourceUri(uri);
+        canvas.Background(brush);
+
         // FUTURE: This should get a weak_ptr from instance
         // fix when the win32 instance merge happens
-        DownloadImageAsync(canvas, sources[0], instance);
+        // DownloadImageAsync(canvas, sources[0], instance);
       }
       else
       {
-        auto brush = winrt::make<winrt::react::uwp::image::implementation::ReactImageBrush>();
+        // auto brush = winrt::make<winrt::react::uwp::image::implementation::ReactImageBrush>();
+        auto brush{ canvas.Background().as<winrt::ReactImageBrush>() };
         brush.SourceUri(uri);
         canvas.Background(brush);
 
