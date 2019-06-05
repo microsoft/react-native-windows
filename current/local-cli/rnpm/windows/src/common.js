@@ -10,9 +10,6 @@ const semver = require('semver');
 const Registry = require('npm-registry');
 const child_process = require('child_process');
 const validUrl = require('valid-url');
-const request = require('request');
-const fsextra = require('fs-extra');
-var extract = require('extract-zip')
 
 let npmConfReg = child_process.execSync('npm config get registry').toString().trim();
 let NPM_REGISTRY_URL = validUrl.is_uri(npmConfReg) ? npmConfReg : 'http://registry.npmjs.org';
@@ -28,9 +25,9 @@ const REACT_NATIVE_PACKAGE_JSON_PATH = function() {
 
 const npm = new Registry({registry: NPM_REGISTRY_URL});
 
-function getDistTagVersion(distTag) {
+function getLatestVersion() {
   return new Promise(function (resolve, reject) {
-    npm.packages.release('react-native-windows', distTag, (err, releases) => {
+    npm.packages.release('react-native-windows', 'latest', (err, releases) => {
       if (err) {
         reject(err);
       } else if (!releases || releases.length === 0) {
@@ -42,27 +39,42 @@ function getDistTagVersion(distTag) {
   });
 }
 
-function getMatchingVersion(version) {
+function matchesTag(version, tag) {
+  const prereleaseInfo = semver.prerelease(version);
+  return prereleaseInfo && prereleaseInfo[0] === tag;
+}
+
+function getMatchingVersion(version, tag, ignoreStable) {
   console.log(`Checking for react-native-windows version matching ${version}...`);
   return new Promise(function (resolve, reject) {
     npm.packages.range('react-native-windows', version, (err, release) => {
       if (err || !release) {
-        return getDistTagVersion('latest')
+        return getLatestVersion()
           .then(latestVersion => {
             reject(new Error(`Could not find react-native-windows@${version}. ` +
               `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
               `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
             }).catch(error => reject(new Error(`Could not find react-native-windows@${version}.`)));
+      }
+
+      const matchedVersion = release.version;
+      const matchedPrerelease = semver.prerelease(matchedVersion);
+      const isPrerelease = prereleaseTag && !!matchedPrerelease;
+      if (!matchesTag(matchedVersion, tag) && (ignoreStable || isPrerelease)) {
+        var candidates = versions.filter(v => matchesTag(v, tag)).sort((x, y) => semver.lt(x, y));
+        if (candidates.length === 0) {
+          reject(new Error(`Could not find react-native-windows@${version}-${prereleaseTag}.*.`));
+        }
+        resolve(candidates[0]);
       } else {
-        resolve(release.version);
+        resolve(matchedVersion);
       }
     });
   });
 }
 
-const getInstallPackage = function (version) {
-  let packageToInstall = 'react-native-windows';
-
+const getInstallPackage = function (version, prereleaseTag, useStable) {
+  const packageToInstall = 'react-native-windows';
   const validVersion = semver.valid(version);
   const validRange = semver.validRange(version);
   if ((validVersion && !semver.gtr(validVersion, '0.26.*')) ||
@@ -73,33 +85,21 @@ const getInstallPackage = function (version) {
     process.exit(1);
   }
 
-  if (validVersion) {
-    return Promise.resolve(`${packageToInstall}@${validVersion}`);
-  } else if (validRange) {
-    return getMatchingVersion(version)
-      .then(resultVersion => `${packageToInstall}@${resultVersion}`);
+  if (validVersion || validRange) {
+    return getMatchingVersion(version, prereleaseTag, useStable)
+      .then(resultVersion => packageToInstall + '@' + resultVersion);
   } else {
     return Promise.resolve(version);
   }
 };
 
-const getReactNativeMajorMinorVersion = function () {
+const getReactNativeVersion = function () {
   console.log('Reading react-native version from node_modules...');
   if (fs.existsSync(REACT_NATIVE_PACKAGE_JSON_PATH())) {
     const version = JSON.parse(fs.readFileSync(REACT_NATIVE_PACKAGE_JSON_PATH(), 'utf-8')).version;
-    return {
-      major: semver.major(version),
-      minor: semver.minor(version),
-    };
+    return `${semver.major(version)}.${semver.minor(version)}.*`;
   }
 };
-
-const getReactNativeVersion = function() {
-  const { major, minor } = getReactNativeMajorMinorVersion();
-  if (version) {
-    return `${major}.${minor}.*`;
-  }
-}
 
 const getReactNativeAppName = function () {
   console.log('Reading application name from package.json...');
@@ -117,35 +117,9 @@ const isGlobalCliUsingYarn = function(projectDir) {
   return fs.existsSync(path.join(projectDir, 'yarn.lock'));
 };
 
-const downloadFile = function (filename, url) {
-  return fsextra.ensureFile(filename).then(function () {
-    return new Promise(function (resolve, reject) {
-      request.get(url).pipe(fs.createWriteStream(filename)).on('close', resolve).on('error', function (err) {
-        reject(err);
-      });
-    });
-  });
-};
-
-const unzipFile = function (file, dir) {
-  return new Promise(function (resolve, reject) {
-    extract(file, { dir }, function (err) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
-
 module.exports = {
-  getDistTagVersion,
   getInstallPackage,
-  getReactNativeMajorMinorVersion,
   getReactNativeVersion,
   getReactNativeAppName,
-  isGlobalCliUsingYarn,
-  downloadFile,
-  unzipFile
+  isGlobalCliUsingYarn
 };

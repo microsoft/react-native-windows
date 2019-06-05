@@ -8,10 +8,8 @@ const Common = require('./common');
 const chalk = require('chalk');
 const execSync = require('child_process').execSync;
 const path = require('path');
-const fs = require('fs');
-const semver = require('semver');
 
-const REACT_NATIVE_WINDOWS_GENERATE_PATH = function () {
+const REACT_NATIVE_WINDOWS_GENERATE_PATH = function() {
   return path.resolve(
     process.cwd(),
     'node_modules',
@@ -21,89 +19,25 @@ const REACT_NATIVE_WINDOWS_GENERATE_PATH = function () {
   );
 };
 
-/**
- * Returns latest version of react-native-windows where version contains 'vnext'
- * @param {'yarn'|'npm'} pkgmgr
- * @param {boolean} isYarn
- */
-const getLatestVnextVersion = function (pkgmgr, isYarn) {
-  let response = JSON.parse(execSync(`${pkgmgr} info react-native-windows --silent --json`));
-  response = isYarn ? response.data : response;
-  const version = response["dist-tags"].vnext;
-  return version;
-}
-
-/**
- * Returns version of react-native-windows tagged with 'current-*' matching react-native dependency
- * @param {boolean} isYarn
- */
-const getMatchingCurrentVersion = function (pkgmgr, isYarn) {
-  const { major, minor } = Common.getReactNativeMajorMinorVersion();
-  console.log(`Checking for react-native-windows version matching ${major}.${minor}.*...`);
-  return new Promise((resolve, reject) =>
-    Common.getDistTagVersion(`current-${major}.${minor}`)
-      .then(resolve)
-      .catch(() => Common.getDistTagVersion('latest')
-        .then(latestVersion =>
-          reject(new Error(`Could not find react-native-windows@${major}.${minor}.*. ` +
-            `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
-            `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`)))
-        .catch(() => reject(new Error(`Could not find react-native-windows@${major}.${minor}.*.`)))));
-}
-
-module.exports = function windows(config, args, options) {
+module.exports = function (config, args, options) {
   const name = args[0] ? args[0] : Common.getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
-  const template = options.template;
-  const execOptions = options.verbose ? { stdio: 'inherit' } : {};
-  const cwd = process.cwd();
-  const isYarn = Common.isGlobalCliUsingYarn(cwd);
+  const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
 
-  if (template === 'vnext') {
-    const pkgmgr = isYarn ? 'yarn' : 'npm';
-    const version = options.windowsVersion ? options.windowsVersion : getLatestVnextVersion(pkgmgr, isYarn);
-    const projectPackageJson = path.join(cwd, 'package.json');
-    const reactNativeWindowsPackageJson = path.join(cwd, 'node_modules', 'react-native-windows', 'package.json');
+  // If the template is not set, look for a stable or 'rc' version
+  const template = options.template ? options.template : 'rc';
+  const ignoreStable = !!options.template;
 
-    console.log('Installing deps...');
-    return Common.getInstallPackage(version).then((rnwPackage) => {
+  return Common.getInstallPackage(version, template, ignoreStable)
+    .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
-      const pkgmgrInstall = isYarn ? `${pkgmgr} add` : `${pkgmgr} install --save`
-      execSync(`${pkgmgrInstall} ${rnwPackage}`, execOptions);
+      const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
+
+      const execOptions = options.verbose ? { stdio: 'inherit' } : {};
+      execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
-      const vnextPackageJson = JSON.parse(fs.readFileSync(reactNativeWindowsPackageJson, { encoding: 'UTF8' }));
-      let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
-      const depDelim = ' || ';
-      const delimIndex = reactNativeVersion.indexOf(depDelim);
-      if (delimIndex !== -1) {
-        reactNativeVersion = reactNativeVersion.substring(delimIndex + depDelim.length);
-      }
-
-      // patching package.json to have proper react-native version and start script
-      const prjPackageJson = JSON.parse(fs.readFileSync(projectPackageJson, { encoding: 'UTF8' }));
-      prjPackageJson.scripts.start = 'node node_modules/react-native-windows/Scripts/cli.js start';
-      prjPackageJson.dependencies['react-native'] = reactNativeVersion;
-      fs.writeFileSync(projectPackageJson, JSON.stringify(prjPackageJson, null, 2));
-      execSync(isYarn ? pkgmgr : `${pkgmgr} i`, execOptions);
-
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
-      generateWindows(process.cwd(), name, ns);
-    });
-  }
-  else {
-    const versionPromise = options.windowsVersion ? Promise.resolve(options.windowsVersion) : getMatchingCurrentVersion();
-    return versionPromise
-      .then(version => Common.getInstallPackage(version))
-      .then(rnwPackage => {
-        console.log(`Installing ${rnwPackage}...`);
-        const pkgmgr = isYarn ? 'yarn add' : 'npm install --save';
-
-        execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
-        console.log(chalk.green(`${rnwPackage} successfully installed.`));
-
-        const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
-        generateWindows(process.cwd(), name, ns);
-      }).catch(error => console.error(chalk.red(error.message)));
-  }
+      generateWindows(process.cwd(), name, ns, options);
+    }).catch(error => console.error(chalk.red(error.message)));
 };
