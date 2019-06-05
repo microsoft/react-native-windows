@@ -146,7 +146,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
     NetworkingModule::name,
     []() { return std::make_unique<NetworkingModule>(); },
-    messageQueue);
+    std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
     "Timing",
