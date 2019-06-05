@@ -274,6 +274,7 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle()
   winrt::Style flyoutStyle({ L"Windows.UI.Xaml.Controls.FlyoutPresenter", winrt::TypeKind::Metadata });
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxWidthProperty(), winrt::box_value(50000)));
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
+  flyoutStyle.Setters().Append(winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
 
