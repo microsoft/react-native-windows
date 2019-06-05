@@ -40,7 +40,19 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/npm-install-and-build.yml
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
+
+      - template: stop-packagers.yml
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
