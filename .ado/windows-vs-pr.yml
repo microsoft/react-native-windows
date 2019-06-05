@@ -46,7 +46,7 @@ jobs:
           script: yarn install --frozen-lockfile
           workingDirectory: vnext
 
-      - template: stop-packagers.yml
+      - template: templates/stop-packagers.yml
 
       - task: CmdLine@2
         displayName: yarn build
