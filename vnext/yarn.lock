@@ -4111,9 +4111,9 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.58.tar.gz":
-  version "0.58.6-microsoft.58"
-  resolved "https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.58.tar.gz#3c43eb8896b08ac4a977e7098cc246b9cacb757f"
+"react-native@https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.59.tar.gz":
+  version "0.58.6-microsoft.59"
+  resolved "https://github.com/Microsoft/react-native/archive/v0.58.6-microsoft.59.tar.gz#989739b7ca46efd9d900bc31b4d40af771d3b0fc"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
@@ -4989,10 +4989,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3.tgz#f1657fc7daa27e1a8930758ace9ae8da31403221"
-  integrity sha512-Y21Xqe54TBVp+VDSNbuDYdGw0BpoR/Q6wo/+35M8PAU0vipahnyduJWirxxdxjsAkS7hue53x2zp8gz7F05u0A==
+typescript@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.1.tgz#ba72a6a600b2158139c5dd8850f700e231464202"
+  integrity sha512-64HkdiRv1yYZsSe4xC1WVgamNigVYjlssIoaH2HcZF0+ijsk5YK2g0G34w9wJkze8+5ow4STd22AynfO6ZYYLw==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"

@@ -95,7 +95,7 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
     else if (propertyName == "numberOfLines")
     {
       if (propertyValue.isNumber())
-        textBlock.MaxLines(static_cast<int32_t>(propertyValue.asInt()));
+        textBlock.MaxLines(static_cast<int32_t>(propertyValue.asDouble()));
       else if (propertyValue.isNull())
         textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
     }
