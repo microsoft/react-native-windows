@@ -60,7 +60,7 @@ jobs:
           command: restore
           restoreSolution: vnext/ReactWindows-UWP.sln
           feedsToUse: config
-          nugetConfigPath: vnext/NuGet.config
+          nugetConfigPath: vnext/NuGet.NoOffice.config
           restoreDirectory: packages/
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
@@ -81,7 +81,7 @@ jobs:
           command: restore
           restoreSolution: vnext/Playground/Playground.sln
           feedsToUse: config
-          nugetConfigPath: vnext/NuGet.config
+          nugetConfigPath: vnext/NuGet.NoOffice.config
           restoreDirectory: packages/
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
