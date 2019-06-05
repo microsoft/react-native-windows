@@ -115,7 +115,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (propertyValue.isNumber())
       {
-        auto selectedIndex = propertyValue.asInt();
+        auto selectedIndex = propertyValue.asDouble();
         if (selectedIndex == static_cast<int32_t>(selectedIndex))
         {
           m_selectedIndex = static_cast<int32_t>(selectedIndex);
