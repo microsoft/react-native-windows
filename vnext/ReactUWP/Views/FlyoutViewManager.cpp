@@ -96,6 +96,7 @@ public:
   void AddView(ShadowNode& child, int64_t index) override;
   void createView() override;
   static void OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue);
+  void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic&& props) override;
   
@@ -138,7 +139,7 @@ void FlyoutShadowNode::createView()
   m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
   {
     auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_flyout.IsOpen())
+    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_isOpen)
     {
       args.Cancel(true);
     }
@@ -156,6 +157,11 @@ void FlyoutShadowNode::createView()
 {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("isOpen", newValue);
   instance.DispatchEvent(tag, "topDismiss", std::move(eventData));
+}
+
+void FlyoutShadowNode::onDropViewInstance() {
+  m_isOpen = false;
+  m_flyout.Hide();
 }
 
 void FlyoutShadowNode::removeAllChildren()
