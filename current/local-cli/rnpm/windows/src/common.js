@@ -39,12 +39,17 @@ function getLatestVersion() {
   });
 }
 
+function isTagMatch(packageVersion, requestTag) {
+  const prerelease = semver.prerelease(packageVersion);
+  return prerelease && prerelease[0] === requestTag;
+}
+
 function isVersionMatch(packageVersion, requestVersion, requestTag) {
-  const { major, minor, prerelease } = semver.parse(packageVersion);
+  const { major, minor } = semver.parse(packageVersion);
   const minVersion = semver.minVersion(requestVersion);
   return major === minVersion.major &&
     minor === minVersion.minor &&
-    prerelease && prerelease[0] === requestTag;
+    isTagMatch(packageVersion, requestTag);
 }
 
 function getMatchingVersion(version, tag, ignoreStable) {
@@ -64,10 +69,18 @@ function getMatchingVersion(version, tag, ignoreStable) {
       const matchedPrerelease = semver.prerelease(matchedVersion);
       const isPrerelease = tag && !!matchedPrerelease;
       if (!isVersionMatch(matchedVersion, version, tag) && (ignoreStable || isPrerelease)) {
-        var versions = Object.keys(release.versions);
-        var candidates = versions.filter(v => isVersionMatch(v, version, tag)).sort(semver.rcompare);
+        const versions = Object.keys(release.versions);
+        const candidates = versions.filter(v => isVersionMatch(v, version, tag)).sort(semver.rcompare);
         if (candidates.length === 0) {
-          reject(new Error(`Could not find react-native-windows@${version}-${tag}.*.`));
+          const tagMatches = versions.filter(v => isTagMatch(v, tag)).sort(semver.rcompare);
+          if (tagMatches.length === 0) {
+            reject(new Error(`Could not find react-native-windows@${version}-${tag}.*.`));
+          } else {
+            const latestVersion = tagMatches[0];
+            reject(new Error(`Could not find react-native-windows@${version}-${tag}.*. ` +
+              `Latest version of react-native-windows for tag '${tag}' is ${latestVersion}, try switching to ` +
+              `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
+          }
         }
         resolve(candidates[0]);
       } else {
