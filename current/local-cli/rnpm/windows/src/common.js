@@ -39,9 +39,12 @@ function getLatestVersion() {
   });
 }
 
-function matchesTag(version, tag) {
-  const prereleaseInfo = semver.prerelease(version);
-  return prereleaseInfo && prereleaseInfo[0] === tag;
+function isVersionMatch(packageVersion, requestVersion, requestTag) {
+  const { major, minor, prerelease } = semver.parse(packageVersion);
+  const minVersion = semver.minVersion(requestVersion);
+  return major === minVersion.major &&
+    minor === minVersion.minor &&
+    prerelease && prerelease[0] === requestTag;
 }
 
 function getMatchingVersion(version, tag, ignoreStable) {
@@ -59,11 +62,12 @@ function getMatchingVersion(version, tag, ignoreStable) {
 
       const matchedVersion = release.version;
       const matchedPrerelease = semver.prerelease(matchedVersion);
-      const isPrerelease = prereleaseTag && !!matchedPrerelease;
-      if (!matchesTag(matchedVersion, tag) && (ignoreStable || isPrerelease)) {
-        var candidates = versions.filter(v => matchesTag(v, tag)).sort((x, y) => semver.lt(x, y));
+      const isPrerelease = tag && !!matchedPrerelease;
+      if (!isVersionMatch(matchedVersion, version, tag) && (ignoreStable || isPrerelease)) {
+        var versions = Object.keys(release.versions);
+        var candidates = versions.filter(v => isVersionMatch(v, version, tag)).sort(semver.rcompare);
         if (candidates.length === 0) {
-          reject(new Error(`Could not find react-native-windows@${version}-${prereleaseTag}.*.`));
+          reject(new Error(`Could not find react-native-windows@${version}-${tag}.*.`));
         }
         resolve(candidates[0]);
       } else {
@@ -73,7 +77,7 @@ function getMatchingVersion(version, tag, ignoreStable) {
   });
 }
 
-const getInstallPackage = function (version, prereleaseTag, useStable) {
+const getInstallPackage = function (version, tag, useStable) {
   const packageToInstall = 'react-native-windows';
   const validVersion = semver.valid(version);
   const validRange = semver.validRange(version);
@@ -85,9 +89,11 @@ const getInstallPackage = function (version, prereleaseTag, useStable) {
     process.exit(1);
   }
 
-  if (validVersion || validRange) {
-    return getMatchingVersion(version, prereleaseTag, useStable)
-      .then(resultVersion => packageToInstall + '@' + resultVersion);
+  if (validVersion) {
+    return Promise.resolve(`${packageToInstall}@${resultVersion}`);
+  } else if (validRange) {
+    return getMatchingVersion(version, tag, useStable)
+      .then(resultVersion => `${packageToInstall}@${resultVersion}`);
   } else {
     return Promise.resolve(version);
   }
