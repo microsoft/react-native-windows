@@ -41,7 +41,7 @@ public:
     m_parent = nullptr;
   }
 
-  std::future<void> SendRequest(const std::string& method, const std::string& url, const folly::dynamic& headers,
+  void SendRequest(const std::string& method, const std::string& url, const folly::dynamic& headers,
     folly::dynamic bodyData, const std::string& responseType, bool useIncrementalUpdates, int64_t timeout, Callback cb) noexcept;
   void AbortRequest(int64_t requestId) noexcept;
   void ClearCookies() noexcept;
@@ -228,7 +228,7 @@ void AttachMultipartHeaders(
   }
 }
 
-std::future<void> NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, const std::string& url, const folly::dynamic& headers,
+void NetworkingModule::NetworkingHelper::SendRequest(const std::string& method, const std::string& url, const folly::dynamic& headers,
   folly::dynamic bodyData, const std::string& responseType, bool useIncrementalUpdates, int64_t timeout, Callback cb) noexcept
 {
   int64_t requestId = ++s_lastRequestId;
@@ -288,8 +288,8 @@ std::future<void> NetworkingModule::NetworkingHelper::SendRequest(const std::str
       {
         // file content request
         winrt::Windows::Foundation::Uri uri(facebook::react::unicode::utf8ToUtf16(bodyData["uri"].asString()));
-        winrt::Windows::Storage::StorageFile file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-        auto stream = co_await file.OpenReadAsync();
+        winrt::Windows::Storage::StorageFile file = winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri).get();
+        auto stream = file.OpenReadAsync().get();
         winrt::Windows::Web::Http::HttpStreamContent contentStream(stream);
         content = contentStream;
       }
@@ -307,9 +307,9 @@ std::future<void> NetworkingModule::NetworkingHelper::SendRequest(const std::str
           }
           else if (!formDataPart["uri"].empty()) {
             auto filePath = winrt::to_hstring(formDataPart["uri"].asString());
-            winrt::Windows::Storage::StorageFile file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(filePath);
+            winrt::Windows::Storage::StorageFile file = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(filePath).get();
             
-            auto stream = co_await file.OpenReadAsync();
+            auto stream = file.OpenReadAsync().get();
             winrt::Windows::Web::Http::HttpStreamContent multipartFileValue(stream);
             AttachMultipartHeaders(multipartFileValue, formDataPart["headers"]);
             multiPartContent.Add(multipartFileValue, facebook::react::unicode::utf8ToUtf16(formDataPart["fieldName"].asString()));
