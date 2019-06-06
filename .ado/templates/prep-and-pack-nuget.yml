@@ -36,36 +36,21 @@ steps:
       artifactName: ReactWindows-source
       downloadPath: $(System.DefaultWorkingDirectory)
 
-  - task: CopyFiles@2
-    displayName: 'Copy Win32 debug x64 files'
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-x64'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x64/Debug'
-  - task: CopyFiles@2
-    displayName: 'Copy Win32 debug x86 files'
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-x86'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x86/Debug'
-  - task: CopyFiles@2
-    displayName: 'Copy Win32 ship x64 files'
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-x64'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x64/ship'
-  - task: CopyFiles@2
-    displayName: 'Copy Win32 ship x86 files'
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-x86'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/x86/ship'
-  - task: CopyFiles@2
-    displayName: 'Copy arm debug'
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-debug-arm'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/arm/debug'
-  - task: CopyFiles@2
-    displayName: 'Copy arm ship'
-    inputs:
-      SourceFolder: '$(System.DefaultWorkingDirectory)/ReactWindows-ship-arm'
-      TargetFolder: '$(System.DefaultWorkingDirectory)/NugetRoot/target/arm/ship'
+- script: |
+    rename $(System.DefaultWorkingDirectory)/ReactWindows-debug-x64 Debug
+    robocopy $(System.DefaultWorkingDirectory)/Debug $(System.DefaultWorkingDirectory)/NugetRoot/target/x64 /E /MOV
+    rename $(System.DefaultWorkingDirectory)/ReactWindows-debug-x86 Debug
+    robocopy $(System.DefaultWorkingDirectory)/Debug $(System.DefaultWorkingDirectory)/NugetRoot/target/x86 /E /MOV
+    rename $(System.DefaultWorkingDirectory)/ReactWindows-ship-x64 ship
+    robocopy $(System.DefaultWorkingDirectory)/ship $(System.DefaultWorkingDirectory)/NugetRoot/target/x64 /E /MOV
+    rename $(System.DefaultWorkingDirectory)/ReactWindows-ship-x86 ship
+    robocopy $(System.DefaultWorkingDirectory)/ship $(System.DefaultWorkingDirectory)/NugetRoot/target/x86 /E /MOV
+    rename $(System.DefaultWorkingDirectory)/ReactWindows-debug-arm debug
+    robocopy $(System.DefaultWorkingDirectory)/debug $(System.DefaultWorkingDirectory)/NugetRoot/target/arm /E /MOV
+    rename $(System.DefaultWorkingDirectory)/ReactWindows-ship-arm ship
+    robocopy $(System.DefaultWorkingDirectory)/ship $(System.DefaultWorkingDirectory)/NugetRoot/target/arm /E /MOV
+  displayName: Copy files from Artifact dirs to nuget staging
+
   - task: CopyFiles@2
     displayName: 'Copy Nuget source files'
     inputs:
