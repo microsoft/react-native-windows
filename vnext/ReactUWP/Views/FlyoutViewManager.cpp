@@ -157,9 +157,9 @@ void FlyoutShadowNode::createView()
   {
     if (auto instance = wkinstance.lock())
     {
-      if (auto shadowNode = static_cast<NativeUIManager*>(instance->NativeUIManager())->getShadowNodeWithXamlRoot())
+      if (auto xamlRoot = static_cast<NativeUIManager*>(instance->NativeUIManager())->tryGetXamlRoot())
       {
-        flyoutBase6.XamlRoot(static_cast<ShadowNodeBase*>(shadowNode)->GetView().as<winrt::IUIElement10>().XamlRoot());
+        flyoutBase6.XamlRoot(xamlRoot);
       }
     }
   }
