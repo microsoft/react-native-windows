@@ -266,7 +266,7 @@ jobs:
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
-      name: OE Standard Pool
+      vmImage: vs2017-win2016
     steps:
       - checkout: none #skip checking out the default repository resource
 
