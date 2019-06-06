@@ -93,18 +93,18 @@ void NativeUIManager::DirtyYogaNode(int64_t tag)
   }
 }
 
-facebook::react::ShadowNode* NativeUIManager::getShadowNodeWithXamlRoot()
+winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
 {
   if (m_host)
   {
-    for (auto tag : m_host->GetAllRootTags())
+    for (auto const tag : m_host->GetAllRootTags())
     {
       if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(tag)))
       {
         if (auto uiElement10 = shadowNode->GetView().try_as<winrt::IUIElement10>())
         {
-          if (uiElement10.XamlRoot())
-            return shadowNode;
+          if (auto xamlRoot = uiElement10.XamlRoot())
+            return xamlRoot;
         }
       }
     }
