@@ -180,7 +180,7 @@ jobs:
           #vstestLocationMethod: 'version' # Optional. Options: version, location
           vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
           #vstestLocation: # Optional
-          #runSettingsFile: # Optional
+          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings # Optional
           #overrideTestrunParameters: # Optional
           #pathtoCustomTestAdapters: # Optional
           #runInParallel: False # Optional
