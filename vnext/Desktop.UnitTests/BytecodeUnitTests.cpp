@@ -40,6 +40,9 @@ std::vector<char> ReadFile(const char* filename)
 
 TEST_CLASS(BytecodeUnitTests)
 {
+  BEGIN_TEST_CLASS_ATTRIBUTE()
+    TEST_CLASS_ATTRIBUTE(L"Ignore", L"true")
+  END_TEST_CLASS_ATTRIBUTE()
 private:
 
   MinimalChakraRuntime m_chakraRuntime;
