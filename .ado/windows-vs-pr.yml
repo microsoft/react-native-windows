@@ -29,7 +29,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -131,7 +131,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -163,7 +163,7 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
-        timeoutInMinutes: 10 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
@@ -266,7 +266,7 @@ jobs:
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
-      vmImage: vs2017-win2016
+      vmImage: windows-2019
     steps:
       - checkout: none #skip checking out the default repository resource
 
