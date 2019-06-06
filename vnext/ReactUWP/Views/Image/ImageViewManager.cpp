@@ -36,7 +36,7 @@
 
 #include <cxxreact/JsArgumentHelpers.h>
 
-#include "ReactImageBrush.h"
+#include "ReactImage.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -44,7 +44,6 @@
 #endif
 
 namespace winrt {
-  using namespace winrt::react::uwp::image;
   using namespace Windows::Foundation;
   using namespace Windows::Storage::Streams;
   using namespace Windows::UI::Xaml::Controls;
@@ -97,37 +96,36 @@ struct json_type_traits<react::uwp::ImageSource>
 
 
 template<>
-struct json_type_traits<winrt::ResizeMode>
+struct json_type_traits<react::uwp::ResizeMode>
 {
-  static winrt::ResizeMode parseJson(const folly::dynamic& json)
+  static react::uwp::ResizeMode parseJson(const folly::dynamic& json)
   {
-    auto resizeMode = winrt::ResizeMode::Contain;
+    auto resizeMode = react::uwp::ResizeMode::Contain;
 
     if (json == "cover")
     {
-      resizeMode = winrt::ResizeMode::Cover;
+      resizeMode = react::uwp::ResizeMode::Cover;
     }
     else if (json == "contain")
     {
-      resizeMode = winrt::ResizeMode::Contain;
+      resizeMode = react::uwp::ResizeMode::Contain;
     }
     else if (json == "stretch")
     {
-      resizeMode = winrt::ResizeMode::Stretch;
+      resizeMode = react::uwp::ResizeMode::Stretch;
     }
     else if (json == "center")
     {
-      resizeMode = winrt::ResizeMode::Center;
+      resizeMode = react::uwp::ResizeMode::Center;
     }
     else if (json == "repeat")
     {
-      resizeMode = winrt::ResizeMode::Repeat;
+      resizeMode = react::uwp::ResizeMode::Repeat;
     }
 
     return resizeMode;
   }
 };
-
 
 namespace react { namespace uwp {
 
@@ -143,12 +141,7 @@ namespace react { namespace uwp {
 
   XamlView ImageViewManager::CreateViewCore(int64_t tag)
   {
-    auto brush{ winrt::make<winrt::react::uwp::image::implementation::ReactImageBrush>() };
-
-    winrt::Canvas canvas;
-    canvas.Background(brush);
-
-    return canvas;
+    return ReactImage::Create().as<winrt::Canvas>();
   }
 
   void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
@@ -157,12 +150,6 @@ namespace react { namespace uwp {
 
     if (canvas == nullptr)
       return;
-
-    auto width{ canvas.Width() };
-    auto heigth{ canvas.Height() };
-
-    auto actualWidth{ canvas.ActualWidth() };
-    auto actualHeight{ canvas.ActualHeight() };
 
     for (const auto& pair : reactDiffMap.items())
     {
@@ -175,9 +162,9 @@ namespace react { namespace uwp {
       }
       else if (propertyName == "resizeMode")
       {
-        auto resizeMode = json_type_traits<winrt::ResizeMode>::parseJson(propertyValue);
-        auto brush = canvas.Background().as<winrt::ReactImageBrush>();
-        brush.ResizeMode(resizeMode);
+        auto resizeMode = json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue);
+        auto reactImage{ canvas.as<ReactImage>() };
+        reactImage->ResizeMode(resizeMode);
       }
 
       // TODO: overflow
@@ -298,28 +285,15 @@ namespace react { namespace uwp {
       EmitImageEvent(instance, canvas, "topLoadStart", sources[0]);
       if (needsDownload)
       {
-        auto brush{ canvas.Background().as<winrt::ReactImageBrush>() };
-        brush.SourceUri(uri);
-        canvas.Background(brush);
+        auto reactImage{ canvas.as<ReactImage>() };
+        reactImage->SourceUri(uri);
 
-        // FUTURE: This should get a weak_ptr from instance
-        // fix when the win32 instance merge happens
-        // DownloadImageAsync(canvas, sources[0], instance);
+        // TODO: Bubble up LoadedImageSourceLoadStatus
       }
       else
       {
-        // auto brush = winrt::make<winrt::react::uwp::image::implementation::ReactImageBrush>();
-        auto brush{ canvas.Background().as<winrt::ReactImageBrush>() };
-        brush.SourceUri(uri);
-        canvas.Background(brush);
-
-        //winrt::BitmapImage bitmap;
-        //bitmap.UriSource(uri);
-
-        //winrt::ImageBrush brush;
-        //brush.ImageSource(bitmap);
-
-        //canvas.Background(brush);
+        auto reactImage{ canvas.as<ReactImage>() };
+        reactImage->SourceUri(uri);
 
         EmitImageEvent(instance, canvas, "topLoad", sources[0]);
       }

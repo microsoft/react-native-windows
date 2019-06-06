@@ -1,41 +1,62 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
-#include <Views/cppwinrt/react.uwp.image.ReactImageBrush.g.h>
 
-namespace winrt::react::uwp::image::implementation
-{
-  struct ReactImageBrush : ReactImageBrushT<ReactImageBrush>
-  {
-    ReactImageBrush() = default;
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 
-    react::uwp::image::ResizeMode ResizeMode() { return m_resizeMode; }
-    void ResizeMode(react::uwp::image::ResizeMode value);
+namespace react {
+  namespace uwp {
 
-    Windows::Foundation::Uri SourceUri() { return m_sourceUri; }
-    void SourceUri(Windows::Foundation::Uri const& value);
+    enum class ResizeMode
+    {
+      Cover = 0,
+      Contain = 1,
+      Stretch = 2,
+      Repeat = 3,
+      Center = 4,
+    };
 
-    // XamlCompositionBaseBrush
-    void OnConnected();
-    void OnDisconnected();
+    struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
+    {
+      using Super = winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>;
+    private:
+      // Constructors
+      ReactImageBrush();
 
-  private:
-    bool m_usingEffectBrush{ false };
-    Windows::Foundation::Uri m_sourceUri{ nullptr };
-    react::uwp::image::ResizeMode m_resizeMode{ react::uwp::image::ResizeMode::Contain };
-    Windows::UI::Composition::CompositionEffectBrush m_effectBrush{ nullptr };
+    public:
+      static winrt::com_ptr<ReactImageBrush> Create();
+      template <typename D, typename... Args> friend auto winrt::make_self(Args&& ... args);
 
-    bool IsImageLargerThanView();
-    bool ShouldSwitchCompositionBrush();
-    void UpdateCompositionBrush();
-    Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
-    Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
-    Windows::UI::Composition::CompositionEffectBrush GetOrCreateEffectBrush(Windows::UI::Composition::CompositionSurfaceBrush const& surfaceBrush);
+      // Public Properties
+      react::uwp::ResizeMode ResizeMode() { return m_resizeMode; }
+      void ResizeMode(react::uwp::ResizeMode value);
 
-  };
-}
+      winrt::Windows::Foundation::Uri SourceUri() { return m_sourceUri; }
+      void SourceUri(winrt::Windows::Foundation::Uri const& value);
 
-namespace winrt::react::uwp::image::factory_implementation
-{
-  struct ReactImageBrush : ReactImageBrushT<ReactImageBrush, implementation::ReactImageBrush>
-  {
-  };
-}
+      winrt::Windows::Foundation::Size AvailableSize() { return m_availableSize; }
+      void AvailableSize(winrt::Windows::Foundation::Size const& value);
+
+      // XamlCompositionBaseBrush Methods
+      void OnConnected();
+      void OnDisconnected();
+
+    private:
+      bool m_imageLoaded{ false };
+      winrt::Windows::Foundation::Uri m_sourceUri{ nullptr };
+      winrt::Windows::Foundation::Size m_availableSize{ };
+      react::uwp::ResizeMode m_resizeMode{ ResizeMode::Contain };
+      winrt::Windows::UI::Composition::CompositionEffectBrush m_effectBrush{ nullptr };
+
+      bool IsImageLargerThanView();
+      bool ShouldSwitchCompositionBrush();
+      void UpdateCompositionBrush();
+      winrt::Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
+      winrt::Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
+      winrt::Windows::UI::Composition::CompositionEffectBrush GetOrCreateEffectBrush(winrt::Windows::UI::Composition::CompositionSurfaceBrush const& surfaceBrush);
+    };
+  }
+} // namespace react::uwp
