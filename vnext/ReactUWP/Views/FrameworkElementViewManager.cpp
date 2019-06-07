@@ -349,7 +349,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
 void FrameworkElementViewManager::AnnounceIfNeeded(winrt::FrameworkElement element)
 {
   if (winrt::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off
-    && !!winrt::AutomationProperties::GetName(element).empty())
+    && !winrt::AutomationProperties::GetName(element).empty())
   {
     auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element);
     if (nullptr != peer)
