@@ -264,6 +264,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
         {
           element.ClearValue(winrt::AutomationProperties::NameProperty());
         }
+        AnnounceIfNeeded(element);
       }
       else if (propertyName == "accessible")
       {
@@ -296,7 +297,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
         {
           element.ClearValue(winrt::AutomationProperties::LiveSettingProperty());
         }
-
+        AnnounceIfNeeded(element);
       }
       else if (propertyName == "testID")
       {
@@ -343,6 +344,19 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+}
+
+void FrameworkElementViewManager::AnnounceIfNeeded(winrt::FrameworkElement element)
+{
+  if (winrt::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off
+    && !!winrt::AutomationProperties::GetName(element).empty())
+  {
+    auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element);
+    if (nullptr != peer)
+    {
+      peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
+    }
+  }
 }
 
 } }
