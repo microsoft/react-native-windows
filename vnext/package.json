@@ -63,7 +63,7 @@
     "react": "16.6.3",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
-    "tslint-react": "^3.5.0",
+    "tslint-react": "^4",
     "typescript": "3.5.1",
     "react-native": "0.58.6-microsoft.60"
   },
