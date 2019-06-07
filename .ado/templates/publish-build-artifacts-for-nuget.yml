@@ -1,6 +1,4 @@
-
 steps:
-
   - task: BatchScript@1
     displayName: 'Copy Nuget source files'
     inputs:
