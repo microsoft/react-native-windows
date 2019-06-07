@@ -46,6 +46,7 @@ steps:
       robocopy $(System.DefaultWorkingDirectory)\ReactWindows-source $(System.DefaultWorkingDirectory)\NugetRoot /E /MOVE /NP
       echo Done
     displayName: Copy files from build artifacts to nuget root
+    failOnStderr: true
 
   - task: PowerShell@2
     displayName: Extract version from package.json, and put it in nuspec
