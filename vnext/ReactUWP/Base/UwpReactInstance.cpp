@@ -225,6 +225,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->useJITCompilation = settings.EnableJITCompilation;
+    devSettings->debugHost = settings.DebugHost;
 
     if (settings.UseLiveReload)
     {
