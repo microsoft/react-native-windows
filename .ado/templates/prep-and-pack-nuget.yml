@@ -41,13 +41,14 @@ steps:
     inputs:
       targetType: inline # filePath | inline
       script: |
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-source $(System.DefaultWorkingDirectory)\NugetRoot /E /MOVE /NP
         robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-x64 $(System.DefaultWorkingDirectory)\NugetRoot\target\x64\Debug /E /MOVE /NP
         robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-x86 $(System.DefaultWorkingDirectory)\NugetRoot\target\x86\Debug /E /MOVE /NP
         robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-x64 $(System.DefaultWorkingDirectory)\NugetRoot\target\x64\ship /E /MOVE /NP
         robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-x86 $(System.DefaultWorkingDirectory)\NugetRoot\target\x86\ship /E /MOVE /NP
         robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-arm $(System.DefaultWorkingDirectory)\NugetRoot\target\arm\debug /E /MOVE /NP
         robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-arm $(System.DefaultWorkingDirectory)\NugetRoot\target\arm\ship /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-source $(System.DefaultWorkingDirectory)\NugetRoot /E /MOVE /NP
+        echo Done
 
   - task: PowerShell@2
     displayName: Extract version from package.json, and put it in nuspec
