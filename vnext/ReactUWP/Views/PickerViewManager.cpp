@@ -35,6 +35,8 @@ public:
   PickerShadowNode();
   void createView() override;
   void updateProperties(const folly::dynamic&& props) override;
+  bool IsExternalLayoutDirty() const override { return m_hasNewItems; }
+  void DoExtraLayoutPrep(YGNodeRef yogaNode) override;
 
 private:
   void RepopulateItems();
@@ -42,6 +44,7 @@ private:
 
   folly::dynamic m_items;
   int32_t m_selectedIndex = -1;
+  bool m_hasNewItems = false;
 
   // FUTURE: remove when we can require RS5+
   bool m_isEditableComboboxSupported;
@@ -51,6 +54,17 @@ PickerShadowNode::PickerShadowNode()
   : Super()
 {
   m_isEditableComboboxSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
+}
+
+void PickerShadowNode::DoExtraLayoutPrep(YGNodeRef yogaNode)
+{
+  if (!m_hasNewItems)
+    return;
+
+  m_hasNewItems = false;
+
+  auto comboBox = GetView().try_as<winrt::ComboBox>();
+  comboBox.UpdateLayout();
 }
 
 void PickerShadowNode::createView()
@@ -158,6 +172,7 @@ void PickerShadowNode::RepopulateItems()
         comboboxItem.Foreground(BrushFrom(item["textColor"]));
       comboBoxItems.Append(comboboxItem);
     }
+    m_hasNewItems = true;
   }
   if (m_selectedIndex < static_cast<int32_t>(m_items.size()))
     combobox.SelectedIndex(m_selectedIndex);
