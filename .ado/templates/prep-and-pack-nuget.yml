@@ -39,7 +39,30 @@ steps:
   - task: PowerShell@2
     displayName: Copy files from build artifacts to nuget root
     inputs:
-      filePath: ./.ado/copy-build-artifacts-to-nugetroot.ps1
+      ignoreLASTEXITCODE: true
+      targetType: inline # filePath | inline
+      script: |
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-source $(System.DefaultWorkingDirectory)\NugetRoot /E /MOVE /NP
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-x64 $(System.DefaultWorkingDirectory)\NugetRoot\target\x64\Debug /E /MOVE /NP
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-x86 $(System.DefaultWorkingDirectory)\NugetRoot\target\x86\Debug /E /MOVE /NP
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-x64 $(System.DefaultWorkingDirectory)\NugetRoot\target\x64\ship /E /MOVE /NP
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-x86 $(System.DefaultWorkingDirectory)\NugetRoot\target\x86\ship /E /MOVE /NP
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-arm $(System.DefaultWorkingDirectory)\NugetRoot\target\arm\debug /E /MOVE /NP
+        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-arm $(System.DefaultWorkingDirectory)\NugetRoot\target\arm\ship /E /MOVE /NP
+
+  - task: PowerShell@2
+    displayName: Extract version from package.json, and put it in nuspec
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        if (Test-Path $env:SYSTEM_DEFAULTWORKINGDIRECTORY/UpdatedPackageJson/package.json) {
+          $lines = Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/UpdatedPackageJson/package.json | Where {$_ -match '^\s*"version":.*'} 
+          $npmVersion = $lines.Trim().Split()[1].Trim('",');
+        } else {
+          $npmVersion = "0.0.1-pr"
+        }
+        (Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactWin32.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactWin32.nuspec
+        (Get-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactUwp.nuspec).replace('__BuildBuildNumber__', $npmVersion) | Set-Content $env:SYSTEM_DEFAULTWORKINGDIRECTORY/NugetRoot/ReactUwp.nuspec
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
