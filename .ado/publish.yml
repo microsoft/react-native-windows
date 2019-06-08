@@ -89,6 +89,13 @@ jobs:
 
     steps:
 
+      # The RnwNpmPublish task does this too before publishing the npm package,
+      # but when each slice checks out code, its not going to have those changes
+    - task: CmdLine@2
+      displayName: Update version numbers to align with publishing version
+      inputs:
+        script: node ../.ado/bumpFileVersions.js
+
     - template: templates/npm-install-and-build.yml
 
     - template: templates/vs-build.yml
