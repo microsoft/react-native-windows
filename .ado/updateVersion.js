@@ -1,9 +1,14 @@
 // @ts-check
 // Used to update the package version
 
-const fs = require("fs");
 const path = require("path");
 const execSync = require("child_process").execSync;
+const {
+  pkgJsonPath,
+  publishBranchName,
+  updateVersionsInFiles,
+  win32VersionRcPath
+} = require("./versionUtils");
 
 function exec(command) {
   try {
@@ -19,10 +24,6 @@ function exec(command) {
 }
 
 function updateVersion() {
-  const publishBranchName = process.env.BUILD_SOURCEBRANCH.match(
-    /refs\/heads\/(.*)/
-  )[1];
-
   // Set env variable to allow npm publish task to publish to correct tag
   console.log(
     `##vso[task.setvariable variable=npmTag]${
@@ -36,9 +37,6 @@ function updateVersion() {
   console.log(
     `Using ${`(.*-microsoft)(-${publishBranchName})?\\.([0-9]*)`} to match version`
   );
-  const branchVersionSuffix = publishBranchName.match(/(fb.*merge)|(fabric)/)
-    ? `-${publishBranchName}`
-    : "";
 
   exec(`npm install -g yarn`);
 
@@ -49,53 +47,7 @@ function updateVersion() {
 
   exec(`git checkout -b ${tempPublishBranch}`);
 
-  const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
-  let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
-
-  let releaseVersion = pkgJson.version;
-
-  const versionStringRegEx = new RegExp(
-    `(.*-vnext)(-${publishBranchName})?\\.([0-9]*)`
-  );
-  const versionGroups = versionStringRegEx.exec(releaseVersion);
-  if (versionGroups) {
-    releaseVersion =
-      versionGroups[1] +
-      branchVersionSuffix +
-      "." +
-      (parseInt(versionGroups[3]) + 1);
-  } else {
-    if (releaseVersion.indexOf("-") === -1) {
-      releaseVersion = releaseVersion + `-vnext${branchVersionSuffix}.0`;
-    } else {
-      console.log("Invalid version to publish");
-      process.exit(1);
-    }
-  }
-
-  pkgJson.version = releaseVersion;
-  fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
-  console.log(`Updating package.json to version ${releaseVersion}`);
-
-  const win32VersionRcPath = path.resolve(
-    __dirname,
-    "../vnext/Desktop.DLL/Version.rc"
-  );
-
-  let versionRC = fs.readFileSync(win32VersionRcPath).toString();
-  versionRC = versionRC.replace(
-    /#define VER_FILEVERSION_STR\s+"[^"]+"/,
-    `#define VER_FILEVERSION_STR "${releaseVersion}"`
-  );
-  versionRC = versionRC.replace(
-    /#define VER_FILEVERSION\s+.+/,
-    `#define VER_FILEVERSION ${releaseVersion.split(".")[0]},${
-      releaseVersion.split(".")[1]
-    },${releaseVersion.split(".")[2].split("-")[0]},${parseInt(
-      versionGroups[3]
-    ) + 1}`
-  );
-  fs.writeFileSync(win32VersionRcPath, versionRC);
+  const releaseVersion = updateVersionsInFiles();
 
   process.chdir(path.resolve(__dirname, "../vnext"));
   exec(
