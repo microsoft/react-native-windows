@@ -13,6 +13,7 @@ trigger:
     exclude:
       - vnext/package.json
       - vnext/yarn.lock
+      - vnext/Desktop.DLL/Version.rc
 
 pr: none
 
