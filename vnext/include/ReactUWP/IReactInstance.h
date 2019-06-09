@@ -7,7 +7,7 @@
 
 #include <Folly/dynamic.h>
 #include <DevSettings.h>
-#include <XamlView.h>
+#include "XamlView.h"
 
 #include <functional>
 #include <string>
