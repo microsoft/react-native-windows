@@ -157,7 +157,9 @@ jobs:
         inputs:
           script: yarn build
           workingDirectory: vnext
-          
+
+      - template: templates/install-SDK.yml
+
       - template: templates/vs-build.yml
         parameters:
           BuildConfiguration: $(BuildConfiguration)
