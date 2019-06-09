@@ -96,6 +96,7 @@ jobs:
       displayName: Update version numbers to align with publishing version
       inputs:
         script: node ../.ado/bumpFileVersions.js
+        workingDirectory: vnext
 
     - template: templates/npm-install-and-build.yml
 
