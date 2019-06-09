@@ -1,12 +1,20 @@
 [CmdletBinding()]
 param([Parameter(Mandatory=$true, Position=0)]
-      [string]$buildNumber)
+      [string]$buildNumber,
+	  [switch]$desktopCPP = $true)
 
 # Ensure the error action preference is set to the default for PowerShell3, 'Stop'
 $ErrorActionPreference = 'Stop'
 
 # Constants
-$WindowsSDKOptions = @("OptionId.UWPCpp")
+if ($desktopCPP)
+{
+    $WindowsSDKOptions = @("OptionId.UWPCpp", "OptionId.DesktopCPPx64", "OptionId.DesktopCPPx86", "OptionID.DesktopCPPARM", "OptionID.DesktopCPPARM64")
+}
+else
+{
+    $WindowsSDKOptions = @("OptionId.UWPCpp")
+}
 $WindowsSDKRegPath = "HKLM:\Software\Microsoft\Windows Kits\Installed Roots"
 $WindowsSDKRegRootKey = "KitsRoot10"
 $WindowsSDKVersion = "10.0.$buildNumber.0"
