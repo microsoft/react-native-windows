@@ -54,6 +54,8 @@ jobs:
           script: yarn build
           workingDirectory: vnext
 
+      - template: templates/install-SDK.yml
+      
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
