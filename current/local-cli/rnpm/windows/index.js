@@ -10,12 +10,11 @@ module.exports = [{
     description: 'The native project namespace.'
   }, {
     command: '--verbose',
-    description: 'Enables logging',
+    description: 'Enables logging.',
     default: false,
   }, {
     command: '--template [template]',
-    description: 'Template to install. Possible values vnext, csharp',
-    default: 'csharp',
+    description: 'Template to install. E.g., `vnext`.',
   }]
 },{
   func: require('./src/wpf'),

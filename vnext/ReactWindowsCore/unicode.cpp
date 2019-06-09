@@ -39,8 +39,9 @@ std::wstring utf8ToUtf16(const char* utf8, size_t utf8Len)
 
   const int utf8Length = static_cast<int>(utf8Len);
 
-  // Fail if an invalid UTF-8 character is encountered in the input string.
-  constexpr DWORD flags = MB_ERR_INVALID_CHARS;
+  // We do not specify MB_ERR_INVALID_CHARS here, which means that invalid UTF-8
+  // characters are replaced with U+FFFD.
+  constexpr DWORD flags = 0;
 
   const int utf16Length = ::MultiByteToWideChar(
     CP_UTF8,       // Source string is in UTF-8.
@@ -128,8 +129,9 @@ std::string utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
 
   const int utf16Length = static_cast<int>(utf16Len);
 
-  // Fail if an invalid UTF-16 character is encountered in the input string.
-  constexpr DWORD flags = WC_ERR_INVALID_CHARS;
+  // We do not specify WC_ERR_INVALID_CHARS here, which means that invalid
+  // UTF-16 characters are replaced with U+FFFD.
+  constexpr DWORD flags = 0;
 
   const int utf8Length = ::WideCharToMultiByte(
     CP_UTF8,       // Destination string is in UTF-8.
@@ -226,6 +228,6 @@ std::string utf16ToUtf8(const std::u16string_view& utf16)
 }
 #endif
 
-} // namespace utilities
+} // namespace unicode
 } // namespace react
 } // namespace facebook

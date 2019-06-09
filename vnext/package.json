@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.141",
+  "version": "0.58.0-vnext.166",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -63,12 +63,12 @@
     "react": "16.6.3",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
-    "tslint-react": "^3.5.0",
-    "typescript": "3.3.3",
-    "react-native": "0.58.6-microsoft.58"
+    "tslint-react": "^4",
+    "typescript": "3.5.1",
+    "react-native": "0.58.6-microsoft.60"
   },
   "peerDependencies": {
     "react": "16.6.3",
-    "react-native": "0.58.6-microsoft.58 || https://github.com/microsoft/react-native/archive/v0.58.6-microsoft.58.tar.gz"
+    "react-native": "0.58.6-microsoft.60 || https://github.com/microsoft/react-native/archive/v0.58.6-microsoft.60.tar.gz"
   }
 }
