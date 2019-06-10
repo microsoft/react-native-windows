@@ -151,6 +151,18 @@ void FlyoutShadowNode::createView()
     if (!m_updating && instance != nullptr)
       OnFlyoutClosed(*instance, m_tag, false);
   });
+
+  // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
+  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>())
+  {
+    if (auto instance = wkinstance.lock())
+    {
+      if (auto xamlRoot = static_cast<NativeUIManager*>(instance->NativeUIManager())->tryGetXamlRoot())
+      {
+        flyoutBase6.XamlRoot(xamlRoot);
+      }
+    }
+  }
 }
 
 /*static*/ void FlyoutShadowNode::OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue)
