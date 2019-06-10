@@ -114,7 +114,7 @@ std::string ExceptionsManagerModule::RetrieveValueFromMap(const folly::dynamic &
     {
       assert(iterator->second.isNumber());
       std::stringstream stream;
-      stream << iterator->second.asInt();
+      stream << static_cast<int64_t>(iterator->second.asDouble());
       value = stream.str();
     }
   }

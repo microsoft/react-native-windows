@@ -29,8 +29,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -41,7 +40,19 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/npm-install-and-build.yml
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
+
+      - template: templates/stop-packagers.yml
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
@@ -120,8 +131,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -132,8 +142,20 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/npm-install-and-build.yml
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
 
+      - template: templates/stop-packagers.yml
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
+          
       - template: templates/vs-build.yml
         parameters:
           BuildConfiguration: $(BuildConfiguration)
@@ -141,7 +163,7 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
-        timeoutInMinutes: 10 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
@@ -158,7 +180,7 @@ jobs:
           #vstestLocationMethod: 'version' # Optional. Options: version, location
           vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
           #vstestLocation: # Optional
-          #runSettingsFile: # Optional
+          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings # Optional
           #overrideTestrunParameters: # Optional
           #pathtoCustomTestAdapters: # Optional
           #runInParallel: False # Optional
@@ -244,7 +266,7 @@ jobs:
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
-      name: OE Standard Pool
+      vmImage: vs2017-win2016
     steps:
       - checkout: none #skip checking out the default repository resource
 

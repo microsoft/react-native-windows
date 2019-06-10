@@ -7,7 +7,7 @@
 
 #include <Folly/dynamic.h>
 #include <DevSettings.h>
-#include <XamlView.h>
+#include "XamlView.h"
 
 #include <functional>
 #include <string>
@@ -29,6 +29,8 @@ struct ReactInstanceSettings
   bool UseLiveReload { false };
   bool UseDirectDebugger{ false };
   bool UseJsi { true };
+  bool EnableJITCompilation { true };
+  std::string DebugHost;
   std::string DebugBundlePath;
   facebook::react::NativeLoggingHook LoggingCallback;
   std::function<void(facebook::react::JSExceptionInfo&&)> JsExceptionCallback;
