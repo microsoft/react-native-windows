@@ -7,6 +7,7 @@
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
+#include <Utils/AccessibilityUtils.h>
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
@@ -264,7 +265,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
         {
           element.ClearValue(winrt::AutomationProperties::NameProperty());
         }
-        AnnounceIfNeeded(element);
+        AnnounceLiveRegionChangedIfNeeded(element);
       }
       else if (propertyName == "accessible")
       {
@@ -278,7 +279,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       {
         if (propertyValue.isString())
         {
-          auto value = propertyValue.asString();
+          auto value = propertyValue.getString();
 
           auto liveSetting = winrt::AutomationLiveSetting::Off;
 
@@ -297,7 +298,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
         {
           element.ClearValue(winrt::AutomationProperties::LiveSettingProperty());
         }
-        AnnounceIfNeeded(element);
+        AnnounceLiveRegionChangedIfNeeded(element);
       }
       else if (propertyName == "testID")
       {
@@ -344,19 +345,6 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
-}
-
-void FrameworkElementViewManager::AnnounceIfNeeded(winrt::FrameworkElement element)
-{
-  if (winrt::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off
-    && !winrt::AutomationProperties::GetName(element).empty())
-  {
-    auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element);
-    if (nullptr != peer)
-    {
-      peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
-    }
-  }
 }
 
 } }
