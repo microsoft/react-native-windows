@@ -38,6 +38,7 @@ set(SOURCES
 	Threading/WorkerMessageQueueThread.cpp
 	Utils/LocalBundleReader.cpp
 	Utils/ValueUtils.cpp
+	Utils/AccessibilityUtils.cpp
 	Views/ActivityIndicatorViewManager.cpp
 	Views/CheckboxViewManager.cpp
 	Views/ControlViewManager.cpp

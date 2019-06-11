@@ -148,6 +148,7 @@
     <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
     <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="Threading\WorkerMessageQueueThread.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
+    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
