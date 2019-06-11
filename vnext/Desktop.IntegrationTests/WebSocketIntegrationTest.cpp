@@ -4,7 +4,6 @@
 #include <CppUnitTest.h>
 #include <IWebSocket.h>
 #include <WebSocketServer.h>
-#include "unicode.h"
 
 #include <condition_variable>
 #include <future>
@@ -199,10 +198,10 @@ TEST_CLASS(WebSocketIntegrationTest)
     {
       response.set_value(message);
     });
-    ws->SetOnError([](IWebSocket::Error err)
+    string errorMessage;
+    ws->SetOnError([&errorMessage](IWebSocket::Error err)
     {
-      auto message = facebook::react::unicode::utf8ToUtf16(err.Message);
-      Assert::Fail(message.c_str());
+      errorMessage = err.Message;
     });
 
     server->Start();
@@ -227,6 +226,7 @@ TEST_CLASS(WebSocketIntegrationTest)
     ws->Close(CloseCode::Normal, "Closing after reading");
     server->Stop();
 
+    Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
   }
 
