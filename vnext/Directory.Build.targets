@@ -3,7 +3,7 @@
 
   <PropertyGroup Label="Configuration">
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <!-- <Platform Condition="'$(Platform)'=='Win32'">x86</Platform> -->
+    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
   </PropertyGroup>
 
   <!-- For build debugging purposes. -->
