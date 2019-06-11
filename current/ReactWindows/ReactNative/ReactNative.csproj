@@ -154,6 +154,8 @@
     <Compile Include="UIManager\DisplayMetrics.cs" />
     <Compile Include="Accessibility\DynamicAutomationPeer.cs" />
     <Compile Include="UIManager\UIViewOperationQueue.cs" />
+    <Compile Include="Views\DatePicker\ReactDatePickerManager.cs" />
+    <Compile Include="Views\DatePicker\ReactDatePickerShadowNode.cs" />
     <Compile Include="Views\Flip\ReactFlipViewManager.cs" />
     <Compile Include="Views\Image\ReactImageManager.cs" />
     <Compile Include="Views\Modal\ReactModalHostView.cs" />

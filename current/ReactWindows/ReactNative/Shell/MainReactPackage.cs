@@ -22,6 +22,7 @@ using ReactNative.Modules.Vibration;
 using ReactNative.Modules.WebSocket;
 using ReactNative.UIManager;
 using ReactNative.Views.ControlView;
+using ReactNative.Views.DatePicker;
 using ReactNative.Views.Flip;
 using ReactNative.Views.Image;
 using ReactNative.Views.Modal;
@@ -84,6 +85,7 @@ namespace ReactNative.Shell
         {
             return new List<IViewManager>
             {
+                new ReactDatePickerManager(),
                 new ReactSimpleTextViewManager(),
                 new ReactFlipViewManager(),
                 new ReactImageManager(),
