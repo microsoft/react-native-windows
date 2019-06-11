@@ -1,4 +1,0 @@
-DIRS = \
-	modules \
-	win32{!arm} \
-	uniconv{!arm} \

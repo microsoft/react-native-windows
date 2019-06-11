@@ -96,6 +96,7 @@ public:
   void AddView(ShadowNode& child, int64_t index) override;
   void createView() override;
   static void OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue);
+  void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic&& props) override;
   
@@ -138,7 +139,7 @@ void FlyoutShadowNode::createView()
   m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
   {
     auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_flyout.IsOpen())
+    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_isOpen)
     {
       args.Cancel(true);
     }
@@ -150,12 +151,29 @@ void FlyoutShadowNode::createView()
     if (!m_updating && instance != nullptr)
       OnFlyoutClosed(*instance, m_tag, false);
   });
+
+  // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
+  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>())
+  {
+    if (auto instance = wkinstance.lock())
+    {
+      if (auto xamlRoot = static_cast<NativeUIManager*>(instance->NativeUIManager())->tryGetXamlRoot())
+      {
+        flyoutBase6.XamlRoot(xamlRoot);
+      }
+    }
+  }
 }
 
 /*static*/ void FlyoutShadowNode::OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue)
 {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("isOpen", newValue);
   instance.DispatchEvent(tag, "topDismiss", std::move(eventData));
+}
+
+void FlyoutShadowNode::onDropViewInstance() {
+  m_isOpen = false;
+  m_flyout.Hide();
 }
 
 void FlyoutShadowNode::removeAllChildren()
@@ -207,7 +225,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (propertyValue.isNumber())
       {
-        m_targetTag = propertyValue.asInt();
+        m_targetTag = static_cast<int64_t>(propertyValue.asDouble());
         updateTargetElement = true;
       }
       else
@@ -274,6 +292,7 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle()
   winrt::Style flyoutStyle({ L"Windows.UI.Xaml.Controls.FlyoutPresenter", winrt::TypeKind::Metadata });
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxWidthProperty(), winrt::box_value(50000)));
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
+  flyoutStyle.Setters().Append(winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
 

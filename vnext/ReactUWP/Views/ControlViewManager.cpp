@@ -65,7 +65,7 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const fo
       {
         if (propertyValue.isNumber())
         {
-          auto tabIndex = propertyValue.asInt();
+          auto tabIndex = propertyValue.asDouble();
           if (tabIndex == static_cast<int32_t>(tabIndex))
             control.TabIndex(static_cast<int32_t>(tabIndex));
         }

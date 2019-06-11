@@ -1,8 +1,0 @@
-DIRS = \
-	chakra{!arm,!droidarm,!droidarm64,!droidx64,!droidx86} \
-	reactcommon{!arm,!droidarm,!droidarm64,!droidx64,!droidx86} \
-	desktop{apple,chpe,x64,x86} \
-	reactwindowscore{!arm,!droidarm,!droidarm64,!droidx64,!droidx86} \
-	shared{!arm,!droidarm,!droidarm64,!droidx64,!droidx86} \
-	win32 \
-

@@ -23,7 +23,7 @@
     <ProjectGuid>{F1B91D19-79E4-461B-AC8E-E3E6E747F65F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>V8Inspector</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
