@@ -30,4 +30,22 @@ inline void SetTag(XamlView view, winrt::IInspectable tag)
   SetTag(view, tag.as<winrt::IPropertyValue>().GetInt64());
 }
 
+inline bool IsValidTag(winrt::IPropertyValue value)
+{
+  assert(value);
+  return (value.Type() == winrt::PropertyType::Int64);
+}
+
+inline int64_t GetTag(winrt::IPropertyValue value)
+{
+  assert(value);
+  return value.GetInt64();
+}
+
+inline winrt::IPropertyValue GetPropertyValue(winrt::FrameworkElement fe)
+{
+  assert(fe);
+  return fe.GetValue(winrt::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+}
+
 } }

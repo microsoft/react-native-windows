@@ -92,6 +92,8 @@ dynamic ViewManagerBase::GetNativeProps() const
   folly::dynamic props = folly::dynamic::object();
   props.update(folly::dynamic::object
     ("onLayout", "function")
+    ("keyDownEvents", "array")
+    ("keyUpEvents", "array")
   );
   return props;
 }
@@ -142,6 +144,10 @@ dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const
     "TouchMove",
     "TouchCancel",
     "TouchEnd",
+
+    // Keyboard events
+    "KeyUp",
+    "KeyDown",
   };
 
   folly::dynamic bubblingEvents = folly::dynamic::object();
@@ -229,6 +235,14 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, const dynam
     {
       nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
     }
+    else if (propertyName == "keyDownEvents")
+    {
+      nodeToUpdate->UpdateHandledKeyboardEvents(ShadowNodeBase::KeyboardType::KeyDown, propertyValue);
+    }
+    else if (propertyName == "keyUpEvents")
+    {
+      nodeToUpdate->UpdateHandledKeyboardEvents(ShadowNodeBase::KeyboardType::KeyUp, propertyValue);
+    }
   }
 }
 
@@ -299,5 +313,6 @@ bool ViewManagerBase::IsNativeControlWithSelfLayout() const
 {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
+
 
 } }

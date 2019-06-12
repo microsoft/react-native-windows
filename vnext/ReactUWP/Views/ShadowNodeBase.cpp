@@ -12,11 +12,22 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <WindowsNumerics.h>
 
+using namespace std::placeholders;
+
 namespace react { namespace uwp {
 
 ShadowNodeBase::ShadowNodeBase()
   : m_view(nullptr)
 {
+  m_previewKeyboardEventHandler = make_unique<PreviewKeyboardEventHandler>(
+    std::bind(&ShadowNodeBase::KeyboardEventHandledHandler, this, KeyboardEventPhase::PreviewKeyDown, _1, _2),
+    std::bind(&ShadowNodeBase::KeyboardEventHandledHandler, this, KeyboardEventPhase::PreviewKeyUp, _1, _2)
+    );
+
+  m_keyboardEventHandler = make_unique<KeyboardEventHandler>(
+    std::bind(&ShadowNodeBase::KeyboardEventHandledHandler, this, KeyboardEventPhase::KeyDown, _1, _2),
+    std::bind(&ShadowNodeBase::KeyboardEventHandledHandler, this, KeyboardEventPhase::KeyUp, _1, _2)
+    );
 }
 
 ViewManagerBase* ShadowNodeBase::GetViewManager() const
@@ -60,9 +71,15 @@ void ShadowNodeBase::onDropViewInstance()
 
 void ShadowNodeBase::ReplaceView(XamlView view)
 {
+
   SetTag(view, GetTag(m_view));
 
   m_view = view;
+
+  // Force unhook from old view
+  UpdateKeyboardEventHooks(nullptr);
+  UpdateKeyboardEventHooks(m_view);
+
 }
 
 void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView)
@@ -110,6 +127,75 @@ void ShadowNodeBase::UpdateTransformPS()
       m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
     }
   }
+  
+void ShadowNodeBase::UpdateHandledKeyboardEvents(KeyboardType keyboardType, folly::dynamic const& value)
+{
+  if (keyboardType == KeyboardType::KeyDown) {
+    m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
+  }
+  else
+  {
+    m_handledKeyUpKeyboardEvents = KeyboardHelper::FromJS(value);
+  }
+
+  UpdateKeyboardEventHooks(m_view);
+}
+
+void ShadowNodeBase::UpdateKeyboardEventHooks(XamlView const& xamlView)
+{
+  auto shouldHook = ShouldHookKeyboardEvent(m_view);
+  if (shouldHook != m_keyboardEventHooked)
+  {
+    if (shouldHook && m_view)
+    {
+      m_previewKeyboardEventHandler->hook(m_view);
+      m_keyboardEventHandler->hook(m_view);
+      m_keyboardEventHooked = true;
+    }
+    else
+    {
+      m_previewKeyboardEventHandler->unhook();
+      m_keyboardEventHandler->unhook();
+      m_keyboardEventHooked = false;
+    }
+  }
+}
+
+bool ShadowNodeBase::ShouldHookKeyboardEvent(XamlView const& xamlView)
+{
+  return (xamlView && (m_handledKeyDownKeyboardEvents.size() > 0 || m_handledKeyUpKeyboardEvents.size() > 0));
+}
+
+void ShadowNodeBase::KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args)
+{
+  EventPhase currentEventPhase = (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
+    ? EventPhase::CAPTURING : EventPhase::BUBBLING;
+
+  auto ev = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
+
+  bool shouldMarkHandled = false;
+  if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, ev);
+  else
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, ev);
+
+  if (shouldMarkHandled)
+    args.Handled(true);
+}
+
+bool ShadowNodeBase::ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent)
+{
+  for (auto event : handledEvents)
+  {
+    if (event.key == currentEvent.key &&
+      (!event.altKey || (event.altKey && currentEvent.altKey)) &&
+      (!event.ctrlKey || (event.ctrlKey && currentEvent.ctrlKey)) &&
+      (!event.shiftKey || (event.shiftKey && currentEvent.shiftKey)) &&
+      (!event.metaKey || (event.metaKey && currentEvent.metaKey)) &&
+      event.eventPhase == currentEvent.eventPhase)
+      return true;
+  }
+  return false;
 }
 
 }}

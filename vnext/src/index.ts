@@ -7,3 +7,5 @@ export * from './Libraries/Components/Flyout/Flyout';
 export * from './Libraries/Components/Glyph/Glyph';
 export * from './Libraries/Components/Picker/PickerUWP';
 export * from './Libraries/Components/Popup/Popup';
+export * from './Libraries/Components/View/ViewWindows';
+export * from './Libraries/Components/View/ViewWindowsProps';

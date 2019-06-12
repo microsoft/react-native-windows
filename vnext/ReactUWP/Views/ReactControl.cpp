@@ -102,6 +102,9 @@ void ReactControl::AttachRoot() noexcept
   if (!m_touchEventHandler)
     m_touchEventHandler = std::make_shared<TouchEventHandler>(m_reactInstance);
 
+  if (!m_previewKeyboardEventHandlerOnRoot)
+    m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(m_reactInstance);
+
   // Register callback from instance for live reload
   m_errorCallbackCookie = m_reactInstance->RegisterErrorCallback([this]()
   {
@@ -128,6 +131,8 @@ void ReactControl::AttachRoot() noexcept
 #endif
 
   m_touchEventHandler->AddTouchHandlers(m_xamlRootView);
+  m_previewKeyboardEventHandlerOnRoot->hook(m_xamlRootView);
+
   auto initialProps = m_initialProps;
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
 
@@ -143,6 +148,9 @@ void ReactControl::DetachRoot() noexcept
   {
     m_touchEventHandler->RemoveTouchHandlers();
   }
+
+  if (!m_previewKeyboardEventHandlerOnRoot)
+    m_previewKeyboardEventHandlerOnRoot->unhook();
 
   if (m_reactInstance != nullptr)
   {
