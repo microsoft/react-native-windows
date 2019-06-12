@@ -12,7 +12,7 @@
   "scripts": {
     "preinstall": "node Scripts/preInstall.js",
     "postinstall": "node Scripts/postInstall.js",
-    "build": "node Scripts/just.js build",
+    "build": "just-scripts build",
     "clean": "node Scripts/just.js clean",
     "start": "node Scripts/cli.js start",
     "watch": "node node_modules/@office-iss/sdx-build-tools/watch.js"
@@ -58,8 +58,7 @@
     "@types/es6-promise": "0.0.32",
     "@types/react": "16.7.20",
     "@types/react-native": "~0.57.29",
-    "just-task": "0.8.1",
-    "just-scripts": "^0.10.1",
+    "just-scripts": "^0.20.0",
     "react": "16.6.3",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
