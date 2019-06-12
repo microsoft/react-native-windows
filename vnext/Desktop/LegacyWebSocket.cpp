@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include "pch.h"
+
 #pragma warning( push )
 #pragma warning( disable : 4996 )  // std::copy::_Unchecked_iterators::_Deprecate
 
@@ -443,7 +445,7 @@ template class LegacySecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
 #pragma region IWebSocket static members
 
-/*static*/ std::unique_ptr<IWebSocket> __cdecl IWebSocket::MakeLegacy(const string& urlString)
+/*static*/ std::unique_ptr<IWebSocket> IWebSocket::MakeLegacy(const string& urlString)
 {
   Url url(urlString);
 

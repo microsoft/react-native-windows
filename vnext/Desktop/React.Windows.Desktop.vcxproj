@@ -105,11 +105,7 @@
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="LazyDevSupportManager.cpp" />
-    <ClCompile Include="LegacyWebSocket.cpp">
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <CallingConvention Condition="'$(Platform)'=='x86' OR '$(Platform)'=='Win32'">Cdecl</CallingConvention>
-    </ClCompile>
+    <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="pch.cpp">
@@ -120,12 +116,9 @@
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
     <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
+    <ClCompile Include="Stubs.cpp" />
     <ClCompile Include="TimingModule.cpp" />
-    <ClCompile Include="WebSocket.cpp">
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <CallingConvention Condition="'$(Platform)'=='x86' OR '$(Platform)'=='Win32'">Cdecl</CallingConvention>
-    </ClCompile>
+    <ClCompile Include="WebSocket.cpp" />
     <ClCompile Include="WebSocketJSExecutor.cpp" />
     <ClCompile Include="WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="WebSocketModule.cpp" />
@@ -171,7 +164,7 @@
     <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets')" />
-    <Import Project="$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets" Condition="Exists('$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets')" />
+    <Import Project="$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.3\build\native\OpenSSL.Windows-1.0.2n.targets" Condition="Exists('$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.3\build\native\OpenSSL.Windows-1.0.2n.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -181,6 +174,6 @@
     <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.1\build\native\OpenSSL.Windows-1.0.2n.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.3\build\native\OpenSSL.Windows-1.0.2n.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\OpenSSL.Windows-1.0.2n.0.0.3\build\native\OpenSSL.Windows-1.0.2n.targets'))" />
   </Target>
 </Project>

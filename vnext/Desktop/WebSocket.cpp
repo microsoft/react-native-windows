@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include "pch.h"
+
 #pragma warning( push )
 #pragma warning( disable : 4996 )  // std::copy::_Unchecked_iterators::_Deprecate
 
@@ -481,7 +483,7 @@ void SecureWebSocket::Handshake(const IWebSocket::Options& options)
 
 #pragma region IWebSocket static members
 
-/*static*/ unique_ptr<IWebSocket> __cdecl IWebSocket::Make(const string& urlString)
+/*static*/ unique_ptr<IWebSocket> IWebSocket::Make(const string& urlString)
 {
   Url url(urlString);
 

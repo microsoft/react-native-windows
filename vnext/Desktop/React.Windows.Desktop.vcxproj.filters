@@ -38,6 +38,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="HttpResource.cpp" />
+    <ClCompile Include="Stubs.cpp" />
     <ClCompile Include="WebSocket.cpp" />
     <ClCompile Include="WebSocketJSExecutor.cpp">
       <Filter>Executors</Filter>
