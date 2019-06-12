@@ -41,7 +41,7 @@ namespace ReactNative.Views.DatePicker
         /// Sets the maximum allowed year of the picker.
         /// </summary>
         /// <param name="view">The picker view element.</param>
-        /// <param name="date">The value to set as maximum.</param>
+        /// <param name="maxYearDate">The value to set as maximum.</param>
         [ReactProp("maxYear")]
         public void SetMaxYear(Windows.UI.Xaml.Controls.DatePicker view, long? maxYearDate) => view.MaxYear = maxYearDate.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(maxYearDate.Value) : DateTimeOffset.MaxValue;
 
@@ -49,7 +49,7 @@ namespace ReactNative.Views.DatePicker
         /// Sets the minimum allowed year of the picker.
         /// </summary>
         /// <param name="view">The picker view element.</param>
-        /// <param name="date">The value to set as minimum.</param>
+        /// <param name="minYearDate">The value to set as minimum.</param>
         [ReactProp("minYear")]
         public void SetMinYear(Windows.UI.Xaml.Controls.DatePicker view, long? minYearDate) => view.MinYear = minYearDate.HasValue ? DateTimeOffset.FromUnixTimeMilliseconds(minYearDate.Value) : DateTimeOffset.MinValue;
 
@@ -62,6 +62,17 @@ namespace ReactNative.Views.DatePicker
         public override ReactDatePickerShadowNode CreateShadowNodeInstance()
         {
             return new ReactDatePickerShadowNode();
+        }
+
+        /// <summary>
+        /// Implement this method to receive optional extra data enqueued from
+        /// the corresponding instance of <see cref="ReactShadowNode"/> in
+        /// <see cref="ReactShadowNode.OnCollectExtraUpdates"/>.
+        /// </summary>
+        /// <param name="root">The root view.</param>
+        /// <param name="extraData">The extra data.</param>
+        public override void UpdateExtraData(Windows.UI.Xaml.Controls.DatePicker root, object extraData)
+        {
         }
 
 
