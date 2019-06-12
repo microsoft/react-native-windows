@@ -204,12 +204,11 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     if (propertyName == "horizontalOffset")
     {
       if (propertyValue.isNumber())
-      {
         m_horizontalOffset = static_cast<float>(propertyValue.asDouble());
-        updateOffset = true;
-      }
       else
         m_horizontalOffset = 0;
+
+      updateOffset = true;
     }
     else if (propertyName == "isLightDismissEnabled")
     {
@@ -250,12 +249,11 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     else if (propertyName == "verticalOffset")
     {
       if (propertyValue.isNumber())
-      {
         m_verticalOffset = static_cast<float>(propertyValue.asDouble());
-        updateOffset = true;
-      }
       else
         m_verticalOffset = 0;
+
+      updateOffset = true;
     }
   }
 
@@ -270,6 +268,9 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     winrt::Point newPoint(m_horizontalOffset, m_verticalOffset);
     m_showOptions.Position(newPoint);
   }
+
+  winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
+  m_showOptions.ExclusionRect(exclusionRect);
 
   if (updateIsOpen)
   {
@@ -361,7 +362,7 @@ folly::dynamic FlyoutViewManager::GetNativeProps() const
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object
-    ("horizontalOffset", "boolean")
+    ("horizontalOffset", "number")
     ("isLightDismissEnabled", "boolean")
     ("isOpen", "boolean")
     ("placement", "number")
