@@ -5,7 +5,6 @@ trigger:
   branches:
     include:
       - master
-      - fb59merge
       - fabric
   paths:
     include:
