@@ -5,6 +5,7 @@ trigger:
   branches:
     include:
       - master
+      - 0.58-vnext-stable
       - fabric
   paths:
     include:
