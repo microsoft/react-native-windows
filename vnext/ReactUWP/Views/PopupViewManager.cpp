@@ -96,7 +96,7 @@ void PopupShadowNode::updateProperties(const folly::dynamic&& props)
     if (propertyName == "target")
     {
       if (propertyValue.isNumber())
-        m_targetTag = propertyValue.asInt();
+        m_targetTag = static_cast<int64_t>(propertyValue.asDouble());
       else
         m_targetTag = -1;
     }

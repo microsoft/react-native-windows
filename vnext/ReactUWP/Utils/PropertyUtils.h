@@ -317,7 +317,7 @@ bool TryUpdateFontProperties(const T& element, const std::string& propertyName, 
   if (propertyName == "fontSize")
   {
     if (propertyValue.isNumber())
-      element.FontSize(static_cast<double>(propertyValue.asInt()));
+      element.FontSize(propertyValue.asDouble());
     else if (propertyValue.isNull())
       element.ClearValue(T::FontSizeProperty());
   }
@@ -537,7 +537,7 @@ bool TryUpdateCharacterSpacing(const T& element, const std::string& propertyName
   if (propertyName == "letterSpacing" || propertyName == "characterSpacing")
   {
     if (propertyValue.isNumber())
-      element.CharacterSpacing(static_cast<int32_t>(propertyValue.asInt()));
+      element.CharacterSpacing(static_cast<int32_t>(propertyValue.asDouble()));
     else if (propertyValue.isNull())
       element.ClearValue(T::CharacterSpacingProperty());
 
