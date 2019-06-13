@@ -63,7 +63,9 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#if !defined(OSS_RN)
 #include "ChakraJSIRuntimeHolder.h"
+#endif
 
 #include <tuple>
 
@@ -267,8 +269,11 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
 
     std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+
+    #if !defined(OSS_RN)
     if (settings.UseJsi)
       devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+    #endif
 
     try
     {

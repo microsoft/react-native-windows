@@ -1,6 +1,16 @@
 EXPORTS
+?assertionFailure@detail@folly@@YAXPEBD00I0@Z
+?assume_check@detail@folly@@YAX_N@Z
+?warnAboutToCrash@ScopeGuardImplBase@detail@folly@@KAXXZ
+??0ColdClass@cold_detail@folly@@QEAA@XZ
+??0TypeError@folly@@QEAA@AEBU01@@Z
+??0TypeError@folly@@QEAA@$$QEAU01@@Z
+?logTaggedMarker@ReactMarker@react@facebook@@3P6AXW4ReactMarkerId@123@PEBD@ZEA
+?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ?destroy@dynamic@folly@@AEAAXXZ
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
+??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
+?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ??4dynamic@folly@@QEAAAEAU01@$$QEAU01@@Z
 ?hash@dynamic@folly@@QEBA_KXZ
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
@@ -8,6 +18,7 @@ EXPORTS
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ??4dynamic@folly@@QEAAAEAU01@AEBU01@@Z
 ?size@dynamic@folly@@QEBA_KXZ
+?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
 ?print_as_pseudo_json@dynamic@folly@@AEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
@@ -18,24 +29,23 @@ EXPORTS
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?InitializeLogging@react@facebook@@YAX$$QEAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PEBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPEAUINativeTraceHandler@12@@Z
-?ShouldReuseReactInstancesWhenPossible@uwp@react@@YA_NXZ
 ?CreateWorkerMessageQueue@uwp@react@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?CreateMemoryTracker@react@facebook@@YA?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QEAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
-?callJSFunction@Instance@react@facebook@@QEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 
+?callJSFunction@Instance@react@facebook@@QEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
+?tlsMinstdRand@detail@f14@folly@@YA_K_K@Z
+?tlsPendingSafeInserts@detail@f14@folly@@YA_N_J@Z
+
+
 ??0AppState@react@facebook@@QEAA@XZ
-??0AppStateModule@react@facebook@@QEAA@$$QEAV?$unique_ptr@VAppState@react@facebook@@U?$default_delete@VAppState@react@facebook@@@std@@@std@@@Z
+??0AppStateModule@react@facebook@@QEAA@$$QEAV?$shared_ptr@VAppState@react@facebook@@@std@@@Z
 ??0DeviceInfoModule@uwp@react@@QEAA@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
 ??0LocationObserverModule@uwp@react@@QEAA@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
-?CreateUIManager@uwp@react@@YA?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@V?$shared_ptr@UIReactInstance@uwp@react@@@4@@Z
 ??0NativeUIManager@uwp@react@@QEAA@XZ
 ?update@DeviceInfo@uwp@react@@QEAAXXZ
 ??0WebSocketModule@uwp@react@@QEAA@XZ
 
-
-?CreateReactInstance@uwp@react@@YA?AV?$shared_ptr@UIReactInstance@uwp@react@@@std@@AEBV?$shared_ptr@UNativeModuleProvider@react@facebook@@@4@@Z
-?CreateReactRootView@uwp@react@@YA?AV?$shared_ptr@UIXamlRootView@uwp@react@@@std@@UDependencyObject@Xaml@UI@Windows@winrt@@PEB_W1AEBV?$shared_ptr@UIReactInstance@uwp@react@@@4@@Z
 ?CreateTimingModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 
@@ -56,9 +66,19 @@ EXPORTS
 
 ?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
-?utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 
 ?JsPointerToStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEBD_KPEAPEAX@Z
 ?JsStringToStdStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 
 ?demangle@folly@@YA?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PEBD@Z
+
+mallocxWeak
+rallocxWeak
+xallocxWeak
+sallocxWeak
+dallocxWeak
+sdallocxWeak
+nallocxWeak
+mallctlWeak
+mallctlnametomibWeak
+mallctlbymibWeak
