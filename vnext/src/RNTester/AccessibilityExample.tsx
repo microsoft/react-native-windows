@@ -46,7 +46,7 @@ class TouchableExamples extends React.Component<{}, any> {
         >
           <Text>Blue</Text>
         </TouchableHighlight>
-        <Text>Pressed {this.state.pressedCount} times</Text>
+        <Text accessibilityLiveRegion="polite" accessibilityLabel={"Pressed " + this.state.pressedCount + "times"}>Pressed {this.state.pressedCount} times</Text>
       </View>
     );
   }
