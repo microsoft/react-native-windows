@@ -7,7 +7,9 @@
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
+#include <winrt/Windows.UI.Xaml.Automation.Provider.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
@@ -47,27 +49,21 @@ private:
   AccessibilityInvokeEventHandler m_accessibilityInvokeHandler = nullptr;
 };
 
-}} // namespace react::uwp
-
-
-#include "cppwinrt/react.uwp.DynamicAutomationPeer.g.h"
-namespace winrt::react::uwp::implementation
-{
 //
 // DynamicAutomationPeer refers to the owner ViewControl to determine what type control
 // it appears to be for accessibility tools
 //
-struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
+struct DynamicAutomationPeer : winrt::Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeerT<DynamicAutomationPeer, winrt::Windows::UI::Xaml::Automation::Provider::IInvokeProvider>
 {
-  using Super = DynamicAutomationPeerT<DynamicAutomationPeer>;
+  using Super = winrt::Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeerT<DynamicAutomationPeer, winrt::Windows::UI::Xaml::Automation::Provider::IInvokeProvider>;
 
   DynamicAutomationPeer() = delete;
-  DynamicAutomationPeer(Windows::UI::Xaml::FrameworkElement const& owner);
+  DynamicAutomationPeer(winrt::Windows::UI::Xaml::FrameworkElement const& owner);
 
-  Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
-  Windows::Foundation::IInspectable GetPatternCore(Windows::UI::Xaml::Automation::Peers::PatternInterface const& patternInterface) const;
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
+  winrt::Windows::Foundation::IInspectable GetPatternCore(winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const& patternInterface) const;
 
   void Invoke() const;
 };
-} // namespace winrt::react::uwp::implementation
 
+}} // namespace react::uwp

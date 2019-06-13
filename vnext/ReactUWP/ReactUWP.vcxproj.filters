@@ -560,9 +560,6 @@
     <Filter Include="ABI\lib">
       <UniqueIdentifier>{6ce02bc1-7b54-4e9f-a950-8d794d89de63}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Views\cppwinrt">
-      <UniqueIdentifier>{4dbf6aed-54f8-4ebd-b99d-667a4b380d8a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{101c2d4a-d343-4771-969f-29af0c9f46b2}</UniqueIdentifier>
     </Filter>

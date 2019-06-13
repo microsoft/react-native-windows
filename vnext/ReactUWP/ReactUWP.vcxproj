@@ -189,11 +189,6 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
-    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
