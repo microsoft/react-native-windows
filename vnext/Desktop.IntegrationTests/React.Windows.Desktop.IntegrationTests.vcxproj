@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x86">
       <Configuration>Debug</Configuration>
@@ -57,9 +58,11 @@
       <SDLCheck>true</SDLCheck>
       <!-- See //https://stackoverflow.com/questions/42847103/stdtr1-with-visual-studio-2017. -->
       <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;WIN32_LEAN_AND_MEAN;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_PLATFORM=windesktop;RN_EXPORT=;JSI_EXPORT=;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UseFullPaths>true</UseFullPaths>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -92,6 +95,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ABITests.cpp" />
+    <ClCompile Include="ActivationFactory.cpp" />
     <ClCompile Include="ChakraJSIRuntimeHolder.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
     <ClCompile Include="RNTesterIntegrationTests.cpp" />
@@ -126,6 +131,20 @@
       <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <CppWinRTMakeReferenceProjectionDependsOn>$(CppWinRTMakeReferenceProjectionDependsOn);SetCppWinRTReferences</CppWinRTMakeReferenceProjectionDependsOn>
+  </PropertyGroup>
+  <Target Name="SetCppWinRTReferences">
+    <ItemGroup>
+      <!-- D:\ISS\react-native-windows\vnext\target\x64\Debug\React.Windows.Desktop\facebook.react.winmd -->
+      <CppWinRTDynamicWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
+        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
+      </CppWinRTDynamicWinMDReferences>
+    </ItemGroup>
+    <!--
+    <Message Text="CppWinRTDynamicWinMDReferences='@(CppWinRTDynamicWinMDReferences)''"/>
+    -->
+  </Target>
   <ItemGroup>
     <ClInclude Include="ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="DesktopTestInstance.h" />
@@ -138,6 +157,7 @@
     <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets')" />
+    <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -148,6 +168,7 @@
     <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.Debugger.0.0.0.34\build\native\Microsoft.ChakraCore.Debugger.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />
