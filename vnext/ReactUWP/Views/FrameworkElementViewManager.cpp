@@ -10,6 +10,7 @@
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
+#include <Utils/AccessibilityUtils.h>
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
@@ -17,12 +18,14 @@
 #include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <WindowsNumerics.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Automation;
+using namespace Windows::UI::Xaml::Automation::Peers;
 }
 
 namespace react { namespace uwp {
@@ -54,6 +57,7 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
 
   // Accessibility Properties
   TransferProperty(oldView, newView, winrt::AutomationProperties::NameProperty());
+  TransferProperty(oldView, newView, winrt::AutomationProperties::LiveSettingProperty());
   auto accessibilityView = winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
 
@@ -260,6 +264,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
         {
           element.ClearValue(winrt::AutomationProperties::NameProperty());
         }
+        AnnounceLiveRegionChangedIfNeeded(element);
       }
       else if (propertyName == "accessible")
       {
@@ -268,6 +273,31 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           if (!propertyValue.asBool())
             winrt::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Raw);
         }
+      }
+      else if (propertyName == "accessibilityLiveRegion")
+      {
+        if (propertyValue.isString())
+        {
+          auto value = propertyValue.getString();
+
+          auto liveSetting = winrt::AutomationLiveSetting::Off;
+
+          if (value == "polite")
+          {
+            liveSetting = winrt::AutomationLiveSetting::Polite;
+          }
+          else if (value == "assertive")
+          {
+            liveSetting = winrt::AutomationLiveSetting::Assertive;
+          }
+
+          element.SetValue(winrt::AutomationProperties::LiveSettingProperty(), winrt::box_value(liveSetting));
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::AutomationProperties::LiveSettingProperty());
+        }
+        AnnounceLiveRegionChangedIfNeeded(element);
       }
       else if (propertyName == "testID")
       {
