@@ -3,9 +3,14 @@
 
 #include "pch.h"
 
+#include <IReactInstance.h>
+
 #include <ViewManager.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>
+#include <Views/ExpressionAnimationStore.h>
+#include <winrt/Windows.UI.Composition.h>
+#include <WindowsNumerics.h>
 
 namespace react { namespace uwp {
 
@@ -63,6 +68,38 @@ void ShadowNodeBase::ReplaceView(XamlView view)
 void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView)
 {
   GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
+}
+
+winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTransformPS()
+{
+  if (m_transformPS == nullptr)
+  {
+    m_transformPS = winrt::Window::Current().Compositor().CreatePropertySet();
+    UpdateTransformPS();
+  }
+
+  return m_transformPS;
+}
+
+void ShadowNodeBase::UpdateTransformPS()
+{
+  if (m_transformPS != nullptr)
+  {
+    auto uielement = m_view.try_as<winrt::UIElement>();
+    assert(uielement != nullptr);
+    m_transformPS = EnsureTransformPS();
+    m_transformPS.InsertVector3(L"center", { 0, 0, 0 });
+    auto instance = GetViewManager()->GetReactInstance().lock();
+    assert(instance != nullptr);
+    auto centeringAnimation = instance->GetExpressionAnimationStore().GetElementCenterPointExpression();
+    centeringAnimation.SetExpressionReferenceParameter(L"uielement", uielement);
+    m_transformPS.StartAnimation(L"center", centeringAnimation);
+    winrt::Windows::Foundation::Numerics::float4x4 unused;
+    if (m_transformPS.TryGetMatrix4x4(L"transform", unused) == winrt::Windows::UI::Composition::CompositionGetValueStatus::NotFound)
+    {
+      m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
+    }
+  }
 }
 
 }}

@@ -78,7 +78,7 @@
       <!-- 
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
@@ -135,7 +135,7 @@
     </PropertyGroup>
     <ItemGroup Condition="'$(ApplicationTypeRevision)' == '10.0'">
       <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.FoundationContract\3.0.0.0" />
-      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.UniversalApiContract\7.0.0.0" />
+      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.UniversalApiContract\8.0.0.0" />
     </ItemGroup>
     <Message Text="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
     <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
@@ -193,6 +193,7 @@
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
     <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
+    <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
     <ClInclude Include="Views\ImageViewManager.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
@@ -266,6 +267,7 @@
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\DatePickerViewManager.cpp" />
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
     <ClCompile Include="Views\ImageViewManager.cpp" />

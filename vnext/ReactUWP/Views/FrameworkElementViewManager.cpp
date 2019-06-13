@@ -3,7 +3,10 @@
 
 #include "pch.h"
 
+#include <IReactInstance.h>
+
 #include <Views/FrameworkElementViewManager.h>
+#include <Views/ExpressionAnimationStore.h>
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
@@ -12,6 +15,8 @@
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Automation.h>
+#include <winrt/Windows.UI.Xaml.Hosting.h>
+#include <winrt/Windows.UI.Composition.h>
 #include <WindowsNumerics.h>
 
 namespace winrt {
@@ -38,13 +43,6 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
 {
   // Render Properties
   TransferProperty(oldView, newView, winrt::UIElement::OpacityProperty());
-
-  if (oldView.try_as<winrt::IUIElement9>())
-  {
-    auto oldElement = oldView.as<winrt::UIElement>();
-    auto newElement = newView.as<winrt::UIElement>();
-    newElement.TransformMatrix(oldElement.TransformMatrix());
-  }
 
   // Layout Properties
   TransferProperty(oldView, newView, winrt::FrameworkElement::WidthProperty());
@@ -105,7 +103,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       }
       else if (propertyName == "transform")
       {
-        if (element.try_as<winrt::IUIElement9>()) // Works on RS5+
+        if (element.try_as<winrt::IUIElement10>()) // Works on 19H1+
         {
           if (propertyValue.isArray())
           {
@@ -127,7 +125,8 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
             transformMatrix.m42 = static_cast<float>(propertyValue[13].asDouble());
             transformMatrix.m43 = static_cast<float>(propertyValue[14].asDouble());
             transformMatrix.m44 = static_cast<float>(propertyValue[15].asDouble());
-            element.TransformMatrix(transformMatrix);
+
+            ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
           }
           else if (propertyValue.isNull())
           {
@@ -315,6 +314,35 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+}
+
+void FrameworkElementViewManager::ApplyTransformMatrix(winrt::UIElement uielement, ShadowNodeBase* shadowNode, winrt::Windows::Foundation::Numerics::float4x4 transformMatrix)
+{
+  auto transformPS = shadowNode->EnsureTransformPS();
+  transformPS.InsertMatrix4x4(L"transform", transformMatrix);
+  StartTransformAnimation(uielement, shadowNode);
+}
+
+void FrameworkElementViewManager::StartTransformAnimation(winrt::UIElement uielement, ShadowNodeBase* shadowNode)
+{
+  auto instance = GetReactInstance().lock();
+  assert(instance != nullptr);
+  auto expression = instance->GetExpressionAnimationStore().GetTransformCenteringExpression();
+  auto transformPS = shadowNode->EnsureTransformPS();
+  expression.SetReferenceParameter(L"PS", transformPS);
+  expression.Target(L"TransformMatrix");
+  uielement.StartAnimation(expression);
+}
+
+void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase* shadowNode)
+{
+  if (shadowNode->HasTransformPS())
+  {
+    shadowNode->UpdateTransformPS();
+    auto uielement = shadowNode->GetView().try_as<winrt::UIElement>();
+    assert(uielement != nullptr);
+    StartTransformAnimation(uielement, shadowNode);
+  }
 }
 
 } }
