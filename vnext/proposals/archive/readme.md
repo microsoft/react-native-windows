@@ -1,0 +1,3 @@
+This folder contains archived proposal documents for `react-native-windows @vnext` features that have been completed and shipped.
+
+Proposals from [active](../active/readme.md) folder should be moved to this folder once the feature has been implemented and shipped. Please update the header of the proposal file to include the `react-native-windows @vnext` version that corresponds to when the feature was first shipped.

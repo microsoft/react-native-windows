@@ -148,7 +148,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
     NetworkingModule::name,
     []() { return std::make_unique<NetworkingModule>(); },
-    messageQueue);
+    std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
     "Timing",
@@ -227,6 +227,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->useJITCompilation = settings.EnableJITCompilation;
+    devSettings->debugHost = settings.DebugHost;
 
     if (settings.UseLiveReload)
     {
@@ -445,6 +447,19 @@ void UwpReactInstance::OnHitError(const std::string& error) noexcept
   // Invoke every callback registered
   for (auto const& current : m_errorCallbacks)
     current.second();
+}
+
+void UwpReactInstance::SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook)
+{
+  m_xamlViewCreatedTestHook = testHook;
+}
+
+void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view)
+{
+  if (m_xamlViewCreatedTestHook != nullptr)
+  {
+    m_xamlViewCreatedTestHook(view);
+  }
 }
 
 } }

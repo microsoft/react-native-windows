@@ -1,3 +1,0 @@
-DIRS = \
-	jsicore{!arm} \
-	win32{!arm} \

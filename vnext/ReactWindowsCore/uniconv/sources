@@ -1,7 +1,0 @@
-LIBLET_WIN32 = 1
-LIBLET_DEF_NOEXPORTS = 1
-LIBLET_PREFIX = UniConv
-
-!include ..\sources.inc
-
-SOURCES = $(SOURCES_UNICONV)
