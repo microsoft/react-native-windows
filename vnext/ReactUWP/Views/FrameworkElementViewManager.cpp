@@ -346,32 +346,52 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
+// Applies a TransformMatrix to the backing UIElement.
+// In react-native, rotates and scales are applied about the center of the component, unlike XAML.
+// Since the javascript layer sends a non-centered TransformMatrix, we need to compute the UIElement center and apply
+// centering manually via this formula:
+// tx = -TranslateCenter * TransformMatrix * TranslateCenter
+// We accomplish this in several steps:
+// 1) Create a PropertySet to hold both the TranslateCenter matrix and TransformMatrix.  Stored on the shadow node.
+//    This allows us to generalize to the animated scenario as well.
+// 2) To compute the CenterTransform we create an ExpressionAnimation that references the UIElement.ActualSize facade.
+//    This way whenever the ActualSize changes, the animation will automatically pick up the new value.
+// 3) Create an ExpressionAnimation to multiply everything together.
 void FrameworkElementViewManager::ApplyTransformMatrix(winrt::UIElement uielement, ShadowNodeBase* shadowNode, winrt::Windows::Foundation::Numerics::float4x4 transformMatrix)
 {
+  // Get our PropertySet from the ShadowNode and insert the TransformMatrix as the "transform" property
   auto transformPS = shadowNode->EnsureTransformPS();
   transformPS.InsertMatrix4x4(L"transform", transformMatrix);
-  StartTransformAnimation(uielement, shadowNode);
+
+  // Start the overall animation to multiply everything together
+  StartTransformAnimation(uielement, transformPS);
 }
 
-void FrameworkElementViewManager::StartTransformAnimation(winrt::UIElement uielement, ShadowNodeBase* shadowNode)
+// Starts ExpressionAnimation targeting UIElement.TransformMatrix with centered transform
+void FrameworkElementViewManager::StartTransformAnimation(
+  winrt::UIElement uielement,
+  winrt::Windows::UI::Composition::CompositionPropertySet transformPS)
 {
   auto instance = GetReactInstance().lock();
   assert(instance != nullptr);
   auto expression = instance->GetExpressionAnimationStore().GetTransformCenteringExpression();
-  auto transformPS = shadowNode->EnsureTransformPS();
   expression.SetReferenceParameter(L"PS", transformPS);
   expression.Target(L"TransformMatrix");
   uielement.StartAnimation(expression);
 }
 
+// Used in scenario where View changes its backing Xaml element.
 void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase* shadowNode)
 {
   if (shadowNode->HasTransformPS())
   {
+    // First we need to update the reference parameter on the centering expression to point to the new backing UIElement.
     shadowNode->UpdateTransformPS();
     auto uielement = shadowNode->GetView().try_as<winrt::UIElement>();
     assert(uielement != nullptr);
-    StartTransformAnimation(uielement, shadowNode);
+
+    // Start a new ExpressionAnimation targeting the new UIElement.TransformMatrix.
+    StartTransformAnimation(uielement, shadowNode->EnsureTransformPS());
   }
 }
 

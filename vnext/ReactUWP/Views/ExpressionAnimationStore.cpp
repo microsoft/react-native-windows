@@ -12,6 +12,7 @@ namespace winrt
 
 namespace react {  namespace uwp {
 
+// Expression for computing the center point of a UIElement, produces a vector3 with 2D translation to center.
 winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpression()
 {
   if (m_elementCenterPointExpression == nullptr)
@@ -22,6 +23,7 @@ winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpres
   return m_elementCenterPointExpression;
 }
 
+// Expression for applying a TransformMatrix about the centerpoint of a UIElement, produces a Matrix4x4 with overall transform.
 winrt::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpression()
 {
   if (m_transformCenteringExpression == nullptr)

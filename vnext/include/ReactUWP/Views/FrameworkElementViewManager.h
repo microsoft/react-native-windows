@@ -19,7 +19,7 @@ public:
 
   // Helper functions related to setting/updating TransformMatrix
   void RefreshTransformMatrix(ShadowNodeBase* shadowNode);
-  void StartTransformAnimation(winrt::UIElement uielement, ShadowNodeBase* shadowNode);
+  void StartTransformAnimation(winrt::UIElement uielement, winrt::Windows::UI::Composition::CompositionPropertySet transformPS);
 
 protected:
   virtual void TransferProperties(XamlView oldView, XamlView newView) override;

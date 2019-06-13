@@ -81,10 +81,15 @@ winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTr
   return m_transformPS;
 }
 
+// Create a PropertySet that will hold two properties:
+// "center":  This is the center of the UIElement
+// "transform": This will hold the un-centered TransformMatrix we want to apply
 void ShadowNodeBase::UpdateTransformPS()
 {
   if (m_transformPS != nullptr)
   {
+    // First build up an ExpressionAnimation to compute the "center" property, like so:
+    // The input to the expression is UIElement.ActualSize/2, output is a vector3 with [cx, cy, 0].
     auto uielement = m_view.try_as<winrt::UIElement>();
     assert(uielement != nullptr);
     m_transformPS = EnsureTransformPS();
@@ -94,7 +99,12 @@ void ShadowNodeBase::UpdateTransformPS()
     auto centeringAnimation = instance->GetExpressionAnimationStore().GetElementCenterPointExpression();
     centeringAnimation.SetExpressionReferenceParameter(L"uielement", uielement);
     m_transformPS.StartAnimation(L"center", centeringAnimation);
+
+    // Now insert the "transform" property with an initial value of identity.
+    // The caller will handle populating this with the appropriate value (either a static or animated value).
     winrt::Windows::Foundation::Numerics::float4x4 unused;
+    // Take care not to stomp over any transform value we currently have set, as we will use this value in the scenario
+    // where a View changed its backing XAML element, here we will just transfer existing value to a new backing XAML element.
     if (m_transformPS.TryGetMatrix4x4(L"transform", unused) == winrt::Windows::UI::Composition::CompositionGetValueStatus::NotFound)
     {
       m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
