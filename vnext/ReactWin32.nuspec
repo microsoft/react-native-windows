@@ -24,18 +24,19 @@
     <file src="inc\ReactWindowsCore\AbiSafe.h" target="inc"/>
     <file src="inc\ReactWindowsCore\DevSettings.h" target="inc"/>
     <file src="inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\IUIManager.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\IWebSocket.h" target="inc"/>
     <file src="inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
     <file src="inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\IUIManager.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\IWebSocket.h" target="inc"/>
     <file src="inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\LayoutAnimation.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Logging.h" target="inc"/>
     <file src="inc\ReactWindowsCore\MemoryTracker.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
     <file src="inc\ReactWindowsCore\NativeModuleProvider.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Sandbox\SandboxEndpoint.h" target="inc"/>
     <file src="inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Tracing.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
 
     <!-- Required for win32 -->
     <file src="inc\ReactWindowsCore\DevServerHelper.h" target="inc"/>
