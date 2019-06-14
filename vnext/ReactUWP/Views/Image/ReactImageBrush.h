@@ -24,39 +24,37 @@ namespace react {
       using Super = winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>;
     private:
       // Constructors
-      ReactImageBrush();
+      ReactImageBrush() = default;
 
     public:
       static winrt::com_ptr<ReactImageBrush> Create();
       template <typename D, typename... Args> friend auto winrt::make_self(Args&& ... args);
 
+      // XamlCompositionBaseBrush Overrides
+      void OnConnected();
+      void OnDisconnected();
+
       // Public Properties
       react::uwp::ResizeMode ResizeMode() { return m_resizeMode; }
       void ResizeMode(react::uwp::ResizeMode value);
 
-      winrt::Windows::Foundation::Uri SourceUri() { return m_sourceUri; }
-      void SourceUri(winrt::Windows::Foundation::Uri const& value);
-
       winrt::Windows::Foundation::Size AvailableSize() { return m_availableSize; }
       void AvailableSize(winrt::Windows::Foundation::Size const& value);
 
-      // XamlCompositionBaseBrush Methods
-      void OnConnected();
-      void OnDisconnected();
+      void Source(winrt::Windows::UI::Xaml::Media::LoadedImageSurface const& value);
 
     private:
-      bool m_imageLoaded{ false };
-      winrt::Windows::Foundation::Uri m_sourceUri{ nullptr };
-      winrt::Windows::Foundation::Size m_availableSize{ };
-      react::uwp::ResizeMode m_resizeMode{ ResizeMode::Contain };
-      winrt::Windows::UI::Composition::CompositionEffectBrush m_effectBrush{ nullptr };
-
+      void UpdateCompositionBrush();
       bool IsImageLargerThanView();
       bool ShouldSwitchCompositionBrush();
-      void UpdateCompositionBrush();
       winrt::Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
       winrt::Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
       winrt::Windows::UI::Composition::CompositionEffectBrush GetOrCreateEffectBrush(winrt::Windows::UI::Composition::CompositionSurfaceBrush const& surfaceBrush);
+
+      react::uwp::ResizeMode m_resizeMode{ ResizeMode::Contain };
+      winrt::Windows::Foundation::Size m_availableSize{ };
+      winrt::Windows::UI::Xaml::Media::LoadedImageSurface m_loadedImageSurface{ nullptr };
+      winrt::Windows::UI::Composition::CompositionEffectBrush m_effectBrush{ nullptr };
     };
   }
 } // namespace react::uwp

@@ -6,11 +6,26 @@
 #include "ReactImageBrush.h"
 
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
+
+#include <folly/dynamic.h>
 
 namespace react {
   namespace uwp {
+
+    struct ImageSource
+    {
+      std::string uri;
+      std::string method;
+      folly::dynamic headers;
+      double width = 0;
+      double height = 0;
+      double scale = 1.0;
+      bool packagerAsset = false;
+    };
 
     struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage>
     {
@@ -24,18 +39,31 @@ namespace react {
       template <typename D, typename... Args> friend auto winrt::make_self(Args&& ... args);
 
       // Overrides
-      virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
+      virtual winrt::Windows::Foundation::Size ArrangeOverride(
+        winrt::Windows::Foundation::Size finalSize);
+
+      // Events
+      winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<bool> const& handler);
+      void OnLoadEnd(winrt::event_token const& token) noexcept;
 
       // Public Properties
-      winrt::Windows::Foundation::Uri SourceUri() { return m_brush->SourceUri(); }
-      void SourceUri(winrt::Windows::Foundation::Uri const& value) { m_brush->SourceUri(value); }
+      ImageSource Source() { return m_imageSource; }
+      winrt::fire_and_forget Source(ImageSource source);
 
       react::uwp::ResizeMode ResizeMode() { return m_brush->ResizeMode(); }
       void ResizeMode(react::uwp::ResizeMode value) { m_brush->ResizeMode(value); }
 
     private:
+      void LoadedImageSurfaceHandler(
+        winrt::Windows::UI::Xaml::Media::LoadedImageSurface const& sender,
+        winrt::Windows::UI::Xaml::Media::LoadedImageSourceLoadCompletedEventArgs const& args);
+
+      ImageSource m_imageSource;
       winrt::com_ptr<ReactImageBrush> m_brush;
+      winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
     };
 
+    // Helper functions
+    winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source);
   }
 } // namespace react::uwp

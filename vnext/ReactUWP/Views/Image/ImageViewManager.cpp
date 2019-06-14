@@ -10,32 +10,15 @@
 
 #include "ImageViewManager.h"
 
-#include <Views/ShadowNodeBase.h>
-
-#include <Utils/ValueUtils.h>
-#include <Utils/PropertyHandlerUtils.h>
-
-#include <IReactInstance.h>
-
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.Media.Imaging.h>
-#include <winrt/Windows.Security.Cryptography.h>
-#include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.Web.Http.h>
-
-#include "unicode.h"
-
-#include <condition_variable>
-#include <future>
-#include <mutex>
-#include <type_traits>
-
-#include "Utils/PropertyHandlerUtils.h"
 
 #include <cxxreact/JsArgumentHelpers.h>
 
+#include <IReactInstance.h>
+#include <Views/ShadowNodeBase.h>
+#include <Utils/PropertyHandlerUtils.h>
 #include "ReactImage.h"
 
 #if _MSC_VER <= 1913
@@ -47,24 +30,8 @@ namespace winrt {
   using namespace Windows::Foundation;
   using namespace Windows::Storage::Streams;
   using namespace Windows::UI::Xaml::Controls;
-  using namespace Windows::UI::Xaml::Media;
   using namespace Windows::UI::Xaml::Media::Imaging;
-  using namespace Windows::Web::Http;
 }
-
-namespace react {
-  namespace uwp {
-    struct ImageSource
-    {
-      std::string uri;
-      std::string method;
-      folly::dynamic headers;
-      double width = 0;
-      double height = 0;
-      double scale = 1.0;
-      bool packagerAsset = false;
-    };
-} }
 
 // Such code is better to move to a seperate parser layer
 template<>
@@ -93,7 +60,6 @@ struct json_type_traits<react::uwp::ImageSource>
     return source;
   }
 };
-
 
 template<>
 struct json_type_traits<react::uwp::ResizeMode>
@@ -141,7 +107,17 @@ namespace react { namespace uwp {
 
   XamlView ImageViewManager::CreateViewCore(int64_t tag)
   {
-    return ReactImage::Create().as<winrt::Canvas>();
+    auto reactImage{ ReactImage::Create() };
+
+    reactImage->OnLoadEnd([=](const auto&, const bool& succeeded)
+    {
+        ImageSource source{ reactImage->Source() };
+
+        EmitImageEvent(m_wkReactInstance.lock(), reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
+        EmitImageEvent(m_wkReactInstance.lock(), reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
+    });
+
+    return reactImage.as<winrt::Canvas>();
   }
 
   void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
@@ -173,7 +149,7 @@ namespace react { namespace uwp {
     Super::UpdateProperties(nodeToUpdate, reactDiffMap);
   }
 
-  void EmitImageEvent(const std::shared_ptr<react::uwp::IReactInstance> &reactInstance, winrt::Canvas canvas, const char* eventName, ImageSource& source)
+  void EmitImageEvent(const std::shared_ptr<react::uwp::IReactInstance>& reactInstance, winrt::Canvas canvas, const char* eventName, ImageSource& source)
   {
     if (reactInstance == nullptr)
       return;
@@ -190,73 +166,6 @@ namespace react { namespace uwp {
     reactInstance->DispatchEvent(tag, eventName, std::move(eventData));
   }
 
-  std::future<void> DownloadImageAsync(winrt::Canvas canvas, ImageSource source, std::weak_ptr<IReactInstance> instanceWeak)
-  {
-    // Since this is a fire and forget function (not waited upon when called), we need to wrap in a
-    // try/catch or uncaught exceptions will take down the process
-    try
-    {
-      winrt::HttpClient httpClient;
-      winrt::HttpMethod httpMethod(nullptr);
-
-      if (source.method.empty())
-        httpMethod = winrt::HttpMethod::Get();
-      else
-        httpMethod = winrt::HttpMethod(facebook::react::unicode::utf8ToUtf16(source.method));
-
-      winrt::Uri uri(facebook::react::unicode::utf8ToUtf16(source.uri));
-
-      winrt::HttpRequestMessage request(httpMethod, uri);
-
-      if (!source.headers.empty())
-      {
-        for (auto& header : source.headers.items())
-        {
-          auto& name = header.first.getString();
-          auto& value = header.second.getString();
-
-          if (_stricmp(name.c_str(), "authorization") == 0)
-            request.Headers().TryAppendWithoutValidation(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
-          else
-            request.Headers().Append(facebook::react::unicode::utf8ToUtf16(name), facebook::react::unicode::utf8ToUtf16(value));
-        }
-      }
-
-      winrt::HttpResponseMessage response = co_await httpClient.SendRequestAsync(request);
-
-      auto instance = instanceWeak.lock();
-      if (response.StatusCode() == winrt::HttpStatusCode::Ok)
-      {
-        winrt::IInputStream inputStream = co_await response.Content().ReadAsInputStreamAsync();
-        winrt::InMemoryRandomAccessStream memoryStream;
-        co_await winrt::RandomAccessStream::CopyAsync(inputStream, memoryStream);
-        memoryStream.Seek(0);
-
-        // winrt::LoadedImageSurface().StartLoadFromStream(memoryStream);
-
-        winrt::BitmapImage bitmap;
-        co_await bitmap.SetSourceAsync(memoryStream);
-
-        winrt::ImageBrush brush;
-        brush.ImageSource(bitmap);
-
-        canvas.Background(brush);
-
-        EmitImageEvent(instance, canvas, "topLoad", source);
-      }
-      else
-      {
-        EmitImageEvent(instance, canvas, "topError", source);
-      }
-    }
-    catch (winrt::hresult_error const &)
-    {
-      EmitImageEvent(instanceWeak.lock(), canvas, "topError", source);
-    }
-
-    EmitImageEvent(instanceWeak.lock(), canvas, "topLoadEnd", source);
-  }
-
   void ImageViewManager::setSource(winrt::Canvas canvas, const folly::dynamic& data)
   {
     auto instance = m_wkReactInstance.lock();
@@ -264,6 +173,7 @@ namespace react { namespace uwp {
       return;
 
     auto sources = json_type_traits<std::vector<ImageSource>>::parseJson(data);
+
     auto uriString = sources[0].uri;
     if (uriString.length() == 0)
     {
@@ -271,41 +181,9 @@ namespace react { namespace uwp {
       return;
     }
 
-    if (sources[0].packagerAsset && uriString.find("file://") == 0)
-      uriString.replace(0, 7, "ms-appx:///Bundle/");
-
-    bool needsDownload = false;
-
-    try
-    {
-      auto uri = winrt::Uri(winrt::hstring(asWStr(uriString).c_str()));
-      auto scheme = uri.SchemeName();
-      needsDownload = scheme == L"http" || scheme == L"https";
-
-      EmitImageEvent(instance, canvas, "topLoadStart", sources[0]);
-      if (needsDownload)
-      {
-        auto reactImage{ canvas.as<ReactImage>() };
-        reactImage->SourceUri(uri);
-
-        // TODO: Bubble up LoadedImageSourceLoadStatus
-      }
-      else
-      {
-        auto reactImage{ canvas.as<ReactImage>() };
-        reactImage->SourceUri(uri);
-
-        EmitImageEvent(instance, canvas, "topLoad", sources[0]);
-      }
-    }
-    catch (...)
-    {
-      OutputDebugString(L"caught exception setting up image source");
-      EmitImageEvent(instance, canvas, "topError", sources[0]);
-    }
-
-    if (!needsDownload)
-      EmitImageEvent(instance, canvas, "topLoadEnd", sources[0]);
+    auto reactImage{ canvas.as<ReactImage>() };
+    EmitImageEvent(instance, canvas, "topLoadStart", sources[0]);
+    reactImage->Source(sources[0]);
   }
 
   folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants() const
@@ -330,6 +208,7 @@ namespace react { namespace uwp {
 
     return props;
   }
+
 
 //
 // ImageViewManagerModule::ImageViewManagerModuleImpl
@@ -358,26 +237,27 @@ private:
 
 winrt::fire_and_forget GetImageSizeAsync(std::string uri, facebook::xplat::module::CxxModule::Callback successCallback, facebook::xplat::module::CxxModule::Callback errorCallback)
 {
-  winrt::Canvas canvas;
-  ImageSource source;
-  source.uri = uri;
+  bool succeeded{ false };
 
-  winrt::apartment_context ui_thread;
-
-  bool succeeded = false;
   try
   {
-    co_await DownloadImageAsync(canvas, source, std::weak_ptr<IReactInstance>());
+    ImageSource source;
+    source.uri = uri;
 
-    // Get back to the UI-thread to read properties on Image
-    co_await ui_thread;
-    if (auto brush = canvas.Background().try_as<winrt::ImageBrush>())
+    winrt::InMemoryRandomAccessStream memoryStream{ co_await react::uwp::GetImageStreamAsync(source) };
+
+    if (!memoryStream)
     {
-      if (auto bitmap = brush.ImageSource().try_as<winrt::BitmapImage>())
-      {
-        successCallback({ bitmap.PixelWidth(), bitmap.PixelHeight() });
-        succeeded = true;
-      }
+      EmitImageEvent(std::weak_ptr<IReactInstance>().lock(), {}, "topError", source);
+    }
+
+    winrt::BitmapImage bitmap;
+    co_await bitmap.SetSourceAsync(memoryStream);
+
+    if (bitmap)
+    {
+      successCallback({ bitmap.PixelWidth(), bitmap.PixelHeight() });
+      succeeded = true;
     }
   }
   catch (winrt::hresult_error const &)
@@ -389,7 +269,6 @@ winrt::fire_and_forget GetImageSizeAsync(std::string uri, facebook::xplat::modul
 
   co_return;
 }
-
 
 void ImageViewManagerModule::ImageViewManagerModuleImpl::getSize(std::string uri, Callback successCallback, Callback errorCallback)
 {
@@ -451,6 +330,5 @@ auto ImageViewManagerModule::getMethods() -> std::vector<Method>
     }),
   };
 }
-
 
 } }
