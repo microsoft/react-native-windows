@@ -63,6 +63,8 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#include<ChakraScriptStore.h>
+
 #if !defined(OSS_RN)
 #include "ChakraJSIRuntimeHolder.h"
 #endif
@@ -272,7 +274,10 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
 
     #if !defined(OSS_RN)
     if (settings.UseJsi)
-      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+    {
+      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = std::make_unique<ChakraScriptStore>();
+      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, std::move(scriptStore), nullptr);
+    }
     #endif
 
     try
