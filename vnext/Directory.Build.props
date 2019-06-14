@@ -40,7 +40,7 @@
   <!-- For now we are using the existance of the glog stub... but we probably want a better long term solution -->
   <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
     <OSS_RN>true</OSS_RN>
-    <FollyDir>$(SolutionDir)node_modules\.folly\folly-2019.06.03.00</FollyDir>
+    <FollyDir>$(SolutionDir)node_modules\.folly\folly-2019.06.10.00</FollyDir>
   </PropertyGroup>
 
 </Project>
