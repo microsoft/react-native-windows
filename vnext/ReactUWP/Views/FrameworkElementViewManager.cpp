@@ -3,21 +3,29 @@
 
 #include "pch.h"
 
+#include <IReactInstance.h>
+
 #include <Views/FrameworkElementViewManager.h>
+#include <Views/ExpressionAnimationStore.h>
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
+#include <Utils/AccessibilityUtils.h>
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Automation.h>
+#include <winrt/Windows.UI.Xaml.Hosting.h>
+#include <winrt/Windows.UI.Composition.h>
+#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <WindowsNumerics.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Automation;
+using namespace Windows::UI::Xaml::Automation::Peers;
 }
 
 namespace react { namespace uwp {
@@ -31,20 +39,16 @@ void FrameworkElementViewManager::TransferProperty(XamlView oldView, XamlView ne
 {
   auto oldValue = oldView.ReadLocalValue(dp);
   if (oldValue != nullptr)
+  {
     newView.SetValue(dp, oldValue);
+    oldView.ClearValue(dp);
+  }
 }
 
 void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView newView)
 {
   // Render Properties
   TransferProperty(oldView, newView, winrt::UIElement::OpacityProperty());
-
-  if (oldView.try_as<winrt::IUIElement9>())
-  {
-    auto oldElement = oldView.as<winrt::UIElement>();
-    auto newElement = newView.as<winrt::UIElement>();
-    newElement.TransformMatrix(oldElement.TransformMatrix());
-  }
 
   // Layout Properties
   TransferProperty(oldView, newView, winrt::FrameworkElement::WidthProperty());
@@ -56,8 +60,11 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
 
   // Accessibility Properties
   TransferProperty(oldView, newView, winrt::AutomationProperties::NameProperty());
+  TransferProperty(oldView, newView, winrt::AutomationProperties::HelpTextProperty());
+  TransferProperty(oldView, newView, winrt::AutomationProperties::LiveSettingProperty());
   auto accessibilityView = winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
+  winrt::AutomationProperties::SetAccessibilityView(oldView, winrt::Peers::AccessibilityView::Raw);
 
   auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
   oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
@@ -105,7 +112,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       }
       else if (propertyName == "transform")
       {
-        if (element.try_as<winrt::IUIElement9>()) // Works on RS5+
+        if (element.try_as<winrt::IUIElement10>()) // Works on 19H1+
         {
           if (propertyValue.isArray())
           {
@@ -127,7 +134,8 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
             transformMatrix.m42 = static_cast<float>(propertyValue[13].asDouble());
             transformMatrix.m43 = static_cast<float>(propertyValue[14].asDouble());
             transformMatrix.m44 = static_cast<float>(propertyValue[15].asDouble());
-            element.TransformMatrix(transformMatrix);
+
+            ApplyTransformMatrix(element, nodeToUpdate, transformMatrix);
           }
           else if (propertyValue.isNull())
           {
@@ -261,6 +269,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
         {
           element.ClearValue(winrt::AutomationProperties::NameProperty());
         }
+        AnnounceLiveRegionChangedIfNeeded(element);
       }
       else if (propertyName == "accessible")
       {
@@ -269,6 +278,31 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           if (!propertyValue.asBool())
             winrt::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Raw);
         }
+      }
+      else if (propertyName == "accessibilityLiveRegion")
+      {
+        if (propertyValue.isString())
+        {
+          auto value = propertyValue.getString();
+
+          auto liveSetting = winrt::AutomationLiveSetting::Off;
+
+          if (value == "polite")
+          {
+            liveSetting = winrt::AutomationLiveSetting::Polite;
+          }
+          else if (value == "assertive")
+          {
+            liveSetting = winrt::AutomationLiveSetting::Assertive;
+          }
+
+          element.SetValue(winrt::AutomationProperties::LiveSettingProperty(), winrt::box_value(liveSetting));
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::AutomationProperties::LiveSettingProperty());
+        }
+        AnnounceLiveRegionChangedIfNeeded(element);
       }
       else if (propertyName == "testID")
       {
@@ -297,7 +331,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       {
         if (propertyValue.isNumber())
         {
-          auto value = static_cast<int>(propertyValue.asInt());
+          auto value = static_cast<int>(propertyValue.asDouble());
           auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
 
           element.SetValue(winrt::Canvas::ZIndexProperty(), boxedValue);
@@ -315,6 +349,55 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+}
+
+// Applies a TransformMatrix to the backing UIElement.
+// In react-native, rotates and scales are applied about the center of the component, unlike XAML.
+// Since the javascript layer sends a non-centered TransformMatrix, we need to compute the UIElement center and apply
+// centering manually via this formula:
+// tx = -TranslateCenter * TransformMatrix * TranslateCenter
+// We accomplish this in several steps:
+// 1) Create a PropertySet to hold both the TranslateCenter matrix and TransformMatrix.  Stored on the shadow node.
+//    This allows us to generalize to the animated scenario as well.
+// 2) To compute the CenterTransform we create an ExpressionAnimation that references the UIElement.ActualSize facade.
+//    This way whenever the ActualSize changes, the animation will automatically pick up the new value.
+// 3) Create an ExpressionAnimation to multiply everything together.
+void FrameworkElementViewManager::ApplyTransformMatrix(winrt::UIElement uielement, ShadowNodeBase* shadowNode, winrt::Windows::Foundation::Numerics::float4x4 transformMatrix)
+{
+  // Get our PropertySet from the ShadowNode and insert the TransformMatrix as the "transform" property
+  auto transformPS = shadowNode->EnsureTransformPS();
+  transformPS.InsertMatrix4x4(L"transform", transformMatrix);
+
+  // Start the overall animation to multiply everything together
+  StartTransformAnimation(uielement, transformPS);
+}
+
+// Starts ExpressionAnimation targeting UIElement.TransformMatrix with centered transform
+void FrameworkElementViewManager::StartTransformAnimation(
+  winrt::UIElement uielement,
+  winrt::Windows::UI::Composition::CompositionPropertySet transformPS)
+{
+  auto instance = GetReactInstance().lock();
+  assert(instance != nullptr);
+  auto expression = instance->GetExpressionAnimationStore().GetTransformCenteringExpression();
+  expression.SetReferenceParameter(L"PS", transformPS);
+  expression.Target(L"TransformMatrix");
+  uielement.StartAnimation(expression);
+}
+
+// Used in scenario where View changes its backing Xaml element.
+void FrameworkElementViewManager::RefreshTransformMatrix(ShadowNodeBase* shadowNode)
+{
+  if (shadowNode->HasTransformPS())
+  {
+    // First we need to update the reference parameter on the centering expression to point to the new backing UIElement.
+    shadowNode->UpdateTransformPS();
+    auto uielement = shadowNode->GetView().try_as<winrt::UIElement>();
+    assert(uielement != nullptr);
+
+    // Start a new ExpressionAnimation targeting the new UIElement.TransformMatrix.
+    StartTransformAnimation(uielement, shadowNode->EnsureTransformPS());
+  }
 }
 
 } }

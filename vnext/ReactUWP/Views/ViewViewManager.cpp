@@ -129,6 +129,7 @@ public:
     AccessibilityState(AccessibilityStates::Selected, AccessibilityState(AccessibilityStates::Selected));
     EnableFocusRing(EnableFocusRing());
     TabIndex(TabIndex());
+    static_cast<FrameworkElementViewManager*>(GetViewManager())->RefreshTransformMatrix(this);
   }
 
   winrt::com_ptr<ViewPanel> GetViewPanel()
@@ -410,7 +411,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
       {
         if (propertyValue.isNumber())
         {
-          auto tabIndex = propertyValue.asInt();
+          auto tabIndex = propertyValue.asDouble();
           if (tabIndex == static_cast<int32_t>(tabIndex))
           {
             pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));

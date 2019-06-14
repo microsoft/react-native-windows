@@ -5,7 +5,7 @@ trigger:
   branches:
     include:
       - master
-      - fb59merge
+      - 0.58-vnext-stable
       - fabric
   paths:
     include:
@@ -13,6 +13,7 @@ trigger:
     exclude:
       - vnext/package.json
       - vnext/yarn.lock
+      - vnext/Desktop.DLL/Version.rc
 
 pr: none
 
@@ -27,7 +28,7 @@ jobs:
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
@@ -88,6 +89,14 @@ jobs:
       - Cmd
 
     steps:
+
+      # The RnwNpmPublish task does this too before publishing the npm package,
+      # but when each slice checks out code, its not going to have those changes
+    - task: CmdLine@2
+      displayName: Update version numbers to align with publishing version
+      inputs:
+        script: node ../.ado/bumpFileVersions.js
+        workingDirectory: vnext
 
     - template: templates/npm-install-and-build.yml
 

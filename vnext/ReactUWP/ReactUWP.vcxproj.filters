@@ -43,6 +43,9 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\AccessibilityUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Threading\UIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -221,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="Views\Image\ReactImage.cpp">
       <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp">
+      <Filter>Views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -407,6 +413,9 @@
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
@@ -461,6 +470,9 @@
     </ClInclude>
     <ClInclude Include="Views\Image\ReactImage.h">
       <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ExpressionAnimationStore.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

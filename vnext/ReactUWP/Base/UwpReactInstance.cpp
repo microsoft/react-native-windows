@@ -63,7 +63,9 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#if !defined(OSS_RN)
 #include "ChakraJSIRuntimeHolder.h"
+#endif
 
 #include <tuple>
 
@@ -146,7 +148,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
     NetworkingModule::name,
     []() { return std::make_unique<NetworkingModule>(); },
-    messageQueue);
+    std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
     "Timing",
@@ -225,6 +227,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->useJITCompilation = settings.EnableJITCompilation;
+    devSettings->debugHost = settings.DebugHost;
 
     if (settings.UseLiveReload)
     {
@@ -265,8 +269,11 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
 
     std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+
+    #if !defined(OSS_RN)
     if (settings.UseJsi)
       devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+    #endif
 
     try
     {
