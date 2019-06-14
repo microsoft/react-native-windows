@@ -51,17 +51,17 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2
-        displayName: yarn install
+        displayName: yarn install (Using microsoft/react-native)
         inputs:
           script: yarn install --frozen-lockfile
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
         # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-        # We dont want to force devs to update/create two lock files on every change, so just dont freeze when
+        # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
         # using the non fork version.
       - task: CmdLine@2
-        displayName: yarn install
+        displayName: yarn install (Using facebook/react-native)
         inputs:
           script: yarn install
           workingDirectory: vnext
