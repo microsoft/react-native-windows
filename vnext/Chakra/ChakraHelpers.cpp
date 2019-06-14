@@ -16,7 +16,9 @@
 #include <folly/Memory.h>
 #include <glog/logging.h>
 
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 
 #include <windows.h>
 #include <cstdlib>
@@ -430,13 +432,17 @@ JsValueRef evaluateScript(
   std::unique_ptr<const JSBigString>&& script,
   JsValueRef sourceURL)
 {
+#if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
+#endif
 #if defined(USE_EDGEMODE_JSRT)
   JsValueRef jsScript = jsStringFromBigString(*script.get());
 #else
   JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(std::move(script));
 #endif
+#if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
+#endif
 
 #if defined(USE_EDGEMODE_JSRT)
   return evaluateScript(jsScript, sourceURL);

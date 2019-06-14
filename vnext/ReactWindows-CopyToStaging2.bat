@@ -53,10 +53,7 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeArgs.h                        %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeFactory.h                     %DESTROOT%\inc\jsi
 
-%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\Yoga.h                          %DESTROOT%\inc\yoga
-%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGMacros.h                      %DESTROOT%\inc\yoga
-%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGNodeList.h                    %DESTROOT%\inc\yoga
-%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\YGEnums.h                       %DESTROOT%\inc\yoga
+%COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\*.h                             %DESTROOT%\inc\yoga
 
 %COPYCMD%  %RNROOT%\Folly                                                 %DESTROOT%\inc\Folly
 %COPYCMD%  %SRCROOT%\stubs                                                %DESTROOT%\inc\stubs

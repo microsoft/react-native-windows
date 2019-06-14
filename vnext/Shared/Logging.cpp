@@ -7,7 +7,9 @@
 
 #include "../Chakra/ChakraPlatform.h"
 #include <chrono>
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 
 #if !defined(NOJSC)
 #include <jschelpers/Value.h>
@@ -28,8 +30,10 @@ static double nativePerformanceNow() {
     std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
+#if !defined(OSS_RN)
 void logMarker(const ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
+#endif
 
 #if !defined(NOJSC)
 
@@ -69,7 +73,9 @@ void InitializeLogging(NativeLoggingHook&& hook) {
   // JSCNativeHooks::installPerfHooks = addNativePerfLoggingHooksJSC;
 #endif
 
+#if !defined(OSS_RN)
   ReactMarker::logTaggedMarker = logMarker;
+#endif
 }
 
 }}

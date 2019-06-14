@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.58.0-vnext.172",
+  "version": "0.59.0-vnext.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -43,11 +43,13 @@
     "plugin": "./local-cli/index.js"
   },
   "dependencies": {
+    "@babel/runtime": "^7.4.0",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
     "react-timer-mixin": "^0.13.2",
     "react-native-local-cli": "^1.0.0-alpha.5",
+    "regenerator-runtime": "^0.13.2",
     "username": "^3.0.0",
     "shelljs": "^0.7.8",
     "uuid": "^2.0.1",
@@ -56,18 +58,18 @@
   "devDependencies": {
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
-    "@types/react": "16.7.20",
-    "@types/react-native": "~0.57.29",
+    "@types/react": "16.8.15",
+    "@types/react-native": "~0.57.51",
     "just-scripts": "^0.20.0",
-    "react": "16.6.3",
+    "react": "16.8.3",
     "tslint": "^5.11.0",
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^4",
     "typescript": "3.5.1",
-    "react-native": "0.58.6-microsoft.63"
+    "react-native": "0.59.0-microsoft.1"
   },
   "peerDependencies": {
-    "react": "16.6.3",
-    "react-native": "0.58.6-microsoft.63 || https://github.com/microsoft/react-native/archive/v0.58.6-microsoft.63.tar.gz"
+    "react": "16.8.3",
+    "react-native": "^0.59.0 || 0.59.0-microsoft.1 || https://github.com/Microsoft/react-native/archive/v0.59.0-microsoft.1.tar.gz"
   }
 }
