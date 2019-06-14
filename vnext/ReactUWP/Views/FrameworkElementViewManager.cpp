@@ -34,7 +34,10 @@ void FrameworkElementViewManager::TransferProperty(XamlView oldView, XamlView ne
 {
   auto oldValue = oldView.ReadLocalValue(dp);
   if (oldValue != nullptr)
+  {
     newView.SetValue(dp, oldValue);
+    oldView.ClearValue(dp);
+  }
 }
 
 void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView newView)
@@ -59,9 +62,11 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
 
   // Accessibility Properties
   TransferProperty(oldView, newView, winrt::AutomationProperties::NameProperty());
+  TransferProperty(oldView, newView, winrt::AutomationProperties::HelpTextProperty());
   TransferProperty(oldView, newView, winrt::AutomationProperties::LiveSettingProperty());
   auto accessibilityView = winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
+  winrt::AutomationProperties::SetAccessibilityView(oldView, winrt::Peers::AccessibilityView::Raw);
 
   auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
   oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
