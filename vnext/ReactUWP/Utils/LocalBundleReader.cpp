@@ -27,19 +27,19 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string& b
   // Read the buffer manually to avoid a Utf8 -> Utf16 -> Utf8 encoding roundtrip.
   auto fileBuffer { co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file) };
   auto dataReader{ winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer) };
-  std::vector<uint8_t>* data = new std::vector<uint8_t>(fileBuffer.Length() + 1);
+  std::vector<uint8_t> data(fileBuffer.Length() + 1);
 
   // manually place the null byte at the end.
-  (*data)[fileBuffer.Length()] = 0;
+  data[fileBuffer.Length()] = 0;
 
   // Construct the array_view to slice into the first fileBuffer.Length bytes.
   // DataReader.ReadBytes will read as many bytes as are present in the array_view.
   // The backing vector has fileBuffer.Length() + 1 bytes, without an explicit end it will read 1 byte to many and throw.
-  winrt::array_view<uint8_t> arrayView{ data->data(), data->data() + fileBuffer.Length() };
+  winrt::array_view<uint8_t> arrayView{ data.data(), data.data() + fileBuffer.Length() };
   dataReader.ReadBytes(arrayView);
   dataReader.Close();
 
-  co_return std::string(reinterpret_cast<const char*>(data->data()));
+  co_return std::string(reinterpret_cast<const char*>(data.data()));
 }
 
 std::string LocalBundleReader::LoadBundle(const std::string& bundlePath)
