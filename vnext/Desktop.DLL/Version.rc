@@ -1,7 +1,7 @@
 #include <winver.h>
 
-#define VER_FILEVERSION 0,59,0,6
-#define VER_FILEVERSION_STR "0.59.0-vnext.6"
+#define VER_FILEVERSION 0,59,0,7
+#define VER_FILEVERSION_STR "0.59.0-vnext.7"
 
 #ifndef DEBUG
 #define VER_DEBUG                   0
