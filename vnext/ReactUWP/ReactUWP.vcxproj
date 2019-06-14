@@ -161,6 +161,7 @@
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
+    <ClInclude Include="ChakraPreparedScriptStore.h" />
     <ClInclude Include="ChakraScriptStore.h" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
@@ -234,6 +235,7 @@
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
+    <ClCompile Include="ChakraPreparedScriptStore.cpp" />
     <ClCompile Include="ChakraScriptStore.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />

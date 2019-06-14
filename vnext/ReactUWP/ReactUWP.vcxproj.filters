@@ -222,6 +222,9 @@
     <ClCompile Include="ChakraScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ChakraPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -442,6 +445,9 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="ChakraScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ChakraPreparedScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
