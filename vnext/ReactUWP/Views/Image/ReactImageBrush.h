@@ -16,7 +16,7 @@ namespace react {
       Contain = 1,
       Stretch = 2,
       Repeat = 3,
-      Center = 4,
+      Center = 4
     };
 
     struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
@@ -47,6 +47,7 @@ namespace react {
       void UpdateCompositionBrush();
       bool IsImageLargerThanView();
       bool ShouldSwitchCompositionBrush();
+      bool UsingSurfaceBrush();
       winrt::Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
       winrt::Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
       winrt::Windows::UI::Composition::CompositionEffectBrush GetOrCreateEffectBrush(winrt::Windows::UI::Composition::CompositionSurfaceBrush const& surfaceBrush);

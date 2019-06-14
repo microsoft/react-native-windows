@@ -104,11 +104,17 @@ namespace react {
     {
       bool effectToSurfaceBrushSwitch{
         ResizeMode() != ResizeMode::Repeat &&
-        !CompositionBrush().try_as<winrt::CompositionSurfaceBrush>() };
+        !UsingSurfaceBrush()
+      };
 
       bool surfaceToEffectBrushSwitch{ ResizeMode() == ResizeMode::Repeat };
 
       return effectToSurfaceBrushSwitch || surfaceToEffectBrushSwitch;
+    }
+
+    bool ReactImageBrush::UsingSurfaceBrush()
+    {
+      return CompositionBrush().try_as<winrt::CompositionSurfaceBrush>() != nullptr;
     }
 
     winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch()
@@ -159,6 +165,8 @@ namespace react {
       if (!surfaceBrush)
       {
         auto effectBrush{ CompositionBrush().as<winrt::CompositionEffectBrush>() };
+        assert(effectBrush);
+
         surfaceBrush = effectBrush.GetSourceParameter(L"source").as<winrt::CompositionSurfaceBrush>();
       }
 
