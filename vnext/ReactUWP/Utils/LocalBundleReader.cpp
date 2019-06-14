@@ -28,7 +28,7 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string& b
   auto fileBuffer { co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file) };
   auto dataReader{ winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer) };
 
-  std::string script(fileBuffer.Length(), '\0');
+  std::string script(fileBuffer.Length() + 1, '\0');
 
   // Construct the array_view to slice into the first fileBuffer.Length bytes.
   // DataReader.ReadBytes will read as many bytes as are present in the array_view.
