@@ -13,21 +13,31 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
+          UseRNFork: true
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
+          UseRNFork: true
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
+          UseRNFork: true
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+          UseRNFork: true
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+          UseRNFork: true
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: arm
+          UseRNFork: true
+        PublicRNX86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: false
     pool:
       vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
@@ -45,6 +55,18 @@ jobs:
         inputs:
           script: yarn install --frozen-lockfile
           workingDirectory: vnext
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+
+        # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
+        # We dont want to force devs to update/create two lock files on every change, so just dont freeze when
+        # using the non fork version.
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install
+          workingDirectory: vnext
+        env: { UseRNFork: 'false' }
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
       - template: templates/stop-packagers.yml
 
