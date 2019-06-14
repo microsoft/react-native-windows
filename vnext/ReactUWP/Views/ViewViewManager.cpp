@@ -85,6 +85,8 @@ public:
   void AccessibilityState(AccessibilityStates state, bool value)
   {
     m_accessibilityStates[state] = value;
+    if (IsControl())
+      GetControl()->AccessibilityState(state, value);
   }
 
   void AddView(ShadowNode& child, int64_t index) override
@@ -166,7 +168,7 @@ private:
   bool m_onClick = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
   AccessibilityRoles m_accessibilityRole = AccessibilityRoles::None;
-  bool m_accessibilityStates[AccessibilityStates::CountStates] = { false, false };
+  bool m_accessibilityStates[AccessibilityStates::CountStates] = { 0 };
 };
 
 
@@ -396,6 +398,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
           }
         }
 
+        shouldBeControl = true;
         pViewShadowNode->AccessibilityState(AccessibilityStates::Disabled, disabled);
         pViewShadowNode->AccessibilityState(AccessibilityStates::Selected, selected);
       }

@@ -8,12 +8,7 @@
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
 namespace winrt {
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Interop;
-using namespace Windows::UI::Xaml::Media;
-using namespace Windows::Foundation;
 }
 
 namespace react { namespace uwp {
@@ -27,66 +22,90 @@ ViewControl::ViewControl()
   return winrt::make_self<ViewControl>();
 }
 
-winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer ViewControl::OnCreateAutomationPeer()
+winrt::AutomationPeer ViewControl::OnCreateAutomationPeer()
 {
   auto dyn = winrt::make<DynamicAutomationPeer>(*this);
   return dyn;
 }
 
-DynamicAutomationPeer::DynamicAutomationPeer(winrt::Windows::UI::Xaml::FrameworkElement const& owner)
+DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owner)
   : Super(owner)
 {
 }
 
-winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const
+winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const
 {
-  auto viewControl = Owner().as<::react::uwp::ViewControl>();
+  auto viewControl = Owner().try_as<ViewControl>();
 
-  switch(viewControl->AccessibilityRole())
+  if (nullptr != viewControl)
   {
-    case ::react::uwp::AccessibilityRoles::Button:
-    case ::react::uwp::AccessibilityRoles::ImageButton:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Button;
-    case ::react::uwp::AccessibilityRoles::Link:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Hyperlink;
-    case ::react::uwp::AccessibilityRoles::Image:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Image;
-    case ::react::uwp::AccessibilityRoles::KeyboardKey:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Custom;
-    case ::react::uwp::AccessibilityRoles::Text:
-    case ::react::uwp::AccessibilityRoles::Summary:
-    case ::react::uwp::AccessibilityRoles::Header:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Text;
-    case ::react::uwp::AccessibilityRoles::Adjustable:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Slider;
-    case ::react::uwp::AccessibilityRoles::Search:
-    case ::react::uwp::AccessibilityRoles::Unknown:
+    switch (viewControl->AccessibilityRole())
+    {
+    case AccessibilityRoles::Button:
+    case AccessibilityRoles::ImageButton:
+      return winrt::AutomationControlType::Button;
+    case AccessibilityRoles::Link:
+      return winrt::AutomationControlType::Hyperlink;
+    case AccessibilityRoles::Image:
+      return winrt::AutomationControlType::Image;
+    case AccessibilityRoles::KeyboardKey:
+      return winrt::AutomationControlType::Custom;
+    case AccessibilityRoles::Text:
+    case AccessibilityRoles::Summary:
+    case AccessibilityRoles::Header:
+      return winrt::AutomationControlType::Text;
+    case AccessibilityRoles::Adjustable:
+      return winrt::AutomationControlType::Slider;
+    case AccessibilityRoles::Search:
+    case AccessibilityRoles::Unknown:
     default:
-      return winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType::Group;
+      return winrt::AutomationControlType::Group;
+    }
   }
+
+  return winrt::AutomationControlType::Group;
 }
 
-winrt::Windows::Foundation::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const& patternInterface) const
+winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterface const& patternInterface) const
 {
-  auto viewControl = Owner().as<::react::uwp::ViewControl>();
+  auto viewControl = Owner().try_as<ViewControl>();
 
-  if (patternInterface == winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface::Invoke &&
-      (viewControl->AccessibilityRole() == ::react::uwp::AccessibilityRoles::Button || 
-        viewControl->AccessibilityRole() == ::react::uwp::AccessibilityRoles::ImageButton))
+  if (nullptr != viewControl)
   {
-    return *this;
+    auto accessibilityRole = viewControl->AccessibilityRole();
+
+    if (patternInterface == winrt::PatternInterface::Invoke &&
+      (accessibilityRole == AccessibilityRoles::Button || accessibilityRole == AccessibilityRoles::ImageButton))
+    {
+      return *this;
+    }
   }
 
   return nullptr;
 }
 
+bool DynamicAutomationPeer::IsEnabledCore() const
+{
+  auto viewControl = Owner().try_as<ViewControl>();
+
+  if (nullptr != viewControl && viewControl->AccessibilityState(AccessibilityStates::Disabled))
+  {
+    return false;
+  }
+
+  return Super::IsEnabledCore();
+}
 
 void DynamicAutomationPeer::Invoke() const
 {
-  auto viewControl = Owner().as<::react::uwp::ViewControl>();
-  auto invokeHandler = viewControl->AccessibilityInvoke();
-  if (invokeHandler)
-    invokeHandler();
+  auto viewControl = Owner().try_as<ViewControl>();
+
+  if (nullptr != viewControl)
+  {
+    auto invokeHandler = viewControl->AccessibilityInvoke();
+    if (invokeHandler)
+      invokeHandler();
+  }
 }
 
 } } // namespace react::uwp

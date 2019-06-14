@@ -56,6 +56,35 @@ class TouchableExamples extends React.Component<{}, any> {
   }
 }
 
+class AccessibilityStateExamples extends React.Component {
+  public state = {
+    disabled: false,
+  }
+
+  public render() {
+    return (
+      <View>
+        <Text>The following TouchableHighlight toggles accessibilityState.disabled for the View under it:</Text>
+        <TouchableHighlight
+          style={{width:50, height:50, backgroundColor:'blue'}}
+          accessibilityRole="button"
+          onPress={this.press}
+        >
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{backgroundColor: this.state.disabled ? 'gray' : 'lightskyblue'}}
+          accessibilityStates={this.state.disabled ? ['disabled'] : []}>
+          <Text>This View should be {this.state.disabled ? "disabled" : "enabled"} according to UIA</Text>
+        </View>
+      </View>
+    );
+  }
+
+  private press = () => {
+    this.setState({disabled: !this.state.disabled});
+  }
+}
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'Accessibility';
@@ -71,6 +100,12 @@ export const examples = [
     title: 'Touchables',
     render: function(): JSX.Element {
       return <TouchableExamples />;
+    },
+  },
+  {
+    title: 'States',
+    render: function(): JSX.Element {
+      return <AccessibilityStateExamples />;
     },
   }
 ];
