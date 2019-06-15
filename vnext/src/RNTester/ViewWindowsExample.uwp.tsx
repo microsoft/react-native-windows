@@ -40,10 +40,9 @@ interface IKeyboardableComponentState {
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
-  { key: 'ArrowDown', eventPhase:  EventPhase.Capturing },
-  { key: 'ArrowUp' },
-  { key: 'ArrowLeft' },
-  { key: 'ArrowRight' },
+  { key: 'a', eventPhase:  EventPhase.Capturing },
+  { key: 'b' },
+  { key: 'c', eventPhase:  EventPhase.Bubbling },
   { key: 'Tab', eventPhase: EventPhase.Capturing }
 ];
 

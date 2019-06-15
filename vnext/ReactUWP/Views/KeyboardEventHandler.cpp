@@ -38,6 +38,8 @@ struct json_type_traits<react::uwp::KeyboardEvent>
         ev.metaKey = as<bool>(propertyValue);
       else if (propertyName == KEY)
         ev.key = as<string>(propertyValue);
+      else if (propertyName == EVENT_PHASE)
+        ev.eventPhase = as<EventPhase>(propertyValue);
     }
     return ev;
   }
