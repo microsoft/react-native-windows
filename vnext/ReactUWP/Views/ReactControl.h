@@ -9,7 +9,7 @@
 #include "IXamlRootView.h"
 #include <IReactInstance.h>
 #include "TouchEventHandler.h"
-#include "KeyboardEventHandler.h"
+#include "Views/KeyboardEventHandler.h"
 #include <winrt/Windows.UI.Xaml.Controls.h>
 
 namespace winrt {

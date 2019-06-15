@@ -39,6 +39,7 @@ namespace react { namespace uwp {
     bool ctrlKey{ false };
     bool metaKey{ false };
     bool shiftKey{ false };
+    bool capLocked{ false };
   };
 
   struct ReactKeyboardEvent: ModifiedKeyStatue
@@ -50,7 +51,7 @@ namespace react { namespace uwp {
   struct KeyboardEvent: ModifiedKeyStatue
   {
     EventPhase eventPhase{ EventPhase::BUBBLING };
-    winrt::VirtualKey key{ winrt::VirtualKey::None };
+    string key{};
   };
 
   typedef std::function<void(winrt::IInspectable const&, winrt::KeyRoutedEventArgs const&)> KeyboardEventCallback;
@@ -111,7 +112,6 @@ namespace react { namespace uwp {
   {
     static std::vector<KeyboardEvent> FromJS(folly::dynamic const& obj);
     static KeyboardEvent CreateKeyboardEvent(EventPhase phase, winrt::KeyRoutedEventArgs const& args);
-    static winrt::VirtualKey ToVirtualKey(string key);
-    static string FromVirutalKey(winrt::VirtualKey key);
+    static string FromVirutalKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   };
 }}

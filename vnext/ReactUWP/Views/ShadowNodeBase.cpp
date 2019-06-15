@@ -9,6 +9,7 @@
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>
 #include <Views/ExpressionAnimationStore.h>
+#include "Views/KeyboardEventHandler.h"
 #include <winrt/Windows.UI.Composition.h>
 #include <WindowsNumerics.h>
 

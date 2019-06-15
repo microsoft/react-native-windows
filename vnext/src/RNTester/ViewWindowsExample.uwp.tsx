@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 import { StyleSheet, Text, TextInput } from 'react-native';
-import { ViewWindows, IHandledKeyboardEvent, IKeyboardEvent } from '../../src/index.uwp';
+import { ViewWindows, IHandledKeyboardEvent, IKeyboardEvent, EventPhase } from '../../src/index.uwp';
 
 const styles = StyleSheet.create({
   border: {
@@ -35,14 +35,16 @@ const styles = StyleSheet.create({
 interface IKeyboardableComponentState {
   lastKeyDown: string | null;
   lastKeyUp: string | null;
+  lastKeyDownCapture: string | null;
+  lastKeyUpCapture: string | null;
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
-  { key: 'ArrowDown' },
+  { key: 'ArrowDown', eventPhase:  EventPhase.Capturing },
   { key: 'ArrowUp' },
   { key: 'ArrowLeft' },
   { key: 'ArrowRight' },
-  { key: 'Tab' }
+  { key: 'Tab', eventPhase: EventPhase.Capturing }
 ];
 
 class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableComponentState> {
@@ -50,27 +52,35 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
     super(props);
     this.state = {
       lastKeyDown: null,
-      lastKeyUp: null
+      lastKeyUp: null,
+      lastKeyDownCapture: null,
+      lastKeyUpCapture: null,
     };
   }
 
   public render(): JSX.Element {
     return (
-      <ViewWindows keyDownEvents={handledNativeKeyboardEvents} keyUpEvents={handledNativeKeyboardEvents}>
+      <ViewWindows >
         <ViewWindows
           style={styles.keyComponentRoot}
+          onKeyDownCapture={this._onKeyDownCapture}
+          onKeyUpCapture={this._onKeyUpCapture}
           onKeyUp={this._onKeyUp}
           onKeyDown={this._onKeyDown}
+          keyDownEvents={handledNativeKeyboardEvents} 
+          keyUpEvents={handledNativeKeyboardEvents}
         >
           <ViewWindows style={styles.keyEnterVisualizer}>
             <Text>OnKeyDown</Text>
-            <Text>----</Text>
             <Text>{this.state.lastKeyDown !== null ? this.state.lastKeyDown : ' '}</Text>
+            <Text>OnKeyDownCapture</Text>
+            <Text>{this.state.lastKeyDownCapture !== null ? this.state.lastKeyDownCapture : ' '}</Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
             <Text>OnKeyUp</Text>
-            <Text>----</Text>
             <Text>{this.state.lastKeyUp !== null ? this.state.lastKeyUp : ' '}</Text>
+            <Text>OnKeyUpCapture</Text>
+            <Text>{this.state.lastKeyUpCapture !== null ? this.state.lastKeyUpCapture : ' '}</Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
             <TextInput placeholder='I got focus' style={styles.textInput}/>
@@ -86,6 +96,13 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
 
   private _onKeyDown = (ev: IKeyboardEvent) => {
     this.setState({ lastKeyDown: ev.nativeEvent.key, lastKeyUp: null });
+  };
+  private _onKeyUpCapture = (ev: IKeyboardEvent) => {
+    this.setState({ lastKeyUpCapture: ev.nativeEvent.key, lastKeyDownCapture: null });
+  };
+
+  private _onKeyDownCapture = (ev: IKeyboardEvent) => {
+    this.setState({ lastKeyDownCapture: ev.nativeEvent.key, lastKeyUpCapture: null });
   };
 }
 export const displayName = (_undefined?: string) => {};

@@ -8,6 +8,7 @@
 
 namespace winrt {
   using namespace Windows::UI::Xaml;
+  using namespace Windows::UI::Xaml::Input;
   using namespace Windows::Foundation;
 }
 
