@@ -70,9 +70,9 @@ private:
 // DynamicAutomationPeer refers to the owner ViewControl to determine what type control
 // it appears to be for accessibility tools
 //
-struct DynamicAutomationPeer : winrt::FrameworkElementAutomationPeerT<DynamicAutomationPeer, winrt::IInvokeProvider>
+struct DynamicAutomationPeer : winrt::FrameworkElementAutomationPeerT<DynamicAutomationPeer, winrt::IInvokeProvider, winrt::ISelectionProvider, winrt::ISelectionItemProvider>
 {
-  using Super = winrt::FrameworkElementAutomationPeerT<DynamicAutomationPeer, winrt::IInvokeProvider>;
+  using Super = winrt::FrameworkElementAutomationPeerT<DynamicAutomationPeer, winrt::IInvokeProvider, winrt::ISelectionProvider, winrt::ISelectionItemProvider>;
 
   DynamicAutomationPeer() = delete;
   DynamicAutomationPeer(winrt::FrameworkElement const& owner);
@@ -84,6 +84,18 @@ struct DynamicAutomationPeer : winrt::FrameworkElementAutomationPeerT<DynamicAut
 
   // IInvokeProvider
   void Invoke() const;
+
+  // ISelectionProvider
+  bool CanSelectMultiple() const { return true; }
+  bool IsSelectionRequired() const { return false; }
+  winrt::com_array<winrt::IRawElementProviderSimple> GetSelection() const;
+
+  // ISelectionItemProvider
+  bool IsSelected() const;
+  winrt::IRawElementProviderSimple SelectionContainer() const;
+  void AddToSelection() const;
+  void RemoveFromSelection() const;
+  void Select() const;
 };
 
 }} // namespace react::uwp

@@ -79,6 +79,10 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
     {
       return *this;
     }
+    else if (patternInterface == winrt::PatternInterface::Selection || patternInterface == winrt::PatternInterface::SelectionItem)
+    {
+      return *this;
+    }
   }
 
   return nullptr;
@@ -106,6 +110,37 @@ void DynamicAutomationPeer::Invoke() const
     if (invokeHandler)
       invokeHandler();
   }
+}
+
+winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSelection() const
+{
+  return {};
+}
+
+bool DynamicAutomationPeer::IsSelected() const
+{
+  auto viewControl = Owner().try_as<ViewControl>();
+  return (nullptr != viewControl && viewControl->AccessibilityState(AccessibilityStates::Selected));
+}
+
+winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const
+{
+  return nullptr;
+}
+
+void DynamicAutomationPeer::AddToSelection() const
+{
+
+}
+
+void DynamicAutomationPeer::RemoveFromSelection() const
+{
+
+}
+
+void DynamicAutomationPeer::Select() const
+{
+
 }
 
 } } // namespace react::uwp
