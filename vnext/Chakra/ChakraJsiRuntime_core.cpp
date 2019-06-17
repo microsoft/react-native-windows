@@ -197,6 +197,7 @@ struct FileVersionInfoResource {
 /*static*/ void ChakraJsiRuntime::initRuntimeVersion()  noexcept {
   // This code is win32 only at the moment. We will need to change this
   // line if we want to support UWP.
+#if !defined(CHAKRACOREUWP)
   constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
 
   auto freeLibraryWrapper = [](void* p) { FreeLibrary((HMODULE)p); };
@@ -222,6 +223,7 @@ struct FileVersionInfoResource {
   s_runtimeVersion = chakraVersionInfo->fixedFileInfo.dwFileVersionMS;
   s_runtimeVersion <<= 32;
   s_runtimeVersion |= chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
+#endif
 }
 
 JsErrorCode ChakraJsiRuntime::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,
