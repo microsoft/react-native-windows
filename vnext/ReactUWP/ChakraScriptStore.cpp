@@ -9,7 +9,7 @@ namespace react {
     facebook::jsi::VersionedBuffer ChakraScriptStore::getVersionedScript(const std::string& url) noexcept
     {
       facebook::jsi::VersionedBuffer versionedBuffer_;
-      versionedBuffer_.buffer = 0;
+      versionedBuffer_.buffer = nullptr;
       versionedBuffer_.version = 0;
 
       return versionedBuffer_;
@@ -19,11 +19,9 @@ namespace react {
     facebook::jsi::ScriptVersion_t ChakraScriptStore::getScriptVersion(const std::string& url) noexcept
     {
       const std::string bundleUrl = "ms-appx:///Bundle/App.bundle";
-      const winrt::Windows::Foundation::DateTime bundleCreatedTime = LocalBundleReader::LoadBundleCreatedDateTime(bundleUrl);
+      const winrt::Windows::Foundation::DateTime bundleCreatedTime = LocalBundleReader::LoadBundleCreatedDate(bundleUrl);
       const std::uint64_t timestamp = bundleCreatedTime.time_since_epoch().count();
-      facebook::jsi::ScriptVersion_t scriptVersion_ = timestamp;
-
-      return scriptVersion_;
+      return timestamp;
     }
   }
 }

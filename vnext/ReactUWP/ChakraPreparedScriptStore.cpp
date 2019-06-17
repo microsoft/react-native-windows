@@ -3,22 +3,36 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.h>
 #include <Utils/LocalBundleReader.h>
-#include "unicode.h"
+#include "LocalByteCodeManager.h"
+#include "ChakraJsiRuntime.h"
+#include <winrt/Windows.Storage.Streams.h>
 
 using namespace winrt;
 
 namespace react {
   namespace uwp {
-
     std::unique_ptr<const facebook::jsi::Buffer> ChakraPreparedScriptStore::tryGetPreparedScript(
       const facebook::jsi::ScriptSignature& scriptSignature,
       const facebook::jsi::JSRuntimeSignature& runtimeSignature,
       const char* prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept
     {
+      // check if app bundle version is older than or equal to the prepared script version
+      // if true then just read the buffer from the prepared script and return
       if (shouldGetPreparedScript(scriptSignature.version))
       {
-        return getPreparedScriptAsync();
+        auto buffer = LocalByteCodeManager::LoadBuffer();
+        std::unique_ptr<facebook::jsi::chakraruntime::ByteArrayBuffer> bytecodeBuffer(
+          std::make_unique<facebook::jsi::chakraruntime::ByteArrayBuffer>(buffer.Length())
+        );
+
+        auto dataReader{ winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer) };
+        std::vector<uint8_t> buffer_vector(buffer.Length());
+        winrt::array_view<uint8_t> arrayView{ buffer_vector };
+        dataReader.ReadBytes(arrayView);
+        dataReader.Close();
+
+        return bytecodeBuffer;
       }
       return nullptr;
     }
@@ -30,26 +44,15 @@ namespace react {
       const char* prepareTag  // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept
     {
-      persistPreparedScriptAsync(scriptMetadata.version, preparedScript);
+      // generate a new bytecode file
+      LocalByteCodeManager::CreateFile(preparedScript.get()->data());
     }
 
     bool ChakraPreparedScriptStore::shouldGetPreparedScript(facebook::jsi::ScriptVersion_t v) noexcept
     {
-      const std::string bundleUrl = "ms-appx:///assets/app.bytecode";
-      const winrt::Windows::Foundation::DateTime bytecodeFileCreatedTime = LocalBundleReader::LoadBundleCreatedDateTime(bundleUrl);
-      const std::uint64_t timestamp = bytecodeFileCreatedTime.time_since_epoch().count();
-        
-      return timestamp > v;
-    }
-
-    std::unique_ptr<const facebook::jsi::Buffer> ChakraPreparedScriptStore::getPreparedScriptAsync() noexcept
-    {
-      return nullptr;
-    }
-    void ChakraPreparedScriptStore::persistPreparedScriptAsync(facebook::jsi::ScriptVersion_t v, std::shared_ptr<const facebook::jsi::Buffer>) noexcept
-    {
-      auto folder = Windows::Storage::ApplicationData::Current().LocalCacheFolder();
-
+      const winrt::Windows::Foundation::DateTime createdDateTime = LocalByteCodeManager::LoadCreatedDateTime();
+      const std::uint64_t timestamp = createdDateTime.time_since_epoch().count();
+      return timestamp >= v;
     }
   }
 }

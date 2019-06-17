@@ -164,6 +164,9 @@
     <ClInclude Include="ChakraPreparedScriptStore.h" />
     <ClInclude Include="ChakraScriptStore.h" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
+    <ClInclude Include="LocalByteCodeManager.h">
+      <DeploymentContent>true</DeploymentContent>
+    </ClInclude>
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
@@ -242,6 +245,9 @@
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
+    <ClCompile Include="LocalByteCodeManager.cpp">
+      <DeploymentContent>true</DeploymentContent>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />

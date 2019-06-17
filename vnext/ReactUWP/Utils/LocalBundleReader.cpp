@@ -32,7 +32,7 @@ std::string LocalBundleReader::LoadBundle(const std::string& bundlePath)
   return LoadBundleAsync(bundlePath).get();
 }
 
-std::future<winrt::Windows::Foundation::DateTime> LocalBundleReader::LoadBundleCreatedDateTimeAsync(const std::string& bundleUri)
+std::future<winrt::Windows::Foundation::DateTime> LocalBundleReader::LoadBundleCreatedDateAsync(const std::string& bundleUri)
 {
   winrt::hstring str(facebook::react::unicode::utf8ToUtf16(bundleUri));
   winrt::Windows::Foundation::Uri uri(str);
@@ -46,16 +46,14 @@ std::future<winrt::Windows::Foundation::DateTime> LocalBundleReader::LoadBundleC
   }
   catch (winrt::hresult_error const& ex)
   {
-    winrt::hresult hr = ex.to_abi(); // HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND).
-    winrt::hstring message = ex.message(); // The system cannot find the file specified.
     winrt::Windows::Foundation::DateTime date;
     return date;
   }
 }
 
-winrt::Windows::Foundation::DateTime LocalBundleReader::LoadBundleCreatedDateTime(const std::string& bundlePath)
+winrt::Windows::Foundation::DateTime LocalBundleReader::LoadBundleCreatedDate(const std::string& bundlePath)
 {
-  return LoadBundleCreatedDateTimeAsync(bundlePath).get();
+  return LoadBundleCreatedDateAsync(bundlePath).get();
 }
 
 StorageFileBigString::StorageFileBigString(const std::string& path) {

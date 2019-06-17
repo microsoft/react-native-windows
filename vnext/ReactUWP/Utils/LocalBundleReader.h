@@ -14,8 +14,10 @@ class LocalBundleReader
 public:
   static std::future<std::string> LoadBundleAsync(const std::string& bundlePath);
   static std::string LoadBundle(const std::string& bundlePath);
-  static std::future<winrt::Windows::Foundation::DateTime> LoadBundleCreatedDateTimeAsync(const std::string& bundlePath);
-  static winrt::Windows::Foundation::DateTime LoadBundleCreatedDateTime(const std::string& bundlePath);
+
+  // Get app bundle created date to compare with byte code file created date
+  static std::future<winrt::Windows::Foundation::DateTime> LoadBundleCreatedDateAsync(const std::string& bundlePath);
+  static winrt::Windows::Foundation::DateTime LoadBundleCreatedDate(const std::string& bundlePath);
 };
 
 class StorageFileBigString : public facebook::react::JSBigString

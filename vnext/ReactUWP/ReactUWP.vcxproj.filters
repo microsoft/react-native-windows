@@ -225,6 +225,9 @@
     <ClCompile Include="ChakraPreparedScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="LocalByteCodeManager.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -448,6 +451,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="ChakraPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalByteCodeManager.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

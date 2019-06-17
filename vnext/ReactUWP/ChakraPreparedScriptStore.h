@@ -21,8 +21,6 @@ namespace react {
       ) noexcept override;
     private:
       bool shouldGetPreparedScript(facebook::jsi::ScriptVersion_t v) noexcept;
-      std::unique_ptr<const facebook::jsi::Buffer> getPreparedScriptAsync() noexcept;
-      void persistPreparedScriptAsync(facebook::jsi::ScriptVersion_t v, std::shared_ptr<const facebook::jsi::Buffer>) noexcept;
     };
   }
 }
