@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ChakraScriptStore.h"
+#include <winrt/Windows.Storage.h>
+#include <Utils/LocalBundleReader.h>
 
 namespace react {
   namespace uwp {
@@ -13,9 +15,13 @@ namespace react {
       return versionedBuffer_;
     }
 
+    // Script version = timestamp of bundle file last created
     facebook::jsi::ScriptVersion_t ChakraScriptStore::getScriptVersion(const std::string& url) noexcept
     {
-      facebook::jsi::ScriptVersion_t scriptVersion_ = 0;
+      const std::string bundleUrl = "ms-appx:///Bundle/App.bundle";
+      const winrt::Windows::Foundation::DateTime bundleCreatedTime = LocalBundleReader::LoadBundleCreatedDateTime(bundleUrl);
+      const std::uint64_t timestamp = bundleCreatedTime.time_since_epoch().count();
+      facebook::jsi::ScriptVersion_t scriptVersion_ = timestamp;
 
       return scriptVersion_;
     }

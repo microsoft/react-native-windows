@@ -1,5 +1,6 @@
 #pragma once
 #include <jsi/ScriptStore.h>
+#include <winrt/Windows.Foundation.h>
 
 namespace react {
   namespace uwp {
@@ -18,6 +19,10 @@ namespace react {
         const facebook::jsi::JSRuntimeSignature& runtimeMetadata,
         const char* prepareTag  // Optional tag. For e.g. eagerly evaluated vs lazy cache.
       ) noexcept override;
+    private:
+      bool shouldGetPreparedScript(facebook::jsi::ScriptVersion_t v) noexcept;
+      std::unique_ptr<const facebook::jsi::Buffer> getPreparedScriptAsync() noexcept;
+      void persistPreparedScriptAsync(facebook::jsi::ScriptVersion_t v, std::shared_ptr<const facebook::jsi::Buffer>) noexcept;
     };
   }
 }

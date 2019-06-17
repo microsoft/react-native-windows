@@ -5,6 +5,7 @@
 #include <cxxreact/JSBigString.h>
 #include <string>
 #include <future>
+#include <winrt/Windows.Storage.h>
 
 namespace react { namespace uwp {
 
@@ -13,6 +14,8 @@ class LocalBundleReader
 public:
   static std::future<std::string> LoadBundleAsync(const std::string& bundlePath);
   static std::string LoadBundle(const std::string& bundlePath);
+  static std::future<winrt::Windows::Foundation::DateTime> LoadBundleCreatedDateTimeAsync(const std::string& bundlePath);
+  static winrt::Windows::Foundation::DateTime LoadBundleCreatedDateTime(const std::string& bundlePath);
 };
 
 class StorageFileBigString : public facebook::react::JSBigString
