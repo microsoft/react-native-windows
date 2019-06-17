@@ -128,7 +128,8 @@ void ShadowNodeBase::UpdateTransformPS()
       m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
     }
   }
-  
+}
+
 void ShadowNodeBase::UpdateHandledKeyboardEvents(KeyboardType keyboardType, folly::dynamic const& value)
 {
   if (keyboardType == KeyboardType::KeyDown) {

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+/* tslint:disable */
+
 import * as React from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { supportKeyboard, IHandledKeyboardEvent, IKeyboardEvent, HandledEventPhase } from '../../src/index.uwp';

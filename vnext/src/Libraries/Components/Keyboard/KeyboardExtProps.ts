@@ -12,8 +12,7 @@ export enum EventPhase {
   Bubbling
 }
 
-export enum HandledEventPhase
-{
+export enum HandledEventPhase {
   Capturing = 1, // Match with EventPhase
   Bubbling = 3
 }
