@@ -34,20 +34,25 @@ public:
 
   TEST_METHOD(utf8ToUtf16InvalidCharacterTest)
   {
-    constexpr const char* const invalidUtf8 = "\xed\xa3\xa9";
+    // In UTF-8, cc must the first byte of a two byte sequence, but 22 cannot be
+    // the second byte of a two byte sequence (in fact, it is the double quote
+    // ASCII character). To prevent over comsumption attacks, we test that 22 is
+    // not swallowed/omitted after the string is converted to UTF-16. For more
+    // information on overconsumption attacks, see
+    // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
+    constexpr const char* const invalidUtf8 = "\xcc\x22\x3c";
+    Assert::IsTrue(utf8ToUtf16(invalidUtf8) ==
+      L"\xfffd" + utf8ToUtf16(invalidUtf8 + 1));
 
-    // The binary representation for invalidUtf8 is
-    //     11101101 10100011 10101001
-    // which idicates that all three bytes is used to encode one (invalid)
-    // character. One would expect MultiByteToWideChar to output u"\xfffd"
-    // (U+FFFD encodede on UTF-16) when given invalidUtf8 as input, but oddly, it
-    // outputs u"\xfffd\xfffd". However, the reason for this behavior is
-    // irrelevant, as what we care about is that invalid UTF-8 characters do not
-    // cause utf8ToUtf16() to throw any exception.
-
-    std::wstring replacementUtf16{ reinterpret_cast<const wchar_t*>(u"\xfffd\xfffd") };
-
-    Assert::IsTrue(utf8ToUtf16(invalidUtf8) == replacementUtf16);
+    // Although ed a3 a9 follows the correct binary format for a three byte
+    // UTF-8 sequence, the Unicode code point it encodes is not valid. While
+    // converting this string, utf8ToUtf16 will not realize this until it
+    // encounters a9, upon which it will replace ed a3 with U+FFFD. utf8ToUtf16
+    // will then try to interpret a9 on its own and, realizing that a9 can only
+    // be the third byte unit of a three byte UTF-8 sequence, will replace it
+    // with U+FFFD as well. Hence the result it outputs is U+FFFD U+FFFD.
+    constexpr const char* const anotherInvalidUtf8 = "\xed\xa3\xa9";
+    Assert::IsTrue(utf8ToUtf16(anotherInvalidUtf8) == L"\xfffd\xfffd");
   }
 
   TEST_METHOD(utf16ToUtf8SimpleTestNoBom)
@@ -62,12 +67,14 @@ public:
 
   TEST_METHOD(utf16ToUtf8InvalidCharacterTest)
   {
-    constexpr const char16_t* const invalidUtf16 = u"\xd8e9";
-
-    // This is U+FFFD encoded in UTF-8.
-    std::string replacementUtf8{ "\xef\xbf\xbd" };
-
-    Assert::IsTrue(utf16ToUtf8(invalidUtf16) == replacementUtf8);
+    // In Utf-16, D801 must be the first two bytes of a surrogate pair, but 0022
+    // cannot be the second two bytes of a surrogate pair (in fact, it is the
+    // double quote ASCII character). To prevent over consumption attacks, we
+    // test that 0022 is not swallowed/omitted after the string is converted to
+    // UTF-8. For more information on overconsumption attaks, see
+    // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
+    constexpr const char16_t* const invalidUtf16 = u"\xD801\x0022";
+    Assert::IsTrue(utf16ToUtf8(invalidUtf16) == "\xef\xbf\xbd\x22");
   }
 
   TEST_METHOD(SymmetricConversionNoBom)
