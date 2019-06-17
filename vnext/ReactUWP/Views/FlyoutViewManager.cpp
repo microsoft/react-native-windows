@@ -90,7 +90,7 @@ class FlyoutShadowNode : public ShadowNodeBase
 {
   using Super = ShadowNodeBase;
 public:
-  FlyoutShadowNode();
+  FlyoutShadowNode() = default;
   virtual ~FlyoutShadowNode();
 
   void AddView(ShadowNode& child, int64_t index) override;
@@ -113,16 +113,10 @@ private:
   float m_horizontalOffset = 0;
   float m_verticalOffset = 0;
   bool m_isFlyoutShowOptionsSupported = false;
-  winrt::FlyoutShowOptions m_showOptions;
+  winrt::FlyoutShowOptions m_showOptions = nullptr;
 
   std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
 };
-
-FlyoutShadowNode::FlyoutShadowNode()
-  : Super()
-{
-  m_isFlyoutShowOptionsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsTypePresent(L"Windows.UI.Xaml.Controls.Primitives.FlyoutShowOptions");
-}
 
 FlyoutShadowNode::~FlyoutShadowNode()
 {
@@ -143,10 +137,10 @@ void FlyoutShadowNode::createView()
   Super::createView();
 
   m_flyout = winrt::Flyout();
+  m_isFlyoutShowOptionsSupported = !!(m_flyout.try_as<winrt::IFlyoutBase5>());
+
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
-  else
-    m_showOptions = nullptr;
 
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
