@@ -169,8 +169,8 @@ bool ShadowNodeBase::ShouldHookKeyboardEvent(XamlView const& xamlView)
 
 void ShadowNodeBase::KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args)
 {
-  EventPhase currentEventPhase = (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
-    ? EventPhase::CAPTURING : EventPhase::BUBBLING;
+  HandledEventPhase currentEventPhase = (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
+    ? HandledEventPhase::CAPTURING : HandledEventPhase::BUBBLING;
 
   auto ev = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
@@ -193,7 +193,7 @@ bool ShadowNodeBase::ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const&
       (!event.ctrlKey || (event.ctrlKey && currentEvent.ctrlKey)) &&
       (!event.shiftKey || (event.shiftKey && currentEvent.shiftKey)) &&
       (!event.metaKey || (event.metaKey && currentEvent.metaKey)) &&
-      event.eventPhase == currentEvent.eventPhase)
+      event.handledEventPhase == currentEvent.handledEventPhase)
       return true;
   }
   return false;

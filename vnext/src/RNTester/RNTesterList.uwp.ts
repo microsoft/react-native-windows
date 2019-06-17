@@ -69,8 +69,8 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./PopupExample.uwp'),
   },
   {
-    key: 'ViewWindowsExample',
-    module: require('./ViewWindowsExample.uwp'),
+    key: 'KeyboardExtensionExample',
+    module: require('./KeyboardExtensionExample.uwp'),
   },
   {
     key: 'ScrollViewSimpleExample',

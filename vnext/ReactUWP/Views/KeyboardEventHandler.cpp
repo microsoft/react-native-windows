@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "Views/KeyboardEventHandler.h"
 #include "Helpers.h"
@@ -10,7 +13,7 @@ static constexpr auto ALT_KEY = "altKey";
 static constexpr auto CTRL_KEY = "ctrlKey";
 static constexpr auto META_KEY = "metaKey";
 static constexpr auto SHIFT_KEY = "shiftKey";
-static constexpr auto EVENT_PHASE = "eventPhase";
+static constexpr auto EVENT_PHASE = "handledEventPhase";
 static constexpr auto KEY = "key";
 static constexpr auto TARGET = "target";
 
@@ -39,7 +42,7 @@ struct json_type_traits<react::uwp::KeyboardEvent>
       else if (propertyName == KEY)
         ev.key = as<string>(propertyValue);
       else if (propertyName == EVENT_PHASE)
-        ev.eventPhase = as<EventPhase>(propertyValue);
+        ev.handledEventPhase = as<HandledEventPhase>(propertyValue);
     }
     return ev;
   }
@@ -168,10 +171,10 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winr
   }
 }
 
-KeyboardEvent KeyboardHelper::CreateKeyboardEvent(EventPhase phase, winrt::KeyRoutedEventArgs const& args)
+KeyboardEvent KeyboardHelper::CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args)
 {
   KeyboardEvent ev;
-  ev.eventPhase = phase;
+  ev.handledEventPhase = phase;
   UpdateModifiedKeyStatusTo(ev);
   ev.key = KeyboardHelper::FromVirutalKey(args.Key(), ev.shiftKey, ev.capLocked);
 

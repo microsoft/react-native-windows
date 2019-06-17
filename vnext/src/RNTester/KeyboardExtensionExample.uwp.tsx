@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-/* tslint:disable */
-
 import * as React from 'react';
-import { StyleSheet, Text, TextInput } from 'react-native';
-import { ViewWindows, IHandledKeyboardEvent, IKeyboardEvent, EventPhase } from '../../src/index.uwp';
+import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { supportKeyboard, IHandledKeyboardEvent, IKeyboardEvent, HandledEventPhase } from '../../src/index.uwp';
+
+const ViewWindows = supportKeyboard(View)
 
 const styles = StyleSheet.create({
   border: {
@@ -40,10 +40,10 @@ interface IKeyboardableComponentState {
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
-  { key: 'a', eventPhase:  EventPhase.Capturing },
+  { key: 'a', handledEventPhase:  HandledEventPhase.Capturing },
   { key: 'b' },
-  { key: 'c', eventPhase:  EventPhase.Bubbling },
-  { key: 'Tab', eventPhase: EventPhase.Capturing }
+  { key: 'c', handledEventPhase:  HandledEventPhase.Bubbling },
+  { key: 'Tab', handledEventPhase: HandledEventPhase.Capturing }
 ];
 
 class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableComponentState> {
@@ -105,11 +105,11 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
   };
 }
 export const displayName = (_undefined?: string) => {};
-export const title = 'ViewWindows Example';
+export const title = 'Keyboard extension Example';
 export const description = 'Demo of keyboard properties.';
 export const examples = [
   {
-    title: 'ViewWindows example',
+    title: 'Keyboard extension example',
     render(): JSX.Element {
       return <ViewWindowsKeyboardExample />;
     },

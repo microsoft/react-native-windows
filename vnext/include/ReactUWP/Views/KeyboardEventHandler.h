@@ -25,12 +25,10 @@ namespace winrt {
 using namespace std;
 
 namespace react { namespace uwp {
-  enum class EventPhase
+  enum class HandledEventPhase
   {
-    NONE = 0,
-    CAPTURING,
-    AT_TARGET,
-    BUBBLING
+    CAPTURING = 1, // match the value with EventPhase in React. EventPhase includes None, Capturing, AtTarget, Bubbling
+    BUBBLING = 3
   };
 
   struct ModifiedKeyStatue
@@ -50,7 +48,7 @@ namespace react { namespace uwp {
 
   struct KeyboardEvent: ModifiedKeyStatue
   {
-    EventPhase eventPhase{ EventPhase::BUBBLING };
+    HandledEventPhase handledEventPhase{ HandledEventPhase::BUBBLING };
     string key{};
   };
 
@@ -111,7 +109,7 @@ namespace react { namespace uwp {
   struct KeyboardHelper
   {
     static std::vector<KeyboardEvent> FromJS(folly::dynamic const& obj);
-    static KeyboardEvent CreateKeyboardEvent(EventPhase phase, winrt::KeyRoutedEventArgs const& args);
+    static KeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args);
     static string FromVirutalKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   };
 }}
