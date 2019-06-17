@@ -90,7 +90,7 @@ class FlyoutShadowNode : public ShadowNodeBase
 {
   using Super = ShadowNodeBase;
 public:
-  FlyoutShadowNode() = default;
+  FlyoutShadowNode();
   virtual ~FlyoutShadowNode();
 
   void AddView(ShadowNode& child, int64_t index) override;
@@ -112,10 +112,17 @@ private:
   int64_t m_targetTag = -1;
   float m_horizontalOffset = 0;
   float m_verticalOffset = 0;
+  bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions;
 
   std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
 };
+
+FlyoutShadowNode::FlyoutShadowNode()
+  : Super()
+{
+  m_isFlyoutShowOptionsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsTypePresent(L"Windows.UI.Xaml.Controls.Primitives.FlyoutShowOptions");
+}
 
 FlyoutShadowNode::~FlyoutShadowNode()
 {
@@ -136,7 +143,10 @@ void FlyoutShadowNode::createView()
   Super::createView();
 
   m_flyout = winrt::Flyout();
-  m_showOptions = winrt::FlyoutShowOptions();
+  if (m_isFlyoutShowOptionsSupported)
+    m_showOptions = winrt::FlyoutShowOptions();
+  else
+    m_showOptions = nullptr;
 
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
@@ -263,21 +273,31 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_flyout);
   }
 
-  if (updateOffset)
+  if (updateOffset && m_isFlyoutShowOptionsSupported)
   {
     winrt::Point newPoint(m_horizontalOffset, m_verticalOffset);
     m_showOptions.Position(newPoint);
   }
 
-  winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
-  m_showOptions.ExclusionRect(exclusionRect);
+  if (m_isFlyoutShowOptionsSupported)
+  {
+    winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
+    m_showOptions.ExclusionRect(exclusionRect);
+  }
 
   if (updateIsOpen)
   {
     if (m_isOpen)
     {
       AdjustDefaultFlyoutStyle();
-      m_flyout.ShowAt(m_targetElement, m_showOptions);
+      if (m_isFlyoutShowOptionsSupported)
+      {
+        m_flyout.ShowAt(m_targetElement, m_showOptions);
+      }
+      else
+      {
+        winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+      }
 
       auto popup = GetFlyoutParentPopup();
       if (popup != nullptr)
