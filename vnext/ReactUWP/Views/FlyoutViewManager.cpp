@@ -112,7 +112,8 @@ private:
   int64_t m_targetTag = -1;
   float m_horizontalOffset = 0;
   float m_verticalOffset = 0;
-  winrt::FlyoutShowOptions m_showOptions;
+  bool m_isFlyoutShowOptionsSupported = false;
+  winrt::FlyoutShowOptions m_showOptions = nullptr;
 
   std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
 };
@@ -136,7 +137,10 @@ void FlyoutShadowNode::createView()
   Super::createView();
 
   m_flyout = winrt::Flyout();
-  m_showOptions = winrt::FlyoutShowOptions();
+  m_isFlyoutShowOptionsSupported = !!(m_flyout.try_as<winrt::IFlyoutBase5>());
+
+  if (m_isFlyoutShowOptionsSupported)
+    m_showOptions = winrt::FlyoutShowOptions();
 
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
@@ -263,21 +267,31 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_flyout);
   }
 
-  if (updateOffset)
+  if (updateOffset && m_isFlyoutShowOptionsSupported)
   {
     winrt::Point newPoint(m_horizontalOffset, m_verticalOffset);
     m_showOptions.Position(newPoint);
   }
 
-  winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
-  m_showOptions.ExclusionRect(exclusionRect);
+  if (m_isFlyoutShowOptionsSupported)
+  {
+    winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
+    m_showOptions.ExclusionRect(exclusionRect);
+  }
 
   if (updateIsOpen)
   {
     if (m_isOpen)
     {
       AdjustDefaultFlyoutStyle();
-      m_flyout.ShowAt(m_targetElement, m_showOptions);
+      if (m_isFlyoutShowOptionsSupported)
+      {
+        m_flyout.ShowAt(m_targetElement, m_showOptions);
+      }
+      else
+      {
+        winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+      }
 
       auto popup = GetFlyoutParentPopup();
       if (popup != nullptr)
