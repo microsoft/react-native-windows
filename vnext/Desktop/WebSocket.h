@@ -76,7 +76,7 @@ protected:
   virtual void Handshake(const IWebSocket::Options& options);
 
 public:
-  #pragma region IWebSocket members
+  #pragma region IWebSocket
 
   void Connect(const Protocols& protocols, const Options& options) override;
   void Ping() override;
@@ -86,14 +86,37 @@ public:
 
   ReadyState GetReadyState() const override;
 
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnConnect" />
+  /// </summary>
   void SetOnConnect(std::function<void()>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnPing" />
+  /// </summary>
   void SetOnPing(std::function<void()>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnSend" />
+  /// </summary>
   void SetOnSend(std::function<void(std::size_t)>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnMessage" />
+  /// </summary>
   void SetOnMessage(std::function<void(std::size_t, const std::string&)>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnClose" />
+  /// </summary>
   void SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnError" />
+  /// </summary>
   void SetOnError(std::function<void(Error&&)>&& handler) override;
 
-  #pragma endregion
+  #pragma endregion // IWebSocket
 };
 
 class WebSocket
