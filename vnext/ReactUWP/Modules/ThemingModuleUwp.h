@@ -34,7 +34,8 @@ namespace react {
       const char* m_lastTheme;
       const char* m_lastHighContrastState;
       std::weak_ptr<IReactInstance> m_wkReactInstance;
-      winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker;
+      using HighContrastChanged_revoker = winrt::event_revoker<winrt::Windows::UI::ViewManagement::IAccessibilitySettings>;
+      HighContrastChanged_revoker m_highContrastChangedRevoker;
     };
 
   }

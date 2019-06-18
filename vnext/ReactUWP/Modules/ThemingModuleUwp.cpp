@@ -20,7 +20,7 @@ namespace react {
       m_lastTheme = "light";
       m_lastHighContrastState = "false";
 
-      m_highContrastChangedRevoker = winrt::Windows::UI::ViewManagement::AccessibilitySettings.HighContrastChanged(winrt::auto_revoke, { this, &Theming::HighContrastChanged });
+      m_highContrastChangedRevoker = winrt::Windows::UI::ViewManagement::AccessibilitySettings.HighContrastChanged(winrt::auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> const& handler);
     }
   }
 
