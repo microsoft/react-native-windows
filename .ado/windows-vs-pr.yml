@@ -179,6 +179,7 @@ jobs:
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
+          restoreNugetPackages: true
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           clean: true # Optional
 
