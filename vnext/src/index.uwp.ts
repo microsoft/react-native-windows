@@ -4,5 +4,6 @@ export * from './Libraries/Components/CheckBox/CheckBox.uwp';
 export * from './Libraries/Components/DatePicker/DatePicker.uwp';
 export * from './Libraries/Components/DatePicker/DatePickerProps';
 export * from './Libraries/Components/Flyout/Flyout.uwp';
+export * from './Libraries/Components/Glyph/Glyph.uwp';
 export * from './Libraries/Components/Picker/PickerUWP.uwp';
 export * from './Libraries/Components/Popup/Popup.uwp';

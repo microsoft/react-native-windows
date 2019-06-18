@@ -86,4 +86,9 @@
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\seguiemj.ttf">
+      <Filter>Assets</Filter>
+    </Font>
+  </ItemGroup>
 </Project>
