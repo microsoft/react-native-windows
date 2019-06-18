@@ -17,9 +17,11 @@ export type Placement = 'top'
   | 'right-edge-aligned-bottom';
 
 export interface IFlyoutProps extends ViewProps {
+  horizontalOffset?: number;
   isLightDismissEnabled?: boolean;
   isOpen?: boolean;
   onDismiss?: (isOpen: boolean) => void;
   placement?: Placement;
   target?: React.ReactNode;
+  verticalOffset?: number;
 }

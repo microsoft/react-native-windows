@@ -10,9 +10,6 @@ const semver = require('semver');
 const Registry = require('npm-registry');
 const child_process = require('child_process');
 const validUrl = require('valid-url');
-const request = require('request');
-const fsextra = require('fs-extra');
-var extract = require('extract-zip')
 
 let npmConfReg = child_process.execSync('npm config get registry').toString().trim();
 let NPM_REGISTRY_URL = validUrl.is_uri(npmConfReg) ? npmConfReg : 'http://registry.npmjs.org';
@@ -42,7 +39,20 @@ function getLatestVersion() {
   });
 }
 
-function getMatchingVersion(version) {
+function isTagMatch(packageVersion, requestTag) {
+  const prerelease = semver.prerelease(packageVersion);
+  return prerelease && prerelease[0] === requestTag;
+}
+
+function isVersionMatch(packageVersion, requestVersion, requestTag) {
+  const { major, minor } = semver.parse(packageVersion);
+  const minVersion = semver.minVersion(requestVersion);
+  return major === minVersion.major &&
+    minor === minVersion.minor &&
+    isTagMatch(packageVersion, requestTag);
+}
+
+function getMatchingVersion(version, tag, ignoreStable) {
   console.log(`Checking for react-native-windows version matching ${version}...`);
   return new Promise(function (resolve, reject) {
     npm.packages.range('react-native-windows', version, (err, release) => {
@@ -53,16 +63,35 @@ function getMatchingVersion(version) {
               `Latest version of react-native-windows is ${latestVersion}, try switching to ` +
               `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
             }).catch(error => reject(new Error(`Could not find react-native-windows@${version}.`)));
+      }
+
+      const matchedVersion = release.version;
+      const matchedPrerelease = semver.prerelease(matchedVersion);
+      const isPrerelease = tag && !!matchedPrerelease;
+      if (!isVersionMatch(matchedVersion, version, tag) && (ignoreStable || isPrerelease)) {
+        const versions = Object.keys(release.versions);
+        const candidates = versions.filter(v => isVersionMatch(v, version, tag)).sort(semver.rcompare);
+        if (candidates.length === 0) {
+          const tagMatches = versions.filter(v => isTagMatch(v, tag)).sort(semver.rcompare);
+          if (tagMatches.length === 0) {
+            reject(new Error(`Could not find react-native-windows@${version}-${tag}.*.`));
+          } else {
+            const latestVersion = tagMatches[0];
+            reject(new Error(`Could not find react-native-windows@${version}-${tag}.*. ` +
+              `Latest version of react-native-windows for tag '${tag}' is ${latestVersion}, try switching to ` +
+              `react-native@${semver.major(latestVersion)}.${semver.minor(latestVersion)}.*.`));
+          }
+        }
+        resolve(candidates[0]);
       } else {
-        resolve(release.version);
+        resolve(matchedVersion);
       }
     });
   });
 }
 
-const getInstallPackage = function (version) {
-  let packageToInstall = 'react-native-windows';
-
+const getInstallPackage = function (version, tag, useStable) {
+  const packageToInstall = 'react-native-windows';
   const validVersion = semver.valid(version);
   const validRange = semver.validRange(version);
   if ((validVersion && !semver.gtr(validVersion, '0.26.*')) ||
@@ -73,9 +102,11 @@ const getInstallPackage = function (version) {
     process.exit(1);
   }
 
-  if (validVersion || validRange) {
-    return getMatchingVersion(version)
-      .then(resultVersion => packageToInstall + '@' + resultVersion);
+  if (validVersion) {
+    return Promise.resolve(`${packageToInstall}@${resultVersion}`);
+  } else if (validRange) {
+    return getMatchingVersion(version, tag, useStable)
+      .then(resultVersion => `${packageToInstall}@${resultVersion}`);
   } else {
     return Promise.resolve(version);
   }
@@ -105,33 +136,9 @@ const isGlobalCliUsingYarn = function(projectDir) {
   return fs.existsSync(path.join(projectDir, 'yarn.lock'));
 };
 
-const downloadFile = function (filename, url) {
-  return fsextra.ensureFile(filename).then(function () {
-    return new Promise(function (resolve, reject) {
-      request.get(url).pipe(fs.createWriteStream(filename)).on('close', resolve).on('error', function (err) {
-        reject(err);
-      });
-    });
-  });
-};
-
-const unzipFile = function (file, dir) {
-  return new Promise(function (resolve, reject) {
-    extract(file, { dir }, function (err) {
-      if (err) {
-        reject(err);
-      } else {
-        resolve();
-      }
-    });
-  });
-}
-
 module.exports = {
   getInstallPackage,
   getReactNativeVersion,
   getReactNativeAppName,
-  isGlobalCliUsingYarn,
-  downloadFile,
-  unzipFile
+  isGlobalCliUsingYarn
 };

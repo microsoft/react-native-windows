@@ -56,13 +56,13 @@ struct json_type_traits<react::uwp::Selection>
     {
       if (item.first == "start")
       {
-        auto start = item.second.asInt();
+        auto start = item.second.asDouble();
         if (start == static_cast<int>(start))
           selection.start = static_cast<int>(start);
       }
       else if (item.first == "end")
       {
-        auto end = item.second.asInt();
+        auto end = item.second.asDouble();
         if (end == static_cast<int>(end))
           selection.end = static_cast<int>(end);
       }
@@ -86,6 +86,12 @@ public:
 private:
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
+
+  // Javascripts is running in a different thread. If the typing is very fast,
+  // It's possible that two TextChanged are raised but TextInput just got the first response from Javascript.
+  // So the first response should be dropped. EventCount is introduced to resolve this problem
+  uint32_t m_nativeEventCount{ 0 }; // EventCount to javascript
+  uint32_t m_mostRecentEventCount{ 0 }; // EventCount from javascript
 };
 
 enum class TextInputCommands
@@ -101,12 +107,28 @@ void TextInputShadowNode::createView()
   auto textBox = GetView().as<winrt::TextBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
   auto tag = m_tag;
+
+  // TextChanged is implemented as async event in Xaml. If Javascript is like this: 
+  //    onChangeText={text => this.setState({text})}
+  // And user type 'AB' very fast, then 'B' is possible to be lost in below situation.
+  //    Input 'A' -> TextChanged for 'A' -> Javascript processing 'A' -> Input becomes 'AB' ->
+  //    Processing javascript response and set text to 'A'
+  //    TextChanged for 'AB' but textbox.Text is 'A' -> Javascript processing 'A'
+  //
+  // TextChanging is used to drop the Javascript response of 'A' and expect another TextChanged event with correct event count.
+  textBox.TextChanging([=](auto &&, auto &&)
+  {
+      m_nativeEventCount++;
+  });
+
   textBox.TextChanged([=](auto &&, auto &&)
   {
-    auto instance = wkinstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", tag)("text", HstringToDynamic(textBox.Text()));
-    if (!m_updating && instance != nullptr)
-      instance->DispatchEvent(tag, "topTextInputChange", std::move(eventData));
+      if (auto instance = wkinstance.lock())
+      {
+        m_nativeEventCount++;
+        folly::dynamic eventData = folly::dynamic::object("target", tag)("text", HstringToDynamic(textBox.Text()))("eventCount", m_nativeEventCount);
+        instance->DispatchEvent(tag, "topTextInputChange", std::move(eventData));
+      }
   });
 
   textBox.GotFocus([=](auto &&, auto &&)
@@ -244,7 +266,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     else if (propertyName == "maxLength")
     {
       if (propertyValue.isNumber())
-        textBox.MaxLength(static_cast<int32_t>(propertyValue.asInt()));
+        textBox.MaxLength(static_cast<int32_t>(propertyValue.asDouble()));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::MaxLengthProperty());
     }
@@ -305,10 +327,27 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     }
     else if (propertyName == "text")
     {
-      if (propertyValue.isString())
-        textBox.Text(asHstring(propertyValue));
-      else if (propertyValue.isNull())
-        textBox.ClearValue(winrt::TextBox::TextProperty());
+      if (m_mostRecentEventCount == m_nativeEventCount)
+      {     
+        if (propertyValue.isString())
+        {
+          auto oldValue = textBox.Text();
+          auto newValue = asHstring(propertyValue);
+          if (oldValue != newValue)
+          {
+            textBox.Text(newValue);
+          }
+        }
+        else if (propertyValue.isNull())
+          textBox.ClearValue(winrt::TextBox::TextProperty());
+      }
+    }
+    else if (propertyName == "mostRecentEventCount")
+    {
+      if (propertyValue.isNumber())
+      {
+        m_mostRecentEventCount = static_cast<uint32_t>(propertyValue.asInt());
+      }
     }
   }
 
@@ -356,6 +395,7 @@ folly::dynamic TextInputViewManager::GetNativeProps() const
     ("selectTextOnFocus", "boolean")
     ("spellCheck", "boolean")
     ("text", "string")
+    ("mostRecentEventCount", "int")
   );
 
   return props;

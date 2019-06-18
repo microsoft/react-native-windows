@@ -35,11 +35,24 @@ static int YogaLog(
   const char* format,
   va_list args)
 {
-  char buffer[16384];
-  int c = vsnprintf_s(buffer, _countof(buffer), _TRUNCATE, format, args);
-  if (c == -1)
-    OutputDebugString(L"YogaLog: output is truncated\n");
-  OutputDebugStringA(buffer);
+  int len = _scprintf(format, args);
+  std::string buffer(len + 1, '\0');
+  int c = vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
+  buffer.resize(len);
+
+  // OutputDebugString will truncate output around 4k, here
+  // we output a 1000 characters at a time.
+  int start = 0;
+  while (len - start > 1000)
+  {
+    char tmp = buffer[start + 1000];
+    buffer[start + 1000] = '\0';
+    OutputDebugStringA(&buffer[start]);
+    buffer[start + 1000] = tmp;
+    start += 1000;
+  }
+  OutputDebugStringA(&buffer[start]);
+  OutputDebugStringA("\n");
 
   return 0;
 }
@@ -80,11 +93,34 @@ void NativeUIManager::DirtyYogaNode(int64_t tag)
   }
 }
 
+winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
+{
+  if (m_host)
+  {
+    for (auto const tag : m_host->GetAllRootTags())
+    {
+      if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(tag)))
+      {
+        if (auto uiElement10 = shadowNode->GetView().try_as<winrt::IUIElement10>())
+        {
+          if (auto xamlRoot = uiElement10.XamlRoot())
+            return xamlRoot;
+        }
+      }
+    }
+  }
+  return nullptr;
+}
+
 NativeUIManager::NativeUIManager()
 {
 #if defined(_DEBUG)
   YGConfigSetLogger(YGConfigGetDefault(), &YogaLog);
-  // Set 'gPrintTree' in Yoga.c to true so they print their node tree to the logger.
+
+  // To Debug Yoga layout, uncomment the following line.
+  // YGConfigSetPrintTreeFlag(YGConfigGetDefault(), true);
+
+  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges, gPrintSkips)
 #endif
 }
 

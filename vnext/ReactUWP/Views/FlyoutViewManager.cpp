@@ -96,18 +96,24 @@ public:
   void AddView(ShadowNode& child, int64_t index) override;
   void createView() override;
   static void OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue);
+  void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic&& props) override;
   
 private:
   void SetTargetFrameworkElement();
   void AdjustDefaultFlyoutStyle();
+  winrt::Popup GetFlyoutParentPopup() const;
 
   winrt::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
   bool m_isLightDismissEnabled = true;
   bool m_isOpen = false;
   int64_t m_targetTag = -1;
+  float m_horizontalOffset = 0;
+  float m_verticalOffset = 0;
+  winrt::FlyoutShowOptions m_showOptions;
+
   std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
 };
 
@@ -130,6 +136,7 @@ void FlyoutShadowNode::createView()
   Super::createView();
 
   m_flyout = winrt::Flyout();
+  m_showOptions = winrt::FlyoutShowOptions();
 
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
@@ -137,7 +144,7 @@ void FlyoutShadowNode::createView()
   m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
   {
     auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_flyout.IsOpen())
+    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled && m_isOpen)
     {
       args.Cancel(true);
     }
@@ -149,12 +156,29 @@ void FlyoutShadowNode::createView()
     if (!m_updating && instance != nullptr)
       OnFlyoutClosed(*instance, m_tag, false);
   });
+
+  // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
+  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>())
+  {
+    if (auto instance = wkinstance.lock())
+    {
+      if (auto xamlRoot = static_cast<NativeUIManager*>(instance->NativeUIManager())->tryGetXamlRoot())
+      {
+        flyoutBase6.XamlRoot(xamlRoot);
+      }
+    }
+  }
 }
 
 /*static*/ void FlyoutShadowNode::OnFlyoutClosed(IReactInstance& instance, int64_t tag, bool newValue)
 {
   folly::dynamic eventData = folly::dynamic::object("target", tag)("isOpen", newValue);
   instance.DispatchEvent(tag, "topDismiss", std::move(eventData));
+}
+
+void FlyoutShadowNode::onDropViewInstance() {
+  m_isOpen = false;
+  m_flyout.Hide();
 }
 
 void FlyoutShadowNode::removeAllChildren()
@@ -167,6 +191,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   m_updating = true;
   bool updateTargetElement = false;
   bool updateIsOpen = false;
+  bool updateOffset = false;
 
   if (m_flyout == nullptr)
     return;
@@ -176,12 +201,27 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName == "isLightDismissEnabled")
+    if (propertyName == "horizontalOffset")
+    {
+      if (propertyValue.isNumber())
+        m_horizontalOffset = static_cast<float>(propertyValue.asDouble());
+      else
+        m_horizontalOffset = 0;
+
+      updateOffset = true;
+    }
+    else if (propertyName == "isLightDismissEnabled")
     {
       if (propertyValue.isBool())
         m_isLightDismissEnabled = propertyValue.asBool();
       else if (propertyValue.isNull())
         m_isLightDismissEnabled = true;
+      if (m_isOpen)
+      {
+        auto popup = GetFlyoutParentPopup();
+        if (popup != nullptr)
+          popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+      }
     }
     else if (propertyName == "isOpen")
     {
@@ -200,11 +240,20 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     {
       if (propertyValue.isNumber())
       {
-        m_targetTag = propertyValue.asInt();
+        m_targetTag = static_cast<int64_t>(propertyValue.asDouble());
         updateTargetElement = true;
       }
       else
         m_targetTag = -1;
+    }
+    else if (propertyName == "verticalOffset")
+    {
+      if (propertyValue.isNumber())
+        m_verticalOffset = static_cast<float>(propertyValue.asDouble());
+      else
+        m_verticalOffset = 0;
+
+      updateOffset = true;
     }
   }
 
@@ -214,12 +263,25 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_flyout);
   }
 
+  if (updateOffset)
+  {
+    winrt::Point newPoint(m_horizontalOffset, m_verticalOffset);
+    m_showOptions.Position(newPoint);
+  }
+
+  winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
+  m_showOptions.ExclusionRect(exclusionRect);
+
   if (updateIsOpen)
   {
     if (m_isOpen)
     {
       AdjustDefaultFlyoutStyle();
-      winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+      m_flyout.ShowAt(m_targetElement, m_showOptions);
+
+      auto popup = GetFlyoutParentPopup();
+      if (popup != nullptr)
+        popup.IsLightDismissEnabled(m_isLightDismissEnabled);
     }
     else
     {
@@ -262,7 +324,17 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle()
   winrt::Style flyoutStyle({ L"Windows.UI.Xaml.Controls.FlyoutPresenter", winrt::TypeKind::Metadata });
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxWidthProperty(), winrt::box_value(50000)));
   flyoutStyle.Setters().Append(winrt::Setter(winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
+  flyoutStyle.Setters().Append(winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
+}
+
+winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const
+{
+  // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against RS6
+  winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups = winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
+  if (popups.Size() > 0)
+    return popups.GetAt(0);
+  return nullptr;
 }
 
 FlyoutViewManager::FlyoutViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
@@ -290,10 +362,12 @@ folly::dynamic FlyoutViewManager::GetNativeProps() const
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object
+    ("horizontalOffset", "number")
     ("isLightDismissEnabled", "boolean")
     ("isOpen", "boolean")
     ("placement", "number")
     ("target", "number")
+    ("verticalOffset", "number")
   );
 
   return props;

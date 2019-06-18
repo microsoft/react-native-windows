@@ -133,7 +133,7 @@ std::vector<int64_t> PopulateIntVecFromDynamicArray(const folly::dynamic& arr)
 	auto i = 0;
 	for (auto& val : arr)
 	{
-		vec[i] = val.asInt();
+		vec[i] = static_cast<int64_t>(val.asDouble());
 		++i;
 	}
 	return vec;
@@ -282,7 +282,7 @@ void UIManager::setChildren(int64_t viewTag, folly::dynamic&& childrenTags)
 	int64_t index = 0;
 	for (auto&& childTag : childrenTags)
 	{
-		auto tag = childTag.asInt();
+		auto tag = static_cast<int>(childTag.asDouble());
 		auto& childNode = m_nodeRegistry.getNode(tag);
 		childNode.m_parent = parent.m_tag;
 		parent.m_children.push_back(tag);
@@ -368,16 +368,6 @@ void UIManager::onBatchComplete()
   m_nativeUIManager->onBatchComplete();
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
-	: m_manager(std::move(manager))
-{
-}
-
-std::string UIManagerModule::getName()
-{
-	return "UIManager";
-}
-
 int64_t UIManager::AddMeasuredRootView(IReactRootView* rootView)
 {
 	auto tag = m_nextRootTag;
@@ -422,6 +412,16 @@ ShadowNode* UIManager::FindShadowNodeForTag(int64_t tag)
 ShadowNode& UIManager::GetShadowNodeForTag(int64_t tag)
 {
   return m_nodeRegistry.getNode(tag);
+}
+
+UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager>&& manager)
+	: m_manager(std::move(manager))
+{
+}
+
+std::string UIManagerModule::getName()
+{
+	return "UIManager";
 }
 
 std::map<std::string, folly::dynamic> UIManagerModule::getConstants()

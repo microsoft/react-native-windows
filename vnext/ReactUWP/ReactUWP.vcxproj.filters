@@ -43,6 +43,9 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\AccessibilityUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Threading\UIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -213,6 +216,12 @@
       <Filter>Views\Impl</Filter>
     </ClCompile>
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Views\ScrollContentViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp">
+      <Filter>Views</Filter>
+	</ClCompile>
     <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -455,6 +464,9 @@
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
@@ -480,6 +492,12 @@
       <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\ScrollContentViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ExpressionAnimationStore.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\Animated\NativeAnimatedModule.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
