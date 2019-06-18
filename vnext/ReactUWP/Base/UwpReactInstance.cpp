@@ -49,6 +49,7 @@
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
+#include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>

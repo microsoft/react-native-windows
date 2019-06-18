@@ -61,6 +61,11 @@ namespace react {
     winrt::fire_and_forget ReactImage::Source(ImageSource source)
     {
       std::string uriString{ source.uri };
+      if (uriString.length() == 0)
+      {
+        m_onLoadEndEvent(*this, false);
+        return;
+      }
 
       if (source.packagerAsset && uriString.find("file://") == 0)
       {
@@ -99,6 +104,7 @@ namespace react {
       }
       catch (winrt::hresult_error const&)
       {
+        m_onLoadEndEvent(*this, false);
       }
     }
 

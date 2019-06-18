@@ -46,7 +46,6 @@ namespace react {
     private:
       void UpdateCompositionBrush();
       bool IsImageLargerThanView();
-      bool ShouldSwitchCompositionBrush();
       bool UsingSurfaceBrush();
       winrt::Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
       winrt::Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();

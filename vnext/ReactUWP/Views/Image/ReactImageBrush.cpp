@@ -76,11 +76,14 @@ namespace react {
         auto compositionBrush{ surfaceBrush.as<winrt::CompositionBrush>() };
         if (ResizeMode() == ResizeMode::Repeat)
         {
+          // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
+          // The CompositionSurfaceBrush holding the image is used as its source.
           compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
         }
 
-        // Only switch CompositionBrush if we are switching to/from ResizeMode::Repeat
-        if (ShouldSwitchCompositionBrush())
+        // The CompositionBrush is only set after the image is first loaded,
+        // and anytime we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
+        if (CompositionBrush() != compositionBrush)
         {
           CompositionBrush(compositionBrush);
         }
@@ -98,18 +101,6 @@ namespace react {
       }
 
       return false;
-    }
-
-    bool ReactImageBrush::ShouldSwitchCompositionBrush()
-    {
-      bool effectToSurfaceBrushSwitch{
-        ResizeMode() != ResizeMode::Repeat &&
-        !UsingSurfaceBrush()
-      };
-
-      bool surfaceToEffectBrushSwitch{ ResizeMode() == ResizeMode::Repeat };
-
-      return effectToSurfaceBrushSwitch || surfaceToEffectBrushSwitch;
     }
 
     bool ReactImageBrush::UsingSurfaceBrush()
