@@ -179,6 +179,7 @@ void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept{
   }
 }
 
+#if !defined(CHAKRACOREUWP)
 // This is very wierd. This should match with the definition of VS_VERSIONINFO as defined in https://docs.microsoft.com/en-us/windows/desktop/menurc/vs-versioninfo
 // I can't find a way to include the actual definition of VS_VERSIONINFO
 // TODO :: Re-evaluate this strategy.
@@ -191,6 +192,7 @@ struct FileVersionInfoResource {
   VS_FIXEDFILEINFO fixedFileInfo;
   uint32_t padding2;
 };
+#endif
 
 // TODO :: This code is mostly copied from the old ChakraExecutor flow, and not verified for reliability yet.
 // TODO :: Re-evaluate this strategy of finding the dll version for versioning the runtime.

@@ -49,6 +49,7 @@ bool fwrite(const T& val, FILE* file) noexcept
   return fwrite(&val, 1, file) == 1;
 }
 
+#if !defined(CHAKRACOREUWP)
 struct FileVersionInfoResource
 {
   uint16_t len;
@@ -59,7 +60,7 @@ struct FileVersionInfoResource
   VS_FIXEDFILEINFO fixedFileInfo;
   uint32_t padding2;
 };
-
+#endif
 class ChakraVersionInfo
 {
 public:
