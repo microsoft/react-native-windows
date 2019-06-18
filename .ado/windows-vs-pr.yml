@@ -132,6 +132,54 @@ jobs:
           script: del SampleApp.uwp.bundle
           workingDirectory: vnext
 
+  - job: CliInit
+    displayName: Verify react-native init
+    pool:
+      vmImage: vs2017-win2016
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: CmdLine@2
+        displayName: Install react-native cli
+        inputs:
+          script: npm install -g react-native-cli
+
+      - task: CmdLine@2
+        displayName: Init new project
+        inputs:
+          script: react-native init testcli
+          workingDirectory: $(Agent.BuildDirectory)
+
+      - task: CmdLine@2
+        displayName: Install rnpm-plugin-windows
+        inputs:
+          script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+        
+      - task: CmdLine@2
+        displayName: Apply windows template
+        inputs:
+          script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+
+      - task: MSBuild@1
+        displayName: MSBuild - Build the project
+        inputs:
+          solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: x64 # Optional
+          configuration: Debug # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
   - job: RnwNativePRBuild
     displayName: Windows Visual Studio with Win32 PR
     strategy:
