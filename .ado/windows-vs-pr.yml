@@ -146,6 +146,27 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
+      # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
+      - task: CmdLine@2
+        displayName: yarn install (local react-native-windows)
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn build (local react-native-windows)
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
+
+      # yarn ends up copying the whole node_modules folder when doing an install of a file package
+      # Delete node_modules, so that resolution is more like when installing from a published npm package
+      - task: CmdLine@2
+        displayName: Remove node_modules
+        inputs:
+          script: del /SFQ node_modules
+          workingDirectory: vnext
+
       - task: CmdLine@2
         displayName: Install react-native cli
         inputs:
@@ -170,6 +191,12 @@ jobs:
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
       - template: templates/install-SDK.yml
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore
+        inputs:
+          command: restore
+          restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
       - task: MSBuild@1
         displayName: MSBuild - Build the project
