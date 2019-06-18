@@ -94,9 +94,6 @@
     <ClCompile Include="Views\FrameworkElementViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\ImageViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\RawTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -219,6 +216,21 @@
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Image\ImageViewManager.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ReactImage.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ImageViewManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -307,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="ABI\HStringHelper.h">
       <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ImageViewManager.h">
-      <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\RawTextViewManager.h">
       <Filter>Views</Filter>
@@ -413,18 +422,6 @@
     <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -437,6 +434,54 @@
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ImageViewManager.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
+      <Filter>Views\cppwinrt\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h">
+      <Filter>Views\cppwinrt\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\Microsoft.UI.Composition.Effects.BorderEffect.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImageBrush.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImage.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ExpressionAnimationStore.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ImageViewManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\BorderEffect.h">
+      <Filter>Views\Image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -562,6 +607,15 @@
     </Filter>
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{101c2d4a-d343-4771-969f-29af0c9f46b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Image">
+      <UniqueIdentifier>{6d877886-1c5c-45b8-8eae-2e1354cf673e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\cppwinrt\winrt">
+      <UniqueIdentifier>{e5234a36-e9ee-4ba3-9b11-02e7bd2ca6f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\cppwinrt\winrt\impl">
+      <UniqueIdentifier>{24ea7245-f460-4176-82b1-3cac4cd54621}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

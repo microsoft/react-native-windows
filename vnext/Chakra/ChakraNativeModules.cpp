@@ -62,7 +62,7 @@ folly::Optional<ChakraObject> ChakraNativeModules::createModule(const std::strin
   auto result = m_moduleRegistry->getConfig(name);
   if (!result.hasValue())
   {
-    return nullptr;
+    return folly::none;
   }
 
   ChakraValue moduleInfo = m_genNativeModuleJS->callAsFunction({

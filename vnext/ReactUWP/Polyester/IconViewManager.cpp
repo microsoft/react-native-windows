@@ -25,45 +25,41 @@ using namespace Windows::UI::Xaml::Media;
 
 namespace react { namespace uwp { namespace polyester {
 
-IconViewManager::IconViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : Super(reactInstance)
+//
+// IconShadowNode
+//
+class IconShadowNode : public ShadowNodeBase
 {
-}
+  using Super = ShadowNodeBase;
+public:
+  IconShadowNode() = default;
 
-const char* IconViewManager::GetName() const
+  void createView() override;
+  void updateProperties(const folly::dynamic&& props) override;
+
+private:
+  static void UpdateFontColorProps(winrt::Windows::UI::Xaml::Documents::Glyphs glyphs);
+
+  std::optional<double> m_emSize;
+  double m_height = 24;
+};
+
+void IconShadowNode::createView()
 {
-  return "PLYIcon";
-}
+  Super::createView();
+  auto glyphs = GetView().as<winrt::Glyphs>();
 
-folly::dynamic IconViewManager::GetNativeProps() const
-{
-  auto props = Super::GetNativeProps();
-
-  props.update(folly::dynamic::object
-    ("fontUri", "string")
-    ("glyph", "string")
-    ("colorEnabled", "boolean")
-  );
-
-  return props;
-}
-
-XamlView IconViewManager::CreateViewCore(int64_t tag)
-{
-  winrt::Glyphs glyphs = winrt::Glyphs();
   glyphs.FontRenderingEmSize(24);
   UpdateFontColorProps(glyphs);
-
-  return glyphs;
 }
 
-void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
+void IconShadowNode::updateProperties(const folly::dynamic&& props)
 {
-  auto glyphs = nodeToUpdate->GetView().as<winrt::Glyphs>();
-  if (glyphs == nullptr)
-    return;
+  m_updating = true;
+  auto glyphs = GetView().as<winrt::Glyphs>();
+  bool updateEmSize = false;
 
-  for (const auto& pair : reactDiffMap.items())
+  for (auto& pair : props.items())
   {
     const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
@@ -98,16 +94,41 @@ void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
     else if (propertyName == "height")
     {
       if (propertyValue.isNumber())
-        glyphs.FontRenderingEmSize(propertyValue.asDouble());
-    }
+        m_height = propertyValue.asDouble();
 
-    continue;
+      updateEmSize = true;
+    }
+    else if (propertyName == "emSize")
+    {
+      if (propertyValue.isNumber())
+        m_emSize = propertyValue.asDouble();
+      else
+        m_emSize.reset();
+
+      updateEmSize = true;
+    }
   }
 
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+  if (updateEmSize)
+  {
+    // Default emSize to match height, unless its been explicitly set
+
+    // FUTURE: enable some default scaling of 0.75 to convert height px to em?
+    // The SegouUI Emoji font renders the full area of the emSize
+    // where emSize should be height * 0.75, but office icon fonts
+    // do not and applying a scale would be wrong
+
+    double emSize = m_height;
+    if (m_emSize.has_value())
+      emSize = m_emSize.value();
+    glyphs.FontRenderingEmSize(emSize);
+  }
+
+  Super::updateProperties(std::move(props));
+  m_updating = false;
 }
 
-/*static*/ void IconViewManager::UpdateFontColorProps(winrt::Glyphs glyphs)
+/*static*/ void IconShadowNode::UpdateFontColorProps(winrt::Glyphs glyphs)
 {
   glyphs.IsColorFontEnabled(false);
 
@@ -125,6 +146,44 @@ void IconViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
     color = winrt::unbox_value<winrt::Windows::UI::Color>(appDictionary.Lookup(winrt::box_value(L"SystemAccentColor")));
 
   glyphs.Fill(winrt::SolidColorBrush(color));
+}
+
+//
+// IconViewManager
+//
+IconViewManager::IconViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
+  : Super(reactInstance)
+{
+}
+
+const char* IconViewManager::GetName() const
+{
+  return "PLYIcon";
+}
+
+facebook::react::ShadowNode* IconViewManager::createShadow() const
+{
+  return new IconShadowNode();
+}
+
+folly::dynamic IconViewManager::GetNativeProps() const
+{
+  auto props = Super::GetNativeProps();
+
+  props.update(folly::dynamic::object
+    ("emSize", "number")
+    ("fontUri", "string")
+    ("glyph", "string")
+    ("colorEnabled", "boolean")
+  );
+
+  return props;
+}
+
+XamlView IconViewManager::CreateViewCore(int64_t tag)
+{
+  winrt::Glyphs glyphs = winrt::Glyphs();
+  return glyphs;
 }
 
 }}}

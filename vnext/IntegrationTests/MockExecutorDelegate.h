@@ -25,6 +25,8 @@ public:
   {
     return facebook::react::MethodCallResult();
   }
+
+  bool isBatchActive() override { return false; }
 };
 
 } } }// namespace facebook::react::test

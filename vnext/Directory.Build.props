@@ -36,12 +36,11 @@
   </PropertyGroup>
   <Import Project="$(ReactNativeProjectDir)\windows\react.overrides.props" Condition="$([System.IO.File]::Exists($(ReactNativeProjectDir)\windows\react.overrides.props))" />
 
-<!-- Uncomment this (and modify the path below) to build react-native-win against a public version of react-native -->
-<!--
-  <PropertyGroup>
-	  <ReactNativeDir>G:\repos\react-native-github</ReactNativeDir>
-      <OSS_RN>true</OSS_RN>
+  <!-- We need some way to tell if we are using the microsoft/react-native version of the facebook one... -->
+  <!-- For now we are using the existance of the glog stub... but we probably want a better long term solution -->
+  <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
+    <OSS_RN>true</OSS_RN>
+    <FollyDir>$(SolutionDir)node_modules\.folly\folly-2019.06.10.00</FollyDir>
   </PropertyGroup>
--->
 
 </Project>

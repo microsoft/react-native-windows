@@ -179,6 +179,7 @@ void ChakraJsiRuntime::setupNativePromiseContinuation() noexcept{
   }
 }
 
+#if !defined(CHAKRACOREUWP)
 // This is very wierd. This should match with the definition of VS_VERSIONINFO as defined in https://docs.microsoft.com/en-us/windows/desktop/menurc/vs-versioninfo
 // I can't find a way to include the actual definition of VS_VERSIONINFO
 // TODO :: Re-evaluate this strategy.
@@ -191,12 +192,14 @@ struct FileVersionInfoResource {
   VS_FIXEDFILEINFO fixedFileInfo;
   uint32_t padding2;
 };
+#endif
 
 // TODO :: This code is mostly copied from the old ChakraExecutor flow, and not verified for reliability yet.
 // TODO :: Re-evaluate this strategy of finding the dll version for versioning the runtime.
 /*static*/ void ChakraJsiRuntime::initRuntimeVersion()  noexcept {
   // This code is win32 only at the moment. We will need to change this
   // line if we want to support UWP.
+#if !defined(CHAKRACOREUWP)
   constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
 
   auto freeLibraryWrapper = [](void* p) { FreeLibrary((HMODULE)p); };
@@ -222,6 +225,7 @@ struct FileVersionInfoResource {
   s_runtimeVersion = chakraVersionInfo->fixedFileInfo.dwFileVersionMS;
   s_runtimeVersion <<= 32;
   s_runtimeVersion |= chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
+#endif
 }
 
 JsErrorCode ChakraJsiRuntime::enableDebugging(JsRuntimeHandle runtime, std::string const& runtimeName, bool breakOnNextLine, uint16_t port,

@@ -131,6 +131,7 @@ public:
     AccessibilityState(AccessibilityStates::Selected, AccessibilityState(AccessibilityStates::Selected));
     EnableFocusRing(EnableFocusRing());
     TabIndex(TabIndex());
+    static_cast<FrameworkElementViewManager*>(GetViewManager())->RefreshTransformMatrix(this);
   }
 
   winrt::com_ptr<ViewPanel> GetViewPanel()

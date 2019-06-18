@@ -16,7 +16,9 @@
 #include <folly/Memory.h>
 #include <glog/logging.h>
 
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 
 #include <windows.h>
 #include <cstdlib>
@@ -47,6 +49,7 @@ bool fwrite(const T& val, FILE* file) noexcept
   return fwrite(&val, 1, file) == 1;
 }
 
+#if !defined(CHAKRACOREUWP)
 struct FileVersionInfoResource
 {
   uint16_t len;
@@ -57,7 +60,7 @@ struct FileVersionInfoResource
   VS_FIXEDFILEINFO fixedFileInfo;
   uint32_t padding2;
 };
-
+#endif
 class ChakraVersionInfo
 {
 public:
@@ -71,6 +74,7 @@ public:
 
   bool initialize() noexcept
   {
+#if !defined(CHAKRACOREUWP)
     // This code is win32 only at the moment. We will need to change this
     // line if we want to support UWP.
     constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
@@ -105,7 +109,7 @@ public:
     m_fileVersionLS = chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
     m_productVersionMS = chakraVersionInfo->fixedFileInfo.dwProductVersionMS;
     m_productVersionLS = chakraVersionInfo->fixedFileInfo.dwProductVersionLS;
-
+#endif
     return true;
   }
 
@@ -430,13 +434,17 @@ JsValueRef evaluateScript(
   std::unique_ptr<const JSBigString>&& script,
   JsValueRef sourceURL)
 {
+#if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
+#endif
 #if defined(USE_EDGEMODE_JSRT)
   JsValueRef jsScript = jsStringFromBigString(*script.get());
 #else
   JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(std::move(script));
 #endif
+#if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
+#endif
 
 #if defined(USE_EDGEMODE_JSRT)
   return evaluateScript(jsScript, sourceURL);

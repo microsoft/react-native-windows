@@ -5,7 +5,7 @@ trigger:
   branches:
     include:
       - master
-      - fb59merge
+      - 0.58-vnext-stable
       - fabric
   paths:
     include:

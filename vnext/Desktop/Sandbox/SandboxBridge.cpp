@@ -204,6 +204,10 @@ void SandboxHostNativeBridge::callNativeModules(
   }
 }
 
+bool SandboxHostNativeBridge::isBatchActive() {
+  return m_batchHadNativeModuleCalls;
+}
+
 MethodCallResult SandboxHostNativeBridge::callSerializableNativeHook(
     JSExecutor& executor,
     unsigned int moduleId,
@@ -275,6 +279,10 @@ void SandboxJsToNativeBridge::callNativeModules(
     }
     m_callback->decrementPendingJSCalls();
   }
+}
+
+bool SandboxJsToNativeBridge::isBatchActive() {
+  return m_batchHadNativeModuleCalls;
 }
 
 MethodCallResult SandboxJsToNativeBridge::callSerializableNativeHook(
