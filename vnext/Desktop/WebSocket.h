@@ -49,14 +49,47 @@ class BaseWebSocket : public IWebSocket
   std::atomic_bool m_pingInProgress { false };
   std::atomic_bool m_writeInProgress { false };
 
+  /// <summary>
+  /// Add the message to a write queue for eventual sending.
+  /// </summary>
+  /// <param name="message">
+  /// Payload to send to the remote endpoint.
+  /// </param>
+  /// <param name="binary">
+  /// Indicates whether the payload should be treated as binary data, or text.
+  /// </param>
   void EnqueueWrite(const std::string& message, bool binary);
+
+  /// <summary>
+  /// Dequeues a message from <c>m_writeRequests</c> and sends it asynchronously.
+  /// </summary>
   void PerformWrite();
+
+  /// <summary>
+  /// If this instance is considered open, post a read request into <c>m_bufferIn</c>.
+  /// If there is an incoming message and <c>m_readHandler</c> is set, call the handler.
+  /// Then, post new call to this method to read further incoming data.
+  /// </summary>
   void PerformRead();
+
+  /// <summary>
+  /// If there are pending ping requests, post an asynchronous ping.
+  /// Invoke <c>m_pingHandler</c> if set.
+  /// Call this method again if there are still pending requests.
+  /// </summary>
   void PerformPing();
+
+  /// <summary>
+  /// Set the ready state to <c>Closing</c>.
+  /// Post a close request for this stream.
+  /// Stop this instance to drop any future read or write requests.
+  /// </summary>
   void PerformClose();
 
   ///
-  // Synchronizes the context thread and allows the io_context to stop dispatching tasks.
+  /// <summary>
+  /// Synchronizes the context thread and allows the io_context to stop dispatching tasks.
+  /// </summary>
   ///
   void Stop();
 
@@ -73,6 +106,19 @@ protected:
 
   ~BaseWebSocket() override;
 
+  /// <summary>
+  /// Finalizes the connection setup to the remote endpoint.
+  /// Sets the ready state to <c>Open</c>
+  /// </summary>
+  /// <remarks>
+  /// On callback, invokes the connect handler, if set.
+  /// Performs a pending write, if requested during the connection process.
+  /// Performs a pending ping call, if requested during the connection process.
+  /// Closes this instance, if requested during the connection process.
+  /// </remarks>
+  /// <param name="options">
+  /// Map of HTTP header fields sent by the remote endpoint.
+  /// </param>
   virtual void Handshake(const IWebSocket::Options& options);
 
 public:
