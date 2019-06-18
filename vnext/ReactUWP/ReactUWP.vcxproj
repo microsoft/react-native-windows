@@ -90,6 +90,7 @@
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
+      <AdditionalDependencies>dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>
@@ -167,6 +168,7 @@
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\ImageViewManagerModule.h" />
     <ClInclude Include="Modules\LinkingManagerModule.h" />
     <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
@@ -189,15 +191,24 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\cppwinrt\Microsoft.UI.Composition.Effects.BorderEffect.g.h" />
     <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h" />
     <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
-    <ClInclude Include="Views\ImageViewManager.h" />
+    <ClInclude Include="Views\Image\BorderEffect.h" />
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
+    <ClInclude Include="Views\Image\ImageViewManager.h" />
+    <ClInclude Include="Views\Image\ReactImage.h" />
+    <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
@@ -231,7 +242,7 @@
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
     <ClCompile Include="..\Shared\InstanceManager.cpp" />
     <ClCompile Include="..\Shared\OInstance.cpp" />
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
@@ -244,6 +255,7 @@
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
@@ -273,7 +285,9 @@
     <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
-    <ClCompile Include="Views\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Image\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Image\ReactImage.cpp" />
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
