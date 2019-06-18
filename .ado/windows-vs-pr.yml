@@ -169,6 +169,8 @@ jobs:
           script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
+      - template: templates/install-SDK.yml
+
       - task: MSBuild@1
         displayName: MSBuild - Build the project
         inputs:
@@ -179,6 +181,12 @@ jobs:
           configuration: Debug # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           clean: true # Optional
+
+      - task: CmdLine@2
+        displayName: Create bundle
+        inputs:
+          script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
+          workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - job: RnwNativePRBuild
     displayName: Windows Visual Studio with Win32 PR
