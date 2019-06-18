@@ -164,7 +164,7 @@ jobs:
       - task: CmdLine@2
         displayName: Remove node_modules
         inputs:
-          script: del /SFQ node_modules
+          script: rd /S /Q node_modules
           workingDirectory: vnext
 
       - task: CmdLine@2
