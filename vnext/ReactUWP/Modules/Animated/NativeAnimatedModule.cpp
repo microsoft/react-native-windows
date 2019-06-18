@@ -192,7 +192,7 @@ namespace react {
 
     void NativeAnimatedModule::addAnimatedEventToView(int64_t tag, const std::string& eventName, const folly::dynamic& eventMapping)
     {
-      //NotImplemented
+      _nodesManager->AddAnimatedEventToView(tag, eventName, eventMapping);
     }
 
     void NativeAnimatedModule::removeAnimatedEventFromView(int64_t tag, const std::string& eventName, int64_t animatedValueTag)

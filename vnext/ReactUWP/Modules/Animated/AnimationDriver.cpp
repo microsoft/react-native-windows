@@ -7,11 +7,9 @@
 namespace react {
   namespace uwp {
 
-    AnimationDriver::AnimationDriver(int64_t id, std::weak_ptr<ValueAnimatedNode> animatedValue, Callback endCallback)
+    AnimationDriver::AnimationDriver(int64_t id, std::shared_ptr<ValueAnimatedNode> animatedValue, Callback endCallback) :
+      m_id(id), m_animatedValue(animatedValue), m_endCallback(endCallback)
     {
-      m_id = id;
-      m_animatedValue = animatedValue;
-      m_endCallback = endCallback;
     }
   }
 }

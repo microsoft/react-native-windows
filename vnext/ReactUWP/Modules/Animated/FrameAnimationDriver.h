@@ -10,7 +10,7 @@ namespace react {
     class FrameAnimationDriver : public AnimationDriver
     {
     public:
-      FrameAnimationDriver(int64_t id, std::weak_ptr<ValueAnimatedNode> animatedValue, Callback endCallback, const folly::dynamic& config);
+      FrameAnimationDriver(int64_t id, std::shared_ptr<ValueAnimatedNode> animatedValue, Callback endCallback, const folly::dynamic& config);
 
     private:
       std::vector<double> m_frames {};

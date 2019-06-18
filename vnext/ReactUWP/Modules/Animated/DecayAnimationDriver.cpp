@@ -1,16 +1,14 @@
 #include "pch.h"
-#include "FrameAnimationDriver.h"
+#include "DecayAnimationDriver.h"
 #include <jsi/jsi.h>
+#include <math.h>
 
 namespace react {
   namespace uwp {
-    FrameAnimationDriver::FrameAnimationDriver(int64_t id, std::shared_ptr<ValueAnimatedNode> animatedValue, Callback endCallback, const folly::dynamic& config) : AnimationDriver(id, animatedValue, endCallback)
+    DecayAnimationDriver::DecayAnimationDriver(int64_t id, std::shared_ptr<ValueAnimatedNode> animatedValue, Callback endCallback, const folly::dynamic& config) : AnimationDriver(id, animatedValue, endCallback)
     {
-      for (auto frame : config.find("frames").dereference().second)
-      {
-        m_frames.push_back(frame.asDouble());
-      }
-      m_toValue = config.find("toValue").dereference().second.asDouble();
+      m_deceleration = config.find("deceleration").dereference().second.asDouble();
+      m_velocity = config.find("velocity").dereference().second.asDouble();
       m_iterations = [iterations = config.find("iterations"), end = config.items().end()]() {
         if (iterations != end)
         {
@@ -19,7 +17,7 @@ namespace react {
         return static_cast<int64_t>(1);
       }();
 
-      const auto [animation, scopedBatch] = [frames = m_frames, toValue = m_toValue, iterations = m_iterations, fromValue = m_animatedValue->RawValue()]()
+      const auto [animation, scopedBatch] = [deceleration = m_deceleration, velocity = m_velocity, iterations = m_iterations, fromValue = m_animatedValue->RawValue()]()
       {
         const auto [scopedBatch, animation] = []()
         {
@@ -27,17 +25,14 @@ namespace react {
           return std::make_tuple(compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations), compositor.CreateScalarKeyFrameAnimation());
         }();
 
-        std::chrono::milliseconds duration(static_cast<int>(frames.size() * 1000.0 / 60.0));
+        std::chrono::milliseconds duration(static_cast<int>(velocity / -deceleration * 1000));
         animation.Duration(duration);
 
-        auto normalizedProgress = 0.0f;
-        auto step = 1.0f / frames.size();
-        for (auto frame : frames)
-        {
-          normalizedProgress += step;
-          animation.InsertKeyFrame(normalizedProgress, static_cast<float>(fromValue + (frame * (toValue - fromValue))));
-        }
-
+        const auto compositor = winrt::Window::Current().Compositor();
+        animation.SetScalarParameter(L"velocity", static_cast<float>(velocity));
+        animation.SetScalarParameter(L"deceleration", static_cast<float>(deceleration));
+        animation.SetScalarParameter(L"duration", static_cast<float>(velocity / -deceleration) * 1000);
+        animation.InsertExpressionKeyFrame(1.0f, L"(duration * velocity) + (0.5 * deceleration * duration * duration)", compositor.CreateCubicBezierEasingFunction({ 0,1 }, {0, 1}));
         animation.IterationCount(static_cast<int32_t>(iterations));
         animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
 

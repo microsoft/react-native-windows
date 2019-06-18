@@ -20,11 +20,16 @@ namespace react {
     void AnimatedNode::AddChild(const std::shared_ptr<AnimatedNode>& animatedNode)
     {
       m_children.insert({ animatedNode->Tag(), animatedNode });
+      animatedNode->OnAttachToNode(m_tag);
     }
 
     void AnimatedNode::RemoveChild(const int64_t tag)
     {
-      m_children.erase(tag);
+      if (m_children.count(tag))
+      {
+        m_children.at(tag)->OnDetachedFromNode(m_tag);
+        m_children.erase(tag);
+      }
     }
   }
 }

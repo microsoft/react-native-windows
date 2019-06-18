@@ -9,6 +9,7 @@
 #include <winrt/Windows.UI.Text.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <winrt/Windows.UI.Xaml.Hosting.h>
 
 namespace winrt
 {
@@ -20,4 +21,5 @@ namespace winrt
   using namespace Windows::UI::Xaml::Controls;
   using namespace Windows::UI::Xaml::Controls::Primitives;
   using namespace Windows::UI::Composition;
+  using namespace Windows::UI::Xaml::Hosting;
 }

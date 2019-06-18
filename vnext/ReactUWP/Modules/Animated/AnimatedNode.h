@@ -14,8 +14,8 @@ namespace react {
       void RemoveChild(const int64_t animatedNode);
 
       virtual void Update() {};
-      virtual void OnDetachedFromNode(const std::shared_ptr<AnimatedNode>& animatedNode) {};
-      virtual void OnAttachToNode(const std::shared_ptr<AnimatedNode>& animatedNode) {};
+      virtual void OnDetachedFromNode(int64_t animatedNodeTag) {};
+      virtual void OnAttachToNode(int64_t animatedNodeTag) {};
 
     protected:
       std::unordered_map<int64_t, std::shared_ptr<AnimatedNode>> m_children{};

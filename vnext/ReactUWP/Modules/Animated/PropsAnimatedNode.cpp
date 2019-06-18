@@ -65,20 +65,63 @@ namespace react {
         {
           if (manager->m_styleNodes.count(entry.second))
           {
-            auto mapping = manager->m_styleNodes.at(entry.second)->GetMapping();
-            for (auto entry : mapping)
+            for (auto entry : manager->m_styleNodes.at(entry.second)->GetMapping())
             {
               auto valueNode = manager->m_valueNodes.at(entry.second);
-              switch (entry.first)
+
+              const auto animation = [valueNode, entry, uiElement]()
               {
-              case FacadeType::opacity:
-                auto propSet = valueNode->PropertySet();
                 auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
-                animation.SetReferenceParameter(L"ValuePropSet", propSet);
-                animation.Expression(L"ValuePropSet.value + ValuePropSet.Offset");
-                animation.Target(L"opacity");
+                animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
+                animation.Expression(L"ValuePropSet.value + ValuePropSet.offset");
+                switch (entry.first)
+                {
+                case FacadeType::opacity:
+                  animation.Target(L"Opacity");
+                  break;
+                case FacadeType::rotation:
+                  animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
+                  animation.Target(L"Rotation");
+                  break;
+                case FacadeType::rotationX:
+                  animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
+                  uiElement.RotationAxis({ 1, 0, 0 });
+                  animation.Target(L"Rotation");
+                  break;
+                case FacadeType::rotationY:
+                  animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
+                  uiElement.RotationAxis({ 0, 1, 0 });
+                  animation.Target(L"Rotation");
+                  break;
+                case FacadeType::scale:
+                  animation.Expression(L"Vector3(ValuePropSet.value + ValuePropSet.offset, ValuePropSet.value + ValuePropSet.offset, 0)");
+                  animation.Target(L"Scale");
+                  break;
+                case FacadeType::scaleX:
+                  animation.Target(L"Scale.X");
+                  break;
+                case FacadeType::scaleY:
+                  animation.Target(L"Scale.Y");
+                  break;
+                case FacadeType::translateX:
+                  animation.Target(L"Translation.X");
+                  break;
+                case FacadeType::translateY:
+                  animation.Target(L"Translation.Y");
+                  break;
+                case FacadeType::perspective:
+                  // We don't have an easy way of doing this..
+                  return static_cast<winrt::ExpressionAnimation>(nullptr);
+                default:
+                  assert(false);
+                }
+                return animation;
+              }();
+
+              if (animation)
+              {
+                m_expressionAnimations.insert({ valueNode->Tag(), { animation, uiElement } });
                 uiElement.StartAnimation(animation);
-                break;
               }
             }
           }
@@ -88,6 +131,13 @@ namespace react {
           }
         }
       }
+    }
+
+    void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag)
+    {
+      auto animationAndTarget = m_expressionAnimations.at(valueTag);
+      animationAndTarget.target.StopAnimation(animationAndTarget.animation);
+      m_expressionAnimations.erase(valueTag);
     }
   }
 }

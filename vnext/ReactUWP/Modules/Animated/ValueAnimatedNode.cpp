@@ -3,11 +3,18 @@
 
 namespace react {
   namespace uwp {
-    ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config) : AnimatedNode(tag)
+    ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : AnimatedNode(tag), m_manager(manager)
     {
       m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
       m_propertySet.InsertScalar(L"value", static_cast<float>(config.find("value").dereference().second.asDouble()));
       m_propertySet.InsertScalar(L"offset", static_cast<float>(config.find("offset").dereference().second.asDouble()));
+    }
+
+    ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : AnimatedNode(tag), m_manager(manager)
+    {
+      m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
+      m_propertySet.InsertScalar(L"value", 0.0);
+      m_propertySet.InsertScalar(L"offset", 0.0);
     }
 
     double ValueAnimatedNode::RawValue()
@@ -40,7 +47,7 @@ namespace react {
       auto offset = 0.0f;
       m_propertySet.TryGetScalar(L"value", rawValue);
       m_propertySet.TryGetScalar(L"offset", offset);
-      return rawValue + offset;
+      return static_cast<double>(rawValue) + static_cast<double>(offset);
     }
 
     void ValueAnimatedNode::FlattenOffset()
@@ -61,6 +68,37 @@ namespace react {
       m_propertySet.TryGetScalar(L"offset", offset);
       m_propertySet.InsertScalar(L"value", 0.0f);
       m_propertySet.InsertScalar(L"offset", rawValue + offset);
+    }
+
+    void ValueAnimatedNode::AddDependentPropsNode(int64_t propsNodeTag)
+    {
+      m_dependentPropsNodes.insert(propsNodeTag);
+    }
+
+    void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag)
+    {
+      m_dependentPropsNodes.erase(propsNodeTag);
+    }
+
+    void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag)
+    {
+      m_activeAnimations.insert(animationTag);
+    }
+
+    void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag)
+    {
+      m_activeAnimations.erase(animationTag);
+      if (!m_activeAnimations.size())
+      {
+        if (auto manager = m_manager.lock())
+        {
+          for (auto props : m_dependentPropsNodes)
+          {
+            auto node = manager->m_propsNodes.at(props);
+            node->DisposeCompletedAnimation(Tag());
+          }
+        }
+      }
     }
   }
 }
