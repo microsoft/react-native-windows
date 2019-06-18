@@ -96,6 +96,9 @@ struct DynamicAutomationPeer : winrt::FrameworkElementAutomationPeerT<DynamicAut
   void AddToSelection() const;
   void RemoveFromSelection() const;
   void Select() const;
+
+private:
+  winrt::com_ptr<ViewControl> GetParentViewControl() const;
 };
 
 }} // namespace react::uwp
