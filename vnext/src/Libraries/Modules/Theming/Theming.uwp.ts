@@ -14,15 +14,15 @@ class Theming extends NativeEventEmitter  {
     super(ThemingNative);
   }
 
-  addEventListener(type: string, handler: Function) {
+  public addEventListener(eventName: 'themeOrContrastDidChange', handler: Function): void {
     // TODO Hx: Implement this module.
-    const listener = RCTDeviceEventEmitter.addListener('themeOrContrastDidChange', (enabledInner: boolean) => {
+    const listener = RCTDeviceEventEmitter.addListener(eventName, (enabledInner: boolean) => {
       handler(enabledInner);
     });
     _subscriptions.set(handler, listener);
   }
 
-  removeEventListener(eventName: 'themeOrContrastDidChange', handler: Function) {
+  public removeEventListener(eventName: 'themeOrContrastDidChange', handler: Function): void {
     // TODO Hx: Implement this module.
     const listener = _subscriptions.get(handler);
     if (!listener) {
@@ -32,13 +32,13 @@ class Theming extends NativeEventEmitter  {
     _subscriptions.delete(handler);
   }
 
-  getConstants() {
+  public getConstants(): string {
     return ThemingNative.isHighContrast;
   }
 
-  getMethods() {
+  public getMethods(): string {
     return ThemingNative.getCurrentTheme();
   }
-};
+}
 
 export = Theming;
