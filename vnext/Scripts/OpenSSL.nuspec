@@ -11,16 +11,16 @@
   <files>
     <file src="OpenSSL.targets" target="build\native\$id$.targets" />
 
-    <file src="$targetroot$\x86\debug\opensource_openssl\x-none\inc\openssl\**\*.*" target="include\x86\openssl" />
-    <file src="$targetroot$\x86\debug\opensource_openssl\x-none\lib\libeay32.lib" target="lib\x86\Debug" />
-    <file src="$targetroot$\x86\debug\opensource_openssl\x-none\lib\ssleay32.lib" target="lib\x86\Debug" />
-    <file src="$targetroot$\x86\ship\opensource_openssl\x-none\lib\libeay32.lib" target="lib\x86\Release" />
-    <file src="$targetroot$\x86\ship\opensource_openssl\x-none\lib\ssleay32.lib" target="lib\x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\include\openssl\**\*.*" target="include\x86\openssl" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libeay32.lib" target="lib\x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\ssleay32.lib" target="lib\x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libeay32.lib" target="lib\x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\ssleay32.lib" target="lib\x86\Release" />
 
-    <file src="$targetroot$\x64\debug\opensource_openssl\x-none\inc\openssl\**\*.*" target="include\x64\openssl" />
-    <file src="$targetroot$\x64\debug\opensource_openssl\x-none\lib\libeay32.lib" target="lib\x64\Debug" />
-    <file src="$targetroot$\x64\debug\opensource_openssl\x-none\lib\ssleay32.lib" target="lib\x64\Debug" />
-    <file src="$targetroot$\x64\ship\opensource_openssl\x-none\lib\libeay32.lib" target="lib\x64\Release" />
-    <file src="$targetroot$\x64\ship\opensource_openssl\x-none\lib\ssleay32.lib" target="lib\x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\include\openssl\**\*.*" target="include\x64\openssl" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libeay32.lib" target="lib\x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\ssleay32.lib" target="lib\x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libeay32.lib" target="lib\x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\ssleay32.lib" target="lib\x64\Release" />
   </files>
 </package>
