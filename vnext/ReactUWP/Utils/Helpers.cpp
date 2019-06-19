@@ -7,10 +7,17 @@
 
 namespace react { namespace uwp {
 
-ReactId getReactId(IReactInstance *instance, winrt::FrameworkElement const& fe)
+// Not only react-native, native modules could set tag too for controls.
+// For example, to identify an clicked item, customer may add tag in NavigationView since content for the two NavigationViewItem are empty.
+// 
+// <NavigationView>
+//  <NavigationViewItem Icon="Accept" Tag="1" />
+//  <NavigationViewItem Icon="Accept" Tag="2" />
+// </NavigationView>
+// Instead of deduce view id directly from FrameworkElement.Tag, this do additional check by uimanager.
+ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const& fe)
 {
   ReactId reactId;
-  assert(instance);
   if (auto uiManager = static_cast<NativeUIManager*>(instance->NativeUIManager()))
   {
     if (auto peer = uiManager->reactPeerOrContainerFrom(fe))

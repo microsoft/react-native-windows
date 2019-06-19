@@ -118,7 +118,7 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(winrt::FrameworkElement fe)
   {
     while (fe)
     {
-      if (auto value = GetPropertyValue(fe))
+      if (auto value = GetTagAsPropertyValue(fe))
       {
         auto tag = GetTag(value);
         if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(tag)))

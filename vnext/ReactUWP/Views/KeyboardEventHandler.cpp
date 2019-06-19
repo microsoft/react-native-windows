@@ -66,13 +66,13 @@ static folly::dynamic ToEventData(ReactKeyboardEvent event)
     (SHIFT_KEY, event.shiftKey);
 }
 
-KeyboardEventBaseHandler::KeyboardEventBaseHandler(KeyboardEventCallback keyDown, KeyboardEventCallback keyUp)
-  :m_keyDownCallback(keyDown), m_keyUpCallback(keyUp)
+KeyboardEventBaseHandler::KeyboardEventBaseHandler(KeyboardEventCallback&& keyDown, KeyboardEventCallback&& keyUp)
+  :m_keyDownCallback(std::move(keyDown)), m_keyUpCallback(std::move(keyUp))
 {
 }
 
-PreviewKeyboardEventHandler::PreviewKeyboardEventHandler(KeyboardEventCallback keyDown, KeyboardEventCallback keyUp)
-  : KeyboardEventBaseHandler(keyDown, keyUp)
+PreviewKeyboardEventHandler::PreviewKeyboardEventHandler(KeyboardEventCallback&& keyDown, KeyboardEventCallback&& keyUp)
+  : KeyboardEventBaseHandler(std::move(keyDown), std::move(keyUp))
 {
 }
 
@@ -92,19 +92,21 @@ void PreviewKeyboardEventHandler::unhook()
   m_previewKeyUpRevoker.revoke();
 }
 
-KeyboardEventHandler::KeyboardEventHandler(KeyboardEventCallback keyDown, KeyboardEventCallback keyUp)
-  :KeyboardEventBaseHandler(keyDown, keyUp)
+KeyboardEventHandler::KeyboardEventHandler(KeyboardEventCallback&& keyDown, KeyboardEventCallback&& keyUp)
+  :KeyboardEventBaseHandler(std::move(keyDown), std::move(keyUp))
 {
 }
 
 void KeyboardEventHandler::hook(XamlView xamlView)
 {
-  auto uiElement = xamlView.as<winrt::UIElement>();
-  if (m_keyDownCallback)
-    m_KeyDownRevoker = uiElement.KeyDown(winrt::auto_revoke, m_keyDownCallback);
+  if (auto uiElement = xamlView.try_as<winrt::UIElement>())
+  {
+    if (m_keyDownCallback)
+      m_KeyDownRevoker = uiElement.KeyDown(winrt::auto_revoke, m_keyDownCallback);
 
-  if (m_keyUpCallback)
-    m_KeyUpRevoker = uiElement.KeyUp(winrt::auto_revoke, m_keyUpCallback);
+    if (m_keyUpCallback)
+      m_KeyUpRevoker = uiElement.KeyUp(winrt::auto_revoke, m_keyUpCallback);
+  }
 }
 
 void KeyboardEventHandler::unhook()
@@ -131,6 +133,89 @@ void PreviewKeyboardEventHandlerOnRoot::OnPreKeyUp(winrt::IInspectable const& se
   DispatchEventToJs("topKeyUp", args);
 }
 
+HandledKeyboardEventHandler::HandledKeyboardEventHandler()
+{
+}
+
+void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(string propertyName, folly::dynamic const& value)
+{
+  if (propertyName == "keyDownEvents") {
+    m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
+  }
+  else if (propertyName == "keyUpEvents")
+  {
+    m_handledKeyUpKeyboardEvents = KeyboardHelper::FromJS(value);
+  }
+}
+
+void HandledKeyboardEventHandler::hook(XamlView xamlView)
+{
+  unhook();
+
+  EnsureKeyboardEventHandler();
+  m_previewKeyboardEventHandler->hook(xamlView);
+  m_keyboardEventHandler->hook(xamlView);
+}
+
+void HandledKeyboardEventHandler::unhook()
+{
+  if (m_previewKeyboardEventHandler)
+    m_previewKeyboardEventHandler->unhook();
+  if (m_keyboardEventHandler)
+    m_keyboardEventHandler->unhook();
+}
+
+void HandledKeyboardEventHandler::EnsureKeyboardEventHandler()
+{
+  if (!m_previewKeyboardEventHandler)
+  {
+    m_previewKeyboardEventHandler = make_unique<PreviewKeyboardEventHandler>(
+      std::bind(&HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::PreviewKeyDown, _1, _2),
+      std::bind(&HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::PreviewKeyUp, _1, _2)
+      );
+  }
+
+  if (!m_keyboardEventHandler)
+  {
+    m_keyboardEventHandler = make_unique<KeyboardEventHandler>(
+      std::bind(&HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::KeyDown, _1, _2),
+      std::bind(&HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::KeyUp, _1, _2)
+      );
+  }
+}
+
+void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args)
+{
+  HandledEventPhase currentEventPhase = (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
+    ? HandledEventPhase::CAPTURING : HandledEventPhase::BUBBLING;
+
+  auto ev = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
+
+  bool shouldMarkHandled = false;
+  if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, ev);
+  else
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, ev);
+
+  if (shouldMarkHandled)
+    args.Handled(true);
+}
+
+bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent)
+{
+  for (auto event : handledEvents)
+  {
+    if (event.key == currentEvent.key &&
+      (!event.altKey || (event.altKey && currentEvent.altKey)) &&
+      (!event.ctrlKey || (event.ctrlKey && currentEvent.ctrlKey)) &&
+      (!event.shiftKey || (event.shiftKey && currentEvent.shiftKey)) &&
+      (!event.metaKey || (event.metaKey && currentEvent.metaKey)) &&
+      event.handledEventPhase == currentEvent.handledEventPhase)
+      return true;
+  }
+  return false;
+}
+
 inline bool IsModifiedKeyPressed(winrt::CoreWindow const& coreWindow, winrt::VirtualKey vk)
 {
   return (coreWindow.GetKeyState(vk) & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
@@ -152,13 +237,13 @@ template<typename T> void UpdateModifiedKeyStatusTo(T& ev)
   ev.capLocked = IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
 };
 
-void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winrt::KeyRoutedEventArgs args)
+void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winrt::KeyRoutedEventArgs const& args)
 {
   if (auto instance = m_wkReactInstance.lock())
   {
     if (auto source = args.OriginalSource().try_as<winrt::FrameworkElement>())
     {
-      auto reactId = getReactId(instance.operator->(), source);
+      auto reactId = getViewId(instance.operator->(), source);
       if (reactId.isValid)
       {
         ReactKeyboardEvent ev;

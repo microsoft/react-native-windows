@@ -43,7 +43,7 @@ inline int64_t GetTag(winrt::IPropertyValue value)
   return value.GetInt64();
 }
 
-inline winrt::IPropertyValue GetPropertyValue(winrt::FrameworkElement fe)
+inline winrt::IPropertyValue GetTagAsPropertyValue(winrt::FrameworkElement fe)
 {
   assert(fe);
   return fe.GetValue(winrt::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();

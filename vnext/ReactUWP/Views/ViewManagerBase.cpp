@@ -237,11 +237,11 @@ void ViewManagerBase::UpdateProperties(ShadowNodeBase* nodeToUpdate, const dynam
     }
     else if (propertyName == "keyDownEvents")
     {
-      nodeToUpdate->UpdateHandledKeyboardEvents(ShadowNodeBase::KeyboardType::KeyDown, propertyValue);
+      nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
     }
     else if (propertyName == "keyUpEvents")
     {
-      nodeToUpdate->UpdateHandledKeyboardEvents(ShadowNodeBase::KeyboardType::KeyUp, propertyValue);
+      nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
     }
   }
 }

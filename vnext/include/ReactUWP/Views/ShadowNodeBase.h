@@ -77,20 +77,6 @@ extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #pragma warning(disable: 4251) // member is not DLL exported
 struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
 {
-  enum class KeyboardEventPhase
-  {
-    PreviewKeyUp,
-    PreviewKeyDown,
-    KeyUp,
-    KeyDown
-  };
-
-  enum class KeyboardType
-  {
-    KeyUp,
-    KeyDown
-  };
-
   ShadowNodeBase(const ShadowNodeBase&) = delete;
   ShadowNodeBase& operator=(ShadowNodeBase const&) = delete;
   ShadowNodeBase();
@@ -140,21 +126,11 @@ public:
 
   // Support Keyboard
 public:
-  void UpdateHandledKeyboardEvents(KeyboardType forKeyDown, folly::dynamic const& value);
+  void UpdateHandledKeyboardEvents(std::string propertyName, folly::dynamic const& value);
 
 private:
-  bool ShouldHookKeyboardEvent(XamlView const& xamlView);
-  void UpdateKeyboardEventHooks(XamlView const& xamlView);
-
-  void KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
-  bool ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent);
-  std::vector<KeyboardEvent> m_handledKeyUpKeyboardEvents;
-  std::vector<KeyboardEvent> m_handledKeyDownKeyboardEvents;
-
-  std::unique_ptr<PreviewKeyboardEventHandler> m_previewKeyboardEventHandler;
-  std::unique_ptr<KeyboardEventHandler> m_keyboardEventHandler;
-
-  bool m_keyboardEventHooked{ false };
+  void EnsureHandledKeyboardEventHandler();
+  std::unique_ptr<HandledKeyboardEventHandler> m_handledKeyboardEventHandler;
 };
 #pragma warning(pop)
 

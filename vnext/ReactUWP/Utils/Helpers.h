@@ -27,5 +27,5 @@ namespace react { namespace uwp {
     return (T)(obj.asInt());
   }
 
-  ReactId getReactId(IReactInstance *instance, winrt::FrameworkElement const& fe);
+  ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const& fe);
 }}

@@ -56,7 +56,7 @@ namespace react { namespace uwp {
 
   class KeyboardEventBaseHandler {
   public:
-    KeyboardEventBaseHandler(KeyboardEventCallback keyDown, KeyboardEventCallback keyUp);
+    KeyboardEventBaseHandler(KeyboardEventCallback&& keyDown, KeyboardEventCallback&& keyUp);
     virtual ~KeyboardEventBaseHandler() {};
 
     virtual void hook(XamlView xamlView) = 0;
@@ -70,7 +70,7 @@ namespace react { namespace uwp {
   class PreviewKeyboardEventHandler: public KeyboardEventBaseHandler
   {
   public:
-    PreviewKeyboardEventHandler(KeyboardEventCallback keyDown, KeyboardEventCallback keyUp);
+    PreviewKeyboardEventHandler(KeyboardEventCallback&& keyDown, KeyboardEventCallback&& keyUp);
 
     void hook(XamlView xamlView);
     void unhook();
@@ -83,7 +83,7 @@ namespace react { namespace uwp {
   class KeyboardEventHandler : public KeyboardEventBaseHandler
   {
   public:
-    KeyboardEventHandler(KeyboardEventCallback keyDown, KeyboardEventCallback keyUp);
+    KeyboardEventHandler(KeyboardEventCallback&& keyDown, KeyboardEventCallback&& keyUp);
 
     void hook(XamlView xamlView);
     void unhook();
@@ -102,8 +102,46 @@ namespace react { namespace uwp {
     void OnPreKeyDown(winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
     void OnPreKeyUp(winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
 
-    void DispatchEventToJs(string name, winrt::KeyRoutedEventArgs args);
+    void DispatchEventToJs(string name, winrt::KeyRoutedEventArgs const& args);
     std::weak_ptr<IReactInstance> m_wkReactInstance;
+  };
+
+  class HandledKeyboardEventHandler
+  {
+  public:
+    enum class KeyboardEventPhase
+    {
+      PreviewKeyUp,
+      PreviewKeyDown,
+      KeyUp,
+      KeyDown
+    };
+
+    enum class KeyboardType
+    {
+      KeyUp,
+      KeyDown
+    };
+
+    HandledKeyboardEventHandler();
+
+    void hook(XamlView xamlView);
+    void unhook();
+
+  public:
+    void UpdateHandledKeyboardEvents(string propertyName, folly::dynamic const& value);
+
+  private:
+    void EnsureKeyboardEventHandler();
+
+    void KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
+    bool ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent);
+
+    std::vector<KeyboardEvent> m_handledKeyUpKeyboardEvents;
+    std::vector<KeyboardEvent> m_handledKeyDownKeyboardEvents;
+
+    std::unique_ptr<PreviewKeyboardEventHandler> m_previewKeyboardEventHandler;
+    std::unique_ptr<KeyboardEventHandler> m_keyboardEventHandler;
   };
 
   struct KeyboardHelper

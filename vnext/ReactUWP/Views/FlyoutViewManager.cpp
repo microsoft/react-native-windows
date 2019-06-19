@@ -116,17 +116,20 @@ private:
   winrt::FlyoutShowOptions m_showOptions = nullptr;
 
   std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 };
 
 FlyoutShadowNode::~FlyoutShadowNode()
 {
   m_touchEventHanadler->RemoveTouchHandlers();
+  m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
 void FlyoutShadowNode::AddView(ShadowNode& child, int64_t index)
 {
   auto childView = static_cast<ShadowNodeBase&>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
+  m_previewKeyboardEventHandlerOnRoot->hook(childView);
 
   if (m_flyout != nullptr)
     m_flyout.Content(childView.as<winrt::UIElement>());
@@ -144,6 +147,7 @@ void FlyoutShadowNode::createView()
 
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
+  m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
   m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
   {
