@@ -70,7 +70,7 @@ private:
 }} // namespace react::uwp
 
 
-#include "cppwinrt/react.uwp.DynamicAutomationPeer.g.h"
+#include "cppwinrt/DynamicAutomationPeer.g.h"
 namespace winrt::react::uwp::implementation
 {
 //

@@ -38,9 +38,9 @@ struct WINRT_EBO BorderEffect_base : implements<D, Microsoft::UI::Composition::E
 
 }
 
-#if defined(WINRT_FORCE_INCLUDE_BORDEREFFECT_XAML_G_H) || __has_include("Microsoft.UI.Composition.Effects.BorderEffect.xaml.g.h")
+#if defined(WINRT_FORCE_INCLUDE_BORDEREFFECT_XAML_G_H) || __has_include("BorderEffect.xaml.g.h")
 
-#include "Microsoft.UI.Composition.Effects.BorderEffect.xaml.g.h"
+#include "BorderEffect.xaml.g.h"
 
 #else
 

@@ -419,7 +419,7 @@
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
@@ -462,7 +462,7 @@
     <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h">
       <Filter>Views\cppwinrt\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\Microsoft.UI.Composition.Effects.BorderEffect.g.h">
+    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\Image\ReactImageBrush.h">

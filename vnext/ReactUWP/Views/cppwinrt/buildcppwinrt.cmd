@@ -9,9 +9,11 @@ setlocal enabledelayedexpansion
 
 set TargetSDK=10.0.18362.0
 
-set MetadataDir=%WindowsSdkDir%References\%TargetSDK%\Windows.Foundation.FoundationContract\3.0.0.0
-set FoundationRef=%MetadataDir%\Windows.Foundation.FoundationContract.winmd
-set UniversalApiRef=%WindowsSdkDir%References\%TargetSDK%\Windows.Foundation.UniversalApiContract\8.0.0.0\Windows.Foundation.UniversalApiContract.winmd
+set FoundationDir=%WindowsSdkDir%References\%TargetSDK%\Windows.Foundation.FoundationContract\3.0.0.0
+set FoundationRef=%FoundationDir%\Windows.Foundation.FoundationContract.winmd
+
+set UniversalApiDir=%WindowsSdkDir%References\%TargetSDK%\Windows.Foundation.UniversalApiContract\8.0.0.0
+set UniversalApiRef=%UniversalApiDir%\Windows.Foundation.UniversalApiContract.winmd
 
 set TargetDir=..\..\..\target\cppwinrt
 
@@ -22,21 +24,33 @@ if not exist "%TargetDir%" call mkdir "%TargetDir%"
 if exist "%TargetDir%" call del /s /q "%TargetDir%\*"
 
 for %%f in (*.idl) do (
-  call :BuildHeaders %%f
+  call :BuildWinmd %%f
 )
+
+echo Merge winmds
+if not exist "%TargetDir%\merged" call mkdir "%TargetDir%\merged"
+call mdmerge -v -metadata_dir "%FoundationDir%\." -metadata_dir "%UniversalApiDir%\." -o "%TargetDir%\merged" -i "%TargetDir%" -partial
+
+for %%w in (%TargetDir%\merged\*.winmd) do (
+  call :BuildHeaders %%w
+)
+
+echo Copy generated files
+call xcopy /Y "%TargetDir%\*.h" .\
+call xcopy /Y "%TargetDir%\winrt\*.h" .\winrt\
+call xcopy /Y "%TargetDir%\winrt\impl\*.h" .\winrt\impl\
 
 popd
 goto :end
 
-:BuildHeaders 
+:BuildWinmd
 echo Building winmd for "%~1"
-call midlrt /metadata_dir "%MetadataDir%" /winrt /nomidl /ns_prefix /enum_class /h "NUL" /reference "%FoundationRef%" /reference "%UniversalApiRef%" /winmd "%TargetDir%\%~n1.winmd" %~1
-echo Building headers from "%~n1.winmd"
-call cppwinrt -verbose -overwrite -prefix -comp "%TargetDir%\sources" -in "%TargetDir%\%~n1.winmd" -ref %TargetSDK% -out %TargetDir%
-echo Copying generated files
-call xcopy /Y "%TargetDir%\*.h" .\
-call xcopy /Y  "%TargetDir%\winrt\*.h" .\winrt\
-call xcopy /Y "%TargetDir%\winrt\impl\*.h" .\winrt\impl\
+call midlrt /metadata_dir "%FoundationDir%" /winrt /nomidl /ns_prefix /enum_class /h "NUL" /reference "%FoundationRef%" /reference "%UniversalApiRef%" /winmd "%TargetDir%\%~n1.winmd" %~1
+exit /b
+
+:BuildHeaders
+echo Building headers for "%~1"
+call cppwinrt -verbose -overwrite -prefix -comp "%TargetDir%\sources" -in "%TargetDir%\merged\%~1" -ref %TargetSDK% -out %TargetDir%
 exit /b
 
 :end

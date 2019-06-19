@@ -72,9 +72,9 @@ struct WINRT_EBO DynamicAutomationPeerT : implements<D, Windows::Foundation::IAc
 
 }
 
-#if defined(WINRT_FORCE_INCLUDE_DYNAMICAUTOMATIONPEER_XAML_G_H) || __has_include("react.uwp.DynamicAutomationPeer.xaml.g.h")
+#if defined(WINRT_FORCE_INCLUDE_DYNAMICAUTOMATIONPEER_XAML_G_H) || __has_include("DynamicAutomationPeer.xaml.g.h")
 
-#include "react.uwp.DynamicAutomationPeer.xaml.g.h"
+#include "DynamicAutomationPeer.xaml.g.h"
 
 #else
 
