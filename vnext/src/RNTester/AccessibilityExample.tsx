@@ -4,7 +4,7 @@
 /* tslint:disable */
 
 import React = require('react');
-import { Text, TouchableHighlight, View } from 'react-native';
+import { FlatList, Text, TouchableHighlight, View } from 'react-native';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -46,7 +46,7 @@ class TouchableExamples extends React.Component<{}, any> {
         >
           <Text>Blue</Text>
         </TouchableHighlight>
-        <Text accessibilityLiveRegion="polite" accessibilityLabel={"Pressed " + this.state.pressedCount + "times"}>Pressed {this.state.pressedCount} times</Text>
+        <Text accessibilityLiveRegion="polite" accessibilityLabel={"Pressed " + this.state.pressedCount + " times"}>Pressed {this.state.pressedCount} times</Text>
       </View>
     );
   }
@@ -58,31 +58,56 @@ class TouchableExamples extends React.Component<{}, any> {
 
 class AccessibilityStateExamples extends React.Component {
   public state = {
-    disabled: false,
+    viewDisabled: false,
+    itemsSelected: [false, false, false],
   }
 
   public render() {
+    var selectableItems = [{}, {}, {}]
     return (
       <View>
         <Text>The following TouchableHighlight toggles accessibilityState.disabled for the View under it:</Text>
         <TouchableHighlight
           style={{width:50, height:50, backgroundColor:'blue'}}
           accessibilityRole="button"
-          onPress={this.press}
+          onPress={this.disablePress}
         >
           <Text>Toggle</Text>
         </TouchableHighlight>
         <View
-          style={{backgroundColor: this.state.disabled ? 'gray' : 'lightskyblue'}}
-          accessibilityStates={this.state.disabled ? ['disabled'] : []}>
-          <Text>This View should be {this.state.disabled ? "disabled" : "enabled"} according to UIA</Text>
+          style={{backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue'}}
+          accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
+          <Text>This View should be {this.state.viewDisabled ? "disabled" : "enabled"} according to UIA</Text>
+        </View>
+        <Text>The following list of TouchableHighlights toggles accessibilityState.selected when touched:</Text>
+        <View accessibilityRole="button">
+          <FlatList
+            data={selectableItems}
+            renderItem={(item) =>
+              <TouchableHighlight
+                style={{width:50, height:50, backgroundColor: this.state.itemsSelected[item.index] ? 'gray' : 'lightskyblue'}}
+                accessibilityRole="button"
+                accessibilityStates={this.state.itemsSelected[item.index] ? ['selected'] : []}
+                onPress={() => this.selectPress(item.index)}
+              >
+                <Text>{this.state.itemsSelected[item.index] ? "Selected" : "Unselected"} </Text>
+              </TouchableHighlight>
+            }
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
       </View>
     );
   }
 
-  private press = () => {
-    this.setState({disabled: !this.state.disabled});
+  private disablePress = () => {
+    this.setState({viewDisabled: !this.state.viewDisabled});
+  }
+
+  private selectPress = (index: number) => {
+    let tmp = this.state.itemsSelected;
+    tmp[index] = !tmp[index];
+    this.setState({itemsSelected: tmp});
   }
 }
 

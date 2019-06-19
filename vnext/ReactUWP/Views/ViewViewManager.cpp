@@ -169,7 +169,7 @@ private:
   bool m_onClick = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
   AccessibilityRoles m_accessibilityRole = AccessibilityRoles::None;
-  bool m_accessibilityStates[AccessibilityStates::CountStates] = { 0 };
+  bool m_accessibilityStates[AccessibilityStates::CountStates] = { };
 };
 
 
@@ -379,6 +379,8 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
         {
           pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
         }
+
+        shouldBeControl = (pViewShadowNode->AccessibilityRole() != AccessibilityRoles::None);
       }
       else if (propertyName == "accessibilityStates")
       {

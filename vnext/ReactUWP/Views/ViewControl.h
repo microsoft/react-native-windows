@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Views/ViewPanel.h>
 #include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.Foundation.h>
@@ -62,7 +63,7 @@ public:
 
 private:
   AccessibilityRoles m_accessibilityRole = AccessibilityRoles::None;
-  bool m_accessibilityStates[AccessibilityStates::CountStates] = { 0 };
+  bool m_accessibilityStates[AccessibilityStates::CountStates] = { };
   AccessibilityInvokeEventHandler m_accessibilityInvokeHandler = nullptr;
 };
 
@@ -98,6 +99,7 @@ struct DynamicAutomationPeer : winrt::FrameworkElementAutomationPeerT<DynamicAut
   void Select() const;
 
 private:
+  winrt::com_ptr<ViewPanel> GetViewPanel() const;
   winrt::com_ptr<ViewControl> GetParentViewControl() const;
 };
 

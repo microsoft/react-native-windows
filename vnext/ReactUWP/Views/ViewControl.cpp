@@ -113,6 +113,30 @@ void DynamicAutomationPeer::Invoke() const
 
 winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSelection() const
 {
+  if (auto viewPanel = GetViewPanel())
+  {
+    std::vector<winrt::IRawElementProviderSimple> providers;
+
+    for (winrt::UIElement child : viewPanel->Children())
+    {
+      if (auto viewControl = child.try_as<ViewControl>())
+      {
+        if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(child))
+        {
+          winrt::IRawElementProviderSimple provider = ProviderFromPeer(peer);
+          providers.push_back(provider);
+        }
+      }
+    }
+
+    if (!providers.empty())
+    {
+      winrt::com_array<winrt::IRawElementProviderSimple> providersArray{ providers };
+      return providersArray;
+    }
+
+  }
+
   return {};
 }
 
@@ -121,16 +145,19 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 bool DynamicAutomationPeer::IsSelected() const
 {
   auto viewControl = Owner().try_as<ViewControl>();
-  return (nullptr != viewControl && viewControl->AccessibilityState(AccessibilityStates::Selected));
+  return (viewControl && viewControl->AccessibilityState(AccessibilityStates::Selected));
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const
 {
   if (auto viewControl = GetParentViewControl())
   {
-    if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(viewControl.as<winrt::UIElement>()))
+    if (auto element = viewControl.try_as<winrt::UIElement>())
     {
-      return ProviderFromPeer(peer);
+      if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(element))
+      {
+        return ProviderFromPeer(peer);
+      }
     }
   }
 
@@ -152,15 +179,35 @@ void DynamicAutomationPeer::Select() const
 
 }
 
+winrt::com_ptr<ViewPanel> DynamicAutomationPeer::GetViewPanel() const
+{
+  if (auto viewControl = Owner().try_as<ViewControl>())
+  {
+    auto child = viewControl->Content();
+
+    if (auto border = child.try_as<winrt::Border>())
+    {
+      child = border.Child();
+    }
+
+    if (auto viewPanel = child.try_as<ViewPanel>())
+    {
+      return viewPanel;
+    }
+  }
+
+  return nullptr;
+}
+
 winrt::com_ptr<ViewControl> DynamicAutomationPeer::GetParentViewControl() const
 {
-  auto viewControlAncestor = Owner().as<winrt::DependencyObject>();
+  auto ancestor = Owner().as<winrt::DependencyObject>();
 
-  while (viewControlAncestor)
+  while (ancestor)
   {
-    if (viewControlAncestor = winrt::VisualTreeHelper::GetParent(viewControlAncestor))
+    if (ancestor = winrt::VisualTreeHelper::GetParent(ancestor))
     {
-      if (auto ancestorViewControl = viewControlAncestor.try_as<ViewControl>())
+      if (auto ancestorViewControl = ancestor.try_as<ViewControl>())
       {
         return ancestorViewControl;
       }
