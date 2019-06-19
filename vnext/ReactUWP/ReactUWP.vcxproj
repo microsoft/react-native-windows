@@ -79,8 +79,11 @@
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
-      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=uwp;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <ShowIncludes>false</ShowIncludes>
@@ -90,6 +93,9 @@
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
+      <AdditionalDependencies Condition="'$(CHAKRACOREUWP)'=='true'">ChakraCore.Debugger.Protocol.lib;ChakraCore.Debugger.ProtocolHandler.lib;ChakraCore.Debugger.Service.lib;ChakraCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreLibDir);$(ChakraCoreDebugLibDir)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>
@@ -97,7 +103,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
     <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
@@ -148,6 +154,7 @@
     <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
     <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
@@ -166,6 +173,7 @@
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
     <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\ImageViewManagerModule.h" />
     <ClInclude Include="Modules\LinkingManagerModule.h" />
     <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
@@ -188,14 +196,24 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\cppwinrt\Microsoft.UI.Composition.Effects.BorderEffect.g.h" />
     <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
+    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h" />
     <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
+    <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
-    <ClInclude Include="Views\ImageViewManager.h" />
+    <ClInclude Include="Views\Image\BorderEffect.h" />
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
+    <ClInclude Include="Views\Image\ImageViewManager.h" />
+    <ClInclude Include="Views\Image\ReactImage.h" />
+    <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
@@ -229,7 +247,7 @@
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
     <ClCompile Include="..\Shared\InstanceManager.cpp" />
     <ClCompile Include="..\Shared\OInstance.cpp" />
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" />
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
@@ -242,6 +260,7 @@
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
@@ -263,13 +282,17 @@
     <ClCompile Include="Threading\WorkerMessageQueueThread.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
+    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\DatePickerViewManager.cpp" />
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
     <ClCompile Include="Views\FlyoutViewManager.cpp" />
     <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
-    <ClCompile Include="Views\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Image\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Image\ReactImage.cpp" />
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
@@ -337,17 +360,17 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(ReactNativeWindowsDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(ReactNativeWindowsDir)\packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(ReactNativeWindowsDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(ReactNativeWindowsDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="$(ReactNativeWindowsDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets" Condition="Exists('$(ReactNativeWindowsDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
+    <Import Project="$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('$(ReactNativeWindowsDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

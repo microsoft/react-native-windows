@@ -12,6 +12,7 @@
     <Message Text="=> Platform                [$(Platform)]" />
     <Message Text="=> PlatformTarget          [$(PlatformTarget)]" />
     <Message Text="=> PlatformName            [$(PlatformName)]" />
+    <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
     <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
     <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
     <Message Text="=> IntDir                  [$(IntDir)]" />

@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 #include <InstanceFactory.h>
 #include <Logging.h>
 #include <TestRunner.h>
@@ -47,6 +49,7 @@ static double nativePerformanceNow()
     std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
+#if !defined(OSS_RN)
 void logMarker(const ReactMarker::ReactMarkerId id, const char* tag)
 {
   std::cout << "Marker: " << id;
@@ -54,13 +57,16 @@ void logMarker(const ReactMarker::ReactMarkerId id, const char* tag)
     std::cout << " Tag: " << tag;
   std::cout << std::endl;
 }
+#endif
 
 } // end anonymous namespace
 
 void InitializeLogging(NativeLoggingHook&& hook)
 {
   g_nativeLogHook = std::move(hook);
-  ReactMarker::logTaggedMarker = logMarker;
+#if !defined(OSS_RN)
+    ReactMarker::logTaggedMarker = logMarker;
+#endif
 }
 
 namespace test {

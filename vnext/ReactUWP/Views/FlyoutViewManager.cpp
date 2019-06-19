@@ -110,6 +110,11 @@ private:
   bool m_isLightDismissEnabled = true;
   bool m_isOpen = false;
   int64_t m_targetTag = -1;
+  float m_horizontalOffset = 0;
+  float m_verticalOffset = 0;
+  bool m_isFlyoutShowOptionsSupported = false;
+  winrt::FlyoutShowOptions m_showOptions = nullptr;
+
   std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
 };
 
@@ -132,6 +137,10 @@ void FlyoutShadowNode::createView()
   Super::createView();
 
   m_flyout = winrt::Flyout();
+  m_isFlyoutShowOptionsSupported = !!(m_flyout.try_as<winrt::IFlyoutBase5>());
+
+  if (m_isFlyoutShowOptionsSupported)
+    m_showOptions = winrt::FlyoutShowOptions();
 
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
@@ -186,6 +195,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   m_updating = true;
   bool updateTargetElement = false;
   bool updateIsOpen = false;
+  bool updateOffset = false;
 
   if (m_flyout == nullptr)
     return;
@@ -195,7 +205,16 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     const std::string& propertyName = pair.first.getString();
     const folly::dynamic& propertyValue = pair.second;
 
-    if (propertyName == "isLightDismissEnabled")
+    if (propertyName == "horizontalOffset")
+    {
+      if (propertyValue.isNumber())
+        m_horizontalOffset = static_cast<float>(propertyValue.asDouble());
+      else
+        m_horizontalOffset = 0;
+
+      updateOffset = true;
+    }
+    else if (propertyName == "isLightDismissEnabled")
     {
       if (propertyValue.isBool())
         m_isLightDismissEnabled = propertyValue.asBool();
@@ -231,6 +250,15 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
       else
         m_targetTag = -1;
     }
+    else if (propertyName == "verticalOffset")
+    {
+      if (propertyValue.isNumber())
+        m_verticalOffset = static_cast<float>(propertyValue.asDouble());
+      else
+        m_verticalOffset = 0;
+
+      updateOffset = true;
+    }
   }
 
   if (updateTargetElement || m_targetElement == nullptr)
@@ -239,17 +267,35 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_flyout);
   }
 
+  if (updateOffset && m_isFlyoutShowOptionsSupported)
+  {
+    winrt::Point newPoint(m_horizontalOffset, m_verticalOffset);
+    m_showOptions.Position(newPoint);
+  }
+
+  if (m_isFlyoutShowOptionsSupported)
+  {
+    winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
+    m_showOptions.ExclusionRect(exclusionRect);
+  }
+
   if (updateIsOpen)
   {
     if (m_isOpen)
     {
       AdjustDefaultFlyoutStyle();
-      winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+      if (m_isFlyoutShowOptionsSupported)
       {
-        auto popup = GetFlyoutParentPopup();
-        if (popup != nullptr)
-          popup.IsLightDismissEnabled(m_isLightDismissEnabled);
+        m_flyout.ShowAt(m_targetElement, m_showOptions);
       }
+      else
+      {
+        winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
+      }
+
+      auto popup = GetFlyoutParentPopup();
+      if (popup != nullptr)
+        popup.IsLightDismissEnabled(m_isLightDismissEnabled);
     }
     else
     {
@@ -330,10 +376,12 @@ folly::dynamic FlyoutViewManager::GetNativeProps() const
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object
+    ("horizontalOffset", "number")
     ("isLightDismissEnabled", "boolean")
     ("isOpen", "boolean")
     ("placement", "number")
     ("target", "number")
+    ("verticalOffset", "number")
   );
 
   return props;
