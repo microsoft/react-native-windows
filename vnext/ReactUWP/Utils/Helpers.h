@@ -22,28 +22,10 @@ namespace react { namespace uwp {
   };
 
   template<typename T>
-  inline typename T as(folly::dynamic const& obj)
+  inline typename T asEnum(folly::dynamic const& obj)
   {
     return (T)(obj.asInt());
   }
 
-  template<>
-  inline typename std::string as<std::string>(folly::dynamic const& obj)
-  {
-    return obj.asString();
-  }
-
-  template<>
-  inline typename bool as<bool>(folly::dynamic const& obj)
-  {
-    return obj.asBool();
-  }
-
-  template<>
-  inline typename double as<double>(folly::dynamic const& obj)
-  {
-    return obj.asDouble();
-  }
-
-   ReactId getReactId(IReactInstance *instance, winrt::FrameworkElement const& fe);
+  ReactId getReactId(IReactInstance *instance, winrt::FrameworkElement const& fe);
 }}

@@ -32,17 +32,17 @@ struct json_type_traits<react::uwp::KeyboardEvent>
       const folly::dynamic& propertyValue = pair.second;
 
       if (propertyName == ALT_KEY)
-        ev.altKey = as<bool>(propertyValue);
+        ev.altKey = propertyValue.asBool();
       else if (propertyName == SHIFT_KEY)
-        ev.shiftKey = as<bool>(propertyValue);
+        ev.shiftKey = propertyValue.asBool();
       else if (propertyName == CTRL_KEY)
-        ev.ctrlKey = as<bool>(propertyValue);
+        ev.ctrlKey = propertyValue.asBool();
       else if (propertyName == META_KEY)
-        ev.metaKey = as<bool>(propertyValue);
+        ev.metaKey = propertyValue.asBool();
       else if (propertyName == KEY)
-        ev.key = as<string>(propertyValue);
+        ev.key = propertyValue.asString();
       else if (propertyName == EVENT_PHASE)
-        ev.handledEventPhase = as<HandledEventPhase>(propertyValue);
+        ev.handledEventPhase = asEnum<HandledEventPhase>(propertyValue);
     }
     return ev;
   }

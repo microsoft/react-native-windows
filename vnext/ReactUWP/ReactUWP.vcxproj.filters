@@ -232,14 +232,12 @@
     </ClCompile>
     <ClCompile Include="Views\ExpressionAnimationStore.cpp">
       <Filter>Views</Filter>
-    </ClCompile>        
+    </ClCompile>
     <ClCompile Include="Modules\ImageViewManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Helpers.cpp">
+    <ClCompile Include="Views\KeyboardEventHandler.cpp" />
+    <ClCompile Include="Utils\Helpers.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -485,12 +483,6 @@
     <ClInclude Include="Views\ExpressionAnimationStore.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="KeyboardEventHandler.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\ImageViewManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -501,6 +493,12 @@
       <Filter>Views\Image</Filter>
     </ClInclude>
     <ClInclude Include="UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h" />
+          <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="UwpScriptStore.h">
