@@ -222,6 +222,9 @@
     <ClCompile Include="Views\ExpressionAnimationStore.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\ThemingModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -443,6 +446,9 @@
     </ClInclude>
     <ClInclude Include="Views\ExpressionAnimationStore.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ThemingModuleUwp.h">
+      <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

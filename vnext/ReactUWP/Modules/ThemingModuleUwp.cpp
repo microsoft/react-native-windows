@@ -4,86 +4,66 @@
 #include "pch.h"
 #include "ThemingModuleUwp.h"
 
-#include <winrt/Windows.UI.Xaml.h>
+#if _MSC_VER <= 1913
+// VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
+#pragma optimize( "", off )
+#endif
+
+namespace winrt {
+  using namespace Windows::UI::Xaml;
+}
 
 namespace react {
   namespace uwp {
 
-    //
-    // Theming
-    //
+  //
+  // Theming
+  //
 
-    Theming::Theming(const std::shared_ptr<IReactInstance>& reactInstance)
-      : facebook::react::Theming()
-      , m_wkReactInstance(reactInstance)
-    {
-      m_lastTheme = "light";
-      m_lastHighContrastState = "false";
+  Theming::Theming(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread) : react::windows::PlatformTheme()
+    , m_wkReactInstance(reactInstance)
+    , m_queueThread(defaultQueueThread)
+  {
+    m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke,
+      [this](const auto&, const auto&) {
+        fireEvent(ThemingEvent::HighContrast, m_accessibilitySettings.HighContrastScheme());
+    });
 
-      m_highContrastChangedRevoker = winrt::Windows::UI::ViewManagement::AccessibilitySettings.HighContrastChanged(winrt::auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> const& handler);
-    }
+    m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(winrt::auto_revoke,
+      [this](const auto&, const auto&) {
+        m_queueThread->runOnQueue([this]() {
+          if (m_currentTheme != winrt::Application::Current().RequestedTheme())
+          {
+            m_currentTheme = winrt::Application::Current().RequestedTheme();
+            fireEvent(ThemingEvent::Theme, winrt::to_hstring(getTheme()));
+          }
+        });
+    });
   }
 
   Theming::~Theming() = default;
 
-  const char* Theming::getTheme()
+  const std::string Theming::getTheme()
   {
-    return m_lastTheme;
+    return m_currentTheme == winrt::ApplicationTheme::Light ? "light" : "dark";
   }
 
-  const char* Theming::getHighContrast()
+  bool Theming::getIsHighContrast()
   {
-    return m_lastHighContrastState;
+    return m_accessibilitySettings.HighContrast();
   }
 
-  // How's this going to return the event?
-  const char* Theming::highContrastChanged()
+  void Theming::fireEvent(ThemingEvent event, winrt::hstring const& args)
   {
-    return "highContrastDidChange";
-  }
+    std::string paramsName{ event == ThemingEvent::Theme ? "platform_theme" : "highContrastScheme" };
+    std::string eventName{ event == ThemingEvent::Theme ? "themeDidChange" : "highContrastDidChange" };
 
-  void Theming::EnteredLightMode(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::ApplicationModel::VisualStateChangedEventArgs const& /*e*/)
-  {
-    fireThemeEvent("light");
-  }
-
-  void Theming::EnteredDarkMode(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::ApplicationModel::VisualStateChangedEventArgs const& /*e*/)
-  {
-    fireThemeEvent("dark");
-  }
-
-  void Theming::HighContrastChanged(winrt::Windows::Foundation::IInspectable const& /*sender*/ /*e*/)
-  {
-    if (m_lastHighContrastState == "true") {
-      fireHighContrastEvent("false");
-    }
-    else
-    {
-      fireHighContrastEvent("true");
-    }
-  }
-
-  void Theming::fireThemeEvent(const char* newTheme)
-  {
     auto instance = m_wkReactInstance.lock();
     if (instance)
     {
-      m_lastTheme = newTheme;
-      folly::dynamic parameters = folly::dynamic::object("theme", newTheme);
-      instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("themeDidChange", std::move(parameters)));
+      folly::dynamic parameters = folly::dynamic::object(paramsName, winrt::to_string(args));
+      instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(parameters)));
     }
   }
-
-  void Theming::fireHighContrastEvent(const char* newHighContrastState)
-  {
-    auto instance = m_wkReactInstance.lock();
-    if (instance)
-    {
-      m_lastHighContrastState = newHighContrastState;
-      folly::dynamic parameters = folly::dynamic::object("highContrast", newHighContrastState);
-      instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("highContrastDidChange", std::move(parameters)));
-    }
-  }
-
 }
 } // namespace react::uwp

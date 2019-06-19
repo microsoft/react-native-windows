@@ -8,28 +8,25 @@
 #include <map>
 #include <vector>
 
-namespace facebook {
-  namespace react {
+namespace react {
+  namespace windows {
 
-    class Theming
+    class PlatformTheme
     {
     public:
-      Theming();
-      virtual ~Theming();
+      PlatformTheme();
+      virtual ~PlatformTheme();
 
-      virtual const char* getTheme();
-
-      virtual const char* getHighContrast();
-
-      virtual const char* highContrastChanged();
+      virtual const std::string getTheme();
+      virtual bool getIsHighContrast();
     };
 
     class ThemingModule : public facebook::xplat::module::CxxModule
     {
     public:
-      ThemingModule(std::shared_ptr<Theming> && theme);
+      ThemingModule(std::shared_ptr<PlatformTheme> && theme);
 
-      static const char* name;
+      static const std::string name;
 
       // CxxModule
       std::string getName() override;
@@ -37,9 +34,8 @@ namespace facebook {
       auto getMethods()->std::vector<Method> override;
 
     private:
-      std::shared_ptr<Theming> m_theme;
-      std::shared_ptr<Theming> m_highContrast;
+      std::shared_ptr<PlatformTheme> m_theme;
     };
 
   }
-} // namespace facebook::react
+} // namespace react::windows

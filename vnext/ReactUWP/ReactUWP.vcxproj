@@ -171,6 +171,7 @@
     <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
+    <ClInclude Include="Modules\ThemingModuleUwp.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="Pch\pch.h" />
@@ -231,7 +232,7 @@
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
     <ClCompile Include="..\Shared\InstanceManager.cpp" />
     <ClCompile Include="..\Shared\OInstance.cpp" />
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
@@ -248,6 +249,7 @@
     <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="Modules\ThemingModuleUwp.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="Pch\pch.cpp">

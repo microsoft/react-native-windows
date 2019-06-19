@@ -41,6 +41,9 @@
     <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\ThemingModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />
@@ -129,6 +132,9 @@
     <ClInclude Include="LayoutAnimation.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="Modules\BatchingUIManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ThemingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

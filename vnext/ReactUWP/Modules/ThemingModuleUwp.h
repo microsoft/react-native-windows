@@ -4,38 +4,43 @@
 #pragma once
 
 #include <Modules/ThemingModule.h>
-#include <IReactInstance.h>
 
-#include <winrt/Windows.ApplicationModel.Core.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.ViewManagement.h>
+
+#include <cxxreact/MessageQueueThread.h>
+
+#include <IReactInstance.h>
 
 namespace react {
   namespace uwp {
 
-    class Theming : public facebook::react::Theming
+    class Theming : public react::windows::PlatformTheme
     {
+    private:
+      enum ThemingEvent
+      {
+        Theme = 0,
+        HighContrast = 1
+      };
+
     public:
-      Theming(const std::shared_ptr<IReactInstance>& reactInstance);
+      Theming(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread);
       virtual ~Theming();
 
-      const char* getTheme() override;
-      const char* getHighContrast() override;
-      const char* highContrastChanged() override;
+      const std::string getTheme() override;
+      bool getIsHighContrast() override;
 
     private:
-      void EnteredLightMode(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::VisualStateChangedEventArgs const& /*e*/);
-      void EnteredDarkMode(winrt::Windows::Foundation::IInspectable const& /*sender*/, winrt::Windows::UI::Xaml::VisualStateChangedEventArgs const& /*e*/);
-      void HighContrastChanged(winrt::Windows::Foundation::IInspectable const& /*sender*/ /*e*/);
+      void fireEvent(ThemingEvent event, winrt::hstring const& args);
 
-      void fireThemeEvent(const char* newTheme);
-      void fireHighContrastEvent(const char* newHighContrastState);
-
-      const char* m_lastTheme;
-      const char* m_lastHighContrastState;
       std::weak_ptr<IReactInstance> m_wkReactInstance;
-      using HighContrastChanged_revoker = winrt::event_revoker<winrt::Windows::UI::ViewManagement::IAccessibilitySettings>;
-      HighContrastChanged_revoker m_highContrastChangedRevoker;
+      std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
+      winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{ winrt::Windows::UI::Xaml::ApplicationTheme::Light };
+
+      winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{ };
+      winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{ };
+      winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{ };
+      winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker m_colorValuesChangedRevoker{ };
     };
 
   }

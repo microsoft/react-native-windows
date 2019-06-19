@@ -121,6 +121,7 @@
     <ClInclude Include="Modules\BatchingUIManagerModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\ThemingModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
@@ -143,6 +144,7 @@
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
+    <ClCompile Include="Modules\ThemingModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />

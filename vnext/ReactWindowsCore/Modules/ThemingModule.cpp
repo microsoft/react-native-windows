@@ -5,39 +5,35 @@
 
 #include "ThemingModule.h"
 
-namespace facebook {
-  namespace react {
+namespace react {
+  namespace windows {
 
     //
     // Theming and High Contrast
     //
 
-    Theming::Theming() = default;
-    Theming::~Theming() = default;
+    PlatformTheme::PlatformTheme() = default;
+    PlatformTheme::~PlatformTheme() = default;
 
     // TODO: real implementation
-    const char* Theming::getTheme()
+    const std::string PlatformTheme::getTheme()
     {
       return "light";
     }
 
-    const char* Theming::getHighContrast()
+    // TODO: real implementation
+    bool PlatformTheme::getIsHighContrast()
     {
       return "false";
-    }
-
-    // Fires event or something? Returns string to bridge indicating event?
-    const char* Theming::highContrastChanged()
-    {
-      return "highContrastChanged";
     }
 
     //
     // ThemingModule
     //
-    const char* ThemingModule::name = "Theming";
 
-    ThemingModule::ThemingModule(std::shared_ptr<Theming>&& theme)
+    /* static */ const std::string ThemingModule::name = "ThemingModule";
+
+    ThemingModule::ThemingModule(std::shared_ptr<PlatformTheme>&& theme)
       : m_theme(std::move(theme))
     {
     }
@@ -50,7 +46,9 @@ namespace facebook {
     // This seems maybe redundant
     std::map<std::string, folly::dynamic> ThemingModule::getConstants()
     {
-      return { /*{"initialContrastState", m_highContrast->getHighContrast()}*/ };
+      return {
+        { "isHighContrast", folly::dynamic { m_theme->getIsHighContrast() } }
+      };
     }
 
     auto ThemingModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method>
@@ -58,18 +56,10 @@ namespace facebook {
       return {
         Method("getCurrentTheme", [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/)
         {
-          cbSuccess({folly::dynamic::object("theme", m_theme->getTheme())});
-        }, AsyncTag),
-        Method("isHighContrast", [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/)
-        {
-          cbSuccess({folly::dynamic::object(boolean, m_highContrast->getHighContrast())});
-        }, AsyncTag),
-          Method("highContrastChanged", [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/)
-        {
-          cbSuccess({folly::dynamic::object("highContrast", m_highContrast->highContrastChanged())});
-        }, AsyncTag),
+          cbSuccess({folly::dynamic::object("platform_theme", m_theme->getTheme())});
+        }, AsyncTag)
       };
     }
 
   }
-} // namespace facebook::react
+} // namespace react::windows
