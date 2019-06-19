@@ -41,7 +41,7 @@ DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owne
 
 winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const
 {
-  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
+  if (auto viewControl = GetViewControl())
   {
     switch (viewControl->AccessibilityRole())
     {
@@ -72,7 +72,7 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
 
 winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterface const& patternInterface) const
 {
-  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
+  if (auto viewControl = GetViewControl())
   {
     auto accessibilityRole = viewControl->AccessibilityRole();
 
@@ -94,7 +94,7 @@ bool DynamicAutomationPeer::IsEnabledCore() const
 {
   bool disabled = false;
 
-  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
+  if (auto viewControl = GetViewControl())
   {
     disabled = viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Disabled);
   }
@@ -106,7 +106,7 @@ bool DynamicAutomationPeer::IsEnabledCore() const
 
 void DynamicAutomationPeer::Invoke() const
 {
-  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
+  if (auto viewControl = GetViewControl())
   {
     if (auto invokeHandler = viewControl->AccessibilityInvoke())
     {
@@ -119,29 +119,34 @@ void DynamicAutomationPeer::Invoke() const
 
 winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSelection() const
 {
-  if (auto viewPanel = GetViewPanel())
+  // Temporarily commenting this out as it keeps crashing andperhaps isn't strictly necessary
+  /*if (auto viewPanel = GetViewPanel())
   {
-    std::vector<winrt::IRawElementProviderSimple> providers;
-
-    for (winrt::UIElement child : viewPanel->Children())
+    try
     {
-      if (auto viewControl = child.try_as<::react::uwp::ViewControl>())
+      std::vector<winrt::IRawElementProviderSimple> providers;
+
+      for (winrt::UIElement child : viewPanel->Children())
       {
-        if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(child))
+        if (auto viewControl = child.try_as<::react::uwp::ViewControl>())
         {
-          winrt::IRawElementProviderSimple provider = ProviderFromPeer(peer);
-          providers.push_back(provider);
+          if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(child))
+          {
+            winrt::IRawElementProviderSimple provider = ProviderFromPeer(peer);
+            providers.push_back(provider);
+          }
         }
       }
-    }
 
-    if (!providers.empty())
-    {
-      winrt::com_array<winrt::IRawElementProviderSimple> providersArray{ providers };
-      return providersArray;
+      if (!providers.empty())
+      {
+        winrt::com_array<winrt::IRawElementProviderSimple> providersArray{ providers };
+        return providersArray;
+      }
     }
+    catch (std::exception e) {}
 
-  }
+  }*/
 
   return {};
 }
@@ -150,7 +155,7 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 
 bool DynamicAutomationPeer::IsSelected() const
 {
-  auto viewControl = Owner().try_as<::react::uwp::ViewControl>();
+  auto viewControl = GetViewControl();
   return (viewControl && viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Selected));
 }
 
@@ -185,21 +190,36 @@ void DynamicAutomationPeer::Select() const
 
 }
 
+winrt::com_ptr<::react::uwp::ViewControl> DynamicAutomationPeer::GetViewControl() const
+{
+  try
+  {
+    return Owner().try_as<::react::uwp::ViewControl>();
+  }
+  catch (std::exception e) {}
+
+  return nullptr;
+}
+
 winrt::com_ptr<::react::uwp::ViewPanel> DynamicAutomationPeer::GetViewPanel() const
 {
-  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
+  if (auto viewControl = GetViewControl())
   {
-    auto child = viewControl->Content();
-
-    if (auto border = child.try_as<winrt::Border>())
+    try
     {
-      child = border.Child();
-    }
+      auto child = viewControl->Content();
 
-    if (auto viewPanel = child.try_as<::react::uwp::ViewPanel>())
-    {
-      return viewPanel;
+      if (auto border = child.try_as<winrt::Border>())
+      {
+        child = border.Child();
+      }
+    
+      if (auto viewPanel = child.try_as<::react::uwp::ViewPanel>())
+      {
+        return viewPanel;
+      }
     }
+    catch (std::exception e) {}
   }
 
   return nullptr;
@@ -207,18 +227,22 @@ winrt::com_ptr<::react::uwp::ViewPanel> DynamicAutomationPeer::GetViewPanel() co
 
 winrt::com_ptr<::react::uwp::ViewControl> DynamicAutomationPeer::GetParentViewControl() const
 {
-  auto ancestor = Owner().as<winrt::DependencyObject>();
-
-  while (ancestor)
+  try
   {
-    if (ancestor = winrt::VisualTreeHelper::GetParent(ancestor))
+    auto ancestor = Owner().as<winrt::DependencyObject>();
+
+    while (ancestor)
     {
-      if (auto ancestorViewControl = ancestor.try_as<::react::uwp::ViewControl>())
+      if (ancestor = winrt::VisualTreeHelper::GetParent(ancestor))
       {
-        return ancestorViewControl;
+        if (auto ancestorViewControl = ancestor.try_as<::react::uwp::ViewControl>())
+        {
+          return ancestorViewControl;
+        }
       }
     }
   }
+  catch (std::exception e) {}
 
   return nullptr;
 }

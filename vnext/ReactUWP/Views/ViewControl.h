@@ -105,6 +105,7 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
   void Select() const;
 
 private:
+  winrt::com_ptr<::react::uwp::ViewControl> GetViewControl() const;
   winrt::com_ptr<::react::uwp::ViewPanel> GetViewPanel() const;
   winrt::com_ptr<::react::uwp::ViewControl> GetParentViewControl() const;
 };
