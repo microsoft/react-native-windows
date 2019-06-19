@@ -7,6 +7,10 @@
     <authors>Microsoft</authors>
     <projectUrl>https://office.visualstudio.com/ISS/_git/sdx-platform</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
   </metadata>
   <files>
     <file src="target\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
