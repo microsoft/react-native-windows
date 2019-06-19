@@ -61,7 +61,16 @@ namespace react {
     {
       if (m_loadedImageSurface != value)
       {
+        bool updateSurface{ m_loadedImageSurface };
+
         m_loadedImageSurface = value;
+
+        if (updateSurface)
+        {
+          winrt::CompositionSurfaceBrush surfaceBrush{ GetOrCreateSurfaceBrush() };
+          surfaceBrush.Surface(m_loadedImageSurface);
+        }
+
         UpdateCompositionBrush();
       }
     }
@@ -85,6 +94,17 @@ namespace react {
         // and anytime we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
         if (CompositionBrush() != compositionBrush)
         {
+          if (ResizeMode() == ResizeMode::Repeat)
+          {
+            surfaceBrush.HorizontalAlignmentRatio(0.0f);
+            surfaceBrush.VerticalAlignmentRatio(0.0f);
+          }
+          else
+          {
+            surfaceBrush.HorizontalAlignmentRatio(0.5f);
+            surfaceBrush.VerticalAlignmentRatio(0.5f);
+          }
+
           CompositionBrush(compositionBrush);
         }
       }
@@ -177,9 +197,6 @@ namespace react {
 
         winrt::CompositionEffectFactory effectFactory{ winrt::Window::Current().Compositor().CreateEffectFactory(borderEffect) };
         m_effectBrush = effectFactory.CreateBrush();
-
-        surfaceBrush.HorizontalAlignmentRatio(0.0f);
-        surfaceBrush.VerticalAlignmentRatio(0.0f);
 
         m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
       }
