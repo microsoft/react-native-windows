@@ -167,6 +167,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/TimerExample'),
   },
   {
+    key: 'ThemingExample',
+    module: require('./ThemingExample'),
+  },
+  {
     key: 'WebSocketExample',
     module: require('react-native/RNTester/js/WebSocketExample'),
   },

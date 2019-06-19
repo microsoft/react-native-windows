@@ -27,6 +27,27 @@ class AccessibilityBaseExample extends React.Component {
   }
 }
 
+class HighContrastExample extends React.Component {
+  public render() {
+    return (
+      <View>
+        <Text>The following has HighContrast Event awareness:</Text>
+        <View
+          style={{width:50, height:50, backgroundColor:'blue'}}
+          accessibilityLabel="A blue box"
+          accessibilityHint="A hint for the blue box."
+        />
+        <Text>The following does not have HighContrast Event awareness:</Text>
+        <View
+          style={{ width: 50, height: 50, backgroundColor: 'blue' }}
+          accessible={true}
+          accessibilityLabel="A hint for the blue box."
+        />
+      </View>
+    );
+  }
+}
+
 class TouchableExamples extends React.Component<{}, any> {
   public state = {
     pressedCount: 0,
@@ -71,6 +92,12 @@ export const examples = [
     title: 'Touchables',
     render: function(): JSX.Element {
       return <TouchableExamples />;
+    },
+  },
+  {
+    title: 'HighContrast',
+    render: function(): JSX.Element {
+      return <HighContrastExample />;
     },
   }
 ];
