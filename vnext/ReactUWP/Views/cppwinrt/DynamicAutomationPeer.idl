@@ -11,7 +11,9 @@ namespace react.uwp
 	[default_interface]
 	runtimeclass DynamicAutomationPeer :
 		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
-		Windows.UI.Xaml.Automation.Provider.IInvokeProvider
+		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,
+		Windows.UI.Xaml.Automation.Provider.ISelectionProvider,
+		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider
 	{
 		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
 	}

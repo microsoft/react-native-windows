@@ -2,8 +2,8 @@
 
 #pragma once
 #include "winrt/impl/Windows.UI.Xaml.0.h"
-#include "winrt/impl/Windows.UI.Xaml.Automation.Peers.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Automation.Provider.0.h"
+#include "winrt/impl/Windows.UI.Xaml.Automation.Peers.0.h"
 #include "winrt/impl/react.uwp.0.h"
 
 WINRT_EXPORT namespace winrt::react::uwp {

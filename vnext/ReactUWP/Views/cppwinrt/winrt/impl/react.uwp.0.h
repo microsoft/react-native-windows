@@ -8,6 +8,12 @@ struct FrameworkElement;
 
 }
 
+WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation::Provider {
+
+struct IRawElementProviderSimple;
+
+}
+
 WINRT_EXPORT namespace winrt::react::uwp {
 
 struct IDynamicAutomationPeer;
