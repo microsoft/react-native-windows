@@ -116,7 +116,6 @@
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
     <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
-    <ClCompile Include="Stubs.cpp" />
     <ClCompile Include="TimingModule.cpp" />
     <ClCompile Include="WebSocket.cpp" />
     <ClCompile Include="WebSocketJSExecutor.cpp" />
