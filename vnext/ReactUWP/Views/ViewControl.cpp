@@ -11,22 +11,28 @@ namespace winrt {
 using namespace Windows::UI::Xaml::Interop;
 }
 
-namespace react { namespace uwp {
-
-ViewControl::ViewControl()
+namespace react::uwp
 {
+
+  ViewControl::ViewControl()
+  {
+  }
+
+  /*static*/ winrt::com_ptr<ViewControl> ViewControl::Create()
+  {
+    return winrt::make_self<ViewControl>();
+  }
+
+  winrt::AutomationPeer ViewControl::OnCreateAutomationPeer()
+  {
+    auto dyn = winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(*this);
+    return dyn;
+  }
+
 }
 
-/*static*/ winrt::com_ptr<ViewControl> ViewControl::Create()
+namespace winrt::react::uwp::implementation
 {
-  return winrt::make_self<ViewControl>();
-}
-
-winrt::AutomationPeer ViewControl::OnCreateAutomationPeer()
-{
-  auto dyn = winrt::make<DynamicAutomationPeer>(*this);
-  return dyn;
-}
 
 DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owner)
   : Super(owner)
@@ -35,27 +41,27 @@ DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owne
 
 winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const
 {
-  if (auto viewControl = Owner().try_as<ViewControl>())
+  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
   {
     switch (viewControl->AccessibilityRole())
     {
-    case AccessibilityRoles::Button:
-    case AccessibilityRoles::ImageButton:
+    case ::react::uwp::AccessibilityRoles::Button:
+    case ::react::uwp::AccessibilityRoles::ImageButton:
       return winrt::AutomationControlType::Button;
-    case AccessibilityRoles::Link:
+    case ::react::uwp::AccessibilityRoles::Link:
       return winrt::AutomationControlType::Hyperlink;
-    case AccessibilityRoles::Image:
+    case ::react::uwp::AccessibilityRoles::Image:
       return winrt::AutomationControlType::Image;
-    case AccessibilityRoles::KeyboardKey:
+    case ::react::uwp::AccessibilityRoles::KeyboardKey:
       return winrt::AutomationControlType::Custom;
-    case AccessibilityRoles::Text:
-    case AccessibilityRoles::Summary:
-    case AccessibilityRoles::Header:
+    case ::react::uwp::AccessibilityRoles::Text:
+    case ::react::uwp::AccessibilityRoles::Summary:
+    case ::react::uwp::AccessibilityRoles::Header:
       return winrt::AutomationControlType::Text;
-    case AccessibilityRoles::Adjustable:
+    case ::react::uwp::AccessibilityRoles::Adjustable:
       return winrt::AutomationControlType::Slider;
-    case AccessibilityRoles::Search:
-    case AccessibilityRoles::Unknown:
+    case ::react::uwp::AccessibilityRoles::Search:
+    case ::react::uwp::AccessibilityRoles::Unknown:
     default:
       return winrt::AutomationControlType::Group;
     }
@@ -66,12 +72,12 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
 
 winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterface const& patternInterface) const
 {
-  if (auto viewControl = Owner().try_as<ViewControl>())
+  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
   {
     auto accessibilityRole = viewControl->AccessibilityRole();
 
     if (patternInterface == winrt::PatternInterface::Invoke &&
-      (accessibilityRole == AccessibilityRoles::Button || accessibilityRole == AccessibilityRoles::ImageButton))
+      (accessibilityRole == ::react::uwp::AccessibilityRoles::Button || accessibilityRole == ::react::uwp::AccessibilityRoles::ImageButton))
     {
       return *this;
     }
@@ -88,9 +94,9 @@ bool DynamicAutomationPeer::IsEnabledCore() const
 {
   bool disabled = false;
 
-  if (auto viewControl = Owner().try_as<ViewControl>())
+  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
   {
-    disabled = viewControl->AccessibilityState(AccessibilityStates::Disabled);
+    disabled = viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Disabled);
   }
 
   return !disabled && Super::IsEnabledCore();
@@ -100,7 +106,7 @@ bool DynamicAutomationPeer::IsEnabledCore() const
 
 void DynamicAutomationPeer::Invoke() const
 {
-  if (auto viewControl = Owner().try_as<ViewControl>())
+  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
   {
     if (auto invokeHandler = viewControl->AccessibilityInvoke())
     {
@@ -119,7 +125,7 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 
     for (winrt::UIElement child : viewPanel->Children())
     {
-      if (auto viewControl = child.try_as<ViewControl>())
+      if (auto viewControl = child.try_as<::react::uwp::ViewControl>())
       {
         if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(child))
         {
@@ -144,8 +150,8 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 
 bool DynamicAutomationPeer::IsSelected() const
 {
-  auto viewControl = Owner().try_as<ViewControl>();
-  return (viewControl && viewControl->AccessibilityState(AccessibilityStates::Selected));
+  auto viewControl = Owner().try_as<::react::uwp::ViewControl>();
+  return (viewControl && viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Selected));
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const
@@ -179,9 +185,9 @@ void DynamicAutomationPeer::Select() const
 
 }
 
-winrt::com_ptr<ViewPanel> DynamicAutomationPeer::GetViewPanel() const
+winrt::com_ptr<::react::uwp::ViewPanel> DynamicAutomationPeer::GetViewPanel() const
 {
-  if (auto viewControl = Owner().try_as<ViewControl>())
+  if (auto viewControl = Owner().try_as<::react::uwp::ViewControl>())
   {
     auto child = viewControl->Content();
 
@@ -190,7 +196,7 @@ winrt::com_ptr<ViewPanel> DynamicAutomationPeer::GetViewPanel() const
       child = border.Child();
     }
 
-    if (auto viewPanel = child.try_as<ViewPanel>())
+    if (auto viewPanel = child.try_as<::react::uwp::ViewPanel>())
     {
       return viewPanel;
     }
@@ -199,7 +205,7 @@ winrt::com_ptr<ViewPanel> DynamicAutomationPeer::GetViewPanel() const
   return nullptr;
 }
 
-winrt::com_ptr<ViewControl> DynamicAutomationPeer::GetParentViewControl() const
+winrt::com_ptr<::react::uwp::ViewControl> DynamicAutomationPeer::GetParentViewControl() const
 {
   auto ancestor = Owner().as<winrt::DependencyObject>();
 
@@ -207,7 +213,7 @@ winrt::com_ptr<ViewControl> DynamicAutomationPeer::GetParentViewControl() const
   {
     if (ancestor = winrt::VisualTreeHelper::GetParent(ancestor))
     {
-      if (auto ancestorViewControl = ancestor.try_as<ViewControl>())
+      if (auto ancestorViewControl = ancestor.try_as<::react::uwp::ViewControl>())
       {
         return ancestorViewControl;
       }
@@ -217,4 +223,4 @@ winrt::com_ptr<ViewControl> DynamicAutomationPeer::GetParentViewControl() const
   return nullptr;
 }
 
-} } // namespace react::uwp
+} // namespace winrt::react::uwp::implementation
