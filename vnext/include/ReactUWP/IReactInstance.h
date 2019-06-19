@@ -30,6 +30,9 @@ struct ReactInstanceSettings
   bool UseDirectDebugger{ false };
   bool UseJsi { true };
   bool EnableJITCompilation { true };
+  bool EnableByteCodeCacheing { true };
+
+  std::string ByteCodeFileUri;
   std::string DebugHost;
   std::string DebugBundlePath;
   facebook::react::NativeLoggingHook LoggingCallback;

@@ -219,13 +219,10 @@
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraScriptStore.cpp">
+    <ClCompile Include="UwpPreparedScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraPreparedScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="LocalByteCodeManager.cpp">
+    <ClCompile Include="UwpScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
@@ -447,13 +444,10 @@
     <ClInclude Include="Views\ScrollContentViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraScriptStore.h">
+    <ClInclude Include="UwpPreparedScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="LocalByteCodeManager.h">
+    <ClInclude Include="UwpScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

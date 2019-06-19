@@ -32,30 +32,6 @@ std::string LocalBundleReader::LoadBundle(const std::string& bundlePath)
   return LoadBundleAsync(bundlePath).get();
 }
 
-std::future<winrt::Windows::Foundation::DateTime> LocalBundleReader::LoadBundleCreatedDateAsync(const std::string& bundleUri)
-{
-  winrt::hstring str(facebook::react::unicode::utf8ToUtf16(bundleUri));
-  winrt::Windows::Foundation::Uri uri(str);
-
-  co_await winrt::resume_background();
-
-  try
-  {
-    auto file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-    return file.DateCreated();
-  }
-  catch (winrt::hresult_error const& ex)
-  {
-    winrt::Windows::Foundation::DateTime date;
-    return date;
-  }
-}
-
-winrt::Windows::Foundation::DateTime LocalBundleReader::LoadBundleCreatedDate(const std::string& bundlePath)
-{
-  return LoadBundleCreatedDateAsync(bundlePath).get();
-}
-
 StorageFileBigString::StorageFileBigString(const std::string& path) {
   m_futureBuffer = LocalBundleReader::LoadBundleAsync(path);
 }

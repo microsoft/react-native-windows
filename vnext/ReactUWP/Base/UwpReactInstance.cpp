@@ -63,8 +63,8 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
-#include<ChakraScriptStore.h>
-#include<ChakraPreparedScriptStore.h>
+#include<UwpScriptStore.h>
+#include<UwpPreparedScriptStore.h>
 
 #if !defined(OSS_RN)
 #include "ChakraJSIRuntimeHolder.h"
@@ -276,8 +276,13 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     #if !defined(OSS_RN)
     if (settings.UseJsi)
     {
-      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = std::make_unique<ChakraScriptStore>();
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = std::make_unique<ChakraPreparedScriptStore>();
+      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+
+      if (settings.EnableByteCodeCacheing || !settings.ByteCodeFileUri.empty()) {
+        scriptStore = std::make_unique<UwpScriptStore>();
+        preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(winrt::to_hstring(settings.ByteCodeFileUri));
+      }
       devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(
         devSettings,
         jsQueue,

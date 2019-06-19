@@ -1,13 +1,16 @@
 #pragma once
 #include <jsi/ScriptStore.h>
+#include <future>
 
 namespace react { namespace uwp {
 
-class ChakraScriptStore : public facebook::jsi::ScriptStore
+class UwpScriptStore : public facebook::jsi::ScriptStore
 {
 public:
   facebook::jsi::VersionedBuffer getVersionedScript(const std::string& url) noexcept override;
   facebook::jsi::ScriptVersion_t getScriptVersion(const std::string& url) noexcept override;
+private:
+  std::future<winrt::Windows::Foundation::DateTime> getBundleCreatedDate(const std::string& bundlePath);
 };
 
 }}
