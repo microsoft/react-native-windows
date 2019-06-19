@@ -24,7 +24,7 @@ struct json_type_traits<react::uwp::KeyboardEvent>
 {
   static react::uwp::KeyboardEvent parseJson(const folly::dynamic& json)
   {
-    react::uwp::KeyboardEvent ev;
+    react::uwp::KeyboardEvent event;
 
     for (auto const& pair : json.items())
     {
@@ -32,19 +32,19 @@ struct json_type_traits<react::uwp::KeyboardEvent>
       const folly::dynamic& propertyValue = pair.second;
 
       if (propertyName == ALT_KEY)
-        ev.altKey = propertyValue.asBool();
+        event.altKey = propertyValue.asBool();
       else if (propertyName == SHIFT_KEY)
-        ev.shiftKey = propertyValue.asBool();
+        event.shiftKey = propertyValue.asBool();
       else if (propertyName == CTRL_KEY)
-        ev.ctrlKey = propertyValue.asBool();
+        event.ctrlKey = propertyValue.asBool();
       else if (propertyName == META_KEY)
-        ev.metaKey = propertyValue.asBool();
+        event.metaKey = propertyValue.asBool();
       else if (propertyName == KEY)
-        ev.key = propertyValue.asString();
+        event.key = propertyValue.asString();
       else if (propertyName == EVENT_PHASE)
-        ev.handledEventPhase = asEnum<HandledEventPhase>(propertyValue);
+        event.handledEventPhase = asEnum<HandledEventPhase>(propertyValue);
     }
-    return ev;
+    return event;
   }
 };
 
@@ -99,14 +99,12 @@ KeyboardEventHandler::KeyboardEventHandler(KeyboardEventCallback&& keyDown, Keyb
 
 void KeyboardEventHandler::hook(XamlView xamlView)
 {
-  if (auto uiElement = xamlView.try_as<winrt::UIElement>())
-  {
-    if (m_keyDownCallback)
-      m_KeyDownRevoker = uiElement.KeyDown(winrt::auto_revoke, m_keyDownCallback);
+  auto uiElement = xamlView.as<winrt::UIElement>();
+  if (m_keyDownCallback)
+    m_KeyDownRevoker = uiElement.KeyDown(winrt::auto_revoke, m_keyDownCallback);
 
-    if (m_keyUpCallback)
-      m_KeyUpRevoker = uiElement.KeyUp(winrt::auto_revoke, m_keyUpCallback);
-  }
+  if (m_keyUpCallback)
+    m_KeyUpRevoker = uiElement.KeyUp(winrt::auto_revoke, m_keyUpCallback);
 }
 
 void KeyboardEventHandler::unhook()
@@ -189,13 +187,13 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase
   HandledEventPhase currentEventPhase = (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
     ? HandledEventPhase::CAPTURING : HandledEventPhase::BUBBLING;
 
-  auto ev = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
+  auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
   bool shouldMarkHandled = false;
   if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
-    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, ev);
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   else
-    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, ev);
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, event);
 
   if (shouldMarkHandled)
     args.Handled(true);
@@ -203,7 +201,7 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase
 
 bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent)
 {
-  for (auto event : handledEvents)
+  for (auto const& event : handledEvents)
   {
     if (event.key == currentEvent.key &&
       (!event.altKey || (event.altKey && currentEvent.altKey)) &&
@@ -216,25 +214,25 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(std::vector<Keyboard
   return false;
 }
 
-inline bool IsModifiedKeyPressed(winrt::CoreWindow const& coreWindow, winrt::VirtualKey vk)
+inline bool IsModifiedKeyPressed(winrt::CoreWindow const& coreWindow, winrt::VirtualKey virtualKey)
 {
-  return (coreWindow.GetKeyState(vk) & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
+  return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
 }
 
-inline bool IsModifiedKeyLocked(winrt::CoreWindow const& coreWindow, winrt::VirtualKey vk)
+inline bool IsModifiedKeyLocked(winrt::CoreWindow const& coreWindow, winrt::VirtualKey virtualKey)
 {
-  return (coreWindow.GetKeyState(vk) & winrt::CoreVirtualKeyStates::Locked) == winrt::CoreVirtualKeyStates::Locked;
+  return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Locked) == winrt::CoreVirtualKeyStates::Locked;
 }
 
-template<typename T> void UpdateModifiedKeyStatusTo(T& ev)
+template<typename T> void UpdateModifiedKeyStatusTo(T& event)
 {
   auto const& coreWindow = winrt::CoreWindow::GetForCurrentThread();
-  ev.altKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Menu);
-  ev.shiftKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Shift);
-  ev.metaKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::LeftWindows)
+  event.altKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Menu);
+  event.shiftKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Shift);
+  event.metaKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::LeftWindows)
     || IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::RightWindows);
-  ev.ctrlKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Control);
-  ev.capLocked = IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
+  event.ctrlKey = IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Control);
+  event.capLocked = IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
 };
 
 void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winrt::KeyRoutedEventArgs const& args)
@@ -246,11 +244,11 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winr
       auto reactId = getViewId(instance.operator->(), source);
       if (reactId.isValid)
       {
-        ReactKeyboardEvent ev;
-        ev.target = reactId.tag;
-        UpdateModifiedKeyStatusTo(ev);
-        ev.key = KeyboardHelper::FromVirutalKey(args.Key(), ev.shiftKey, ev.capLocked);
-        instance->DispatchEvent(ev.target, eventName, ToEventData(ev));
+        ReactKeyboardEvent event;
+        event.target = reactId.tag;
+        UpdateModifiedKeyStatusTo(event);
+        event.key = KeyboardHelper::FromVirutalKey(args.Key(), event.shiftKey, event.capLocked);
+        instance->DispatchEvent(event.target, eventName, ToEventData(event));
       }
     }
   }
@@ -258,12 +256,12 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winr
 
 KeyboardEvent KeyboardHelper::CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args)
 {
-  KeyboardEvent ev;
-  ev.handledEventPhase = phase;
-  UpdateModifiedKeyStatusTo(ev);
-  ev.key = KeyboardHelper::FromVirutalKey(args.Key(), ev.shiftKey, ev.capLocked);
+  KeyboardEvent event;
+  event.handledEventPhase = phase;
+  UpdateModifiedKeyStatusTo(event);
+  event.key = KeyboardHelper::FromVirutalKey(args.Key(), event.shiftKey, event.capLocked);
 
-  return ev;
+  return event;
 }
 
 // Should align to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
