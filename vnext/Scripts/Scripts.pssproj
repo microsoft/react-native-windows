@@ -23,7 +23,6 @@
     <Optimize>true</Optimize>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Bootstrap.ps1" />
     <Compile Include="IntegrationTests.ps1" />
     <Compile Include="Tfs\Layout-Headers.ps1" />
     <Compile Include="Tfs\Start-TestServers.ps1" />
