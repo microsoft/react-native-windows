@@ -32,24 +32,15 @@ std::future<winrt::Windows::Foundation::DateTime> LocalByteCodeManager::LoadCrea
     return date;
   }
 }
-
-winrt::Windows::Foundation::DateTime LocalByteCodeManager::LoadCreatedDateTime()
-{
-  return LoadCreatedDateTimeAsync().get();
-}
-
-std::future<void> LocalByteCodeManager::CreateFileAsync(const uint8_t* buffer)
+std::future<void> LocalByteCodeManager::CreateFileAsync(size_t size, const uint8_t* buffer)
 {
   auto folder = Windows::Storage::ApplicationData::Current().LocalCacheFolder();
   co_await winrt::resume_background();
 
   auto file = co_await folder.CreateFileAsync(L"app.bytecode", Windows::Storage::CreationCollisionOption::ReplaceExisting);
-  co_await winrt::Windows::Storage::FileIO::WriteBytesAsync(file, winrt::array_view<const uint8_t> { *buffer });
-}
-
-void LocalByteCodeManager::CreateFile(const uint8_t* buffer)
-{
-  CreateFileAsync(buffer).get();
+  std::unique_ptr<std::vector<uint8_t>> bytecodeBuffer = std::make_unique<std::vector<uint8_t>>(size);
+  bytecodeBuffer->push_back(*buffer);
+  co_await winrt::Windows::Storage::FileIO::WriteBytesAsync(file, *bytecodeBuffer);
 }
 
 std::future<Windows::Storage::Streams::IBuffer> LocalByteCodeManager::LoadBufferAsync()
@@ -60,11 +51,6 @@ std::future<Windows::Storage::Streams::IBuffer> LocalByteCodeManager::LoadBuffer
   auto file = co_await folder.GetFileAsync(L"app.bytecode");
   auto buffer = co_await Windows::Storage::FileIO::ReadBufferAsync(file);
   return buffer;
-}
-
-Windows::Storage::Streams::IBuffer LocalByteCodeManager::LoadBuffer()
-{
-  return LoadBufferAsync().get();
 }
 
 }}

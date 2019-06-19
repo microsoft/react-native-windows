@@ -21,7 +21,7 @@ std::unique_ptr<const facebook::jsi::Buffer> ChakraPreparedScriptStore::tryGetPr
   // if true then just read the buffer from the prepared script and return
   if (shouldGetPreparedScript(scriptSignature.version))
   {
-    auto buffer = LocalByteCodeManager::LoadBuffer();
+    auto buffer = LocalByteCodeManager::LoadBufferAsync().get();
     std::unique_ptr<facebook::jsi::chakraruntime::ByteArrayBuffer> bytecodeBuffer(
       std::make_unique<facebook::jsi::chakraruntime::ByteArrayBuffer>(buffer.Length())
     );
@@ -44,13 +44,16 @@ void ChakraPreparedScriptStore::persistPreparedScript(
   const char* prepareTag  // Optional tag. For e.g. eagerly evaluated vs lazy cache.
 ) noexcept
 {
+  auto size = preparedScript->size();
+  auto data = preparedScript->data();
+
   // generate a new bytecode file
-  LocalByteCodeManager::CreateFile(preparedScript.get()->data());
+  LocalByteCodeManager::CreateFileAsync(size, data);
 }
 
 bool ChakraPreparedScriptStore::shouldGetPreparedScript(facebook::jsi::ScriptVersion_t v) noexcept
 {
-  const winrt::Windows::Foundation::DateTime createdDateTime = LocalByteCodeManager::LoadCreatedDateTime();
+  const winrt::Windows::Foundation::DateTime createdDateTime = LocalByteCodeManager::LoadCreatedDateTimeAsync().get();
   const std::uint64_t timestamp = createdDateTime.time_since_epoch().count();
   return timestamp >= v;
 }
