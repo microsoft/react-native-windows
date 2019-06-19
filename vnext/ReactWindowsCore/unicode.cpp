@@ -19,7 +19,7 @@ namespace unicode {
 // The implementations of the following functions heavily reference the MSDN
 // article at https://msdn.microsoft.com/en-us/magazine/mt763237.aspx.
 
-std::wstring __stdcall utf8ToUtf16(const char* utf8, size_t utf8Len)
+std::wstring utf8ToUtf16(const char* utf8, size_t utf8Len)
 {
   std::wstring utf16{};
 
@@ -39,9 +39,8 @@ std::wstring __stdcall utf8ToUtf16(const char* utf8, size_t utf8Len)
 
   const int utf8Length = static_cast<int>(utf8Len);
 
-  // We do not specify MB_ERR_INVALID_CHARS here, which means that invalid UTF-8
-  // characters are replaced with U+FFFD.
-  constexpr DWORD flags = 0;
+  // Fail if an invalid UTF-8 character is encountered in the input string.
+  constexpr DWORD flags = MB_ERR_INVALID_CHARS;
 
   const int utf16Length = ::MultiByteToWideChar(
     CP_UTF8,       // Source string is in UTF-8.
@@ -92,24 +91,24 @@ std::wstring __stdcall utf8ToUtf16(const char* utf8, size_t utf8Len)
   return utf16;
 }
 
-std::wstring __stdcall utf8ToUtf16(const char* utf8)
+std::wstring utf8ToUtf16(const char* utf8)
 {
   return utf8ToUtf16(utf8, strlen(utf8));
 }
 
-std::wstring __stdcall utf8ToUtf16(const std::string& utf8)
+std::wstring utf8ToUtf16(const std::string& utf8)
 {
   return utf8ToUtf16(utf8.c_str(), utf8.length());
 }
 
 #if _HAS_CXX17
-std::wstring __stdcall utf8ToUtf16(const std::string_view& utf8)
+std::wstring utf8ToUtf16(const std::string_view& utf8)
 {
   return utf8ToUtf16(utf8.data(), utf8.length());
 }
 #endif
 
-std::string __stdcall utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
+std::string utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
 {
   std::string utf8{};
 
@@ -129,9 +128,8 @@ std::string __stdcall utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
 
   const int utf16Length = static_cast<int>(utf16Len);
 
-  // We do not specify WC_ERR_INVALID_CHARS here, which means that invalid
-  // UTF-16 characters are replaced with U+FFFD.
-  constexpr DWORD flags = 0;
+  // Fail if an invalid UTF-16 character is encountered in the input string.
+  constexpr DWORD flags = WC_ERR_INVALID_CHARS;
 
   const int utf8Length = ::WideCharToMultiByte(
     CP_UTF8,       // Destination string is in UTF-8.
@@ -186,28 +184,28 @@ std::string __stdcall utf16ToUtf8(const wchar_t* utf16, size_t utf16Len)
   return utf8;
 }
 
-std::string __stdcall utf16ToUtf8(const char16_t* utf16, size_t utf16Len)
+std::string utf16ToUtf8(const char16_t* utf16, size_t utf16Len)
 {
   return utf16ToUtf8(
     utilities::checkedReinterpretCast<const wchar_t*>(utf16), utf16Len);
 }
 
-std::string __stdcall utf16ToUtf8(const wchar_t* utf16)
+std::string utf16ToUtf8(const wchar_t* utf16)
 {
   return utf16ToUtf8(utf16, wcslen(utf16));
 }
 
-std::string __stdcall utf16ToUtf8(const char16_t* utf16)
+std::string utf16ToUtf8(const char16_t* utf16)
 {
   return utf16ToUtf8(utf16, std::char_traits<char16_t>::length(utf16));
 }
 
-std::string __stdcall utf16ToUtf8(const std::wstring& utf16)
+std::string utf16ToUtf8(const std::wstring& utf16)
 {
   return utf16ToUtf8(utf16.c_str(), utf16.length());
 }
 
-std::string __stdcall utf16ToUtf8(const std::u16string& utf16)
+std::string utf16ToUtf8(const std::u16string& utf16)
 {
   return utf16ToUtf8(
     utilities::checkedReinterpretCast<const wchar_t*>(utf16.c_str()),
@@ -215,12 +213,12 @@ std::string __stdcall utf16ToUtf8(const std::u16string& utf16)
 }
 
 #if _HAS_CXX17
-std::string __stdcall utf16ToUtf8(const std::wstring_view& utf16)
+std::string utf16ToUtf8(const std::wstring_view& utf16)
 {
   return utf16ToUtf8(utf16.data(), utf16.length());
 }
 
-std::string __stdcall utf16ToUtf8(const std::u16string_view& utf16)
+std::string utf16ToUtf8(const std::u16string_view& utf16)
 {
   return utf16ToUtf8(
     utilities::checkedReinterpretCast<const wchar_t*>(utf16.data()),
@@ -228,6 +226,6 @@ std::string __stdcall utf16ToUtf8(const std::u16string_view& utf16)
 }
 #endif
 
-} // namespace unicode
+} // namespace utilities
 } // namespace react
 } // namespace facebook
