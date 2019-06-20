@@ -10,6 +10,9 @@
 namespace Microsoft {
 namespace React {
 
+///
+/// Defines the core functionality for a native WebSocket resource.
+///
 struct IWebSocket
 {
   #pragma region Aliases
@@ -24,10 +27,10 @@ struct IWebSocket
   enum class ReadyState : std::uint16_t
   {
     Connecting = 0, // Handle initialized
-    Open = 1, // Ready to send
-    Closing = 2, // Currently closing
-    Closed = 3, // Closed or failed to open
-    Size = 4
+    Open = 1,       // Ready to send
+    Closing = 2,    // Currently closing
+    Closed = 3,     // Closed or failed to open
+    Size = 4        // Metavalue representing the number of entries in this enum.
   };
 
   enum class ErrorType : size_t
@@ -40,8 +43,10 @@ struct IWebSocket
     Send = 5,
     Receive = 6,
     Close = 7,
-    Size = 8
+    Size = 8 // Metavalue representing the number of entries in this enum.
   };
+
+
 
   enum class CloseCode : std::uint16_t
   {
@@ -73,32 +78,93 @@ struct IWebSocket
 
   #pragma endregion // Inner types
 
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   static std::unique_ptr<IWebSocket> Make(const std::string& url);
 
   // Only use if a legacy implementation is required as fallback.
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   static std::unique_ptr<IWebSocket> MakeLegacy(const std::string& url);
 
   virtual ~IWebSocket() {}
 
-  ///
-  // Parameters:
-  //
-  // protocols - vector of protocols
-  // options   - map of headers
-  ///
+  /// <summary>
+  /// </summary>
+  /// <param name="protocols">
+  /// </param>
+  /// <param name="options">
+  /// </param>
   virtual void Connect(const Protocols& protocols = {}, const Options& options = {}) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void Ping() = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void Send(const std::string& message) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SendBinary(const std::string& base64String) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void Close(CloseCode code, const std::string& reason) = 0;
 
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual ReadyState GetReadyState() const = 0;
 
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SetOnConnect(std::function<void()>&& handler) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SetOnPing(std::function<void()>&& handler) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SetOnSend(std::function<void(std::size_t)>&& handler) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SetOnMessage(std::function<void(std::size_t, const std::string&)>&& handler) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler) = 0;
+
+  /// <summary>
+  /// </summary>
+  /// <param name="">
+  /// </param>
   virtual void SetOnError(std::function<void(Error&&)>&& handler) = 0;
 };
 
