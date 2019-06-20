@@ -78,7 +78,6 @@
     <ClInclude Include="NativeModuleFactories.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
-    <ClInclude Include="ABI.h" />
     <ClInclude Include="NativeTraceEventSource.h" />
   </ItemGroup>
   <ItemGroup>

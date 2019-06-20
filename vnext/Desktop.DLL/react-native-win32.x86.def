@@ -197,3 +197,6 @@ _YGPositionTypeToString@4
 _YGPrintOptionsToString@4
 _YGUnitToString@4
 _YGWrapToString@4
+
+DllCanUnloadNow = WINRT_CanUnloadNow                    PRIVATE
+DllGetActivationFactory = WINRT_GetActivationFactory    PRIVATE

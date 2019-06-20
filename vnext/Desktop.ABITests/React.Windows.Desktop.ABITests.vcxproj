@@ -30,7 +30,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{44DCED9B-9C4C-48FE-8545-0930192BBC16}</ProjectGuid>
-    <ProjectName>React.Windows.Desktop.IntegrationTests</ProjectName>
+    <ProjectName>React.Windows.Desktop.ABITests</ProjectName>
     <VCProjectVersion>15.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ReactWindowsDesktopABITests</RootNamespace>
@@ -106,19 +106,41 @@
   </PropertyGroup>
   <Target Name="SetCppWinRTReferences">
     <ItemGroup>
-      <!-- D:\ISS\react-native-windows\vnext\target\x64\Debug\React.Windows.Desktop\facebook.react.winmd -->
+      <!--
+      To increase resilience against build configuration changes, we could try to obtain the .winmd
+      path below from the Desktop.DLL project reference. The respective task should look similar to
+      'GetTargetFileName' MSBuild task in the 'GetRNDllPath' target below (and potentially share
+      build logic with it).
+      -->
       <CppWinRTDynamicWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
         <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
       </CppWinRTDynamicWinMDReferences>
     </ItemGroup>
+  </Target>
+  <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
     <!--
-    <Message Text="CppWinRTDynamicWinMDReferences='@(CppWinRTDynamicWinMDReferences)''"/>
+    During test execution, we need to find react-native-win32.dll which has been built into a
+    different target folder. The 'GetRNDllPath' build target passes the path to the DLL as a macro
+    (RNDLLPATH) into the test code where it is intended to be used in a LoadLibrary call.
     -->
+    <MSBuild
+      Projects="%(ProjectReference.Identity)"
+      Targets="GetTargetFileName"
+      Condition="$([System.String]::Copy('%(ProjectReference.Filename)').Contains('React.Windows.Desktop.DLL'))">
+      <Output TaskParameter="TargetOutputs" PropertyName="_RNDllPath"/>
+    </MSBuild>
+    <!-- It seems that the CL task takes preprocessor definitions only from ClCompile.PreprocessorDefinitions item metadata. -->
+    <ItemGroup>
+      <_ClCompileTemp Include="@(ClCompile)"/>
+      <ClCompile Remove="@(ClCompile)"/>
+      <ClCompile Include='@(_ClCompileTemp)'>
+        <PreprocessorDefinitions>RNDLLPATH=LR"($(_RNDllPath))";%(_ClCompileTemp.PreprocessorDefinitions)</PreprocessorDefinitions>
+      </ClCompile>
+    </ItemGroup>
   </Target>
   <ItemGroup>
     <ClCompile Include="ABITests.cpp" />
     <ClCompile Include="ActivationFactory.cpp" />
-    <ClCompile Include="unittest1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
