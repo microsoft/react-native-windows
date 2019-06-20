@@ -45,8 +45,7 @@ namespace react {
 
     private:
       void UpdateCompositionBrush();
-      bool IsImageLargerThanView();
-      bool UsingSurfaceBrush();
+      bool IsImageSmallerThanView();
       winrt::Windows::UI::Composition::CompositionStretch ResizeModeToStretch();
       winrt::Windows::UI::Composition::CompositionSurfaceBrush GetOrCreateSurfaceBrush();
       winrt::Windows::UI::Composition::CompositionEffectBrush GetOrCreateEffectBrush(winrt::Windows::UI::Composition::CompositionSurfaceBrush const& surfaceBrush);
