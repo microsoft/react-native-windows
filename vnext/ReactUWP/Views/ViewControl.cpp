@@ -22,20 +22,19 @@ namespace winrt {
 namespace react::uwp
 {
 
-  ViewControl::ViewControl()
-  {
-  }
+ViewControl::ViewControl()
+{
+}
 
-  /*static*/ winrt::com_ptr<ViewControl> ViewControl::Create()
-  {
-    return winrt::make_self<ViewControl>();
-  }
+/*static*/ winrt::com_ptr<ViewControl> ViewControl::Create()
+{
+  return winrt::make_self<ViewControl>();
+}
 
-  winrt::AutomationPeer ViewControl::OnCreateAutomationPeer()
-  {
-    auto dyn = winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(*this);
-    return dyn;
-  }
+winrt::AutomationPeer ViewControl::OnCreateAutomationPeer()
+{
+  return winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(*this);
+}
 
 }
 
@@ -49,7 +48,7 @@ DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owne
 
 winrt::hstring DynamicAutomationPeer::GetClassNameCore() const
 {
-  return winrt::to_hstring("DynamicAutomationPeer");
+  return L"DynamticAutomationPeer";
 }
 
 winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const
