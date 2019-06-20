@@ -93,10 +93,8 @@ namespace react {
 
         if (!needsDownload || memoryStream)
         {
-          // Height and Width are required for network images, so we can set the desiredMaxSize of the surface.
-          // TODO: Set desiredMaxSize for static images if height/width have been set.
           auto surface{ needsDownload ?
-            winrt::LoadedImageSurface::StartLoadFromStream(memoryStream, m_brush->AvailableSize()) :
+            winrt::LoadedImageSurface::StartLoadFromStream(memoryStream) :
             winrt::LoadedImageSurface::StartLoadFromUri(uri) };
 
           surface.LoadCompleted({ this, &ReactImage::LoadedImageSurfaceHandler });
