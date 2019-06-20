@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>OfficeReact.Win32</id>
-    <version>__BuildBuildNumber__</version>
+    <version>$npmVersion$</version>
     <description>Contains Windows Implementation of React-Native</description>
     <authors>Microsoft</authors>
     <projectUrl>https://office.visualstudio.com/ISS/_git/sdx-platform</projectUrl>
