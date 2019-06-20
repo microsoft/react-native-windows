@@ -5,7 +5,6 @@
 #include <cxxreact/JSBigString.h>
 #include <string>
 #include <future>
-#include <winrt/Windows.Storage.h>
 
 namespace react { namespace uwp {
 

@@ -13,18 +13,17 @@
 #pragma optimize( "", off )
 #endif
 
-using namespace winrt::Windows;
+namespace winrt {
+  using namespace winrt::Windows::Foundation;
+  using namespace winrt::Windows::Storage;
+};
 
 namespace react { namespace uwp {
   UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri)
   {
     if (!uri.empty())
     {
-      auto file = Storage::ApplicationData::Current().LocalFolder().TryGetItemAsync(uri).get();
-      if (file)
-      {
-        m_byteCodeFileUri = uri;
-      }
+      m_byteCodeFileAsync = winrt::StorageFile::GetFileFromApplicationUriAsync(winrt::Uri(uri));
     }
   }
 
@@ -34,19 +33,27 @@ std::unique_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPrepa
   const char* prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
 ) noexcept
 {
-  // check if app bundle version is older than or equal to the prepared script version
-  // if true then just read the buffer from the prepared script and return
-  if (shouldGetPreparedScript(scriptSignature.version))
-  {
-    auto buffer = ByteCodeManager::ReadByteCodeFileAsync(m_byteCodeFileUri).get();
+  try {
+    // check if app bundle version is older than or equal to the prepared script version
+    // if true then just read the buffer from the prepared script and return
+
+
+    auto byteCodeFile = TryGetByteCodeFileSync(scriptSignature.version);
+    if (byteCodeFile == nullptr) {
+      return nullptr;
+    }
+
+    auto buffer = winrt::FileIO::ReadBufferAsync(byteCodeFile).get();
     auto bytecodeBuffer(std::make_unique<facebook::jsi::chakraruntime::ByteArrayBuffer>(buffer.Length()));
-    auto dataReader{ Storage::Streams::DataReader::FromBuffer(buffer) };
+    auto dataReader{ winrt::Streams::DataReader::FromBuffer(buffer) };
     dataReader.ReadBytes(winrt::array_view<uint8_t> { &bytecodeBuffer->data()[0], &bytecodeBuffer->data()[bytecodeBuffer->size()] });
     dataReader.Close();
 
     return bytecodeBuffer;
   }
-  return nullptr;
+  catch (...) {
+    return nullptr;
+  }
 }
 
 void UwpPreparedScriptStore::persistPreparedScript(
@@ -56,67 +63,49 @@ void UwpPreparedScriptStore::persistPreparedScript(
   const char* prepareTag  // Optional tag. For e.g. eagerly evaluated vs lazy cache.
 ) noexcept
 {
-  // generate a new bytecode file
-  ByteCodeManager::CreateByteCodeFileAsync(preparedScript);
+  persistPreparedScriptAsync(preparedScript, scriptMetadata, runtimeMetadata, prepareTag);
 }
 
-bool UwpPreparedScriptStore::shouldGetPreparedScript(facebook::jsi::ScriptVersion_t version) noexcept
+winrt::fire_and_forget UwpPreparedScriptStore::persistPreparedScriptAsync(
+  std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
+  const facebook::jsi::ScriptSignature& scriptMetadata,
+  const facebook::jsi::JSRuntimeSignature& runtimeMetadata,
+  const char* prepareTag  // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+)
 {
-  auto createdDateTime = ByteCodeManager::GetByteCodeFileCreatedDateAsync(m_byteCodeFileUri).get();
-  std::uint64_t timestamp = createdDateTime.time_since_epoch().count();
-
-  // try using default bytecode file url if given url is older than app bundle
-  if (timestamp < version && !m_byteCodeFileUri.empty())
-  {
-    m_byteCodeFileUri = nullptr;
-    return shouldGetPreparedScript(version);
+  try {
+    co_await winrt::resume_background();
+    auto folder = winrt::ApplicationData::Current().LocalCacheFolder();
+    auto file = co_await folder.CreateFileAsync(L"app.bytecode", winrt::CreationCollisionOption::ReplaceExisting);
+    winrt::FileIO::WriteBytesAsync(file, winrt::array_view<const uint8_t>{ &preparedScript->data()[0], &preparedScript->data()[preparedScript->size()] });
   }
-
-  return timestamp >= version;
+  catch (...) {
+  }
 }
 
-std::future<Foundation::DateTime> ByteCodeManager::GetByteCodeFileCreatedDateAsync(winrt::hstring fileName)
+winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(facebook::jsi::ScriptVersion_t version)
 {
-  co_await winrt::resume_background();
+  try {
+    if (m_byteCodeFileAsync != nullptr) {
+      auto file = m_byteCodeFileAsync.get();
+      auto createdDateTime = file.DateCreated();
+      facebook::jsi::ScriptVersion_t byteCodeVersion = createdDateTime.time_since_epoch().count();
+      if (byteCodeVersion >= version) {
+        return file;
+      }
+    }
+  }
+  catch (...) {
+    // Eat this exception. If we can't get the file from the uri. Still try looking  in the cache.
+  }
 
-  try
-  {
-    auto file = fileName.empty() ?
-      co_await Storage::ApplicationData::Current().LocalCacheFolder().GetFileAsync(L"app.bytecode") :
-      co_await Storage::StorageFile::GetFileFromApplicationUriAsync(Foundation::Uri(fileName));
-    return file.DateCreated();
-  }
-  catch (winrt::hresult_error const& ex)
-  {
-    Foundation::DateTime date;
-    return date;
-  }
+
+  // Getting here means one of two things. No bytecode file uri was specified, or the file uri was specified but it is outdated.
+  // Try looking in LocalCache folder for app.bytecode and use that.
+  auto file = winrt::ApplicationData::Current().LocalCacheFolder().GetFileAsync(L"app.bytecode").get();
+  auto createdDateTime = file.DateCreated();
+  facebook::jsi::ScriptVersion_t byteCodeVersion = createdDateTime.time_since_epoch().count();
+
+  return byteCodeVersion > version ? file : nullptr;
 }
-
-winrt::fire_and_forget ByteCodeManager::CreateByteCodeFileAsync(std::shared_ptr<const facebook::jsi::Buffer> preparedScript)
-{
-  auto folder = Storage::ApplicationData::Current().LocalCacheFolder();
-  co_await winrt::resume_background();
-
-  auto file = co_await folder.CreateFileAsync(L"app.bytecode", Storage::CreationCollisionOption::ReplaceExisting);
-  Storage::FileIO::WriteBytesAsync(file, winrt::array_view<const uint8_t>{ &preparedScript->data()[0], &preparedScript->data()[preparedScript->size()] });
-}
-
-std::future<Storage::Streams::IBuffer> ByteCodeManager::ReadByteCodeFileAsync(winrt::hstring fileName)
-{
-  co_await winrt::resume_background();
-  try
-  {
-    auto file = fileName.empty() ?
-      co_await Storage::ApplicationData::Current().LocalCacheFolder().GetFileAsync(L"app.bytecode") :
-      co_await Storage::StorageFile::GetFileFromApplicationUriAsync(Foundation::Uri(fileName));
-    auto buffer = co_await Storage::FileIO::ReadBufferAsync(file);
-    return buffer;
-  }
-  catch (winrt::hresult_error const& ex)
-  {
-    return nullptr;
-  }
-}
-
 }}
