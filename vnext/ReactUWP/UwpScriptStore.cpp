@@ -13,6 +13,8 @@ namespace winrt {
 
 namespace react { namespace uwp {
 
+UwpScriptStore::UwpScriptStore() {}
+
 facebook::jsi::VersionedBuffer UwpScriptStore::getVersionedScript(const std::string& url) noexcept
 {
   facebook::jsi::VersionedBuffer versionedBuffer_;
