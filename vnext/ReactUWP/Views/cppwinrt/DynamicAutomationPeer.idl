@@ -3,15 +3,17 @@
 
 // This file was used to generate the files in the cppwinrt subfolders
 //
-// in the future this should be run through cppwinrt.exe but thats not currently
-// possible with the multiple build systems react uwp needs to support.
+// If you modify this file, be sure to run buildcppwinrt.cmd in this folder
+// to generate new headers
 
 namespace react.uwp
 {
 	[default_interface]
 	runtimeclass DynamicAutomationPeer :
 		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
-		Windows.UI.Xaml.Automation.Provider.IInvokeProvider
+		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,
+		Windows.UI.Xaml.Automation.Provider.ISelectionProvider,
+		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider
 	{
 		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
 	}
