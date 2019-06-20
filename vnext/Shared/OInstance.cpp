@@ -9,7 +9,9 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 #include "unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"
@@ -42,9 +44,11 @@
 
 #include <cxxreact/JSExecutor.h>
 
+#if !defined(OSS_RN)
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
 #include <jsi/RuntimeHolder.h>
+#endif
 
 namespace {
 
@@ -150,6 +154,7 @@ bool GetLastWriteTime(const std::string& fileName, uint64_t& result) noexcept
 
 namespace facebook { namespace react {
 
+#if !defined(OSS_RN)
 namespace {
 class OJSIExecutorFactory : public JSExecutorFactory {
 public:
@@ -182,10 +187,12 @@ private:
 };
 
 }
+#endif
 
-
+#if !defined(OSS_RN)
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
+#endif
 
 struct BridgeUIBatchInstanceCallback : public InstanceCallback {
   BridgeUIBatchInstanceCallback(std::weak_ptr<Instance> instance, std::weak_ptr<IUIManager> uimanager, std::weak_ptr<MessageQueueThread> uithread)
@@ -334,7 +341,9 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
     , m_innerInstance(std::make_shared<Instance>()) {
 
   // Temp set the logmarker here
+#if !defined(OSS_RN)
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
+#endif
 
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
@@ -379,11 +388,14 @@ InstanceImpl::InstanceImpl(std::string&& jsBundleBasePath,
   }
   else {
 
+#if !defined(OSS_RN)
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     }
-    else {
+    else
+#endif
+    {
       // We use the older non-JSI ChakraExecutor pipeline as a fallback as of now. This will go away once we completely move to JSI flow.
       ChakraInstanceArgs instanceArgs;
 

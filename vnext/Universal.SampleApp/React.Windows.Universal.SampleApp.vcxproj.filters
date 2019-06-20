@@ -78,6 +78,7 @@
     <None Include="Bundle\Universal.SampleApp\index.uwp.bundle">
       <Filter>Bundle\Universal.SampleApp</Filter>
     </None>
+    <None Include="image.uwp.js" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />
@@ -85,5 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\seguiemj.ttf">
+      <Filter>Assets</Filter>
+    </Font>
   </ItemGroup>
 </Project>

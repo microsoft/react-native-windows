@@ -71,6 +71,12 @@
       <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -167,7 +173,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" Condition="'$(OSS_RN)' != 'true'"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCHelpers.cpp" Condition="'$(NOJSC)' != 'true'" />
@@ -188,11 +194,11 @@
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGFloatOptional.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -113,7 +113,7 @@ function installDependencies(options) {
   const depDelim = ' || ';
   const delimIndex = reactNativeVersion.indexOf(depDelim);
   if (delimIndex !== -1) {
-    reactNativeVersion = reactNativeVersion.substring(delimIndex + depDelim.length);
+    reactNativeVersion = reactNativeVersion.slice(0, delimIndex);
   }
 
   console.log(chalk.green('Updating to compatible version of react-native:'));

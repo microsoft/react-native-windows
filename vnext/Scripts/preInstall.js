@@ -22,7 +22,13 @@ if (replaceDep) {
     if (pkgJson.devDependencies['react-native'].indexOf('https://github.com') === -1) {
 
         pkgJson.rnDepVersion = pkgJson.devDependencies['react-native'];
-        pkgJson.devDependencies['react-native'] = `https://github.com/Microsoft/react-native/archive/v${pkgJson.devDependencies['react-native']}.tar.gz`;
+        if (process.env.UseRNFork === 'false') {
+            console.log('Using unforked RN');
+            pkgJson.devDependencies['react-native'] = pkgJson.peerDependencies['react-native'].slice(0, pkgJson.peerDependencies['react-native'].indexOf(' '));
+        } else {
+            console.log('Using forked RN');
+            pkgJson.devDependencies['react-native'] = `https://github.com/Microsoft/react-native/archive/v${pkgJson.devDependencies['react-native']}.tar.gz`;
+        }
         fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
     }
 }
