@@ -166,7 +166,7 @@
     <ClInclude Include="ABI\Instance_rt.h" />
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
-    <ClInclude Include="Base\UwpReactInstance.h" />
+    <ClInclude Include="Base\UwpReactInstance.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
@@ -251,7 +251,7 @@
     <ClCompile Include="..\Shared\OInstance.cpp" />
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
-    <ClCompile Include="Base\UwpReactInstance.cpp" />
+    <ClCompile Include="Base\UwpReactInstance.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
