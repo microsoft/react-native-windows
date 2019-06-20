@@ -8,11 +8,6 @@
 
 namespace react {
   namespace uwp {
-    struct AnimationAndTarget
-    {
-      winrt::ExpressionAnimation animation;
-      winrt::UIElement target;
-    };
     class NativeAnimatedNodesManager;
     class PropsAnimatedNode : public AnimatedNode
     {
@@ -22,14 +17,18 @@ namespace react {
       void DisconnectFromView(int64_t viewTag);
       void RestoreDefaultValues();
       void UpdateView();
+      void StartAnimations();
       void DisposeCompletedAnimation(int64_t valueTag);
     private:
+
+      winrt::UIElement GetUIElement();
       std::weak_ptr<IReactInstance> m_instance{};
       std::weak_ptr<NativeAnimatedNodesManager> m_manager{};
       std::map<std::string, int64_t> m_propMapping{};
       folly::dynamic m_propMap{};
       int64_t m_connectedViewTag{ -1 };
-      std::unordered_map<int64_t, AnimationAndTarget> m_expressionAnimations{};
+      std::unordered_map<int64_t, winrt::CompositionAnimation> m_expressionAnimations{};
+      winrt::Numerics::float3 m_rotationAxis{ 0,0,1 };
     };
   }
 }

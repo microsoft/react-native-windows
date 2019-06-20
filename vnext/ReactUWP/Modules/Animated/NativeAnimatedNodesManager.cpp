@@ -18,6 +18,7 @@
 #include "FrameAnimationDriver.h"
 #include "DecayAnimationDriver.h"
 #include <Windows.Foundation.h>
+#include <ReactUWP\Modules\NativeUIManager.h>
 
 namespace react {
   namespace uwp {
@@ -105,6 +106,11 @@ namespace react {
       }();
 
       m_nodes.insert({ tag, node });
+
+      if (auto inst = instance.lock())
+      {
+        static_cast<NativeUIManager*>(inst->NativeUIManager())->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
+      }
     }
 
 
@@ -243,6 +249,14 @@ namespace react {
         {
           m_eventDrivers.erase(key);
         }
+      }
+    }
+
+    void NativeAnimatedNodesManager::ProcessDelayedPropsNodes()
+    {
+      for (auto tag : m_delayedPropsNodes)
+      {
+        m_propsNodes.at(tag)->StartAnimations();
       }
     }
 

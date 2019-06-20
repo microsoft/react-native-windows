@@ -96,6 +96,7 @@ namespace react {
       void ExtractAnimatedNodeOffset(int64_t tag);
       void AddAnimatedEventToView(int64_t viewTag, const std::string& eventName, const folly::dynamic& eventMapping);
       void RemoveAnimatedEventFromView(int64_t viewTag, const std::string& eventName, int64_t animatedValueTag);
+      void ProcessDelayedPropsNodes();
 
       static AnimatedNodeType AnimatedNodeTypeFromString(const std::string& string);
       static AnimationType AnimationTypeFromString(const std::string& string);
@@ -104,6 +105,7 @@ namespace react {
       std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_animationNodes{};
       std::unordered_map<int64_t, std::shared_ptr<ValueAnimatedNode>> m_valueNodes{};
       std::unordered_map<int64_t, std::shared_ptr<PropsAnimatedNode>> m_propsNodes{};
+      std::vector<int64_t> m_delayedPropsNodes{};
       std::unordered_map<int64_t, std::shared_ptr<StyleAnimatedNode>> m_styleNodes{};
       std::unordered_map<int64_t, std::shared_ptr<TransformAnimatedNode>> m_transformNodes{};
       std::unordered_map<std::tuple<int64_t, std::string>, std::unordered_set<std::shared_ptr<EventAnimationDriver>>> m_eventDrivers{};

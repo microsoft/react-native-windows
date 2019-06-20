@@ -130,7 +130,7 @@ namespace ReactNative.Animated
         {
             if (!_animatedNodes.TryGetValue(tag, out var node))
             {
-                throw new InvalidOperationException(AddAnimatedEventToView
+                throw new InvalidOperationException(
                     Invariant($"Animated node with tag '{tag}' does not exist."));
             }
 

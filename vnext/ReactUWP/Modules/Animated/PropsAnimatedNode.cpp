@@ -48,17 +48,6 @@ namespace react {
         return;
       }
 
-      auto const uiElement = [instance = m_instance.lock(), connectedViewTag = m_connectedViewTag]()
-      {
-        if (instance)
-        {
-          auto pNativeUIManagerHost = static_cast<NativeUIManager*>(instance->NativeUIManager())->getHost();
-          auto pShadowNodeChild = static_cast<ShadowNodeBase*>(pNativeUIManagerHost->FindShadowNodeForTag(connectedViewTag));
-          return pShadowNodeChild->GetView().as<winrt::UIElement>();
-        }
-        return static_cast<winrt::UIElement>(nullptr);
-      }();
-
       if (const auto manager = m_manager.lock())
       {
         for (auto entry : m_propMapping)
@@ -69,7 +58,7 @@ namespace react {
             {
               auto valueNode = manager->m_valueNodes.at(entry.second);
 
-              const auto animation = [valueNode, entry, uiElement]()
+              const auto animation = [this, valueNode, entry]()
               {
                 auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
                 animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
@@ -80,17 +69,18 @@ namespace react {
                   animation.Target(L"Opacity");
                   break;
                 case FacadeType::rotation:
+                  m_rotationAxis = { 0,0,1 };
                   animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
                   animation.Target(L"Rotation");
                   break;
                 case FacadeType::rotationX:
                   animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
-                  uiElement.RotationAxis({ 1, 0, 0 });
+                  m_rotationAxis = { 1,0,0 };
                   animation.Target(L"Rotation");
                   break;
                 case FacadeType::rotationY:
                   animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
-                  uiElement.RotationAxis({ 0, 1, 0 });
+                  m_rotationAxis = { 0,1,0 };
                   animation.Target(L"Rotation");
                   break;
                 case FacadeType::scale:
@@ -120,8 +110,17 @@ namespace react {
 
               if (animation)
               {
-                m_expressionAnimations.insert({ valueNode->Tag(), { animation, uiElement } });
-                uiElement.StartAnimation(animation);
+                m_expressionAnimations.insert({ valueNode->Tag(), animation });
+                valueNode->AddDependentPropsNode(Tag());
+                if (auto const uiElement = GetUIElement())
+                {
+                  uiElement.RotationAxis(m_rotationAxis);
+                  uiElement.StartAnimation(animation);
+                }
+                else
+                {
+                  manager->m_delayedPropsNodes.push_back(Tag());
+                }
               }
             }
           }
@@ -133,11 +132,49 @@ namespace react {
       }
     }
 
+    void PropsAnimatedNode::StartAnimations()
+    {
+      if (auto uiElement = GetUIElement())
+      {
+        for (auto anim : m_expressionAnimations)
+        {
+          uiElement.RotationAxis(m_rotationAxis);
+          uiElement.StartAnimation(anim.second);
+        }
+        if (auto manager = m_manager.lock())
+        {
+          auto delayedPropsNodes = manager->m_delayedPropsNodes;
+          delayedPropsNodes.erase(std::find(delayedPropsNodes.begin(), delayedPropsNodes.end(), Tag()));
+        }
+      }
+    }
+
     void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag)
     {
-      auto animationAndTarget = m_expressionAnimations.at(valueTag);
-      animationAndTarget.target.StopAnimation(animationAndTarget.animation);
+      if (auto target = GetUIElement())
+      {
+        target.StopAnimation(m_expressionAnimations.at(valueTag));
+      }
       m_expressionAnimations.erase(valueTag);
     }
+
+    winrt::UIElement PropsAnimatedNode::GetUIElement()
+    {
+      if (auto instance = m_instance.lock())
+      {
+        if (auto nativeUIManagerHost = static_cast<NativeUIManager*>(instance->NativeUIManager())->getHost())
+        {
+          if (auto shadowNodeChild = static_cast<ShadowNodeBase*>(nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag)))
+          {
+            if (auto shadowNodeView = shadowNodeChild->GetView())
+            {
+              return shadowNodeView.as<winrt::UIElement>();
+            }
+          }
+        }
+      }
+      return static_cast<winrt::UIElement>(nullptr);
+    }
+
   }
 }
