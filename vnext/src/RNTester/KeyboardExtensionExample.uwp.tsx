@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     minWidth: 100,
     minHeight: 30
   },
-  textInput: { 
-    height: 32, 
-    width: 100 
+  textInput: {
+    height: 32,
+    width: 100
   },
   blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 }
 });
@@ -42,9 +42,9 @@ interface IKeyboardableComponentState {
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
-  { key: 'a', handledEventPhase:  HandledEventPhase.Capturing },
+  { key: 'a', handledEventPhase: HandledEventPhase.Capturing },
   { key: 'b' },
-  { key: 'c', handledEventPhase:  HandledEventPhase.Bubbling },
+  { key: 'c', handledEventPhase: HandledEventPhase.Bubbling },
   { key: 'Tab', handledEventPhase: HandledEventPhase.Capturing }
 ];
 
@@ -68,7 +68,7 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
           onKeyUpCapture={this._onKeyUpCapture}
           onKeyUp={this._onKeyUp}
           onKeyDown={this._onKeyDown}
-          keyDownEvents={handledNativeKeyboardEvents} 
+          keyDownEvents={handledNativeKeyboardEvents}
           keyUpEvents={handledNativeKeyboardEvents}
         >
           <ViewWindows style={styles.keyEnterVisualizer}>
@@ -84,7 +84,7 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
             <Text>{this.state.lastKeyUpCapture !== null ? this.state.lastKeyUpCapture : ' '}</Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
-            <TextInput placeholder='I got focus' style={styles.textInput}/>
+            <TextInput placeholder='I got focus' style={styles.textInput} />
           </ViewWindows>
         </ViewWindows>
       </ViewWindows>
@@ -106,7 +106,7 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
     this.setState({ lastKeyDownCapture: ev.nativeEvent.key, lastKeyUpCapture: null });
   };
 }
-export const displayName = (_undefined?: string) => {};
+export const displayName = (_undefined?: string) => { };
 export const title = 'Keyboard extension Example';
 export const description = 'Demo of keyboard properties.';
 export const examples = [

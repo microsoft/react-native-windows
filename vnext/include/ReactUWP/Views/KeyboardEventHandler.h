@@ -27,11 +27,11 @@ using namespace std;
 namespace react { namespace uwp {
   enum class HandledEventPhase
   {
-    CAPTURING = 1, // match the value with EventPhase in React. EventPhase includes None, Capturing, AtTarget, Bubbling
-    BUBBLING = 3
+    Capturing = 1, // match the value with EventPhase in React. EventPhase includes None, Capturing, AtTarget, Bubbling
+    Bubbling = 3
   };
 
-  struct ModifiedKeyStatue
+  struct ModifiedKeyState
   {
     bool altKey{ false };
     bool ctrlKey{ false };
@@ -40,15 +40,15 @@ namespace react { namespace uwp {
     bool capLocked{ false };
   };
 
-  struct ReactKeyboardEvent: ModifiedKeyStatue
+  struct ReactKeyboardEvent: ModifiedKeyState
   {
-    int64_t target = 0;
+    int64_t target{ 0 };
     string key{};
   };
 
-  struct KeyboardEvent: ModifiedKeyStatue
+  struct KeyboardEvent: ModifiedKeyState
   {
-    HandledEventPhase handledEventPhase{ HandledEventPhase::BUBBLING };
+    HandledEventPhase handledEventPhase{ HandledEventPhase::Bubbling };
     string key{};
   };
 
@@ -89,8 +89,8 @@ namespace react { namespace uwp {
     void unhook();
 
   private:
-    winrt::UIElement::KeyDown_revoker m_KeyDownRevoker{};
-    winrt::UIElement::KeyUp_revoker m_KeyUpRevoker{};
+    winrt::UIElement::KeyDown_revoker m_keyDownRevoker{};
+    winrt::UIElement::KeyUp_revoker m_keyUpRevoker{};
   };
 
   class PreviewKeyboardEventHandlerOnRoot: public PreviewKeyboardEventHandler
@@ -113,12 +113,6 @@ namespace react { namespace uwp {
     {
       PreviewKeyUp,
       PreviewKeyDown,
-      KeyUp,
-      KeyDown
-    };
-
-    enum class KeyboardType
-    {
       KeyUp,
       KeyDown
     };

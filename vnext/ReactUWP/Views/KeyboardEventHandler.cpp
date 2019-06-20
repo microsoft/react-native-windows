@@ -58,7 +58,7 @@ std::vector<KeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const& obj)
 static folly::dynamic ToEventData(ReactKeyboardEvent event)
 {
   return folly::dynamic::object
-  (TARGET, event.target)
+    (TARGET, event.target)
     (ALT_KEY, event.altKey)
     (CTRL_KEY, event.ctrlKey)
     (KEY, event.key)
@@ -101,16 +101,16 @@ void KeyboardEventHandler::hook(XamlView xamlView)
 {
   auto uiElement = xamlView.as<winrt::UIElement>();
   if (m_keyDownCallback)
-    m_KeyDownRevoker = uiElement.KeyDown(winrt::auto_revoke, m_keyDownCallback);
+    m_keyDownRevoker = uiElement.KeyDown(winrt::auto_revoke, m_keyDownCallback);
 
   if (m_keyUpCallback)
-    m_KeyUpRevoker = uiElement.KeyUp(winrt::auto_revoke, m_keyUpCallback);
+    m_keyUpRevoker = uiElement.KeyUp(winrt::auto_revoke, m_keyUpCallback);
 }
 
 void KeyboardEventHandler::unhook()
 {
-  m_KeyDownRevoker.revoke();
-  m_KeyUpRevoker.revoke();
+  m_keyDownRevoker.revoke();
+  m_keyUpRevoker.revoke();
 }
 
 PreviewKeyboardEventHandlerOnRoot::PreviewKeyboardEventHandlerOnRoot(const std::weak_ptr<IReactInstance>& reactInstance)
@@ -141,9 +141,7 @@ void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(string propertyNam
     m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
   }
   else if (propertyName == "keyUpEvents")
-  {
     m_handledKeyUpKeyboardEvents = KeyboardHelper::FromJS(value);
-  }
 }
 
 void HandledKeyboardEventHandler::hook(XamlView xamlView)
@@ -185,7 +183,7 @@ void HandledKeyboardEventHandler::EnsureKeyboardEventHandler()
 void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args)
 {
   HandledEventPhase currentEventPhase = (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
-    ? HandledEventPhase::CAPTURING : HandledEventPhase::BUBBLING;
+    ? HandledEventPhase::Capturing : HandledEventPhase::Bubbling;
 
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
@@ -377,7 +375,7 @@ static const std::map<winrt::VirtualKey, string> g_virtualKeyToString
 
 string KeyboardHelper::FromVirutalKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked)
 {
-  char key = (char)virtualKey;
+  char key = static_cast<char>(virtualKey);
 
   if (!isalnum(key))
   {
@@ -392,7 +390,7 @@ string KeyboardHelper::FromVirutalKey(winrt::VirtualKey virtualKey, bool shiftDo
   // Virtual Keys for 0-9 and A-Z, they're just aligned to their ASCII representation (in uppercase, for the alphabet VKs)
   // Windows doesn't define key for a-z, convert it lower if shift is down.
   if (isalpha(key) && ((!shiftDown && !capLocked) || (shiftDown && capLocked)))
-      key = (char)tolower(key);
+      key = static_cast<char>(tolower(key));
 
   return string(1, key);
 }

@@ -40,8 +40,8 @@ public:
   winrt::Windows::Foundation::Size GetAppWindowSize();
 
 private:
-  std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
-  std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
+  std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::unique_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
   int64_t m_targetTag;
 };
@@ -58,8 +58,8 @@ void PopupShadowNode::createView()
 
   auto popup = GetView().as<winrt::Popup>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
-  m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
+  m_touchEventHanadler = std::make_unique<TouchEventHandler>(wkinstance);
+  m_previewKeyboardEventHandlerOnRoot = std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
   popup.Closed([=](auto&&, auto&&)
   {

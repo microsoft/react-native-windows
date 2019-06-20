@@ -24,7 +24,7 @@ namespace react { namespace uwp {
   template<typename T>
   inline typename T asEnum(folly::dynamic const& obj)
   {
-    return (T)(obj.asInt());
+    return static_cast<T>(obj.asInt());
   }
 
   ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const& fe);

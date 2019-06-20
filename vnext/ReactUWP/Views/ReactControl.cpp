@@ -102,10 +102,6 @@ void ReactControl::AttachRoot() noexcept
   if (!m_touchEventHandler)
     m_touchEventHandler = std::make_shared<TouchEventHandler>(m_reactInstance);
 
-  if (m_previewKeyboardEventHandlerOnRoot)
-  {
-    m_previewKeyboardEventHandlerOnRoot->unhook();
-  }
   m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(m_reactInstance);
 
   // Register callback from instance for live reload
