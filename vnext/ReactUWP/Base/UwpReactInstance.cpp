@@ -34,7 +34,7 @@
 #include <Views/TextViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 #include <Views/ViewViewManager.h>
-#include <Views/ImageViewManager.h>
+#include <Views/Image/ImageViewManager.h>
 #include <Views/WebViewManager.h>
 
 // Polyester View Managers // TODO: Move Polyester implementations out of this library and depot
@@ -49,6 +49,7 @@
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
+#include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>

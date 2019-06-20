@@ -19,6 +19,7 @@ struct INativeUIManager;
 namespace react { namespace uwp {
 
 struct IXamlRootView;
+class ExpressionAnimationStore;
 
 typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;
@@ -81,6 +82,9 @@ struct IReactInstance
   // Test Hooks
   virtual void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) = 0;
   virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
+
+  virtual ExpressionAnimationStore& GetExpressionAnimationStore() = 0;
+
 };
 
 } }
