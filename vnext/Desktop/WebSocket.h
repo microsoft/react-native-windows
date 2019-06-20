@@ -124,10 +124,29 @@ protected:
 public:
   #pragma region IWebSocket
 
+  /// <summary>
+  /// <see cref="IWebSocket::Connect" />
+  /// </summary>
   void Connect(const Protocols& protocols, const Options& options) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::Ping" />
+  /// </summary>
   void Ping() override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::Send" />
+  /// </summary>
   void Send(const std::string& message) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SendBinary" />
+  /// </summary>
   void SendBinary(const std::string& base64String) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::Close" />
+  /// </summary>
   void Close(CloseCode code, const std::string& reason) override;
 
   ReadyState GetReadyState() const override;
