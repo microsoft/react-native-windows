@@ -46,7 +46,7 @@ namespace react { namespace uwp {
     string key{};
   };
 
-  struct KeyboardEvent: ModifiedKeyState
+  struct HandledKeyboardEvent: ModifiedKeyState
   {
     HandledEventPhase handledEventPhase{ HandledEventPhase::Bubbling };
     string key{};
@@ -102,7 +102,7 @@ namespace react { namespace uwp {
     void OnPreKeyDown(winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
     void OnPreKeyUp(winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
 
-    void DispatchEventToJs(string name, winrt::KeyRoutedEventArgs const& args);
+    void DispatchEventToJs(string const& name, winrt::KeyRoutedEventArgs const& args);
     std::weak_ptr<IReactInstance> m_wkReactInstance;
   };
 
@@ -123,16 +123,16 @@ namespace react { namespace uwp {
     void unhook();
 
   public:
-    void UpdateHandledKeyboardEvents(string propertyName, folly::dynamic const& value);
+    void UpdateHandledKeyboardEvents(string const& propertyName, folly::dynamic const& value);
 
   private:
     void EnsureKeyboardEventHandler();
 
     void KeyboardEventHandledHandler(KeyboardEventPhase phase, winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
-    bool ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent);
+    bool ShouldMarkKeyboardHandled(std::vector<HandledKeyboardEvent> const& handledEvents, HandledKeyboardEvent currentEvent);
 
-    std::vector<KeyboardEvent> m_handledKeyUpKeyboardEvents;
-    std::vector<KeyboardEvent> m_handledKeyDownKeyboardEvents;
+    std::vector<HandledKeyboardEvent> m_handledKeyUpKeyboardEvents;
+    std::vector<HandledKeyboardEvent> m_handledKeyDownKeyboardEvents;
 
     std::unique_ptr<PreviewKeyboardEventHandler> m_previewKeyboardEventHandler;
     std::unique_ptr<KeyboardEventHandler> m_keyboardEventHandler;
@@ -140,8 +140,8 @@ namespace react { namespace uwp {
 
   struct KeyboardHelper
   {
-    static std::vector<KeyboardEvent> FromJS(folly::dynamic const& obj);
-    static KeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args);
+    static std::vector<HandledKeyboardEvent> FromJS(folly::dynamic const& obj);
+    static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args);
     static string FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   };
 }}

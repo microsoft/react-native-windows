@@ -126,7 +126,7 @@ public:
 
   // Support Keyboard
 public:
-  void UpdateHandledKeyboardEvents(std::string propertyName, folly::dynamic const& value);
+  void UpdateHandledKeyboardEvents(std::string const& propertyName, folly::dynamic const& value);
 
 private:
   void EnsureHandledKeyboardEventHandler();

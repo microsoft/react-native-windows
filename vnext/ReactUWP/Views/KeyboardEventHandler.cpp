@@ -20,11 +20,11 @@ static constexpr auto TARGET = "target";
 using namespace react::uwp;
 
 template<>
-struct json_type_traits<react::uwp::KeyboardEvent>
+struct json_type_traits<react::uwp::HandledKeyboardEvent>
 {
-  static react::uwp::KeyboardEvent parseJson(const folly::dynamic& json)
+  static react::uwp::HandledKeyboardEvent parseJson(const folly::dynamic& json)
   {
-    react::uwp::KeyboardEvent event;
+    react::uwp::HandledKeyboardEvent event;
 
     for (auto const& pair : json.items())
     {
@@ -44,15 +44,18 @@ struct json_type_traits<react::uwp::KeyboardEvent>
       else if (propertyName == EVENT_PHASE)
         event.handledEventPhase = asEnum<HandledEventPhase>(propertyValue);
     }
+
+    //To simplify the implementaion, key from JS is converted to upper case.
+    toUpperInplace(event.key);
     return event;
   }
 };
 
 namespace react {namespace uwp {
 
-std::vector<KeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const& obj)
+std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const& obj)
 {
-  return json_type_traits<std::vector<KeyboardEvent>>::parseJson(obj);
+  return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
 }
 
 static folly::dynamic ToEventData(ReactKeyboardEvent event)
@@ -135,7 +138,7 @@ HandledKeyboardEventHandler::HandledKeyboardEventHandler()
 {
 }
 
-void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(string propertyName, folly::dynamic const& value)
+void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(string const& propertyName, folly::dynamic const& value)
 {
   if (propertyName == "keyDownEvents") {
     m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
@@ -187,6 +190,10 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase
 
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
+  // Handled KeyboardEvents are converted to uppercase in parseJson
+  // Apply the same logic to actual keyboard input.
+  toUpperInplace(event.key);
+
   bool shouldMarkHandled = false;
   if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
     shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
@@ -197,7 +204,7 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase
     args.Handled(true);
 }
 
-bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(std::vector<KeyboardEvent> const& handledEvents, KeyboardEvent currentEvent)
+bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(std::vector<HandledKeyboardEvent> const& handledEvents, HandledKeyboardEvent currentEvent)
 {
   for (auto const& event : handledEvents)
   {
@@ -233,7 +240,7 @@ template<typename T> void UpdateModifiedKeyStatusTo(T& event)
   event.capLocked = IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
 };
 
-void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winrt::KeyRoutedEventArgs const& args)
+void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string const& eventName, winrt::KeyRoutedEventArgs const& args)
 {
   if (auto instance = m_wkReactInstance.lock())
   {
@@ -252,9 +259,9 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winr
   }
 }
 
-KeyboardEvent KeyboardHelper::CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args)
+HandledKeyboardEvent KeyboardHelper::CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args)
 {
-  KeyboardEvent event;
+  HandledKeyboardEvent event;
   event.handledEventPhase = phase;
   UpdateModifiedKeyStatusTo(event);
   event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);

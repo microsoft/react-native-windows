@@ -123,7 +123,7 @@ void ShadowNodeBase::UpdateTransformPS()
   }
 }
 
-void ShadowNodeBase::UpdateHandledKeyboardEvents(string propertyName, folly::dynamic const& value)
+void ShadowNodeBase::UpdateHandledKeyboardEvents(string const& propertyName, folly::dynamic const& value)
 {
   EnsureHandledKeyboardEventHandler();
   m_handledKeyboardEventHandler->UpdateHandledKeyboardEvents(propertyName, value);
