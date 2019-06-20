@@ -341,7 +341,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
       else if (propertyName == "acceptsKeyboardFocus")
       {
         if (propertyValue.isBool())
-          shouldBeControl = propertyValue.getBool();
+          shouldBeControl = shouldBeControl || propertyValue.getBool();
       }
       else if (propertyName == "accessibilityRole")
       {
@@ -380,7 +380,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
           pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
         }
 
-        shouldBeControl = (pViewShadowNode->AccessibilityRole() != AccessibilityRoles::None);
+        shouldBeControl = shouldBeControl || (pViewShadowNode->AccessibilityRole() != AccessibilityRoles::None);
       }
       else if (propertyName == "accessibilityStates")
       {
@@ -395,13 +395,18 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
             if (!state.isString())
               continue;
             if (state.getString() == "disabled")
+            {
               disabled = true;
+              shouldBeControl = true;
+            }
             else if (state.getString() == "selected")
+            {
               selected = true;
+              shouldBeControl = true;
+            }
           }
         }
 
-        shouldBeControl = true;
         pViewShadowNode->AccessibilityState(AccessibilityStates::Disabled, disabled);
         pViewShadowNode->AccessibilityState(AccessibilityStates::Selected, selected);
       }
