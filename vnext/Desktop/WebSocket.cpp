@@ -31,8 +31,7 @@ using std::unique_ptr;
 
 using boostecr = boost::system::error_code const&;
 
-namespace Microsoft {
-namespace React {
+namespace Microsoft::React {
 
 #pragma region BaseWebSocket members
 
@@ -644,10 +643,9 @@ void TestWebSocket::SetCloseResult(function<error_code()>&& resultFunc)
 #pragma endregion // TestWebSocket
 } // namespace Microsoft::React::Test
 
-} } // namespace Microsoft::React
+} // namespace Microsoft::React
 
-namespace boost {
-namespace asio {
+namespace boost::asio {
 
 // See <boost/asio/connect.hpp>(776)
 template
@@ -667,6 +665,6 @@ async_connect
   handler(s.ConnectResult(), {});
 }
 
-} } // namespace boost::asio
+} // namespace boost::asio
 
 #pragma warning(pop)

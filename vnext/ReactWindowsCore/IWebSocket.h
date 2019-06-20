@@ -7,8 +7,7 @@
 #include <map>
 #include <vector>
 
-namespace Microsoft {
-namespace React {
+namespace Microsoft::React {
 
 ///
 /// Defines the core functionality for a native WebSocket resource.
@@ -168,12 +167,11 @@ struct IWebSocket
   virtual void SetOnError(std::function<void(Error&&)>&& handler) = 0;
 };
 
-} } // namespace facebook::react
+} // namespace Microsoft::React
 
 // Deprecated. Keeping for compatibility with dependent code.
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 using IWebSocket = Microsoft::React::IWebSocket;
 
-} } // namespace facebook::react
+} // namespace facebook::react

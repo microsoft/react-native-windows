@@ -15,8 +15,7 @@ using namespace folly;
 
 using std::string;
 
-namespace Microsoft {
-namespace React {
+namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule()
 {
@@ -143,4 +142,4 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noex
 	return std::make_unique<WebSocketModule>();
 }
 
-} } // Microsoft::React
+} // Microsoft::React

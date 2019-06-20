@@ -10,8 +10,7 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-namespace Microsoft {
-namespace React {
+namespace Microsoft::React {
 
 template
 <
@@ -287,4 +286,4 @@ public:
 
 } // namespace Microsoft::React::Test
 
-} } // namespace Microsoft::React
+} // namespace Microsoft::React
