@@ -6,9 +6,17 @@
 #include "ViewControl.h"
 
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 
 namespace winrt {
-using namespace Windows::UI::Xaml::Interop;
+  using namespace Windows::Foundation;
+  using namespace Windows::UI::Xaml;
+  using namespace Windows::UI::Xaml::Automation;
+  using namespace Windows::UI::Xaml::Automation::Peers;
+  using namespace Windows::UI::Xaml::Automation::Provider;
+  using namespace Windows::UI::Xaml::Controls;
+  using namespace Windows::UI::Xaml::Interop;
+  using namespace Windows::UI::Xaml::Media;
 }
 
 namespace react::uwp
@@ -119,7 +127,7 @@ void DynamicAutomationPeer::Invoke() const
 
 winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSelection() const
 {
-  // Temporarily commenting this out as it keeps crashing andperhaps isn't strictly necessary
+  // Temporarily commenting this out as it keeps crashing and perhaps isn't strictly necessary
   /*if (auto viewPanel = GetViewPanel())
   {
     try

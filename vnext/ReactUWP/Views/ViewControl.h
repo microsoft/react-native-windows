@@ -12,17 +12,6 @@
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <winrt/Windows.UI.Xaml.Automation.Provider.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-
-namespace winrt {
-  using namespace Windows::Foundation;
-  using namespace Windows::UI::Xaml;
-  using namespace Windows::UI::Xaml::Automation;
-  using namespace Windows::UI::Xaml::Automation::Peers;
-  using namespace Windows::UI::Xaml::Automation::Provider;
-  using namespace Windows::UI::Xaml::Controls;
-  using namespace Windows::UI::Xaml::Media;
-}
 
 namespace react {
 namespace uwp {
@@ -31,9 +20,9 @@ namespace uwp {
 // ViewControl is ViewViewManager's ContentControl but with a custom AutomationPeer
 // using DynamicAutomationPeer (See below)
 //
-struct ViewControl : winrt::ContentControlT<ViewControl>
+struct ViewControl : winrt::Windows::UI::Xaml::Controls::ContentControlT<ViewControl>
 {
-  using Super = winrt::ContentControlT<ViewControl>;
+  using Super = winrt::Windows::UI::Xaml::Controls::ContentControlT<ViewControl>;
 private:
   // Constructors
   ViewControl();
@@ -42,7 +31,7 @@ public:
   static winrt::com_ptr<ViewControl> Create();
   template <typename D, typename... Args> friend auto winrt::make_self(Args&&... args);
 
-  winrt::AutomationPeer OnCreateAutomationPeer();
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   // Public Methods
   AccessibilityRoles AccessibilityRole() { return m_accessibilityRole; }
@@ -84,8 +73,8 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
   DynamicAutomationPeer() = delete;
   DynamicAutomationPeer(winrt::FrameworkElement const& owner);
 
-  winrt::AutomationControlType GetAutomationControlTypeCore() const;
-  winrt::IInspectable GetPatternCore(winrt::PatternInterface const& patternInterface) const;
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
+  winrt::IInspectable GetPatternCore(winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const& patternInterface) const;
 
   bool IsEnabledCore() const;
 
@@ -95,11 +84,11 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
   // ISelectionProvider
   bool CanSelectMultiple() const { return true; }
   bool IsSelectionRequired() const { return false; }
-  winrt::com_array<winrt::IRawElementProviderSimple> GetSelection() const;
+  winrt::com_array<winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetSelection() const;
 
   // ISelectionItemProvider
   bool IsSelected() const;
-  winrt::IRawElementProviderSimple SelectionContainer() const;
+  winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple SelectionContainer() const;
   void AddToSelection() const;
   void RemoveFromSelection() const;
   void Select() const;
