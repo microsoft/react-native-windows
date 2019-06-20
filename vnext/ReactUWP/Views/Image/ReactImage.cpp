@@ -124,6 +124,8 @@ namespace react {
     {
       try
       {
+        co_await winrt::resume_background();
+
         auto httpMethod{ source.method.empty() ?
           winrt::HttpMethod::Get() :
           winrt::HttpMethod{facebook::utf8ToUtf16(source.method)}
