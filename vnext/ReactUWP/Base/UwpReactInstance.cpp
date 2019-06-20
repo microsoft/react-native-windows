@@ -64,8 +64,10 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#if !defined(OSS_RN)
 #include<UwpScriptStore.h>
 #include<UwpPreparedScriptStore.h>
+#endif
 
 #if !defined(OSS_RN)
 #include "ChakraJSIRuntimeHolder.h"
