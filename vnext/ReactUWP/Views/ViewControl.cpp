@@ -47,6 +47,11 @@ DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owne
 {
 }
 
+winrt::hstring DynamicAutomationPeer::GetClassNameCore() const
+{
+  return winrt::to_hstring("DynamicAutomationPeer");
+}
+
 winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const
 {
   if (auto viewControl = GetViewControl())
@@ -95,17 +100,21 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
     }
   }
 
-  return nullptr;
+  return Super::GetPatternCore(patternInterface);
 }
 
 bool DynamicAutomationPeer::IsEnabledCore() const
 {
   bool disabled = false;
 
-  if (auto viewControl = GetViewControl())
+  try
   {
-    disabled = viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Disabled);
+    if (auto viewControl = GetViewControl())
+    {
+      disabled = viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Disabled);
+    }
   }
+  catch (winrt::hresult_error const & ex) {}
 
   return !disabled && Super::IsEnabledCore();
 }
@@ -127,35 +136,10 @@ void DynamicAutomationPeer::Invoke() const
 
 winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSelection() const
 {
-  // Temporarily commenting this out as it keeps crashing and perhaps isn't strictly necessary
-  /*if (auto viewPanel = GetViewPanel())
-  {
-    try
-    {
-      std::vector<winrt::IRawElementProviderSimple> providers;
+  // We don't differentiate between Views that are containers and Views that are items, and we don't
+  // have a way to specify the linkage between the two
 
-      for (winrt::UIElement child : viewPanel->Children())
-      {
-        if (auto viewControl = child.try_as<::react::uwp::ViewControl>())
-        {
-          if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(child))
-          {
-            winrt::IRawElementProviderSimple provider = ProviderFromPeer(peer);
-            providers.push_back(provider);
-          }
-        }
-      }
-
-      if (!providers.empty())
-      {
-        winrt::com_array<winrt::IRawElementProviderSimple> providersArray{ providers };
-        return providersArray;
-      }
-    }
-    catch (std::exception e) {}
-
-  }*/
-
+  // Returning nothing until that linkage exists
   return {};
 }
 
@@ -163,22 +147,36 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 
 bool DynamicAutomationPeer::IsSelected() const
 {
-  auto viewControl = GetViewControl();
-  return (viewControl && viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Selected));
+  try
+  {
+    auto viewControl = GetViewControl();
+    return (viewControl && viewControl->AccessibilityState(::react::uwp::AccessibilityStates::Selected));
+  }
+  catch (winrt::hresult_error const & ex) {}
+
+  return false;
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const
 {
-  if (auto viewControl = GetParentViewControl())
+  // We don't differentiate between Views that are containers and Views that are items, and we don't
+  // have a way to specify the linkage between the two
+
+  // This logic grabs the first View (ViewControl) going up the tree as the container
+  try
   {
-    if (auto element = viewControl.try_as<winrt::UIElement>())
+    if (auto viewControl = GetParentViewControl())
     {
-      if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(element))
+      if (auto element = viewControl.try_as<winrt::UIElement>())
       {
-        return ProviderFromPeer(peer);
+        if (auto peer = winrt::FrameworkElementAutomationPeer::CreatePeerForElement(element))
+        {
+          return ProviderFromPeer(peer);
+        }
       }
     }
   }
+  catch (winrt::hresult_error const & ex) {}
 
   return nullptr;
 }
@@ -204,16 +202,16 @@ winrt::com_ptr<::react::uwp::ViewControl> DynamicAutomationPeer::GetViewControl(
   {
     return Owner().try_as<::react::uwp::ViewControl>();
   }
-  catch (std::exception e) {}
+  catch (winrt::hresult_error const & ex) {}
 
   return nullptr;
 }
 
 winrt::com_ptr<::react::uwp::ViewPanel> DynamicAutomationPeer::GetViewPanel() const
 {
-  if (auto viewControl = GetViewControl())
+  try
   {
-    try
+    if (auto viewControl = GetViewControl())
     {
       auto child = viewControl->Content();
 
@@ -221,14 +219,14 @@ winrt::com_ptr<::react::uwp::ViewPanel> DynamicAutomationPeer::GetViewPanel() co
       {
         child = border.Child();
       }
-    
+
       if (auto viewPanel = child.try_as<::react::uwp::ViewPanel>())
       {
         return viewPanel;
       }
     }
-    catch (std::exception e) {}
   }
+  catch (winrt::hresult_error const & ex) {}
 
   return nullptr;
 }
@@ -250,7 +248,7 @@ winrt::com_ptr<::react::uwp::ViewControl> DynamicAutomationPeer::GetParentViewCo
       }
     }
   }
-  catch (std::exception e) {}
+  catch (winrt::hresult_error const & ex) {}
 
   return nullptr;
 }

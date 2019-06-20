@@ -73,6 +73,8 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
   DynamicAutomationPeer() = delete;
   DynamicAutomationPeer(winrt::FrameworkElement const& owner);
 
+  winrt::hstring GetClassNameCore() const;
+
   winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
   winrt::IInspectable GetPatternCore(winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const& patternInterface) const;
 

@@ -80,13 +80,14 @@ class AccessibilityStateExamples extends React.Component {
           <Text>This View should be {this.state.viewDisabled ? "disabled" : "enabled"} according to UIA</Text>
         </View>
         <Text>The following list of TouchableHighlights toggles accessibilityState.selected when touched:</Text>
-        <View accessibilityRole="button">
+        <View accessibilityLabel="List of selectable items" accessibilityRole={"header"}>
           <FlatList
             data={selectableItems}
             renderItem={(item) =>
               <TouchableHighlight
                 style={{width:50, height:50, backgroundColor: this.state.itemsSelected[item.index] ? 'gray' : 'lightskyblue'}}
                 accessibilityRole="button"
+                accessibilityLabel={"Selectable item " + (item.index + 1)}
                 accessibilityStates={this.state.itemsSelected[item.index] ? ['selected'] : []}
                 onPress={() => this.selectPress(item.index)}
               >
