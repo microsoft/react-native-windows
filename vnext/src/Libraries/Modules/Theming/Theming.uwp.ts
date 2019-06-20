@@ -8,7 +8,7 @@ const ThemingNative = require('NativeModules').ThemingModule;
 
 const _subscriptions = new Map<Function, EmitterSubscription>();
 
-class Theming extends NativeEventEmitter  {
+export class Theming extends NativeEventEmitter  {
 
   constructor() {
     super(ThemingNative);
@@ -41,4 +41,4 @@ class Theming extends NativeEventEmitter  {
   }
 }
 
-export = Theming;
+export default Theming;

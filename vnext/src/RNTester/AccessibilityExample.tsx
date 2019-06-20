@@ -5,6 +5,12 @@
 
 import React = require('react');
 import { Text, TouchableHighlight, View } from 'react-native';
+import { Theming } from '../../src/index.uwp';
+
+// 'global' var so that background changed on highContrast event can be easily 
+// propogated to any control.
+var currentBackgroundColor = ['blue', 'red'];
+var isHighContrast = 'false';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -33,19 +39,28 @@ class HighContrastExample extends React.Component {
       <View>
         <Text>The following has HighContrast Event awareness:</Text>
         <View
-          style={{width:50, height:50, backgroundColor:'blue'}}
+          style={{width:50, height:50, backgroundColor: currentBackgroundColor[0]}}
           accessibilityLabel="A blue box"
-          accessibilityHint="A hint for the blue box."
-        />
+          accessibilityHint="A hint for the blue box.">
+        <Text>{isHighContrast}</Text>
+        </View>
         <Text>The following does not have HighContrast Event awareness:</Text>
         <View
-          style={{ width: 50, height: 50, backgroundColor: 'blue' }}
+          style={{ width: 50, height: 50, backgroundColor: currentBackgroundColor[1]}}
           accessible={true}
-          accessibilityLabel="A hint for the blue box."
+          accessibilityLabel="A hint for the red box."
         />
+        onHighContrastChanged={Theming.addListener};
       </View>
     );
   }
+
+  private onHighContrastChanged = () => {
+      isHighContrast=Theming.getConstants();
+      // Just changing both so that we can verify that control 1 
+      // does change and control 2 does not.
+      currentBackgroundColor=['white', 'black'];
+  };
 }
 
 class TouchableExamples extends React.Component<{}, any> {
