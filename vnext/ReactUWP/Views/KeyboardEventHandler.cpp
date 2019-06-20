@@ -245,7 +245,7 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string eventName, winr
         ReactKeyboardEvent event;
         event.target = reactId.tag;
         UpdateModifiedKeyStatusTo(event);
-        event.key = KeyboardHelper::FromVirutalKey(args.Key(), event.shiftKey, event.capLocked);
+        event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
         instance->DispatchEvent(event.target, eventName, ToEventData(event));
       }
     }
@@ -257,7 +257,7 @@ KeyboardEvent KeyboardHelper::CreateKeyboardEvent(HandledEventPhase phase, winrt
   KeyboardEvent event;
   event.handledEventPhase = phase;
   UpdateModifiedKeyStatusTo(event);
-  event.key = KeyboardHelper::FromVirutalKey(args.Key(), event.shiftKey, event.capLocked);
+  event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
 
   return event;
 }
@@ -373,7 +373,7 @@ static const std::map<winrt::VirtualKey, string> g_virtualKeyToString
   //
 };
 
-string KeyboardHelper::FromVirutalKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked)
+string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked)
 {
   char key = static_cast<char>(virtualKey);
 

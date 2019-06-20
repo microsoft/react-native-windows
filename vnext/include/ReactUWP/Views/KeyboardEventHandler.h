@@ -142,6 +142,6 @@ namespace react { namespace uwp {
   {
     static std::vector<KeyboardEvent> FromJS(folly::dynamic const& obj);
     static KeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args);
-    static string FromVirutalKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
+    static string FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   };
 }}
