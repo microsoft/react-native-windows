@@ -97,10 +97,15 @@ namespace react {
             winrt::LoadedImageSurface::StartLoadFromStream(memoryStream) :
             winrt::LoadedImageSurface::StartLoadFromUri(uri) };
 
-          // using a lambda here to capture the surface and prevent it from freeing while the image loads
           surface.LoadCompleted([this, surface](winrt::LoadedImageSurface const& sender, winrt::LoadedImageSourceLoadCompletedEventArgs const& args) {
-			      this->LoadedImageSurfaceHandler(sender, args);
-		      });
+            bool succeeded{ false };
+            if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
+              m_brush->Source(surface);
+              succeeded = true;
+            }
+
+            m_onLoadEndEvent(*this, succeeded);
+          });
         }
       }
       catch (winrt::hresult_error const&)
