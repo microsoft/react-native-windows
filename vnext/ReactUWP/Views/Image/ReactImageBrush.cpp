@@ -110,22 +110,17 @@ namespace react {
       }
     }
 
-    bool ReactImageBrush::IsImageLargerThanView()
+    bool ReactImageBrush::IsImageSmallerThanView()
     {
       if (m_loadedImageSurface)
       {
         auto surface{ GetOrCreateSurfaceBrush().Surface().as<winrt::LoadedImageSurface>() };
         winrt::Size dipsSize{ surface.DecodedSize() };
 
-        return (dipsSize.Height > AvailableSize().Height) || (dipsSize.Width > AvailableSize().Width);
+        return (dipsSize.Height < AvailableSize().Height) && (dipsSize.Width < AvailableSize().Width);
       }
 
       return false;
-    }
-
-    bool ReactImageBrush::UsingSurfaceBrush()
-    {
-      return CompositionBrush().try_as<winrt::CompositionSurfaceBrush>() != nullptr;
     }
 
     winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch()
@@ -134,10 +129,6 @@ namespace react {
 
       switch (ResizeMode())
       {
-      case ResizeMode::Center:
-        stretch = IsImageLargerThanView() ? winrt::CompositionStretch::Uniform : winrt::CompositionStretch::None;
-        break;
-
       case ResizeMode::Contain:
         stretch = winrt::CompositionStretch::Uniform;
         break;
@@ -150,8 +141,9 @@ namespace react {
         stretch = winrt::CompositionStretch::Fill;
         break;
 
+      case ResizeMode::Center:
       case ResizeMode::Repeat:
-        stretch = IsImageLargerThanView() ? winrt::CompositionStretch::Uniform : winrt::CompositionStretch::None;
+        stretch = IsImageSmallerThanView() ? winrt::CompositionStretch::None : winrt::CompositionStretch::Uniform;
         break;
       }
 
