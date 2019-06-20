@@ -10,7 +10,7 @@ public:
   facebook::jsi::VersionedBuffer getVersionedScript(const std::string& url) noexcept override;
   facebook::jsi::ScriptVersion_t getScriptVersion(const std::string& url) noexcept override;
 private:
-  std::future<winrt::Windows::Foundation::DateTime> getBundleCreatedDate(const std::string& bundlePath);
+  std::future<winrt::Windows::Foundation::DateTime> getBundleModifiedDate(const std::string& bundlePath);
 };
 
 }}

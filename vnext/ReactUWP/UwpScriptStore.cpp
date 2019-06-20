@@ -1,8 +1,15 @@
 #include "pch.h"
 #include "UwpScriptStore.h"
 #include <winrt/Windows.Storage.h>
+#include <winrt/Windows.Storage.FileProperties.h>
+#include <winrt/Windows.Foundation.h>
 #include <future>
 #include "unicode.h"
+
+namespace winrt {
+  using namespace winrt::Windows::Foundation;
+  using namespace winrt::Windows::Storage;
+}
 
 namespace react { namespace uwp {
 
@@ -19,26 +26,25 @@ facebook::jsi::VersionedBuffer UwpScriptStore::getVersionedScript(const std::str
 facebook::jsi::ScriptVersion_t UwpScriptStore::getScriptVersion(const std::string& url) noexcept
 {
   const std::string bundleUrl = "ms-appx:///Bundle/" + url + ".bundle";
-  const winrt::Windows::Foundation::DateTime bundleCreatedTime = getBundleCreatedDate(bundleUrl).get();
-  const std::uint64_t timestamp = bundleCreatedTime.time_since_epoch().count();
+  const winrt::DateTime bundleModifiedTime = getBundleModifiedDate(bundleUrl).get();
+  const std::uint64_t timestamp = bundleModifiedTime.time_since_epoch().count();
   return timestamp;
 }
 
-std::future<winrt::Windows::Foundation::DateTime> UwpScriptStore::getBundleCreatedDate(const std::string& bundleUri)
+std::future<winrt::DateTime> UwpScriptStore::getBundleModifiedDate(const std::string& bundleUri)
 {
   winrt::hstring str(facebook::react::unicode::utf8ToUtf16(bundleUri));
   winrt::Windows::Foundation::Uri uri(str);
 
-  co_await winrt::resume_background();
-
   try
   {
-    auto file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
-    return file.DateCreated();
+    auto file = co_await winrt::StorageFile::GetFileFromApplicationUriAsync(uri);
+    auto props = file.GetBasicPropertiesAsync().get();
+    return props.DateModified();
   }
   catch (winrt::hresult_error const& ex)
   {
-    winrt::Windows::Foundation::DateTime date;
+    winrt::DateTime date;
     return date;
   }
 }

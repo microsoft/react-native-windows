@@ -1,10 +1,7 @@
 #include "pch.h"
 #include "UwpPreparedScriptStore.h"
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Storage.h>
-#include <Utils/LocalBundleReader.h>
-#include "ChakraJsiRuntime.h"
 #include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Storage.FileProperties.h>
 #include "unicode.h"
 #include "jsi/jsi.h"
 
@@ -34,17 +31,16 @@ std::unique_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPrepa
 ) noexcept
 {
   try {
+    
     // check if app bundle version is older than or equal to the prepared script version
     // if true then just read the buffer from the prepared script and return
-
-
     auto byteCodeFile = TryGetByteCodeFileSync(scriptSignature.version);
     if (byteCodeFile == nullptr) {
       return nullptr;
     }
 
     auto buffer = winrt::FileIO::ReadBufferAsync(byteCodeFile).get();
-    auto bytecodeBuffer(std::make_unique<facebook::jsi::chakraruntime::ByteArrayBuffer>(buffer.Length()));
+    auto bytecodeBuffer(std::make_unique<ByteCodeBuffer>(buffer.Length()));
     auto dataReader{ winrt::Streams::DataReader::FromBuffer(buffer) };
     dataReader.ReadBytes(winrt::array_view<uint8_t> { &bytecodeBuffer->data()[0], &bytecodeBuffer->data()[bytecodeBuffer->size()] });
     dataReader.Close();
@@ -88,8 +84,8 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(facebook::jsi:
   try {
     if (m_byteCodeFileAsync != nullptr) {
       auto file = m_byteCodeFileAsync.get();
-      auto createdDateTime = file.DateCreated();
-      facebook::jsi::ScriptVersion_t byteCodeVersion = createdDateTime.time_since_epoch().count();
+      auto fileprops = file.GetBasicPropertiesAsync().get();
+      facebook::jsi::ScriptVersion_t byteCodeVersion = fileprops.DateModified().time_since_epoch().count();
       if (byteCodeVersion >= version) {
         return file;
       }
@@ -99,12 +95,11 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(facebook::jsi:
     // Eat this exception. If we can't get the file from the uri. Still try looking  in the cache.
   }
 
-
   // Getting here means one of two things. No bytecode file uri was specified, or the file uri was specified but it is outdated.
   // Try looking in LocalCache folder for app.bytecode and use that.
   auto file = winrt::ApplicationData::Current().LocalCacheFolder().GetFileAsync(L"app.bytecode").get();
-  auto createdDateTime = file.DateCreated();
-  facebook::jsi::ScriptVersion_t byteCodeVersion = createdDateTime.time_since_epoch().count();
+  auto fileprops = file.GetBasicPropertiesAsync().get();
+  facebook::jsi::ScriptVersion_t byteCodeVersion = fileprops.DateModified().time_since_epoch().count();
 
   return byteCodeVersion > version ? file : nullptr;
 }
