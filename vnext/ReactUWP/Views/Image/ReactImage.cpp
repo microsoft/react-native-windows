@@ -97,14 +97,16 @@ namespace react {
             winrt::LoadedImageSurface::StartLoadFromStream(memoryStream) :
             winrt::LoadedImageSurface::StartLoadFromUri(uri) };
 
-          surface.LoadCompleted([this, surface](winrt::LoadedImageSurface const& sender, winrt::LoadedImageSourceLoadCompletedEventArgs const& args) {
-            bool succeeded{ false };
-            if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
-              m_brush->Source(surface);
-              succeeded = true;
-            }
+          surface.LoadCompleted([weak_this{ get_weak() }, surface](winrt::LoadedImageSurface const& /*sender*/, winrt::LoadedImageSourceLoadCompletedEventArgs const& args) {
+            if (auto strong_this{ weak_this.get() }) {
+              bool succeeded{ false };
+              if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
+                strong_this->m_brush->Source(surface);
+                succeeded = true;
+              }
 
-            m_onLoadEndEvent(*this, succeeded);
+              strong_this->m_onLoadEndEvent(*strong_this, succeeded);
+            }
           });
         }
       }
