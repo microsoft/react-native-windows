@@ -114,18 +114,6 @@ namespace react {
       }
     }
 
-    void ReactImage::LoadedImageSurfaceHandler(winrt::LoadedImageSurface const& sender, winrt::LoadedImageSourceLoadCompletedEventArgs const& args)
-    {
-      bool succeeded{ false };
-      if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success)
-      {
-        m_brush->Source(sender.as<winrt::LoadedImageSurface>());
-        succeeded = true;
-      }
-
-      m_onLoadEndEvent(*this, succeeded);
-    }
-
     winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source)
     {
       try
