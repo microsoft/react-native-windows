@@ -103,6 +103,21 @@ public:
   void removeAllChildren() override
   {
     GetViewPanel()->Clear();
+
+    XamlView current = m_view;
+
+    if (IsControl())
+    {
+      auto control = m_view.as<winrt::ContentControl>();
+      current = control.Content().as<XamlView>();
+      control.Content(nullptr);
+    }
+
+    if (HasOuterBorder())
+    {
+      auto border = current.try_as<winrt::Border>();
+      border.Child(nullptr);
+    }
   }
 
   void ReplaceChild(XamlView oldChildView, XamlView newChildView) override
