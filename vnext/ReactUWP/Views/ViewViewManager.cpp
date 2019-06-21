@@ -102,7 +102,7 @@ public:
 
   void removeAllChildren() override
   {
-    GetViewPanel()->Clear();
+    GetViewPanel(/* removeAllChildren */ true)->Clear();
   }
 
   void ReplaceChild(XamlView oldChildView, XamlView newChildView) override
@@ -134,7 +134,7 @@ public:
     static_cast<FrameworkElementViewManager*>(GetViewManager())->RefreshTransformMatrix(this);
   }
 
-  winrt::com_ptr<ViewPanel> GetViewPanel()
+  winrt::com_ptr<ViewPanel> GetViewPanel(bool removeAllChildren = false)
   {
     XamlView current = m_view;
 
@@ -142,12 +142,18 @@ public:
     {
       auto control = m_view.as<winrt::ContentControl>();
       current = control.Content().as<XamlView>();
+      if (removeAllChildren) {
+        control.Content(nullptr);
+      }
     }
 
     if (HasOuterBorder())
     {
       auto border = current.try_as<winrt::Border>();
       current = border.Child().try_as<XamlView>();
+      if (removeAllChildren) {
+        border.Child(nullptr);
+      }
     }
 
     auto panel = current.try_as<ViewPanel>();
