@@ -216,6 +216,11 @@
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
     </ClCompile>
@@ -419,7 +424,7 @@
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
@@ -462,7 +467,7 @@
     <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h">
       <Filter>Views\cppwinrt\winrt</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\Microsoft.UI.Composition.Effects.BorderEffect.g.h">
+    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\Image\ReactImageBrush.h">
@@ -482,6 +487,12 @@
     </ClInclude>
     <ClInclude Include="Views\Image\BorderEffect.h">
       <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="UwpScriptStore.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

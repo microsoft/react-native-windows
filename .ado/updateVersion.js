@@ -65,6 +65,11 @@ function updateVersion() {
   exec(`git push origin HEAD:${tempPublishBranch} --follow-tags --verbose`);
   exec(`git push origin tag ${tagName}`);
 
+  // Record the updated npmVersion and commitId so that later build tasks can use it (to record in the nuget for instance)
+  const publishCommitId = execSync(`git rev-list -n 1 ${tagName}`);
+  console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${publishCommitId}`);
+  console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${releaseVersion}`);
+  
   exec(`git checkout ${publishBranchName}`);
   exec(`git pull origin ${publishBranchName}`);
   exec(`git merge ${tempPublishBranch} --no-edit`);
