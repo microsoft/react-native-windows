@@ -216,6 +216,11 @@
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
     </ClCompile>
@@ -482,6 +487,12 @@
     </ClInclude>
     <ClInclude Include="Views\Image\BorderEffect.h">
       <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="UwpScriptStore.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
