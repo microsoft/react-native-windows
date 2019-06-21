@@ -15,7 +15,7 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
-    "watch": "node node_modules/@office-iss/sdx-build-tools/watch.js"
+    "watch": "tsc -w"
   },
   "disabledTasks": [
     "api-doc",
