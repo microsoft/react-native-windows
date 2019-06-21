@@ -15,6 +15,12 @@ using namespace folly;
 
 using std::string;
 
+namespace {
+
+static string s_moduleName = "WebSocketModule";
+
+} // anonymous namespace
+
 namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule()
@@ -23,7 +29,7 @@ WebSocketModule::WebSocketModule()
 
 string WebSocketModule::getName()
 {
-  return "WebSocketModule";
+  return s_moduleName;
 }
 
 std::map<string, dynamic> WebSocketModule::getConstants()

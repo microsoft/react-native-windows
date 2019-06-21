@@ -32,9 +32,9 @@ class BaseWebSocket : public IWebSocket
   boost::beast::multi_buffer m_bufferIn;
   std::thread m_contextThread;
 
-  ///
-  // Must be modified exclusively from the context thread.
-  ///
+  /// <remarks>
+  /// Must be modified exclusively from the context thread.
+  /// </remarks>
   std::queue<std::pair<std::string, bool>> m_writeRequests;
 
   std::atomic_size_t m_pingRequests { 0 };
@@ -85,21 +85,28 @@ class BaseWebSocket : public IWebSocket
   /// </summary>
   void PerformClose();
 
-  ///
   /// <summary>
   /// Synchronizes the context thread and allows the io_context to stop dispatching tasks.
   /// </summary>
-  ///
   void Stop();
 
   boost::beast::websocket::close_code ToBeastCloseCode(IWebSocket::CloseCode closeCode);
 
 protected:
-  std::function<void(Error&&)> m_errorHandler;
-
+  /// <summary>
+  /// See https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio/reference/io_context.html.
+  ///
+  /// Dispatches tasks posted either by <see cref="m_stream" />
+  /// or arbitrary lambdas using <c>boost::asio::post</c>.
+  /// </summary>
+  /// <remarks>
+  /// Tasks will be run in the thread that calls this object's <c>run</c> method.
+  /// </remarks>
   boost::asio::io_context m_context;
+
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
   std::unique_ptr<Stream> m_stream;
+  std::function<void(Error&&)> m_errorHandler;
 
   BaseWebSocket(Url&& url);
 
@@ -107,7 +114,7 @@ protected:
 
   /// <summary>
   /// Finalizes the connection setup to the remote endpoint.
-  /// Sets the ready state to <c>Open</c>
+  /// Sets the ready state to <c>Open</c>.
   /// </summary>
   /// <remarks>
   /// On callback, invokes the connect handler, if set.
@@ -204,7 +211,9 @@ public:
 
 namespace Test {
 
-// See <boost/beast/experimental/test/stream.hpp>
+/// <summary>
+/// See <boost/beast/experimental/test/stream.hpp>.
+/// </summary>
 class MockStream
 {
   boost::asio::io_context& m_context;
