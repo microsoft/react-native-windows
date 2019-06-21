@@ -1,9 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "TransformAnimatedNode.h"
+#include "FacadeType.h"
 
 namespace react {
   namespace uwp {
-    TransformAnimatedNode::TransformAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : AnimatedNode(tag), m_manager(manager)
+    TransformAnimatedNode::TransformAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
     {
       for (auto transform : config.find("transforms").dereference().second)
       {
@@ -26,7 +30,7 @@ namespace react {
       {
         if (config.nodeTag != -1)
         {
-          mapping.insert({ NativeAnimatedNodesManager::StringToFacadeType(config.property), config.nodeTag });
+          mapping.insert({ StringToFacadeType(config.property), config.nodeTag });
         }
       }
       return mapping;

@@ -1,9 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "AdditionAnimatedNode.h"
 
 namespace react {
   namespace uwp {
-    AdditionAnimatedNode::AdditionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : ValueAnimatedNode(tag, config, manager)
+    AdditionAnimatedNode::AdditionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, config, manager)
     {
       for (auto inputNode : config.find("input").dereference().second)
       {

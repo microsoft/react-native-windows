@@ -1,17 +1,19 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
-#include "pch.h"
 #include "AnimatedNode.h"
-#include "NativeAnimatedNodesManager.h"
+#include "NativeAnimatedNodeManager.h"
 #include <folly/dynamic.h>
 
 namespace react {
   namespace uwp {
 
-    class NativeAnimatedNodesManager;
+    class NativeAnimatedNodeManager;
     class AdditionAnimatedNode : public ValueAnimatedNode
     {
     public:
-      AdditionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager);
+      AdditionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
 
     private:
       std::unordered_set<int64_t> m_inputNodes{};

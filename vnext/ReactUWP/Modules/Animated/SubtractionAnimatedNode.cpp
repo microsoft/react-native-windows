@@ -1,24 +1,26 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "SubtractionAnimatedNode.h"
 
-namespace react {
-  namespace uwp {
-    SubtractionAnimatedNode::SubtractionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : ValueAnimatedNode(tag, config, manager)
+namespace react { namespace uwp {
+  SubtractionAnimatedNode::SubtractionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, config, manager)
+  {
+    for (auto inputNode : config.find("input").dereference().second)
     {
-      for (auto inputNode : config.find("input").dereference().second)
+      if (m_firstInput == -1)
       {
-        if (m_firstInput == -1)
-        {
-          m_firstInput = inputNode.asInt();
-        }
-        else
-        {
-          m_inputNodes.insert(inputNode.asInt());
-        }
+        m_firstInput = inputNode.asInt();
       }
+      else
+      {
+        m_inputNodes.insert(inputNode.asInt());
+      }
+    }
 
-      m_propertySet.StartAnimation(L"value",
-        [firstNode = m_firstInput, nodes = m_inputNodes, manager]()
+    m_propertySet.StartAnimation(L"value",
+      [firstNode = m_firstInput, nodes = m_inputNodes, manager]()
       {
         const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
 
@@ -35,8 +37,6 @@ namespace react {
           return expr;
         }());
         return anim;
-      }()
-        );
-    }
+      }());
   }
-}
+} }

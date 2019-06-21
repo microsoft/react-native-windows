@@ -3,10 +3,9 @@
 
 #pragma once
 
-#include "pch.h"
 #include <folly/dynamic.h>
 #include <cxxreact/CxxModule.h>
-#include "NativeAnimatedNodesManager.h"
+#include "NativeAnimatedNodeManager.h"
 
   /// <summary>
   /// Module that exposes interface for creating and managing animated nodes 
@@ -42,424 +41,49 @@
   /// 
   /// Last "special" elements of the the graph are "animation drivers". Those
   /// are objects (represented as a graph nodes too) that based on some
-  /// criteria updates attached values every frame (we have few types of
-  /// those, e.g., spring, timing, decay). Animation objects can be "started"
-  /// and "stopped". Those are like "pulse generators" for the rest of the 
-  /// nodes graph. Those pulses then propagate along the graph to the
+  /// criteria updates attached values via a composition expression animatation
+  /// (we have few types of those, e.g., spring, timing, decay). Animation objects
+  /// can be "started" and "stopped". Those are like "pulse generators" for the
+  /// rest of the nodes graph. Those pulses then propagate along the graph to the
   /// children nodes up to the special node type: AnimatedProps which then 
   /// can be used to calculate prop update map for a view.
   /// 
   /// This class acts as a proxy between the "native" API that can be called
   /// from JS and the main class that coordinates all the action: 
-  /// <see cref="NativeAnimatedNodesManager"/>. Since all the methods from
-  /// <see cref="NativeAnimatedNodesManager"/> need to be called from the UI
-  /// thread, we create a queue of animated graph operations that is then
-  /// enqueued to be executed on the UI Thread at the end of the batch of 
-  /// JS->native calls (similarily to how it's handled in 
-  /// <see cref="UIManagerModule"/>). This isolates us from the problems that
-  /// may be caused by concurrent updates of animated graph while UI thread 
-  /// is "executing" the animation loop.
+  /// <see cref="NativeAnimatedNodeManager"/>.
   /// </remarks>
-namespace react {
-  namespace uwp {
+namespace react { namespace uwp {
+  class NativeAnimatedModule final : public facebook::xplat::module::CxxModule
+  {
+  public:
+    NativeAnimatedModule(const std::weak_ptr<IReactInstance> & reactInstance);
+    virtual ~NativeAnimatedModule() = default;
 
-    class NativeAnimatedModule final : public facebook::xplat::module::CxxModule
-    {
-    public:
-      NativeAnimatedModule(const std::shared_ptr<IReactInstance> & reactInstance);
-      virtual ~NativeAnimatedModule();
+    // CxxModule
+    std::string getName() override { return name; };
+    std::map<std::string, folly::dynamic> getConstants() override { return {}; };
+    auto getMethods()->std::vector<Method> override;
 
-      // CxxModule
-      std::string getName() override;
-      std::map<std::string, folly::dynamic> getConstants() override;
-      auto getMethods()->std::vector<Method> override;
+    void CreateAnimatedNode(int64_t tag, const folly::dynamic& config);
+    void ConnectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag);
+    void DisconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag);
+    void ConnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
+    void DisconnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
+    void StartAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, const Callback& endCallback);
+    void StopAnimation(int64_t animationId);
+    void DropAnimatedNode(int64_t tag);
+    void SetAnimatedNodeValue(int64_t tag, double value);
+    void SetAnimatedNodeOffset(int64_t tag, double offset);
+    void FlattenAnimatedNodeOffset(int64_t tag);
+    void ExtractAnimatedNodeOffset(int64_t tag);
+    void AddAnimatedEventToView(int64_t tag, const std::string& eventName, const folly::dynamic& eventMapping);
+    void RemoveAnimatedEventFromView(int64_t tag, const std::string& eventName, int64_t animatedValueTag);
+    void StartListeningToAnimatedNodeValue(int64_t tag);
+    void StopListeningToAnimatedNodeValue(int64_t tag);
 
-      void createAnimatedNode(int64_t tag, const folly::dynamic& config);
-      void connectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag);
-      void disconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag);
-      void connectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
-      void disconnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag);
-      void startAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, Callback endCallback);
-      void stopAnimation(int64_t animationId);
-      void dropAnimatedNode(int64_t tag);
-      void setAnimatedNodeValue(int64_t tag, double value);
-      void setAnimatedNodeOffset(int64_t tag, double offset);
-      void flattenAnimatedNodeOffset(int64_t tag);
-      void extractAnimatedNodeOffset(int64_t tag);
-      void addAnimatedEventToView(int64_t tag, const std::string& eventName, const folly::dynamic& eventMapping);
-      void removeAnimatedEventFromView(int64_t tag, const std::string& eventName, int64_t animatedValueTag);
-      void startListeningToAnimatedNodeValue(int64_t tag);
-      void stopListeningToAnimatedNodeValue(int64_t tag);
-
-      static const char* name;
-
-
-
-    private:
-      std::shared_ptr<NativeAnimatedNodesManager> _nodesManager{};
-      std::weak_ptr<IReactInstance> m_wkReactInstance;
-    };
-  }
-}/*
-      /// <summary>
-      /// The name of the module.
-      /// </summary>
-      public override string Name
-      {
-          get
-          {
-              return "NativeAnimatedModule";
-          }
-      }
-
-      private NativeAnimatedNodesManager NodesManager
-      {
-          get
-          {
-              if (_nodesManager == null)
-              {
-                  var uiManager = Context.GetNativeModule<UIManagerModule>();
-                  _nodesManager = new NativeAnimatedNodesManager(uiManager);
-              }
-
-              return _nodesManager;
-          }
-      }
-
-            /// <summary>
-            /// Called after the creation of a <see cref="IReactInstance"/>, in
-            /// order to initialize native modules that require the React or
-            /// JavaScript modules.
-            /// </summary>
-            public override void Initialize()
-            {
-                var ctx = Context;
-                var uiManager = ctx.GetNativeModule<UIManagerModule>();
-                uiManager.DispatchingViewUpdates += OnDispatchingViewUpdates;
-                _animatedFrameCallback = (sender, args) = >
-                {
-                    try
-                    {
-                        var nodesManager = NodesManager;
-                        if (nodesManager.HasActiveAnimations)
-                        {
-                            nodesManager.RunUpdates(args.RenderingTime);
-                        }
-                        else
-                        {
-                            ReactChoreographer.Instance.DeactivateCallback(nameof(NativeAnimatedModule));
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Context.HandleException(ex);
-                    }
-                };
-
-                ctx.AddLifecycleEventListener(this);
-            }
-
-            private void OnDispatchingViewUpdates(object sender, EventArgs e)
-            {
-                if (_operations.Count == 0 && _preOperations.Count == 0)
-                {
-                    return;
-                }
-
-                var uiManager = (UIManagerModule)sender;
-                List<Action<NativeAnimatedNodesManager>> preOperations;
-                List<Action<NativeAnimatedNodesManager>> operations;
-                lock(_operationsGate)
-                {
-                    preOperations = _preOperations;
-                    operations = _operations;
-                    _preOperations = new List<Action<NativeAnimatedNodesManager>>();
-                    _operations = new List<Action<NativeAnimatedNodesManager>>();
-                }
-
-                uiManager.PrependUIBlock(new UIBlock(() = >
-                {
-                    var nodesManager = NodesManager;
-                    foreach(var operation in preOperations)
-                    {
-                        operation(nodesManager);
-                    }
-                }));
-
-                uiManager.AddUIBlock(new UIBlock(() = >
-                {
-                    var nodesManager = NodesManager;
-                    foreach(var operation in operations)
-                    {
-                        operation(nodesManager);
-                    }
-                }));
-
-                ReactChoreographer.Instance.ActivateCallback(nameof(NativeAnimatedModule));
-            }
-
-            /// <summary>
-            /// Called when the host is shutting down.
-            /// </summary>
-            public void OnDestroy()
-            {
-                ReactChoreographer.Instance.NativeAnimatedCallback -= _animatedFrameCallback;
-            }
-
-            /// <summary>
-            /// Called when the host receives the resume event.
-            /// </summary>
-            public void OnResume()
-            {
-                ReactChoreographer.Instance.NativeAnimatedCallback += _animatedFrameCallback;
-            }
-
-            /// <summary>
-            /// Called when the host receives the suspend event.
-            /// </summary>
-            public void OnSuspend()
-            {
-                ReactChoreographer.Instance.NativeAnimatedCallback -= _animatedFrameCallback;
-            }
-
-            /// <summary>
-            /// Creates an animated node.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            /// <param name="config">Animation configuration.</param>
-            [ReactMethod]
-            public void createAnimatedNode(int tag, JObject config)
-            {
-                AddOperation(manager = >
-                    manager.CreateAnimatedNode(tag, config));
-            }
-
-            /// <summary>
-            /// Creates listener for animated values on the given node.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            [ReactMethod]
-            public void startListeningToAnimatedNodeValue(int tag)
-            {
-                AddOperation(manager = >
-                    manager.StartListeningToAnimatedNodeValue(tag, value = >
-                        Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                            .emit("onAnimatedValueUpdate", new JObject
-                            {
-                                { "tag", tag },
-                                { "value", value }
-                            })));
-            }
-
-            /// <summary>
-            /// Removes listener for animated values on the given node.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            [ReactMethod]
-            public void stopListeningToAnimatedNodeValue(int tag)
-            {
-                AddOperation(manager = >
-                    manager.StopListeningToAnimatedNodeValue(tag));
-            }
-
-            /// <summary>
-            /// Drops animated node with the given tag.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            [ReactMethod]
-            public void dropAnimatedNode(int tag)
-            {
-                AddOperation(manager = >
-                    manager.DropAnimatedNode(tag));
-            }
-
-            /// <summary>
-            /// Sets the value of the animated node.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            /// <param name="value">Animated node value.</param>
-            [ReactMethod]
-            public void setAnimatedNodeValue(int tag, double value)
-            {
-                AddOperation(manager = >
-                    manager.SetAnimatedNodeValue(tag, value));
-            }
-
-            /// <summary>
-            /// Sets the offset of the animated node.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            /// <param name="value">Animated node offset.</param>
-            [ReactMethod]
-            public void setAnimatedNodeOffset(int tag, double value)
-            {
-                AddOperation(manager = >
-                    manager.SetAnimatedNodeOffset(tag, value));
-            }
-
-            /// <summary>
-            /// Flattens the animated node offset.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            [ReactMethod]
-            public void flattenAnimatedNodeOffset(int tag)
-            {
-                AddOperation(manager = >
-                    manager.FlattenAnimatedNodeOffset(tag));
-            }
-
-            /// <summary>
-            /// Extracts the animated node offset.
-            /// </summary>
-            /// <param name="tag">Tag of the animated node.</param>
-            [ReactMethod]
-            public void extractAnimatedNodeOffset(int tag)
-            {
-                AddOperation(manager = >
-                    manager.ExtractAnimatedNodeOffset(tag));
-            }
-
-            /// <summary>
-            /// Starts an animation on the given node with the given identifier.
-            /// </summary>
-            /// <param name="animationId">Anmation identifier.</param>
-            /// <param name="animatedNodeTag">Animated node tag.</param>
-            /// <param name="animationConfig">Animation configuration.</param>
-            /// <param name="endCallback">Callback for animation completion.</param>
-            [ReactMethod]
-            public void startAnimatingNode(
-                int animationId,
-                int animatedNodeTag,
-                JObject animationConfig,
-                ICallback endCallback)
-            {
-                AddOperation(manager = >
-                    manager.StartAnimatingNode(
-                        animationId,
-                        animatedNodeTag,
-                        animationConfig,
-                        endCallback));
-            }
-
-            /// <summary>
-            /// Stops the animation with the given identifier.
-            /// </summary>
-            /// <param name="animationId">Animation identifier.</param>
-            [ReactMethod]
-            public void stopAnimation(int animationId)
-            {
-                AddOperation(manager = >
-                    manager.StopAnimation(animationId));
-            }
-
-            /// <summary>
-            /// Connects animated nodes.
-            /// </summary>
-            /// <param name="parentNodeTag">Parent animated node tag.</param>
-            /// <param name="childNodeTag">Child animated node tag.</param>
-            [ReactMethod]
-            public void connectAnimatedNodes(int parentNodeTag, int childNodeTag)
-            {
-                AddOperation(manager = >
-                    manager.ConnectAnimatedNodes(parentNodeTag, childNodeTag));
-            }
-
-            /// <summary>
-            /// Disconnects animated nodes.
-            /// </summary>
-            /// <param name="parentNodeTag">Parent animated node tag.</param>
-            /// <param name="childNodeTag">Child animated node tag.</param>
-            [ReactMethod]
-            public void disconnectAnimatedNodes(int parentNodeTag, int childNodeTag)
-            {
-                AddOperation(manager = >
-                    manager.DisconnectAnimatedNodes(parentNodeTag, childNodeTag));
-            }
-
-            /// <summary>
-            /// Connects animated node to view.
-            /// </summary>
-            /// <param name="animatedNodeTag">Animated node tag.</param>
-            /// <param name="viewTag">React view tag.</param>
-            [ReactMethod]
-            public void connectAnimatedNodeToView(int animatedNodeTag, int viewTag)
-            {
-                AddOperation(manager = >
-                    manager.ConnectAnimatedNodeToView(animatedNodeTag, viewTag));
-            }
-
-            /// <summary>
-            /// Disconnects animated node from view.
-            /// </summary>
-            /// <param name="animatedNodeTag">Animated node tag.</param>
-            /// <param name="viewTag">React view tag.</param>
-            [ReactMethod]
-            public void disconnectAnimatedNodeFromView(int animatedNodeTag, int viewTag)
-            {
-                lock(_operationsGate)
-                {
-                    _preOperations.Add(manager = >
-                        manager.RestoreDefaultValues(animatedNodeTag, viewTag));
-                    _operations.Add(manager = >
-                        manager.DisconnectAnimatedNodeFromView(animatedNodeTag, viewTag));
-                }
-            }
-
-            /// <summary>
-            /// Adds an animated event to view.
-            /// </summary>
-            /// <param name="viewTag">The view tag.</param>
-            /// <param name="eventName">The event name.</param>
-            /// <param name="eventMapping">The event mapping.</param>
-            [ReactMethod]
-            public void addAnimatedEventToView(int viewTag, string eventName, JObject eventMapping)
-            {
-                AddOperation(manager = >
-                    manager.AddAnimatedEventToView(viewTag, eventName, eventMapping));
-            }
-
-            /// <summary>
-            /// Removes an animated event from view.
-            /// </summary>
-            /// <param name="viewTag">The view tag.</param>
-            /// <param name="eventName">The event name.</param>
-            /// <param name="animatedValueTag">The value tag.</param>
-            [ReactMethod]
-            public void removeAnimatedEventFromView(int viewTag, string eventName, int animatedValueTag)
-            {
-                AddOperation(manager = >
-                    manager.RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag));
-            }
-
-            private void AddOperation(Action<NativeAnimatedNodesManager> action)
-            {
-                lock(_operationsGate)
-                {
-                    _operations.Add(action);
-                }
-            }
-
-            private void AddPreOperation(Action<NativeAnimatedNodesManager> action)
-            {
-                lock(_operationsGate)
-                {
-                    _preOperations.Add(action);
-                }
-            }
-
-            class UIBlock : IUIBlock
-            {
-                private readonly Action _action;
-
-                public UIBlock(Action action)
-                {
-                    _action = action;
-                }
-
-                public void Execute(NativeViewHierarchyManager nativeViewHierarchyManager)
-                {
-                    _action();
-                }
-            }
-        }
-}*/
+    static const char* name;
+  private:
+    std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
+    std::weak_ptr<IReactInstance> m_wkReactInstance;
+  };
+} }

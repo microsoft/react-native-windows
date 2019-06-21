@@ -1,104 +1,97 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "ValueAnimatedNode.h"
 
-namespace react {
-  namespace uwp {
-    ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : AnimatedNode(tag), m_manager(manager)
-    {
-      m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
-      m_propertySet.InsertScalar(L"value", static_cast<float>(config.find("value").dereference().second.asDouble()));
-      m_propertySet.InsertScalar(L"offset", static_cast<float>(config.find("offset").dereference().second.asDouble()));
-    }
+namespace react { namespace uwp {
+  ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
+  {
+    m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
+    m_propertySet.InsertScalar(L"value", static_cast<float>(config.find("value").dereference().second.asDouble()));
+    m_propertySet.InsertScalar(L"offset", static_cast<float>(config.find("offset").dereference().second.asDouble()));
+  }
 
-    ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : AnimatedNode(tag), m_manager(manager)
-    {
-      m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
-      m_propertySet.InsertScalar(L"value", 0.0);
-      m_propertySet.InsertScalar(L"offset", 0.0);
-    }
+  ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
+  {
+    m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
+    m_propertySet.InsertScalar(L"value", 0.0);
+    m_propertySet.InsertScalar(L"offset", 0.0);
+  }
 
-    double ValueAnimatedNode::RawValue()
-    {
-      auto rawValue = 0.0f;
-      m_propertySet.TryGetScalar(L"value", rawValue);
-      return rawValue;
-    }
+  double ValueAnimatedNode::RawValue()
+  {
+    auto rawValue = 0.0f;
+    m_propertySet.TryGetScalar(L"value", rawValue);
+    return rawValue;
+  }
 
-    void ValueAnimatedNode::RawValue(float value)
-    {
-      m_propertySet.InsertScalar(L"value", value);
-    }
+  void ValueAnimatedNode::RawValue(double value)
+  {
+    m_propertySet.InsertScalar(L"value", static_cast<float>(value));
+  }
 
-    double ValueAnimatedNode::Offset()
-    {
-      auto offset = 0.0f;
-      m_propertySet.TryGetScalar(L"offset", offset);
-      return offset;
-    }
+  double ValueAnimatedNode::Offset()
+  {
+    auto offset = 0.0f;
+    m_propertySet.TryGetScalar(L"offset", offset);
+    return offset;
+  }
 
-    void ValueAnimatedNode::Offset(float offset)
-    {
-      m_propertySet.InsertScalar(L"offset", offset);
-    }
+  void ValueAnimatedNode::Offset(double offset)
+  {
+    m_propertySet.InsertScalar(L"offset", static_cast<float>(offset));
+  }
 
-    double ValueAnimatedNode::Value()
-    {
-      auto rawValue = 0.0f;
-      auto offset = 0.0f;
-      m_propertySet.TryGetScalar(L"value", rawValue);
-      m_propertySet.TryGetScalar(L"offset", offset);
-      return static_cast<double>(rawValue) + static_cast<double>(offset);
-    }
+  double ValueAnimatedNode::Value()
+  {
+    auto rawValue = 0.0f;
+    auto offset = 0.0f;
+    m_propertySet.TryGetScalar(L"value", rawValue);
+    m_propertySet.TryGetScalar(L"offset", offset);
+    return static_cast<double>(rawValue) + static_cast<double>(offset);
+  }
 
-    void ValueAnimatedNode::FlattenOffset()
-    {
-      auto rawValue = 0.0f;
-      auto offset = 0.0f;
-      m_propertySet.TryGetScalar(L"value", rawValue);
-      m_propertySet.TryGetScalar(L"offset", offset);
-      m_propertySet.InsertScalar(L"value", rawValue + offset);
-      m_propertySet.InsertScalar(L"offset", 0.0f);
-    }
+  void ValueAnimatedNode::FlattenOffset()
+  {
+    RawValue(RawValue() + Offset());
+    Offset(0.0f);
+  }
 
-    void ValueAnimatedNode::ExtractOffset()
-    {
-      auto rawValue = 0.0f;
-      auto offset = 0.0f;
-      m_propertySet.TryGetScalar(L"value", rawValue);
-      m_propertySet.TryGetScalar(L"offset", offset);
-      m_propertySet.InsertScalar(L"value", 0.0f);
-      m_propertySet.InsertScalar(L"offset", rawValue + offset);
-    }
+  void ValueAnimatedNode::ExtractOffset()
+  {
+    Offset(RawValue() + Offset());
+    RawValue(0.0f);
+  }
 
-    void ValueAnimatedNode::AddDependentPropsNode(int64_t propsNodeTag)
-    {
-      m_dependentPropsNodes.insert(propsNodeTag);
-    }
+  void ValueAnimatedNode::AddDependentPropsNode(int64_t propsNodeTag)
+  {
+    m_dependentPropsNodes.insert(propsNodeTag);
+  }
 
-    void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag)
-    {
-      m_dependentPropsNodes.erase(propsNodeTag);
-    }
+  void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag)
+  {
+    m_dependentPropsNodes.erase(propsNodeTag);
+  }
 
-    void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag)
-    {
-      m_activeAnimations.insert(animationTag);
-    }
+  void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag)
+  {
+    m_activeAnimations.insert(animationTag);
+  }
 
-    void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag)
+  void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag)
+  {
+    m_activeAnimations.erase(animationTag);
+    if (!m_activeAnimations.size())
     {
-      m_activeAnimations.erase(animationTag);
-      if (!m_activeAnimations.size())
+      if (auto manager = m_manager.lock())
       {
-        if (auto manager = m_manager.lock())
+        for (auto props : m_dependentPropsNodes)
         {
-          for (auto props : m_dependentPropsNodes)
-          {
-            auto node = manager->m_propsNodes.at(props);
-            node->DisposeCompletedAnimation(Tag());
-          }
+          auto node = manager->m_propsNodes.at(props);
+          node->DisposeCompletedAnimation(Tag());
         }
       }
     }
   }
-}
+} }

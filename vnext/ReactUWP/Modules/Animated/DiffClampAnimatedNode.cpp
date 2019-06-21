@@ -1,9 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include "DiffClampAnimatedNode.h"
 
 namespace react {
   namespace uwp {
-    DiffClampAnimatedNode::DiffClampAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodesManager>& manager) : ValueAnimatedNode(tag, config, manager)
+    DiffClampAnimatedNode::DiffClampAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, config, manager)
     {
       m_inputNodeTag = config.find("input").dereference().second.asInt();
       m_min = config.find("min").dereference().second.asDouble();

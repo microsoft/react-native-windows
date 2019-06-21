@@ -132,7 +132,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   std::shared_ptr<facebook::react::DevSettings> devSettings,
   const I18nModule::I18nInfo&& i18nInfo,
   std::shared_ptr<facebook::react::AppState> appstate,
-  std::shared_ptr<IReactInstance> nativeAnimated)
+  std::weak_ptr<IReactInstance> uwpInstance)
 {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -189,7 +189,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
     NativeAnimatedModule::name,
-    [nativeAnimated = std::move(nativeAnimated)]() mutable { return std::make_unique<NativeAnimatedModule>(nativeAnimated); },
+    [uwpInstance = std::move(uwpInstance)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(uwpInstance)); },
     messageQueue);
 
   modules.emplace_back(
@@ -267,7 +267,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
     // Acquire default modules and then populate with custom modules
-    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate), spThis);
+    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate), std::weak_ptr<IReactInstance>(spThis));
 
     if (m_moduleProvider != nullptr)
     {

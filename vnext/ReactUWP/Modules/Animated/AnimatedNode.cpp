@@ -19,7 +19,7 @@ namespace react {
 
     void AnimatedNode::AddChild(const std::shared_ptr<AnimatedNode>& animatedNode)
     {
-      m_children.insert({ animatedNode->Tag(), animatedNode });
+      m_children.emplace(animatedNode->Tag(), animatedNode);
       animatedNode->OnAttachToNode(m_tag);
     }
 

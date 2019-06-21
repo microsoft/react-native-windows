@@ -37,7 +37,6 @@
     <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp" />
-    <ClCompile Include="Modules\Animated\NativeAnimatedNodesManager.cpp" />
     <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp" />
@@ -99,6 +98,7 @@
     <ClCompile Include="Views\WebViewManager.cpp" />
     <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
@@ -131,7 +131,6 @@
     <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\NativeAnimatedModule.h" />
-    <ClInclude Include="Modules\Animated\NativeAnimatedNodesManager.h" />
     <ClInclude Include="Modules\Animated\PropsAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\StyleAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h" />
@@ -193,6 +192,10 @@
     <ClInclude Include="Views\WebViewManager.h" />
     <ClInclude Include="Modules\Animated\AnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h" />
+    <ClInclude Include="Modules\Animated\AnimationType.h" />
+    <ClInclude Include="Modules\Animated\FacadeType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makewinrt.inc" />
