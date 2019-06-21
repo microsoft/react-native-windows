@@ -49,7 +49,7 @@ bool fwrite(const T& val, FILE* file) noexcept
   return fwrite(&val, 1, file) == 1;
 }
 
-#if !defined(CHAKRACOREUWP)
+#if !defined(CHAKRACORE_UWP)
 struct FileVersionInfoResource
 {
   uint16_t len;
@@ -74,7 +74,7 @@ public:
 
   bool initialize() noexcept
   {
-#if !defined(CHAKRACOREUWP)
+#if !defined(CHAKRACORE_UWP)
     // This code is win32 only at the moment. We will need to change this
     // line if we want to support UWP.
     constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
