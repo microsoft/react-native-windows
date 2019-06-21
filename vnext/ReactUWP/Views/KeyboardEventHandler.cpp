@@ -190,10 +190,6 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase
 
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
-  // Handled KeyboardEvents are converted to uppercase in parseJson
-  // Apply the same logic to actual keyboard input.
-  toUpperInplace(event.key);
-
   bool shouldMarkHandled = false;
   if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
     shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
@@ -209,10 +205,10 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(std::vector<HandledK
   for (auto const& event : handledEvents)
   {
     if (event.key == currentEvent.key &&
-      (!event.altKey || (event.altKey && currentEvent.altKey)) &&
-      (!event.ctrlKey || (event.ctrlKey && currentEvent.ctrlKey)) &&
-      (!event.shiftKey || (event.shiftKey && currentEvent.shiftKey)) &&
-      (!event.metaKey || (event.metaKey && currentEvent.metaKey)) &&
+      (event.altKey == currentEvent.altKey) &&
+      (event.ctrlKey == currentEvent.ctrlKey) &&
+      (event.shiftKey == currentEvent.shiftKey) &&
+      (event.metaKey == currentEvent.metaKey) &&
       event.handledEventPhase == currentEvent.handledEventPhase)
       return true;
   }
@@ -393,12 +389,9 @@ string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool shiftDo
       return it->second;
   }
 
+  // Customer never receives a-z
   // https://docs.microsoft.com/en-us/uwp/api/windows.system.virtualkey
   // Virtual Keys for 0-9 and A-Z, they're just aligned to their ASCII representation (in uppercase, for the alphabet VKs)
-  // Windows doesn't define key for a-z, convert it lower if shift is down.
-  if (isalpha(key) && ((!shiftDown && !capLocked) || (shiftDown && capLocked)))
-      key = static_cast<char>(tolower(key));
-
   return string(1, key);
 }
 
