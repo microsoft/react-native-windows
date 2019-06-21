@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 // module.cpp : Defines the module that contains the com classes
@@ -7,6 +7,10 @@
 
 #include <wrl\module.h>
 
+extern int32_t WINRT_CALL WINRT_CanUnloadNow() noexcept;
+
+extern int32_t WINRT_CALL WINRT_GetActivationFactory(void* classId, void** factory) noexcept;
+
 extern "C" HRESULT WINAPI DllCanUnloadNow();
 
 #if !defined(__WRL_CLASSIC_COM__)
@@ -14,8 +18,15 @@ extern "C" HRESULT WINAPI DllGetActivationFactory(_In_ HSTRING, _Deref_out_ IAct
 
 extern "C" HRESULT WINAPI DllGetActivationFactory(_In_ HSTRING activatibleClassId, _Deref_out_ IActivationFactory** factory)
 {
-	auto &module = Microsoft::WRL::Module<Microsoft::WRL::InProc>::GetModule();
-	return module.GetActivationFactory(activatibleClassId, factory);
+  HRESULT hr = WINRT_GetActivationFactory((void*)activatibleClassId, (void**)factory);
+
+  if (hr != S_OK)
+  {
+    auto &module = Microsoft::WRL::Module<Microsoft::WRL::InProc>::GetModule();
+    hr = module.GetActivationFactory(activatibleClassId, factory);
+  }
+
+  return hr;
 }
 #endif
 
@@ -31,8 +42,15 @@ extern "C" HRESULT WINAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, _Deref
 
 extern "C" HRESULT WINAPI DllCanUnloadNow()
 {
-	const auto &module = Microsoft::WRL::Module<Microsoft::WRL::InProc>::GetModule();
-	return module.GetObjectCount() == 0 ? S_OK : S_FALSE;
+  HRESULT hr = WINRT_CanUnloadNow();
+
+  if (hr == S_OK)
+  {
+    const auto &module = Microsoft::WRL::Module<Microsoft::WRL::InProc>::GetModule();
+    hr = module.GetObjectCount() == 0 ? S_OK : S_FALSE;
+  }
+
+  return hr;
 }
 
 #if defined(_M_IX86)

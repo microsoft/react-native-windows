@@ -15,42 +15,67 @@ set FoundationRef=%FoundationDir%\Windows.Foundation.FoundationContract.winmd
 set UniversalApiDir=%WindowsSdkDir%References\%TargetSDK%\Windows.Foundation.UniversalApiContract\8.0.0.0
 set UniversalApiRef=%UniversalApiDir%\Windows.Foundation.UniversalApiContract.winmd
 
-set TargetDir=..\..\..\target\cppwinrt
-
 pushd %~dp0
 
-echo Initializing target dir
+call :GetAbsolute "..\..\..\target\cppwinrt"
+set TargetDir=%absolute%
+
+echo.
+echo ### Initializing target dir ###
+echo.
 if not exist "%TargetDir%" call mkdir "%TargetDir%"
 if exist "%TargetDir%" call del /s /q "%TargetDir%\*"
+
+echo.
+echo ### Building winmds from idls ###
+echo.
 
 for %%f in (*.idl) do (
   call :BuildWinmd %%f
 )
 
-echo Merge winmds
+echo.
+echo ### Merge winmds ###
+echo.
 if not exist "%TargetDir%\merged" call mkdir "%TargetDir%\merged"
-call mdmerge -v -metadata_dir "%FoundationDir%\." -metadata_dir "%UniversalApiDir%\." -o "%TargetDir%\merged" -i "%TargetDir%" -partial
+call mdmerge -metadata_dir "%FoundationDir%\." -metadata_dir "%UniversalApiDir%\." -o "%TargetDir%\merged" -i "%TargetDir%" -partial
 
-for %%w in (%TargetDir%\merged\*.winmd) do (
+echo.
+echo ### Building headers from winmds ###
+
+for %%w in ("%TargetDir%\merged\*.winmd") do (
   call :BuildHeaders %%w
 )
 
-echo Copy generated files
+echo.
+echo ### Copy generated files into ReactUWP ###
+echo.
 call xcopy /Y "%TargetDir%\*.h" .\
 call xcopy /Y "%TargetDir%\winrt\*.h" .\winrt\
 call xcopy /Y "%TargetDir%\winrt\impl\*.h" .\winrt\impl\
+call xcopy /Y "%TargetDir%\module.g.cpp" ..\
+
+echo.
+echo ### Stubbed out implmentations (*.h and *. cpp) are in "%TargetDir%\sources" ###
+echo.
 
 popd
 goto :end
 
 :BuildWinmd
+echo.
 echo Building winmd for "%~1"
 call midlrt /metadata_dir "%FoundationDir%" /winrt /nomidl /ns_prefix /enum_class /h "NUL" /reference "%FoundationRef%" /reference "%UniversalApiRef%" /winmd "%TargetDir%\%~n1.winmd" %~1
 exit /b
 
 :BuildHeaders
+echo.
 echo Building headers for "%~1"
-call cppwinrt -verbose -overwrite -prefix -comp "%TargetDir%\sources" -in "%TargetDir%\merged\%~1" -ref %TargetSDK% -out %TargetDir%
+call cppwinrt -overwrite -prefix -comp "%TargetDir%\sources" -in "%~1" -ref %TargetSDK% -out %TargetDir%
+exit /b
+
+:GetAbsolute
+set absolute=%~f1
 exit /b
 
 :end

@@ -367,7 +367,7 @@ const char* FlyoutViewManager::GetName() const
 
 XamlView FlyoutViewManager::CreateViewCore(int64_t tag)
 {
-  return ViewPanel::Create().as<XamlView>();
+  return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
 }
 
 facebook::react::ShadowNode* FlyoutViewManager::createShadow() const
