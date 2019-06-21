@@ -44,7 +44,7 @@
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-    <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -123,23 +123,20 @@
     different target folder. The 'GetRNDllPath' build target passes the path to the DLL as a macro
     (RNDLLPATH) into the test code where it is intended to be used in a LoadLibrary call.
     -->
-    <MSBuild
-      Projects="%(ProjectReference.Identity)"
-      Targets="GetTargetFileName"
-      Condition="$([System.String]::Copy('%(ProjectReference.Filename)').Contains('React.Windows.Desktop.DLL'))">
-      <Output TaskParameter="TargetOutputs" PropertyName="_RNDllPath"/>
+    <MSBuild Projects="%(ProjectReference.Identity)" Targets="GetTargetFileName" Condition="$([System.String]::Copy('%(ProjectReference.Filename)').Contains('React.Windows.Desktop.DLL'))">
+      <Output TaskParameter="TargetOutputs" PropertyName="_RNDllPath" />
     </MSBuild>
     <!-- It seems that the CL task takes preprocessor definitions only from ClCompile.PreprocessorDefinitions item metadata. -->
     <ItemGroup>
-      <_ClCompileTemp Include="@(ClCompile)"/>
-      <ClCompile Remove="@(ClCompile)"/>
-      <ClCompile Include='@(_ClCompileTemp)'>
+      <_ClCompileTemp Include="@(ClCompile)" />
+      <ClCompile Remove="@(ClCompile)" />
+      <ClCompile Include="@(_ClCompileTemp)">
         <PreprocessorDefinitions>RNDLLPATH=LR"($(_RNDllPath))";%(_ClCompileTemp.PreprocessorDefinitions)</PreprocessorDefinitions>
       </ClCompile>
     </ItemGroup>
   </Target>
   <ItemGroup>
-    <ClCompile Include="ABITests.cpp" />
+    <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="ActivationFactory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

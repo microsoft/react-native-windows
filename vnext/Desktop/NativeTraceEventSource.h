@@ -7,7 +7,8 @@ namespace winrt::facebook::react::implementation
     {
         NativeTraceEventSource() = default;
 
-        static void InitializeTracing(facebook::react::INativeTraceHandler const& handler);
+        static uint32_t InitializeTracing(facebook::react::INativeTraceHandler const& handler);
+        static void UninitializeTracing(uint32_t cookie);
     };
 }
 namespace winrt::facebook::react::factory_implementation

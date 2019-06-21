@@ -15,8 +15,10 @@ interface INativeTraceHandler
 
 static runtimeclass NativeTraceEventSource
 {
-	// REVIEW: A better idiom would a set of delegates and events.
-	static void InitializeTracing(INativeTraceHandler handler);
+	// Delegates/events would be a better idiom. However, currently I only aim to create ABI-safety
+	// for the existing interface, not to redesign it.
+	static UInt32 InitializeTracing(INativeTraceHandler handler);
+	static void UninitializeTracing(UInt32 cookie);
 }
 
 }
