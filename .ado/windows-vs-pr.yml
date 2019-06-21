@@ -380,4 +380,9 @@ jobs:
     steps:
       - checkout: none #skip checking out the default repository resource
 
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: '>=4.6.0' 
+
       - template: templates/prep-and-pack-nuget.yml
