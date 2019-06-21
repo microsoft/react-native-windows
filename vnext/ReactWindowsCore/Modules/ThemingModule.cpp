@@ -24,7 +24,7 @@ namespace react {
     // TODO: real implementation
     bool PlatformTheme::getIsHighContrast()
     {
-      return "false";
+      return false;
     }
 
     //
@@ -43,20 +43,19 @@ namespace react {
       return name;
     }
 
-    // This seems maybe redundant
     std::map<std::string, folly::dynamic> ThemingModule::getConstants()
     {
       return {
-        { "isHighContrast", folly::dynamic { m_theme->getIsHighContrast() } }
+        { "currentTheme", folly::dynamic { m_theme->getTheme() } }
       };
     }
 
     auto ThemingModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method>
     {
       return {
-        Method("getCurrentTheme", [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/)
-        {
-          cbSuccess({folly::dynamic::object("platform_theme", m_theme->getTheme())});
+        Method("isHighContrast", [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/) 
+        { 
+          cbSuccess({folly::dynamic::object("isHighContrast", m_theme->getIsHighContrast())});
         }, AsyncTag)
       };
     }

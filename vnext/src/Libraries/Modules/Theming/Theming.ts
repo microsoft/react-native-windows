@@ -4,6 +4,7 @@ import { ViewProps } from 'react-native';
 
 export interface IThemingProps extends ViewProps {
   isHighContrast?: boolean;
+  highContrastScheme?: string;
   onThemeChanged?: (event: IThemingChangedEvent) => void;
 }
 

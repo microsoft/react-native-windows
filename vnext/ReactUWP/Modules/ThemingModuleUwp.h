@@ -31,11 +31,12 @@ namespace react {
       bool getIsHighContrast() override;
 
     private:
-      void fireEvent(ThemingEvent event, winrt::hstring const& args);
+      void fireEvent(ThemingEvent event, std::string const& args);
 
       std::weak_ptr<IReactInstance> m_wkReactInstance;
       std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
       winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{ winrt::Windows::UI::Xaml::ApplicationTheme::Light };
+      bool m_isHighContrast;
 
       winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{ };
       winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{ };

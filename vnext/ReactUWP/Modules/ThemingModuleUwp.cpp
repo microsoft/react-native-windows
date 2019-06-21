@@ -24,9 +24,17 @@ namespace react {
     , m_wkReactInstance(reactInstance)
     , m_queueThread(defaultQueueThread)
   {
+    m_currentTheme = winrt::Application::Current().RequestedTheme();
+    m_isHighContrast = m_accessibilitySettings.HighContrast();
+
     m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke,
       [this](const auto&, const auto&) {
-        fireEvent(ThemingEvent::HighContrast, m_accessibilitySettings.HighContrastScheme());
+        if (m_isHighContrast != m_accessibilitySettings.HighContrast()) {
+          m_isHighContrast = m_accessibilitySettings.HighContrast();
+        }
+        const std::string hcScheme{ getIsHighContrast() ?                     // Is high contrast being turned on or off?
+    winrt::to_string(m_accessibilitySettings.HighContrastScheme()) : "None" };
+        fireEvent(ThemingEvent::HighContrast, hcScheme); // fire event with information that it's a high contrast change and what the scheme is.
     });
 
     m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(winrt::auto_revoke,
@@ -35,7 +43,7 @@ namespace react {
           if (m_currentTheme != winrt::Application::Current().RequestedTheme())
           {
             m_currentTheme = winrt::Application::Current().RequestedTheme();
-            fireEvent(ThemingEvent::Theme, winrt::to_hstring(getTheme()));
+            fireEvent(ThemingEvent::Theme, getTheme());
           }
         });
     });
@@ -50,10 +58,10 @@ namespace react {
 
   bool Theming::getIsHighContrast()
   {
-    return m_accessibilitySettings.HighContrast();
+    return m_isHighContrast;
   }
 
-  void Theming::fireEvent(ThemingEvent event, winrt::hstring const& args)
+  void Theming::fireEvent(ThemingEvent event, std::string const& args)
   {
     std::string paramsName{ event == ThemingEvent::Theme ? "platform_theme" : "highContrastScheme" };
     std::string eventName{ event == ThemingEvent::Theme ? "themeDidChange" : "highContrastDidChange" };
@@ -61,7 +69,7 @@ namespace react {
     auto instance = m_wkReactInstance.lock();
     if (instance)
     {
-      folly::dynamic parameters = folly::dynamic::object(paramsName, winrt::to_string(args));
+      folly::dynamic parameters = folly::dynamic::object(paramsName, args); // For high contrast args are the scheme.
       instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(parameters)));
     }
   }

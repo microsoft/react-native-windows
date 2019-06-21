@@ -7,10 +7,8 @@ import React = require('react');
 import { Text, TouchableHighlight, View } from 'react-native';
 import { Theming } from '../../src/index.uwp';
 
-// 'global' var so that background changed on highContrast event can be easily 
-// propogated to any control.
-var currentBackgroundColor = ['blue', 'red'];
-var isHighContrast = 'false';
+var currentBackgroundColor = ['blue', 'red', '#E6E6E6', '#7fff00'];
+const theming = new Theming();
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -34,33 +32,61 @@ class AccessibilityBaseExample extends React.Component {
 }
 
 class HighContrastExample extends React.Component {
-  public render() {
-    return (
-      <View>
-        <Text>The following has HighContrast Event awareness:</Text>
-        <View
-          style={{width:50, height:50, backgroundColor: currentBackgroundColor[0]}}
-          accessibilityLabel="A blue box"
-          accessibilityHint="A hint for the blue box.">
-        <Text>{isHighContrast}</Text>
-        </View>
-        <Text>The following does not have HighContrast Event awareness:</Text>
-        <View
-          style={{ width: 50, height: 50, backgroundColor: currentBackgroundColor[1]}}
-          accessible={true}
-          accessibilityLabel="A hint for the red box."
-        />
-        onHighContrastChanged={Theming.addListener};
-      </View>
-    );
+  state = {
+    isHighContrast: theming.isHighContrast, // Initializes value
+    highContrastScheme: 'Initial'
+  };
+
+  componentDidMount() {
+    theming.addListener('highContrastDidChange', this.highContrastHandler);
   }
 
-  private onHighContrastChanged = () => {
-      isHighContrast=Theming.getConstants();
-      // Just changing both so that we can verify that control 1 
-      // does change and control 2 does not.
-      currentBackgroundColor=['white', 'black'];
+  // TODO: Make args props
+  highContrastHandler = (args: any) => {
+    const isHighContrast = theming.isHighContrast; //Should update value on event.
+    const highContrastScheme = args.highContrastScheme;
+    this.setState({ isHighContrast, highContrastScheme });
   };
+
+  public render() {
+    if (this.state.isHighContrast) {
+      return (
+        <View>
+          <Text>The following has HighContrast Event awareness:</Text>
+          <View
+            style={{width: 150, height: 50, backgroundColor: currentBackgroundColor[2]}}
+            accessibilityLabel="A blue box"
+            accessibilityHint="A hint for the blue box.">
+          <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
+          </View>
+          <Text>highContrastScheme: {this.state.highContrastScheme}</Text>
+          <View
+            style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
+            accessible={true}
+            accessibilityLabel="A hint for the red box."
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Text>The following has HighContrast Event awareness:</Text>
+          <View
+            style={{width: 150, height: 50, backgroundColor: currentBackgroundColor[0]}}
+            accessibilityLabel="A blue box"
+            accessibilityHint="A hint for the blue box.">
+          <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
+          </View>
+          <Text>highContrastScheme: {this.state.highContrastScheme}</Text>
+          <View
+            style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[1]}}
+            accessible={true}
+            accessibilityLabel="A hint for the red box."
+          />
+        </View>
+      );
+    }
+  }
 }
 
 class TouchableExamples extends React.Component<{}, any> {
