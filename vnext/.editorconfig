@@ -21,3 +21,6 @@ insert_final_newline = false
 [*.ps1]
 indent_style = tab
 indent_size = 4
+
+[package.json]
+insert_final_newline = false
