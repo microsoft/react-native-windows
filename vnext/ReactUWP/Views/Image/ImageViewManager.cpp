@@ -96,12 +96,14 @@ namespace react { namespace uwp {
   {
     auto reactImage{ ReactImage::Create() };
 
-    reactImage->OnLoadEnd([this, reactImage](const auto&, const bool& succeeded)
+    reactImage->OnLoadEnd([this, weak_reactImage{ reactImage->get_weak() }](const auto&, const bool& succeeded)
     {
-        ImageSource source{ reactImage->Source() };
+      if (auto strong_reactImage{ weak_reactImage.get() }) {
+        ImageSource source{ strong_reactImage->Source() };
 
-        EmitImageEvent(m_wkReactInstance.lock(), reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
-        EmitImageEvent(m_wkReactInstance.lock(), reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
+        EmitImageEvent(m_wkReactInstance.lock(), strong_reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
+        EmitImageEvent(m_wkReactInstance.lock(), strong_reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
+      }
     });
 
     return reactImage.as<winrt::Canvas>();

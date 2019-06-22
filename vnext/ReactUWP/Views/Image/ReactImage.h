@@ -33,6 +33,7 @@ namespace react {
     private:
       // Constructors
       ReactImage();
+      ~ReactImage();
 
     public:
       static winrt::com_ptr<ReactImage> Create();
@@ -54,13 +55,11 @@ namespace react {
       void ResizeMode(react::uwp::ResizeMode value) { m_brush->ResizeMode(value); }
 
     private:
-      void LoadedImageSurfaceHandler(
-        winrt::Windows::UI::Xaml::Media::LoadedImageSurface const& sender,
-        winrt::Windows::UI::Xaml::Media::LoadedImageSourceLoadCompletedEventArgs const& args);
-
       ImageSource m_imageSource;
       winrt::com_ptr<ReactImageBrush> m_brush;
       winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
+      winrt::Windows::UI::Xaml::Media::LoadedImageSurface m_surface{ nullptr };
+      winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
     };
 
     // Helper functions
