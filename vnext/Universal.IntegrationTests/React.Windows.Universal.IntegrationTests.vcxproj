@@ -58,7 +58,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>;$(ReactNativeWindowsDir)IntegrationTests;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4453;28204;4068;4146;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <PreprocessorDefinitions>_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;WIN32_LEAN_AND_MEAN;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;WIN32=0;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;WIN32=0;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
