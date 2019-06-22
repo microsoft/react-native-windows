@@ -8,6 +8,7 @@
 
   <!-- For build debugging purposes. -->
   <Target Name="Vars">
+    <Message Text="=> ApplicationType         [$(ApplicationType)]" />
     <Message Text="=> Configuration           [$(Configuration)]" />
     <Message Text="=> Platform                [$(Platform)]" />
     <Message Text="=> PlatformTarget          [$(PlatformTarget)]" />
