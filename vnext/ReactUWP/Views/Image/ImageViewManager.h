@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include <Views/FrameworkElementViewManager.h>
+#include "ReactImage.h"
 
 namespace react { namespace uwp {
 
@@ -16,6 +17,7 @@ namespace react { namespace uwp {
 
     folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
     folly::dynamic GetNativeProps() const override;
+    void EmitImageEvent(winrt::Windows::UI::Xaml::Controls::Canvas canvas, const char* eventName, ImageSource& source);
 
   protected:
     XamlView CreateViewCore(int64_t tag) override;
