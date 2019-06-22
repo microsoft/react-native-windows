@@ -22,8 +22,6 @@ namespace winrt {
   using namespace Windows::UI::Core;
 }
 
-using namespace std;
-
 namespace react { namespace uwp {
   enum class HandledEventPhase
   {
@@ -43,13 +41,13 @@ namespace react { namespace uwp {
   struct ReactKeyboardEvent: ModifiedKeyState
   {
     int64_t target{ 0 };
-    string key{};
+    std::string key{};
   };
 
   struct HandledKeyboardEvent: ModifiedKeyState
   {
     HandledEventPhase handledEventPhase{ HandledEventPhase::Bubbling };
-    string key{};
+    std::string key{};
   };
 
   typedef std::function<void(winrt::IInspectable const&, winrt::KeyRoutedEventArgs const&)> KeyboardEventCallback;
@@ -102,7 +100,7 @@ namespace react { namespace uwp {
     void OnPreKeyDown(winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
     void OnPreKeyUp(winrt::IInspectable const& sender, winrt::KeyRoutedEventArgs const& args);
 
-    void DispatchEventToJs(string const& name, winrt::KeyRoutedEventArgs const& args);
+    void DispatchEventToJs(std::string const& name, winrt::KeyRoutedEventArgs const& args);
     std::weak_ptr<IReactInstance> m_wkReactInstance;
   };
 
@@ -123,7 +121,7 @@ namespace react { namespace uwp {
     void unhook();
 
   public:
-    void UpdateHandledKeyboardEvents(string const& propertyName, folly::dynamic const& value);
+    void UpdateHandledKeyboardEvents(std::string const& propertyName, folly::dynamic const& value);
 
   private:
     void EnsureKeyboardEventHandler();
@@ -142,6 +140,6 @@ namespace react { namespace uwp {
   {
     static std::vector<HandledKeyboardEvent> FromJS(folly::dynamic const& obj);
     static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const& args);
-    static string FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
+    static std::string FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   };
 }}

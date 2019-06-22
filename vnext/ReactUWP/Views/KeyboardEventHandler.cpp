@@ -138,7 +138,7 @@ HandledKeyboardEventHandler::HandledKeyboardEventHandler()
 {
 }
 
-void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(string const& propertyName, folly::dynamic const& value)
+void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(std::string const& propertyName, folly::dynamic const& value)
 {
   if (propertyName == "keyDownEvents") {
     m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
@@ -236,7 +236,7 @@ template<typename T> void UpdateModifiedKeyStatusTo(T& event)
   event.capLocked = IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
 };
 
-void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(string const& eventName, winrt::KeyRoutedEventArgs const& args)
+void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(std::string const& eventName, winrt::KeyRoutedEventArgs const& args)
 {
   if (auto instance = m_wkReactInstance.lock())
   {
@@ -266,7 +266,7 @@ HandledKeyboardEvent KeyboardHelper::CreateKeyboardEvent(HandledEventPhase phase
 }
 
 // Should align to https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
-static const std::map<winrt::VirtualKey, string> g_virtualKeyToString
+static const std::vector<std::pair<winrt::VirtualKey, std::string>> g_virtualKeyToString
 {
   // Modifier keys
   {winrt::VirtualKey::LeftMenu, "Alt"},
@@ -376,23 +376,24 @@ static const std::map<winrt::VirtualKey, string> g_virtualKeyToString
   //
 };
 
-string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked)
+std::string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked)
 {
   char key = static_cast<char>(virtualKey);
 
   if (!isalnum(key))
   {
-    auto it = g_virtualKeyToString.find(virtualKey);
-    if (it == g_virtualKeyToString.end())
-      return "Unidentified";
-    else
-      return it->second;
+	  for (auto const& pair : g_virtualKeyToString)
+	  {
+		  if (pair.first == virtualKey)
+			  return pair.second;
+	  }
+	  return "Unidentified";
   }
 
   // Customer never receives a-z
   // https://docs.microsoft.com/en-us/uwp/api/windows.system.virtualkey
   // Virtual Keys for 0-9 and A-Z, they're just aligned to their ASCII representation (in uppercase, for the alphabet VKs)
-  return string(1, key);
+  return std::string(1, key);
 }
 
 }}
