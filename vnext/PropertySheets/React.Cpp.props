@@ -42,11 +42,24 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)' == 'x86'">
+  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)' == 'x86' OR '$(Platform)' == 'Win32'">
     <ClCompile>
       <!-- MSVC macros -->
       <PreprocessorDefinitions>WITH_OFFICE_TRACING=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
+
+  <!-- <ItemDefinitionGroup Label="Microsoft.Cl.Common.props">
+    <CLCompile>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(ConfigurationType)' == 'StaticLibrary'">$(IntDir)$(ProjectName).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'%(ClCompile.ProgramDataBaseFileName)' == '' and
+                                          '$(PlatformToolsetVersion)' != ''">$(IntDir)vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <XMLDocumentationFileName>$(IntDir)</XMLDocumentationFileName>
+      <BrowseInformationFile>$(IntDir)</BrowseInformationFile>
+    </CLCompile>
+  </ItemDefinitionGroup> -->
 
 </Project>

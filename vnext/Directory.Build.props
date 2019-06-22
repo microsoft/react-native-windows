@@ -15,9 +15,11 @@
 
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
     <!-- NOTE: This assignment of `Platform` won't persist thourgh the build. -->
-    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
-    <BaseIntDir>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseOutDir>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+    <!-- <Platform Condition="'$(Platform)'=='Win32'">x86</Platform> -->
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
+    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
 
     <!-- Windows Desktop -->
     <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
