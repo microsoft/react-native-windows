@@ -11,7 +11,6 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
 
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
