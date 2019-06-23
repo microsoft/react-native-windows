@@ -167,8 +167,8 @@
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
-    <ClInclude Include="UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
-    <ClInclude Include="UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
@@ -248,8 +248,8 @@
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
-    <ClCompile Include="UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />

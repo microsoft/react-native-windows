@@ -65,8 +65,8 @@
 #include <cxxreact/Instance.h>
 
 #if !defined(OSS_RN)
-#include<UwpScriptStore.h>
-#include<UwpPreparedScriptStore.h>
+#include<Utils/UwpScriptStore.h>
+#include<Utils/UwpPreparedScriptStore.h>
 #endif
 
 #if !defined(OSS_RN)
