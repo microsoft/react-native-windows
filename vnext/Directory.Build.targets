@@ -1,58 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
-  <PropertyGroup Label="Configuration">
-    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <!--<Platform Condition="'$(Platform)'=='Win32'">x86</Platform>-->
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <PrepareForBuildDependsOn>
-      $(PrepareForBuildDependsOn);
-      MyPre;
-      Vars
-    </PrepareForBuildDependsOn>
-  </PropertyGroup>
-
-  <Target Name="MyPre">
-  </Target>
-
-  <Target Name="MyPre0">
-    <PropertyGroup>
-      <BaseIntDir>$(ReactNativeWindowsDir)build\$(PlatformTarget)\$(Configuration)</BaseIntDir>
-      <BaseOutDir>$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)</BaseOutDir>
-
-      <!-- Windows Desktop -->
-      <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-      <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
-
-      <TargetPath>$(OutDir)$(TargetName)$(TargetExt)</TargetPath>
-      <TargetDir>$([System.IO.Path]::GetDirectoryName('$(TargetPath)'))</TargetDir>
-    </PropertyGroup>
-    <PropertyGroup Label="Microsoft.BuildSteps.targets">
-      <!-- TLogLocation requires trailing slash. -->
-      <!-- <TLogLocation Condition="'$(ProjectName)' != '' and '$(ProjectGuid)' != '' and '$(ProjectName.Length)' &gt; '16'">$(IntDir)$(ProjectName.Substring(0,8)).$(ProjectGuid.Substring(1,8)).tlog\</TLogLocation> -->
-      <TLogLocation>$(IntDir)$(ProjectName).tlog\</TLogLocation>
-      <LastBuildUnsuccessful>$(TLogLocation)unsuccessfulbuild</LastBuildUnsuccessful>
-      <LastBuildState>$(TLogLocation)$(ProjectName).lastbuildstate</LastBuildState>
-    </PropertyGroup>
-    <PropertyGroup Label="Microsoft.Cpp.AppContainerApplication.props">
-      <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
-    </PropertyGroup>
-
-    <ItemGroup Label="Microsoft.CppBuild.targets">
-      <GeneralDirsToMake Remove="@(GeneralDirsToMake)" />
-
-      <GeneralDirsToMake Include="$(IntDir)" />
-      <GeneralDirsToMake Include="$(OutDir)" />
-      <GeneralDirsToMake Include="$(TLogLocation)" />
-      <GeneralDirsToMake Condition="'$(GeneratedFilesDir)' != ''" Include="$(GeneratedFilesDir)" />
-    </ItemGroup>
-  </Target>
-
   <!-- For build debugging purposes. -->
   <Target Name="Vars">
-    <Message Text="=> GeneralDirsToMake       [@(GeneralDirsToMake)]" />
+    <Message Text="General" />
     <Message Text="=> ApplicationType         [$(ApplicationType)]" />
     <Message Text="=> Configuration           [$(Configuration)]" />
     <Message Text="=> Platform                [$(Platform)]" />
@@ -70,7 +21,7 @@
     <Message Text="=> LastBuildState          [$(LastBuildState)]" />
     <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
 
-    <Message Text=" " />
+    <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
     <Message Text="=> PrecompiledHeaderOutputFile [@(CLCompile->Metadata('PrecompiledHeaderOutputFile')->DirectoryName()->Distinct())]" />
     <Message Text="=> AssemblerListingLocation    [@(CLCompile->Metadata('AssemblerListingLocation')->DirectoryName()->Distinct())]" />
@@ -81,6 +32,7 @@
     <Message Text="=> PreprocessOutputPath        [@(CLCompile->Metadata('PreprocessOutputPath')->DirectoryName()->Distinct())]" />
     <Message Text="=> ClDirsToMake                [@(ClDirsToMake)]" />
 
+    <Message Text="%0A" />
     <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
     <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
     <Message Text="=> FollyDir                [$(FollyDir)]" />
@@ -93,8 +45,6 @@
     <Message Text="=> MSBuildExtensionsPath32 [$(MSBuildExtensionsPath32)]" />
     <Message Text="=> MSBuildExtensionsPath64 [$(MSBuildExtensionsPath64)]" />
     <Message Text="=> VCTargetsPath           [$(VCTargetsPath)]" />
-
-    <!-- <Error Text="STOP at Vars target." /> -->
   </Target>
 
 </Project>
