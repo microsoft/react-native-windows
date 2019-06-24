@@ -91,14 +91,12 @@ namespace react { namespace uwp {
       ShadowNodeBase::createView();
       auto reactImage{ m_view.as<ReactImage>() };
 
-      m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{ static_cast<ImageViewManager*>(GetViewManager()) }, weak_reactImage{ reactImage->get_weak() }](const auto&, const bool& succeeded)
+      m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{ static_cast<ImageViewManager*>(GetViewManager()) }, reactImage ](const auto&, const bool& succeeded)
       {
-        if (auto strong_reactImage{ weak_reactImage.get() }) {
-          ImageSource source{ strong_reactImage->Source() };
+        ImageSource source{ reactImage->Source() };
 
-          imageViewManager->EmitImageEvent(strong_reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
-          imageViewManager->EmitImageEvent(strong_reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
-        }
+        imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
+        imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
       });
     }
 
