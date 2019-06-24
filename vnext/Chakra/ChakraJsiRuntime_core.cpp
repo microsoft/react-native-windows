@@ -35,9 +35,7 @@ Value ChakraJsiRuntime::evaluateJavaScriptSimple(const jsi::Buffer& buffer, cons
   JsCreateString(reinterpret_cast<const char*>(buffer.data()), buffer.size(), &sourceRef);
 
   JsValueRef sourceURLRef = nullptr;
-  if (!sourceURL.empty()) {
-    JsCreateString(reinterpret_cast<const char*>(sourceURL.c_str()), sourceURL.size(), &sourceURLRef);
-  }
+  JsCreateString(reinterpret_cast<const char*>(sourceURL.c_str()), sourceURL.size(), &sourceURLRef);
 
   JsValueRef result;
   checkException(JsRun(sourceRef, 0, sourceURLRef, JsParseScriptAttributes::JsParseScriptAttributeNone, &result), sourceURL.c_str());

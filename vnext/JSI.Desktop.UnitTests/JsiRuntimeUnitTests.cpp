@@ -22,18 +22,15 @@
 using namespace facebook::jsi;
 using namespace facebook::react::utilities;
 
-//TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
-//  rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
-//  auto i = rt.global().getProperty(rt, "x").getNumber();
-//  EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
-//}
 
-//TEST_P(JsiRuntimeUnitTests, PropNameIDTest_CreationTest1)
-//{
-//  PropNameID attack = PropNameID::forAscii(rt, "attack", 6);
-//  EXPECT_EQ(attack.utf8(rt), "attack");
-//}
+TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
+  rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
+  auto i = rt.global().getProperty(rt, "x").getNumber();
+  EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
+}
 
+// TODO (yicyao): Currently, comparison of property IDs is broken for
+// ChakraJsiRuntime. Enable this test once we fix it.
 //TEST_P(JsiRuntimeUnitTests, PropNameIDTest) {
 //  // This is a little weird to test, because it doesn't really exist
 //  // in JS yet.  All I can do is create them, compare them, and
@@ -76,167 +73,116 @@ using namespace facebook::react::utilities;
 //    PropNameID::compare(rt, names[2], PropNameID::forAscii(rt, "kota")));
 //}
 
-// Test the creation, comparison, and std::string conversion of jsi::String for
-// ASCII encoding.
-TEST_P(JsiRuntimeUnitTests, StringTests_AsciiTest)
-{
-  String foo1 = String::createFromAscii(rt, "foobar", 3);
-  EXPECT_EQ(foo1.utf8(rt), "foo");
+TEST_P(JsiRuntimeUnitTests, StringTest) {
+  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar", 3), "'foo'"));
+  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar"), "'foobar'"));
 
-  String foo2 = String::createFromAscii(rt, "foo");
-  EXPECT_EQ(foo2.utf8(rt), "foo");
+  std::string baz = "baz";
+  EXPECT_TRUE(checkValue(String::createFromAscii(rt, baz), "'baz'"));
 
-  String bar = String::createFromAscii(rt, "bar");
-  EXPECT_EQ(bar.utf8(rt), "bar");
+  uint8_t utf8[] = { 0xF0, 0x9F, 0x86, 0x97 };
+  EXPECT_TRUE(checkValue(
+    String::createFromUtf8(rt, utf8, sizeof(utf8)), "'\\uD83C\\uDD97'"));
 
-  String baz = String::createFromAscii(rt, std::string{ "baz" });
-  EXPECT_EQ(baz.utf8(rt), "baz");
+  EXPECT_EQ(eval("'quux'").getString(rt).utf8(rt), "quux");
+  EXPECT_EQ(eval("'\\u20AC'").getString(rt).utf8(rt), "\xe2\x82\xac");
 
-  EXPECT_TRUE(String::strictEquals(rt, foo1, foo2));
-  EXPECT_FALSE(String::strictEquals(rt, bar, baz));
+  String quux = String::createFromAscii(rt, "quux");
+  String movedQuux = std::move(quux);
+  EXPECT_EQ(movedQuux.utf8(rt), "quux");
+  movedQuux = String::createFromAscii(rt, "quux2");
+  EXPECT_EQ(movedQuux.utf8(rt), "quux2");
 }
 
-// Test the creation, comparison, and std::string conversion of jsi::String for
-// UTF-8 encoding.
-TEST_P(JsiRuntimeUnitTests, StringTests_Utf8Test)
-{
-  uint8_t squaredOk[] = { 0xF0, 0x9F, 0x86, 0x97 };
-  std::string squaredOkString { checkedReinterpretCast<char*>(squaredOk),
-    arraySize(squaredOk) };
+TEST_P(JsiRuntimeUnitTests, ObjectTest) {
+  eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
+  Object x = rt.global().getPropertyAsObject(rt, "x");
+  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 4);
+  EXPECT_TRUE(x.hasProperty(rt, "1"));
+  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "1")));
+  EXPECT_FALSE(x.hasProperty(rt, "2"));
+  EXPECT_FALSE(x.hasProperty(rt, PropNameID::forAscii(rt, "2")));
+  EXPECT_TRUE(x.hasProperty(rt, "3"));
+  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "3")));
+  EXPECT_TRUE(x.hasProperty(rt, "seven"));
+  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "seven")));
+  EXPECT_EQ(x.getProperty(rt, "1").getNumber(), 2);
+  EXPECT_EQ(x.getProperty(rt, PropNameID::forAscii(rt, "1")).getNumber(), 2);
+  EXPECT_EQ(x.getProperty(rt, "3").getNumber(), 4);
+  Value five = 5;
+  EXPECT_EQ(
+    x.getProperty(rt, PropNameID::forString(rt, five.toString(rt)))
+    .getString(rt)
+    .utf8(rt),
+    "six");
 
-  String squaredOkJsString1 =
-      String::createFromUtf8(rt, squaredOk, arraySize(squaredOk));
-  EXPECT_EQ(squaredOkJsString1.utf8(rt), squaredOkString);
+  x.setProperty(rt, "ten", 11);
+  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 5);
+  EXPECT_TRUE(eval("x.ten == 11").getBool());
 
-  String squaredOkJsString2 = String::createFromUtf8(rt, squaredOkString);
-  EXPECT_EQ(squaredOkJsString2.utf8(rt), squaredOkString);
+  x.setProperty(rt, "e_as_float", 2.71f);
+  EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
 
-  std::string euroSignString = std::string{ "\xe2\x82\xac" };
-  String euroSignJsString = String::createFromUtf8(rt, euroSignString);
-  EXPECT_EQ(euroSignJsString.utf8(rt), euroSignString);
+  x.setProperty(rt, "e_as_double", 2.71);
+  EXPECT_TRUE(eval("x.e_as_double == 2.71").getBool());
 
-  EXPECT_TRUE(String::strictEquals(rt, squaredOkJsString1, squaredOkJsString2));
-  EXPECT_FALSE(String::strictEquals(rt, squaredOkJsString1, euroSignJsString));
+  uint8_t utf8[] = { 0xF0, 0x9F, 0x86, 0x97 };
+  String nonAsciiName = String::createFromUtf8(rt, utf8, sizeof(utf8));
+  x.setProperty(rt, PropNameID::forString(rt, nonAsciiName), "emoji");
+  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 8);
+  EXPECT_TRUE(eval("x['\\uD83C\\uDD97'] == 'emoji'").getBool());
+
+  Object seven = x.getPropertyAsObject(rt, "seven");
+  EXPECT_TRUE(seven.isArray(rt));
+  Object evalf = rt.global().getPropertyAsObject(rt, "eval");
+  EXPECT_TRUE(evalf.isFunction(rt));
+
+  Object movedX = Object(rt);
+  movedX = std::move(x);
+  EXPECT_EQ(movedX.getPropertyNames(rt).size(rt), 8);
+  EXPECT_EQ(movedX.getProperty(rt, "1").getNumber(), 2);
+
+  Object obj = Object(rt);
+  obj.setProperty(rt, "roses", "red");
+  obj.setProperty(rt, "violets", "blue");
+  Object oprop = Object(rt);
+  obj.setProperty(rt, "oprop", oprop);
+  obj.setProperty(rt, "aprop", Array(rt, 1));
+
+  EXPECT_TRUE(function("function (obj) { return "
+    "obj.roses == 'red' && "
+    "obj['violets'] == 'blue' && "
+    "typeof obj.oprop == 'object' && "
+    "Array.isArray(obj.aprop); }")
+    .call(rt, obj)
+    .getBool());
+
+  // Check that getPropertyNames doesn't return non-enumerable
+  // properties.
+  obj = function(
+    "function () {"
+    "  obj = {};"
+    "  obj.a = 1;"
+    "  Object.defineProperty(obj, 'b', {"
+    "    enumerable: false,"
+    "    value: 2"
+    "  });"
+    "  return obj;"
+    "}")
+    .call(rt)
+    .getObject(rt);
+  EXPECT_EQ(obj.getProperty(rt, "a").getNumber(), 1);
+  EXPECT_EQ(obj.getProperty(rt, "b").getNumber(), 2);
+  Array names = obj.getPropertyNames(rt);
+  // TODO (yicyao): We need to fix getPropertyNames as it currently:
+  // - Does not traverse property chains.
+  // - Returns non-enumerable properties.
+  //EXPECT_EQ(names.size(rt), 1);
+  //EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
 }
 
-// Test the move semantics of jsi::String.
-TEST_P(JsiRuntimeUnitTests, StringTests_MoveTest)
-{
-  String foo = String::createFromAscii(rt, "foo");
-
-  String other = std::move(foo);
-  EXPECT_EQ(other.utf8(rt), "foo");
-  
-  other = String::createFromAscii(rt, "notFoo");
-  EXPECT_EQ(other.utf8(rt), "notFoo");
-}
-
-// Test that jsi::String integrates with other features of jsi::Runtime.
-//TEST_P(JsiRuntimeUnitTests, StringTests_IntegrationTest)
-//{
-//  uint8_t squaredOk[] = { 0xF0, 0x9F, 0x86, 0x97 };
-//  EXPECT_TRUE(checkValue(
-//    String::createFromUtf8(rt, squaredOk, arraySize(squaredOk)),
-//    // This is the JavaScript string literal for squared OK.
-//    // It uses UTF-16 code units.
-//    "'\\uD83C\\uDD97'"));
-//
-//  EXPECT_EQ(eval("'quux'").getString(rt).utf8(rt), "quux");
-//  EXPECT_EQ(
-//    // This is the JavaScriptr string literal for the euro sign.
-//    // It uses UTF-16 code units.
-//    eval("'\\u20AC'").getString(rt).utf8(rt),
-//    // This is the UTF-8 encoding for the euro sign.
-//    "\xe2\x82\xac");
-//}
-
-//TEST_P(JsiRuntimeUnitTests, ObjectTest) {
-//  eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
-//  Object x = rt.global().getPropertyAsObject(rt, "x");
-//  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 4);
-//  EXPECT_TRUE(x.hasProperty(rt, "1"));
-//  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "1")));
-//  EXPECT_FALSE(x.hasProperty(rt, "2"));
-//  EXPECT_FALSE(x.hasProperty(rt, PropNameID::forAscii(rt, "2")));
-//  EXPECT_TRUE(x.hasProperty(rt, "3"));
-//  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "3")));
-//  EXPECT_TRUE(x.hasProperty(rt, "seven"));
-//  EXPECT_TRUE(x.hasProperty(rt, PropNameID::forAscii(rt, "seven")));
-//  EXPECT_EQ(x.getProperty(rt, "1").getNumber(), 2);
-//  EXPECT_EQ(x.getProperty(rt, PropNameID::forAscii(rt, "1")).getNumber(), 2);
-//  EXPECT_EQ(x.getProperty(rt, "3").getNumber(), 4);
-//  Value five = 5;
-//  EXPECT_EQ(
-//    x.getProperty(rt, PropNameID::forString(rt, five.toString(rt)))
-//    .getString(rt)
-//    .utf8(rt),
-//    "six");
-//
-//  x.setProperty(rt, "ten", 11);
-//  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 5);
-//  EXPECT_TRUE(eval("x.ten == 11").getBool());
-//
-//  x.setProperty(rt, "e_as_float", 2.71f);
-//  EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
-//
-//  x.setProperty(rt, "e_as_double", 2.71);
-//  EXPECT_TRUE(eval("x.e_as_double == 2.71").getBool());
-//
-//  uint8_t utf8[] = { 0xF0, 0x9F, 0x86, 0x97 };
-//  String nonAsciiName = String::createFromUtf8(rt, utf8, sizeof(utf8));
-//  x.setProperty(rt, PropNameID::forString(rt, nonAsciiName), "emoji");
-//  EXPECT_EQ(x.getPropertyNames(rt).size(rt), 8);
-//  EXPECT_TRUE(eval("x['\\uD83C\\uDD97'] == 'emoji'").getBool());
-//
-//  Object seven = x.getPropertyAsObject(rt, "seven");
-//  EXPECT_TRUE(seven.isArray(rt));
-//  Object evalf = rt.global().getPropertyAsObject(rt, "eval");
-//  EXPECT_TRUE(evalf.isFunction(rt));
-//
-//  Object movedX = Object(rt);
-//  movedX = std::move(x);
-//  EXPECT_EQ(movedX.getPropertyNames(rt).size(rt), 8);
-//  EXPECT_EQ(movedX.getProperty(rt, "1").getNumber(), 2);
-//
-//  Object obj = Object(rt);
-//  obj.setProperty(rt, "roses", "red");
-//  obj.setProperty(rt, "violets", "blue");
-//  Object oprop = Object(rt);
-//  obj.setProperty(rt, "oprop", oprop);
-//  obj.setProperty(rt, "aprop", Array(rt, 1));
-//
-//  EXPECT_TRUE(function("function (obj) { return "
-//    "obj.roses == 'red' && "
-//    "obj['violets'] == 'blue' && "
-//    "typeof obj.oprop == 'object' && "
-//    "Array.isArray(obj.aprop); }")
-//    .call(rt, obj)
-//    .getBool());
-//
-//  // Check that getPropertyNames doesn't return non-enumerable
-//  // properties.
-//  obj = function(
-//    "function () {"
-//    "  obj = {};"
-//    "  obj.a = 1;"
-//    "  Object.defineProperty(obj, 'b', {"
-//    "    enumerable: false,"
-//    "    value: 2"
-//    "  });"
-//    "  return obj;"
-//    "}")
-//    .call(rt)
-//    .getObject(rt);
-//  EXPECT_EQ(obj.getProperty(rt, "a").getNumber(), 1);
-//  EXPECT_EQ(obj.getProperty(rt, "b").getNumber(), 2);
-//  Array names = obj.getPropertyNames(rt);
-//  // TODO (yicyao): We need to fix getPropertyNames as it currently:
-//  // - Does not traverse property chains.
-//  // - Returns non-enumerable properties.
-//  //EXPECT_EQ(names.size(rt), 1);
-//  //EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
-//}
-
+// TODO (yicyao): Enable this once host object is implemented for
+// ChakraJsiRuntime.
 //TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
 //  class ConstantHostObject : public HostObject {
 //    Value get(Runtime&, const PropNameID& sym) override {
@@ -463,161 +409,161 @@ TEST_P(JsiRuntimeUnitTests, StringTests_MoveTest)
 //    .call(rt, howpn, String::createFromAscii(rt, "not_existing"))
 //    .getBool());
 //}
-//
-//TEST_P(JsiRuntimeUnitTests, ArrayTest) {
-//  eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
-//
-//  Object x = rt.global().getPropertyAsObject(rt, "x");
-//  Array names = x.getPropertyNames(rt);
-//  EXPECT_EQ(names.size(rt), 4);
-//  std::unordered_set<std::string> strNames;
-//  for (size_t i = 0; i < names.size(rt); ++i) {
-//    Value n = names.getValueAtIndex(rt, i);
-//    EXPECT_TRUE(n.isString());
-//    strNames.insert(n.getString(rt).utf8(rt));
-//  }
-//
-//  EXPECT_EQ(strNames.size(), 4);
-//  EXPECT_EQ(strNames.count("1"), 1);
-//  EXPECT_EQ(strNames.count("3"), 1);
-//  EXPECT_EQ(strNames.count("5"), 1);
-//  EXPECT_EQ(strNames.count("seven"), 1);
-//
-//  Object seven = x.getPropertyAsObject(rt, "seven");
-//  Array arr = seven.getArray(rt);
-//
-//  EXPECT_EQ(arr.size(rt), 2);
-//  EXPECT_EQ(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "eight");
-//  EXPECT_EQ(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), "nine");
-//  // TODO: test out of range
-//
-//  EXPECT_EQ(x.getPropertyAsObject(rt, "seven").getArray(rt).size(rt), 2);
-//
-//  // Check that property access with both symbols and strings can access
-//  // array values.
-//  EXPECT_EQ(seven.getProperty(rt, "0").getString(rt).utf8(rt), "eight");
-//  EXPECT_EQ(seven.getProperty(rt, "1").getString(rt).utf8(rt), "nine");
-//  seven.setProperty(rt, "1", "modified");
-//  EXPECT_EQ(seven.getProperty(rt, "1").getString(rt).utf8(rt), "modified");
-//  EXPECT_EQ(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), "modified");
-//  EXPECT_EQ(
-//    seven.getProperty(rt, PropNameID::forAscii(rt, "0"))
-//    .getString(rt)
-//    .utf8(rt),
-//    "eight");
-//  seven.setProperty(rt, PropNameID::forAscii(rt, "0"), "modified2");
-//  EXPECT_EQ(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "modified2");
-//
-//  Array alpha = Array(rt, 4);
-//  EXPECT_TRUE(alpha.getValueAtIndex(rt, 0).isUndefined());
-//  EXPECT_TRUE(alpha.getValueAtIndex(rt, 3).isUndefined());
-//  EXPECT_EQ(alpha.size(rt), 4);
-//  alpha.setValueAtIndex(rt, 0, "a");
-//  alpha.setValueAtIndex(rt, 1, "b");
-//  EXPECT_EQ(alpha.length(rt), 4);
-//  alpha.setValueAtIndex(rt, 2, "c");
-//  alpha.setValueAtIndex(rt, 3, "d");
-//  EXPECT_EQ(alpha.size(rt), 4);
-//
-//  EXPECT_TRUE(
-//    function(
-//      "function (arr) { return "
-//      "arr.length == 4 && "
-//      "['a','b','c','d'].every(function(v,i) { return v === arr[i]}); }")
-//    .call(rt, alpha)
-//    .getBool());
-//
-//  Array alpha2 = Array(rt, 1);
-//  alpha2 = std::move(alpha);
-//  EXPECT_EQ(alpha2.size(rt), 4);
-//}
-//
-//TEST_P(JsiRuntimeUnitTests, FunctionTest) {
-//  // test move ctor
-//  Function fmove = function("function() { return 1 }");
-//  {
-//    Function g = function("function() { return 2 }");
-//    fmove = std::move(g);
-//  }
-//  EXPECT_EQ(fmove.call(rt).getNumber(), 2);
-//
-//  // This tests all the function argument converters, and all the
-//  // non-lvalue overloads of call().
-//  Function f = function(
-//    "function(n, b, d, df, i, s1, s2, s3, o, a, f, v) { return "
-//    "n === null && "
-//    "b === true && "
-//    "d === 3.14 && "
-//    "Math.abs(df - 2.71) < 0.001 && "
-//    "i === 17 && "
-//    "s1 == 's1' && "
-//    "s2 == 's2' && "
-//    "s3 == 's3' && "
-//    "typeof o == 'object' && "
-//    "Array.isArray(a) && "
-//    "typeof f == 'function' && "
-//    "v == 42 }");
-//  std::string s3 = "s3";
-//  EXPECT_TRUE(f.call(
-//    rt,
-//    nullptr,
-//    true,
-//    3.14,
-//    2.71f,
-//    17,
-//    "s1",
-//    String::createFromAscii(rt, "s2"),
-//    s3,
-//    Object(rt),
-//    Array(rt, 1),
-//    function("function(){}"),
-//    Value(42))
-//    .getBool());
-//
-//  // lvalue overloads of call()
-//  Function flv = function(
-//    "function(s, o, a, f, v) { return "
-//    "s == 's' && "
-//    "typeof o == 'object' && "
-//    "Array.isArray(a) && "
-//    "typeof f == 'function' && "
-//    "v == 42 }");
-//
-//  String s = String::createFromAscii(rt, "s");
-//  Object o = Object(rt);
-//  Array a = Array(rt, 1);
-//  Value v = 42;
-//  EXPECT_TRUE(flv.call(rt, s, o, a, f, v).getBool());
-//
-//  Function f1 = function("function() { return 1; }");
-//  Function f2 = function("function() { return 2; }");
-//  f2 = std::move(f1);
-//  EXPECT_EQ(f2.call(rt).getNumber(), 1);
-//}
-//
-//TEST_P(JsiRuntimeUnitTests, FunctionThisTest) {
-//  Function checkPropertyFunction =
-//    function("function() { return this.a === 'a_property' }");
-//
-//  Object jsObject = Object(rt);
-//  jsObject.setProperty(rt, "a", String::createFromUtf8(rt, "a_property"));
-//
-//  //class APropertyHostObject : public HostObject {
-//  //  Value get(Runtime& rt, const PropNameID& sym) override {
-//  //    return String::createFromUtf8(rt, "a_property");
-//  //  }
-//
-//  //  void set(Runtime&, const PropNameID&, const Value&) override {}
-//  //};
-//  //Object hostObject =
-//  //  Object::createFromHostObject(rt, std::make_shared<APropertyHostObject>());
-//
-//  EXPECT_TRUE(checkPropertyFunction.callWithThis(rt, jsObject).getBool());
-//  //EXPECT_TRUE(checkPropertyFunction.callWithThis(rt, hostObject).getBool());
-//  EXPECT_FALSE(checkPropertyFunction.callWithThis(rt, Array(rt, 5)).getBool());
-//  EXPECT_FALSE(checkPropertyFunction.call(rt).getBool());
-//}
-//
+
+TEST_P(JsiRuntimeUnitTests, ArrayTest) {
+  eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
+
+  Object x = rt.global().getPropertyAsObject(rt, "x");
+  Array names = x.getPropertyNames(rt);
+  EXPECT_EQ(names.size(rt), 4);
+  std::unordered_set<std::string> strNames;
+  for (size_t i = 0; i < names.size(rt); ++i) {
+    Value n = names.getValueAtIndex(rt, i);
+    EXPECT_TRUE(n.isString());
+    strNames.insert(n.getString(rt).utf8(rt));
+  }
+
+  EXPECT_EQ(strNames.size(), 4);
+  EXPECT_EQ(strNames.count("1"), 1);
+  EXPECT_EQ(strNames.count("3"), 1);
+  EXPECT_EQ(strNames.count("5"), 1);
+  EXPECT_EQ(strNames.count("seven"), 1);
+
+  Object seven = x.getPropertyAsObject(rt, "seven");
+  Array arr = seven.getArray(rt);
+
+  EXPECT_EQ(arr.size(rt), 2);
+  EXPECT_EQ(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "eight");
+  EXPECT_EQ(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), "nine");
+  // TODO: test out of range
+
+  EXPECT_EQ(x.getPropertyAsObject(rt, "seven").getArray(rt).size(rt), 2);
+
+  // Check that property access with both symbols and strings can access
+  // array values.
+  EXPECT_EQ(seven.getProperty(rt, "0").getString(rt).utf8(rt), "eight");
+  EXPECT_EQ(seven.getProperty(rt, "1").getString(rt).utf8(rt), "nine");
+  seven.setProperty(rt, "1", "modified");
+  EXPECT_EQ(seven.getProperty(rt, "1").getString(rt).utf8(rt), "modified");
+  EXPECT_EQ(arr.getValueAtIndex(rt, 1).getString(rt).utf8(rt), "modified");
+  EXPECT_EQ(
+    seven.getProperty(rt, PropNameID::forAscii(rt, "0"))
+    .getString(rt)
+    .utf8(rt),
+    "eight");
+  seven.setProperty(rt, PropNameID::forAscii(rt, "0"), "modified2");
+  EXPECT_EQ(arr.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "modified2");
+
+  Array alpha = Array(rt, 4);
+  EXPECT_TRUE(alpha.getValueAtIndex(rt, 0).isUndefined());
+  EXPECT_TRUE(alpha.getValueAtIndex(rt, 3).isUndefined());
+  EXPECT_EQ(alpha.size(rt), 4);
+  alpha.setValueAtIndex(rt, 0, "a");
+  alpha.setValueAtIndex(rt, 1, "b");
+  EXPECT_EQ(alpha.length(rt), 4);
+  alpha.setValueAtIndex(rt, 2, "c");
+  alpha.setValueAtIndex(rt, 3, "d");
+  EXPECT_EQ(alpha.size(rt), 4);
+
+  EXPECT_TRUE(
+    function(
+      "function (arr) { return "
+      "arr.length == 4 && "
+      "['a','b','c','d'].every(function(v,i) { return v === arr[i]}); }")
+    .call(rt, alpha)
+    .getBool());
+
+  Array alpha2 = Array(rt, 1);
+  alpha2 = std::move(alpha);
+  EXPECT_EQ(alpha2.size(rt), 4);
+}
+
+TEST_P(JsiRuntimeUnitTests, FunctionTest) {
+  // test move ctor
+  Function fmove = function("function() { return 1 }");
+  {
+    Function g = function("function() { return 2 }");
+    fmove = std::move(g);
+  }
+  EXPECT_EQ(fmove.call(rt).getNumber(), 2);
+
+  // This tests all the function argument converters, and all the
+  // non-lvalue overloads of call().
+  Function f = function(
+    "function(n, b, d, df, i, s1, s2, s3, o, a, f, v) { return "
+    "n === null && "
+    "b === true && "
+    "d === 3.14 && "
+    "Math.abs(df - 2.71) < 0.001 && "
+    "i === 17 && "
+    "s1 == 's1' && "
+    "s2 == 's2' && "
+    "s3 == 's3' && "
+    "typeof o == 'object' && "
+    "Array.isArray(a) && "
+    "typeof f == 'function' && "
+    "v == 42 }");
+  std::string s3 = "s3";
+  EXPECT_TRUE(f.call(
+    rt,
+    nullptr,
+    true,
+    3.14,
+    2.71f,
+    17,
+    "s1",
+    String::createFromAscii(rt, "s2"),
+    s3,
+    Object(rt),
+    Array(rt, 1),
+    function("function(){}"),
+    Value(42))
+    .getBool());
+
+  // lvalue overloads of call()
+  Function flv = function(
+    "function(s, o, a, f, v) { return "
+    "s == 's' && "
+    "typeof o == 'object' && "
+    "Array.isArray(a) && "
+    "typeof f == 'function' && "
+    "v == 42 }");
+
+  String s = String::createFromAscii(rt, "s");
+  Object o = Object(rt);
+  Array a = Array(rt, 1);
+  Value v = 42;
+  EXPECT_TRUE(flv.call(rt, s, o, a, f, v).getBool());
+
+  Function f1 = function("function() { return 1; }");
+  Function f2 = function("function() { return 2; }");
+  f2 = std::move(f1);
+  EXPECT_EQ(f2.call(rt).getNumber(), 1);
+}
+
+TEST_P(JsiRuntimeUnitTests, FunctionThisTest) {
+  Function checkPropertyFunction =
+    function("function() { return this.a === 'a_property' }");
+
+  Object jsObject = Object(rt);
+  jsObject.setProperty(rt, "a", String::createFromUtf8(rt, "a_property"));
+
+  //class APropertyHostObject : public HostObject {
+  //  Value get(Runtime& rt, const PropNameID& sym) override {
+  //    return String::createFromUtf8(rt, "a_property");
+  //  }
+
+  //  void set(Runtime&, const PropNameID&, const Value&) override {}
+  //};
+  //Object hostObject =
+  //  Object::createFromHostObject(rt, std::make_shared<APropertyHostObject>());
+
+  EXPECT_TRUE(checkPropertyFunction.callWithThis(rt, jsObject).getBool());
+  //EXPECT_TRUE(checkPropertyFunction.callWithThis(rt, hostObject).getBool());
+  EXPECT_FALSE(checkPropertyFunction.callWithThis(rt, Array(rt, 5)).getBool());
+  EXPECT_FALSE(checkPropertyFunction.call(rt).getBool());
+}
+
 //TEST_P(JsiRuntimeUnitTests, FunctionConstructorTest) {
 //  Function ctor = function(
 //    "function (a) {"
@@ -656,20 +602,20 @@ TEST_P(JsiRuntimeUnitTests, StringTests_MoveTest)
 //    // and this test is not about timing precision.
 //    48);
 //}
-//
-//TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
-//  auto ctor = function("function Rick() { this.say = 'wubalubadubdub'; }");
-//  auto newObj = function("function (ctor) { return new ctor(); }");
-//  auto instance = newObj.call(rt, ctor).getObject(rt);
-//  EXPECT_TRUE(instance.instanceOf(rt, ctor));
-//  EXPECT_EQ(
-//    instance.getProperty(rt, "say").getString(rt).utf8(rt), "wubalubadubdub");
-//  EXPECT_FALSE(Object(rt).instanceOf(rt, ctor));
-//  EXPECT_TRUE(ctor.callAsConstructor(rt, nullptr, 0)
-//    .getObject(rt)
-//    .instanceOf(rt, ctor));
-//}
-//
+
+TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
+  auto ctor = function("function Rick() { this.say = 'wubalubadubdub'; }");
+  auto newObj = function("function (ctor) { return new ctor(); }");
+  auto instance = newObj.call(rt, ctor).getObject(rt);
+  EXPECT_TRUE(instance.instanceOf(rt, ctor));
+  EXPECT_EQ(
+    instance.getProperty(rt, "say").getString(rt).utf8(rt), "wubalubadubdub");
+  EXPECT_FALSE(Object(rt).instanceOf(rt, ctor));
+  EXPECT_TRUE(ctor.callAsConstructor(rt, nullptr, 0)
+    .getObject(rt)
+    .instanceOf(rt, ctor));
+}
+
 //TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
 //  auto one = std::make_shared<int>(1);
 //  Function plusOne = Function::createFromHostFunction(
@@ -823,227 +769,227 @@ TEST_P(JsiRuntimeUnitTests, StringTests_MoveTest)
 //    .getBool());
 //}
 
-//TEST_P(JsiRuntimeUnitTests, ValueTest) {
-//  EXPECT_TRUE(checkValue(Value::undefined(), "undefined"));
-//  EXPECT_TRUE(checkValue(Value(), "undefined"));
-//  EXPECT_TRUE(checkValue(Value::null(), "null"));
-//  EXPECT_TRUE(checkValue(nullptr, "null"));
-//
-//  EXPECT_TRUE(checkValue(Value(false), "false"));
-//  EXPECT_TRUE(checkValue(false, "false"));
-//  EXPECT_TRUE(checkValue(true, "true"));
-//
-//  EXPECT_TRUE(checkValue(Value(1.5), "1.5"));
-//  EXPECT_TRUE(checkValue(2.5, "2.5"));
-//
-//  EXPECT_TRUE(checkValue(Value(10), "10"));
-//  EXPECT_TRUE(checkValue(20, "20"));
-//  EXPECT_TRUE(checkValue(30, "30"));
-//
-//  // rvalue implicit conversion
-//  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "one"), "'one'"));
-//  // lvalue explicit copy
-//  String s = String::createFromAscii(rt, "two");
-//  EXPECT_TRUE(checkValue(Value(rt, s), "'two'"));
-//
-//  {
-//    // rvalue assignment of trivial value
-//    Value v1 = 100;
-//    Value v2 = String::createFromAscii(rt, "hundred");
-//    v2 = std::move(v1);
-//    EXPECT_TRUE(v2.isNumber());
-//    EXPECT_EQ(v2.getNumber(), 100);
-//  }
-//
-//  {
-//    // rvalue assignment of js heap value
-//    Value v1 = String::createFromAscii(rt, "hundred");
-//    Value v2 = 100;
-//    v2 = std::move(v1);
-//    EXPECT_TRUE(v2.isString());
-//    EXPECT_EQ(v2.getString(rt).utf8(rt), "hundred");
-//  }
-//
-//  Object o = Object(rt);
-//  EXPECT_TRUE(function("function(value) { return typeof(value) == 'object'; }")
-//    .call(rt, Value(rt, o))
-//    .getBool());
-//
-//  uint8_t utf8[] = "[null, 2, \"c\", \"emoji: \xf0\x9f\x86\x97\", {}]";
-//
-//  EXPECT_TRUE(
-//    function("function (arr) { return "
-//      "Array.isArray(arr) && "
-//      "arr.length == 5 && "
-//      "arr[0] === null && "
-//      "arr[1] == 2 && "
-//      "arr[2] == 'c' && "
-//      "arr[3] == 'emoji: \\uD83C\\uDD97' && "
-//      "typeof arr[4] == 'object'; }")
-//    .call(rt, Value::createFromJsonUtf8(rt, utf8, sizeof(utf8) - 1))
-//    .getBool());
-//
-//  EXPECT_TRUE(eval("undefined").isUndefined());
-//  EXPECT_TRUE(eval("null").isNull());
-//  EXPECT_TRUE(eval("true").isBool());
-//  EXPECT_TRUE(eval("false").isBool());
-//  EXPECT_TRUE(eval("123").isNumber());
-//  EXPECT_TRUE(eval("123.4").isNumber());
-//  EXPECT_TRUE(eval("'str'").isString());
-//  // "{}" returns undefined.  empty code block?
-//  EXPECT_TRUE(eval("({})").isObject());
-//  EXPECT_TRUE(eval("[]").isObject());
-//  EXPECT_TRUE(eval("(function(){})").isObject());
-//
-//  EXPECT_EQ(eval("123").getNumber(), 123);
-//  EXPECT_EQ(eval("123.4").getNumber(), 123.4);
-//  EXPECT_EQ(eval("'str'").getString(rt).utf8(rt), "str");
-//  EXPECT_TRUE(eval("[]").getObject(rt).isArray(rt));
-//
-//  EXPECT_EQ(eval("456").asNumber(), 456);
-//  EXPECT_THROW(eval("'word'").asNumber(), JSIException);
-//  EXPECT_EQ(
-//    eval("({1:2, 3:4})").asObject(rt).getProperty(rt, "1").getNumber(), 2);
-//  EXPECT_THROW(eval("'oops'").asObject(rt), JSIException);
-//
-//  EXPECT_EQ(eval("['zero',1,2,3]").toString(rt).utf8(rt), "zero,1,2,3");
-//}
-//
-//TEST_P(JsiRuntimeUnitTests, EqualsTest) {
-//  EXPECT_TRUE(Object::strictEquals(rt, rt.global(), rt.global()));
-//  EXPECT_TRUE(Value::strictEquals(rt, 1, 1));
-//  EXPECT_FALSE(Value::strictEquals(rt, true, 1));
-//  EXPECT_FALSE(Value::strictEquals(rt, true, false));
-//  EXPECT_TRUE(Value::strictEquals(rt, false, false));
-//  EXPECT_FALSE(Value::strictEquals(rt, nullptr, 1));
-//  EXPECT_TRUE(Value::strictEquals(rt, nullptr, nullptr));
-//  EXPECT_TRUE(Value::strictEquals(rt, Value::undefined(), Value()));
-//  EXPECT_TRUE(Value::strictEquals(rt, rt.global(), Value(rt.global())));
-//  EXPECT_FALSE(Value::strictEquals(
-//    rt,
-//    std::numeric_limits<double>::quiet_NaN(),
-//    std::numeric_limits<double>::quiet_NaN()));
-//  EXPECT_FALSE(Value::strictEquals(
-//    rt,
-//    std::numeric_limits<double>::signaling_NaN(),
-//    std::numeric_limits<double>::signaling_NaN()));
-//  EXPECT_TRUE(Value::strictEquals(rt, +0.0, -0.0));
-//  EXPECT_TRUE(Value::strictEquals(rt, -0.0, +0.0));
-//
-//  Function noop = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "noop"),
-//    0,
-//    [](const Runtime&, const Value&, const Value*, size_t) {
-//    return Value();
-//  });
-//  auto noopDup = Value(rt, noop).getObject(rt);
-//  EXPECT_TRUE(Object::strictEquals(rt, noop, noopDup));
-//  EXPECT_TRUE(Object::strictEquals(rt, noopDup, noop));
-//  EXPECT_FALSE(Object::strictEquals(rt, noop, rt.global()));
-//  EXPECT_TRUE(Object::strictEquals(rt, noop, noop));
-//  EXPECT_TRUE(Value::strictEquals(rt, Value(rt, noop), Value(rt, noop)));
-//
-//  String str = String::createFromAscii(rt, "rick");
-//  String strDup = String::createFromAscii(rt, "rick");
-//  String otherStr = String::createFromAscii(rt, "morty");
-//  EXPECT_TRUE(String::strictEquals(rt, str, str));
-//  EXPECT_TRUE(String::strictEquals(rt, str, strDup));
-//  EXPECT_TRUE(String::strictEquals(rt, strDup, str));
-//  EXPECT_FALSE(String::strictEquals(rt, str, otherStr));
-//  EXPECT_TRUE(Value::strictEquals(rt, Value(rt, str), Value(rt, str)));
-//  EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), Value(rt, noop)));
-//  EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), 1.0));
-//}
-//
-//TEST_P(JsiRuntimeUnitTests, ExceptionStackTraceTest) {
-//  static const char invokeUndefinedScript[] =
-//    "function hello() {"
-//    "  var a = {}; a.log(); }"
-//    "function world() { hello(); }"
-//    "world()";
-//  std::string stack;
-//  try {
-//    rt.evaluateJavaScript(
-//      std::make_unique<StringBuffer>(invokeUndefinedScript), "");
-//  }
-//  catch (JSError& e) {
-//    stack = e.getStack();
-//  }
-//  EXPECT_NE(stack.find("world"), std::string::npos);
-//}
-//
-//// TODO (T28293178) Remove this once exceptions are supported in all builds.
-//#ifndef JSI_NO_EXCEPTION_TESTS
-//
-//namespace {
-//
-//  unsigned countOccurences(const std::string& of, const std::string& in) {
-//    unsigned occurences = 0;
-//    std::string::size_type lastOccurence = -1;
-//    while ((lastOccurence = in.find(of, lastOccurence + 1)) !=
-//      std::string::npos) {
-//      occurences++;
-//    }
-//    return occurences;
-//  }
-//
-//} // namespace
-//
-//TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
-//  unsigned callsBeoreError = 5;
-//
-//  Function sometimesThrows = function(
-//    "function sometimesThrows(shouldThrow, callback) {"
-//    "  if (shouldThrow) {"
-//    "    throw Error('Omg, what a nasty exception')"
-//    "  }"
-//    "  callback(callback);"
-//    "}");
-//
-//  Function callback = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "callback"),
-//    0,
-//    [&sometimesThrows, &callsBeoreError](
-//      Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
-//    return sometimesThrows.call(rt, --callsBeoreError == 0, args[0]);
-//  });
-//
-//  try {
-//    sometimesThrows.call(rt, false, callback);
-//  }
-//  catch (JSError& error) {
-//    EXPECT_EQ(error.getMessage(), "Omg, what a nasty exception");
-//    EXPECT_EQ(countOccurences("sometimesThrows", error.getStack()), 6);
-//
-//    // system JSC JSI does not implement host function names
-//    // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);
-//  }
-//}
-//#endif
-//
-//TEST_P(JsiRuntimeUnitTests, JSErrorsCanBeConstructedWithStack) {
-//  auto err = JSError(rt, "message", "stack");
-//  EXPECT_EQ(err.getMessage(), "message");
-//  EXPECT_EQ(err.getStack(), "stack");
-//}
-//
-//TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashTest) {
-//  Scope scope(rt);
-//  Object o(rt);
-//}
-//
-//TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashWhenValueEscapes) {
-//  Value v;
-//  Scope::callInNewScope(rt, [&]() {
-//    Object o(rt);
-//    o.setProperty(rt, "a", 5);
-//    v = std::move(o);
-//  });
-//  EXPECT_EQ(v.getObject(rt).getProperty(rt, "a").getNumber(), 5);
-//}
-//
+TEST_P(JsiRuntimeUnitTests, ValueTest) {
+  EXPECT_TRUE(checkValue(Value::undefined(), "undefined"));
+  EXPECT_TRUE(checkValue(Value(), "undefined"));
+  EXPECT_TRUE(checkValue(Value::null(), "null"));
+  EXPECT_TRUE(checkValue(nullptr, "null"));
+
+  EXPECT_TRUE(checkValue(Value(false), "false"));
+  EXPECT_TRUE(checkValue(false, "false"));
+  EXPECT_TRUE(checkValue(true, "true"));
+
+  EXPECT_TRUE(checkValue(Value(1.5), "1.5"));
+  EXPECT_TRUE(checkValue(2.5, "2.5"));
+
+  EXPECT_TRUE(checkValue(Value(10), "10"));
+  EXPECT_TRUE(checkValue(20, "20"));
+  EXPECT_TRUE(checkValue(30, "30"));
+
+  // rvalue implicit conversion
+  EXPECT_TRUE(checkValue(String::createFromAscii(rt, "one"), "'one'"));
+  // lvalue explicit copy
+  String s = String::createFromAscii(rt, "two");
+  EXPECT_TRUE(checkValue(Value(rt, s), "'two'"));
+
+  {
+    // rvalue assignment of trivial value
+    Value v1 = 100;
+    Value v2 = String::createFromAscii(rt, "hundred");
+    v2 = std::move(v1);
+    EXPECT_TRUE(v2.isNumber());
+    EXPECT_EQ(v2.getNumber(), 100);
+  }
+
+  {
+    // rvalue assignment of js heap value
+    Value v1 = String::createFromAscii(rt, "hundred");
+    Value v2 = 100;
+    v2 = std::move(v1);
+    EXPECT_TRUE(v2.isString());
+    EXPECT_EQ(v2.getString(rt).utf8(rt), "hundred");
+  }
+
+  Object o = Object(rt);
+  EXPECT_TRUE(function("function(value) { return typeof(value) == 'object'; }")
+    .call(rt, Value(rt, o))
+    .getBool());
+
+  uint8_t utf8[] = "[null, 2, \"c\", \"emoji: \xf0\x9f\x86\x97\", {}]";
+
+  EXPECT_TRUE(
+    function("function (arr) { return "
+      "Array.isArray(arr) && "
+      "arr.length == 5 && "
+      "arr[0] === null && "
+      "arr[1] == 2 && "
+      "arr[2] == 'c' && "
+      "arr[3] == 'emoji: \\uD83C\\uDD97' && "
+      "typeof arr[4] == 'object'; }")
+    .call(rt, Value::createFromJsonUtf8(rt, utf8, sizeof(utf8) - 1))
+    .getBool());
+
+  EXPECT_TRUE(eval("undefined").isUndefined());
+  EXPECT_TRUE(eval("null").isNull());
+  EXPECT_TRUE(eval("true").isBool());
+  EXPECT_TRUE(eval("false").isBool());
+  EXPECT_TRUE(eval("123").isNumber());
+  EXPECT_TRUE(eval("123.4").isNumber());
+  EXPECT_TRUE(eval("'str'").isString());
+  // "{}" returns undefined.  empty code block?
+  EXPECT_TRUE(eval("({})").isObject());
+  EXPECT_TRUE(eval("[]").isObject());
+  EXPECT_TRUE(eval("(function(){})").isObject());
+
+  EXPECT_EQ(eval("123").getNumber(), 123);
+  EXPECT_EQ(eval("123.4").getNumber(), 123.4);
+  EXPECT_EQ(eval("'str'").getString(rt).utf8(rt), "str");
+  EXPECT_TRUE(eval("[]").getObject(rt).isArray(rt));
+
+  EXPECT_EQ(eval("456").asNumber(), 456);
+  EXPECT_THROW(eval("'word'").asNumber(), JSIException);
+  EXPECT_EQ(
+    eval("({1:2, 3:4})").asObject(rt).getProperty(rt, "1").getNumber(), 2);
+  EXPECT_THROW(eval("'oops'").asObject(rt), JSIException);
+
+  EXPECT_EQ(eval("['zero',1,2,3]").toString(rt).utf8(rt), "zero,1,2,3");
+}
+
+TEST_P(JsiRuntimeUnitTests, EqualsTest) {
+  EXPECT_TRUE(Object::strictEquals(rt, rt.global(), rt.global()));
+  EXPECT_TRUE(Value::strictEquals(rt, 1, 1));
+  EXPECT_FALSE(Value::strictEquals(rt, true, 1));
+  EXPECT_FALSE(Value::strictEquals(rt, true, false));
+  EXPECT_TRUE(Value::strictEquals(rt, false, false));
+  EXPECT_FALSE(Value::strictEquals(rt, nullptr, 1));
+  EXPECT_TRUE(Value::strictEquals(rt, nullptr, nullptr));
+  EXPECT_TRUE(Value::strictEquals(rt, Value::undefined(), Value()));
+  EXPECT_TRUE(Value::strictEquals(rt, rt.global(), Value(rt.global())));
+  EXPECT_FALSE(Value::strictEquals(
+    rt,
+    std::numeric_limits<double>::quiet_NaN(),
+    std::numeric_limits<double>::quiet_NaN()));
+  EXPECT_FALSE(Value::strictEquals(
+    rt,
+    std::numeric_limits<double>::signaling_NaN(),
+    std::numeric_limits<double>::signaling_NaN()));
+  EXPECT_TRUE(Value::strictEquals(rt, +0.0, -0.0));
+  EXPECT_TRUE(Value::strictEquals(rt, -0.0, +0.0));
+
+  Function noop = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "noop"),
+    0,
+    [](const Runtime&, const Value&, const Value*, size_t) {
+    return Value();
+  });
+  auto noopDup = Value(rt, noop).getObject(rt);
+  EXPECT_TRUE(Object::strictEquals(rt, noop, noopDup));
+  EXPECT_TRUE(Object::strictEquals(rt, noopDup, noop));
+  EXPECT_FALSE(Object::strictEquals(rt, noop, rt.global()));
+  EXPECT_TRUE(Object::strictEquals(rt, noop, noop));
+  EXPECT_TRUE(Value::strictEquals(rt, Value(rt, noop), Value(rt, noop)));
+
+  String str = String::createFromAscii(rt, "rick");
+  String strDup = String::createFromAscii(rt, "rick");
+  String otherStr = String::createFromAscii(rt, "morty");
+  EXPECT_TRUE(String::strictEquals(rt, str, str));
+  EXPECT_TRUE(String::strictEquals(rt, str, strDup));
+  EXPECT_TRUE(String::strictEquals(rt, strDup, str));
+  EXPECT_FALSE(String::strictEquals(rt, str, otherStr));
+  EXPECT_TRUE(Value::strictEquals(rt, Value(rt, str), Value(rt, str)));
+  EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), Value(rt, noop)));
+  EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), 1.0));
+}
+
+TEST_P(JsiRuntimeUnitTests, ExceptionStackTraceTest) {
+  static const char invokeUndefinedScript[] =
+    "function hello() {"
+    "  var a = {}; a.log(); }"
+    "function world() { hello(); }"
+    "world()";
+  std::string stack;
+  try {
+    rt.evaluateJavaScript(
+      std::make_unique<StringBuffer>(invokeUndefinedScript), "");
+  }
+  catch (JSError& e) {
+    stack = e.getStack();
+  }
+  EXPECT_NE(stack.find("world"), std::string::npos);
+}
+
+// TODO (T28293178) Remove this once exceptions are supported in all builds.
+#ifndef JSI_NO_EXCEPTION_TESTS
+
+namespace {
+
+  unsigned countOccurences(const std::string& of, const std::string& in) {
+    unsigned occurences = 0;
+    std::string::size_type lastOccurence = -1;
+    while ((lastOccurence = in.find(of, lastOccurence + 1)) !=
+      std::string::npos) {
+      occurences++;
+    }
+    return occurences;
+  }
+
+} // namespace
+
+TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
+  unsigned callsBeoreError = 5;
+
+  Function sometimesThrows = function(
+    "function sometimesThrows(shouldThrow, callback) {"
+    "  if (shouldThrow) {"
+    "    throw Error('Omg, what a nasty exception')"
+    "  }"
+    "  callback(callback);"
+    "}");
+
+  Function callback = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "callback"),
+    0,
+    [&sometimesThrows, &callsBeoreError](
+      Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
+    return sometimesThrows.call(rt, --callsBeoreError == 0, args[0]);
+  });
+
+  try {
+    sometimesThrows.call(rt, false, callback);
+  }
+  catch (JSError& error) {
+    EXPECT_EQ(error.getMessage(), "Omg, what a nasty exception");
+    EXPECT_EQ(countOccurences("sometimesThrows", error.getStack()), 6);
+
+    // system JSC JSI does not implement host function names
+    // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);
+  }
+}
+#endif
+
+TEST_P(JsiRuntimeUnitTests, JSErrorsCanBeConstructedWithStack) {
+  auto err = JSError(rt, "message", "stack");
+  EXPECT_EQ(err.getMessage(), "message");
+  EXPECT_EQ(err.getStack(), "stack");
+}
+
+TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashTest) {
+  Scope scope(rt);
+  Object o(rt);
+}
+
+TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashWhenValueEscapes) {
+  Value v;
+  Scope::callInNewScope(rt, [&]() {
+    Object o(rt);
+    o.setProperty(rt, "a", 5);
+    v = std::move(o);
+  });
+  EXPECT_EQ(v.getObject(rt).getProperty(rt, "a").getNumber(), 5);
+}
+
 //// Verifies you can have a host object that emulates a normal object
 //TEST_P(JsiRuntimeUnitTests, HostObjectWithValueMembers) {
 //  class Bag : public HostObject {
@@ -1107,3 +1053,4 @@ TEST_P(JsiRuntimeUnitTests, StringTests_MoveTest)
 //    bag["obj"].getObject(rt).getProperty(rt, "foo").getString(rt).utf8(rt),
 //    "bar");
 //}
+
