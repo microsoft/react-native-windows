@@ -10,8 +10,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -32,7 +31,7 @@
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         BOOST_ERROR_CODE_HEADER_ONLY  - Compile Boost error_code members inline. Requires BOOST_SYSTEM_SOURCE.
       -->
-      <PreprocessorDefinitions>_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;BOOST_SYSTEM_SOURCE;BOOST_ERROR_CODE_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;BOOST_SYSTEM_SOURCE;BOOST_ERROR_CODE_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -43,7 +42,7 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)' == 'x86'">
+  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)' == 'x86' OR '$(Platform)' == 'Win32'">
     <ClCompile>
       <!-- MSVC macros -->
       <PreprocessorDefinitions>WITH_OFFICE_TRACING=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
