@@ -35,11 +35,6 @@ namespace react {
       this->Background(m_brush.as<winrt::XamlCompositionBrushBase>());
     }
 
-    ReactImage::~ReactImage()
-    {
-      m_surface = nullptr;
-    }
-
     /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create()
     {
       return winrt::make_self<ReactImage>();
@@ -98,15 +93,15 @@ namespace react {
 
         if (!needsDownload || memoryStream)
         {
-          m_surface = needsDownload ?
+          auto surface = needsDownload ?
             winrt::LoadedImageSurface::StartLoadFromStream(memoryStream) :
             winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
-          m_surfaceLoadedRevoker = m_surface.LoadCompleted(winrt::auto_revoke, [weak_this{ get_weak() }](winrt::LoadedImageSurface const& /*sender*/, winrt::LoadedImageSourceLoadCompletedEventArgs const& args) {
+          m_surfaceLoadedRevoker = surface.LoadCompleted(winrt::auto_revoke, [weak_this{ get_weak() }, surface](winrt::LoadedImageSurface const& /*sender*/, winrt::LoadedImageSourceLoadCompletedEventArgs const& args) {
             if (auto strong_this{ weak_this.get() }) {
               bool succeeded{ false };
               if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
-                strong_this->m_brush->Source(strong_this->m_surface);
+                strong_this->m_brush->Source(surface);
                 succeeded = true;
               }
               strong_this->m_onLoadEndEvent(*strong_this, succeeded);

@@ -33,7 +33,6 @@ namespace react {
     private:
       // Constructors
       ReactImage();
-      ~ReactImage();
 
     public:
       static winrt::com_ptr<ReactImage> Create();
@@ -58,7 +57,6 @@ namespace react {
       ImageSource m_imageSource;
       winrt::com_ptr<ReactImageBrush> m_brush;
       winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
-      winrt::Windows::UI::Xaml::Media::LoadedImageSurface m_surface{ nullptr };
       winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
     };
 
