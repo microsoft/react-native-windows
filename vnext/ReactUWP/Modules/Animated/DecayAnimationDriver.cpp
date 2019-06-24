@@ -54,7 +54,6 @@ namespace react { namespace uwp {
       {
         endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", "true")});
       }
-      auto offset = animatedValue->Offset();
       if (animatedValue)
       {
         animatedValue->RemoveActiveAnimation(id);

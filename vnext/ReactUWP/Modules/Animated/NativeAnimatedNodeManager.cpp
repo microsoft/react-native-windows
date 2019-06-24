@@ -144,8 +144,7 @@ namespace react {
       {
         if (auto animation = m_activeAnimations.at(animationId))
         {
-          //Do some callback on animation ...
-
+          animation->StopAnimation();
           m_activeAnimations.erase(animationId);
         }
       }
@@ -154,8 +153,6 @@ namespace react {
     void NativeAnimatedNodeManager::StartAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, const Callback& endCallback)
     {
       auto animation = [animationId, animatedNode = m_valueNodes.at(animatedNodeTag), endCallback, animationConfig]() {
-        //return std::make_shared<AnimatedNode>(ValueAnimatedNode(tag, config));
-        //return winrt::make_self<ValueAnimatedNode>(tag, config);
         switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString()))
         {
         case AnimationType::Decay:
@@ -163,7 +160,7 @@ namespace react {
         case AnimationType::Frames:
           return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<FrameAnimationDriver>(FrameAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
         //case AnimationType::Spring:
-          //return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<SpringAnimationDriver>(SpringAnimationDriver(tag, config)));
+          //return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<SpringAnimationDriver>(SpringAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
         default:
           assert(false);
           return static_cast<std::shared_ptr<AnimationDriver>>(nullptr);

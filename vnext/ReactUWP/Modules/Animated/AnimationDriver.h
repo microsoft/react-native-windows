@@ -13,6 +13,7 @@ namespace react { namespace uwp {
   {
   public:
     AnimationDriver(int64_t id, const std::shared_ptr<ValueAnimatedNode>& animatedValue, const Callback& endCallback);
+    void StopAnimation();
 
     inline constexpr int64_t Id() { return m_id; };
 

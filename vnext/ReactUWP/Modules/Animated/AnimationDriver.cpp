@@ -11,5 +11,11 @@ namespace react {
       m_id(id), m_animatedValue(animatedValue), m_endCallback(endCallback)
     {
     }
+
+    void AnimationDriver::StopAnimation()
+    {
+      m_animatedValue->PropertySet().StopAnimation(L"offset");
+      m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", "false")});
+    }
   }
 }

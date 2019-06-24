@@ -211,11 +211,13 @@ void NativeUIManager::onBatchComplete()
   {
     DoLayout();
     m_inBatch = false;
-    for (auto callback : m_batchCompletedCallbacks)
+
+    auto callbacks = m_batchCompletedCallbacks;
+    m_batchCompletedCallbacks.clear();
+    for (auto callback : callbacks)
     {
       callback.operator()();
     }
-    m_batchCompletedCallbacks.clear();
   }
 }
 

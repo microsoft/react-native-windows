@@ -41,7 +41,7 @@
   /// 
   /// Last "special" elements of the the graph are "animation drivers". Those
   /// are objects (represented as a graph nodes too) that based on some
-  /// criteria updates attached values via a composition expression animatation
+  /// criteria updates attached values via a composition expression animation
   /// (we have few types of those, e.g., spring, timing, decay). Animation objects
   /// can be "started" and "stopped". Those are like "pulse generators" for the
   /// rest of the nodes graph. Those pulses then propagate along the graph to the
