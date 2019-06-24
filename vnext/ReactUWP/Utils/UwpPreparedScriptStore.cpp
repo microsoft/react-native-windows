@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "UwpPreparedScriptStore.h"
+#include "Utils/UwpPreparedScriptStore.h"
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Storage.FileProperties.h>
 #include "unicode.h"
