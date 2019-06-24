@@ -5,7 +5,7 @@ trigger:
   branches:
     include:
       - master
-      - fb59merge
+      - 0.58-vnext-stable
       - fabric
   paths:
     include:
@@ -37,16 +37,10 @@ jobs:
 
       - task: CmdLine@2
         displayName: Update package version
+        name: updateVersionTask
         inputs:
           script: node ../.ado/updateVersion.js
           workingDirectory: vnext
-
-      # since the above task will update the package.json, we want to ensure that we use the correct version for the nuget
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish updated package.json for nuget'
-        inputs:
-          PathtoPublish: 'vnext\package.json'
-          ArtifactName: 'UpdatedPackageJson'
 
       - task: Npm@1
         displayName: npm public publish (vnext)
@@ -61,6 +55,8 @@ jobs:
   - job: RnwNativeBuild
     displayName: React-Native-Windows Native Build
     dependsOn: RnwNpmPublish
+    variables:
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.publishCommitId'] ]
     strategy:
       matrix:
         X64Debug:
@@ -90,13 +86,11 @@ jobs:
 
     steps:
 
-      # The RnwNpmPublish task does this too before publishing the npm package,
-      # but when each slice checks out code, its not going to have those changes
+      # Sync to point where the version numbers have been updated
     - task: CmdLine@2
-      displayName: Update version numbers to align with publishing version
       inputs:
-        script: node ../.ado/bumpFileVersions.js
-        workingDirectory: vnext
+        script: git checkout $(publishCommitId)
+
 
     - template: templates/npm-install-and-build.yml
 
@@ -115,20 +109,28 @@ jobs:
 
 
   - job: RNWNuget
-    dependsOn: RnwNativeBuild
+    dependsOn:
+      - RnwNpmPublish
+      - RnwNativeBuild
     displayName: React-Native-Windows Build and Publish Nuget
     pool:
       name: OE Standard Pool
+    variables:
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.publishCommitId'] ]
+      npmVersion: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.npmVersion'] ]
+
     steps:
       - checkout: none #skip checking out the default repository resource
 
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download source Artifact'
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
         inputs:
-          artifactName: UpdatedPackageJson
-          downloadPath: $(System.DefaultWorkingDirectory)
+          versionSpec: '>=4.6.0' 
 
       - template: templates/prep-and-pack-nuget.yml
+        parameters:
+          publishCommitId: $(publishCommitId)
+          npmVersion: $(npmVersion)
 
       - task: NuGetCommand@2
         displayName: 'NuGet push'
