@@ -69,6 +69,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./PopupExample.uwp'),
   },
   {
+    key: 'KeyboardExtensionExample',
+    module: require('./KeyboardExtensionExample.uwp'),
+  },
+  {
     key: 'ScrollViewSimpleExample',
     module: require('react-native/RNTester/js/ScrollViewSimpleExample')
   },
@@ -140,7 +144,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'KeyboardExample',
-    module: require('./KeyboardExample')
+    module: require('./KeyboardExample'),
   },
   {
     key: 'LayoutExample',
