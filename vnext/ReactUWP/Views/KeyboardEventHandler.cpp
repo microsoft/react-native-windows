@@ -382,12 +382,12 @@ std::string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool sh
 
   if (!isalnum(key))
   {
-	  for (auto const& pair : g_virtualKeyToString)
-	  {
-		  if (pair.first == virtualKey)
-			  return pair.second;
-	  }
-	  return "Unidentified";
+    for (auto const& pair : g_virtualKeyToString)
+    {
+      if (pair.first == virtualKey)
+        return pair.second;
+    }
+    return "Unidentified";
   }
 
   // Customer never receives a-z
