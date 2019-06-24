@@ -43,6 +43,9 @@
     <ClCompile Include="Utils\ValueUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\AccessibilityUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Threading\UIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -89,9 +92,6 @@
       <Filter>Endpoint\dll</Filter>
     </ClCompile>
     <ClCompile Include="Views\FrameworkElementViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Views\ImageViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\RawTextViewManager.cpp">
@@ -216,6 +216,26 @@
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
+    <ClCompile Include="Views\Image\ImageViewManager.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Image\ReactImage.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ImageViewManagerModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -304,9 +324,6 @@
     </ClInclude>
     <ClInclude Include="ABI\HStringHelper.h">
       <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ImageViewManager.h">
-      <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\RawTextViewManager.h">
       <Filter>Views</Filter>
@@ -404,19 +421,10 @@
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h">
-      <Filter>Views\cppwinrt</Filter>
+    <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
@@ -431,6 +439,60 @@
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ImageViewManager.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
+      <Filter>Views\cppwinrt\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h">
+      <Filter>Views\cppwinrt\winrt\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h">
+      <Filter>Views\cppwinrt\winrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImageBrush.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\ReactImage.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\ExpressionAnimationStore.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\ImageViewManagerModule.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\BorderEffect.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="UwpScriptStore.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -559,6 +621,15 @@
     </Filter>
     <Filter Include="Views\Impl">
       <UniqueIdentifier>{101c2d4a-d343-4771-969f-29af0c9f46b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Image">
+      <UniqueIdentifier>{6d877886-1c5c-45b8-8eae-2e1354cf673e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\cppwinrt\winrt">
+      <UniqueIdentifier>{e5234a36-e9ee-4ba3-9b11-02e7bd2ca6f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\cppwinrt\winrt\impl">
+      <UniqueIdentifier>{24ea7245-f460-4176-82b1-3cac4cd54621}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

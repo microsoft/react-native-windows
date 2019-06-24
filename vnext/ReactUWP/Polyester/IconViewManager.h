@@ -14,15 +14,11 @@ public:
   IconViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
   const char* GetName() const override;
+  facebook::react::ShadowNode* createShadow() const override;
   folly::dynamic GetNativeProps() const override;
-
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
-
-private:
-  static void UpdateFontColorProps(winrt::Windows::UI::Xaml::Documents::Glyphs glyphs);
 };
 
 } } }

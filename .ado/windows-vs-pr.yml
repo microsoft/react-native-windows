@@ -13,36 +13,71 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
+          UseRNFork: true
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
+          UseRNFork: true
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
+          UseRNFork: true
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+          UseRNFork: true
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+          UseRNFork: true
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: arm
+          UseRNFork: true
+        PublicRNX86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: false
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/npm-install-and-build.yml
+      - task: CmdLine@2
+        displayName: yarn install (Using microsoft/react-native)
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
+        # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
+        # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
+        # using the non fork version.
+      - task: CmdLine@2
+        displayName: yarn install (Using facebook/react-native)
+        inputs:
+          script: yarn install
+          workingDirectory: vnext
+        env: { UseRNFork: 'false' }
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
+
+      - template: templates/stop-packagers.yml
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
+
+      - template: templates/install-SDK.yml
+      
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
@@ -97,6 +132,90 @@ jobs:
           script: del SampleApp.uwp.bundle
           workingDirectory: vnext
 
+  - job: CliInit
+    displayName: Verify react-native init
+    pool:
+      vmImage: vs2017-win2016
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
+      - task: CmdLine@2
+        displayName: yarn install (local react-native-windows)
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: yarn build (local react-native-windows)
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
+
+      # yarn ends up copying the whole node_modules folder when doing an install of a file package
+      # Delete node_modules, so that resolution is more like when installing from a published npm package
+      - task: CmdLine@2
+        displayName: Remove node_modules
+        inputs:
+          script: rd /S /Q node_modules
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: Install react-native cli
+        inputs:
+          script: npm install -g react-native-cli
+
+      - task: CmdLine@2
+        displayName: Init new project
+        inputs:
+          script: react-native init testcli
+          workingDirectory: $(Agent.BuildDirectory)
+
+      - task: CmdLine@2
+        displayName: Install rnpm-plugin-windows
+        inputs:
+          script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+        
+      - task: CmdLine@2
+        displayName: Apply windows template
+        inputs:
+          script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+
+      - template: templates/install-SDK.yml
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore
+        inputs:
+          command: restore
+          restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+
+      - task: MSBuild@1
+        displayName: MSBuild - Build the project
+        inputs:
+          solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x86' # Optional. Options: x86, x64
+          platform: x64 # Optional
+          configuration: Debug # Optional
+          restoreNugetPackages: true
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+
+      - task: CmdLine@2
+        displayName: Create bundle
+        inputs:
+          script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+
   - job: RnwNativePRBuild
     displayName: Windows Visual Studio with Win32 PR
     strategy:
@@ -120,19 +239,32 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/npm-install-and-build.yml
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+          workingDirectory: vnext
+
+      - template: templates/stop-packagers.yml
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
+
+      - template: templates/install-SDK.yml
 
       - template: templates/vs-build.yml
         parameters:
@@ -141,7 +273,7 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
-        timeoutInMinutes: 10 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
@@ -158,7 +290,7 @@ jobs:
           #vstestLocationMethod: 'version' # Optional. Options: version, location
           vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
           #vstestLocation: # Optional
-          #runSettingsFile: # Optional
+          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings # Optional
           #overrideTestrunParameters: # Optional
           #pathtoCustomTestAdapters: # Optional
           #runInParallel: False # Optional
@@ -244,8 +376,13 @@ jobs:
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
-      name: OE Standard Pool
+      vmImage: vs2017-win2016
     steps:
       - checkout: none #skip checking out the default repository resource
+
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: '>=4.6.0' 
 
       - template: templates/prep-and-pack-nuget.yml

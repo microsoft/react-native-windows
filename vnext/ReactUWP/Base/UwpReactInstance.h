@@ -6,6 +6,7 @@
 #include <IReactInstance.h>
 
 #include <Threading/WorkerMessageQueueThread.h>
+#include <Views/ExpressionAnimationStore.h>
 
 #include <winrt/Windows.UI.Core.h>
 
@@ -51,6 +52,7 @@ public:
   bool IsInError() const noexcept override { return m_isInError; }
   const std::string& LastErrorMessage() const noexcept override { return m_errorMessage; }
   void loadBundle(std::string&& jsBundleRelativePath) override { if (!m_isInError) m_instanceWrapper->loadBundle(std::move(jsBundleRelativePath)); };
+  ExpressionAnimationStore& GetExpressionAnimationStore() override { return m_expressionAnimationStore; }
 
   // Test hooks
   void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
@@ -77,6 +79,7 @@ private:
   bool m_started{ false };
   std::atomic_bool m_isInError{ false };
   std::string m_errorMessage;
+  ExpressionAnimationStore m_expressionAnimationStore;
 
   std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 };

@@ -34,7 +34,7 @@
 #include <Views/TextViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 #include <Views/ViewViewManager.h>
-#include <Views/ImageViewManager.h>
+#include <Views/Image/ImageViewManager.h>
 #include <Views/WebViewManager.h>
 
 // Polyester View Managers // TODO: Move Polyester implementations out of this library and depot
@@ -49,6 +49,7 @@
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
+#include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
@@ -63,7 +64,14 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#if !defined(OSS_RN)
+#include<Utils/UwpScriptStore.h>
+#include<Utils/UwpPreparedScriptStore.h>
+#endif
+
+#if !defined(OSS_RN)
 #include "ChakraJSIRuntimeHolder.h"
+#endif
 
 #include <tuple>
 
@@ -146,7 +154,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
     NetworkingModule::name,
     []() { return std::make_unique<NetworkingModule>(); },
-    messageQueue);
+    std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
     "Timing",
@@ -225,6 +233,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     devSettings->useDirectDebugger = settings.UseDirectDebugger;
     devSettings->loggingCallback = std::move(settings.LoggingCallback);
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
+    devSettings->useJITCompilation = settings.EnableJITCompilation;
+    devSettings->debugHost = settings.DebugHost;
 
     if (settings.UseLiveReload)
     {
@@ -265,8 +275,24 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     }
 
     std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+
+    #if !defined(OSS_RN)
     if (settings.UseJsi)
-      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+    {
+      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+
+      if (settings.EnableByteCodeCacheing || !settings.ByteCodeFileUri.empty()) {
+        scriptStore = std::make_unique<UwpScriptStore>();
+        preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(winrt::to_hstring(settings.ByteCodeFileUri));
+      }
+      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(
+        devSettings,
+        jsQueue,
+        std::move(scriptStore),
+        std::move(preparedScriptStore));
+    }
+    #endif
 
     try
     {

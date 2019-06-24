@@ -56,13 +56,13 @@ struct json_type_traits<react::uwp::Selection>
     {
       if (item.first == "start")
       {
-        auto start = item.second.asInt();
+        auto start = item.second.asDouble();
         if (start == static_cast<int>(start))
           selection.start = static_cast<int>(start);
       }
       else if (item.first == "end")
       {
-        auto end = item.second.asInt();
+        auto end = item.second.asDouble();
         if (end == static_cast<int>(end))
           selection.end = static_cast<int>(end);
       }
@@ -266,7 +266,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic&& props)
     else if (propertyName == "maxLength")
     {
       if (propertyValue.isNumber())
-        textBox.MaxLength(static_cast<int32_t>(propertyValue.asInt()));
+        textBox.MaxLength(static_cast<int32_t>(propertyValue.asDouble()));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::MaxLengthProperty());
     }

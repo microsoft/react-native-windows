@@ -4,7 +4,9 @@
 #pragma once
 
 #include <cxxreact/CxxModule.h>
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 #include <folly/dynamic.h>
 #include <INativeUIManager.h>
 #include <InstanceManager.h>

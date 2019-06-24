@@ -4,6 +4,7 @@ const path = require('path');
 const username = require('username');
 const uuid = require('uuid');
 const childProcess = require('child_process');
+const fs = require('fs');
 const os = require('os');
 const {
   createDir,
@@ -102,6 +103,36 @@ function copyProjectTemplateAndReplace(
   console.log(chalk.white('   react-native run-windows'));
 }
 
+function installDependencies(options) {
+  const cwd = process.cwd();
+
+  // Extract react-native peer dependency version
+  const vnextPackageJsonPath = path.join(cwd, 'node_modules', 'react-native-windows', 'package.json');
+  const vnextPackageJson = JSON.parse(fs.readFileSync(vnextPackageJsonPath, { encoding: 'UTF8' }));
+  let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
+  const depDelim = ' || ';
+  const delimIndex = reactNativeVersion.indexOf(depDelim);
+  if (delimIndex !== -1) {
+    reactNativeVersion = reactNativeVersion.slice(0, delimIndex);
+  }
+
+  console.log(chalk.green('Updating to compatible version of react-native:'));
+  console.log(chalk.white(`    ${reactNativeVersion}`));
+
+  // Patch package.json to have proper react-native version and install
+  const projectPackageJsonPath = path.join(cwd, 'package.json');
+  const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
+  projectPackageJson.scripts.start = 'node node_modules/react-native-windows/Scripts/cli.js start';
+  projectPackageJson.dependencies['react-native'] = reactNativeVersion;
+  fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
+
+  // Install dependencies using correct package manager
+  const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
+  const execOptions = options && options.verbose ? { stdio: 'inherit' } : {};
+  childProcess.execSync(isYarn ? `yarn` : `npm i`, execOptions);
+}
+
 module.exports = {
-  copyProjectTemplateAndReplace
+  copyProjectTemplateAndReplace,
+  installDependencies
 };

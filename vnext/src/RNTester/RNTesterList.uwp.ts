@@ -49,6 +49,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./FlyoutExample.uwp'),
   },
   {
+    key: 'GlyphExample',
+    module: require('./GlyphExample'),
+  },
+  {
     key: 'ImageExample',
     module: require('react-native/RNTester/js/ImageExample'),
   },
