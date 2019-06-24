@@ -85,6 +85,8 @@ public:
   void AccessibilityState(AccessibilityStates state, bool value)
   {
     m_accessibilityStates[state] = value;
+    if (IsControl())
+      GetControl()->AccessibilityState(state, value);
   }
 
   void AddView(ShadowNode& child, int64_t index) override
@@ -101,6 +103,21 @@ public:
   void removeAllChildren() override
   {
     GetViewPanel()->Clear();
+
+    XamlView current = m_view;
+
+    if (IsControl())
+    {
+      auto control = m_view.as<winrt::ContentControl>();
+      current = control.Content().as<XamlView>();
+      control.Content(nullptr);
+    }
+
+    if (HasOuterBorder())
+    {
+      auto border = current.try_as<winrt::Border>();
+      border.Child(nullptr);
+    }
   }
 
   void ReplaceChild(XamlView oldChildView, XamlView newChildView) override
@@ -167,7 +184,7 @@ private:
   bool m_onClick = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
   AccessibilityRoles m_accessibilityRole = AccessibilityRoles::None;
-  bool m_accessibilityStates[AccessibilityStates::CountStates] = { false, false };
+  bool m_accessibilityStates[AccessibilityStates::CountStates] = { };
 };
 
 
@@ -339,7 +356,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
       else if (propertyName == "acceptsKeyboardFocus")
       {
         if (propertyValue.isBool())
-          shouldBeControl = propertyValue.getBool();
+          shouldBeControl = shouldBeControl || propertyValue.getBool();
       }
       else if (propertyName == "accessibilityRole")
       {
@@ -377,6 +394,8 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
         {
           pViewShadowNode->AccessibilityRole(AccessibilityRoles::None);
         }
+
+        shouldBeControl = shouldBeControl || (pViewShadowNode->AccessibilityRole() != AccessibilityRoles::None);
       }
       else if (propertyName == "accessibilityStates")
       {
@@ -391,9 +410,15 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
             if (!state.isString())
               continue;
             if (state.getString() == "disabled")
+            {
               disabled = true;
+              shouldBeControl = true;
+            }
             else if (state.getString() == "selected")
+            {
               selected = true;
+              shouldBeControl = true;
+            }
           }
         }
 

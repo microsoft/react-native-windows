@@ -9,8 +9,11 @@
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>
 #include <Views/ExpressionAnimationStore.h>
+#include "Views/KeyboardEventHandler.h"
 #include <winrt/Windows.UI.Composition.h>
 #include <WindowsNumerics.h>
+
+using namespace std::placeholders;
 
 namespace react { namespace uwp {
 
@@ -56,13 +59,21 @@ void ShadowNodeBase::RemoveChildAt(int64_t indexToRemove)
 
 void ShadowNodeBase::onDropViewInstance()
 {
+  m_handledKeyboardEventHandler = nullptr;
 }
 
 void ShadowNodeBase::ReplaceView(XamlView view)
 {
+
   SetTag(view, GetTag(m_view));
 
   m_view = view;
+
+  if (m_handledKeyboardEventHandler)
+  {
+    m_handledKeyboardEventHandler->unhook();
+    m_handledKeyboardEventHandler->hook(view);
+  }
 }
 
 void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView)
@@ -109,6 +120,22 @@ void ShadowNodeBase::UpdateTransformPS()
     {
       m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
     }
+  }
+}
+
+void ShadowNodeBase::UpdateHandledKeyboardEvents(std::string const& propertyName, folly::dynamic const& value)
+{
+  EnsureHandledKeyboardEventHandler();
+  m_handledKeyboardEventHandler->UpdateHandledKeyboardEvents(propertyName, value);
+}
+
+void ShadowNodeBase::EnsureHandledKeyboardEventHandler()
+{
+  if (!m_handledKeyboardEventHandler)
+  {
+    assert(m_view);
+    m_handledKeyboardEventHandler = std::make_unique<HandledKeyboardEventHandler>();
+    m_handledKeyboardEventHandler->hook(m_view);
   }
 }
 

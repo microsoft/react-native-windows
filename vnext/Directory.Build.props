@@ -8,33 +8,30 @@
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
 
     <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)</ReactNativeWindowsDir>
-  </PropertyGroup>
-
-  <PropertyGroup Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
-    <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
-
-    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <!-- NOTE: This assignment of `Platform` won't persist thourgh the build. -->
-    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
-    <BaseIntDir>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseOutDir>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
-
-    <!-- Windows Desktop -->
-    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <FollyDir>$(ReactNativeWindowsDir)node_modules\react-native\folly</FollyDir>
     <ReactNativeDir>$(ReactNativeWindowsDir)node_modules\react-native</ReactNativeDir>
     <YogaDir>$(ReactNativeWindowsDir)node_modules\react-native\ReactCommon\yoga</YogaDir>
   </PropertyGroup>
 
+  <PropertyGroup Label="Configuration">
+    <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
+
+    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
+    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
+
+    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
+  </PropertyGroup>
+
   <PropertyGroup>
     <ReactNativeProjectDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), app.json))</ReactNativeProjectDir>
   </PropertyGroup>
-  <Import Project="$(ReactNativeProjectDir)\windows\react.overrides.props" Condition="$([System.IO.File]::Exists($(ReactNativeProjectDir)\windows\react.overrides.props))" />
+  <Import Project="$(ReactNativeProjectDir)\windows\react.overrides.props" Condition="Exists('$(ReactNativeProjectDir)\windows\react.overrides.props')" />
 
   <!-- We need some way to tell if we are using the microsoft/react-native version of the facebook one... -->
   <!-- For now we are using the existance of the glog stub... but we probably want a better long term solution -->

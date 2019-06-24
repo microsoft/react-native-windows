@@ -4,12 +4,9 @@
 #pragma once
 
 #include <ReactWindowsCore/ViewManager.h>
-
 #include <XamlView.h>
-
 #include <folly/dynamic.h>
 #include <yoga/yoga.h>
-
 #include <ReactWindowsCore/ReactWindowsAPI.h>
 
 namespace facebook { namespace react {

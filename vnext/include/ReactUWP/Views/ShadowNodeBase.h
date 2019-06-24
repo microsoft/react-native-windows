@@ -10,6 +10,7 @@
 #include <yoga/yoga.h>
 
 #include <ReactWindowsCore/ReactWindowsAPI.h>
+#include "KeyboardEventHandler.h"
 
 namespace react { namespace uwp {
 
@@ -122,6 +123,14 @@ public:
   bool m_onMouseEnter = false;
   bool m_onMouseLeave = false;
   bool m_onMouseMove = false;
+
+  // Support Keyboard
+public:
+  void UpdateHandledKeyboardEvents(std::string const& propertyName, folly::dynamic const& value);
+
+private:
+  void EnsureHandledKeyboardEventHandler();
+  std::unique_ptr<HandledKeyboardEventHandler> m_handledKeyboardEventHandler;
 };
 #pragma warning(pop)
 

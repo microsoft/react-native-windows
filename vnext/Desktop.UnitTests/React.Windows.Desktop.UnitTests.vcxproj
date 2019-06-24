@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|x86">
-      <Configuration>Debug</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x86">
-      <Configuration>Release</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -55,7 +47,7 @@
     <ClCompile>
       <SDLCheck>true</SDLCheck>
       <!-- See //https://stackoverflow.com/questions/42847103/stdtr1-with-visual-studio-2017. -->
-      <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;GTEST_LANG_CXX11=1;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;WIN32_LEAN_AND_MEAN;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;JSI_EXPORT=;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;GTEST_LANG_CXX11=1;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;JSI_EXPORT=;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -101,19 +93,19 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="$(SolutionDir)\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
-    <Import Project="$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
+    <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
   </Target>
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />

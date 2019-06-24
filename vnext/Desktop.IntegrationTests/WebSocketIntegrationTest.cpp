@@ -3,27 +3,31 @@
 
 #include <CppUnitTest.h>
 #include <IWebSocket.h>
-#include "unicode.h"
+#include <WebSocketServer.h>
 
 #include <condition_variable>
 #include <future>
 #include <mutex>
 
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::chrono::milliseconds;
 using std::condition_variable;
+using std::make_shared;
 using std::unique_lock;
 using std::lock_guard;
 using std::promise;
 using std::string;
 
+using CloseCode = IWebSocket::CloseCode;
+
 TEST_CLASS(WebSocketIntegrationTest)
 {
   TEST_METHOD(ConnectClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
     string message;
@@ -32,8 +36,10 @@ TEST_CLASS(WebSocketIntegrationTest)
       connected = true;
     });
 
+    server->Start();
     ws->Connect();
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+    ws->Close(CloseCode::Normal, "Closing");
+    server->Stop();
 
     Assert::IsTrue(connected);
   }
@@ -41,10 +47,12 @@ TEST_CLASS(WebSocketIntegrationTest)
   TEST_METHOD(ConnectNoClose)
   {
     bool connected = false;
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
 
     // IWebSocket scope. Ensures object is closed implicitly by destructor.
     {
-      auto ws = IWebSocket::Make("ws://localhost:5555/");
+      auto ws = IWebSocket::Make("ws://localhost:5556/");
       ws->SetOnConnect([&connected]()
       {
         connected = true;
@@ -53,12 +61,17 @@ TEST_CLASS(WebSocketIntegrationTest)
       ws->Connect();
     }
 
+    server->Stop();
+
     Assert::IsTrue(connected);
   }
 
   TEST_METHOD(PingClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->Start();
+
+    auto ws = IWebSocket::Make("ws://localhost:5556");
     promise<bool> pingPromise;
     ws->SetOnPing([&pingPromise]()
     {
@@ -75,41 +88,12 @@ TEST_CLASS(WebSocketIntegrationTest)
     auto pingFuture = pingPromise.get_future();
     pingFuture.wait();
     bool pinged = pingFuture.get();
+    ws->Close(CloseCode::Normal, "Closing after reading");
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    server->Stop();
 
     Assert::IsTrue(pinged);
     Assert::AreEqual({}, errorString);
-  }
-
-  TEST_METHOD(SendReceiveNoClose)
-  {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string& message)
-    {
-      // Ignore greeting message.
-      if (message == "hello")
-        return;
-
-      response.set_value(message);
-    });
-    string errorMessage;
-    ws->SetOnError([&errorMessage](IWebSocket::Error err)
-    {
-      errorMessage = err.Message;
-    });
-
-    ws->Connect();
-    ws->Send("suffixme");
-
-    // Block until respone is received. Fail in case of a remote endpoint failure.
-    auto future = response.get_future();
-    future.wait();
-    string result = future.get();
-
-    Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(string("suffixme_response"), result);
   }
 
   // Emulate promise/future functionality.
@@ -157,7 +141,12 @@ TEST_CLASS(WebSocketIntegrationTest)
 
   TEST_METHOD(SendReceiveClose)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+        return message + "_response";
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
     {
@@ -166,10 +155,6 @@ TEST_CLASS(WebSocketIntegrationTest)
     promise<string> receivedPromise;
     ws->SetOnMessage([&receivedPromise](size_t size, const string& message)
     {
-      // Ignore greeting message
-      if (message == "hello")
-        return;
-
       receivedPromise.set_value(message);
     });
     string errorMessage;
@@ -178,7 +163,8 @@ TEST_CLASS(WebSocketIntegrationTest)
       errorMessage = err.Message;
     });
 
-    string sent = "suffixme";
+    server->Start();
+    string sent = "prefix";
     ws->Connect();
     ws->Send(sent);
 
@@ -191,31 +177,34 @@ TEST_CLASS(WebSocketIntegrationTest)
     string received = receivedFuture.get();
     Assert::AreEqual({}, errorMessage);
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
+    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(sent.length(), sentSize);
-    Assert::AreEqual(string("suffixme_response"), received);
+    Assert::AreEqual({ "prefix_response" }, received);
   }
 
   TEST_METHOD(SendReceiveLargeMessage)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string& message)
     {
-      // Ignore greeting message
-      if (message == "hello")
-        return;
-
       response.set_value(message);
     });
-    ws->SetOnError([](IWebSocket::Error err)
+    string errorMessage;
+    ws->SetOnError([&errorMessage](IWebSocket::Error err)
     {
-      auto message = facebook::react::unicode::utf8ToUtf16(err.Message);
-      Assert::Fail(message.c_str());
+      errorMessage = err.Message;
     });
 
+    server->Start();
     ws->Connect();
 
     char digits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
@@ -234,8 +223,10 @@ TEST_CLASS(WebSocketIntegrationTest)
     future.wait();
     string result = future.get();
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
+    server->Stop();
 
+    Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
   }
 
@@ -261,13 +252,24 @@ TEST_CLASS(WebSocketIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AdditionalHeaders)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    string cookie;
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetOnHandshake([server](boost::beast::websocket::response_type& response)
+    {
+      auto cookie = response[boost::beast::http::field::cookie].to_string();
+      server->SetMessageFactory([cookie](string&&)
+      {
+        return cookie;
+      });
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string& message)
     {
       response.set_value(message);
     });
 
+    server->Start();
     ws->Connect({}, {{ L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }});
     ws->Send("");
 
@@ -275,65 +277,42 @@ TEST_CLASS(WebSocketIntegrationTest)
     future.wait();
     string result = future.get();
 
-    Assert::AreEqual(string("JSESSIONID=AD9A320CC4034641997FF903F1D10906"), result);
+    Assert::AreEqual({ "JSESSIONID=AD9A320CC4034641997FF903F1D10906" }, result);
 
-    ws->Close(IWebSocket::CloseCode::Normal, "No reason");
+    ws->Close(CloseCode::Normal, "No reason");
+    server->Stop();
   }
 
-  ///
-  // Run this test against a valid WebSocket server runing on SSL.
-  // See sample below.
-  ///
-  /*
-const WebSocket = require('ws');
-const fs = require('fs');
-const https = require('https');
-
-const httpsServer = https.createServer({
-  key:  fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-});
-const server = new WebSocket.Server({
-  server:httpsServer
-});
-
-server.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    console.log('Received message:', message);
-    if (message === 'exit') {
-      console.log('WebSocket integration test server exit');
-      process.exit(0);
-    }
-    console.log('Cookie:', ws.upgradeReq.headers.cookie);
-    ws.send(message + '_response');
-  });
-
-  ws.send('hello');
-});
-
-httpsServer.listen(443);
-  */
-  BEGIN_TEST_METHOD_ATTRIBUTE(SendAndReceiveSsl)
-    TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SendAndReceiveSsl)
+  TEST_METHOD(SendReceiveSsl)
   {
-    auto ws = IWebSocket::Make("wss://localhost/");
-    string message;
-    ws->SetOnMessage([&message](size_t size, const string& messageIn)
+    auto server = make_shared<Test::WebSocketServer>(5556, /*isSecure*/ true);
+    server->SetMessageFactory([](string&& message)
     {
-      message = messageIn;
+      return message + "_response";
+    });
+    auto ws = IWebSocket::Make("wss://localhost:5556");
+    promise<string> response;
+    ws->SetOnMessage([&response](size_t size, const string& messageIn)
+    {
+      response.set_value(messageIn);
     });
 
+    server->Start();
     ws->Connect();
     ws->Send("suffixme");
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
 
-    Assert::AreEqual(string("hello"), message);
+    auto result = response.get_future();
+    result.wait();
+
+    ws->Close(CloseCode::Normal, "Closing after reading");
+    server->Stop();
+
+    Assert::AreEqual({ "suffixme_response" }, result.get());
   }
 
+  //TODO: Use Test::WebSocketServer!!!
   BEGIN_TEST_METHOD_ATTRIBUTE(SendBinary)
-    //TEST_IGNORE()
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendBinary)
   {
@@ -386,23 +365,24 @@ httpsServer.listen(443);
       Assert::AreEqual(messages[i], response);
     }
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing after reading");
+    ws->Close(CloseCode::Normal, "Closing after reading");
 
     Assert::AreEqual({}, errorMessage);
   }
 
   TEST_METHOD(SendConsecutive)
   {
-    auto ws = IWebSocket::Make("ws://localhost:5555/");
+    auto server = make_shared<Test::WebSocketServer>(5556);
+    server->SetMessageFactory([](string&& message)
+    {
+      return message + "_response";
+    });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
     promise<string> response;
     const int writes = 10;
     int count = 0;
     ws->SetOnMessage([&response, &count, writes](size_t size, const string& message)
     {
-      // Ignore greeting message.
-      if (message == "hello")
-        return;
-
       if (++count < writes)
         return;
 
@@ -414,6 +394,7 @@ httpsServer.listen(443);
       errorMessage = err.Message;
     });
 
+    server->Start();
     ws->Connect();
 
     // Consecutive immediate writes should be enqueued.
@@ -426,8 +407,11 @@ httpsServer.listen(443);
     future.wait();
     string result = future.get();
 
-    ws->Close(IWebSocket::CloseCode::Normal, "Closing");
+    ws->Close(CloseCode::Normal, "Closing");
+    server->Stop();
+
     Assert::AreEqual({}, errorMessage);
-    Assert::AreEqual(string("suffixme_response"), result);
+    Assert::AreEqual(writes, count);
+    Assert::AreEqual({ "suffixme_response" }, result);
   }
 };
