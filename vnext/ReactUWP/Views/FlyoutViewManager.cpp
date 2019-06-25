@@ -23,61 +23,88 @@ struct json_type_traits<winrt::FlyoutPlacementMode>
   static winrt::FlyoutPlacementMode parseJson(const folly::dynamic& json)
   {
     winrt::FlyoutPlacementMode placement;
-    if (json == "top")
+
+    if (auto flyoutBase5 = winrt::Flyout().try_as<winrt::IFlyoutBase5>())
     {
-      placement = winrt::FlyoutPlacementMode::Top;
-    }
-    else if (json == "bottom")
-    {
-      placement = winrt::FlyoutPlacementMode::Bottom;
-    }
-    else if (json == "left")
-    {
-      placement = winrt::FlyoutPlacementMode::Left;
-    }
-    else if (json == "right")
-    {
-      placement = winrt::FlyoutPlacementMode::Right;
-    }
-    else if (json == "top-edge-aligned-left")
-    {
-      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedLeft;
-    }
-    else if (json == "top-edge-aligned-right")
-    {
-      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedRight;
-    }
-    else if (json == "bottom-edge-aligned-left")
-    {
-      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft;
-    }
-    else if (json == "bottom-edge-aligned-right")
-    {
-      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedRight;
-    }
-    else if (json == "left-edge-aligned-top")
-    {
-      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedTop;
-    }
-    else if (json == "right-edge-aligned-top")
-    {
-      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedTop;
-    }
-    else if (json == "left-bottom")
-    {
-      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom;
-    }
-    else if (json == "right-edge-aligned-bottom")
-    {
-      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedBottom;
-    }
-    else if (json == "full")
-    {
-      placement = winrt::FlyoutPlacementMode::Full;
+      if (json == "top")
+      {
+        placement = winrt::FlyoutPlacementMode::Top;
+      }
+      else if (json == "bottom")
+      {
+        placement = winrt::FlyoutPlacementMode::Bottom;
+      }
+      else if (json == "left")
+      {
+        placement = winrt::FlyoutPlacementMode::Left;
+      }
+      else if (json == "right")
+      {
+        placement = winrt::FlyoutPlacementMode::Right;
+      }
+      else if (json == "top-edge-aligned-left")
+      {
+        placement = winrt::FlyoutPlacementMode::TopEdgeAlignedLeft;
+      }
+      else if (json == "top-edge-aligned-right")
+      {
+        placement = winrt::FlyoutPlacementMode::TopEdgeAlignedRight;
+      }
+      else if (json == "bottom-edge-aligned-left")
+      {
+        placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft;
+      }
+      else if (json == "bottom-edge-aligned-right")
+      {
+        placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedRight;
+      }
+      else if (json == "left-edge-aligned-top")
+      {
+        placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedTop;
+      }
+      else if (json == "right-edge-aligned-top")
+      {
+        placement = winrt::FlyoutPlacementMode::RightEdgeAlignedTop;
+      }
+      else if (json == "left-edge-aligned-bottom")
+      {
+        placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom;
+      }
+      else if (json == "right-edge-aligned-bottom")
+      {
+        placement = winrt::FlyoutPlacementMode::RightEdgeAlignedBottom;
+      }
+      else if (json == "full")
+      {
+        placement = winrt::FlyoutPlacementMode::Full;
+      }
+      else
+      {
+        placement = winrt::FlyoutPlacementMode::Top;
+      }
     }
     else
     {
-    placement = winrt::FlyoutPlacementMode::Top;
+      if (json == "top")
+      {
+        placement = winrt::FlyoutPlacementMode::Top;
+      }
+      else if (json == "bottom")
+      {
+        placement = winrt::FlyoutPlacementMode::Bottom;
+      }
+      else if (json == "left")
+      {
+        placement = winrt::FlyoutPlacementMode::Left;
+      }
+      else if (json == "full")
+      {
+        placement = winrt::FlyoutPlacementMode::Full;
+      }
+      else
+      {
+        placement = winrt::FlyoutPlacementMode::Right;
+      }
     }
 
     return placement;
@@ -271,12 +298,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
   {
     winrt::Point newPoint(m_horizontalOffset, m_verticalOffset);
     m_showOptions.Position(newPoint);
-  }
-
-  if (m_isFlyoutShowOptionsSupported)
-  {
-    winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
-    m_showOptions.ExclusionRect(exclusionRect);
   }
 
   if (updateIsOpen)
