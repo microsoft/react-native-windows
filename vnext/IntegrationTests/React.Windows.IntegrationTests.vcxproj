@@ -54,7 +54,7 @@
     <ClCompile>
       <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;RN_EXPORT=;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FOLLY_NO_CONFIG;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
@@ -71,10 +71,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestInstance.cpp" />
+    <ClCompile Include="TestInstance.cpp">
+      <!-- TODO: Remove NOJSC from react-native. -->
+      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="TestModule.cpp" />
     <ClCompile Include="TestRootView.cpp" />
-    <ClCompile Include="TestRunner.cpp" />
+    <ClCompile Include="TestRunner.cpp">
+      <!-- TODO: Remove NOJSC from react-native. -->
+      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MockExecutorDelegate.h" />
