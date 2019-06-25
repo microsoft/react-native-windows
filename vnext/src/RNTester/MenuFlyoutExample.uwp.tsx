@@ -4,14 +4,14 @@
 /* tslint:disable */
 
 import React = require('react');
-import { Button, Text, TextInput, View } from 'react-native';
-import { MenuFlyout, Picker } from '../../src/index.uwp';
+import { Button, Text, View } from 'react-native';
+import { CheckBox, MenuFlyout, Picker } from '../../src/index.uwp';
 import { Placement  } from '../../src/Libraries/Components/MenuFlyout/MenuFlyoutProps';
 
 interface IMenuFlyoutExampleState {
   isMenuFlyoutVisible: boolean;
   buttonTitle: string;
-  isLightDismissEnabled: boolean;
+  attachAsContextMenu: boolean;
   popupCheckBoxState: boolean;
   placementOptions: Placement;
 }
@@ -40,8 +40,8 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
   public state: IMenuFlyoutExampleState = {
     isMenuFlyoutVisible: false,
     buttonTitle: 'Open MenuFlyout',
-    isLightDismissEnabled: true,
-    popupCheckBoxState: true,
+    attachAsContextMenu: false,
+    popupCheckBoxState: false,
     placementOptions: 'top',
   };
 
@@ -64,19 +64,17 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
         <View style={ { justifyContent: 'center', padding: 20, width: 200 } }>
           <Button onPress={ this._onPress } title={ this.state.buttonTitle }  ref={ this._setRef }></Button>
         </View>
-        <View style={ { flexDirection: 'row', paddingTop: 20 } }>
-          <Text
-            style={ { padding: 10, width: 300, height: 32 } }>Text Input to Anchor MenuFlyout to: </Text>
-          <TextInput
-            style={ { height: 32, width: 300 } }
-           
-          />
+        <View style={ { flexDirection: 'row' } }>
+                <Text style={ { padding: 10 } }>isAttachedAsContextMenu: </Text>
+                <CheckBox
+                    style={{ justifyContent: 'center', padding: 20 }}
+                    checked={this.state.popupCheckBoxState}
+                    onValueChange={value => this.setState({ popupCheckBoxState: value, attachAsContextMenu: value, isMenuFlyoutVisible: false })} />
         </View>
         { this.state.isMenuFlyoutVisible && (
           <MenuFlyout
-            isOpen={ this.state.isMenuFlyoutVisible && false }
-            attachAsContextFlyout = {true}
-            isLightDismissEnabled={ this.state.isLightDismissEnabled }
+            isOpen={ this.state.isMenuFlyoutVisible }
+            attachAsContextFlyout = {this.state.attachAsContextMenu}
             onDismiss={ this._onMenuFlyoutDismissed }
             target={ this._textInput }
             placement= {this.state.placementOptions}
@@ -91,11 +89,9 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
   }
 
   _onPress = () => {
+    if (!this.state.attachAsContextMenu){
     this.setState({ buttonTitle: 'Close MenuFlyout', isMenuFlyoutVisible: true });
-  }
-
-  _onMenuFlyoutButtonPressed = () => {
-    this.setState({ buttonTitle: 'Open MenuFlyout', isMenuFlyoutVisible: false });
+    }
   }
 
   _onMenuFlyoutDismissed = (isOpen: boolean) => {
