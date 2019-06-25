@@ -17,7 +17,7 @@ using std::string;
 
 namespace {
 
-static string s_moduleName = "WebSocketModule";
+const char* moduleName = "WebSocketModule";
 
 } // anonymous namespace
 
@@ -29,7 +29,7 @@ WebSocketModule::WebSocketModule()
 
 string WebSocketModule::getName()
 {
-  return s_moduleName;
+  return moduleName;
 }
 
 std::map<string, dynamic> WebSocketModule::getConstants()

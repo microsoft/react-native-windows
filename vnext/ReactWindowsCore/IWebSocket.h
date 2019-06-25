@@ -10,7 +10,7 @@
 namespace Microsoft::React {
 
 ///
-/// Defines the core functionality for a native WebSocket resource.
+/// Defines the core functionality for a native WebSocket client resource.
 ///
 struct IWebSocket
 {
