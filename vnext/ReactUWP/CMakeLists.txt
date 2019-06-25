@@ -44,6 +44,7 @@ set(SOURCES
 	Views/ControlViewManager.cpp
 	Views/DatePickerViewManager.cpp
 	Views/FlyoutViewManager.cpp
+  Views/MenuFlyoutViewManager.cpp
 	Views/FrameworkElementViewManager.cpp
 	Views/ImageViewManager.cpp
 	Views/Impl/ScrollViewUWPImplementation.cpp
