@@ -66,6 +66,7 @@ namespace winrt::facebook::react::implementation
 	void NativeTraceEventSource::UninitializeTracing(uint32_t cookie)
 	{
 		assert(cookie == g_abiHandlerRegistrationCookie);
+		g_abiHandler = nullptr;
 		::facebook::react::InitializeTracing(nullptr);
 	}
 }

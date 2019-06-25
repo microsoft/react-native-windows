@@ -111,6 +111,9 @@
     <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
+    <ClCompile Include="NativeLogEventSource.cpp">
+      <DependentUpon>ABI.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="NativeTraceEventSource.cpp">
       <DependentUpon>ABI.idl</DependentUpon>
     </ClCompile>
@@ -136,6 +139,9 @@
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="NativeModuleFactories.h" />
+    <ClInclude Include="NativeLogEventSource.h">
+      <DependentUpon>ABI.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="NativeTraceEventSource.h">
       <DependentUpon>ABI.idl</DependentUpon>
     </ClInclude>
