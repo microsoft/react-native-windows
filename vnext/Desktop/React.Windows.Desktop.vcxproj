@@ -22,9 +22,6 @@
     <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
     <ProjectName>React.Windows.Desktop</ProjectName>
   </PropertyGroup>
-  <PropertyGroup Label="NOJSC">
-    <NOJSC>true</NOJSC>
-  </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>
   </PropertyGroup>
@@ -66,11 +63,6 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
     <ClCompile>
       <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -103,7 +95,10 @@
     <ClCompile Include="Sandbox\DevSupportManagerSandbox.cpp" />
     <ClCompile Include="Sandbox\SandboxBridge.cpp" />
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
-    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
+    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp">
+      <!-- TODO: Remove NOJSC from react-native. -->
+      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
     <ClCompile Include="HttpResource.cpp" />
     <ClCompile Include="TimingModule.cpp" />
     <ClCompile Include="WebSocket.cpp" />

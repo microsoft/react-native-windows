@@ -23,9 +23,6 @@
     <ProjectName>React.Windows.Desktop.DLL</ProjectName>
     <TargetName>react-native-win32</TargetName>
   </PropertyGroup>
-  <PropertyGroup Label="NOJSC">
-    <NOJSC>true</NOJSC>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
@@ -63,21 +60,6 @@
       <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
-    <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
-    <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
     <Link>
