@@ -448,7 +448,7 @@ void TextInputViewManager::DispatchCommand(XamlView viewToUpdate, int64_t comman
         break;
 
       // Verify that the textBox hasn't already lost focus.
-      if (focusedUIElement.try_as<winrt::DependencyObject>() != static_cast<winrt::DependencyObject>(textBox))
+      if (focusedUIElement.try_as<winrt::TextBox>() != textBox)
         break;
 
       auto content = winrt::Windows::UI::Xaml::Window::Current().Content();
