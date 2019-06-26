@@ -8,10 +8,6 @@
 #include <map>
 #include <vector>
 
-#if !defined(NOJSC)
-#include <cxxreact/JSCExecutor.h>
-#endif
-
 #include <cxxreact/JSExecutor.h>
 
 namespace folly {
