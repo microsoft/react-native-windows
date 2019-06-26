@@ -388,27 +388,27 @@ void FrameworkElementViewManager::StartTransformAnimation(
 folly::dynamic FrameworkElementViewManager::GetCommands() const
 {
   // Don't update SetFocus/Blur commands in subclass, otherwise commands may not match with what defined in js side.
-	auto commands = Super::GetCommands();
-	commands.update(folly::dynamic::object
-	("SetFocus", static_cast<std::underlying_type_t<FocusCommand>>(FocusCommand::SetFocus))
-	);
-	commands.update(folly::dynamic::object
-	("Blur", static_cast<std::underlying_type_t<FocusCommand>>(FocusCommand::Blur))
-	);
-	return commands;
+  auto commands = Super::GetCommands();
+  commands.update(folly::dynamic::object
+  ("SetFocus", static_cast<std::underlying_type_t<FocusCommand>>(FocusCommand::SetFocus))
+  );
+  commands.update(folly::dynamic::object
+  ("Blur", static_cast<std::underlying_type_t<FocusCommand>>(FocusCommand::Blur))
+  );
+  return commands;
 }
 
 void FrameworkElementViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)
 {
   // UWP doesn't have the blur concept. Here we use FocusState::Pointer to move away to keyboard focused visual.
-	if (viewToUpdate)
-	{
-		auto focusCommand = (static_cast<FocusCommand>(commandId));
-		if (focusCommand == FocusCommand::SetFocus)
-			winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Programmatic);
-		else if (focusCommand == FocusCommand::Blur)
-			winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Pointer);		
-	}
+  if (viewToUpdate)
+  {
+    auto focusCommand = (static_cast<FocusCommand>(commandId));
+    if (focusCommand == FocusCommand::SetFocus)
+      winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Programmatic);
+    else if (focusCommand == FocusCommand::Blur)
+      winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Pointer);    
+  }
 }
 
 // Used in scenario where View changes its backing Xaml element.
