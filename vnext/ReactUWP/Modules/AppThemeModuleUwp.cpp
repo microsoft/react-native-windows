@@ -50,7 +50,7 @@ const std::string AppTheme::getCurrentTheme()
   return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light : AppTheme::dark;
 }
 
-void AppTheme::fireEvent(std::string const& eventName, folly::dynamic const& eventData)
+void AppTheme::fireEvent(std::string const& eventName, folly::dynamic&& eventData)
 {
   if (auto instance = m_wkReactInstance.lock())
   {

@@ -22,7 +22,7 @@ public:
   const std::string getCurrentTheme() override;
 
 private:
-  void fireEvent(std::string const& eventName, folly::dynamic const& eventData);
+  void fireEvent(std::string const& eventName, folly::dynamic&& eventData);
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
