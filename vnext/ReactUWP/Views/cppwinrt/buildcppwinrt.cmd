@@ -65,7 +65,7 @@ goto :end
 :BuildWinmd
 echo.
 echo Building winmd for "%~1"
-call midlrt /metadata_dir "%FoundationDir%" /winrt /nomidl /ns_prefix /enum_class /h "NUL" /reference "%FoundationRef%" /reference "%UniversalApiRef%" /winmd "%TargetDir%\%~n1.winmd" %~1
+call midlrt /metadata_dir "%FoundationDir%" /winrt /W1 /nologo /char signed /env win32 /nomidl /ns_prefix /enum_class /h "NUL" /dlldata "NUL" /iid "NUL" /proxy "NUL" /notlb /client none /server none /target "NT60" /reference "%FoundationRef%" /reference "%UniversalApiRef%" /winmd "%TargetDir%\%~n1.winmd" %~1
 exit /b
 
 :BuildHeaders

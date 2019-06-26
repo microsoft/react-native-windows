@@ -193,6 +193,8 @@
     <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h" />
+    <ClInclude Include="Views\cppwinrt\ViewControl.g.h" />
+    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h" />
     <ClInclude Include="Views\cppwinrt\BorderEffect.g.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
