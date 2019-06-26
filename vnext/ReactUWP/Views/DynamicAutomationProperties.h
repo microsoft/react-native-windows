@@ -10,6 +10,10 @@
 namespace winrt::react::uwp::implementation
 {
 
+//
+// DynamicAutomationProperties provides attached properties for the various
+// accessibility related properties in RN that will be used by DynamicAutomationPeer
+//
 struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomationProperties>
 {
   using Super = DynamicAutomationPropertiesT<DynamicAutomationProperties>;

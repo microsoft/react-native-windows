@@ -59,8 +59,6 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
   default:
     return winrt::AutomationControlType::Group;
   }
-
-  return Super::GetAutomationControlTypeCore();
 }
 
 winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterface const& patternInterface) const
@@ -126,17 +124,17 @@ winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() con
 
 void DynamicAutomationPeer::AddToSelection() const
 {
-  
+  // Right now RN does not have "selection" events, so this is a no-op
 }
 
 void DynamicAutomationPeer::RemoveFromSelection() const
 {
-
+  // Right now RN does not have "selection" events, so this is a no-op
 }
 
 void DynamicAutomationPeer::Select() const
 {
-
+  // Right now RN does not have "selection" events, so this is a no-op
 }
 
 winrt::react::uwp::AccessibilityRoles DynamicAutomationPeer::GetAccessibilityRole() const

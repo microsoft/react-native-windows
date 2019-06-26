@@ -6,7 +6,6 @@
 #include "ViewViewManager.h"
 
 #include "ViewControl.h"
-#include "ViewPanel.h"
 
 #include "DynamicAutomationProperties.h"
 

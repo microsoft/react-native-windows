@@ -13,8 +13,8 @@ namespace winrt::react::uwp::implementation
 {
 
 //
-// ViewControl is ViewViewManager's ContentControl but with a custom AutomationPeer
-// using DynamicAutomationPeer (See below)
+// ViewControl is a ContentControl that ViewViewManager uses to wrap a ViewPanel
+// when we want that ViewPanel to be keyboard focusable
 //
 struct ViewControl : ViewControlT<ViewControl>
 {

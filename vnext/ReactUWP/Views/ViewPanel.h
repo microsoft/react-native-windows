@@ -13,6 +13,9 @@
 namespace winrt::react::uwp::implementation
 {
 
+//
+// ViewPanel is our custom Panel used by ViewViewManager
+//
 struct ViewPanel : ViewPanelT<ViewPanel>
 {
   using Super = ViewPanelT<ViewPanel>;

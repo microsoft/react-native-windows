@@ -15,9 +15,10 @@
 #include "cppwinrt/DynamicAutomationPeer.g.h"
 namespace winrt::react::uwp::implementation
 {
+
 //
-// DynamicAutomationPeer refers to the owner ViewControl to determine what type control
-// it appears to be for accessibility tools
+// DynamicAutomationPeer translates the values of the attached properties in DynamicAutomationProperties
+// into the equivalent UIA AutomationPeer
 //
 struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
 {
