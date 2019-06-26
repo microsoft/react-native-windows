@@ -23,11 +23,6 @@ namespace winrt {
 
 namespace react { namespace uwp {
 
-enum class PickerCommands
-{
-  SetFocus = 1,
-};
-
 class PickerShadowNode : public ShadowNodeBase
 {
   using Super = ShadowNodeBase;
@@ -198,15 +193,6 @@ const char* PickerViewManager::GetName() const
   return "RCTPicker";
 }
 
-folly::dynamic PickerViewManager::GetCommands() const
-{
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object
-    ("SetFocus", static_cast<std::underlying_type_t<PickerCommands>>(PickerCommands::SetFocus))
-  );
-  return commands;
-}
-
 folly::dynamic PickerViewManager::GetNativeProps() const
 {
   auto props = Super::GetNativeProps();
@@ -231,22 +217,6 @@ XamlView PickerViewManager::CreateViewCore(int64_t tag)
 {
   auto combobox = winrt::ComboBox();
   return combobox;
-}
-
-void PickerViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)
-{
-  auto combobox = viewToUpdate.as<winrt::ComboBox>();
-  if (combobox == nullptr)
-    return;
-
-  switch (static_cast<PickerCommands>(commandId))
-  {
-    case PickerCommands::SetFocus:
-    {
-      combobox.Focus(winrt::FocusState::Programmatic);
-      break;
-    }
-  }
 }
 
 YGMeasureFunc PickerViewManager::GetYogaCustomMeasureFunc() const
