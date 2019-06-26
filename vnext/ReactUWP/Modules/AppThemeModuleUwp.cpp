@@ -39,15 +39,15 @@ AppTheme::AppTheme(const std::shared_ptr<IReactInstance>& reactInstance, const s
 
           fireEvent("appThemeChanged", std::move(eventData));
         }
-        });
-    });
+      });
+  });
 }
 
 AppTheme::~AppTheme() = default;
 
 const std::string AppTheme::getCurrentTheme()
 {
-  return m_currentTheme == winrt::ApplicationTheme::Light ? "light" : "dark";
+  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light : AppTheme::dark;
 }
 
 void AppTheme::fireEvent(std::string const& eventName, folly::dynamic const& eventData)

@@ -12,6 +12,9 @@ namespace react { namespace windows {
 class AppTheme
 {
 public:
+  static inline const std::string dark = "dark";
+  static inline const std::string light = "light";
+
   AppTheme();
   virtual ~AppTheme();
 
@@ -21,14 +24,14 @@ public:
 class AppThemeModule : public facebook::xplat::module::CxxModule
 {
 public:
+  static inline const std::string name = "RTCAppTheme";
+
   AppThemeModule(std::shared_ptr<AppTheme> && appTheme);
 
-  static const std::string name;
-
   // CxxModule
-  std::string getName() override;
-  std::map<std::string, folly::dynamic> getConstants() override;
-  auto getMethods()->std::vector<Method> override;
+  std::string getName() override { return name; }
+  auto getConstants() -> std::map<std::string, folly::dynamic> override;
+  auto getMethods() -> std::vector<Method> override;
 
 private:
   std::shared_ptr<AppTheme> m_appTheme;

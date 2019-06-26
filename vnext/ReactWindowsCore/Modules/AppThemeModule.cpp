@@ -14,29 +14,21 @@ namespace react { namespace windows {
 AppTheme::AppTheme() = default;
 AppTheme::~AppTheme() = default;
 
-// TODO: real implementation
 const std::string AppTheme::getCurrentTheme()
 {
-  return "light";
+  return AppTheme::light;
 }
 
 //
 // AppThemeModule
 //
 
-/* static */ const std::string AppThemeModule::name = "RTCAppTheme";
-
 AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme>&& appTheme)
   : m_appTheme(std::move(appTheme))
 {
 }
 
-std::string AppThemeModule::getName()
-{
-  return name;
-}
-
-std::map<std::string, folly::dynamic> AppThemeModule::getConstants()
+auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic>
 {
   return {
     { "initialAppTheme", folly::dynamic { m_appTheme->getCurrentTheme() } }
