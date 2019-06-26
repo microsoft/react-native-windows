@@ -17,7 +17,7 @@ namespace winrt {
   using namespace Windows::UI::Xaml::Interop;
 }
 
-static const std::map<std::string, winrt::FlyoutPlacementMode> placementModeMinVersion = {
+static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placementModeMinVersion = {
     {"top", winrt::FlyoutPlacementMode::Top},
     {"bottom", winrt::FlyoutPlacementMode::Bottom},
     {"left", winrt::FlyoutPlacementMode::Left},
@@ -25,7 +25,7 @@ static const std::map<std::string, winrt::FlyoutPlacementMode> placementModeMinV
     {"full", winrt::FlyoutPlacementMode::Full}
 };
 
-static const std::map<std::string, winrt::FlyoutPlacementMode> placementModeRS5 = {
+static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placementModeRS5 = {
   {"top", winrt::FlyoutPlacementMode::Top},
   {"bottom", winrt::FlyoutPlacementMode::Bottom},
   {"left", winrt::FlyoutPlacementMode::Left},
