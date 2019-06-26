@@ -407,7 +407,11 @@ void FrameworkElementViewManager::DispatchCommand(XamlView viewToUpdate, int64_t
     if (focusCommand == FocusCommand::SetFocus)
       winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Programmatic);
     else if (focusCommand == FocusCommand::Blur)
-      winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Pointer);    
+    {
+      // Only blur if current UI is focused to avoid problem described in PR #2687
+      if (viewToUpdate == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>())      
+        winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Pointer);
+    }
   }
 }
 

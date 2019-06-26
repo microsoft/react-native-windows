@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   },
   keyComponentRoot: {
     borderWidth: 2,
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginVertical: 5,
     backgroundColor: 'whitesmoke',
     justifyContent: 'space-around'
@@ -63,6 +63,9 @@ class KeyboardFocusExample extends React.Component<{}, IKeyboardFocusComponentSt
 
     return (
       <View style={styles.keyComponentRoot}>
+        <View>
+          <Text>Please select a item to set focus</Text>
+        </View>
         <Picker selectedValue={this.state.selected} onValueChange={this._selectionChanged}>
           {pickerItems.map(item => (<Picker.Item key={item} value={item} label={item} />))}
         </Picker>
@@ -71,12 +74,17 @@ class KeyboardFocusExample extends React.Component<{}, IKeyboardFocusComponentSt
           <Text>View accept focus</Text>
         </ViewWindows>
 
-        <Picker ref={pickerRef}>
-          <Picker.Item label="Picker accept focus" />
-        </Picker>
-
-        <TextInput placeholder='TextInput accept focus' style={styles.textInput} ref={textInputRef} />
         <View>
+          <Picker ref={pickerRef}>
+            <Picker.Item label="Picker accept focus" />
+          </Picker>
+        </View>
+        <View>
+          <Text>Test Purpose: focus on TextInput, then timeout and blur on TextInput2, TextInput still keep focus</Text>
+          <TextInput placeholder='TextInput accept focus' style={styles.textInput} ref={textInputRef} />
+        </View>
+        <View>
+          <Text>Test Purpose: focus on TextInput2, then timeout and blur on TextInput2, TextInput2 lose focus</Text>
           <TextInput2 onKeyDown={this._textInputKeyDown} placeholder='TextInput accept focus' style={styles.textInput} ref={textInputRef2} />
           <Text>Key {this.state.keyOnKeyDown}</Text>
         </View>
@@ -102,9 +110,16 @@ class KeyboardFocusExample extends React.Component<{}, IKeyboardFocusComponentSt
         break;
       case 'TextInput':
         textInputRef.current && textInputRef.current.focus();
+        if (textInputRef.current) {
+          textInputRef.current.focus();
+          setTimeout(() => { textInputRef2.current && textInputRef2.current.blur(); }, 10000);
+        }
         break;
       case 'TextInput2':
-        textInputRef2.current && textInputRef2.current.focus();
+        if (textInputRef2.current) {
+          textInputRef2.current.focus();
+          setTimeout(() => { textInputRef2.current && textInputRef2.current.blur(); }, 10000);
+        }
         break;
       case 'CheckBox':
         checkBoxRef.current && checkBoxRef.current.focus();
