@@ -8,47 +8,47 @@ namespace react { namespace uwp {
   ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
   {
     m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
-    m_propertySet.InsertScalar(L"value", static_cast<float>(config.find("value").dereference().second.asDouble()));
-    m_propertySet.InsertScalar(L"offset", static_cast<float>(config.find("offset").dereference().second.asDouble()));
+    m_propertySet.InsertScalar(s_valueName, static_cast<float>(config.find(s_jsValueName).dereference().second.asDouble()));
+    m_propertySet.InsertScalar(s_offsetName, static_cast<float>(config.find(s_jsOffsetName).dereference().second.asDouble()));
   }
 
   ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
   {
     m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
-    m_propertySet.InsertScalar(L"value", 0.0);
-    m_propertySet.InsertScalar(L"offset", 0.0);
+    m_propertySet.InsertScalar(s_valueName, 0.0);
+    m_propertySet.InsertScalar(s_offsetName, 0.0);
   }
 
   double ValueAnimatedNode::RawValue()
   {
     auto rawValue = 0.0f;
-    m_propertySet.TryGetScalar(L"value", rawValue);
+    m_propertySet.TryGetScalar(s_valueName, rawValue);
     return rawValue;
   }
 
   void ValueAnimatedNode::RawValue(double value)
   {
-    m_propertySet.InsertScalar(L"value", static_cast<float>(value));
+    m_propertySet.InsertScalar(s_valueName, static_cast<float>(value));
   }
 
   double ValueAnimatedNode::Offset()
   {
     auto offset = 0.0f;
-    m_propertySet.TryGetScalar(L"offset", offset);
+    m_propertySet.TryGetScalar(s_offsetName, offset);
     return offset;
   }
 
   void ValueAnimatedNode::Offset(double offset)
   {
-    m_propertySet.InsertScalar(L"offset", static_cast<float>(offset));
+    m_propertySet.InsertScalar(s_offsetName, static_cast<float>(offset));
   }
 
   double ValueAnimatedNode::Value()
   {
     auto rawValue = 0.0f;
     auto offset = 0.0f;
-    m_propertySet.TryGetScalar(L"value", rawValue);
-    m_propertySet.TryGetScalar(L"offset", offset);
+    m_propertySet.TryGetScalar(s_valueName, rawValue);
+    m_propertySet.TryGetScalar(s_offsetName, offset);
     return static_cast<double>(rawValue) + static_cast<double>(offset);
   }
 

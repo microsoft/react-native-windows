@@ -196,6 +196,7 @@
     <ClInclude Include="Modules\Animated\AnimatedNodeType.h" />
     <ClInclude Include="Modules\Animated\AnimationType.h" />
     <ClInclude Include="Modules\Animated\FacadeType.h" />
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makewinrt.inc" />

@@ -9,16 +9,16 @@ namespace react {
   namespace uwp {
     TransformAnimatedNode::TransformAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
     {
-      for (auto transform : config.find("transforms").dereference().second)
+      for (auto transform : config.find(s_transformsName).dereference().second)
       {
-        auto property = transform.find("property").dereference().second.asString();
-        if (transform.find("type").dereference().second.asString() == "animated")
+        auto property = transform.find(s_propertyName).dereference().second.asString();
+        if (transform.find(s_typeName).dereference().second.asString() == s_animatedName)
         {
-          m_transformConfigs.push_back(TransformConfig{ property, transform.find("nodeTag").dereference().second.asInt(), 0 });
+          m_transformConfigs.push_back(TransformConfig{ property, transform.find(s_nodeTagName).dereference().second.asInt(), 0 });
         }
         else
         {
-          m_transformConfigs.push_back(TransformConfig{ property, -1, transform.find("value").dereference().second.asDouble() });
+          m_transformConfigs.push_back(TransformConfig{ property, s_unsetNodeTag, transform.find(s_valueName).dereference().second.asDouble() });
         }
       }
     }
@@ -28,7 +28,7 @@ namespace react {
       std::unordered_map<FacadeType, int64_t> mapping;
       for (auto config : m_transformConfigs)
       {
-        if (config.nodeTag != -1)
+        if (config.nodeTag != s_unsetNodeTag)
         {
           mapping.insert({ StringToFacadeType(config.property), config.nodeTag });
         }

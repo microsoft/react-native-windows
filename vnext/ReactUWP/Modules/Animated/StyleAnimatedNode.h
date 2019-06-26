@@ -17,5 +17,7 @@ namespace react { namespace uwp {
   private:
     std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
     std::map<std::string, int64_t> m_propMapping{};
+
+    static constexpr std::string_view s_styleName{ "style" };
   };
 } }

@@ -19,7 +19,7 @@ namespace react { namespace uwp {
 
   void PropsAnimatedNode::ConnectToView(int64_t viewTag)
   {
-    if (m_connectedViewTag != -1)
+    if (m_connectedViewTag != s_connectedViewTagUnset)
     {
       throw new std::invalid_argument("Animated node " + std::to_string(m_tag) + " has already been attached to a view already exists.");
       return;
@@ -55,7 +55,7 @@ namespace react { namespace uwp {
       m_centerPointAnimation = nullptr;
     }
 
-    m_connectedViewTag = -1;
+    m_connectedViewTag = s_connectedViewTagUnset;
     m_needsCenterPointAnimation = false;
   }
 
@@ -66,7 +66,7 @@ namespace react { namespace uwp {
 
   void PropsAnimatedNode::UpdateView()
   {
-    if (m_connectedViewTag == -1)
+    if (m_connectedViewTag == s_connectedViewTagUnset)
     {
       return;
     }
@@ -193,7 +193,7 @@ namespace react { namespace uwp {
           animation.Target(L"Translation.Y");
           break;
         case FacadeType::Perspective:
-          // We don't have an easy way of doing this..
+          // TODO: implement perspective animations, tracked by issue #2680
           return nullptr;
         default:
           assert(false);

@@ -25,6 +25,15 @@ namespace react {
     private:
       std::weak_ptr<NativeAnimatedNodeManager> m_manager;
       std::vector<TransformConfig> m_transformConfigs;
+
+      static constexpr int64_t s_unsetNodeTag{ -1 };
+
+      static constexpr std::string_view s_transformsName{ "transforms" };
+      static constexpr std::string_view s_propertyName{ "property" };
+      static constexpr std::string_view s_typeName{ "type" };
+      static constexpr std::string_view s_animatedName{ "animated" };
+      static constexpr std::string_view s_nodeTagName{ "nodeTag" };
+      static constexpr std::string_view s_valueName{ "value" };
     };
   }
 }

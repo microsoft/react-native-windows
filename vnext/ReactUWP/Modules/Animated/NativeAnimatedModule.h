@@ -85,5 +85,20 @@ namespace react { namespace uwp {
   private:
     std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
     std::weak_ptr<IReactInstance> m_wkReactInstance;
+
+    static constexpr std::string_view s_createAnimatedNodeName{ "createAnimatedNode" };
+    static constexpr std::string_view s_connectAnimatedNodeToViewName{ "connectAnimatedNodeToView" };
+    static constexpr std::string_view s_disconnectAnimatedNodeFromViewName{ "disconnectAnimatedNodeFromView" };
+    static constexpr std::string_view s_connectAnimatedNodesName{ "connectAnimatedNodes" };
+    static constexpr std::string_view s_disconnectAnimatedNodesName{ "disconnectAnimatedNodes" };
+    static constexpr std::string_view s_stopAnimationName{ "stopAnimation" };
+    static constexpr std::string_view s_startAnimatingNodeName{ "startAnimatingNode" };
+    static constexpr std::string_view s_dropAnimatedNodeName{ "dropAnimatedNode" };
+    static constexpr std::string_view s_setAnimatedNodeValueName{ "setAnimatedNodeValue" };
+    static constexpr std::string_view s_setAnimatedNodeOffsetName{ "setAnimatedNodeOffset" };
+    static constexpr std::string_view s_flattenAnimatedNodeOffsetName{ "flattenAnimatedNodeOffset" };
+    static constexpr std::string_view s_extractAnimatedNodeOffsetName{ "extractAnimatedNodeOffset" };
+    static constexpr std::string_view s_addAnimatedEventToViewName{ "addAnimatedEventToView" };
+    static constexpr std::string_view s_removeAnimatedEventFromViewName{ "removeAnimatedEventFromView" };
   };
 } }

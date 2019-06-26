@@ -152,21 +152,28 @@ namespace react {
 
     void NativeAnimatedNodeManager::StartAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, const Callback& endCallback)
     {
-      auto animation = [animationId, animatedNode = m_valueNodes.at(animatedNodeTag), endCallback, animationConfig]() {
+      auto animation = [animationId, animatedNode = m_valueNodes.at(animatedNodeTag), endCallback, animationConfig]()
+      {
         switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString()))
         {
         case AnimationType::Decay:
           return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<DecayAnimationDriver>(DecayAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
         case AnimationType::Frames:
           return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<FrameAnimationDriver>(FrameAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
-        //case AnimationType::Spring:
-          //return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<SpringAnimationDriver>(SpringAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
+        case AnimationType::Spring:
+          //TODO: implement spring animations tracked by issue #2681
+          return static_cast<std::shared_ptr<AnimationDriver>>(nullptr);
         default:
           assert(false);
           return static_cast<std::shared_ptr<AnimationDriver>>(nullptr);
         }
       }();
-      m_activeAnimations.insert({ animationId, animation });
+
+      if (animation)
+      {
+        animation->StartAnimation();
+        m_activeAnimations.insert({ animationId, animation });
+      }
     }
 
     void NativeAnimatedNodeManager::DropAnimatedNode(int64_t tag)

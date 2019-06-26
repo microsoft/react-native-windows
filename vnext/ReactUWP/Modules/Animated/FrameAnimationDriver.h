@@ -12,9 +12,9 @@ namespace react { namespace uwp {
   public:
     FrameAnimationDriver(int64_t id, const std::shared_ptr<ValueAnimatedNode>& animatedValue, const Callback& endCallback, const folly::dynamic& config);
 
+    std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(const folly::dynamic& config) override;
   private:
     std::vector<double> m_frames {};
     double m_toValue { 0 };
-    int64_t m_iterations { 0 };
   };
 } }

@@ -3,26 +3,27 @@
 
 #include "pch.h"
 #include "InterpolationAnimatedNode.h"
+#include "ExtrapolationType.h"
 
 namespace react { namespace uwp {
   InterpolationAnimatedNode::InterpolationAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, manager)
   {
     int arrayIndex = 0;
-    for (auto rangeValue : config.find("inputRange").dereference().second)
+    for (auto rangeValue : config.find(s_inputRangeName).dereference().second)
     {
       m_inputRange[arrayIndex] = rangeValue.asDouble();
       arrayIndex++;
     }
 
     arrayIndex = 0;
-    for (auto rangeValue : config.find("outputRange").dereference().second)
+    for (auto rangeValue : config.find(s_outputRangeName).dereference().second)
     {
       m_outputRange[arrayIndex] = rangeValue.asDouble();
       arrayIndex++;
     }
 
-    m_extrapolateLeft = config.find("extrapolateLeft").dereference().second.asString();
-    m_extrapolateRight = config.find("extrapolateRight").dereference().second.asString();
+    m_extrapolateLeft = config.find(s_extrapolateLeftName).dereference().second.asString();
+    m_extrapolateRight = config.find(s_extrapolateRightName).dereference().second.asString();
   }
 
   void InterpolationAnimatedNode::Update()
@@ -33,16 +34,16 @@ namespace react { namespace uwp {
   void InterpolationAnimatedNode::OnDetachedFromNode(int64_t animatedNodeTag)
   {
     assert(m_parentTag == animatedNodeTag);
-    m_parentTag = -1;
-    m_propertySet.StopAnimation(L"value");
-    m_propertySet.StopAnimation(L"offset");
+    m_parentTag = s_parentTagUnset;
+    m_propertySet.StopAnimation(s_valueName);
+    m_propertySet.StopAnimation(s_valueName);
     m_rawValueAnimation = nullptr;
     m_offsetAnimation = nullptr;
   }
 
   void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag)
   {
-    assert(m_parentTag == -1);
+    assert(m_parentTag == s_parentTagUnset);
     m_parentTag = animatedNodeTag;
 
     const auto [rawValueAnimation, offsetAnimation] = [this]()
@@ -54,10 +55,10 @@ namespace react { namespace uwp {
           auto compositor = winrt::Window::Current().Compositor();
 
           auto rawValueAnimation = createExpressionAnimation(compositor, parent);
-          rawValueAnimation.Expression(GetExpression(L"parentProps.value"));
+          rawValueAnimation.Expression(GetExpression(s_parentPropsName + static_cast<winrt::hstring>(L".") + s_valueName));
 
           auto offsetAnimation = createExpressionAnimation(compositor, parent);
-          offsetAnimation.Expression(L"(" + GetExpression(L"(parentProps.offset + parentProps.value)") + L") - this.target.value");
+          offsetAnimation.Expression(L"(" + GetExpression(static_cast<winrt::hstring>(L"(") + s_parentPropsName + L"." + s_offsetName + L" + " + s_parentPropsName +L"." + s_valueName + L")") + L") - this.target." + s_valueName);
 
           return std::make_tuple(rawValueAnimation, offsetAnimation);
         }
@@ -65,8 +66,8 @@ namespace react { namespace uwp {
       return std::tuple<winrt::ExpressionAnimation, winrt::ExpressionAnimation>(nullptr, nullptr);
     }();
 
-    m_propertySet.StartAnimation(L"value", rawValueAnimation);
-    m_propertySet.StartAnimation(L"offset", offsetAnimation);
+    m_propertySet.StartAnimation(s_valueName, rawValueAnimation);
+    m_propertySet.StartAnimation(s_offsetName, offsetAnimation);
 
     m_rawValueAnimation = rawValueAnimation;
     m_offsetAnimation = offsetAnimation;
@@ -75,11 +76,11 @@ namespace react { namespace uwp {
   winrt::ExpressionAnimation InterpolationAnimatedNode::createExpressionAnimation(const winrt::Compositor& compositor, const std::shared_ptr<ValueAnimatedNode>& parent)
   {
     auto animation = compositor.CreateExpressionAnimation();
-    animation.SetReferenceParameter(L"parentProps", parent->PropertySet());
-    animation.SetScalarParameter(L"inputMin", static_cast<float>(m_inputRange[0]));
-    animation.SetScalarParameter(L"inputMax", static_cast<float>(m_inputRange[1]));
-    animation.SetScalarParameter(L"outputMin", static_cast<float>(m_outputRange[0]));
-    animation.SetScalarParameter(L"outputMax", static_cast<float>(m_outputRange[1]));
+    animation.SetReferenceParameter(s_parentPropsName, parent->PropertySet());
+    animation.SetScalarParameter(s_inputMinName, static_cast<float>(m_inputRange[0]));
+    animation.SetScalarParameter(s_inputMaxName, static_cast<float>(m_inputRange[1]));
+    animation.SetScalarParameter(s_outputMinName, static_cast<float>(m_outputRange[0]));
+    animation.SetScalarParameter(s_outputMaxName, static_cast<float>(m_outputRange[1]));
     return animation;
   }
 
@@ -90,19 +91,19 @@ namespace react { namespace uwp {
 
   winrt::hstring InterpolationAnimatedNode::GetInterpolateExpression(const winrt::hstring& value)
   {
-    return L"outputMin + ((outputMax - outputMin) * ((" + value + L" - inputMin) / (inputMax - inputMin)))";
+    return s_outputMinName + static_cast<winrt::hstring>(L" + ((") + s_outputMaxName + L" - " + s_outputMinName + L") * ((" + value + L" - " + s_inputMinName + L") / (" + s_inputMaxName + L" - " + s_inputMinName + L")))";
   }
 
   winrt::hstring InterpolationAnimatedNode::GetLeftExpression(const winrt::hstring& value)
   {
     switch (ExtrapolationTypeFromString(m_extrapolateLeft))
     {
-    case ExtrapolationType::clamp:
-      return value + L" < inputMin ? inputMin : ";
-    case ExtrapolationType::identity:
-      return value + L" < inputMin ? " + value + L" : ";
-    case ExtrapolationType::extend:
-      return value + L" < inputMin ? " + GetInterpolateExpression(value) + L" : ";
+    case ExtrapolationType::Clamp:
+      return value + L" < " + s_inputMinName + L" ? " + s_inputMinName + L" : ";
+    case ExtrapolationType::Identity:
+      return value + L" < " + s_inputMinName + L" ? " + value + L" : ";
+    case ExtrapolationType::Extend:
+      return value + L" < " + s_inputMinName + L" ? " + GetInterpolateExpression(value) + L" : ";
     default:
       return L"";
 
@@ -113,26 +114,15 @@ namespace react { namespace uwp {
   {
     switch (ExtrapolationTypeFromString(m_extrapolateRight))
     {
-    case ExtrapolationType::clamp:
-      return value + L" > inputMax ? inputMax : ";
-    case ExtrapolationType::identity:
-      return value + L" > inputMax ? " + value + L" : ";
-    case ExtrapolationType::extend:
-      return value + L" > inputMax ? " + GetInterpolateExpression(value) + L" : ";
+    case ExtrapolationType::Clamp:
+      return value + L" > " + s_inputMaxName + L" ? " + s_inputMaxName + L" : ";
+    case ExtrapolationType::Identity:
+      return value + L" > " + s_inputMaxName + L" ? " + value + L" : ";
+    case ExtrapolationType::Extend:
+      return value + L" > " + s_inputMaxName + L" ? " + GetInterpolateExpression(value) + L" : ";
     default:
       return L"";
 
-    }
-  }
-
-  ExtrapolationType InterpolationAnimatedNode::ExtrapolationTypeFromString(const std::string& string)
-  {
-    if (string == "identity") return ExtrapolationType::identity;
-    else if (string == "clamp") return ExtrapolationType::clamp;
-    else
-    {
-      assert(string == "extend");
-      return ExtrapolationType::extend;
     }
   }
 } }

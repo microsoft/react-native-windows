@@ -16,5 +16,10 @@ namespace react { namespace uwp {
   private:
     int64_t m_inputNodeTag{};
     int64_t m_modulus{};
+
+    static constexpr std::string_view s_modulusName{ "modulus" };
+
+    static constexpr std::wstring_view s_inputParameterName{ L"input" };
+    static constexpr std::wstring_view s_modName{ L"mod" };
   };
 } }

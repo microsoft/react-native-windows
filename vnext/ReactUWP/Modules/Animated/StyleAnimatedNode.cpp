@@ -8,7 +8,7 @@
 namespace react { namespace uwp {
   StyleAnimatedNode::StyleAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
   {
-    for (auto entry : config.find("style").dereference().second.items())
+    for (auto entry : config.find(s_styleName).dereference().second.items())
     {
       m_propMapping.insert({ entry.first.getString(), entry.second.getInt() });
     }

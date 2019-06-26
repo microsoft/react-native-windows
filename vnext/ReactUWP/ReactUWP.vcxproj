@@ -171,6 +171,7 @@
     <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\EventAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h" />
     <ClInclude Include="Modules\Animated\FacadeType.h" />
     <ClInclude Include="Modules\Animated\FrameAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h" />

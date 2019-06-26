@@ -36,6 +36,14 @@ namespace react { namespace uwp {
     std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
     winrt::CompositionPropertySet m_propertySet{ nullptr };
 
+    static constexpr std::string_view s_inputName{ "input" };
+
+    static constexpr std::string_view s_jsValueName{ "value" };
+    static constexpr std::string_view s_jsOffsetName{ "offset" };
+
+    static constexpr std::wstring_view s_valueName{ L"value" };
+    static constexpr std::wstring_view s_offsetName{ L"offset" };
+
   private:
     std::unordered_set<int64_t> m_dependentPropsNodes{};
     std::unordered_set<int64_t> m_activeAnimations{};

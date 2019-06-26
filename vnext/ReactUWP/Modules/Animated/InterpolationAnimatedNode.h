@@ -6,12 +6,6 @@
 #include <folly/dynamic.h>
 
 namespace react { namespace uwp {
-  enum ExtrapolationType
-  {
-    identity,
-    clamp,
-    extend,
-  };
 
   class InterpolationAnimatedNode : public ValueAnimatedNode
   {
@@ -27,7 +21,6 @@ namespace react { namespace uwp {
     static constexpr std::wstring_view ExtrapolateTypeExtend = L"extend";
 
   private:
-    static ExtrapolationType ExtrapolationTypeFromString(const std::string& type);
     winrt::ExpressionAnimation createExpressionAnimation(const winrt::Compositor& compositor, const std::shared_ptr<ValueAnimatedNode>& parent);
 
     winrt::hstring GetExpression(const winrt::hstring& value);
@@ -41,6 +34,19 @@ namespace react { namespace uwp {
     std::string m_extrapolateLeft;
     std::string m_extrapolateRight;
 
-    int64_t m_parentTag{ -1 };
+    int64_t m_parentTag{ s_parentTagUnset };
+
+    static constexpr int64_t s_parentTagUnset{ -1 };
+
+    static constexpr std::string_view s_inputRangeName{ "inputRange" };
+    static constexpr std::string_view s_outputRangeName{ "outputRange" };
+    static constexpr std::string_view s_extrapolateLeftName{ "extrapolateLeft" };
+    static constexpr std::string_view s_extrapolateRightName{ "extrapolateRight" };
+
+    static constexpr std::wstring_view s_parentPropsName{ L"parentProps" };
+    static constexpr std::wstring_view s_inputMinName{ L"inputMin" };
+    static constexpr std::wstring_view s_inputMaxName{ L"inputMax" };
+    static constexpr std::wstring_view s_outputMinName{ L"outputMin" };
+    static constexpr std::wstring_view s_outputMaxName{ L"outputMax" };
   };
 } }
