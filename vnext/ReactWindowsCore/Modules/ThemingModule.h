@@ -19,6 +19,7 @@ namespace react {
 
       virtual const std::string getTheme();
       virtual bool getIsHighContrast();
+      virtual folly::dynamic getHighContrastRGBValues();
     };
 
     class ThemingModule : public facebook::xplat::module::CxxModule

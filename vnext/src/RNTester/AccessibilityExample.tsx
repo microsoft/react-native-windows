@@ -33,20 +33,25 @@ class AccessibilityBaseExample extends React.Component {
 
 class HighContrastExample extends React.Component {
   state = {
-    isHighContrast: theming.isHighContrast, // Initializes value
-    highContrastScheme: 'Initial'
+    isHighContrast: theming.isHighContrast,
+    RGBValues: theming.RGBValues,
+    currentTheme: theming.currentTheme
   };
 
   componentDidMount() {
     theming.addListener('highContrastDidChange', this.highContrastHandler);
+    theming.addListener('themeDidChange', this.themeChanged);
   }
 
   // TODO: Make args props
   highContrastHandler = (args: any) => {
-    const isHighContrast = theming.isHighContrast; //Should update value on event.
-    const highContrastScheme = args.highContrastScheme;
-    this.setState({ isHighContrast, highContrastScheme });
+    this.setState({isHighContrast : theming.isHighContrast, 
+                  RGBValues : theming.RGBValues});
   };
+
+  themeChanged = (args: any) => {
+    this.setState({currentTheme : theming.currentTheme});
+  }
 
   public render() {
     if (this.state.isHighContrast) {
@@ -59,7 +64,14 @@ class HighContrastExample extends React.Component {
             accessibilityHint="A hint for the blue box.">
           <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
           </View>
-          <Text>highContrastScheme: {this.state.highContrastScheme}</Text>
+          <Text>ButtonFaceRGB value: {this.state.RGBValues[0]}</Text>
+          <Text>ButtonTextRGB value: {this.state.RGBValues[1]}</Text>
+          <Text>GrayTextRGB value: {this.state.RGBValues[2]}</Text>
+          <Text>HighlightRGB value: {this.state.RGBValues[3]}</Text>
+          <Text>HighlightTextRGB value: {this.state.RGBValues[4]}</Text>
+          <Text>HotlightRGB value: {this.state.RGBValues[5]}</Text>
+          <Text>WindowRGB value: {this.state.RGBValues[6]}</Text>
+          <Text>WindowTextRGB value: {this.state.RGBValues[7]}</Text>
           <View
             style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
             accessible={true}
@@ -77,7 +89,14 @@ class HighContrastExample extends React.Component {
             accessibilityHint="A hint for the blue box.">
           <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
           </View>
-          <Text>highContrastScheme: {this.state.highContrastScheme}</Text>
+          <Text>ButtonFaceRGB value: {this.state.RGBValues[0]}</Text>
+          <Text>ButtonTextRGB value: {this.state.RGBValues[1]}</Text>
+          <Text>GrayTextRGB value: {this.state.RGBValues[2]}</Text>
+          <Text>HighlightRGB value: {this.state.RGBValues[3]}</Text>
+          <Text>HighlightTextRGB value: {this.state.RGBValues[4]}</Text>
+          <Text>HotlightRGB value: {this.state.RGBValues[5]}</Text>
+          <Text>WindowRGB value: {this.state.RGBValues[6]}</Text>
+          <Text>WindowTextRGB value: {this.state.RGBValues[7]}</Text>
           <View
             style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[1]}}
             accessible={true}

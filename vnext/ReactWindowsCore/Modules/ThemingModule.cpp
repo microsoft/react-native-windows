@@ -27,6 +27,11 @@ namespace react {
       return false;
     }
 
+    folly::dynamic PlatformTheme::getHighContrastRGBValues()
+    {
+      return folly::dynamic::object("highContrastRGBValues", "None");
+    }
+
     //
     // ThemingModule
     //
@@ -46,18 +51,15 @@ namespace react {
     std::map<std::string, folly::dynamic> ThemingModule::getConstants()
     {
       return {
-        { "currentTheme", folly::dynamic { m_theme->getTheme() } }
+        { "currentTheme", folly::dynamic { m_theme->getTheme() } },
+        { "isHighContrast", folly::dynamic { m_theme->getIsHighContrast() }},
+        { "highContrastRGBValues", folly::dynamic {m_theme->getHighContrastRGBValues()}}
       };
     }
 
     auto ThemingModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method>
     {
-      return {
-        Method("isHighContrast", [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/) 
-        { 
-          cbSuccess({folly::dynamic::object("isHighContrast", m_theme->getIsHighContrast())});
-        }, AsyncTag)
-      };
+      return {};
     }
 
   }

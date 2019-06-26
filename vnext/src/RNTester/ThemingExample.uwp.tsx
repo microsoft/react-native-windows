@@ -13,26 +13,33 @@ const theming = new Theming();
 class ThemeExample extends React.Component {
   state = {
     isHighContrast: theming.isHighContrast,
-    highContrastScheme: ''
+    highContrastElementRGBValues: 'None',
+    currentTheme: theming.currentTheme
   };
 
   componentDidMount() {
-    theming.addListener('highContrastDidChange', this.highContrastHandler);
+    theming.addListener('highContrastDidChange', this.highContrastChanged);
+    theming.addListener('themeDidChange', this.themeChanged);
   }
 
   // TODO: Make args props
-  highContrastHandler = (args: any) => {
+  highContrastChanged = (args: any) => {
     const isHighContrast = theming.isHighContrast;
-    const highContrastScheme = args.highContrastScheme;
-    this.setState({ isHighContrast, highContrastScheme });
+    const highContrastElementRGBValues = args.highContrastElementRGBValues;
+    this.setState({ isHighContrast, highContrastElementRGBValues });
+  };
+
+  themeChanged = (args: any) => {
+    const currentTheme = theming.currentTheme;
+    this.setState({currentTheme});
   };
 
   public render() {
     return (
-      <View
-        style={{width:200, height:50, backgroundColor: 'cyan'}}>
+      <View>
         <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
-        <Text>highContrastScheme: {this.state.highContrastScheme}</Text>
+        <Text>highContrastScheme: {this.state.highContrastElementRGBValues}</Text>
+        <Text>currentTheme: {this.state.currentTheme}</Text>
       </View>
     );
   }
