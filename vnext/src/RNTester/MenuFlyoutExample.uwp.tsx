@@ -35,7 +35,7 @@ let placementValues: string[] = [
 class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
   // tslint:disable-next-line:no-any
-  private _textInput: any;
+  private _target: any;
 
   public state: IMenuFlyoutExampleState = {
     isMenuFlyoutVisible: false,
@@ -47,12 +47,12 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
   public constructor(props: any) {
     super(props);
-    this._textInput = React.createRef();
+    this._target = React.createRef();
   }
 
   public render() {
     return (
-      <View>
+      <View >
         <View style={ { flexDirection: 'row', paddingTop: 20 } }>
           <Text style={ { padding: 10 } }>Placement Options: </Text>
           <Picker
@@ -62,30 +62,30 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
           </Picker>
         </View>
         <View style={ { justifyContent: 'center', padding: 20, width: 200 } }>
-          <Button onPress={ this._onPress } title={ this.state.buttonTitle }  ref={ this._setRef }></Button>
+          <Button onPress={ this._onPress } title={ this.state.buttonTitle } ref={ this._setRef } ></Button>
         </View>
         <View style={ { flexDirection: 'row' } }>
-                <Text style={ { padding: 10 } }>isAttachedAsContextMenu: </Text>
+                <Text style={ { padding: 10 }  } >isAttachedAsContextMenu: </Text>
                 <CheckBox
                     style={{ justifyContent: 'center', padding: 20 }}
                     checked={this.state.popupCheckBoxState}
-                    onValueChange={value => this.setState({ popupCheckBoxState: value, attachAsContextMenu: value, isMenuFlyoutVisible: false })} />
+                    onValueChange={value => this.setState({ popupCheckBoxState: value, attachAsContextMenu: value, isMenuFlyoutVisible: false })
+                    } />
         </View>
-        { this.state.isMenuFlyoutVisible && (
           <MenuFlyout
             isOpen={ this.state.isMenuFlyoutVisible }
             attachAsContextFlyout = {this.state.attachAsContextMenu}
             onDismiss={ this._onMenuFlyoutDismissed }
-            target={ this._textInput }
+            target={ this._target }
             placement= {this.state.placementOptions}
           />
         )}
       </View>
-    );
+
   }
 
-  private _setRef = (textInput: Button) => {
-    this._textInput = textInput;
+  private _setRef = (targetElement: any) => {
+    this._target = targetElement;
   }
 
   _onPress = () => {
@@ -103,10 +103,10 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
 export const displayName = (_undefined?: string) => { };
 export const title = '<MenuFlyout>';
-export const description = 'Displays content on top of existing content, within the bounds of the application window.';
+export const description = 'Displays a Menu that can be operated like a flyout or assigned as a compnents context menu.';
 export const examples = [
   {
-    title: 'MenuFlyout Anchor to text input',
+    title: 'MenuFlyout Anchor to button',
     render: function (): JSX.Element {
       return <MenuFlyoutExample />;
     },
