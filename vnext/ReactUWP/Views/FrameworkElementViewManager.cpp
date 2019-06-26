@@ -400,18 +400,17 @@ folly::dynamic FrameworkElementViewManager::GetCommands() const
 
 void FrameworkElementViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)
 {
-  // UWP doesn't have the blur concept. Here we use FocusState::Pointer to move away to keyboard focused visual.
-  if (viewToUpdate)
+  assert(viewToUpdate);
+
+  auto focusCommand = (static_cast<FocusCommand>(commandId));
+  if (focusCommand == FocusCommand::SetFocus)
+    winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Programmatic);
+  else if (focusCommand == FocusCommand::Blur)
   {
-    auto focusCommand = (static_cast<FocusCommand>(commandId));
-    if (focusCommand == FocusCommand::SetFocus)
-      winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Programmatic);
-    else if (focusCommand == FocusCommand::Blur)
-    {
-      // Only blur if current UI is focused to avoid problem described in PR #2687
-      if (viewToUpdate == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>())      
-        winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Pointer);
-    }
+    // UWP doesn't have the blur concept. Here we use FocusState::Pointer to move away to keyboard focused visual.
+    // Only blur if current UI is focused to avoid problem described in PR #2687
+    if (viewToUpdate == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>())      
+      winrt::FocusManager::TryFocusAsync(viewToUpdate, winrt::FocusState::Pointer);
   }
 }
 
