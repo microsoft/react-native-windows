@@ -7,7 +7,7 @@ import { NativeEventEmitter } from 'react-native';
 const NativeModules = require('NativeModules');
 const ThemingNative = NativeModules.RTCAppTheme;
 
-class ThemingModule extends NativeEventEmitter  {
+class AppThemeModule extends NativeEventEmitter  {
   private _currentTheme: string;
 
   constructor() {
@@ -24,5 +24,5 @@ class ThemingModule extends NativeEventEmitter  {
   }
 }
 
-export const Theming = new ThemingModule();
-export default Theming;
+export const AppTheme = new AppThemeModule();
+export default AppTheme;
