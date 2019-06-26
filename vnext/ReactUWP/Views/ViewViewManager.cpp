@@ -297,9 +297,12 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
       const std::string& propertyName = pair.first.getString();
       const folly::dynamic& propertyValue = pair.second;
 
-      if (TryUpdateBackgroundBrush(pPanel.as<winrt::Panel>(), propertyName, propertyValue))
+      if (propertyName == "backgroundColor")
       {
-        continue;
+        if (propertyValue.isNumber())
+          pPanel.ViewBackground(BrushFrom(propertyValue));
+        else if (propertyValue.isNull())
+          pPanel.ClearValue(ViewPanel::ViewBackgroundProperty());
       }
       else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue))
       {

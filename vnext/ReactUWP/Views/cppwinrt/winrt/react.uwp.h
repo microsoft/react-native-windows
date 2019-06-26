@@ -135,6 +135,18 @@ template <typename D> Windows::UI::Xaml::Controls::Border consume_react_uwp_IVie
     return result;
 }
 
+template <typename D> Windows::UI::Xaml::Media::Brush consume_react_uwp_IViewPanel<D>::ViewBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(react::uwp::IViewPanel)->get_ViewBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_react_uwp_IViewPanel<D>::ViewBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(react::uwp::IViewPanel)->put_ViewBackground(get_abi(value)));
+}
+
 template <typename D> Windows::UI::Xaml::Thickness consume_react_uwp_IViewPanel<D>::BorderThickness() const
 {
     Windows::UI::Xaml::Thickness value{};
@@ -181,6 +193,13 @@ template <typename D> bool consume_react_uwp_IViewPanel<D>::ClipChildren() const
 template <typename D> void consume_react_uwp_IViewPanel<D>::ClipChildren(bool value) const
 {
     check_hresult(WINRT_SHIM(react::uwp::IViewPanel)->put_ClipChildren(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_react_uwp_IViewPanelStatics<D>::ViewBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(react::uwp::IViewPanelStatics)->get_ViewBackgroundProperty(put_abi(value)));
+    return value;
 }
 
 template <typename D> Windows::UI::Xaml::DependencyProperty consume_react_uwp_IViewPanelStatics<D>::BorderThicknessProperty() const
@@ -530,6 +549,31 @@ struct produce<D, react::uwp::IViewPanel> : produce_base<D, react::uwp::IViewPan
         catch (...) { return to_hresult(); }
     }
 
+    int32_t WINRT_CALL get_ViewBackground(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ViewBackground, WINRT_WRAP(Windows::UI::Xaml::Media::Brush));
+            *value = detach_from<Windows::UI::Xaml::Media::Brush>(this->shim().ViewBackground());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_ViewBackground(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ViewBackground, WINRT_WRAP(void), Windows::UI::Xaml::Media::Brush const&);
+            this->shim().ViewBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
     int32_t WINRT_CALL get_BorderThickness(struct struct_Windows_UI_Xaml_Thickness* value) noexcept final
     {
         try
@@ -631,6 +675,19 @@ struct produce<D, react::uwp::IViewPanel> : produce_base<D, react::uwp::IViewPan
 template <typename D>
 struct produce<D, react::uwp::IViewPanelStatics> : produce_base<D, react::uwp::IViewPanelStatics>
 {
+    int32_t WINRT_CALL get_ViewBackgroundProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(ViewBackgroundProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().ViewBackgroundProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
     int32_t WINRT_CALL get_BorderThicknessProperty(void** value) noexcept final
     {
         try
@@ -833,6 +890,11 @@ inline ViewControl::ViewControl() :
 inline ViewPanel::ViewPanel() :
     ViewPanel(impl::call_factory<ViewPanel>([](auto&& f) { return f.template ActivateInstance<ViewPanel>(); }))
 {}
+
+inline Windows::UI::Xaml::DependencyProperty ViewPanel::ViewBackgroundProperty()
+{
+    return impl::call_factory<ViewPanel, react::uwp::IViewPanelStatics>([&](auto&& f) { return f.ViewBackgroundProperty(); });
+}
 
 inline Windows::UI::Xaml::DependencyProperty ViewPanel::BorderThicknessProperty()
 {
@@ -1087,8 +1149,33 @@ struct property_react_uwp_IViewPanel
                 target.CornerRadius(std::forward<Value>(value));
             }
         };
+    };
+    struct ViewBackground
+    {
+        struct name { static constexpr std::wstring_view value{ L"ViewBackground"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Media::Brush;
+        using target_type = winrt::react::uwp::IViewPanel;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ViewBackground();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.ViewBackground(std::forward<Value>(value));
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::BorderBrush, named::BorderThickness, named::ClipChildren, named::CornerRadius>; };
+    struct list { using type = impl::typelist<named::BorderBrush, named::BorderThickness, named::ClipChildren, named::CornerRadius, named::ViewBackground>; };
 };
 
 struct property_react_uwp_IViewPanelStatics
@@ -1194,8 +1281,25 @@ struct property_react_uwp_IViewPanelStatics
                 return target.TopProperty();
             }
         };
+    };
+    struct ViewBackgroundProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"ViewBackgroundProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::react::uwp::IViewPanelStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ViewBackgroundProperty();
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::BorderBrushProperty, named::BorderThicknessProperty, named::ClipChildrenProperty, named::CornerRadiusProperty, named::LeftProperty, named::TopProperty>; };
+    struct list { using type = impl::typelist<named::BorderBrushProperty, named::BorderThicknessProperty, named::ClipChildrenProperty, named::CornerRadiusProperty, named::LeftProperty, named::TopProperty, named::ViewBackgroundProperty>; };
 };
 
 struct property_react_uwp_DynamicAutomationPeer
@@ -1346,6 +1450,31 @@ struct property_react_uwp_DynamicAutomationProperties
 
 struct property_react_uwp_ViewPanel
 { struct named {
+    struct ViewBackground
+    {
+        struct name { static constexpr std::wstring_view value{ L"ViewBackground"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Media::Brush;
+        using target_type = winrt::react::uwp::ViewPanel;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ViewBackground();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.ViewBackground(std::forward<Value>(value));
+            }
+        };
+    };
     struct CornerRadius
     {
         struct name { static constexpr std::wstring_view value{ L"CornerRadius"sv }; };
@@ -1547,8 +1676,25 @@ struct property_react_uwp_ViewPanel
                 return target_type::TopProperty();
             }
         };
+    };
+    struct ViewBackgroundProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"ViewBackgroundProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::react::uwp::ViewPanel;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::ViewBackgroundProperty();
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::CornerRadius, named::ClipChildren, named::BorderThickness, named::BorderBrush, named::BorderBrushProperty, named::BorderThicknessProperty, named::ClipChildrenProperty, named::CornerRadiusProperty, named::LeftProperty, named::TopProperty>; };
+    struct list { using type = impl::typelist<named::ViewBackground, named::CornerRadius, named::ClipChildren, named::BorderThickness, named::BorderBrush, named::BorderBrushProperty, named::BorderThicknessProperty, named::ClipChildrenProperty, named::CornerRadiusProperty, named::LeftProperty, named::TopProperty, named::ViewBackgroundProperty>; };
 };
 
 }

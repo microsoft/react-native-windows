@@ -50,6 +50,20 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer()
     element.InvalidateArrange();
 }
 
+/*static*/ winrt::DependencyProperty ViewPanel::ViewBackgroundProperty()
+{
+  static winrt::DependencyProperty s_viewBackgroundProperty =
+    winrt::DependencyProperty::Register(
+      L"ViewBackground",
+      winrt::xaml_typename<winrt::Brush>(),
+      viewPanelTypeName,
+      winrt::PropertyMetadata(
+        winrt::SolidColorBrush(),
+        ViewPanel::VisualPropertyChanged));
+
+  return s_viewBackgroundProperty;
+}
+
 /*static*/ winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
 {
   static winrt::DependencyProperty s_borderThicknessProperty =
@@ -223,6 +237,11 @@ void ViewPanel::Clear() const
   Children().Clear();
 }
 
+void ViewPanel::ViewBackground(winrt::Brush const &value)
+{
+  SetValue(ViewBackgroundProperty(), winrt::box_value(value));
+}
+
 void ViewPanel::BorderThickness(winrt::Thickness const &value)
 {
   SetValue(BorderThicknessProperty(), winrt::box_value(value));
@@ -230,7 +249,7 @@ void ViewPanel::BorderThickness(winrt::Thickness const &value)
 
 void ViewPanel::BorderBrush(winrt::Brush const &value)
 {
-  SetValue(BorderBrushProperty(), value);
+  SetValue(BorderBrushProperty(), winrt::box_value(value));
 }
 
 void ViewPanel::CornerRadius(winrt::CornerRadius const &value)
@@ -264,7 +283,7 @@ void ViewPanel::FinalizeProperties()
 
   const auto unsetValue = winrt::DependencyProperty::UnsetValue();
 
-  bool hasBackground = ReadLocalValue(winrt::Panel::BackgroundProperty()) != unsetValue;
+  bool hasBackground = ReadLocalValue(ViewBackgroundProperty()) != unsetValue;
   bool hasBorderBrush = ReadLocalValue(BorderBrushProperty()) != unsetValue;
   bool hasBorderThickness = ReadLocalValue(BorderThicknessProperty()) != unsetValue;
   bool hasCornerRadius = ReadLocalValue(CornerRadiusProperty()) != unsetValue;
@@ -332,7 +351,7 @@ void ViewPanel::FinalizeProperties()
   if (scenario == Scenario::OuterBorder)
   {
     if (hasBackground)
-      m_border.Background(Background());
+      m_border.Background(ViewBackground());
     else
       m_border.ClearValue(winrt::Border::BackgroundProperty());
 
@@ -342,12 +361,12 @@ void ViewPanel::FinalizeProperties()
   {
     // Set any background on this Panel
     if (hasBackground)
-      SetValue(winrt::Panel::BackgroundProperty(), Background());
+      SetValue(winrt::Panel::BackgroundProperty(), ViewBackground());
     else
       ClearValue(winrt::Panel::BackgroundProperty());
     // Set any background on this Panel
     if (hasBackground)
-      SetValue(winrt::Panel::BackgroundProperty(), Background());
+      SetValue(winrt::Panel::BackgroundProperty(), ViewBackground());
     else
       ClearValue(winrt::Panel::BackgroundProperty());
   }

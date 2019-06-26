@@ -73,6 +73,7 @@ struct WINRT_EBO ViewPanel :
 {
     ViewPanel(std::nullptr_t) noexcept {}
     ViewPanel();
+    static Windows::UI::Xaml::DependencyProperty ViewBackgroundProperty();
     static Windows::UI::Xaml::DependencyProperty BorderThicknessProperty();
     static Windows::UI::Xaml::DependencyProperty BorderBrushProperty();
     static Windows::UI::Xaml::DependencyProperty CornerRadiusProperty();

@@ -106,8 +106,8 @@ template <> struct guid_storage<react::uwp::IDynamicAutomationPeerFactory>{ stat
 template <> struct guid_storage<react::uwp::IDynamicAutomationProperties>{ static constexpr guid value{ 0xB70AAC96,0x549C,0x52C1,{ 0xA1,0x24,0xAE,0x0C,0xA4,0x96,0xC8,0x05 } }; };
 template <> struct guid_storage<react::uwp::IDynamicAutomationPropertiesStatics>{ static constexpr guid value{ 0xA92AD1FD,0xB630,0x5CDB,{ 0x85,0x61,0x9F,0xEC,0xEC,0xA8,0xB9,0x66 } }; };
 template <> struct guid_storage<react::uwp::IViewControl>{ static constexpr guid value{ 0xDD899021,0xA952,0x5F5A,{ 0xA5,0xC1,0xAC,0x9E,0x85,0x08,0x09,0xBD } }; };
-template <> struct guid_storage<react::uwp::IViewPanel>{ static constexpr guid value{ 0x3925A064,0xC58F,0x57D5,{ 0x80,0xF6,0xF6,0x09,0xFD,0x2D,0x42,0x2C } }; };
-template <> struct guid_storage<react::uwp::IViewPanelStatics>{ static constexpr guid value{ 0x844BE4A4,0xF166,0x5B49,{ 0x8E,0x82,0x5E,0xA6,0x16,0x19,0xF0,0x10 } }; };
+template <> struct guid_storage<react::uwp::IViewPanel>{ static constexpr guid value{ 0x46487875,0x5C11,0x5EBE,{ 0xAA,0x1A,0xC7,0xC9,0x70,0xCF,0x46,0x02 } }; };
+template <> struct guid_storage<react::uwp::IViewPanelStatics>{ static constexpr guid value{ 0xF820A53A,0x6DFD,0x53F9,{ 0xA1,0x96,0x40,0xA4,0xED,0x81,0x8B,0x80 } }; };
 template <> struct guid_storage<react::uwp::AccessibilityInvokeEventHandler>{ static constexpr guid value{ 0xCF396F1D,0x7B41,0x5E44,{ 0xB2,0xD5,0xBA,0xB5,0x86,0xC7,0xEE,0x33 } }; };
 template <> struct default_interface<react::uwp::DynamicAutomationPeer>{ using type = react::uwp::IDynamicAutomationPeer; };
 template <> struct default_interface<react::uwp::DynamicAutomationProperties>{ using type = react::uwp::IDynamicAutomationProperties; };
@@ -155,6 +155,8 @@ template <> struct abi<react::uwp::IViewPanel>{ struct type : IInspectable
     virtual int32_t WINRT_CALL Clear() noexcept = 0;
     virtual int32_t WINRT_CALL FinalizeProperties() noexcept = 0;
     virtual int32_t WINRT_CALL GetOuterBorder(void** result) noexcept = 0;
+    virtual int32_t WINRT_CALL get_ViewBackground(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL put_ViewBackground(void* value) noexcept = 0;
     virtual int32_t WINRT_CALL get_BorderThickness(struct struct_Windows_UI_Xaml_Thickness* value) noexcept = 0;
     virtual int32_t WINRT_CALL put_BorderThickness(struct struct_Windows_UI_Xaml_Thickness value) noexcept = 0;
     virtual int32_t WINRT_CALL get_BorderBrush(void** value) noexcept = 0;
@@ -167,6 +169,7 @@ template <> struct abi<react::uwp::IViewPanel>{ struct type : IInspectable
 
 template <> struct abi<react::uwp::IViewPanelStatics>{ struct type : IInspectable
 {
+    virtual int32_t WINRT_CALL get_ViewBackgroundProperty(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_BorderThicknessProperty(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_BorderBrushProperty(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL get_CornerRadiusProperty(void** value) noexcept = 0;
@@ -236,6 +239,8 @@ struct consume_react_uwp_IViewPanel
     void Clear() const;
     void FinalizeProperties() const;
     Windows::UI::Xaml::Controls::Border GetOuterBorder() const;
+    Windows::UI::Xaml::Media::Brush ViewBackground() const;
+    void ViewBackground(Windows::UI::Xaml::Media::Brush const& value) const;
     Windows::UI::Xaml::Thickness BorderThickness() const;
     void BorderThickness(Windows::UI::Xaml::Thickness const& value) const;
     Windows::UI::Xaml::Media::Brush BorderBrush() const;
@@ -250,6 +255,7 @@ template <> struct consume<react::uwp::IViewPanel> { template <typename D> using
 template <typename D>
 struct consume_react_uwp_IViewPanelStatics
 {
+    Windows::UI::Xaml::DependencyProperty ViewBackgroundProperty() const;
     Windows::UI::Xaml::DependencyProperty BorderThicknessProperty() const;
     Windows::UI::Xaml::DependencyProperty BorderBrushProperty() const;
     Windows::UI::Xaml::DependencyProperty CornerRadiusProperty() const;

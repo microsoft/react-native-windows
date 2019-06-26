@@ -67,6 +67,11 @@ struct WINRT_EBO ViewPanelT : implements<D, Windows::Foundation::IActivationFact
         return make<T>();
     }
 
+    Windows::UI::Xaml::DependencyProperty ViewBackgroundProperty()
+    {
+        return T::ViewBackgroundProperty();
+    }
+
     Windows::UI::Xaml::DependencyProperty BorderThicknessProperty()
     {
         return T::BorderThicknessProperty();

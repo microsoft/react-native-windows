@@ -16,6 +16,8 @@
 
 #include <Views/ShadowNodeBase.h>
 
+#include <Views/ViewPanel.h>
+
 namespace winrt {
 using namespace Windows::UI::Xaml;
 }

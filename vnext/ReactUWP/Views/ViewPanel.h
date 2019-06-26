@@ -36,6 +36,9 @@ public:
   winrt::Windows::UI::Xaml::Controls::Border GetOuterBorder();
 
   // Public Properties
+  winrt::Windows::UI::Xaml::Media::Brush ViewBackground() { return GetValue(ViewBackgroundProperty()).as<winrt::Windows::UI::Xaml::Media::Brush>(); }
+  void ViewBackground(winrt::Windows::UI::Xaml::Media::Brush const& value);
+
   winrt::Windows::UI::Xaml::Thickness BorderThickness() { return winrt::unbox_value<winrt::Windows::UI::Xaml::Thickness>(GetValue(BorderThicknessProperty())); }
   void BorderThickness(winrt::Windows::UI::Xaml::Thickness const& value);
 
@@ -49,6 +52,7 @@ public:
   void ClipChildren(bool value);
 
   // ViewPanel Properties
+  static winrt::Windows::UI::Xaml::DependencyProperty ViewBackgroundProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty BorderThicknessProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty BorderBrushProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty CornerRadiusProperty();
