@@ -33,6 +33,8 @@ struct json_type_traits<react::uwp::ImageSource>
         source.uri = item.second.asString();
       else if (item.first == "method")
         source.method = item.second.asString();
+      else if (item.first == "bundleRootPath")
+        source.bundleRootPath = item.second.asString();
       else if (item.first == "headers")
         source.headers = item.second;
       else if (item.first == "width")
@@ -179,10 +181,12 @@ namespace react { namespace uwp {
       return;
 
     auto sources{ json_type_traits<std::vector<ImageSource>>::parseJson(data) };
+    sources[0].bundleRootPath = instance->GetBundleRootPath();
+
     auto reactImage{ canvas.as<ReactImage>() };
 
     EmitImageEvent(canvas, "topLoadStart", sources[0]);
-    reactImage->Source(sources[0], instance->GetBundleRootPath());
+    reactImage->Source(sources[0]);
   }
 
   folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants() const

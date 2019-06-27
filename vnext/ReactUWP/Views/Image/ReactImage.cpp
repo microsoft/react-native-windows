@@ -58,7 +58,7 @@ namespace react {
       m_onLoadEndEvent.remove(token);
     }
 
-    winrt::fire_and_forget ReactImage::Source(ImageSource source, std::string bundleRootPath)
+    winrt::fire_and_forget ReactImage::Source(ImageSource source)
     {
       std::string uriString{ source.uri };
       if (uriString.length() == 0)
@@ -70,7 +70,7 @@ namespace react {
       if (source.packagerAsset && uriString.find("file://") == 0)
       {
         
-        uriString.replace(0, 7, bundleRootPath);
+        uriString.replace(0, 7, source.bundleRootPath);
       }
 
       winrt::Uri uri{ facebook::utf8ToUtf16(uriString) };

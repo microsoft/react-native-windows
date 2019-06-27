@@ -20,6 +20,7 @@ namespace react {
     {
       std::string uri;
       std::string method;
+      std::string bundleRootPath;
       folly::dynamic headers;
       double width = 0;
       double height = 0;
@@ -48,7 +49,7 @@ namespace react {
 
       // Public Properties
       ImageSource Source() { return m_imageSource; }
-      winrt::fire_and_forget Source(ImageSource source, std::string bundleRootPath);
+      winrt::fire_and_forget Source(ImageSource source);
 
       react::uwp::ResizeMode ResizeMode() { return m_brush->ResizeMode(); }
       void ResizeMode(react::uwp::ResizeMode value) { m_brush->ResizeMode(value); }
