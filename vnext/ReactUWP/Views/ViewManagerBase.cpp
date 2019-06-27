@@ -264,38 +264,30 @@ void ViewManagerBase::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView view
   }
   auto fe = element.as<winrt::FrameworkElement>();
 
-  bool changed =
-    left != ViewPanel::GetLeft(element) ||
-    top != ViewPanel::GetTop(element) ||
-    width != fe.Width() ||
-    height != fe.Height();
+  // Set Position & Size Properties
+  ViewPanel::SetLeft(element, left);
+  ViewPanel::SetTop(element, top);
 
-  if (changed) {
-    // Set Position & Size Properties
-    ViewPanel::SetLeft(element, left);
-    ViewPanel::SetTop(element, top);
+  fe.Width(width);
+  fe.Height(height);
 
-    fe.Width(width);
-    fe.Height(height);
+  // Fire Events
+  if (nodeToUpdate.m_onLayout)
+  {
+    int64_t tag = GetTag(viewToUpdate);
+    folly::dynamic layout = folly::dynamic::object
+    ("x", left)
+    ("y", top)
+    ("height", height)
+    ("width", width);
 
-    // Fire Events
-    if (nodeToUpdate.m_onLayout)
-    {
-      int64_t tag = GetTag(viewToUpdate);
-      folly::dynamic layout = folly::dynamic::object
-      ("x", left)
-        ("y", top)
-        ("height", height)
-        ("width", width);
+    folly::dynamic eventData = folly::dynamic::object
+    ("target", tag)
+    ("layout", std::move(layout));
 
-      folly::dynamic eventData = folly::dynamic::object
-      ("target", tag)
-        ("layout", std::move(layout));
-
-      auto instance = m_wkReactInstance.lock();
-      if (instance != nullptr)
-        instance->DispatchEvent(tag, "topLayout", std::move(eventData));
-    }
+    auto instance = m_wkReactInstance.lock();
+    if (instance != nullptr)
+    instance->DispatchEvent(tag, "topLayout", std::move(eventData));
   }
 }
 
