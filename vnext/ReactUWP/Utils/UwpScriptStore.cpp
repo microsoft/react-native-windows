@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "UwpScriptStore.h"
+#include "Utils/UwpScriptStore.h"
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Foundation.h>

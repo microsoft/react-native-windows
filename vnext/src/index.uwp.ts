@@ -7,3 +7,6 @@ export * from './Libraries/Components/Flyout/Flyout.uwp';
 export * from './Libraries/Components/Glyph/Glyph.uwp';
 export * from './Libraries/Components/Picker/PickerUWP.uwp';
 export * from './Libraries/Components/Popup/Popup.uwp';
+export * from './Libraries/Components/Keyboard/KeyboardExt.uwp';
+export * from './Libraries/Components/Keyboard/KeyboardExtProps';
+export * from './Libraries/Modules/AppTheme/AppTheme.uwp';

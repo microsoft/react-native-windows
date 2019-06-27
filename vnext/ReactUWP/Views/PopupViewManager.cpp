@@ -40,13 +40,16 @@ public:
   winrt::Windows::Foundation::Size GetAppWindowSize();
 
 private:
-  std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::unique_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
+
   int64_t m_targetTag;
 };
 
 PopupShadowNode::~PopupShadowNode()
 {
   m_touchEventHanadler->RemoveTouchHandlers();
+  m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
 void PopupShadowNode::createView()
@@ -55,7 +58,8 @@ void PopupShadowNode::createView()
 
   auto popup = GetView().as<winrt::Popup>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
+  m_touchEventHanadler = std::make_unique<TouchEventHandler>(wkinstance);
+  m_previewKeyboardEventHandlerOnRoot = std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
   popup.Closed([=](auto&&, auto&&)
   {
@@ -78,6 +82,7 @@ void PopupShadowNode::AddView(ShadowNode& child, int64_t index)
 
   auto childView = static_cast<ShadowNodeBase&>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
+  m_previewKeyboardEventHandlerOnRoot->hook(childView);
 }
 
 void PopupShadowNode::updateProperties(const folly::dynamic&& props)

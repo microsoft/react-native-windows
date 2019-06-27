@@ -53,7 +53,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC=1;FOLLY_NO_CONFIG;NOMINMAX;NOJSC;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC=1;FOLLY_NO_CONFIG;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(FollyDir)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>

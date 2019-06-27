@@ -7,6 +7,7 @@ set(SOURCES
 	DesktopTestRunner.cpp
 	WebSocketIntegrationTest.cpp
 	WebSocketJSExecutorIntegrationTest.cpp
+	WebSocketServer.cpp
 	WebSocketModuleIntegrationTest.cpp)
 
 add_library(ReactWindows.Desktop.IntegrationTests SHARED ${SOURCES})

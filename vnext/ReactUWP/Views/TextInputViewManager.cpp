@@ -443,6 +443,14 @@ void TextInputViewManager::DispatchCommand(XamlView viewToUpdate, int64_t comman
 
     case TextInputCommands::Blur:
     {
+      auto focusedUIElement = winrt::FocusManager::GetFocusedElement();
+      if (focusedUIElement == nullptr)
+        break;
+
+      // Verify that the textBox hasn't already lost focus.
+      if (focusedUIElement.try_as<winrt::TextBox>() != textBox)
+        break;
+
       auto content = winrt::Windows::UI::Xaml::Window::Current().Content();
       if (content == nullptr)
         break;

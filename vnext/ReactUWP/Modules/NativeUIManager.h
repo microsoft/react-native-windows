@@ -58,6 +58,10 @@ public:
   // this function iterates all roots and try to get a valid XamlRoot.
   winrt::XamlRoot tryGetXamlRoot();
 
+  // Searches itself and its parent to get a valid XamlView.
+  // Like Mouse/Keyboard, the event source may not have matched XamlView.
+  XamlView reactPeerOrContainerFrom(winrt::FrameworkElement fe);
+
 private:
   void DoLayout();
   void UpdateExtraLayout(int64_t tag);
