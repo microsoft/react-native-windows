@@ -202,6 +202,9 @@
     <ClCompile Include="Modules\AppStateModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AppThemeModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -224,16 +227,10 @@
       <Filter>Views\Impl</Filter>
     </ClCompile>
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
-      <Filter>Views</Filter>
+      <Filter>Views\Impl</Filter>
     </ClCompile>
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\UwpScriptStore.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
@@ -255,6 +252,12 @@
     </ClCompile>
     <ClCompile Include="Views\KeyboardEventHandler.cpp">
       <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,6 +423,9 @@
     <ClInclude Include="Modules\AppStateModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\AppThemeModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -492,18 +498,6 @@
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
       <Filter>Views\cppwinrt\winrt\impl</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h">
-      <Filter>Views\cppwinrt\winrt</Filter>
-    </ClInclude>
     <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
@@ -525,17 +519,17 @@
     <ClInclude Include="Views\Image\BorderEffect.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -35,11 +35,15 @@ static winrt::fire_and_forget openURLAsync(winrt::Windows::Foundation::Uri uri, 
   }
   else
   {
-    error({});
+    error({
+      folly::dynamic::object
+      ("code", 1)
+      ("message", "Unable to open URL:" + facebook::react::unicode::utf16ToUtf8(uri.DisplayUri()))
+    });
   }
 }
 
-static winrt::fire_and_forget canOpenURLAsync(winrt::Windows::Foundation::Uri uri, Callback success, Callback error)
+static winrt::fire_and_forget canOpenURLAsync(winrt::Windows::Foundation::Uri uri, Callback success, Callback /*error*/)
 {
   winrt::Windows::System::LaunchQuerySupportStatus status = co_await winrt::Windows::System::Launcher::QueryUriSupportAsync(uri, winrt::Windows::System::LaunchQuerySupportType::Uri);
   if (status == winrt::Windows::System::LaunchQuerySupportStatus::Available)
@@ -48,7 +52,7 @@ static winrt::fire_and_forget canOpenURLAsync(winrt::Windows::Foundation::Uri ur
   }
   else
   {
-    error({});
+    success({ false });
   }
 }
 
