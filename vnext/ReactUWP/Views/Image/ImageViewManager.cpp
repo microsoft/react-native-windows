@@ -33,8 +33,6 @@ struct json_type_traits<react::uwp::ImageSource>
         source.uri = item.second.asString();
       else if (item.first == "method")
         source.method = item.second.asString();
-      else if (item.first == "bundleRootPath")
-        source.bundleRootPath = item.second.asString();
       else if (item.first == "headers")
         source.headers = item.second;
       else if (item.first == "width")
