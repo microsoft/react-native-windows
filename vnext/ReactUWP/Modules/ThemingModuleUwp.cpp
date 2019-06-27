@@ -62,7 +62,7 @@ namespace react {
                                                     ("ButtonTextRGB", formatRGB(ButtonTextColor))
                                                     ("GrayTextRGB", formatRGB(GrayTextColor))
                                                     ("HighlightRGB", formatRGB(HighlightColor))
-                                                    ("HightlightTextRGB", formatRGB(HighlightTextColor))
+                                                    ("HighlightTextRGB", formatRGB(HighlightTextColor))
                                                     ("HotlightRGB", formatRGB(HotlightColor))
                                                     ("WindowRGB", formatRGB(WindowColor))
                                                     ("WindowTextRGB", formatRGB(WindowTextColor));
