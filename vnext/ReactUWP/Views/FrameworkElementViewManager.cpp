@@ -21,6 +21,8 @@
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <WindowsNumerics.h>
 
+#include "DynamicAutomationProperties.h"
+
 namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -65,6 +67,10 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
   auto accessibilityView = winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
   winrt::AutomationProperties::SetAccessibilityView(oldView, winrt::Peers::AccessibilityView::Raw);
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityRoleProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateDisabledProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateSelectedProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty());
 
   auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
   oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
@@ -303,6 +309,62 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           element.ClearValue(winrt::AutomationProperties::LiveSettingProperty());
         }
         AnnounceLiveRegionChangedIfNeeded(element);
+      }
+      else if (propertyName == "accessibilityRole")
+      {
+        if (propertyValue.isString())
+        {
+          const std::string& role = propertyValue.getString();
+          if (role == "none")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::None);
+          else if (role == "button")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Button);
+          else if (role == "link")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Link);
+          else if (role == "search")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Search);
+          else if (role == "image")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Image);
+          else if (role == "keyboardkey")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::KeyboardKey);
+          else if (role == "text")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Text);
+          else if (role == "adjustable")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Adjustable);
+          else if (role == "imagebutton")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::ImageButton);
+          else if (role == "header")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Header);
+          else if (role == "summary")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Summary);
+          else
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Unknown);
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(DynamicAutomationProperties::AccessibilityRoleProperty());
+        }
+      }
+      else if (propertyName == "accessibilityStates")
+      {
+        bool disabled = false;
+        bool selected = false;
+
+        if (propertyValue.isArray())
+        {
+          for (const auto& state : propertyValue)
+          {
+            if (!state.isString())
+              continue;
+            if (state.getString() == "disabled")
+              disabled = true;
+            else if (state.getString() == "selected")
+              selected = true;
+          }
+        }
+
+        DynamicAutomationProperties::SetAccessibilityStateDisabled(element, disabled);
+        DynamicAutomationProperties::SetAccessibilityStateSelected(element, selected);
       }
       else if (propertyName == "testID")
       {
