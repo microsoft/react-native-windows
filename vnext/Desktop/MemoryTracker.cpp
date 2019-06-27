@@ -33,7 +33,7 @@ namespace winrt::facebook::react::implementation
 	uint32_t MemoryTracker::AddThresholdHandler(uint64_t threshold, uint32_t minCallbackIntervalInMilliseconds, facebook::react::MemoryThresholdHandler const& handler)
 	{
 		return static_cast<uint32_t>(m_internalMemoryTracker->AddThresholdCallback(
-			threshold,
+			static_cast<size_t>(threshold),
 			std::chrono::milliseconds(minCallbackIntervalInMilliseconds),
 			handler));
 	}
