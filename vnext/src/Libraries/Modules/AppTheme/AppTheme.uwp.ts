@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 'use strict';
 
-import { NativeEventEmitter } from 'react-native';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
-const NativeModules = require('NativeModules');
 const ThemingNative = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter  {
