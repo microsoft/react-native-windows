@@ -9,14 +9,16 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
+    <!-- We need to figure out how we want to consume the Google Test Nuget for
+    Win32. For now, we disable the Win32. -->
+    <!-- <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
+    </ProjectConfiguration> -->
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}</ProjectGuid>

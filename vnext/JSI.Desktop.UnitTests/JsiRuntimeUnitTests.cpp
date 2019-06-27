@@ -31,47 +31,47 @@ TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
 
 // TODO (yicyao): Currently, comparison of property IDs is broken for
 // ChakraJsiRuntime. Enable this test once we fix it.
-//TEST_P(JsiRuntimeUnitTests, PropNameIDTest) {
-//  // This is a little weird to test, because it doesn't really exist
-//  // in JS yet.  All I can do is create them, compare them, and
-//  // receive one as an argument to a HostObject.
-//
-//  PropNameID quux = PropNameID::forAscii(rt, "quux1", 4);
-//  PropNameID movedQuux = std::move(quux);
-//  EXPECT_EQ(movedQuux.utf8(rt), "quux");
-//  movedQuux = PropNameID::forAscii(rt, "quux2");
-//  EXPECT_EQ(movedQuux.utf8(rt), "quux2");
-//  PropNameID copiedQuux = PropNameID(rt, movedQuux);
-//  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, copiedQuux));
-//
-//  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, movedQuux));
-//  EXPECT_TRUE(PropNameID::compare(
-//    rt, movedQuux, PropNameID::forAscii(rt, std::string("quux2"))));
-//  EXPECT_FALSE(PropNameID::compare(
-//    rt, movedQuux, PropNameID::forAscii(rt, std::string("foo"))));
-//  uint8_t utf8[] = { 0xF0, 0x9F, 0x86, 0x97 };
-//  PropNameID utf8PropNameID = PropNameID::forUtf8(rt, utf8, sizeof(utf8));
-//  EXPECT_EQ(utf8PropNameID.utf8(rt), u8"\U0001F197");
-//  EXPECT_TRUE(PropNameID::compare(
-//    rt, utf8PropNameID, PropNameID::forUtf8(rt, utf8, sizeof(utf8))));
-//  PropNameID nonUtf8PropNameID = PropNameID::forUtf8(rt, "meow");
-//  EXPECT_TRUE(PropNameID::compare(
-//    rt, nonUtf8PropNameID, PropNameID::forAscii(rt, "meow")));
-//  EXPECT_EQ(nonUtf8PropNameID.utf8(rt), "meow");
-//  PropNameID strPropNameID =
-//    PropNameID::forString(rt, String::createFromAscii(rt, "meow"));
-//  EXPECT_TRUE(PropNameID::compare(rt, nonUtf8PropNameID, strPropNameID));
-//
-//  auto names = PropNameID::names(
-//    rt, "Ala", std::string("ma"), PropNameID::forAscii(rt, "kota"));
-//  EXPECT_EQ(names.size(), 3);
-//  EXPECT_TRUE(
-//    PropNameID::compare(rt, names[0], PropNameID::forAscii(rt, "Ala")));
-//  EXPECT_TRUE(
-//    PropNameID::compare(rt, names[1], PropNameID::forAscii(rt, "ma")));
-//  EXPECT_TRUE(
-//    PropNameID::compare(rt, names[2], PropNameID::forAscii(rt, "kota")));
-//}
+TEST_P(JsiRuntimeUnitTests, DISABLED_PropNameIDTest) {
+  // This is a little weird to test, because it doesn't really exist
+  // in JS yet.  All I can do is create them, compare them, and
+  // receive one as an argument to a HostObject.
+
+  PropNameID quux = PropNameID::forAscii(rt, "quux1", 4);
+  PropNameID movedQuux = std::move(quux);
+  EXPECT_EQ(movedQuux.utf8(rt), "quux");
+  movedQuux = PropNameID::forAscii(rt, "quux2");
+  EXPECT_EQ(movedQuux.utf8(rt), "quux2");
+  PropNameID copiedQuux = PropNameID(rt, movedQuux);
+  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, copiedQuux));
+
+  EXPECT_TRUE(PropNameID::compare(rt, movedQuux, movedQuux));
+  EXPECT_TRUE(PropNameID::compare(
+    rt, movedQuux, PropNameID::forAscii(rt, std::string("quux2"))));
+  EXPECT_FALSE(PropNameID::compare(
+    rt, movedQuux, PropNameID::forAscii(rt, std::string("foo"))));
+  uint8_t utf8[] = { 0xF0, 0x9F, 0x86, 0x97 };
+  PropNameID utf8PropNameID = PropNameID::forUtf8(rt, utf8, sizeof(utf8));
+  EXPECT_EQ(utf8PropNameID.utf8(rt), u8"\U0001F197");
+  EXPECT_TRUE(PropNameID::compare(
+    rt, utf8PropNameID, PropNameID::forUtf8(rt, utf8, sizeof(utf8))));
+  PropNameID nonUtf8PropNameID = PropNameID::forUtf8(rt, "meow");
+  EXPECT_TRUE(PropNameID::compare(
+    rt, nonUtf8PropNameID, PropNameID::forAscii(rt, "meow")));
+  EXPECT_EQ(nonUtf8PropNameID.utf8(rt), "meow");
+  PropNameID strPropNameID =
+    PropNameID::forString(rt, String::createFromAscii(rt, "meow"));
+  EXPECT_TRUE(PropNameID::compare(rt, nonUtf8PropNameID, strPropNameID));
+
+  auto names = PropNameID::names(
+    rt, "Ala", std::string("ma"), PropNameID::forAscii(rt, "kota"));
+  EXPECT_EQ(names.size(), 3);
+  EXPECT_TRUE(
+    PropNameID::compare(rt, names[0], PropNameID::forAscii(rt, "Ala")));
+  EXPECT_TRUE(
+    PropNameID::compare(rt, names[1], PropNameID::forAscii(rt, "ma")));
+  EXPECT_TRUE(
+    PropNameID::compare(rt, names[2], PropNameID::forAscii(rt, "kota")));
+}
 
 TEST_P(JsiRuntimeUnitTests, StringTest) {
   EXPECT_TRUE(checkValue(String::createFromAscii(rt, "foobar", 3), "'foo'"));
@@ -120,8 +120,10 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
   EXPECT_EQ(x.getPropertyNames(rt).size(rt), 5);
   EXPECT_TRUE(eval("x.ten == 11").getBool());
 
-  x.setProperty(rt, "e_as_float", 2.71f);
-  EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
+  // TODO (yicyao): The copy of jsi-inl.h in Microsoft/react-native is out of
+  // date and does not contain the float overload. Renable this later.
+  //x.setProperty(rt, "e_as_float", 2.71f);
+  //EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
 
   x.setProperty(rt, "e_as_double", 2.71);
   EXPECT_TRUE(eval("x.e_as_double == 2.71").getBool());
@@ -183,232 +185,232 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
 
 // TODO (yicyao): Enable this once host object is implemented for
 // ChakraJsiRuntime.
-//TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
-//  class ConstantHostObject : public HostObject {
-//    Value get(Runtime&, const PropNameID& sym) override {
-//      return 9000;
-//    }
-//
-//    void set(Runtime&, const PropNameID&, const Value&) override {}
-//  };
-//
-//  Object cho =
-//    Object::createFromHostObject(rt, std::make_shared<ConstantHostObject>());
-//  EXPECT_TRUE(function("function (obj) { return obj.someRandomProp == 9000; }")
-//    .call(rt, cho)
-//    .getBool());
-//  EXPECT_TRUE(cho.isHostObject(rt));
-//  EXPECT_TRUE(cho.getHostObject<ConstantHostObject>(rt).get() != nullptr);
-//
-//  struct SameRuntimeHostObject : HostObject {
-//    SameRuntimeHostObject(Runtime& rt) : rt_(rt) {};
-//
-//    Value get(Runtime& rt, const PropNameID& sym) override {
-//      EXPECT_EQ(&rt, &rt_);
-//      return Value();
-//    }
-//
-//    void set(Runtime& rt, const PropNameID& name, const Value& value) override {
-//      EXPECT_EQ(&rt, &rt_);
-//    }
-//
-//    std::vector<PropNameID> getPropertyNames(Runtime& rt) override {
-//      EXPECT_EQ(&rt, &rt_);
-//      return {};
-//    }
-//
-//    Runtime& rt_;
-//  };
-//
-//  Object srho = Object::createFromHostObject(
-//    rt, std::make_shared<SameRuntimeHostObject>(rt));
-//  // Test get's Runtime is as expected
-//  function("function (obj) { return obj.isSame; }").call(rt, srho);
-//  // ... and set
-//  function("function (obj) { obj['k'] = 'v'; }").call(rt, srho);
-//  // ... and getPropertyNames
-//  function("function (obj) { for (k in obj) {} }").call(rt, srho);
-//
-//  class TwiceHostObject : public HostObject {
-//    Value get(Runtime& rt, const PropNameID& sym) override {
-//      return String::createFromUtf8(rt, sym.utf8(rt) + sym.utf8(rt));
-//    }
-//
-//    void set(Runtime&, const PropNameID&, const Value&) override {}
-//  };
-//
-//  Object tho =
-//    Object::createFromHostObject(rt, std::make_shared<TwiceHostObject>());
-//  EXPECT_TRUE(function("function (obj) { return obj.abc == 'abcabc'; }")
-//    .call(rt, tho)
-//    .getBool());
-//  EXPECT_TRUE(function("function (obj) { return obj['def'] == 'defdef'; }")
-//    .call(rt, tho)
-//    .getBool());
-//  EXPECT_TRUE(function("function (obj) { return obj[12] === '1212'; }")
-//    .call(rt, tho)
-//    .getBool());
-//  EXPECT_TRUE(tho.isHostObject(rt));
-//  EXPECT_TRUE(
-//    std::dynamic_pointer_cast<ConstantHostObject>(tho.getHostObject(rt)) ==
-//    nullptr);
-//  EXPECT_TRUE(tho.getHostObject<TwiceHostObject>(rt).get() != nullptr);
-//
-//  class PropNameIDHostObject : public HostObject {
-//    Value get(Runtime& rt, const PropNameID& sym) override {
-//      if (PropNameID::compare(rt, sym, PropNameID::forAscii(rt, "undef"))) {
-//        return Value::undefined();
-//      }
-//      else {
-//        return PropNameID::compare(
-//          rt, sym, PropNameID::forAscii(rt, "somesymbol"));
-//      }
-//    }
-//
-//    void set(Runtime&, const PropNameID&, const Value&) override {}
-//  };
-//
-//  Object sho = Object::createFromHostObject(
-//    rt, std::make_shared<PropNameIDHostObject>());
-//  EXPECT_TRUE(sho.isHostObject(rt));
-//  EXPECT_TRUE(function("function (obj) { return obj.undef; }")
-//    .call(rt, sho)
-//    .isUndefined());
-//  EXPECT_TRUE(function("function (obj) { return obj.somesymbol; }")
-//    .call(rt, sho)
-//    .getBool());
-//  EXPECT_FALSE(function("function (obj) { return obj.notsomuch; }")
-//    .call(rt, sho)
-//    .getBool());
-//
-//  class BagHostObject : public HostObject {
-//  public:
-//    const std::string& getThing() {
-//      return bag_["thing"];
-//    }
-//
-//  private:
-//    Value get(Runtime& rt, const PropNameID& sym) override {
-//      if (sym.utf8(rt) == "thing") {
-//        return String::createFromUtf8(rt, bag_[sym.utf8(rt)]);
-//      }
-//      return Value::undefined();
-//    }
-//
-//    void set(Runtime& rt, const PropNameID& sym, const Value& val) override {
-//      std::string key(sym.utf8(rt));
-//      if (key == "thing") {
-//        bag_[key] = val.toString(rt).utf8(rt);
-//      }
-//    }
-//
-//    std::unordered_map<std::string, std::string> bag_;
-//  };
-//
-//  std::shared_ptr<BagHostObject> shbho = std::make_shared<BagHostObject>();
-//  Object bho = Object::createFromHostObject(rt, shbho);
-//  EXPECT_TRUE(bho.isHostObject(rt));
-//  EXPECT_TRUE(function("function (obj) { return obj.undef; }")
-//    .call(rt, bho)
-//    .isUndefined());
-//  EXPECT_EQ(
-//    function("function (obj) { obj.thing = 'hello'; return obj.thing; }")
-//    .call(rt, bho)
-//    .toString(rt)
-//    .utf8(rt),
-//    "hello");
-//  EXPECT_EQ(shbho->getThing(), "hello");
-//
-//  // TODO (T28293178) Remove this once exceptions are supported in all builds.
-//#ifndef JSI_NO_EXCEPTION_TESTS
-//  class ThrowingHostObject : public HostObject {
-//    Value get(Runtime& rt, const PropNameID& sym) override {
-//      throw std::runtime_error("Cannot get");
-//    }
-//
-//    void set(Runtime& rt, const PropNameID& sym, const Value& val) override {
-//      throw std::runtime_error("Cannot set");
-//    }
-//  };
-//
-//  Object thro =
-//    Object::createFromHostObject(rt, std::make_shared<ThrowingHostObject>());
-//  EXPECT_TRUE(thro.isHostObject(rt));
-//  std::string exc;
-//  try {
-//    function("function (obj) { return obj.thing; }").call(rt, thro);
-//  }
-//  catch (const JSError& ex) {
-//    exc = ex.what();
-//  }
-//  EXPECT_NE(exc.find("Cannot get"), std::string::npos);
-//  exc = "";
-//  try {
-//    function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
-//  }
-//  catch (const JSError& ex) {
-//    exc = ex.what();
-//  }
-//  EXPECT_NE(exc.find("Cannot set"), std::string::npos);
-//#endif
-//
-//  class NopHostObject : public HostObject {};
-//  Object nopHo =
-//    Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
-//  EXPECT_TRUE(nopHo.isHostObject(rt));
-//  EXPECT_TRUE(function("function (obj) { return obj.thing; }")
-//    .call(rt, nopHo)
-//    .isUndefined());
-//  // TODO (T28293178) Remove this once exceptions are supported in all builds.
-//#ifndef JSI_NO_EXCEPTION_TESTS
-//  std::string nopExc;
-//  try {
-//    function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
-//  }
-//  catch (const JSError& ex) {
-//    nopExc = ex.what();
-//  }
-//  EXPECT_NE(nopExc.find("TypeError: "), std::string::npos);
-//#endif
-//
-//  class HostObjectWithPropertyNames : public HostObject {
-//    std::vector<PropNameID> getPropertyNames(Runtime& rt) override {
-//      return PropNameID::names(
-//        rt, "a_prop", "1", "false", "a_prop", "3", "c_prop");
-//    }
-//  };
-//
-//  Object howpn = Object::createFromHostObject(
-//    rt, std::make_shared<HostObjectWithPropertyNames>());
-//  EXPECT_TRUE(
-//    function(
-//      "function (o) { return Object.getOwnPropertyNames(o).length == 5 }")
-//    .call(rt, howpn)
-//    .getBool());
-//
-//  auto hasOwnPropertyName = function(
-//    "function (o, p) {"
-//    "  return Object.getOwnPropertyNames(o).indexOf(p) >= 0"
-//    "}");
-//  EXPECT_TRUE(
-//    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "a_prop"))
-//    .getBool());
-//  EXPECT_TRUE(
-//    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "1"))
-//    .getBool());
-//  EXPECT_TRUE(
-//    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "false"))
-//    .getBool());
-//  EXPECT_TRUE(
-//    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "3"))
-//    .getBool());
-//  EXPECT_TRUE(
-//    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop"))
-//    .getBool());
-//  EXPECT_FALSE(hasOwnPropertyName
-//    .call(rt, howpn, String::createFromAscii(rt, "not_existing"))
-//    .getBool());
-//}
+TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectTest) {
+  class ConstantHostObject : public HostObject {
+    Value get(Runtime&, const PropNameID& sym) override {
+      return 9000;
+    }
+
+    void set(Runtime&, const PropNameID&, const Value&) override {}
+  };
+
+  Object cho =
+    Object::createFromHostObject(rt, std::make_shared<ConstantHostObject>());
+  EXPECT_TRUE(function("function (obj) { return obj.someRandomProp == 9000; }")
+    .call(rt, cho)
+    .getBool());
+  EXPECT_TRUE(cho.isHostObject(rt));
+  EXPECT_TRUE(cho.getHostObject<ConstantHostObject>(rt).get() != nullptr);
+
+  struct SameRuntimeHostObject : HostObject {
+    SameRuntimeHostObject(Runtime& rt) : rt_(rt) {};
+
+    Value get(Runtime& rt, const PropNameID& sym) override {
+      EXPECT_EQ(&rt, &rt_);
+      return Value();
+    }
+
+    void set(Runtime& rt, const PropNameID& name, const Value& value) override {
+      EXPECT_EQ(&rt, &rt_);
+    }
+
+    std::vector<PropNameID> getPropertyNames(Runtime& rt) override {
+      EXPECT_EQ(&rt, &rt_);
+      return {};
+    }
+
+    Runtime& rt_;
+  };
+
+  Object srho = Object::createFromHostObject(
+    rt, std::make_shared<SameRuntimeHostObject>(rt));
+  // Test get's Runtime is as expected
+  function("function (obj) { return obj.isSame; }").call(rt, srho);
+  // ... and set
+  function("function (obj) { obj['k'] = 'v'; }").call(rt, srho);
+  // ... and getPropertyNames
+  function("function (obj) { for (k in obj) {} }").call(rt, srho);
+
+  class TwiceHostObject : public HostObject {
+    Value get(Runtime& rt, const PropNameID& sym) override {
+      return String::createFromUtf8(rt, sym.utf8(rt) + sym.utf8(rt));
+    }
+
+    void set(Runtime&, const PropNameID&, const Value&) override {}
+  };
+
+  Object tho =
+    Object::createFromHostObject(rt, std::make_shared<TwiceHostObject>());
+  EXPECT_TRUE(function("function (obj) { return obj.abc == 'abcabc'; }")
+    .call(rt, tho)
+    .getBool());
+  EXPECT_TRUE(function("function (obj) { return obj['def'] == 'defdef'; }")
+    .call(rt, tho)
+    .getBool());
+  EXPECT_TRUE(function("function (obj) { return obj[12] === '1212'; }")
+    .call(rt, tho)
+    .getBool());
+  EXPECT_TRUE(tho.isHostObject(rt));
+  EXPECT_TRUE(
+    std::dynamic_pointer_cast<ConstantHostObject>(tho.getHostObject(rt)) ==
+    nullptr);
+  EXPECT_TRUE(tho.getHostObject<TwiceHostObject>(rt).get() != nullptr);
+
+  class PropNameIDHostObject : public HostObject {
+    Value get(Runtime& rt, const PropNameID& sym) override {
+      if (PropNameID::compare(rt, sym, PropNameID::forAscii(rt, "undef"))) {
+        return Value::undefined();
+      }
+      else {
+        return PropNameID::compare(
+          rt, sym, PropNameID::forAscii(rt, "somesymbol"));
+      }
+    }
+
+    void set(Runtime&, const PropNameID&, const Value&) override {}
+  };
+
+  Object sho = Object::createFromHostObject(
+    rt, std::make_shared<PropNameIDHostObject>());
+  EXPECT_TRUE(sho.isHostObject(rt));
+  EXPECT_TRUE(function("function (obj) { return obj.undef; }")
+    .call(rt, sho)
+    .isUndefined());
+  EXPECT_TRUE(function("function (obj) { return obj.somesymbol; }")
+    .call(rt, sho)
+    .getBool());
+  EXPECT_FALSE(function("function (obj) { return obj.notsomuch; }")
+    .call(rt, sho)
+    .getBool());
+
+  class BagHostObject : public HostObject {
+  public:
+    const std::string& getThing() {
+      return bag_["thing"];
+    }
+
+  private:
+    Value get(Runtime& rt, const PropNameID& sym) override {
+      if (sym.utf8(rt) == "thing") {
+        return String::createFromUtf8(rt, bag_[sym.utf8(rt)]);
+      }
+      return Value::undefined();
+    }
+
+    void set(Runtime& rt, const PropNameID& sym, const Value& val) override {
+      std::string key(sym.utf8(rt));
+      if (key == "thing") {
+        bag_[key] = val.toString(rt).utf8(rt);
+      }
+    }
+
+    std::unordered_map<std::string, std::string> bag_;
+  };
+
+  std::shared_ptr<BagHostObject> shbho = std::make_shared<BagHostObject>();
+  Object bho = Object::createFromHostObject(rt, shbho);
+  EXPECT_TRUE(bho.isHostObject(rt));
+  EXPECT_TRUE(function("function (obj) { return obj.undef; }")
+    .call(rt, bho)
+    .isUndefined());
+  EXPECT_EQ(
+    function("function (obj) { obj.thing = 'hello'; return obj.thing; }")
+    .call(rt, bho)
+    .toString(rt)
+    .utf8(rt),
+    "hello");
+  EXPECT_EQ(shbho->getThing(), "hello");
+
+  // TODO (T28293178) Remove this once exceptions are supported in all builds.
+#ifndef JSI_NO_EXCEPTION_TESTS
+  class ThrowingHostObject : public HostObject {
+    Value get(Runtime& rt, const PropNameID& sym) override {
+      throw std::runtime_error("Cannot get");
+    }
+
+    void set(Runtime& rt, const PropNameID& sym, const Value& val) override {
+      throw std::runtime_error("Cannot set");
+    }
+  };
+
+  Object thro =
+    Object::createFromHostObject(rt, std::make_shared<ThrowingHostObject>());
+  EXPECT_TRUE(thro.isHostObject(rt));
+  std::string exc;
+  try {
+    function("function (obj) { return obj.thing; }").call(rt, thro);
+  }
+  catch (const JSError& ex) {
+    exc = ex.what();
+  }
+  EXPECT_NE(exc.find("Cannot get"), std::string::npos);
+  exc = "";
+  try {
+    function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
+  }
+  catch (const JSError& ex) {
+    exc = ex.what();
+  }
+  EXPECT_NE(exc.find("Cannot set"), std::string::npos);
+#endif
+
+  class NopHostObject : public HostObject {};
+  Object nopHo =
+    Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
+  EXPECT_TRUE(nopHo.isHostObject(rt));
+  EXPECT_TRUE(function("function (obj) { return obj.thing; }")
+    .call(rt, nopHo)
+    .isUndefined());
+  // TODO (T28293178) Remove this once exceptions are supported in all builds.
+#ifndef JSI_NO_EXCEPTION_TESTS
+  std::string nopExc;
+  try {
+    function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
+  }
+  catch (const JSError& ex) {
+    nopExc = ex.what();
+  }
+  EXPECT_NE(nopExc.find("TypeError: "), std::string::npos);
+#endif
+
+  class HostObjectWithPropertyNames : public HostObject {
+    std::vector<PropNameID> getPropertyNames(Runtime& rt) override {
+      return PropNameID::names(
+        rt, "a_prop", "1", "false", "a_prop", "3", "c_prop");
+    }
+  };
+
+  Object howpn = Object::createFromHostObject(
+    rt, std::make_shared<HostObjectWithPropertyNames>());
+  EXPECT_TRUE(
+    function(
+      "function (o) { return Object.getOwnPropertyNames(o).length == 5 }")
+    .call(rt, howpn)
+    .getBool());
+
+  auto hasOwnPropertyName = function(
+    "function (o, p) {"
+    "  return Object.getOwnPropertyNames(o).indexOf(p) >= 0"
+    "}");
+  EXPECT_TRUE(
+    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "a_prop"))
+    .getBool());
+  EXPECT_TRUE(
+    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "1"))
+    .getBool());
+  EXPECT_TRUE(
+    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "false"))
+    .getBool());
+  EXPECT_TRUE(
+    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "3"))
+    .getBool());
+  EXPECT_TRUE(
+    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop"))
+    .getBool());
+  EXPECT_FALSE(hasOwnPropertyName
+    .call(rt, howpn, String::createFromAscii(rt, "not_existing"))
+    .getBool());
+}
 
 TEST_P(JsiRuntimeUnitTests, ArrayTest) {
   eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
@@ -564,44 +566,45 @@ TEST_P(JsiRuntimeUnitTests, FunctionThisTest) {
   EXPECT_FALSE(checkPropertyFunction.call(rt).getBool());
 }
 
-//TEST_P(JsiRuntimeUnitTests, FunctionConstructorTest) {
-//  Function ctor = function(
-//    "function (a) {"
-//    "  if (typeof a !== 'undefined') {"
-//    "   this.pika = a;"
-//    "  }"
-//    "}");
-//  ctor.getProperty(rt, "prototype")
-//    .getObject(rt)
-//    .setProperty(rt, "pika", "chu");
-//  auto empty = ctor.callAsConstructor(rt);
-//  ASSERT_TRUE(empty.isObject());
-//  auto emptyObj = std::move(empty).getObject(rt);
-//  EXPECT_EQ(emptyObj.getProperty(rt, "pika").getString(rt).utf8(rt), "chu");
-//  auto who = ctor.callAsConstructor(rt, "who");
-//  ASSERT_TRUE(who.isObject());
-//  auto whoObj = std::move(who).getObject(rt);
-//  EXPECT_EQ(whoObj.getProperty(rt, "pika").getString(rt).utf8(rt), "who");
-//
-//  auto instanceof = function("function (o, b) { return o instanceof b; }");
-//  EXPECT_TRUE(instanceof.call(rt, emptyObj, ctor).getBool());
-//  EXPECT_TRUE(instanceof.call(rt, whoObj, ctor).getBool());
-//
-//  auto dateCtor = rt.global().getPropertyAsFunction(rt, "Date");
-//  auto date = dateCtor.callAsConstructor(rt);
-//  EXPECT_TRUE(date.isObject());
-//  EXPECT_TRUE(instanceof.call(rt, date, dateCtor).getBool());
-//  // Sleep for 50 milliseconds
-//  //usleep(50000);
-//  std::this_thread::sleep_for(std::chrono::milliseconds(50));
-//  EXPECT_GE(
-//    function("function (d) { return (new Date()).getTime() - d.getTime(); }")
-//    .call(rt, date)
-//    .getNumber(),
-//    // We use 48 here because sleep_for is not very precise,
-//    // and this test is not about timing precision.
-//    48);
-//}
+// TODO (yicyao): Fix this test.
+TEST_P(JsiRuntimeUnitTests, DISABLED_FunctionConstructorTest) {
+  Function ctor = function(
+    "function (a) {"
+    "  if (typeof a !== 'undefined') {"
+    "   this.pika = a;"
+    "  }"
+    "}");
+  ctor.getProperty(rt, "prototype")
+    .getObject(rt)
+    .setProperty(rt, "pika", "chu");
+  auto empty = ctor.callAsConstructor(rt);
+  ASSERT_TRUE(empty.isObject());
+  auto emptyObj = std::move(empty).getObject(rt);
+  EXPECT_EQ(emptyObj.getProperty(rt, "pika").getString(rt).utf8(rt), "chu");
+  auto who = ctor.callAsConstructor(rt, "who");
+  ASSERT_TRUE(who.isObject());
+  auto whoObj = std::move(who).getObject(rt);
+  EXPECT_EQ(whoObj.getProperty(rt, "pika").getString(rt).utf8(rt), "who");
+
+  auto instanceof = function("function (o, b) { return o instanceof b; }");
+  EXPECT_TRUE(instanceof.call(rt, emptyObj, ctor).getBool());
+  EXPECT_TRUE(instanceof.call(rt, whoObj, ctor).getBool());
+
+  auto dateCtor = rt.global().getPropertyAsFunction(rt, "Date");
+  auto date = dateCtor.callAsConstructor(rt);
+  EXPECT_TRUE(date.isObject());
+  EXPECT_TRUE(instanceof.call(rt, date, dateCtor).getBool());
+  // Sleep for 50 milliseconds
+  //usleep(50000);
+  std::this_thread::sleep_for(std::chrono::milliseconds(50));
+  EXPECT_GE(
+    function("function (d) { return (new Date()).getTime() - d.getTime(); }")
+    .call(rt, date)
+    .getNumber(),
+    // We use 48 here because sleep_for is not very precise,
+    // and this test is not about timing precision.
+    48);
+}
 
 TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
   auto ctor = function("function Rick() { this.say = 'wubalubadubdub'; }");
@@ -616,158 +619,160 @@ TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
     .instanceOf(rt, ctor));
 }
 
-//TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
-//  auto one = std::make_shared<int>(1);
-//  Function plusOne = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "plusOne"),
-//    2,
-//    [one, savedRt = &rt](
-//      Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
-//    EXPECT_EQ(savedRt, &rt);
-//    // We don't know if we're in strict mode or not, so it's either global
-//    // or undefined.
-//    EXPECT_TRUE(
-//      Value::strictEquals(rt, thisVal, rt.global()) ||
-//      thisVal.isUndefined());
-//    return *one + args[0].getNumber() + args[1].getNumber();
-//  });
-//
-//  EXPECT_EQ(plusOne.call(rt, 1, 2).getNumber(), 4);
-//  EXPECT_TRUE(checkValue(plusOne.call(rt, 3, 5), "9"));
-//  rt.global().setProperty(rt, "plusOne", plusOne);
-//  EXPECT_TRUE(eval("plusOne(20, 300) == 321").getBool());
-//
-//  Function dot = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "dot"),
-//    2,
-//    [](Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
-//    EXPECT_TRUE(
-//      Value::strictEquals(rt, thisVal, rt.global()) ||
-//      thisVal.isUndefined());
-//    if (count != 2) {
-//      throw std::runtime_error("expected 2 args");
-//    }
-//    std::string ret = args[0].getString(rt).utf8(rt) + "." +
-//      args[1].getString(rt).utf8(rt);
-//    return String::createFromUtf8(
-//      rt, reinterpret_cast<const uint8_t*>(ret.data()), ret.size());
-//  });
-//
-//  rt.global().setProperty(rt, "cons", dot);
-//  EXPECT_TRUE(eval("cons('left', 'right') == 'left.right'").getBool());
-//  EXPECT_TRUE(eval("cons.name == 'dot'").getBool());
-//  EXPECT_TRUE(eval("cons.length == 2").getBool());
-//  EXPECT_TRUE(eval("cons instanceof Function").getBool());
-//  // TODO (T28293178) Remove this once exceptions are supported in all builds.
-//#ifndef JSI_NO_EXCEPTION_TESTS
-//  EXPECT_TRUE(eval("(function() {"
-//    "  try {"
-//    "    cons('fail'); return false;"
-//    "  } catch (e) {"
-//    "    return ((e instanceof Error) &&"
-//    "            (e.message == 'Exception in HostFunction: ' +"
-//    "                          'expected 2 args'));"
-//    "  }})()")
-//    .getBool());
-//#endif
-//  Function coolify = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "coolify"),
-//    0,
-//    [](Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
-//    EXPECT_EQ(count, 0);
-//    std::string ret = thisVal.toString(rt).utf8(rt) + " is cool";
-//    return String::createFromUtf8(
-//      rt, reinterpret_cast<const uint8_t*>(ret.data()), ret.size());
-//  });
-//  rt.global().setProperty(rt, "coolify", coolify);
-//  EXPECT_TRUE(eval("coolify.name == 'coolify'").getBool());
-//  EXPECT_TRUE(eval("coolify.length == 0").getBool());
-//  EXPECT_TRUE(eval("coolify.bind('R&M')() == 'R&M is cool'").getBool());
-//  EXPECT_TRUE(eval("(function() {"
-//    "  var s = coolify.bind(function(){})();"
-//    "  return s.lastIndexOf(' is cool') == (s.length - 8);"
-//    "})()")
-//    .getBool());
-//
-//  Function lookAtMe = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "lookAtMe"),
-//    0,
-//    [](Runtime& rt, const Value& thisVal, const Value* args, size_t count)
-//    -> Value {
-//    EXPECT_TRUE(thisVal.isObject());
-//    EXPECT_EQ(
-//      thisVal.getObject(rt)
-//      .getProperty(rt, "name")
-//      .getString(rt)
-//      .utf8(rt),
-//      "mr.meeseeks");
-//    return Value();
-//  });
-//  rt.global().setProperty(rt, "lookAtMe", lookAtMe);
-//  EXPECT_TRUE(eval("lookAtMe.bind({'name': 'mr.meeseeks'})()").isUndefined());
-//
-//  struct Callable {
-//    Callable(std::string s) : str(s) {}
-//
-//    Value
-//      operator()(Runtime& rt, const Value&, const Value* args, size_t count) {
-//      if (count != 1) {
-//        return Value();
-//      }
-//      return String::createFromUtf8(
-//        rt, args[0].toString(rt).utf8(rt) + " was called with " + str);
-//    }
-//
-//    std::string str;
-//  };
-//
-//  Function callable = Function::createFromHostFunction(
-//    rt,
-//    PropNameID::forAscii(rt, "callable"),
-//    1,
-//    Callable("std::function::target"));
-//  EXPECT_EQ(
-//    function("function (f) { return f('A cat'); }")
-//    .call(rt, callable)
-//    .getString(rt)
-//    .utf8(rt),
-//    "A cat was called with std::function::target");
-//  //EXPECT_TRUE(callable.isHostFunction(rt));
-//  //EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
-//
-//  std::string strval = "strval1";
-//  auto getter = Object(rt);
-//  getter.setProperty(
-//    rt,
-//    "get",
-//    Function::createFromHostFunction(
-//      rt,
-//      PropNameID::forAscii(rt, "getter"),
-//      1,
-//      [&strval](
-//        Runtime& rt,
-//        const Value& thisVal,
-//        const Value* args,
-//        size_t count) -> Value {
-//    return String::createFromUtf8(rt, strval);
-//  }));
-//  auto obj = Object(rt);
-//  rt.global()
-//    .getPropertyAsObject(rt, "Object")
-//    .getPropertyAsFunction(rt, "defineProperty")
-//    .call(rt, obj, "prop", getter);
-//  EXPECT_TRUE(function("function(value) { return value.prop == 'strval1'; }")
-//    .call(rt, obj)
-//    .getBool());
-//  strval = "strval2";
-//  EXPECT_TRUE(function("function(value) { return value.prop == 'strval2'; }")
-//    .call(rt, obj)
-//    .getBool());
-//}
+// TODO (yicyao): Fix this test.
+TEST_P(JsiRuntimeUnitTests, DISABLED_HostFunctionTest) {
+  auto one = std::make_shared<int>(1);
+  Function plusOne = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "plusOne"),
+    2,
+    [one, savedRt = &rt](
+      Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
+    EXPECT_EQ(savedRt, &rt);
+    // We don't know if we're in strict mode or not, so it's either global
+    // or undefined.
+    EXPECT_TRUE(
+      Value::strictEquals(rt, thisVal, rt.global()) ||
+      thisVal.isUndefined());
+    return *one + args[0].getNumber() + args[1].getNumber();
+  });
+
+  EXPECT_EQ(plusOne.call(rt, 1, 2).getNumber(), 4);
+  EXPECT_TRUE(checkValue(plusOne.call(rt, 3, 5), "9"));
+  rt.global().setProperty(rt, "plusOne", plusOne);
+  EXPECT_TRUE(eval("plusOne(20, 300) == 321").getBool());
+
+  Function dot = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "dot"),
+    2,
+    [](Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
+    EXPECT_TRUE(
+      Value::strictEquals(rt, thisVal, rt.global()) ||
+      thisVal.isUndefined());
+    if (count != 2) {
+      throw std::runtime_error("expected 2 args");
+    }
+    std::string ret = args[0].getString(rt).utf8(rt) + "." +
+      args[1].getString(rt).utf8(rt);
+    return String::createFromUtf8(
+      rt, reinterpret_cast<const uint8_t*>(ret.data()), ret.size());
+  });
+
+  rt.global().setProperty(rt, "cons", dot);
+  EXPECT_TRUE(eval("cons('left', 'right') == 'left.right'").getBool());
+  EXPECT_TRUE(eval("cons.name == 'dot'").getBool());
+  EXPECT_TRUE(eval("cons.length == 2").getBool());
+  EXPECT_TRUE(eval("cons instanceof Function").getBool());
+  // TODO (T28293178) Remove this once exceptions are supported in all builds.
+#ifndef JSI_NO_EXCEPTION_TESTS
+  EXPECT_TRUE(eval("(function() {"
+    "  try {"
+    "    cons('fail'); return false;"
+    "  } catch (e) {"
+    "    return ((e instanceof Error) &&"
+    "            (e.message == 'Exception in HostFunction: ' +"
+    "                          'expected 2 args'));"
+    "  }})()")
+    .getBool());
+#endif
+  Function coolify = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "coolify"),
+    0,
+    [](Runtime& rt, const Value& thisVal, const Value* args, size_t count) {
+    EXPECT_EQ(count, 0);
+    std::string ret = thisVal.toString(rt).utf8(rt) + " is cool";
+    return String::createFromUtf8(
+      rt, reinterpret_cast<const uint8_t*>(ret.data()), ret.size());
+  });
+  rt.global().setProperty(rt, "coolify", coolify);
+  EXPECT_TRUE(eval("coolify.name == 'coolify'").getBool());
+  EXPECT_TRUE(eval("coolify.length == 0").getBool());
+  EXPECT_TRUE(eval("coolify.bind('R&M')() == 'R&M is cool'").getBool());
+  EXPECT_TRUE(eval("(function() {"
+    "  var s = coolify.bind(function(){})();"
+    "  return s.lastIndexOf(' is cool') == (s.length - 8);"
+    "})()")
+    .getBool());
+
+  Function lookAtMe = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "lookAtMe"),
+    0,
+    [](Runtime& rt, const Value& thisVal, const Value* args, size_t count)
+    -> Value {
+    EXPECT_TRUE(thisVal.isObject());
+    EXPECT_EQ(
+      thisVal.getObject(rt)
+      .getProperty(rt, "name")
+      .getString(rt)
+      .utf8(rt),
+      "mr.meeseeks");
+    return Value();
+  });
+  rt.global().setProperty(rt, "lookAtMe", lookAtMe);
+  EXPECT_TRUE(eval("lookAtMe.bind({'name': 'mr.meeseeks'})()").isUndefined());
+
+  struct Callable {
+    Callable(std::string s) : str(s) {}
+
+    Value
+      operator()(Runtime& rt, const Value&, const Value* args, size_t count) {
+      if (count != 1) {
+        return Value();
+      }
+      return String::createFromUtf8(
+        rt, args[0].toString(rt).utf8(rt) + " was called with " + str);
+    }
+
+    std::string str;
+  };
+
+  Function callable = Function::createFromHostFunction(
+    rt,
+    PropNameID::forAscii(rt, "callable"),
+    1,
+    Callable("std::function::target"));
+  EXPECT_EQ(
+    function("function (f) { return f('A cat'); }")
+    .call(rt, callable)
+    .getString(rt)
+    .utf8(rt),
+    "A cat was called with std::function::target");
+  EXPECT_TRUE(callable.isHostFunction(rt));
+  // TODO (yicyao): This line failed to compile. Fix this.
+  //EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
+
+  std::string strval = "strval1";
+  auto getter = Object(rt);
+  getter.setProperty(
+    rt,
+    "get",
+    Function::createFromHostFunction(
+      rt,
+      PropNameID::forAscii(rt, "getter"),
+      1,
+      [&strval](
+        Runtime& rt,
+        const Value& thisVal,
+        const Value* args,
+        size_t count) -> Value {
+    return String::createFromUtf8(rt, strval);
+  }));
+  auto obj = Object(rt);
+  rt.global()
+    .getPropertyAsObject(rt, "Object")
+    .getPropertyAsFunction(rt, "defineProperty")
+    .call(rt, obj, "prop", getter);
+  EXPECT_TRUE(function("function(value) { return value.prop == 'strval1'; }")
+    .call(rt, obj)
+    .getBool());
+  strval = "strval2";
+  EXPECT_TRUE(function("function(value) { return value.prop == 'strval2'; }")
+    .call(rt, obj)
+    .getBool());
+}
 
 TEST_P(JsiRuntimeUnitTests, ValueTest) {
   EXPECT_TRUE(checkValue(Value::undefined(), "undefined"));
@@ -990,67 +995,68 @@ TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashWhenValueEscapes) {
   EXPECT_EQ(v.getObject(rt).getProperty(rt, "a").getNumber(), 5);
 }
 
-//// Verifies you can have a host object that emulates a normal object
-//TEST_P(JsiRuntimeUnitTests, HostObjectWithValueMembers) {
-//  class Bag : public HostObject {
-//  public:
-//    Bag() = default;
-//
-//    const Value& operator[](const std::string& name) const {
-//      auto iter = data_.find(name);
-//      if (iter == data_.end()) {
-//        return undef_;
-//      }
-//      return iter->second;
-//    }
-//
-//  protected:
-//    Value get(Runtime& rt, const PropNameID& name) override {
-//      return Value(rt, (*this)[name.utf8(rt)]);
-//    }
-//
-//    void set(Runtime& rt, const PropNameID& name, const Value& val) override {
-//      data_.emplace(name.utf8(rt), Value(rt, val));
-//    }
-//
-//    Value undef_;
-//    std::map<std::string, Value> data_;
-//  };
-//
-//  auto sharedBag = std::make_shared<Bag>();
-//  auto& bag = *sharedBag;
-//  Object jsbag = Object::createFromHostObject(rt, std::move(sharedBag));
-//  auto set = function(
-//    "function (o) {"
-//    "  o.foo = 'bar';"
-//    "  o.count = 37;"
-//    "  o.nul = null;"
-//    "  o.iscool = true;"
-//    "  o.obj = { 'foo': 'bar' };"
-//    "}");
-//  set.call(rt, jsbag);
-//  auto checkFoo = function("function (o) { return o.foo === 'bar'; }");
-//  auto checkCount = function("function (o) { return o.count === 37; }");
-//  auto checkNul = function("function (o) { return o.nul === null; }");
-//  auto checkIsCool = function("function (o) { return o.iscool === true; }");
-//  auto checkObj = function(
-//    "function (o) {"
-//    "  return (typeof o.obj) === 'object' && o.obj.foo === 'bar';"
-//    "}");
-//  // Check this looks good from js
-//  EXPECT_TRUE(checkFoo.call(rt, jsbag).getBool());
-//  EXPECT_TRUE(checkCount.call(rt, jsbag).getBool());
-//  EXPECT_TRUE(checkNul.call(rt, jsbag).getBool());
-//  EXPECT_TRUE(checkIsCool.call(rt, jsbag).getBool());
-//  EXPECT_TRUE(checkObj.call(rt, jsbag).getBool());
-//
-//  // Check this looks good from c++
-//  EXPECT_EQ(bag["foo"].getString(rt).utf8(rt), "bar");
-//  EXPECT_EQ(bag["count"].getNumber(), 37);
-//  EXPECT_TRUE(bag["nul"].isNull());
-//  EXPECT_TRUE(bag["iscool"].getBool());
-//  EXPECT_EQ(
-//    bag["obj"].getObject(rt).getProperty(rt, "foo").getString(rt).utf8(rt),
-//    "bar");
-//}
+// TODO (yicyao): Enable this test.
+// Verifies you can have a host object that emulates a normal object
+TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectWithValueMembers) {
+  class Bag : public HostObject {
+  public:
+    Bag() = default;
+
+    const Value& operator[](const std::string& name) const {
+      auto iter = data_.find(name);
+      if (iter == data_.end()) {
+        return undef_;
+      }
+      return iter->second;
+    }
+
+  protected:
+    Value get(Runtime& rt, const PropNameID& name) override {
+      return Value(rt, (*this)[name.utf8(rt)]);
+    }
+
+    void set(Runtime& rt, const PropNameID& name, const Value& val) override {
+      data_.emplace(name.utf8(rt), Value(rt, val));
+    }
+
+    Value undef_;
+    std::map<std::string, Value> data_;
+  };
+
+  auto sharedBag = std::make_shared<Bag>();
+  auto& bag = *sharedBag;
+  Object jsbag = Object::createFromHostObject(rt, std::move(sharedBag));
+  auto set = function(
+    "function (o) {"
+    "  o.foo = 'bar';"
+    "  o.count = 37;"
+    "  o.nul = null;"
+    "  o.iscool = true;"
+    "  o.obj = { 'foo': 'bar' };"
+    "}");
+  set.call(rt, jsbag);
+  auto checkFoo = function("function (o) { return o.foo === 'bar'; }");
+  auto checkCount = function("function (o) { return o.count === 37; }");
+  auto checkNul = function("function (o) { return o.nul === null; }");
+  auto checkIsCool = function("function (o) { return o.iscool === true; }");
+  auto checkObj = function(
+    "function (o) {"
+    "  return (typeof o.obj) === 'object' && o.obj.foo === 'bar';"
+    "}");
+  // Check this looks good from js
+  EXPECT_TRUE(checkFoo.call(rt, jsbag).getBool());
+  EXPECT_TRUE(checkCount.call(rt, jsbag).getBool());
+  EXPECT_TRUE(checkNul.call(rt, jsbag).getBool());
+  EXPECT_TRUE(checkIsCool.call(rt, jsbag).getBool());
+  EXPECT_TRUE(checkObj.call(rt, jsbag).getBool());
+
+  // Check this looks good from c++
+  EXPECT_EQ(bag["foo"].getString(rt).utf8(rt), "bar");
+  EXPECT_EQ(bag["count"].getNumber(), 37);
+  EXPECT_TRUE(bag["nul"].isNull());
+  EXPECT_TRUE(bag["iscool"].getBool());
+  EXPECT_EQ(
+    bag["obj"].getObject(rt).getProperty(rt, "foo").getString(rt).utf8(rt),
+    "bar");
+}
 
