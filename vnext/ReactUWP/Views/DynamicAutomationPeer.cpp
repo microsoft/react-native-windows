@@ -30,7 +30,7 @@ DynamicAutomationPeer::DynamicAutomationPeer(winrt::FrameworkElement const& owne
 
 winrt::hstring DynamicAutomationPeer::GetClassNameCore() const
 {
-  return L"DynamticAutomationPeer";
+  return L"DynamicAutomationPeer";
 }
 
 winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore() const

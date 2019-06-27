@@ -83,12 +83,6 @@ private:
   bool m_hasOuterBorder;
 
 private:
-  winrt::react::uwp::AccessibilityRoles m_accessibilityRole = winrt::react::uwp::AccessibilityRoles::None;
-  bool m_accessibilityStates[static_cast<uint8_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = { };
-
-  winrt::react::uwp::AccessibilityInvokeEventHandler m_accessibilityInvokeHandler = { nullptr };
-
-private:
   static void VisualPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
   static void PositionPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
 };
