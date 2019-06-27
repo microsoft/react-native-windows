@@ -337,6 +337,38 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
             DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Header);
           else if (role == "summary")
             DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Summary);
+          else if (role == "alert")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Alert);
+          else if (role == "checkbox")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::CheckBox);
+          else if (role == "combobox")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::ComboBox);
+          else if (role == "menu")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Menu);
+          else if (role == "menubar")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::MenuBar);
+          else if (role == "menuitem")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::MenuItem);
+          else if (role == "progressbar")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::ProgressBar);
+          else if (role == "radio")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Radio);
+          else if (role == "radiogroup")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::RadioGroup);
+          else if (role == "scrollbar")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::ScrollBar);
+          else if (role == "spinbutton")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::SpinButton);
+          else if (role == "switch")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Switch);
+          else if (role == "tab")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Tab);
+          else if (role == "tablist")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::TabList);
+          else if (role == "timer")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Timer);
+          else if (role == "toolbar")
+            DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::ToolBar);
           else
             DynamicAutomationProperties::SetAccessibilityRole(element, winrt::react::uwp::AccessibilityRoles::Unknown);
         }
@@ -347,8 +379,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       }
       else if (propertyName == "accessibilityStates")
       {
-        bool disabled = false;
-        bool selected = false;
+        bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)];
 
         if (propertyValue.isArray())
         {
@@ -356,15 +387,31 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
           {
             if (!state.isString())
               continue;
-            if (state.getString() == "disabled")
-              disabled = true;
-            else if (state.getString() == "selected")
-              selected = true;
+
+            if (state.getString() == "selected")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)] = true;
+            else if (state.getString() == "disabled")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)] = true;
+            else if (state.getString() == "checked")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)] = true;
+            else if (state.getString() == "unchecked")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)] = true;
+            else if (state.getString() == "busy")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)] = true;
+            else if (state.getString() == "expanded")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)] = true;
+            else if (state.getString() == "collapsed")
+              states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)] = true;
           }
         }
 
-        DynamicAutomationProperties::SetAccessibilityStateDisabled(element, disabled);
-        DynamicAutomationProperties::SetAccessibilityStateSelected(element, selected);
+        DynamicAutomationProperties::SetAccessibilityStateSelected(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Selected)]);
+        DynamicAutomationProperties::SetAccessibilityStateDisabled(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Disabled)]);
+        DynamicAutomationProperties::SetAccessibilityStateChecked(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Checked)]);
+        DynamicAutomationProperties::SetAccessibilityStateUnchecked(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Unchecked)]);
+        DynamicAutomationProperties::SetAccessibilityStateBusy(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Busy)]);
+        DynamicAutomationProperties::SetAccessibilityStateExpanded(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Expanded)]);
+        DynamicAutomationProperties::SetAccessibilityStateCollapsed(element, states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::Collapsed)]);
       }
       else if (propertyName == "testID")
       {
