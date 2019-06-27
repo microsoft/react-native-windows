@@ -9,9 +9,9 @@
 
 namespace Microsoft::React {
 
-///
+/// <summary>
 /// Defines the core functionality for a native WebSocket client resource.
-///
+/// </summary>
 struct IWebSocket
 {
   #pragma region Aliases
