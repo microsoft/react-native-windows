@@ -17,7 +17,7 @@ using std::string;
 
 namespace {
 
-const char* moduleName = "WebSocketModule";
+constexpr char moduleName[] = "WebSocketModule";
 
 } // anonymous namespace
 
