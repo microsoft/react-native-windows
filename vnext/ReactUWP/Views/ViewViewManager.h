@@ -3,12 +3,12 @@
 
 #pragma once
 
+#include <Views/ViewPanel.h>
 #include <Views/FrameworkElementViewManager.h>
 
 namespace react { namespace uwp {
 
 class ViewShadowNode;
-struct ViewPanel;
 
 class ViewViewManager : public FrameworkElementViewManager
 {
@@ -29,7 +29,7 @@ public:
 
 protected:
   XamlView CreateViewCore(int64_t tag) override;
-  void TryUpdateView(ViewShadowNode* viewShadowNode, ViewPanel* pPanel, bool useControl);
+  void TryUpdateView(ViewShadowNode* viewShadowNode, winrt::react::uwp::ViewPanel& pPanel, bool useControl);
 
 private:
   void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic&& eventData);

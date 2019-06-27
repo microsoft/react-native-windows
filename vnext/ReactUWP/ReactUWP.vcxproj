@@ -5,10 +5,6 @@
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x86">
-      <Configuration>Debug</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -17,15 +13,10 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x86">
-      <Configuration>Release</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <!-- Kept for Visual Studio compatibility. -->
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -75,7 +66,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <!-- 
+      <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
@@ -173,6 +164,7 @@
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
+    <ClInclude Include="Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
@@ -200,7 +192,10 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h" />
+    <ClInclude Include="Views\cppwinrt\ViewControl.g.h" />
+    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h" />
     <ClInclude Include="Views\cppwinrt\BorderEffect.g.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
@@ -229,6 +224,8 @@
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
     <ClInclude Include="Views\ViewPanel.h" />
+    <ClInclude Include="Views\DynamicAutomationPeer.h" />
+    <ClInclude Include="Views\DynamicAutomationProperties.h" />
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
     <ClInclude Include="Views\WebViewManager.h" />
@@ -259,6 +256,7 @@
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
     <ClCompile Include="Utils\Helpers.cpp" />
     <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
+    <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
@@ -314,9 +312,12 @@
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
     <ClCompile Include="Views\ViewPanel.cpp" />
+    <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
+    <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\ViewViewManager.cpp" />
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
     <ClCompile Include="Views\WebViewManager.cpp" />
+    <ClCompile Include="Views\module.g.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -364,17 +365,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

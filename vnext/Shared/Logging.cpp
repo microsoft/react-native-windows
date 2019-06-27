@@ -11,10 +11,6 @@
 #include <cxxreact/Platform.h>
 #endif
 
-#if !defined(NOJSC)
-#include <jschelpers/Value.h>
-#endif
-
 namespace facebook { namespace react {
 
 namespace {
@@ -34,31 +30,6 @@ static double nativePerformanceNow() {
 void logMarker(const ReactMarker::ReactMarkerId /*id*/, const char* /*tag*/) {
 }
 #endif
-
-#if !defined(NOJSC)
-
-JSValueRef nativePerformanceNowJSC(
-    JSContextRef ctx,
-    JSObjectRef function,
-    JSObjectRef thisObject,
-    size_t argumentCount,
-    const JSValueRef arguments[], JSValueRef *exception) {
-  // TODO
-  return Value::makeNumber(ctx, 0);
-}
-
-JSValueRef nativeLoggingHookJSC(
-    JSContextRef ctx,
-    JSObjectRef function,
-    JSObjectRef thisObject,
-    size_t argumentCount,
-    const JSValueRef arguments[], JSValueRef *exception) {
-  // TODO
-  return Value::makeUndefined(ctx);
-}
-
-#endif // !defined(NOJSC)
-
 } // end anonymous namespace
 
 void InitializeLogging(NativeLoggingHook&& hook) {
@@ -66,12 +37,6 @@ void InitializeLogging(NativeLoggingHook&& hook) {
 
   JSNativeHooks::loggingHook = LogHook;
   JSNativeHooks::nowHook = nativePerformanceNow;
-
-#if !defined(NOJSC)
-  JSCNativeHooks::loggingHook = nativeLoggingHookJSC;
-  JSCNativeHooks::nowHook = nativePerformanceNowJSC;
-  // JSCNativeHooks::installPerfHooks = addNativePerfLoggingHooksJSC;
-#endif
 
 #if !defined(OSS_RN)
   ReactMarker::logTaggedMarker = logMarker;
