@@ -14,7 +14,6 @@ public:
   TextInputViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
   const char* GetName() const override;
-  folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   facebook::react::ShadowNode* createShadow() const override;
