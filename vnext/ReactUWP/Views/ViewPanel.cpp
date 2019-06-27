@@ -364,11 +364,6 @@ void ViewPanel::FinalizeProperties()
       SetValue(winrt::Panel::BackgroundProperty(), ViewBackground());
     else
       ClearValue(winrt::Panel::BackgroundProperty());
-    // Set any background on this Panel
-    if (hasBackground)
-      SetValue(winrt::Panel::BackgroundProperty(), ViewBackground());
-    else
-      ClearValue(winrt::Panel::BackgroundProperty());
   }
 
   m_propertiesChanged = false;
