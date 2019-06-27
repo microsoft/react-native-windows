@@ -48,7 +48,7 @@ namespace react {
 
       // Public Properties
       ImageSource Source() { return m_imageSource; }
-      winrt::fire_and_forget Source(ImageSource source);
+      winrt::fire_and_forget Source(ImageSource source, std::string bundleRootPath);
 
       react::uwp::ResizeMode ResizeMode() { return m_brush->ResizeMode(); }
       void ResizeMode(react::uwp::ResizeMode value) { m_brush->ResizeMode(value); }

@@ -182,7 +182,7 @@ namespace react { namespace uwp {
     auto reactImage{ canvas.as<ReactImage>() };
 
     EmitImageEvent(canvas, "topLoadStart", sources[0]);
-    reactImage->Source(sources[0]);
+    reactImage->Source(sources[0], instance->GetBundleRootPath());
   }
 
   folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants() const
