@@ -138,9 +138,13 @@
   </Target>
   <ItemGroup>
     <ClCompile Include="MemoryTrackerTests.cpp" />
+    <ClCompile Include="MessageQueueShim.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="ActivationFactory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MessageQueueShim.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

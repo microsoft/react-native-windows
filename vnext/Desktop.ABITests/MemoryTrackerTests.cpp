@@ -2,45 +2,26 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IntegrationTests/TestMessageQueueThread.h>
 #include <winrt/facebook.react.h>
+
+#include "MessageQueueShim.h"
 
 using namespace ::facebook::react::test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
-using namespace winrt;
 
 namespace ABITests
 {
-
-TEST_CLASS(MemoryTrackerTests)
-{
-	// RAII helper to ensure log handlers get unregistered
-	struct NativeLogInitializationGuard
+	TEST_CLASS(MemoryTrackerTests)
 	{
-		NativeLogInitializationGuard(::winrt::facebook::react::NativeLogHandler const& handler) noexcept
+		TEST_METHOD(Handler_AddedAndRemoved)
 		{
-			m_registrationCookie = NativeLogEventSource::InitializeLogging(handler);
-		}
+			init_apartment(winrt::apartment_type::single_threaded);
+			IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+			MemoryTracker tracker { callbackMessageQueue };
 
-		~NativeLogInitializationGuard() noexcept
-		{
-			NativeLogEventSource::UninitializeLogging(m_registrationCookie);
+			uint32_t registrationToken = tracker.AddThresholdHandler(/* threshold */ 100, /* minCallbackIntervalInMilliseconds */ 100, [](uint64_t currentUsage){});
+			Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
 		}
-
-	private:
-		uint32_t m_registrationCookie;
 	};
-
-	TEST_METHOD(MemoryTracker_Created)
-	{
-		init_apartment(winrt::apartment_type::single_threaded);
-
-		TestMessageQueueThread messageQueueThread;
-
-		// TODO: implement
-		// MemoryTracker tracker();
-	}
-};
-
 }
