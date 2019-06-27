@@ -160,6 +160,9 @@
     <ClCompile Include="Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\module.g.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="..\Shared\Logging.cpp">
       <Filter>Shared</Filter>
     </ClCompile>
@@ -175,7 +178,9 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\MemoryTracker.cpp" />
+    <ClCompile Include="..\Shared\MemoryTracker.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
     <ClCompile Include="Views\SwitchViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -204,6 +209,12 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\DatePickerViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicAutomationProperties.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicAutomationPeer.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\ViewControl.cpp">
@@ -439,10 +450,25 @@
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="Views\cppwinrt\ViewControl.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicAutomationProperties.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicAutomationPeer.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\FlyoutViewManager.h">

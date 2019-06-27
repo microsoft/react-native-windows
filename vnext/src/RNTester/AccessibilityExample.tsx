@@ -12,13 +12,13 @@ class AccessibilityBaseExample extends React.Component {
       <View>
         <Text>The following has accessibilityLabel and accessibilityHint:</Text>
         <View
-          style={{width:50, height:50, backgroundColor:'blue'}}
+          style={{width:100, height:50, backgroundColor:'blue'}}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
         />
         <Text>The following has accessible and accessibilityLabel:</Text>
         <View
-          style={{ width: 50, height: 50, backgroundColor: 'red' }}
+          style={{ width: 100, height: 50, backgroundColor: 'red' }}
           accessible={true}
           accessibilityLabel="A hint for the red box."
         />
@@ -37,7 +37,7 @@ class TouchableExamples extends React.Component<{}, any> {
       <View>
         <Text>The following TouchableHighlight has accessibilityLabel, accessibilityHint, accessibilityRole, toolip:</Text>
         <TouchableHighlight
-          style={{width:50, height:50, backgroundColor:'blue'}}
+          style={{width:100, height:50, backgroundColor:'blue'}}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
           accessibilityRole="button"
@@ -68,7 +68,7 @@ class AccessibilityStateExamples extends React.Component {
       <View>
         <Text>The following TouchableHighlight toggles accessibilityState.disabled for the View under it:</Text>
         <TouchableHighlight
-          style={{width:50, height:50, backgroundColor:'blue'}}
+          style={{width:100, height:50, backgroundColor:'blue'}}
           accessibilityRole="button"
           onPress={this.disablePress}
         >
@@ -80,12 +80,12 @@ class AccessibilityStateExamples extends React.Component {
           <Text>This View should be {this.state.viewDisabled ? "disabled" : "enabled"} according to UIA</Text>
         </View>
         <Text>The following list of TouchableHighlights toggles accessibilityState.selected when touched:</Text>
-        <View accessibilityLabel="List of selectable items" accessibilityRole={"header"}>
+        <View accessibilityLabel="List of selectable items">
           <FlatList
             data={selectableItems}
             renderItem={(item) =>
               <TouchableHighlight
-                style={{width:50, height:50, backgroundColor: this.state.itemsSelected[item.index] ? 'gray' : 'lightskyblue'}}
+                style={{width:100, height:50, backgroundColor: this.state.itemsSelected[item.index] ? 'gray' : 'lightskyblue'}}
                 accessibilityRole="button"
                 accessibilityLabel={"Selectable item " + (item.index + 1)}
                 accessibilityStates={this.state.itemsSelected[item.index] ? ['selected'] : []}
