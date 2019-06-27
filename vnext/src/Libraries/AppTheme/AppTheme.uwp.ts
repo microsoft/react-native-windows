@@ -3,12 +3,12 @@
 'use strict';
 
 import { NativeEventEmitter } from 'react-native';
-import { IThemingChangedEvent, IRGBValues } from './Theming';
+import { IAppThemeChangedEvent, IRGBValues } from './AppTheme';
 
 const NativeModules = require('NativeModules');
-const ThemingNative = NativeModules.ThemingModule;
+const ThemingNative = NativeModules.RTCAppTheme;
 
-export class Theming extends NativeEventEmitter  {
+export class AppThemeModule extends NativeEventEmitter  {
   private _isHighContrast: boolean;
   private _currentTheme: string;
   private _highContrastRGBValues: IRGBValues;
@@ -16,17 +16,19 @@ export class Theming extends NativeEventEmitter  {
   constructor() {
     super(ThemingNative);
 
-    this._highContrastRGBValues = {ButtonFaceRGB: ThemingNative.highContrastRGBValues.ButtonFaceRGB,
+    this._highContrastRGBValues = ThemingNative.highContrastRGBValues;
+    /*
+    {ButtonFaceRGB: ThemingNative.highContrastRGBValues.ButtonFaceRGB,
                       ButtonTextRGB: ThemingNative.highContrastRGBValues.ButtonTextRGB,
                       GrayTextRGB: ThemingNative.highContrastRGBValues.GrayTextRGB,
                       HighlightRGB: ThemingNative.highContrastRGBValues.HighlightRGB,
                       HighlightTextRGB: ThemingNative.highContrastRGBValues.HighlightTextRGB,
                       HotlightRGB: ThemingNative.highContrastRGBValues.HotlightRGB,
                       WindowRGB: ThemingNative.highContrastRGBValues.WindowRGB,
-                      WindowTextRGB: ThemingNative.highContrastRGBValues.WindowTextRGB};
+                      WindowTextRGB: ThemingNative.highContrastRGBValues.WindowTextRGB};*/
 
     this._isHighContrast = ThemingNative.isHighContrast;
-    this.addListener('highContrastChanged', (nativeEvent: IThemingChangedEvent) => {
+    this.addListener('highContrastChanged', (nativeEvent: IAppThemeChangedEvent) => {
       this._isHighContrast = nativeEvent.isHighContrast;
       this._highContrastRGBValues = nativeEvent.highContrastRGBValues;
     });
@@ -50,4 +52,5 @@ export class Theming extends NativeEventEmitter  {
   }
 }
 
-export default Theming;
+export const AppTheme = new AppThemeModule();
+export default AppTheme;

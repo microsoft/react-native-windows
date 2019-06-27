@@ -12,7 +12,7 @@ export interface IRGBValues  {
   WindowTextRGB: string;
 }
 
-export interface IThemingChangedEvent {
+export interface IAppThemeChangedEvent {
     isHighContrast: boolean;
     highContrastRGBValues: IRGBValues;
     currentTheme: string;

@@ -6,4 +6,4 @@ export * from './Libraries/Components/DatePicker/DatePickerProps';
 export * from './Libraries/Components/Flyout/Flyout.uwp';
 export * from './Libraries/Components/Picker/PickerUWP.uwp';
 export * from './Libraries/Components/Popup/Popup.uwp';
-export * from './Libraries/Modules/Theming/Theming.uwp';
+export * from './Libraries/AppTheme/AppTheme.uwp';

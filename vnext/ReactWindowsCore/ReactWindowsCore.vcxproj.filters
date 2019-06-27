@@ -41,7 +41,7 @@
     <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\ThemingModule.cpp">
+    <ClCompile Include="Modules\AppThemeModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,7 +134,7 @@
     <ClInclude Include="Modules\BatchingUIManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\ThemingModule.h">
+    <ClInclude Include="Modules\AppThemeModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

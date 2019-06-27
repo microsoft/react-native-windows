@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "ThemingModuleUwp.h"
+#include "AppThemeModuleUwp.h"
 #include <iomanip>
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -17,10 +17,10 @@ namespace react {
   namespace uwp {
 
   //
-  // Theming
+  // AppTheme
   //
 
-  Theming::Theming(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread) : react::windows::PlatformTheme()
+  AppTheme::AppTheme(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread) : react::windows::AppTheme()
     , m_wkReactInstance(reactInstance)
     , m_queueThread(defaultQueueThread)
   {
@@ -49,7 +49,7 @@ namespace react {
   }
 
   // Returns the RBG values for the 8 relevant High Contrast elements.
-  folly::dynamic Theming::getHighContrastRGBValues() {
+  folly::dynamic AppTheme::getHighContrastRGBValues() {
     winrt::Windows::UI::Color ButtonFaceColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace);
     winrt::Windows::UI::Color ButtonTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::ButtonText);
     winrt::Windows::UI::Color GrayTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
@@ -69,25 +69,25 @@ namespace react {
     return rbgValues;
   }
 
-  std::string Theming::formatRGB(winrt::Windows::UI::Color ElementColor) {
+  std::string AppTheme::formatRGB(winrt::Windows::UI::Color ElementColor) {
     std::stringstream RGBString;
     RGBString << "#" << std::setfill('0') << std::setw(3) << (int)ElementColor.R << std::setfill('0') << std::setw(3) << (int)ElementColor.G << std::setfill('0') << std::setw(3) << (int)ElementColor.B;
     return RGBString.str();
   }
 
-  Theming::~Theming() = default;
+  AppTheme::~AppTheme() = default;
 
-  const std::string Theming::getCurrentTheme()
+  const std::string AppTheme::getCurrentTheme()
   {
     return m_currentTheme == winrt::ApplicationTheme::Light ? "light" : "dark";
   }
 
-  bool Theming::getIsHighContrast()
+  bool AppTheme::getIsHighContrast()
   {
     return m_accessibilitySettings.HighContrast();;
   }
 
-  void Theming::fireEvent(std::string const& eventName, folly::dynamic const& eventData)
+  void AppTheme::fireEvent(std::string const& eventName, folly::dynamic const& eventData)
   {
     if (auto instance = m_wkReactInstance.lock())
     {

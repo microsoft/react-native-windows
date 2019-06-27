@@ -5,32 +5,29 @@
 
 import React = require('react');
 import { Text, View } from 'react-native';
-import { Theming } from '../../src/index.uwp';
-
-// TODO: Figure out how to make Theming.uwp.ts export a new instance
-const theming = new Theming();
+import { AppTheme } from '../../src/index.uwp';
 
 class ThemeExample extends React.Component {
   state = {
-    isHighContrast: theming.isHighContrast,
-    RGBValues: theming.currentRGBValues,
-    currentTheme: theming.currentTheme
+    isHighContrast: AppTheme.isHighContrast,
+    RGBValues: AppTheme.currentRGBValues,
+    currentTheme: AppTheme.currentTheme
   };
 
   componentDidMount() {
-    theming.addListener('highContrastChanged', this.onHighContrastChanged);
-    theming.addListener('appThemeChanged', this.onAppThemeChanged);
+    AppTheme.addListener('highContrastChanged', this.onHighContrastChanged);
+    AppTheme.addListener('appThemeChanged', this.onAppThemeChanged);
   }
 
   // TODO: Make args props
   onHighContrastChanged = (event: any) => {
-    const isHighContrast = theming.isHighContrast;
+    const isHighContrast = AppTheme.isHighContrast;
     const RGBValues = event.RGBValues;
     this.setState({ isHighContrast, RGBValues });
   };
 
   onAppThemeChanged = (event: any) => {
-    const currentTheme = theming.currentTheme;
+    const currentTheme = AppTheme.currentTheme;
     this.setState({currentTheme});
   };
 
@@ -46,7 +43,7 @@ class ThemeExample extends React.Component {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = 'Theming';
+export const title = 'AppTheme';
 export const description = 'Usage of theme properties.';
 export const examples = [
   {

@@ -6,4 +6,4 @@ export * from './Libraries/Components/DatePicker/DatePickerProps';
 export * from './Libraries/Components/Flyout/Flyout';
 export * from './Libraries/Components/Picker/PickerUWP';
 export * from './Libraries/Components/Popup/Popup';
-export * from './Libraries/Modules/Theming/Theming';
+export * from './Libraries/AppTheme/AppTheme';

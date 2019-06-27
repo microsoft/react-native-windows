@@ -3,27 +3,25 @@
 
 #pragma once
 
-#include <Modules/ThemingModule.h>
-
+#include <Modules/AppThemeModule.h>
 #include <winrt/Windows.UI.ViewManagement.h>
-
 #include <cxxreact/MessageQueueThread.h>
-
 #include <IReactInstance.h>
 
 namespace react {
   namespace uwp {
 
-    class Theming : public react::windows::PlatformTheme
+    class AppTheme : public react::windows::AppTheme
     {
     public:
-      Theming(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread);
-      virtual ~Theming();
+      AppTheme(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread);
+      virtual ~AppTheme();
 
       const std::string getCurrentTheme() override;
       bool getIsHighContrast() override;
 
     private:
+      // RGB helper methods
       folly::dynamic getHighContrastRGBValues();
       std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 

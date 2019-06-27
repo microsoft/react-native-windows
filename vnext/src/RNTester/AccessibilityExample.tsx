@@ -5,11 +5,10 @@
 
 import React = require('react');
 import { Text, TouchableHighlight, View } from 'react-native';
-import { Theming } from '../../src/index.uwp';
-import { IThemingChangedEvent } from 'src/Libraries/Modules/Theming/Theming';
+import { AppTheme } from '../../src/index.uwp';
+import { IAppThemeChangedEvent } from 'src/Libraries/AppTheme/AppTheme';
 
 var currentBackgroundColor = ['blue', 'red', '#E6E6E6', '#7fff00'];
-const theming = new Theming();
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -34,29 +33,29 @@ class AccessibilityBaseExample extends React.Component {
 
 class HighContrastExample extends React.Component {
   state = {
-    isHighContrast: theming.isHighContrast,
-    RGBValues: theming.currentRGBValues,
-    currentTheme: theming.currentTheme
+    isHighContrast: AppTheme.isHighContrast,
+    RGBValues: AppTheme.currentRGBValues,
+    currentTheme: AppTheme.currentTheme
   };
 
   componentDidMount() {
-    theming.addListener('highContrastChanged', this.onHighContrastChanged);
-    theming.addListener('appThemeChanged', this.onAppThemeChanged);
+    AppTheme.addListener('highContrastChanged', this.onHighContrastChanged);
+    AppTheme.addListener('appThemeChanged', this.onAppThemeChanged);
   }
 
   componenetWillUnmount() {
-    theming.removeListener('highContrastChanged', this.onHighContrastChanged);
-    theming.removeListener('appThemeChanged', this.onAppThemeChanged);
+    AppTheme.removeListener('highContrastChanged', this.onHighContrastChanged);
+    AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
   } 
 
   // TODO: Make args props
-  onHighContrastChanged = (event: IThemingChangedEvent) => {
-    this.setState({isHighContrast : theming.isHighContrast, 
-                  RGBValues : theming.currentRGBValues});
+  onHighContrastChanged = (event: IAppThemeChangedEvent) => {
+    this.setState({isHighContrast : AppTheme.isHighContrast, 
+                  RGBValues : AppTheme.currentRGBValues});
   };
 
   onAppThemeChanged = (event: any) => {
-    this.setState({currentTheme : theming.currentTheme});
+    this.setState({currentTheme : AppTheme.currentTheme});
   }
 
   public render() {
@@ -78,7 +77,7 @@ class HighContrastExample extends React.Component {
         <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
         <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
         <View
-          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
+          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}} // RGBs would need to be converted to hex to work directly.
           accessible={true}
           accessibilityLabel="A hint for the red box."
         />

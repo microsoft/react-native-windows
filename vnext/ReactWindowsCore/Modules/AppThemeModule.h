@@ -11,31 +11,34 @@
 namespace react {
   namespace windows {
 
-    class PlatformTheme
+    class AppTheme
     {
     public:
-      PlatformTheme();
-      virtual ~PlatformTheme();
+      static inline const std::string dark = "dark"; 
+      static inline const std::string light = "light";
+
+      AppTheme();
+      virtual ~AppTheme();
 
       virtual const std::string getCurrentTheme();
       virtual bool getIsHighContrast();
       virtual folly::dynamic getHighContrastRGBValues();
     };
 
-    class ThemingModule : public facebook::xplat::module::CxxModule
+    class AppThemeModule : public facebook::xplat::module::CxxModule
     {
     public:
-      ThemingModule(std::shared_ptr<PlatformTheme> && theme);
+      static inline const std::string name = "RTCAppTheme";
 
-      static const std::string name;
+      AppThemeModule(std::shared_ptr<AppTheme> && theme);
 
       // CxxModule
-      std::string getName() override;
-      std::map<std::string, folly::dynamic> getConstants() override;
+      std::string getName() override { return name; };
+      auto getConstants() -> std::map<std::string, folly::dynamic> override;
       auto getMethods()->std::vector<Method> override;
 
     private:
-      std::shared_ptr<PlatformTheme> m_theme;
+      std::shared_ptr<AppTheme> m_appTheme;
     };
 
   }

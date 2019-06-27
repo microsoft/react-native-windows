@@ -46,7 +46,7 @@
 // Modules
 #include <AsyncStorageModule.h>
 #include <Modules/AppStateModuleUwp.h>
-#include <Modules/ThemingModuleUwp.h>
+#include <Modules/AppThemeModuleUwp.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
@@ -133,7 +133,7 @@ namespace react {
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       const I18nModule::I18nInfo&& i18nInfo,
       std::shared_ptr<facebook::react::AppState> appstate,
-      std::shared_ptr<react::windows::PlatformTheme> theme)
+      std::shared_ptr<react::windows::AppTheme> theme)
     {
       // Modules
       std::vector<facebook::react::NativeModuleDescription> modules;
@@ -184,8 +184,8 @@ namespace react {
         std::make_shared<WorkerMessageQueueThread>());
 
       modules.emplace_back(
-        react::windows::ThemingModule::name,
-        [theme = std::move(theme)]() mutable { return std::make_unique<react::windows::ThemingModule>(std::move(theme)); },
+        react::windows::AppThemeModule::name,
+        [theme = std::move(theme)]() mutable { return std::make_unique<react::windows::AppThemeModule>(std::move(theme)); },
         messageQueue);
 
       modules.emplace_back(
@@ -220,7 +220,7 @@ namespace react {
       // Objects that must be created on the UI thread
       std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
       std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
-      std::shared_ptr<react::windows::PlatformTheme> theme = std::make_shared<react::uwp::Theming>(spThis, m_defaultNativeThread);
+      std::shared_ptr<react::windows::AppTheme> theme = std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
       std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
 
       // TODO: Figure out threading. What thread should this really be on?
