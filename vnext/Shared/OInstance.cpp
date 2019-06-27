@@ -576,15 +576,7 @@ void InstanceImpl::loadBundleInternal(std::string&& jsBundleRelativePath, bool s
       }
 
 #else
-    std::string bundlePath = "";
-    if (m_devSettings->useCustomRootPath)
-    {
-      bundlePath += m_devSettings->bundleRootPath + jsBundleRelativePath + ".bundle";
-    }
-    else
-    {
-      bundlePath += "ms-appx:///Bundle/" + jsBundleRelativePath + ".bundle";
-    }
+    std::string bundlePath = m_devSettings->bundleRootPath + jsBundleRelativePath + ".bundle";
 
     auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
     m_innerInstance->loadScriptFromString(std::move(bundleString),

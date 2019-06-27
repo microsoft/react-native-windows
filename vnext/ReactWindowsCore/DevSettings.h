@@ -46,7 +46,6 @@ struct DevSettings
   std::function<void(JSExceptionInfo&&)> jsExceptionCallback;
 
   /// Enables the user to set a custom root path for bundle resolution
-  bool useCustomRootPath{ false }; // This option is needed in case the user wants to use a blank root path
   std::string bundleRootPath;
 
   /// Enables debugging directly in the JavaScript engine.

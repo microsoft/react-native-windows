@@ -29,7 +29,6 @@ struct ReactInstanceSettings
   bool UseWebDebugger { false };
   bool UseLiveReload { false };
   bool UseDirectDebugger{ false };
-  bool UseCustomRootPath { false };
   bool UseJsi { true };
   bool EnableJITCompilation { true };
   bool EnableByteCodeCacheing { false };
