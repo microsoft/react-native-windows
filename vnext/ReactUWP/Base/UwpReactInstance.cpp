@@ -247,15 +247,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     // In most cases, using the hardcoded ms-appx URI works fine, but there are certain scenarios,
     // such as in optional packaging, where the developer might need to modify the path, in which
     // case we should use the custom path instead.
-    if (settings.BundleRootPath.empty())
-    {
-      devSettings->bundleRootPath = "ms-appx:///Bundle/";
-    }
-    else
-    {
-      devSettings->bundleRootPath = settings.BundleRootPath;
-    }
-
+    devSettings->bundleRootPath = settings.BundleRootPath.empty() ? "ms-appx:///Bundle/" : settings.BundleRootPath;
     m_bundleRootPath = devSettings->bundleRootPath;
 
     if (settings.UseLiveReload)
