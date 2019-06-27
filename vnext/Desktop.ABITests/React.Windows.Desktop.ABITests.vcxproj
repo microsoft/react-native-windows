@@ -61,7 +61,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -97,6 +97,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
       <Project>{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
+      <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

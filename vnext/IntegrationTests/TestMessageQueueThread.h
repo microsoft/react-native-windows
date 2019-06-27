@@ -3,7 +3,8 @@
 
 #pragma once
 
-#include <CxxMessageQueue.h>
+#include <atomic>
+#include <cxxreact/MessageQueueThread.h>
 #include <Windows.h>
 #include <queue>
 

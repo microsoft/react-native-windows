@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
+#include <IntegrationTests/TestMessageQueueThread.h>
 #include <winrt/facebook.react.h>
 
+using namespace ::facebook::react::test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 using namespace winrt;
@@ -33,6 +35,8 @@ TEST_CLASS(MemoryTrackerTests)
 	TEST_METHOD(MemoryTracker_Created)
 	{
 		init_apartment(winrt::apartment_type::single_threaded);
+
+		TestMessageQueueThread messageQueueThread;
 
 		// TODO: implement
 		// MemoryTracker tracker();
