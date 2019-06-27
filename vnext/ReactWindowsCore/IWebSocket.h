@@ -19,7 +19,7 @@ struct IWebSocket
   using Protocols = std::vector<std::string>;
   using Options = std::map<std::wstring, std::string>;
 
-  #pragma endregion // Aliases
+  #pragma endregion Aliases
 
   #pragma region Inner types
 
@@ -80,7 +80,7 @@ struct IWebSocket
     const ErrorType Type;
   };
 
-  #pragma endregion // Inner types
+  #pragma endregion Inner types
 
   /// <summary>
   /// Creates an <c>IWebSocket</c> instance.

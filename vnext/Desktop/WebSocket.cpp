@@ -392,7 +392,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Ping()
     PerformPing();
 }
 
-#pragma endregion // IWebSocket members
+#pragma endregion IWebSocket members
 
 #pragma region Handler setters
 
@@ -438,9 +438,9 @@ IWebSocket::ReadyState BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::G
   return m_readyState;
 }
 
-#pragma endregion // Handler setters
+#pragma endregion Handler setters
 
-#pragma endregion // BaseWebSocket members
+#pragma endregion BaseWebSocket members
 
 #pragma region WebSocket members
 
@@ -478,7 +478,7 @@ void SecureWebSocket::Handshake(const IWebSocket::Options& options)
   });
 }
 
-#pragma endregion // SecureWebSocket members
+#pragma endregion SecureWebSocket members
 
 #pragma region IWebSocket static members
 
@@ -504,7 +504,7 @@ void SecureWebSocket::Handshake(const IWebSocket::Options& options)
     throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
 }
 
-#pragma endregion // IWebSocket static members
+#pragma endregion IWebSocket static members
 
 namespace Test {
 
@@ -615,7 +615,7 @@ MockStream::async_close(websocket::close_reason const& cr, CloseHandler&& handle
   return init.result.get();
 }
 
-#pragma endregion // MockStream
+#pragma endregion MockStream
 
 #pragma region TestWebSocket
 
@@ -640,7 +640,7 @@ void TestWebSocket::SetCloseResult(function<error_code()>&& resultFunc)
   m_stream->CloseResult = std::move(resultFunc);
 }
 
-#pragma endregion // TestWebSocket
+#pragma endregion TestWebSocket
 } // namespace Microsoft::React::Test
 
 } // namespace Microsoft::React

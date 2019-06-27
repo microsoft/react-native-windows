@@ -143,6 +143,6 @@ vector<facebook::xplat::module::CxxModule::Method> NetworkingModule::getMethods(
   };
 }
 
-#pragma endregion // CxxModule members
+#pragma endregion CxxModule members
 
 } } // namespace facebook::react

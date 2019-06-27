@@ -91,7 +91,7 @@ public:
 
   void Start() override;
 
-  #pragma endregion //IWebSocketSession
+  #pragma endregion IWebSocketSession
 };
 
 class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>

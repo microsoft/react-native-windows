@@ -347,7 +347,7 @@ void LegacyBaseWebSocket<Protocol, Socket, Resolver>::Ping()
   });
 }
 
-#pragma endregion // IWebSocket members
+#pragma endregion IWebSocket members
 
 #pragma region Handler setters
 
@@ -393,9 +393,9 @@ IWebSocket::ReadyState LegacyBaseWebSocket<Protocol, Socket, Resolver>::GetReady
   return m_readyState;
 }
 
-#pragma endregion // Handler setters
+#pragma endregion Handler setters
 
-#pragma endregion // LegacyBaseWebSocket members
+#pragma endregion LegacyBaseWebSocket members
 
 #pragma region LegacyWebSocket members
 
@@ -441,7 +441,7 @@ void LegacySecureWebSocket<Protocol, Socket, Resolver>::Handshake(const IWebSock
 
 template class LegacySecureWebSocket<tcp, ssl::stream<tcp::socket>>;
 
-#pragma endregion // LegacySecureWebSocket members
+#pragma endregion LegacySecureWebSocket members
 
 #pragma region IWebSocket static members
 
@@ -467,7 +467,7 @@ template class LegacySecureWebSocket<tcp, ssl::stream<tcp::socket>>;
     throw std::exception((string("Incorrect url protocol: ") + url.scheme).c_str());
 }
 
-#pragma endregion // IWebSocket static members
+#pragma endregion IWebSocket static members
 
 } } // namespace Microsoft:React
 

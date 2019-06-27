@@ -196,6 +196,6 @@ bool TestMessageQueueThread::IsWorkerThread()
   return m_workerThread != NULL && GetCurrentThreadId() == GetThreadId(m_workerThread);
 }
 
-#pragma endregion // namespace TestMessageQueueThread members
+#pragma endregion namespace TestMessageQueueThread members
 
 }}} //namespace facebook::react::test

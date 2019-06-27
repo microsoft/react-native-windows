@@ -35,6 +35,6 @@ shared_ptr<facebook::react::Instance> DesktopTestInstance::GetInnerInstance() co
   return m_instanceWrapper->GetInstance();
 }
 
-#pragma endregion // DesktopTestInstance members
+#pragma endregion DesktopTestInstance members
 
 } } } // namespace facebook::react::test

@@ -141,7 +141,7 @@ IWebSocket* WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
   return ptr;
 }
 
-#pragma endregion // private members
+#pragma endregion private members
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept
 {

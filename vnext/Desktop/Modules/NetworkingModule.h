@@ -32,7 +32,7 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<Method> getMethods() override;
 
-  #pragma endregion // CxxModule members
+  #pragma endregion CxxModule members
 
   static const char* name;
 };

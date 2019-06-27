@@ -187,7 +187,7 @@ public:
   /// </summary>
   void SetOnError(std::function<void(Error&&)>&& handler) override;
 
-  #pragma endregion // IWebSocket
+  #pragma endregion IWebSocket
 };
 
 class WebSocket
@@ -267,7 +267,7 @@ public:
   BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(boost::system::error_code))
   async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
 
-  #pragma endregion // boost::beast::websocket::stream mocks
+  #pragma endregion boost::beast::websocket::stream mocks
 
   std::function<boost::system::error_code()> ConnectResult;
   std::function<boost::system::error_code(std::string, std::string)> HandshakeResult;
