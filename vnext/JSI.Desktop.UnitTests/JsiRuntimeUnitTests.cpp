@@ -511,7 +511,10 @@ TEST_P(JsiRuntimeUnitTests, FunctionTest) {
     nullptr,
     true,
     3.14,
-    2.71f,
+    2.71,
+    // TODO (yicyao): The copy of jsi-inl.h in Microsoft/react-native is out of
+    // date and does not contain the float overload.
+    //2.71f,
     17,
     "s1",
     String::createFromAscii(rt, "s2"),
