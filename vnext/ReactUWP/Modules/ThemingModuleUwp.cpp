@@ -30,12 +30,11 @@ namespace react {
 
     m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke,
       [this](const auto&, const auto&) {
-        if (m_isHighContrast != m_accessibilitySettings.HighContrast()) {
-          m_isHighContrast = m_accessibilitySettings.HighContrast();
-        }
-        folly::dynamic hcScheme{ getIsHighContrast() ? // Is high contrast being turned on or off.
-    getHighContrastRGBValues() : folly::dynamic::object("highContrastElementRGBValues", "None") };
-        fireEvent(ThemingEvent::HighContrast, hcScheme); // fire event with information that it's a high contrast change and what the scheme is
+        const winrt::hstring hcScheme{ getIsHighContrast() ? m_accessibilitySettings.HighContrastScheme() : L"None" };
+
+        folly::dynamic eventData = folly::dynamic::object("highContrastRGBValues", getHighContrastRGBValues())
+          ("isHighContrast", getIsHighContrast());
+        fireEvent("highContrastChanged", std::move(eventData));// fire event with information that it's a high contrast change and what the scheme is
     });
 
     m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(winrt::auto_revoke,
@@ -44,7 +43,8 @@ namespace react {
           if (m_currentTheme != winrt::Application::Current().RequestedTheme())
           {
             m_currentTheme = winrt::Application::Current().RequestedTheme();
-            fireEvent(ThemingEvent::Theme, folly::dynamic::object("Theme", getTheme()));
+            folly::dynamic eventData = folly::dynamic::object("currentTheme", getCurrentTheme());
+            fireEvent("appThemeChanged", std::move(eventData));
           }
         });
     });
@@ -79,26 +79,21 @@ namespace react {
 
   Theming::~Theming() = default;
 
-  const std::string Theming::getTheme()
+  const std::string Theming::getCurrentTheme()
   {
     return m_currentTheme == winrt::ApplicationTheme::Light ? "light" : "dark";
   }
 
   bool Theming::getIsHighContrast()
   {
-    return m_isHighContrast;
+    return m_accessibilitySettings.HighContrast();;
   }
 
-  void Theming::fireEvent(ThemingEvent event, folly::dynamic eventData)
+  void Theming::fireEvent(std::string const& eventName, folly::dynamic const& eventData)
   {
-    std::string paramsName{ event == ThemingEvent::Theme ? "platform_theme" : "highContrastElementRGBValues" };
-    std::string eventName{ event == ThemingEvent::Theme ? "themeDidChange" : "highContrastDidChange" };
-
-    auto instance = m_wkReactInstance.lock();
-    if (instance)
+    if (auto instance = m_wkReactInstance.lock())
     {
-      folly::dynamic parameters = folly::dynamic::object(paramsName, eventData); // For high contrast, args are the scheme.
-      instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(parameters)));
+      instance->CallJsFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(eventData)));
     }
   }
 }

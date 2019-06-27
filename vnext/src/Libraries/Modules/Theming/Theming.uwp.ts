@@ -3,48 +3,50 @@
 'use strict';
 
 import { NativeEventEmitter } from 'react-native';
+import { IThemingChangedEvent, RGBValues } from './Theming';
 
 const NativeModules = require('NativeModules');
 const ThemingNative = NativeModules.ThemingModule;
 
 export class Theming extends NativeEventEmitter  {
-  private misHighContrast: boolean;
-  private mcurrentTheme: string;
-  private mRGBValues = ["", "", "", "", "", "", "", ""];
+  private _isHighContrast: boolean;
+  private _currentTheme: string;
+  private _highContrastRGBValues: RGBValues;
 
   constructor() {
     super(ThemingNative);
 
-    this.mRGBValues[0] = ThemingNative.highContrastRGBValues.ButtonFaceRGB;
-    this.mRGBValues[1] = ThemingNative.highContrastRGBValues.ButtonTextRGB;
-    this.mRGBValues[2] = ThemingNative.highContrastRGBValues.GrayTextRGB;
-    this.mRGBValues[3] = ThemingNative.highContrastRGBValues.HighlightRGB;
-    this.mRGBValues[4] = ThemingNative.highContrastRGBValues.HighlightTextRGB;
-    this.mRGBValues[5] = ThemingNative.highContrastRGBValues.HotlightRGB;
-    this.mRGBValues[6] = ThemingNative.highContrastRGBValues.WindowRGB;
-    this.mRGBValues[7] = ThemingNative.highContrastRGBValues.WindowTextRGB;
+    this._highContrastRGBValues = {ButtonFaceRGB: ThemingNative.highContrastRGBValues.ButtonFaceRGB,
+                      ButtonTextRGB: ThemingNative.highContrastRGBValues.ButtonTextRGB,
+                      GrayTextRGB: ThemingNative.highContrastRGBValues.GrayTextRGB,
+                      HighlightRGB: ThemingNative.highContrastRGBValues.HighlightRGB,
+                      HighlightTextRGB: ThemingNative.highContrastRGBValues.HighlightTextRGB,
+                      HotlightRGB: ThemingNative.highContrastRGBValues.HotlightRGB,
+                      WindowRGB: ThemingNative.highContrastRGBValues.WindowRGB,
+                      WindowTextRGB: ThemingNative.highContrastRGBValues.WindowTextRGB};
 
-    this.misHighContrast = ThemingNative.isHighContrast;
-    this.addListener('highContrastDidChange', (args): any => {
-      this.misHighContrast = args.highContrastRGBValues !== 'None';
+    this._isHighContrast = ThemingNative.isHighContrast;
+    this.addListener('highContrastChanged', (eventData: IThemingChangedEvent) => {
+      this._isHighContrast = eventData.nativeEvent.isHighContrast;
+      this._highContrastRGBValues = eventData.nativeEvent.RGBValues;
     });
 
-    this.mcurrentTheme = ThemingNative.currentTheme;
-    this.addListener('themeDidChange', (args): any => {
-      this.mcurrentTheme = args.platform_theme;
+    this._currentTheme = ThemingNative.currentTheme;
+    this.addListener('appThemeChanged', ({currentTheme}:{currentTheme: string}) => {
+      this._currentTheme = currentTheme;
     });
   }
 
   get isHighContrast(): boolean {
-    return this.misHighContrast;
+    return this._isHighContrast;
   }
 
   get currentTheme(): string {
-    return this.mcurrentTheme;
+    return this._currentTheme;
   }
 
-  get RGBValues(): string[] {
-    return this.mRGBValues;
+  get RGBValues(): RGBValues {
+    return this._highContrastRGBValues;
   }
 }
 

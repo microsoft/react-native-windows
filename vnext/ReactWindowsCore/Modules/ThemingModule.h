@@ -17,7 +17,7 @@ namespace react {
       PlatformTheme();
       virtual ~PlatformTheme();
 
-      virtual const std::string getTheme();
+      virtual const std::string getCurrentTheme();
       virtual bool getIsHighContrast();
       virtual folly::dynamic getHighContrastRGBValues();
     };

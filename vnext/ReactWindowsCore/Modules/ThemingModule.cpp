@@ -16,7 +16,7 @@ namespace react {
     PlatformTheme::~PlatformTheme() = default;
 
     // TODO: real implementation
-    const std::string PlatformTheme::getTheme()
+    const std::string PlatformTheme::getCurrentTheme()
     {
       return "light";
     }
@@ -51,7 +51,7 @@ namespace react {
     std::map<std::string, folly::dynamic> ThemingModule::getConstants()
     {
       return {
-        { "currentTheme", folly::dynamic { m_theme->getTheme() } },
+        { "currentTheme", folly::dynamic { m_theme->getCurrentTheme() } },
         { "isHighContrast", folly::dynamic { m_theme->getIsHighContrast() }},
         { "highContrastRGBValues", folly::dynamic {m_theme->getHighContrastRGBValues()}}
       };

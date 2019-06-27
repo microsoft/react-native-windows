@@ -6,6 +6,7 @@
 import React = require('react');
 import { Text, TouchableHighlight, View } from 'react-native';
 import { Theming } from '../../src/index.uwp';
+import { IThemingChangedEvent } from 'src/Libraries/Modules/Theming/Theming';
 
 var currentBackgroundColor = ['blue', 'red', '#E6E6E6', '#7fff00'];
 const theming = new Theming();
@@ -39,17 +40,17 @@ class HighContrastExample extends React.Component {
   };
 
   componentDidMount() {
-    theming.addListener('highContrastDidChange', this.highContrastHandler);
-    theming.addListener('themeDidChange', this.themeChanged);
+    theming.addListener('highContrastChanged', this.onHighContrastChanged);
+    theming.addListener('appThemeChanged', this.onAppThemeChanged);
   }
 
   // TODO: Make args props
-  highContrastHandler = (args: any) => {
+  onHighContrastChanged = (event: IThemingChangedEvent) => {
     this.setState({isHighContrast : theming.isHighContrast, 
-                  RGBValues : theming.RGBValues});
+                  RGBValues : event.nativeEvent.RGBValues});
   };
 
-  themeChanged = (args: any) => {
+  onAppThemeChanged = (event: any) => {
     this.setState({currentTheme : theming.currentTheme});
   }
 
@@ -64,14 +65,14 @@ class HighContrastExample extends React.Component {
             accessibilityHint="A hint for the blue box.">
           <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
           </View>
-          <Text>ButtonFaceRGB value: {this.state.RGBValues[0]}</Text>
-          <Text>ButtonTextRGB value: {this.state.RGBValues[1]}</Text>
-          <Text>GrayTextRGB value: {this.state.RGBValues[2]}</Text>
-          <Text>HighlightRGB value: {this.state.RGBValues[3]}</Text>
-          <Text>HighlightTextRGB value: {this.state.RGBValues[4]}</Text>
-          <Text>HotlightRGB value: {this.state.RGBValues[5]}</Text>
-          <Text>WindowRGB value: {this.state.RGBValues[6]}</Text>
-          <Text>WindowTextRGB value: {this.state.RGBValues[7]}</Text>
+          <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
+          <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
+          <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
+          <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
+          <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
+          <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
+          <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
+          <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
           <View
             style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
             accessible={true}
@@ -89,14 +90,14 @@ class HighContrastExample extends React.Component {
             accessibilityHint="A hint for the blue box.">
           <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
           </View>
-          <Text>ButtonFaceRGB value: {this.state.RGBValues[0]}</Text>
-          <Text>ButtonTextRGB value: {this.state.RGBValues[1]}</Text>
-          <Text>GrayTextRGB value: {this.state.RGBValues[2]}</Text>
-          <Text>HighlightRGB value: {this.state.RGBValues[3]}</Text>
-          <Text>HighlightTextRGB value: {this.state.RGBValues[4]}</Text>
-          <Text>HotlightRGB value: {this.state.RGBValues[5]}</Text>
-          <Text>WindowRGB value: {this.state.RGBValues[6]}</Text>
-          <Text>WindowTextRGB value: {this.state.RGBValues[7]}</Text>
+          <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
+          <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
+          <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
+          <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
+          <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
+          <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
+          <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
+          <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
           <View
             style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[1]}}
             accessible={true}

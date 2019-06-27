@@ -16,25 +16,18 @@ namespace react {
 
     class Theming : public react::windows::PlatformTheme
     {
-    private:
-      enum ThemingEvent
-      {
-        Theme = 0,
-        HighContrast = 1
-      };
-
     public:
       Theming(const std::shared_ptr<IReactInstance>& reactInstance, const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread);
       virtual ~Theming();
 
-      const std::string getTheme() override;
+      const std::string getCurrentTheme() override;
       bool getIsHighContrast() override;
 
     private:
       folly::dynamic getHighContrastRGBValues();
       std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
-      void fireEvent(ThemingEvent event, folly::dynamic eventData);
+      void fireEvent(std::string const& eventName, folly::dynamic const& eventData);
 
       std::weak_ptr<IReactInstance> m_wkReactInstance;
       std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
