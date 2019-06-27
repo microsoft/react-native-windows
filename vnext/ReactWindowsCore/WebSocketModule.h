@@ -52,7 +52,7 @@ private:
   /// <summary>
   /// Creates or retrieves a raw <c>IWebSocket</c> pointer.
   /// </summary>
-  IWebSocket* GetWebSocket(int64_t id, std::string&& url = std::string());
+  IWebSocket* GetOrCreateWebSocket(int64_t id, std::string&& url = std::string());
 
   /// <summary>
   /// Keeps <c>IWebSocket</c> instances identified by <c>id</c>.
