@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-export interface RGBValues  {
+export interface IRGBValues  {
   ButtonFaceRGB: string;
   ButtonTextRGB: string;
   GrayTextRGB: string;
@@ -13,9 +13,7 @@ export interface RGBValues  {
 }
 
 export interface IThemingChangedEvent {
-  nativeEvent: {
-      isHighContrast: boolean;
-      RGBValues: RGBValues;
-      currentTheme: string;
-  };
+    isHighContrast: boolean;
+    highContrastRGBValues: IRGBValues;
+    currentTheme: string;
 }

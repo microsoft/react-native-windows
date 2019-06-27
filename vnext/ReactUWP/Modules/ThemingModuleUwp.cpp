@@ -30,8 +30,6 @@ namespace react {
 
     m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke,
       [this](const auto&, const auto&) {
-        const winrt::hstring hcScheme{ getIsHighContrast() ? m_accessibilitySettings.HighContrastScheme() : L"None" };
-
         folly::dynamic eventData = folly::dynamic::object("highContrastRGBValues", getHighContrastRGBValues())
           ("isHighContrast", getIsHighContrast());
         fireEvent("highContrastChanged", std::move(eventData));// fire event with information that it's a high contrast change and what the scheme is

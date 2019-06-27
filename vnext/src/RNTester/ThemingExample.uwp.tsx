@@ -13,7 +13,7 @@ const theming = new Theming();
 class ThemeExample extends React.Component {
   state = {
     isHighContrast: theming.isHighContrast,
-    RGBValues: theming.RGBValues,
+    RGBValues: theming.currentRGBValues,
     currentTheme: theming.currentTheme
   };
 

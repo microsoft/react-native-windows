@@ -3,7 +3,7 @@
 'use strict';
 
 import { NativeEventEmitter } from 'react-native';
-import { IThemingChangedEvent, RGBValues } from './Theming';
+import { IThemingChangedEvent, IRGBValues } from './Theming';
 
 const NativeModules = require('NativeModules');
 const ThemingNative = NativeModules.ThemingModule;
@@ -11,7 +11,7 @@ const ThemingNative = NativeModules.ThemingModule;
 export class Theming extends NativeEventEmitter  {
   private _isHighContrast: boolean;
   private _currentTheme: string;
-  private _highContrastRGBValues: RGBValues;
+  private _highContrastRGBValues: IRGBValues;
 
   constructor() {
     super(ThemingNative);
@@ -26,9 +26,9 @@ export class Theming extends NativeEventEmitter  {
                       WindowTextRGB: ThemingNative.highContrastRGBValues.WindowTextRGB};
 
     this._isHighContrast = ThemingNative.isHighContrast;
-    this.addListener('highContrastChanged', (eventData: IThemingChangedEvent) => {
-      this._isHighContrast = eventData.nativeEvent.isHighContrast;
-      this._highContrastRGBValues = eventData.nativeEvent.RGBValues;
+    this.addListener('highContrastChanged', (nativeEvent: IThemingChangedEvent) => {
+      this._isHighContrast = nativeEvent.isHighContrast;
+      this._highContrastRGBValues = nativeEvent.highContrastRGBValues;
     });
 
     this._currentTheme = ThemingNative.currentTheme;
@@ -45,7 +45,7 @@ export class Theming extends NativeEventEmitter  {
     return this._currentTheme;
   }
 
-  get RGBValues(): RGBValues {
+  get currentRGBValues(): IRGBValues {
     return this._highContrastRGBValues;
   }
 }

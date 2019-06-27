@@ -35,7 +35,7 @@ class AccessibilityBaseExample extends React.Component {
 class HighContrastExample extends React.Component {
   state = {
     isHighContrast: theming.isHighContrast,
-    RGBValues: theming.RGBValues,
+    RGBValues: theming.currentRGBValues,
     currentTheme: theming.currentTheme
   };
 
@@ -44,10 +44,15 @@ class HighContrastExample extends React.Component {
     theming.addListener('appThemeChanged', this.onAppThemeChanged);
   }
 
+  componenetWillUnmount() {
+    theming.removeListener('highContrastChanged', this.onHighContrastChanged);
+    theming.removeListener('appThemeChanged', this.onAppThemeChanged);
+  } 
+
   // TODO: Make args props
   onHighContrastChanged = (event: IThemingChangedEvent) => {
     this.setState({isHighContrast : theming.isHighContrast, 
-                  RGBValues : event.nativeEvent.RGBValues});
+                  RGBValues : theming.currentRGBValues});
   };
 
   onAppThemeChanged = (event: any) => {
@@ -55,57 +60,30 @@ class HighContrastExample extends React.Component {
   }
 
   public render() {
-    if (this.state.isHighContrast) {
-      return (
-        <View>
-          <Text>The following has HighContrast Event awareness:</Text>
-          <View
-            style={{width: 150, height: 50, backgroundColor: currentBackgroundColor[2]}}
-            accessibilityLabel="A blue box"
-            accessibilityHint="A hint for the blue box.">
-          <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
-          </View>
-          <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
-          <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
-          <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
-          <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
-          <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
-          <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
-          <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
-          <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
-          <View
-            style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
-            accessible={true}
-            accessibilityLabel="A hint for the red box."
-          />
+    return (
+      <View>
+        <Text>The following has HighContrast Event awareness:</Text>
+        <View
+          style={{width: 150, height: 50, backgroundColor: currentBackgroundColor[2]}}
+          accessibilityLabel="A blue box"
+          accessibilityHint="A hint for the blue box.">
+        <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
         </View>
-      );
-    } else {
-      return (
-        <View>
-          <Text>The following has HighContrast Event awareness:</Text>
-          <View
-            style={{width: 150, height: 50, backgroundColor: currentBackgroundColor[0]}}
-            accessibilityLabel="A blue box"
-            accessibilityHint="A hint for the blue box.">
-          <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
-          </View>
-          <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
-          <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
-          <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
-          <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
-          <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
-          <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
-          <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
-          <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
-          <View
-            style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[1]}}
-            accessible={true}
-            accessibilityLabel="A hint for the red box."
-          />
-        </View>
-      );
-    }
+        <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
+        <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
+        <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
+        <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
+        <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
+        <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
+        <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
+        <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
+        <View
+          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
+          accessible={true}
+          accessibilityLabel="A hint for the red box."
+        />
+      </View>
+    );
   }
 }
 
