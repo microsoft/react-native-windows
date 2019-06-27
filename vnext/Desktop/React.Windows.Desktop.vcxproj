@@ -109,8 +109,13 @@
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="LegacyWebSocket.cpp" />
+    <ClCompile Include="MessageQueueShim.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
+    <ClCompile Include="MemoryTracker.cpp">
+      <DependentUpon>ABI.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="NativeLogEventSource.cpp">
       <DependentUpon>ABI.idl</DependentUpon>
     </ClCompile>
@@ -136,9 +141,13 @@
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
+    <ClInclude Include="MessageQueueShim.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="NativeModuleFactories.h" />
+    <ClInclude Include="MemoryTracker.h">
+      <DependentUpon>ABI.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="NativeLogEventSource.h">
       <DependentUpon>ABI.idl</DependentUpon>
     </ClInclude>

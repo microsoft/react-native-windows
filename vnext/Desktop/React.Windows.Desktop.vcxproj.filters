@@ -52,6 +52,9 @@
     <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="NativeTraceEventSource.cpp" />
+    <ClCompile Include="MemoryTracker.cpp" />
+    <ClCompile Include="NativeLogEventSource.cpp" />
+    <ClCompile Include="MessageQueueShim.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TimingModule.h" />
@@ -79,6 +82,9 @@
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
     <ClInclude Include="NativeTraceEventSource.h" />
+    <ClInclude Include="MemoryTracker.h" />
+    <ClInclude Include="NativeLogEventSource.h" />
+    <ClInclude Include="MessageQueueShim.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

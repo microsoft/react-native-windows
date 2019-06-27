@@ -1,4 +1,16 @@
 // ABI_REVIEW:
+// Questions:
+// - Should we approximate the existing API as closely as possible (a) or should we re-design the
+//   API using IDL/WinRT/COM idioms (b)? Examples for (b) are delegates, property accessors and
+//   events. (a) might help developers to orient themselves quicker, simplify migration to the new
+//   ABI and reduce refactoring-related defects. (b) should get us closer to the "final" API and
+//   might foster programming paradigms that reduce defects.
+
+// Guidelines:
+// - Follow .NET framework naming conventions.
+
+
+// ABI_REVIEW:
 // Given this is a new API without usage legacy, should we use the chance to introduce a different
 // namespace, e.g. "Microsoft.React"?
 namespace facebook.react {
@@ -29,11 +41,12 @@ static runtimeclass NativeTraceEventSource
 	//     void facebook::react::InitializeTracing(INativeTraceHandler* handler);
 	// Delegates/events would be a better idiom. However, currently I only aim to create ABI-safety
 	// for the existing interface, not to redesign it.
+	// Should this be an event?
 	static UInt32 InitializeTracing(INativeTraceHandler handler);
 
 	// ABI_REVIEW:
 	// There is no equivalent for this in the existing ABI.
-	static void UninitializeTracing(UInt32 cookie);
+	static void UninitializeTracing(UInt32 token);
 };
 
 // ABI_REVIEW:
@@ -65,7 +78,34 @@ static runtimeclass NativeLogEventSource
 	// the delegate passed into the 'InitializeLogging' method can capture arbitrary objects and we
 	// need a way to release those. FWIW, the old-ABI equivalent of the delegate (std::function) can
 	// already capture things, and absence of a method to unregister it could be problematic.
-	static void UninitializeLogging(UInt32 cookie);
+	static void UninitializeLogging(UInt32 token);
+};
+
+// ABI_REVIEW:
+// representing
+//     std::function<void()>
+// arguments to MessageQueueThread::runOnQueue(), MessageQueueThread::runOnQueueSync() methods.
+delegate void QueueItem();
+
+interface IMessageQueue
+{
+	void Run(QueueItem item);
+	void RunSync(QueueItem item);
+	void QuitSync();
+};
+
+// ABI_REVIEW:
+//     using MemoryThresholdCallback = std::function<void(size_t currentlyUsedMemory)>;
+delegate void MemoryThresholdHandler(UInt64 currentlyUsedMemory);
+
+runtimeclass MemoryTracker
+{
+	MemoryTracker(IMessageQueue callbackMessageQueue);
+	UInt64 CurrentMemoryUsage { get; };
+	UInt64 PeakMemoryUsage { get; };
+	IMessageQueue CallbackMessageQueue { get; set; };
+	UInt32 AddThresholdHandler(UInt64 threshold, UInt32 minCallbackIntervalInMilliseconds, MemoryThresholdHandler handler);
+	Boolean RemoveThresholdHandler(UInt32 token);
 };
 
 }
