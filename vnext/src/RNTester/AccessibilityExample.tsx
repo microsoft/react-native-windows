@@ -34,7 +34,7 @@ class AccessibilityBaseExample extends React.Component {
 class HighContrastExample extends React.Component {
   state = {
     isHighContrast: AppTheme.isHighContrast,
-    RGBValues: AppTheme.currentRGBValues,
+    highContrastColorValues: AppTheme.currentHighContrastColorValues,
     currentTheme: AppTheme.currentTheme
   };
 
@@ -51,7 +51,7 @@ class HighContrastExample extends React.Component {
   // TODO: Make args props
   onHighContrastChanged = (event: IAppThemeChangedEvent) => {
     this.setState({isHighContrast : AppTheme.isHighContrast, 
-                  RGBValues : AppTheme.currentRGBValues});
+                  highContrastColorValues : AppTheme.currentHighContrastColorValues});
   };
 
   onAppThemeChanged = (event: any) => {
@@ -68,16 +68,16 @@ class HighContrastExample extends React.Component {
           accessibilityHint="A hint for the blue box.">
         <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
         </View>
-        <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
-        <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
-        <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
-        <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
-        <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
-        <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
-        <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
-        <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
+        <Text>ButtonFaceColor value: {this.state.highContrastColorValues.ButtonFaceColor}</Text>
+        <Text>ButtonTextColor value: {this.state.highContrastColorValues.ButtonTextColor}</Text>
+        <Text>GrayTextColor value: {this.state.highContrastColorValues.GrayTextColor}</Text>
+        <Text>HighlightColor value: {this.state.highContrastColorValues.HighlightColor}</Text>
+        <Text>HighlightTextColor value: {this.state.highContrastColorValues.HighlightTextColor}</Text>
+        <Text>HotlightColor value: {this.state.highContrastColorValues.HotlightColor}</Text>
+        <Text>WindowColor value: {this.state.highContrastColorValues.WindowColor}</Text>
+        <Text>WindowTextColor value: {this.state.highContrastColorValues.WindowTextColor}</Text>
         <View
-          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}} // RGBs would need to be converted to hex to work directly.
+          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
           accessible={true}
           accessibilityLabel="A hint for the red box."
         />

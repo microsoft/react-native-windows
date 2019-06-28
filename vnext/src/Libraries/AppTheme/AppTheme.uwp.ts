@@ -4,7 +4,7 @@
 
 import { NativeEventEmitter, NativeModules } from 'react-native';
 const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
-import { IAppThemeChangedEvent, IRGBValues } from './AppTheme';
+import { IAppThemeChangedEvent, IColorValues } from './AppTheme';
 
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
@@ -12,27 +12,17 @@ class AppThemeModule extends NativeEventEmitter  {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
   private _currentTheme: string;
-  private _highContrastRGBValues: IRGBValues;
+  private _highContrastColors: IColorValues;
 
   constructor() {
     super(NativeAppTheme);
     this.isAvailable = true;
 
-    this._highContrastRGBValues = NativeAppTheme.highContrastRGBValues;
-    /*
-    {ButtonFaceRGB: ThemingNative.highContrastRGBValues.ButtonFaceRGB,
-                      ButtonTextRGB: ThemingNative.highContrastRGBValues.ButtonTextRGB,
-                      GrayTextRGB: ThemingNative.highContrastRGBValues.GrayTextRGB,
-                      HighlightRGB: ThemingNative.highContrastRGBValues.HighlightRGB,
-                      HighlightTextRGB: ThemingNative.highContrastRGBValues.HighlightTextRGB,
-                      HotlightRGB: ThemingNative.highContrastRGBValues.HotlightRGB,
-                      WindowRGB: ThemingNative.highContrastRGBValues.WindowRGB,
-                      WindowTextRGB: ThemingNative.highContrastRGBValues.WindowTextRGB};*/
-
-    this._isHighContrast = NativeAppTheme.isHighContrast;
+    this._highContrastColors = NativeAppTheme.initialHighContrastColors;
+    this._isHighContrast = NativeAppTheme.initialHighContrast;
     this.addListener('highContrastChanged', (nativeEvent: IAppThemeChangedEvent) => {
       this._isHighContrast = nativeEvent.isHighContrast;
-      this._highContrastRGBValues = nativeEvent.highContrastRGBValues;
+      this._highContrastColors = nativeEvent.highContrastColors;
     });
 
     this._currentTheme = NativeAppTheme.initialAppTheme;
@@ -49,8 +39,8 @@ class AppThemeModule extends NativeEventEmitter  {
     return this._isHighContrast;
   }
 
-  get currentRGBValues(): IRGBValues {
-    return this._highContrastRGBValues;
+  get currentHighContrastColorValues(): IColorValues {
+    return this._highContrastColors;
   }
 }
 

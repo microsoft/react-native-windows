@@ -28,12 +28,12 @@ AppTheme::AppTheme(const std::shared_ptr<IReactInstance>& reactInstance, const s
 {
   m_currentTheme = winrt::Application::Current().RequestedTheme();
   m_isHighContrast = m_accessibilitySettings.HighContrast();
-  m_RGBValues = getHighContrastRGBValues();
+  m_highContrastColors = getHighContrastColors();
 
   m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(winrt::auto_revoke,
       [this](const auto&, const auto&) {
 
-        folly::dynamic eventData = folly::dynamic::object("highContrastRGBValues", getHighContrastRGBValues())
+        folly::dynamic eventData = folly::dynamic::object("highContrastColors", getHighContrastColors())
           ("isHighContrast", getIsHighContrast());
 
         fireEvent("highContrastChanged", std::move(eventData));
@@ -56,7 +56,7 @@ AppTheme::AppTheme(const std::shared_ptr<IReactInstance>& reactInstance, const s
 }
 
 // Returns the RBG values for the 8 relevant High Contrast elements.
-folly::dynamic AppTheme::getHighContrastRGBValues() {
+folly::dynamic AppTheme::getHighContrastColors() {
   winrt::Windows::UI::Color ButtonFaceColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace);
   winrt::Windows::UI::Color ButtonTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::ButtonText);
   winrt::Windows::UI::Color GrayTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
@@ -65,20 +65,22 @@ folly::dynamic AppTheme::getHighContrastRGBValues() {
   winrt::Windows::UI::Color HotlightColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::Hotlight);
   winrt::Windows::UI::Color WindowColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::Window);
   winrt::Windows::UI::Color WindowTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::WindowText);
-  folly::dynamic rbgValues = folly::dynamic::object("ButtonFaceRGB", formatRGB(ButtonFaceColor))
-                                                  ("ButtonTextRGB", formatRGB(ButtonTextColor))
-                                                  ("GrayTextRGB", formatRGB(GrayTextColor))
-                                                  ("HighlightRGB", formatRGB(HighlightColor))
-                                                  ("HighlightTextRGB", formatRGB(HighlightTextColor))
-                                                  ("HotlightRGB", formatRGB(HotlightColor))
-                                                  ("WindowRGB", formatRGB(WindowColor))
-                                                  ("WindowTextRGB", formatRGB(WindowTextColor));
+  folly::dynamic rbgValues = folly::dynamic::object("ButtonFaceColor", formatRGB(ButtonFaceColor))
+                                                  ("ButtonTextColor", formatRGB(ButtonTextColor))
+                                                  ("GrayTextColor", formatRGB(GrayTextColor))
+                                                  ("HighlightColor", formatRGB(HighlightColor))
+                                                  ("HighlightTextColor", formatRGB(HighlightTextColor))
+                                                  ("HotlightColor", formatRGB(HotlightColor))
+                                                  ("WindowColor", formatRGB(WindowColor))
+                                                  ("WindowTextColor", formatRGB(WindowTextColor));
   return rbgValues;
 }
 
 std::string AppTheme::formatRGB(winrt::Windows::UI::Color ElementColor) {
   std::stringstream RGBString;
-  RGBString << "#" << std::setfill('0') << std::setw(3) << (int)ElementColor.R << std::setfill('0') << std::setw(3) << (int)ElementColor.G << std::setfill('0') << std::setw(3) << (int)ElementColor.B;
+  RGBString << "#" << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.R 
+            << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.G 
+            << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.B;
   return RGBString.str();
 }
 

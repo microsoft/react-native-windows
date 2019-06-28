@@ -20,8 +20,8 @@ public:
   bool getIsHighContrast() override;
 
 private:
-  // RGB helper methods
-  folly::dynamic getHighContrastRGBValues();
+  // High Contrast Color helper methods
+  folly::dynamic getHighContrastColors();
   std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
   void fireEvent(std::string const& eventName, folly::dynamic&& eventData);
@@ -30,7 +30,7 @@ private:
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
   winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{ winrt::Windows::UI::Xaml::ApplicationTheme::Light };
   bool m_isHighContrast;
-  folly::dynamic m_RGBValues;
+  folly::dynamic m_highContrastColors;
 
   winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{ };
   winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{ };
