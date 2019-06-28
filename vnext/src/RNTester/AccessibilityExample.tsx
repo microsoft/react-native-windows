@@ -4,7 +4,7 @@
 /* tslint:disable */
 
 import React = require('react');
-import { FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { FlatList, Text, TouchableHighlight, View, StyleSheet } from 'react-native';
 import { AppTheme } from '../../src/index.uwp';
 import { IAppThemeChangedEvent } from 'src/Libraries/AppTheme/AppThemeTypes';
 
@@ -60,28 +60,85 @@ class HighContrastExample extends React.Component {
     return (
       <View>
         <Text>The following has HighContrast Event awareness:</Text>
-        <View
-          style={{width: 150, height: 50, backgroundColor: 'red'}}
-          accessibilityLabel="A blue box"
-          accessibilityHint="A hint for the blue box.">
-          <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
+        <View>
+          <Text>isHighContrast: {this.state.isHighContrast ? 'True' : 'False'}</Text>
         </View>
-        <Text>ButtonFaceColor value: {this.state.highContrastColorValues.ButtonFaceColor}</Text>
-        <Text>ButtonTextColor value: {this.state.highContrastColorValues.ButtonTextColor}</Text>
-        <Text>GrayTextColor value: {this.state.highContrastColorValues.GrayTextColor}</Text>
-        <Text>HighlightColor value: {this.state.highContrastColorValues.HighlightColor}</Text>
-        <Text>HighlightTextColor value: {this.state.highContrastColorValues.HighlightTextColor}</Text>
-        <Text>HotlightColor value: {this.state.highContrastColorValues.HotlightColor}</Text>
-        <Text>WindowColor value: {this.state.highContrastColorValues.WindowColor}</Text>
-        <Text>WindowTextColor value: {this.state.highContrastColorValues.WindowTextColor}</Text>
-        <View
-          style={{ width: 150, height: 50, backgroundColor: this.state.highContrastColorValues.ButtonFaceColor}}
-          accessible={true}
-          accessibilityLabel="A hint for the red box."
-        />
+        <View style = {this.state.isHighContrast? this.styles.ButtonFaceEnabled : this.styles.disabled}>
+          <Text>ButtonFace High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.ButtonTextEnabled : this.styles.disabled}>
+          <Text>ButtonText High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.GrayTextEnabled : this.styles.disabled}>
+          <Text>GrayText High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.HighlightEnabled : this.styles.disabled}> 
+          <Text>Highlight High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.HighlightTextEnabled : this.styles.disabled}> 
+          <Text>HighlightText High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.HotlightEnabled : this.styles.disabled}> 
+          <Text>Hotlight High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.WindowEnabled : this.styles.disabled}> 
+          <Text>Window High Contrast Color</Text>
+        </View>
+        <View style = {this.state.isHighContrast? this.styles.WindowTextEnabled : this.styles.disabled}> 
+          <Text>WindowText High Contrast Color</Text>
+        </View>
       </View>
     );
   }
+
+  styles = StyleSheet.create ({
+    ButtonFaceEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.ButtonFaceColor
+    },
+    ButtonTextEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.ButtonTextColor
+    },
+    GrayTextEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.GrayTextColor
+    },
+    HighlightEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.HighlightColor
+    },
+    HighlightTextEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.HighlightTextColor
+    },
+    HotlightEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.HotlightColor
+    },
+    WindowEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.WindowColor
+    },
+    WindowTextEnabled: {
+      width: 50, 
+      height: 50, 
+      backgroundColor: this.state.highContrastColorValues.WindowTextColor
+    },
+    disabled: {
+      width: 50,
+      height: 50,
+      backgroundColor: 'gray',
+      textColor: 'white' 
+    }
+  });
 }
 
 class TouchableExamples extends React.Component<{}, any> {
