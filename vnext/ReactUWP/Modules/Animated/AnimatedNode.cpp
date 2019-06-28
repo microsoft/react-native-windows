@@ -20,19 +20,19 @@ namespace react {
     void AnimatedNode::AddChild(const int64_t animatedNodeTag)
     {
       m_children.push_back(animatedNodeTag);
-      GetChildNode(animatedNodeTag).OnAttachToNode(m_tag);
+      GetChildNode(animatedNodeTag)->OnAttachToNode(m_tag);
     }
 
     void AnimatedNode::RemoveChild(const int64_t tag)
     {
-      if (const auto childNode = &GetChildNode(tag))
+      if (const auto childNode = GetChildNode(tag))
       {
         childNode->OnDetachedFromNode(m_tag);
         m_children.erase(std::find(m_children.begin(), m_children.end(), tag));
       }
     }
 
-    AnimatedNode& AnimatedNode::GetChildNode(int64_t tag)
+    AnimatedNode* AnimatedNode::GetChildNode(int64_t tag)
     {
       if (std::find(m_children.begin(), m_children.end(), tag) != m_children.end())
       {
@@ -42,7 +42,7 @@ namespace react {
         }
       }
 
-      return *static_cast<AnimatedNode*>(nullptr);
+      return static_cast<AnimatedNode*>(nullptr);
     }
   }
 }

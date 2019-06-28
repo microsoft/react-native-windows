@@ -25,7 +25,7 @@ namespace react { namespace uwp {
     inline constexpr int64_t Id() { return m_id; };
 
   protected:
-    ValueAnimatedNode& GetAnimatedValue();
+    ValueAnimatedNode* GetAnimatedValue();
 
     int64_t m_id{ 0 };
     int64_t m_animatedValueTag{};

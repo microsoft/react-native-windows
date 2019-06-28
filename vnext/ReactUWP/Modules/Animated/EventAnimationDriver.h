@@ -12,7 +12,7 @@ namespace react { namespace uwp {
   {
   public:
     EventAnimationDriver(const folly::dynamic& eventPath, int64_t animatedValueTag, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
-    ValueAnimatedNode& AnimatedValue();
+    ValueAnimatedNode* AnimatedValue();
 
   private:
     std::vector<std::string> m_eventPath{};

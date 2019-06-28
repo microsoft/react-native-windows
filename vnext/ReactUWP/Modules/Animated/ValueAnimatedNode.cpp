@@ -89,7 +89,7 @@ namespace react { namespace uwp {
       {
         for (const auto& props : m_dependentPropsNodes)
         {
-          manager->GetPropsAnimatedNode(props).DisposeCompletedAnimation(Tag());
+          manager->GetPropsAnimatedNode(props)->DisposeCompletedAnimation(Tag());
         }
       }
     }

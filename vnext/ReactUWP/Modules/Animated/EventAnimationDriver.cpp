@@ -16,13 +16,13 @@ namespace react { namespace uwp {
     }
   }
 
-  ValueAnimatedNode& EventAnimationDriver::AnimatedValue()
+  ValueAnimatedNode* EventAnimationDriver::AnimatedValue()
   {
     if (const auto manager = m_manager.lock())
     {
       return manager->GetValueAnimatedNode(m_animatedValueTag);
     }
-    return *static_cast<ValueAnimatedNode*>(nullptr);
+    return static_cast<ValueAnimatedNode*>(nullptr);
   }
 
 } }

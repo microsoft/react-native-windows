@@ -27,12 +27,12 @@ namespace react { namespace uwp {
 
         anim.Expression([firstNode, nodes, manager, anim]()
         {
-          anim.SetReferenceParameter(s_baseName, manager->GetValueAnimatedNode(firstNode).PropertySet());
+          anim.SetReferenceParameter(s_baseName, manager->GetValueAnimatedNode(firstNode)->PropertySet());
           winrt::hstring expr = static_cast<winrt::hstring>(L"(") + s_baseName + L"." + s_valueName + L" + " + s_baseName + L"." + s_offsetName + L")";
           for (const auto tag : nodes)
           {
             const auto identifier = std::to_wstring(tag);
-            anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag).PropertySet());
+            anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
             expr = expr + L" / (" + identifier + L"." + s_valueName + L" " + identifier + L"." + s_offsetName + L")";
           }
           return expr;

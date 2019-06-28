@@ -24,7 +24,7 @@ namespace react { namespace uwp {
         for (const auto tag : nodes)
         {
           auto identifier = std::to_wstring(tag);
-          anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag).PropertySet());
+          anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
           expr = expr + L" * (" + identifier + L"." + s_valueName + L" + " + identifier + L"." + s_offsetName + L")";
         }
         return expr;

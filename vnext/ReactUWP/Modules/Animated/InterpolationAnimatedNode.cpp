@@ -51,7 +51,7 @@ namespace react { namespace uwp {
     {
       if (const auto manager = m_manager.lock())
       {
-        if (const auto parent = &manager->GetValueAnimatedNode(m_parentTag))
+        if (const auto parent = manager->GetValueAnimatedNode(m_parentTag))
         {
           const auto compositor = winrt::Window::Current().Compositor();
 

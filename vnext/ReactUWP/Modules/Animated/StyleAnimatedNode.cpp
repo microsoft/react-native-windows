@@ -27,7 +27,7 @@ namespace react { namespace uwp {
     {
       if (const auto manager = m_manager.lock())
       {
-        if (const auto transformNode = &manager->GetTransformAnimatedNode(prop.second))
+        if (const auto transformNode = manager->GetTransformAnimatedNode(prop.second))
         {
           const auto transformMapping = transformNode->GetMapping();
           mapping.insert(transformMapping.begin(), transformMapping.end());

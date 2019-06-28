@@ -55,13 +55,13 @@ namespace react { namespace uwp {
     void ProcessDelayedPropsNodes();
     void AddDelayedPropsNode(int64_t propsNodeTag, const std::shared_ptr<IReactInstance>& instance);
 
-    AnimationDriver& GetAnimationNode(int64_t tag);
+    AnimationDriver* GetAnimationNode(int64_t tag);
 
-    AnimatedNode& GetAnimatedNode(int64_t tag);
-    ValueAnimatedNode& GetValueAnimatedNode(int64_t tag);
-    PropsAnimatedNode& GetPropsAnimatedNode(int64_t tag);
-    StyleAnimatedNode& GetStyleAnimatedNode(int64_t tag);
-    TransformAnimatedNode& GetTransformAnimatedNode(int64_t tag);
+    AnimatedNode* GetAnimatedNode(int64_t tag);
+    ValueAnimatedNode* GetValueAnimatedNode(int64_t tag);
+    PropsAnimatedNode* GetPropsAnimatedNode(int64_t tag);
+    StyleAnimatedNode* GetStyleAnimatedNode(int64_t tag);
+    TransformAnimatedNode* GetTransformAnimatedNode(int64_t tag);
 
   private:
     std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>> m_animationNodes{};

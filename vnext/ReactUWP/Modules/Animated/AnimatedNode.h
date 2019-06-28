@@ -20,7 +20,7 @@ namespace react { namespace uwp {
     virtual void OnAttachToNode(int64_t animatedNodeTag) {};
 
   protected:
-    AnimatedNode& GetChildNode(int64_t tag);
+    AnimatedNode* GetChildNode(int64_t tag);
     const std::weak_ptr<NativeAnimatedNodeManager> m_manager;
 
   protected:

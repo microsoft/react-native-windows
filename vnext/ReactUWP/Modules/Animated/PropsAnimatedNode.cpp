@@ -76,14 +76,14 @@ namespace react { namespace uwp {
     {
       for (const auto& entry : m_propMapping)
       {
-        if (const auto& styleNode = &manager->GetStyleAnimatedNode(entry.second))
+        if (const auto& styleNode = manager->GetStyleAnimatedNode(entry.second))
         {
           for (const auto& styleEntry : styleNode->GetMapping())
           {
             MakeAnimation(styleEntry.second, styleEntry.first);
           }
         }
-        else if (const auto& valueNode = &manager->GetValueAnimatedNode(entry.second))
+        else if (const auto& valueNode = manager->GetValueAnimatedNode(entry.second))
         {
           MakeAnimation(entry.second, StringToFacadeType(entry.first));
         }
@@ -146,7 +146,7 @@ namespace react { namespace uwp {
   {
     if (const auto manager = m_manager.lock())
     {
-      if (const auto valueNode = &manager->GetValueAnimatedNode(valueNodeTag))
+      if (const auto valueNode = manager->GetValueAnimatedNode(valueNodeTag))
       {
         const auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
         animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
