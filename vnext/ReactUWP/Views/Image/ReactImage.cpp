@@ -69,7 +69,6 @@ namespace react {
 
       if (source.packagerAsset && uriString.find("file://") == 0)
       {
-        
         uriString.replace(0, 7, source.bundleRootPath);
       }
 
