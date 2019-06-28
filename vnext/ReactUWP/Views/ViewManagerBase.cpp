@@ -24,6 +24,9 @@ namespace react { namespace uwp {
 
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode)
 {
+  // Round up to workaround truncation inside yoga
+  measuredSize = ceil(measuredSize);
+
   if (measureMode == YGMeasureMode::YGMeasureModeExactly)
     return constrainTo;
   if (measureMode == YGMeasureMode::YGMeasureModeAtMost)
