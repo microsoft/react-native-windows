@@ -179,6 +179,8 @@ namespace react { namespace uwp {
       return;
 
     auto sources{ json_type_traits<std::vector<ImageSource>>::parseJson(data) };
+    sources[0].bundleRootPath = instance->GetBundleRootPath();
+
     auto reactImage{ canvas.as<ReactImage>() };
 
     EmitImageEvent(canvas, "topLoadStart", sources[0]);

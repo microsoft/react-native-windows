@@ -36,6 +36,7 @@ struct ReactInstanceSettings
   std::string ByteCodeFileUri;
   std::string DebugHost;
   std::string DebugBundlePath;
+  std::string BundleRootPath;
   facebook::react::NativeLoggingHook LoggingCallback;
   std::function<void(facebook::react::JSExceptionInfo&&)> JsExceptionCallback;
 };
@@ -78,6 +79,10 @@ struct IReactInstance
   virtual const std::string& LastErrorMessage() const noexcept = 0;
 
   virtual void loadBundle(std::string&& jsBundleRelativePath) = 0;
+
+  // Returns the root path of the JS bundle. This is needed for
+  // classes that do not have access to the settings object.
+  virtual std::string GetBundleRootPath() const noexcept = 0;
 
   // Test Hooks
   virtual void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) = 0;
