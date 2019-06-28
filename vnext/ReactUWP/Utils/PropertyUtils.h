@@ -107,7 +107,7 @@ bool TryUpdateBackgroundBrush(const T& element, const std::string& propertyName,
 {
   if (propertyName == "backgroundColor")
   {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.Background(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BackgroundProperty());
@@ -131,7 +131,7 @@ bool TryUpdateForeground(const T& element, const std::string& propertyName, cons
 {
   if (propertyName == "color")
   {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.Foreground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::ForegroundProperty());
@@ -149,7 +149,7 @@ bool TryUpdateBorderProperties(ShadowNodeBase* node, const T& element, const std
 
   if (propertyName == "borderColor")
   {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BorderBrushProperty());

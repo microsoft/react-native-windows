@@ -122,7 +122,7 @@ void TextViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
     }
     else if (propertyName == "selectionColor")
     {
-      if (propertyValue.isNumber())
+      if (IsValidColorValue(propertyValue))
       {
         textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       }

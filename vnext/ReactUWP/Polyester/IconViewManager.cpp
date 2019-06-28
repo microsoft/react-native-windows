@@ -66,7 +66,7 @@ void IconShadowNode::updateProperties(const folly::dynamic&& props)
 
     if (propertyName == "color")
     {
-      if (propertyValue.isNumber())
+      if (IsValidColorValue(propertyValue))
         glyphs.Fill(BrushFrom(propertyValue));
 #if FUTURE
       else if (propertyValue.isNull())

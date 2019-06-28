@@ -298,7 +298,7 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
 
       if (propertyName == "backgroundColor")
       {
-        if (propertyValue.isNumber())
+        if (IsValidColorValue(propertyValue))
           pPanel.ViewBackground(BrushFrom(propertyValue));
         else if (propertyValue.isNull())
           pPanel.ClearValue(ViewPanel::ViewBackgroundProperty());

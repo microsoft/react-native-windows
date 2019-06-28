@@ -49,9 +49,39 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
 
 REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynamic& d)
 {
-  thread_local static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
+  if (d.isObject())
+  {
+    winrt::hstring brushName{ winrt::to_hstring(d.find("windowsbrush")->second.asString()) };
+
+    winrt::IInspectable resource{ winrt::Application::Current().Resources().Lookup(winrt::box_value(brushName)) };
+
+    if (brushName == L"SystemAccentColor"
+      || brushName == L"SystemAccentColorLight1"
+      || brushName == L"SystemAccentColorLight2"
+      || brushName == L"SystemAccentColorLight3"
+      || brushName == L"SystemAccentColorDark1"
+      || brushName == L"SystemAccentColorDark2"
+      || brushName == L"SystemAccentColorDark3")
+    {
+      if (winrt::Application::Current().Resources().HasKey(winrt::box_value(brushName + L"Brush")))
+      {
+        resource = winrt::Application::Current().Resources().Lookup(winrt::box_value(brushName + L"Brush"));
+      }
+      else
+      {
+        const winrt::SolidColorBrush brush{ winrt::unbox_value<winrt::Color>(resource) };
+        winrt::Application::Current().Resources().Insert(winrt::box_value(brushName + L"Brush"), winrt::box_value(brush));
+
+        return brush;
+      }
+    }
+
+    return winrt::unbox_value<winrt::SolidColorBrush>(resource);
+  }
 
   const auto color = ColorFrom(d);
+  thread_local static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
+
   if (solidColorBrushCache.count(color) != 0)
   {
     auto brush = solidColorBrushCache[color].get();
@@ -137,6 +167,16 @@ REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr)
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic& d)
 {
   return winrt::hstring(asWStr(d));
+}
+
+REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic& d)
+{
+  if (d.isObject())
+  {
+    return d.find("windowsbrush") != d.items().end();
+  }
+
+  return d.isNumber();
 }
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms)
