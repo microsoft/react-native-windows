@@ -15,8 +15,13 @@ using namespace folly;
 
 using std::string;
 
-namespace Microsoft {
-namespace React {
+namespace {
+
+constexpr char moduleName[] = "WebSocketModule";
+
+} // anonymous namespace
+
+namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule()
 {
@@ -24,7 +29,7 @@ WebSocketModule::WebSocketModule()
 
 string WebSocketModule::getName()
 {
-  return "WebSocketModule";
+  return moduleName;
 }
 
 std::map<string, dynamic> WebSocketModule::getConstants()
@@ -59,15 +64,15 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           }
         }
 
-        this->GetWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0))->Connect(protocols, options);
+        this->GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0))->Connect(protocols, options);
       }),
     Method("close", [this](dynamic args) // [int64_t code, string reason,] int64_t id
       {
         // See react-native\Libraries\WebSocket\WebSocket.js:_close
         if (args.size() == 3)      // WebSocketModule.close(statusCode, closeReason, this._socketId);
-          this->GetWebSocket(jsArgAsInt(args, 2))->Close(static_cast<IWebSocket::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
+          this->GetOrCreateWebSocket(jsArgAsInt(args, 2))->Close(static_cast<IWebSocket::CloseCode>(jsArgAsInt(args, 0)), jsArgAsString(args, 1));
         else if (args.size() == 1) // WebSocketModule.close(this._socketId);
-          this->GetWebSocket(jsArgAsInt(args, 0))->Close(IWebSocket::CloseCode::Normal, {});
+          this->GetOrCreateWebSocket(jsArgAsInt(args, 0))->Close(IWebSocket::CloseCode::Normal, {});
         else
         {
           auto errorObj = dynamic::object("id", -1)("message", "Incorrect number of parameters");
@@ -76,15 +81,15 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
       }),
     Method("send", [this](dynamic args) // const string& message, int64_t id
       {
-        this->GetWebSocket(jsArgAsInt(args, 1))->Send(jsArgAsString(args, 0));
+        this->GetOrCreateWebSocket(jsArgAsInt(args, 1))->Send(jsArgAsString(args, 0));
       }),
     Method("sendBinary", [this](dynamic args) // const string& base64String, int64_t id
       {
-        this->GetWebSocket(jsArgAsInt(args, 1))->SendBinary(jsArgAsString(args, 0));
+        this->GetOrCreateWebSocket(jsArgAsInt(args, 1))->SendBinary(jsArgAsString(args, 0));
       }),
     Method("ping", [this](dynamic args) // int64_t id
       {
-        this->GetWebSocket(jsArgAsInt(args, 0))->Ping();
+        this->GetOrCreateWebSocket(jsArgAsInt(args, 0))->Ping();
       })
   };
 }//getMethods
@@ -98,7 +103,7 @@ void WebSocketModule::SendEvent(string&& eventName, dynamic&& args)
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
 }
 
-IWebSocket* WebSocketModule::GetWebSocket(int64_t id, string&& url)
+IWebSocket* WebSocketModule::GetOrCreateWebSocket(int64_t id, string&& url)
 {
   IWebSocket* ptr = nullptr;
   if (m_webSockets.find(id) == m_webSockets.end())
@@ -136,11 +141,11 @@ IWebSocket* WebSocketModule::GetWebSocket(int64_t id, string&& url)
   return ptr;
 }
 
-#pragma endregion // private members
+#pragma endregion private members
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept
 {
 	return std::make_unique<WebSocketModule>();
 }
 
-} } // Microsoft::React
+} // Microsoft::React
