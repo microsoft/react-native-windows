@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-export interface IColorValues  {
+export interface IHighContrastColors  {
   ButtonFaceColor: string;
   ButtonTextColor: string;
   GrayTextColor: string;
@@ -18,5 +18,5 @@ export interface IAppThemeChangedEvent {
 
 export interface IHighContrastChangedEvent {
   isHighContrast: boolean;
-  highContrastColors: IColorValues;
+  highContrastColors: IHighContrastColors;
 }

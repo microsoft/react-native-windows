@@ -91,11 +91,9 @@ folly::dynamic AppTheme::getHighContrastColors() {
 }
 
 std::string AppTheme::formatRGB(winrt::Windows::UI::Color ElementColor) {
-  std::stringstream RGBString;
-  RGBString << "#" << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.R 
-            << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.G 
-            << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.B;
-  return RGBString.str();
+  char colorChars[8];
+  sprintf_s(colorChars, "#%02x%02x%02x", ElementColor.R, ElementColor.G, ElementColor.B);
+  return colorChars;
 }
 
 void AppTheme::fireEvent(std::string const& eventName, folly::dynamic&& eventData)

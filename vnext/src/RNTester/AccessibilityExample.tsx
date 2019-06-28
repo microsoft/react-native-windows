@@ -32,7 +32,7 @@ class AccessibilityBaseExample extends React.Component {
 class HighContrastExample extends React.Component {
   state = {
     isHighContrast: AppTheme.isHighContrast,
-    highContrastColorValues: AppTheme.currentHighContrastColorValues,
+    highContrastColorValues: AppTheme.currentHighContrastColors,
     currentTheme: AppTheme.currentTheme
   };
 
@@ -49,7 +49,7 @@ class HighContrastExample extends React.Component {
   // TODO: Make args props
   onHighContrastChanged = (event: IAppThemeChangedEvent) => {
     this.setState({isHighContrast : AppTheme.isHighContrast, 
-                  highContrastColorValues : AppTheme.currentHighContrastColorValues});
+                  highContrastColorValues : AppTheme.currentHighContrastColors});
   };
 
   onAppThemeChanged = (event: any) => {
@@ -63,80 +63,43 @@ class HighContrastExample extends React.Component {
         <View>
           <Text>isHighContrast: {this.state.isHighContrast ? 'True' : 'False'}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.ButtonFaceEnabled : this.styles.disabled}>
-          <Text>ButtonFace High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.ButtonFaceColor}] : this.styles.disabled}>
+          <Text>ButtonFace High Contrast Hex Value: {this.state.highContrastColorValues.ButtonFaceColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.ButtonTextEnabled : this.styles.disabled}>
-          <Text>ButtonText High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.ButtonTextColor}] : this.styles.disabled}>
+          <Text>ButtonText High Contrast Color Hex Value: {this.state.highContrastColorValues.ButtonTextColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.GrayTextEnabled : this.styles.disabled}>
-          <Text>GrayText High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.GrayTextColor}] : this.styles.disabled}>
+          <Text>GrayText High Contrast Color Hex Value: {this.state.highContrastColorValues.GrayTextColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.HighlightEnabled : this.styles.disabled}> 
-          <Text>Highlight High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HighlightColor}] : this.styles.disabled}> 
+          <Text>Highlight High Contrast Color Hex Value: {this.state.highContrastColorValues.HighlightColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.HighlightTextEnabled : this.styles.disabled}> 
-          <Text>HighlightText High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HighlightTextColor}] : this.styles.disabled}> 
+          <Text>HighlightText High Contrast Color Hex Value: {this.state.highContrastColorValues.HighlightTextColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.HotlightEnabled : this.styles.disabled}> 
-          <Text>Hotlight High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HotlightColor}] : this.styles.disabled}> 
+          <Text>Hotlight High Contrast Color Hex Value: {this.state.highContrastColorValues.HotlightColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.WindowEnabled : this.styles.disabled}> 
-          <Text>Window High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.WindowColor}] : this.styles.disabled}> 
+          <Text>Window High Contrast Color Hex Value: {this.state.highContrastColorValues.WindowColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? this.styles.WindowTextEnabled : this.styles.disabled}> 
-          <Text>WindowText High Contrast Color</Text>
+        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.WindowTextColor}] : this.styles.disabled}> 
+          <Text>WindowText High Contrast Color Hex Value: {this.state.highContrastColorValues.WindowTextColor}</Text>
         </View>
       </View>
     );
   }
 
   styles = StyleSheet.create ({
-    ButtonFaceEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.ButtonFaceColor
-    },
-    ButtonTextEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.ButtonTextColor
-    },
-    GrayTextEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.GrayTextColor
-    },
-    HighlightEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.HighlightColor
-    },
-    HighlightTextEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.HighlightTextColor
-    },
-    HotlightEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.HotlightColor
-    },
-    WindowEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.WindowColor
-    },
-    WindowTextEnabled: {
-      width: 50, 
-      height: 50, 
-      backgroundColor: this.state.highContrastColorValues.WindowTextColor
+    enabled: {
+      width: 250, 
+      height: 50
     },
     disabled: {
-      width: 50,
+      width: 250,
       height: 50,
-      backgroundColor: 'gray',
-      textColor: 'white' 
+      backgroundColor: '#808080'
     }
   });
 }
