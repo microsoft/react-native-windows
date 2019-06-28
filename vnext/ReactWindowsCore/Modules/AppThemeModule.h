@@ -19,6 +19,8 @@ public:
   virtual ~AppTheme();
 
   virtual const std::string getCurrentTheme();
+  virtual bool getIsHighContrast();
+  virtual folly::dynamic getHighContrastRGBValues();
 };
 
 class AppThemeModule : public facebook::xplat::module::CxxModule

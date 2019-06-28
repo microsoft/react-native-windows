@@ -11,4 +11,4 @@ export * from './Libraries/Components/Keyboard/KeyboardExt';
 export * from './Libraries/Components/Keyboard/KeyboardExtProps';
 export * from './Libraries/Components/View/ViewWindowsProps';
 export * from './Libraries/Components/View/ViewWindows';
-export * from './Libraries/Modules/AppTheme/AppTheme';
+export * from './Libraries/AppTheme/AppTheme';

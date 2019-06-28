@@ -19,6 +19,16 @@ const std::string AppTheme::getCurrentTheme()
   return AppTheme::light;
 }
 
+bool AppTheme::getIsHighContrast()
+{
+  return false;
+}
+
+folly::dynamic AppTheme::getHighContrastRGBValues()
+{
+  return folly::dynamic::object("highContrastRGBValues", "None");
+}
+
 //
 // AppThemeModule
 //
@@ -32,6 +42,8 @@ auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic>
 {
   return {
     { "initialAppTheme", folly::dynamic { m_appTheme->getCurrentTheme() } }
+    { "isHighContrast", folly::dynamic { m_appTheme->getIsHighContrast() }},
+    { "highContrastRGBValues", folly::dynamic {m_appTheme->getHighContrastRGBValues()}}
   };
 }
 

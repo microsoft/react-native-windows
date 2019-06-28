@@ -4,7 +4,11 @@
 /* tslint:disable */
 
 import React = require('react');
-import { FlatList, Text, TouchableHighlight, View } from 'react-native';
+import { Text, TouchableHighlight, View } from 'react-native';
+import { AppTheme } from '../../src/index.uwp';
+import { IAppThemeChangedEvent } from 'src/Libraries/AppTheme/AppTheme';
+
+var currentBackgroundColor = ['blue', 'red', '#E6E6E6', '#7fff00'];
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -12,13 +16,68 @@ class AccessibilityBaseExample extends React.Component {
       <View>
         <Text>The following has accessibilityLabel and accessibilityHint:</Text>
         <View
-          style={{width:100, height:50, backgroundColor:'blue'}}
+          style={{width:50, height:50, backgroundColor:'blue'}}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
         />
         <Text>The following has accessible and accessibilityLabel:</Text>
         <View
-          style={{ width: 100, height: 50, backgroundColor: 'red' }}
+          style={{ width: 50, height: 50, backgroundColor: 'red' }}
+          accessible={true}
+          accessibilityLabel="A hint for the red box."
+        />
+      </View>
+    );
+  }
+}
+
+class HighContrastExample extends React.Component {
+  state = {
+    isHighContrast: AppTheme.isHighContrast,
+    RGBValues: AppTheme.currentRGBValues,
+    currentTheme: AppTheme.currentTheme
+  };
+
+  componentDidMount() {
+    AppTheme.addListener('highContrastChanged', this.onHighContrastChanged);
+    AppTheme.addListener('appThemeChanged', this.onAppThemeChanged);
+  }
+
+  componenetWillUnmount() {
+    AppTheme.removeListener('highContrastChanged', this.onHighContrastChanged);
+    AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
+  } 
+
+  // TODO: Make args props
+  onHighContrastChanged = (event: IAppThemeChangedEvent) => {
+    this.setState({isHighContrast : AppTheme.isHighContrast, 
+                  RGBValues : AppTheme.currentRGBValues});
+  };
+
+  onAppThemeChanged = (event: any) => {
+    this.setState({currentTheme : AppTheme.currentTheme});
+  }
+
+  public render() {
+    return (
+      <View>
+        <Text>The following has HighContrast Event awareness:</Text>
+        <View
+          style={{width: 150, height: 50, backgroundColor: currentBackgroundColor[2]}}
+          accessibilityLabel="A blue box"
+          accessibilityHint="A hint for the blue box.">
+        <Text>isHighContrast: {this.state.isHighContrast ? 'true' : 'false'}</Text>
+        </View>
+        <Text>ButtonFaceRGB value: {this.state.RGBValues.ButtonFaceRGB}</Text>
+        <Text>ButtonTextRGB value: {this.state.RGBValues.ButtonTextRGB}</Text>
+        <Text>GrayTextRGB value: {this.state.RGBValues.GrayTextRGB}</Text>
+        <Text>HighlightRGB value: {this.state.RGBValues.HighlightRGB}</Text>
+        <Text>HighlightTextRGB value: {this.state.RGBValues.HighlightTextRGB}</Text>
+        <Text>HotlightRGB value: {this.state.RGBValues.HotlightRGB}</Text>
+        <Text>WindowRGB value: {this.state.RGBValues.WindowRGB}</Text>
+        <Text>WindowTextRGB value: {this.state.RGBValues.WindowTextRGB}</Text>
+        <View
+          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}} // RGBs would need to be converted to hex to work directly.
           accessible={true}
           accessibilityLabel="A hint for the red box."
         />
@@ -37,7 +96,7 @@ class TouchableExamples extends React.Component<{}, any> {
       <View>
         <Text>The following TouchableHighlight has accessibilityLabel, accessibilityHint, accessibilityRole, toolip:</Text>
         <TouchableHighlight
-          style={{width:100, height:50, backgroundColor:'blue'}}
+          style={{width:50, height:50, backgroundColor:'blue'}}
           accessibilityLabel="A blue box"
           accessibilityHint="A hint for the blue box."
           accessibilityRole="button"
@@ -46,7 +105,7 @@ class TouchableExamples extends React.Component<{}, any> {
         >
           <Text>Blue</Text>
         </TouchableHighlight>
-        <Text accessibilityLiveRegion="polite" accessibilityLabel={"Pressed " + this.state.pressedCount + " times"}>Pressed {this.state.pressedCount} times</Text>
+        <Text accessibilityLiveRegion="polite" accessibilityLabel={"Pressed " + this.state.pressedCount + "times"}>Pressed {this.state.pressedCount} times</Text>
       </View>
     );
   }
@@ -56,61 +115,6 @@ class TouchableExamples extends React.Component<{}, any> {
   }
 }
 
-class AccessibilityStateExamples extends React.Component {
-  public state = {
-    viewDisabled: false,
-    itemsSelected: [false, false, false],
-  }
-
-  public render() {
-    var selectableItems = [{}, {}, {}]
-    return (
-      <View>
-        <Text>The following TouchableHighlight toggles accessibilityState.disabled for the View under it:</Text>
-        <TouchableHighlight
-          style={{width:100, height:50, backgroundColor:'blue'}}
-          accessibilityRole="button"
-          onPress={this.disablePress}
-        >
-          <Text>Toggle</Text>
-        </TouchableHighlight>
-        <View
-          style={{backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue'}}
-          accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
-          <Text>This View should be {this.state.viewDisabled ? "disabled" : "enabled"} according to UIA</Text>
-        </View>
-        <Text>The following list of TouchableHighlights toggles accessibilityState.selected when touched:</Text>
-        <View accessibilityLabel="List of selectable items">
-          <FlatList
-            data={selectableItems}
-            renderItem={(item) =>
-              <TouchableHighlight
-                style={{width:100, height:50, backgroundColor: this.state.itemsSelected[item.index] ? 'gray' : 'lightskyblue'}}
-                accessibilityRole="button"
-                accessibilityLabel={"Selectable item " + (item.index + 1)}
-                accessibilityStates={this.state.itemsSelected[item.index] ? ['selected'] : []}
-                onPress={() => this.selectPress(item.index)}
-              >
-                <Text>{this.state.itemsSelected[item.index] ? "Selected" : "Unselected"} </Text>
-              </TouchableHighlight>
-            }
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
-      </View>
-    );
-  }
-
-  private disablePress = () => {
-    this.setState({viewDisabled: !this.state.viewDisabled});
-  }
-
-  private selectPress = (index: number) => {
-    let tmp = this.state.itemsSelected;
-    tmp[index] = !tmp[index];
-    this.setState({itemsSelected: tmp});
-  }
-}
 
 export const displayName = (_undefined?: string) => {};
 export const title = 'Accessibility';
@@ -129,9 +133,9 @@ export const examples = [
     },
   },
   {
-    title: 'States',
+    title: 'HighContrast',
     render: function(): JSX.Element {
-      return <AccessibilityStateExamples />;
+      return <HighContrastExample />;
     },
   }
 ];

@@ -11,4 +11,4 @@ export * from './Libraries/Components/Keyboard/KeyboardExt.uwp';
 export * from './Libraries/Components/Keyboard/KeyboardExtProps';
 export * from './Libraries/Components/View/ViewWindowsProps';
 export * from './Libraries/Components/View/ViewWindows.uwp';
-export * from './Libraries/Modules/AppTheme/AppTheme.uwp';
+export * from './Libraries/AppTheme/AppTheme.uwp';
