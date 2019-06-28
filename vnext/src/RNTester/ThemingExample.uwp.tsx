@@ -32,7 +32,7 @@ class ThemeExample extends React.Component {
     return (
       <View>
         <Text style={{color: 'red'}}>currentTheme: {this.state.currentTheme}</Text>
-        <Button onPress={ this._onPress } title={this.state.currentTheme === 'dark' ? 'Dark' : 'Light'} color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'}></Button>
+        <Button onPress={ this._onPress } title={this.state.currentTheme} color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'}></Button>
       </View>
     );
   }

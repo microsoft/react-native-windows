@@ -4,7 +4,7 @@
 
 import { NativeEventEmitter, NativeModules } from 'react-native';
 const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
-import { IAppThemeChangedEvent, IColorValues } from './AppTheme';
+import { IColorValues, IHighContrastChangedEvent } from './AppTheme';
 
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
@@ -20,7 +20,7 @@ class AppThemeModule extends NativeEventEmitter  {
 
     this._highContrastColors = NativeAppTheme.initialHighContrastColors;
     this._isHighContrast = NativeAppTheme.initialHighContrast;
-    this.addListener('highContrastChanged', (nativeEvent: IAppThemeChangedEvent) => {
+    this.addListener('highContrastChanged', (nativeEvent: IHighContrastChangedEvent) => {
       this._isHighContrast = nativeEvent.isHighContrast;
       this._highContrastColors = nativeEvent.highContrastColors;
     });

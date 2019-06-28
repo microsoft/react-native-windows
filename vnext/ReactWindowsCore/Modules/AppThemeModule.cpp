@@ -26,7 +26,7 @@ bool AppTheme::getIsHighContrast()
 
 folly::dynamic AppTheme::getHighContrastColors()
 {
-  return folly::dynamic::object("highContrastColors", "None");
+  return {};
 }
 
 //

@@ -14,6 +14,7 @@
 
 namespace winrt {
   using namespace Windows::UI::Xaml;
+  using namespace Windows::UI::ViewManagement;
 }
 
 namespace react { namespace uwp {
@@ -55,16 +56,29 @@ AppTheme::AppTheme(const std::shared_ptr<IReactInstance>& reactInstance, const s
   });
 }
 
+AppTheme::~AppTheme() = default;
+
+const std::string AppTheme::getCurrentTheme()
+{
+  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light : AppTheme::dark;
+}
+
+bool AppTheme::getIsHighContrast()
+{
+  return m_accessibilitySettings.HighContrast();;
+}
+
 // Returns the RBG values for the 8 relevant High Contrast elements.
 folly::dynamic AppTheme::getHighContrastColors() {
-  winrt::Windows::UI::Color ButtonFaceColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace);
-  winrt::Windows::UI::Color ButtonTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::ButtonText);
-  winrt::Windows::UI::Color GrayTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::GrayText);
-  winrt::Windows::UI::Color HighlightColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::Highlight);
-  winrt::Windows::UI::Color HighlightTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::HighlightText);
-  winrt::Windows::UI::Color HotlightColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::Hotlight);
-  winrt::Windows::UI::Color WindowColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::Window);
-  winrt::Windows::UI::Color WindowTextColor = m_uiSettings.UIElementColor(winrt::Windows::UI::ViewManagement::UIElementType::WindowText);
+  winrt::Windows::UI::Color ButtonFaceColor = m_uiSettings.UIElementColor(winrt::UIElementType::ButtonFace);
+  winrt::Windows::UI::Color ButtonTextColor = m_uiSettings.UIElementColor(winrt::UIElementType::ButtonText);
+  winrt::Windows::UI::Color GrayTextColor = m_uiSettings.UIElementColor(winrt::UIElementType::GrayText);
+  winrt::Windows::UI::Color HighlightColor = m_uiSettings.UIElementColor(winrt::UIElementType::Highlight);
+  winrt::Windows::UI::Color HighlightTextColor = m_uiSettings.UIElementColor(winrt::UIElementType::HighlightText);
+  winrt::Windows::UI::Color HotlightColor = m_uiSettings.UIElementColor(winrt::UIElementType::Hotlight);
+  winrt::Windows::UI::Color WindowColor = m_uiSettings.UIElementColor(winrt::UIElementType::Window);
+  winrt::Windows::UI::Color WindowTextColor = m_uiSettings.UIElementColor(winrt::UIElementType::WindowText);
+  
   folly::dynamic rbgValues = folly::dynamic::object("ButtonFaceColor", formatRGB(ButtonFaceColor))
                                                   ("ButtonTextColor", formatRGB(ButtonTextColor))
                                                   ("GrayTextColor", formatRGB(GrayTextColor))
@@ -82,18 +96,6 @@ std::string AppTheme::formatRGB(winrt::Windows::UI::Color ElementColor) {
             << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.G 
             << std::setfill('0') << std::setw(2) << std::hex << (int)ElementColor.B;
   return RGBString.str();
-}
-
-AppTheme::~AppTheme() = default;
-
-const std::string AppTheme::getCurrentTheme()
-{
-  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light : AppTheme::dark;
-}
-
-bool AppTheme::getIsHighContrast()
-{
-  return m_accessibilitySettings.HighContrast();;
 }
 
 void AppTheme::fireEvent(std::string const& eventName, folly::dynamic&& eventData)
