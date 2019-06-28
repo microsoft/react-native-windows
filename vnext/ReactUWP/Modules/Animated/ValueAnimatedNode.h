@@ -3,7 +3,6 @@
 
 #pragma once
 #include "AnimatedNode.h"
-#include "NativeAnimatedNodeManager.h"
 #include <folly/dynamic.h>
 
 namespace winrt
@@ -12,7 +11,6 @@ namespace winrt
 }
 
 namespace react { namespace uwp {
-  class NativeAnimatedNodeManager;
   class ValueAnimatedNode : public AnimatedNode
   {
   public:
@@ -33,7 +31,6 @@ namespace react { namespace uwp {
     void RemoveActiveAnimation(int64_t animationTag);
 
   protected:
-    std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
     winrt::CompositionPropertySet m_propertySet{ nullptr };
 
     static constexpr std::string_view s_inputName{ "input" };

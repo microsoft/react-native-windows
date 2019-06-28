@@ -86,19 +86,19 @@ namespace react { namespace uwp {
     std::shared_ptr<NativeAnimatedNodeManager> m_nodesManager{};
     std::weak_ptr<IReactInstance> m_wkReactInstance;
 
-    static constexpr std::string_view s_createAnimatedNodeName{ "createAnimatedNode" };
-    static constexpr std::string_view s_connectAnimatedNodeToViewName{ "connectAnimatedNodeToView" };
-    static constexpr std::string_view s_disconnectAnimatedNodeFromViewName{ "disconnectAnimatedNodeFromView" };
-    static constexpr std::string_view s_connectAnimatedNodesName{ "connectAnimatedNodes" };
-    static constexpr std::string_view s_disconnectAnimatedNodesName{ "disconnectAnimatedNodes" };
-    static constexpr std::string_view s_stopAnimationName{ "stopAnimation" };
-    static constexpr std::string_view s_startAnimatingNodeName{ "startAnimatingNode" };
-    static constexpr std::string_view s_dropAnimatedNodeName{ "dropAnimatedNode" };
-    static constexpr std::string_view s_setAnimatedNodeValueName{ "setAnimatedNodeValue" };
-    static constexpr std::string_view s_setAnimatedNodeOffsetName{ "setAnimatedNodeOffset" };
-    static constexpr std::string_view s_flattenAnimatedNodeOffsetName{ "flattenAnimatedNodeOffset" };
-    static constexpr std::string_view s_extractAnimatedNodeOffsetName{ "extractAnimatedNodeOffset" };
-    static constexpr std::string_view s_addAnimatedEventToViewName{ "addAnimatedEventToView" };
-    static constexpr std::string_view s_removeAnimatedEventFromViewName{ "removeAnimatedEventFromView" };
+    static const char* s_createAnimatedNodeName;
+    static const char* s_connectAnimatedNodeToViewName;
+    static const char* s_disconnectAnimatedNodeFromViewName;
+    static const char* s_connectAnimatedNodesName;
+    static const char* s_disconnectAnimatedNodesName;
+    static const char* s_stopAnimationName;
+    static const char* s_startAnimatingNodeName;
+    static const char* s_dropAnimatedNodeName;
+    static const char* s_setAnimatedNodeValueName;
+    static const char* s_setAnimatedNodeOffsetName;
+    static const char* s_flattenAnimatedNodeOffsetName;
+    static const char* s_extractAnimatedNodeOffsetName;
+    static const char* s_addAnimatedEventToViewName;
+    static const char* s_removeAnimatedEventFromViewName;
   };
 } }

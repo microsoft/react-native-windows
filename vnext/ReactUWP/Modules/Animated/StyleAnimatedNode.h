@@ -4,7 +4,7 @@
 #pragma once
 #include "AnimatedNode.h"
 #include <folly/dynamic.h>
-#include "NativeAnimatedNodeManager.h"
+#include "FacadeType.h"
 
 namespace react { namespace uwp {
   class StyleAnimatedNode : public AnimatedNode
@@ -15,7 +15,6 @@ namespace react { namespace uwp {
 
     std::unordered_map<FacadeType, int64_t> GetMapping();
   private:
-    std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
     std::map<std::string, int64_t> m_propMapping{};
 
     static constexpr std::string_view s_styleName{ "style" };

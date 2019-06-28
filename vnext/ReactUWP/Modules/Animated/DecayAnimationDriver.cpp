@@ -9,12 +9,14 @@
 namespace react { namespace uwp {
   DecayAnimationDriver::DecayAnimationDriver(
     int64_t id,
-    const std::shared_ptr<ValueAnimatedNode>& animatedValue,
+    int64_t animatedValueTag,
     const Callback& endCallback,
-    const folly::dynamic& config)
-    : AnimationDriver(id, animatedValue, endCallback, config)
+    const folly::dynamic& config,
+    const std::shared_ptr<NativeAnimatedNodeManager>& manager)
+    : AnimationDriver(id, animatedValueTag, endCallback, config, manager)
   {
     m_deceleration = config.find(s_decelerationName).dereference().second.asDouble();
+    assert(m_deceleration > 0);
     m_velocity = config.find(s_velocityName).dereference().second.asDouble();
   }
 

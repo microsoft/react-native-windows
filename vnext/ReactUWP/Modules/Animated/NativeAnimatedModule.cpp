@@ -9,18 +9,22 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
-//#pragma warning(push)
-//#pragma warning(disable : 4146)
-//#include <cxxreact/JsArgumentHelpers.h>
-//#pragma warning(pop)
-
-#if _MSC_VER <= 1913
-// VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
-#pragma optimize( "", off )
-#endif
-
 namespace react { namespace uwp {
-  const char* NativeAnimatedModule::name = "NativeAnimatedModule";
+  const char* NativeAnimatedModule::name{ "NativeAnimatedModule" };
+  const char* NativeAnimatedModule::s_createAnimatedNodeName{ "createAnimatedNode" };
+  const char* NativeAnimatedModule::s_connectAnimatedNodeToViewName{ "connectAnimatedNodeToView" };
+  const char* NativeAnimatedModule::s_disconnectAnimatedNodeFromViewName{ "disconnectAnimatedNodeFromView" };
+  const char* NativeAnimatedModule::s_connectAnimatedNodesName{ "connectAnimatedNodes" };
+  const char* NativeAnimatedModule::s_disconnectAnimatedNodesName{ "disconnectAnimatedNodes" };
+  const char* NativeAnimatedModule::s_stopAnimationName{ "stopAnimation" };
+  const char* NativeAnimatedModule::s_startAnimatingNodeName{ "startAnimatingNode" };
+  const char* NativeAnimatedModule::s_dropAnimatedNodeName{ "dropAnimatedNode" };
+  const char* NativeAnimatedModule::s_setAnimatedNodeValueName{ "setAnimatedNodeValue" };
+  const char* NativeAnimatedModule::s_setAnimatedNodeOffsetName{ "setAnimatedNodeOffset" };
+  const char* NativeAnimatedModule::s_flattenAnimatedNodeOffsetName{ "flattenAnimatedNodeOffset" };
+  const char* NativeAnimatedModule::s_extractAnimatedNodeOffsetName{ "extractAnimatedNodeOffset" };
+  const char* NativeAnimatedModule::s_addAnimatedEventToViewName{ "addAnimatedEventToView" };
+  const char* NativeAnimatedModule::s_removeAnimatedEventFromViewName{ "removeAnimatedEventFromView" };
 
   NativeAnimatedModule::NativeAnimatedModule(const std::weak_ptr<IReactInstance>& reactInstance) : m_wkReactInstance(reactInstance)
   {
@@ -30,87 +34,87 @@ namespace react { namespace uwp {
   std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::getMethods()
   {
     return {
-      Method(s_createAnimatedNodeName.data(), [this](folly::dynamic args)
+      Method(s_createAnimatedNodeName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
-        auto config = facebook::xplat::jsArgAsObject(args, 1);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto config = facebook::xplat::jsArgAsObject(args, 1);
         NativeAnimatedModule::CreateAnimatedNode(tag, config);
       }),
-      Method(s_connectAnimatedNodeToViewName.data(), [this](folly::dynamic args)
+      Method(s_connectAnimatedNodeToViewName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
-        auto viewTag = facebook::xplat::jsArgAsInt(args, 1);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto viewTag = facebook::xplat::jsArgAsInt(args, 1);
         NativeAnimatedModule::ConnectAnimatedNodeToView(tag, viewTag);
       }),
-      Method(s_disconnectAnimatedNodeFromViewName.data(), [this](folly::dynamic args)
+      Method(s_disconnectAnimatedNodeFromViewName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
-        auto viewTag = facebook::xplat::jsArgAsInt(args, 1);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto viewTag = facebook::xplat::jsArgAsInt(args, 1);
         NativeAnimatedModule::DisconnectAnimatedNodeFromView(tag, viewTag);
       }),
-      Method(s_connectAnimatedNodesName.data(), [this](folly::dynamic args)
+      Method(s_connectAnimatedNodesName, [this](folly::dynamic args)
       {
-        auto parentTag = facebook::xplat::jsArgAsInt(args, 0);
-        auto childTag = facebook::xplat::jsArgAsInt(args, 1);
+        const auto parentTag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto childTag = facebook::xplat::jsArgAsInt(args, 1);
         NativeAnimatedModule::ConnectAnimatedNodes(parentTag, childTag);
       }),
-      Method(s_disconnectAnimatedNodesName.data(), [this](folly::dynamic args)
+      Method(s_disconnectAnimatedNodesName, [this](folly::dynamic args)
       {
-        auto parentTag = facebook::xplat::jsArgAsInt(args, 0);
-        auto childTag = facebook::xplat::jsArgAsInt(args, 1);
+        const auto parentTag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto childTag = facebook::xplat::jsArgAsInt(args, 1);
         NativeAnimatedModule::DisconnectAnimatedNodes(parentTag, childTag);
       }),
-      Method(s_stopAnimationName.data(), [this](folly::dynamic args)
+      Method(s_stopAnimationName, [this](folly::dynamic args)
       {
-        auto animationId = facebook::xplat::jsArgAsInt(args, 0);
+        const auto animationId = facebook::xplat::jsArgAsInt(args, 0);
         NativeAnimatedModule::StopAnimation(animationId);
       }),
-      Method(s_startAnimatingNodeName.data(), [this](folly::dynamic args, Callback endCallback)
+      Method(s_startAnimatingNodeName, [this](folly::dynamic args, Callback endCallback)
       {
-        auto animationId = facebook::xplat::jsArgAsInt(args, 0);
-        auto animatedNodeTag = facebook::xplat::jsArgAsInt(args, 1);
-        auto animationConfig = facebook::xplat::jsArgAsObject(args, 2);
+        const auto animationId = facebook::xplat::jsArgAsInt(args, 0);
+        const auto animatedNodeTag = facebook::xplat::jsArgAsInt(args, 1);
+        const auto animationConfig = facebook::xplat::jsArgAsObject(args, 2);
         NativeAnimatedModule::StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback);
       }),
-      Method(s_dropAnimatedNodeName.data(), [this](folly::dynamic args)
+      Method(s_dropAnimatedNodeName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
         NativeAnimatedModule::DropAnimatedNode(tag);
       }),
-      Method(s_setAnimatedNodeValueName.data(), [this](folly::dynamic args)
+      Method(s_setAnimatedNodeValueName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
-        auto value = facebook::xplat::jsArgAsDouble(args, 1);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto value = facebook::xplat::jsArgAsDouble(args, 1);
         NativeAnimatedModule::SetAnimatedNodeValue(tag, value);
       }),
-      Method(s_setAnimatedNodeOffsetName.data(), [this](folly::dynamic args)
+      Method(s_setAnimatedNodeOffsetName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
-        auto value = facebook::xplat::jsArgAsDouble(args, 1);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto value = facebook::xplat::jsArgAsDouble(args, 1);
         NativeAnimatedModule::SetAnimatedNodeOffset(tag, value);
       }),
-      Method(s_flattenAnimatedNodeOffsetName.data(), [this](folly::dynamic args)
+      Method(s_flattenAnimatedNodeOffsetName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
         NativeAnimatedModule::FlattenAnimatedNodeOffset(tag);
       }),
-      Method(s_extractAnimatedNodeOffsetName.data(), [this](folly::dynamic args)
+      Method(s_extractAnimatedNodeOffsetName, [this](folly::dynamic args)
       {
-        auto tag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto tag = facebook::xplat::jsArgAsInt(args, 0);
         NativeAnimatedModule::ExtractAnimatedNodeOffset(tag);
       }),
-      Method(s_addAnimatedEventToViewName.data(), [this](folly::dynamic args)
+      Method(s_addAnimatedEventToViewName, [this](folly::dynamic args)
       {
-        auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
-        auto eventName = facebook::xplat::jsArgAsString(args, 1);
-        auto eventMapping = facebook::xplat::jsArgAsObject(args, 2);
+        const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto eventName = facebook::xplat::jsArgAsString(args, 1);
+        const auto eventMapping = facebook::xplat::jsArgAsObject(args, 2);
         NativeAnimatedModule::AddAnimatedEventToView(viewTag, eventName, eventMapping);
       }),
-      Method(s_removeAnimatedEventFromViewName.data(), [this](folly::dynamic args)
+      Method(s_removeAnimatedEventFromViewName, [this](folly::dynamic args)
       {
-        auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
-        auto eventName = facebook::xplat::jsArgAsString(args, 1);
-        auto animatedValueTag = facebook::xplat::jsArgAsInt(args, 2);
+        const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+        const auto eventName = facebook::xplat::jsArgAsString(args, 1);
+        const auto animatedValueTag = facebook::xplat::jsArgAsInt(args, 2);
         NativeAnimatedModule::RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag);
       }),
     };
@@ -143,7 +147,7 @@ namespace react { namespace uwp {
 
   void NativeAnimatedModule::StartAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, const Callback& endCallback)
   {
-    m_nodesManager->StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback);
+    m_nodesManager->StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback, m_nodesManager);
   }
 
   void NativeAnimatedModule::StopAnimation(int64_t animationId)
@@ -178,7 +182,7 @@ namespace react { namespace uwp {
 
   void NativeAnimatedModule::AddAnimatedEventToView(int64_t tag, const std::string& eventName, const folly::dynamic& eventMapping)
   {
-    m_nodesManager->AddAnimatedEventToView(tag, eventName, eventMapping);
+    m_nodesManager->AddAnimatedEventToView(tag, eventName, eventMapping, m_nodesManager);
   }
 
   void NativeAnimatedModule::RemoveAnimatedEventFromView(int64_t tag, const std::string& eventName, int64_t animatedValueTag)

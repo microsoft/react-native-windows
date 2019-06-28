@@ -3,12 +3,13 @@
 
 #include "pch.h"
 #include "ModulusAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 
 namespace react { namespace uwp {
   ModulusAnimatedNode::ModulusAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, config, manager)
   {
-    m_inputNodeTag = config.find(s_inputName).dereference().second.asInt();
-    m_modulus = config.find(s_modulusName).dereference().second.asInt();
+    m_inputNodeTag = static_cast<int64_t>(config.find(s_inputName).dereference().second.asDouble());
+    m_modulus = static_cast<int64_t>(config.find(s_modulusName).dereference().second.asDouble());
 
     m_propertySet.StartAnimation(s_valueName,
       [node = m_inputNodeTag, mod = m_modulus, manager]()

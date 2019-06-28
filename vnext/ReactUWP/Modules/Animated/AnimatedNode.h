@@ -6,12 +6,13 @@
 #include "pch.h"
 
 namespace react { namespace uwp {
+  class NativeAnimatedNodeManager;
   class AnimatedNode
   {
   public:
-    AnimatedNode(int64_t tag);
+    AnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
     int64_t Tag();
-    void AddChild(const std::shared_ptr<AnimatedNode>& animatedNode);
+    void AddChild(int64_t animatedNode);
     void RemoveChild(int64_t animatedNode);
 
     virtual void Update() {};
@@ -19,7 +20,11 @@ namespace react { namespace uwp {
     virtual void OnAttachToNode(int64_t animatedNodeTag) {};
 
   protected:
-    std::unordered_map<int64_t, std::shared_ptr<AnimatedNode>> m_children{};
+    AnimatedNode& GetChildNode(int64_t tag);
+    const std::weak_ptr<NativeAnimatedNodeManager> m_manager;
+
+  protected:
+    std::vector<int64_t> m_children{};
     int64_t m_tag{ 0 };
   };
 } }

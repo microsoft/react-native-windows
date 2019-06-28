@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "NativeAnimatedNodeManager.h"
-#include "ValueAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 #include "InterpolationAnimatedNode.h"
 #include "AdditionAnimatedNode.h"
@@ -12,9 +11,7 @@
 #include "SubtractionAnimatedNode.h"
 #include "ModulusAnimatedNode.h"
 #include "DiffClampAnimatedNode.h"
-#include "TransformAnimatedNode.h"
 
-#include "AnimationDriver.h"
 #include "FrameAnimationDriver.h"
 #include "DecayAnimationDriver.h"
 
@@ -38,61 +35,61 @@ namespace react {
         return;
       }
 
-      switch (auto type = AnimatedNodeTypeFromString(config.find("type").dereference().second.getString()))
+      switch (const auto type = AnimatedNodeTypeFromString(config.find("type").dereference().second.getString()))
       {
         case AnimatedNodeType::Style:
         {
-          m_styleNodes.emplace(tag, std::make_shared<StyleAnimatedNode>(StyleAnimatedNode(tag, config, manager)));
+          m_styleNodes.emplace(tag, std::make_unique<StyleAnimatedNode>(StyleAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Value:
         {
-          m_valueNodes.emplace(tag, std::make_shared<ValueAnimatedNode>(ValueAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<ValueAnimatedNode>(ValueAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Props:
         {
-          m_propsNodes.emplace(tag, std::make_shared<PropsAnimatedNode>(PropsAnimatedNode(tag, config, instance, manager)));
+          m_propsNodes.emplace(tag, std::make_unique<PropsAnimatedNode>(PropsAnimatedNode(tag, config, instance, manager)));
           break;
         }
         case AnimatedNodeType::Interpolation:
         {
-          m_valueNodes.emplace(tag, std::make_shared<InterpolationAnimatedNode>(InterpolationAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<InterpolationAnimatedNode>(InterpolationAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Addition:
         {
-          m_valueNodes.emplace(tag, std::make_shared<AdditionAnimatedNode>(AdditionAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<AdditionAnimatedNode>(AdditionAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Subtraction:
         {
-          m_valueNodes.emplace(tag, std::make_shared<SubtractionAnimatedNode>(SubtractionAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<SubtractionAnimatedNode>(SubtractionAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Division:
         {
-          m_valueNodes.emplace(tag, std::make_shared<DivisionAnimatedNode>(DivisionAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<DivisionAnimatedNode>(DivisionAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Multiplication:
         {
-          m_valueNodes.emplace(tag, std::make_shared<MultiplicationAnimatedNode>(MultiplicationAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<MultiplicationAnimatedNode>(MultiplicationAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Modulus:
         {
-          m_valueNodes.emplace(tag, std::make_shared<ModulusAnimatedNode>(ModulusAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<ModulusAnimatedNode>(ModulusAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Diffclamp:
         {
-          m_valueNodes.emplace(tag, std::make_shared<DiffClampAnimatedNode>(DiffClampAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<DiffClampAnimatedNode>(DiffClampAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Transform:
         {
-          m_transformNodes.emplace(tag, std::make_shared<TransformAnimatedNode>(TransformAnimatedNode(tag, config, manager)));
+          m_transformNodes.emplace(tag, std::make_unique<TransformAnimatedNode>(TransformAnimatedNode(tag, config, manager)));
           break;
         }
         case AnimatedNodeType::Tracking:
@@ -109,30 +106,25 @@ namespace react {
 
     void NativeAnimatedNodeManager::ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag)
     {
-      auto node = m_propsNodes.at(propsNodeTag);
-      node->ConnectToView(viewTag);
+      m_propsNodes.at(propsNodeTag)->ConnectToView(viewTag);
     }
 
     void NativeAnimatedNodeManager::DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag)
     {
-      auto node = m_propsNodes.at(propsNodeTag);
-      node->DisconnectFromView(viewTag);
+      m_propsNodes.at(propsNodeTag)->DisconnectFromView(viewTag);
     }
 
     void NativeAnimatedNodeManager::ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag)
     {
-      if (auto parentNode = GetAnimatedNode(parentNodeTag))
+      if(const auto parentNode = &GetAnimatedNode(parentNodeTag))
       {
-        if (auto childNode = GetAnimatedNode(childNodeTag))
-        {
-          parentNode->AddChild(childNode);
-        }
+        parentNode->AddChild(childNodeTag);
       }
     }
 
     void NativeAnimatedNodeManager::DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag)
     {
-      if (auto parentNode = GetAnimatedNode(parentNodeTag))
+      if (const auto parentNode = &GetAnimatedNode(parentNodeTag))
       {
         parentNode->RemoveChild(childNodeTag);
       }
@@ -142,7 +134,7 @@ namespace react {
     {
       if (m_activeAnimations.count(animationId))
       {
-        if (auto animation = m_activeAnimations.at(animationId))
+        if (const auto animation = m_activeAnimations.at(animationId).get())
         {
           animation->StopAnimation();
           m_activeAnimations.erase(animationId);
@@ -150,29 +142,27 @@ namespace react {
       }
     }
 
-    void NativeAnimatedNodeManager::StartAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, const Callback& endCallback)
+    void NativeAnimatedNodeManager::StartAnimatingNode(int64_t animationId, int64_t animatedNodeTag, const folly::dynamic& animationConfig, const Callback& endCallback, const std::shared_ptr<NativeAnimatedNodeManager>& manager)
     {
-      auto animation = [animationId, animatedNode = m_valueNodes.at(animatedNodeTag), endCallback, animationConfig]()
+      switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString()))
       {
-        switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString()))
-        {
-        case AnimationType::Decay:
-          return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<DecayAnimationDriver>(DecayAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
-        case AnimationType::Frames:
-          return static_cast<std::shared_ptr<AnimationDriver>>(std::make_shared<FrameAnimationDriver>(FrameAnimationDriver(animationId, animatedNode, endCallback, animationConfig)));
-        case AnimationType::Spring:
-          //TODO: implement spring animations tracked by issue #2681
-          return static_cast<std::shared_ptr<AnimationDriver>>(nullptr);
-        default:
-          assert(false);
-          return static_cast<std::shared_ptr<AnimationDriver>>(nullptr);
-        }
-      }();
+      case AnimationType::Decay:
+        m_activeAnimations.emplace(animationId, std::make_unique<DecayAnimationDriver>(DecayAnimationDriver(animationId, animatedNodeTag, endCallback, animationConfig, manager)));
+        break;
+      case AnimationType::Frames:
+        m_activeAnimations.emplace(animationId, std::make_unique<FrameAnimationDriver>(FrameAnimationDriver(animationId, animatedNodeTag, endCallback, animationConfig, manager)));
+        break;
+      case AnimationType::Spring:
+        //TODO: implement spring animations tracked by issue #2681
+        break;
+      default:
+        assert(false);
+        break;
+      }
 
-      if (animation)
+      if (m_activeAnimations.count(animationId))
       {
-        animation->StartAnimation();
-        m_activeAnimations.insert({ animationId, animation });
+        m_activeAnimations.at(animationId)->StartAnimation();
       }
     }
 
@@ -186,7 +176,7 @@ namespace react {
 
     void NativeAnimatedNodeManager::SetAnimatedNodeValue(int64_t tag, double value)
     {
-      if (auto valueNode = m_valueNodes.at(tag))
+      if (const auto valueNode = m_valueNodes.at(tag).get())
       {
         valueNode->RawValue(static_cast<float>(value));
       }
@@ -194,7 +184,7 @@ namespace react {
 
     void NativeAnimatedNodeManager::SetAnimatedNodeOffset(int64_t tag, double offset)
     {
-      if (auto valueNode = m_valueNodes.at(tag))
+      if (const auto valueNode = m_valueNodes.at(tag).get())
       {
         valueNode->Offset(static_cast<float>(offset));
       }
@@ -202,7 +192,7 @@ namespace react {
 
     void NativeAnimatedNodeManager::FlattenAnimatedNodeOffset(int64_t tag)
     {
-      if (auto valueNode = m_valueNodes.at(tag))
+      if (const auto valueNode = m_valueNodes.at(tag).get())
       {
         valueNode->FlattenOffset();
       }
@@ -210,43 +200,44 @@ namespace react {
 
     void NativeAnimatedNodeManager::ExtractAnimatedNodeOffset(int64_t tag)
     {
-      if (auto valueNode = m_valueNodes.at(tag))
+      if (const auto valueNode = m_valueNodes.at(tag).get())
       {
         valueNode->ExtractOffset();
       }
     }
 
-    void NativeAnimatedNodeManager::AddAnimatedEventToView(int64_t viewTag, const std::string& eventName, const folly::dynamic& eventMapping)
+    void NativeAnimatedNodeManager::AddAnimatedEventToView(int64_t viewTag, const std::string& eventName, const folly::dynamic& eventMapping, const std::shared_ptr<NativeAnimatedNodeManager>& manager)
     {
-      auto valueNode = m_valueNodes.at(eventMapping.find("animatedValueTag").dereference().second.getInt());
-      auto pathList = eventMapping.find("nativeEventPath").dereference().second.getString();
+      const auto valueNodeTag = static_cast<int64_t>(eventMapping.find("animatedValueTag").dereference().second.asDouble());
+      const auto pathList = eventMapping.find("nativeEventPath").dereference().second.getString();
 
-
-      auto key = std::make_tuple(viewTag, eventName);
+      const auto key = std::make_tuple(viewTag, eventName);
       if (m_eventDrivers.count(key))
       {
-        m_eventDrivers.at(key).emplace(std::make_shared<EventAnimationDriver>(EventAnimationDriver(pathList, valueNode)));
+        m_eventDrivers.at(key).emplace_back(std::make_unique<EventAnimationDriver>(EventAnimationDriver(pathList, valueNodeTag, manager)));
       }
       else
       {
-        m_eventDrivers.emplace(key, std::unordered_set{ std::make_shared<EventAnimationDriver>(EventAnimationDriver(pathList, valueNode)) } );
+        auto vector = std::vector<std::unique_ptr<EventAnimationDriver>>{};
+        vector.emplace_back(std::make_unique<EventAnimationDriver>(EventAnimationDriver(pathList, valueNodeTag, manager)));
+        m_eventDrivers.insert({ key, std::move(vector) });
       }
     }
 
     void NativeAnimatedNodeManager::RemoveAnimatedEventFromView(int64_t viewTag, const std::string& eventName, int64_t animatedValueTag)
     {
-      auto key = std::make_tuple(viewTag, eventName);
+      const auto key = std::make_tuple(viewTag, eventName);
       if (m_eventDrivers.count(key))
       {
-        auto drivers = m_eventDrivers.at(key);
+        auto& drivers = m_eventDrivers.at(key);
 
-        for (auto driver : drivers)
+        for (auto iterator = drivers.begin(); iterator != drivers.end(); iterator++)
         {
-          if (auto value = driver->AnimatedValue().lock())
+          if (const auto value = iterator->get()->AnimatedValue())
           {
             if(value->Tag() == animatedValueTag)
             {
-              drivers.erase(driver);
+              m_eventDrivers.at(key).erase(iterator);
             }
           }
         }
@@ -263,9 +254,9 @@ namespace react {
       // If StartAnimations fails we'll put the props nodes back into this queue to
       // try again when the next batch completes. Because of this we need to copy the
       // props to change into a local and clear the member before we begin.
-      auto delayedPropsNodes = m_delayedPropsNodes;
+      const auto delayedPropsNodes = m_delayedPropsNodes;
       m_delayedPropsNodes.clear();
-      for (auto tag : delayedPropsNodes)
+      for (const auto tag : delayedPropsNodes)
       {
         m_propsNodes.at(tag)->StartAnimations();
       }
@@ -280,25 +271,25 @@ namespace react {
       }
     }
 
-    std::shared_ptr<AnimatedNode> NativeAnimatedNodeManager::GetAnimatedNode(int64_t tag)
+    AnimatedNode& NativeAnimatedNodeManager::GetAnimatedNode(int64_t tag)
     {
       if (m_valueNodes.count(tag))
       {
-        return static_cast<std::shared_ptr<AnimatedNode>>(m_valueNodes.at(tag));
+        return *m_valueNodes.at(tag).get();
       }
       if (m_styleNodes.count(tag))
       {
-        return static_cast<std::shared_ptr<AnimatedNode>>(m_styleNodes.at(tag));
+        return *m_styleNodes.at(tag).get();
       }
       if (m_propsNodes.count(tag))
       {
-        return static_cast<std::shared_ptr<AnimatedNode>>(m_propsNodes.at(tag));
+        return *m_propsNodes.at(tag).get();
       }
       if (m_transformNodes.count(tag))
       {
-        return static_cast<std::shared_ptr<AnimatedNode>>(m_transformNodes.at(tag));
+        return *m_transformNodes.at(tag).get();
       }
-      return static_cast<std::shared_ptr<AnimatedNode>>(nullptr);
+      return *static_cast<AnimatedNode*>(nullptr);
     }
   }
 }

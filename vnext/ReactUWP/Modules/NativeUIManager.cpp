@@ -95,7 +95,7 @@ void NativeUIManager::DirtyYogaNode(int64_t tag)
 
 void NativeUIManager::AddBatchCompletedCallback(std::function<void()> callback)
 {
-  m_batchCompletedCallbacks.push_back(callback);
+  m_batchCompletedCallbacks.push_back(std::move(callback));
 }
 
 winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
@@ -212,9 +212,9 @@ void NativeUIManager::onBatchComplete()
     DoLayout();
     m_inBatch = false;
 
-    auto callbacks = m_batchCompletedCallbacks;
+    const auto callbacks = m_batchCompletedCallbacks;
     m_batchCompletedCallbacks.clear();
-    for (auto callback : callbacks)
+    for (const auto& callback : callbacks)
     {
       callback.operator()();
     }

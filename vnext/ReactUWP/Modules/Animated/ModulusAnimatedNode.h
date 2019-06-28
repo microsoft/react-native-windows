@@ -2,12 +2,10 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "AnimatedNode.h"
-#include "NativeAnimatedNodeManager.h"
+#include "ValueAnimatedNode.h"
 #include <folly/dynamic.h>
 
 namespace react { namespace uwp {
-  class NativeAnimatedNodeManager;
   class ModulusAnimatedNode : public ValueAnimatedNode
   {
   public:

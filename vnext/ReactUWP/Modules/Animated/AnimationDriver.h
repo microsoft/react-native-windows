@@ -3,6 +3,7 @@
 
 #pragma once
 #include "ValueAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 #include <folly/dynamic.h>
 
 namespace react { namespace uwp {
@@ -12,7 +13,7 @@ namespace react { namespace uwp {
   class AnimationDriver
   {
   public:
-    AnimationDriver(int64_t id, const std::shared_ptr<ValueAnimatedNode>& animatedValue, const Callback& endCallback, const folly::dynamic& config);
+    AnimationDriver(int64_t id, int64_t animatedValueTag, const Callback& endCallback, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
     void StartAnimation();
     void StopAnimation();
 
@@ -24,11 +25,14 @@ namespace react { namespace uwp {
     inline constexpr int64_t Id() { return m_id; };
 
   protected:
+    ValueAnimatedNode* GetAnimatedValue();
+
     int64_t m_id{ 0 };
-    std::shared_ptr<ValueAnimatedNode> m_animatedValue{};
+    int64_t m_animatedValueTag{};
     Callback m_endCallback{};
     int64_t m_iterations{ 0 };
     folly::dynamic m_config{};
+    std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
 
     winrt::Windows::UI::Composition::CompositionAnimation m_animation{ nullptr };
     //auto revoker for scopedBatch.Completed is broken, tracked by internal bug #22399779

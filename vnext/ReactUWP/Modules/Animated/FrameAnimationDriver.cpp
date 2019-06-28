@@ -8,12 +8,13 @@
 namespace react { namespace uwp {
   FrameAnimationDriver::FrameAnimationDriver(
     int64_t id,
-    const std::shared_ptr<ValueAnimatedNode>& animatedValue,
+    int64_t animatedValueTag,
     const Callback& endCallback,
-    const folly::dynamic& config)
-    : AnimationDriver(id, animatedValue, endCallback, config)
+    const folly::dynamic& config,
+    const std::shared_ptr<NativeAnimatedNodeManager>& manager)
+    : AnimationDriver(id, animatedValueTag, endCallback, config, manager)
   {
-    for (auto frame : config.find("frames").dereference().second)
+    for (const auto& frame : config.find("frames").dereference().second)
     {
       m_frames.push_back(frame.asDouble());
     }
@@ -34,7 +35,7 @@ namespace react { namespace uwp {
 
     auto normalizedProgress = 0.0f;
     auto step = 1.0f / m_frames.size();
-    auto fromValue = m_animatedValue->RawValue();
+    auto fromValue = GetAnimatedValue()->RawValue();
     for (auto frame : m_frames)
     {
       normalizedProgress += step;

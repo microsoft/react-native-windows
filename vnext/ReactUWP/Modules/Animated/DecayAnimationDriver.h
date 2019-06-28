@@ -10,7 +10,7 @@ namespace react { namespace uwp {
   class DecayAnimationDriver : public AnimationDriver
   {
   public:
-    DecayAnimationDriver(int64_t id, const std::shared_ptr<ValueAnimatedNode>& animatedValue, const Callback& endCallback, const folly::dynamic& config);
+    DecayAnimationDriver(int64_t id, int64_t animatedValueTag, const Callback& endCallback, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
 
     std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(const folly::dynamic& config) override;
   private:

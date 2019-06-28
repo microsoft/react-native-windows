@@ -4,13 +4,11 @@
 #pragma once
 #include "AnimatedNode.h"
 #include <folly/dynamic.h>
-#include "NativeAnimatedNodeManager.h"
 #include <IReactInstance.h>
 
 #include "FacadeType.h"
 
 namespace react { namespace uwp {
-  class NativeAnimatedNodeManager;
   struct ShadowNodeBase;
   class PropsAnimatedNode : public AnimatedNode
   {
@@ -29,7 +27,6 @@ namespace react { namespace uwp {
     winrt::UIElement GetUIElement();
 
     std::weak_ptr<IReactInstance> m_instance{};
-    std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
     std::map<std::string, int64_t> m_propMapping{};
     folly::dynamic m_propMap{};
 

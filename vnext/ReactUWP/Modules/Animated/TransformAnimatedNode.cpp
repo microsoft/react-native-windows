@@ -7,14 +7,14 @@
 
 namespace react {
   namespace uwp {
-    TransformAnimatedNode::TransformAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
+    TransformAnimatedNode::TransformAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag, manager)
     {
-      for (auto transform : config.find(s_transformsName).dereference().second)
+      for (const auto& transform : config.find(s_transformsName).dereference().second)
       {
-        auto property = transform.find(s_propertyName).dereference().second.asString();
+        const auto property = transform.find(s_propertyName).dereference().second.asString();
         if (transform.find(s_typeName).dereference().second.asString() == s_animatedName)
         {
-          m_transformConfigs.push_back(TransformConfig{ property, transform.find(s_nodeTagName).dereference().second.asInt(), 0 });
+          m_transformConfigs.push_back(TransformConfig{ property, static_cast<int64_t>(transform.find(s_nodeTagName).dereference().second.asDouble()), 0 });
         }
         else
         {
@@ -26,7 +26,7 @@ namespace react {
     std::unordered_map<FacadeType, int64_t> TransformAnimatedNode::GetMapping()
     {
       std::unordered_map<FacadeType, int64_t> mapping;
-      for (auto config : m_transformConfigs)
+      for (const auto& config : m_transformConfigs)
       {
         if (config.nodeTag != s_unsetNodeTag)
         {

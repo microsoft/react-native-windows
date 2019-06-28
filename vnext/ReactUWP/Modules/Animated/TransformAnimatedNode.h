@@ -3,7 +3,6 @@
 
 #pragma once
 #include "AnimatedNode.h"
-#include "NativeAnimatedNodeManager.h"
 #include <folly/dynamic.h>
 #include "FacadeType.h"
 
@@ -23,7 +22,6 @@ namespace react {
       TransformAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
       std::unordered_map<FacadeType, int64_t> GetMapping();
     private:
-      std::weak_ptr<NativeAnimatedNodeManager> m_manager;
       std::vector<TransformConfig> m_transformConfigs;
 
       static constexpr int64_t s_unsetNodeTag{ -1 };

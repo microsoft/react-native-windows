@@ -21,7 +21,7 @@ namespace react { namespace uwp {
     static constexpr std::wstring_view ExtrapolateTypeExtend = L"extend";
 
   private:
-    winrt::ExpressionAnimation createExpressionAnimation(const winrt::Compositor& compositor, const std::shared_ptr<ValueAnimatedNode>& parent);
+    winrt::ExpressionAnimation CreateExpressionAnimation(const winrt::Compositor& compositor, ValueAnimatedNode& parent);
 
     winrt::hstring GetExpression(const winrt::hstring& value);
     winrt::hstring GetInterpolateExpression(const winrt::hstring& value);

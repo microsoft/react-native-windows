@@ -3,16 +3,17 @@
 
 #include "pch.h"
 #include "ValueAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 
 namespace react { namespace uwp {
-  ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
+  ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag, manager)
   {
     m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
     m_propertySet.InsertScalar(s_valueName, static_cast<float>(config.find(s_jsValueName).dereference().second.asDouble()));
     m_propertySet.InsertScalar(s_offsetName, static_cast<float>(config.find(s_jsOffsetName).dereference().second.asDouble()));
   }
 
-  ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag), m_manager(manager)
+  ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : AnimatedNode(tag, manager)
   {
     m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
     m_propertySet.InsertScalar(s_valueName, 0.0);
@@ -84,12 +85,11 @@ namespace react { namespace uwp {
     m_activeAnimations.erase(animationTag);
     if (!m_activeAnimations.size())
     {
-      if (auto manager = m_manager.lock())
+      if (const auto manager = m_manager.lock())
       {
-        for (auto props : m_dependentPropsNodes)
+        for (const auto& props : m_dependentPropsNodes)
         {
-          auto node = manager->m_propsNodes.at(props);
-          node->DisposeCompletedAnimation(Tag());
+          manager->m_propsNodes.at(props).get()->DisposeCompletedAnimation(Tag());
         }
       }
     }

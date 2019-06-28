@@ -6,12 +6,13 @@
 #include <ReactUWP\Modules\NativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
 #include "StyleAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 
 namespace react { namespace uwp {
   PropsAnimatedNode::PropsAnimatedNode(int64_t tag, const folly::dynamic& config, const std::weak_ptr<IReactInstance>& instance, const std::shared_ptr<NativeAnimatedNodeManager>& manager) :
-    AnimatedNode(tag), m_instance(instance), m_manager(manager)
+    AnimatedNode(tag, manager), m_instance(instance)
   {
-    for (auto entry : config.find("props").dereference().second.items())
+    for (const auto& entry : config.find("props").dereference().second.items())
     {
       m_propMapping.insert({ entry.first.getString(), entry.second.getInt() });
     }
@@ -37,18 +38,18 @@ namespace react { namespace uwp {
     }
 
     std::vector<int64_t> keys{};
-    for (auto anim : m_expressionAnimations)
+    for (const auto& anim : m_expressionAnimations)
     {
       keys.push_back(anim.first);
     }
-    for(auto key : keys)
+    for(const auto& key : keys)
     {
       DisposeCompletedAnimation(key);
     }
 
     if (m_centerPointAnimation)
     {
-      if (auto target = GetUIElement())
+      if (const auto target = GetUIElement())
       {
         target.StopAnimation(m_centerPointAnimation);
       }
@@ -71,13 +72,13 @@ namespace react { namespace uwp {
       return;
     }
 
-    if (const auto manager = m_manager.lock())
+    if (const auto manager = std::shared_ptr<NativeAnimatedNodeManager>(m_manager))
     {
-      for (auto entry : m_propMapping)
+      for (const auto& entry : m_propMapping)
       {
         if (manager->m_styleNodes.count(entry.second))
         {
-          for (auto styleEntry : manager->m_styleNodes.at(entry.second)->GetMapping())
+          for (const auto& styleEntry : manager->m_styleNodes.at(entry.second)->GetMapping())
           {
             MakeAnimation(styleEntry.second, styleEntry.first);
           }
@@ -133,7 +134,7 @@ namespace react { namespace uwp {
   {
     if (m_expressionAnimations.count(valueTag))
     {
-      if (auto target = GetUIElement())
+      if (const auto target = GetUIElement())
       {
         target.StopAnimation(m_expressionAnimations.at(valueTag));
       }
@@ -145,9 +146,9 @@ namespace react { namespace uwp {
   {
     if (const auto manager = m_manager.lock())
     {
-      if (const auto valueNode = manager->m_valueNodes.at(valueNodeTag))
+      if (const auto valueNode = manager->m_valueNodes.at(valueNodeTag).get())
       {
-        auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+        const auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
         animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
         animation.Expression(L"ValuePropSet.value + ValuePropSet.offset");
         switch (facadeType)
@@ -209,9 +210,9 @@ namespace react { namespace uwp {
 
   ShadowNodeBase* PropsAnimatedNode::GetShadowNodeBase()
   {
-    if (auto instance = m_instance.lock())
+    if (const auto instance = m_instance.lock())
     {
-      if (auto nativeUIManagerHost = static_cast<NativeUIManager*>(instance->NativeUIManager())->getHost())
+      if (const auto nativeUIManagerHost = static_cast<NativeUIManager*>(instance->NativeUIManager())->getHost())
       {
         return static_cast<ShadowNodeBase*>(nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
       }
@@ -221,9 +222,9 @@ namespace react { namespace uwp {
 
   winrt::UIElement PropsAnimatedNode::GetUIElement()
   {
-    if(auto shadowNodeBase = GetShadowNodeBase())
+    if(const auto shadowNodeBase = GetShadowNodeBase())
     {
-      if (auto shadowNodeView = shadowNodeBase->GetView())
+      if (const auto shadowNodeView = shadowNodeBase->GetView())
       {
         return shadowNodeView.as<winrt::UIElement>();
       }

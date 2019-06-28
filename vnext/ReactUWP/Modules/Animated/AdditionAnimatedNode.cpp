@@ -3,14 +3,15 @@
 
 #include "pch.h"
 #include "AdditionAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 
 namespace react {
   namespace uwp {
     AdditionAnimatedNode::AdditionAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, config, manager)
     {
-      for (auto inputNode : config.find(s_inputName).dereference().second)
+      for (const auto& inputNode : config.find(s_inputName).dereference().second)
       {
-        m_inputNodes.insert(inputNode.asInt());
+        m_inputNodes.insert(static_cast<int64_t>(inputNode.asDouble()));
       }
 
       m_propertySet.StartAnimation(s_valueName,
@@ -21,9 +22,9 @@ namespace react {
           anim.Expression([nodes, manager, anim]()
           {
             winrt::hstring expr = L"0";
-            for (auto tag : nodes)
+            for (const auto tag : nodes)
             {
-              auto identifier = winrt::to_hstring(std::to_string(tag));
+              const auto identifier = std::to_wstring(tag);
               anim.SetReferenceParameter(identifier, manager->m_valueNodes.at(tag)->PropertySet());
               expr = expr + L" + " + identifier + L"." + s_valueName + L" + " + identifier + L"." + s_offsetName;
             }

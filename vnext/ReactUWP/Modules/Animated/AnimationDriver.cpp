@@ -7,8 +7,8 @@
 namespace react {
   namespace uwp {
 
-    AnimationDriver::AnimationDriver(int64_t id, const std::shared_ptr<ValueAnimatedNode>& animatedValue, const Callback& endCallback, const folly::dynamic& config) :
-      m_id(id), m_animatedValue(animatedValue), m_endCallback(endCallback), m_config(config)
+    AnimationDriver::AnimationDriver(int64_t id, int64_t animatedValueTag, const Callback& endCallback, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) :
+      m_id(id), m_animatedValueTag(animatedValueTag), m_endCallback(endCallback), m_config(config), m_manager(manager)
     {
       m_iterations = [iterations = config.find("iterations"), end = config.items().end()]() {
         if (iterations != end)
@@ -23,18 +23,21 @@ namespace react {
     {
       const auto [animation, scopedBatch] = MakeAnimation(m_config);
 
-      if (m_animatedValue)
+
+      const auto animatedValue = GetAnimatedValue();
+
+      if (animatedValue)
       {
-        m_animatedValue->PropertySet().StartAnimation(L"offset", animation);
-        m_animatedValue->AddActiveAnimation(m_id);
+        animatedValue->PropertySet().StartAnimation(L"offset", animation);
+        animatedValue->AddActiveAnimation(m_id);
       }
       scopedBatch.End();
 
-      scopedBatch.Completed([endCallback = m_endCallback, animatedValue = m_animatedValue, id = m_id](auto sender, auto)
+      scopedBatch.Completed([endCallback = m_endCallback, animatedValue, id = m_id](auto sender, auto)
       {
         if (endCallback)
         {
-          endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", "true")});
+          endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", true)});
         }
         if (animatedValue)
         {
@@ -47,8 +50,23 @@ namespace react {
 
     void AnimationDriver::StopAnimation()
     {
-      m_animatedValue->PropertySet().StopAnimation(L"offset");
-      m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", "false")});
+      if (const auto animatedValue = GetAnimatedValue())
+      {
+        animatedValue->PropertySet().StopAnimation(L"offset");
+        m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
+      }
+    }
+
+    ValueAnimatedNode* AnimationDriver::GetAnimatedValue()
+    {
+      if (auto manager = m_manager.lock())
+      {
+        if (manager->m_valueNodes.count(m_animatedValueTag))
+        {
+          return manager->m_valueNodes.at(m_animatedValueTag).get();
+        }
+      }
+      return static_cast<ValueAnimatedNode*>(nullptr);
     }
   }
 }

@@ -3,12 +3,13 @@
 
 #include "pch.h"
 #include "DiffClampAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 
 namespace react {
   namespace uwp {
     DiffClampAnimatedNode::DiffClampAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager) : ValueAnimatedNode(tag, config, manager)
     {
-      m_inputNodeTag = config.find(s_inputName).dereference().second.asInt();
+      m_inputNodeTag = static_cast<int64_t>(config.find(s_inputName).dereference().second.asDouble());
       m_min = config.find(s_minName).dereference().second.asDouble();
       m_max = config.find(s_maxName).dereference().second.asDouble();
 
