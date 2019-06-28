@@ -62,5 +62,6 @@ namespace react {
 
     // Helper functions
     winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source);
+    winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageInlineDataAsync(ImageSource source);
   }
 } // namespace react::uwp

@@ -6,6 +6,7 @@
 #include "ReactImage.h"
 
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/Windows.Security.Cryptography.h>
 
 #include "unicode.h"
 
@@ -75,6 +76,7 @@ namespace react {
       winrt::Uri uri{ facebook::utf8ToUtf16(uriString) };
       winrt::hstring scheme{ uri.SchemeName() };
       bool needsDownload = (scheme == L"http") || (scheme == L"https");
+      bool inlineData = scheme == L"data";
 
       try
       {
@@ -90,10 +92,14 @@ namespace react {
             m_onLoadEndEvent(*this, false);
           }
         }
+        else if (inlineData)
+        {
+          memoryStream = co_await GetImageInlineDataAsync(source);
+        }
 
         if (!needsDownload || memoryStream)
         {
-          auto surface = needsDownload ?
+          auto surface = needsDownload || inlineData ?
             winrt::LoadedImageSurface::StartLoadFromStream(memoryStream) :
             winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
@@ -162,6 +168,33 @@ namespace react {
       }
       catch (winrt::hresult_error const&)
       {
+      }
+
+      return nullptr;
+    }
+
+    winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ImageSource source)
+    {
+      size_t start = source.uri.find(',');
+      if (start == std::string::npos || start + 1 > source.uri.length())
+        return nullptr;
+
+      try
+      {
+        co_await winrt::resume_background();
+
+        std::string_view base64String(source.uri.c_str() + start + 1, source.uri.length() - start - 1);
+        auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(facebook::react::unicode::utf8ToUtf16(base64String));
+
+        winrt::InMemoryRandomAccessStream memoryStream;
+        co_await memoryStream.WriteAsync(buffer);
+        memoryStream.Seek(0);
+
+        return memoryStream;
+      }
+      catch (winrt::hresult_error const&)
+      {
+        // Base64 decode failed
       }
 
       return nullptr;
