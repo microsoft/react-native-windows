@@ -22,7 +22,7 @@ namespace react { namespace uwp {
     void DisposeCompletedAnimation(int64_t valueTag);
 
   private:
-    winrt::CompositionAnimation MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
+    void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
     ShadowNodeBase* GetShadowNodeBase();
     winrt::UIElement GetUIElement();
 

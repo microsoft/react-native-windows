@@ -76,14 +76,14 @@ namespace react { namespace uwp {
     {
       for (const auto& entry : m_propMapping)
       {
-        if (manager->m_styleNodes.count(entry.second))
+        if (const auto& styleNode = &manager->GetStyleAnimatedNode(entry.second))
         {
-          for (const auto& styleEntry : manager->m_styleNodes.at(entry.second)->GetMapping())
+          for (const auto& styleEntry : styleNode->GetMapping())
           {
             MakeAnimation(styleEntry.second, styleEntry.first);
           }
         }
-        else if (manager->m_valueNodes.count(entry.second))
+        else if (const auto& valueNode = &manager->GetValueAnimatedNode(entry.second))
         {
           MakeAnimation(entry.second, StringToFacadeType(entry.first));
         }
@@ -142,11 +142,11 @@ namespace react { namespace uwp {
     }
   }
 
-  winrt::CompositionAnimation PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType)
+  void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType)
   {
     if (const auto manager = m_manager.lock())
     {
-      if (const auto valueNode = manager->m_valueNodes.at(valueNodeTag).get())
+      if (const auto valueNode = &manager->GetValueAnimatedNode(valueNodeTag))
       {
         const auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
         animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
@@ -155,7 +155,7 @@ namespace react { namespace uwp {
         {
         case FacadeType::Opacity:
           animation.Target(L"Opacity");
-            break;
+          break;
         case FacadeType::Rotation:
           m_rotationAxis = { 0,0,1 };
           animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
@@ -195,16 +195,14 @@ namespace react { namespace uwp {
           break;
         case FacadeType::Perspective:
           // TODO: implement perspective animations, tracked by issue #2680
-          return nullptr;
+          return;
         default:
           assert(false);
         }
         m_expressionAnimations.insert({ valueNode->Tag(), animation });
         valueNode->AddDependentPropsNode(Tag());
-        return animation;
       }
     }
-    return nullptr;
   }
 
 

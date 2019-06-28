@@ -24,7 +24,7 @@ namespace react {
       const auto [animation, scopedBatch] = MakeAnimation(m_config);
 
 
-      const auto animatedValue = GetAnimatedValue();
+      const auto animatedValue = &GetAnimatedValue();
 
       if (animatedValue)
       {
@@ -50,23 +50,20 @@ namespace react {
 
     void AnimationDriver::StopAnimation()
     {
-      if (const auto animatedValue = GetAnimatedValue())
+      if (const auto animatedValue = &GetAnimatedValue())
       {
         animatedValue->PropertySet().StopAnimation(L"offset");
         m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
       }
     }
 
-    ValueAnimatedNode* AnimationDriver::GetAnimatedValue()
+    ValueAnimatedNode& AnimationDriver::GetAnimatedValue()
     {
       if (auto manager = m_manager.lock())
       {
-        if (manager->m_valueNodes.count(m_animatedValueTag))
-        {
-          return manager->m_valueNodes.at(m_animatedValueTag).get();
-        }
+        return manager->GetValueAnimatedNode(m_animatedValueTag);
       }
-      return static_cast<ValueAnimatedNode*>(nullptr);
+      return *static_cast<ValueAnimatedNode*>(nullptr);
     }
   }
 }

@@ -233,7 +233,7 @@ namespace react {
 
         for (auto iterator = drivers.begin(); iterator != drivers.end(); iterator++)
         {
-          if (const auto value = iterator->get()->AnimatedValue())
+          if (const auto value = &iterator->get()->AnimatedValue())
           {
             if(value->Tag() == animatedValueTag)
             {
@@ -271,6 +271,15 @@ namespace react {
       }
     }
 
+    AnimationDriver& NativeAnimatedNodeManager::GetAnimationNode(int64_t tag)
+    {
+      if (m_animationNodes.count(tag))
+      {
+        return *m_animationNodes.at(tag).get();
+      }
+      return *static_cast<AnimationDriver*>(nullptr);
+    }
+
     AnimatedNode& NativeAnimatedNodeManager::GetAnimatedNode(int64_t tag)
     {
       if (m_valueNodes.count(tag))
@@ -290,6 +299,42 @@ namespace react {
         return *m_transformNodes.at(tag).get();
       }
       return *static_cast<AnimatedNode*>(nullptr);
+    }
+
+    ValueAnimatedNode& NativeAnimatedNodeManager::GetValueAnimatedNode(int64_t tag)
+    {
+      if (m_valueNodes.count(tag))
+      {
+        return *m_valueNodes.at(tag).get();
+      }
+      return *static_cast<ValueAnimatedNode*>(nullptr);
+    }
+
+    PropsAnimatedNode& NativeAnimatedNodeManager::GetPropsAnimatedNode(int64_t tag)
+    {
+      if (m_propsNodes.count(tag))
+      {
+        return *m_propsNodes.at(tag).get();
+      }
+      return *static_cast<PropsAnimatedNode*>(nullptr);
+    }
+
+    StyleAnimatedNode& NativeAnimatedNodeManager::GetStyleAnimatedNode(int64_t tag)
+    {
+      if (m_styleNodes.count(tag))
+      {
+        return *m_styleNodes.at(tag).get();
+      }
+      return *static_cast<StyleAnimatedNode*>(nullptr);
+    }
+
+    TransformAnimatedNode& NativeAnimatedNodeManager::GetTransformAnimatedNode(int64_t tag)
+    {
+      if (m_transformNodes.count(tag))
+      {
+        return *m_transformNodes.at(tag).get();
+      }
+      return *static_cast<TransformAnimatedNode*>(nullptr);
     }
   }
 }

@@ -35,7 +35,7 @@ namespace react { namespace uwp {
 
     auto normalizedProgress = 0.0f;
     auto step = 1.0f / m_frames.size();
-    auto fromValue = GetAnimatedValue()->RawValue();
+    auto fromValue = GetAnimatedValue().RawValue();
     for (auto frame : m_frames)
     {
       normalizedProgress += step;

@@ -17,7 +17,7 @@ namespace react {
         [node = m_inputNodeTag, min = m_min, max = m_max,  manager]()
         {
           const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
-          anim.SetReferenceParameter(s_inputParameterName, manager->m_valueNodes.at(node)->PropertySet());
+          anim.SetReferenceParameter(s_inputParameterName, manager->GetValueAnimatedNode(node).PropertySet());
           anim.SetScalarParameter(s_minParameterName, static_cast<float>(min));
           anim.SetScalarParameter(s_maxParameterName, static_cast<float>(max));
           anim.Expression(static_cast<winrt::hstring>(L"Clamp(") + s_inputParameterName + L"." + s_valueName + L" + " + s_inputParameterName + L"." + s_offsetName + L", " + s_minParameterName + L", " + s_maxParameterName + L")");

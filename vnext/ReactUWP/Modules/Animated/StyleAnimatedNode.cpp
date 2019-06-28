@@ -27,14 +27,11 @@ namespace react { namespace uwp {
     {
       if (const auto manager = m_manager.lock())
       {
-        if (manager->m_transformNodes.count(prop.second))
+        if (const auto transformNode = &manager->GetTransformAnimatedNode(prop.second))
         {
-          if (const auto transformNode = manager->m_transformNodes.at(prop.second).get())
-          {
-            const auto transformMapping = transformNode->GetMapping();
-            mapping.insert(transformMapping.begin(), transformMapping.end());
-            break;
-          }
+          const auto transformMapping = transformNode->GetMapping();
+          mapping.insert(transformMapping.begin(), transformMapping.end());
+          break;
         }
       }
       mapping.insert({ StringToFacadeType(prop.first), prop.second });
