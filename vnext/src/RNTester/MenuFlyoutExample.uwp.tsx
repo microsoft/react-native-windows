@@ -5,7 +5,7 @@
 
 import React = require('react');
 import { Button, Text, View } from 'react-native';
-import { CheckBox, MenuFlyout, Picker } from '../../src/index.uwp';
+import { CheckBox, MenuFlyout, Picker, MenuFlyoutItem } from '../../src/index.uwp';
 import { Placement  } from '../../src/Libraries/Components/MenuFlyout/MenuFlyoutProps';
 
 interface IMenuFlyoutExampleState {
@@ -14,6 +14,8 @@ interface IMenuFlyoutExampleState {
   attachAsContextMenu: boolean;
   popupCheckBoxState: boolean;
   placementOptions: Placement;
+  target?: React.ReactNode;
+  message?: string;
 }
 
 let placementValues: string[] = [
@@ -35,58 +37,83 @@ let placementValues: string[] = [
 class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
   // tslint:disable-next-line:no-any
-  private _target: any;
+  // private _target: React.ReactNode;
 
   public state: IMenuFlyoutExampleState = {
     isMenuFlyoutVisible: false,
     buttonTitle: 'Open MenuFlyout',
-    attachAsContextMenu: false,
-    popupCheckBoxState: false,
+    attachAsContextMenu: true,
+    popupCheckBoxState: true,
     placementOptions: 'top',
+    target: undefined,
+    message:"not dismissed"
   };
 
   public constructor(props: any) {
     super(props);
-    this._target = React.createRef();
+    // this._target = React.createRef();
   }
 
   public render() {
     return (
-      <View >
-        <View style={ { flexDirection: 'row', paddingTop: 20 } }>
-          <Text style={ { padding: 10 } }>Placement Options: </Text>
+      <View>
+        <View style={{ flexDirection: "row", paddingTop: 20 }}>
+          <Text style={{ padding: 10 }}>Placement Options: </Text>
           <Picker
-            style={ { width: 200, height: 35 } } selectedValue={ this.state.placementOptions }
-            onValueChange={ value => this.setState({ placementOptions: value }) }>
-            { placementValues.map(item => <Picker.Item key={item} label={item} value={item} /> ) }
+            style={{ width: 200, height: 35 }}
+            selectedValue={this.state.placementOptions}
+            onValueChange={value =>
+              this.setState({ placementOptions: value })
+            }
+          >
+            {placementValues.map(item => (
+              <Picker.Item key={item} label={item} value={item} />
+            ))}
           </Picker>
         </View>
-        <View style={ { justifyContent: 'center', padding: 20, width: 200 } }>
-          <Button onPress={ this._onPress } title={ this.state.buttonTitle } ref={ this._setRef } ></Button>
-        </View>
-        <View style={ { flexDirection: 'row' } }>
-                <Text style={ { padding: 10 }  } >isAttachedAsContextMenu: </Text>
-                <CheckBox
-                    style={{ justifyContent: 'center', padding: 20 }}
-                    checked={this.state.popupCheckBoxState}
-                    onValueChange={value => this.setState({ popupCheckBoxState: value, attachAsContextMenu: value, isMenuFlyoutVisible: false })
-                    } />
-        </View>
-          <MenuFlyout
-            isOpen={ this.state.isMenuFlyoutVisible }
-            attachAsContextFlyout = {this.state.attachAsContextMenu}
-            onDismiss={ this._onMenuFlyoutDismissed }
-            target={ this._target }
-            placement= {this.state.placementOptions}
+        <View style={{ justifyContent: "center", padding: 20, width: 200 }}>
+          <Button
+            onPress={this._onPress}
+            title={this.state.buttonTitle}
+            ref={ref => {
+              // this._target = ref;
+              if(!this.state.target)
+                this.setState({target: ref})
+            }}
           />
-        )}
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ padding: 10 }}>isAttachedAsContextMenu: </Text>
+          <CheckBox
+            style={{ justifyContent: "center", padding: 20 }}
+            checked={this.state.popupCheckBoxState}
+            onValueChange={value =>
+              this.setState({
+                popupCheckBoxState: value,
+                attachAsContextMenu: value,
+                isMenuFlyoutVisible: false
+              })
+            }
+          />
+        </View>
+         { this.state.target && (<MenuFlyout
+            isOpen={this.state.isMenuFlyoutVisible}
+            attachAsContextFlyout={this.state.attachAsContextMenu}
+            onDismiss={this._onMenuFlyoutDismissed}
+            target={this.state.target}
+            placement={this.state.placementOptions}
+          >
+            <MenuFlyoutItem text="Edit"></MenuFlyoutItem>
+            </MenuFlyout>
+            
+            )}   
+
+          <Text style={{ padding: 10 }}>{this.state.message}</Text>
+ 
       </View>
-
+    );
   }
 
-  private _setRef = (targetElement: any) => {
-    this._target = targetElement;
-  }
 
   _onPress = () => {
     if (!this.state.attachAsContextMenu){
@@ -95,8 +122,8 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
   }
 
   _onMenuFlyoutDismissed = (isOpen: boolean) => {
-    this.setState({ isMenuFlyoutVisible: false });
-    this.setState({ buttonTitle: 'Open MenuFlyout' });
+    this.setState({ isMenuFlyoutVisible: isOpen });
+    this.setState({ buttonTitle: 'Open MenuFlyout', message: 'flyout dismissed once' });
   }
 }
 
