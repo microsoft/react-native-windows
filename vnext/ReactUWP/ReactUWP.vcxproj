@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -162,6 +162,28 @@
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
+    <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h" />
+    <ClInclude Include="Modules\Animated\AnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\AnimationType.h" />
+    <ClInclude Include="Modules\Animated\DecayAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\EventAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h" />
+    <ClInclude Include="Modules\Animated\FacadeType.h" />
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h" />
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\TransformAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\AppThemeModuleUwp.h" />
@@ -254,6 +276,24 @@
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
+    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp" />
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="Utils\Helpers.cpp" />
     <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />

@@ -61,6 +61,51 @@
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
     <ClCompile Include="..\Shared\OInstance.cpp">
       <Filter>Shared</Filter>
     </ClCompile>
@@ -259,6 +304,15 @@
     <ClCompile Include="Utils\UwpScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -329,6 +383,51 @@
     </ClInclude>
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DecayAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\EventAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\TransformAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Modules</Filter>
@@ -531,6 +630,27 @@
     <ClInclude Include="Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FacadeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -604,6 +724,9 @@
   <ItemGroup>
     <Filter Include="Modules">
       <UniqueIdentifier>{c08ab955-f1a5-41c1-9cc6-5f8bcefaf7e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Animated">
+      <UniqueIdentifier>{A4613589-965A-4B1F-85DB-CEEC21D101DA}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
       <UniqueIdentifier>{f74fe3a1-618b-482c-ba94-adc3e6e90ab8}</UniqueIdentifier>
