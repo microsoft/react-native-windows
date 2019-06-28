@@ -25,7 +25,7 @@ public:
 
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityRoleProperty();
   static void SetAccessibilityRole(winrt::Windows::UI::Xaml::UIElement const& element, winrt::react::uwp::AccessibilityRoles const& value);
-  static winrt::react::uwp::AccessibilityRoles GetAccessibilityRole(winrt::Windows::UI::Xaml::UIElement const& element);
+  static AccessibilityRoles GetAccessibilityRole(winrt::Windows::UI::Xaml::UIElement const& element);
 
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty();
   static void SetAccessibilityStateSelected(winrt::Windows::UI::Xaml::UIElement const& element, bool value);

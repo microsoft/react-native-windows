@@ -12,6 +12,12 @@ struct UIElement;
 
 }
 
+WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation {
+
+enum class ToggleState;
+
+}
+
 WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation::Provider {
 
 struct IRawElementProviderSimple;

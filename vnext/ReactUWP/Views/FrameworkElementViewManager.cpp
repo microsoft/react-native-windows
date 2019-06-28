@@ -379,7 +379,7 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
       }
       else if (propertyName == "accessibilityStates")
       {
-        bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)];
+        bool states[static_cast<int32_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = {};
 
         if (propertyValue.isArray())
         {

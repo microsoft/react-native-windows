@@ -9,6 +9,7 @@ static_assert(winrt::check_version(CPPWINRT_VERSION, "1.0.190111.3"), "Mismatche
 #include "winrt/Windows.Foundation.h"
 #include "winrt/Windows.Foundation.Collections.h"
 #include "winrt/impl/Windows.UI.Xaml.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Automation.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Automation.Provider.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.2.h"
@@ -1811,8 +1812,25 @@ struct property_react_uwp_DynamicAutomationPeer
                 return target.IsSelectionRequired();
             }
         };
+    };
+    struct ToggleState
+    {
+        struct name { static constexpr std::wstring_view value{ L"ToggleState"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Automation::ToggleState;
+        using target_type = winrt::react::uwp::DynamicAutomationPeer;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ToggleState();
+            }
+        };
     };};
-    struct list { using type = impl::typelist<named::IsSelected, named::SelectionContainer, named::CanSelectMultiple, named::IsSelectionRequired>; };
+    struct list { using type = impl::typelist<named::IsSelected, named::SelectionContainer, named::CanSelectMultiple, named::IsSelectionRequired, named::ToggleState>; };
 };
 
 struct property_react_uwp_DynamicAutomationProperties

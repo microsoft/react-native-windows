@@ -30,7 +30,7 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
       L"AccessibilityRole",
       winrt::xaml_typename<winrt::react::uwp::AccessibilityRoles>(),
       dynamicAutomationTypeName,
-      winrt::PropertyMetadata(winrt::box_value(winrt::react::uwp::AccessibilityRoles::None)));
+      winrt::PropertyMetadata(winrt::box_value(winrt::react::uwp::AccessibilityRoles::Unknown)));
 
   return s_AccessibilityRoleProperty;
 }
@@ -42,7 +42,7 @@ void DynamicAutomationProperties::SetAccessibilityRole(winrt::Windows::UI::Xaml:
 
 winrt::react::uwp::AccessibilityRoles DynamicAutomationProperties::GetAccessibilityRole(winrt::Windows::UI::Xaml::UIElement const& element)
 {
-  return winrt::unbox_value<react::uwp::AccessibilityRoles>(element.GetValue(AccessibilityRoleProperty()));
+  return winrt::unbox_value<winrt::react::uwp::AccessibilityRoles>(element.GetValue(AccessibilityRoleProperty()));
 }
 
 winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateSelectedProperty()

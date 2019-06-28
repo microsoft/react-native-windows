@@ -365,6 +365,12 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 
+  if (auto view = pViewShadowNode->GetView().try_as<winrt::UIElement>())
+  {
+    // If we have DynamicAutomationProperties, we need a ViewControl with a DynamicAutomationPeer
+    shouldBeControl = shouldBeControl || HasDynamicAutomationProperties(view);
+  }
+
   pPanel.FinalizeProperties();
 
   TryUpdateView(pViewShadowNode, pPanel, shouldBeControl);

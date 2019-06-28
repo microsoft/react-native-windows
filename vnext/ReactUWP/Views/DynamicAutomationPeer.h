@@ -49,6 +49,10 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer>
   void RemoveFromSelection() const;
   void Select() const;
 
+  // IToggleProvider
+  winrt::Windows::UI::Xaml::Automation::ToggleState ToggleState() const;
+  void Toggle() const;
+
 private:
   winrt::react::uwp::AccessibilityRoles GetAccessibilityRole() const;
   bool GetAccessibilityState(winrt::react::uwp::AccessibilityStates state) const;
