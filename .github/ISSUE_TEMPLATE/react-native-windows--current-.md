@@ -1,7 +1,7 @@
 ---
-name: React Native Windows (v0.57 and earlier)
-about: Bugs and feature requests for React Native Windows v0.57 and earlier.
-title: 
+name: React Native Windows (current)
+about: Bugs and feature requests for React Native Windows - current
+title: ''
 labels: ".NET"
 assignees: rozele
 

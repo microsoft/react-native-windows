@@ -1,6 +1,10 @@
 ---
 name: vnext Bug or Feature
 about: Bugs and feature requests for vnext (under development).
-title:
+title: 
 labels: vnext
+assignees: 
+
 ---
+
+

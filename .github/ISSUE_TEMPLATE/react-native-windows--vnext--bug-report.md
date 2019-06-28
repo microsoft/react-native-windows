@@ -1,9 +1,9 @@
 ---
-name: React Native Windows (v0.57 and earlier)
-about: Bugs and feature requests for React Native Windows v0.57 and earlier.
-title: 
-labels: ".NET"
-assignees: rozele
+name: React Native Windows (vNext) Bug Report
+about: File a bug report on vNext
+title: "[BUG] Describe the problem"
+labels: bug, vnext
+assignees: ''
 
 ---
 
@@ -22,19 +22,13 @@ assignees: rozele
 
 Then, specify:
 
-<!-- (What platform are you building for? Choose any from UWP, WPF) -->
-- Target Platform:
-
-<!-- (What framework version are you building for? Choose from 10.0.14393, 10.0.10586, 10.0.10240, etc. (UWP), .NET 4.6.1, .NET 4.5, etc. (WPF) -->
+<!-- (What SDK version are you building for? Choose from 10.0.15063, 10.0.16299, 10.0.18362, etc. -->
 - Target Platform Version(s):
 
-<!-- (What device(s) are you targeting? Choose any from Desktop, Mobile (ARM), Mobile Emulator, Xbox, Hololens) -->
+<!-- (What device(s) are you targeting? Choose any from Desktop, Xbox, Hololens) -->
 - Target Device(s):
 
-<!-- Which operating system are you using? Specify macOS, Windows, or Linux, along with specific release versions -->
-- Development Operating System:
-
-<!-- Which version of Visual Studio are you using? Specify Visual Studio 2015 or Visual Studio 2017 -->
+<!-- Which version of Visual Studio are you using? Specify Visual Studio 2017 or Visual Studio 2019 -->
 - Visual Studio Version:
 
 <!-- Which build configuration are you running? Choose from Debug, DebugBundle, Release, ReleaseBundle -->
@@ -93,18 +87,6 @@ Then, specify:
 
 (Paste the link to an example project and exact instructions to reproduce the issue.)
 
-<!--
-  What happens if you skip this step?
+### Additional context
 
-  Someone will read your bug report, and maybe will be able to help you,
-  but it’s unlikely that it will get much attention from the team. Eventually,
-  the issue will likely get closed in favor of issues that have reproducible demos.
-
-  Please remember that:
-
-    * Issues without reproducible demos have a very low priority.
-    * The person fixing the bug would have to do that anyway. Please be respectful of their time.
-    * You might figure out the issues yourself as you work on extracting it.
-
-  Thanks for helping us help you!
--->
+(Write any other additional context that may help in root causing the issue.)
