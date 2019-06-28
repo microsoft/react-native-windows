@@ -41,6 +41,7 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
   {
   case winrt::react::uwp::AccessibilityRoles::Button:
   case winrt::react::uwp::AccessibilityRoles::ImageButton:
+  case winrt::react::uwp::AccessibilityRoles::Switch:
     return winrt::AutomationControlType::Button;
   case winrt::react::uwp::AccessibilityRoles::Link:
     return winrt::AutomationControlType::Hyperlink;
@@ -49,12 +50,39 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
   case winrt::react::uwp::AccessibilityRoles::KeyboardKey:
     return winrt::AutomationControlType::Custom;
   case winrt::react::uwp::AccessibilityRoles::Text:
-  case winrt::react::uwp::AccessibilityRoles::Summary:
   case winrt::react::uwp::AccessibilityRoles::Header:
+  case winrt::react::uwp::AccessibilityRoles::Summary:  
     return winrt::AutomationControlType::Text;
   case winrt::react::uwp::AccessibilityRoles::Adjustable:
     return winrt::AutomationControlType::Slider;
+  case winrt::react::uwp::AccessibilityRoles::CheckBox:
+    return winrt::AutomationControlType::CheckBox;
+  case winrt::react::uwp::AccessibilityRoles::ComboBox:
+    return winrt::AutomationControlType::ComboBox;
+  case winrt::react::uwp::AccessibilityRoles::Menu:
+    return winrt::AutomationControlType::Menu;
+  case winrt::react::uwp::AccessibilityRoles::MenuBar:
+    return winrt::AutomationControlType::MenuBar;
+  case winrt::react::uwp::AccessibilityRoles::MenuItem:
+    return winrt::AutomationControlType::MenuItem;
+  case winrt::react::uwp::AccessibilityRoles::ProgressBar:
+    return winrt::AutomationControlType::ProgressBar;
+  case winrt::react::uwp::AccessibilityRoles::Radio:
+    return winrt::AutomationControlType::RadioButton;
+  case winrt::react::uwp::AccessibilityRoles::ScrollBar:
+    return winrt::AutomationControlType::ScrollBar;
+  case winrt::react::uwp::AccessibilityRoles::SpinButton:
+    return winrt::AutomationControlType::Spinner;
+  case winrt::react::uwp::AccessibilityRoles::Tab:
+    return winrt::AutomationControlType::TabItem;
+  case winrt::react::uwp::AccessibilityRoles::TabList:
+    return winrt::AutomationControlType::Tab;
+  case winrt::react::uwp::AccessibilityRoles::ToolBar:
+    return winrt::AutomationControlType::ToolBar;
   case winrt::react::uwp::AccessibilityRoles::Search:
+  case winrt::react::uwp::AccessibilityRoles::Alert:
+  case winrt::react::uwp::AccessibilityRoles::RadioGroup:
+  case winrt::react::uwp::AccessibilityRoles::Timer:
   case winrt::react::uwp::AccessibilityRoles::Unknown:
   default:
     return winrt::AutomationControlType::Group;
