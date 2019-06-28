@@ -24,7 +24,7 @@ public:
   void DetachRootView() noexcept;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
 
-  #pragma endregion // ITestInstance members
+  #pragma endregion ITestInstance members
 private:
   ::react::uwp::ReactInstanceCreator m_instanceCreator;
 };

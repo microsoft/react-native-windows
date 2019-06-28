@@ -48,6 +48,7 @@
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/ClipboardModule.h>
+#include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -138,7 +139,8 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   std::shared_ptr<facebook::react::DevSettings> devSettings,
   const I18nModule::I18nInfo&& i18nInfo,
   std::shared_ptr<facebook::react::AppState> appstate,
-  std::shared_ptr<react::windows::AppTheme> appTheme)
+  std::shared_ptr<react::windows::AppTheme> appTheme,
+  std::weak_ptr<IReactInstance> uwpInstance)
 {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -199,6 +201,11 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
     messageQueue);
 
   modules.emplace_back(
+    NativeAnimatedModule::name,
+    [uwpInstance = std::move(uwpInstance)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(uwpInstance)); },
+    messageQueue);
+
+  modules.emplace_back(
     "I18nManager",
     [i18nInfo = std::move(i18nInfo)]() mutable { return createI18nModule(std::make_unique<I18nModule>(std::move(i18nInfo))); },
     messageQueue);
@@ -244,6 +251,12 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     devSettings->useJITCompilation = settings.EnableJITCompilation;
     devSettings->debugHost = settings.DebugHost;
 
+    // In most cases, using the hardcoded ms-appx URI works fine, but there are certain scenarios,
+    // such as in optional packaging, where the developer might need to modify the path, in which
+    // case we should use the custom path instead.
+    devSettings->bundleRootPath = settings.BundleRootPath.empty() ? "ms-appx:///Bundle/" : settings.BundleRootPath;
+    m_bundleRootPath = devSettings->bundleRootPath;
+
     if (settings.UseLiveReload)
     {
       devSettings->liveReloadCallback = [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept
@@ -274,7 +287,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
     // Acquire default modules and then populate with custom modules
-    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate), std::move(appTheme));
+    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate), std::move(appTheme), std::weak_ptr<IReactInstance>(spThis));
 
     if (m_moduleProvider != nullptr)
     {

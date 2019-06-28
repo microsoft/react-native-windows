@@ -16,6 +16,8 @@
 
 #include <Views/ShadowNodeBase.h>
 
+#include <Views/ViewPanel.h>
+
 namespace winrt {
 using namespace Windows::UI::Xaml;
 }
@@ -87,7 +89,7 @@ void UpdatePadding(ShadowNodeBase* node, const T& element, ShadowEdges edge, dou
 }
 
 template <class T>
-void SetBorderThickness(ShadowNodeBase* node, T& element, ShadowEdges edge, double margin)
+void SetBorderThickness(ShadowNodeBase* node, const T& element, ShadowEdges edge, double margin)
 {
   node->m_border[edge] = margin;
   winrt::Thickness thickness = GetThickness(node->m_border, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
@@ -101,7 +103,7 @@ void SetBorderBrush(const T& element, const winrt::Windows::UI::Xaml::Media::Bru
 }
 
 template <class T>
-bool TryUpdateBackgroundBrush(T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateBackgroundBrush(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "backgroundColor")
   {
@@ -117,7 +119,7 @@ bool TryUpdateBackgroundBrush(T& element, const std::string& propertyName, const
 }
 
 template <class T>
-void UpdateCornerRadius(ShadowNodeBase* node, T& element, ShadowCorners corner, double newValue)
+void UpdateCornerRadius(ShadowNodeBase* node, const T& element, ShadowCorners corner, double newValue)
 {
   node->m_cornerRadius[corner] = newValue;
   winrt::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
@@ -141,7 +143,7 @@ bool TryUpdateForeground(const T& element, const std::string& propertyName, cons
 }
 
 template <class T>
-bool TryUpdateBorderProperties(ShadowNodeBase* node, T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateBorderProperties(ShadowNodeBase* node, const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   bool isBorderProperty = true;
 
@@ -254,7 +256,7 @@ bool TryUpdatePadding(ShadowNodeBase* node, const T& element, const std::string&
 }
 
 template <class T>
-bool TryUpdateCornerRadius(ShadowNodeBase* node, T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
+bool TryUpdateCornerRadius(ShadowNodeBase* node, const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
 {
   if (propertyName == "borderTopLeftRadius")
   {

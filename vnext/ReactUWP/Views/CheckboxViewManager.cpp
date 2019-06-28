@@ -21,11 +21,6 @@ namespace winrt {
 
 namespace react { namespace uwp {
 
-enum class CheckboxCommands
-{
-  SetFocus = 1,
-};
-
 class CheckBoxShadowNode : public ShadowNodeBase
 {
   using Super = ShadowNodeBase;
@@ -82,15 +77,6 @@ const char* CheckBoxViewManager::GetName() const
   return "RCTCheckBox";
 }
 
-folly::dynamic CheckBoxViewManager::GetCommands() const
-{
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object
-    ("SetFocus", static_cast<std::underlying_type_t<CheckboxCommands>>(CheckboxCommands::SetFocus))
-  );
-  return commands;
-}
-
 folly::dynamic CheckBoxViewManager::GetNativeProps() const
 {
   auto props = Super::GetNativeProps();
@@ -142,22 +128,6 @@ void CheckBoxViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const f
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
-}
-
-void CheckBoxViewManager::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs)
-{
-  auto checkbox = viewToUpdate.as<winrt::CheckBox>();
-  if (checkbox == nullptr)
-    return;
-
-  switch (commandId)
-  {
-    case static_cast<int64_t>(CheckboxCommands::SetFocus):
-    {
-      checkbox.Focus(winrt::FocusState::Programmatic);
-      break;
-    }
-  }
 }
 
 }}

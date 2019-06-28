@@ -3,16 +3,19 @@
 'use strict';
 
 import { NativeEventEmitter, NativeModules } from 'react-native';
+const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
 
-const ThemingNative = NativeModules.RTCAppTheme;
+const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter  {
+  public isAvailable: boolean;
   private _currentTheme: string;
 
   constructor() {
-    super(ThemingNative);
+    super(NativeAppTheme);
+    this.isAvailable = true;
 
-    this._currentTheme = ThemingNative.initialAppTheme;
+    this._currentTheme = NativeAppTheme.initialAppTheme;
     this.addListener('appThemeChanged', ({currentTheme}:{currentTheme: string}) => {
       this._currentTheme = currentTheme;
     });
@@ -23,5 +26,12 @@ class AppThemeModule extends NativeEventEmitter  {
   }
 }
 
-export const AppTheme = new AppThemeModule();
+// This module depends on the native `RCTAppTheme` module. If you don't include it,
+// `AppTheme.isAvailable` will return `false`, and any method calls will throw.
+class MissingNativeAppThemeShim extends MissingNativeEventEmitterShim {
+  public isAvailable = false;
+  public currentTheme = '';
+}
+
+export const AppTheme = (NativeAppTheme ? new AppThemeModule() : new MissingNativeAppThemeShim());
 export default AppTheme;

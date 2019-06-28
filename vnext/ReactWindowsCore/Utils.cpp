@@ -6,8 +6,7 @@
 
 using namespace std;
 
-namespace Microsoft {
-namespace React {
+namespace Microsoft::React {
 
 Url::Url(const string& source)
 {
@@ -51,13 +50,12 @@ string Url::Target()
     return path.append("?").append(queryString);
 }
 
-} } // namespace Microsoft::React
+} // namespace Microsoft::React
 
 // Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise dont need
 // And we probably want to look at some other functionality for reporting errors at
 // some point anyway.  For now, just stub them out.
-namespace folly {
-namespace detail {
+namespace folly::detail {
 
 namespace {
 void writeStderr(const char* s, size_t len) {
@@ -80,6 +78,5 @@ void assertionFailure(
   std::terminate();
 }
 
-} // namespace detail
-} // namespace folly
+} // namespace folly::detail
 

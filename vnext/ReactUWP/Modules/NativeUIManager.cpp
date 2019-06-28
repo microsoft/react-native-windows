@@ -93,6 +93,11 @@ void NativeUIManager::DirtyYogaNode(int64_t tag)
   }
 }
 
+void NativeUIManager::AddBatchCompletedCallback(std::function<void()> callback)
+{
+  m_batchCompletedCallbacks.push_back(std::move(callback));
+}
+
 winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
 {
   if (m_host)
@@ -233,6 +238,13 @@ void NativeUIManager::onBatchComplete()
   {
     DoLayout();
     m_inBatch = false;
+
+    const auto callbacks = m_batchCompletedCallbacks;
+    m_batchCompletedCallbacks.clear();
+    for (const auto& callback : callbacks)
+    {
+      callback.operator()();
+    }
   }
 }
 

@@ -53,6 +53,7 @@ public:
   const std::string& LastErrorMessage() const noexcept override { return m_errorMessage; }
   void loadBundle(std::string&& jsBundleRelativePath) override { if (!m_isInError) m_instanceWrapper->loadBundle(std::move(jsBundleRelativePath)); };
   ExpressionAnimationStore& GetExpressionAnimationStore() override { return m_expressionAnimationStore; }
+  std::string GetBundleRootPath() const noexcept override { return m_bundleRootPath; }
 
   // Test hooks
   void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
@@ -82,6 +83,8 @@ private:
   ExpressionAnimationStore m_expressionAnimationStore;
 
   std::function<void(XamlView)> m_xamlViewCreatedTestHook;
+
+  std::string m_bundleRootPath;
 };
 
 } }

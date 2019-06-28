@@ -115,6 +115,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
 
 const APIExamples: Array<IRNTesterExample> = [
   {
+    key: 'KeyboardFocusExample',
+    module: require('./KeyboardFocusExample.uwp'),
+  },
+  {
     key: 'AccessibilityExample',
     module: require('./AccessibilityExample')
   },

@@ -8,7 +8,56 @@
 
 namespace react.uwp
 {
+	enum AccessibilityRoles
+	{
+		None = 0,
+		Button,
+		Link,
+		Search,
+		Image,
+		KeyboardKey,
+		Text,
+		Adjustable,
+		ImageButton,
+		Header,
+		Summary,
+		Unknown,
+		CountRoles
+	};
+
+	enum AccessibilityStates
+	{
+		Selected = 0,
+		Disabled,
+		CountStates
+	};
+
+	delegate void AccessibilityInvokeEventHandler();
+
 	[default_interface]
+	[webhosthidden]
+	runtimeclass DynamicAutomationProperties
+	{
+		// Attached Properties
+		static Windows.UI.Xaml.DependencyProperty AccessibilityRoleProperty { get; };
+		static void SetAccessibilityRole(Windows.UI.Xaml.UIElement element, AccessibilityRoles value);
+		static AccessibilityRoles GetAccessibilityRole(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateDisabledProperty { get; };
+		static void SetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateSelectedProperty { get; };
+		static void SetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
+		static void SetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityInvokeEventHandler value);
+		static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element);
+	}
+
+	[default_interface]
+	[webhosthidden]
 	runtimeclass DynamicAutomationPeer :
 		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
 		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,

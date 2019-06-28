@@ -44,30 +44,6 @@ enum ShadowCorners : uint8_t
   CountCorners
 };
 
-enum AccessibilityRoles : uint8_t
-{
-  None = 0,
-  Button,
-  Link,
-  Search,
-  Image,
-  KeyboardKey,
-  Text,
-  Adjustable,
-  ImageButton,
-  Header,
-  Summary,
-  Unknown,
-  CountRoles
-};
-
-enum AccessibilityStates : uint8_t
-{
-  Selected = 0,
-  Disabled,
-  CountStates
-};
-
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
 #define INIT_UNDEFINED_EDGES { c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge }
 #define INIT_UNDEFINED_CORNERS { c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge }

@@ -195,9 +195,9 @@ void HttpResource::SetOnError(std::function<void(const std::string&)>&& handler)
   m_errorHandler = move(handler);
 }
 
-#pragma endregion // Handler setters
+#pragma endregion Handler setters
 
-#pragma endregion // HttpResource members
+#pragma endregion HttpResource members
 
 } // namespace facebook::react::experimental
 
@@ -208,6 +208,6 @@ void HttpResource::SetOnError(std::function<void(const std::string&)>&& handler)
   return unique_ptr<IHttpResource>(new experimental::HttpResource());
 }
 
-#pragma endregion // IHttpResource static members
+#pragma endregion IHttpResource static members
 
 } } // namespace facebook::react
