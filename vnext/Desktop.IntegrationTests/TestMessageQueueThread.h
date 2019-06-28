@@ -42,7 +42,7 @@ public:
   // Once quitSynchronous() returns, no further work should run on the queue.
   void quitSynchronous() noexcept override;
 
-  #pragma endregion // MessageQueueThread members
+  #pragma endregion MessageQueueThread members
 
 private:
   enum class State

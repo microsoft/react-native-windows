@@ -117,6 +117,33 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
   return nullptr;
 }
 
+XamlView NativeUIManager::reactPeerOrContainerFrom(winrt::FrameworkElement fe)
+{
+  if (m_host)
+  {
+    while (fe)
+    {
+      if (auto value = GetTagAsPropertyValue(fe))
+      {
+        auto tag = GetTag(value);
+        if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(tag)))
+        {
+          if (auto xamlView = shadowNode->GetView())
+          {
+            if (xamlView == fe)
+            {
+              return xamlView;
+            }
+          }
+          
+        }
+      }
+      fe = fe.Parent().try_as<winrt::FrameworkElement>();
+    }
+  }
+  return nullptr;
+}
+
 NativeUIManager::NativeUIManager()
 {
 #if defined(_DEBUG)

@@ -30,7 +30,7 @@ public:
   void StopPollingLiveReload() override;
   bool HasException() override;
 
-  #pragma endregion // IDevSupportManager
+  #pragma endregion IDevSupportManager
 };
 
 } } // namespace facebook::react

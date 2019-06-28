@@ -7,9 +7,7 @@
 using namespace facebook::react::test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace Microsoft {
-namespace VisualStudio {
-namespace CppUnitTestFramework {
+namespace Microsoft::VisualStudio::CppUnitTestFramework {
 
 template <>
 std::wstring ToString<facebook::react::test::TestStatus>(const facebook::react::test::TestStatus& status)
@@ -17,7 +15,7 @@ std::wstring ToString<facebook::react::test::TestStatus>(const facebook::react::
   return ToString(static_cast<unsigned int>(status));
 }
 
-} } } // namespace Microsoft::VisualStudio::CppUnitTestFramework
+} // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_CLASS(RNTesterIntegrationTests)
 {

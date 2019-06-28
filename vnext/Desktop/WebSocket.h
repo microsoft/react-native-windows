@@ -10,8 +10,7 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-namespace Microsoft {
-namespace React {
+namespace Microsoft::React {
 
 template
 <
@@ -33,9 +32,9 @@ class BaseWebSocket : public IWebSocket
   boost::beast::multi_buffer m_bufferIn;
   std::thread m_contextThread;
 
-  ///
-  // Must be modified exclusively from the context thread.
-  ///
+  /// <remarks>
+  /// Must be modified exclusively from the context thread.
+  /// </remarks>
   std::queue<std::pair<std::string, bool>> m_writeRequests;
 
   std::atomic_size_t m_pingRequests { 0 };
@@ -49,51 +48,146 @@ class BaseWebSocket : public IWebSocket
   std::atomic_bool m_pingInProgress { false };
   std::atomic_bool m_writeInProgress { false };
 
+  /// <summary>
+  /// Add the message to a write queue for eventual sending.
+  /// </summary>
+  /// <param name="message">
+  /// Payload to send to the remote endpoint.
+  /// </param>
+  /// <param name="binary">
+  /// Indicates whether the payload should be treated as binary data, or text.
+  /// </param>
   void EnqueueWrite(const std::string& message, bool binary);
+
+  /// <summary>
+  /// Dequeues a message from <c>m_writeRequests</c> and sends it asynchronously.
+  /// </summary>
   void PerformWrite();
+
+  /// <summary>
+  /// If this instance is considered open, post a read request into <c>m_bufferIn</c>.
+  /// If there is an incoming message and <c>m_readHandler</c> is set, call the handler.
+  /// Then, post new call to this method to read further incoming data.
+  /// </summary>
   void PerformRead();
+
+  /// <summary>
+  /// If there are pending ping requests, post an asynchronous ping.
+  /// Invoke <c>m_pingHandler</c> if set.
+  /// Call this method again if there are still pending requests.
+  /// </summary>
   void PerformPing();
+
+  /// <summary>
+  /// Set the ready state to <c>Closing</c>.
+  /// Post a close request for this stream.
+  /// Stop this instance to drop any future read or write requests.
+  /// </summary>
   void PerformClose();
 
-  ///
-  // Synchronizes the context thread and allows the io_context to stop dispatching tasks.
-  ///
+  /// <summary>
+  /// Synchronizes the context thread and allows the io_context to stop dispatching tasks.
+  /// </summary>
   void Stop();
 
   boost::beast::websocket::close_code ToBeastCloseCode(IWebSocket::CloseCode closeCode);
 
 protected:
-  std::function<void(Error&&)> m_errorHandler;
-
+  /// <summary>
+  /// See https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio/reference/io_context.html.
+  ///
+  /// Dispatches tasks posted either by <see cref="m_stream" />
+  /// or arbitrary lambdas using <c>boost::asio::post</c>.
+  /// </summary>
+  /// <remarks>
+  /// Tasks will be run in the thread that calls this object's <c>run</c> method.
+  /// </remarks>
   boost::asio::io_context m_context;
+
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
   std::unique_ptr<Stream> m_stream;
+  std::function<void(Error&&)> m_errorHandler;
 
   BaseWebSocket(Url&& url);
 
   ~BaseWebSocket() override;
 
+  /// <summary>
+  /// Finalizes the connection setup to the remote endpoint.
+  /// Sets the ready state to <c>Open</c>.
+  /// </summary>
+  /// <remarks>
+  /// On callback, invokes the connect handler, if set.
+  /// Performs a pending write, if requested during the connection process.
+  /// Performs a pending ping call, if requested during the connection process.
+  /// Closes this instance, if requested during the connection process.
+  /// </remarks>
+  /// <param name="options">
+  /// Map of HTTP header fields sent by the remote endpoint.
+  /// </param>
   virtual void Handshake(const IWebSocket::Options& options);
 
 public:
-  #pragma region IWebSocket members
+  #pragma region IWebSocket
 
+  /// <summary>
+  /// <see cref="IWebSocket::Connect" />
+  /// </summary>
   void Connect(const Protocols& protocols, const Options& options) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::Ping" />
+  /// </summary>
   void Ping() override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::Send" />
+  /// </summary>
   void Send(const std::string& message) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SendBinary" />
+  /// </summary>
   void SendBinary(const std::string& base64String) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::Close" />
+  /// </summary>
   void Close(CloseCode code, const std::string& reason) override;
 
   ReadyState GetReadyState() const override;
 
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnConnect" />
+  /// </summary>
   void SetOnConnect(std::function<void()>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnPing" />
+  /// </summary>
   void SetOnPing(std::function<void()>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnSend" />
+  /// </summary>
   void SetOnSend(std::function<void(std::size_t)>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnMessage" />
+  /// </summary>
   void SetOnMessage(std::function<void(std::size_t, const std::string&)>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnClose" />
+  /// </summary>
   void SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler) override;
+
+  /// <summary>
+  /// <see cref="IWebSocket::SetOnError" />
+  /// </summary>
   void SetOnError(std::function<void(Error&&)>&& handler) override;
 
-  #pragma endregion
+  #pragma endregion IWebSocket
 };
 
 class WebSocket
@@ -117,7 +211,9 @@ public:
 
 namespace Test {
 
-// See <boost/beast/experimental/test/stream.hpp>
+/// <summary>
+/// See <boost/beast/experimental/test/stream.hpp>.
+/// </summary>
 class MockStream
 {
   boost::asio::io_context& m_context;
@@ -171,7 +267,7 @@ public:
   BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(boost::system::error_code))
   async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
 
-  #pragma endregion // boost::beast::websocket::stream mocks
+  #pragma endregion boost::beast::websocket::stream mocks
 
   std::function<boost::system::error_code()> ConnectResult;
   std::function<boost::system::error_code(std::string, std::string)> HandshakeResult;
@@ -199,4 +295,4 @@ public:
 
 } // namespace Microsoft::React::Test
 
-} } // namespace Microsoft::React
+} // namespace Microsoft::React

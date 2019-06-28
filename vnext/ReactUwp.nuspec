@@ -2,11 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>OfficeReact.Uwp</id>
-    <version>__BuildBuildNumber__</version>
+    <version>$npmVersion$</version>
     <description>Contains Windows Implementation of React-Native</description>
     <authors>Microsoft</authors>
     <projectUrl>https://office.visualstudio.com/ISS/_git/sdx-platform</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <repository type="git"
+      url="https://github.com/microsoft/react-native-windows.git"
+      commit="$CommitId$" />
   </metadata>
   <files>
     <file src="inc\cxxreact\*" target="inc\cxxreact"/>

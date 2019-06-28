@@ -49,6 +49,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./FlyoutExample.uwp'),
   },
   {
+    key: 'GlyphExample',
+    module: require('./GlyphExample'),
+  },
+  {
     key: 'ImageExample',
     module: require('react-native/RNTester/js/ImageExample'),
   },
@@ -63,6 +67,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'PopupExample',
     module: require('./PopupExample.uwp'),
+  },
+  {
+    key: 'KeyboardExtensionExample',
+    module: require('./KeyboardExtensionExample.uwp'),
   },
   {
     key: 'ScrollViewSimpleExample',
@@ -107,6 +115,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
 
 const APIExamples: Array<IRNTesterExample> = [
   {
+    key: 'KeyboardFocusExample',
+    module: require('./KeyboardFocusExample.uwp'),
+  },
+  {
     key: 'AccessibilityExample',
     module: require('./AccessibilityExample')
   },
@@ -136,7 +148,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'KeyboardExample',
-    module: require('./KeyboardExample')
+    module: require('./KeyboardExample'),
   },
   {
     key: 'LayoutExample',

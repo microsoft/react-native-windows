@@ -376,6 +376,6 @@ bool WebSocketJSExecutor::IsInError() const noexcept
   return m_state == State::Error;
 }
 
-#pragma endregion // private members
+#pragma endregion private members
 
 }} // namespace facebook::react

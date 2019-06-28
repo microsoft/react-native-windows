@@ -73,7 +73,7 @@ dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const
   return dynamic::object();
 }
 
-#pragma endregion // TestViewManager members
+#pragma endregion TestViewManager members
 
 #pragma region TestNativeUIManager members
 
@@ -113,7 +113,7 @@ void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode) {
 
 void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
-#pragma endregion // TestNativeUIManager members
+#pragma endregion TestNativeUIManager members
 
 #pragma region TestShadowNode members
 
