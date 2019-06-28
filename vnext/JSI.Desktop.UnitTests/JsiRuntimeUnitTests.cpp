@@ -29,7 +29,7 @@ TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
 }
 
-// TODO (yicyao): Currently, comparison of property IDs is broken for
+// TODO (yicyao) #2703: Currently, comparison of property IDs is broken for
 // ChakraJsiRuntime. Enable this test once we fix it.
 TEST_P(JsiRuntimeUnitTests, DISABLED_PropNameIDTest) {
   // This is a little weird to test, because it doesn't really exist
@@ -120,8 +120,8 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
   EXPECT_EQ(x.getPropertyNames(rt).size(rt), 5);
   EXPECT_TRUE(eval("x.ten == 11").getBool());
 
-  // TODO (yicyao): The copy of jsi-inl.h in Microsoft/react-native is out of
-  // date and does not contain the float overload.
+  // TODO (yicyao): #2704 The copy of jsi-inl.h in Microsoft/react-native is out
+  // of date and does not contain the float overload.
   x.setProperty(rt, "e_as_float", 2.71);
   //x.setProperty(rt, "e_as_float", 2.71f);
   EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
@@ -513,8 +513,8 @@ TEST_P(JsiRuntimeUnitTests, FunctionTest) {
     true,
     3.14,
     2.71,
-    // TODO (yicyao): The copy of jsi-inl.h in Microsoft/react-native is out of
-    // date and does not contain the float overload.
+    // TODO (yicyao): #2704 The copy of jsi-inl.h in Microsoft/react-native is
+    // out of date and does not contain the float overload.
     //2.71f,
     17,
     "s1",

@@ -9,8 +9,8 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <!-- We need to figure out how we want to consume the Google Test Nuget for
-    Win32. For now, we disable the Win32. -->
+    <!-- #2702: We need to figure out how we want to consume the Google Test'
+    Nuget for Win32. For now, we disable the Win32. -->
     <!-- <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -34,7 +34,6 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- We cannot include Warnings.props here because Google Test only builds at warning level 3. -->
-  <!-- <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" /> -->
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -57,6 +56,10 @@
       -->
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;_USRDLL;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;NOJSC;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
+      string literals. It prevents code like
+        wchar_t* str = L"hello";
+      from compiling. -->
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
       <AssemblerListingLocation>..\build\$(IntDir)\%(RelativeDir)</AssemblerListingLocation>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -73,6 +76,10 @@
       <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>true</MinimalRebuild>
+      <!-- Use /RTCsu for debug builds. This enables some run-time error
+      checking such as detection of overruns and underruns of local variables
+      and use of uninitialized variables.
+      -->
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
