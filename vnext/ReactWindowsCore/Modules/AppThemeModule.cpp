@@ -41,7 +41,7 @@ AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme>&& appTheme)
 auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic>
 {
   return {
-    { "initialAppTheme", folly::dynamic { m_appTheme->getCurrentTheme() } }
+    { "initialAppTheme", folly::dynamic { m_appTheme->getCurrentTheme() } },
     { "isHighContrast", folly::dynamic { m_appTheme->getIsHighContrast() }},
     { "highContrastRGBValues", folly::dynamic {m_appTheme->getHighContrastRGBValues()}}
   };

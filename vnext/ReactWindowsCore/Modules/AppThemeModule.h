@@ -31,7 +31,7 @@ public:
   AppThemeModule(std::shared_ptr<AppTheme> && appTheme);
 
   // CxxModule
-  std::string getName() override { return name; }
+  std::string getName() override { return name; };
   auto getConstants() -> std::map<std::string, folly::dynamic> override;
   auto getMethods() -> std::vector<Method> override;
 

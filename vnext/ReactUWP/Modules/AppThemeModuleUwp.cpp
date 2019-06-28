@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "AppThemeModuleUwp.h"
+#include <iomanip>
 
 #include <Utils\ValueUtils.h>
 
