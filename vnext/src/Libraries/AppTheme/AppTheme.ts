@@ -13,7 +13,7 @@ export interface IColorValues  {
 }
 
 export interface IAppThemeChangedEvent {
-    isHighContrast: boolean;
-    highContrastColors: IColorValues;
-    currentTheme: string;
+  isHighContrast: boolean;
+  highContrastColors: IColorValues;
+  currentTheme: string;
 }
