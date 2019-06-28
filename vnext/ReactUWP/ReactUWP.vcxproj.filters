@@ -304,6 +304,15 @@
     <ClCompile Include="Utils\UwpScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -379,7 +388,7 @@
       <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\DecayAnimationDriver.h">
-	  <Filter>Modules\Animated</Filter>
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -620,6 +629,27 @@
     </ClInclude>
     <ClInclude Include="Utils\UwpScriptStore.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FacadeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h">
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
