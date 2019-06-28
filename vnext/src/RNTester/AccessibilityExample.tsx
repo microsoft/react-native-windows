@@ -77,7 +77,7 @@ class HighContrastExample extends React.Component {
         <Text>WindowColor value: {this.state.highContrastColorValues.WindowColor}</Text>
         <Text>WindowTextColor value: {this.state.highContrastColorValues.WindowTextColor}</Text>
         <View
-          style={{ width: 150, height: 50, backgroundColor: currentBackgroundColor[3]}}
+          style={{ width: 150, height: 50, backgroundColor: this.state.highContrastColorValues.ButtonFaceColor}}
           accessible={true}
           accessibilityLabel="A hint for the red box."
         />
