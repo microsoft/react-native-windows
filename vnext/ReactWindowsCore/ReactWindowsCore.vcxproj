@@ -131,6 +131,7 @@
     <ClCompile Include="CxxMessageQueue.cpp" />
     <ClCompile Include="FollyDynamicConverter.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
+    <ClCompile Include="KeyValueStorage.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />

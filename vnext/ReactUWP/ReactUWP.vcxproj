@@ -253,7 +253,6 @@
     <ClInclude Include="Views\WebViewManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="..\Shared\Logging.cpp" />
     <ClCompile Include="ABI\ABIModuleLoader.cpp" />

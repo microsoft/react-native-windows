@@ -50,6 +50,7 @@
     </ClCompile>
     <ClCompile Include="FollyDynamicConverter.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
+    <ClCompile Include="KeyValueStorage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />
