@@ -39,6 +39,8 @@ public:
 	void measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) override;
 	INativeUIManager* getNativeUIManager() override { return m_nativeUIManager; }
 
+  void focus(int64_t reactTag) override;
+  void blur(int64_t reactTag) override;
 	// INativeUIManagerHost
 	void zombieView(int64_t tag) override;
 	std::unordered_set<int64_t>& GetAllRootTags() override;

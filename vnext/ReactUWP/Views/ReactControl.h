@@ -27,11 +27,7 @@ namespace uwp {
 class ReactControl : public std::enable_shared_from_this<ReactControl>
 {
 public:
-  ReactControl(IXamlRootView* parent, XamlView rootView)
-    : m_pParent(parent),
-    m_xamlRootView(rootView)
-  {
-  }
+  ReactControl(IXamlRootView* parent, XamlView rootView);
 
   virtual ~ReactControl();
 
@@ -52,10 +48,13 @@ public:
   virtual int64_t GetActualWidth() const;
   int64_t GetTag() const { return m_rootTag; }
   void SetTag(int64_t tag) { m_rootTag = tag; }
+  void BlurOrStopOnFocusSafeHabor(XamlView const& blurredElement);
 
 private:
   void HandleInstanceError();
   void HandleInstanceErrorOnUIThread();
+  void PrepareXamlRootView(XamlView const& rootView);
+  static winrt::ContentControl CreateFocusSafeHabor();
 
   IXamlRootView* m_pParent;
 
@@ -66,7 +65,7 @@ private:
   std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
   int64_t m_rootTag = -1;
-  XamlView m_xamlRootView;
+  XamlView m_xamlRootView{ nullptr };
   ReactInstanceCreator m_instanceCreator;
   std::shared_ptr<IReactInstance> m_reactInstance;
   bool m_isAttached { false };
@@ -75,6 +74,9 @@ private:
 
   winrt::Grid m_redBoxGrid { nullptr };
   winrt::TextBlock m_errorTextBlock { nullptr };
+
+  winrt::ContentControl m_focusSafeHabor{ nullptr };
+  winrt::ContentControl::LosingFocus_revoker m_focusSafeHaborLosingFocusRevoker{};
 };
 
 }

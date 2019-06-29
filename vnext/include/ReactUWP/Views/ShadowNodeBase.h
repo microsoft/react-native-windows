@@ -64,6 +64,8 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode
   virtual void AddView(ShadowNode& child, int64_t index) override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
   virtual void createView() override;
+  virtual void focus() override;
+  virtual void blur() override;
 
   virtual void updateProperties(const folly::dynamic&& props) override;
 

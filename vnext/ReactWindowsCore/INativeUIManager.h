@@ -43,6 +43,9 @@ struct INativeUIManager
 	virtual void onBatchComplete() = 0;
 	virtual void ensureInBatch() = 0;
   virtual void measure(facebook::react::ShadowNode& shadowNode, facebook::react::ShadowNode& shadowRoot, facebook::xplat::module::CxxModule::Callback callback) = 0;
+
+  virtual void focus(int64_t reactTag) = 0;
+  virtual void blur(int64_t reactTag) = 0;
 };
 
 }} // facebook.react

@@ -898,6 +898,7 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag)
     UpdateExtraLayout(child);
 }
 
+
 void NativeUIManager::DoLayout()
 {
   auto& rootTags = m_host->GetAllRootTags();
@@ -998,6 +999,22 @@ void NativeUIManager::measure(facebook::react::ShadowNode& shadowNode, facebook:
   args.push_back(rectInParentCoords.Y);
 
   callback(args);
+}
+
+void NativeUIManager::focus(int64_t reactTag)
+{
+  if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(reactTag)))
+  {
+    shadowNode->focus();
+  }
+}
+
+void NativeUIManager::blur(int64_t reactTag)
+{
+  if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(reactTag)))
+  {
+    shadowNode->blur();
+  }
 }
 
 }

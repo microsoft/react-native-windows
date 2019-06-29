@@ -170,6 +170,23 @@ void BatchingUIManager::measure(folly::dynamic&& args, facebook::xplat::module::
   });
 }
 
+void BatchingUIManager::focus(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  dispatchFunction([manager, args]()
+    {
+      static_cast<IUIManager*>(manager.get())->focus(jsArgAsInt(args, 0));
+    });
+}
+
+void BatchingUIManager::blur(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  dispatchFunction([manager, args]()
+    {
+      static_cast<IUIManager*>(manager.get())->blur(jsArgAsInt(args, 0));
+    });
+}
 
 BatchingUIManagerModule::BatchingUIManagerModule(std::shared_ptr<IUIManager>&& manager)
 	: m_manager(std::move(manager))
@@ -249,6 +266,14 @@ std::vector<facebook::xplat::module::CxxModule::Method> BatchingUIManagerModule:
     Method("measure", [manager](dynamic args, facebook::xplat::module::CxxModule::Callback cb)
     {
       manager->measure(std::move(args), cb);
+    }),
+    Method("focus", [manager](dynamic args)
+    {
+      manager->focus(std::move(args));
+    }),
+    Method("blur", [manager](dynamic args)
+    {
+      manager->blur(std::move(args));
     }),
     Method("setJSResponder", [](dynamic args)
     {

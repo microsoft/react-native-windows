@@ -20,6 +20,7 @@ namespace react { namespace uwp {
 
 struct IXamlRootView;
 class ExpressionAnimationStore;
+class ReactControl;
 
 typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;
@@ -84,6 +85,9 @@ struct IReactInstance
   virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
 
   virtual ExpressionAnimationStore& GetExpressionAnimationStore() = 0;
+
+  virtual void SetReactControl(std::weak_ptr<ReactControl> reactControl) = 0;
+  virtual std::weak_ptr<ReactControl> GetReactControl() = 0;
 
 };
 

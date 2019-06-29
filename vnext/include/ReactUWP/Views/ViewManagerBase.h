@@ -58,6 +58,9 @@ public:
 
   virtual void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs);
 
+  virtual void Blur(XamlView const& view);
+  virtual void Focus(XamlView const& view);
+
   // Yoga Layout
   virtual void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height);
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;

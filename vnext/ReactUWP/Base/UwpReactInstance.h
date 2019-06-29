@@ -58,6 +58,9 @@ public:
   void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
   void CallXamlViewCreatedTestHook(react::uwp::XamlView view) override;
 
+  void SetReactControl(std::weak_ptr<ReactControl> reactControl) override;
+  virtual std::weak_ptr<ReactControl> GetReactControl() override;
+
   // Public functions
   std::shared_ptr<facebook::react::MessageQueueThread> GetNewUIMessageQueue() const;
 
@@ -65,6 +68,7 @@ private:
   void OnHitError(const std::string& error) noexcept;
 
 private:
+  std::weak_ptr<ReactControl> m_reactControl;
   std::shared_ptr<WorkerMessageQueueThread> m_initThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_defaultNativeThread;

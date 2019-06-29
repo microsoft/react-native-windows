@@ -25,12 +25,28 @@
 namespace react {
 namespace uwp {
 
+ReactControl::ReactControl(IXamlRootView* parent, XamlView rootView)
+  : m_pParent(parent)
+{
+  PrepareXamlRootView(rootView);
+}
+
 ReactControl::~ReactControl()
 {
   if (m_reactInstance != nullptr)
   {
+    m_reactInstance->SetReactControl({});
     m_reactInstance->UnregisterLiveReloadCallback(m_liveReloadCallbackCookie);
     m_reactInstance->UnregisterErrorCallback(m_errorCallbackCookie);
+  }
+
+  // remove safe habor and child grid from visual tree
+  if (m_focusSafeHabor)
+  {
+    if (auto root = m_focusSafeHabor.Parent().try_as<winrt::Panel>())
+    {
+      root.Children().Clear();
+    }
   }
 }
 
@@ -134,7 +150,7 @@ void ReactControl::AttachRoot() noexcept
 
   auto initialProps = m_initialProps;
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
-
+  m_reactInstance->SetReactControl(shared_from_this());
   m_isAttached = true;
 }
 
@@ -153,6 +169,7 @@ void ReactControl::DetachRoot() noexcept
 
   if (m_reactInstance != nullptr)
   {
+    m_reactInstance->SetReactControl({});
     m_reactInstance->DetachRootView(m_pParent);
 
     // If the redbox error UI is shown we need to remove it, otherwise let the natural teardown process do this
@@ -176,6 +193,7 @@ void ReactControl::DetachInstance()
   {
     std::shared_ptr<IReactInstance> instance = m_reactInstance;
 
+    m_reactInstance->SetReactControl({});
     m_reactInstance->UnregisterLiveReloadCallback(m_liveReloadCallbackCookie);
     m_reactInstance->UnregisterErrorCallback(m_errorCallbackCookie);
     m_reactInstance.reset();
@@ -253,6 +271,54 @@ int64_t ReactControl::GetActualWidth() const
   assert(element != nullptr);
 
   return static_cast<int64_t>(element.ActualWidth());
+}
+
+void ReactControl::PrepareXamlRootView(XamlView const& rootView)
+{
+  if (auto panel = rootView.try_as<winrt::Panel>())
+  {
+    // Xaml don't have blur concept.
+    // A ContentControl is created in the middle to act as a 'focus safe harbor'
+    // When a XamlView is blurred, make the ContentControl to allow tabstop, and move the pointer focus to safe harbor
+    // When the safe harbor is LosingFocus, disable tabstop on ContentControl.
+    auto children = panel.Children();
+    children.Clear();
+
+    m_focusSafeHabor = CreateFocusSafeHabor();
+    children.Append(m_focusSafeHabor);
+
+    auto newRootView = winrt::Grid();
+    children.Append(newRootView);
+    m_xamlRootView = newRootView;
+
+    m_focusSafeHaborLosingFocusRevoker = m_focusSafeHabor.LosingFocus(winrt::auto_revoke, [this](const auto & sender, const winrt::LosingFocusEventArgs & args)
+      {
+        m_focusSafeHabor.IsTabStop(false);
+      });
+  }
+  else
+    m_xamlRootView = rootView;
+}
+
+winrt::ContentControl ReactControl::CreateFocusSafeHabor()
+{
+  auto control = winrt::ContentControl();
+  control.Width(0.0);
+  return control;
+}
+
+// Xaml doesn't provide Blur.
+// If 'focus safe habor' exists, make habor to allow tabstop and focus on habor with ::Pointer
+// otherwise, just changing the FocusState to ::Pointer for the element.
+void ReactControl::BlurOrStopOnFocusSafeHabor(XamlView const& blurredElement)
+{
+  if (m_focusSafeHabor)
+  {
+    m_focusSafeHabor.IsTabStop(true);
+    winrt::FocusManager::TryFocusAsync(m_focusSafeHabor, winrt::FocusState::Pointer);
+  }
+  else
+    winrt::FocusManager::TryFocusAsync(blurredElement, winrt::FocusState::Pointer);
 }
 
 }

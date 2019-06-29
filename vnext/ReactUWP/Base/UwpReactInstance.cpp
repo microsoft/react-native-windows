@@ -496,4 +496,13 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view)
   }
 }
 
+void UwpReactInstance::SetReactControl(std::weak_ptr<ReactControl> reactControl)
+{
+  m_reactControl = reactControl;
+}
+
+std::weak_ptr<ReactControl> UwpReactInstance::GetReactControl()
+{
+  return m_reactControl;
+}
 } }

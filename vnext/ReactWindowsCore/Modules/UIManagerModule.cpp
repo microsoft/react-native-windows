@@ -368,6 +368,16 @@ void UIManager::onBatchComplete()
   m_nativeUIManager->onBatchComplete();
 }
 
+void UIManager::focus(int64_t reactTag)
+{
+  m_nativeUIManager->focus(reactTag);
+}
+
+void UIManager::blur(int64_t reactTag)
+{
+  m_nativeUIManager->blur(reactTag);
+}
+
 int64_t UIManager::AddMeasuredRootView(IReactRootView* rootView)
 {
 	auto tag = m_nextRootTag;
@@ -492,6 +502,14 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
     Method("measure", [manager](dynamic args, Callback cb)
     {
       manager->measure(jsArgAsInt(args, 0), cb);
+    }),
+    Method("focus", [manager](dynamic args)
+    {
+      manager->focus(jsArgAsInt(args, 0));
+    }),
+    Method("blur", [manager](dynamic args)
+    {
+      manager->blur(jsArgAsInt(args, 0));
     }),
     Method("setJSResponder", [manager](dynamic args)
     {

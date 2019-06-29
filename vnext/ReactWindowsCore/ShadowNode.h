@@ -24,6 +24,8 @@ struct ShadowNode
 	virtual void AddView(ShadowNode& child, int64_t index) = 0;
 	virtual void RemoveChildAt(int64_t indexToRemove) = 0;
 	virtual void createView() = 0;
+  virtual void focus() = 0;
+  virtual void blur() = 0;
 
 	int64_t m_tag { 0 };
 	std::string m_className;
