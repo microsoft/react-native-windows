@@ -13,6 +13,7 @@
 #include <objbase.h>
 #include <locale>
 
+using namespace facebook::react;
 using namespace facebook::xplat::module;
 using namespace folly;
 
@@ -27,9 +28,8 @@ using std::unique_ptr;
 using std::vector;
 using std::wstring;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 void TestRunner::AwaitEvent(HANDLE& event, TestResult& result)
 {
@@ -135,4 +135,4 @@ TestResult TestRunner::RunTest(string&& bundlePath, string&& appName, NativeLogg
   return result;
 }
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

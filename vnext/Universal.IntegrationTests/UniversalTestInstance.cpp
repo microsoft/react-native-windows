@@ -14,9 +14,8 @@ using namespace react::uwp;
 
 using std::shared_ptr;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 #pragma region UniversalTestInstance members
 
@@ -87,4 +86,4 @@ void UniversalTestInstance::DetachRootView() noexcept
 
 #pragma endregion
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

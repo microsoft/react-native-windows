@@ -31,9 +31,6 @@ using std::string;
 using std::tuple;
 using std::vector;
 
-namespace facebook {
-namespace react {
-
 namespace {
 
 NativeLoggingHook g_nativeLogHook;
@@ -61,6 +58,9 @@ void logMarker(const ReactMarker::ReactMarkerId id, const char* tag)
 
 } // end anonymous namespace
 
+namespace Microsoft::React
+{
+
 void InitializeLogging(NativeLoggingHook&& hook)
 {
   g_nativeLogHook = std::move(hook);
@@ -69,7 +69,7 @@ void InitializeLogging(NativeLoggingHook&& hook)
 #endif
 }
 
-namespace test {
+namespace Test {
 
 class TestRunnerModuleProvider final : public facebook::react::NativeModuleProvider
 {
@@ -123,4 +123,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   return shared_ptr<ITestInstance>(new UniversalTestInstance(std::move(instance)));
 }
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test
+
+} // namespace Microsoft::React

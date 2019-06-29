@@ -9,7 +9,8 @@
 
 #include "App.g.h"
 
-namespace facebook { namespace react { namespace test {
+namespace Microsoft::React::Test
+{
 
 	/// <summary>
 	/// Provides application-specific behavior to supplement the default Application class.
@@ -27,4 +28,4 @@ namespace facebook { namespace react { namespace test {
 		void OnNavigationFailed(Platform::Object ^sender, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^e);
 	};
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

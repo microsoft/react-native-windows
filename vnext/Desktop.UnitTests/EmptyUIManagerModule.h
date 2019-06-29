@@ -7,9 +7,8 @@
 #include <cxxreact/CxxModule.h>
 #include <ViewManager.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 struct EmptyUINode
 {
@@ -33,7 +32,7 @@ private:
 class EmptyUIManager
 {
 public:
-  EmptyUIManager(std::unique_ptr<std::vector<std::unique_ptr<IViewManager>>> viewManagers, std::shared_ptr<NodeRegistry> nodeRegistry);
+  EmptyUIManager(std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>> viewManagers, std::shared_ptr<NodeRegistry> nodeRegistry);
 
   void removeRootView(int64_t rootViewTag);
   void createView(int64_t tag, const std::string& className, int64_t rootViewTag, folly::dynamic /*ReadableMap*/ props);
@@ -61,7 +60,7 @@ public:
   std::shared_ptr<EmptyUINode> addRootView(int64_t rootViewTag);
 
 private:
-  std::unique_ptr<std::vector<std::unique_ptr<IViewManager>>> m_viewManagers;
+  std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>> m_viewManagers;
   std::shared_ptr<NodeRegistry> m_nodeRegistry;
 };
 
@@ -77,6 +76,4 @@ private:
   std::unique_ptr<EmptyUIManager> m_manager;
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

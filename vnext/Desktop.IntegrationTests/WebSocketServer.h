@@ -6,9 +6,8 @@
 #include <IWebSocket.h>
 #include <thread>
 
-namespace Microsoft {
-namespace React {
-namespace Test {
+namespace Microsoft::React::Test
+{
 
 struct WebSocketServiceCallbacks
 {
@@ -122,4 +121,4 @@ public:
   void SetOnError(std::function<void(IWebSocket::Error&&)>&& func);
 };
 
-} } } // Microsoft::React::Test
+} // Microsoft::React::Test

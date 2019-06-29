@@ -9,9 +9,8 @@
 #include <string>
 #include "TestInstance.h"
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 enum class TestStatus : unsigned int
 {
@@ -33,12 +32,12 @@ class TestRunner
   std::shared_ptr<ITestInstance> GetInstance(
     std::string&& jsBundleFile,
     std::vector<std::tuple<std::string, facebook::xplat::module::CxxModule::Provider>>&& cxxModules,
-    std::shared_ptr<DevSettings> devSettings) noexcept;
+    std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
 
 public:
   TestRunner();
 
-  TestResult RunTest(std::string&& bundlePath, std::string&& appName, NativeLoggingHook&& loggingCallback = {});
+  TestResult RunTest(std::string&& bundlePath, std::string&& appName, facebook::react::NativeLoggingHook&& loggingCallback = {});
 };
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

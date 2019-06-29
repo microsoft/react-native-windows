@@ -8,9 +8,8 @@ using namespace facebook;
 using namespace facebook::react;
 using namespace facebook::jsi::chakraruntime;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 std::shared_ptr<facebook::jsi::Runtime> ChakraJSIRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
@@ -59,4 +58,4 @@ ChakraJsiRuntimeArgs ChakraJSIRuntimeHolder::RuntimeArgsFromDevSettings(std::sha
   return runtimeArgs;
 }
 
-}}}
+} //namespace Microsoft::React::Test
