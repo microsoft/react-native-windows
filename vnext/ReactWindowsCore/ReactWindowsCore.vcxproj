@@ -76,11 +76,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Chakra\ChakraExecutor.h" />
-    <ClInclude Include="..\Chakra\ChakraHelpers.h" />
-    <ClInclude Include="..\Chakra\ChakraNativeModules.h" />
-    <ClInclude Include="..\Chakra\ChakraUtils.h" />
-    <ClInclude Include="..\Chakra\ChakraValue.h" />
     <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
     <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h" />
     <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h" />
@@ -96,7 +91,6 @@
     <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
-    <ClInclude Include="ChakraPlatform.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
     <ClInclude Include="DevSettings.h" />
@@ -130,11 +124,11 @@
     <ClInclude Include="WebSocketModule.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AsyncStorageManager.cpp" />
+    <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
+    <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
+    <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="CxxMessageQueue.cpp" />
-    <ClCompile Include="FollyDynamicConverter.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
-    <ClCompile Include="KeyValueStorage.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="MemoryTracker.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />

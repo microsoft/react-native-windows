@@ -85,10 +85,14 @@
   <ItemGroup>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
+    <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
+    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
+    <ClCompile Include="Modules\TimingModule.cpp" />
+    <ClCompile Include="Modules\WebSocketModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -97,26 +101,22 @@
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
     <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
-    <ClCompile Include="TimingModule.cpp" />
     <ClCompile Include="WebSocket.cpp" />
-    <ClCompile Include="WebSocketJSExecutor.cpp" />
-    <ClCompile Include="WebSocketJSExecutorFactory.cpp" />
-    <ClCompile Include="WebSocketModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DevSupportManager.h" />
+    <ClInclude Include="Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
+    <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="NativeModuleFactories.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sandbox\SandboxBridge.h" />
     <ClInclude Include="Sandbox\NamedPipeEndpoint.h" />
     <ClInclude Include="Sandbox\SandboxJSExecutor.h" />
-    <ClInclude Include="TimingModule.h" />
     <ClInclude Include="HttpResource.h" />
-    <ClInclude Include="UIManagerModule.h" />
     <ClInclude Include="WebSocket.h" />
   </ItemGroup>
   <ItemGroup>
