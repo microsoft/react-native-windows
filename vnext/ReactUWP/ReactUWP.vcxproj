@@ -53,6 +53,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -253,14 +254,10 @@
     <ClInclude Include="Views\WebViewManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp" />
-    <ClCompile Include="..\Shared\Logging.cpp" />
     <ClCompile Include="ABI\ABIModuleLoader.cpp" />
     <ClCompile Include="ABI\HStringHelper.cpp" />
     <ClCompile Include="ABI\Instance_rt.cpp" />
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
-    <ClCompile Include="..\Shared\InstanceManager.cpp" />
-    <ClCompile Include="..\Shared\OInstance.cpp" />
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
@@ -357,8 +354,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makewinrt.inc" />
-    <None Include="..\Shared\sources.inc" />
-    <None Include="..\Shared\winrt\sources" />
     <None Include="ABI\dirs" />
     <None Include="ABI\idl\sources" />
     <None Include="ABI\lib\sources" />
