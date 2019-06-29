@@ -86,17 +86,17 @@ namespace react {
         if (needsDownload)
         {
           memoryStream = co_await GetImageStreamAsync(source);
-
-          if (!memoryStream)
-          {
-            m_onLoadEndEvent(*this, false);
-          }
         }
         else if (inlineData)
         {
           memoryStream = co_await GetImageInlineDataAsync(source);
         }
 
+        if ((needsDownload || inlineData) && !memoryStream)
+        {
+          m_onLoadEndEvent(*this, false);
+        }
+        
         if (!needsDownload || memoryStream)
         {
           auto surface = needsDownload || inlineData ?
