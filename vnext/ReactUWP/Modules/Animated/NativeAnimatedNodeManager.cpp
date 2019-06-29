@@ -39,57 +39,57 @@ namespace react {
       {
         case AnimatedNodeType::Style:
         {
-          m_styleNodes.emplace(tag, std::make_unique<StyleAnimatedNode>(StyleAnimatedNode(tag, config, manager)));
+          m_styleNodes.emplace(tag, std::make_unique<StyleAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Value:
         {
-          m_valueNodes.emplace(tag, std::make_unique<ValueAnimatedNode>(ValueAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<ValueAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Props:
         {
-          m_propsNodes.emplace(tag, std::make_unique<PropsAnimatedNode>(PropsAnimatedNode(tag, config, instance, manager)));
+          m_propsNodes.emplace(tag, std::make_unique<PropsAnimatedNode>(tag, config, instance, manager));
           break;
         }
         case AnimatedNodeType::Interpolation:
         {
-          m_valueNodes.emplace(tag, std::make_unique<InterpolationAnimatedNode>(InterpolationAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<InterpolationAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Addition:
         {
-          m_valueNodes.emplace(tag, std::make_unique<AdditionAnimatedNode>(AdditionAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<AdditionAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Subtraction:
         {
-          m_valueNodes.emplace(tag, std::make_unique<SubtractionAnimatedNode>(SubtractionAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<SubtractionAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Division:
         {
-          m_valueNodes.emplace(tag, std::make_unique<DivisionAnimatedNode>(DivisionAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<DivisionAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Multiplication:
         {
-          m_valueNodes.emplace(tag, std::make_unique<MultiplicationAnimatedNode>(MultiplicationAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<MultiplicationAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Modulus:
         {
-          m_valueNodes.emplace(tag, std::make_unique<ModulusAnimatedNode>(ModulusAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<ModulusAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Diffclamp:
         {
-          m_valueNodes.emplace(tag, std::make_unique<DiffClampAnimatedNode>(DiffClampAnimatedNode(tag, config, manager)));
+          m_valueNodes.emplace(tag, std::make_unique<DiffClampAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Transform:
         {
-          m_transformNodes.emplace(tag, std::make_unique<TransformAnimatedNode>(TransformAnimatedNode(tag, config, manager)));
+          m_transformNodes.emplace(tag, std::make_unique<TransformAnimatedNode>(tag, config, manager));
           break;
         }
         case AnimatedNodeType::Tracking:
@@ -147,10 +147,10 @@ namespace react {
       switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString()))
       {
       case AnimationType::Decay:
-        m_activeAnimations.emplace(animationId, std::make_unique<DecayAnimationDriver>(DecayAnimationDriver(animationId, animatedNodeTag, endCallback, animationConfig, manager)));
+        m_activeAnimations.emplace(animationId, std::make_unique<DecayAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
         break;
       case AnimationType::Frames:
-        m_activeAnimations.emplace(animationId, std::make_unique<FrameAnimationDriver>(FrameAnimationDriver(animationId, animatedNodeTag, endCallback, animationConfig, manager)));
+        m_activeAnimations.emplace(animationId, std::make_unique<FrameAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
         break;
       case AnimationType::Spring:
         //TODO: implement spring animations tracked by issue #2681
@@ -214,12 +214,12 @@ namespace react {
       const auto key = std::make_tuple(viewTag, eventName);
       if (m_eventDrivers.count(key))
       {
-        m_eventDrivers.at(key).emplace_back(std::make_unique<EventAnimationDriver>(EventAnimationDriver(pathList, valueNodeTag, manager)));
+        m_eventDrivers.at(key).emplace_back(std::make_unique<EventAnimationDriver>(pathList, valueNodeTag, manager));
       }
       else
       {
         auto vector = std::vector<std::unique_ptr<EventAnimationDriver>>{};
-        vector.emplace_back(std::make_unique<EventAnimationDriver>(EventAnimationDriver(pathList, valueNodeTag, manager)));
+        vector.emplace_back(std::make_unique<EventAnimationDriver>(pathList, valueNodeTag, manager));
         m_eventDrivers.insert({ key, std::move(vector) });
       }
     }
