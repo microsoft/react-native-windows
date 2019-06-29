@@ -4,7 +4,7 @@
 #include <CppUnitTest.h>
 #include <Executors/WebSocketJSExecutor.h>
 
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 TEST_CLASS(WebSocketJSExecutorTest)

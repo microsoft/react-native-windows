@@ -10,6 +10,7 @@
 
 using namespace facebook::react;
 using namespace facebook::react::test;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::make_shared;

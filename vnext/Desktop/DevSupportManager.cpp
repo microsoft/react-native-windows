@@ -23,6 +23,8 @@ using namespace boost::beast::http;
 using namespace Concurrency;
 using namespace std;
 
+using Microsoft::React::WebSocketJSExecutor;
+
 namespace facebook { namespace react {
 
 DevSupportManager::DevSupportManager()
