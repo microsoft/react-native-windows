@@ -16,14 +16,8 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp">
-      <!-- TODO: Remove NOJSC from react-native. -->
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
-      <!-- TODO: Remove NOJSC from react-native. -->
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />

@@ -289,7 +289,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4146;4251;4800;4804;4305;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>

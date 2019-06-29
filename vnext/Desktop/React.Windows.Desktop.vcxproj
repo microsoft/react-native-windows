@@ -95,10 +95,7 @@
     <ClCompile Include="Sandbox\DevSupportManagerSandbox.cpp" />
     <ClCompile Include="Sandbox\SandboxBridge.cpp" />
     <ClCompile Include="Sandbox\NamedPipeEndpoint.cpp" />
-    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp">
-      <!-- TODO: Remove NOJSC from react-native. -->
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="Sandbox\SandboxJSExecutor.cpp" />
     <ClCompile Include="HttpResource.cpp" />
     <ClCompile Include="TimingModule.cpp" />
     <ClCompile Include="WebSocket.cpp" />
