@@ -63,7 +63,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
     ),
     make_tuple(
       "Networking",
-      []() -> unique_ptr<CxxModule> { return make_unique<NetworkingModule>(); },
+      []() -> unique_ptr<CxxModule> { return make_unique<Microsoft::React::NetworkingModule>(); },
       nativeQueue
     ),
     make_tuple(
