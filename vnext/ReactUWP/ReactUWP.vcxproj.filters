@@ -187,9 +187,6 @@
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp">
       <Filter>Shared</Filter>
     </ClCompile>
