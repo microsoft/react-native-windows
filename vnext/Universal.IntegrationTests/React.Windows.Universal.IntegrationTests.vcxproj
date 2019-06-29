@@ -81,7 +81,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="packages.config" />
-    <None Include="Universal.IntegrationTests_TemporaryKey.pfx" />
+    <None Include="React.Windows.Universal.IntegrationTests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

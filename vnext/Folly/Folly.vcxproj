@@ -46,11 +46,6 @@
     <ClCompile Include="$(FollyDir)\folly\lang\ColdClass.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(FollyDir)\folly\ApplyTuple.h" />
-    <ClInclude Include="$(FollyDir)\folly\Arena-inl.h" />
-    <ClInclude Include="$(FollyDir)\folly\Arena.h" />
-    <ClInclude Include="$(FollyDir)\folly\Array.h" />
-    <ClInclude Include="$(FollyDir)\folly\Assume.h" />
     <ClInclude Include="$(FollyDir)\folly\AtomicBitSet.h" />
     <ClInclude Include="$(FollyDir)\folly\AtomicHashArray-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\AtomicHashArray.h" />
@@ -60,16 +55,12 @@
     <ClInclude Include="$(FollyDir)\folly\AtomicLinkedList.h" />
     <ClInclude Include="$(FollyDir)\folly\AtomicStruct.h" />
     <ClInclude Include="$(FollyDir)\folly\AtomicUnorderedMap.h" />
-    <ClInclude Include="$(FollyDir)\folly\Baton.h" />
     <ClInclude Include="$(FollyDir)\folly\Benchmark.h" />
     <ClInclude Include="$(FollyDir)\folly\Bits.h" />
     <ClInclude Include="$(FollyDir)\folly\CachelinePadded.h" />
-    <ClInclude Include="$(FollyDir)\folly\CallOnce.h" />
-    <ClInclude Include="$(FollyDir)\folly\Checksum.h" />
     <ClInclude Include="$(FollyDir)\folly\ClockGettimeWrappers.h" />
     <ClInclude Include="$(FollyDir)\folly\ConcurrentSkipList-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\ConcurrentSkipList.h" />
-    <ClInclude Include="$(FollyDir)\folly\ContainerTraits.h" />
     <ClInclude Include="$(FollyDir)\folly\Conv.h" />
     <ClInclude Include="$(FollyDir)\folly\CPortability.h" />
     <ClInclude Include="$(FollyDir)\folly\CppAttributes.h" />
@@ -77,11 +68,7 @@
     <ClInclude Include="$(FollyDir)\folly\Demangle.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\AtomicHashUtils.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\AtomicUnorderedMapUtils.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\BitIteratorDetail.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\BitsDetail.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\CachelinePaddedImpl.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\CacheLocality.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\ChecksumDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\DiscriminatedPtrDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\FileUtilDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\FingerprintPolynomial.h" />
@@ -89,26 +76,19 @@
     <ClInclude Include="$(FollyDir)\folly\detail\GroupVarintDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\IPAddress.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\IPAddressSource.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\Malloc.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\MemoryIdler.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\MPMCPipelineDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\RangeCommon.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\RangeSse42.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\Sleeper.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\SlowFingerprint.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\SocketFastOpen.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\SpinLockImpl.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\StaticSingletonManager.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\Stats.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\ThreadLocalDetail.h" />
     <ClInclude Include="$(FollyDir)\folly\detail\TurnSequencer.h" />
-    <ClInclude Include="$(FollyDir)\folly\detail\UncaughtExceptionCounter.h" />
     <ClInclude Include="$(FollyDir)\folly\DiscriminatedPtr.h" />
     <ClInclude Include="$(FollyDir)\folly\dynamic-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\dynamic.h" />
     <ClInclude Include="$(FollyDir)\folly\DynamicConverter.h" />
-    <ClInclude Include="$(FollyDir)\folly\Enumerate.h" />
-    <ClInclude Include="$(FollyDir)\folly\EvictingCacheMap.h" />
     <ClInclude Include="$(FollyDir)\folly\Exception.h" />
     <ClInclude Include="$(FollyDir)\folly\ExceptionString.h" />
     <ClInclude Include="$(FollyDir)\folly\ExceptionWrapper.h" />
@@ -119,7 +99,6 @@
     <ClInclude Include="$(FollyDir)\folly\File.h" />
     <ClInclude Include="$(FollyDir)\folly\FileUtil.h" />
     <ClInclude Include="$(FollyDir)\folly\Fingerprint.h" />
-    <ClInclude Include="$(FollyDir)\folly\Foreach.h" />
     <ClInclude Include="$(FollyDir)\folly\Format-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\Format.h" />
     <ClInclude Include="$(FollyDir)\folly\FormatArg.h" />
@@ -136,19 +115,13 @@
     <ClInclude Include="$(FollyDir)\folly\IPAddressV6.h" />
     <ClInclude Include="$(FollyDir)\folly\json.h" />
     <ClInclude Include="$(FollyDir)\folly\Lazy.h" />
-    <ClInclude Include="$(FollyDir)\folly\LifoSem.h" />
     <ClInclude Include="$(FollyDir)\folly\Likely.h" />
     <ClInclude Include="$(FollyDir)\folly\LockTraits.h" />
     <ClInclude Include="$(FollyDir)\folly\LockTraitsBoost.h" />
-    <ClInclude Include="$(FollyDir)\folly\Logging.h" />
     <ClInclude Include="$(FollyDir)\folly\MacAddress.h" />
-    <ClInclude Include="$(FollyDir)\folly\MallctlHelper.h" />
-    <ClInclude Include="$(FollyDir)\folly\Malloc.h" />
     <ClInclude Include="$(FollyDir)\folly\MapUtil.h" />
     <ClInclude Include="$(FollyDir)\folly\Math.h" />
     <ClInclude Include="$(FollyDir)\folly\Memory.h" />
-    <ClInclude Include="$(FollyDir)\folly\MemoryMapping.h" />
-    <ClInclude Include="$(FollyDir)\folly\Merge.h" />
     <ClInclude Include="$(FollyDir)\folly\MicroLock.h" />
     <ClInclude Include="$(FollyDir)\folly\MicroSpinLock.h" />
     <ClInclude Include="$(FollyDir)\folly\MoveWrapper.h" />
@@ -157,17 +130,13 @@
     <ClInclude Include="$(FollyDir)\folly\Optional.h" />
     <ClInclude Include="$(FollyDir)\folly\PackedSyncPtr.h" />
     <ClInclude Include="$(FollyDir)\folly\Padded.h" />
-    <ClInclude Include="$(FollyDir)\folly\Partial.h" />
-    <ClInclude Include="$(FollyDir)\folly\PicoSpinLock.h" />
     <ClInclude Include="$(FollyDir)\folly\Portability.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Asm.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Atomic.h" />
-    <ClInclude Include="$(FollyDir)\folly\portability\BitsFunctexcept.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Builtins.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Config.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Constexpr.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Dirent.h" />
-    <ClInclude Include="$(FollyDir)\folly\portability\Environment.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Event.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Fcntl.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\GFlags.h" />
@@ -193,7 +162,6 @@
     <ClInclude Include="$(FollyDir)\folly\portability\SysTypes.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\SysUio.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Time.h" />
-    <ClInclude Include="$(FollyDir)\folly\portability\TypeTraits.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Unistd.h" />
     <ClInclude Include="$(FollyDir)\folly\portability\Windows.h" />
     <ClInclude Include="$(FollyDir)\folly\Preprocessor.h" />
@@ -202,31 +170,22 @@
     <ClInclude Include="$(FollyDir)\folly\Random.h" />
     <ClInclude Include="$(FollyDir)\folly\Range.h" />
     <ClInclude Include="$(FollyDir)\folly\RWSpinLock.h" />
-    <ClInclude Include="$(FollyDir)\folly\SafeAssert.h" />
     <ClInclude Include="$(FollyDir)\folly\ScopeGuard.h" />
     <ClInclude Include="$(FollyDir)\folly\SharedMutex.h" />
-    <ClInclude Include="$(FollyDir)\folly\Shell.h" />
     <ClInclude Include="$(FollyDir)\folly\Singleton-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\Singleton.h" />
     <ClInclude Include="$(FollyDir)\folly\SingletonThreadLocal.h" />
-    <ClInclude Include="$(FollyDir)\folly\SingletonVault_c.h" />
-    <ClInclude Include="$(FollyDir)\folly\SmallLocks.h" />
     <ClInclude Include="$(FollyDir)\folly\small_vector.h" />
     <ClInclude Include="$(FollyDir)\folly\SocketAddress.h" />
     <ClInclude Include="$(FollyDir)\folly\sorted_vector_types.h" />
-    <ClInclude Include="$(FollyDir)\folly\SparseByteSet.h" />
     <ClInclude Include="$(FollyDir)\folly\SpinLock.h" />
-    <ClInclude Include="$(FollyDir)\folly\SpookyHashV1.h" />
-    <ClInclude Include="$(FollyDir)\folly\SpookyHashV2.h" />
     <ClInclude Include="$(FollyDir)\folly\stop_watch.h" />
     <ClInclude Include="$(FollyDir)\folly\String-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\String.h" />
     <ClInclude Include="$(FollyDir)\folly\Subprocess.h" />
     <ClInclude Include="$(FollyDir)\folly\Synchronized.h" />
-    <ClInclude Include="$(FollyDir)\folly\ThreadCachedArena.h" />
     <ClInclude Include="$(FollyDir)\folly\ThreadCachedInt.h" />
     <ClInclude Include="$(FollyDir)\folly\ThreadLocal.h" />
-    <ClInclude Include="$(FollyDir)\folly\ThreadName.h" />
     <ClInclude Include="$(FollyDir)\folly\TimeoutQueue.h" />
     <ClInclude Include="$(FollyDir)\folly\TokenBucket.h" />
     <ClInclude Include="$(FollyDir)\folly\traits.h" />
@@ -237,7 +196,6 @@
     <ClInclude Include="$(FollyDir)\folly\Uri-inl.h" />
     <ClInclude Include="$(FollyDir)\folly\Uri.h" />
     <ClInclude Include="$(FollyDir)\folly\Varint.h" />
-    <ClInclude Include="$(FollyDir)\folly\VersionCheck.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Folly.natvis">
@@ -312,26 +270,13 @@
     <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
   <Target Name="DownloadFollyIfNotUseMicrosoftReactNative" BeforeTargets="PrepareForBuild">
-    <Warning
-      Text="Folly required to build without microsoft/react-native. - Downloading folly..."
-      Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip')" />
-    <DownloadFile
-      Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip')"
-      SourceUrl="https://github.com/facebook/folly/archive/v2019.06.10.00.zip"
-      DestinationFolder="$(SolutionDir)node_modules\.follyzip"/>
+    <Warning Text="Folly required to build without microsoft/react-native. - Downloading folly..." Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip')" />
+    <DownloadFile Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.06.10.00.zip" DestinationFolder="$(SolutionDir)node_modules\.follyzip" />
   </Target>
   <Target Name="UnzipFollyIfNotUseMicrosoftReactNative" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFollyIfNotUseMicrosoftReactNative">
-    <Warning
-      Text="Folly required to build without microsoft/react-native. - Unzipping folly..."
-      Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" />
-      <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, unzip seems to have completed dispite errors -->
-    <Unzip
-      Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')"
-      ContinueOnError="true"
-      SourceFiles="$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip"
-      DestinationFolder="$(SolutionDir)node_modules\.folly"
-      OverwriteReadOnlyFiles="true"
-    />
+    <Warning Text="Folly required to build without microsoft/react-native. - Unzipping folly..." Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" />
+    <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, unzip seems to have completed dispite errors -->
+    <Unzip Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip" DestinationFolder="$(SolutionDir)node_modules\.folly" OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(OSS_RN)'!='true' AND !Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />

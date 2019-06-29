@@ -4,7 +4,7 @@
 #include <CppUnitTest.h>
 
 #include <cxxreact/JSBigString.h>
-#include <WebSocketJSExecutor.h>
+#include <Executors/WebSocketJSExecutor.h>
 #include "MockExecutorDelegate.h"
 #include "TestMessageQueueThread.h"
 
