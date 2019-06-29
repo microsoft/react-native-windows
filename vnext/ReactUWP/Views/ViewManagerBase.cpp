@@ -270,7 +270,7 @@ void ViewManagerBase::Blur(XamlView const& view)
     {
       if (auto reactControl = instance->GetReactControl().lock())
       {
-        reactControl->BlurOrStopOnFocusSafeHabor(view);
+        reactControl->BlurOrStopOnFocusSafeHarbor(view);
       }
     }
   }

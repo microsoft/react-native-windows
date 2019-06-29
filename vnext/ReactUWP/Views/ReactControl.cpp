@@ -40,10 +40,10 @@ ReactControl::~ReactControl()
     m_reactInstance->UnregisterErrorCallback(m_errorCallbackCookie);
   }
 
-  // remove safe habor and child grid from visual tree
-  if (m_focusSafeHabor)
+  // remove safe harbor and child grid from visual tree
+  if (m_focusSafeHarbor)
   {
-    if (auto root = m_focusSafeHabor.Parent().try_as<winrt::Panel>())
+    if (auto root = m_focusSafeHarbor.Parent().try_as<winrt::Panel>())
     {
       root.Children().Clear();
     }
@@ -284,23 +284,23 @@ void ReactControl::PrepareXamlRootView(XamlView const& rootView)
     auto children = panel.Children();
     children.Clear();
 
-    m_focusSafeHabor = CreateFocusSafeHabor();
-    children.Append(m_focusSafeHabor);
+    m_focusSafeHarbor = CreateFocusSafeHarbor();
+    children.Append(m_focusSafeHarbor);
 
     auto newRootView = winrt::Grid();
     children.Append(newRootView);
     m_xamlRootView = newRootView;
 
-    m_focusSafeHaborLosingFocusRevoker = m_focusSafeHabor.LosingFocus(winrt::auto_revoke, [this](const auto & sender, const winrt::LosingFocusEventArgs & args)
+    m_focusSafeHarborLosingFocusRevoker = m_focusSafeHarbor.LosingFocus(winrt::auto_revoke, [this](const auto & sender, const winrt::LosingFocusEventArgs & args)
       {
-        m_focusSafeHabor.IsTabStop(false);
+        m_focusSafeHarbor.IsTabStop(false);
       });
   }
   else
     m_xamlRootView = rootView;
 }
 
-winrt::ContentControl ReactControl::CreateFocusSafeHabor()
+winrt::ContentControl ReactControl::CreateFocusSafeHarbor()
 {
   auto control = winrt::ContentControl();
   control.Width(0.0);
@@ -308,14 +308,14 @@ winrt::ContentControl ReactControl::CreateFocusSafeHabor()
 }
 
 // Xaml doesn't provide Blur.
-// If 'focus safe habor' exists, make habor to allow tabstop and focus on habor with ::Pointer
+// If 'focus safe harbor' exists, make harbor to allow tabstop and focus on harbor with ::Pointer
 // otherwise, just changing the FocusState to ::Pointer for the element.
-void ReactControl::BlurOrStopOnFocusSafeHabor(XamlView const& blurredElement)
+void ReactControl::BlurOrStopOnFocusSafeHarbor(XamlView const& blurredElement)
 {
-  if (m_focusSafeHabor)
+  if (m_focusSafeHarbor)
   {
-    m_focusSafeHabor.IsTabStop(true);
-    winrt::FocusManager::TryFocusAsync(m_focusSafeHabor, winrt::FocusState::Pointer);
+    m_focusSafeHarbor.IsTabStop(true);
+    winrt::FocusManager::TryFocusAsync(m_focusSafeHarbor, winrt::FocusState::Pointer);
   }
   else
     winrt::FocusManager::TryFocusAsync(blurredElement, winrt::FocusState::Pointer);

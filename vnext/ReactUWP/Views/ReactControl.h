@@ -48,13 +48,13 @@ public:
   virtual int64_t GetActualWidth() const;
   int64_t GetTag() const { return m_rootTag; }
   void SetTag(int64_t tag) { m_rootTag = tag; }
-  void BlurOrStopOnFocusSafeHabor(XamlView const& blurredElement);
+  void BlurOrStopOnFocusSafeHarbor(XamlView const& blurredElement);
 
 private:
   void HandleInstanceError();
   void HandleInstanceErrorOnUIThread();
   void PrepareXamlRootView(XamlView const& rootView);
-  static winrt::ContentControl CreateFocusSafeHabor();
+  static winrt::ContentControl CreateFocusSafeHarbor();
 
   IXamlRootView* m_pParent;
 
@@ -75,8 +75,8 @@ private:
   winrt::Grid m_redBoxGrid { nullptr };
   winrt::TextBlock m_errorTextBlock { nullptr };
 
-  winrt::ContentControl m_focusSafeHabor{ nullptr };
-  winrt::ContentControl::LosingFocus_revoker m_focusSafeHaborLosingFocusRevoker{};
+  winrt::ContentControl m_focusSafeHarbor{ nullptr };
+  winrt::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
 };
 
 }
