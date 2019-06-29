@@ -180,12 +180,7 @@ REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic& d)
 
 REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic& d)
 {
-  if (d.isObject())
-  {
-    return d.find("windowsbrush") != d.items().end();
-  }
-
-  return d.isNumber();
+  return d.isObject() ? (d.find("windowsbrush") != d.items().end()) : d.isNumber();
 }
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms)
