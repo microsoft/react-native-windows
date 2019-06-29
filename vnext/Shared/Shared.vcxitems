@@ -21,7 +21,6 @@
       <!-- TODO: Remove NOJSC from react-native. -->
       <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryTracker.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
       <!-- TODO: Remove NOJSC from react-native. -->
       <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>

@@ -48,6 +48,8 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="FollyDynamicConverter.cpp" />
+    <ClCompile Include="MemoryTracker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />

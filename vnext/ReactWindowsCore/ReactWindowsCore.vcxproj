@@ -129,8 +129,10 @@
   <ItemGroup>
     <ClCompile Include="AsyncStorageManager.cpp" />
     <ClCompile Include="CxxMessageQueue.cpp" />
+    <ClCompile Include="FollyDynamicConverter.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
+    <ClCompile Include="MemoryTracker.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\AppThemeModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />

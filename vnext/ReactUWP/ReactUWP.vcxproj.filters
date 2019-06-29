@@ -214,9 +214,6 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\MemoryTracker.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
     <ClCompile Include="Views\SwitchViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>

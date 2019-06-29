@@ -256,7 +256,6 @@
     <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="..\Shared\Logging.cpp" />
-    <ClCompile Include="..\Shared\MemoryTracker.cpp" />
     <ClCompile Include="ABI\ABIModuleLoader.cpp" />
     <ClCompile Include="ABI\HStringHelper.cpp" />
     <ClCompile Include="ABI\Instance_rt.cpp" />
