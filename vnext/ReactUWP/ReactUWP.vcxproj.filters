@@ -190,9 +190,6 @@
     <ClCompile Include="..\Shared\AsyncStorageModule.cpp">
       <Filter>Shared</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\AsyncStorageManager.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
     <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp">
       <Filter>Shared</Filter>
     </ClCompile>

@@ -254,7 +254,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Shared\AsyncStorageModule.cpp" />
-    <ClCompile Include="..\Shared\AsyncStorage\AsyncStorageManager.cpp" />
     <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp" />
     <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp" />
