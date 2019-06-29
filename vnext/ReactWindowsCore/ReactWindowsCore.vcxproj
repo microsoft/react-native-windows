@@ -133,6 +133,7 @@
     <ClCompile Include="LayoutAnimation.cpp" />
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\AppThemeModule.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModule.cpp" />
     <ClCompile Include="Modules\BatchingUIManagerModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />

@@ -45,6 +45,9 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="AsyncStorageManager.cpp" />
+    <ClCompile Include="Modules\AsyncStorageModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CxxMessageQueue.h" />
