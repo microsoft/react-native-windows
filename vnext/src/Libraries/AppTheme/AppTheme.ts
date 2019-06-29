@@ -3,10 +3,19 @@
 'use strict';
 
 import { NativeEventEmitter } from 'react-native';
+import { IHighContrastColors } from './AppThemeTypes';
 
 class AppThemeModule extends NativeEventEmitter  {
   get currentTheme(): string {
     return '';
+  }
+
+  get isHighContrast(): boolean {
+    return false;
+  }
+
+  get currentHighContrastColorValues(): IHighContrastColors {
+    return { } as IHighContrastColors;
   }
 }
 

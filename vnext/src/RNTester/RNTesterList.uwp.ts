@@ -127,6 +127,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/AppStateExample')
   },
   {
+    key: 'ThemingExample',
+    module: require('./ThemingExample'),
+  },
+  {
     key: 'BorderExample',
     module: require('react-native/RNTester/js/BorderExample'),
   },
