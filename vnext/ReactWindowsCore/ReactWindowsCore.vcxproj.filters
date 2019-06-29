@@ -13,6 +13,9 @@
     <Filter Include="Sandbox">
       <UniqueIdentifier>{485cc520-3fae-4b03-896a-bfd3e288aa42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AsyncStorage">
+      <UniqueIdentifier>{afc5d1fe-6d70-4040-a72b-036ffa74a2eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CxxMessageQueue.cpp" />
@@ -143,6 +146,15 @@
     </ClInclude>
     <ClInclude Include="Modules\AppThemeModule.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorage\AsyncStorageManager.h">
+      <Filter>AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorage\FollyDynamicConverter.h">
+      <Filter>AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorage\KeyValueStorage.h">
+      <Filter>AsyncStorage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

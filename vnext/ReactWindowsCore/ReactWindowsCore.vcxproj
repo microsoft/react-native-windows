@@ -93,6 +93,9 @@
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="AbiSafe.h" />
     <ClInclude Include="AsyncStorageModule.h" />
+    <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
+    <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
+    <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="ChakraPlatform.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
