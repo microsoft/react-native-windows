@@ -17,6 +17,15 @@ namespace winrt::facebook::react::implementation
 		uint32_t AddThresholdHandler(uint64_t threshold, uint32_t minCallbackIntervalInMilliseconds, facebook::react::MemoryThresholdHandler const& handler);
 		bool RemoveThresholdHandler(uint32_t token);
 
+		#pragma region IMemoryTrackerTester
+
+		void Initialize(uint64_t initialMemoryUsage);
+		void OnAllocation(uint64_t size);
+		void OnDeallocation(uint64_t size);
+
+		#pragma endregion IMemoryTrackerTester
+
+
 	private:
 		std::shared_ptr<::facebook::react::MemoryTracker> m_internalMemoryTracker;
 		::winrt::facebook::react::IMessageQueue m_abiCallbackMessageQueue;

@@ -9,13 +9,12 @@ namespace ABITests
 	{
 	public:
 		MessageQueueShim();
-		MessageQueueShim(std::unique_ptr<::facebook::react::test::TestMessageQueueThread> messageQueueThread);
+		MessageQueueShim(std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread);
 		void Run(::winrt::facebook::react::QueueItem const& item) const;
 		void RunSync(::winrt::facebook::react::QueueItem const& item) const;
 		void QuitSync() const;
 
 	private:
-		std::unique_ptr<::facebook::react::test::TestMessageQueueThread> m_messageQueueThread;
+		std::shared_ptr<::facebook::react::MessageQueueThread> m_messageQueueThread;
 	};
-
 }

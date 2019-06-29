@@ -98,7 +98,14 @@ interface IMessageQueue
 //     using MemoryThresholdCallback = std::function<void(size_t currentlyUsedMemory)>;
 delegate void MemoryThresholdHandler(UInt64 currentlyUsedMemory);
 
-runtimeclass MemoryTracker
+interface IMemoryTrackerTester
+{
+	void Initialize(UInt64 initialMemoryUsage);
+	void OnAllocation(UInt64 size);
+	void OnDeallocation(UInt64 size);
+};
+
+runtimeclass MemoryTracker : IMemoryTrackerTester
 {
 	MemoryTracker(IMessageQueue callbackMessageQueue);
 	UInt64 CurrentMemoryUsage { get; };

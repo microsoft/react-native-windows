@@ -42,4 +42,23 @@ namespace winrt::facebook::react::implementation
 	{
 		return m_internalMemoryTracker->RemoveThresholdCallback(token);
 	}
+
+	#pragma region IMemoryTrackerTester
+
+	void MemoryTracker::Initialize(uint64_t initialMemoryUsage)
+	{
+		m_internalMemoryTracker->Initialize(static_cast<size_t>(initialMemoryUsage));
+	}
+
+	void MemoryTracker::OnAllocation(uint64_t size)
+	{
+		m_internalMemoryTracker->OnAllocation(static_cast<size_t>(size));
+	}
+
+	void MemoryTracker::OnDeallocation(uint64_t size)
+	{
+		m_internalMemoryTracker->OnDeallocation(static_cast<size_t>(size));
+	}
+
+	#pragma endregion IMemoryTrackerTester
 }

@@ -3,11 +3,11 @@
 namespace ABITests
 {
 	MessageQueueShim::MessageQueueShim()
-	: m_messageQueueThread { std::make_unique<::facebook::react::test::TestMessageQueueThread>() }
+	: m_messageQueueThread { std::make_shared<::facebook::react::test::TestMessageQueueThread>() }
 	{
 	}
 
-	MessageQueueShim::MessageQueueShim(std::unique_ptr<::facebook::react::test::TestMessageQueueThread> messageQueueThread)
+	MessageQueueShim::MessageQueueShim(std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread)
 	: m_messageQueueThread { std::move(messageQueueThread) }
 	{
 	}
