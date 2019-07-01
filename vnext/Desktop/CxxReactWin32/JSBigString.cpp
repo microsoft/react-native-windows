@@ -4,6 +4,11 @@
 #include "pch.h"
 #include <cxxreact/JSBigString.h>
 
+#pragma warning( push )
+
+// 'function' : destructor never returns, potential memory leak
+#pragma warning( disable:4722 )
+
 namespace facebook {
 namespace react {
 
@@ -39,3 +44,5 @@ std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(const std::stri
 
 }  // namespace react
 }  // namespace facebook
+
+#pragma warning( pop )
