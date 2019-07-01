@@ -214,6 +214,7 @@
     <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\MenuFlyoutItemViewManager.h" />
     <ClInclude Include="Views\MenuFlyoutViewManager.h" />
     <ClInclude Include="Views\PickerViewManager.h" />
     <ClInclude Include="Views\PopupViewManager.h" />
@@ -296,6 +297,7 @@
     <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Views\MenuFlyoutItemViewManager.cpp" />
     <ClCompile Include="Views\MenuFlyoutViewManager.cpp" />
     <ClCompile Include="Views\PickerViewManager.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />

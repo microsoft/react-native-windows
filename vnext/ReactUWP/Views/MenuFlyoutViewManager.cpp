@@ -4,6 +4,8 @@
 #include "pch.h"
 
 #include "MenuFlyoutViewManager.h"
+#include "MenuFlyoutItemViewManager.h"
+
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 #include "ViewPanel.h"
@@ -128,11 +130,13 @@ MenuFlyoutShadowNode::~MenuFlyoutShadowNode()
 
 void MenuFlyoutShadowNode::AddView(ShadowNode& child, int64_t index)
 {
-  /*auto childView = static_cast<ShadowNodeBase&>(child).GetView();
+
+  auto childView = static_cast<ShadowNodeBase&>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
 
   if (m_menuFlyout != nullptr)
-    m_menuFlyout.Content(childView.as<winrt::UIElement>());*/
+    m_menuFlyout.Items().Append(childView.as<winrt::MenuFlyoutItem>());
+
 }
 
 void MenuFlyoutShadowNode::createView()
@@ -148,41 +152,7 @@ void MenuFlyoutShadowNode::createView()
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
 
-    // ADD MENU ITEMS TEMP
-  auto sub_menu = winrt::MenuFlyoutSubItem();
-  auto str_sub = asHstring("sub menu");
-  sub_menu.Text(str_sub);
-
-
-  auto menuItem_sub_1 = winrt::MenuFlyoutItem();
-  auto str_3 = react::uwp::asHstring("Duplicate_sub_1");
-  auto menuItem_sub_2 = winrt::MenuFlyoutItem();
-  auto str_4 = react::uwp::asHstring("Duplicate_sub_1");
-  menuItem_sub_1.Text(str_3);
-  menuItem_sub_2.Text(str_4);
-
-  sub_menu.Items().Append(menuItem_sub_1);
-  sub_menu.Items().Append(menuItem_sub_2);
-
-	auto menuItem_1 =  winrt::MenuFlyoutItem();
-  auto str = react::uwp::asHstring("Edit");
-  auto menuItem_2 = winrt::MenuFlyoutItem();
-  auto str_2 = react::uwp::asHstring("Duplicate");
-  menuItem_1.Text(str);
-  menuItem_2.Text(str_2);
-  m_menuFlyout.Items().Append(menuItem_1);
-  m_menuFlyout.Items().Append(sub_menu);
-  m_menuFlyout.Items().Append(menuItem_2);
-  auto change_str = react::uwp::asHstring("clicked");
-
-  menuItem_2.Click([=](auto&&, auto&&)
-  {
-    menuItem_2.Text(change_str);
-  });
   
-
-
-
   // cancel closing if lighDismiss is false
   m_menuFlyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
   {
@@ -227,7 +197,7 @@ void MenuFlyoutShadowNode::onDropViewInstance() {
 
 void MenuFlyoutShadowNode::removeAllChildren()
 {
-  // m_menuFlyout.ClearValue(winrt::Flyout::ContentProperty());
+  m_menuFlyout.Items().Clear();
 }
 
 void MenuFlyoutShadowNode::updateProperties(const folly::dynamic&& props)
@@ -312,8 +282,10 @@ void MenuFlyoutShadowNode::updateProperties(const folly::dynamic&& props)
 
   if (updateTargetElement || m_targetElement == nullptr || updateContextFlyout)
   {
-    SetTargetFrameworkElement(updateContextFlyout);
-    winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_menuFlyout);
+    SetTargetFrameworkElement(m_attachAsContextFlyout);
+    if (!m_attachAsContextFlyout) {
+      winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_menuFlyout);
+    }
   }
 
   if (updateOffset && m_isFlyoutShowOptionsSupported)
@@ -383,6 +355,10 @@ void MenuFlyoutShadowNode::SetTargetFrameworkElement(bool updateContextFlyout)
 
   if (updateContextFlyout) {
     m_targetElement.ContextFlyout(m_menuFlyout);
+  } 
+	else
+  {
+    m_targetElement.ClearValue(winrt::UIElement::ContextFlyoutProperty());
   }
 }
 

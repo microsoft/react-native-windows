@@ -8,3 +8,5 @@ export * from './Libraries/Components/Glyph/Glyph.uwp';
 export * from './Libraries/Components/Picker/PickerUWP.uwp';
 export * from './Libraries/Components/Popup/Popup.uwp';
 export * from './Libraries/Components/MenuFlyout/MenuFlyout.uwp';
+export * from './Libraries/Components/MenuFlyoutItem/MenuFlyoutItem.uwp';
+

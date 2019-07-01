@@ -16,6 +16,7 @@ interface IMenuFlyoutExampleState {
   placementOptions: Placement;
   target?: React.ReactNode;
   message?: string;
+  buttonClicked?: string;
 }
 
 let placementValues: string[] = [
@@ -51,7 +52,6 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
   public constructor(props: any) {
     super(props);
-    // this._target = React.createRef();
   }
 
   public render() {
@@ -76,7 +76,6 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             onPress={this._onPress}
             title={this.state.buttonTitle}
             ref={ref => {
-              // this._target = ref;
               if(!this.state.target)
                 this.setState({target: ref})
             }}
@@ -103,12 +102,15 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             target={this.state.target}
             placement={this.state.placementOptions}
           >
-            <MenuFlyoutItem text="Edit"></MenuFlyoutItem>
-            </MenuFlyout>
+            <MenuFlyoutItem text="Edit" onClick = {this._onEditClicked}></MenuFlyoutItem>
+            <MenuFlyoutItem text="Delete" onClick = {this._onDeleteClicked}></MenuFlyoutItem>
+          </MenuFlyout>
             
             )}   
 
           <Text style={{ padding: 10 }}>{this.state.message}</Text>
+          <Text style={{ padding: 10 }}>{"button clicked: " + this.state.buttonClicked}</Text>
+
  
       </View>
     );
@@ -124,6 +126,14 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
   _onMenuFlyoutDismissed = (isOpen: boolean) => {
     this.setState({ isMenuFlyoutVisible: isOpen });
     this.setState({ buttonTitle: 'Open MenuFlyout', message: 'flyout dismissed once' });
+  }
+
+  _onEditClicked = () => {
+    this.setState({buttonClicked: 'edit clicked' });
+  }
+
+  _onDeleteClicked = () => {
+      this.setState({buttonClicked: 'delete clicked' });
   }
 }
 
