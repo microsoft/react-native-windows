@@ -1,2 +1,3 @@
-/node_modules
+/lib
 /local-cli/generator-windows/templates/App.windows.js
+/node_modules
