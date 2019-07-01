@@ -14,6 +14,7 @@ namespace react { namespace uwp {
   {
   public:
     AnimationDriver(int64_t id, int64_t animatedValueTag, const Callback& endCallback, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
+    virtual ~AnimationDriver();
     void StartAnimation();
     void StopAnimation();
 
@@ -35,6 +36,7 @@ namespace react { namespace uwp {
     std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
 
     winrt::Windows::UI::Composition::CompositionAnimation m_animation{ nullptr };
+    winrt::Windows::UI::Composition::CompositionScopedBatch m_scopedBatch{ nullptr };
     //auto revoker for scopedBatch.Completed is broken, tracked by internal bug #22399779
     winrt::event_token m_scopedBatchCompletedToken{};
   };

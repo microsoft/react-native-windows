@@ -19,6 +19,12 @@ namespace react {
       }();
     }
 
+    AnimationDriver::~AnimationDriver()
+    {
+      if (m_scopedBatch)
+        m_scopedBatch.Completed(m_scopedBatchCompletedToken);
+    }
+
     void AnimationDriver::StartAnimation()
     {
       const auto [animation, scopedBatch] = MakeAnimation(m_config);
@@ -32,7 +38,7 @@ namespace react {
       }
       scopedBatch.End();
 
-      scopedBatch.Completed([endCallback = m_endCallback, animatedValue, id = m_id](auto sender, auto)
+      m_scopedBatchCompletedToken = scopedBatch.Completed([endCallback = m_endCallback, animatedValue, id = m_id](auto sender, auto)
       {
         if (endCallback)
         {
@@ -45,6 +51,7 @@ namespace react {
       });
 
       m_animation = animation;
+      m_scopedBatch = scopedBatch;
     }
 
     void AnimationDriver::StopAnimation()
