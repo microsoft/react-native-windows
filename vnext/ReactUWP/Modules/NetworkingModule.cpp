@@ -91,12 +91,12 @@ std::future<void> SendRequestAsync(
   networking->AddRequest(requestId, completion);
 
   winrt::Windows::Web::Http::HttpResponseMessage response = co_await completion;
-
-  networking->OnResponseReceived(requestId, response);
+  if (response != nullptr)
+    networking->OnResponseReceived(requestId, response);
 
   // NotYetImplemented: useIncrementalUpdates
 
-  if (response.Content() != nullptr)
+  if (response != nullptr && response.Content() != nullptr)
   {
     winrt::Windows::Storage::Streams::IInputStream inputStream = co_await response.Content().ReadAsInputStreamAsync();
     auto reader = winrt::Windows::Storage::Streams::DataReader(inputStream);
@@ -129,7 +129,7 @@ std::future<void> SendRequestAsync(
   }
   else
   {
-    networking->OnRequestError(requestId, "No response content", false/*isTimeout*/);
+    networking->OnRequestError(requestId, response == nullptr ? "request failed" : "No response content", false/*isTimeout*/);
   }
 
   networking->RemoveRequest(requestId);
