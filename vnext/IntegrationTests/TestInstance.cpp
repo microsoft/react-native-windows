@@ -127,6 +127,10 @@ void TestShadowNode::RemoveChildAt(int64_t indexToRemove) {}
 
 void TestShadowNode::createView() {}
 
+void TestShadowNode::focus() {}
+
+void TestShadowNode::blur() {}
+
 #pragma endregion
 
 }}} // namespace facebook::react::test
