@@ -17,9 +17,14 @@ JSBigFileString::JSBigFileString(int fd, size_t size, off_t offset /*= 0*/) {
   std::terminate();
 }
 
+#pragma warning( push )
+#pragma warning( disable:4722 ) // 'function' : destructor never returns, potential memory leak
+
 JSBigFileString::~JSBigFileString() {
   std::terminate();
 }
+
+#pragma warning( pop )
 
 const char* JSBigFileString::c_str() const {
   std::terminate();

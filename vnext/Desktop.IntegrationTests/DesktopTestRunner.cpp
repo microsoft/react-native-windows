@@ -28,9 +28,8 @@ using std::tuple;
 using std::unique_ptr;
 using std::vector;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 shared_ptr<ITestInstance> TestRunner::GetInstance(
   string&& jsBundleFile,
@@ -63,7 +62,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
     ),
     make_tuple(
       "Networking",
-      []() -> unique_ptr<CxxModule> { return make_unique<NetworkingModule>(); },
+      []() -> unique_ptr<CxxModule> { return make_unique<Microsoft::React::NetworkingModule>(); },
       nativeQueue
     ),
     make_tuple(
@@ -116,4 +115,4 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   return shared_ptr<ITestInstance>(new DesktopTestInstance(move(instanceWrapper)));
 }
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

@@ -9,9 +9,8 @@
 
 #include <Logging.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 class ChakraJSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
 public:
@@ -41,4 +40,4 @@ private:
 
 };
 
-}}}
+} //namespace Microsoft::React::Test

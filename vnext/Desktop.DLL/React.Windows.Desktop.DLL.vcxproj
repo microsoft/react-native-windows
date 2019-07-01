@@ -58,7 +58,6 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
       <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">

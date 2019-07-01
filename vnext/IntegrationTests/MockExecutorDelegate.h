@@ -5,9 +5,8 @@
 
 #include <cxxreact/JSExecutor.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 class MockDelegate : public facebook::react::ExecutorDelegate
 {
@@ -29,4 +28,4 @@ public:
   bool isBatchActive() override { return false; }
 };
 
-} } }// namespace facebook::react::test
+} // namespace Microsoft::React::Test

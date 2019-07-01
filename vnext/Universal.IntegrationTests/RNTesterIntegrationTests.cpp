@@ -5,13 +5,13 @@
 #include <CppUnitTest.h>
 #include "TestRunner.h"
 
-using namespace facebook::react::test;
+using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Microsoft::VisualStudio::CppUnitTestFramework {
 
 template <>
-std::wstring ToString<facebook::react::test::TestStatus>(const facebook::react::test::TestStatus& status)
+std::wstring ToString<TestStatus>(const TestStatus& status)
 {
   return ToString(static_cast<unsigned int>(status));
 }

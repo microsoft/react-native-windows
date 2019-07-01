@@ -5,8 +5,8 @@
 
 #include <Folly/dynamic.h>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React
+{
 
 struct IHttpResource
 {
@@ -33,4 +33,4 @@ struct IHttpResource
   virtual void SetOnError(std::function<void(const std::string&)>&& handler) noexcept = 0;
 };
 
-} } // namespace facebook::react
+} // namespace Microsoft::React

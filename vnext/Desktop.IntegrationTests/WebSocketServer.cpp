@@ -13,9 +13,8 @@ using std::string;
 
 namespace websocket = boost::beast::websocket;
 
-namespace Microsoft {
-namespace React {
-namespace Test {
+namespace Microsoft::React::Test
+{
 
 #pragma region BaseWebSocketSession
 
@@ -387,4 +386,4 @@ void WebSocketServer::SetOnError(function<void(IWebSocket::Error&&)>&& func)
 
 #pragma endregion WebSocketServer
 
-} } } // Microsoft::React::Test
+} // Microsoft::React::Test

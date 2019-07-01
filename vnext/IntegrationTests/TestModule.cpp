@@ -12,9 +12,8 @@ using std::move;
 using std::string;
 using std::vector;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 #pragma region TestModule members
 
@@ -110,4 +109,4 @@ auto TestDeviceInfoModule::getMethods() -> vector<Method>
 
 #pragma endregion TestDeviceInfoModule members
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test
