@@ -61,7 +61,7 @@ bool LazyDevSupportManager::HasException() /*override*/
   return m_dsm->HasException();
 }
 
-#pragma endregion //LazyDevSupportManager
+#pragma endregion LazyDevSupportManager
 
 std::shared_ptr<IDevSupportManager> CreateDevSupportManager()
 {

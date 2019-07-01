@@ -46,7 +46,7 @@ public:
   folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
-  #pragma endregion // IViewManager members
+  #pragma endregion IViewManager members
 };
 
 class TestNativeUIManager : public facebook::react::INativeUIManager
@@ -81,7 +81,7 @@ public:
   void RemoveChildAt(int64_t indexToRemove) override;
   void createView() override;
 
-  #pragma endregion // ShadowNode overrides
+  #pragma endregion ShadowNode overrides
 };
 
 } } } // namespace facebook::react::test

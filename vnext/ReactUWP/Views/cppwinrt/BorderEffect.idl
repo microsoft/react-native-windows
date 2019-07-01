@@ -1,3 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// This file was used to generate the files in the cppwinrt subfolders
+//
+// If you modify this file, be sure to run buildcppwinrt.cmd in this folder
+// to generate new headers
+
 namespace Microsoft.UI.Composition.Effects
 {
     [version(1)]

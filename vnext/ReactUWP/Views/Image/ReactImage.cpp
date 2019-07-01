@@ -6,6 +6,7 @@
 #include "ReactImage.h"
 
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/Windows.Security.Cryptography.h>
 
 #include "unicode.h"
 
@@ -69,12 +70,13 @@ namespace react {
 
       if (source.packagerAsset && uriString.find("file://") == 0)
       {
-        uriString.replace(0, 7, "ms-appx:///Bundle/");
+        uriString.replace(0, 7, source.bundleRootPath);
       }
 
       winrt::Uri uri{ facebook::utf8ToUtf16(uriString) };
       winrt::hstring scheme{ uri.SchemeName() };
       bool needsDownload = (scheme == L"http") || (scheme == L"https");
+      bool inlineData = scheme == L"data";
 
       try
       {
@@ -84,40 +86,39 @@ namespace react {
         if (needsDownload)
         {
           memoryStream = co_await GetImageStreamAsync(source);
-
-          if (!memoryStream)
-          {
-            m_onLoadEndEvent(*this, false);
-          }
+        }
+        else if (inlineData)
+        {
+          memoryStream = co_await GetImageInlineDataAsync(source);
         }
 
+        if ((needsDownload || inlineData) && !memoryStream)
+        {
+          m_onLoadEndEvent(*this, false);
+        }
+        
         if (!needsDownload || memoryStream)
         {
-          auto surface{ needsDownload ?
+          auto surface = needsDownload || inlineData ?
             winrt::LoadedImageSurface::StartLoadFromStream(memoryStream) :
-            winrt::LoadedImageSurface::StartLoadFromUri(uri) };
+            winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
-          surface.LoadCompleted({ this, &ReactImage::LoadedImageSurfaceHandler });
-
-          m_brush->Source(surface);
+          m_surfaceLoadedRevoker = surface.LoadCompleted(winrt::auto_revoke, [weak_this{ get_weak() }, surface](winrt::LoadedImageSurface const& /*sender*/, winrt::LoadedImageSourceLoadCompletedEventArgs const& args) {
+            if (auto strong_this{ weak_this.get() }) {
+              bool succeeded{ false };
+              if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
+                strong_this->m_brush->Source(surface);
+                succeeded = true;
+              }
+              strong_this->m_onLoadEndEvent(*strong_this, succeeded);
+            }
+          });
         }
       }
       catch (winrt::hresult_error const&)
       {
         m_onLoadEndEvent(*this, false);
       }
-    }
-
-    void ReactImage::LoadedImageSurfaceHandler(winrt::LoadedImageSurface const& sender, winrt::LoadedImageSourceLoadCompletedEventArgs const& args)
-    {
-      bool succeeded{ false };
-      if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success)
-      {
-        m_brush->Source(sender.as<winrt::LoadedImageSurface>());
-        succeeded = true;
-      }
-
-      m_onLoadEndEvent(*this, succeeded);
     }
 
     winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source)
@@ -167,6 +168,33 @@ namespace react {
       }
       catch (winrt::hresult_error const&)
       {
+      }
+
+      return nullptr;
+    }
+
+    winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ImageSource source)
+    {
+      size_t start = source.uri.find(',');
+      if (start == std::string::npos || start + 1 > source.uri.length())
+        return nullptr;
+
+      try
+      {
+        co_await winrt::resume_background();
+
+        std::string_view base64String(source.uri.c_str() + start + 1, source.uri.length() - start - 1);
+        auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(facebook::react::unicode::utf8ToUtf16(base64String));
+
+        winrt::InMemoryRandomAccessStream memoryStream;
+        co_await memoryStream.WriteAsync(buffer);
+        memoryStream.Seek(0);
+
+        return memoryStream;
+      }
+      catch (winrt::hresult_error const&)
+      {
+        // Base64 decode failed
       }
 
       return nullptr;

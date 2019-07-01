@@ -1,13 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x86">
-      <Configuration>Debug</Configuration>
-      <Platform>x86</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -17,15 +13,10 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x86">
-      <Configuration>Release</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <!-- Kept for Visual Studio compatibility. -->
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -75,7 +66,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <!-- 
+      <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
@@ -158,6 +149,7 @@
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\FrameworkElementViewManager.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
     <ClInclude Include="..\include\ReactUWP\XamlView.h" />
     <ClInclude Include="ABI\ABIModuleLoader.h" />
@@ -167,8 +159,34 @@
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
+    <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h" />
+    <ClInclude Include="Modules\Animated\AnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\AnimationType.h" />
+    <ClInclude Include="Modules\Animated\DecayAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\EventAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h" />
+    <ClInclude Include="Modules\Animated\FacadeType.h" />
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h" />
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\TransformAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h" />
+    <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
+    <ClInclude Include="Modules\AppThemeModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
@@ -196,15 +214,14 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
-    <ClInclude Include="Views\cppwinrt\Microsoft.UI.Composition.Effects.BorderEffect.g.h" />
-    <ClInclude Include="Views\cppwinrt\react.uwp.DynamicAutomationPeer.g.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h" />
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h" />
+    <ClInclude Include="Views\cppwinrt\ViewControl.g.h" />
+    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h" />
+    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h" />
     <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
@@ -229,6 +246,8 @@
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
     <ClInclude Include="Views\ViewPanel.h" />
+    <ClInclude Include="Views\DynamicAutomationPeer.h" />
+    <ClInclude Include="Views\DynamicAutomationProperties.h" />
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
     <ClInclude Include="Views\WebViewManager.h" />
@@ -250,12 +269,34 @@
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
+    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp" />
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="Utils\Helpers.cpp" />
     <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
+    <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
@@ -311,9 +352,13 @@
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
     <ClCompile Include="Views\ViewPanel.cpp" />
+    <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
+    <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\ViewViewManager.cpp" />
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
     <ClCompile Include="Views\WebViewManager.cpp" />
+    <ClCompile Include="Views\module.g.cpp" />
+    <ClCompile Include="Views\KeyboardEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makewinrt.inc" />
@@ -360,17 +405,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

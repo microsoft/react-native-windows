@@ -624,6 +624,17 @@ export default class Bootstrap extends Component {
               }}
             />
           </View>
+          <View style={{backgroundColor: 'yellow', marginTop: 15}}>
+            <Image
+              style={{width: 66, height: 58}}
+              source={{
+                width: 66,
+                height: 58,
+                uri:
+                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+              }}
+            />
+          </View>
           <View
             style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
             <CheckBox

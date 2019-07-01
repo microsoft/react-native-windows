@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.20",
+  "version": "0.59.0-vnext.51",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,11 +13,11 @@
     "preinstall": "node Scripts/preInstall.js",
     "postinstall": "node Scripts/postInstall.js",
     "build": "just-scripts build",
-    "clean": "node Scripts/just.js clean",
+    "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
-    "eslint": "just-scripts eslint",
-    "fix:eslint": "eslint ./**/*.js --fix",
-    "watch": "node node_modules/@office-iss/sdx-build-tools/watch.js"
+    "lint": "just-scripts eslint",
+    "lint:fix": "eslint ./**/*.js --fix",
+    "watch": "tsc -w"
   },
   "disabledTasks": [
     "api-doc",
@@ -68,11 +68,11 @@
     "just-scripts": "^0.23.0",
     "prettier": "^1.18.2",
     "react": "16.8.3",
-    "react-native": "0.59.0-microsoft.5",
+    "react-native": "0.59.0-microsoft.7",
     "typescript": "3.5.1"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.5 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.5.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.7 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.7.tar.gz"
   }
 }

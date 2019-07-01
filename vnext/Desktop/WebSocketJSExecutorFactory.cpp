@@ -26,6 +26,6 @@ std::unique_ptr<JSExecutor> WebSocketJSExecutorFactory::createJSExecutor(
     return std::unique_ptr<JSExecutor>(new WebSocketJSExecutor(delegate, jsQueue));
 }
 
-#pragma endregion // WebSocketJSExecutorFactory members
+#pragma endregion WebSocketJSExecutorFactory members
 
 }} // namespace facebook::react

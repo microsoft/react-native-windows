@@ -82,6 +82,34 @@ struct json_type_traits<react::uwp::ResizeMode>
 
 namespace react { namespace uwp {
 
+  class ImageShadowNode : public ShadowNodeBase {
+  public:
+    ImageShadowNode() = default;
+
+    void createView() override
+    {
+      ShadowNodeBase::createView();
+      auto reactImage{ m_view.as<ReactImage>() };
+
+      m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{ static_cast<ImageViewManager*>(GetViewManager()) }, reactImage ](const auto&, const bool& succeeded)
+      {
+        ImageSource source{ reactImage->Source() };
+
+        imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
+        imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
+      });
+    }
+
+    void onDropViewInstance() override
+    {
+      auto reactImage{ m_view.as<ReactImage>() };
+      reactImage->OnLoadEnd(m_onLoadEndToken);
+    }
+
+  private:
+    winrt::event_token m_onLoadEndToken;
+  };
+
   ImageViewManager::ImageViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
     : Super(reactInstance)
   {
@@ -94,17 +122,7 @@ namespace react { namespace uwp {
 
   XamlView ImageViewManager::CreateViewCore(int64_t tag)
   {
-    auto reactImage{ ReactImage::Create() };
-
-    reactImage->OnLoadEnd([this, reactImage](const auto&, const bool& succeeded)
-    {
-        ImageSource source{ reactImage->Source() };
-
-        EmitImageEvent(m_wkReactInstance.lock(), reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
-        EmitImageEvent(m_wkReactInstance.lock(), reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
-    });
-
-    return reactImage.as<winrt::Canvas>();
+    return ReactImage::Create().as<winrt::Canvas>();
   }
 
   void ImageViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
@@ -136,8 +154,9 @@ namespace react { namespace uwp {
     Super::UpdateProperties(nodeToUpdate, reactDiffMap);
   }
 
-  void EmitImageEvent(const std::shared_ptr<react::uwp::IReactInstance>& reactInstance, winrt::Canvas canvas, const char* eventName, ImageSource& source)
+  void ImageViewManager::EmitImageEvent(winrt::Canvas canvas, const char* eventName, ImageSource& source)
   {
+    auto reactInstance{ m_wkReactInstance.lock() };
     if (reactInstance == nullptr)
       return;
 
@@ -160,9 +179,11 @@ namespace react { namespace uwp {
       return;
 
     auto sources{ json_type_traits<std::vector<ImageSource>>::parseJson(data) };
+    sources[0].bundleRootPath = instance->GetBundleRootPath();
+
     auto reactImage{ canvas.as<ReactImage>() };
 
-    EmitImageEvent(instance, canvas, "topLoadStart", sources[0]);
+    EmitImageEvent(canvas, "topLoadStart", sources[0]);
     reactImage->Source(sources[0]);
   }
 

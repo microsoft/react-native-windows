@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
-  <PropertyGroup Label="Configuration">
-    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
-  </PropertyGroup>
-
   <!-- For build debugging purposes. -->
   <Target Name="Vars">
+    <Message Text="General" />
+    <Message Text="=> ApplicationType         [$(ApplicationType)]" />
     <Message Text="=> Configuration           [$(Configuration)]" />
     <Message Text="=> Platform                [$(Platform)]" />
     <Message Text="=> PlatformTarget          [$(PlatformTarget)]" />
@@ -17,6 +14,25 @@
     <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
     <Message Text="=> IntDir                  [$(IntDir)]" />
     <Message Text="=> OutDir                  [$(OutDir)]" />
+    <Message Text="=> TargetDir               [$(TargetDir)]" />
+    <Message Text="=> TargetPath              [$(TargetPath)]" />
+    <Message Text="=> TLogLocation            [$(TLogLocation)]" />
+    <Message Text="=> LastBuildUnsuccessful   [$(LastBuildUnsuccessful)]" />
+    <Message Text="=> LastBuildState          [$(LastBuildState)]" />
+    <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
+
+    <Message Text="%0A" />
+    <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
+    <Message Text="=> PrecompiledHeaderOutputFile [@(CLCompile->Metadata('PrecompiledHeaderOutputFile')->DirectoryName()->Distinct())]" />
+    <Message Text="=> AssemblerListingLocation    [@(CLCompile->Metadata('AssemblerListingLocation')->DirectoryName()->Distinct())]" />
+    <Message Text="=> ObjectFileName              [@(CLCompile->Metadata('ObjectFileName')->DirectoryName()->Distinct())]" />
+    <Message Text="=> ProgramDataBaseFileName     [@(CLCompile->Metadata('ProgramDataBaseFileName')->DirectoryName()->Distinct())]" />
+    <Message Text="=> XMLDocumentationFileName    [@(CLCompile->Metadata('XMLDocumentationFileName')->DirectoryName()->Distinct())]" />
+    <Message Text="=> BrowseInformationFile       [@(CLCompile->Metadata('BrowseInformationFile')->DirectoryName()->Distinct())]" />
+    <Message Text="=> PreprocessOutputPath        [@(CLCompile->Metadata('PreprocessOutputPath')->DirectoryName()->Distinct())]" />
+    <Message Text="=> ClDirsToMake                [@(ClDirsToMake)]" />
+
+    <Message Text="%0A" />
     <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
     <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
     <Message Text="=> FollyDir                [$(FollyDir)]" />

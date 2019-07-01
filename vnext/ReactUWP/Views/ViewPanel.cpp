@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "ViewPanel.h"
+#include "DynamicAutomationPeer.h"
 
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.Foundation.h>
@@ -12,42 +13,27 @@ namespace winrt
 {
 using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation;
 } // namespace winrt
 
-namespace react
-{
-namespace uwp
+namespace winrt::react::uwp::implementation
 {
 
 const winrt::TypeName viewPanelTypeName{
     winrt::hstring{L"ViewPanel"},
     winrt::TypeKind::Metadata};
 
-ViewPanel::ViewPanel()
+ViewPanel::ViewPanel() : Super()
 {
 }
 
-/*static*/ winrt::com_ptr<ViewPanel> ViewPanel::Create()
+winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer()
 {
-  return winrt::make_self<ViewPanel>();
-}
-
-/*static*/ winrt::DependencyProperty ViewPanel::BackgroundProperty()
-{
-  static winrt::DependencyProperty s_backgroundProperty =
-      winrt::DependencyProperty::Register(
-          L"Background",
-          winrt::xaml_typename<winrt::Brush>(),
-          viewPanelTypeName,
-          winrt::PropertyMetadata(
-              winrt::SolidColorBrush(),
-              ViewPanel::VisualPropertyChanged));
-
-  return s_backgroundProperty;
+  return winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(*this);
 }
 
 /*static*/ void ViewPanel::VisualPropertyChanged(winrt::DependencyObject sender, winrt::DependencyPropertyChangedEventArgs e)
@@ -62,6 +48,20 @@ ViewPanel::ViewPanel()
   auto element{sender.as<winrt::UIElement>()};
   if (element != nullptr)
     element.InvalidateArrange();
+}
+
+/*static*/ winrt::DependencyProperty ViewPanel::ViewBackgroundProperty()
+{
+  static winrt::DependencyProperty s_viewBackgroundProperty =
+    winrt::DependencyProperty::Register(
+      L"ViewBackground",
+      winrt::xaml_typename<winrt::Brush>(),
+      viewPanelTypeName,
+      winrt::PropertyMetadata(
+        winrt::SolidColorBrush(),
+        ViewPanel::VisualPropertyChanged));
+
+  return s_viewBackgroundProperty;
 }
 
 /*static*/ winrt::DependencyProperty ViewPanel::BorderThicknessProperty()
@@ -122,7 +122,7 @@ ViewPanel::ViewPanel()
 
 /*static*/ winrt::DependencyProperty ViewPanel::LeftProperty()
 {
-  static winrt::DependencyProperty s_topProperty =
+  static winrt::DependencyProperty s_LeftProperty =
       winrt::DependencyProperty::RegisterAttached(
           L"Left",
           winrt::xaml_typename<double>(),
@@ -131,7 +131,7 @@ ViewPanel::ViewPanel()
               winrt::box_value((double)0),
               ViewPanel::PositionPropertyChanged));
 
-  return s_topProperty;
+  return s_LeftProperty;
 }
 
 /*static*/ winrt::DependencyProperty ViewPanel::ClipChildrenProperty()
@@ -148,13 +148,13 @@ ViewPanel::ViewPanel()
   return s_clipChildrenProperty;
 }
 
-/*static*/ void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement &element, double value)
+/*static*/ void ViewPanel::SetTop(winrt::Windows::UI::Xaml::UIElement const& element, double value)
 {
   element.SetValue(TopProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
 }
 
-/*static*/ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement &element, double value)
+/*static*/ void ViewPanel::SetLeft(winrt::Windows::UI::Xaml::UIElement const& element, double value)
 {
   element.SetValue(LeftProperty(), winrt::box_value<double>(value));
   element.InvalidateArrange();
@@ -237,9 +237,9 @@ void ViewPanel::Clear() const
   Children().Clear();
 }
 
-void ViewPanel::Background(winrt::Brush const& value)
+void ViewPanel::ViewBackground(winrt::Brush const &value)
 {
-  SetValue(BackgroundProperty(), winrt::box_value(value));
+  SetValue(ViewBackgroundProperty(), winrt::box_value(value));
 }
 
 void ViewPanel::BorderThickness(winrt::Thickness const &value)
@@ -249,7 +249,7 @@ void ViewPanel::BorderThickness(winrt::Thickness const &value)
 
 void ViewPanel::BorderBrush(winrt::Brush const &value)
 {
-  SetValue(BorderBrushProperty(), value);
+  SetValue(BorderBrushProperty(), winrt::box_value(value));
 }
 
 void ViewPanel::CornerRadius(winrt::CornerRadius const &value)
@@ -283,7 +283,7 @@ void ViewPanel::FinalizeProperties()
 
   const auto unsetValue = winrt::DependencyProperty::UnsetValue();
 
-  bool hasBackground = ReadLocalValue(BackgroundProperty()) != unsetValue;
+  bool hasBackground = ReadLocalValue(ViewBackgroundProperty()) != unsetValue;
   bool hasBorderBrush = ReadLocalValue(BorderBrushProperty()) != unsetValue;
   bool hasBorderThickness = ReadLocalValue(BorderThicknessProperty()) != unsetValue;
   bool hasCornerRadius = ReadLocalValue(CornerRadiusProperty()) != unsetValue;
@@ -351,7 +351,7 @@ void ViewPanel::FinalizeProperties()
   if (scenario == Scenario::OuterBorder)
   {
     if (hasBackground)
-      m_border.Background(Background());
+      m_border.Background(ViewBackground());
     else
       m_border.ClearValue(winrt::Border::BackgroundProperty());
 
@@ -361,12 +361,7 @@ void ViewPanel::FinalizeProperties()
   {
     // Set any background on this Panel
     if (hasBackground)
-      SetValue(winrt::Panel::BackgroundProperty(), Background());
-    else
-      ClearValue(winrt::Panel::BackgroundProperty());
-    // Set any background on this Panel
-    if (hasBackground)
-      SetValue(winrt::Panel::BackgroundProperty(), Background());
+      SetValue(winrt::Panel::BackgroundProperty(), ViewBackground());
     else
       ClearValue(winrt::Panel::BackgroundProperty());
   }
@@ -398,5 +393,4 @@ void ViewPanel::UpdateClip(winrt::Size& finalSize)
   }
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace winrt::react::uwp::implementation

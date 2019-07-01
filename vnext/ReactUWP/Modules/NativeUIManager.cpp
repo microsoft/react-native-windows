@@ -93,6 +93,11 @@ void NativeUIManager::DirtyYogaNode(int64_t tag)
   }
 }
 
+void NativeUIManager::AddBatchCompletedCallback(std::function<void()> callback)
+{
+  m_batchCompletedCallbacks.push_back(std::move(callback));
+}
+
 winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
 {
   if (m_host)
@@ -107,6 +112,33 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot()
             return xamlRoot;
         }
       }
+    }
+  }
+  return nullptr;
+}
+
+XamlView NativeUIManager::reactPeerOrContainerFrom(winrt::FrameworkElement fe)
+{
+  if (m_host)
+  {
+    while (fe)
+    {
+      if (auto value = GetTagAsPropertyValue(fe))
+      {
+        auto tag = GetTag(value);
+        if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(tag)))
+        {
+          if (auto xamlView = shadowNode->GetView())
+          {
+            if (xamlView == fe)
+            {
+              return xamlView;
+            }
+          }
+          
+        }
+      }
+      fe = fe.Parent().try_as<winrt::FrameworkElement>();
     }
   }
   return nullptr;
@@ -206,6 +238,13 @@ void NativeUIManager::onBatchComplete()
   {
     DoLayout();
     m_inBatch = false;
+
+    const auto callbacks = m_batchCompletedCallbacks;
+    m_batchCompletedCallbacks.clear();
+    for (const auto& callback : callbacks)
+    {
+      callback.operator()();
+    }
   }
 }
 

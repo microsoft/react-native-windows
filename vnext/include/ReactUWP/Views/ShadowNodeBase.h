@@ -10,6 +10,7 @@
 #include <yoga/yoga.h>
 
 #include <ReactWindowsCore/ReactWindowsAPI.h>
+#include "KeyboardEventHandler.h"
 
 namespace react { namespace uwp {
 
@@ -41,30 +42,6 @@ enum ShadowCorners : uint8_t
   BottomEnd,
   AllCorners,
   CountCorners
-};
-
-enum AccessibilityRoles : uint8_t
-{
-  None = 0,
-  Button,
-  Link,
-  Search,
-  Image,
-  KeyboardKey,
-  Text,
-  Adjustable,
-  ImageButton,
-  Header,
-  Summary,
-  Unknown,
-  CountRoles
-};
-
-enum AccessibilityStates : uint8_t
-{
-  Selected = 0,
-  Disabled,
-  CountStates
 };
 
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
@@ -122,6 +99,14 @@ public:
   bool m_onMouseEnter = false;
   bool m_onMouseLeave = false;
   bool m_onMouseMove = false;
+
+  // Support Keyboard
+public:
+  void UpdateHandledKeyboardEvents(std::string const& propertyName, folly::dynamic const& value);
+
+private:
+  void EnsureHandledKeyboardEventHandler();
+  std::unique_ptr<HandledKeyboardEventHandler> m_handledKeyboardEventHandler;
 };
 #pragma warning(pop)
 

@@ -14,7 +14,7 @@ steps:
       feedsToUse: config
       #vstsFeed: # Required when feedsToUse == Select
       #includeNuGetOrg: true # Required when feedsToUse == Select
-      nugetConfigPath: vnext/NuGet.config
+      nugetConfigPath: vnext/NuGet.config 
       #externalFeedCredentials: # Optional
       #noCache: false
       #disableParallelProcessing: false
