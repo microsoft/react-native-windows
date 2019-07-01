@@ -150,7 +150,7 @@ namespace react { namespace uwp {
       {
         const auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
         animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
-        animation.Expression(L"ValuePropSet.value + ValuePropSet.offset");
+        animation.Expression(static_cast<winrt::hstring>(L"ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName);
         switch (facadeType)
         {
         case FacadeType::Opacity:
@@ -158,24 +158,24 @@ namespace react { namespace uwp {
           break;
         case FacadeType::Rotation:
           m_rotationAxis = { 0,0,1 };
-          animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
+          animation.Expression(static_cast<winrt::hstring>(L"(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::RotationX:
-          animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
+          animation.Expression(static_cast<winrt::hstring>(L"(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           m_rotationAxis = { 1,0,0 };
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::RotationY:
-          animation.Expression(L"(ValuePropSet.value + ValuePropSet.offset) * 180 / PI");
+          animation.Expression(static_cast<winrt::hstring>(L"(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           m_rotationAxis = { 0,1,0 };
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::Scale:
-          animation.Expression(L"Vector3(ValuePropSet.value + ValuePropSet.offset, ValuePropSet.value + ValuePropSet.offset, 0)");
+          animation.Expression(static_cast<winrt::hstring>(L"Vector3(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L", ValuePropSet." + ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L", 0)");
           animation.Target(L"Scale");
           m_needsCenterPointAnimation = true;
           break;

@@ -33,7 +33,7 @@ namespace react {
 
       if (animatedValue)
       {
-        animatedValue->PropertySet().StartAnimation(L"offset", animation);
+        animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_offsetName, animation);
         animatedValue->AddActiveAnimation(m_id);
       }
       scopedBatch.End();
@@ -58,7 +58,7 @@ namespace react {
     {
       if (const auto animatedValue = GetAnimatedValue())
       {
-        animatedValue->PropertySet().StopAnimation(L"offset");
+        animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
         m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
       }
     }

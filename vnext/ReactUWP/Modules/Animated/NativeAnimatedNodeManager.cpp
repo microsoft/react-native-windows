@@ -209,7 +209,7 @@ namespace react {
     void NativeAnimatedNodeManager::AddAnimatedEventToView(int64_t viewTag, const std::string& eventName, const folly::dynamic& eventMapping, const std::shared_ptr<NativeAnimatedNodeManager>& manager)
     {
       const auto valueNodeTag = static_cast<int64_t>(eventMapping.find("animatedValueTag").dereference().second.asDouble());
-      const auto pathList = eventMapping.find("nativeEventPath").dereference().second.getString();
+      const auto pathList = eventMapping.find("nativeEventPath").dereference().second;
 
       const auto key = std::make_tuple(viewTag, eventName);
       if (m_eventDrivers.count(key))
@@ -230,16 +230,19 @@ namespace react {
       if (m_eventDrivers.count(key))
       {
         auto& drivers = m_eventDrivers.at(key);
+        auto iterator = drivers.begin();
 
-        for (auto iterator = drivers.begin(); iterator != drivers.end(); iterator++)
+        while (iterator != drivers.end())
         {
           if (const auto value = iterator->get()->AnimatedValue())
           {
             if(value->Tag() == animatedValueTag)
             {
-              m_eventDrivers.at(key).erase(iterator);
+              iterator = drivers.erase(iterator);
+              continue;
             }
           }
+          ++iterator;
         }
 
         if (!drivers.size())

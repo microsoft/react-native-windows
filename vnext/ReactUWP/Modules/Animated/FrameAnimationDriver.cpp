@@ -39,6 +39,10 @@ namespace react { namespace uwp {
     for (auto frame : m_frames)
     {
       normalizedProgress += step;
+      if (normalizedProgress > 1.0f)
+      {
+        normalizedProgress = 1.0f;
+      }
       animation.InsertKeyFrame(normalizedProgress, static_cast<float>(fromValue + (frame * (m_toValue - fromValue))));
     }
 
