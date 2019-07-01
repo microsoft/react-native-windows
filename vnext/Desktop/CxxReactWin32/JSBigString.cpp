@@ -4,11 +4,6 @@
 #include "pch.h"
 #include <cxxreact/JSBigString.h>
 
-#pragma warning( push )
-
-// 'function' : destructor never returns, potential memory leak
-#pragma warning( disable:4722 )
-
 namespace facebook {
 namespace react {
 
@@ -22,9 +17,14 @@ JSBigFileString::JSBigFileString(int fd, size_t size, off_t offset /*= 0*/) {
   std::terminate();
 }
 
+#pragma warning( push )
+#pragma warning( disable:4722 ) // 'function' : destructor never returns, potential memory leak
+
 JSBigFileString::~JSBigFileString() {
   std::terminate();
 }
+
+#pragma warning( pop )
 
 const char* JSBigFileString::c_str() const {
   std::terminate();
@@ -44,5 +44,3 @@ std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(const std::stri
 
 }  // namespace react
 }  // namespace facebook
-
-#pragma warning( pop )
