@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
 const EOL = require('os').EOL;
@@ -18,8 +23,14 @@ class MSBuildTools {
   }
 
   cleanProject(slnFile) {
-    const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" t/:Clean`;
-    const results = child_process.execSync(cmd).toString().split(EOL);
+    const cmd = `"${path.join(
+      this.path,
+      'msbuild.exe',
+    )}" "${slnFile}" t/:Clean`;
+    const results = child_process
+      .execSync(cmd)
+      .toString()
+      .split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 
@@ -34,7 +45,7 @@ class MSBuildTools {
       '/nologo',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
-      '/p:AppxBundle=Never'
+      '/p:AppxBundle=Never',
     ];
 
     // Set platform toolset for VS 2017 (this way we can keep the base sln file working for VS 2015)
@@ -50,7 +61,7 @@ class MSBuildTools {
     }
 
     if (config) {
-      Object.keys(config).forEach(function (key) {
+      Object.keys(config).forEach(function(key) {
         args.push(`/p:${key}=${config[key]}`);
       });
     }
@@ -62,27 +73,42 @@ class MSBuildTools {
       return;
     }
 
-    const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
+    const cmd =
+      `"${path.join(this.path, 'msbuild.exe')}" ` +
+      ['"' + slnFile + '"'].concat(args).join(' ');
     // Always inherit from stdio as we're controlling verbosity output above.
-    child_process.execSync(cmd, { stdio: 'inherit' });
+    child_process.execSync(cmd, {stdio: 'inherit'});
   }
 }
 
 function checkMSBuildVersion(version) {
   let toolsPath = null;
-  
+
   // This path is maintained and VS has promised to keep it valid.
-  const vsWherePath = path.join(process.env['ProgramFiles(x86)'], '/Microsoft Visual Studio/Installer/vswhere.exe');
-  
+  const vsWherePath = path.join(
+    process.env['ProgramFiles(x86)'],
+    '/Microsoft Visual Studio/Installer/vswhere.exe',
+  );
+
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
-    const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`).toString().split(EOL)[0];
-    
+    const vsPath = child_process
+      .execSync(
+        `"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`,
+      )
+      .toString()
+      .split(EOL)[0];
+
     // VS 2019 changed path naming convention
-    const vsVersion = (version == '16.0') ? 'Current' : version;
+    const vsVersion = version === '16.0' ? 'Current' : version;
 
     // look for the specified version of msbuild
-    const msBuildPath = path.join(vsPath, 'MSBuild', vsVersion, 'Bin/MSBuild.exe');
+    const msBuildPath = path.join(
+      vsPath,
+      'MSBuild',
+      vsVersion,
+      'Bin/MSBuild.exe',
+    );
 
     toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
   } else {
@@ -94,7 +120,10 @@ function checkMSBuildVersion(version) {
       if (toolsPathOutput) {
         toolsPathOutput = toolsPathOutput[1];
         // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
-        if ((version === '15.0' || version === '14.0' && toolsPath.indexOf('amd64') > -1)) {
+        if (
+          version === '15.0' ||
+          (version === '14.0' && toolsPath.indexOf('amd64') > -1)
+        ) {
           toolsPathOutput = path.resolve(toolsPathOutput, '..');
         }
         toolsPath = toolsPathOutput;
@@ -108,13 +137,12 @@ function checkMSBuildVersion(version) {
   if (toolsPath) {
     console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
     return new MSBuildTools(version, toolsPath);
-  }
-  else {
+  } else {
     return null;
   }
 }
 
-module.exports.findAvailableVersion = function () {
+module.exports.findAvailableVersion = function() {
   const versions = MSBUILD_VERSIONS.map(checkMSBuildVersion);
   const msbuildTools = versions.find(Boolean);
 
@@ -125,29 +153,35 @@ module.exports.findAvailableVersion = function () {
   return msbuildTools;
 };
 
-module.exports.findAllAvailableVersions = function () {
+module.exports.findAllAvailableVersions = function() {
   console.log(chalk.green('Searching for available MSBuild versions...'));
-  return MSBUILD_VERSIONS
-    .map(checkMSBuildVersion)
-    .filter(item => !!item);
+  return MSBUILD_VERSIONS.map(checkMSBuildVersion).filter(item => !!item);
 };
 
-module.exports.getAllAvailableUAPVersions = function () {
+module.exports.getAllAvailableUAPVersions = function() {
   const results = [];
 
-  const programFilesFolder = process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
+  const programFilesFolder =
+    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
   // No Program Files folder found, so we won't be able to find UAP SDK
   if (!programFilesFolder) {
     return results;
   }
 
-  const uapFolderPath = path.join(programFilesFolder, 'Windows Kits', '10', 'Platforms', 'UAP');
+  const uapFolderPath = path.join(
+    programFilesFolder,
+    'Windows Kits',
+    '10',
+    'Platforms',
+    'UAP',
+  );
   // No UAP SDK exists on this machine
   if (!shell.test('-e', uapFolderPath)) {
     return results;
   }
 
-  shell.ls(uapFolderPath)
+  shell
+    .ls(uapFolderPath)
     .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
     .map(Version.tryParse)
     .forEach(version => version && results.push(version));

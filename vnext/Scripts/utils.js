@@ -20,6 +20,6 @@ module.exports = {
         return currentDir;
       }
       currentDir = path.resolve(currentDir, '..');
-    } while (currentDir !== root)
-  }
-}
+    } while (currentDir !== root);
+  },
+};

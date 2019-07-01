@@ -14,7 +14,7 @@ const {
 } = ReactNative;
 
 const {
-  TestModule
+  TestModule,
 } = ReactNative.NativeModules;
 
 class DummyTest extends React.Component {

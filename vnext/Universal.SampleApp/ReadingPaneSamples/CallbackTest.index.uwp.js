@@ -7,7 +7,7 @@ import {
   NativeModules,
   StyleSheet,
   Text,
-  View
+  View,
 } from 'react-native';
 
 export default class Bootstrap extends Component {
@@ -15,18 +15,18 @@ export default class Bootstrap extends Component {
     super();
 
     this.state = {
-      subject: "Loading...",
-      msgs: Array(0)
+      subject: 'Loading...',
+      msgs: Array(0),
     };
 
-    NativeModules.ReadingPane.CurrentConversation((js) => this.LoadedConversation(js))
+    NativeModules.ReadingPane.CurrentConversation((js) => this.LoadedConversation(js));
   }
 
   LoadedConversation(js)
   {
     this.setState({
       subject: js.Subject,
-      msgs: js.Messages
+      msgs: js.Messages,
     });
   }
 
