@@ -7,9 +7,35 @@
     "**/lib": true,
     "**/dist": true
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.tslint": true
-  },
   "editor.formatOnSave": true,
-  "tslint.packageManager": "yarn"
+  // turn off formatting for JS and JSX, we will do this via eslint
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.packageManager": "yarn",
+  "eslint.validate": [
+    {"language": "javascript", "autoFix": true},
+    {"language": "javascriptreact", "autoFix": true},
+    {"language": "typescript", "autoFix": true},
+    {"language": "typescriptreact", "autoFix": true}
+  ],
+  "eslint.options": {
+    "configFile": "./vnext/.eslintrc.js"
+  },
+  // These should run through eslint
+  "prettier.disableLanguages": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
 }
