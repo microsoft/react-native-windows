@@ -6,9 +6,7 @@
 #include <boost/beast/websocket/ssl.hpp>
 #include <thread>
 
-namespace Microsoft {
-namespace React {
-namespace Test {
+namespace Microsoft::React::Test {
 
 struct WebSocketServiceCallbacks {
   std::function<void()> OnConnection;
@@ -123,6 +121,4 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer> {
   void SetOnError(std::function<void(IWebSocket::Error &&)> &&func);
 };
 
-} // namespace Test
-} // namespace React
-} // namespace Microsoft
+} // Microsoft::React::Test

@@ -3,13 +3,14 @@
 
 #pragma once
 
-#include "winrt/Windows.UI.Composition.h"
-#include "winrt/Windows.UI.Xaml.Automation.Peers.h"
 #include "winrt/Windows.UI.Xaml.Automation.Provider.h"
+#include "winrt/Windows.UI.Xaml.Automation.h"
 #include "winrt/Windows.UI.Xaml.Controls.h"
 #include "winrt/Windows.UI.Xaml.Media.h"
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.UI.Xaml.h"
 #include "winrt/react.uwp.h"
+
 
 namespace winrt::react::uwp::implementation {
 

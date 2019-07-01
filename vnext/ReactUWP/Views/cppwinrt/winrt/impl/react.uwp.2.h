@@ -4,7 +4,7 @@
 #pragma once
 #include "winrt/impl/Windows.UI.Composition.1.h"
 #include "winrt/impl/Windows.UI.Xaml.1.h"
-#include "winrt/impl/Windows.UI.Xaml.Automation.Peers.1.h"
+#include "winrt/impl/Windows.UI.Xaml.Automation.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Automation.Provider.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.1.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.1.h"
@@ -30,41 +30,12 @@ WINRT_EXPORT namespace winrt::react::uwp {
 namespace winrt::impl {}
 
 WINRT_EXPORT namespace winrt::react::uwp {
-  struct WINRT_EBO DynamicAutomationPeer
-      : react::uwp::IDynamicAutomationPeer,
-        impl::base<
-            DynamicAutomationPeer,
-            Windows::UI::Xaml::Automation::Peers::
-                FrameworkElementAutomationPeer,
-            Windows::UI::Xaml::Automation::Peers::AutomationPeer,
-            Windows::UI::Xaml::DependencyObject>,
-        impl::require<
-            DynamicAutomationPeer,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer2,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer3,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer4,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer5,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer6,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer7,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer8,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeer9,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides2,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides3,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides4,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides5,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides6,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides8,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides9,
-            Windows::UI::Xaml::Automation::Peers::IAutomationPeerProtected,
-            Windows::UI::Xaml::Automation::Peers::
-                IFrameworkElementAutomationPeer,
-            Windows::UI::Xaml::Automation::Provider::IInvokeProvider,
-            Windows::UI::Xaml::Automation::Provider::ISelectionItemProvider,
-            Windows::UI::Xaml::Automation::Provider::ISelectionProvider,
-            Windows::UI::Xaml::IDependencyObject,
-            Windows::UI::Xaml::IDependencyObject2> {
+
+struct WINRT_EBO DynamicAutomationPeer :
+    react::uwp::IDynamicAutomationPeer,
+    impl::base<DynamicAutomationPeer, Windows::UI::Xaml::Automation::Peers::FrameworkElementAutomationPeer, Windows::UI::Xaml::Automation::Peers::AutomationPeer, Windows::UI::Xaml::DependencyObject>,
+    impl::require<DynamicAutomationPeer, Windows::UI::Xaml::Automation::Peers::IAutomationPeer, Windows::UI::Xaml::Automation::Peers::IAutomationPeer2, Windows::UI::Xaml::Automation::Peers::IAutomationPeer3, Windows::UI::Xaml::Automation::Peers::IAutomationPeer4, Windows::UI::Xaml::Automation::Peers::IAutomationPeer5, Windows::UI::Xaml::Automation::Peers::IAutomationPeer6, Windows::UI::Xaml::Automation::Peers::IAutomationPeer7, Windows::UI::Xaml::Automation::Peers::IAutomationPeer8, Windows::UI::Xaml::Automation::Peers::IAutomationPeer9, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides2, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides3, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides4, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides5, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides6, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides8, Windows::UI::Xaml::Automation::Peers::IAutomationPeerOverrides9, Windows::UI::Xaml::Automation::Peers::IAutomationPeerProtected, Windows::UI::Xaml::Automation::Peers::IFrameworkElementAutomationPeer, Windows::UI::Xaml::Automation::Provider::IInvokeProvider, Windows::UI::Xaml::Automation::Provider::ISelectionItemProvider, Windows::UI::Xaml::Automation::Provider::ISelectionProvider, Windows::UI::Xaml::Automation::Provider::IToggleProvider, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2>
+{
     DynamicAutomationPeer(std::nullptr_t) noexcept {}
     DynamicAutomationPeer(Windows::UI::Xaml::FrameworkElement const &owner);
   };
@@ -73,34 +44,33 @@ WINRT_EXPORT namespace winrt::react::uwp {
       : react::uwp::IDynamicAutomationProperties {
     DynamicAutomationProperties(std::nullptr_t) noexcept {}
     static Windows::UI::Xaml::DependencyProperty AccessibilityRoleProperty();
-    static void SetAccessibilityRole(
-        Windows::UI::Xaml::UIElement const &element,
-        react::uwp::AccessibilityRoles const &value);
-    static react::uwp::AccessibilityRoles GetAccessibilityRole(
-        Windows::UI::Xaml::UIElement const &element);
-    static Windows::UI::Xaml::DependencyProperty
-    AccessibilityStateDisabledProperty();
-    static void SetAccessibilityStateDisabled(
-        Windows::UI::Xaml::UIElement const &element,
-        bool value);
-    static bool GetAccessibilityStateDisabled(
-        Windows::UI::Xaml::UIElement const &element);
-    static Windows::UI::Xaml::DependencyProperty
-    AccessibilityStateSelectedProperty();
-    static void SetAccessibilityStateSelected(
-        Windows::UI::Xaml::UIElement const &element,
-        bool value);
-    static bool GetAccessibilityStateSelected(
-        Windows::UI::Xaml::UIElement const &element);
-    static Windows::UI::Xaml::DependencyProperty
-    AccessibilityInvokeEventHandlerProperty();
-    static void SetAccessibilityInvokeEventHandler(
-        Windows::UI::Xaml::UIElement const &element,
-        react::uwp::AccessibilityInvokeEventHandler const &value);
-    static react::uwp::AccessibilityInvokeEventHandler
-    GetAccessibilityInvokeEventHandler(
-        Windows::UI::Xaml::UIElement const &element);
-  };
+    static void SetAccessibilityRole(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityRoles const& value);
+    static react::uwp::AccessibilityRoles GetAccessibilityRole(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty();
+    static void SetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateDisabledProperty();
+    static void SetAccessibilityStateDisabled(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateDisabled(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateCheckedProperty();
+    static void SetAccessibilityStateChecked(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateChecked(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateUncheckedProperty();
+    static void SetAccessibilityStateUnchecked(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateUnchecked(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateBusyProperty();
+    static void SetAccessibilityStateBusy(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateBusy(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateExpandedProperty();
+    static void SetAccessibilityStateExpanded(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateExpanded(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityStateCollapsedProperty();
+    static void SetAccessibilityStateCollapsed(Windows::UI::Xaml::UIElement const& element, bool value);
+    static bool GetAccessibilityStateCollapsed(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
+    static void SetAccessibilityInvokeEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityInvokeEventHandler const& value);
+    static react::uwp::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows::UI::Xaml::UIElement const& element);
+};
 
   struct WINRT_EBO ViewControl
       : react::uwp::IViewControl,

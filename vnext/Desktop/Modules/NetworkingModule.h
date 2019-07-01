@@ -6,9 +6,7 @@
 #include <IHttpResource.h>
 #include <cxxreact/CxxModule.h>
 
-namespace facebook {
-namespace react {
-
+namespace Microsoft::React {
 // NetworkingModule
 // provides the 'Networking' native module backing RCTNetworking.js
 class NetworkingModule : public facebook::xplat::module::CxxModule {
@@ -43,5 +41,4 @@ class NetworkingModule : public facebook::xplat::module::CxxModule {
   static const char *name;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

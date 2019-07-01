@@ -12,7 +12,7 @@ static_assert(
 #include "winrt/Windows.Foundation.h"
 #include "winrt/impl/Windows.UI.Composition.2.h"
 #include "winrt/impl/Windows.UI.Xaml.2.h"
-#include "winrt/impl/Windows.UI.Xaml.Automation.Peers.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Automation.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Automation.Provider.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.2.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.2.h"
@@ -62,6 +62,35 @@ consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::GetAccessibilityRole(
 template <typename D>
 Windows::UI::Xaml::DependencyProperty
 consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::AccessibilityStateSelectedProperty() const {
+  Windows::UI::Xaml::DependencyProperty value{nullptr};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->get_AccessibilityStateSelectedProperty(put_abi(value)));
+  return value;
+}
+
+template <typename D>
+void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::
+    SetAccessibilityStateSelected(
+        Windows::UI::Xaml::UIElement const &element,
+        bool value) const {
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->SetAccessibilityStateSelected(get_abi(element), value));
+}
+
+template <typename D>
+bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::GetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const
+                                          &element) const {
+  bool result{};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->GetAccessibilityStateSelected(get_abi(element), &result));
+  return result;
+}
+
+template <typename D>
+Windows::UI::Xaml::DependencyProperty
+consume_react_uwp_IDynamicAutomationPropertiesStatics<
     D>::AccessibilityStateDisabledProperty() const {
   Windows::UI::Xaml::DependencyProperty value{nullptr};
   check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
@@ -91,29 +120,147 @@ bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
 template <typename D>
 Windows::UI::Xaml::DependencyProperty
 consume_react_uwp_IDynamicAutomationPropertiesStatics<
-    D>::AccessibilityStateSelectedProperty() const {
+    D>::AccessibilityStateCheckedProperty() const {
   Windows::UI::Xaml::DependencyProperty value{nullptr};
   check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
-                    ->get_AccessibilityStateSelectedProperty(put_abi(value)));
+                    ->get_AccessibilityStateCheckedProperty(put_abi(value)));
   return value;
 }
 
 template <typename D>
 void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::
-    SetAccessibilityStateSelected(
+    SetAccessibilityStateChecked(
         Windows::UI::Xaml::UIElement const &element,
         bool value) const {
   check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
-                    ->SetAccessibilityStateSelected(get_abi(element), value));
+                    ->SetAccessibilityStateChecked(get_abi(element), value));
 }
 
 template <typename D>
 bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
-    D>::GetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const
+    D>::GetAccessibilityStateChecked(Windows::UI::Xaml::UIElement const
+                                         &element) const {
+  bool result{};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->GetAccessibilityStateChecked(get_abi(element), &result));
+  return result;
+}
+
+template <typename D>
+Windows::UI::Xaml::DependencyProperty
+consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::AccessibilityStateUncheckedProperty() const {
+  Windows::UI::Xaml::DependencyProperty value{nullptr};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->get_AccessibilityStateUncheckedProperty(put_abi(value)));
+  return value;
+}
+
+template <typename D>
+void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::
+    SetAccessibilityStateUnchecked(
+        Windows::UI::Xaml::UIElement const &element,
+        bool value) const {
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->SetAccessibilityStateUnchecked(get_abi(element), value));
+}
+
+template <typename D>
+bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::GetAccessibilityStateUnchecked(Windows::UI::Xaml::UIElement const
+                                           &element) const {
+  bool result{};
+  check_hresult(
+      WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+          ->GetAccessibilityStateUnchecked(get_abi(element), &result));
+  return result;
+}
+
+template <typename D>
+Windows::UI::Xaml::DependencyProperty
+consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::AccessibilityStateBusyProperty() const {
+  Windows::UI::Xaml::DependencyProperty value{nullptr};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->get_AccessibilityStateBusyProperty(put_abi(value)));
+  return value;
+}
+
+template <typename D>
+void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::
+    SetAccessibilityStateBusy(
+        Windows::UI::Xaml::UIElement const &element,
+        bool value) const {
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->SetAccessibilityStateBusy(get_abi(element), value));
+}
+
+template <typename D>
+bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::GetAccessibilityStateBusy(Windows::UI::Xaml::UIElement const &element)
+    const {
+  bool result{};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->GetAccessibilityStateBusy(get_abi(element), &result));
+  return result;
+}
+
+template <typename D>
+Windows::UI::Xaml::DependencyProperty
+consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::AccessibilityStateExpandedProperty() const {
+  Windows::UI::Xaml::DependencyProperty value{nullptr};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->get_AccessibilityStateExpandedProperty(put_abi(value)));
+  return value;
+}
+
+template <typename D>
+void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::
+    SetAccessibilityStateExpanded(
+        Windows::UI::Xaml::UIElement const &element,
+        bool value) const {
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->SetAccessibilityStateExpanded(get_abi(element), value));
+}
+
+template <typename D>
+bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::GetAccessibilityStateExpanded(Windows::UI::Xaml::UIElement const
                                           &element) const {
   bool result{};
   check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
-                    ->GetAccessibilityStateSelected(get_abi(element), &result));
+                    ->GetAccessibilityStateExpanded(get_abi(element), &result));
+  return result;
+}
+
+template <typename D>
+Windows::UI::Xaml::DependencyProperty
+consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::AccessibilityStateCollapsedProperty() const {
+  Windows::UI::Xaml::DependencyProperty value{nullptr};
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->get_AccessibilityStateCollapsedProperty(put_abi(value)));
+  return value;
+}
+
+template <typename D>
+void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::
+    SetAccessibilityStateCollapsed(
+        Windows::UI::Xaml::UIElement const &element,
+        bool value) const {
+  check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+                    ->SetAccessibilityStateCollapsed(get_abi(element), value));
+}
+
+template <typename D>
+bool consume_react_uwp_IDynamicAutomationPropertiesStatics<
+    D>::GetAccessibilityStateCollapsed(Windows::UI::Xaml::UIElement const
+                                           &element) const {
+  bool result{};
+  check_hresult(
+      WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)
+          ->GetAccessibilityStateCollapsed(get_abi(element), &result));
   return result;
 }
 
@@ -468,21 +615,71 @@ struct produce<D, react::uwp::IDynamicAutomationPropertiesStatics>
     } catch (...) {
       return to_hresult();
     }
-  }
 
-  int32_t WINRT_CALL
-  get_AccessibilityStateDisabledProperty(void **value) noexcept final {
-    try {
-      *value = nullptr;
-      typename D::abi_guard guard(this->shim());
-      WINRT_ASSERT_DECLARATION(
-          AccessibilityStateDisabledProperty,
-          WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
-      *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
-          this->shim().AccessibilityStateDisabledProperty());
-      return 0;
-    } catch (...) {
-      return to_hresult();
+    int32_t WINRT_CALL get_AccessibilityStateSelectedProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateSelectedProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateSelectedProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityStateSelected(
+        void *element, bool value) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            SetAccessibilityStateSelected,
+            WINRT_WRAP(void),
+            Windows::UI::Xaml::UIElement const &,
+            bool);
+        this->shim().SetAccessibilityStateSelected(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
+            value);
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityStateSelected(
+        void *element, bool *result) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            GetAccessibilityStateSelected,
+            WINRT_WRAP(bool),
+            Windows::UI::Xaml::UIElement const &);
+        *result = detach_from<bool>(this->shim().GetAccessibilityStateSelected(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityStateDisabledProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateDisabledProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateDisabledProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
     }
   }
 
@@ -518,55 +715,255 @@ struct produce<D, react::uwp::IDynamicAutomationPropertiesStatics>
     } catch (...) {
       return to_hresult();
     }
-  }
 
-  int32_t WINRT_CALL
-  get_AccessibilityStateSelectedProperty(void **value) noexcept final {
-    try {
-      *value = nullptr;
-      typename D::abi_guard guard(this->shim());
-      WINRT_ASSERT_DECLARATION(
-          AccessibilityStateSelectedProperty,
-          WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
-      *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
-          this->shim().AccessibilityStateSelectedProperty());
-      return 0;
-    } catch (...) {
-      return to_hresult();
+    int32_t WINRT_CALL get_AccessibilityStateCheckedProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateCheckedProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateCheckedProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
     }
-  }
 
-  int32_t WINRT_CALL
-  SetAccessibilityStateSelected(void *element, bool value) noexcept final {
-    try {
-      typename D::abi_guard guard(this->shim());
-      WINRT_ASSERT_DECLARATION(
-          SetAccessibilityStateSelected,
-          WINRT_WRAP(void),
-          Windows::UI::Xaml::UIElement const &,
-          bool);
-      this->shim().SetAccessibilityStateSelected(
-          *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
-          value);
-      return 0;
-    } catch (...) {
-      return to_hresult();
+    int32_t WINRT_CALL SetAccessibilityStateChecked(
+        void *element, bool value) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            SetAccessibilityStateChecked,
+            WINRT_WRAP(void),
+            Windows::UI::Xaml::UIElement const &,
+            bool);
+        this->shim().SetAccessibilityStateChecked(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
+            value);
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
     }
-  }
 
-  int32_t WINRT_CALL
-  GetAccessibilityStateSelected(void *element, bool *result) noexcept final {
-    try {
-      typename D::abi_guard guard(this->shim());
-      WINRT_ASSERT_DECLARATION(
-          GetAccessibilityStateSelected,
-          WINRT_WRAP(bool),
-          Windows::UI::Xaml::UIElement const &);
-      *result = detach_from<bool>(this->shim().GetAccessibilityStateSelected(
-          *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
-      return 0;
-    } catch (...) {
-      return to_hresult();
+    int32_t WINRT_CALL GetAccessibilityStateChecked(
+        void *element, bool *result) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            GetAccessibilityStateChecked,
+            WINRT_WRAP(bool),
+            Windows::UI::Xaml::UIElement const &);
+        *result = detach_from<bool>(this->shim().GetAccessibilityStateChecked(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityStateUncheckedProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateUncheckedProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateUncheckedProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityStateUnchecked(
+        void *element, bool value) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            SetAccessibilityStateUnchecked,
+            WINRT_WRAP(void),
+            Windows::UI::Xaml::UIElement const &,
+            bool);
+        this->shim().SetAccessibilityStateUnchecked(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
+            value);
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityStateUnchecked(
+        void *element, bool *result) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            GetAccessibilityStateUnchecked,
+            WINRT_WRAP(bool),
+            Windows::UI::Xaml::UIElement const &);
+        *result = detach_from<bool>(this->shim().GetAccessibilityStateUnchecked(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityStateBusyProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateBusyProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateBusyProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityStateBusy(
+        void *element, bool value) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            SetAccessibilityStateBusy,
+            WINRT_WRAP(void),
+            Windows::UI::Xaml::UIElement const &,
+            bool);
+        this->shim().SetAccessibilityStateBusy(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
+            value);
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityStateBusy(
+        void *element, bool *result) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            GetAccessibilityStateBusy,
+            WINRT_WRAP(bool),
+            Windows::UI::Xaml::UIElement const &);
+        *result = detach_from<bool>(this->shim().GetAccessibilityStateBusy(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityStateExpandedProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateExpandedProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateExpandedProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityStateExpanded(
+        void *element, bool value) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            SetAccessibilityStateExpanded,
+            WINRT_WRAP(void),
+            Windows::UI::Xaml::UIElement const &,
+            bool);
+        this->shim().SetAccessibilityStateExpanded(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
+            value);
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityStateExpanded(
+        void *element, bool *result) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            GetAccessibilityStateExpanded,
+            WINRT_WRAP(bool),
+            Windows::UI::Xaml::UIElement const &);
+        *result = detach_from<bool>(this->shim().GetAccessibilityStateExpanded(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityStateCollapsedProperty(
+        void **value) noexcept final {
+      try {
+        *value = nullptr;
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            AccessibilityStateCollapsedProperty,
+            WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+        *value = detach_from<Windows::UI::Xaml::DependencyProperty>(
+            this->shim().AccessibilityStateCollapsedProperty());
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityStateCollapsed(
+        void *element, bool value) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            SetAccessibilityStateCollapsed,
+            WINRT_WRAP(void),
+            Windows::UI::Xaml::UIElement const &,
+            bool);
+        this->shim().SetAccessibilityStateCollapsed(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element),
+            value);
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityStateCollapsed(
+        void *element, bool *result) noexcept final {
+      try {
+        typename D::abi_guard guard(this->shim());
+        WINRT_ASSERT_DECLARATION(
+            GetAccessibilityStateCollapsed,
+            WINRT_WRAP(bool),
+            Windows::UI::Xaml::UIElement const &);
+        *result = detach_from<bool>(this->shim().GetAccessibilityStateCollapsed(
+            *reinterpret_cast<Windows::UI::Xaml::UIElement const *>(&element)));
+        return 0;
+      } catch (...) {
+        return to_hresult();
+      }
     }
   }
 
@@ -1055,6 +1452,31 @@ WINRT_EXPORT namespace winrt::react::uwp {
   }
 
   inline Windows::UI::Xaml::DependencyProperty
+  DynamicAutomationProperties::AccessibilityStateSelectedProperty() {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.AccessibilityStateSelectedProperty(); });
+  }
+
+  inline void DynamicAutomationProperties::SetAccessibilityStateSelected(
+      Windows::UI::Xaml::UIElement const &element, bool value) {
+    impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>([&](auto &&f) {
+      return f.SetAccessibilityStateSelected(element, value);
+    });
+  }
+
+  inline bool DynamicAutomationProperties::GetAccessibilityStateSelected(
+      Windows::UI::Xaml::UIElement const &element) {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.GetAccessibilityStateSelected(element); });
+  }
+
+  inline Windows::UI::Xaml::DependencyProperty
   DynamicAutomationProperties::AccessibilityStateDisabledProperty() {
     return impl::call_factory<
         DynamicAutomationProperties,
@@ -1080,28 +1502,127 @@ WINRT_EXPORT namespace winrt::react::uwp {
   }
 
   inline Windows::UI::Xaml::DependencyProperty
-  DynamicAutomationProperties::AccessibilityStateSelectedProperty() {
+  DynamicAutomationProperties::AccessibilityStateCheckedProperty() {
     return impl::call_factory<
         DynamicAutomationProperties,
         react::uwp::IDynamicAutomationPropertiesStatics>(
-        [&](auto &&f) { return f.AccessibilityStateSelectedProperty(); });
+        [&](auto &&f) { return f.AccessibilityStateCheckedProperty(); });
   }
 
-  inline void DynamicAutomationProperties::SetAccessibilityStateSelected(
+  inline void DynamicAutomationProperties::SetAccessibilityStateChecked(
       Windows::UI::Xaml::UIElement const &element, bool value) {
     impl::call_factory<
         DynamicAutomationProperties,
         react::uwp::IDynamicAutomationPropertiesStatics>([&](auto &&f) {
-      return f.SetAccessibilityStateSelected(element, value);
+      return f.SetAccessibilityStateChecked(element, value);
     });
   }
 
-  inline bool DynamicAutomationProperties::GetAccessibilityStateSelected(
+  inline bool DynamicAutomationProperties::GetAccessibilityStateChecked(
       Windows::UI::Xaml::UIElement const &element) {
     return impl::call_factory<
         DynamicAutomationProperties,
         react::uwp::IDynamicAutomationPropertiesStatics>(
-        [&](auto &&f) { return f.GetAccessibilityStateSelected(element); });
+        [&](auto &&f) { return f.GetAccessibilityStateChecked(element); });
+  }
+
+  inline Windows::UI::Xaml::DependencyProperty
+  DynamicAutomationProperties::AccessibilityStateUncheckedProperty() {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.AccessibilityStateUncheckedProperty(); });
+  }
+
+  inline void DynamicAutomationProperties::SetAccessibilityStateUnchecked(
+      Windows::UI::Xaml::UIElement const &element, bool value) {
+    impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>([&](auto &&f) {
+      return f.SetAccessibilityStateUnchecked(element, value);
+    });
+  }
+
+  inline bool DynamicAutomationProperties::GetAccessibilityStateUnchecked(
+      Windows::UI::Xaml::UIElement const &element) {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.GetAccessibilityStateUnchecked(element); });
+  }
+
+  inline Windows::UI::Xaml::DependencyProperty
+  DynamicAutomationProperties::AccessibilityStateBusyProperty() {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.AccessibilityStateBusyProperty(); });
+  }
+
+  inline void DynamicAutomationProperties::SetAccessibilityStateBusy(
+      Windows::UI::Xaml::UIElement const &element, bool value) {
+    impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.SetAccessibilityStateBusy(element, value); });
+  }
+
+  inline bool DynamicAutomationProperties::GetAccessibilityStateBusy(
+      Windows::UI::Xaml::UIElement const &element) {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.GetAccessibilityStateBusy(element); });
+  }
+
+  inline Windows::UI::Xaml::DependencyProperty
+  DynamicAutomationProperties::AccessibilityStateExpandedProperty() {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.AccessibilityStateExpandedProperty(); });
+  }
+
+  inline void DynamicAutomationProperties::SetAccessibilityStateExpanded(
+      Windows::UI::Xaml::UIElement const &element, bool value) {
+    impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>([&](auto &&f) {
+      return f.SetAccessibilityStateExpanded(element, value);
+    });
+  }
+
+  inline bool DynamicAutomationProperties::GetAccessibilityStateExpanded(
+      Windows::UI::Xaml::UIElement const &element) {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.GetAccessibilityStateExpanded(element); });
+  }
+
+  inline Windows::UI::Xaml::DependencyProperty
+  DynamicAutomationProperties::AccessibilityStateCollapsedProperty() {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.AccessibilityStateCollapsedProperty(); });
+  }
+
+  inline void DynamicAutomationProperties::SetAccessibilityStateCollapsed(
+      Windows::UI::Xaml::UIElement const &element, bool value) {
+    impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>([&](auto &&f) {
+      return f.SetAccessibilityStateCollapsed(element, value);
+    });
+  }
+
+  inline bool DynamicAutomationProperties::GetAccessibilityStateCollapsed(
+      Windows::UI::Xaml::UIElement const &element) {
+    return impl::call_factory<
+        DynamicAutomationProperties,
+        react::uwp::IDynamicAutomationPropertiesStatics>(
+        [&](auto &&f) { return f.GetAccessibilityStateCollapsed(element); });
   }
 
   inline Windows::UI::Xaml::DependencyProperty
@@ -1225,16 +1746,14 @@ WINRT_EXPORT namespace winrt::react::uwp {
   template <typename O, typename M>
   AccessibilityInvokeEventHandler::AccessibilityInvokeEventHandler(
       com_ptr<O> && object, M method)
-      : AccessibilityInvokeEventHandler(
-            [o = std::move(object), method](auto &&... args) {
-              return ((*o).*(method))(args...);
-            }) {}
+      : AccessibilityInvokeEventHandler([ o = std::move(object), method ](
+            auto &&... args) { return ((*o).*(method))(args...); }) {}
 
   template <typename O, typename M>
   AccessibilityInvokeEventHandler::AccessibilityInvokeEventHandler(
       weak_ref<O> && object, M method)
       : AccessibilityInvokeEventHandler(
-            [o = std::move(object), method](auto &&... args) {
+            [ o = std::move(object), method ](auto &&... args) {
               if (auto s = o.get()) {
                 ((*s).*(method))(args...);
               }
@@ -1253,7 +1772,7 @@ struct property_react_uwp_IDynamicAutomationPropertiesStatics {
     struct AccessibilityInvokeEventHandlerProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityInvokeEventHandlerProperty"sv};
+            L"AccessibilityInvokeEventHandlerProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type =
@@ -1271,7 +1790,7 @@ struct property_react_uwp_IDynamicAutomationPropertiesStatics {
     struct AccessibilityRoleProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityRoleProperty"sv};
+            L"AccessibilityRoleProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type =
@@ -1289,7 +1808,7 @@ struct property_react_uwp_IDynamicAutomationPropertiesStatics {
     struct AccessibilityStateDisabledProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityStateDisabledProperty"sv};
+            L"AccessibilityStateDisabledProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type =
@@ -1304,10 +1823,100 @@ struct property_react_uwp_IDynamicAutomationPropertiesStatics {
         }
       };
     };
+    struct AccessibilityStateBusyProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateBusyProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type =
+          winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.AccessibilityStateBusyProperty();
+        }
+      };
+    };
+    struct AccessibilityStateCheckedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateCheckedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type =
+          winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.AccessibilityStateCheckedProperty();
+        }
+      };
+    };
+    struct AccessibilityStateCollapsedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateCollapsedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type =
+          winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.AccessibilityStateCollapsedProperty();
+        }
+      };
+    };
+    struct AccessibilityStateDisabledProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateDisabledProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type =
+          winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.AccessibilityStateDisabledProperty();
+        }
+      };
+    };
+    struct AccessibilityStateExpandedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateExpandedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type =
+          winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.AccessibilityStateExpandedProperty();
+        }
+      };
+    };
     struct AccessibilityStateSelectedProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityStateSelectedProperty"sv};
+            L"AccessibilityStateSelectedProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type =
@@ -1322,13 +1931,36 @@ struct property_react_uwp_IDynamicAutomationPropertiesStatics {
         }
       };
     };
+    struct AccessibilityStateUncheckedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateUncheckedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type =
+          winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.AccessibilityStateUncheckedProperty();
+        }
+      };
+    };
   };
   struct list {
     using type = impl::typelist<
         named::AccessibilityInvokeEventHandlerProperty,
         named::AccessibilityRoleProperty,
+        named::AccessibilityStateBusyProperty,
+        named::AccessibilityStateCheckedProperty,
+        named::AccessibilityStateCollapsedProperty,
         named::AccessibilityStateDisabledProperty,
-        named::AccessibilityStateSelectedProperty>;
+        named::AccessibilityStateExpandedProperty,
+        named::AccessibilityStateSelectedProperty,
+        named::AccessibilityStateUncheckedProperty>;
   };
 };
 
@@ -1336,7 +1968,7 @@ struct property_react_uwp_IViewPanel {
   struct named {
     struct BorderBrush {
       struct name {
-        static constexpr std::wstring_view value{L"BorderBrush"sv};
+        static constexpr std::wstring_view value{L"BorderBrush" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Media::Brush;
       using target_type = winrt::react::uwp::IViewPanel;
@@ -1358,7 +1990,7 @@ struct property_react_uwp_IViewPanel {
     };
     struct BorderThickness {
       struct name {
-        static constexpr std::wstring_view value{L"BorderThickness"sv};
+        static constexpr std::wstring_view value{L"BorderThickness" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Thickness;
       using target_type = winrt::react::uwp::IViewPanel;
@@ -1380,7 +2012,7 @@ struct property_react_uwp_IViewPanel {
     };
     struct ClipChildren {
       struct name {
-        static constexpr std::wstring_view value{L"ClipChildren"sv};
+        static constexpr std::wstring_view value{L"ClipChildren" sv};
       };
       using property_type = bool;
       using target_type = winrt::react::uwp::IViewPanel;
@@ -1402,7 +2034,7 @@ struct property_react_uwp_IViewPanel {
     };
     struct CornerRadius {
       struct name {
-        static constexpr std::wstring_view value{L"CornerRadius"sv};
+        static constexpr std::wstring_view value{L"CornerRadius" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::CornerRadius;
       using target_type = winrt::react::uwp::IViewPanel;
@@ -1424,7 +2056,7 @@ struct property_react_uwp_IViewPanel {
     };
     struct ViewBackground {
       struct name {
-        static constexpr std::wstring_view value{L"ViewBackground"sv};
+        static constexpr std::wstring_view value{L"ViewBackground" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Media::Brush;
       using target_type = winrt::react::uwp::IViewPanel;
@@ -1459,7 +2091,7 @@ struct property_react_uwp_IViewPanelStatics {
   struct named {
     struct BorderBrushProperty {
       struct name {
-        static constexpr std::wstring_view value{L"BorderBrushProperty"sv};
+        static constexpr std::wstring_view value{L"BorderBrushProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1475,7 +2107,7 @@ struct property_react_uwp_IViewPanelStatics {
     };
     struct BorderThicknessProperty {
       struct name {
-        static constexpr std::wstring_view value{L"BorderThicknessProperty"sv};
+        static constexpr std::wstring_view value{L"BorderThicknessProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1491,7 +2123,7 @@ struct property_react_uwp_IViewPanelStatics {
     };
     struct ClipChildrenProperty {
       struct name {
-        static constexpr std::wstring_view value{L"ClipChildrenProperty"sv};
+        static constexpr std::wstring_view value{L"ClipChildrenProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1507,7 +2139,7 @@ struct property_react_uwp_IViewPanelStatics {
     };
     struct CornerRadiusProperty {
       struct name {
-        static constexpr std::wstring_view value{L"CornerRadiusProperty"sv};
+        static constexpr std::wstring_view value{L"CornerRadiusProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1523,7 +2155,7 @@ struct property_react_uwp_IViewPanelStatics {
     };
     struct LeftProperty {
       struct name {
-        static constexpr std::wstring_view value{L"LeftProperty"sv};
+        static constexpr std::wstring_view value{L"LeftProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1539,7 +2171,7 @@ struct property_react_uwp_IViewPanelStatics {
     };
     struct TopProperty {
       struct name {
-        static constexpr std::wstring_view value{L"TopProperty"sv};
+        static constexpr std::wstring_view value{L"TopProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1555,7 +2187,7 @@ struct property_react_uwp_IViewPanelStatics {
     };
     struct ViewBackgroundProperty {
       struct name {
-        static constexpr std::wstring_view value{L"ViewBackgroundProperty"sv};
+        static constexpr std::wstring_view value{L"ViewBackgroundProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::IViewPanelStatics;
@@ -1586,7 +2218,7 @@ struct property_react_uwp_DynamicAutomationPeer {
   struct named {
     struct IsSelected {
       struct name {
-        static constexpr std::wstring_view value{L"IsSelected"sv};
+        static constexpr std::wstring_view value{L"IsSelected" sv};
       };
       using property_type = bool;
       using target_type = winrt::react::uwp::DynamicAutomationPeer;
@@ -1602,7 +2234,7 @@ struct property_react_uwp_DynamicAutomationPeer {
     };
     struct SelectionContainer {
       struct name {
-        static constexpr std::wstring_view value{L"SelectionContainer"sv};
+        static constexpr std::wstring_view value{L"SelectionContainer" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Automation::Provider::
           IRawElementProviderSimple;
@@ -1619,7 +2251,7 @@ struct property_react_uwp_DynamicAutomationPeer {
     };
     struct CanSelectMultiple {
       struct name {
-        static constexpr std::wstring_view value{L"CanSelectMultiple"sv};
+        static constexpr std::wstring_view value{L"CanSelectMultiple" sv};
       };
       using property_type = bool;
       using target_type = winrt::react::uwp::DynamicAutomationPeer;
@@ -1635,7 +2267,7 @@ struct property_react_uwp_DynamicAutomationPeer {
     };
     struct IsSelectionRequired {
       struct name {
-        static constexpr std::wstring_view value{L"IsSelectionRequired"sv};
+        static constexpr std::wstring_view value{L"IsSelectionRequired" sv};
       };
       using property_type = bool;
       using target_type = winrt::react::uwp::DynamicAutomationPeer;
@@ -1649,13 +2281,46 @@ struct property_react_uwp_DynamicAutomationPeer {
         }
       };
     };
+    struct IsSelectionRequired {
+      struct name {
+        static constexpr std::wstring_view value{L"IsSelectionRequired" sv};
+      };
+      using property_type = bool;
+      using target_type = winrt::react::uwp::DynamicAutomationPeer;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.IsSelectionRequired();
+        }
+      };
+    };
+    struct ToggleState {
+      struct name {
+        static constexpr std::wstring_view value{L"ToggleState" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::Automation::ToggleState;
+      using target_type = winrt::react::uwp::DynamicAutomationPeer;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::false_type;
+      struct getter {
+        auto operator()(target_type const &target) const {
+          return target.ToggleState();
+        }
+      };
+    };
   };
   struct list {
     using type = impl::typelist<
         named::IsSelected,
         named::SelectionContainer,
         named::CanSelectMultiple,
-        named::IsSelectionRequired>;
+        named::IsSelectionRequired,
+        named::ToggleState>;
   };
 };
 
@@ -1664,7 +2329,7 @@ struct property_react_uwp_DynamicAutomationProperties {
     struct AccessibilityInvokeEventHandlerProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityInvokeEventHandlerProperty"sv};
+            L"AccessibilityInvokeEventHandlerProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::DynamicAutomationProperties;
@@ -1681,7 +2346,7 @@ struct property_react_uwp_DynamicAutomationProperties {
     struct AccessibilityRoleProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityRoleProperty"sv};
+            L"AccessibilityRoleProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::DynamicAutomationProperties;
@@ -1698,7 +2363,7 @@ struct property_react_uwp_DynamicAutomationProperties {
     struct AccessibilityStateDisabledProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityStateDisabledProperty"sv};
+            L"AccessibilityStateDisabledProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::DynamicAutomationProperties;
@@ -1712,10 +2377,95 @@ struct property_react_uwp_DynamicAutomationProperties {
         }
       };
     };
+    struct AccessibilityStateBusyProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateBusyProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::true_type;
+      struct getter {
+        auto operator()() const {
+          return target_type::AccessibilityStateBusyProperty();
+        }
+      };
+    };
+    struct AccessibilityStateCheckedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateCheckedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::true_type;
+      struct getter {
+        auto operator()() const {
+          return target_type::AccessibilityStateCheckedProperty();
+        }
+      };
+    };
+    struct AccessibilityStateCollapsedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateCollapsedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::true_type;
+      struct getter {
+        auto operator()() const {
+          return target_type::AccessibilityStateCollapsedProperty();
+        }
+      };
+    };
+    struct AccessibilityStateDisabledProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateDisabledProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::true_type;
+      struct getter {
+        auto operator()() const {
+          return target_type::AccessibilityStateDisabledProperty();
+        }
+      };
+    };
+    struct AccessibilityStateExpandedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateExpandedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::true_type;
+      struct getter {
+        auto operator()() const {
+          return target_type::AccessibilityStateExpandedProperty();
+        }
+      };
+    };
     struct AccessibilityStateSelectedProperty {
       struct name {
         static constexpr std::wstring_view value{
-            L"AccessibilityStateSelectedProperty"sv};
+            L"AccessibilityStateSelectedProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::DynamicAutomationProperties;
@@ -1729,13 +2479,35 @@ struct property_react_uwp_DynamicAutomationProperties {
         }
       };
     };
+    struct AccessibilityStateUncheckedProperty {
+      struct name {
+        static constexpr std::wstring_view value{
+            L"AccessibilityStateUncheckedProperty" sv};
+      };
+      using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+      using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+      using is_readable = std::true_type;
+      using is_writable = std::false_type;
+      using is_static = std::true_type;
+      struct getter {
+        auto operator()() const {
+          return target_type::AccessibilityStateUncheckedProperty();
+        }
+      };
+    };
   };
   struct list {
     using type = impl::typelist<
         named::AccessibilityInvokeEventHandlerProperty,
         named::AccessibilityRoleProperty,
+        named::AccessibilityStateBusyProperty,
+        named::AccessibilityStateCheckedProperty,
+        named::AccessibilityStateCollapsedProperty,
         named::AccessibilityStateDisabledProperty,
-        named::AccessibilityStateSelectedProperty>;
+        named::AccessibilityStateExpandedProperty,
+        named::AccessibilityStateSelectedProperty,
+        named::AccessibilityStateUncheckedProperty>;
   };
 };
 
@@ -1743,7 +2515,7 @@ struct property_react_uwp_ViewPanel {
   struct named {
     struct ViewBackground {
       struct name {
-        static constexpr std::wstring_view value{L"ViewBackground"sv};
+        static constexpr std::wstring_view value{L"ViewBackground" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Media::Brush;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1765,7 +2537,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct CornerRadius {
       struct name {
-        static constexpr std::wstring_view value{L"CornerRadius"sv};
+        static constexpr std::wstring_view value{L"CornerRadius" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::CornerRadius;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1787,7 +2559,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct ClipChildren {
       struct name {
-        static constexpr std::wstring_view value{L"ClipChildren"sv};
+        static constexpr std::wstring_view value{L"ClipChildren" sv};
       };
       using property_type = bool;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1809,7 +2581,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct BorderThickness {
       struct name {
-        static constexpr std::wstring_view value{L"BorderThickness"sv};
+        static constexpr std::wstring_view value{L"BorderThickness" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Thickness;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1831,7 +2603,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct BorderBrush {
       struct name {
-        static constexpr std::wstring_view value{L"BorderBrush"sv};
+        static constexpr std::wstring_view value{L"BorderBrush" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::Media::Brush;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1853,7 +2625,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct BorderBrushProperty {
       struct name {
-        static constexpr std::wstring_view value{L"BorderBrushProperty"sv};
+        static constexpr std::wstring_view value{L"BorderBrushProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1869,7 +2641,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct BorderThicknessProperty {
       struct name {
-        static constexpr std::wstring_view value{L"BorderThicknessProperty"sv};
+        static constexpr std::wstring_view value{L"BorderThicknessProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1885,7 +2657,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct ClipChildrenProperty {
       struct name {
-        static constexpr std::wstring_view value{L"ClipChildrenProperty"sv};
+        static constexpr std::wstring_view value{L"ClipChildrenProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1901,7 +2673,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct CornerRadiusProperty {
       struct name {
-        static constexpr std::wstring_view value{L"CornerRadiusProperty"sv};
+        static constexpr std::wstring_view value{L"CornerRadiusProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1917,7 +2689,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct LeftProperty {
       struct name {
-        static constexpr std::wstring_view value{L"LeftProperty"sv};
+        static constexpr std::wstring_view value{L"LeftProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1933,7 +2705,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct TopProperty {
       struct name {
-        static constexpr std::wstring_view value{L"TopProperty"sv};
+        static constexpr std::wstring_view value{L"TopProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -1949,7 +2721,7 @@ struct property_react_uwp_ViewPanel {
     };
     struct ViewBackgroundProperty {
       struct name {
-        static constexpr std::wstring_view value{L"ViewBackgroundProperty"sv};
+        static constexpr std::wstring_view value{L"ViewBackgroundProperty" sv};
       };
       using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
       using target_type = winrt::react::uwp::ViewPanel;
@@ -2036,25 +2808,22 @@ WINRT_EXPORT namespace winrt::experimental::reflect {
   };
   template <>
   struct get_enumerator_names<react::uwp::AccessibilityRoles> {
-    static constexpr std::array<std::wstring_view, 13> value{{
-        {L"None", 4},
-        {L"Button", 6},
-        {L"Link", 4},
-        {L"Search", 6},
-        {L"Image", 5},
-        {L"KeyboardKey", 11},
-        {L"Text", 4},
-        {L"Adjustable", 10},
-        {L"ImageButton", 11},
-        {L"Header", 6},
-        {L"Summary", 7},
-        {L"Unknown", 7},
-        {L"CountRoles", 10},
+    static constexpr std::array<std::wstring_view, 29> value{{
+        {L"None", 4},        {L"Button", 6},      {L"Link", 4},
+        {L"Search", 6},      {L"Image", 5},       {L"KeyboardKey", 11},
+        {L"Text", 4},        {L"Adjustable", 10}, {L"ImageButton", 11},
+        {L"Header", 6},      {L"Summary", 7},     {L"Alert", 5},
+        {L"CheckBox", 8},    {L"ComboBox", 8},    {L"Menu", 4},
+        {L"MenuBar", 7},     {L"MenuItem", 8},    {L"ProgressBar", 11},
+        {L"Radio", 5},       {L"RadioGroup", 10}, {L"ScrollBar", 9},
+        {L"SpinButton", 10}, {L"Switch", 6},      {L"Tab", 3},
+        {L"TabList", 7},     {L"Timer", 5},       {L"ToolBar", 7},
+        {L"Unknown", 7},     {L"CountRoles", 10},
     }};
   };
   template <>
   struct get_enumerator_values<react::uwp::AccessibilityRoles> {
-    static constexpr std::array<react::uwp::AccessibilityRoles, 13> value{{
+    static constexpr std::array<react::uwp::AccessibilityRoles, 29> value{{
         react::uwp::AccessibilityRoles::None,
         react::uwp::AccessibilityRoles::Button,
         react::uwp::AccessibilityRoles::Link,
@@ -2066,23 +2835,49 @@ WINRT_EXPORT namespace winrt::experimental::reflect {
         react::uwp::AccessibilityRoles::ImageButton,
         react::uwp::AccessibilityRoles::Header,
         react::uwp::AccessibilityRoles::Summary,
+        react::uwp::AccessibilityRoles::Alert,
+        react::uwp::AccessibilityRoles::CheckBox,
+        react::uwp::AccessibilityRoles::ComboBox,
+        react::uwp::AccessibilityRoles::Menu,
+        react::uwp::AccessibilityRoles::MenuBar,
+        react::uwp::AccessibilityRoles::MenuItem,
+        react::uwp::AccessibilityRoles::ProgressBar,
+        react::uwp::AccessibilityRoles::Radio,
+        react::uwp::AccessibilityRoles::RadioGroup,
+        react::uwp::AccessibilityRoles::ScrollBar,
+        react::uwp::AccessibilityRoles::SpinButton,
+        react::uwp::AccessibilityRoles::Switch,
+        react::uwp::AccessibilityRoles::Tab,
+        react::uwp::AccessibilityRoles::TabList,
+        react::uwp::AccessibilityRoles::Timer,
+        react::uwp::AccessibilityRoles::ToolBar,
         react::uwp::AccessibilityRoles::Unknown,
         react::uwp::AccessibilityRoles::CountRoles,
     }};
   };
   template <>
   struct get_enumerator_names<react::uwp::AccessibilityStates> {
-    static constexpr std::array<std::wstring_view, 3> value{{
+    static constexpr std::array<std::wstring_view, 8> value{{
         {L"Selected", 8},
         {L"Disabled", 8},
+        {L"Checked", 7},
+        {L"Unchecked", 9},
+        {L"Busy", 4},
+        {L"Expanded", 8},
+        {L"Collapsed", 9},
         {L"CountStates", 11},
     }};
   };
   template <>
   struct get_enumerator_values<react::uwp::AccessibilityStates> {
-    static constexpr std::array<react::uwp::AccessibilityStates, 3> value{{
+    static constexpr std::array<react::uwp::AccessibilityStates, 8> value{{
         react::uwp::AccessibilityStates::Selected,
         react::uwp::AccessibilityStates::Disabled,
+        react::uwp::AccessibilityStates::Checked,
+        react::uwp::AccessibilityStates::Unchecked,
+        react::uwp::AccessibilityStates::Busy,
+        react::uwp::AccessibilityStates::Expanded,
+        react::uwp::AccessibilityStates::Collapsed,
         react::uwp::AccessibilityStates::CountStates,
     }};
   };

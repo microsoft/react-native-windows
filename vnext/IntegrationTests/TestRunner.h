@@ -9,9 +9,7 @@
 #include <string>
 #include "TestInstance.h"
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 enum class TestStatus : unsigned int { Pending = 0, Passed, Failed };
 
@@ -28,7 +26,7 @@ class TestRunner {
       std::vector<
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider>>
           &&cxxModules,
-      std::shared_ptr<DevSettings> devSettings) noexcept;
+      std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
 
  public:
   TestRunner();
@@ -36,9 +34,7 @@ class TestRunner {
   TestResult RunTest(
       std::string &&bundlePath,
       std::string &&appName,
-      NativeLoggingHook &&loggingCallback = {});
+      facebook::react::NativeLoggingHook &&loggingCallback = {});
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

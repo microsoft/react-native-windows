@@ -53,6 +53,7 @@
   </ImportGroup>
   <ImportGroup Label="Shared">
     <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -72,7 +73,7 @@
       -->
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=uwp;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=uwp;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -82,7 +83,6 @@
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
       <AdditionalDependencies Condition="'$(CHAKRACOREUWP)'=='true'">ChakraCore.Debugger.Protocol.lib;ChakraCore.Debugger.ProtocolHandler.lib;ChakraCore.Debugger.Service.lib;ChakraCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreLibDir);$(ChakraCoreDebugLibDir)</AdditionalLibraryDirectories>
@@ -253,19 +253,10 @@
     <ClInclude Include="Views\WebViewManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Shared\AsyncStorageModule.cpp" />
-    <ClCompile Include="..\Shared\AsyncStorage\AsyncStorageManager.cpp" />
-    <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp" />
-    <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp" />
-    <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp" />
-    <ClCompile Include="..\Shared\Logging.cpp" />
-    <ClCompile Include="..\Shared\MemoryTracker.cpp" />
     <ClCompile Include="ABI\ABIModuleLoader.cpp" />
     <ClCompile Include="ABI\HStringHelper.cpp" />
     <ClCompile Include="ABI\Instance_rt.cpp" />
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
-    <ClCompile Include="..\Shared\InstanceManager.cpp" />
-    <ClCompile Include="..\Shared\OInstance.cpp" />
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
@@ -362,8 +353,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makewinrt.inc" />
-    <None Include="..\Shared\sources.inc" />
-    <None Include="..\Shared\winrt\sources" />
     <None Include="ABI\dirs" />
     <None Include="ABI\idl\sources" />
     <None Include="ABI\lib\sources" />

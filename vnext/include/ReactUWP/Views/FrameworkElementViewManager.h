@@ -42,8 +42,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       XamlView newView,
       winrt::Windows::UI::Xaml::DependencyProperty dp);
 
-  void AnnounceIfNeeded(winrt::FrameworkElement element);
-
  private:
   void ApplyTransformMatrix(
       winrt::UIElement uielement,

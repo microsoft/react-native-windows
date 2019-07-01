@@ -3,13 +3,14 @@
 
 #include "DesktopTestInstance.h"
 
+using namespace facebook::react;
+
+using std::move;
 using std::make_unique;
 using std::move;
 using std::shared_ptr;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 #pragma region DesktopTestInstance members
 
@@ -35,6 +36,4 @@ shared_ptr<facebook::react::Instance> DesktopTestInstance::GetInnerInstance()
 
 #pragma endregion DesktopTestInstance members
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

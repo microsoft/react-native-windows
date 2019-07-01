@@ -26,11 +26,6 @@ const winrt::TypeName viewPanelTypeName{winrt::hstring{L"ViewPanel"},
 
 ViewPanel::ViewPanel() : Super() {}
 
-winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
-  return winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(
-      *this);
-}
-
 /*static*/ void ViewPanel::VisualPropertyChanged(
     winrt::DependencyObject sender,
     winrt::DependencyPropertyChangedEventArgs e) {

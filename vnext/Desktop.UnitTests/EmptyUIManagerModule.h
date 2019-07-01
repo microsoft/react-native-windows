@@ -7,9 +7,7 @@
 #include <cxxreact/CxxModule.h>
 #include <vector>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 struct EmptyUINode {
   EmptyUINode(int64_t tag, const std::string &className);
@@ -31,7 +29,8 @@ struct NodeRegistry {
 class EmptyUIManager {
  public:
   EmptyUIManager(
-      std::unique_ptr<std::vector<std::unique_ptr<IViewManager>>> viewManagers,
+      std::unique_ptr<std::vector<
+          std::unique_ptr<facebook::react::IViewManager>>> viewManagers,
       std::shared_ptr<NodeRegistry> nodeRegistry);
 
   void removeRootView(int64_t rootViewTag);
@@ -98,7 +97,8 @@ class EmptyUIManager {
   std::shared_ptr<EmptyUINode> addRootView(int64_t rootViewTag);
 
  private:
-  std::unique_ptr<std::vector<std::unique_ptr<IViewManager>>> m_viewManagers;
+  std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>>
+      m_viewManagers;
   std::shared_ptr<NodeRegistry> m_nodeRegistry;
 };
 
@@ -113,6 +113,4 @@ class EmptyUIManagerModule : public facebook::xplat::module::CxxModule {
   std::unique_ptr<EmptyUIManager> m_manager;
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

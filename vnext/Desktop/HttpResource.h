@@ -10,9 +10,7 @@
 #include <boost/beast/core/flat_buffer.hpp>
 #include <boost/beast/http.hpp>
 
-namespace facebook {
-namespace react {
-namespace experimental {
+namespace Microsoft::React::Experimental {
 
 class HttpResource : public IHttpResource {
   boost::asio::io_context m_context;
@@ -54,6 +52,4 @@ class HttpResource : public IHttpResource {
 #pragma endregion
 };
 
-} // namespace experimental
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Experimental

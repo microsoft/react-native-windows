@@ -6,11 +6,11 @@
 
 using namespace std;
 using namespace folly;
+using namespace facebook::react;
 using namespace facebook::xplat;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 std::string NodeRegistry::PrintTree() {
   std::stringstream ss;
@@ -133,6 +133,4 @@ auto EmptyUIManagerModule::getMethods() -> std::vector<Method> {
   };
 }
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

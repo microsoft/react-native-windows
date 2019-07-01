@@ -153,6 +153,7 @@ class AccessibilityStateExamples extends React.Component {
         </TouchableHighlight>
         <View
           style={{backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue'}}
+          accessibilityRole="text"
           accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
           <Text>This View should be {this.state.viewDisabled ? "disabled" : "enabled"} according to UIA</Text>
         </View>

@@ -11,6 +11,10 @@ WINRT_EXPORT namespace winrt::Windows::UI::Xaml {
   struct UIElement;
 }
 
+WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation {
+  enum class ToggleState;
+}
+
 WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation::Provider {
   struct IRawElementProviderSimple;
 }
@@ -36,14 +40,35 @@ WINRT_EXPORT namespace winrt::react::uwp {
     ImageButton = 8,
     Header = 9,
     Summary = 10,
-    Unknown = 11,
-    CountRoles = 12,
+    Alert = 11,
+    CheckBox = 12,
+    ComboBox = 13,
+    Menu = 14,
+    MenuBar = 15,
+    MenuItem = 16,
+    ProgressBar = 17,
+    Radio = 18,
+    RadioGroup = 19,
+    ScrollBar = 20,
+    SpinButton = 21,
+    Switch = 22,
+    Tab = 23,
+    TabList = 24,
+    Timer = 25,
+    ToolBar = 26,
+    Unknown = 27,
+    CountRoles = 28,
   };
 
   enum class AccessibilityStates : int32_t {
     Selected = 0,
     Disabled = 1,
-    CountStates = 2,
+    Checked = 2,
+    Unchecked = 3,
+    Busy = 4,
+    Expanded = 5,
+    Collapsed = 6,
+    CountStates = 7,
   };
 
   struct IDynamicAutomationPeer;
@@ -198,10 +223,10 @@ struct guid_storage<react::uwp::IDynamicAutomationProperties> {
 };
 template <>
 struct guid_storage<react::uwp::IDynamicAutomationPropertiesStatics> {
-  static constexpr guid value{0xA92AD1FD,
-                              0xB630,
-                              0x5CDB,
-                              {0x85, 0x61, 0x9F, 0xEC, 0xEC, 0xA8, 0xB9, 0x66}};
+  static constexpr guid value{0x12D63F8E,
+                              0xB2E6,
+                              0x577F,
+                              {0x9A, 0x87, 0xE3, 0xB5, 0x46, 0x03, 0xFA, 0x0F}};
 };
 template <>
 struct guid_storage<react::uwp::IViewControl> {
@@ -278,17 +303,47 @@ struct abi<react::uwp::IDynamicAutomationPropertiesStatics> {
         void *element,
         react::uwp::AccessibilityRoles *result) noexcept = 0;
     virtual int32_t WINRT_CALL
+    get_AccessibilityStateSelectedProperty(void **value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    SetAccessibilityStateSelected(void *element, bool value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    GetAccessibilityStateSelected(void *element, bool *result) noexcept = 0;
+    virtual int32_t WINRT_CALL
     get_AccessibilityStateDisabledProperty(void **value) noexcept = 0;
     virtual int32_t WINRT_CALL
     SetAccessibilityStateDisabled(void *element, bool value) noexcept = 0;
     virtual int32_t WINRT_CALL
     GetAccessibilityStateDisabled(void *element, bool *result) noexcept = 0;
     virtual int32_t WINRT_CALL
-    get_AccessibilityStateSelectedProperty(void **value) noexcept = 0;
+    get_AccessibilityStateCheckedProperty(void **value) noexcept = 0;
     virtual int32_t WINRT_CALL
-    SetAccessibilityStateSelected(void *element, bool value) noexcept = 0;
+    SetAccessibilityStateChecked(void *element, bool value) noexcept = 0;
     virtual int32_t WINRT_CALL
-    GetAccessibilityStateSelected(void *element, bool *result) noexcept = 0;
+    GetAccessibilityStateChecked(void *element, bool *result) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    get_AccessibilityStateUncheckedProperty(void **value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    SetAccessibilityStateUnchecked(void *element, bool value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    GetAccessibilityStateUnchecked(void *element, bool *result) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    get_AccessibilityStateBusyProperty(void **value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    SetAccessibilityStateBusy(void *element, bool value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    GetAccessibilityStateBusy(void *element, bool *result) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    get_AccessibilityStateExpandedProperty(void **value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    SetAccessibilityStateExpanded(void *element, bool value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    GetAccessibilityStateExpanded(void *element, bool *result) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    get_AccessibilityStateCollapsedProperty(void **value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    SetAccessibilityStateCollapsed(void *element, bool value) noexcept = 0;
+    virtual int32_t WINRT_CALL
+    GetAccessibilityStateCollapsed(void *element, bool *result) noexcept = 0;
     virtual int32_t WINRT_CALL
     get_AccessibilityInvokeEventHandlerProperty(void **value) noexcept = 0;
     virtual int32_t WINRT_CALL
@@ -399,6 +454,13 @@ struct consume_react_uwp_IDynamicAutomationPropertiesStatics {
       react::uwp::AccessibilityRoles const &value) const;
   react::uwp::AccessibilityRoles GetAccessibilityRole(
       Windows::UI::Xaml::UIElement const &element) const;
+  Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty()
+      const;
+  void SetAccessibilityStateSelected(
+      Windows::UI::Xaml::UIElement const &element,
+      bool value) const;
+  bool GetAccessibilityStateSelected(
+      Windows::UI::Xaml::UIElement const &element) const;
   Windows::UI::Xaml::DependencyProperty AccessibilityStateDisabledProperty()
       const;
   void SetAccessibilityStateDisabled(
@@ -406,12 +468,39 @@ struct consume_react_uwp_IDynamicAutomationPropertiesStatics {
       bool value) const;
   bool GetAccessibilityStateDisabled(
       Windows::UI::Xaml::UIElement const &element) const;
-  Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty()
+  Windows::UI::Xaml::DependencyProperty AccessibilityStateCheckedProperty()
       const;
-  void SetAccessibilityStateSelected(
+  void SetAccessibilityStateChecked(
       Windows::UI::Xaml::UIElement const &element,
       bool value) const;
-  bool GetAccessibilityStateSelected(
+  bool GetAccessibilityStateChecked(
+      Windows::UI::Xaml::UIElement const &element) const;
+  Windows::UI::Xaml::DependencyProperty AccessibilityStateUncheckedProperty()
+      const;
+  void SetAccessibilityStateUnchecked(
+      Windows::UI::Xaml::UIElement const &element,
+      bool value) const;
+  bool GetAccessibilityStateUnchecked(
+      Windows::UI::Xaml::UIElement const &element) const;
+  Windows::UI::Xaml::DependencyProperty AccessibilityStateBusyProperty() const;
+  void SetAccessibilityStateBusy(
+      Windows::UI::Xaml::UIElement const &element,
+      bool value) const;
+  bool GetAccessibilityStateBusy(
+      Windows::UI::Xaml::UIElement const &element) const;
+  Windows::UI::Xaml::DependencyProperty AccessibilityStateExpandedProperty()
+      const;
+  void SetAccessibilityStateExpanded(
+      Windows::UI::Xaml::UIElement const &element,
+      bool value) const;
+  bool GetAccessibilityStateExpanded(
+      Windows::UI::Xaml::UIElement const &element) const;
+  Windows::UI::Xaml::DependencyProperty AccessibilityStateCollapsedProperty()
+      const;
+  void SetAccessibilityStateCollapsed(
+      Windows::UI::Xaml::UIElement const &element,
+      bool value) const;
+  bool GetAccessibilityStateCollapsed(
       Windows::UI::Xaml::UIElement const &element) const;
   Windows::UI::Xaml::DependencyProperty
   AccessibilityInvokeEventHandlerProperty() const;

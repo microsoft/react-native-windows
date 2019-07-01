@@ -13,6 +13,7 @@
 #include <objbase.h>
 #include <locale>
 
+using namespace facebook::react;
 using namespace facebook::xplat::module;
 using namespace folly;
 
@@ -27,9 +28,7 @@ using std::unique_ptr;
 using std::vector;
 using std::wstring;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 void TestRunner::AwaitEvent(HANDLE &event, TestResult &result) {
   DWORD done = ::WaitForSingleObject(event, INFINITE);
@@ -126,6 +125,4 @@ TestResult TestRunner::RunTest(
   return result;
 }
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

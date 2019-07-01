@@ -5,6 +5,8 @@
 
 #include <Utils/AccessibilityUtils.h>
 
+#include <Views\DynamicAutomationProperties.h>
+
 namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Automation;
@@ -26,5 +28,19 @@ AnnounceLiveRegionChangedIfNeeded(const winrt::FrameworkElement &element) {
   }
 }
 
-} // namespace uwp
-} // namespace react
+REACTWINDOWS_API_(bool)
+HasDynamicAutomationProperties(
+    const winrt::Windows::UI::Xaml::UIElement &element) {
+  static auto unsetValue = winrt::DependencyProperty::UnsetValue();
+
+  if (element) {
+    return (
+        unsetValue !=
+        element.ReadLocalValue(
+            DynamicAutomationProperties::AccessibilityRoleProperty()));
+  }
+
+  return false;
+}
+}
+}

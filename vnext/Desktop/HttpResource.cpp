@@ -19,10 +19,8 @@ using std::unique_ptr;
 
 using boostecr = boost::system::error_code const &;
 
-namespace facebook {
-namespace react {
-namespace experimental {
-
+namespace Microsoft::React {
+namespace Experimental {
 #pragma region HttpResource members
 
 HttpResource::HttpResource() noexcept
@@ -122,7 +120,7 @@ void HttpResource::SendRequest(
                                   if (bec &&
                                       boost::system::errc::not_connected !=
                                           bec) // not_connected may happen. Not
-                                               // an actual error.
+                                  // an actual error.
                                   {
                                     if (m_errorHandler)
                                       m_errorHandler(bec.message());
@@ -178,15 +176,14 @@ void HttpResource::SetOnError(
 
 #pragma endregion HttpResource members
 
-} // namespace experimental
+} // namespace Microsoft::React::Experimental
 
 #pragma region IHttpResource static members
 
 /*static*/ unique_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  return unique_ptr<IHttpResource>(new experimental::HttpResource());
+  return unique_ptr<IHttpResource>(new Experimental::HttpResource());
 }
 
 #pragma endregion IHttpResource static members
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

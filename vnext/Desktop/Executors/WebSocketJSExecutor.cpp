@@ -25,8 +25,8 @@ namespace {
 const int ConnectTimeoutMilliseconds = 5000;
 }
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React
+{
 
 WebSocketJSExecutor::WebSocketJSExecutor(const shared_ptr<ExecutorDelegate>& delegate, const shared_ptr<MessageQueueThread>& messageQueueThread)
   : m_delegate { delegate }
@@ -378,4 +378,4 @@ bool WebSocketJSExecutor::IsInError() const noexcept
 
 #pragma endregion private members
 
-}} // namespace facebook::react
+} // namespace Microsoft::React

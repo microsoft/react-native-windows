@@ -5,9 +5,7 @@
 
 #include <IReactRootView.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 class TestRootView : public facebook::react::IReactRootView {
   int64_t m_tag;
@@ -30,6 +28,4 @@ class TestRootView : public facebook::react::IReactRootView {
 #pragma endregion
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

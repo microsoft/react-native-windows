@@ -15,9 +15,7 @@
 
 #include <queue>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 struct ITestInstance {
   virtual void AttachMeasuredRootView(std::string &&appName) noexcept = 0;
@@ -38,8 +36,8 @@ class TestViewManager : public facebook::react::IViewManager {
   folly::dynamic GetExportedViewConstants() const override;
   folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
-  ShadowNode *createShadow() const override;
-  void destroyShadow(ShadowNode *) const override;
+  facebook::react::ShadowNode *createShadow() const override;
+  void destroyShadow(facebook::react::ShadowNode *) const override;
 
   folly::dynamic GetConstants() const override;
   folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
@@ -101,6 +99,4 @@ class TestShadowNode : public facebook::react::ShadowNode {
 #pragma endregion ShadowNode overrides
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

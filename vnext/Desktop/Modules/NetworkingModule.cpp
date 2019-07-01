@@ -15,8 +15,7 @@ using std::string;
 using std::unique_ptr;
 using std::vector;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
 #pragma region NetworkingModule static members
 
@@ -124,7 +123,7 @@ NetworkingModule::getMethods() {
                     params["incrementalUpdates"].asBool(),
                     params["timeout"].asInt(),
                     [](int64_t) {} // ISS:2306365 - Convert from 'cb' parameter.
-                );
+                    );
                 // ISS:2306365 - Callback?
               }),
           Method(
@@ -141,5 +140,4 @@ NetworkingModule::getMethods() {
 
 #pragma endregion CxxModule members
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

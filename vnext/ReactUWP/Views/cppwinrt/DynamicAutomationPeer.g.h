@@ -3,13 +3,14 @@
 
 #pragma once
 
-#include "winrt/Windows.UI.Composition.h"
-#include "winrt/Windows.UI.Xaml.Automation.Peers.h"
 #include "winrt/Windows.UI.Xaml.Automation.Provider.h"
+#include "winrt/Windows.UI.Xaml.Automation.h"
 #include "winrt/Windows.UI.Xaml.Controls.h"
 #include "winrt/Windows.UI.Xaml.Media.h"
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.UI.Xaml.h"
 #include "winrt/react.uwp.h"
+
 
 namespace winrt::react::uwp::implementation {
 
@@ -29,6 +30,7 @@ struct WINRT_EBO DynamicAutomationPeer_base
           Windows::UI::Xaml::Automation::Provider::IInvokeProvider,
           Windows::UI::Xaml::Automation::Provider::ISelectionItemProvider,
           Windows::UI::Xaml::Automation::Provider::ISelectionProvider,
+          Windows::UI::Xaml::Automation::Provider::IToggleProvider,
           composing,
           I...>,
       impl::require<

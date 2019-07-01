@@ -3,6 +3,7 @@
 
 #include "TestInstance.h"
 
+using namespace facebook::react;
 using namespace folly;
 
 using std::make_unique;
@@ -11,9 +12,7 @@ using std::move;
 using std::shared_ptr;
 using std::string;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 #pragma region TestViewManager members
 
@@ -139,6 +138,4 @@ void TestShadowNode::createView() {}
 
 #pragma endregion
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

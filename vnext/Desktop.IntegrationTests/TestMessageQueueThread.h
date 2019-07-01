@@ -7,9 +7,7 @@
 #include <Windows.h>
 #include <queue>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 class TestMessageQueueThread : public facebook::react::MessageQueueThread {
   class Lock {
@@ -75,6 +73,4 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
   std::queue<VoidFunctor> m_queue;
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

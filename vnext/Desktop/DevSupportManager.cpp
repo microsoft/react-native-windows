@@ -13,8 +13,8 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
+#include "Executors/WebSocketJSExecutor.h"
 #include "Utils.h"
-#include "WebSocketJSExecutor.h"
 
 using namespace boost::asio;
 using namespace boost::asio::ip;
@@ -22,6 +22,8 @@ using namespace boost::beast;
 using namespace boost::beast::http;
 using namespace Concurrency;
 using namespace std;
+
+using Microsoft::React::WebSocketJSExecutor;
 
 namespace facebook {
 namespace react {
@@ -41,8 +43,8 @@ void DevSupportManager::StopPollingLiveReload() {
 JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
     const DevSettings &settings) {
   return [settings](
-             shared_ptr<ExecutorDelegate> delegate,
-             shared_ptr<MessageQueueThread> jsQueue) {
+      shared_ptr<ExecutorDelegate> delegate,
+      shared_ptr<MessageQueueThread> jsQueue) {
     auto websocketJSE = make_unique<WebSocketJSExecutor>(delegate, jsQueue);
     websocketJSE
         ->ConnectAsync(
@@ -99,9 +101,11 @@ string DevSupportManager::GetJavaScriptFromServer(
 void DevSupportManager::StartPollingLiveReload(
     const string &debugHost,
     std::function<void()> onChangeCallback) {
-  auto t = create_task([this,
-                        debugHost,
-                        onChangeCallback = move(onChangeCallback)] {
+  auto t = create_task([
+    this,
+    debugHost,
+    onChangeCallback = move(onChangeCallback)
+  ] {
     cancellation_token token = m_liveReloadCts.get_token();
     while (!token.is_canceled()) {
       try {

@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemDefinitionGroup>
-    <ClCompile>
-    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
 
 </Project>

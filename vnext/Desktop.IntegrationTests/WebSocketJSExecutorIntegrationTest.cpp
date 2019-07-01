@@ -3,13 +3,15 @@
 
 #include <CppUnitTest.h>
 
-#include <WebSocketJSExecutor.h>
+#include <Executors/WebSocketJSExecutor.h>
 #include <cxxreact/JSBigString.h>
 #include "MockExecutorDelegate.h"
 #include "TestMessageQueueThread.h"
 
+
 using namespace facebook::react;
-using namespace facebook::react::test;
+using namespace Microsoft::React;
+using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::make_shared;
@@ -89,7 +91,7 @@ TEST_METHOD(LoadApplicationScriptSucceeds) {
       ,
       ""
 #endif
-  );
+      );
 
   jsQueue->quitSynchronous();
 
@@ -126,7 +128,7 @@ TEST_METHOD(LoadApplicationScriptHandles404) {
       ,
       ""
 #endif
-  );
+      );
 
   jsThread->quitSynchronous();
 
@@ -163,7 +165,7 @@ TEST_METHOD(LoadApplicationScriptHandlesNonExistingBundle) {
       ,
       ""
 #endif
-  );
+      );
 
   jsThread->quitSynchronous();
 

@@ -5,9 +5,7 @@
 
 #include <cxxreact/JSExecutor.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 class MockDelegate : public facebook::react::ExecutorDelegate {
  public:
@@ -34,6 +32,4 @@ class MockDelegate : public facebook::react::ExecutorDelegate {
   }
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

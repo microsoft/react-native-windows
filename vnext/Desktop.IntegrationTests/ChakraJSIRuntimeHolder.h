@@ -9,9 +9,7 @@
 
 #include <Logging.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 class ChakraJSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
@@ -44,6 +42,4 @@ class ChakraJSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   std::thread::id own_thread_id_;
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

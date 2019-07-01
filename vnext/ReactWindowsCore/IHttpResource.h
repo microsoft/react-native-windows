@@ -5,8 +5,7 @@
 
 #include <Folly/dynamic.h>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
 struct IHttpResource {
   typedef std::map<std::string, std::string> Headers;
@@ -34,5 +33,4 @@ struct IHttpResource {
       std::function<void(const std::string &)> &&handler) noexcept = 0;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React

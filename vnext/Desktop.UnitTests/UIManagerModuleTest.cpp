@@ -7,7 +7,7 @@
 #include <ViewManager.h>
 
 using namespace facebook::react;
-using namespace facebook::react::test;
+using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 TEST_CLASS(UIManagerModuleTests) {

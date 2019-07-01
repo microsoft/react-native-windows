@@ -9,9 +9,7 @@
 
 #include "App.g.h"
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application
@@ -34,6 +32,4 @@ ref class App sealed {
       Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^ e);
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

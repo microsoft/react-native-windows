@@ -8,9 +8,7 @@ using namespace facebook;
 using namespace facebook::react;
 using namespace facebook::jsi::chakraruntime;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 std::shared_ptr<facebook::jsi::Runtime>
 ChakraJSIRuntimeHolder::getRuntime() noexcept {
@@ -35,7 +33,8 @@ void ChakraJSIRuntimeHolder::initRuntime() noexcept {
 Logger ChakraJSIRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
     facebook::react::NativeLoggingHook loggingCallback) noexcept {
   return [loggingCallback = std::move(loggingCallback)](
-             const char *message, LogLevel logLevel) -> void {
+             const char *message, LogLevel logLevel)
+      ->void {
     loggingCallback(
         static_cast<facebook::react::RCTLogLevel>(logLevel), message);
   };
@@ -66,6 +65,4 @@ ChakraJsiRuntimeArgs ChakraJSIRuntimeHolder::RuntimeArgsFromDevSettings(
   return runtimeArgs;
 }
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

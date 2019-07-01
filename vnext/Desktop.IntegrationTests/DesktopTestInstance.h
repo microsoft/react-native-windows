@@ -6,13 +6,11 @@
 #include <TestInstance.h>
 #include <TestRootView.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 class DesktopTestInstance : public ITestInstance {
   std::shared_ptr<facebook::react::InstanceWrapper> m_instanceWrapper;
-  std::unique_ptr<facebook::react::test::TestRootView> m_rootView;
+  std::unique_ptr<TestRootView> m_rootView;
 
  public:
   DesktopTestInstance(std::shared_ptr<facebook::react::InstanceWrapper>
@@ -28,6 +26,4 @@ class DesktopTestInstance : public ITestInstance {
 #pragma endregion ITestInstance members
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

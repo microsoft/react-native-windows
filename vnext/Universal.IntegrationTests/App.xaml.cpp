@@ -8,8 +8,7 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 
-using namespace facebook::react::test;
-
+using namespace Microsoft::React::Test;
 using namespace Platform;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
@@ -70,7 +69,7 @@ void App::OnLaunched(
   Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::
       UnitTestClient::CreateDefaultUI();
 
-  rootFrame->Navigate(TypeName(facebook::MainPage::typeid), e->Arguments);
+  rootFrame->Navigate(TypeName(MainPage::typeid), e->Arguments);
 
   Window::Current->Activate();
 

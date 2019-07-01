@@ -5,9 +5,7 @@
 
 #include <assert.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 #pragma region TestMessageQueueThread members
 
@@ -181,6 +179,4 @@ bool TestMessageQueueThread::IsWorkerThread() {
 
 #pragma endregion namespace TestMessageQueueThread members
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

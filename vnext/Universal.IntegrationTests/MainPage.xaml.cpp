@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 
-using namespace facebook;
+using namespace Microsoft::React::Test;
 
 using namespace Platform;
 using namespace Windows::Foundation;

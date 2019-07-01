@@ -39,6 +39,8 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
+// ViewShadowNode
+
 class ViewShadowNode : public ShadowNodeBase {
  public:
   ViewShadowNode() = default;
@@ -171,9 +173,86 @@ class ViewShadowNode : public ShadowNodeBase {
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 };
 
-ViewViewManager::ViewViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+// ViewPanel uses a ViewBackground property, not Background, so need to
+// specialize
+// PropertyUtils' TryUpdateBackgroundBrush to use ViewBackground.
+// Issue #2172: Additionally, we need to use
+// winrt::react::uwp::ViewPanel::implementation::ViewBackgroundProperty
+// rather than the proper projected type, because of how we're using cppwinrt.
+
+template <>
+bool TryUpdateBackgroundBrush(
+    const winrt::react::uwp::ViewPanel &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "backgroundColor") {
+    if (propertyValue.isNumber())
+      element.ViewBackground(BrushFrom(propertyValue));
+    else if (propertyValue.isNull())
+      element.ClearValue(ViewPanel::ViewBackgroundProperty());
+
+    return true;
+  }
+
+  return false;
+}
+
+// Issue #2172: Calling winrt::react::uwp::ViewPanel::BorderBrushProperty fails
+// to call
+// down into winrt::react::uwp::implementation::ViewPanel::BorderBrushProperty
+// because of how we're using cppwinrt. So we specialize PropertyUtils'
+// TryUpdateBorderProperties
+// to use winrt::react::uwp::ViewPanel::implementation::BorderBrushProperty
+
+template <>
+bool TryUpdateBorderProperties(
+    ShadowNodeBase *node,
+    const winrt::react::uwp::ViewPanel &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  bool isBorderProperty = true;
+
+  if (propertyName == "borderColor") {
+    if (propertyValue.isNumber())
+      element.BorderBrush(BrushFrom(propertyValue));
+    else if (propertyValue.isNull())
+      element.ClearValue(ViewPanel::BorderBrushProperty());
+  } else if (propertyName == "borderLeftWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::Left, propertyValue.asDouble());
+  } else if (propertyName == "borderTopWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::Top, propertyValue.asDouble());
+  } else if (propertyName == "borderRightWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::Right, propertyValue.asDouble());
+  } else if (propertyName == "borderBottomWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+  } else if (propertyName == "borderStartWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::Start, propertyValue.asDouble());
+  } else if (propertyName == "borderEndWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::End, propertyValue.asDouble());
+  } else if (propertyName == "borderWidth") {
+    if (propertyValue.isNumber())
+      SetBorderThickness(
+          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+  } else {
+    isBorderProperty = false;
+  }
+
+  return isBorderProperty;
+}
+
+// ViewViewManager
 
 const char *ViewViewManager::GetName() const {
   return "RCTView";
@@ -299,11 +378,8 @@ void ViewViewManager::UpdateProperties(
       const std::string &propertyName = pair.first.getString();
       const folly::dynamic &propertyValue = pair.second;
 
-      if (propertyName == "backgroundColor") {
-        if (propertyValue.isNumber())
-          pPanel.ViewBackground(BrushFrom(propertyValue));
-        else if (propertyValue.isNull())
-          pPanel.ClearValue(ViewPanel::ViewBackgroundProperty());
+      if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
+        continue;
       } else if (TryUpdateBorderProperties(
                      nodeToUpdate, pPanel, propertyName, propertyValue)) {
         continue;
@@ -347,6 +423,12 @@ void ViewViewManager::UpdateProperties(
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+
+  if (auto view = pViewShadowNode->GetView().try_as<winrt::UIElement>()) {
+    // If we have DynamicAutomationProperties, we need a ViewControl with a
+    // DynamicAutomationPeer
+    shouldBeControl = shouldBeControl || HasDynamicAutomationProperties(view);
+  }
 
   pPanel.FinalizeProperties();
 

@@ -8,9 +8,7 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 class TestModule : public facebook::xplat::module::CxxModule {
   std::function<void(bool)> m_testPassedHandler;
@@ -56,6 +54,4 @@ class TestDeviceInfoModule : public facebook::xplat::module::CxxModule {
   auto getMethods() -> std::vector<Method> override;
 };
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test
