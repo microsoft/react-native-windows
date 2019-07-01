@@ -13,32 +13,32 @@ namespace facebook {
 namespace react {
 namespace test {
 
-enum class TestStatus : unsigned int
-{
-  Pending = 0,
-  Passed,
-  Failed
-};
+enum class TestStatus : unsigned int { Pending = 0, Passed, Failed };
 
-struct TestResult
-{
+struct TestResult {
   TestStatus Status;
   std::wstring Message;
 };
 
-class TestRunner
-{
-  void AwaitEvent(HANDLE& event, TestResult& status);
+class TestRunner {
+  void AwaitEvent(HANDLE &event, TestResult &status);
 
   std::shared_ptr<ITestInstance> GetInstance(
-    std::string&& jsBundleFile,
-    std::vector<std::tuple<std::string, facebook::xplat::module::CxxModule::Provider>>&& cxxModules,
-    std::shared_ptr<DevSettings> devSettings) noexcept;
+      std::string &&jsBundleFile,
+      std::vector<
+          std::tuple<std::string, facebook::xplat::module::CxxModule::Provider>>
+          &&cxxModules,
+      std::shared_ptr<DevSettings> devSettings) noexcept;
 
-public:
+ public:
   TestRunner();
 
-  TestResult RunTest(std::string&& bundlePath, std::string&& appName, NativeLoggingHook&& loggingCallback = {});
+  TestResult RunTest(
+      std::string &&bundlePath,
+      std::string &&appName,
+      NativeLoggingHook &&loggingCallback = {});
 };
 
-} } } // namespace facebook::react::test
+} // namespace test
+} // namespace react
+} // namespace facebook

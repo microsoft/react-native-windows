@@ -7,15 +7,14 @@
 
 namespace Microsoft::React {
 
-struct Url
-{
+struct Url {
   std::string scheme;
   std::string host;
   std::string port;
   std::string path;
   std::string queryString;
 
-  Url(const std::string& urlString);
+  Url(const std::string &urlString);
 
   std::string Target();
 };

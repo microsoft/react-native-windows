@@ -45,6 +45,8 @@ DerivePointerAlignment: false
 DisableFormat:   false
 ForEachMacros:   [ FOR_EACH_RANGE, FOR_EACH, ]
 IncludeCategories:
+  - Regex:           '^["<]pch.h[">]'
+    Priority:        -1
   - Regex:           '^<.*\.h(pp)?>'
     Priority:        1
   - Regex:           '^<.*'

@@ -12,18 +12,17 @@ namespace facebook {
 namespace react {
 namespace test {
 
-class TestModule : public facebook::xplat::module::CxxModule
-{
+class TestModule : public facebook::xplat::module::CxxModule {
   std::function<void(bool)> m_testPassedHandler;
 
-public:
+ public:
   static std::string name;
 
-  TestModule(std::function<void(bool)>&& testPassedHandler);
+  TestModule(std::function<void(bool)> &&testPassedHandler);
 
-  #pragma region TestModule.js methods
+#pragma region TestModule.js methods
 
-  void sendAppEvent(const std::string& name);
+  void sendAppEvent(const std::string &name);
 
   void markTestPassed(bool success);
 
@@ -31,9 +30,9 @@ public:
 
   void shouldResolve();
 
-  #pragma endregion TestModule.js methods
+#pragma endregion TestModule.js methods
 
-  #pragma region CxxModule members
+#pragma region CxxModule members
 
   std::string getName() override;
 
@@ -41,21 +40,22 @@ public:
 
   std::vector<Method> getMethods() override;
 
-  #pragma endregion CxxModule members
+#pragma endregion CxxModule members
 };
 
-class TestDeviceInfoModule : public facebook::xplat::module::CxxModule
-{
-public:
+class TestDeviceInfoModule : public facebook::xplat::module::CxxModule {
+ public:
   static std::string name;
 
   TestDeviceInfoModule();
 
   std::string getName() override;
 
-  auto getConstants()->std::map<std::string, folly::dynamic> override;
+  auto getConstants() -> std::map<std::string, folly::dynamic> override;
 
-  auto getMethods()->std::vector<Method> override;
+  auto getMethods() -> std::vector<Method> override;
 };
 
-} } } // namespace facebook::react::test
+} // namespace test
+} // namespace react
+} // namespace facebook

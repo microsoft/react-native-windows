@@ -9,21 +9,22 @@ namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
-}
+} // namespace winrt
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-REACTWINDOWS_API_(void) AnnounceLiveRegionChangedIfNeeded(const winrt::FrameworkElement& element)
-{
-  if (winrt::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off
-    && !winrt::AutomationProperties::GetName(element).empty())
-  {
+REACTWINDOWS_API_(void)
+AnnounceLiveRegionChangedIfNeeded(const winrt::FrameworkElement &element) {
+  if (winrt::AutomationProperties::GetLiveSetting(element) !=
+          winrt::AutomationLiveSetting::Off &&
+      !winrt::AutomationProperties::GetName(element).empty()) {
     auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element);
-    if (nullptr != peer)
-    {
+    if (nullptr != peer) {
       peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
     }
   }
 }
 
-} }
+} // namespace uwp
+} // namespace react

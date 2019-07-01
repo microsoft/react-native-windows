@@ -8,78 +8,79 @@
 
 #include <Sddl.h>
 
+#include <folly/Optional.h>
 #include <folly/dynamic.h>
 #include <folly/json.h>
-#include <folly/Optional.h>
-#include <chrono>
 #include <glog/logging.h>
+#include <chrono>
 
 namespace facebook {
 namespace react {
 
 #define ReturnIfFailed(f) \
-  do { if (!(f)) { return false; } } while (0)
+  do {                    \
+    if (!(f)) {           \
+      return false;       \
+    }                     \
+  } while (0)
 
-class IPCConn;  // Forward declaration
+class IPCConn; // Forward declaration
 
-class IoThreadPool
-{
-public:
+class IoThreadPool {
+ public:
   IoThreadPool();
   ~IoThreadPool();
 
   static DWORD WINAPI ThreadProc(LPVOID lpParameter);
 
-  bool AddAsyncIO(IPCConn* conn);
+  bool AddAsyncIO(IPCConn *conn);
   void StartShutdown();
   void Shutdown();
 
-private:
-  HANDLE  m_ioPort;
-  HANDLE  m_thread;
-  DWORD   m_threadId{ 0 };
-  std::atomic<bool> m_shutdown{ false };
+ private:
+  HANDLE m_ioPort;
+  HANDLE m_thread;
+  DWORD m_threadId{0};
+  std::atomic<bool> m_shutdown{false};
 };
 
 // Simple message header only includes message length.
 using IPCMessageHeader = unsigned;
 
 struct AsyncIO {
-  enum class IoType {
-    ACCEPT,
-    READ,
-    WRITE
-  };
+  enum class IoType { ACCEPT, READ, WRITE };
 
   AsyncIO() = delete;
-  AsyncIO(const AsyncIO&) = delete;
-  explicit AsyncIO(IoType ioType, IPCConn* conn);
+  AsyncIO(const AsyncIO &) = delete;
+  explicit AsyncIO(IoType ioType, IPCConn *conn);
 
-  IPCConn* m_conn;
+  IPCConn *m_conn;
   OVERLAPPED m_overlapped;
   IoType m_ioType;
 };
 
-struct AsyncWriteIO : AsyncIO
-{
+struct AsyncWriteIO : AsyncIO {
   AsyncWriteIO() = delete;
-  AsyncWriteIO(const AsyncWriteIO&) = delete;
-  explicit AsyncWriteIO(IPCConn* conn, std::string&& message, const SendRequestCallback& callback);
+  AsyncWriteIO(const AsyncWriteIO &) = delete;
+  explicit AsyncWriteIO(
+      IPCConn *conn,
+      std::string &&message,
+      const SendRequestCallback &callback);
   unsigned MessageSize() const;
 
-  std::atomic<unsigned> m_writeOpCount{ 0 };
-  IPCMessageHeader m_messageHeader{ 0 };
+  std::atomic<unsigned> m_writeOpCount{0};
+  IPCMessageHeader m_messageHeader{0};
   std::string m_message;
 
   SendRequestCallback m_completed;
 };
 
 const unsigned NAMED_PIPE_BUFFER_SIZE = 16 * 1024;
-using NamedPipeMessageHandler = std::function<void(std::unique_ptr<std::string> message)>;
+using NamedPipeMessageHandler =
+    std::function<void(std::unique_ptr<std::string> message)>;
 
-class IPCConn
-{
-private:
+class IPCConn {
+ private:
   const unsigned MaxMessageLength = 16 * 1024 * 1024;
   const unsigned CONNECTION_TIMEOUT_MS = 5000;
 
@@ -93,9 +94,9 @@ private:
     Closed
   };
 
-public:
+ public:
   IPCConn() = delete;
-  explicit IPCConn(const std::wstring& pipeName);
+  explicit IPCConn(const std::wstring &pipeName);
   ~IPCConn();
 
   HANDLE GetHandle() {
@@ -110,51 +111,58 @@ public:
     return m_state == Connected;
   }
 
-  void RegisterMessageHandler(const NamedPipeMessageHandler& messageHandler);
+  void RegisterMessageHandler(const NamedPipeMessageHandler &messageHandler);
 
   bool AddListener();
-  bool Listen();  // For server
-  bool Connect();  // For client
+  bool Listen(); // For server
+  bool Connect(); // For client
 
   void Close();
-  //void OnAsyncDisconnect();
+  // void OnAsyncDisconnect();
 
   void BeginRead();
-  void BeginWrite(std::string&& message, const SendRequestCallback& callback);
+  void BeginWrite(std::string &&message, const SendRequestCallback &callback);
 
   void OnIoCompleted(AsyncIO *asyncIoResult, DWORD bytes);
 
-private:
+ private:
   bool ProcessReadBuffer(DWORD bytes);
   void CompleteWriteOp(AsyncWriteIO *op);
 
   static folly::Optional<SECURITY_ATTRIBUTES> CreatePipeSecurity();
 
   std::wstring m_pipeName;
-  HANDLE m_handle{ INVALID_HANDLE_VALUE };
-  State m_state{ Start };
+  HANDLE m_handle{INVALID_HANDLE_VALUE};
+  State m_state{Start};
 
   AsyncIO m_acceptOp;
   AsyncIO m_readOp;
 
   BYTE m_buffer[NAMED_PIPE_BUFFER_SIZE];
-  static_assert(NAMED_PIPE_BUFFER_SIZE > sizeof(IPCMessageHeader), "Buffer size must be bigger than header size");
+  static_assert(
+      NAMED_PIPE_BUFFER_SIZE > sizeof(IPCMessageHeader),
+      "Buffer size must be bigger than header size");
 
-  IPCMessageHeader m_bufferOffset{ 0 };
+  IPCMessageHeader m_bufferOffset{0};
 
   std::unique_ptr<std::string> m_message;
-  unsigned m_messageBytesToRead{ 0 };
+  unsigned m_messageBytesToRead{0};
 
   NamedPipeMessageHandler m_messageReceiveHandler;
 };
 
-AsyncIO::AsyncIO(IoType ioType, IPCConn* conn)
+AsyncIO::AsyncIO(IoType ioType, IPCConn *conn)
     : m_ioType(ioType), m_conn(conn) {
   memset(&m_overlapped, 0, sizeof(m_overlapped));
 }
 
-AsyncWriteIO::AsyncWriteIO(IPCConn* conn, std::string&& message, const SendRequestCallback& callback)
-    : AsyncIO(IoType::WRITE, conn), m_message(std::move(message)), m_completed(callback) {
+AsyncWriteIO::AsyncWriteIO(
+    IPCConn *conn,
+    std::string &&message,
+    const SendRequestCallback &callback)
+    : AsyncIO(IoType::WRITE, conn),
+      m_message(std::move(message)),
+      m_completed(callback) {
   m_messageHeader = (IPCMessageHeader)m_message.size();
 }
 
@@ -169,12 +177,12 @@ IoThreadPool::IoThreadPool() {
 
   // Just create one thread.
   m_thread = CreateThread(
-    NULL,
-    IoThreadStackSize,
-    &IoThreadPool::ThreadProc,
-    (LPVOID)this,
-    0,
-    &m_threadId);
+      NULL,
+      IoThreadStackSize,
+      &IoThreadPool::ThreadProc,
+      (LPVOID)this,
+      0,
+      &m_threadId);
 }
 
 IoThreadPool::~IoThreadPool() {
@@ -186,11 +194,7 @@ void IoThreadPool::StartShutdown() {
   m_shutdown = true;
 
   // Queue null op to wake up a thread
-  PostQueuedCompletionStatus(
-    m_ioPort,
-    0,
-    NULL,
-    NULL);
+  PostQueuedCompletionStatus(m_ioPort, 0, NULL, NULL);
 }
 
 void IoThreadPool::Shutdown() {
@@ -200,21 +204,21 @@ void IoThreadPool::Shutdown() {
 }
 
 /**
-* IPC IO thread proc
-*/
+ * IPC IO thread proc
+ */
 DWORD WINAPI IoThreadPool::ThreadProc(LPVOID lpParameter) {
-  IoThreadPool* threadPool = (IoThreadPool*) lpParameter;
+  IoThreadPool *threadPool = (IoThreadPool *)lpParameter;
 
   while (!threadPool->m_shutdown) {
-    OVERLAPPED* overlapped;
+    OVERLAPPED *overlapped;
     ULONG_PTR completionKey;
     DWORD bytes;
     BOOL success = (GetQueuedCompletionStatus(
-      threadPool->m_ioPort,
-      &bytes,
-      (PULONG_PTR) &completionKey,
-      &overlapped,
-      INFINITE));
+        threadPool->m_ioPort,
+        &bytes,
+        (PULONG_PTR)&completionKey,
+        &overlapped,
+        INFINITE));
 
     if (success == FALSE) {
       // TODO: Error handling.
@@ -225,7 +229,7 @@ DWORD WINAPI IoThreadPool::ThreadProc(LPVOID lpParameter) {
     }
 
     if (overlapped) {
-      AsyncIO* asyncIo = CONTAINING_RECORD(overlapped, AsyncIO, m_overlapped);
+      AsyncIO *asyncIo = CONTAINING_RECORD(overlapped, AsyncIO, m_overlapped);
       if (asyncIo->m_conn) {
         asyncIo->m_conn->OnIoCompleted(asyncIo, bytes);
       }
@@ -235,7 +239,7 @@ DWORD WINAPI IoThreadPool::ThreadProc(LPVOID lpParameter) {
   return 0;
 }
 
-bool IoThreadPool::AddAsyncIO(IPCConn* conn) {
+bool IoThreadPool::AddAsyncIO(IPCConn *conn) {
   CHECK(conn->GetHandle() != NULL);
 
   // Associate the IO handle with IOCP
@@ -247,15 +251,17 @@ bool IoThreadPool::AddAsyncIO(IPCConn* conn) {
   }
 }
 
-IPCConn::IPCConn(const std::wstring& pipeName)
-    : m_pipeName(pipeName), m_acceptOp(AsyncIO::IoType::ACCEPT, this), m_readOp(AsyncIO::IoType::READ, this) {
-}
+IPCConn::IPCConn(const std::wstring &pipeName)
+    : m_pipeName(pipeName),
+      m_acceptOp(AsyncIO::IoType::ACCEPT, this),
+      m_readOp(AsyncIO::IoType::READ, this) {}
 
 IPCConn::~IPCConn() {
   Close();
 }
 
-void IPCConn::RegisterMessageHandler(const NamedPipeMessageHandler& messageHandler) {
+void IPCConn::RegisterMessageHandler(
+    const NamedPipeMessageHandler &messageHandler) {
   m_messageReceiveHandler = messageHandler;
 }
 
@@ -265,8 +271,9 @@ bool IPCConn::Connect() {
   while (true) {
     if (!WaitNamedPipeW(m_pipeName.c_str(), CONNECTION_TIMEOUT_MS)) {
       if (GetLastError() == ERROR_FILE_NOT_FOUND &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::steady_clock::now() - start).count() < CONNECTION_TIMEOUT_MS) {
+          std::chrono::duration_cast<std::chrono::milliseconds>(
+              std::chrono::steady_clock::now() - start)
+                  .count() < CONNECTION_TIMEOUT_MS) {
         continue;
       }
 
@@ -278,19 +285,20 @@ bool IPCConn::Connect() {
 
     // Connect to the named pipe
     m_handle = CreateFileW(
-      m_pipeName.c_str(),     // pipe name
-      GENERIC_READ |      // read and write access
-      GENERIC_WRITE,
-      0,                  // no sharing
-      NULL,               // default security attributes
-      OPEN_EXISTING,          // opens existing pipe
-      FILE_FLAG_OVERLAPPED,   // default attributes
-      NULL);                // no template file
+        m_pipeName.c_str(), // pipe name
+        GENERIC_READ | // read and write access
+            GENERIC_WRITE,
+        0, // no sharing
+        NULL, // default security attributes
+        OPEN_EXISTING, // opens existing pipe
+        FILE_FLAG_OVERLAPPED, // default attributes
+        NULL); // no template file
 
     if (m_handle == INVALID_HANDLE_VALUE) {
       if (GetLastError() == ERROR_PIPE_BUSY &&
-        std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::steady_clock::now() - start).count() < CONNECTION_TIMEOUT_MS) {
+          std::chrono::duration_cast<std::chrono::milliseconds>(
+              std::chrono::steady_clock::now() - start)
+                  .count() < CONNECTION_TIMEOUT_MS) {
         continue;
       } else {
         break;
@@ -312,14 +320,15 @@ bool IPCConn::AddListener() {
 
   // Attempt to open the named pipe for listening
   m_handle = CreateNamedPipeW(
-    m_pipeName.c_str(),
-    (PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED | FILE_FLAG_FIRST_PIPE_INSTANCE),
-    (PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT),
-    PIPE_UNLIMITED_INSTANCES,  // max instances
-    4096,       // outbuf
-    4096,       // inbuf
-    0,          // timeout ms
-    sa.get_pointer());  // securityattrib
+      m_pipeName.c_str(),
+      (PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED |
+       FILE_FLAG_FIRST_PIPE_INSTANCE),
+      (PIPE_TYPE_BYTE | PIPE_READMODE_BYTE | PIPE_WAIT),
+      PIPE_UNLIMITED_INSTANCES, // max instances
+      4096, // outbuf
+      4096, // inbuf
+      0, // timeout ms
+      sa.get_pointer()); // securityattrib
 
   if (m_handle == INVALID_HANDLE_VALUE) {
     return false;
@@ -346,7 +355,7 @@ void IPCConn::Close() {
     m_handle = INVALID_HANDLE_VALUE;
     m_state = Closed;
 
-    //if (m_notify)
+    // if (m_notify)
     //  m_notify->OnDisconnected();
   }
 }
@@ -358,11 +367,11 @@ void IPCConn::BeginRead() {
   }
 
   BOOL bResult = ReadFile(
-    GetHandle(),
-    m_buffer + m_bufferOffset,  // buffer
-    sizeof(m_buffer) - m_bufferOffset,  // size of buffer
-    NULL,  // number of bytes read
-    &m_readOp.m_overlapped);
+      GetHandle(),
+      m_buffer + m_bufferOffset, // buffer
+      sizeof(m_buffer) - m_bufferOffset, // size of buffer
+      NULL, // number of bytes read
+      &m_readOp.m_overlapped);
 
   // bResult == TRUE: Completed inline and result will be posted to IOCP.
 
@@ -388,7 +397,9 @@ void IPCConn::BeginRead() {
   return;
 }
 
-void IPCConn::BeginWrite(std::string&& message, const SendRequestCallback& callback) {
+void IPCConn::BeginWrite(
+    std::string &&message,
+    const SendRequestCallback &callback) {
   if (m_state != Connected) {
     if (callback) {
       callback(false);
@@ -402,29 +413,27 @@ void IPCConn::BeginWrite(std::string&& message, const SendRequestCallback& callb
   writeOp->m_writeOpCount = 2;
   DWORD dwWritten = 0;
   BOOL bResult = WriteFile(
-    GetHandle(),
-    (const void*)&writeOp->m_messageHeader,
-    sizeof(writeOp->m_messageHeader),
-    &dwWritten,
-    &writeOp->m_overlapped);
+      GetHandle(),
+      (const void *)&writeOp->m_messageHeader,
+      sizeof(writeOp->m_messageHeader),
+      &dwWritten,
+      &writeOp->m_overlapped);
 
   DWORD hr = GetLastError();
   if (bResult || hr == ERROR_IO_PENDING) {
     bResult = WriteFile(
-      GetHandle(),
-      (const void*)writeOp->m_message.c_str(),
-      writeOp->MessageSize(),
-      &dwWritten,
-      &writeOp->m_overlapped
-    );
+        GetHandle(),
+        (const void *)writeOp->m_message.c_str(),
+        writeOp->MessageSize(),
+        &dwWritten,
+        &writeOp->m_overlapped);
 
     hr = GetLastError();
   }
 
-
   // bResult == TRUE: Completed inline and result will still be posted to IOCP.
-  // bResult == FALSE && hr == ERROR_IO_PENDING: Async operation queued and result will be posted to IOCP.
-  // Other cases: Unexpected error.
+  // bResult == FALSE && hr == ERROR_IO_PENDING: Async operation queued and
+  // result will be posted to IOCP. Other cases: Unexpected error.
   if (!bResult && hr != ERROR_IO_PENDING) {
     // TODO: Error handling.
     if (writeOp->m_completed) {
@@ -439,7 +448,7 @@ bool IPCConn::ProcessReadBuffer(DWORD bytes) {
     return false;
   }
 
-  const char* msg = (const char*)m_buffer;
+  const char *msg = (const char *)m_buffer;
   while (bytes > 0) {
     if (m_messageBytesToRead == 0) {
       if (bytes >= sizeof(IPCMessageHeader)) {
@@ -456,7 +465,7 @@ bool IPCConn::ProcessReadBuffer(DWORD bytes) {
         continue;
       } else {
         // Handle case that header has not been fully read.
-        if (msg != (const char*)m_buffer) {
+        if (msg != (const char *)m_buffer) {
           memmove(m_buffer, msg, bytes);
         }
         m_bufferOffset = bytes;
@@ -495,7 +504,6 @@ void IPCConn::CompleteWriteOp(AsyncWriteIO *op) {
   }
 }
 
-
 void IPCConn::OnIoCompleted(AsyncIO *asyncIoOp, DWORD bytes) {
   switch (asyncIoOp->m_ioType) {
     case AsyncIO::IoType::ACCEPT:
@@ -524,11 +532,13 @@ folly::Optional<SECURITY_ATTRIBUTES> IPCConn::CreatePipeSecurity() {
   SECURITY_ATTRIBUTES sa;
 
   // Define the SDDL for the security descriptor.
-  PCWSTR szSDDL = L"D:"     // Discretionary ACL
-    L"(A;OICI;GRGW;;;AU)"   // Allow read/write to authenticated users
-    L"(A;OICI;GA;;;BA)";    // Allow full control to administrators
+  PCWSTR szSDDL =
+      L"D:" // Discretionary ACL
+      L"(A;OICI;GRGW;;;AU)" // Allow read/write to authenticated users
+      L"(A;OICI;GA;;;BA)"; // Allow full control to administrators
 
-  if (!ConvertStringSecurityDescriptorToSecurityDescriptorW(szSDDL, SDDL_REVISION_1, &pSd, NULL)) {
+  if (!ConvertStringSecurityDescriptorToSecurityDescriptorW(
+          szSDDL, SDDL_REVISION_1, &pSd, NULL)) {
     return {};
   }
 
@@ -539,29 +549,29 @@ folly::Optional<SECURITY_ATTRIBUTES> IPCConn::CreatePipeSecurity() {
   return folly::Optional<SECURITY_ATTRIBUTES>(sa);
 }
 
-struct NamedPipeEndpoint::Impl
-{
-  const wchar_t* PIPE_NAME_PREFIX = L"\\\\.\\pipe\\";
+struct NamedPipeEndpoint::Impl {
+  const wchar_t *PIPE_NAME_PREFIX = L"\\\\.\\pipe\\";
 
-  explicit Impl(const std::string& pipeName);
+  explicit Impl(const std::string &pipeName);
   ~Impl();
 
   bool Start(EndpointType endpointType);
   void Shutdown();
-  void RegisterJSCallRequestHandler(const JSCallRequestHandler& handler);
-  void RegisterReplyHandler(const ReplyMessageHandler& handler);
-  void RegisterNativeModuleCallHandler(const NativeModuleCallHandler& handler);
+  void RegisterJSCallRequestHandler(const JSCallRequestHandler &handler);
+  void RegisterReplyHandler(const ReplyMessageHandler &handler);
+  void RegisterNativeModuleCallHandler(const NativeModuleCallHandler &handler);
 
-  void SendRequest(int64_t requestId,
-                   const std::string& methodName,
-                   const folly::dynamic& arguments,
-                   SendRequestCallback&& callback);
-  void Send(std::string&& message);
+  void SendRequest(
+      int64_t requestId,
+      const std::string &methodName,
+      const folly::dynamic &arguments,
+      SendRequestCallback &&callback);
+  void Send(std::string &&message);
 
   void OnMessageReceived_Host(std::unique_ptr<std::string> message);
   void OnMessageReceived_Sandbox(std::unique_ptr<std::string> message);
 
-private:
+ private:
   EndpointType m_endpointType;
   std::wstring m_pipeName;
   std::unique_ptr<IoThreadPool> m_ioThreadPool;
@@ -571,7 +581,7 @@ private:
   NativeModuleCallHandler m_nativeModuleCallHandler;
 };
 
-NamedPipeEndpoint::Impl::Impl(const std::string& pipeName) {
+NamedPipeEndpoint::Impl::Impl(const std::string &pipeName) {
   m_pipeName = PIPE_NAME_PREFIX + unicode::utf8ToUtf16(pipeName);
   m_ioThreadPool = std::make_unique<IoThreadPool>();
   m_conn = std::make_shared<IPCConn>(m_pipeName);
@@ -585,17 +595,19 @@ bool NamedPipeEndpoint::Impl::Start(EndpointType endpointType) {
   m_endpointType = endpointType;
 
   if (m_endpointType == EndpointType::Host) { // Client
-    m_conn->RegisterMessageHandler([this](std::unique_ptr<std::string> message) {
-      OnMessageReceived_Host(std::move(message));
-    });
+    m_conn->RegisterMessageHandler(
+        [this](std::unique_ptr<std::string> message) {
+          OnMessageReceived_Host(std::move(message));
+        });
 
     ReturnIfFailed(m_conn->Connect());
     ReturnIfFailed(m_ioThreadPool->AddAsyncIO(m_conn.get()));
     m_conn->BeginRead();
   } else if (m_endpointType == EndpointType::Sandbox) { // Server
-    m_conn->RegisterMessageHandler([this](std::unique_ptr<std::string> message) {
-      OnMessageReceived_Sandbox(std::move(message));
-    });
+    m_conn->RegisterMessageHandler(
+        [this](std::unique_ptr<std::string> message) {
+          OnMessageReceived_Sandbox(std::move(message));
+        });
 
     // Add one listener.
     ReturnIfFailed(m_conn->AddListener());
@@ -612,38 +624,42 @@ void NamedPipeEndpoint::Impl::Shutdown() {
   m_conn->Close();
 }
 
-void NamedPipeEndpoint::Impl::RegisterJSCallRequestHandler(const JSCallRequestHandler& handler) {
+void NamedPipeEndpoint::Impl::RegisterJSCallRequestHandler(
+    const JSCallRequestHandler &handler) {
   m_jsCallRequestHandler = handler;
 }
 
-void NamedPipeEndpoint::Impl::RegisterReplyHandler(const ReplyMessageHandler& handler) {
+void NamedPipeEndpoint::Impl::RegisterReplyHandler(
+    const ReplyMessageHandler &handler) {
   m_replyHandler = handler;
 }
 
-void NamedPipeEndpoint::Impl::RegisterNativeModuleCallHandler(const NativeModuleCallHandler& handler) {
+void NamedPipeEndpoint::Impl::RegisterNativeModuleCallHandler(
+    const NativeModuleCallHandler &handler) {
   m_nativeModuleCallHandler = handler;
 }
 
-void NamedPipeEndpoint::Impl::SendRequest(int64_t requestId,
-                                          const std::string& methodName,
-                                          const folly::dynamic& arguments,
-                                          SendRequestCallback&& callback) {
-  folly::dynamic request = folly::dynamic::object
-    ("id", requestId)
-    ("method", methodName)
-    ("arguments", std::move(arguments));
+void NamedPipeEndpoint::Impl::SendRequest(
+    int64_t requestId,
+    const std::string &methodName,
+    const folly::dynamic &arguments,
+    SendRequestCallback &&callback) {
+  folly::dynamic request = folly::dynamic::object("id", requestId)(
+      "method", methodName)("arguments", std::move(arguments));
   std::string requestJson = folly::toJson(request);
   m_conn->BeginWrite(std::move(requestJson), callback);
 }
 
-void NamedPipeEndpoint::Impl::Send(std::string&& message) {
+void NamedPipeEndpoint::Impl::Send(std::string &&message) {
   m_conn->BeginWrite(std::move(message), nullptr);
 }
 
-void NamedPipeEndpoint::Impl::OnMessageReceived_Host(std::unique_ptr<std::string> message) {
+void NamedPipeEndpoint::Impl::OnMessageReceived_Host(
+    std::unique_ptr<std::string> message) {
   int64_t replyId = 0;
 
-  std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+  std::chrono::high_resolution_clock::time_point t1 =
+      std::chrono::high_resolution_clock::now();
 
   folly::dynamic parsed = folly::parseJson(*message.get());
 
@@ -664,19 +680,26 @@ void NamedPipeEndpoint::Impl::OnMessageReceived_Host(std::unique_ptr<std::string
     }
   }
 
-  std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-  auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+  std::chrono::high_resolution_clock::time_point t2 =
+      std::chrono::high_resolution_clock::now();
+  auto duration =
+      std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
 
   OutputDebugStringA(message->c_str());
   OutputDebugStringA("\n");
 
   char buffer[256];
-  sprintf_s(buffer, "(%03lld) OnMessageReceived, elapsed time = %d us\n", replyId, (int)duration);
+  sprintf_s(
+      buffer,
+      "(%03lld) OnMessageReceived, elapsed time = %d us\n",
+      replyId,
+      (int)duration);
 
   OutputDebugStringA(buffer);
 }
 
-void NamedPipeEndpoint::Impl::OnMessageReceived_Sandbox(std::unique_ptr<std::string> message) {
+void NamedPipeEndpoint::Impl::OnMessageReceived_Sandbox(
+    std::unique_ptr<std::string> message) {
   if (m_jsCallRequestHandler != nullptr) {
     folly::dynamic parsed = folly::parseJson(*message.get());
     auto requestId = parsed["id"].asInt();
@@ -687,11 +710,11 @@ void NamedPipeEndpoint::Impl::OnMessageReceived_Sandbox(std::unique_ptr<std::str
   }
 }
 
-NamedPipeEndpoint::NamedPipeEndpoint(const std::string& pipeName) {
+NamedPipeEndpoint::NamedPipeEndpoint(const std::string &pipeName) {
   m_pimpl = std::make_unique<Impl>(pipeName);
 }
 
-NamedPipeEndpoint::~NamedPipeEndpoint() { }
+NamedPipeEndpoint::~NamedPipeEndpoint() {}
 
 bool NamedPipeEndpoint::Start(EndpointType endpointType) {
   return m_pimpl->Start(endpointType);
@@ -701,27 +724,33 @@ void NamedPipeEndpoint::Shutdown() {
   return m_pimpl->Shutdown();
 }
 
-void NamedPipeEndpoint::RegisterJSCallRequestHandler(const JSCallRequestHandler& handler) {
+void NamedPipeEndpoint::RegisterJSCallRequestHandler(
+    const JSCallRequestHandler &handler) {
   return m_pimpl->RegisterJSCallRequestHandler(handler);
 }
 
-void NamedPipeEndpoint::RegisterReplyHandler(const ReplyMessageHandler& handler) {
+void NamedPipeEndpoint::RegisterReplyHandler(
+    const ReplyMessageHandler &handler) {
   return m_pimpl->RegisterReplyHandler(handler);
 }
 
-void NamedPipeEndpoint::RegisterNativeModuleCallHandler(const NativeModuleCallHandler& handler) {
+void NamedPipeEndpoint::RegisterNativeModuleCallHandler(
+    const NativeModuleCallHandler &handler) {
   return m_pimpl->RegisterNativeModuleCallHandler(handler);
 }
 
-void NamedPipeEndpoint::SendRequest(int64_t requestId,
-                                    const std::string& methodName,
-                                    const folly::dynamic& arguments,
-                                    SendRequestCallback&& callback) {
-  return m_pimpl->SendRequest(requestId, methodName, arguments, std::move(callback));
+void NamedPipeEndpoint::SendRequest(
+    int64_t requestId,
+    const std::string &methodName,
+    const folly::dynamic &arguments,
+    SendRequestCallback &&callback) {
+  return m_pimpl->SendRequest(
+      requestId, methodName, arguments, std::move(callback));
 }
 
-void NamedPipeEndpoint::Send(std::string&& message) {
+void NamedPipeEndpoint::Send(std::string &&message) {
   return m_pimpl->Send(std::move(message));
 }
 
-}}
+} // namespace react
+} // namespace facebook
