@@ -261,7 +261,10 @@ namespace react {
       m_delayedPropsNodes.clear();
       for (const auto tag : delayedPropsNodes)
       {
-        m_propsNodes.at(tag)->StartAnimations();
+        if (m_propsNodes.count(tag))
+        {
+          m_propsNodes.at(tag)->StartAnimations();
+        }
       }
     }
 
