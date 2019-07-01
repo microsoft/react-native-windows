@@ -24,8 +24,6 @@ public:
   // Constructors
   ViewPanel();
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
-
   // Overrides
   virtual winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
   virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
@@ -83,12 +81,6 @@ private:
   bool m_hasOuterBorder;
 
 private:
-  winrt::react::uwp::AccessibilityRoles m_accessibilityRole = winrt::react::uwp::AccessibilityRoles::None;
-  bool m_accessibilityStates[static_cast<uint8_t>(winrt::react::uwp::AccessibilityStates::CountStates)] = { };
-
-  winrt::react::uwp::AccessibilityInvokeEventHandler m_accessibilityInvokeHandler = { nullptr };
-
-private:
   static void VisualPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
   static void PositionPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
 };
@@ -104,7 +96,7 @@ namespace winrt::react::uwp::factory_implementation
 
 namespace react::uwp
 {
-  // BUG: Calling static members on winrt::react::uwp::ViewPanel fails to call
+  // Issue #2172: Calling static members on winrt::react::uwp::ViewPanel fails to call
   // down into winrt::react::uwp::implementation::ViewPanel because of how we're
   // using cppwinrt. This workaround is so that consumers in react::uwp can just call ViewPanel
 

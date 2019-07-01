@@ -21,6 +21,22 @@ namespace react.uwp
 		ImageButton,
 		Header,
 		Summary,
+		Alert,
+		CheckBox,
+		ComboBox,
+		Menu,
+		MenuBar,
+		MenuItem,
+		ProgressBar,
+		Radio,
+		RadioGroup,
+		ScrollBar,
+		SpinButton,
+		Switch,
+		Tab,
+		TabList,
+		Timer,
+		ToolBar,
 		Unknown,
 		CountRoles
 	};
@@ -29,6 +45,11 @@ namespace react.uwp
 	{
 		Selected = 0,
 		Disabled,
+		Checked,
+		Unchecked,
+		Busy,
+		Expanded,
+		Collapsed,
 		CountStates
 	};
 
@@ -43,13 +64,33 @@ namespace react.uwp
 		static void SetAccessibilityRole(Windows.UI.Xaml.UIElement element, AccessibilityRoles value);
 		static AccessibilityRoles GetAccessibilityRole(Windows.UI.Xaml.UIElement element);
 
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateSelectedProperty { get; };
+		static void SetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element);
+
 		static Windows.UI.Xaml.DependencyProperty AccessibilityStateDisabledProperty { get; };
 		static void SetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element, Boolean value);
 		static Boolean GetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element);
 
-		static Windows.UI.Xaml.DependencyProperty AccessibilityStateSelectedProperty { get; };
-		static void SetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element, Boolean value);
-		static Boolean GetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element);
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateCheckedProperty { get; };
+		static void SetAccessibilityStateChecked(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateChecked(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateUncheckedProperty { get; };
+		static void SetAccessibilityStateUnchecked(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateUnchecked(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateBusyProperty { get; };
+		static void SetAccessibilityStateBusy(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateBusy(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateExpandedProperty { get; };
+		static void SetAccessibilityStateExpanded(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateExpanded(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateCollapsedProperty { get; };
+		static void SetAccessibilityStateCollapsed(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateCollapsed(Windows.UI.Xaml.UIElement element);
 
 		static Windows.UI.Xaml.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
 		static void SetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityInvokeEventHandler value);
@@ -62,7 +103,8 @@ namespace react.uwp
 		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
 		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,
 		Windows.UI.Xaml.Automation.Provider.ISelectionProvider,
-		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider
+		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider,
+		Windows.UI.Xaml.Automation.Provider.IToggleProvider
 	{
 		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
 	}
