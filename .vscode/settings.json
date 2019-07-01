@@ -22,6 +22,8 @@
     "editor.formatOnSave": false
   },
   "eslint.packageManager": "yarn",
+  "eslint.autoFixOnSave": true,
+  "eslint.enable": true,
   "eslint.validate": [
     {"language": "javascript", "autoFix": true},
     {"language": "javascriptreact", "autoFix": true},
