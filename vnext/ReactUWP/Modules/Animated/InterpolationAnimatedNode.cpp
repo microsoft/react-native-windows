@@ -73,11 +73,11 @@ namespace react { namespace uwp {
   {
     const auto animation = compositor.CreateExpressionAnimation();
     animation.SetReferenceParameter(s_parentPropsName, parent.PropertySet());
-    for (uint16_t i = 0; i < m_inputRanges.size(); i++)
+    for (size_t i = 0; i < m_inputRanges.size(); i++)
     {
       animation.SetScalarParameter(s_inputName.data() + std::to_wstring(i), static_cast<float>(m_inputRanges[i]));
     }
-    for (uint16_t i = 0; i < m_outputRanges.size(); i++)
+    for (size_t i = 0; i < m_outputRanges.size(); i++)
     {
       animation.SetScalarParameter(s_outputName.data() + std::to_wstring(i), static_cast<float>(m_outputRanges[i]));
     }
@@ -104,7 +104,7 @@ namespace react { namespace uwp {
     auto returnValue = GetLeftExpression(value, leftInterpolateExpression) + GetRightExpression(value, rightInterpolateExpression);
 
     // Start at 1 because we use the index and previous for each step.
-    for (uint16_t i = 1; i < size - 1; i++)
+    for (size_t i = 1; i < size - 1; i++)
     {
       const std::wstring inMin = s_inputName.data() + std::to_wstring(i - 1);
       const std::wstring inMax = s_inputName.data() + std::to_wstring(i);

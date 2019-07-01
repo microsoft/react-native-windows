@@ -73,10 +73,9 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./KeyboardExtensionExample.uwp'),
   },
   {
-    key: 'ScrollViewSimpleExample2',
+    key: 'ScrollViewSimpleExample',
     module: require('react-native/RNTester/js/ScrollViewSimpleExample')
   },
-  //  TODO: Enable SectionList when Animation is supported
   {
     key: 'SectionListExample',
     module: require('react-native/RNTester/js/SectionListExample'),
