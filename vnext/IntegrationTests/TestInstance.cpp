@@ -113,6 +113,10 @@ void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode) {
 
 void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
+void TestNativeUIManager::focus(int64_t reactTag) {}
+
+void TestNativeUIManager::blur(int64_t reactTag) {}
+
 #pragma endregion TestNativeUIManager members
 
 #pragma region TestShadowNode members

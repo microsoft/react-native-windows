@@ -68,6 +68,8 @@ public:
   void onBatchComplete() override;
   void ensureInBatch() override;
   void measure(facebook::react::ShadowNode& shadowNode, facebook::react::ShadowNode& shadowRoot, facebook::xplat::module::CxxModule::Callback callback) override;
+  void focus(int64_t reactTag) override;
+  void blur(int64_t reactTag) override;
 };
 
 class TestShadowNode : public facebook::react::ShadowNode
