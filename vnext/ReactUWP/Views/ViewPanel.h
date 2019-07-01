@@ -96,7 +96,7 @@ namespace winrt::react::uwp::factory_implementation
 
 namespace react::uwp
 {
-  // BUG: Calling static members on winrt::react::uwp::ViewPanel fails to call
+  // Issue #2172: Calling static members on winrt::react::uwp::ViewPanel fails to call
   // down into winrt::react::uwp::implementation::ViewPanel because of how we're
   // using cppwinrt. This workaround is so that consumers in react::uwp can just call ViewPanel
 
