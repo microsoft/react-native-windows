@@ -79,7 +79,7 @@ void EmptyUIManager::setChildren(int64_t viewTag, folly::dynamic /*ReadableMap*/
 {
   auto& parent = m_nodeRegistry->m_allNodes[viewTag];
   for (auto&& childTag : childrenTags)
-    parent->m_children.push_back(childTag.getInt());
+    parent->m_children.push_back(childTag.asInt());
 }
 
 EmptyUIManagerModule::EmptyUIManagerModule(std::unique_ptr<EmptyUIManager> sample)

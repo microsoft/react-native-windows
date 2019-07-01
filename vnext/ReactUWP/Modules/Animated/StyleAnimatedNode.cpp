@@ -11,7 +11,7 @@ namespace react { namespace uwp {
   {
     for (const auto& entry : config.find(s_styleName).dereference().second.items())
     {
-      m_propMapping.insert({ entry.first.getString(), entry.second.getInt() });
+      m_propMapping.insert({ entry.first.getString(), static_cast<int64_t>(entry.second.asDouble()) });
     }
   }
 
