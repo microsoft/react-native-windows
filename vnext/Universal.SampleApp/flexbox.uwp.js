@@ -1,15 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import React, {Component} from 'react';
+import {AppRegistry, Button, StyleSheet, Text, View} from 'react-native';
 
 export default class FlexboxLayoutPlayground extends Component {
   constructor(props) {
@@ -24,26 +21,23 @@ export default class FlexboxLayoutPlayground extends Component {
   }
 
   _onClick() {
-    state = this.state;
+    const state = this.state;
 
     if (state.currentAlignStyle === styles.endAlignStyle) {
       state.currentAlignStyle = styles.emptyStyle;
-    }
-    else {
+    } else {
       state.currentAlignStyle = styles.endAlignStyle;
     }
 
     if (state.currentAbsoluteStyle === styles.absoluteTest1) {
       state.currentAbsoluteStyle = styles.absoluteTest2;
-    }
-    else {
+    } else {
       state.currentAbsoluteStyle = styles.absoluteTest1;
     }
 
     if (state.currentWidthStyle === styles.widthTest1) {
       state.currentWidthStyle = styles.widthTest2;
-    }
-    else {
+    } else {
       state.currentWidthStyle = styles.widthTest1;
     }
 
@@ -55,7 +49,6 @@ export default class FlexboxLayoutPlayground extends Component {
       // TODO: Should be ScrollView
       <View style={styles.root}>
         <View style={styles.mainContainer}>
-
           <View style={styles.section}>
             <Text>Direction: Row</Text>
             <View style={styles.containerRow}>
@@ -97,10 +90,8 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.box} />
             </View>
           </View>
-
-          </View>
-          <View style={styles.mainContainer}>
-
+        </View>
+        <View style={styles.mainContainer}>
           <View style={styles.section}>
             <Text>Justify: SpaceBetween</Text>
             <View style={styles.containerJustifySpaceBetween}>
@@ -147,10 +138,8 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.box} />
             </View>
           </View>
-
-          </View>
-          <View style={styles.mainContainer}>
-
+        </View>
+        <View style={styles.mainContainer}>
           <View style={styles.section}>
             <Text>AlignItems: FlexStart</Text>
             <View style={styles.containerAlignItemsFlexStart}>
@@ -190,10 +179,8 @@ export default class FlexboxLayoutPlayground extends Component {
           <View style={styles.section}>
             <Text style={styles.todoLabel}>TODO: FlexEnd, Stretch, Center</Text>
           </View>
-
-          </View>
-          <View style={styles.mainContainer}>
-
+        </View>
+        <View style={styles.mainContainer}>
           <View style={styles.section}>
             <Text>AlignContent: FlexEnd</Text>
             <View style={styles.containerAlignContentFlexEnd}>
@@ -206,7 +193,9 @@ export default class FlexboxLayoutPlayground extends Component {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.todoLabel}>TODO: FlexStart, Center, Stretch, SpaceBetween, SpaceAround</Text>
+            <Text style={styles.todoLabel}>
+              TODO: FlexStart, Center, Stretch, SpaceBetween, SpaceAround
+            </Text>
           </View>
 
           <View style={styles.section}>
@@ -232,10 +221,8 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.boxWithGrow2} />
             </View>
           </View>
-
-          </View>
-          <View style={styles.mainContainer}>
-
+        </View>
+        <View style={styles.mainContainer}>
           <View style={styles.section}>
             <Text>FlexShrink: Right Box</Text>
             <View style={styles.containerRow}>
@@ -264,10 +251,10 @@ export default class FlexboxLayoutPlayground extends Component {
 
           <View style={styles.section}>
             <Text>FlexBasis: Percent</Text>
-              <View style={styles.containerRow}>
-                <View style={styles.boxWithFlexBasisPercent} />
-                <View style={styles.boxWithFlexBasisPercent} />
-                <View style={styles.boxWithFlexBasisPercent} />
+            <View style={styles.containerRow}>
+              <View style={styles.boxWithFlexBasisPercent} />
+              <View style={styles.boxWithFlexBasisPercent} />
+              <View style={styles.boxWithFlexBasisPercent} />
             </View>
           </View>
 
@@ -277,10 +264,8 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.absoluteBox} />
             </View>
           </View>
-
-          </View>
-          <View style={styles.mainContainer}>
-
+        </View>
+        <View style={styles.mainContainer}>
           <View style={styles.section}>
             <Text>Align: Stretch With Right Box MaxHeight</Text>
             <View style={styles.containerAlignItemsStretch}>
@@ -309,27 +294,34 @@ export default class FlexboxLayoutPlayground extends Component {
               <View style={styles.boxNoMargin} />
             </View>
           </View>
-
         </View>
         <View style={styles.mainContainer}>
           <View>
             <Text style={{flexWrap: 'wrap'}}>
-              Native control under React view, make sure margin is not double counted.
-              It is being double counted if the button's right and bottom edges touch
-              the edge of the rect behind it.
+              Native control under React view, make sure margin is not double
+              counted. It is being double counted if the button's right and
+              bottom edges touch the edge of the rect behind it.
             </Text>
 
-            <View style={{padding: 5}} >
+            <View style={{padding: 5}}>
               <Text>Click to switch styles</Text>
-              <Button title="Click" onPress={() => {this._onClick()}} />
+              <Button
+                title="Click"
+                onPress={() => {
+                  this._onClick();
+                }}
+              />
             </View>
 
             <View style={{backgroundColor: '#EEEEFF', alignItems: 'flex-end'}}>
-              <Button style={{margin: 5}} title="Text" onPress={this._onClick} />
+              <Button
+                style={{margin: 5}}
+                title="Text"
+                onPress={this._onClick}
+              />
             </View>
 
             <View style={{flex: 1, flexDirection: 'column'}}>
-
               <View style={this.state.currentAlignStyle}>
                 <View style={styles.box} />
               </View>
@@ -343,12 +335,11 @@ export default class FlexboxLayoutPlayground extends Component {
               </View>
             </View>
           </View>
-
         </View>
       </View>
     );
   }
-};
+}
 
 const styles = StyleSheet.create({
   endAlignStyle: {
@@ -381,11 +372,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#660000',
   },
 
-  emptyStyle: {
-
-  },
-
-
+  emptyStyle: {},
 
   nativeStackPanel: {
     borderWidth: 5,
@@ -417,7 +404,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
     margin: 10,
   },
-  section : {
+  section: {
     flex: 1,
     flexDirection: 'column',
   },
@@ -668,7 +655,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     backgroundColor: '#333333',
-  }
+  },
 });
 
 AppRegistry.registerComponent('Bootstrap', () => FlexboxLayoutPlayground);

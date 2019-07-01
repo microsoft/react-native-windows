@@ -10,7 +10,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View
+  View,
 } from 'react-native';
 
 export default class Bootstrap extends Component {
@@ -44,20 +44,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'lightgray'
+    backgroundColor: 'lightgray',
   },
   item: {
     margin: 10,
     backgroundColor: 'lightpink',
     borderColor: 'indianred',
     borderWidth: 2,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
     fontSize: 20,
     textAlign: 'center',
     color: 'black',
-    margin: 10
+    margin: 10,
   },
 });
 

@@ -9,7 +9,7 @@ const os = require('os');
 const {
   createDir,
   copyAndReplaceAll,
-  copyAndReplaceWithChangedCallback
+  copyAndReplaceWithChangedCallback,
 } = require('../generator-common');
 
 const windowsDir = 'windows';
@@ -25,7 +25,7 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
       '$pwd = ConvertTo-SecureString -String password -Force -AsPlainText',
       `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join(windowsDir, newProjectName)}`,
       `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd`,
-      '$cert.Thumbprint'
+      '$cert.Thumbprint',
     ];
     const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
 
@@ -83,7 +83,7 @@ function copyProjectTemplateAndReplace(
     '<%=projectGuid%>': projectGuid,
     '<%=packageGuid%>': packageGuid,
     '<%=currentUser%>': currentUser,
-    '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : ''
+    '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',
   };
 
   [
@@ -129,10 +129,10 @@ function installDependencies(options) {
   // Install dependencies using correct package manager
   const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
   const execOptions = options && options.verbose ? { stdio: 'inherit' } : {};
-  childProcess.execSync(isYarn ? `yarn` : `npm i`, execOptions);
+  childProcess.execSync(isYarn ? 'yarn' : 'npm i', execOptions);
 }
 
 module.exports = {
   copyProjectTemplateAndReplace,
-  installDependencies
+  installDependencies,
 };
