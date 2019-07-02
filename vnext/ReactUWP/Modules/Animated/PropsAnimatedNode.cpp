@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "PropsAnimatedNode.h"
+#include "pch.h"
+
 #include <ReactUWP\Modules\NativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
+#include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
-#include "pch.h"
 
 
 namespace react {

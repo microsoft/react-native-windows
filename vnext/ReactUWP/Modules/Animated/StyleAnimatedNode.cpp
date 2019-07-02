@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "StyleAnimatedNode.h"
+#include "pch.h"
+
 #include "FacadeType.h"
 #include "NativeAnimatedNodeManager.h"
-#include "pch.h"
+#include "StyleAnimatedNode.h"
 
 
 namespace react {
