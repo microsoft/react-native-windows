@@ -29,8 +29,8 @@ let placementValues: string[] = [
   'left-edge-aligned-top',
   'right-edge-aligned-top',
   'left-edge-aligned-bottom',
-  'right-edge-aligned-bottom'
-]
+  'right-edge-aligned-bottom',
+];
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
@@ -62,7 +62,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           </Picker>
         </View>
         <View style={ { justifyContent: 'center', padding: 20, width: 200 } }>
-          <Button onPress={ this._onPress } title={ this.state.buttonTitle }></Button>
+          <Button onPress={ this._onPress } title={ this.state.buttonTitle } />
         </View>
         <View style={ { flexDirection: 'row', paddingTop: 20 } }>
           <Text
@@ -92,7 +92,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
               </View>
               <TextInput style={ { height: 32, width: 100 } } />
             </View>
-          </Flyout> 
+          </Flyout>
         )}
       </View>
     );
@@ -110,7 +110,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     this.setState({ buttonTitle: 'Open Flyout', isFlyoutVisible: false });
   }
 
-  _onFlyoutDismissed = (isOpen: boolean) => {
+  _onFlyoutDismissed = (_isOpen: boolean) => {
     this.setState({ isFlyoutVisible: false });
     this.setState({ buttonTitle: 'Open Flyout' });
   }
@@ -126,5 +126,5 @@ export const examples = [
     render: function (): JSX.Element {
       return <FlyoutExample />;
     },
-  }
+  },
 ];

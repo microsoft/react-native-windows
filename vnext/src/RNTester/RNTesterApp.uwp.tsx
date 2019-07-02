@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
   headerContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#96969A',
-    backgroundColor: '#F5F5F6'
+    backgroundColor: '#F5F5F6',
   },
   header: {
     height: 40,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   headerLeft: {},
   headerCenter: {
@@ -28,16 +28,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 7,
     left: 0,
-    right: 0
+    right: 0,
   },
   title: {
     fontSize: 19,
     fontWeight: '600',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   exampleContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 interface IRNTesterNavigationState {
@@ -109,6 +109,7 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
      if (err || !storedString) {
       */
     const initialAction: RNTesterAction = /*launchAction ||*/ { type: 'InitialAction' };
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState(RNTesterNavigationReducer(undefined, initialAction));
     return;
     /*
