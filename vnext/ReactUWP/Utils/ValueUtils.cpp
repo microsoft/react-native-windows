@@ -10,10 +10,10 @@
 #include <folly/dynamic.h>
 #include <iomanip>
 
-#pragma warning( push )
-#pragma warning( disable : 4995 )
+#pragma warning(push)
+#pragma warning(disable : 4995)
 #include <locale>
-#pragma warning( pop )
+#pragma warning(pop)
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -21,81 +21,97 @@ using namespace Windows::UI;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
+} // namespace winrt
+
+namespace react {
+namespace uwp {
+
+inline BYTE GetAFromArgb(DWORD v) {
+  return ((BYTE)((v & 0xFF000000) >> 24));
+}
+inline BYTE GetRFromArgb(DWORD v) {
+  return ((BYTE)((v & 0x00FF0000) >> 16));
+}
+inline BYTE GetGFromArgb(DWORD v) {
+  return ((BYTE)((v & 0x0000FF00) >> 8));
+}
+inline BYTE GetBFromArgb(DWORD v) {
+  return ((BYTE)((v & 0x000000FF)));
 }
 
-namespace react { namespace uwp {
-
-inline BYTE GetAFromArgb(DWORD v) { return ((BYTE)((v & 0xFF000000) >> 24)); }
-inline BYTE GetRFromArgb(DWORD v) { return ((BYTE)((v & 0x00FF0000) >> 16)); }
-inline BYTE GetGFromArgb(DWORD v) { return ((BYTE)((v & 0x0000FF00) >> 8)); }
-inline BYTE GetBFromArgb(DWORD v) { return ((BYTE)((v & 0x000000FF))); }
-
-struct ColorComp
-{
-  bool operator()(const winrt::Color& lhs, const winrt::Color& rhs) const
-  {
-    return
-      (lhs.A < rhs.A || lhs.A == rhs.A &&
-       (lhs.R < rhs.R || lhs.R == rhs.R &&
-       (lhs.G < rhs.G || lhs.G == rhs.G &&
-        lhs.B < rhs.B)));
+struct ColorComp {
+  bool operator()(const winrt::Color &lhs, const winrt::Color &rhs) const {
+    return (
+        lhs.A < rhs.A ||
+        lhs.A == rhs.A &&
+            (lhs.R < rhs.R ||
+             lhs.R == rhs.R &&
+                 (lhs.G < rhs.G || lhs.G == rhs.G && lhs.B < rhs.B)));
   }
 };
 
-REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic& d)
-{
+REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
   UINT argb = static_cast<UINT>(d.asInt());
-  return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
+  return winrt::ColorHelper::FromArgb(
+      GetAFromArgb(argb),
+      GetRFromArgb(argb),
+      GetGFromArgb(argb),
+      GetBFromArgb(argb));
 }
 
-REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynamic& d)
-{
-  if (d.isObject())
-  {
-    winrt::hstring resourceName{ winrt::to_hstring(d.find("windowsbrush")->second.asString()) };
+REACTWINDOWS_API_(winrt::SolidColorBrush)
+SolidColorBrushFrom(const folly::dynamic &d) {
+  if (d.isObject()) {
+    winrt::hstring resourceName{
+        winrt::to_hstring(d.find("windowsbrush")->second.asString())};
 
-    thread_local static std::map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>> accentColorMap = {
-      {L"SystemAccentColor",            { nullptr }},
-      {L"SystemAccentColorLight1",      { nullptr }},
-      {L"SystemAccentColorLight2",      { nullptr }},
-      {L"SystemAccentColorLight3",      { nullptr }},
-      {L"SystemAccentColorDark1",       { nullptr }},
-      {L"SystemAccentColorDark2",       { nullptr }},
-      {L"SystemAccentColorDark3",       { nullptr }},
-      {L"SystemListAccentLowColor",     { nullptr }},
-      {L"SystemListAccentMediumColor",  { nullptr }},
-      {L"SystemListAccentHighColor",    { nullptr }}
-    };
+    thread_local static std::
+        map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>>
+            accentColorMap = {{L"SystemAccentColor", {nullptr}},
+                              {L"SystemAccentColorLight1", {nullptr}},
+                              {L"SystemAccentColorLight2", {nullptr}},
+                              {L"SystemAccentColorLight3", {nullptr}},
+                              {L"SystemAccentColorDark1", {nullptr}},
+                              {L"SystemAccentColorDark2", {nullptr}},
+                              {L"SystemAccentColorDark3", {nullptr}},
+                              {L"SystemListAccentLowColor", {nullptr}},
+                              {L"SystemListAccentMediumColor", {nullptr}},
+                              {L"SystemListAccentHighColor", {nullptr}}};
 
-    if (accentColorMap.find(resourceName) != accentColorMap.end())
-    {
-      if (auto brush = accentColorMap.at(resourceName).get())
-      {
+    if (accentColorMap.find(resourceName) != accentColorMap.end()) {
+      if (auto brush = accentColorMap.at(resourceName).get()) {
         return brush;
       }
 
       winrt::hstring xamlString =
-        L"<ResourceDictionary xmlns = 'http://schemas.microsoft.com/winfx/2006/xaml/presentation' xmlns:x = 'http://schemas.microsoft.com/winfx/2006/xaml'>"
-        L"  <SolidColorBrush x:Key='" + resourceName + L"' Color='{ThemeResource " + resourceName + "}' />"
-        L"</ResourceDictionary>";
+          L"<ResourceDictionary xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+          L"  <SolidColorBrush x:Key='" + resourceName + L"' Color='{ThemeResource " + resourceName + "}' />"
+          L"</ResourceDictionary>";
 
-      auto dictionary{ winrt::unbox_value<winrt::ResourceDictionary>(winrt::Markup::XamlReader::Load(xamlString)) };
-      auto brush{ winrt::unbox_value<winrt::SolidColorBrush>(dictionary.Lookup(winrt::box_value(resourceName))) };
+      auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
+          winrt::Markup::XamlReader::Load(xamlString))};
+
+      auto brush{winrt::unbox_value<winrt::SolidColorBrush>(
+          dictionary.Lookup(winrt::box_value(resourceName)))};
+
       accentColorMap[resourceName] = winrt::make_weak(brush);
+
       return brush;
     }
 
-    winrt::IInspectable resource{ winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName)) };
+    winrt::IInspectable resource{
+        winrt::Application::Current().Resources().Lookup(
+            winrt::box_value(resourceName))};
     return winrt::unbox_value<winrt::SolidColorBrush>(resource);
   }
 
-  const auto color = ColorFrom(d);
-  thread_local static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
+  thread_local static std::
+      map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp>
+          solidColorBrushCache;
 
-  if (solidColorBrushCache.count(color) != 0)
-  {
-    if (auto brush = solidColorBrushCache[color].get())
-    {
+  const auto color = ColorFrom(d);
+  if (solidColorBrushCache.count(color) != 0) {
+    if (auto brush = solidColorBrushCache[color].get()) {
       return brush;
     }
   }
@@ -105,13 +121,12 @@ REACTWINDOWS_API_(winrt::SolidColorBrush) SolidColorBrushFrom(const folly::dynam
   return brush;
 }
 
-REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic& d)
-{
+REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic &d) {
   return SolidColorBrushFrom(d);
 }
 
-REACTWINDOWS_API_(winrt::HorizontalAlignment) HorizontalAlignmentFrom(const folly::dynamic& d)
-{
+REACTWINDOWS_API_(winrt::HorizontalAlignment)
+HorizontalAlignmentFrom(const folly::dynamic &d) {
   auto valueString = d.asString();
   if (valueString == "center")
     return winrt::HorizontalAlignment::Center;
@@ -127,8 +142,8 @@ REACTWINDOWS_API_(winrt::HorizontalAlignment) HorizontalAlignmentFrom(const foll
   return winrt::HorizontalAlignment::Stretch;
 }
 
-REACTWINDOWS_API_(winrt::VerticalAlignment) VerticalAlignmentFrom(const folly::dynamic& d)
-{
+REACTWINDOWS_API_(winrt::VerticalAlignment)
+VerticalAlignmentFrom(const folly::dynamic &d) {
   auto valueString = d.asString();
   if (valueString == "bottom")
     return winrt::VerticalAlignment::Bottom;
@@ -144,17 +159,18 @@ REACTWINDOWS_API_(winrt::VerticalAlignment) VerticalAlignmentFrom(const folly::d
   return winrt::VerticalAlignment::Stretch;
 }
 
-REACTWINDOWS_API_(winrt::DateTime) DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds)
-{
+REACTWINDOWS_API_(winrt::DateTime)
+DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds) {
   auto timeInSeconds = (int64_t)timeInMilliSeconds / 1000;
-  time_t ttWithTimeZoneOffset = (time_t)(timeInSeconds + timeZoneOffsetInSeconds);
+  time_t ttWithTimeZoneOffset =
+      (time_t)(timeInSeconds + timeZoneOffsetInSeconds);
   winrt::DateTime dateTime = winrt::clock::from_time_t(ttWithTimeZoneOffset);
 
   return dateTime;
 }
 
-REACTWINDOWS_API_(folly::dynamic) DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds)
-{
+REACTWINDOWS_API_(folly::dynamic)
+DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds) {
   time_t ttInSeconds = winrt::clock::to_time_t(dateTime);
   auto timeInUtc = ttInSeconds - timeZoneOffsetInSeconds;
   auto ttInMilliseconds = (int64_t)timeInUtc * 1000;
@@ -163,30 +179,28 @@ REACTWINDOWS_API_(folly::dynamic) DateTimeToDynamic(winrt::DateTime dateTime, in
   return strDateTime;
 }
 
-REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic& d)
-{
+REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d) {
   return facebook::react::unicode::utf8ToUtf16(d.getString());
 }
 
-REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr)
-{
-  return folly::dynamic(facebook::react::unicode::utf16ToUtf8(hstr.c_str(), hstr.size()));
+REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr) {
+  return folly::dynamic(
+      facebook::react::unicode::utf16ToUtf8(hstr.c_str(), hstr.size()));
 }
 
-REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic& d)
-{
+REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d) {
   return winrt::hstring(asWStr(d));
 }
 
-REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic& d)
-{
-  return d.isObject() ? (d.find("windowsbrush") != d.items().end()) : d.isNumber();
+REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d) {
+  return d.isObject() ? (d.find("windowsbrush") != d.items().end())
+                      : d.isNumber();
 }
 
-REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms)
-{
+REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   std::chrono::milliseconds dur((int64_t)ms);
   return winrt::TimeSpan::duration(dur);
 }
 
-} }
+} // namespace uwp
+} // namespace react

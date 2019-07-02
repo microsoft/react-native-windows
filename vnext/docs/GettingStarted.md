@@ -4,16 +4,15 @@ This is a summary of setup steps needed to install and work with React Native fo
 
 ## System requirements
 * You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.15063.0 or higher.
-* [Visual Studio 2017](https://www.visualstudio.com/downloads) with the following options:
+* [Visual Studio 2019](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
-      * Enable the optional 'C++ Universal Windows Platform tools'
+      * Enable the optional `C++ (v141) Universal Windows Platform tools`
     * Desktop development with C++
   * Individual Components
     * Development activities
-      * Node.js development support
+      * Node.js development support (optional)
     * SDKs, libraries, and frameworks per your versioning needs
-      * Windows 10 SDK (10.0.15063.0)
       * Windows 10 SDK (10.0.18362.0)
 
 ## Dependencies
@@ -89,77 +88,78 @@ A new Command Prompt window will open with the React packager as well as a `reac
 - Make sure you have installed [dependencies](#dependencies)
 - Install [Git](https://git-scm.com/download/win) if you don't have it installed in your development machine
 
-#### Build Steps	
-* Clone the repo	
-    ```cmd	
-    git clone https://github.com/microsoft/react-native-windows.git	
-    cd react-native-windows	
-    ```	
+#### Build Steps
+* Clone the repo
+    ```cmd
+    git clone https://github.com/microsoft/react-native-windows.git
+    cd react-native-windows
+    ```
 
-* Install dependencies. This step may take a while on the first run due to dependency download.	
-    ```cmd	
-    cd vnext	
-    npm install	
-    ```	
+* Install dependencies. This step may take a while on the first run due to dependency download.
+    ```cmd
+    cd vnext
+    npm install
+    nuget restore
+    ```
 
-* Run `npm run build` in the vnext folder.	
+* Run `npm run build` in the vnext folder.
 
 * Run `Scripts\launchPackager.bat`.	This is needed to ensure the JS files can be packaged and bundled to the UWP app.
 
 * Make sure Chrome is running if you're not already running it
 
 #### Running the Playground app
-* Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS. 
+* Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS.
     ```cmd
     cd Playground
     ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory packages
     ```
 
 * Build solution.
-    * Using MSBuild	
-    ```cmd	
-    MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]	
-    ```	
+    * Using MSBuild
+    ```cmd
+    MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]
+    ```
 
-    * Using Visual Studio IDE	
-      1. Open `Playground.sln`.	
-      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.	
+    * Using Visual Studio IDE
+      1. Open `Playground.sln`.
+      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.
       3. Select `Project / Build Solution (Ctrl+Shift+B)`
 
-* In Visual Studio, set Playground as the StartUp Project.		
+* In Visual Studio, set Playground as the StartUp Project.
 
-* Run project (`F5` or `Debug / Start Debugging`).	
+* Run project (`F5` or `Debug / Start Debugging`).
 
 You now see your new app and Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
-#### Running the Sample Universal Windows App	
-* Build solution.	
-    * Using MSBuild	
-    ```cmd	
-    MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]	
-    ```	
+#### Running the Sample Universal Windows App
+* Build solution.
+    * Using MSBuild
+    ```cmd
+    MSBuild.exe [/p:Platform=$(TargetPlatform)] [/p:Configuration=$(TargetConfiguration)]
+    ```
 
-    * Using Visual Studio IDE	
-      1. Open `ReactWindows-UWP.sln`.	
-      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.	
+    * Using Visual Studio IDE
+      1. Open `ReactWindows-UWP.sln`.
+      2. Set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.
       3. Select `Project / Build Solution (Ctrl+Shift+B)`
 
 
-* In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.	
+* In Visual Studio, set React.Windows.Universal.SampleApp as the StartUp Project.
 
-* If you didn't already, make sure to set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.	
+* If you didn't already, make sure to set your `Platform` to `x86` or `x64` and `Configuration ` to `Debug`.
 
-* Run project (`F5` or `Debug / Start Debugging`).	
+* Run project (`F5` or `Debug / Start Debugging`).
 
-* Press the "Load" button on the left side of the Windows 10 application window that appears.	
+* Press the "Load" button on the left side of the Windows 10 application window that appears.
 
- The selected React Native component (defaulted to `Bootstrap`) should get loaded in the bottom of the application window. Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:	
+ The selected React Native component (defaulted to `Bootstrap`) should get loaded in the bottom of the application window. Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
- Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window before pressing "Load":	
-   - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`	
-   - RNTester: JavaScript file: `lib\RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`	
-      
+ Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window before pressing "Load":
+   - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`
+   - RNTester: JavaScript file: `lib\RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`
+
 ## Troubleshooting
 * If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/microsoft/react-native-windows/issues/2311) is tracking a known issue on this.
-* If you get a red error box in your UWP app window with the error message : `ERROR: Instance failed to start. A connection with the server cannot be established`, make sure you have the packager running using `yarn start` and run the app again. 
+* If you get a red error box in your UWP app window with the error message : `ERROR: Instance failed to start. A connection with the server cannot be established`, make sure you have the packager running using `yarn start` and run the app again.
 * If you are trying to run your `react-native` app on iOS/Android while using this `vnext` implementation for developing/running on Windows, you will encounter errors while running the app for other platforms. This will be fixed once we address Issues [#2264](https://github.com/microsoft/react-native-windows/issues/2264) and [#2535](https://github.com/microsoft/react-native-windows/issues/2535). Until this is fixed, please refer to [this comment](https://github.com/microsoft/react-native-windows/issues/2515#issuecomment-497375198) which describes the workaround for running on other platforms while developing for windows using `vnext`.

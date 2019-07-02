@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableNativeFeedbackProps
+  TouchableNativeFeedbackProps,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10
+    margin: 10,
   },
   info: {
     color: '#333333',
-    margin: 20
-  }
+    margin: 20,
+  },
 });
 
 class DummyTouchableNativeFeedback extends React.Component<

@@ -3,15 +3,15 @@
 // @ts-check
 
 const path = require('path');
-const { task, series, condition, option, argv, tscTask, tslintTask, cleanTask } = require('just-scripts');
+const { task, series, condition, option, argv, tscTask, eslintTask, cleanTask } = require('just-scripts');
 const libPath = path.resolve(process.cwd(), 'lib');
 const srcPath = path.resolve(process.cwd(), 'src');
 
 option('production');
 option('clean');
 
-task('tslint', () => {
-  return tslintTask();
+task('eslint', () => {
+  return eslintTask();
 });
 task('ts', () => {
   return tscTask({
@@ -30,7 +30,7 @@ task(
   'build',
   series(
     condition('clean', () => argv().clean),
-    'tslint',
+    'eslint',
     'ts'
   )
 );

@@ -14,7 +14,7 @@ function just(cmd) {
     ...(cmd ? [cmd] : []),
     '--config',
     path.resolve(__dirname, 'just-task.js'),
-    ...process.argv.slice(startIndex)
+    ...process.argv.slice(startIndex),
   ];
 
   require('just-task/lib/cli.js');

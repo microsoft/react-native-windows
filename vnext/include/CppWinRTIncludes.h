@@ -4,8 +4,22 @@
 #pragma once
 
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Text.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Composition.h>
+#include <winrt/Windows.UI.Xaml.Hosting.h>
 
 namespace winrt
 {
+  using namespace ::winrt::Windows::UI::Xaml;
   using namespace ::winrt::Windows::UI::Core;
+  using namespace Windows::Foundation;
+  using namespace Windows::Foundation::Collections;
+  using namespace Windows::UI::Xaml;
+  using namespace Windows::UI::Xaml::Controls;
+  using namespace Windows::UI::Xaml::Controls::Primitives;
+  using namespace Windows::UI::Composition;
+  using namespace Windows::UI::Xaml::Hosting;
 }

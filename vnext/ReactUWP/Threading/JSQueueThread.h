@@ -5,12 +5,15 @@
 
 #include <memory>
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 class CxxMessageQueue;
-} }
+}
+} // namespace facebook
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
 std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread();
-
-} }
+}
+} // namespace react

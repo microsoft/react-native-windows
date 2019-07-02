@@ -3,38 +3,42 @@
 
 #pragma once
 
-#include <cxxreact/CxxModule.h>
 #include <IHttpResource.h>
+#include <cxxreact/CxxModule.h>
 
-namespace facebook {
-namespace react {
-
+namespace Microsoft::React {
 // NetworkingModule
 // provides the 'Networking' native module backing RCTNetworking.js
-class NetworkingModule : public facebook::xplat::module::CxxModule
-{
+class NetworkingModule : public facebook::xplat::module::CxxModule {
   static int64_t s_lastRequestId;
   std::unordered_map<int64_t, std::unique_ptr<IHttpResource>> m_resources;
 
-  IHttpResource* GetResource(int64_t requestId) noexcept;
-  void OnDataReceived(int64_t requestId, const std::string& data) noexcept;
-  void OnRequestError(int64_t requestId, const std::string& error, bool isTimeOut) noexcept;
+  IHttpResource *GetResource(int64_t requestId) noexcept;
+  void OnDataReceived(int64_t requestId, const std::string &data) noexcept;
+  void OnRequestError(
+      int64_t requestId,
+      const std::string &error,
+      bool isTimeOut) noexcept;
   void OnRequestSuccess(int64_t requestId) noexcept;
-  void OnResponseReceived(int64_t requestId, int64_t statusCode, const folly::dynamic& headers, const std::string& url) noexcept;
-  void SendEvent(std::string&& eventName, folly::dynamic&& parameters);
+  void OnResponseReceived(
+      int64_t requestId,
+      int64_t statusCode,
+      const folly::dynamic &headers,
+      const std::string &url) noexcept;
+  void SendEvent(std::string &&eventName, folly::dynamic &&parameters);
 
-public:
+ public:
   NetworkingModule();
 
-  #pragma region CxxModule members
+#pragma region CxxModule members
 
   std::string getName() override;
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<Method> getMethods() override;
 
-  #pragma endregion // CxxModule members
+#pragma endregion CxxModule members
 
-  static const char* name;
+  static const char *name;
 };
 
-} } // namespace facebook::react
+} // namespace Microsoft::React

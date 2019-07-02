@@ -8,7 +8,7 @@ import { IPopupProps } from './PopupProps';
 
 const styles = StyleSheet.create({
   rctPopup: {
-    position: 'absolute'
+    position: 'absolute',
   },
 });
 
@@ -39,7 +39,7 @@ export class Popup extends React.Component<IPopupProps, IPopupTargetState> {
 
       return {
         target: newTarget,
-        targetRef: nextProps.target
+        targetRef: nextProps.target,
       };
     }
 

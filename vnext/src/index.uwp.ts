@@ -9,4 +9,7 @@ export * from './Libraries/Components/Picker/PickerUWP.uwp';
 export * from './Libraries/Components/Popup/Popup.uwp';
 export * from './Libraries/Components/Keyboard/KeyboardExt.uwp';
 export * from './Libraries/Components/Keyboard/KeyboardExtProps';
-export * from './Libraries/Modules/AppTheme/AppTheme.uwp';
+export * from './Libraries/Components/View/ViewWindowsProps';
+export * from './Libraries/Components/View/ViewWindows.uwp';
+export * from './Libraries/AppTheme/AppTheme.uwp';
+export * from './Libraries/AppTheme/AppThemeTypes';

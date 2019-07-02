@@ -10,8 +10,8 @@ namespace react {
 namespace uwp {
 
 std::string HSTRINGToString(HSTRING hstring);
-HSTRING StringToHSTRING(const std::string& str);
+HSTRING StringToHSTRING(const std::string &str);
 
-}
-}
-}
+} // namespace uwp
+} // namespace react
+} // namespace ABI

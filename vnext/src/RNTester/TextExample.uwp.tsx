@@ -74,7 +74,7 @@ export class TextExample extends React.Component<{}> {
 
   public render() {
     const lorumIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.';
-    
+
     return (
       <RNTesterPage title="<Text>">
         <RNTesterBlock title="Wrap">
@@ -490,12 +490,12 @@ export class TextExample extends React.Component<{}> {
           <Text numberOfLines={1}>
             This very long text should be truncated with dots in the end. {lorumIpsum}
           </Text>
-          
+
           <Text style={{marginTop: 20, fontStyle: 'italic'}}>middle</Text>
           <Text ellipsizeMode="middle" numberOfLines={1}>
             This very long text should be truncated with dots in the middle. {lorumIpsum}
           </Text>
-          
+
           <Text style={{marginTop: 20, fontStyle: 'italic'}}>head</Text>
           <Text ellipsizeMode="head" numberOfLines={1}>
             This very long text should be truncated with dots in the beginning. {lorumIpsum}

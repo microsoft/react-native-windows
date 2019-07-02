@@ -7,12 +7,12 @@
 
 #include <folly/dynamic.h>
 #include <stdint.h>
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Metadata.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
+#include <winrt/Windows.UI.Xaml.h>
 
 #include <Views/ShadowNodeBase.h>
 
@@ -22,7 +22,8 @@ namespace winrt {
 using namespace Windows::UI::Xaml;
 }
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
 struct ShadowNodeBase;
 
@@ -30,16 +31,22 @@ static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
 };
 
-inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges], bool isRTL)
-{
-  const double defaultWidth = std::max<double>(0, thicknesses[ShadowEdges::AllEdges]);
-  double startWidth = DefaultOrOverride(thicknesses[ShadowEdges::Left], thicknesses[ShadowEdges::Start]);
-  double endWidth = DefaultOrOverride(thicknesses[ShadowEdges::Right], thicknesses[ShadowEdges::End]);
+inline winrt::Windows::UI::Xaml::Thickness GetThickness(
+    double thicknesses[ShadowEdges::CountEdges],
+    bool isRTL) {
+  const double defaultWidth =
+      std::max<double>(0, thicknesses[ShadowEdges::AllEdges]);
+  double startWidth = DefaultOrOverride(
+      thicknesses[ShadowEdges::Left], thicknesses[ShadowEdges::Start]);
+  double endWidth = DefaultOrOverride(
+      thicknesses[ShadowEdges::Right], thicknesses[ShadowEdges::End]);
   if (isRTL)
     std::swap(startWidth, endWidth);
 
-  // Compute each edge.  Most specific setting wins, so fill from broad to narrow: all, horiz/vert, start/end, left/right
-  winrt::Windows::UI::Xaml::Thickness thickness = { defaultWidth, defaultWidth, defaultWidth, defaultWidth };
+  // Compute each edge.  Most specific setting wins, so fill from broad to
+  // narrow: all, horiz/vert, start/end, left/right
+  winrt::Windows::UI::Xaml::Thickness thickness = {
+      defaultWidth, defaultWidth, defaultWidth, defaultWidth};
 
   if (thicknesses[ShadowEdges::Horizontal] != c_UndefinedEdge)
     thickness.Left = thickness.Right = thicknesses[ShadowEdges::Horizontal];
@@ -58,16 +65,24 @@ inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[Shado
   return thickness;
 }
 
-inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(double cornerRadii[ShadowCorners::CountCorners], bool isRTL)
-{
+inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(
+    double cornerRadii[ShadowCorners::CountCorners],
+    bool isRTL) {
   winrt::Windows::UI::Xaml::CornerRadius cornerRadius;
-  const double defaultRadius = std::max<double>(0, cornerRadii[ShadowCorners::AllCorners]);
-  double topStartRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopLeft], cornerRadii[ShadowCorners::TopStart]);
-  double topEndRadius = DefaultOrOverride(cornerRadii[ShadowCorners::TopRight], cornerRadii[ShadowCorners::TopEnd]);
-  double bottomStartRadius = DefaultOrOverride(cornerRadii[ShadowCorners::BottomLeft], cornerRadii[ShadowCorners::BottomStart]);
-  double bottomEndRadius = DefaultOrOverride(cornerRadii[ShadowCorners::BottomRight], cornerRadii[ShadowCorners::BottomEnd]);
-  if (isRTL)
-  {
+  const double defaultRadius =
+      std::max<double>(0, cornerRadii[ShadowCorners::AllCorners]);
+  double topStartRadius = DefaultOrOverride(
+      cornerRadii[ShadowCorners::TopLeft],
+      cornerRadii[ShadowCorners::TopStart]);
+  double topEndRadius = DefaultOrOverride(
+      cornerRadii[ShadowCorners::TopRight], cornerRadii[ShadowCorners::TopEnd]);
+  double bottomStartRadius = DefaultOrOverride(
+      cornerRadii[ShadowCorners::BottomLeft],
+      cornerRadii[ShadowCorners::BottomStart]);
+  double bottomEndRadius = DefaultOrOverride(
+      cornerRadii[ShadowCorners::BottomRight],
+      cornerRadii[ShadowCorners::BottomEnd]);
+  if (isRTL) {
     std::swap(topStartRadius, topEndRadius);
     std::swap(bottomStartRadius, bottomEndRadius);
   }
@@ -81,32 +96,45 @@ inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(double cornerRadii
 }
 
 template <class T>
-void UpdatePadding(ShadowNodeBase* node, const T& element, ShadowEdges edge, double margin)
-{
+void UpdatePadding(
+    ShadowNodeBase *node,
+    const T &element,
+    ShadowEdges edge,
+    double margin) {
   node->m_padding[edge] = margin;
-  winrt::Thickness thickness = GetThickness(node->m_padding, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
+  winrt::Thickness thickness = GetThickness(
+      node->m_padding,
+      element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.Padding(thickness);
 }
 
 template <class T>
-void SetBorderThickness(ShadowNodeBase* node, const T& element, ShadowEdges edge, double margin)
-{
+void SetBorderThickness(
+    ShadowNodeBase *node,
+    const T &element,
+    ShadowEdges edge,
+    double margin) {
   node->m_border[edge] = margin;
-  winrt::Thickness thickness = GetThickness(node->m_border, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
+  winrt::Thickness thickness = GetThickness(
+      node->m_border,
+      element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.BorderThickness(thickness);
 }
 
 template <class T>
-void SetBorderBrush(const T& element, const winrt::Windows::UI::Xaml::Media::Brush& brush)
-{
+void SetBorderBrush(
+    const T &element,
+    const winrt::Windows::UI::Xaml::Media::Brush &brush) {
   element.BorderBrush(brush);
 }
 
 template <class T>
-bool TryUpdateBackgroundBrush(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "backgroundColor")
-  {
+bool TryUpdateBackgroundBrush(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+
+  if (propertyName == "backgroundColor") {
     if (IsValidColorValue(propertyValue))
       element.Background(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
@@ -119,18 +147,25 @@ bool TryUpdateBackgroundBrush(const T& element, const std::string& propertyName,
 }
 
 template <class T>
-void UpdateCornerRadius(ShadowNodeBase* node, const T& element, ShadowCorners corner, double newValue)
-{
+void UpdateCornerRadius(
+    ShadowNodeBase *node,
+    const T &element,
+    ShadowCorners corner,
+    double newValue) {
   node->m_cornerRadius[corner] = newValue;
-  winrt::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
+  winrt::CornerRadius cornerRadius = GetCornerRadius(
+      node->m_cornerRadius,
+      element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.CornerRadius(cornerRadius);
 }
 
 template <class T>
-bool TryUpdateForeground(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "color")
-  {
+bool TryUpdateForeground(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+
+  if (propertyName == "color") {
     if (IsValidColorValue(propertyValue))
       element.Foreground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
@@ -143,54 +178,47 @@ bool TryUpdateForeground(const T& element, const std::string& propertyName, cons
 }
 
 template <class T>
-bool TryUpdateBorderProperties(ShadowNodeBase* node, const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
+bool TryUpdateBorderProperties(
+    ShadowNodeBase *node,
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   bool isBorderProperty = true;
 
-  if (propertyName == "borderColor")
-  {
+  if (propertyName == "borderColor") {
     if (IsValidColorValue(propertyValue))
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BorderBrushProperty());
-  }
-  else if (propertyName == "borderLeftWidth")
-  {
+  } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderTopWidth")
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::Left, propertyValue.asDouble());
+  } else if (propertyName == "borderTopWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderRightWidth")
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::Top, propertyValue.asDouble());
+  } else if (propertyName == "borderRightWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderBottomWidth")
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::Right, propertyValue.asDouble());
+  } else if (propertyName == "borderBottomWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderStartWidth")
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+  } else if (propertyName == "borderStartWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderEndWidth")
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::Start, propertyValue.asDouble());
+  } else if (propertyName == "borderEndWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderWidth")
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::End, propertyValue.asDouble());
+  } else if (propertyName == "borderWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
-  }
-  else
-  {
+      SetBorderThickness(
+          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+  } else {
     isBorderProperty = false;
   }
 
@@ -198,57 +226,47 @@ bool TryUpdateBorderProperties(ShadowNodeBase* node, const T& element, const std
 }
 
 template <class T>
-bool TryUpdatePadding(ShadowNodeBase* node, const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
+bool TryUpdatePadding(
+    ShadowNodeBase *node,
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   bool isPaddingProperty = true;
 
-  if (propertyName == "paddingLeft")
-  {
+  if (propertyName == "paddingLeft") {
     if (propertyValue.isNumber())
       UpdatePadding(node, element, ShadowEdges::Left, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingTop")
-  {
+  } else if (propertyName == "paddingTop") {
     if (propertyValue.isNumber())
       UpdatePadding(node, element, ShadowEdges::Top, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingRight")
-  {
+  } else if (propertyName == "paddingRight") {
     if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Right, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingBottom")
-  {
+      UpdatePadding(
+          node, element, ShadowEdges::Right, propertyValue.asDouble());
+  } else if (propertyName == "paddingBottom") {
     if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingStart")
-  {
+      UpdatePadding(
+          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+  } else if (propertyName == "paddingStart") {
     if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Start, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingEnd")
-  {
+      UpdatePadding(
+          node, element, ShadowEdges::Start, propertyValue.asDouble());
+  } else if (propertyName == "paddingEnd") {
     if (propertyValue.isNumber())
       UpdatePadding(node, element, ShadowEdges::End, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingHorizontal")
-  {
+  } else if (propertyName == "paddingHorizontal") {
     if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Horizontal, propertyValue.asDouble());
-  }
-  else if (propertyName == "paddingVertical")
-  {
+      UpdatePadding(
+          node, element, ShadowEdges::Horizontal, propertyValue.asDouble());
+  } else if (propertyName == "paddingVertical") {
     if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Vertical, propertyValue.asDouble());
-  }
-  else if (propertyName == "padding")
-  {
+      UpdatePadding(
+          node, element, ShadowEdges::Vertical, propertyValue.asDouble());
+  } else if (propertyName == "padding") {
     if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
-  }
-  else
-  {
+      UpdatePadding(
+          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+  } else {
     isPaddingProperty = false;
   }
 
@@ -256,55 +274,49 @@ bool TryUpdatePadding(ShadowNodeBase* node, const T& element, const std::string&
 }
 
 template <class T>
-bool TryUpdateCornerRadius(ShadowNodeBase* node, const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "borderTopLeftRadius")
-  {
+bool TryUpdateCornerRadius(
+    ShadowNodeBase *node,
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "borderTopLeftRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::TopLeft, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderTopRightRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::TopLeft, propertyValue.asDouble());
+  } else if (propertyName == "borderTopRightRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::TopRight, propertyValue.asDouble());
+      UpdateCornerRadius(
+          node, element, ShadowCorners::TopRight, propertyValue.asDouble());
   }
-  if (propertyName == "borderTopStartRadius")
-  {
+  if (propertyName == "borderTopStartRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::TopStart, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderTopEndRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::TopStart, propertyValue.asDouble());
+  } else if (propertyName == "borderTopEndRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::TopEnd, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderBottomRightRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::TopEnd, propertyValue.asDouble());
+  } else if (propertyName == "borderBottomRightRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::BottomRight, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderBottomLeftRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::BottomRight, propertyValue.asDouble());
+  } else if (propertyName == "borderBottomLeftRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::BottomLeft, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderBottomStartRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::BottomLeft, propertyValue.asDouble());
+  } else if (propertyName == "borderBottomStartRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::BottomStart, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderBottomEndRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::BottomStart, propertyValue.asDouble());
+  } else if (propertyName == "borderBottomEndRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::BottomEnd, propertyValue.asDouble());
-  }
-  else if (propertyName == "borderRadius")
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::BottomEnd, propertyValue.asDouble());
+  } else if (propertyName == "borderRadius") {
     if (propertyValue.isNumber())
-      UpdateCornerRadius(node, element, ShadowCorners::AllCorners, propertyValue.asDouble());
-  }
-  else
-  {
+      UpdateCornerRadius(
+          node, element, ShadowCorners::AllCorners, propertyValue.asDouble());
+  } else {
     return false;
   }
 
@@ -312,29 +324,26 @@ bool TryUpdateCornerRadius(ShadowNodeBase* node, const T& element, const std::st
 }
 
 template <class T>
-bool TryUpdateFontProperties(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
+bool TryUpdateFontProperties(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   bool isFontProperty = true;
 
-  if (propertyName == "fontSize")
-  {
+  if (propertyName == "fontSize") {
     if (propertyValue.isNumber())
       element.FontSize(propertyValue.asDouble());
     else if (propertyValue.isNull())
       element.ClearValue(T::FontSizeProperty());
-  }
-  else if (propertyName == "fontFamily")
-  {
+  } else if (propertyName == "fontFamily") {
     if (propertyValue.isString())
-      element.FontFamily(winrt::Windows::UI::Xaml::Media::FontFamily(asWStr(propertyValue)));
+      element.FontFamily(
+          winrt::Windows::UI::Xaml::Media::FontFamily(asWStr(propertyValue)));
     else if (propertyValue.isNull())
       element.ClearValue(T::FontFamilyProperty());
-  }
-  else if (propertyName == "fontWeight")
-  {
-    if (propertyValue.isString())
-    {
-      const std::string& value = propertyValue.getString();
+  } else if (propertyName == "fontWeight") {
+    if (propertyValue.isString()) {
+      const std::string &value = propertyValue.getString();
       winrt::Windows::UI::Text::FontWeight fontWeight;
       if (value == "normal")
         fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
@@ -362,29 +371,21 @@ bool TryUpdateFontProperties(const T& element, const std::string& propertyName, 
         fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
 
       element.FontWeight(fontWeight);
-    }
-    else if (propertyValue.isNull())
-    {
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontWeightProperty());
     }
 
-  }
-  else if (propertyName == "fontStyle")
-  {
-    if (propertyValue.isString())
-    {
-      element.FontStyle((propertyValue.getString() == "italic")
-        ? winrt::Windows::UI::Text::FontStyle::Italic
-        : winrt::Windows::UI::Text::FontStyle::Normal);
-    }
-    else if (propertyValue.isNull())
-    {
+  } else if (propertyName == "fontStyle") {
+    if (propertyValue.isString()) {
+      element.FontStyle(
+          (propertyValue.getString() == "italic")
+              ? winrt::Windows::UI::Text::FontStyle::Italic
+              : winrt::Windows::UI::Text::FontStyle::Normal);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontStyleProperty());
     }
 
-  }
-  else
-  {
+  } else {
     isFontProperty = false;
   }
 
@@ -392,8 +393,7 @@ bool TryUpdateFontProperties(const T& element, const std::string& propertyName, 
 }
 
 template <class T>
-void SetTextAlignment(const T& element, const std::string& value)
-{
+void SetTextAlignment(const T &element, const std::string &value) {
   if (value == "left")
     element.TextAlignment(winrt::TextAlignment::Left);
   else if (value == "right")
@@ -407,17 +407,15 @@ void SetTextAlignment(const T& element, const std::string& value)
 }
 
 template <class T>
-bool TryUpdateTextAlignment(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "textAlign")
-  {
-    if (propertyValue.isString())
-    {
-      const std::string& value = propertyValue.getString();
+bool TryUpdateTextAlignment(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "textAlign") {
+    if (propertyValue.isString()) {
+      const std::string &value = propertyValue.getString();
       SetTextAlignment(element, value);
-    }
-    else if (propertyValue.isNull())
-    {
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::TextAlignmentProperty());
     }
 
@@ -428,32 +426,27 @@ bool TryUpdateTextAlignment(const T& element, const std::string& propertyName, c
 }
 
 template <class T>
-void SetTextTrimming(const T& element, const std::string& value)
-{
+void SetTextTrimming(const T &element, const std::string &value) {
   if (value == "clip")
     element.TextTrimming(winrt::TextTrimming::Clip);
-  else if (value == "head" || value == "middle" || value == "tail")
-  {
+  else if (value == "head" || value == "middle" || value == "tail") {
     // "head" and "middle" not supported by UWP, but "tail"
     // behavior is the most similar
     element.TextTrimming(winrt::TextTrimming::CharacterEllipsis);
-  }
-  else
+  } else
     element.TextTrimming(winrt::TextTrimming::None);
 }
 
 template <class T>
-bool TryUpdateTextTrimming(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "ellipsizeMode")
-  {
-    if (propertyValue.isString())
-    {
-      const std::string& value = propertyValue.getString();
+bool TryUpdateTextTrimming(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "ellipsizeMode") {
+    if (propertyValue.isString()) {
+      const std::string &value = propertyValue.getString();
       SetTextTrimming(element, value);
-    }
-    else if (propertyValue.isNull())
-    {
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::TextTrimmingProperty());
     }
 
@@ -464,20 +457,22 @@ bool TryUpdateTextTrimming(const T& element, const std::string& propertyName, co
 }
 
 template <class T>
-bool TryUpdateTextDecorationLine(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "textDecorationLine")
-  {
+bool TryUpdateTextDecorationLine(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "textDecorationLine") {
     // FUTURE: remove when SDK target minVer >= 10.0.15063.0
-    static bool isTextDecorationsSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(L"Windows.UI.Xaml.Controls.TextBlock", L"TextDecorations");
+    static bool isTextDecorationsSupported =
+        winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
+            L"Windows.UI.Xaml.Controls.TextBlock", L"TextDecorations");
     if (!isTextDecorationsSupported)
       return true;
 
-    if (propertyValue.isString())
-    {
+    if (propertyValue.isString()) {
       using winrt::Windows::UI::Text::TextDecorations;
 
-      const std::string& value = propertyValue.getString();
+      const std::string &value = propertyValue.getString();
       TextDecorations decorations = TextDecorations::None;
       if (value == "none")
         decorations = TextDecorations::None;
@@ -486,12 +481,11 @@ bool TryUpdateTextDecorationLine(const T& element, const std::string& propertyNa
       else if (value == "line-through")
         decorations = TextDecorations::Strikethrough;
       else if (value == "underline line-through")
-        decorations = TextDecorations::Underline | TextDecorations::Strikethrough;
+        decorations =
+            TextDecorations::Underline | TextDecorations::Strikethrough;
 
       element.TextDecorations(decorations);
-    }
-    else if (propertyValue.isNull())
-    {
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::TextDecorationsProperty());
     }
 
@@ -502,28 +496,25 @@ bool TryUpdateTextDecorationLine(const T& element, const std::string& propertyNa
 }
 
 template <class T>
-void SetFlowDirection(const T& element, const std::string& value)
-{
+void SetFlowDirection(const T &element, const std::string &value) {
   if (value == "rtl")
     element.FlowDirection(winrt::FlowDirection::RightToLeft);
-  else if (value =="ltr")
+  else if (value == "ltr")
     element.FlowDirection(winrt::FlowDirection::LeftToRight);
   else // 'auto', 'inherit'
     element.ClearValue(winrt::FrameworkElement::FlowDirectionProperty());
 }
 
 template <class T>
-bool TryUpdateFlowDirection(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if ((propertyName == "writingDirection") || (propertyName == "direction"))
-  {
-    if (propertyValue.isString())
-    {
-      const std::string& value = propertyValue.getString();
+bool TryUpdateFlowDirection(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if ((propertyName == "writingDirection") || (propertyName == "direction")) {
+    if (propertyValue.isString()) {
+      const std::string &value = propertyValue.getString();
       SetFlowDirection(element, value);
-    }
-    else if (propertyValue.isNull())
-    {
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::FlowDirectionProperty());
     }
 
@@ -534,10 +525,11 @@ bool TryUpdateFlowDirection(const T& element, const std::string& propertyName, c
 }
 
 template <class T>
-bool TryUpdateCharacterSpacing(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "letterSpacing" || propertyName == "characterSpacing")
-  {
+bool TryUpdateCharacterSpacing(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "letterSpacing" || propertyName == "characterSpacing") {
     if (propertyValue.isNumber())
       element.CharacterSpacing(static_cast<int32_t>(propertyValue.asDouble()));
     else if (propertyValue.isNull())
@@ -550,17 +542,15 @@ bool TryUpdateCharacterSpacing(const T& element, const std::string& propertyName
 }
 
 template <class T>
-bool TryUpdateOrientation(const T& element, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
-  if (propertyName == "orientation")
-  {
-    if (propertyValue.isNull())
-    {
+bool TryUpdateOrientation(
+    const T &element,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
+  if (propertyName == "orientation") {
+    if (propertyValue.isNull()) {
       element.ClearValue(T::OrientationProperty());
-    }
-    else if (propertyValue.isString())
-    {
-      const std::string& valueString = propertyValue.getString();
+    } else if (propertyValue.isString()) {
+      const std::string &valueString = propertyValue.getString();
       if (valueString == "horizontal")
         element.Orientation(Orientation::Horizontal);
       else if (valueString == "vertical")
@@ -573,8 +563,10 @@ bool TryUpdateOrientation(const T& element, const std::string& propertyName, con
   return false;
 }
 
-inline bool TryUpdateMouseEvents(ShadowNodeBase* node, const std::string& propertyName, const folly::dynamic& propertyValue)
-{
+inline bool TryUpdateMouseEvents(
+    ShadowNodeBase *node,
+    const std::string &propertyName,
+    const folly::dynamic &propertyValue) {
   if (propertyName == "onMouseEnter")
     node->m_onMouseEnter = !propertyValue.isNull() && propertyValue.asBool();
   else if (propertyName == "onMouseLeave")
@@ -587,4 +579,5 @@ inline bool TryUpdateMouseEvents(ShadowNodeBase* node, const std::string& proper
   return true;
 }
 
-} }
+} // namespace uwp
+} // namespace react

@@ -59,5 +59,5 @@ export const examples = [
     render: function(): JSX.Element {
       return <TabStopExample />;
     },
-  }
+  },
 ];

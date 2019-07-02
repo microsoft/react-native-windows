@@ -71,16 +71,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="TestInstance.cpp">
-      <!-- TODO: Remove NOJSC from react-native. -->
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="TestInstance.cpp" />
     <ClCompile Include="TestModule.cpp" />
     <ClCompile Include="TestRootView.cpp" />
-    <ClCompile Include="TestRunner.cpp">
-      <!-- TODO: Remove NOJSC from react-native. -->
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
+    <ClCompile Include="TestRunner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MockExecutorDelegate.h" />

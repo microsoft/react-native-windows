@@ -3,29 +3,32 @@
 #include <cxxreact/CxxModule.h>
 
 namespace facebook {
-  namespace react {
-    class MessageQueueThread;
-  }
+namespace react {
+class MessageQueueThread;
 }
+} // namespace facebook
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class ImageViewManagerModule : public facebook::xplat::module::CxxModule
-{
-  public:
-    ImageViewManagerModule(const std::shared_ptr<facebook::react::MessageQueueThread> & defaultQueueThread);
-    virtual ~ImageViewManagerModule();
+class ImageViewManagerModule : public facebook::xplat::module::CxxModule {
+ public:
+  ImageViewManagerModule(
+      const std::shared_ptr<facebook::react::MessageQueueThread>
+          &defaultQueueThread);
+  virtual ~ImageViewManagerModule();
 
-    // CxxModule
-    std::string getName() override;
-    std::map<std::string, folly::dynamic> getConstants() override;
-    auto getMethods()->std::vector<Method> override;
+  // CxxModule
+  std::string getName() override;
+  std::map<std::string, folly::dynamic> getConstants() override;
+  auto getMethods() -> std::vector<Method> override;
 
-    static const char* name;
+  static const char *name;
 
-  private:
-    class ImageViewManagerModuleImpl;
-    std::shared_ptr<ImageViewManagerModuleImpl> m_imageViewManagerModule;
+ private:
+  class ImageViewManagerModuleImpl;
+  std::shared_ptr<ImageViewManagerModuleImpl> m_imageViewManagerModule;
 };
 
-} } // namespace react::uwp
+} // namespace uwp
+} // namespace react

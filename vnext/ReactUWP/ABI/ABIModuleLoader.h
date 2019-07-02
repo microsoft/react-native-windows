@@ -3,10 +3,10 @@
 
 #pragma once
 
+#include <Module.h>
+#include <NativeModuleProvider.h>
 #include <combaseapi.h>
 #include <cxxreact/CxxModule.h>
-#include <NativeModuleProvider.h>
-#include <Module.h>
 #include <wrl.h>
 
 namespace ABI {
@@ -15,34 +15,34 @@ namespace uwp {
 
 class ABIModule;
 
-class ABIModule : public facebook::xplat::module::CxxModule
-{
-public:
-  ABIModule(const Microsoft::WRL::ComPtr<ABI::react::uwp::IModule>& module);
+class ABIModule : public facebook::xplat::module::CxxModule {
+ public:
+  ABIModule(const Microsoft::WRL::ComPtr<ABI::react::uwp::IModule> &module);
 
   std::string getName() override;
 
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
-private:
 
+ private:
   Microsoft::WRL::ComPtr<ABI::react::uwp::IModule> m_module;
 };
 
-class ABIModuleLoader : public facebook::react::NativeModuleProvider
-{
-public:
+class ABIModuleLoader : public facebook::react::NativeModuleProvider {
+ public:
   ABIModuleLoader();
 
-  void RegisterModule(Microsoft::WRL::ComPtr<ABI::react::uwp::IModule>& module);
+  void RegisterModule(Microsoft::WRL::ComPtr<ABI::react::uwp::IModule> &module);
 
   // NativeModuleProvider
-  std::vector<facebook::react::NativeModuleDescription> GetModules(const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread) override;
+  std::vector<facebook::react::NativeModuleDescription> GetModules(
+      const std::shared_ptr<facebook::react::MessageQueueThread>
+          &defaultQueueThread) override;
 
-private:
+ private:
   std::vector<Microsoft::WRL::ComPtr<ABI::react::uwp::IModule>> m_modules;
 };
 
-}
-}
-}
+} // namespace uwp
+} // namespace react
+} // namespace ABI

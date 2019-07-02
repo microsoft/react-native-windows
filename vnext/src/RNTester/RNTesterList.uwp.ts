@@ -74,7 +74,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'ScrollViewSimpleExample',
-    module: require('react-native/RNTester/js/ScrollViewSimpleExample')
+    module: require('react-native/RNTester/js/ScrollViewSimpleExample'),
   },
   /*  TODO: Enable SectionList when Animation is supported
   {
@@ -115,12 +115,20 @@ const ComponentExamples: Array<IRNTesterExample> = [
 
 const APIExamples: Array<IRNTesterExample> = [
   {
+    key: 'KeyboardFocusExample',
+    module: require('./KeyboardFocusExample.uwp'),
+  },
+  {
     key: 'AccessibilityExample',
-    module: require('./AccessibilityExample')
+    module: require('./AccessibilityExample'),
   },
   {
     key: 'AppStateExample',
-    module: require('react-native/RNTester/js/AppStateExample')
+    module: require('react-native/RNTester/js/AppStateExample'),
+  },
+  {
+    key: 'ThemingExample',
+    module: require('./ThemingExample'),
   },
   {
     key: 'BorderExample',
@@ -194,7 +202,7 @@ APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
 const RNTesterList = {
   APIExamples,
   ComponentExamples,
-  Modules
+  Modules,
 };
 
 export default RNTesterList;

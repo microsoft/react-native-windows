@@ -3,6 +3,7 @@
 
 #include "TestInstance.h"
 
+using namespace facebook::react;
 using namespace folly;
 
 using std::make_unique;
@@ -11,109 +12,117 @@ using std::move;
 using std::shared_ptr;
 using std::string;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
 #pragma region TestViewManager members
 
-TestViewManager::TestViewManager(const char* name) : m_name { name } {}
+TestViewManager::TestViewManager(const char *name) : m_name{name} {}
 
-const char* TestViewManager::GetName() const
-{
-	return m_name.c_str();
+const char *TestViewManager::GetName() const {
+  return m_name.c_str();
 }
 
-dynamic TestViewManager::GetExportedViewConstants() const
-{
+dynamic TestViewManager::GetExportedViewConstants() const {
   return dynamic();
 }
 
-dynamic TestViewManager::GetCommands() const
-{
+dynamic TestViewManager::GetCommands() const {
   return dynamic();
 }
 
-dynamic TestViewManager::GetNativeProps() const
-{
+dynamic TestViewManager::GetNativeProps() const {
   return folly::dynamic::object("dummyprop", "string");
 }
 
-ShadowNode* TestViewManager::createShadow() const
-{
+ShadowNode *TestViewManager::createShadow() const {
   return new TestShadowNode();
 }
 
-void TestViewManager::destroyShadow(ShadowNode*) const {}
+void TestViewManager::destroyShadow(ShadowNode *) const {}
 
-dynamic TestViewManager::GetConstants() const
-{
-  folly::dynamic constants = folly::dynamic::object
-  ("Constants", GetExportedViewConstants())
-    ("Commands", GetCommands())
-    ("NativeProps", GetNativeProps());
+dynamic TestViewManager::GetConstants() const {
+  folly::dynamic constants =
+      folly::dynamic::object("Constants", GetExportedViewConstants())(
+          "Commands", GetCommands())("NativeProps", GetNativeProps());
 
-  const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
+  const auto bubblingEventTypesConstants =
+      GetExportedCustomBubblingEventTypeConstants();
   if (!bubblingEventTypesConstants.empty())
     constants["bubblingEventTypes"] = bubblingEventTypesConstants;
-  const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
+  const auto directEventTypesConstants =
+      GetExportedCustomDirectEventTypeConstants();
   if (!directEventTypesConstants.empty())
     constants["directEventTypes"] = directEventTypesConstants;
 
   return constants;
 }
 
-dynamic TestViewManager::GetExportedCustomBubblingEventTypeConstants() const
-{
+dynamic TestViewManager::GetExportedCustomBubblingEventTypeConstants() const {
   return dynamic::object();
 }
 
-dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const
-{
+dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const {
   return dynamic::object();
 }
 
-#pragma endregion // TestViewManager members
+#pragma endregion TestViewManager members
 
 #pragma region TestNativeUIManager members
 
-void TestNativeUIManager::configureNextLayoutAnimation(folly::dynamic&& config, facebook::xplat::module::CxxModule::Callback success, facebook::xplat::module::CxxModule::Callback error) {}
+void TestNativeUIManager::configureNextLayoutAnimation(
+    folly::dynamic &&config,
+    facebook::xplat::module::CxxModule::Callback success,
+    facebook::xplat::module::CxxModule::Callback error) {}
 
 void TestNativeUIManager::destroy() {}
 
-ShadowNode* TestNativeUIManager::createRootShadowNode(IReactRootView* rootView)
-{
+ShadowNode *TestNativeUIManager::createRootShadowNode(
+    IReactRootView *rootView) {
   return new TestShadowNode();
 }
 
-void TestNativeUIManager::destroyRootShadowNode(ShadowNode* node)
-{
+void TestNativeUIManager::destroyRootShadowNode(ShadowNode *node) {
   delete node;
 }
 
-void TestNativeUIManager::removeRootView(ShadowNode& rootNode) {}
+void TestNativeUIManager::removeRootView(ShadowNode &rootNode) {}
 
-void TestNativeUIManager::setHost(INativeUIManagerHost* host) {}
+void TestNativeUIManager::setHost(INativeUIManagerHost *host) {}
 
 void TestNativeUIManager::onBatchComplete() {}
 
 void TestNativeUIManager::ensureInBatch() {}
 
-void TestNativeUIManager::measure(facebook::react::ShadowNode& shadowNode, facebook::react::ShadowNode& shadowRoot, facebook::xplat::module::CxxModule::Callback callback) {}
+void TestNativeUIManager::measure(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::react::ShadowNode &shadowRoot,
+    facebook::xplat::module::CxxModule::Callback callback) {}
 
-void TestNativeUIManager::AddRootView(facebook::react::ShadowNode& shadowNode, facebook::react::IReactRootView* pReactRootView) {}
+void TestNativeUIManager::AddRootView(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::react::IReactRootView *pReactRootView) {}
 
-void TestNativeUIManager::CreateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
+void TestNativeUIManager::CreateView(
+    facebook::react::ShadowNode &shadowNode,
+    folly::dynamic /*ReadableMap*/ props) {}
 
-void TestNativeUIManager::AddView(facebook::react::ShadowNode& parentShadowNode, facebook::react::ShadowNode& childShadowNode, uint64_t index) {}
+void TestNativeUIManager::AddView(
+    facebook::react::ShadowNode &parentShadowNode,
+    facebook::react::ShadowNode &childShadowNode,
+    uint64_t index) {}
 
-void TestNativeUIManager::RemoveView(facebook::react::ShadowNode& shadowNode, bool removeChildren) {}
+void TestNativeUIManager::RemoveView(
+    facebook::react::ShadowNode &shadowNode,
+    bool removeChildren) {}
 
-void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode) {}
+void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
+}
 
-void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
+void TestNativeUIManager::UpdateView(
+    facebook::react::ShadowNode &shadowNode,
+    folly::dynamic /*ReadableMap*/ props) {}
 
-#pragma endregion // TestNativeUIManager members
+#pragma endregion TestNativeUIManager members
 
 #pragma region TestShadowNode members
 
@@ -121,7 +130,7 @@ void TestShadowNode::onDropViewInstance() {}
 
 void TestShadowNode::removeAllChildren() {}
 
-void TestShadowNode::AddView(ShadowNode& child, int64_t index) {}
+void TestShadowNode::AddView(ShadowNode &child, int64_t index) {}
 
 void TestShadowNode::RemoveChildAt(int64_t indexToRemove) {}
 
@@ -129,4 +138,4 @@ void TestShadowNode::createView() {}
 
 #pragma endregion
 
-}}} // namespace facebook::react::test
+} // namespace Microsoft::React::Test

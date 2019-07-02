@@ -7,22 +7,32 @@
 
 #include <folly/dynamic.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class RawTextViewManager : public ViewManagerBase
-{
+class RawTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
-public:
-  RawTextViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
+ public:
+  RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
-  void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height) override;
+  const char *GetName() const override;
+  void UpdateProperties(
+      ShadowNodeBase *nodeToUpdate,
+      const folly::dynamic &reactDiffMap) override;
+
+  void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      XamlView viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
   bool RequiresYogaNode() const override;
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} }
+} // namespace uwp
+} // namespace react
