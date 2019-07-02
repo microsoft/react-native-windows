@@ -26,8 +26,7 @@ namespace uwp {
 
 class ReactControl : public std::enable_shared_from_this<ReactControl>, public IXamlReactControl {
  public:
-  ReactControl(IXamlRootView *parent, XamlView rootView)
-      : m_pParent(parent), m_xamlRootView(rootView) {}
+  ReactControl(IXamlRootView *parent, XamlView rootView);
 
   virtual ~ReactControl();
 
