@@ -878,7 +878,7 @@ export const examples = [
             returnKeyType="next"
             blurOnSubmit={true}
             multiline={true}
-            onSubmitEditing={event => Alert(event.nativeEvent.text)}
+            onSubmitEditing={event => Alert.alert(event.nativeEvent.text)}
           />
         </View>
       );
