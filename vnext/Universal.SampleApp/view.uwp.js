@@ -99,8 +99,8 @@ export default class Bootstrap extends Component {
                 ? styles.radial
                 : styles.noBorder
               : this.state.radius
-              ? styles.outerBorder
-              : styles.innerBorder
+                ? styles.outerBorder
+                : styles.innerBorder
           }>
           <Text>The text!</Text>
         </View>
