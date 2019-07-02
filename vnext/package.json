@@ -63,6 +63,8 @@
     "@types/es6-promise": "0.0.32",
     "@types/react": "16.8.15",
     "@types/react-native": "~0.57.51",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
     "eslint": "5.1.0",
     "eslint-plugin-prettier": "2.6.0",
     "just-scripts": "^0.24.2",
