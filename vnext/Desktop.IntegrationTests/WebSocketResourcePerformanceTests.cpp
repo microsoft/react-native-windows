@@ -4,11 +4,9 @@
 #include <CppUnitTest.h>
 #include <IWebSocket.h>
 
-// clang-format off
-// windows.h needs to be included before TlHelp32.h
 #include <Windows.h>
+
 #include <TlHelp32.h>
-// clang-format on
 
 // Standard library includes
 #include <math.h>
@@ -49,7 +47,7 @@ return -1;
 ///
 TEST_METHOD(ProcessThreadsPerResource) {
   const int resourceTotal = 50; // About 3 seconds total running time. 6 if we
-                                // increase this value to 100.
+  // increase this value to 100.
   const int maxWriteCount = 10;
   const int expectedThreadsPerResource = 3;
   const int startThreadCount = GetCurrentThreadCount();
@@ -73,7 +71,7 @@ TEST_METHOD(ProcessThreadsPerResource) {
           threadCount.store(count);
       });
       ws->SetOnClose([this, &threadCount](
-                         IWebSocket::CloseCode, const string & /*reason*/) {
+          IWebSocket::CloseCode, const string & /*reason*/) {
         auto count = this->GetCurrentThreadCount();
         if (count > threadCount.load())
           threadCount.store(count);

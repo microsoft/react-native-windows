@@ -4,11 +4,9 @@
 #include "unicode.h"
 #include "utilities.h"
 
-// clang-format off
-// windows.h needs to be included before stringapiset.h
 #include "windows.h"
+
 #include "stringapiset.h"
-// clang-format on
 
 #include <cassert>
 #include <cstring>
@@ -50,7 +48,7 @@ std::wstring utf8ToUtf16(const char *utf8, size_t utf8Len) {
       utf8Length, // Length of the source UTF-8 string, in chars.
       nullptr, // Do not convert during this step, instead, request the size
       0 //   of the destination buffer, in wchar_ts, excluding the
-        //   null termination character.
+      //   null termination character.
   );
 
   if (utf16Length == 0) {
@@ -77,8 +75,8 @@ std::wstring utf8ToUtf16(const char *utf8, size_t utf8Len) {
       utf8, // Source UTF-8 string pointer.
       utf8Length, // Length of source UTF-8 string, in chars.
       &utf16[0], // Pointer to destination buffer. This is fine because the
-                 //   the C++11 standard specifies that the elements of a
-                 //   std::basic_string are stored continuously.
+      //   the C++11 standard specifies that the elements of a
+      //   std::basic_string are stored continuously.
       utf16Length // Size of destination buffer, in wchar_ts.
   );
 
@@ -133,7 +131,7 @@ std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Len) {
       utf16Length, // Length of the source UTF-16 string, in wchar_ts.
       nullptr, // Do not convert during this step, instead, request the size
       0, //   of the destination buffer, in chars, excluding the
-         //   null termination character.
+      //   null termination character.
       nullptr, // WideCharToMultiByte requires the last two parameters to be
       nullptr //   nullptrs when converting to UTF-8.
   );
@@ -162,8 +160,8 @@ std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Len) {
       utf16, // Source UTF-16 string pointer.
       utf16Length, // Length of the source UTF-16 string, in wchar_ts.
       &utf8[0], // Pointer to destination buffer. This is fine because the
-                //   the C++11 standard specifies that the elements of a
-                //   std::basic_string are stored continuously.
+      //   the C++11 standard specifies that the elements of a
+      //   std::basic_string are stored continuously.
       utf8Length, // Size of destination buffer, in chars.
       nullptr, // WideCharToMultiByte requires the last two parameters to be
       nullptr //   nullptrs when converting to UTF-8.
