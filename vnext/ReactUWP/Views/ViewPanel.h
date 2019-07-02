@@ -4,23 +4,25 @@
 #pragma once
 
 #include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
-namespace react { namespace uwp {
+#include "cppwinrt/ViewPanel.g.h"
 
-struct ViewPanel : winrt::Windows::UI::Xaml::Controls::PanelT<ViewPanel>
+namespace winrt::react::uwp::implementation
 {
-  using Super = winrt::Windows::UI::Xaml::Controls::PanelT<ViewPanel>;
-private:
+
+//
+// ViewPanel is our custom Panel used by ViewViewManager
+//
+struct ViewPanel : ViewPanelT<ViewPanel>
+{
+  using Super = ViewPanelT<ViewPanel>;
+
+public:
   // Constructors
   ViewPanel();
-
-public:
-  static winrt::com_ptr<ViewPanel> Create();
-
-public:
-  template <typename D, typename... Args> friend auto winrt::make_self(Args&&... args);
 
   // Overrides
   virtual winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
@@ -35,8 +37,8 @@ public:
   winrt::Windows::UI::Xaml::Controls::Border GetOuterBorder();
 
   // Public Properties
-  winrt::Windows::UI::Xaml::Media::Brush Background() { return GetValue(BackgroundProperty()).try_as<winrt::Windows::UI::Xaml::Media::Brush>(); }
-  void Background(winrt::Windows::UI::Xaml::Media::Brush const& value);
+  winrt::Windows::UI::Xaml::Media::Brush ViewBackground() { return GetValue(ViewBackgroundProperty()).as<winrt::Windows::UI::Xaml::Media::Brush>(); }
+  void ViewBackground(winrt::Windows::UI::Xaml::Media::Brush const& value);
 
   winrt::Windows::UI::Xaml::Thickness BorderThickness() { return winrt::unbox_value<winrt::Windows::UI::Xaml::Thickness>(GetValue(BorderThicknessProperty())); }
   void BorderThickness(winrt::Windows::UI::Xaml::Thickness const& value);
@@ -50,22 +52,21 @@ public:
   bool ClipChildren() { return winrt::unbox_value<bool>(GetValue(ClipChildrenProperty())); }
   void ClipChildren(bool value);
 
-public:
   // ViewPanel Properties
-  static winrt::Windows::UI::Xaml::DependencyProperty BorderBrushProperty();
+  static winrt::Windows::UI::Xaml::DependencyProperty ViewBackgroundProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty BorderThicknessProperty();
+  static winrt::Windows::UI::Xaml::DependencyProperty BorderBrushProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty CornerRadiusProperty();
-  static winrt::Windows::UI::Xaml::DependencyProperty BackgroundProperty();
   static winrt::Windows::UI::Xaml::DependencyProperty ClipChildrenProperty();
 
   // Attached Properties
   static winrt::Windows::UI::Xaml::DependencyProperty TopProperty();
-  static void SetTop(winrt::Windows::UI::Xaml::UIElement& element, double value);
-  static double GetTop(winrt::Windows::UI::Xaml::UIElement& element) { return winrt::unbox_value<double>(element.GetValue(TopProperty())); }
+  static void SetTop(winrt::Windows::UI::Xaml::UIElement const& element, double value);
+  static double GetTop(winrt::Windows::UI::Xaml::UIElement const& element) { return winrt::unbox_value<double>(element.GetValue(TopProperty())); }
 
   static winrt::Windows::UI::Xaml::DependencyProperty LeftProperty();
-  static void SetLeft(winrt::Windows::UI::Xaml::UIElement& element, double value);
-  static double GetLeft(winrt::Windows::UI::Xaml::UIElement& element) { return winrt::unbox_value<double>(element.GetValue(LeftProperty())); }
+  static void SetLeft(winrt::Windows::UI::Xaml::UIElement const& element, double value);
+  static double GetLeft(winrt::Windows::UI::Xaml::UIElement const& element) { return winrt::unbox_value<double>(element.GetValue(LeftProperty())); }
 
 private:
   void Remove(winrt::Windows::UI::Xaml::UIElement element) const;
@@ -73,8 +74,6 @@ private:
   void UpdateClip(winrt::Windows::Foundation::Size& finalSize);
 
 private:
-  // Properties: Background is not managed as a DP so it won't conflict with the parent Background property.
-  //std::optional<winrt::Windows::UI::Xaml::Media::Brush> m_optBackgroundBrush;
   bool m_propertiesChanged { false };
 
   // Child Elements
@@ -86,4 +85,20 @@ private:
   static void PositionPropertyChanged(winrt::Windows::UI::Xaml::DependencyObject sender, winrt::Windows::UI::Xaml::DependencyPropertyChangedEventArgs e);
 };
 
-} }
+}
+
+namespace winrt::react::uwp::factory_implementation
+{
+  struct ViewPanel : ViewPanelT<ViewPanel, implementation::ViewPanel>
+  {
+  };
+}
+
+namespace react::uwp
+{
+  // Issue #2172: Calling static members on winrt::react::uwp::ViewPanel fails to call
+  // down into winrt::react::uwp::implementation::ViewPanel because of how we're
+  // using cppwinrt. This workaround is so that consumers in react::uwp can just call ViewPanel
+
+  using ViewPanel = winrt::react::uwp::implementation::ViewPanel;
+}

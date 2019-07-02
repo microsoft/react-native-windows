@@ -20,6 +20,7 @@ namespace react {
     {
       std::string uri;
       std::string method;
+      std::string bundleRootPath;
       folly::dynamic headers;
       double width = 0;
       double height = 0;
@@ -62,5 +63,6 @@ namespace react {
 
     // Helper functions
     winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source);
+    winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageInlineDataAsync(ImageSource source);
   }
 } // namespace react::uwp

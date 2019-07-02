@@ -52,11 +52,16 @@ public:
 
   // Other public functions
   void DirtyYogaNode(int64_t tag);
+  void AddBatchCompletedCallback(std::function<void()> callback);
 
   // For unparented node like Flyout, XamlRoot should be set to handle XamlIsland/AppWindow scenarios.
   // Since it doesn't have parent, and all nodes in the tree should have the same XamlRoot,
   // this function iterates all roots and try to get a valid XamlRoot.
   winrt::XamlRoot tryGetXamlRoot();
+
+  // Searches itself and its parent to get a valid XamlView.
+  // Like Mouse/Keyboard, the event source may not have matched XamlView.
+  XamlView reactPeerOrContainerFrom(winrt::FrameworkElement fe);
 
 private:
   void DoLayout();
@@ -70,6 +75,7 @@ private:
   std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
   std::vector<winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
+  std::vector<std::function<void()>> m_batchCompletedCallbacks;
 };
 
 } }

@@ -83,10 +83,10 @@ static std::vector<MethodCall> sandboxHostParseMethodCalls(folly::dynamic&& json
     }
 
     methodCalls.emplace_back(
-      static_cast<int>(moduleIds[i].getInt()),
-      static_cast<int>(methodIds[i].getInt()),
+      static_cast<int>(moduleIds[i].asInt()),
+      static_cast<int>(methodIds[i].asInt()),
       std::move(params[i]),
-      static_cast<int>(callIds[i].getInt()));
+      static_cast<int>(callIds[i].asInt()));
   }
 
   return methodCalls;
@@ -131,7 +131,7 @@ static std::pair<std::vector<MethodCall>, std::vector<MethodCall>> sandboxParseM
         folly::to<std::string>("Did not get valid calls back from JS: %s", folly::toJson(jsonData)));
     }
     else {
-      callId = static_cast<int>(jsonData[REQUEST_CALLID].getInt());
+      callId = static_cast<int>(jsonData[REQUEST_CALLID].asInt());
     }
   }
 
@@ -144,17 +144,17 @@ static std::pair<std::vector<MethodCall>, std::vector<MethodCall>> sandboxParseM
         folly::to<std::string>("Call argument isn't an array"));
     }
 
-    auto moduleId = moduleIds[i].getInt();
+    auto moduleId = moduleIds[i].asInt();
     if (moduleId < maxInprocModuleCount) {
       inprocMethodCalls.emplace_back(
         static_cast<int>(moduleId),
-        static_cast<int>(methodIds[i].getInt()),
+        static_cast<int>(methodIds[i].asInt()),
         std::move(params[i]),
         callId);
     } else {
       remoteMethodCalls.emplace_back(
         static_cast<int>(moduleId),
-        static_cast<int>(methodIds[i].getInt()),
+        static_cast<int>(methodIds[i].asInt()),
         std::move(params[i]),
         callId);
     }

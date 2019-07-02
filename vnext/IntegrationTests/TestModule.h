@@ -8,9 +8,8 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 class TestModule : public facebook::xplat::module::CxxModule
 {
@@ -31,7 +30,7 @@ public:
 
   void shouldResolve();
 
-  #pragma endregion // TestModule.js methods
+  #pragma endregion TestModule.js methods
 
   #pragma region CxxModule members
 
@@ -41,7 +40,7 @@ public:
 
   std::vector<Method> getMethods() override;
 
-  #pragma endregion // CxxModule members
+  #pragma endregion CxxModule members
 };
 
 class TestDeviceInfoModule : public facebook::xplat::module::CxxModule
@@ -58,4 +57,4 @@ public:
   auto getMethods()->std::vector<Method> override;
 };
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

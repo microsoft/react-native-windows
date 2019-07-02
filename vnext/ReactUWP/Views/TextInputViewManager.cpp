@@ -94,12 +94,6 @@ private:
   uint32_t m_mostRecentEventCount{ 0 }; // EventCount from javascript
 };
 
-enum class TextInputCommands
-{
-  SetFocus = 1,
-  Blur = 2,
-};
-
 void TextInputShadowNode::createView()
 {
   Super::createView();
@@ -365,18 +359,6 @@ const char* TextInputViewManager::GetName() const
   return "RCTTextInput";
 }
 
-folly::dynamic TextInputViewManager::GetCommands() const
-{
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object
-    ("SetFocus", static_cast<std::underlying_type_t<TextInputCommands>>(TextInputCommands::SetFocus))
-  );
-  commands.update(folly::dynamic::object
-    ("Blur", static_cast<std::underlying_type_t<TextInputCommands>>(TextInputCommands::Blur))
-  );
-  return commands;
-}
-
 folly::dynamic TextInputViewManager::GetNativeProps() const
 {
   auto props = Super::GetNativeProps();
@@ -433,16 +415,24 @@ void TextInputViewManager::DispatchCommand(XamlView viewToUpdate, int64_t comman
   if (textBox == nullptr)
     return;
 
-  switch (static_cast<TextInputCommands>(commandId))
+  switch (static_cast<FocusCommand>(commandId))
   {
-    case TextInputCommands::SetFocus:
+    case FocusCommand::SetFocus:
     {
       textBox.Focus(winrt::FocusState::Programmatic);
       break;
     }
 
-    case TextInputCommands::Blur:
+    case FocusCommand::Blur:
     {
+      auto focusedUIElement = winrt::FocusManager::GetFocusedElement();
+      if (focusedUIElement == nullptr)
+        break;
+
+      // Verify that the textBox hasn't already lost focus.
+      if (focusedUIElement.try_as<winrt::TextBox>() != textBox)
+        break;
+
       auto content = winrt::Windows::UI::Xaml::Window::Current().Content();
       if (content == nullptr)
         break;

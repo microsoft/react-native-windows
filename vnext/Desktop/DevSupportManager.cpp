@@ -13,8 +13,8 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
+#include "Executors/WebSocketJSExecutor.h"
 #include "Utils.h"
-#include "WebSocketJSExecutor.h"
 
 using namespace boost::asio;
 using namespace boost::asio::ip;
@@ -22,6 +22,8 @@ using namespace boost::beast;
 using namespace boost::beast::http;
 using namespace Concurrency;
 using namespace std;
+
+using Microsoft::React::WebSocketJSExecutor;
 
 namespace facebook { namespace react {
 

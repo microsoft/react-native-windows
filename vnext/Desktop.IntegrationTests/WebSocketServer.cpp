@@ -13,9 +13,8 @@ using std::string;
 
 namespace websocket = boost::beast::websocket;
 
-namespace Microsoft {
-namespace React {
-namespace Test {
+namespace Microsoft::React::Test
+{
 
 #pragma region BaseWebSocketSession
 
@@ -128,7 +127,7 @@ void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transfer
   Read();
 }
 
-#pragma endregion // BaseWebSocketSession
+#pragma endregion BaseWebSocketSession
 
 #pragma region WebSocketSession
 
@@ -148,9 +147,9 @@ std::shared_ptr<BaseWebSocketSession<boost::asio::ip::tcp::socket>> WebSocketSes
   return this->shared_from_this();
 }
 
-#pragma endregion // BaseWebSocketSession
+#pragma endregion BaseWebSocketSession
 
-#pragma endregion // WebSocketSession
+#pragma endregion WebSocketSession
 
 #pragma region SecureWebSocketSession
 
@@ -246,7 +245,7 @@ std::shared_ptr<BaseWebSocketSession<boost::asio::ssl::stream<boost::asio::ip::t
   return this->shared_from_this();
 }
 
-#pragma endregion // BaseWebSocketSession
+#pragma endregion BaseWebSocketSession
 
 #pragma region IWebSocketSession
 
@@ -267,9 +266,9 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec)
   Accept();
 }
 
-#pragma endregion // IWebSocketSession
+#pragma endregion IWebSocketSession
 
-#pragma endregion // SecureWebSocketSession
+#pragma endregion SecureWebSocketSession
 
 #pragma region WebSocketServer
 
@@ -385,6 +384,6 @@ void WebSocketServer::SetOnError(function<void(IWebSocket::Error&&)>&& func)
   m_callbacks.OnError = std::move(func);
 }
 
-#pragma endregion // WebSocketServer
+#pragma endregion WebSocketServer
 
-} } } // Microsoft::React::Test
+} // Microsoft::React::Test

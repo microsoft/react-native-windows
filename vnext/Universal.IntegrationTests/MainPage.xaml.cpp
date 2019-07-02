@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 //
 // MainPage.xaml.cpp
@@ -8,7 +8,7 @@
 #include "pch.h"
 #include "MainPage.xaml.h"
 
-using namespace facebook;
+using namespace Microsoft::React::Test;
 
 using namespace Platform;
 using namespace Windows::Foundation;

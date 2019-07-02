@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <WebSocketJSExecutor.h>
+#include <Executors/WebSocketJSExecutor.h>
 
-using namespace facebook::react;
+using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 TEST_CLASS(WebSocketJSExecutorTest)

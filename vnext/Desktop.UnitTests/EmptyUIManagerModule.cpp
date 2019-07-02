@@ -6,11 +6,11 @@
 
 using namespace std;
 using namespace folly;
+using namespace facebook::react;
 using namespace facebook::xplat;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 std::string NodeRegistry::PrintTree()
 {
@@ -79,7 +79,7 @@ void EmptyUIManager::setChildren(int64_t viewTag, folly::dynamic /*ReadableMap*/
 {
   auto& parent = m_nodeRegistry->m_allNodes[viewTag];
   for (auto&& childTag : childrenTags)
-    parent->m_children.push_back(childTag.getInt());
+    parent->m_children.push_back(childTag.asInt());
 }
 
 EmptyUIManagerModule::EmptyUIManagerModule(std::unique_ptr<EmptyUIManager> sample)
@@ -137,6 +137,4 @@ auto EmptyUIManagerModule::getMethods() -> std::vector<Method>
   };
 }
 
-} // namespace test
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

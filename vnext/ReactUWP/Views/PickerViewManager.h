@@ -14,12 +14,9 @@ public:
   PickerViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
   const char* GetName() const override;
-  folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
 
   facebook::react::ShadowNode* createShadow() const override;
-
-  void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 

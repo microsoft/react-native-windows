@@ -19,10 +19,10 @@ using std::unique_ptr;
 
 using boostecr = boost::system::error_code const&;
 
-namespace facebook {
-namespace react {
-namespace experimental {
-
+namespace Microsoft::React
+{
+namespace Experimental
+{
 #pragma region HttpResource members
 
 HttpResource::HttpResource() noexcept
@@ -195,19 +195,19 @@ void HttpResource::SetOnError(std::function<void(const std::string&)>&& handler)
   m_errorHandler = move(handler);
 }
 
-#pragma endregion // Handler setters
+#pragma endregion Handler setters
 
-#pragma endregion // HttpResource members
+#pragma endregion HttpResource members
 
-} // namespace facebook::react::experimental
+} // namespace Microsoft::React::Experimental
 
 #pragma region IHttpResource static members
 
 /*static*/ unique_ptr<IHttpResource> IHttpResource::Make() noexcept
 {
-  return unique_ptr<IHttpResource>(new experimental::HttpResource());
+  return unique_ptr<IHttpResource>(new Experimental::HttpResource());
 }
 
-#pragma endregion // IHttpResource static members
+#pragma endregion IHttpResource static members
 
-} } // namespace facebook::react
+} // namespace Microsoft::React

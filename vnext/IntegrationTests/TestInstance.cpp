@@ -3,6 +3,7 @@
 
 #include "TestInstance.h"
 
+using namespace facebook::react;
 using namespace folly;
 
 using std::make_unique;
@@ -11,9 +12,8 @@ using std::move;
 using std::shared_ptr;
 using std::string;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 #pragma region TestViewManager members
 
@@ -73,7 +73,7 @@ dynamic TestViewManager::GetExportedCustomDirectEventTypeConstants() const
   return dynamic::object();
 }
 
-#pragma endregion // TestViewManager members
+#pragma endregion TestViewManager members
 
 #pragma region TestNativeUIManager members
 
@@ -113,7 +113,7 @@ void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode) {
 
 void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
-#pragma endregion // TestNativeUIManager members
+#pragma endregion TestNativeUIManager members
 
 #pragma region TestShadowNode members
 
@@ -129,4 +129,4 @@ void TestShadowNode::createView() {}
 
 #pragma endregion
 
-}}} // namespace facebook::react::test
+} // namespace Microsoft::React::Test

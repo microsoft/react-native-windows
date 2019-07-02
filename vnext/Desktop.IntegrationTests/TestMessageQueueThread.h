@@ -7,9 +7,8 @@
 #include <Windows.h>
 #include <queue>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 class TestMessageQueueThread : public facebook::react::MessageQueueThread
 {
@@ -42,7 +41,7 @@ public:
   // Once quitSynchronous() returns, no further work should run on the queue.
   void quitSynchronous() noexcept override;
 
-  #pragma endregion // MessageQueueThread members
+  #pragma endregion MessageQueueThread members
 
 private:
   enum class State
@@ -77,4 +76,4 @@ private:
   std::queue<VoidFunctor> m_queue;
 };
 
-}}}//namespace facebook::react::test
+} //namespace Microsoft::React::Test

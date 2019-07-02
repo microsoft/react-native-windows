@@ -3,9 +3,8 @@
 
 #include "TestRootView.h"
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 TestRootView::TestRootView(const std::string& name, int64_t width, int64_t height)
   : m_name { name }
@@ -43,4 +42,4 @@ void TestRootView::SetTag(int64_t tag)
   m_tag = tag;
 }
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

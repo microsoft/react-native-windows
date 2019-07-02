@@ -12,7 +12,7 @@ import {
   View,
   Text,
   Switch,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 const largeImageUri = 'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
@@ -22,7 +22,7 @@ export default class Bootstrap extends Component {
   state = {
     selectedResizeMode: 'center',
     useLargeImage: false,
-    imageUrl: 'http://facebook.github.io/react-native/img/header_logo.png'
+    imageUrl: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
   switchImageUrl = () => {
@@ -57,7 +57,7 @@ export default class Bootstrap extends Component {
         <View style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: this.state.imageUrl }} resizeMode={this.state.selectedResizeMode}/>
         </View>
-        
+
       </View>
     );
   }
@@ -68,27 +68,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 5
+    marginBottom: 5,
   },
   rowContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   imageContainer: {
     marginTop: 5,
     backgroundColor: 'orange',
     height: '50%',
-    width: '75%'
+    width: '75%',
   },
   image: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   title: {
     fontWeight: 'bold',
     margin: 5,
-    width: 80
-  }
+    width: 80,
+  },
 });
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

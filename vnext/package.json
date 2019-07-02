@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.30",
+  "version": "0.59.0-vnext.57",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,6 +15,8 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
+    "lint": "just-scripts eslint",
+    "lint:fix": "eslint ./**/*.js --fix",
     "watch": "tsc -w"
   },
   "disabledTasks": [
@@ -47,29 +49,30 @@
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "prop-types": "^15.5.8",
-    "react-timer-mixin": "^0.13.2",
     "react-native-local-cli": "^1.0.0-alpha.5",
+    "react-timer-mixin": "^0.13.2",
     "regenerator-runtime": "^0.13.2",
-    "username": "^3.0.0",
     "shelljs": "^0.7.8",
+    "username": "^3.0.0",
     "uuid": "^2.0.1",
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
+    "@react-native-community/eslint-config": "^0.0.5",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/react": "16.8.15",
     "@types/react-native": "~0.57.51",
-    "just-scripts": "^0.20.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "2.6.2",
+    "just-scripts": "^0.23.0",
+    "prettier": "^1.18.2",
     "react": "16.8.3",
-    "tslint": "^5.11.0",
-    "tslint-microsoft-contrib": "^5.0.1",
-    "tslint-react": "^4",
-    "typescript": "3.5.1",
-    "react-native": "0.59.0-microsoft.5"
+    "react-native": "0.59.0-microsoft.8",
+    "typescript": "3.5.1"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.5 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.5.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.8 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.8.tar.gz"
   }
 }

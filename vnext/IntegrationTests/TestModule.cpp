@@ -12,9 +12,8 @@ using std::move;
 using std::string;
 using std::vector;
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 #pragma region TestModule members
 
@@ -45,7 +44,7 @@ void TestModule::shouldResolve()
 {
 }
 
-#pragma endregion // TestModule.js methods
+#pragma endregion TestModule.js methods
 
 string TestModule::getName()
 {
@@ -80,7 +79,7 @@ vector<module::CxxModule::Method> TestModule::getMethods()
   };
 }
 
-#pragma endregion // TestModule members
+#pragma endregion TestModule members
 
 #pragma region TestDeviceInfoModule members
 
@@ -108,6 +107,6 @@ auto TestDeviceInfoModule::getMethods() -> vector<Method>
   return {};
 }
 
-#pragma endregion // TestDeviceInfoModule members
+#pragma endregion TestDeviceInfoModule members
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

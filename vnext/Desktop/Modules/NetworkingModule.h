@@ -6,9 +6,8 @@
 #include <cxxreact/CxxModule.h>
 #include <IHttpResource.h>
 
-namespace facebook {
-namespace react {
-
+namespace Microsoft::React
+{
 // NetworkingModule
 // provides the 'Networking' native module backing RCTNetworking.js
 class NetworkingModule : public facebook::xplat::module::CxxModule
@@ -32,9 +31,9 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   std::vector<Method> getMethods() override;
 
-  #pragma endregion // CxxModule members
+  #pragma endregion CxxModule members
 
   static const char* name;
 };
 
-} } // namespace facebook::react
+} // namespace Microsoft::React

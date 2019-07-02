@@ -3,8 +3,10 @@
 
 #include "pch.h"
 
-#include "WebSocketJSExecutorFactory.h"
+#include <WebSocketJSExecutorFactory.h>
 #include "WebSocketJSExecutor.h"
+
+using Microsoft::React::WebSocketJSExecutor;
 
 namespace facebook {
 namespace react {
@@ -26,6 +28,6 @@ std::unique_ptr<JSExecutor> WebSocketJSExecutorFactory::createJSExecutor(
     return std::unique_ptr<JSExecutor>(new WebSocketJSExecutor(delegate, jsQueue));
 }
 
-#pragma endregion // WebSocketJSExecutorFactory members
+#pragma endregion WebSocketJSExecutorFactory members
 
 }} // namespace facebook::react

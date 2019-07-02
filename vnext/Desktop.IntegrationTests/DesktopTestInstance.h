@@ -6,14 +6,13 @@
 #include <TestInstance.h>
 #include <TestRootView.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 class DesktopTestInstance : public ITestInstance
 {
   std::shared_ptr<facebook::react::InstanceWrapper> m_instanceWrapper;
-  std::unique_ptr<facebook::react::test::TestRootView> m_rootView;
+  std::unique_ptr<TestRootView> m_rootView;
 
 public:
 	DesktopTestInstance(std::shared_ptr<facebook::react::InstanceWrapper> instanceWrapper) noexcept;
@@ -24,7 +23,7 @@ public:
   void DetachRootView() noexcept;
   std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
 
-  #pragma endregion // ITestInstance members
+  #pragma endregion ITestInstance members
 };
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

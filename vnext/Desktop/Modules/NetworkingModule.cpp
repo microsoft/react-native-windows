@@ -15,8 +15,8 @@ using std::string;
 using std::unique_ptr;
 using std::vector;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React
+{
 
 #pragma region NetworkingModule static members
 
@@ -143,6 +143,6 @@ vector<facebook::xplat::module::CxxModule::Method> NetworkingModule::getMethods(
   };
 }
 
-#pragma endregion // CxxModule members
+#pragma endregion CxxModule members
 
-} } // namespace facebook::react
+} // namespace Microsoft::React

@@ -8,13 +8,13 @@ const path = require('path');
 const fs = require('fs');
 const {spawn} = require('child_process');
 
-if (!process.env.VCINSTALLDIR) throw new Error('Cannot find Visual Studio.');
+if (!process.env.VCINSTALLDIR) {throw new Error('Cannot find Visual Studio.');}
 
 const vstestPath = path.join(
     process.env.VCINSTALLDIR,
     'Common7/IDE/CommonExtensions/Microsoft/TestWindow/vstest.console.exe');
 if (!fs.existsSync(vstestPath))
-  throw new Error('Unable to find vstest.console.exe');
+  {throw new Error('Unable to find vstest.console.exe');}
 
 console.log(JSON.stringify(process.argv));
 
@@ -29,14 +29,14 @@ if (process.argv.length === 3) {
 }
 
 let BuildPlatform = process.env.BuildPlatform;
-if (!BuildPlatform) BuildPlatform = 'x64';
+if (!BuildPlatform) {BuildPlatform = 'x64';}
 
 let BuildConfiguration = process.env.BuildConfiguration;
-if (!BuildConfiguration) BuildConfiguration = 'Debug';
+if (!BuildConfiguration) {BuildConfiguration = 'Debug';}
 
 const serverEntries = {
   metroServer: null,
-  websocketServer: null
+  websocketServer: null,
 };
 
 function launchMetroServer() {
@@ -54,7 +54,7 @@ function launchMetroServer() {
     });
     serverEntries.metroServer.on('error', (err) => {
       console.error('Metro process failed!' + err.toString());
-      reject(err)
+      reject(err);
     });
 
     serverEntries.metroServer.on('exit', (code) => {
@@ -73,7 +73,7 @@ function launchWebsocketServer() {
     serverEntries.websocketServer = spawn(
         'node',
         [
-          '../node_modules/react-native/IntegrationTests/websocket_integration_test_server.js'
+          '../node_modules/react-native/IntegrationTests/websocket_integration_test_server.js',
         ],
         {cwd: __dirname});
 
@@ -83,7 +83,7 @@ function launchWebsocketServer() {
         resolve();
       }
     });
-    serverEntries.websocketServer.on('error', (err) => {reject(err)})
+    serverEntries.websocketServer.on('error', (err) => {reject(err);});
 
     serverEntries.websocketServer.on('exit', (code) => {
       if (code !== 0) {
@@ -99,7 +99,7 @@ launchMetroServer().then(launchWebsocketServer).then(() => {
   console.log('Running IntegrationTests');
   runBuildCommand(vstestPath, [
     dllPath,
-    '/InIsolation', `/Platform:${BuildPlatform}`
+    '/InIsolation', `/Platform:${BuildPlatform}`,
   ]);
   console.log('Killing test servers');
   serverEntries.metroServer.kill();

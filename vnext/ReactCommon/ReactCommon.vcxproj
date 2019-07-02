@@ -5,10 +5,6 @@
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x86">
-      <Configuration>Debug</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -17,15 +13,10 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x86">
-      <Configuration>Release</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <!-- Kept for Visual Studio compatibility. -->
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -43,9 +34,6 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-  </PropertyGroup>
-  <PropertyGroup Label="NOJSC">
-    <NOJSC>true</NOJSC>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -66,11 +54,6 @@
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(NOJSC)' == 'true'">
-    <ClCompile>
-      <PreprocessorDefinitions>NOJSC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
     <ClCompile>
       <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -95,7 +78,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
   </ImportGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h" />
@@ -110,16 +93,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBigString.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCExecutor.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCLegacyProfiler.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCLegacyTracing.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCMemory.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCNativeModules.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCPerfStats.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCSamplingProfiler.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCTracing.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCUtils.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCWebWorker.h" Condition="'$(NOJSC)' != 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSModulesUnbundle.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MessageQueueThread.h" />
@@ -133,15 +106,8 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JavaScriptCore.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCHelpers.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCJSException.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCWrapper.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSException.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\noncopyable.h" Condition="'$(NOJSC)' != 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jschelpers\Value.h" Condition="'$(NOJSC)' != 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\instrumentation.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" Condition="'$(NOJSC)' != 'true'" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
@@ -150,7 +116,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" Condition="'$(NOJSC)' != 'true'" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
@@ -160,33 +126,24 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCExecutor.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCLegacyTracing.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCMemory.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCNativeModules.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCPerfStats.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCSamplingProfiler.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCTracing.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSCUtils.cpp" Condition="'$(NOJSC)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCHelpers.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCJSException.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\JSCWrapper.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\systemJSCWrapper.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jschelpers\Value.cpp" Condition="'$(NOJSC)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp" Condition="'$(NOJSC)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp" Condition="'$(NOJSC)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp"  Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp"  Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp"  Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
@@ -208,7 +165,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ReactNativeDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />

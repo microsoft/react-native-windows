@@ -17,70 +17,44 @@ namespace winrt {
   using namespace Windows::UI::Xaml::Interop;
 }
 
+static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placementModeMinVersion = {
+    {"top", winrt::FlyoutPlacementMode::Top},
+    {"bottom", winrt::FlyoutPlacementMode::Bottom},
+    {"left", winrt::FlyoutPlacementMode::Left},
+    {"right", winrt::FlyoutPlacementMode::Right},
+    {"full", winrt::FlyoutPlacementMode::Full}
+};
+
+static const std::unordered_map<std::string, winrt::FlyoutPlacementMode> placementModeRS5 = {
+  {"top", winrt::FlyoutPlacementMode::Top},
+  {"bottom", winrt::FlyoutPlacementMode::Bottom},
+  {"left", winrt::FlyoutPlacementMode::Left},
+  {"right", winrt::FlyoutPlacementMode::Right},
+  {"full", winrt::FlyoutPlacementMode::Full},
+  {"top-edge-aligned-left", winrt::FlyoutPlacementMode::TopEdgeAlignedLeft},
+  {"top-edge-aligned-right", winrt::FlyoutPlacementMode::TopEdgeAlignedRight},
+  {"bottom-edge-aligned-left", winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft},
+  {"bottom-edge-aligned-right", winrt::FlyoutPlacementMode::BottomEdgeAlignedRight},
+  {"left-edge-aligned-top", winrt::FlyoutPlacementMode::LeftEdgeAlignedTop},
+  {"left-edge-aligned-bottom", winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom},
+  {"right-edge-aligned-top", winrt::FlyoutPlacementMode::RightEdgeAlignedTop},
+  {"right-edge-aligned-bottom", winrt::FlyoutPlacementMode::RightEdgeAlignedBottom}
+};
+
 template<>
 struct json_type_traits<winrt::FlyoutPlacementMode>
 {
   static winrt::FlyoutPlacementMode parseJson(const folly::dynamic& json)
   {
-    winrt::FlyoutPlacementMode placement;
-    if (json == "top")
+    auto placementMode = !!(winrt::Flyout().try_as<winrt::IFlyoutBase5>()) ? placementModeRS5 : placementModeMinVersion;
+    auto iter = placementMode.find(json.asString());
+
+    if (iter != placementMode.end())
     {
-      placement = winrt::FlyoutPlacementMode::Top;
-    }
-    else if (json == "bottom")
-    {
-      placement = winrt::FlyoutPlacementMode::Bottom;
-    }
-    else if (json == "left")
-    {
-      placement = winrt::FlyoutPlacementMode::Left;
-    }
-    else if (json == "right")
-    {
-      placement = winrt::FlyoutPlacementMode::Right;
-    }
-    else if (json == "top-edge-aligned-left")
-    {
-      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedLeft;
-    }
-    else if (json == "top-edge-aligned-right")
-    {
-      placement = winrt::FlyoutPlacementMode::TopEdgeAlignedRight;
-    }
-    else if (json == "bottom-edge-aligned-left")
-    {
-      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft;
-    }
-    else if (json == "bottom-edge-aligned-right")
-    {
-      placement = winrt::FlyoutPlacementMode::BottomEdgeAlignedRight;
-    }
-    else if (json == "left-edge-aligned-top")
-    {
-      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedTop;
-    }
-    else if (json == "right-edge-aligned-top")
-    {
-      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedTop;
-    }
-    else if (json == "left-bottom")
-    {
-      placement = winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom;
-    }
-    else if (json == "right-edge-aligned-bottom")
-    {
-      placement = winrt::FlyoutPlacementMode::RightEdgeAlignedBottom;
-    }
-    else if (json == "full")
-    {
-      placement = winrt::FlyoutPlacementMode::Full;
-    }
-    else
-    {
-    placement = winrt::FlyoutPlacementMode::Top;
+      return iter->second;
     }
 
-    return placement;
+    return winrt::FlyoutPlacementMode::Right;
   }
 };
 
@@ -115,18 +89,21 @@ private:
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
 
-  std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
+  std::unique_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 };
 
 FlyoutShadowNode::~FlyoutShadowNode()
 {
   m_touchEventHanadler->RemoveTouchHandlers();
+  m_previewKeyboardEventHandlerOnRoot->unhook();
 }
 
 void FlyoutShadowNode::AddView(ShadowNode& child, int64_t index)
 {
   auto childView = static_cast<ShadowNodeBase&>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
+  m_previewKeyboardEventHandlerOnRoot->hook(childView);
 
   if (m_flyout != nullptr)
     m_flyout.Content(childView.as<winrt::UIElement>());
@@ -143,7 +120,8 @@ void FlyoutShadowNode::createView()
     m_showOptions = winrt::FlyoutShowOptions();
 
   auto wkinstance = GetViewManager()->GetReactInstance();
-  m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
+  m_touchEventHanadler = std::make_unique<TouchEventHandler>(wkinstance);
+  m_previewKeyboardEventHandlerOnRoot = std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
   m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
   {
@@ -273,12 +251,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic&& props)
     m_showOptions.Position(newPoint);
   }
 
-  if (m_isFlyoutShowOptionsSupported)
-  {
-    winrt::Rect exclusionRect = winrt::Rect(100, 100, 20, 20);
-    m_showOptions.ExclusionRect(exclusionRect);
-  }
-
   if (updateIsOpen)
   {
     if (m_isOpen)
@@ -363,7 +335,7 @@ const char* FlyoutViewManager::GetName() const
 
 XamlView FlyoutViewManager::CreateViewCore(int64_t tag)
 {
-  return ViewPanel::Create().as<XamlView>();
+  return winrt::make<winrt::react::uwp::implementation::ViewPanel>().as<XamlView>();
 }
 
 facebook::react::ShadowNode* FlyoutViewManager::createShadow() const

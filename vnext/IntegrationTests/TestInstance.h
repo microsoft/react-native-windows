@@ -15,9 +15,8 @@
 
 #include <queue>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 struct ITestInstance
 {
@@ -39,14 +38,14 @@ public:
   folly::dynamic GetExportedViewConstants() const override;
   folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
-  ShadowNode* createShadow() const override;
-  void destroyShadow(ShadowNode*) const override;
+  facebook::react::ShadowNode* createShadow() const override;
+  void destroyShadow(facebook::react::ShadowNode*) const override;
 
   folly::dynamic GetConstants() const override;
   folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
-  #pragma endregion // IViewManager members
+  #pragma endregion IViewManager members
 };
 
 class TestNativeUIManager : public facebook::react::INativeUIManager
@@ -81,7 +80,7 @@ public:
   void RemoveChildAt(int64_t indexToRemove) override;
   void createView() override;
 
-  #pragma endregion // ShadowNode overrides
+  #pragma endregion ShadowNode overrides
 };
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

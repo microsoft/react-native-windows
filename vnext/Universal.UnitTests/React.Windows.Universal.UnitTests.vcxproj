@@ -20,15 +20,6 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|x86">
-      <Configuration>Debug</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x86">
-      <Configuration>Release</Configuration>
-      <Platform>x86</Platform>
-    </ProjectConfiguration>
-    <!-- Kept for Visual Studio compatibility. -->
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -62,12 +53,12 @@
     <ClCompile>
       <AdditionalOptions>/await /bigobj %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactUWP;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;GTEST_LANG_CXX11=1;WIN32_LEAN_AND_MEAN;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;WIN32=0;WINRT=1;NOJSC;_HAS_AUTO_PTR_ETC;BOOST_ASIO_WINDOWS_APP;BOOST_BEAST_USE_WIN32_FILE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RN_PLATFORM=uwp;USE_EDGEMODE_JSRT;GTEST_LANG_CXX11=1;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;BOOST_ASIO_WINDOWS_APP;BOOST_BEAST_USE_WIN32_FILE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)\ReactUWP\React.uwp.lib;Kernel32.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;Kernel32.lib;WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
@@ -141,14 +132,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets" Condition="Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" />
+    <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost_system-vc141.1.68.0.0\build\boost_system-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
   </Target>
 </Project>

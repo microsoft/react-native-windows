@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 //
 // MainPage.xaml.h
@@ -9,7 +9,7 @@
 
 #include "MainPage.g.h"
 
-namespace facebook
+namespace Microsoft::React::Test
 {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.

@@ -46,7 +46,9 @@
 // Modules
 #include <AsyncStorageModule.h>
 #include <Modules/AppStateModuleUwp.h>
+#include <Modules/AppThemeModuleUwp.h>
 #include <Modules/ClipboardModule.h>
+#include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -136,7 +138,9 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   std::shared_ptr<DeviceInfo> deviceInfo,
   std::shared_ptr<facebook::react::DevSettings> devSettings,
   const I18nModule::I18nInfo&& i18nInfo,
-  std::shared_ptr<facebook::react::AppState> appstate)
+  std::shared_ptr<facebook::react::AppState> appstate,
+  std::shared_ptr<react::windows::AppTheme> appTheme,
+  std::weak_ptr<IReactInstance> uwpInstance)
 {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -187,8 +191,18 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
     std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
+    react::windows::AppThemeModule::name,
+    [appTheme = std::move(appTheme)]() mutable { return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme)); },
+    messageQueue);
+
+  modules.emplace_back(
     ClipboardModule::name,
     []() { return std::make_unique<ClipboardModule>(); },
+    messageQueue);
+
+  modules.emplace_back(
+    NativeAnimatedModule::name,
+    [uwpInstance = std::move(uwpInstance)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(uwpInstance)); },
     messageQueue);
 
   modules.emplace_back(
@@ -218,13 +232,14 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
   // Objects that must be created on the UI thread
   std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
+  std::shared_ptr<react::windows::AppTheme> appTheme = std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
   std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
 
   // TODO: Figure out threading. What thread should this really be on?
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(m_initThread);
   m_initThread->runOnQueueSync(
-    [this, spThis, deviceInfo, settings, i18nInfo = std::move(i18nInfo), appstate = std::move(appstate)]() mutable
+    [this, spThis, deviceInfo, settings, i18nInfo = std::move(i18nInfo), appstate = std::move(appstate), appTheme = std::move(appTheme)]() mutable
   {
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
@@ -235,6 +250,12 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     devSettings->jsExceptionCallback = std::move(settings.JsExceptionCallback);
     devSettings->useJITCompilation = settings.EnableJITCompilation;
     devSettings->debugHost = settings.DebugHost;
+
+    // In most cases, using the hardcoded ms-appx URI works fine, but there are certain scenarios,
+    // such as in optional packaging, where the developer might need to modify the path, in which
+    // case we should use the custom path instead.
+    devSettings->bundleRootPath = settings.BundleRootPath.empty() ? "ms-appx:///Bundle/" : settings.BundleRootPath;
+    m_bundleRootPath = devSettings->bundleRootPath;
 
     if (settings.UseLiveReload)
     {
@@ -266,7 +287,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance>& spThis, cons
     m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
     // Acquire default modules and then populate with custom modules
-    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate));
+    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(m_uiManager, m_defaultNativeThread, deviceInfo, devSettings, std::move(i18nInfo), std::move(appstate), std::move(appTheme), std::weak_ptr<IReactInstance>(spThis));
 
     if (m_moduleProvider != nullptr)
     {

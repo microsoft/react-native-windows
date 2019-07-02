@@ -25,8 +25,8 @@ namespace {
 const int ConnectTimeoutMilliseconds = 5000;
 }
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React
+{
 
 WebSocketJSExecutor::WebSocketJSExecutor(const shared_ptr<ExecutorDelegate>& delegate, const shared_ptr<MessageQueueThread>& messageQueueThread)
   : m_delegate { delegate }
@@ -304,7 +304,7 @@ void WebSocketJSExecutor::OnMessageReceived(const string& msg)
   auto it_end = parsed.items().end();
   if (it_parsed != it_end)
   {
-    auto replyId = it_parsed->second.getInt();
+    auto replyId = it_parsed->second.asInt();
 
     lock_guard<mutex> lock(m_lockPromises);
     auto it_promise = m_promises.find(static_cast<int>(replyId));
@@ -376,6 +376,6 @@ bool WebSocketJSExecutor::IsInError() const noexcept
   return m_state == State::Error;
 }
 
-#pragma endregion // private members
+#pragma endregion private members
 
-}} // namespace facebook::react
+} // namespace Microsoft::React
