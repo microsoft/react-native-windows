@@ -13,7 +13,6 @@
 #include <IXamlRootView.h>
 #include <Views/ShadowNodeBase.h>
 #include <winrt/Windows.UI.Xaml.h>
-#include "Views/ReactControl.h"
 
 using namespace folly;
 

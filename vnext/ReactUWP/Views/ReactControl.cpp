@@ -37,17 +37,14 @@ ReactControl::~ReactControl() {
   }
 
   // remove safe harbor and child grid from visual tree
-  if (m_focusSafeHarbor)
-  {
-    if (auto root = m_focusSafeHarbor.Parent().try_as<winrt::Panel>())
-    {
+  if (m_focusSafeHarbor) {
+    if (auto root = m_focusSafeHarbor.Parent().try_as<winrt::Panel>()) {
       root.Children().Clear();
     }
   }
 }
 
-std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const
-    noexcept {
+std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const noexcept {
   return m_reactInstance;
 }
 
