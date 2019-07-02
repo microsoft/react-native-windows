@@ -18,6 +18,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="ABI\ABI.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -107,8 +112,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="ABI.idl" />
   </ItemGroup>
 </Project>

@@ -105,19 +105,22 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Midl Include="ABI\ABI.idl" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
-      <DependentUpon>ABI.idl</DependentUpon>
+      <DependentUpon>ABI\ABI.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <DependentUpon>ABI.idl</DependentUpon>
+      <DependentUpon>ABI\ABI.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
-      <DependentUpon>ABI.idl</DependentUpon>
+      <DependentUpon>ABI\ABI.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
@@ -143,14 +146,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
-      <DependentUpon>ABI.idl</DependentUpon>
+      <DependentUpon>ABI\ABI.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ABI\MessageQueueShim.h" />
     <ClInclude Include="ABI\NativeLogEventSource.h">
-      <DependentUpon>ABI.idl</DependentUpon>
+      <DependentUpon>ABI\ABI.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ABI\NativeTraceEventSource.h">
-      <DependentUpon>ABI.idl</DependentUpon>
+      <DependentUpon>ABI\ABI.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
@@ -185,9 +188,6 @@
     <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
       <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="ABI.idl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
