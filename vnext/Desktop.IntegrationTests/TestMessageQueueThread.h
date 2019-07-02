@@ -7,52 +7,49 @@
 #include <Windows.h>
 #include <queue>
 
-namespace Microsoft::React::Test
-{
+namespace Microsoft::React::Test {
 
-class TestMessageQueueThread : public facebook::react::MessageQueueThread
-{
-  class Lock
-  {
-  public:
+class TestMessageQueueThread : public facebook::react::MessageQueueThread {
+  class Lock {
+   public:
     Lock(HANDLE mutex) noexcept;
 
     ~Lock() noexcept;
 
-  private:
+   private:
     HANDLE m_mutex = NULL;
   };
 
-public:
+ public:
   using VoidFunctor = std::function<void()>;
 
-  TestMessageQueueThread(VoidFunctor&& initializeThread = nullptr, VoidFunctor&& uninitializeThread = nullptr) noexcept;
+  TestMessageQueueThread(
+      VoidFunctor &&initializeThread = nullptr,
+      VoidFunctor &&uninitializeThread = nullptr) noexcept;
 
-  #pragma region MessageQueueThread members
+#pragma region MessageQueueThread members
 
   ~TestMessageQueueThread() override;
 
-  void runOnQueue(VoidFunctor&& func) noexcept override;
+  void runOnQueue(VoidFunctor &&func) noexcept override;
 
   // runOnQueueSync and quitSynchronous are dangerous.  They should only be
   // used for initialization and cleanup.
-  void runOnQueueSync(VoidFunctor&& func) noexcept override;
+  void runOnQueueSync(VoidFunctor &&func) noexcept override;
 
   // Once quitSynchronous() returns, no further work should run on the queue.
   void quitSynchronous() noexcept override;
 
-  #pragma endregion MessageQueueThread members
+#pragma endregion MessageQueueThread members
 
-private:
-  enum class State
-  {
+ private:
+  enum class State {
     Running,
     QuitSynchronousHasBeenCalled,
     WorkerThreadHasExited
   };
 
-  enum class ThreadSignalIndex
-  {
+  enum class ThreadSignalIndex {
     FunctorAvailable = 0,
     QuitRequested = 1,
     Count // ensure this is the last member
@@ -64,7 +61,7 @@ private:
 
   void quitInternal() noexcept;
 
-  std::atomic<State> m_state { State::Running };
+  std::atomic<State> m_state{State::Running};
   DWORD m_creatorThreadId;
 
   VoidFunctor m_initializeThread;
@@ -76,4 +73,4 @@ private:
   std::queue<VoidFunctor> m_queue;
 };
 
-} //namespace Microsoft::React::Test
+} // namespace Microsoft::React::Test

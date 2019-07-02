@@ -8,28 +8,27 @@
 #include <memory>
 #include <vector>
 
-namespace react { namespace uwp {
-
+namespace react {
+namespace uwp {
 
 // TODO: Emit event to react when dimensions change.
-class DeviceInfo
-{
-public:
-  DeviceInfo() { update(); }
+class DeviceInfo {
+ public:
+  DeviceInfo() {
+    update();
+  }
 
-  folly::dynamic GetDimensionsConstants()
-  { return m_dimensions; }
+  folly::dynamic GetDimensionsConstants() {
+    return m_dimensions;
+  }
   void update();
 
-private:
+ private:
   folly::dynamic m_dimensions;
 };
 
-
-
-class DeviceInfoModule : public facebook::xplat::module::CxxModule
-{
-public:
+class DeviceInfoModule : public facebook::xplat::module::CxxModule {
+ public:
   DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo);
 
   // CxxModule
@@ -37,10 +36,11 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char* name;
+  static const char *name;
 
-private:
+ private:
   std::shared_ptr<DeviceInfo> m_deviceInfo;
 };
 
-} }
+} // namespace uwp
+} // namespace react

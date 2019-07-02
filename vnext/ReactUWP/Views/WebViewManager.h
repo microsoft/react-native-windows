@@ -4,29 +4,27 @@
 #pragma once
 
 #include <Views/FrameworkElementViewManager.h>
-#include "Utils/PropertyHandlerUtils.h"
 #include <winrt/Windows.UI.Xaml.Media.h>
+#include "Utils/PropertyHandlerUtils.h"
 
-namespace winrt::Windows::UI::Xaml::Media { enum class Stretch; }
+namespace winrt::Windows::UI::Xaml::Media {
+enum class Stretch;
+}
 
 namespace react {
-  namespace uwp {
-    struct WebSource
-    {
-      std::string uri;
-      bool packagerAsset;
-    };
-} }
+namespace uwp {
+struct WebSource {
+  std::string uri;
+  bool packagerAsset;
+};
+} // namespace uwp
+} // namespace react
 
-
-template<>
-struct json_type_traits<react::uwp::WebSource>
-{
-  static react::uwp::WebSource parseJson(const folly::dynamic& json)
-  {
+template <>
+struct json_type_traits<react::uwp::WebSource> {
+  static react::uwp::WebSource parseJson(const folly::dynamic &json) {
     react::uwp::WebSource source;
-    for (auto& item : json.items())
-    {
+    for (auto &item : json.items()) {
       if (item.first == "uri")
         source.uri = item.second.asString();
       if (item.first == "__packager_asset")
@@ -36,28 +34,32 @@ struct json_type_traits<react::uwp::WebSource>
   }
 };
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-  class WebViewManager : public FrameworkElementViewManager
-  {
-    using Super = FrameworkElementViewManager;
-  public:
-    RCT_BEGIN_PROPERTY_MAP(WebViewManager)
-      RCT_PROPERTY("source", setSource)
-    RCT_END_PROPERTY_MAP()
+class WebViewManager : public FrameworkElementViewManager {
+  using Super = FrameworkElementViewManager;
 
-    WebViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
+ public:
+  RCT_BEGIN_PROPERTY_MAP(WebViewManager)
+  RCT_PROPERTY("source", setSource)
+  RCT_END_PROPERTY_MAP()
 
-    const char* GetName() const override;
-    void UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap) override;
+  WebViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
-    folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-    folly::dynamic GetNativeProps() const override;
+  const char *GetName() const override;
+  void UpdateProperties(
+      ShadowNodeBase *nodeToUpdate,
+      const folly::dynamic &reactDiffMap) override;
 
-  protected:
-    XamlView CreateViewCore(int64_t tag) override;
+  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  folly::dynamic GetNativeProps() const override;
 
-  private:
-    void setSource(XamlView viewToUpdate, const WebSource& sources);
-  };
-} }
+ protected:
+  XamlView CreateViewCore(int64_t tag) override;
+
+ private:
+  void setSource(XamlView viewToUpdate, const WebSource &sources);
+};
+} // namespace uwp
+} // namespace react

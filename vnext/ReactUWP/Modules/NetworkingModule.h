@@ -11,12 +11,11 @@
 #include <memory>
 #include <vector>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-
-class NetworkingModule : public facebook::xplat::module::CxxModule
-{
-public:
+class NetworkingModule : public facebook::xplat::module::CxxModule {
+ public:
   NetworkingModule();
   virtual ~NetworkingModule();
 
@@ -25,11 +24,13 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char* name;
+  static const char *name;
 
   class NetworkingHelper;
-private:
+
+ private:
   std::shared_ptr<NetworkingHelper> m_networking;
 };
 
-} }
+} // namespace uwp
+} // namespace react

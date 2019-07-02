@@ -2,16 +2,20 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "ValueAnimatedNode.h"
 #include <folly/dynamic.h>
+#include "ValueAnimatedNode.h"
 
-namespace react { namespace uwp {
-  class MultiplicationAnimatedNode : public ValueAnimatedNode
-  {
-  public:
-    MultiplicationAnimatedNode(int64_t tag, const folly::dynamic& config, const std::shared_ptr<NativeAnimatedNodeManager>& manager);
+namespace react {
+namespace uwp {
+class MultiplicationAnimatedNode : public ValueAnimatedNode {
+ public:
+  MultiplicationAnimatedNode(
+      int64_t tag,
+      const folly::dynamic &config,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
-  private:
-    std::unordered_set<int64_t> m_inputNodes{};
-  };
-} }
+ private:
+  std::unordered_set<int64_t> m_inputNodes{};
+};
+} // namespace uwp
+} // namespace react

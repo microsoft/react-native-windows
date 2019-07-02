@@ -3,14 +3,18 @@
 
 #include "ShadowNode.h"
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
 ShadowNode::~ShadowNode() {}
 
-void ShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic& commandArgs) {}
+void ShadowNode::dispatchCommand(
+    int64_t commandId,
+    const folly::dynamic &commandArgs) {}
 
 void ShadowNode::onDropViewInstance() {}
 
-void ShadowNode::updateProperties(const folly::dynamic&& props) {}
+void ShadowNode::updateProperties(const folly::dynamic &&props) {}
 
-}} // namespace facebook::react
+} // namespace react
+} // namespace facebook

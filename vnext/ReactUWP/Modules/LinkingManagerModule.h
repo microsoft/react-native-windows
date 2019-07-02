@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include <folly/dynamic.h>
 #include <cxxreact/CxxModule.h>
+#include <folly/dynamic.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class LinkingManagerModule final : public facebook::xplat::module::CxxModule
-{
-public:
+class LinkingManagerModule final : public facebook::xplat::module::CxxModule {
+ public:
   LinkingManagerModule();
   virtual ~LinkingManagerModule();
 
@@ -19,6 +19,7 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char* name;
+  static const char *name;
 };
-} } // namespace react::uwp
+} // namespace uwp
+} // namespace react

@@ -3,44 +3,48 @@
 
 #include "pch.h"
 
-#include "SandboxJSExecutor.h"
 #include "SandboxBridge.h"
+#include "SandboxJSExecutor.h"
 
+#include <cxxreact/JSBigString.h>
 #include <cxxreact/ModuleRegistry.h>
 #include <cxxreact/RAMBundleRegistry.h>
-#include <cxxreact/JSBigString.h>
 
+#include <agents.h>
 #include <folly/dynamic.h>
 #include <folly/json.h>
 #include <chrono>
-#include <agents.h>
 
 using namespace std;
 using namespace Concurrency;
 
 // OFFICEDEV: Ignore warnings
-#pragma warning( push )
-#pragma warning( disable : 4100 4101 4244 4290 4456 )
+#pragma warning(push)
+#pragma warning(disable : 4100 4101 4244 4290 4456)
 
 namespace facebook {
 namespace react {
 
 #if !defined(OSS_RN)
 
-
-std::unique_ptr<ExecutorDelegate> SandboxDelegateFactory::createExecutorDelegate(
+std::unique_ptr<ExecutorDelegate>
+SandboxDelegateFactory::createExecutorDelegate(
     std::shared_ptr<ModuleRegistry> registry,
-    std::shared_ptr <InstanceCallback> callback) {
-  return std::unique_ptr<ExecutorDelegate>(new SandboxJsToNativeBridge(registry, callback, m_sendNativeModuleCall));
+    std::shared_ptr<InstanceCallback> callback) {
+  return std::unique_ptr<ExecutorDelegate>(
+      new SandboxJsToNativeBridge(registry, callback, m_sendNativeModuleCall));
 }
 
-std::unique_ptr<ExecutorDelegate> SandboxExecutorDelegateFactory::createExecutorDelegate(
+std::unique_ptr<ExecutorDelegate>
+SandboxExecutorDelegateFactory::createExecutorDelegate(
     std::shared_ptr<ModuleRegistry> registry,
-    std::shared_ptr <InstanceCallback> callback) {
-    return std::unique_ptr<ExecutorDelegate>(new SandboxHostNativeBridge(registry, callback));
+    std::shared_ptr<InstanceCallback> callback) {
+  return std::unique_ptr<ExecutorDelegate>(
+      new SandboxHostNativeBridge(registry, callback));
 }
 
-SandboxJSExecutorFactory::SandboxJSExecutorFactory(JSECreator&& jsExecutorFactory)
+SandboxJSExecutorFactory::SandboxJSExecutorFactory(
+    JSECreator &&jsExecutorFactory)
     : m_jseCreater(std::move(jsExecutorFactory)) {}
 
 std::unique_ptr<JSExecutor> SandboxJSExecutorFactory::createJSExecutor(
@@ -49,7 +53,8 @@ std::unique_ptr<JSExecutor> SandboxJSExecutorFactory::createJSExecutor(
   if (m_jseCreater) {
     return m_jseCreater(delegate, jsQueue);
   } else {
-    return std::unique_ptr<JSExecutor>(new SandboxJSExecutor(delegate, jsQueue));
+    return std::unique_ptr<JSExecutor>(
+        new SandboxJSExecutor(delegate, jsQueue));
   }
 }
 
@@ -57,68 +62,79 @@ template <typename Func>
 auto create_delayed_task(
     std::chrono::milliseconds delay,
     Func func,
-    concurrency::cancellation_token token = concurrency::cancellation_token::none()) -> decltype(create_task(func)) {
+    concurrency::cancellation_token token =
+        concurrency::cancellation_token::none())
+    -> decltype(create_task(func)) {
   concurrency::task_completion_event<void> tce;
 
-  auto pTimer = new concurrency::timer<int>(static_cast<int>(delay.count()), 0, NULL, false);
-  auto pCallback = new concurrency::call<int>([tce](int)  {
-    tce.set();
-  });
+  auto pTimer = new concurrency::timer<int>(
+      static_cast<int>(delay.count()), 0, NULL, false);
+  auto pCallback = new concurrency::call<int>([tce](int) { tce.set(); });
 
   pTimer->link_target(pCallback);
   pTimer->start();
-  token.register_callback([tce]() {
-    tce.set();
-  });
+  token.register_callback([tce]() { tce.set(); });
 
-  return create_task(tce).then([pCallback, pTimer]() {
-    delete pCallback;
-    delete pTimer;
-  }).then(func, token);
+  return create_task(tce)
+      .then([pCallback, pTimer]() {
+        delete pCallback;
+        delete pTimer;
+      })
+      .then(func, token);
 }
 
-SandboxJSExecutor::SandboxJSExecutor(std::shared_ptr<ExecutorDelegate> delegate, std::shared_ptr<MessageQueueThread> messageQueueThread) :
-    m_delegate(delegate),
-    m_messageQueueThread(messageQueueThread) { }
+SandboxJSExecutor::SandboxJSExecutor(
+    std::shared_ptr<ExecutorDelegate> delegate,
+    std::shared_ptr<MessageQueueThread> messageQueueThread)
+    : m_delegate(delegate), m_messageQueueThread(messageQueueThread) {}
 
-SandboxJSExecutor::~SandboxJSExecutor() { }
+SandboxJSExecutor::~SandboxJSExecutor() {}
 
-void SandboxJSExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> script, uint64_t /*scriptVersion*/, std::string sourceURL, std::string&& /*bytecodeFileName*/) {
+void SandboxJSExecutor::loadApplicationScript(
+    std::unique_ptr<const JSBigString> script,
+    uint64_t /*scriptVersion*/,
+    std::string sourceURL,
+    std::string && /*bytecodeFileName*/) {
   auto requestId = GetNextRequestId();
   task_completion_event<void> callback;
   m_callbacks.emplace(requestId, callback);
 
-  folly::dynamic request = folly::dynamic::object
-    ("script", script->c_str())
-    ("inject", m_injectedObjects)
-    ("url", sourceURL);
+  folly::dynamic request = folly::dynamic::object("script", script->c_str())(
+      "inject", m_injectedObjects)("url", sourceURL);
 
   try {
-    SendMessageAsync(requestId, "executeApplicationScript", request).then([callback](bool success) {
-      if (success) {
-        // Return task to wait for reply.
-        return task<void>(callback);
-      } else {
-        throw new exception("Failed to send");
-      }
-    }).get();
+    SendMessageAsync(requestId, "executeApplicationScript", request)
+        .then([callback](bool success) {
+          if (success) {
+            // Return task to wait for reply.
+            return task<void>(callback);
+          } else {
+            throw new exception("Failed to send");
+          }
+        })
+        .get();
   }
-  //TODO: handle exceptions in a better way
-  catch (exception& e) {
+  // TODO: handle exceptions in a better way
+  catch (exception &e) {
     m_errorCallback(e.what());
     SetState(State::Error);
   }
 }
 
-void SandboxJSExecutor::registerBundle(uint32_t /*bundleId*/, const std::string& /*bundlePath*/) {
+void SandboxJSExecutor::registerBundle(
+    uint32_t /*bundleId*/,
+    const std::string & /*bundlePath*/) {
   // NYI
   std::terminate();
 }
 
+void SandboxJSExecutor::setBundleRegistry(
+    std::unique_ptr<RAMBundleRegistry> bundleRegistry) {}
 
-void SandboxJSExecutor::setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) {}
-
-void SandboxJSExecutor::callFunction(const std::string& moduleId, const std::string& methodId, const folly::dynamic& arguments) {
+void SandboxJSExecutor::callFunction(
+    const std::string &moduleId,
+    const std::string &methodId,
+    const folly::dynamic &arguments) {
   if (IsInError()) {
     return;
   }
@@ -126,7 +142,9 @@ void SandboxJSExecutor::callFunction(const std::string& moduleId, const std::str
   Call("callFunction", jarray);
 }
 
-void SandboxJSExecutor::invokeCallback(const double callbackId, const folly::dynamic& arguments) {
+void SandboxJSExecutor::invokeCallback(
+    const double callbackId,
+    const folly::dynamic &arguments) {
   if (IsInError()) {
     return;
   }
@@ -134,11 +152,13 @@ void SandboxJSExecutor::invokeCallback(const double callbackId, const folly::dyn
   Call("invokeCallback", jarray);
 }
 
-void SandboxJSExecutor::setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue) {
+void SandboxJSExecutor::setGlobalVariable(
+    std::string propName,
+    std::unique_ptr<const JSBigString> jsonValue) {
   m_injectedObjects[propName] = std::string(jsonValue->c_str());
 }
 
-void* SandboxJSExecutor::getJavaScriptContext() {
+void *SandboxJSExecutor::getJavaScriptContext() {
   return nullptr;
 }
 
@@ -147,9 +167,7 @@ std::string SandboxJSExecutor::getDescription() {
 }
 
 #ifdef WITH_JSC_MEMORY_PRESSURE
-void SandboxJSExecutor::handleMemoryPressure(int pressureLevel)
-{
-}
+void SandboxJSExecutor::handleMemoryPressure(int pressureLevel) {}
 #endif
 
 void SandboxJSExecutor::destroy() {
@@ -159,34 +177,47 @@ void SandboxJSExecutor::destroy() {
   }
 }
 
-// NOTE: This function synchronously waiting until get reply back from the sandbox.
-// TODO: Indefinite waiting can cause SDX to become unresponsive. We need to implement timeout mechanism.
-void SandboxJSExecutor::Call(const std::string& methodName, folly::dynamic& arguments) {
+// NOTE: This function synchronously waiting until get reply back from the
+// sandbox.
+// TODO: Indefinite waiting can cause SDX to become unresponsive. We need to
+// implement timeout mechanism.
+void SandboxJSExecutor::Call(
+    const std::string &methodName,
+    folly::dynamic &arguments) {
   auto requestId = GetNextRequestId();
   task_completion_event<void> callback;
   m_callbacks.emplace(requestId, callback);
 
   try {
-    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    std::chrono::high_resolution_clock::time_point t1 =
+        std::chrono::high_resolution_clock::now();
 
-    SendMessageAsync(requestId, methodName, arguments).then([callback](bool sent) {
-      if (sent) {
-        // Return task to wait for reply.
-        return task<void>(callback);
-      } else {
-        throw new exception("Failed to send");
-      }
-    }).get();  // wait until get reply
+    SendMessageAsync(requestId, methodName, arguments)
+        .then([callback](bool sent) {
+          if (sent) {
+            // Return task to wait for reply.
+            return task<void>(callback);
+          } else {
+            throw new exception("Failed to send");
+          }
+        })
+        .get(); // wait until get reply
 
-    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
+    std::chrono::high_resolution_clock::time_point t2 =
+        std::chrono::high_resolution_clock::now();
+    auto duration =
+        std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1).count();
 
     char buffer[256];
-    sprintf_s(buffer, "(%03I64d) CallFunction, elapsed time = %d us\n", requestId, (int)duration);
+    sprintf_s(
+        buffer,
+        "(%03I64d) CallFunction, elapsed time = %d us\n",
+        requestId,
+        (int)duration);
     OutputDebugStringA(buffer);
   }
-  //TODO: handle exceptions in a better way
-  catch (exception& e) {
+  // TODO: handle exceptions in a better way
+  catch (exception &e) {
     m_errorCallback(e.what());
     SetState(State::Error);
   }
@@ -220,8 +251,9 @@ bool SandboxJSExecutor::IsRunning() const noexcept {
   return m_state == State::Running;
 }
 
-task<bool> SandboxJSExecutor::ConnectAsync(std::shared_ptr<SandboxEndpoint> endpoint,
-    const std::function<void(std::string)>& errorCallback) {
+task<bool> SandboxJSExecutor::ConnectAsync(
+    std::shared_ptr<SandboxEndpoint> endpoint,
+    const std::function<void(std::string)> &errorCallback) {
   m_errorCallback = std::move(errorCallback);
   auto t = task_from_result();
 
@@ -230,31 +262,30 @@ task<bool> SandboxJSExecutor::ConnectAsync(std::shared_ptr<SandboxEndpoint> endp
     while (true) {
       try {
         cancellation_token_source timer_cts;
-        auto timeoutT = create_delayed_task(std::chrono::milliseconds(ConnectTimeoutMilliseconds), [=]() -> string {
-          throw std::runtime_error("timeout");
-        }, timer_cts.get_token());
+        auto timeoutT = create_delayed_task(
+            std::chrono::milliseconds(ConnectTimeoutMilliseconds),
+            [=]() -> string { throw std::runtime_error("timeout"); },
+            timer_cts.get_token());
 
         if (!IsConnected()) {
           try {
             m_sandboxEndpoint = nullptr;
-          }
-          catch (std::exception& /*e*/) {
+          } catch (std::exception & /*e*/) {
             // Don't care what happens with the old client at this point
           }
 
           // TODO: Pass as param
           m_sandboxEndpoint = endpoint;
 
-          m_sandboxEndpoint->RegisterReplyHandler([this](int64_t replyId) {
-            OnReplyMessage(replyId);
-          });
+          m_sandboxEndpoint->RegisterReplyHandler(
+              [this](int64_t replyId) { OnReplyMessage(replyId); });
 
-          m_sandboxEndpoint->RegisterNativeModuleCallHandler([this](folly::dynamic&& calls) {
-            OnNativeModuleCallMessage(std::move(calls));
-          });
+          m_sandboxEndpoint->RegisterNativeModuleCallHandler(
+              [this](folly::dynamic &&calls) {
+                OnNativeModuleCallMessage(std::move(calls));
+              });
 
-          if (m_sandboxEndpoint->Start(EndpointType::Host))
-          {
+          if (m_sandboxEndpoint->Start(EndpointType::Host)) {
             SetState(State::Connected);
             timer_cts.cancel();
           }
@@ -278,11 +309,12 @@ task<bool> SandboxJSExecutor::ConnectAsync(std::shared_ptr<SandboxEndpoint> endp
         if (IsRunning()) {
           return true;
         }
-      }
-      catch (std::exception& /*e*/) {
+      } catch (std::exception & /*e*/) {
         retryCount--;
         if (retryCount == 0) {
-          m_errorCallback(IsConnected() ? "Timeout: preparing JS runtime" : "Timeout: Failed to connect to dev server");
+          m_errorCallback(
+              IsConnected() ? "Timeout: preparing JS runtime"
+                            : "Timeout: Failed to connect to dev server");
           SetState(State::Error);
           return false;
         }
@@ -301,13 +333,12 @@ task<bool> SandboxJSExecutor::PrepareJavaScriptRuntimeAsync() {
 
 task<bool> SandboxJSExecutor::SendMessageAsync(
     int64_t requestId,
-    const std::string& methodName,
-    folly::dynamic& arguments) {
+    const std::string &methodName,
+    folly::dynamic &arguments) {
   if (!IsDisposed()) {
     task_completion_event<bool> tce;
-    m_sandboxEndpoint->SendRequest(requestId, methodName, arguments, [tce](bool sent) {
-      tce.set(sent);
-    });
+    m_sandboxEndpoint->SendRequest(
+        requestId, methodName, arguments, [tce](bool sent) { tce.set(sent); });
     return create_task(tce);
   } else {
     CompleteRequest(requestId);
@@ -328,10 +359,11 @@ void SandboxJSExecutor::OnReplyMessage(int64_t replyId) {
   CompleteRequest(replyId);
 }
 
-void SandboxJSExecutor::OnNativeModuleCallMessage(folly::dynamic&& calls) {
+void SandboxJSExecutor::OnNativeModuleCallMessage(folly::dynamic &&calls) {
   m_delegate->callNativeModules(*this, std::move(calls), false);
 }
 
 #endif // OSS_RN
-}}
-#pragma warning( pop )
+} // namespace react
+} // namespace facebook
+#pragma warning(pop)
