@@ -65,7 +65,6 @@ private:
   void OnHitError(const std::string& error) noexcept;
 
 private:
-  std::weak_ptr<ReactControl> m_reactControl;
   std::shared_ptr<WorkerMessageQueueThread> m_initThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_defaultNativeThread;
