@@ -68,8 +68,6 @@ public:
   void onBatchComplete() override;
   void ensureInBatch() override;
   void measure(facebook::react::ShadowNode& shadowNode, facebook::react::ShadowNode& shadowRoot, facebook::xplat::module::CxxModule::Callback callback) override;
-  void focus(int64_t reactTag) override;
-  void blur(int64_t reactTag) override;
 };
 
 class TestShadowNode : public facebook::react::ShadowNode
@@ -82,6 +80,7 @@ public:
   void AddView(ShadowNode& child, int64_t index) override;
   void RemoveChildAt(int64_t indexToRemove) override;
   void createView() override;
+
   #pragma endregion ShadowNode overrides
 };
 
