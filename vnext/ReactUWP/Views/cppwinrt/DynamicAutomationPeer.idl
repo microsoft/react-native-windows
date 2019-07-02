@@ -37,7 +37,9 @@ namespace react.uwp
 		TabList,
 		Timer,
 		ToolBar,
-		Unknown,
+		List, // RNW extension
+		ListItem, // RNW extension
+		Unknown, // Catch-all
 		CountRoles
 	};
 

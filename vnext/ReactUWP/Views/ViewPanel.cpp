@@ -26,6 +26,11 @@ const winrt::TypeName viewPanelTypeName{winrt::hstring{L"ViewPanel"},
 
 ViewPanel::ViewPanel() : Super() {}
 
+winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
+  // The parent ViewControl handles the peer needs
+  return nullptr;
+}
+
 /*static*/ void ViewPanel::VisualPropertyChanged(
     winrt::DependencyObject sender,
     winrt::DependencyPropertyChangedEventArgs e) {
