@@ -82,8 +82,6 @@ public:
   void AddView(ShadowNode& child, int64_t index) override;
   void RemoveChildAt(int64_t indexToRemove) override;
   void createView() override;
-  void focus() override;
-  void blur() override;
   #pragma endregion ShadowNode overrides
 };
 

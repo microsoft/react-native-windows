@@ -419,6 +419,11 @@ ShadowNode* UIManager::FindShadowNodeForTag(int64_t tag)
   return m_nodeRegistry.findNode(tag);
 }
 
+ShadowNode* UIManager::FindParentRootShadowNode(int64_t tag)
+{
+  return m_nodeRegistry.getParentRootShadowNode(tag);
+}
+
 ShadowNode& UIManager::GetShadowNodeForTag(int64_t tag)
 {
   return m_nodeRegistry.getNode(tag);

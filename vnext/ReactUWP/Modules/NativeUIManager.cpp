@@ -207,9 +207,9 @@ void NativeUIManager::destroyRootShadowNode(facebook::react::ShadowNode* node)
 void NativeUIManager::AddRootView(facebook::react::ShadowNode& shadowNode, facebook::react::IReactRootView* pReactRootView)
 {
   ShadowNodeBase& node = static_cast<ShadowNodeBase&>(shadowNode);
-
-  XamlView view = static_cast<IXamlRootView*>(pReactRootView)->GetXamlView();
-
+  auto xamlRootView = static_cast<IXamlRootView*>(pReactRootView);
+  XamlView view = xamlRootView->GetXamlView();
+  m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
 
   auto element = view.as<winrt::FrameworkElement>();
@@ -229,6 +229,7 @@ void NativeUIManager::destroy()
 
 void NativeUIManager::removeRootView(facebook::react::ShadowNode& shadow)
 {
+  m_tagsToXamlReactControl.erase(shadow.m_tag);
   RemoveView(shadow, true);
 }
 
@@ -898,7 +899,6 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag)
     UpdateExtraLayout(child);
 }
 
-
 void NativeUIManager::DoLayout()
 {
   auto& rootTags = m_host->GetAllRootTags();
@@ -1005,16 +1005,46 @@ void NativeUIManager::focus(int64_t reactTag)
 {
   if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(reactTag)))
   {
-    shadowNode->focus();
+    winrt::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
   }
 }
 
+// Note: It's a known issue that blur on flyout/popup would dismiss them.
 void NativeUIManager::blur(int64_t reactTag)
 {
   if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindShadowNodeForTag(reactTag)))
   {
-    shadowNode->blur();
+    auto view = shadowNode->GetView();
+    // Only blur if current UI is focused to avoid problem described in PR #2687
+    if (view == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>())
+    {
+      if (auto reactControl = GetParentXamlReactControl(reactTag).lock())
+      {
+        reactControl->blur(shadowNode->GetView());
+      }
+      else
+      {
+        assert(false);
+      }
+    }
   }
+}
+
+// The same react instance can be shared by multiple ReactControls.
+// To reduce the dependency between modules, IXamlReactControl other than ReactControl is used here.
+// To get the IXamlReactControl for any node, we first iterate its parent until reaching the root node.
+// Then look up m_tagsToXamlReactControl to get the IXamlReactControl
+std::weak_ptr<react::uwp::IXamlReactControl> NativeUIManager::GetParentXamlReactControl(int64_t tag) const
+{
+  if (auto shadowNode = static_cast<ShadowNodeBase*>(m_host->FindParentRootShadowNode(tag)))
+  {
+    auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
+    if (it != m_tagsToXamlReactControl.end())
+    {
+      return it->second;
+    }
+  }
+  return {};
 }
 
 }

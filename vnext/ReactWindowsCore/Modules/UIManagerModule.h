@@ -46,7 +46,7 @@ public:
 	std::unordered_set<int64_t>& GetAllRootTags() override;
 	ShadowNode& GetShadowNodeForTag(int64_t tag) override;
 	ShadowNode* FindShadowNodeForTag(int64_t tag) override;
-
+  ShadowNode* FindParentRootShadowNode(int64_t tag) override;
 private:
 	std::vector<std::unique_ptr<IViewManager>> m_viewManagers;
 	ShadowNodeRegistry m_nodeRegistry;

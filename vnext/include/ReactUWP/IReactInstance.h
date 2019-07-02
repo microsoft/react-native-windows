@@ -86,9 +86,6 @@ struct IReactInstance
 
   virtual ExpressionAnimationStore& GetExpressionAnimationStore() = 0;
 
-  virtual void SetReactControl(std::weak_ptr<ReactControl> reactControl) = 0;
-  virtual std::weak_ptr<ReactControl> GetReactControl() = 0;
-
 };
 
 } }

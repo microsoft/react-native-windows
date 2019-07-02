@@ -113,10 +113,6 @@ void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode& shadowNode) {
 
 void TestNativeUIManager::UpdateView(facebook::react::ShadowNode& shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
-void TestNativeUIManager::focus(int64_t reactTag) {}
-
-void TestNativeUIManager::blur(int64_t reactTag) {}
-
 #pragma endregion TestNativeUIManager members
 
 #pragma region TestShadowNode members
@@ -130,10 +126,6 @@ void TestShadowNode::AddView(ShadowNode& child, int64_t index) {}
 void TestShadowNode::RemoveChildAt(int64_t indexToRemove) {}
 
 void TestShadowNode::createView() {}
-
-void TestShadowNode::focus() {}
-
-void TestShadowNode::blur() {}
 
 #pragma endregion
 

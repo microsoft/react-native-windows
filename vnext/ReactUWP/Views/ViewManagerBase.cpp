@@ -256,26 +256,6 @@ void ViewManagerBase::DispatchCommand(XamlView viewToUpdate, int64_t commandId, 
   assert(false); // View did not handle its command
 }
 
-void ViewManagerBase::Focus(XamlView const& view)
-{
-  winrt::FocusManager::TryFocusAsync(view, winrt::FocusState::Programmatic);
-}
-
-void ViewManagerBase::Blur(XamlView const& view)
-{
-  // Only blur if current UI is focused to avoid problem described in PR #2687
-  if (view == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>())
-  {
-    if (auto instance = m_wkReactInstance.lock())
-    {
-      if (auto reactControl = instance->GetReactControl().lock())
-      {
-        reactControl->BlurOrStopOnFocusSafeHarbor(view);
-      }
-    }
-  }
-}
-
 void ViewManagerBase::SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height)
 {
   auto element = viewToUpdate.as<winrt::UIElement>();

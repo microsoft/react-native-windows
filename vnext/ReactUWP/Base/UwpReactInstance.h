@@ -58,9 +58,6 @@ public:
   void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
   void CallXamlViewCreatedTestHook(react::uwp::XamlView view) override;
 
-  void SetReactControl(std::weak_ptr<ReactControl> reactControl) override;
-  virtual std::weak_ptr<ReactControl> GetReactControl() override;
-
   // Public functions
   std::shared_ptr<facebook::react::MessageQueueThread> GetNewUIMessageQueue() const;
 

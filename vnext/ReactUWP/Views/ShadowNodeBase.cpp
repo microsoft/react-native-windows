@@ -37,16 +37,6 @@ void ShadowNodeBase::createView()
   m_view = GetViewManager()->CreateView(this->m_tag);
 }
 
-void ShadowNodeBase::focus()
-{
-  GetViewManager()->Focus(GetView());
-}
-
-void ShadowNodeBase::blur()
-{
-  GetViewManager()->Blur(GetView());
-}
-
 void ShadowNodeBase::dispatchCommand(int64_t commandId, const folly::dynamic& commandArgs)
 {
   GetViewManager()->DispatchCommand(GetView(), commandId, commandArgs);

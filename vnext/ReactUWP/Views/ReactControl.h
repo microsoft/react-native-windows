@@ -24,7 +24,8 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
-class ReactControl : public std::enable_shared_from_this<ReactControl>
+class ReactControl : public std::enable_shared_from_this<ReactControl>,
+  public IXamlReactControl
 {
 public:
   ReactControl(IXamlRootView* parent, XamlView rootView);
@@ -39,6 +40,8 @@ public:
 
   void AttachRoot() noexcept;
   void DetachRoot() noexcept;
+  void blur(XamlView const& xamlView) noexcept override;
+
   void DetachInstance();
   void Reload(bool shouldRetireCurrentInstance);
 
@@ -48,7 +51,6 @@ public:
   virtual int64_t GetActualWidth() const;
   int64_t GetTag() const { return m_rootTag; }
   void SetTag(int64_t tag) { m_rootTag = tag; }
-  void BlurOrStopOnFocusSafeHarbor(XamlView const& blurredElement);
 
 private:
   void HandleInstanceError();

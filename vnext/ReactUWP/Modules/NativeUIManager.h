@@ -18,6 +18,8 @@
 
 namespace react { namespace uwp {
 
+struct IXamlReactControl;
+
 struct YogaNodeDeleter
 {
   void operator()(YGNodeRef node) {
@@ -70,6 +72,8 @@ private:
   void DoLayout();
   void UpdateExtraLayout(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
+ 
+  std::weak_ptr<react::uwp::IXamlReactControl> GetParentXamlReactControl(int64_t tag) const;
 
 private:
   facebook::react::INativeUIManagerHost* m_host = nullptr;
@@ -79,6 +83,8 @@ private:
   std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
   std::vector<winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
+
+  std::map<int64_t, std::weak_ptr<IXamlReactControl>> m_tagsToXamlReactControl;
 };
 
 } }
