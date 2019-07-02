@@ -20,7 +20,6 @@ namespace react { namespace uwp {
 
 struct IXamlRootView;
 class ExpressionAnimationStore;
-class ReactControl;
 
 typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;
