@@ -18,7 +18,7 @@ const RCTDatePicker = requireNativeComponent('RCTDatePicker');
 export class DatePicker extends React.Component<IDatePickerProps> {
 
   public static defaultProps: IDatePickerProps = {
-    dateFormat: 'dayofweek day month'
+    dateFormat: 'dayofweek day month',
   };
 
   // tslint:disable-next-line:no-any
@@ -38,7 +38,7 @@ export class DatePicker extends React.Component<IDatePickerProps> {
       onChange: this.props.onChange,
       placeholderText: this.props.placeholderText,
       selectedDate: (this.props.selectedDate ? (this.props.selectedDate.getTime()) : undefined), // time in milliseconds
-      style: [styles.rctDatePicker, this.props.style]
+      style: [styles.rctDatePicker, this.props.style],
     };
 
     // The Date object returns timezone in minutes. Convert that to seconds

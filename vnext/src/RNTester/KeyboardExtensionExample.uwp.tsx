@@ -7,31 +7,31 @@ import * as React from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { supportKeyboard, IHandledKeyboardEvent, IKeyboardEvent, HandledEventPhase } from '../../src/index.uwp';
 
-const ViewWindows = supportKeyboard(View)
+const ViewWindows = supportKeyboard(View);
 
 const styles = StyleSheet.create({
   border: {
     borderStyle: 'dotted',
-    borderColor: 'black'
+    borderColor: 'black',
   },
   keyComponentRoot: {
     borderWidth: 2,
     flexDirection: 'row',
     marginVertical: 5,
     backgroundColor: 'whitesmoke',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   keyEnterVisualizer: {
     margin: 5,
     alignItems: 'center',
     minWidth: 100,
-    minHeight: 30
+    minHeight: 30,
   },
   textInput: {
     height: 32,
-    width: 100
+    width: 100,
   },
-  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 }
+  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 },
 });
 
 interface IKeyboardableComponentState {
@@ -45,7 +45,7 @@ const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
   { key: 'a', handledEventPhase: HandledEventPhase.Capturing },
   { key: 'b' },
   { key: 'c', handledEventPhase: HandledEventPhase.Bubbling },
-  { key: 'Tab', handledEventPhase: HandledEventPhase.Capturing }
+  { key: 'Tab', handledEventPhase: HandledEventPhase.Capturing },
 ];
 
 class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableComponentState> {
@@ -84,7 +84,7 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
             <Text>{this.state.lastKeyUpCapture !== null ? this.state.lastKeyUpCapture : ' '}</Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
-            <TextInput placeholder='I got focus' style={styles.textInput} />
+            <TextInput placeholder="I got focus" style={styles.textInput} />
           </ViewWindows>
         </ViewWindows>
       </ViewWindows>
@@ -115,5 +115,5 @@ export const examples = [
     render(): JSX.Element {
       return <ViewWindowsKeyboardExample />;
     },
-  }
+  },
 ];

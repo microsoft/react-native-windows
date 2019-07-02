@@ -14,7 +14,7 @@ const _subscriptions = new Map<Function, EmitterSubscription>();
 const AccessibilityInfo = {
   fetch: (): Promise<boolean> => {
     // tslint:disable-next-line no-any
-    return new Promise((resolve:(value?: boolean | PromiseLike<boolean>) => void, reject: (reason?: any) => void) => {
+    return new Promise((_resolve:(value?: boolean | PromiseLike<boolean>) => void, _reject: (reason?: any) => void) => {
       // TODO Hx: Implement this module.
       return false;
     });
@@ -36,7 +36,7 @@ const AccessibilityInfo = {
     }
     listener.remove();
     _subscriptions.delete(handler);
-  }
+  },
 };
 
 export = AccessibilityInfo;

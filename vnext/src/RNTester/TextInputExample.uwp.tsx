@@ -6,7 +6,7 @@
 
 /* tslint:disable */
 
-import { Text, TextInput, View, StyleSheet, /*Slider,*/ Switch } from 'react-native';
+import { Alert, Text, TextInput, View, StyleSheet, /*Slider,*/ Switch } from 'react-native';
 // const InputAccessoryView = require('InputAccessoryView');
 import React = require('react');
 import ReactNative = require('react-native');
@@ -278,51 +278,59 @@ class TokenizedTextExample extends React.Component<{}, any> {
 }
 
 class BlurOnSubmitExample extends React.Component<{}> {
-  public focusNextField = (nextField: string) => {
-    const ref: any = this.refs[nextField];
-    ref.focus();
-  };
+
+  private fieldTwo: React.RefObject<TextInput>;
+  private fieldThree: React.RefObject<TextInput>;
+private fieldFour : React.RefObject<TextInput>;
+private fieldFive : React.RefObject<TextInput>;
+
+  constructor(props: {}) {
+    super(props);
+     this.fieldTwo = React.createRef();
+     this.fieldThree = React.createRef();
+     this.fieldFour = React.createRef();
+     this.fieldFive = React.createRef();
+    }
 
   public render() {
     return (
       <View>
         <TextInput
-          ref="1"
           style={styles.default}
           placeholder="blurOnSubmit = false"
           returnKeyType="next"
           blurOnSubmit={false}
-          onSubmitEditing={() => this.focusNextField('2')}
+          onSubmitEditing={() => this.fieldTwo.current!.focus()}
         />
         <TextInput
-          ref="2"
+          ref={this.fieldTwo}
           style={styles.default}
           keyboardType="email-address"
           placeholder="blurOnSubmit = false"
           returnKeyType="next"
           blurOnSubmit={false}
-          onSubmitEditing={() => this.focusNextField('3')}
+          onSubmitEditing={() => this.fieldThree.current!.focus()}
         />
         <TextInput
-          ref="3"
+          ref={this.fieldThree}
           style={styles.default}
           keyboardType="url"
           placeholder="blurOnSubmit = false"
           returnKeyType="next"
           blurOnSubmit={false}
-          onSubmitEditing={() => this.focusNextField('4')}
+          onSubmitEditing={() => this.fieldFour.current!.focus()}
         />
         <TextInput
-          ref="4"
+          ref={this.fieldFour}
           style={styles.default}
           keyboardType="numeric"
           returnKeyType="done"
           placeholder="blurOnSubmit = false"
           blurOnSubmit={false}
-          onSubmitEditing={() => this.focusNextField('5')}
+          onSubmitEditing={() => this.fieldFive.current!.focus()}
         />
         <TextInput
-          ref="5"
+          ref={this.fieldFive}
           style={styles.default}
           keyboardType="numbers-and-punctuation"
           placeholder="blurOnSubmit = true"
@@ -445,6 +453,7 @@ export class AutogrowingTextInputExample extends React.Component<
   }
 
   public render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars 
     const {style, multiline, ...props} = this.props;
     return (
       <View>
@@ -672,28 +681,28 @@ export const examples = [
         'web-search',
         'numeric',
       ];
-      const examples = keyboardTypes.map(type => {
+      const keyExamples = keyboardTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
             <TextInput keyboardType={type} style={styles.default} />
           </WithLabel>
         );
       });
-      return <View>{examples}</View>;
+      return <View>{keyExamples}</View>;
     },
   },
   {
     title: 'Keyboard appearance',
     render: function() {
-      const keyboardAppearance: ("default" | "light" | "dark")[]= ['default', 'light', 'dark'];
-      const examples = keyboardAppearance.map(type => {
+      const keyboardAppearance: ('default' | 'light' | 'dark')[] = ['default', 'light', 'dark'];
+      const keyExamples = keyboardAppearance.map(type => {
         return (
           <WithLabel key={type} label={type}>
             <TextInput keyboardAppearance={type} style={styles.default} />
           </WithLabel>
         );
       });
-      return <View>{examples}</View>;
+      return <View>{keyExamples}</View>;
     },
   },
   {
@@ -712,14 +721,14 @@ export const examples = [
         'done',
         'emergency-call',
       ];
-      const examples = returnKeyTypes.map(type => {
+      const keyExamples = returnKeyTypes.map(type => {
         return (
           <WithLabel key={type} label={type}>
             <TextInput returnKeyType={type} style={styles.default} />
           </WithLabel>
         );
       });
-      return <View>{examples}</View>;
+      return <View>{keyExamples}</View>;
     },
   },
   {
@@ -869,7 +878,7 @@ export const examples = [
             returnKeyType="next"
             blurOnSubmit={true}
             multiline={true}
-            onSubmitEditing={event => alert(event.nativeEvent.text)}
+            onSubmitEditing={event => Alert(event.nativeEvent.text)}
           />
         </View>
       );

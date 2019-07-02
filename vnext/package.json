@@ -16,7 +16,7 @@
     "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
     "lint": "just-scripts eslint",
-    "lint:fix": "eslint ./**/*.js --fix",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
     "watch": "tsc -w"
   },
   "disabledTasks": [
