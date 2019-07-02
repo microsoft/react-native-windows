@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "StyleAnimatedNode.h"
 #include "FacadeType.h"
 #include "NativeAnimatedNodeManager.h"
+#include "pch.h"
+
 
 namespace react {
 namespace uwp {
@@ -15,8 +16,10 @@ StyleAnimatedNode::StyleAnimatedNode(
     : AnimatedNode(tag, manager) {
   for (const auto &entry :
        config.find(s_styleName).dereference().second.items()) {
-    m_propMapping.insert({entry.first.getString(), entry.second.getInt()});
+    m_propMapping.insert({entry.first.getString(),
+                          static_cast<int64_t>(entry.second.asDouble())});
   }
+}
 }
 
 void StyleAnimatedNode::CollectViewUpdates(const folly::dynamic &propsMap) {}

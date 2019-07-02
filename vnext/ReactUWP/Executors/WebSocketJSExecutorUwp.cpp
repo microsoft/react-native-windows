@@ -84,7 +84,7 @@ void WebSocketJSExecutor::loadApplicationScript(
     ,
     std::string && /*bytecodeFileName*/
 #endif
-) {
+    ) {
   int requestId = ++m_requestId;
 
   if (!IsRunning()) {
@@ -266,7 +266,7 @@ void WebSocketJSExecutor::OnMessageReceived(const std::string &msg) {
   folly::dynamic parsed = folly::parseJson(msg);
   auto it_parsed = parsed.find("replyID");
   if (it_parsed != parsed.items().end()) {
-    int replyId = it_parsed->second.getInt();
+    int replyId = it_parsed->second.asInt();
 
     std::lock_guard<std::mutex> lock(m_lockPromises);
     auto it_promise = m_promises.find(replyId);

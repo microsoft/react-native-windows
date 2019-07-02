@@ -9,8 +9,7 @@ using namespace folly;
 using namespace facebook::react;
 using namespace facebook::xplat;
 
-namespace Microsoft::React::Test
-{
+namespace Microsoft::React::Test {
 
 std::string NodeRegistry::PrintTree() {
   std::stringstream ss;
@@ -79,7 +78,7 @@ void EmptyUIManager::setChildren(
     folly::dynamic /*ReadableMap*/ childrenTags) {
   auto &parent = m_nodeRegistry->m_allNodes[viewTag];
   for (auto &&childTag : childrenTags)
-    parent->m_children.push_back(childTag.getInt());
+    parent->m_children.push_back(childTag.asInt());
 }
 
 EmptyUIManagerModule::EmptyUIManagerModule(

@@ -673,7 +673,7 @@ void NamedPipeEndpoint::Impl::OnMessageReceived_Host(
     auto it_parsed = parsed.find("replyID");
     auto it_end = parsed.items().end();
     if (it_parsed != it_end) {
-      replyId = it_parsed->second.getInt();
+      replyId = it_parsed->second.asInt();
       if (m_replyHandler) {
         m_replyHandler(replyId);
       }

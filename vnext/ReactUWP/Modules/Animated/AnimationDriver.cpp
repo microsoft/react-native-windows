@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "AnimationDriver.h"
+#include "pch.h"
+
 
 namespace react {
 namespace uwp {
@@ -18,13 +19,18 @@ AnimationDriver::AnimationDriver(
       m_endCallback(endCallback),
       m_config(config),
       m_manager(manager) {
-  m_iterations = [iterations = config.find("iterations"),
-                  end = config.items().end()]() {
+  m_iterations =
+      [ iterations = config.find("iterations"), end = config.items().end() ]() {
     if (iterations != end) {
-      return iterations.dereference().second.getInt();
+      return static_cast<int64_t>(iterations.dereference().second.asDouble());
     }
     return static_cast<int64_t>(1);
-  }();
+  }
+  ();
+}
+return static_cast<int64_t>(1);
+}
+();
 }
 
 AnimationDriver::~AnimationDriver() {
@@ -33,7 +39,7 @@ AnimationDriver::~AnimationDriver() {
 }
 
 void AnimationDriver::StartAnimation() {
-  const auto [animation, scopedBatch] = MakeAnimation(m_config);
+  const auto[animation, scopedBatch] = MakeAnimation(m_config);
 
   const auto animatedValue = GetAnimatedValue();
 
@@ -44,7 +50,7 @@ void AnimationDriver::StartAnimation() {
   scopedBatch.End();
 
   m_scopedBatchCompletedToken = scopedBatch.Completed(
-      [endCallback = m_endCallback, animatedValue, id = m_id](
+      [ endCallback = m_endCallback, animatedValue, id = m_id ](
           auto sender, auto) {
         if (endCallback) {
           endCallback(std::vector<folly::dynamic>{

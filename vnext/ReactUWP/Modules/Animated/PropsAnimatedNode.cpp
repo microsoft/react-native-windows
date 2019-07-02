@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
 #include "PropsAnimatedNode.h"
 #include <ReactUWP\Modules\NativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
 #include "StyleAnimatedNode.h"
+#include "pch.h"
+
 
 namespace react {
 namespace uwp {
@@ -17,8 +18,10 @@ PropsAnimatedNode::PropsAnimatedNode(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager), m_instance(instance) {
   for (const auto &entry : config.find("props").dereference().second.items()) {
-    m_propMapping.insert({entry.first.getString(), entry.second.getInt()});
+    m_propMapping.insert({entry.first.getString(),
+                          static_cast<int64_t>(entry.second.asDouble())});
   }
+}
 }
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
