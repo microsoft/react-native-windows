@@ -453,7 +453,7 @@ export class AutogrowingTextInputExample extends React.Component<
   }
 
   public render() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const {style, multiline, ...props} = this.props;
     return (
       <View>
