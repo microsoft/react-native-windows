@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IntegrationTests/ManualMessageQueueThread.h>
+#include <IntegrationTests/TestMessageQueueThread.h>
 #include <winrt/facebook.react.h>
 
 #include "MessageQueueShim.h"
@@ -49,7 +49,9 @@ namespace ABITests
 		{
 			init_apartment(winrt::apartment_type::single_threaded);
 
-			auto manualMessageQueue = std::make_shared<ManualMessageQueueThread>();
+			DWORD testThreadId = GetCurrentThreadId();
+
+			auto manualMessageQueue = std::make_shared<TestMessageQueueThread>(TestMessageQueueThread::Mode::ManualDispatch);
 
 			IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>(manualMessageQueue);
 			MemoryTracker tracker { callbackMessageQueue };
@@ -57,21 +59,30 @@ namespace ABITests
 			tracker.Initialize(500);
 
 			std::vector<uint64_t> actualCallbacks;
+			DWORD callbackThreadId;
 			uint32_t registrationToken = tracker.AddThresholdHandler(
 				/* threshold */ 1000,
 				/* minCallbackIntervalInMilliseconds */ 100,
-				[&actualCallbacks](uint64_t currentUsage){ actualCallbacks.push_back(currentUsage); });
+				[&actualCallbacks, &callbackThreadId]
+				(uint64_t currentUsage)
+				{
+					actualCallbacks.push_back(currentUsage);
+					callbackThreadId = GetCurrentThreadId();
+				});
 
 			tracker.OnAllocation(1000);
+
+			// allow the callback to get dispatched
+			Assert::IsTrue(manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
+			Assert::IsTrue(manualMessageQueue->IsEmpty());
 
 			Assert::AreEqual(1500ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
 			Assert::AreEqual(1500ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
 
-			// allow the callback to get dispatched
-			Assert::IsTrue(manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
-
 			Assert::AreEqual(static_cast<size_t>(1), actualCallbacks.size());
 			Assert::AreEqual(1500ull, actualCallbacks[0]);
+
+			Assert::AreNotEqual(testThreadId, callbackThreadId);
 
 			Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
 		}

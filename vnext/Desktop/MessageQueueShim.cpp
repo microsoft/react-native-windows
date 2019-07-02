@@ -8,12 +8,12 @@ namespace facebook::react {
 	{
 	}
 
-		void MessageQueueShim::runOnQueue(std::function<void()>&& item)
+	void MessageQueueShim::runOnQueue(std::function<void()>&& item)
 	{
 		m_abiMessageQueue.Run(std::move(item));
 	}
 
-		void MessageQueueShim::runOnQueueSync(std::function<void()>&& item)
+	void MessageQueueShim::runOnQueueSync(std::function<void()>&& item)
 	{
 		m_abiMessageQueue.RunSync(std::move(item));
 	}

@@ -5,6 +5,9 @@
 
 #include <assert.h>
 
+#pragma push_macro("max")
+#undef max
+
 namespace facebook {
 namespace react {
 namespace test {
@@ -24,8 +27,9 @@ TestMessageQueueThread::Lock::~Lock() noexcept
   m_mutex = NULL;
 }
 
-TestMessageQueueThread::TestMessageQueueThread(VoidFunctor&& initializeThread, VoidFunctor&& uninitializeThread) noexcept
-  : m_initializeThread { move(initializeThread) }
+TestMessageQueueThread::TestMessageQueueThread(Mode mode, VoidFunctor&& initializeThread, VoidFunctor&& uninitializeThread) noexcept
+  : m_mode { mode }
+  , m_initializeThread { move(initializeThread) }
   , m_uninitializeThread { move(uninitializeThread) }
 {
   m_creatorThreadId = GetCurrentThreadId();
@@ -35,6 +39,20 @@ TestMessageQueueThread::TestMessageQueueThread(VoidFunctor&& initializeThread, V
     /* bInitialOwner */     FALSE,
     /* lpName */            nullptr);
   assert(m_queueMutex != NULL);
+
+  m_queueItemPresent = CreateEvent(
+    /* lpEventAttributes */ NULL,
+    /* bManualReset */      FALSE,
+    /* bInitialState */     FALSE,
+    /* lpName */            nullptr);
+  assert(m_queueItemPresent != NULL);
+
+   m_queueItemProcessed = CreateEvent(
+    /* lpEventAttributes */ NULL,
+    /* bManualReset */      FALSE,
+    /* bInitialState */     FALSE,
+    /* lpName */            nullptr);
+  assert(m_queueItemPresent != NULL);
 
   for (int i = 0; i < static_cast<int>(ThreadSignalIndex::Count); ++i)
   {
@@ -68,6 +86,14 @@ TestMessageQueueThread::~TestMessageQueueThread()
     m_threadSignals[i] = NULL;
   }
 
+  assert(m_queueItemProcessed != NULL);
+  CloseHandle(m_queueItemProcessed);
+  m_queueItemProcessed = NULL;
+
+  assert(m_queueItemPresent != NULL);
+  CloseHandle(m_queueItemPresent);
+  m_queueItemPresent = NULL;
+
   assert(m_queueMutex != NULL);
   CloseHandle(m_queueMutex);
   m_queueMutex = NULL;
@@ -76,10 +102,9 @@ TestMessageQueueThread::~TestMessageQueueThread()
 void TestMessageQueueThread::runOnQueue(VoidFunctor&& func) noexcept
 {
   assert(m_state == State::Running);
-
   Lock queueLock(m_queueMutex);
   m_queue.push(move(func));
-  SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+  SignalDispatch();
 }
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
@@ -94,22 +119,13 @@ void TestMessageQueueThread::runOnQueueSync(VoidFunctor&& func) noexcept
   }
   else
   {
-    HANDLE done = CreateEvent(NULL, FALSE, FALSE, nullptr);
-    assert(done != NULL);
-
     {
       Lock queueLock(m_queueMutex);
       m_queue.push(move(func));
-      m_queue.push([done]()
-      {
-        SetEvent(done);
-      });
-      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
     }
 
-    DWORD waitResult = WaitForSingleObject(done, INFINITE);
-    assert(waitResult == WAIT_OBJECT_0);
-    CloseHandle(done);
+	SignalDispatch();
+    DWORD waitResult = WaitForSingleObject(m_queueItemProcessed, INFINITE);
   }
 }
 
@@ -118,6 +134,29 @@ void TestMessageQueueThread::quitSynchronous() noexcept
 {
   assert(m_state == State::Running);
   m_state = State::QuitSynchronousHasBeenCalled;
+}
+
+bool TestMessageQueueThread::IsEmpty() const noexcept
+{
+  Lock queueLock(m_queueMutex);
+  return m_queue.empty();
+}
+
+bool TestMessageQueueThread::DispatchOne(std::chrono::milliseconds timeout) noexcept
+{
+  assert(m_mode == Mode::ManualDispatch);
+
+  DWORD timeoutMilliseconds = timeout == std::chrono::milliseconds::max() ? INFINITE : static_cast<DWORD>(timeout.count());
+
+  switch (WaitForSingleObject(m_queueItemPresent, timeoutMilliseconds))
+  {
+    case WAIT_OBJECT_0:
+      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+	  return WaitForSingleObject(m_queueItemProcessed, timeoutMilliseconds) == WAIT_OBJECT_0;
+
+    default:
+      return false;
+  }
 }
 
 void TestMessageQueueThread::quitInternal() noexcept
@@ -133,6 +172,20 @@ void TestMessageQueueThread::quitInternal() noexcept
     m_workerThread = NULL;
     assert(m_workerThread == NULL);
     assert(m_state == State::WorkerThreadHasExited);
+  }
+}
+
+void TestMessageQueueThread::SignalDispatch() noexcept
+{
+  switch (m_mode)
+  {
+    case Mode::AutoDispatch:
+      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+      break;
+
+    case Mode::ManualDispatch:
+      SetEvent(m_queueItemPresent);
+	  break;
   }
 }
 
@@ -157,20 +210,21 @@ void TestMessageQueueThread::quitInternal() noexcept
     switch (waitResult)
     {
       case static_cast<DWORD>(ThreadSignalIndex::FunctorAvailable) :
-      {
-        VoidFunctor func;
         {
-          Lock queueLock(instance->m_queueMutex);
-          assert(instance->m_queue.size() > 0);
-          func = instance->m_queue.front();
-          instance->m_queue.pop();
-          if (instance->m_queue.size() > 0)
+          VoidFunctor func;
           {
-            SetEvent(instance->m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+            Lock queueLock(instance->m_queueMutex);
+            assert(instance->m_queue.size() > 0);
+            func = instance->m_queue.front();
+            instance->m_queue.pop();
+            if (instance->m_queue.size() > 0)
+            {
+              instance->SignalDispatch();
+            }
           }
+          func();
+          SetEvent(instance->m_queueItemProcessed);
         }
-        func();
-      }
         break;
 
       case static_cast<DWORD>(ThreadSignalIndex::QuitRequested) :
@@ -199,3 +253,5 @@ bool TestMessageQueueThread::IsWorkerThread()
 #pragma endregion // namespace TestMessageQueueThread members
 
 }}} //namespace facebook::react::test
+
+#pragma pop_macro("max")

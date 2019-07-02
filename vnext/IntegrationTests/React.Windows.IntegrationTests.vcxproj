@@ -80,7 +80,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ManualMessageQueueThread.cpp" />
     <ClCompile Include="TestInstance.cpp" />
     <ClCompile Include="TestMessageQueueThread.cpp" />
     <ClCompile Include="TestModule.cpp" />
@@ -88,7 +87,6 @@
     <ClCompile Include="TestRunner.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ManualMessageQueueThread.h" />
     <ClInclude Include="MockExecutorDelegate.h" />
     <ClInclude Include="TestInstance.h" />
     <ClInclude Include="TestModule.h" />
