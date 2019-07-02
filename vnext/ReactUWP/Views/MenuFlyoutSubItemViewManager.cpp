@@ -33,13 +33,11 @@ namespace react {
       void removeAllChildren() override;
       void updateProperties(const folly::dynamic&& props) override;
 
-    private:
-      std::shared_ptr<TouchEventHandler> m_touchEventHandler;
     };
 
     MenuFlyoutSubItemShadowNode::~MenuFlyoutSubItemShadowNode()
     {
-      m_touchEventHandler->RemoveTouchHandlers();
+
     }
 
     void  MenuFlyoutSubItemShadowNode::AddView(ShadowNode& child, int64_t index)
@@ -54,7 +52,7 @@ namespace react {
     {
       Super::createView();
       auto wkinstance = GetViewManager()->GetReactInstance();
-      m_touchEventHandler = std::make_shared<TouchEventHandler>(wkinstance);
+
     }
 
     void  MenuFlyoutSubItemShadowNode::removeAllChildren()
