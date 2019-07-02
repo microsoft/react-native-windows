@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ABI">
+      <UniqueIdentifier>{b7a226dc-4029-4213-b426-37eb7d0907a4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="CxxReactWin32">
       <UniqueIdentifier>{13b0d9c2-9c50-4245-b23f-e120dc6442cf}</UniqueIdentifier>
     </Filter>
@@ -15,6 +18,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ABI\MemoryTracker.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\MessageQueueShim.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\NativeLogEventSource.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
     <ClCompile Include="TimingModule.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>CxxReactWin32</Filter>
@@ -51,12 +66,20 @@
     <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="NativeTraceEventSource.cpp" />
-    <ClCompile Include="MemoryTracker.cpp" />
-    <ClCompile Include="NativeLogEventSource.cpp" />
-    <ClCompile Include="MessageQueueShim.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ABI\MemoryTracker.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\MessageQueueShim.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\NativeLogEventSource.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\NativeTraceEventSource.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
     <ClInclude Include="TimingModule.h" />
     <ClInclude Include="Sandbox\SandboxJSExecutor.h">
       <Filter>Sandbox</Filter>
@@ -81,10 +104,6 @@
     <ClInclude Include="NativeModuleFactories.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
-    <ClInclude Include="NativeTraceEventSource.h" />
-    <ClInclude Include="MemoryTracker.h" />
-    <ClInclude Include="NativeLogEventSource.h" />
-    <ClInclude Include="MessageQueueShim.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

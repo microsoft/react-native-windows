@@ -105,23 +105,27 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ABI\MemoryTracker.cpp">
+      <DependentUpon>ABI.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="ABI\MessageQueueShim.cpp">
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="ABI\NativeLogEventSource.cpp">
+      <DependentUpon>ABI.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
+      <DependentUpon>ABI.idl</DependentUpon>
+      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="DevSupportManager.cpp" />
     <ClCompile Include="LazyDevSupportManager.cpp" />
     <ClCompile Include="LegacyWebSocket.cpp" />
-    <ClCompile Include="MessageQueueShim.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
-    <ClCompile Include="MemoryTracker.cpp">
-      <DependentUpon>ABI.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="NativeLogEventSource.cpp">
-      <DependentUpon>ABI.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="NativeTraceEventSource.cpp">
-      <DependentUpon>ABI.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -138,22 +142,22 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ABI\MemoryTracker.h">
+      <DependentUpon>ABI.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="ABI\MessageQueueShim.h" />
+    <ClInclude Include="ABI\NativeLogEventSource.h">
+      <DependentUpon>ABI.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="ABI\NativeTraceEventSource.h">
+      <DependentUpon>ABI.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
     <ClInclude Include="LegacyWebSocket.h" />
-    <ClInclude Include="MessageQueueShim.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="NativeModuleFactories.h" />
-    <ClInclude Include="MemoryTracker.h">
-      <DependentUpon>ABI.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="NativeLogEventSource.h">
-      <DependentUpon>ABI.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="NativeTraceEventSource.h">
-      <DependentUpon>ABI.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Sandbox\SandboxBridge.h" />
     <ClInclude Include="Sandbox\NamedPipeEndpoint.h" />
