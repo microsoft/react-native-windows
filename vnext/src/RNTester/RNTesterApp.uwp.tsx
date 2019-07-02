@@ -1,10 +1,19 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
 import * as React from 'react';
-import { AsyncStorage, Button, AppRegistry, StyleSheet, Text, View } from 'react-native';
+import {
+  AsyncStorage,
+  Button,
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
@@ -50,7 +59,7 @@ interface IRNTesterAppProps {
 
 const APP_STATE_KEY = 'RNTesterAppState.v2';
 
-const Header = ({ onBack, title }: { onBack?: () => void; title: string }) => (
+const Header = ({onBack, title}: {onBack?: () => void; title: string}) => (
   <View style={styles.headerContainer}>
     <View style={styles.header}>
       <View style={styles.headerCenter}>
@@ -65,7 +74,10 @@ const Header = ({ onBack, title }: { onBack?: () => void; title: string }) => (
   </View>
 );
 
-class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigationState> {
+class RNTesterApp extends React.Component<
+  IRNTesterAppProps,
+  IRNTesterNavigationState
+> {
   public render(): JSX.Element {
     if (!this.state) {
       return <Text>null state</Text>;
@@ -88,7 +100,10 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
     return (
       <View style={styles.exampleContainer}>
         <Header title="RNTester" />
-        <RNTesterExampleList onNavigate={this._handleAction} list={RNTesterList} />
+        <RNTesterExampleList
+          onNavigate={this._handleAction}
+          list={RNTesterList}
+        />
       </View>
     );
   }
@@ -108,7 +123,9 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
         const launchAction = exampleAction || urlAction;
      if (err || !storedString) {
       */
-    const initialAction: RNTesterAction = /*launchAction ||*/ { type: 'InitialAction' };
+    const initialAction: RNTesterAction = /*launchAction ||*/ {
+      type: 'InitialAction',
+    };
     // eslint-disable-next-line react/no-did-mount-set-state
     this.setState(RNTesterNavigationReducer(undefined, initialAction));
     return;
@@ -139,7 +156,9 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
     }
     const newState = RNTesterNavigationReducer(this.state, action);
     if (this.state !== newState) {
-      this.setState(newState, () => AsyncStorage.setItem(APP_STATE_KEY, JSON.stringify(this.state)));
+      this.setState(newState, () =>
+        AsyncStorage.setItem(APP_STATE_KEY, JSON.stringify(this.state)),
+      );
     }
   };
 }

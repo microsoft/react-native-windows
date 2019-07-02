@@ -1,9 +1,12 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
 import RNTesterList from './RNTesterList.uwp';
-import { RNTesterAction } from './RNTesterActions';
+import {RNTesterAction} from './RNTesterActions';
 
 interface IRNTesterNavigationState {
   openExample?: string;
@@ -11,7 +14,7 @@ interface IRNTesterNavigationState {
 
 function rnTesterNavigationReducer(
   state: IRNTesterNavigationState | undefined,
-  action: RNTesterAction
+  action: RNTesterAction,
 ): IRNTesterNavigationState {
   if (
     // Default value is to see example list

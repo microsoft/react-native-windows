@@ -1,11 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-/* tslint:disable */
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 import * as React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
-import { supportKeyboard, IHandledKeyboardEvent, IKeyboardEvent, HandledEventPhase } from '../../src/index.uwp';
+import {View, StyleSheet, Text, TextInput} from 'react-native';
+import {
+  supportKeyboard,
+  IHandledKeyboardEvent,
+  IKeyboardEvent,
+  HandledEventPhase,
+} from '../../src/index.uwp';
 
 const ViewWindows = supportKeyboard(View);
 
@@ -31,7 +37,7 @@ const styles = StyleSheet.create({
     height: 32,
     width: 100,
   },
-  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 },
+  blackbox: {height: 30, width: 30, borderColor: 'black', borderWidth: 3},
 });
 
 interface IKeyboardableComponentState {
@@ -42,13 +48,16 @@ interface IKeyboardableComponentState {
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
-  { key: 'a', handledEventPhase: HandledEventPhase.Capturing },
-  { key: 'b' },
-  { key: 'c', handledEventPhase: HandledEventPhase.Bubbling },
-  { key: 'Tab', handledEventPhase: HandledEventPhase.Capturing },
+  {key: 'a', handledEventPhase: HandledEventPhase.Capturing},
+  {key: 'b'},
+  {key: 'c', handledEventPhase: HandledEventPhase.Bubbling},
+  {key: 'Tab', handledEventPhase: HandledEventPhase.Capturing},
 ];
 
-class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableComponentState> {
+class ViewWindowsKeyboardExample extends React.Component<
+  {},
+  IKeyboardableComponentState
+> {
   public constructor(props: {}) {
     super(props);
     this.state = {
@@ -61,7 +70,7 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
 
   public render(): JSX.Element {
     return (
-      <ViewWindows >
+      <ViewWindows>
         <ViewWindows
           style={styles.keyComponentRoot}
           onKeyDownCapture={this._onKeyDownCapture}
@@ -69,19 +78,30 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
           onKeyUp={this._onKeyUp}
           onKeyDown={this._onKeyDown}
           keyDownEvents={handledNativeKeyboardEvents}
-          keyUpEvents={handledNativeKeyboardEvents}
-        >
+          keyUpEvents={handledNativeKeyboardEvents}>
           <ViewWindows style={styles.keyEnterVisualizer}>
             <Text>OnKeyDown</Text>
-            <Text>{this.state.lastKeyDown !== null ? this.state.lastKeyDown : ' '}</Text>
+            <Text>
+              {this.state.lastKeyDown !== null ? this.state.lastKeyDown : ' '}
+            </Text>
             <Text>OnKeyDownCapture</Text>
-            <Text>{this.state.lastKeyDownCapture !== null ? this.state.lastKeyDownCapture : ' '}</Text>
+            <Text>
+              {this.state.lastKeyDownCapture !== null
+                ? this.state.lastKeyDownCapture
+                : ' '}
+            </Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
             <Text>OnKeyUp</Text>
-            <Text>{this.state.lastKeyUp !== null ? this.state.lastKeyUp : ' '}</Text>
+            <Text>
+              {this.state.lastKeyUp !== null ? this.state.lastKeyUp : ' '}
+            </Text>
             <Text>OnKeyUpCapture</Text>
-            <Text>{this.state.lastKeyUpCapture !== null ? this.state.lastKeyUpCapture : ' '}</Text>
+            <Text>
+              {this.state.lastKeyUpCapture !== null
+                ? this.state.lastKeyUpCapture
+                : ' '}
+            </Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
             <TextInput placeholder="I got focus" style={styles.textInput} />
@@ -92,21 +112,27 @@ class ViewWindowsKeyboardExample extends React.Component<{}, IKeyboardableCompon
   }
 
   private _onKeyUp = (ev: IKeyboardEvent) => {
-    this.setState({ lastKeyUp: ev.nativeEvent.key, lastKeyDown: null });
+    this.setState({lastKeyUp: ev.nativeEvent.key, lastKeyDown: null});
   };
 
   private _onKeyDown = (ev: IKeyboardEvent) => {
-    this.setState({ lastKeyDown: ev.nativeEvent.key, lastKeyUp: null });
+    this.setState({lastKeyDown: ev.nativeEvent.key, lastKeyUp: null});
   };
   private _onKeyUpCapture = (ev: IKeyboardEvent) => {
-    this.setState({ lastKeyUpCapture: ev.nativeEvent.key, lastKeyDownCapture: null });
+    this.setState({
+      lastKeyUpCapture: ev.nativeEvent.key,
+      lastKeyDownCapture: null,
+    });
   };
 
   private _onKeyDownCapture = (ev: IKeyboardEvent) => {
-    this.setState({ lastKeyDownCapture: ev.nativeEvent.key, lastKeyUpCapture: null });
+    this.setState({
+      lastKeyDownCapture: ev.nativeEvent.key,
+      lastKeyUpCapture: null,
+    });
   };
 }
-export const displayName = (_undefined?: string) => { };
+export const displayName = (_undefined?: string) => {};
 export const title = 'Keyboard extension Example';
 export const description = 'Demo of keyboard properties.';
 export const examples = [

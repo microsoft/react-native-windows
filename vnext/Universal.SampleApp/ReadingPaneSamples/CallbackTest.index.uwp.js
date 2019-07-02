@@ -1,14 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  NativeModules,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, {Component} from 'react';
+import {AppRegistry, NativeModules, StyleSheet, Text, View} from 'react-native';
 
 export default class Bootstrap extends Component {
   constructor() {
@@ -19,11 +16,12 @@ export default class Bootstrap extends Component {
       msgs: Array(0),
     };
 
-    NativeModules.ReadingPane.CurrentConversation((js) => this.LoadedConversation(js));
+    NativeModules.ReadingPane.CurrentConversation(js =>
+      this.LoadedConversation(js),
+    );
   }
 
-  LoadedConversation(js)
-  {
+  LoadedConversation(js) {
     this.setState({
       subject: js.Subject,
       msgs: js.Messages,
@@ -33,12 +31,8 @@ export default class Bootstrap extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          Subject: {this.state.subject}
-        </Text>
+        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.instructions}>Subject: {this.state.subject}</Text>
         <Text style={styles.instructions}>
           To get started, edit index.uwp.js
         </Text>
@@ -47,7 +41,8 @@ export default class Bootstrap extends Component {
           Cmd+D or shake for dev menu
         </Text>
       </View>
-    );  }
+    );
+  }
 }
 
 const styles = StyleSheet.create({
