@@ -9,12 +9,18 @@
 
 #include <cxxreact/CxxModule.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 struct ViewManagerProvider;
-}}
+}
+} // namespace react
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>) CreateUIManager(std::shared_ptr<IReactInstance> instance, const std::shared_ptr<ViewManagerProvider>& viewManagerProvider);
-
-}}
+REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>)
+CreateUIManager(
+    std::shared_ptr<IReactInstance> instance,
+    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider);
+} // namespace uwp
+} // namespace react
