@@ -68,11 +68,11 @@
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
     "react": "16.8.3",
-    "react-native": "0.59.0-microsoft.8",
+    "react-native": "0.59.0-microsoft.10",
     "typescript": "3.5.1"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.8 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.8.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.10 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.10.tar.gz"
   }
 }
