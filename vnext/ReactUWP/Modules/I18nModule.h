@@ -4,24 +4,25 @@
 #pragma once
 
 #include <ReactWindowsCore/II18nModule.h>
-#include <folly/dynamic.h>
 #include <cxxreact/CxxModule.h>
+#include <folly/dynamic.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class I18nModule final : public react::windows::II18nModule
-{
-public:
+class I18nModule final : public react::windows::II18nModule {
+ public:
   using I18nInfo = std::pair<std::string, bool>;
   static I18nInfo GetI18nInfo(); // Must be called from a UI thread
 
   // II18nModule
-  I18nModule(I18nInfo&& i18nInfo);
+  I18nModule(I18nInfo &&i18nInfo);
 
   std::string getLocaleIdentifier() override;
   bool getIsRTL() override;
 
-private:
+ private:
   I18nInfo m_i18nInfo;
 };
-} } // namespace react::uwp
+} // namespace uwp
+} // namespace react

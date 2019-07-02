@@ -51,11 +51,11 @@ function upgradeFileContentChangedCallback(
     console.log(
       `${chalk.bold(relativeDestPath)} ` +
       `has changed in the new version.\nDo you want to keep your ${relativeDestPath} or replace it with the ` +
-      `latest version?\nIf you ever made any changes ` +
-      `to this file, you'll probably want to keep it.\n` +
+      'latest version?\nIf you ever made any changes ' +
+      'to this file, you\'ll probably want to keep it.\n' +
       `You can see the new version here: ${absoluteSrcFilePath}\n` +
       `Do you want to replace ${relativeDestPath}? ` +
-      `Answer y to replace, n to keep your version: `
+      'Answer y to replace, n to keep your version: '
     );
     const answer = prompt();
     if (answer === 'y') {
@@ -74,5 +74,5 @@ function upgradeFileContentChangedCallback(
 }
 
 module.exports = {
-  createDir, copyAndReplaceWithChangedCallback, copyAndReplaceAll
+  createDir, copyAndReplaceWithChangedCallback, copyAndReplaceAll,
 };

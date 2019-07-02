@@ -1,14 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import {NativeEventEmitter, NativeModules} from 'react-native';
 const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
-import { IHighContrastColors, IHighContrastChangedEvent } from './AppThemeTypes';
+import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
 
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
-class AppThemeModule extends NativeEventEmitter  {
+class AppThemeModule extends NativeEventEmitter {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
   private _currentTheme: string;
@@ -20,15 +23,21 @@ class AppThemeModule extends NativeEventEmitter  {
 
     this._highContrastColors = NativeAppTheme.initialHighContrastColors;
     this._isHighContrast = NativeAppTheme.initialHighContrast;
-    this.addListener('highContrastChanged', (nativeEvent: IHighContrastChangedEvent) => {
-      this._isHighContrast = nativeEvent.isHighContrast;
-      this._highContrastColors = nativeEvent.highContrastColors;
-    });
+    this.addListener(
+      'highContrastChanged',
+      (nativeEvent: IHighContrastChangedEvent) => {
+        this._isHighContrast = nativeEvent.isHighContrast;
+        this._highContrastColors = nativeEvent.highContrastColors;
+      },
+    );
 
     this._currentTheme = NativeAppTheme.initialAppTheme;
-    this.addListener('appThemeChanged', ({currentTheme}:{currentTheme: string}) => {
-      this._currentTheme = currentTheme;
-    });
+    this.addListener(
+      'appThemeChanged',
+      ({currentTheme}: {currentTheme: string}) => {
+        this._currentTheme = currentTheme;
+      },
+    );
   }
 
   get currentTheme(): string {
@@ -53,5 +62,7 @@ class MissingNativeAppThemeShim extends MissingNativeEventEmitterShim {
   public currentHighContrastColors = {} as IHighContrastColors;
 }
 
-export const AppTheme = (NativeAppTheme ? new AppThemeModule() : new MissingNativeAppThemeShim());
+export const AppTheme = NativeAppTheme
+  ? new AppThemeModule()
+  : new MissingNativeAppThemeShim();
 export default AppTheme;

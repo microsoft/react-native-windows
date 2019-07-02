@@ -5,23 +5,26 @@
 #include "Helpers.h"
 #include <Modules/NativeUIManager.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
 // Not only react-native, native modules could set tag too for controls.
-// For example, to identify an clicked item, customer may add tag in NavigationView since content for the two NavigationViewItem are empty.
-// 
+// For example, to identify an clicked item, customer may add tag in
+// NavigationView since content for the two NavigationViewItem are empty.
+//
 // <NavigationView>
 //  <NavigationViewItem Icon="Accept" Tag="1" />
 //  <NavigationViewItem Icon="Accept" Tag="2" />
 // </NavigationView>
-// Instead of deduce view id directly from FrameworkElement.Tag, this do additional check by uimanager.
-ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const& fe)
-{
+// Instead of deduce view id directly from FrameworkElement.Tag, this do
+// additional check by uimanager.
+ReactId getViewId(
+    _In_ IReactInstance *instance,
+    winrt::FrameworkElement const &fe) {
   ReactId reactId;
-  if (auto uiManager = static_cast<NativeUIManager*>(instance->NativeUIManager()))
-  {
-    if (auto peer = uiManager->reactPeerOrContainerFrom(fe))
-    {
+  if (auto uiManager =
+          static_cast<NativeUIManager *>(instance->NativeUIManager())) {
+    if (auto peer = uiManager->reactPeerOrContainerFrom(fe)) {
       reactId.isValid = true;
       reactId.tag = GetTag(peer);
     }
@@ -29,11 +32,11 @@ ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const& 
   return reactId;
 };
 
-void toUpperInplace(string & str)
-{
-  std::for_each(str.begin(), str.end(), [](char & c) {
+void toUpperInplace(string &str) {
+  std::for_each(str.begin(), str.end(), [](char &c) {
     c = static_cast<char>(std::toupper(c));
-    });
+  });
 }
 
-}};
+} // namespace uwp
+}; // namespace react

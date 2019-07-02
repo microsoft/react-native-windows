@@ -6,9 +6,8 @@
 #include <IXamlRootView.h>
 #include <TestInstance.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test
+{
 
 class UniversalTestInstance : public ITestInstance
 {
@@ -29,4 +28,4 @@ private:
   ::react::uwp::ReactInstanceCreator m_instanceCreator;
 };
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test

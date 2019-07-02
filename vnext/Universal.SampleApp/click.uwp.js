@@ -14,7 +14,7 @@ import {
 
 export default class Bootstrap extends Component {
   state = {
-    ticker: 0
+    ticker: 0,
   };
 
   onSmallIncrement = () => {

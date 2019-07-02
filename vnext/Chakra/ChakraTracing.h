@@ -3,8 +3,9 @@
 
 #pragma once
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
 void addNativeTracingHooks();
-
-}}
+}
+} // namespace facebook

@@ -1,24 +1,19 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 'use strict';
 
 const React = require('react');
 const ReactNative = require('react-native');
 
-const {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-} = ReactNative;
+const {AppRegistry, StyleSheet, Text, View} = ReactNative;
 
-const {
-  TestModule
-} = ReactNative.NativeModules;
+const {TestModule} = ReactNative.NativeModules;
 
 class DummyTest extends React.Component {
-
   componentDidMount() {
     TestModule.markTestPassed(true);
   }
@@ -30,7 +25,6 @@ class DummyTest extends React.Component {
       </View>
     );
   }
-
 }
 
 var styles = StyleSheet.create({
