@@ -13,7 +13,7 @@ namespace react {
       m_iterations = [iterations = config.find("iterations"), end = config.items().end()]() {
         if (iterations != end)
         {
-          return iterations.dereference().second.getInt();
+          return static_cast<int64_t>(iterations.dereference().second.asDouble());
         }
         return static_cast<int64_t>(1);
       }();

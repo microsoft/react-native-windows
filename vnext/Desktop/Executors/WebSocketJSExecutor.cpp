@@ -304,7 +304,7 @@ void WebSocketJSExecutor::OnMessageReceived(const string& msg)
   auto it_end = parsed.items().end();
   if (it_parsed != it_end)
   {
-    auto replyId = it_parsed->second.getInt();
+    auto replyId = it_parsed->second.asInt();
 
     lock_guard<mutex> lock(m_lockPromises);
     auto it_promise = m_promises.find(static_cast<int>(replyId));
