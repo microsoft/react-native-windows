@@ -8,7 +8,7 @@ import { IFlyoutProps } from './FlyoutProps';
 
 const styles = StyleSheet.create({
   rctFlyout: {
-    position: 'absolute'
+    position: 'absolute',
   },
 });
 
@@ -39,7 +39,7 @@ export class Flyout extends React.Component<IFlyoutProps, IFlyoutTargetState> {
 
       return {
         target: newtarget,
-        targetRef: nextProps.target
+        targetRef: nextProps.target,
       };
     }
 

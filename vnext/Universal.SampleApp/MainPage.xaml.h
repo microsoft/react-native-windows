@@ -12,25 +12,23 @@
 #include "HostingPane.xaml.h"
 #include "Utilities/RelayCommand.h"
 
-namespace WindowsSampleApp
-{
+namespace WindowsSampleApp {
 
-[Windows::Foundation::Metadata::WebHostHidden]
-public ref class MainPage sealed
-{
-public:
+[Windows::Foundation::Metadata::WebHostHidden] public ref class MainPage
+    sealed {
+ public:
   MainPage();
 
-private:
-  void RemovePane(HostingPane^ pane);
-  void AddPane(HostingPane^ pane);
+ private:
+  void RemovePane(HostingPane ^ pane);
+  void AddPane(HostingPane ^ pane);
   void UpdatePaneCommandState();
 
-private:
-  Platform::Collections::Vector<HostingPane^> m_hostingPanes;
+ private:
+  Platform::Collections::Vector<HostingPane ^> m_hostingPanes;
 
-  RelayCommand^ m_addPaneCommand;
-  RelayCommand^ m_removePaneCommand;
+  RelayCommand ^ m_addPaneCommand;
+  RelayCommand ^ m_removePaneCommand;
 };
 
-}
+} // namespace WindowsSampleApp

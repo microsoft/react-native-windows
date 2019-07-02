@@ -15,10 +15,12 @@
 #pragma warning( push )
 #pragma warning( disable : 4290 )
 
-namespace facebook {
-namespace react {
+using namespace facebook::react;
 
-class RAMBundleRegistry;
+namespace Microsoft::React
+{
+
+class ::facebook::react::RAMBundleRegistry;
 
 class WebSocketJSExecutor : public JSExecutor
 {
@@ -91,6 +93,6 @@ private:
   std::atomic<LONG> m_requestId { 0 };
 };
 
-}}// namespace facebook::react
+} // namespace Microsoft::React
 
 #pragma warning( pop )

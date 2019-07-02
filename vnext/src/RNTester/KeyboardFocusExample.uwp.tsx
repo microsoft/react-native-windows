@@ -7,32 +7,32 @@ import * as React from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { supportKeyboard, IKeyboardEvent, CheckBox, ViewWindows, Picker } from '../../src/index.uwp';
 
-// TextInput2 is used to verify supportKeyboard + focus 
-const TextInput2 = supportKeyboard(TextInput)
+// TextInput2 is used to verify supportKeyboard + focus
+const TextInput2 = supportKeyboard(TextInput);
 
 const styles = StyleSheet.create({
   border: {
     borderStyle: 'dotted',
-    borderColor: 'black'
+    borderColor: 'black',
   },
   keyComponentRoot: {
     borderWidth: 2,
     flexDirection: 'column',
     marginVertical: 5,
     backgroundColor: 'whitesmoke',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   keyEnterVisualizer: {
     margin: 5,
     alignItems: 'center',
     minWidth: 100,
-    minHeight: 30
+    minHeight: 30,
   },
   textInput: {
     height: 32,
-    width: 100
+    width: 100,
   },
-  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 }
+  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 },
 });
 
 interface IKeyboardFocusComponentState {
@@ -54,12 +54,12 @@ class KeyboardFocusExample extends React.Component<{}, IKeyboardFocusComponentSt
     super(props);
     this.state = {
       selected: '',
-      keyOnKeyDown: 'unknown'
+      keyOnKeyDown: 'unknown',
     };
   }
 
   public render(): JSX.Element {
-    const pickerItems = ['View', 'Picker', 'TextInput', 'TextInput2', "CheckBox"];
+    const pickerItems = ['View', 'Picker', 'TextInput', 'TextInput2', 'CheckBox'];
 
     return (
       <View style={styles.keyComponentRoot}>
@@ -81,11 +81,11 @@ class KeyboardFocusExample extends React.Component<{}, IKeyboardFocusComponentSt
         </View>
         <View>
           <Text>Test Purpose: focus on TextInput, then timeout and blur on TextInput2, TextInput still keep focus</Text>
-          <TextInput placeholder='TextInput accept focus' style={styles.textInput} ref={textInputRef} />
+          <TextInput placeholder="TextInput accept focus" style={styles.textInput} ref={textInputRef} />
         </View>
         <View>
           <Text>Test Purpose: focus on TextInput2, then timeout and blur on TextInput2, TextInput2 lose focus</Text>
-          <TextInput2 onKeyDown={this._textInputKeyDown} placeholder='TextInput accept focus' style={styles.textInput} ref={textInputRef2} />
+          <TextInput2 onKeyDown={this._textInputKeyDown} placeholder="TextInput accept focus" style={styles.textInput} ref={textInputRef2} />
           <Text>Key {this.state.keyOnKeyDown}</Text>
         </View>
         <View>
@@ -136,5 +136,5 @@ export const examples = [
     render(): JSX.Element {
       return <KeyboardFocusExample />;
     },
-  }
+  },
 ];

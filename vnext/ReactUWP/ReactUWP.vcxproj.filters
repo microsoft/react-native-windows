@@ -106,12 +106,6 @@
     <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\OInstance.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\InstanceManager.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
@@ -187,29 +181,11 @@
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorageModule.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\AsyncStorageManager.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
     <ClCompile Include="Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\module.g.cpp">
       <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\Logging.cpp">
-      <Filter>Shared</Filter>
     </ClCompile>
     <ClCompile Include="Modules\LinkingManagerModule.cpp">
       <Filter>Modules</Filter>
@@ -222,9 +198,6 @@
     </ClCompile>
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\MemoryTracker.cpp">
-      <Filter>Shared</Filter>
     </ClCompile>
     <ClCompile Include="Views\SwitchViewManager.cpp">
       <Filter>Views</Filter>
@@ -702,12 +675,6 @@
     <None Include="Sandbox\sources">
       <Filter>Sandbox</Filter>
     </None>
-    <None Include="..\Shared\sources.inc">
-      <Filter>Shared</Filter>
-    </None>
-    <None Include="..\Shared\winrt\sources">
-      <Filter>Shared</Filter>
-    </None>
     <None Include="Threading\sources">
       <Filter>Threading</Filter>
     </None>
@@ -751,9 +718,6 @@
     </Filter>
     <Filter Include="Executors">
       <UniqueIdentifier>{5fbd1830-96ea-41cc-afa6-75f5361a8daa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shared">
-      <UniqueIdentifier>{ae08ff60-1246-49b2-9d8d-dc3ac814d8c4}</UniqueIdentifier>
     </Filter>
     <Filter Include="ABI">
       <UniqueIdentifier>{80eca5f5-e4e9-487a-9e75-e750931c1b56}</UniqueIdentifier>
@@ -802,5 +766,8 @@
     <MidlRT Include="ABI\idl\ReactControl.idl">
       <Filter>ABI\idl</Filter>
     </MidlRT>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
   </ItemGroup>
 </Project>

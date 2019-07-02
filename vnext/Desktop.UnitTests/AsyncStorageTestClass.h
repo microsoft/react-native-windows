@@ -4,6 +4,6 @@
 #pragma once
 
 #include <CppUnitTest.h>
-#include <Windows.h>
 #include <ShlObj.h>
 #include <Shlwapi.h>
+#include <Windows.h>

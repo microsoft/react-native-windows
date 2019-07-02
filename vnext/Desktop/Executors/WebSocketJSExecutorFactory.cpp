@@ -3,8 +3,10 @@
 
 #include "pch.h"
 
-#include "WebSocketJSExecutorFactory.h"
+#include <WebSocketJSExecutorFactory.h>
 #include "WebSocketJSExecutor.h"
+
+using Microsoft::React::WebSocketJSExecutor;
 
 namespace facebook {
 namespace react {

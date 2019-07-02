@@ -21,7 +21,7 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
   public state: IPopupExampleState = {
     isFlyoutVisible: false,
     buttonTitle: 'Open Flyout',
-    isLightDismissEnabled: false
+    isLightDismissEnabled: false,
   };
 
   public constructor(props: any) {
@@ -42,7 +42,7 @@ class PopupExample extends React.Component<{}, IPopupExampleState> {
           />
         </View>
         <View style={ { justifyContent: 'center', padding: 50 } }>
-          <Button onPress={ this._onPress } title={ this.state.buttonTitle }></Button>
+          <Button onPress={ this._onPress } title={ this.state.buttonTitle } />
         </View>
         { this.state.isFlyoutVisible && (
           <Popup
@@ -90,5 +90,5 @@ export const examples = [
     render: function (): JSX.Element {
       return <PopupExample />;
     },
-  }
+  },
 ];
