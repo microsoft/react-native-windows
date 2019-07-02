@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 export interface IRNTesterBackAction {
   // tslint:disable-next-line no-reserved-keywords
   type: 'RNTesterBackAction';
@@ -21,4 +24,8 @@ export interface IRNTesterInitialAction {
   type: 'InitialAction';
 }
 
-export type RNTesterAction = IRNTesterBackAction | IRNTesterListAction | IRNTesterExampleAction | IRNTesterInitialAction;
+export type RNTesterAction =
+  | IRNTesterBackAction
+  | IRNTesterListAction
+  | IRNTesterExampleAction
+  | IRNTesterInitialAction;

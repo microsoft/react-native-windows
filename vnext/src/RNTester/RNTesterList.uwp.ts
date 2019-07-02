@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 'use strict';
 import React = require('react');
@@ -193,7 +196,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },*/
 ];
 
-const Modules: { [key: string]: IRNTesterModule } = {};
+const Modules: {[key: string]: IRNTesterModule} = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;

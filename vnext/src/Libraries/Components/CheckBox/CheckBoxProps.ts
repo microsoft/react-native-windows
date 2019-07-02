@@ -1,7 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-import { ViewProps } from 'react-native';
+import {ViewProps} from 'react-native';
 
 export interface ICheckBoxProps extends ViewProps {
   checked?: boolean;
@@ -12,6 +15,6 @@ export interface ICheckBoxProps extends ViewProps {
 
 export interface ICheckBoxChangeEvent {
   nativeEvent: {
-      value: boolean;
+    value: boolean;
   };
 }
