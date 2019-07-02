@@ -88,6 +88,7 @@
     <ClCompile Include="Views\WebViewManager.cpp" />
     <ClCompile Include="Views\MenuFlyoutViewManager.cpp" />
     <ClCompile Include="Views\MenuFlyoutItemViewManager.cpp" />
+    <ClCompile Include="Views\MenuFlyoutSubItemViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Views\WebViewManager.h" />
     <ClInclude Include="Views\MenuFlyoutViewManager.h" />
     <ClInclude Include="Views\MenuFlyoutItemViewManager.h" />
+    <ClInclude Include="Views\MenuFlyoutSubItemViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\makewinrt.inc" />

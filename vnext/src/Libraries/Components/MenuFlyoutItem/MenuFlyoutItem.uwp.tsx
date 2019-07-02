@@ -16,16 +16,12 @@ const RCTMenuFlyoutItem = requireNativeComponent('RCTMenuFlyoutItem');
 
 /**
  * Renders a MenuFlyoutItem component.
- *
-
- *
  * @keyword MenuFlyoutItem
  */
 export class MenuFlyoutItem extends React.Component<IMenuFlyoutItemProps> {
 
   constructor(props: IMenuFlyoutItemProps) {
     super(props);
-    this.state = { target: undefined, targetRef: null };
   }
 
   public render(): JSX.Element {

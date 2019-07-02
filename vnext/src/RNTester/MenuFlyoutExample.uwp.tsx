@@ -5,7 +5,7 @@
 
 import React = require('react');
 import { Button, Text, View } from 'react-native';
-import { CheckBox, MenuFlyout, Picker, MenuFlyoutItem } from '../../src/index.uwp';
+import { CheckBox, MenuFlyout, Picker, MenuFlyoutItem, MenuFlyoutSubItem } from '../../src/index.uwp';
 import { Placement  } from '../../src/Libraries/Components/MenuFlyout/MenuFlyoutProps';
 
 interface IMenuFlyoutExampleState {
@@ -102,8 +102,11 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             target={this.state.target}
             placement={this.state.placementOptions}
           >
+            <MenuFlyoutSubItem text='Delete'>
+            <MenuFlyoutItem text="Yes" onClick = {this._onDeleteYesClicked}></MenuFlyoutItem>
+            <MenuFlyoutItem text="No" onClick = {this._onDeleteNoClicked}></MenuFlyoutItem>
+            </MenuFlyoutSubItem>
             <MenuFlyoutItem text="Edit" onClick = {this._onEditClicked}></MenuFlyoutItem>
-            <MenuFlyoutItem text="Delete" onClick = {this._onDeleteClicked}></MenuFlyoutItem>
           </MenuFlyout>
             
             )}   
@@ -132,9 +135,12 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
     this.setState({buttonClicked: 'edit clicked' });
   }
 
-  _onDeleteClicked = () => {
-      this.setState({buttonClicked: 'delete clicked' });
-  }
+  _onDeleteYesClicked = () => {
+    this.setState({buttonClicked: 'delete Yes clicked' });
+}
+_onDeleteNoClicked = () => {
+  this.setState({buttonClicked: 'delete No clicked' });
+}
 }
 
 

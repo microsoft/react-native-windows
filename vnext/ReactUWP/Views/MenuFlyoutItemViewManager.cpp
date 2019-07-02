@@ -36,39 +36,34 @@ namespace react {
       void updateProperties(const folly::dynamic&& props) override;
 
     private:
-      winrt::FrameworkElement m_targetElement = nullptr;
-     
-      std::shared_ptr<TouchEventHandler> m_touchEventHanadler;
+      std::shared_ptr<TouchEventHandler> m_touchEventHandler;
     };
 
     MenuFlyoutItemShadowNode::~MenuFlyoutItemShadowNode()
     {
-      m_touchEventHanadler->RemoveTouchHandlers();
+      m_touchEventHandler->RemoveTouchHandlers();
     }
 
     void MenuFlyoutItemShadowNode::AddView(ShadowNode& child, int64_t index)
     {
-      // NO CHILDREN
+      // MenuItems should have no children
     }
 
     void MenuFlyoutItemShadowNode::createView()
     {
       Super::createView();
       auto wkinstance = GetViewManager()->GetReactInstance();
-      m_touchEventHanadler = std::make_shared<TouchEventHandler>(wkinstance);
-   
+      m_touchEventHandler = std::make_shared<TouchEventHandler>(wkinstance);
     }
 
     void MenuFlyoutItemShadowNode::removeAllChildren()
     {
-        // NO CHILDREN
+      // MenuItems should have no children
     }
 
     void MenuFlyoutItemShadowNode::updateProperties(const folly::dynamic&& props)
     {
-      m_updating = true;
       auto MenuFlyoutItem = GetView().as<winrt::MenuFlyoutItem>();
-
 
       if (MenuFlyoutItem == nullptr)
         return;
@@ -77,8 +72,6 @@ namespace react {
       {
         const std::string& propertyName = pair.first.getString();
         const folly::dynamic& propertyValue = pair.second;
-
-      
        
         if (propertyName == "text")
         {
@@ -90,8 +83,6 @@ namespace react {
       }
 
       Super::updateProperties(std::move(props));
-      m_updating = false;
-
     }
 
 

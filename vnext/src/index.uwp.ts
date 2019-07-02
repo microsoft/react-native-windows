@@ -9,4 +9,4 @@ export * from './Libraries/Components/Picker/PickerUWP.uwp';
 export * from './Libraries/Components/Popup/Popup.uwp';
 export * from './Libraries/Components/MenuFlyout/MenuFlyout.uwp';
 export * from './Libraries/Components/MenuFlyoutItem/MenuFlyoutItem.uwp';
-
+export * from './Libraries/Components/MenuFlyoutSubItem/MenuFlyoutSubItem.uwp';
