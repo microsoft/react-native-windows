@@ -26,7 +26,7 @@ namespace react {
 namespace uwp {
 
 ReactControl::ReactControl(IXamlRootView* parent, XamlView rootView)
-  : m_pParent(parent)
+  : m_pParent(parent), m_rootView(rootView)
 {
   PrepareXamlRootView(rootView);
 }
@@ -189,6 +189,7 @@ void ReactControl::DetachRoot() noexcept
 // otherwise, just changing the FocusState to ::Pointer for the element.
 void ReactControl::blur(XamlView const& xamlView) noexcept
 {
+  EnsureFocusSafeHarbor();
   if (m_focusSafeHarbor)
   {
     m_focusSafeHarbor.IsTabStop(true);
@@ -291,30 +292,36 @@ void ReactControl::PrepareXamlRootView(XamlView const& rootView)
     // A ContentControl is created in the middle to act as a 'focus safe harbor'
     // When a XamlView is blurred, make the ContentControl to allow tabstop, and move the pointer focus to safe harbor
     // When the safe harbor is LosingFocus, disable tabstop on ContentControl.
+    // The creation of safe harbor is delayed to EnsureFocusSafeHarbor 
     auto children = panel.Children();
     children.Clear();
-
-    m_focusSafeHarbor = CreateFocusSafeHarbor();
-    children.Append(m_focusSafeHarbor);
 
     auto newRootView = winrt::Grid();
     children.Append(newRootView);
     m_xamlRootView = newRootView;
+  }
+  else
+    m_xamlRootView = rootView;
+}
+
+void ReactControl::EnsureFocusSafeHarbor()
+{
+  if (!m_focusSafeHarbor && m_xamlRootView != m_rootView)
+  {
+    // focus safe harbor is delayed to be inserted to the visual tree
+    auto panel = m_rootView.try_as<winrt::Panel>();
+    assert(panel.Children().Size() == 1);
+
+    m_focusSafeHarbor = winrt::ContentControl();
+    m_focusSafeHarbor.Width(0.0);
+    m_focusSafeHarbor.IsTabStop(false);
+    panel.Children().InsertAt(0, m_focusSafeHarbor);
 
     m_focusSafeHarborLosingFocusRevoker = m_focusSafeHarbor.LosingFocus(winrt::auto_revoke, [this](const auto & sender, const winrt::LosingFocusEventArgs & args)
       {
         m_focusSafeHarbor.IsTabStop(false);
       });
   }
-  else
-    m_xamlRootView = rootView;
-}
-
-winrt::ContentControl ReactControl::CreateFocusSafeHarbor()
-{
-  auto control = winrt::ContentControl();
-  control.Width(0.0);
-  return control;
 }
 
 }

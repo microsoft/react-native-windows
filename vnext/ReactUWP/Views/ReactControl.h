@@ -56,7 +56,7 @@ private:
   void HandleInstanceError();
   void HandleInstanceErrorOnUIThread();
   void PrepareXamlRootView(XamlView const& rootView);
-  static winrt::ContentControl CreateFocusSafeHarbor();
+  void EnsureFocusSafeHarbor();
 
   IXamlRootView* m_pParent;
 
@@ -67,7 +67,15 @@ private:
   std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
   int64_t m_rootTag = -1;
+
+  // Visual tree to support safe harbor
+  // m_rootView
+  //  safe harbor
+  //  m_xamlRootView
+  //    JS created children
   XamlView m_xamlRootView{ nullptr };
+  XamlView m_rootView;
+
   ReactInstanceCreator m_instanceCreator;
   std::shared_ptr<IReactInstance> m_reactInstance;
   bool m_isAttached { false };
