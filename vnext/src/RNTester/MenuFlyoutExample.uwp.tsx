@@ -15,8 +15,8 @@ interface IMenuFlyoutExampleState {
   popupCheckBoxState: boolean;
   placementOptions: Placement;
   target?: React.ReactNode;
-  message?: string;
   buttonClicked?: string;
+  openMessage?: string;
 }
 
 let placementValues: string[] = [
@@ -47,7 +47,7 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
     popupCheckBoxState: true,
     placementOptions: 'top',
     target: undefined,
-    message:"not dismissed"
+    openMessage: "closed"
   };
 
   public constructor(props: any) {
@@ -101,6 +101,7 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             onDismiss={this._onMenuFlyoutDismissed}
             target={this.state.target}
             placement={this.state.placementOptions}
+            onOpen = {this._onOpen}
           >
             <MenuFlyoutSubItem text='Delete'>
             <MenuFlyoutItem text="Yes" onClick = {this._onDeleteYesClicked}></MenuFlyoutItem>
@@ -111,9 +112,9 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             
             )}   
 
-          <Text style={{ padding: 10 }}>{this.state.message}</Text>
           <Text style={{ padding: 10 }}>{"button clicked: " + this.state.buttonClicked}</Text>
-
+          <Text style={{ padding: 10 }}>{"MenuFlyout state: " + this.state.openMessage}</Text>
+ 
  
       </View>
     );
@@ -128,9 +129,9 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
   _onMenuFlyoutDismissed = (isOpen: boolean) => {
     this.setState({ isMenuFlyoutVisible: isOpen });
-    this.setState({ buttonTitle: 'Open MenuFlyout', message: 'flyout dismissed once' });
+    this.setState({ buttonTitle: 'Open MenuFlyout', openMessage: "dismissed"});
   }
-
+ 
   _onEditClicked = () => {
     this.setState({buttonClicked: 'edit clicked' });
   }
@@ -141,6 +142,10 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 _onDeleteNoClicked = () => {
   this.setState({buttonClicked: 'delete No clicked' });
 }
+_onOpen = () => {
+  this.setState({openMessage: "Open"});
+}
+
 }
 
 

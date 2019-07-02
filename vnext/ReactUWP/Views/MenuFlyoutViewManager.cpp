@@ -152,6 +152,14 @@ namespace react {
       auto wkinstance = GetViewManager()->GetReactInstance();
       m_touchEventHandler = std::make_shared<TouchEventHandler>(wkinstance);
 
+      m_menuFlyout.Opened([=](auto &&, auto &&)
+      {
+        auto instance = wkinstance.lock();
+        folly::dynamic eventData = folly::dynamic::object("target", m_tag);
+        if (instance != nullptr)
+          instance->DispatchEvent(m_tag, "topOpen", std::move(eventData));
+      });
+
       // cancel closing if lighDismiss is false
       m_menuFlyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/, winrt::FlyoutBaseClosingEventArgs args)
       {
@@ -364,6 +372,7 @@ namespace react {
       if (m_targetElement != nullptr) {
         if (m_attachAsContextFlyout) {
           m_targetElement.ContextFlyout(m_menuFlyout);
+          auto wkinstance = GetViewManager()->GetReactInstance();
         }
         else
         {
@@ -433,6 +442,8 @@ namespace react {
     {
       auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
       directEvents["topDismiss"] = folly::dynamic::object("registrationName", "onDismiss");
+      directEvents["topOpen"] = folly::dynamic::object("registrationName", "onOpen");
+
 
       return directEvents;
     }

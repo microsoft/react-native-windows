@@ -22,6 +22,7 @@ export interface IMenuFlyoutProps extends ViewProps {
   isOpen?: boolean;
   attachAsContextFlyout?: boolean;
   onDismiss?: (isOpen: boolean) => void;
+  onOpen: () => void;
   placement?: Placement;
   target?: React.ReactNode;
   verticalOffset?: number;
