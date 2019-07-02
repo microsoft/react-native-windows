@@ -177,16 +177,16 @@ dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
 
 dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
   folly::dynamic eventTypes = folly::dynamic::object();
-  eventTypes.update(
-      folly::dynamic::object(
-          "topLayout", folly::dynamic::object("registrationName", "onLayout"))(
-          "topMouseEnter",
-          folly::dynamic::object("registrationName", "onMouseEnter"))(
-          "topMouseLeave",
-          folly::dynamic::object("registrationName", "onMouseLeave"))
-      //    ("topMouseMove", folly::dynamic::object("registrationName",
-      //    "onMouseMove"))
-  );
+  eventTypes.update(folly::dynamic::object(
+      "topLayout", folly::dynamic::object("registrationName", "onLayout"))(
+      "topMouseEnter",
+      folly::dynamic::object("registrationName", "onMouseEnter"))(
+      "topMouseLeave",
+      folly::dynamic::object("registrationName", "onMouseLeave"))
+                    //    ("topMouseMove",
+                    //    folly::dynamic::object("registrationName",
+                    //    "onMouseMove"))
+                    );
   return eventTypes;
 }
 
@@ -229,8 +229,8 @@ void ViewManagerBase::UpdateProperties(
   // Directly dirty this node since non-layout changes like the text property do
   // not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate
-  //  the ancestors which will include the containing Text element. And that's
-  //  what matters.
+  //  the ancestors which
+  //  will include the containing Text element. And that's what matters.
   int64_t tag = GetTag(nodeToUpdate->GetView());
   auto instance = m_wkReactInstance.lock();
   if (instance != nullptr)
@@ -310,6 +310,5 @@ bool ViewManagerBase::RequiresYogaNode() const {
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
-
-} // namespace uwp
-} // namespace react
+}
+}

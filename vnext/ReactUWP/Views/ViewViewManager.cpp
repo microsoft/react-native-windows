@@ -13,6 +13,7 @@
 #include <Utils/AccessibilityUtils.h>
 #include <Utils/PropertyUtils.h>
 
+
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
 
@@ -21,6 +22,7 @@
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
+
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
@@ -34,7 +36,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
-} // namespace winrt
+}
 
 namespace react {
 namespace uwp {
@@ -253,6 +255,10 @@ bool TryUpdateBorderProperties(
 }
 
 // ViewViewManager
+
+ViewViewManager::ViewViewManager(
+    const std::shared_ptr<IReactInstance> &reactInstance)
+    : Super(reactInstance) {}
 
 const char *ViewViewManager::GetName() const {
   return "RCTView";
@@ -551,8 +557,9 @@ void ViewViewManager::SetLayoutProps(
     float width,
     float height) {
   // When the View has a ContentControl the ViewPanel must also have the Width &
-  // Height set Do this first so that it is setup properly before any events are
-  // fired by the Super implementation
+  // Height set
+  // Do this first so that it is setup properly before any events are fired by
+  // the Super implementation
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(&nodeToUpdate);
   if (pViewShadowNode->IsControl()) {
     auto pPanel = pViewShadowNode->GetViewPanel();
@@ -562,6 +569,5 @@ void ViewViewManager::SetLayoutProps(
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
-
-} // namespace uwp
-} // namespace react
+}
+}

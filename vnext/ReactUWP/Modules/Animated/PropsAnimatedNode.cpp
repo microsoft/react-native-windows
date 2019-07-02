@@ -3,12 +3,11 @@
 
 #include "pch.h"
 
+#include "PropsAnimatedNode.h"
 #include <ReactUWP\Modules\NativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
-#include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
-
 
 namespace react {
 namespace uwp {
@@ -22,7 +21,6 @@ PropsAnimatedNode::PropsAnimatedNode(
     m_propMapping.insert({entry.first.getString(),
                           static_cast<int64_t>(entry.second.asDouble())});
   }
-}
 }
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
