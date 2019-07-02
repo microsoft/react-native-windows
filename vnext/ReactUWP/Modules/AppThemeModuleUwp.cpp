@@ -64,7 +64,7 @@ const std::string AppTheme::getCurrentTheme()
 
 bool AppTheme::getIsHighContrast()
 {
-  return m_accessibilitySettings.HighContrast();;
+  return m_accessibilitySettings.HighContrast();
 }
 
 // Returns the RBG values for the 8 relevant High Contrast elements.
