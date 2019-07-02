@@ -5,9 +5,9 @@
 
 #include <folly/AtomicIntrusiveLinkedList.h>
 
-#include <unordered_map>
 #include <mutex>
 #include <queue>
+#include <unordered_map>
 
 #include <glog/logging.h>
 
@@ -28,15 +28,17 @@ time_point now() {
 
 class Task {
  public:
-  static Task* create(std::function<void()>&& func) {
+  static Task *create(std::function<void()> &&func) {
     return new Task{std::move(func), false, time_point()};
   }
 
-  static Task* createSync(std::function<void()>&& func) {
+  static Task *createSync(std::function<void()> &&func) {
     return new Task{std::move(func), true, time_point()};
   }
 
-  static Task* createDelayed(std::function<void()>&& func, time_point startTime) {
+  static Task *createDelayed(
+      std::function<void()> &&func,
+      time_point startTime) {
     return new Task{std::move(func), false, startTime};
   }
 
@@ -52,7 +54,7 @@ class Task {
 
   // Should this sort consider id also?
   struct Compare {
-    bool operator()(const Task* a, const Task* b) {
+    bool operator()(const Task *a, const Task *b) {
       return a->startTime > b->startTime;
     }
   };
@@ -69,7 +71,7 @@ class DelayedTaskQueue {
 
   void process() {
     while (!queue_.empty()) {
-      Task* d = queue_.top();
+      Task *d = queue_.top();
       if (now() < d->startTime) {
         break;
       }
@@ -79,7 +81,7 @@ class DelayedTaskQueue {
     }
   }
 
-  void push(Task* t) {
+  void push(Task *t) {
     queue_.push(t);
   }
 
@@ -90,38 +92,38 @@ class DelayedTaskQueue {
   time_point nextTime() {
     return queue_.top()->startTime;
   }
+
  private:
-  std::priority_queue<Task*, std::vector<Task*>, Task::Compare> queue_;
+  std::priority_queue<Task *, std::vector<Task *>, Task::Compare> queue_;
 };
 
-}
+} // namespace
 
 class CxxMessageQueue::QueueRunner {
  public:
   ~QueueRunner() {
-    queue_.sweep([] (Task* t) {
-        delete t;
-      });
+    queue_.sweep([](Task *t) { delete t; });
   }
 
-  void enqueue(std::function<void()>&& func) {
+  void enqueue(std::function<void()> &&func) {
     enqueueTask(Task::create(std::move(func)));
   }
 
-  void enqueueDelayed(std::function<void()>&& func, uint64_t delayMs) {
+  void enqueueDelayed(std::function<void()> &&func, uint64_t delayMs) {
     if (delayMs) {
-      enqueueTask(Task::createDelayed(std::move(func), now() + std::chrono::milliseconds(delayMs)));
+      enqueueTask(Task::createDelayed(
+          std::move(func), now() + std::chrono::milliseconds(delayMs)));
     } else {
       enqueue(std::move(func));
     }
   }
 
-  void enqueueSync(std::function<void()>&& func) {
+  void enqueueSync(std::function<void()> &&func) {
     EventFlag done;
-    enqueueTask(Task::createSync([&] () mutable {
-        func();
-        done.set();
-      }));
+    enqueueTask(Task::createSync([&]() mutable {
+      func();
+      done.set();
+    }));
     if (stopped_) {
       // If this queue is stopped_, the sync task might never actually run.
       throw std::runtime_error("Stopped within enqueueSync.");
@@ -173,21 +175,21 @@ class CxxMessageQueue::QueueRunner {
   // As we pop things from queue_, before dealing with that thing, we run any
   // delayed tasks whose scheduled time has arrived.
   void sweep() {
-    queue_.sweep([this] (Task* t) {
-        std::unique_ptr<Task> owned(t);
-        if (stopped_.load(std::memory_order_relaxed)) {
-          if (t->sync) {
-            throw std::runtime_error("Sync task posted while stopped.");
-          }
-          return;
+    queue_.sweep([this](Task *t) {
+      std::unique_ptr<Task> owned(t);
+      if (stopped_.load(std::memory_order_relaxed)) {
+        if (t->sync) {
+          throw std::runtime_error("Sync task posted while stopped.");
         }
+        return;
+      }
 
-        delayed_.process();
-        if (t->startTime != time_point() && now() <= t->startTime) {
-          delayed_.push(owned.release());
-        } else {
-          t->func();
-        }
+      delayed_.process();
+      if (t->startTime != time_point() && now() <= t->startTime) {
+        delayed_.push(owned.release());
+      } else {
+        t->func();
+      }
     });
     delayed_.process();
   }
@@ -204,7 +206,7 @@ class CxxMessageQueue::QueueRunner {
   }
 
  private:
-  void enqueueTask(Task* task) {
+  void enqueueTask(Task *task) {
     if (queue_.insertHead(task)) {
       pending_.set();
     }
@@ -221,10 +223,7 @@ class CxxMessageQueue::QueueRunner {
   EventFlag finished_;
 };
 
-
-CxxMessageQueue::CxxMessageQueue() : qr_(new QueueRunner()) {
-
-}
+CxxMessageQueue::CxxMessageQueue() : qr_(new QueueRunner()) {}
 
 CxxMessageQueue::~CxxMessageQueue() {
   // TODO(cjhopman): Add detach() so that the queue doesn't have to be
@@ -234,15 +233,17 @@ CxxMessageQueue::~CxxMessageQueue() {
   }
 }
 
-void CxxMessageQueue::runOnQueue(std::function<void()>&& func) {
+void CxxMessageQueue::runOnQueue(std::function<void()> &&func) {
   qr_->enqueue(std::move(func));
 }
 
-void CxxMessageQueue::runOnQueueDelayed(std::function<void()>&& func, uint64_t delayMs) {
+void CxxMessageQueue::runOnQueueDelayed(
+    std::function<void()> &&func,
+    uint64_t delayMs) {
   qr_->enqueueDelayed(std::move(func), delayMs);
 }
 
-void CxxMessageQueue::runOnQueueSync(std::function<void()>&& func) {
+void CxxMessageQueue::runOnQueueSync(std::function<void()> &&func) {
   if (isOnQueue()) {
     func();
     return;
@@ -267,7 +268,8 @@ struct MQRegistry {
   std::weak_ptr<CxxMessageQueue> find(std::thread::id tid) {
     std::lock_guard<std::mutex> g(lock_);
     auto iter = registry_.find(tid);
-    if (iter == registry_.end()) return std::weak_ptr<CxxMessageQueue>();
+    if (iter == registry_.end())
+      return std::weak_ptr<CxxMessageQueue>();
     return iter->second;
   }
 
@@ -280,24 +282,26 @@ struct MQRegistry {
     std::lock_guard<std::mutex> g(lock_);
     registry_.erase(tid);
   }
+
  private:
   std::mutex lock_;
   std::unordered_map<std::thread::id, std::weak_ptr<CxxMessageQueue>> registry_;
 };
 
-MQRegistry& getMQRegistry() {
-  static MQRegistry* mq_registry = new MQRegistry();
+MQRegistry &getMQRegistry() {
+  static MQRegistry *mq_registry = new MQRegistry();
   return *mq_registry;
 }
-}
+} // namespace
 
 std::weak_ptr<CxxMessageQueue> CxxMessageQueue::current() {
   auto tid = std::this_thread::get_id();
   return getMQRegistry().find(tid);
 }
 
-std::function<void()> CxxMessageQueue::getRunLoop(std::shared_ptr<CxxMessageQueue> mq) {
-  return [capture=mq->qr_, weakMq=std::weak_ptr<CxxMessageQueue>(mq)] {
+std::function<void()> CxxMessageQueue::getRunLoop(
+    std::shared_ptr<CxxMessageQueue> mq) {
+  return [capture = mq->qr_, weakMq = std::weak_ptr<CxxMessageQueue>(mq)] {
     capture->bindToThisThread();
     auto tid = std::this_thread::get_id();
 
@@ -308,7 +312,5 @@ std::function<void()> CxxMessageQueue::getRunLoop(std::shared_ptr<CxxMessageQueu
   };
 }
 
-
-
-}  // namespace react
-}  // namespace facebook
+} // namespace react
+} // namespace facebook

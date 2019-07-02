@@ -18,27 +18,25 @@ namespace utilities {
 //   auto p = checkedReinterpretCast<char32_t*>(i);
 //
 template <typename TResultTypePtr, typename TOriginalTypePtr>
-inline TResultTypePtr checkedReinterpretCast(TOriginalTypePtr p) noexcept
-{
+inline TResultTypePtr checkedReinterpretCast(TOriginalTypePtr p) noexcept {
   using TResultType = typename std::remove_pointer<TResultTypePtr>::type;
   using TOriginalType = typename std::remove_pointer<TOriginalTypePtr>::type;
 
   static_assert(
-    std::is_pointer<TResultTypePtr>::value &&
-    std::is_pointer<TOriginalTypePtr>::value &&
-    std::is_integral<TResultType>::value &&
-    std::is_integral<TOriginalType>::value &&
-    sizeof(TResultType) == sizeof(TOriginalType),
-    "checkedReinterpretCast can only be used to cast from T1* to T2*, where "
-    "T1 and T2 are integral types of the same size.");
+      std::is_pointer<TResultTypePtr>::value &&
+          std::is_pointer<TOriginalTypePtr>::value &&
+          std::is_integral<TResultType>::value &&
+          std::is_integral<TOriginalType>::value &&
+          sizeof(TResultType) == sizeof(TOriginalType),
+      "checkedReinterpretCast can only be used to cast from T1* to T2*, where "
+      "T1 and T2 are integral types of the same size.");
 
   return reinterpret_cast<TResultTypePtr>(p);
 }
 
 // A compile time function that deduces the size of an array.
-template<typename T, std::size_t N>
-constexpr std::size_t arraySize(T(&)[N]) noexcept
-{
+template <typename T, std::size_t N>
+constexpr std::size_t arraySize(T (&)[N]) noexcept {
   return N;
 }
 

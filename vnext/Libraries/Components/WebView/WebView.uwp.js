@@ -1,12 +1,16 @@
-// Copyright (c) Facebook, Inc. and its affiliates.
-//
-// This source code is licensed under the MIT license found in the
-// LICENSE file in the root directory of this source tree.
-//
-// Portions copyright for react-native-windows:
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * Portions copyright for react-native-windows:
+ *
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 
 'use strict';
 
@@ -34,7 +38,6 @@ var WebViewState = keyMirror({
  * Renders a native WebView.
  */
 var WebView = createReactClass({
-
   getInitialState: function() {
     return {
       viewState: WebViewState.IDLE,
@@ -45,7 +48,7 @@ var WebView = createReactClass({
 
   getDefaultProps: function() {
     return {
-      javaScriptEnabled : true,
+      javaScriptEnabled: true,
     };
   },
 
@@ -62,17 +65,24 @@ var WebView = createReactClass({
       otherView = this.props.renderLoading && this.props.renderLoading();
     } else if (this.state.viewState === WebViewState.ERROR) {
       var errorEvent = this.state.lastErrorEvent;
-      otherView = this.props.renderError && this.props.renderError(
-        errorEvent.domain,
-        errorEvent.code,
-        errorEvent.description);
+      otherView =
+        this.props.renderError &&
+        this.props.renderError(
+          errorEvent.domain,
+          errorEvent.code,
+          errorEvent.description,
+        );
     } else if (this.state.viewState !== WebViewState.IDLE) {
-      console.error('RCTWebView invalid state encountered: ' + this.state.loading);
+      console.error(
+        'RCTWebView invalid state encountered: ' + this.state.loading,
+      );
     }
 
     var webViewStyles = [styles.container, this.props.style];
-    if (this.state.viewState === WebViewState.LOADING ||
-      this.state.viewState === WebViewState.ERROR) {
+    if (
+      this.state.viewState === WebViewState.LOADING ||
+      this.state.viewState === WebViewState.ERROR
+    ) {
       // if we're in either LOADING or ERROR states, don't show the webView
       webViewStyles.push(styles.hidden);
     }
@@ -84,7 +94,7 @@ var WebView = createReactClass({
       source.uri = this.props.url;
     }
 
-    var webView =
+    var webView = (
       <RCTWebView
         ref={RCT_WEBVIEW_REF}
         key="webViewKey"
@@ -94,12 +104,15 @@ var WebView = createReactClass({
         javaScriptEnabled={this.props.javaScriptEnabled}
         indexedDbEnabled={this.props.indexedDbEnabled}
         contentInset={this.props.contentInset}
-        automaticallyAdjustContentInsets={this.props.automaticallyAdjustContentInsets}
+        automaticallyAdjustContentInsets={
+          this.props.automaticallyAdjustContentInsets
+        }
         onLoadingStart={this.onLoadingStart}
         onLoadingFinish={this.onLoadingFinish}
         onLoadingError={this.onLoadingError}
         testID={this.props.testID}
-      />;
+      />
+    );
 
     return (
       <View style={styles.container}>
@@ -113,7 +126,7 @@ var WebView = createReactClass({
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.goForward,
-      null
+      null,
     );
   },
 
@@ -121,7 +134,7 @@ var WebView = createReactClass({
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.goBack,
-      null
+      null,
     );
   },
 
@@ -129,7 +142,7 @@ var WebView = createReactClass({
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       UIManager.RCTWebView.Commands.reload,
-      null
+      null,
     );
   },
 
@@ -144,6 +157,7 @@ var WebView = createReactClass({
   },
 
   getWebViewHandle: function() {
+    // eslint-disable-next-line react/no-string-refs
     return ReactNative.findNodeHandle(this.refs[RCT_WEBVIEW_REF]);
   },
 
@@ -162,7 +176,7 @@ var WebView = createReactClass({
 
     this.setState({
       lastErrorEvent: event.nativeEvent,
-      viewState: WebViewState.ERROR
+      viewState: WebViewState.ERROR,
     });
   },
 

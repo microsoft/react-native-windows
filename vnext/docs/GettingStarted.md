@@ -7,11 +7,11 @@ This is a summary of setup steps needed to install and work with React Native fo
 * [Visual Studio 2019](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
-      * Enable the optional 'C++ Universal Windows Platform tools'
+      * Enable the optional `C++ (v141) Universal Windows Platform tools`
     * Desktop development with C++
   * Individual Components
     * Development activities
-      * Node.js development support
+      * Node.js development support (optional)
     * SDKs, libraries, and frameworks per your versioning needs
       * Windows 10 SDK (10.0.18362.0)
 

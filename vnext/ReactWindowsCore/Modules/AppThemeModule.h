@@ -19,6 +19,8 @@ public:
   virtual ~AppTheme();
 
   virtual const std::string getCurrentTheme();
+  virtual bool getIsHighContrast();
+  virtual folly::dynamic getHighContrastColors();
 };
 
 class AppThemeModule : public facebook::xplat::module::CxxModule
@@ -29,7 +31,7 @@ public:
   AppThemeModule(std::shared_ptr<AppTheme> && appTheme);
 
   // CxxModule
-  std::string getName() override { return name; }
+  std::string getName() override { return name; };
   auto getConstants() -> std::map<std::string, folly::dynamic> override;
   auto getMethods() -> std::vector<Method> override;
 

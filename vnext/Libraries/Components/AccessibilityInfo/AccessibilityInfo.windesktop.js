@@ -1,18 +1,19 @@
-// Copyright (c) Facebook, Inc. and its affiliates.
-//
-// This source code is licensed under the MIT license found in the
-// LICENSE file in the root directory of this source tree.
-//
-// Portions copyright for react-native-windows:
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * Portions copyright for react-native-windows:
+ *
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 'use strict';
 
-var NativeModules = require('NativeModules');
 var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
-
-var RCTAccessibilityInfo = NativeModules.AccessibilityInfo;
 
 var TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
 
@@ -23,7 +24,6 @@ type ChangeEventName = $Enum<{
 var _subscriptions = new Map();
 
 var AccessibilityInfo = {
-
   fetch: function(): Promise {
     return new Promise((resolve, reject) => {
       // TODO Hx: Implement this module.
@@ -31,23 +31,23 @@ var AccessibilityInfo = {
     });
   },
 
-  addEventListener: function (
+  addEventListener: function(
     eventName: ChangeEventName,
-    handler: Function
+    handler: Function,
   ): void {
     // TODO Hx: Implement this module.
     var listener = RCTDeviceEventEmitter.addListener(
       TOUCH_EXPLORATION_EVENT,
-      (enabled) => {
+      enabled => {
         handler(enabled);
-      }
+      },
     );
     _subscriptions.set(handler, listener);
   },
 
   removeEventListener: function(
     eventName: ChangeEventName,
-    handler: Function
+    handler: Function,
   ): void {
     // TODO Hx: Implement this module.
     var listener = _subscriptions.get(handler);
@@ -57,7 +57,6 @@ var AccessibilityInfo = {
     listener.remove();
     _subscriptions.delete(handler);
   },
-
 };
 
 module.exports = AccessibilityInfo;
