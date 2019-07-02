@@ -23,7 +23,7 @@ function rnTesterNavigationReducer(
   ) {
     return {
       // A null openExample will cause the views to display the RNTester example list
-      openExample: undefined
+      openExample: undefined,
     };
   }
 
@@ -33,7 +33,7 @@ function rnTesterNavigationReducer(
 
     if (ExampleModule) {
       return {
-        openExample: action.openExample
+        openExample: action.openExample,
       };
     }
   }

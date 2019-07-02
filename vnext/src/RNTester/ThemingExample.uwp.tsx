@@ -9,7 +9,7 @@ import { AppTheme } from '../../src/index.uwp';
 
 class ThemeExample extends React.Component {
   state = {
-    currentTheme: AppTheme.currentTheme
+    currentTheme: AppTheme.currentTheme,
   };
 
   componentDidMount() {
@@ -20,7 +20,7 @@ class ThemeExample extends React.Component {
     AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
   }
 
-  onAppThemeChanged = (event: any) => {
+  onAppThemeChanged = (_event: any) => {
     const currentTheme = AppTheme.currentTheme;
     this.setState({currentTheme});
   };
@@ -32,7 +32,7 @@ class ThemeExample extends React.Component {
     return (
       <View>
         <Text style={{color: 'red'}}>currentTheme: {this.state.currentTheme}</Text>
-        <Button onPress={ this._onPress } title={this.state.currentTheme} color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'}></Button>
+        <Button onPress={ this._onPress } title={this.state.currentTheme} color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'} />
       </View>
     );
   }
@@ -47,5 +47,5 @@ export const examples = [
     render: function(): JSX.Element {
       return <ThemeExample />;
     },
-  }
+  },
 ];

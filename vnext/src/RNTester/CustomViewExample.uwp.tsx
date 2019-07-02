@@ -31,6 +31,7 @@ export class CustomFrameworkElement extends React.Component<ICustomFrameworkElem
   });
 
   public render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { onCustomEvent, ...rest }  = this.props;
     rest.style = [this.styles.default, this.props.style];
 
@@ -67,7 +68,7 @@ class CustomViewExample extends React.Component<{}, any> {
     );
   }
 
-  private onCustomEvent = (event: ICustomChangeEvent) => {
+  private onCustomEvent = (_event: ICustomChangeEvent) => {
     this.setState({countOfEvents: this.state.countOfEvents + 1 });
   }
 
@@ -92,5 +93,5 @@ export const examples = [
     render: function(): JSX.Element {
       return <CustomViewExample />;
     },
-  }
+  },
 ];

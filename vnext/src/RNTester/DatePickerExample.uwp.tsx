@@ -23,7 +23,7 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
     selectedDate: new Date(),
     firstDayOfWeek: DayOfWeek.Sunday,
     maxDate: new Date('2050'),
-    minDate: new Date('1950')
+    minDate: new Date('1950'),
   };
 
   public render() {
@@ -35,10 +35,10 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
           <Picker
             style={ { width: 200, height: 35 } } selectedValue={ this.state.dateFormat }
             onValueChange={ value => this.setState({ dateFormat: value }) }>
-            <Picker.Item label='day month year' value='day month year' />
-            <Picker.Item label='dayofweek day month' value='dayofweek day month' />
-            <Picker.Item label='longdate' value='longdate' />
-            <Picker.Item label='shortdate' value='shortdate' />
+            <Picker.Item label="day month year" value="day month year" />
+            <Picker.Item label="dayofweek day month" value="dayofweek day month" />
+            <Picker.Item label="longdate" value="longdate" />
+            <Picker.Item label="shortdate" value="shortdate" />
           </Picker>
         </View>
         <View style={ { flexDirection: 'row' } }>
@@ -46,9 +46,9 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
           <Picker
             style={ { width: 200, height: 35 } } selectedValue={ this.state.dayOfWeekFormat }
             onValueChange={ value => this.setState({ dayOfWeekFormat: value }) }>
-            <Picker.Item label='abbreviated(2)' value='{dayofweek.abbreviated(2)}' />
-            <Picker.Item label='abbreviated(3)' value='{dayofweek.abbreviated(3)}' />
-            <Picker.Item label='full' value='{dayofweek.full}' />
+            <Picker.Item label="abbreviated(2)" value="{dayofweek.abbreviated(2)}" />
+            <Picker.Item label="abbreviated(3)" value="{dayofweek.abbreviated(3)}" />
+            <Picker.Item label="full" value="{dayofweek.full}" />
           </Picker>
         </View>
         <View style={ { flexDirection: 'row' } }>
@@ -56,19 +56,19 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
           <Picker
             style={ { width: 200, height: 35 } } selectedValue={ this.state.firstDayOfWeek }
             onValueChange={ value => this.setState({ firstDayOfWeek: value }) }>
-            <Picker.Item label='Sunday' value={ DayOfWeek.Sunday } />
-            <Picker.Item label='Monday' value={ DayOfWeek.Monday } />
-            <Picker.Item label='Tuesday' value={ DayOfWeek.Tuesday } />
-            <Picker.Item label='Wednesday' value={ DayOfWeek.Wednesday } />
-            <Picker.Item label='Thursday' value={ DayOfWeek.Thursday } />
-            <Picker.Item label='Friday' value={ DayOfWeek.Friday } />
-            <Picker.Item label='Saturday' value={ DayOfWeek.Saturday } />
+            <Picker.Item label="Sunday" value={ DayOfWeek.Sunday } />
+            <Picker.Item label="Monday" value={ DayOfWeek.Monday } />
+            <Picker.Item label="Tuesday" value={ DayOfWeek.Tuesday } />
+            <Picker.Item label="Wednesday" value={ DayOfWeek.Wednesday } />
+            <Picker.Item label="Thursday" value={ DayOfWeek.Thursday } />
+            <Picker.Item label="Friday" value={ DayOfWeek.Friday } />
+            <Picker.Item label="Saturday" value={ DayOfWeek.Saturday } />
           </Picker>
         </View>
         <DatePicker
           style={ { paddingTop: 10, width: 350 } }
           selectedDate={ this.state.selectedDate }
-          placeholderText='select date'
+          placeholderText="select date"
           dateFormat={ this.state.dateFormat }
           dayOfWeekFormat={ this.state.dayOfWeekFormat }
           firstDayOfWeek={ this.state.firstDayOfWeek }
@@ -84,7 +84,7 @@ class DatePickerExample extends React.Component<{}, IDatePickerExampleState> {
   }
 
   onDateChange = (newDate: Date) => {
-    this.setState({ selectedDate: newDate })
+    this.setState({ selectedDate: newDate });
   };
 }
 
@@ -97,5 +97,5 @@ export const examples = [
     render: function (): JSX.Element {
       return <DatePickerExample />;
     },
-  }
+  },
 ];

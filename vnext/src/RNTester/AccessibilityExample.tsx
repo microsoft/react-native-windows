@@ -33,7 +33,7 @@ class HighContrastExample extends React.Component {
   state = {
     isHighContrast: AppTheme.isHighContrast,
     highContrastColorValues: AppTheme.currentHighContrastColors,
-    currentTheme: AppTheme.currentTheme
+    currentTheme: AppTheme.currentTheme,
   };
 
   componentDidMount() {
@@ -44,15 +44,15 @@ class HighContrastExample extends React.Component {
   componenetWillUnmount() {
     AppTheme.removeListener('highContrastChanged', this.onHighContrastChanged);
     AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
-  } 
+  }
 
   // TODO: Make args props
-  onHighContrastChanged = (event: IAppThemeChangedEvent) => {
-    this.setState({isHighContrast : AppTheme.isHighContrast, 
+  onHighContrastChanged = (_event: IAppThemeChangedEvent) => {
+    this.setState({isHighContrast : AppTheme.isHighContrast,
                   highContrastColorValues : AppTheme.currentHighContrastColors});
   };
 
-  onAppThemeChanged = (event: any) => {
+  onAppThemeChanged = (_event: any) => {
     this.setState({currentTheme : AppTheme.currentTheme});
   }
 
@@ -63,44 +63,44 @@ class HighContrastExample extends React.Component {
         <View>
           <Text>isHighContrast: {this.state.isHighContrast ? 'True' : 'False'}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.ButtonFaceColor}] : this.styles.disabled}>
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.ButtonFaceColor}] : this.styles.disabled}>
           <Text>ButtonFace High Contrast Hex Value: {this.state.highContrastColorValues.ButtonFaceColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.ButtonTextColor}] : this.styles.disabled}>
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.ButtonTextColor}] : this.styles.disabled}>
           <Text>ButtonText High Contrast Color Hex Value: {this.state.highContrastColorValues.ButtonTextColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.GrayTextColor}] : this.styles.disabled}>
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.GrayTextColor}] : this.styles.disabled}>
           <Text>GrayText High Contrast Color Hex Value: {this.state.highContrastColorValues.GrayTextColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HighlightColor}] : this.styles.disabled}> 
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HighlightColor}] : this.styles.disabled}>
           <Text>Highlight High Contrast Color Hex Value: {this.state.highContrastColorValues.HighlightColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HighlightTextColor}] : this.styles.disabled}> 
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HighlightTextColor}] : this.styles.disabled}>
           <Text>HighlightText High Contrast Color Hex Value: {this.state.highContrastColorValues.HighlightTextColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HotlightColor}] : this.styles.disabled}> 
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.HotlightColor}] : this.styles.disabled}>
           <Text>Hotlight High Contrast Color Hex Value: {this.state.highContrastColorValues.HotlightColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.WindowColor}] : this.styles.disabled}> 
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.WindowColor}] : this.styles.disabled}>
           <Text>Window High Contrast Color Hex Value: {this.state.highContrastColorValues.WindowColor}</Text>
         </View>
-        <View style = {this.state.isHighContrast? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.WindowTextColor}] : this.styles.disabled}> 
+        <View style = {this.state.isHighContrast ? [this.styles.enabled, {backgroundColor: this.state.highContrastColorValues.WindowTextColor}] : this.styles.disabled}>
           <Text>WindowText High Contrast Color Hex Value: {this.state.highContrastColorValues.WindowTextColor}</Text>
         </View>
       </View>
     );
   }
 
-  styles = StyleSheet.create ({
+  styles = StyleSheet.create({
     enabled: {
-      width: 250, 
-      height: 50
+      width: 250,
+      height: 50,
     },
     disabled: {
       width: 250,
       height: 50,
-      backgroundColor: '#808080'
-    }
+      backgroundColor: '#808080',
+    },
   });
 }
 
@@ -119,17 +119,17 @@ class TouchableExamples extends React.Component<{}, any> {
           accessibilityHint="A hint for the blue box."
           accessibilityRole="button"
           onPress={this.press}
-          {...{ tooltip: "a blue tooltip" }}
+          {...{ tooltip: 'a blue tooltip' }}
         >
           <Text>Blue</Text>
         </TouchableHighlight>
-        <Text accessibilityLiveRegion="polite" accessibilityLabel={"Pressed " + this.state.pressedCount + "times"}>Pressed {this.state.pressedCount} times</Text>
+        <Text accessibilityLiveRegion="polite" accessibilityLabel={'Pressed ' + this.state.pressedCount + 'times'}>Pressed {this.state.pressedCount} times</Text>
       </View>
     );
   }
 
   private press = () => {
-    this.setState({pressedCount: this.state.pressedCount+1});
+    this.setState({pressedCount: this.state.pressedCount + 1});
   }
 }
 
@@ -140,7 +140,7 @@ class AccessibilityStateExamples extends React.Component {
   }
 
   public render() {
-    var selectableItems = [{}, {}, {}]
+    var selectableItems = [{}, {}, {}];
     return (
       <View>
         <Text>The following TouchableHighlight toggles accessibilityState.disabled for the View under it:</Text>
@@ -155,7 +155,7 @@ class AccessibilityStateExamples extends React.Component {
           style={{backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue'}}
           accessibilityRole="text"
           accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
-          <Text>This View should be {this.state.viewDisabled ? "disabled" : "enabled"} according to UIA</Text>
+          <Text>This View should be {this.state.viewDisabled ? 'disabled' : 'enabled'} according to UIA</Text>
         </View>
         <Text>The following list of TouchableHighlights toggles accessibilityState.selected when touched:</Text>
         <View accessibilityLabel="List of selectable items">
@@ -165,11 +165,11 @@ class AccessibilityStateExamples extends React.Component {
               <TouchableHighlight
                 style={{width:100, height:50, backgroundColor: this.state.itemsSelected[item.index] ? 'gray' : 'lightskyblue'}}
                 accessibilityRole="button"
-                accessibilityLabel={"Selectable item " + (item.index + 1)}
+                accessibilityLabel={'Selectable item ' + (item.index + 1)}
                 accessibilityStates={this.state.itemsSelected[item.index] ? ['selected'] : []}
                 onPress={() => this.selectPress(item.index)}
               >
-                <Text>{this.state.itemsSelected[item.index] ? "Selected" : "Unselected"} </Text>
+                <Text>{this.state.itemsSelected[item.index] ? 'Selected' : 'Unselected'} </Text>
               </TouchableHighlight>
             }
             keyExtractor={(item, index) => index.toString()}
@@ -217,5 +217,5 @@ export const examples = [
     render: function(): JSX.Element {
       return <AccessibilityStateExamples />;
     },
-  }
+  },
 ];
