@@ -127,10 +127,11 @@ jobs:
           workingDirectory: vnext
 
       - task: CmdLine@2
-        displayName: Remove SampleApp.uwp.bundle
+        displayName: Create RNTester bundle
         inputs:
-          script: del SampleApp.uwp.bundle
+          script: node Scripts\cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.uwp.bundle --platform uwp
           workingDirectory: vnext
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
   - job: CliInit
     displayName: Verify react-native init
@@ -175,7 +176,7 @@ jobs:
       - task: CmdLine@2
         displayName: Init new project
         inputs:
-          script: react-native init testcli
+          script: react-native init testcli --version 0.59.10
           workingDirectory: $(Agent.BuildDirectory)
 
       - task: CmdLine@2

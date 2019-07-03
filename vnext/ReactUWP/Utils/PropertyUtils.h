@@ -133,8 +133,9 @@ bool TryUpdateBackgroundBrush(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
+
   if (propertyName == "backgroundColor") {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.Background(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BackgroundProperty());
@@ -163,8 +164,9 @@ bool TryUpdateForeground(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
+
   if (propertyName == "color") {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.Foreground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::ForegroundProperty());
@@ -184,7 +186,7 @@ bool TryUpdateBorderProperties(
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(T::BorderBrushProperty());

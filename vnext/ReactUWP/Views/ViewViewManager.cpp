@@ -379,6 +379,7 @@ void ViewViewManager::UpdateProperties(
   bool shouldBeControl = pViewShadowNode->IsControl();
 
   auto pPanel = pViewShadowNode->GetViewPanel();
+
   if (pPanel != nullptr) {
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
