@@ -17,15 +17,12 @@ function Start-Npm {
 		[string] $NpmPath
 	)
 
-	Start-Process	-FilePath $NpmPath `
-					-PassThru `
-					-NoProfile `
-					-NoNewWindow $NoNewWindow `
-					-WorkingDirectory $WorkingDirectory `
-					-Verb 'run start' `
-					-OutVariable npmProcess
-
-	return $npmProcess
+	return Start-Process `
+		-FilePath $NpmPath `
+		-PassThru `
+		-NoNewWindow:$NoNewWindow `
+		-WorkingDirectory $WorkingDirectory `
+		-ArgumentList 'run', 'start'
 }
 
 function Start-Node {
@@ -41,14 +38,11 @@ function Start-Node {
 		[string] $NodePath
 	)
 
-	Start-Process	-FilePath $NodePath `
-					-PassThru `
-					-NoProfile `
-					-NoNewWindow $NoNewWindow `
-					-ArgumentList $ScriptPath `
-					-OutVariable nodeProcess
-
-	return $nodeProcess
+	return Start-Process `
+		-FilePath $NodePath `
+		-PassThru `
+		-NoNewWindow:$NoNewWindow `
+		-ArgumentList $ScriptPath
 }
 
 function Start-Packager {
@@ -64,7 +58,7 @@ function Start-Packager {
 		[string] $NpmPath
 	)
 
-	return Start-Npm -WorkingDirectory $ReactNativeLocation -NoNewWindow $NoNewWindow -NpmPath $NpmPath
+	return Start-Npm -WorkingDirectory $ReactNativeLocation -NoNewWindow:$NoNewWindow -NpmPath $NpmPath
 }
 
 function Start-WebSocketServer {
@@ -81,7 +75,7 @@ function Start-WebSocketServer {
 	)
 
 	return Start-Node	-ScriptPath $ReactNativeLocation\IntegrationTests\websocket_integration_test_server.js `
-						-NoNewWindow $NoNewWindow `
+						-NoNewWindow:$NoNewWindow `
 						-NodePath $NodePath
 }
 

@@ -9,7 +9,7 @@ param (
 	[switch] $NoRun,
 
 
-[ValidateSet('x64', 'x86')]
+	[ValidateSet('x64', 'x86')]
 	[string] $Platform = 'x64',
 	[ValidateSet('Debug', 'Release')]
 	[string] $Configuration = 'Debug',
@@ -45,7 +45,7 @@ param (
 )
 
 # Import test server functions.
-. .\TestServers.ps1
+. $PSScriptRoot\TestServers.ps1
 
 function Cleanup() {
 	# Expected netstat header:
@@ -94,7 +94,7 @@ if ($Setup) {
 }
 
 if ($NoRun) {
-	Exit-PSSession
+	Exit
 }
 
 if ($List) {
@@ -102,11 +102,11 @@ if ($List) {
 	& $VsTest $Assembly --ListFullyQualifiedTests --ListTestsTargetPath:$env:TEMP\ReactWindowsIntegrationTestsList.txt
 	Get-Content $env:TEMP\ReactWindowsIntegrationTestsList.txt
 
-	Exit-PSSession
+	Exit
 }
 
 # Validate other options.
-if ($List.IsPresent) {
+if ($List) {
 	Write-Warning '-Run switch is present. -List will be ignored.'
 }
 # Ensure server ports are open.
@@ -122,7 +122,7 @@ foreach ($port in $ports) {
 	catch {
 		if ($RequireServers) {
 			Write-Error "Test service on port $currentPort not found."
-			Exit-PSSession
+			Exit
 		}
 
 		Write-Warning 'Not all test servers found.'
