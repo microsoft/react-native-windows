@@ -635,15 +635,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\makewinrt.inc" />
-    <None Include="..\Shared\sources.inc" />
-    <None Include="..\Shared\winrt\sources" />
-    <None Include="ABI\dirs" />
-    <None Include="ABI\idl\sources" />
-    <None Include="ABI\lib\sources" />
-    <None Include="ABI\sources.inc" />
-    <None Include="Base\sources" />
-    <None Include="CxxReactUWP\sources" />
+    <None Include="EndPoints\dll\react-native-uwp.arm.def">
+      <Filter>Endpoint\dll</Filter>
+    </None>
+    <None Include="EndPoints\dll\react-native-uwp.x64.def">
+      <Filter>Endpoint\dll</Filter>
+    </None>
+    <None Include="EndPoints\dll\react-native-uwp.x86.def">
+      <Filter>Endpoint\dll</Filter>
+    </None>
     <None Include="dirs" />
     <None Include="ABI\lib\sources">
       <Filter>ABI\lib</Filter>
@@ -694,7 +694,7 @@
       <Filter>Views</Filter>
     </None>
     <None Include="make.inc" />
-    <None Include="Modules\sources" />
+    <None Include="..\makewinrt.inc" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
