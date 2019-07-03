@@ -105,7 +105,7 @@ void TextViewManager::UpdateProperties(
         textBlock.ClearValue(
             winrt::TextBlock::IsTextScaleFactorEnabledProperty());
     } else if (propertyName == "selectionColor") {
-        if (IsValidColorValue(propertyValue)) {
+      if (IsValidColorValue(propertyValue)) {
         textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       } else
         textBlock.ClearValue(

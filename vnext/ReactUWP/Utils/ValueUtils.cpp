@@ -84,8 +84,12 @@ SolidColorBrushFrom(const folly::dynamic &d) {
       }
 
       winrt::hstring xamlString =
-          L"<ResourceDictionary xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
-          L"  <SolidColorBrush x:Key='" + resourceName + L"' Color='{ThemeResource " + resourceName + "}' />"
+          L"<ResourceDictionary"
+          L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
+          L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+          L"  <SolidColorBrush"
+          L"      x:Key='" + resourceName + L"'"
+          L"      Color='{ThemeResource " + resourceName + "}' />"
           L"</ResourceDictionary>";
 
       auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
@@ -102,14 +106,17 @@ SolidColorBrushFrom(const folly::dynamic &d) {
     winrt::IInspectable resource{
         winrt::Application::Current().Resources().Lookup(
             winrt::box_value(resourceName))};
-    return winrt::unbox_value<winrt::SolidColorBrush>(resource);
+
+    if (resource) {
+      winrt::unbox_value<winrt::SolidColorBrush>(resource);
+    }
   }
 
   thread_local static std::
       map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp>
           solidColorBrushCache;
 
-  const auto color = ColorFrom(d);
+  const auto color = d.isNumber() ? ColorFrom(d) : winrt::Colors::Transparent();
   if (solidColorBrushCache.count(color) != 0) {
     if (auto brush = solidColorBrushCache[color].get()) {
       return brush;
