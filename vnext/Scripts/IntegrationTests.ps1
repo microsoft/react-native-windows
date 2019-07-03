@@ -1,15 +1,25 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-param(
-	[switch] $NoSetup,
-	[switch] $Run,
-	[switch] $Cleanup,
-	[ValidateSet('x64', 'x86')]
+#
+# IntegrationTests.ps1
+#
+param (
+	[switch] $Setup,
+	[switch] $NoRun,
+
+
+[ValidateSet('x64', 'x86')]
 	[string] $Platform = 'x64',
 	[ValidateSet('Debug', 'Release')]
 	[string] $Configuration = 'Debug',
 	[string[]] $Tests,
+
+
+	[switch] $RequireServers = $Setup.IsPresent,
+
+
+	[switch] $Cleanup,
 	$Assembly =
 		"$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll",
 	$VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
@@ -18,12 +28,20 @@ param(
 	[switch] $Preload,
 	[string] $ReactNativeHome = "$($PSScriptRoot | Split-Path)\node_modules\react-native",
 
+
 	[string[]] $Assemblies =
 	(
 		"$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
 	),
 
-	[switch] $NoRun
+	[ValidateScript({Test-Path $_})]
+	[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)\node_modules\react-native",
+
+	[ValidateScript({Test-Path $_})]
+	[string] $NodePath = (Get-Command node.exe).Definition,
+
+	[ValidateScript({Test-Path $_})]
+	[string] $NpmPath = (Get-Command npm.cmd).Definition
 )
 
 # Import test server functions.
@@ -60,12 +78,12 @@ $procs = @()
 
 if($List.IsPresent) {
 	Write-Host '-List is present. Skipping setup.'
-	$NoSetup = $true
+	$Setup = $false
 }
 
-if (! $NoSetup) {
-	$procs += Start-Process powershell -PassThru -WorkingDirectory "$PSScriptRoot\.." -ArgumentList "npm run start"
-	$procs += Start-Process powershell -PassThru -ArgumentList '-NoProfile', "-File $ReactNativeHome\IntegrationTests\Launch-WebSocketServer.ps1 80 24"
+if ($Setup) {
+	$procs += Start-Packager -ReactNativeLocation $ReactNativeLocation -NpmPath $NpmPath
+	$procs += Start-WebSocketServer -ReactNativeLocation $ReactNativeLocation -NodePath $NodePath
 
 	if ($Preload) {
 		Start-Sleep -Seconds $Delay
@@ -102,16 +120,20 @@ foreach ($port in $ports) {
 		Write-Host "Found service on TCP port $port."
 	}
 	catch {
-		Write-Error "Test service on port $currentPort not found."
-		Exit
+		if ($RequireServers) {
+			Write-Error "Test service on port $currentPort not found."
+			Exit-PSSession
+		}
+
+		Write-Warning 'Not all test servers found.'
 	}
 	finally {
 		$tcpClient.Dispose()
 	}
 }
+
 # Run Integration Test assemblies.
 & $VsTest $Assembly --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
-
 
 if ($Cleanup) {
 	Cleanup

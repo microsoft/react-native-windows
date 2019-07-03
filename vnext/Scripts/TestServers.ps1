@@ -6,62 +6,89 @@
 #
 function Start-Npm {
 	param (
+		[Parameter(Mandatory=$true)]
 		[ValidateScript({Test-Path $_})]
-		[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
-
-		[ValidateScript({Test-Path $_})]
-		[string] $NpmPath = (Get-Command npm.cmd).Definition,
+		[string] $WorkingDirectory,
 
 		[switch] $NoNewWindow,
 
+		[Parameter(Mandatory=$true)]
 		[ValidateScript({Test-Path $_})]
-		[string] $WorkingDirectory
+		[string] $NpmPath
 	)
 
 	Start-Process	-FilePath $NpmPath `
 					-PassThru `
+					-NoProfile `
 					-NoNewWindow $NoNewWindow `
-					-WorkingDirectory = ({Get-Location}, {$WorkingDirectory})[$WorkingDirectory] `
+					-WorkingDirectory $WorkingDirectory `
 					-Verb 'run start' `
-					-OutVariable npmProcessId
+					-OutVariable npmProcess
 
-	return $npmProcessId
+	return $npmProcess
 }
 
 function Start-Node {
 	param (
+		[Parameter(Mandatory=$true)]
 		[ValidateScript({Test-Path $_})]
 		[string] $ScriptPath,
+
+		[switch] $NoNewWindow,
+
+		[Parameter(Mandatory=$true)]
 		[ValidateScript({Test-Path $_})]
-
-		[string] $NodePath = (Get-Command node.exe).Definition,
-
-		[switch] $NoNewWindow
+		[string] $NodePath
 	)
 
 	Start-Process	-FilePath $NodePath `
 					-PassThru `
+					-NoProfile `
 					-NoNewWindow $NoNewWindow `
 					-ArgumentList $ScriptPath `
-					-OutVariable nodeProcId
+					-OutVariable nodeProcess
 
-	return $nodeProcId
+	return $nodeProcess
 }
 
 function Start-Packager {
 	param (
+		[Parameter(Mandatory=$true)]
+		[ValidateScript({Test-Path $_})]
+		[string] $ReactNativeLocation,
+
+		[switch] $NoNewWindow,
+
+		[Parameter(Mandatory=$true)]
+		[ValidateScript({Test-Path $_})]
+		[string] $NpmPath
 	)
+
+	return Start-Npm -WorkingDirectory $ReactNativeLocation -NoNewWindow $NoNewWindow -NpmPath $NpmPath
+}
+
+function Start-WebSocketServer {
+	param (
+		[Parameter(Mandatory=$true)]
+		[ValidateScript({Test-Path $_})]
+		[string] $ReactNativeLocation,
+
+		[switch] $NoNewWindow,
+
+		[Parameter(Mandatory=$true)]
+		[ValidateScript({Test-Path $_})]
+		[string] $NodePath
+	)
+
+	return Start-Node	-ScriptPath $ReactNativeLocation\IntegrationTests\websocket_integration_test_server.js `
+						-NoNewWindow $NoNewWindow `
+						-NodePath $NodePath
 }
 
 function Stop-Packager {
 	param (
 	)
 
-}
-
-function Start-WebSocketServer {
-	param (
-	)
 }
 
 function Stop-WebSocketServer {
