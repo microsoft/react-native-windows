@@ -148,10 +148,13 @@ void PickerShadowNode::RepopulateItems() {
     if (item.count("label")) {
       std::string label = item["label"].asString();
       auto comboboxItem = winrt::ComboBoxItem();
+
       comboboxItem.Content(
           winrt::box_value(facebook::react::unicode::utf8ToUtf16(label)));
-      if (item.count("textColor"))
+
+      if (item.count("textColor") && IsValidColorValue(item["textColor"]))
         comboboxItem.Foreground(BrushFrom(item["textColor"]));
+
       comboBoxItems.Append(comboboxItem);
     }
     m_hasNewItems = true;

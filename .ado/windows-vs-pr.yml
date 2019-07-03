@@ -131,7 +131,7 @@ jobs:
         inputs:
           script: node Scripts\cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.uwp.bundle --platform uwp
           workingDirectory: vnext
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
   - job: CliInit
     displayName: Verify react-native init
