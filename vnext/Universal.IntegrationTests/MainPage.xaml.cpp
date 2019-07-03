@@ -21,9 +21,9 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The Blank Page item template is documented at
+// https://go.microsoft.com/fwlink/?LinkId=234238
 
-MainPage::MainPage()
-{
-	InitializeComponent();
+MainPage::MainPage() {
+  InitializeComponent();
 }

@@ -1,12 +1,20 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 // This is a port of TextInputExample.ios.js
 // Text children of TextInput examples are removed/edited
 
-/* tslint:disable */
-
-import { Alert, Text, TextInput, View, StyleSheet, /*Slider,*/ Switch } from 'react-native';
+import {
+  Alert,
+  Text,
+  TextInput,
+  View,
+  StyleSheet,
+  /*Slider,*/ Switch,
+} from 'react-native';
 // const InputAccessoryView = require('InputAccessoryView');
 import React = require('react');
 import ReactNative = require('react-native');
@@ -152,10 +160,7 @@ class RewriteExample extends React.Component<{}, any> {
   }
 }
 
-class RewriteExampleInvalidCharacters extends React.Component<
-  {},
-  any
-> {
+class RewriteExampleInvalidCharacters extends React.Component<{}, any> {
   constructor(props: {}) {
     super(props);
     this.state = {text: ''};
@@ -278,19 +283,18 @@ class TokenizedTextExample extends React.Component<{}, any> {
 }
 
 class BlurOnSubmitExample extends React.Component<{}> {
-
   private fieldTwo: React.RefObject<TextInput>;
   private fieldThree: React.RefObject<TextInput>;
-private fieldFour : React.RefObject<TextInput>;
-private fieldFive : React.RefObject<TextInput>;
+  private fieldFour: React.RefObject<TextInput>;
+  private fieldFive: React.RefObject<TextInput>;
 
   constructor(props: {}) {
     super(props);
-     this.fieldTwo = React.createRef();
-     this.fieldThree = React.createRef();
-     this.fieldFour = React.createRef();
-     this.fieldFive = React.createRef();
-    }
+    this.fieldTwo = React.createRef();
+    this.fieldThree = React.createRef();
+    this.fieldFour = React.createRef();
+    this.fieldFive = React.createRef();
+  }
 
   public render() {
     return (
@@ -347,12 +351,9 @@ type SelectionExampleState = {
     end?: number;
   };
   value: string;
-}
+};
 
-class SelectionExample extends React.Component<
-  any,
-  SelectionExampleState
-> {
+class SelectionExample extends React.Component<any, SelectionExampleState> {
   public _textInput: any;
 
   constructor(props: any) {
@@ -428,10 +429,7 @@ interface IAutogrowingTextInputExampleProps {
   enablesReturnKeyAutomatically: boolean;
   returnKeyType: ReactNative.ReturnKeyTypeOptions;
 }
-export class AutogrowingTextInputExample extends React.Component<
-  any,
-  any
-> {
+export class AutogrowingTextInputExample extends React.Component<any, any> {
   constructor(props: IAutogrowingTextInputExampleProps) {
     super(props);
 
@@ -446,7 +444,9 @@ export class AutogrowingTextInputExample extends React.Component<
     };
   }
 
-  public UNSAFE_componentWillReceiveProps(props: IAutogrowingTextInputExampleProps) {
+  public UNSAFE_componentWillReceiveProps(
+    props: IAutogrowingTextInputExampleProps,
+  ) {
     this.setState({
       multiline: props.multiline,
     });
@@ -694,7 +694,11 @@ export const examples = [
   {
     title: 'Keyboard appearance',
     render: function() {
-      const keyboardAppearance: ('default' | 'light' | 'dark')[] = ['default', 'light', 'dark'];
+      const keyboardAppearance: ('default' | 'light' | 'dark')[] = [
+        'default',
+        'light',
+        'dark',
+      ];
       const keyExamples = keyboardAppearance.map(type => {
         return (
           <WithLabel key={type} label={type}>

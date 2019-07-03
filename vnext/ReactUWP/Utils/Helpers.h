@@ -3,31 +3,34 @@
 
 #pragma once
 
-#include <stdint.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include <IReactInstance.h>
 #include <folly/dynamic.h>
+#include <stdint.h>
+#include <winrt/Windows.UI.Xaml.h>
 
 namespace winrt {
-  using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml;
 }
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-  using namespace std;
+using namespace std;
 
-  struct ReactId {
-    int64_t tag{ 0 };
-    bool isValid{ false };
-  };
+struct ReactId {
+  int64_t tag{0};
+  bool isValid{false};
+};
 
-  template<typename T>
-  inline typename T asEnum(folly::dynamic const& obj)
-  {
-    return static_cast<T>(obj.asInt());
-  }
+template <typename T>
+inline typename T asEnum(folly::dynamic const &obj) {
+  return static_cast<T>(obj.asInt());
+}
 
-  void toUpperInplace(string & str);
+void toUpperInplace(string &str);
 
-  ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const& fe);
-}}
+ReactId getViewId(
+    _In_ IReactInstance *instance,
+    winrt::FrameworkElement const &fe);
+} // namespace uwp
+} // namespace react

@@ -17,10 +17,9 @@
 
 #include <Unknwn.h>
 
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Metadata.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
-
+#include <winrt/Windows.UI.Xaml.h>

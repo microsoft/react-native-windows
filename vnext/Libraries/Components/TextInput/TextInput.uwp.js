@@ -1,12 +1,16 @@
-// Copyright (c) Facebook, Inc. and its affiliates.
-//
-// This source code is licensed under the MIT license found in the
-// LICENSE file in the root directory of this source tree.
-//
-// Portions copyright for react-native-windows:
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * Portions copyright for react-native-windows:
+ *
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 'use strict';
 
 const EventEmitter = require('EventEmitter');
@@ -226,7 +230,7 @@ const TextInput = createReactClass({
   /**
    * Returns `true` if the input is currently focused; `false` otherwise.
    */
-  isFocused: function (): boolean {
+  isFocused: function(): boolean {
     return (
       TextInputState.currentlyFocusedField() ===
       ReactNative.findNodeHandle(this._inputRef)
@@ -236,7 +240,8 @@ const TextInput = createReactClass({
   /**
    * Returns the native `TextView` node.
    */
-  getTextViewHandle: function (): any { // TODO(OSS Candidate ISS#2710739)
+  getTextViewHandle: function(): any {
+    // TODO(OSS Candidate ISS#2710739)
     return ReactNative.findNodeHandle(this._inputRef);
   },
 
@@ -246,7 +251,7 @@ const TextInput = createReactClass({
   _lastNativeSelection: (undefined: ?Selection),
   _rafId: (null: ?AnimationFrameID),
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     this._lastNativeText = this.props.value;
     const tag = ReactNative.findNodeHandle(this._inputRef);
     if (tag != null) {
@@ -275,7 +280,7 @@ const TextInput = createReactClass({
     }
   },
 
-  componentWillUnmount: function () {
+  componentWillUnmount: function() {
     this._focusSubscription && this._focusSubscription.remove();
     if (this.isFocused()) {
       this.blur();
@@ -293,31 +298,31 @@ const TextInput = createReactClass({
   /**
    * Removes all text from the `TextInput`.
    */
-  clear: function () {
-    this.setNativeProps({ text: '' });
+  clear: function() {
+    this.setNativeProps({text: ''});
   },
 
-  render: function () {
+  render: function() {
     var props = Object.assign({}, this.props);
     props.style = [styles.input, this.props.style];
 
     return (
       <TextAncestor.Provider value={true}>
-      <RCTTextInput
-        ref={this._setNativeRef}
-        {...props}
-        mostRecentEventCount={0}
-        onChange={this._onChange}
-        onBlur={this._onBlur}
-        onFocus={this._onFocus}
-        onSelectionChange={this._onSelectionChange}
-        text={this._getText()}
-      />
+        <RCTTextInput
+          ref={this._setNativeRef}
+          {...props}
+          mostRecentEventCount={0}
+          onChange={this._onChange}
+          onBlur={this._onBlur}
+          onFocus={this._onFocus}
+          onSelectionChange={this._onSelectionChange}
+          text={this._getText()}
+        />
       </TextAncestor.Provider>
     );
   },
 
-  _getText: function (): ?string {
+  _getText: function(): ?string {
     return typeof this.props.value === 'string'
       ? this.props.value
       : typeof this.props.defaultValue === 'string'
@@ -325,30 +330,32 @@ const TextInput = createReactClass({
         : '';
   },
 
-  _setNativeRef: function (ref: any) {
+  _setNativeRef: function(ref: any) {
     this._inputRef = ref;
   },
 
-  _onFocus: function (event: FocusEvent) {
+  _onFocus: function(event: FocusEvent) {
     // [TODO(android ISS)
     // Set the focused TextInput field info in TextInputState.
     // Delaying this to onFocus native event ensures that -
     // 1. The state is updated only after the native code completes setting focus on the view
     // 2. In case the focus is moving from one TextInput(A) to another TextInput(B), the state of
     //    A needs to be updated (blurred) before info about B is updated in TestInputState.
-    TextInputState.setFocusedTextInput(ReactNative.findNodeHandle(this._inputRef)); // ]TODO(android ISS)
+    TextInputState.setFocusedTextInput(
+      ReactNative.findNodeHandle(this._inputRef),
+    ); // ]TODO(android ISS)
     if (this.props.onFocus) {
       this.props.onFocus(event);
     }
   },
 
-  _onPress: function (event: PressEvent) {
+  _onPress: function(event: PressEvent) {
     if (this.props.editable || this.props.editable === undefined) {
       this.focus();
     }
   },
 
-  _onChange: function (event: ChangeEvent) {
+  _onChange: function(event: ChangeEvent) {
     // Make sure to fire the mostRecentEventCount first so it is already set on
     // native when the text value is set.
     if (this._inputRef && this._inputRef.setNativeProps) {
@@ -371,7 +378,7 @@ const TextInput = createReactClass({
     this.forceUpdate();
   },
 
-  _onSelectionChange: function (event: SelectionChangeEvent) {
+  _onSelectionChange: function(event: SelectionChangeEvent) {
     this.props.onSelectionChange && this.props.onSelectionChange(event);
 
     if (!this._inputRef) {
@@ -387,7 +394,7 @@ const TextInput = createReactClass({
     }
   },
 
-  componentDidUpdate: function () {
+  componentDidUpdate: function() {
     // This is necessary in case native updates the text and JS decides
     // that the update should be ignored and we should stick with the value
     // that we have in JS.
@@ -402,7 +409,7 @@ const TextInput = createReactClass({
 
     // Selection is also a controlled prop, if the native value doesn't match
     // JS, update to the JS value.
-    const { selection } = this.props;
+    const {selection} = this.props;
     if (
       this._lastNativeSelection &&
       selection &&
@@ -421,24 +428,26 @@ const TextInput = createReactClass({
     }
   },
 
-  _onBlur: function (event: Event) {
+  _onBlur: function(event: Event) {
     // [TODO(android ISS)
     // Set the focused TextInput field info in TextInputState.
     // Delaying this to onBlur native event ensures that -
     // 1. The state is updated only after the native code completes clearing focus on the view
     // 2. In case the focus is moving from one TextInput(A) to another TextInput(B), the state of
     //    A needs to be updated (blurred) before info about B is updated in TestInputState.
-    TextInputState.clearFocusedTextInput(ReactNative.findNodeHandle(this._inputRef)); // ]TODO(android ISS)
+    TextInputState.clearFocusedTextInput(
+      ReactNative.findNodeHandle(this._inputRef),
+    ); // ]TODO(android ISS)
     if (this.props.onBlur) {
       this.props.onBlur(event);
     }
   },
 
-  _onTextInput: function (event: TextInputEvent) {
+  _onTextInput: function(event: TextInputEvent) {
     this.props.onTextInput && this.props.onTextInput(event);
   },
 
-  _onScroll: function (event: ScrollEvent) {
+  _onScroll: function(event: ScrollEvent) {
     this.props.onScroll && this.props.onScroll(event);
   },
 });

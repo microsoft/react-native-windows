@@ -1,13 +1,8 @@
 set(SOURCES
 	InstanceManager.cpp
 	Logging.cpp
-	MemoryTracker.cpp
 	OInstance.cpp
-	AsyncStorage/AsyncStorageManager.cpp
-	AsyncStorage/FollyDynamicConverter.cpp
-	AsyncStorage/KeyValueStorage.cpp
-	AsyncStorage/StorageFileIO.cpp
-	AsyncStorageModule.cpp)
+	AsyncStorage/StorageFileIO.cpp)
 
 add_library(ReactWindowsShared ${SOURCES})
 

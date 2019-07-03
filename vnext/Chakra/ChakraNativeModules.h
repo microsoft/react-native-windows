@@ -16,22 +16,21 @@ namespace facebook {
 namespace react {
 
 /**
-* Holds and creates JS representations of the modules in ModuleRegistry
-*/
+ * Holds and creates JS representations of the modules in ModuleRegistry
+ */
 class ChakraNativeModules {
-
-public:
+ public:
   explicit ChakraNativeModules(std::shared_ptr<ModuleRegistry> moduleRegistry);
   JsValueRef getModule(JsValueRef name);
   void reset();
 
-private:
+ private:
   folly::Optional<ChakraObject> m_genNativeModuleJS;
   std::shared_ptr<ModuleRegistry> m_moduleRegistry;
   std::unordered_map<std::string, ChakraObject> m_objects;
 
-  folly::Optional<ChakraObject> createModule(const std::string& name);
+  folly::Optional<ChakraObject> createModule(const std::string &name);
 };
 
-}
-}
+} // namespace react
+} // namespace facebook

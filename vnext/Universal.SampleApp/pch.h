@@ -9,8 +9,8 @@
 
 #include <collection.h>
 
-#include "ViewLifetimeControl.h"
 #include "App.xaml.h"
+#include "ViewLifetimeControl.h"
 
 #undef min
 #undef max
