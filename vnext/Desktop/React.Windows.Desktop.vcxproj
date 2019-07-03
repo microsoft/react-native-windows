@@ -105,22 +105,26 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Midl Include="ABI\ABI.idl" />
+    <Midl Include="ABI\MemoryTracker.idl" />
+    <Midl Include="ABI\MessageQueue.idl" />
+    <Midl Include="ABI\NativeLogging.idl" />
+    <Midl Include="ABI\NativeTracing.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\MemoryTracker.cpp">
-      <DependentUpon>ABI\ABI.idl</DependentUpon>
+      <DependentUpon>ABI\MemoryTracker.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
+      <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <DependentUpon>ABI\ABI.idl</DependentUpon>
+      <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\NativeTraceEventSource.cpp">
-      <DependentUpon>ABI\ABI.idl</DependentUpon>
+      <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
       <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
@@ -146,14 +150,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
-      <DependentUpon>ABI\ABI.idl</DependentUpon>
+      <DependentUpon>ABI\MemoryTracker.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="ABI\MessageQueueShim.h" />
+    <ClInclude Include="ABI\MessageQueueShim.h">
+      <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="ABI\NativeLogEventSource.h">
-      <DependentUpon>ABI\ABI.idl</DependentUpon>
+      <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="ABI\NativeTraceEventSource.h">
-      <DependentUpon>ABI\ABI.idl</DependentUpon>
+      <DependentUpon>ABI\NativeTracing.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="LazyDevSupportManager.h" />

@@ -18,7 +18,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="ABI\ABI.idl">
+    <Midl Include="ABI\MemoryTracker.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="ABI\MessageQueue.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="ABI\NativeLogging.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="ABI\NativeTracing.idl">
       <Filter>ABI</Filter>
     </Midl>
   </ItemGroup>
