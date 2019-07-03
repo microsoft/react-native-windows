@@ -127,9 +127,9 @@ jobs:
           workingDirectory: vnext
 
       - task: CmdLine@2
-        displayName: Remove SampleApp.uwp.bundle
+        displayName: Create RNTester bundle
         inputs:
-          script: del SampleApp.uwp.bundle
+          script: node Scripts\cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.uwp.bundle --platform uwp
           workingDirectory: vnext
 
   - job: CliInit

@@ -49,7 +49,7 @@ task('clean', () => {
 task(
   'build',
   series(
-    condition('clean', () => argv().clean),
+    condition('clean', () => true || argv().clean),
     'eslint',
     'copyFlowFiles',
     'ts',
