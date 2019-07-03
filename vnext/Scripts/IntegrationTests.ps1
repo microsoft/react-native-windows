@@ -10,13 +10,24 @@ param(
 	[ValidateSet('Debug', 'Release')]
 	[string] $Configuration = 'Debug',
 	[string[]] $Tests,
-	$Assembly = "$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll",
+	$Assembly =
+		"$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll",
 	$VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 	[UInt32] $Delay = 10,
 	[switch] $List,
 	[switch] $Preload,
-	[string] $ReactNativeHome = "$($PSScriptRoot | Split-Path)\node_modules\react-native"
+	[string] $ReactNativeHome = "$($PSScriptRoot | Split-Path)\node_modules\react-native",
+
+	[string[]] $Assemblies =
+	(
+		"$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
+	),
+
+	[switch] $NoRun
 )
+
+# Import test server functions.
+. .\TestServers.ps1
 
 function Cleanup() {
 	# Expected netstat header:
@@ -37,6 +48,10 @@ function Cleanup() {
 	catch {
 		Write-Host 'WebSocket server process not found.'
 	}
+
+	Stop-Packager
+
+	Stop-WebSocketServer
 }
 
 #TODO: Cleanup Watchman logs, free ports 5555 and 8081.
@@ -60,37 +75,43 @@ if (! $NoSetup) {
 	}
 }
 
-if ($Run) {
-	# Validate other options.
-	if ($List.IsPresent) {
-		Write-Warning '-Run switch is present. -List will be ignored.'
-	}
-	# Ensure server ports are open.
-	# 5555 - String-suffixing WebSocket server
-	# 8081 - Packager
-	$ports = (5555, 8081)
-	foreach ($port in $ports) {
-		try {
-			$tcpClient = New-Object System.Net.Sockets.TcpClient
-			$tcpClient.Connect("127.0.0.1", $port)
-			Write-Host "Found service on TCP port $port."
-		}
-		catch {
-			Write-Error "Test service on port $currentPort not found."
-			Exit
-		}
-		finally {
-			$tcpClient.Dispose()
-		}
-	}
-	# Run Integration Test assemblies.
-	& $VsTest $Assembly --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
-} elseif ($List) {
-	#TODO: Make -NoSetup implied.
+if ($NoRun) {
+	Exit-PSSession
+}
+
+if ($List) {
 	# https://github.com/Microsoft/vstest/issues/1732: Can't print full test names directly to console.
 	& $VsTest $Assembly --ListFullyQualifiedTests --ListTestsTargetPath:$env:TEMP\ReactWindowsIntegrationTestsList.txt
 	Get-Content $env:TEMP\ReactWindowsIntegrationTestsList.txt
+
+	Exit-PSSession
 }
+
+# Validate other options.
+if ($List.IsPresent) {
+	Write-Warning '-Run switch is present. -List will be ignored.'
+}
+# Ensure server ports are open.
+# 5555 - String-suffixing WebSocket server
+# 8081 - Packager
+$ports = (5555, 8081)
+foreach ($port in $ports) {
+	try {
+		$tcpClient = New-Object System.Net.Sockets.TcpClient
+		$tcpClient.Connect("127.0.0.1", $port)
+		Write-Host "Found service on TCP port $port."
+	}
+	catch {
+		Write-Error "Test service on port $currentPort not found."
+		Exit
+	}
+	finally {
+		$tcpClient.Dispose()
+	}
+}
+# Run Integration Test assemblies.
+& $VsTest $Assembly --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
+
 
 if ($Cleanup) {
 	Cleanup

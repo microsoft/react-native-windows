@@ -6,9 +6,15 @@
 #
 function Start-Npm {
 	param (
+		[ValidateScript({Test-Path $_})]
 		[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
+
+		[ValidateScript({Test-Path $_})]
 		[string] $NpmPath = (Get-Command npm.cmd).Definition,
+
 		[switch] $NoNewWindow,
+
+		[ValidateScript({Test-Path $_})]
 		[string] $WorkingDirectory
 	)
 
@@ -24,8 +30,12 @@ function Start-Npm {
 
 function Start-Node {
 	param (
+		[ValidateScript({Test-Path $_})]
 		[string] $ScriptPath,
+		[ValidateScript({Test-Path $_})]
+
 		[string] $NodePath = (Get-Command node.exe).Definition,
+
 		[switch] $NoNewWindow
 	)
 
@@ -36,4 +46,26 @@ function Start-Node {
 					-OutVariable nodeProcId
 
 	return $nodeProcId
+}
+
+function Start-Packager {
+	param (
+	)
+}
+
+function Stop-Packager {
+	param (
+	)
+
+}
+
+function Start-WebSocketServer {
+	param (
+	)
+}
+
+function Stop-WebSocketServer {
+	param (
+	)
+
 }
