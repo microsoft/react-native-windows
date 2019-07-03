@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, TouchableHighlight, View, ViewStyle} from 'react-native';
-import {Picker} from '../../src/index.uwp';
+import {Picker} from '../index.uwp';
 
 class TabStopExample extends React.Component {
   public render() {
