@@ -10,22 +10,11 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <!-- #2702: We need to figure out how we want to consume the Google Test'
-    Nuget for Win32. For now, we disable the Win32. -->
-    <!-- <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration> -->
+    Nuget for Win32. For now, we do not build this project for Win32. -->
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}</ProjectGuid>
     <ProjectName>JSI.Desktop.UnitTests</ProjectName>
-  </PropertyGroup>
-  <PropertyGroup Label="NOJSC">
-    <NOJSC>true</NOJSC>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -54,20 +43,17 @@
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;_USRDLL;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;NOJSC;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
       from compiling. -->
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
-      <AssemblerListingLocation>..\build\$(IntDir)\%(RelativeDir)</AssemblerListingLocation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
-      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -75,12 +61,6 @@
     <ClCompile>
       <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
-      <MinimalRebuild>true</MinimalRebuild>
-      <!-- Use /RTCsu for debug builds. This enables some run-time error
-      checking such as detection of overruns and underruns of local variables
-      and use of uninitialized variables.
-      -->
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
