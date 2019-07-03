@@ -18,7 +18,7 @@ public:
   winrt::Windows::UI::Composition::ExpressionAnimation GetTransformCenteringExpression();
 
 private:
-  winrt::Windows::UI::Composition::ExpressionAnimation m_elementCenterPointExpression { nullptr };
+//  winrt::Windows::UI::Composition::ExpressionAnimation m_elementCenterPointExpression { nullptr };  // Compositor bug, see notes in GetElementCenterPointExpression()
   winrt::Windows::UI::Composition::ExpressionAnimation m_transformCenteringExpression { nullptr };
 };
 
