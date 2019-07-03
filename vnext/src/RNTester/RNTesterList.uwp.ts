@@ -125,7 +125,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AnimatedExample',
-    module: require('react-native/RNTester/js/AnimatedExample')
+    module: require('react-native/RNTester/js/AnimatedExample'),
   },
   {
     key: 'AppStateExample',
