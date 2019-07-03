@@ -170,24 +170,41 @@ void BatchingUIManager::measure(folly::dynamic&& args, facebook::xplat::module::
   });
 }
 
+void BatchingUIManager::focus(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  dispatchFunction([manager, args]()
+    {
+      static_cast<IUIManager*>(manager.get())->focus(jsArgAsInt(args, 0));
+    });
+}
+
+void BatchingUIManager::blur(folly::dynamic&& args)
+{
+  auto manager = shared_from_this();
+  dispatchFunction([manager, args]()
+    {
+      static_cast<IUIManager*>(manager.get())->blur(jsArgAsInt(args, 0));
+    });
+}
 
 BatchingUIManagerModule::BatchingUIManagerModule(std::shared_ptr<IUIManager>&& manager)
-	: m_manager(std::move(manager))
+  : m_manager(std::move(manager))
 {
 }
 
 std::string BatchingUIManagerModule::getName()
 {
-	return "UIManager";
+  return "UIManager";
 }
 
 std::map<std::string, folly::dynamic> BatchingUIManagerModule::getConstants()
 {
-	std::map<std::string, folly::dynamic> constants {};
+  std::map<std::string, folly::dynamic> constants {};
 
-	m_manager->populateViewManagerConstants(constants);
+  m_manager->populateViewManagerConstants(constants);
 
-	return constants;
+  return constants;
 }
 
 std::vector<facebook::xplat::module::CxxModule::Method> BatchingUIManagerModule::getMethods()
@@ -250,6 +267,14 @@ std::vector<facebook::xplat::module::CxxModule::Method> BatchingUIManagerModule:
     {
       manager->measure(std::move(args), cb);
     }),
+    Method("focus", [manager](dynamic args)
+    {
+      manager->focus(std::move(args));
+    }),
+    Method("blur", [manager](dynamic args)
+    {
+      manager->blur(std::move(args));
+    }),
     Method("setJSResponder", [](dynamic args)
     {
       // TODO: Implement?
@@ -265,12 +290,12 @@ std::vector<facebook::xplat::module::CxxModule::Method> BatchingUIManagerModule:
 
 shared_ptr<IUIManager> createBatchingUIManager(std::vector<std::unique_ptr<IViewManager>>&& viewManagers, INativeUIManager* nativeManager)
 {
-	return std::make_shared<BatchingUIManager>(std::move(viewManagers), nativeManager);
+  return std::make_shared<BatchingUIManager>(std::move(viewManagers), nativeManager);
 }
 
 std::unique_ptr<facebook::xplat::module::CxxModule> createBatchingUIManagerModule(std::shared_ptr<IUIManager> uimanager)
 {
-	return std::make_unique<BatchingUIManagerModule>(std::move(uimanager));
+  return std::make_unique<BatchingUIManagerModule>(std::move(uimanager));
 }
 
 }

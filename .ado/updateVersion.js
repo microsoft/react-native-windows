@@ -7,7 +7,8 @@ const {
   pkgJsonPath,
   publishBranchName,
   updateVersionsInFiles,
-  win32VersionRcPath
+  win32VersionRcPath,
+  uwpVersionRcPath
 } = require("./versionUtils");
 
 function exec(command) {
@@ -59,6 +60,7 @@ function updateVersion() {
 
   exec(`git add ${pkgJsonPath}`);
   exec(`git add ${win32VersionRcPath}`);
+  exec(`git add ${uwpVersionRcPath}`);
 
   exec(`git commit -m "Applying package update to ${releaseVersion}`);
   exec(`git tag ${tagName}`);

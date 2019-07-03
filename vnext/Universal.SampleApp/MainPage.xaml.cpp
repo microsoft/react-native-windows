@@ -14,8 +14,8 @@
 #include <ReactUWP/ReactUwp.h>
 
 #include <Windows.ApplicationModel.Core.h>
-#include <Windows.UI.Xaml.h>
 #include <Windows.UI.Xaml.Controls.h>
+#include <Windows.UI.Xaml.h>
 
 using namespace WindowsSampleApp;
 
@@ -24,32 +24,35 @@ using namespace Windows::ApplicationModel::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 
-MainPage::MainPage()
-{
+MainPage::MainPage() {
   InitializeComponent();
 
   // Create Commands
   m_addPaneCommand = ref new RelayCommand(
-    [this](Object^ parameter) { return x_PaneContainer->ColumnDefinitions->Size < 3; },
-    [this](Object^ parameter) { this->AddPane(dynamic_cast<HostingPane^>(parameter)); });
+      [this](Object ^ parameter) {
+        return x_PaneContainer->ColumnDefinitions->Size < 3;
+      },
+      [this](Object ^ parameter) {
+        this->AddPane(dynamic_cast<HostingPane ^>(parameter));
+      });
 
   m_removePaneCommand = ref new RelayCommand(
-    [this](Object^ parameter) { return x_PaneContainer->ColumnDefinitions->Size > 1; },
-    [this](Object^ parameter) { this->RemovePane(dynamic_cast<HostingPane^>(parameter)); });
+      [this](Object ^ parameter) {
+        return x_PaneContainer->ColumnDefinitions->Size > 1;
+      },
+      [this](Object ^ parameter) {
+        this->RemovePane(dynamic_cast<HostingPane ^>(parameter));
+      });
 
   AddPane(nullptr);
 }
 
-void WindowsSampleApp::MainPage::RemovePane(HostingPane^ pane)
-{
+void WindowsSampleApp::MainPage::RemovePane(HostingPane ^ pane) {
   unsigned int index;
 
-  if (x_PaneContainer->ColumnDefinitions->Size <= 1)
-  {
+  if (x_PaneContainer->ColumnDefinitions->Size <= 1) {
     assert(false);
-  }
-  else if (x_PaneContainer->Children->IndexOf(pane, &index))
-  {
+  } else if (x_PaneContainer->Children->IndexOf(pane, &index)) {
     // Remove the Pane from the Grid
     x_PaneContainer->Children->RemoveAt(index);
 
@@ -58,9 +61,9 @@ void WindowsSampleApp::MainPage::RemovePane(HostingPane^ pane)
 
     // Decrement Column values on Panes after this one
     unsigned int countColumns = x_PaneContainer->ColumnDefinitions->Size;
-    for (;index < countColumns; ++index)
-    {
-      auto hostingPane  = dynamic_cast<HostingPane^>(x_PaneContainer->Children->GetAt(index));
+    for (; index < countColumns; ++index) {
+      auto hostingPane =
+          dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(index));
       if (hostingPane != nullptr)
         hostingPane->SetValue(Grid::ColumnProperty, index);
       else
@@ -69,21 +72,19 @@ void WindowsSampleApp::MainPage::RemovePane(HostingPane^ pane)
 
     // Ensure that any pane based commanding UI updates for these changes
     UpdatePaneCommandState();
-  }
-  else
-  {
+  } else {
     assert(false);
   }
 }
 
-void WindowsSampleApp::MainPage::AddPane(HostingPane^ afterPane)
-{
+void WindowsSampleApp::MainPage::AddPane(HostingPane ^ afterPane) {
   unsigned int countColumns = x_PaneContainer->ColumnDefinitions->Size;
-  if (countColumns < 3)
-  {
-    // Where to insert? After the pane passed in. At start if not passed or not found.
+  if (countColumns < 3) {
+    // Where to insert? After the pane passed in. At start if not passed or not
+    // found.
     unsigned int index = 0;
-    if ((afterPane != nullptr) && x_PaneContainer->Children->IndexOf(afterPane, &index))
+    if ((afterPane != nullptr) &&
+        x_PaneContainer->Children->IndexOf(afterPane, &index))
       ++index;
 
     // Add ColumnDefinition for Column that will host the Pane
@@ -93,39 +94,38 @@ void WindowsSampleApp::MainPage::AddPane(HostingPane^ afterPane)
     ++countColumns;
 
     // Create Pane and insert into the Grid
-    HostingPane^ newPane = ref new HostingPane();
+    HostingPane ^ newPane = ref new HostingPane();
     newPane->AddPaneCommand = m_addPaneCommand;
     newPane->RemovePaneCommand = m_removePaneCommand;
     x_PaneContainer->Children->InsertAt(index, newPane);
 
     // Set the column indexes on all columns from this one to the end
     newPane->SetValue(Grid::ColumnProperty, index);
-    for (unsigned int i = index + 1; i < countColumns; ++i)
-    {
-      auto currentPane = dynamic_cast<HostingPane^>(x_PaneContainer->Children->GetAt(i));
+    for (unsigned int i = index + 1; i < countColumns; ++i) {
+      auto currentPane =
+          dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(i));
       currentPane->SetValue(Grid::ColumnProperty, i);
     }
 
     // Ensure that any pane based commanding UI updates for these changes
     UpdatePaneCommandState();
-  }
-  else
-  {
+  } else {
     assert(false);
   }
 }
 
-void MainPage::UpdatePaneCommandState()
-{
+void MainPage::UpdatePaneCommandState() {
   // Ensure all pane commands update their CanExecute status
-  for (unsigned int i = 0, c = x_PaneContainer->Children->Size; i < c; ++i)
-  {
-    auto currentPane = dynamic_cast<HostingPane^>(x_PaneContainer->Children->GetAt(i));
+  for (unsigned int i = 0, c = x_PaneContainer->Children->Size; i < c; ++i) {
+    auto currentPane =
+        dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(i));
 
-    auto addPaneCommand = dynamic_cast<RelayCommand^>(currentPane->AddPaneCommand);
+    auto addPaneCommand =
+        dynamic_cast<RelayCommand ^>(currentPane->AddPaneCommand);
     addPaneCommand->RaiseCanExecuteChanged();
 
-    auto removePaneCommand = dynamic_cast<RelayCommand^>(currentPane->RemovePaneCommand);
+    auto removePaneCommand =
+        dynamic_cast<RelayCommand ^>(currentPane->RemovePaneCommand);
     removePaneCommand->RaiseCanExecuteChanged();
   }
 }

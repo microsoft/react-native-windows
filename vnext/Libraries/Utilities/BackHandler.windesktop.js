@@ -1,18 +1,14 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 'use strict';
 
 // TODO Hx: Implement.
 
-type BackPressEventName = $Enum<{
-  backPress: string,
-}>;
-
-var _backPressSubscriptions = new Set();
-
-function emptyFunction() { }
+function emptyFunction() {}
 
 /**
  * Detect hardware button presses for back navigation.
@@ -46,13 +42,13 @@ function emptyFunction() { }
  */
 
 var BackHandler = {
-    exitApp: emptyFunction,
-    addEventListener() {
-        return {
-            remove: emptyFunction,
-        };
-    },
-    removeEventListener: emptyFunction,
+  exitApp: emptyFunction,
+  addEventListener() {
+    return {
+      remove: emptyFunction,
+    };
+  },
+  removeEventListener: emptyFunction,
 };
 
 module.exports = BackHandler;

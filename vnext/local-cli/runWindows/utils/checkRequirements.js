@@ -11,8 +11,8 @@ const REQUIRED_VERSIONS = {
     msbuild: '14.0',
     visualstudio: '14.0',
     windowssdk: '10.0',
-    phonesdk: '10.0'
-  }
+    phonesdk: '10.0',
+  },
 };
 
 function shortenVersion (version) {

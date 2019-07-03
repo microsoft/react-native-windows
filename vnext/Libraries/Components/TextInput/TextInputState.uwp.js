@@ -1,20 +1,21 @@
-// Copyright (c) Facebook, Inc. and its affiliates.
-//
-// This source code is licensed under the MIT license found in the
-// LICENSE file in the root directory of this source tree.
-//
-// Portions copyright for react-native-windows:
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
 /**
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * Portions copyright for react-native-windows:
+ *
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
  * @flow
  *
  * This class is responsible for coordinating the "focused"
  * state for TextInputs. All calls relating to the keyboard
  * should be funneled through here
  */
+
 'use strict';
 
 const UIManager = require('UIManager');
@@ -37,11 +38,7 @@ function currentlyFocusedField(): ?number {
  */
 function focusTextInput(textFieldID: ?number) {
   if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
-    UIManager.dispatchViewManagerCommand(
-      textFieldID,
-      UIManager.getViewManagerConfig('RCTTextInput').Commands.SetFocus,
-      null,
-    );
+    UIManager.focus(textFieldID);
   }
 }
 
@@ -53,11 +50,7 @@ function focusTextInput(textFieldID: ?number) {
 function blurTextInput(textFieldID: ?number) {
   if (currentlyFocusedID === textFieldID && textFieldID !== null) {
     currentlyFocusedID = null;
-    UIManager.dispatchViewManagerCommand(
-      textFieldID,
-      UIManager.getViewManagerConfig('RCTTextInput').Commands.Blur,
-      null,
-    );
+    UIManager.blur(textFieldID);
   }
 }
 
