@@ -277,13 +277,25 @@ jobs:
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies'
-          testAssemblyVer2: |
-            'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll'
-            'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'
+          testAssemblyVer2: 'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll' # Required when testSelector == TestAssemblies
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+          vsTestVersion: '15.0'
+          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: 'onAbortOnly'
+
+      - task: VSTest@2
+        displayName: Run Desktop Unit Tests (Google Test)
+        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: 'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'  # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           vsTestVersion: '15.0'
           pathtoCustomTestAdapters: '$(Build.SourcesDirectory)\vnext\packages\GoogleTestAdapter.0.16.1\build\_common'
-          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
