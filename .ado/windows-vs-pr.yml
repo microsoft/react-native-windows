@@ -175,7 +175,7 @@ jobs:
       - task: CmdLine@2
         displayName: Init new project
         inputs:
-          script: react-native init testcli
+          script: react-native init testcli --version 0.59.10
           workingDirectory: $(Agent.BuildDirectory)
 
       - task: CmdLine@2
