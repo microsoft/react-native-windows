@@ -8,7 +8,7 @@
     "directory": "vnext"
   },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
-  "types": "lib/index.d.ts",
+  "types": "index.d.ts",
   "scripts": {
     "preinstall": "node Scripts/preInstall.js",
     "postinstall": "node Scripts/postInstall.js",

@@ -18,8 +18,8 @@ const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
 import RNTesterList from './RNTesterList.uwp';
-import RNTesterNavigationReducer from './RNTesterNavigationReducer';
-import {RNTesterAction} from './RNTesterActions';
+import RNTesterNavigationReducer from './RNTesterNavigationReducer.uwp';
+import {RNTesterAction} from './RNTesterActions.uwp';
 
 const styles = StyleSheet.create({
   headerContainer: {
