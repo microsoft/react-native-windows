@@ -30,3 +30,4 @@ ReactWindows-UWP.sln
 CMakeLists.txt
 **/sources
 **/dirs
+**/*.windesktop.js
