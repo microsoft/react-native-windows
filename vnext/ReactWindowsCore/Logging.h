@@ -9,8 +9,7 @@ namespace facebook {
 
 namespace react {
 
-enum class RCTLogLevel
-{
+enum class RCTLogLevel {
   Trace = 0,
   Info = 1,
   Warning = 2,
@@ -18,7 +17,9 @@ enum class RCTLogLevel
   Fatal = 4,
 };
 
-using NativeLoggingHook = std::function<void(RCTLogLevel logLevel, const char* message)>;
-void InitializeLogging(NativeLoggingHook&& hook);
+using NativeLoggingHook =
+    std::function<void(RCTLogLevel logLevel, const char *message)>;
+void InitializeLogging(NativeLoggingHook &&hook);
 
-}}
+} // namespace react
+} // namespace facebook

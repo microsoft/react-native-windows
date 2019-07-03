@@ -1,19 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 'use strict';
 
 const React = require('react');
 const ReactNative = require('react-native');
 
-const {
-  AppRegistry,
-  View,
-} = ReactNative;
+const {Alert, AppRegistry, View} = ReactNative;
 
-const {
-  TestModule
-} = ReactNative.NativeModules;
+const {TestModule} = ReactNative.NativeModules;
 
 class XHRTest extends React.Component<{}, Object> {
   state: Object = {
@@ -43,8 +41,10 @@ class XHRTest extends React.Component<{}, Object> {
 
     const onreadystatechange = () => {
       if (xhr.readyState === xhr.HEADERS_RECEIVED) {
-        const contentLength =
-          parseInt(xhr.getResponseHeader('Content-Length'), 10);
+        const contentLength = parseInt(
+          xhr.getResponseHeader('Content-Length'),
+          10,
+        );
         this.setState({
           contentLength,
           responseLength: 0,
@@ -54,12 +54,6 @@ class XHRTest extends React.Component<{}, Object> {
           responseLength: xhr.response.length,
         });
       }
-    };
-    const onprogress = (event) => {
-      this.setState({
-        progressTotal: event.total,
-        progressLoaded: event.loaded,
-      });
     };
 
     if (this.state.readystateHandler) {
@@ -73,23 +67,25 @@ class XHRTest extends React.Component<{}, Object> {
       xhr.responseType = 'arraybuffer';
     }
     xhr.onload = () => {
-      this.setState({ downloading: false });
+      this.setState({downloading: false});
       if (this.cancelled) {
         this.cancelled = false;
         return;
       }
       if (xhr.status === 200) {
-        let responseType =
-          `Response is a string, ${xhr.response.length} characters long.`;
+        let responseType = `Response is a string, ${
+          xhr.response.length
+        } characters long.`;
         if (xhr.response instanceof ArrayBuffer) {
-          responseType =
-            `Response is an ArrayBuffer, ${xhr.response.byteLength} bytes long.`;
+          responseType = `Response is an ArrayBuffer, ${
+            xhr.response.byteLength
+          } bytes long.`;
         }
         Alert.alert('Download complete!', responseType);
       } else if (xhr.status !== 0) {
         Alert.alert(
           'Error',
-          `Server returned HTTP status of ${xhr.status}: ${xhr.responseText}`
+          `Server returned HTTP status of ${xhr.status}: ${xhr.responseText}`,
         );
       } else {
         Alert.alert('Error', xhr.responseText);
@@ -100,8 +96,8 @@ class XHRTest extends React.Component<{}, Object> {
     xhr.setRequestHeader('Accept-Encoding', '');
     xhr.send();
 
-    this.setState({ downloading: true });
-  }
+    this.setState({downloading: true});
+  };
 
   componentDidMount() {
     try {
@@ -114,11 +110,8 @@ class XHRTest extends React.Component<{}, Object> {
   }
 
   render() {
-    return (
-      <View />
-    );
+    return <View />;
   }
-
 }
 
 AppRegistry.registerComponent('XHRTest', () => XHRTest);

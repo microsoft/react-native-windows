@@ -14,20 +14,12 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorageModule.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryTracker.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
   </ItemGroup>
 </Project>

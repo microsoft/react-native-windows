@@ -4,47 +4,91 @@
     <Filter Include="include">
       <UniqueIdentifier>{d58d8a95-1e57-49ea-a4f3-c0859b7f649d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Modules">
-      <UniqueIdentifier>{81319f88-192e-40cf-bc1c-76a84bf37ccd}</UniqueIdentifier>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{32892a40-82db-4c1b-9390-5893f9ddbb0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Chakra">
-      <UniqueIdentifier>{1c2caa01-d0f4-4fb9-a956-c8e47cbee437}</UniqueIdentifier>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{b8d1b3de-1573-4d49-a26f-99892413a797}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sandbox">
+    <Filter Include="Header Files\Sandbox">
       <UniqueIdentifier>{485cc520-3fae-4b03-896a-bfd3e288aa42}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\AsyncStorage">
+      <UniqueIdentifier>{afc5d1fe-6d70-4040-a72b-036ffa74a2eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Modules">
+      <UniqueIdentifier>{2b4f6cca-9c7e-4bf1-9711-829006f0be1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Modules">
+      <UniqueIdentifier>{81319f88-192e-40cf-bc1c-76a84bf37ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\AsyncStorage">
+      <UniqueIdentifier>{efe7ad3d-598a-4633-a2b7-2de458833b88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CxxMessageQueue.cpp" />
-    <ClCompile Include="Modules\UIManagerModule.cpp">
-      <Filter>Modules</Filter>
+    <ClCompile Include="CxxMessageQueue.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\SourceCodeModule.cpp">
-      <Filter>Modules</Filter>
+    <ClCompile Include="JSBigAbiString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LayoutAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryTracker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowNodeRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="unicode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AppThemeModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\AsyncStorageModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\I18nModule.cpp">
-      <Filter>Modules</Filter>
+      <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowNode.cpp" />
-    <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="ViewManager.cpp" />
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Modules\SourceCodeModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\UIManagerModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppStateModule.cpp">
-      <Filter>Modules</Filter>
+      <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="JSBigAbiString.cpp" />
-    <ClCompile Include="unicode.cpp" />
-    <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
-      <Filter>Modules</Filter>
+    <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="LayoutAnimation.cpp" />
-    <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
-      <Filter>Modules</Filter>
+    <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
+      <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CxxMessageQueue.h" />
-    <ClInclude Include="targetver.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -58,7 +102,7 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
-      <Filter>Modules</Filter>
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h">
       <Filter>include</Filter>
@@ -67,69 +111,121 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Modules\I18nModule.h">
-      <Filter>Modules</Filter>
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="NativeModuleProvider.h" />
-    <ClInclude Include="ShadowNode.h" />
-    <ClInclude Include="ShadowNodeRegistry.h" />
-    <ClInclude Include="Logging.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="WebSocketJSExecutorFactory.h" />
-    <ClInclude Include="WebSocketModule.h" />
-    <ClInclude Include="InstanceManager.h" />
-    <ClInclude Include="IReactRootView.h" />
-    <ClInclude Include="IWebSocket.h" />
-    <ClInclude Include="OInstance.h" />
-    <ClInclude Include="IUIManager.h" />
-    <ClInclude Include="INativeUIManager.h" />
     <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="IDevSupportManager.h" />
     <ClInclude Include="Sandbox\SandboxEndpoint.h">
-      <Filter>Sandbox</Filter>
+      <Filter>Header Files\Sandbox</Filter>
     </ClInclude>
-    <ClInclude Include="..\Chakra\ChakraExecutor.h">
-      <Filter>Chakra</Filter>
+    <ClInclude Include="Modules\AppStateModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Chakra\ChakraHelpers.h">
-      <Filter>Chakra</Filter>
+    <ClInclude Include="Modules\ExceptionsManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Chakra\ChakraNativeModules.h">
-      <Filter>Chakra</Filter>
+    <ClInclude Include="Modules\BatchingUIManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraPlatform.h">
-      <Filter>Chakra</Filter>
+    <ClInclude Include="Modules\AppThemeModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Chakra\ChakraUtils.h">
-      <Filter>Chakra</Filter>
+    <ClInclude Include="AsyncStorage\AsyncStorageManager.h">
+      <Filter>Header Files\AsyncStorage</Filter>
     </ClInclude>
-    <ClInclude Include="..\Chakra\ChakraValue.h">
-      <Filter>Chakra</Filter>
+    <ClInclude Include="AsyncStorage\FollyDynamicConverter.h">
+      <Filter>Header Files\AsyncStorage</Filter>
+    </ClInclude>
+    <ClInclude Include="AsyncStorage\KeyValueStorage.h">
+      <Filter>Header Files\AsyncStorage</Filter>
     </ClInclude>
     <ClInclude Include="CreateModules.h">
-      <Filter>Chakra</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DevSettings.h" />
-    <ClInclude Include="Modules\AppStateModule.h">
-      <Filter>Modules</Filter>
+    <ClInclude Include="AbiSafe.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AsyncStorageModule.h" />
-    <ClInclude Include="Tracing.h" />
-    <ClInclude Include="IHttpResource.h" />
-    <ClInclude Include="AbiSafe.h" />
-    <ClInclude Include="JSBigAbiString.h" />
-    <ClInclude Include="MemoryTracker.h" />
-    <ClInclude Include="Modules\ExceptionsManagerModule.h">
-      <Filter>Modules</Filter>
+    <ClInclude Include="AsyncStorageModule.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
-    <ClInclude Include="LayoutAnimation.h" />
-    <ClInclude Include="utilities.h" />
-    <ClInclude Include="Modules\BatchingUIManagerModule.h">
-      <Filter>Modules</Filter>
+    <ClInclude Include="CxxMessageQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DevSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDevSupportManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IHttpResource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INativeUIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstanceManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IReactRootView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IUIManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IWebSocket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="JSBigAbiString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LayoutAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeModuleProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowNodeRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tracing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\unicode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WebSocketModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WebSocketJSExecutorFactory.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

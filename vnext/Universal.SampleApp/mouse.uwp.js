@@ -1,38 +1,61 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ * @flow
+ */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  TextInput,
   View,
-  Button,
   Text,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 export default class Bootstrap extends Component {
   constructor() {
     super();
-    this.state = {clicked: 0, mouseEntered0: false, mouseEntered1: false, mouseEntered2: false};
+    this.state = {
+      clicked: 0,
+      mouseEntered0: false,
+      mouseEntered1: false,
+      mouseEntered2: false,
+    };
   }
 
   render() {
     return (
-      <View style={styles.container} onMouseEnter={this.mouseEnter0} onMouseLeave={this.mouseLeave0}>
-        <View onMouseEnter={this.mouseEnter1} onMouseLeave={this.mouseLeave1} style={{ backgroundColor: this.state.mouseEntered1 ? 'yellow' : 'green'}}>
-          <TouchableHighlight onMouseEnter={this.mouseEnter2}
-                onMouseLeave={this.mouseLeave2}
-                onPress={this.press}
-                onPressIn={this.pressIn}
-                onPressOut={this.pressOut}
-                style={{ backgroundColor: this.state.mouseEntered2 ? 'blue' : 'transparent'}}>
+      <View
+        style={styles.container}
+        onMouseEnter={this.mouseEnter0}
+        onMouseLeave={this.mouseLeave0}>
+        <View
+          onMouseEnter={this.mouseEnter1}
+          onMouseLeave={this.mouseLeave1}
+          style={{
+            backgroundColor: this.state.mouseEntered1 ? 'yellow' : 'green',
+          }}>
+          <TouchableHighlight
+            onMouseEnter={this.mouseEnter2}
+            onMouseLeave={this.mouseLeave2}
+            onPress={this.press}
+            onPressIn={this.pressIn}
+            onPressOut={this.pressOut}
+            style={{
+              backgroundColor: this.state.mouseEntered2
+                ? 'blue'
+                : 'transparent',
+            }}>
             <Text>World</Text>
           </TouchableHighlight>
           <Text>Hello</Text>
         </View>
-        <View style={{backgroundColor: this.state.mouseEntered0 ? 'green' : 'transparent'}}>
+        <View
+          style={{
+            backgroundColor: this.state.mouseEntered0 ? 'green' : 'transparent',
+          }}>
           <Text>Mousey</Text>
         </View>
       </View>
@@ -41,53 +64,42 @@ export default class Bootstrap extends Component {
 
   click = () => {
     this.setState({clicked: this.state.clicked + 1});
-  }
-  mouseEnter0 = () =>
-  {
-    this.setState({mouseEntered0: true})
-  }
+  };
+  mouseEnter0 = () => {
+    this.setState({mouseEntered0: true});
+  };
 
-  mouseLeave0 = () =>
-  {
-    this.setState({mouseEntered0: false})
-  }
+  mouseLeave0 = () => {
+    this.setState({mouseEntered0: false});
+  };
 
-  mouseEnter1 = () =>
-  {
-    this.setState({mouseEntered1: true})
-  }
+  mouseEnter1 = () => {
+    this.setState({mouseEntered1: true});
+  };
 
-  mouseLeave1 = () =>
-  {
-    this.setState({mouseEntered1: false})
-  }
-  mouseEnter2 = (event) =>
-  {
+  mouseLeave1 = () => {
+    this.setState({mouseEntered1: false});
+  };
+  mouseEnter2 = event => {
     console.log(event);
-    this.setState({mouseEntered2: true})
-  }
+    this.setState({mouseEntered2: true});
+  };
 
-  mouseLeave2 = () =>
-  {
-    this.setState({mouseEntered2: false})
-  }
-  press = (event) =>
-  {
-    console.log("press")
+  mouseLeave2 = () => {
+    this.setState({mouseEntered2: false});
+  };
+  press = event => {
+    console.log('press');
     console.log(event);
-  }
-  pressIn = (event) =>
-  {
-    console.log("pressin")
+  };
+  pressIn = event => {
+    console.log('pressin');
     console.log(event);
-  }
-  pressOut = (event) =>
-  {
-    console.log("pressout")
+  };
+  pressOut = event => {
+    console.log('pressout');
     console.log(event);
-  }
-
-
+  };
 }
 
 const styles = StyleSheet.create({

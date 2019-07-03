@@ -13,30 +13,27 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
 typedef winrt::Windows::Foundation::DateTime TDateTime;
 typedef winrt::Windows::Foundation::TimeSpan TTimeSpan;
 
 class TimingModule;
 
-struct Timer
-{
-  Timer(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat)
-  {
+struct Timer {
+  Timer(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat) {
     Id = id;
     TargetTime = targetTime;
     Period = period;
     Repeat = repeat;
   }
 
-  bool operator<(const Timer& timer) const
-  {
+  bool operator<(const Timer &timer) const {
     return timer.TargetTime < TargetTime;
   }
 
-  bool operator==(int64_t id) const
-  {
+  bool operator==(int64_t id) const {
     return id == Id;
   }
 
@@ -46,55 +43,60 @@ struct Timer
   bool Repeat;
 };
 
-class TimerQueue
-{
-public:
+class TimerQueue {
+ public:
   TimerQueue();
 
   void Push(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat);
   void Pop();
-  Timer& Front();
+  Timer &Front();
   void Remove(int64_t id);
 
   bool IsEmpty();
 
-private:
+ private:
   std::vector<Timer> m_timerVector;
 };
 
-class Timing
-{
-public:
-  Timing(TimingModule* parent);
+class Timing {
+ public:
+  Timing(TimingModule *parent);
   void Disconnect();
 
-  void createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat);
+  void createTimer(
+      int64_t id,
+      double duration,
+      double jsSchedulingTime,
+      bool repeat);
   void deleteTimer(int64_t id);
   void setSendIdleEvents(bool sendIdleEvents);
 
-private:
+ private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
-  void OnRendering(const winrt::Windows::Foundation::IInspectable&, const winrt::Windows::Foundation::IInspectable& args);
+  void OnRendering(
+      const winrt::Windows::Foundation::IInspectable &,
+      const winrt::Windows::Foundation::IInspectable &args);
 
-private:
-  TimingModule* m_parent;
+ private:
+  TimingModule *m_parent;
   TimerQueue m_timerQueue;
-  winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
+  winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker
+      m_rendering;
 };
 
-class TimingModule : public facebook::xplat::module::CxxModule
-{
-public:
+class TimingModule : public facebook::xplat::module::CxxModule {
+ public:
   TimingModule();
   ~TimingModule();
   std::string getName();
-  virtual auto getConstants()->std::map<std::string, folly::dynamic>;
-  virtual auto getMethods()->std::vector<Method>;
+  virtual auto getConstants() -> std::map<std::string, folly::dynamic>;
+  virtual auto getMethods() -> std::vector<Method>;
 
-  static const char* name;
+  static const char *name;
 
-private:
+ private:
   std::shared_ptr<Timing> m_timing;
 };
 
-} }
+} // namespace uwp
+} // namespace react

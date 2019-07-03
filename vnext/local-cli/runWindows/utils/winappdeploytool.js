@@ -100,7 +100,7 @@ class WinAppDeployTool {
       shouldUpdate ? 'update' : 'install',
       '-file',
       pathToAppxPackage, '-ip',
-      targetDevice.__ip
+      targetDevice.__ip,
     ];
 
     if (pin) {

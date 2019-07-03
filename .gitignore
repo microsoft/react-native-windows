@@ -118,7 +118,6 @@ packages/
 #Other files
 *.DotSettings
 .vs/
-.vscode/
 *project.lock.json
 jsconfig.json
 package-lock.json

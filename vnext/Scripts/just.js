@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 function just(cmd) {
   const path = require('path');
@@ -14,7 +17,7 @@ function just(cmd) {
     ...(cmd ? [cmd] : []),
     '--config',
     path.resolve(__dirname, 'just-task.js'),
-    ...process.argv.slice(startIndex)
+    ...process.argv.slice(startIndex),
   ];
 
   require('just-task/lib/cli.js');
