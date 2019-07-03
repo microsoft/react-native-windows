@@ -1,20 +1,20 @@
 set(SOURCES
 	CxxReactWin32/JSBigString.cpp
 	DevSupportManager.cpp
+	Executors/WebSocketJSExecutor.cpp
+	Executors/WebSocketJSExecutorFactory.cpp
 	HttpResource.cpp
 	JSBigStringResourceDll.cpp
 	LazyDevSupportManager.cpp
  	LegacyWebSocket.cpp
 	Modules/NetworkingModule.cpp
+	Modules/TimingModule.cpp
+	Modules/WebSocketModule.cpp
 	Sandbox/DevSupportManagerSandbox.cpp
 	Sandbox/SandboxBridge.cpp
 	Sandbox/NamedPipeEndpoint.cpp
 	Sandbox/SandboxJSExecutor.cpp
-	TimingModule.cpp
- 	WebSocket.cpp
-	WebSocketJSExecutor.cpp
-	WebSocketJSExecutorFactory.cpp
-	WebSocketModule.cpp)
+	WebSocket.cpp)
 
 add_library(ReactWindowsStatic ${SOURCES})
 
