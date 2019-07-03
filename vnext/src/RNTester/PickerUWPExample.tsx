@@ -1,15 +1,16 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-// This is a port of PickerIOSExample.js
-
-/* tslint:disable */
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 import React = require('react');
-import { Button, Text, View } from 'react-native';
-import { Picker } from '../../src/index.uwp';
+import {Button, Text, View} from 'react-native';
+import {Picker} from '../../src/index.uwp';
 
 interface MakesModels {
-  name: string; models: string[];
+  name: string;
+  models: string[];
 }
 const CAR_MAKES_AND_MODELS: {[key: string]: MakesModels} = {
   amc: {
@@ -101,13 +102,16 @@ class PickerExample extends React.Component<{}, any> {
 
   public render() {
     const make = CAR_MAKES_AND_MODELS[this.state.carMake];
-    const selectionString = make.name + ' ' + make.models[this.state.modelIndex];
+    const selectionString =
+      make.name + ' ' + make.models[this.state.modelIndex];
     return (
       <View>
         <Text>Please choose a make for your car:</Text>
         <Picker
           selectedValue={this.state.carMake}
-          onValueChange={(carMake: string) => this.setState({carMake, modelIndex: 0})}>
+          onValueChange={(carMake: string) =>
+            this.setState({carMake, modelIndex: 0})
+          }>
           {Object.keys(CAR_MAKES_AND_MODELS).map(carMake => (
             <Picker.Item
               key={carMake}
@@ -144,7 +148,7 @@ class PickerStyleExample extends React.Component<{}, any> {
   };
 
   public render() {
-      /*
+    /*
         itemStyle={{
           fontSize: 11,
           color: 'red',
@@ -152,10 +156,12 @@ class PickerStyleExample extends React.Component<{}, any> {
           fontWeight: 'bold',
         }}
       */
-      return (
+    return (
       <Picker
         selectedValue={this.state.carMake}
-        onValueChange={(carMake: string) => this.setState({carMake, modelIndex: 0})}>
+        onValueChange={(carMake: string) =>
+          this.setState({carMake, modelIndex: 0})
+        }>
         {Object.keys(CAR_MAKES_AND_MODELS).map(carMake => (
           <Picker.Item
             key={carMake}
@@ -171,42 +177,57 @@ class PickerStyleExample extends React.Component<{}, any> {
 class PickerUpdateItemsExample extends React.Component<{}, any> {
   public state = {
     selected: '111',
-    items: ['111','222','333','444','555','666'],
+    items: ['111', '222', '333', '444', '555', '666'],
   };
 
   public render() {
     return (
       <View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Button title='Remove first item' onPress={
-            () => {
+          <Button
+            title="Remove first item"
+            onPress={() => {
               let selected = this.state.selected;
-              if (this.state.items.length > 1 && this.state.items[0] === selected)
+              if (
+                this.state.items.length > 1 &&
+                this.state.items[0] === selected
+              ) {
                 selected = this.state.items[1];
-              this.setState({items: this.state.items.slice(1), selected})
+              }
+              this.setState({items: this.state.items.slice(1), selected});
             }}
           />
-          <Button title='Remove last item' onPress={
-            () => {
+          <Button
+            title="Remove last item"
+            onPress={() => {
               let selected = this.state.selected;
-              if (this.state.items.length > 1 && this.state.items[this.state.items.length-1] === selected)
-                selected = this.state.items[this.state.items.length-2];
-              this.setState({items: this.state.items.slice(0, this.state.items.length-1), selected})
+              if (
+                this.state.items.length > 1 &&
+                this.state.items[this.state.items.length - 1] === selected
+              ) {
+                selected = this.state.items[this.state.items.length - 2];
+              }
+              this.setState({
+                items: this.state.items.slice(0, this.state.items.length - 1),
+                selected,
+              });
             }}
           />
-          <Button title='Reset' onPress={
-            () => this.setState({selected: '111', items: ['111','222','333','444','555','666']})
-            }/>
+          <Button
+            title="Reset"
+            onPress={() =>
+              this.setState({
+                selected: '111',
+                items: ['111', '222', '333', '444', '555', '666'],
+              })
+            }
+          />
         </View>
         <Picker
           selectedValue={this.state.selected}
           onValueChange={(selected: string) => this.setState({selected})}>
           {this.state.items.map(item => (
-            <Picker.Item
-              key={item}
-              value={item}
-              label={item}
-            />
+            <Picker.Item key={item} value={item} label={item} />
           ))}
         </Picker>
         <Text>You selected: {this.state.selected}</Text>
@@ -219,7 +240,7 @@ class PickerEditableExample extends React.Component<{}, any> {
   public state = {
     selected: '111',
     text: 'n',
-    items: ['111','222','333','444','555','666'],
+    items: ['111', '222', '333', '444', '555', '666'],
   };
 
   public render() {
@@ -231,14 +252,9 @@ class PickerEditableExample extends React.Component<{}, any> {
           editable={true}
           selectedValue={this.state.selected}
           text={this.state.text}
-          onValueChange={this.onValueChange}
-          >
+          onValueChange={this.onValueChange}>
           {this.state.items.map(item => (
-            <Picker.Item
-              key={item}
-              value={item}
-              label={item}
-            />
+            <Picker.Item key={item} value={item} label={item} />
           ))}
         </Picker>
       </View>
@@ -247,13 +263,13 @@ class PickerEditableExample extends React.Component<{}, any> {
 
   private onValueChange = (selected: string, _index: number, text: string) => {
     this.setState({selected, text});
-  }
+  };
 }
-
 
 export const displayName = (_undefined?: string) => {};
 export const title = '<Picker> UWP';
-export const description = 'Render lists of selectable options with uwp ComboBox.';
+export const description =
+  'Render lists of selectable options with uwp ComboBox.';
 export const examples = [
   {
     title: '<Picker>',
@@ -271,12 +287,12 @@ export const examples = [
     title: '<Picker> update items maintains selection test',
     render: function(): JSX.Element {
       return <PickerUpdateItemsExample />;
-    }
+    },
   },
   {
     title: '<Picker> editable combobox example',
     render: function(): JSX.Element {
       return <PickerEditableExample />;
-    }
+    },
   },
 ];

@@ -3,31 +3,27 @@
 
 #include "pch.h"
 
-#include "ViewControl.h"
 #include "DynamicAutomationPeer.h"
+#include "ViewControl.h"
 
 namespace winrt {
-  using namespace Windows::UI::Xaml::Automation::Peers;
+using namespace Windows::UI::Xaml::Automation::Peers;
 }
 
-namespace winrt::react::uwp::implementation
-{
+namespace winrt::react::uwp::implementation {
 
-ViewControl::ViewControl() : Super()
-{
+ViewControl::ViewControl() : Super() {}
+
+winrt::AutomationPeer ViewControl::OnCreateAutomationPeer() {
+  return winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(
+      *this);
 }
 
-winrt::AutomationPeer ViewControl::OnCreateAutomationPeer()
-{
-  return winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(*this);
-}
-
-winrt::react::uwp::ViewPanel ViewControl::GetPanel() const
-{
+winrt::react::uwp::ViewPanel ViewControl::GetPanel() const {
   auto child = Content();
 
-  if (auto border = child.try_as<winrt::Windows::UI::Xaml::Controls::Border>())
-  {
+  if (auto border =
+          child.try_as<winrt::Windows::UI::Xaml::Controls::Border>()) {
     child = border.Child();
   }
 
@@ -37,4 +33,4 @@ winrt::react::uwp::ViewPanel ViewControl::GetPanel() const
   return panel;
 }
 
-}
+} // namespace winrt::react::uwp::implementation

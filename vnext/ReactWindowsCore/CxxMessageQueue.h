@@ -6,17 +6,17 @@
 #include <cxxreact/MessageQueueThread.h>
 
 #include <atomic>
-#include <functional>
 #include <chrono>
+#include <functional>
+#include <memory>
 #include <mutex>
 #include <thread>
-#include <memory>
 
 namespace facebook {
 namespace react {
 
 namespace detail {
-template<bool clearOnWait>
+template <bool clearOnWait>
 class CVFlag {
  public:
   using time_point = std::chrono::steady_clock::time_point;
@@ -29,13 +29,15 @@ class CVFlag {
   void wait() {
     std::unique_lock<std::mutex> lk(mtx_);
     cv_.wait(lk, [this] { return flag_; });
-    if (clearOnWait) flag_ = false;
+    if (clearOnWait)
+      flag_ = false;
   }
 
   bool wait_until(time_point d) {
     std::unique_lock<std::mutex> lk(mtx_);
     bool res = cv_.wait_until(lk, d, [this] { return flag_; });
-    if (clearOnWait && res) flag_ = false;
+    if (clearOnWait && res)
+      flag_ = false;
     return res;
   }
 
@@ -47,24 +49,25 @@ class CVFlag {
 
 using BinarySemaphore = CVFlag<true>;
 using EventFlag = CVFlag<false>;
-}
+} // namespace detail
 
 class CxxMessageQueue : public MessageQueueThread {
  public:
   CxxMessageQueue();
   virtual ~CxxMessageQueue() override;
-  virtual void runOnQueue(std::function<void()>&&) override;
-  void runOnQueueDelayed(std::function<void()>&&, uint64_t delayMs);
+  virtual void runOnQueue(std::function<void()> &&) override;
+  void runOnQueueDelayed(std::function<void()> &&, uint64_t delayMs);
   // runOnQueueSync and quitSynchronous are dangerous.  They should only be
   // used for initialization and cleanup.
-  virtual void runOnQueueSync(std::function<void()>&&) override;
+  virtual void runOnQueueSync(std::function<void()> &&) override;
   // Once quitSynchronous() returns, no further work should run on the queue.
   virtual void quitSynchronous() override;
 
   bool isOnQueue();
 
   // This returns a function that will actually run the runloop.
-  // This runloop will return some time after quitSynchronous (or after this is destroyed).
+  // This runloop will return some time after quitSynchronous (or after this is
+  // destroyed).
   //
   // When running the runloop, it is important to ensure that no frames in the
   // current stack have a strong reference to the queue.
@@ -73,9 +76,11 @@ class CxxMessageQueue : public MessageQueueThread {
   static std::function<void()> getRunLoop(std::shared_ptr<CxxMessageQueue> mq);
 
   static std::weak_ptr<CxxMessageQueue> current();
+
  private:
   class QueueRunner;
   std::shared_ptr<QueueRunner> qr_;
 };
 
-}}
+} // namespace react
+} // namespace facebook

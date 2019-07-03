@@ -11,7 +11,8 @@ namespace chakraruntime {
 
 struct ChakraJsiRuntimeArgs;
 
-std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(ChakraJsiRuntimeArgs&& args) noexcept;
+std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(
+    ChakraJsiRuntimeArgs &&args) noexcept;
 
 } // namespace chakraruntime
 } // namespace jsi

@@ -5,28 +5,31 @@
 
 #include <cxxreact/JSExecutor.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
-class MockDelegate : public facebook::react::ExecutorDelegate
-{
-public:
-  std::shared_ptr<facebook::react::ModuleRegistry> getModuleRegistry() override
-  {
+class MockDelegate : public facebook::react::ExecutorDelegate {
+ public:
+  std::shared_ptr<facebook::react::ModuleRegistry> getModuleRegistry()
+      override {
     return nullptr;
   }
 
-  void callNativeModules(facebook::react::JSExecutor& executor, folly::dynamic&& calls, bool isEndOfBatch) override
-  {
-  }
+  void callNativeModules(
+      facebook::react::JSExecutor &executor,
+      folly::dynamic &&calls,
+      bool isEndOfBatch) override {}
 
-  facebook::react::MethodCallResult callSerializableNativeHook(facebook::react::JSExecutor& executor, unsigned int moduleId, unsigned int methodId, folly::dynamic&& args) override
-  {
+  facebook::react::MethodCallResult callSerializableNativeHook(
+      facebook::react::JSExecutor &executor,
+      unsigned int moduleId,
+      unsigned int methodId,
+      folly::dynamic &&args) override {
     return facebook::react::MethodCallResult();
   }
 
-  bool isBatchActive() override { return false; }
+  bool isBatchActive() override {
+    return false;
+  }
 };
 
-} } }// namespace facebook::react::test
+} // namespace Microsoft::React::Test

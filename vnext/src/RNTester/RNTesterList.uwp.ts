@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 'use strict';
 import React = require('react');
@@ -74,7 +77,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'ScrollViewSimpleExample',
-    module: require('react-native/RNTester/js/ScrollViewSimpleExample')
+    module: require('react-native/RNTester/js/ScrollViewSimpleExample'),
   },
   {
     key: 'SectionListExample',
@@ -118,7 +121,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AccessibilityExample',
-    module: require('./AccessibilityExample')
+    module: require('./AccessibilityExample'),
   },
   {
     key: 'AnimatedExample',
@@ -126,7 +129,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AppStateExample',
-    module: require('react-native/RNTester/js/AppStateExample')
+    module: require('react-native/RNTester/js/AppStateExample'),
   },
   {
     key: 'ThemingExample',
@@ -195,7 +198,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },*/
 ];
 
-const Modules: { [key: string]: IRNTesterModule } = {};
+const Modules: {[key: string]: IRNTesterModule} = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
@@ -204,7 +207,7 @@ APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
 const RNTesterList = {
   APIExamples,
   ComponentExamples,
-  Modules
+  Modules,
 };
 
 export default RNTesterList;

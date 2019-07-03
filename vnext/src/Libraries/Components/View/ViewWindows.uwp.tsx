@@ -1,13 +1,18 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-import { IViewWindowsProps } from './ViewWindowsProps';
+import {IViewWindowsProps} from './ViewWindowsProps';
 import * as React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 
 // tslint:disable-next-line:no-any
-export const ViewWindows = React.forwardRef((props: IViewWindowsProps, ref: React.Ref<any>) => (
-  <View ref={ref} {...props}/>
-));
+export const ViewWindows = React.forwardRef(
+  (props: IViewWindowsProps, ref: React.Ref<any>) => (
+    <View ref={ref} {...props} />
+  ),
+);
 
 export default ViewWindows;

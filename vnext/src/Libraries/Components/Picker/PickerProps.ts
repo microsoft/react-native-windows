@@ -1,7 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
-import { ViewProps } from 'react-native';
+import {ViewProps} from 'react-native';
 
 export interface IPickerItemProps extends ViewProps {
   label: string;
@@ -28,9 +31,9 @@ export interface IPickerProps extends ViewProps {
 
 export interface IPickerChangeEvent {
   nativeEvent: {
-      // tslint:disable-next-line:no-any
-      value: any;
-      itemIndex: number;
-      text: string;
+    // tslint:disable-next-line:no-any
+    value: any;
+    itemIndex: number;
+    text: string;
   };
 }

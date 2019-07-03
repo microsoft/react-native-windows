@@ -12,15 +12,15 @@
 #include <ChakraCore.h>
 #endif
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
-JSBigStringResourceDll::JSBigStringResourceDll(HMODULE dll, HRSRC resource)
-{
+JSBigStringResourceDll::JSBigStringResourceDll(HMODULE dll, HRSRC resource) {
   HGLOBAL loadedResource{LoadResource(dll, resource)};
   if (loadedResource == nullptr) {
     throw new std::invalid_argument("Could not load resource");
   }
-  this->resource = static_cast<char*>(LockResource(loadedResource));
+  this->resource = static_cast<char *>(LockResource(loadedResource));
   if (this->resource == nullptr) {
     throw new std::invalid_argument("Could not lock resource");
   }
@@ -35,9 +35,11 @@ JSBigStringResourceDll::JSBigStringResourceDll(HMODULE dll, HRSRC resource)
   }
 }
 
-std::unique_ptr<const JSBigStringResourceDll> JSBigStringResourceDll::Make(HMODULE dll, HRSRC resource)
-{
+std::unique_ptr<const JSBigStringResourceDll> JSBigStringResourceDll::Make(
+    HMODULE dll,
+    HRSRC resource) {
   return std::make_unique<const JSBigStringResourceDll>(dll, resource);
 }
 
-}}
+} // namespace react
+} // namespace facebook

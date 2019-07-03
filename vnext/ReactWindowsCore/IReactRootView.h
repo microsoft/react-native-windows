@@ -6,10 +6,10 @@
 #include <stdint.h>
 #include <string>
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
-struct IReactRootView
-{
+struct IReactRootView {
   virtual void ResetView() = 0;
   virtual std::string JSComponentName() const noexcept = 0;
   virtual int64_t GetActualHeight() const = 0;
@@ -18,4 +18,5 @@ struct IReactRootView
   virtual void SetTag(int64_t tag) = 0;
 };
 
-} }
+} // namespace react
+} // namespace facebook
