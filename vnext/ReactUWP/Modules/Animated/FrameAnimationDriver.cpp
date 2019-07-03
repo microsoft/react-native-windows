@@ -38,11 +38,7 @@ namespace react { namespace uwp {
     auto fromValue = GetAnimatedValue()->RawValue();
     for (auto frame : m_frames)
     {
-      normalizedProgress += step;
-      if (normalizedProgress > 1.0f)
-      {
-        normalizedProgress = 1.0f;
-      }
+      normalizedProgress = std::min(normalizedProgress += step, 1.0f);
       animation.InsertKeyFrame(normalizedProgress, static_cast<float>(fromValue + (frame * (m_toValue - fromValue))));
     }
 

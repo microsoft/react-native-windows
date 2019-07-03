@@ -232,7 +232,7 @@ namespace react {
         auto& drivers = m_eventDrivers.at(key);
         auto iterator = drivers.begin();
 
-        while (iterator != drivers.end())
+        for (auto iterator = drivers.begin(); iterator != drivers.end(); )
         {
           if (const auto value = iterator->get()->AnimatedValue())
           {
@@ -261,7 +261,7 @@ namespace react {
       m_delayedPropsNodes.clear();
       for (const auto tag : delayedPropsNodes)
       {
-        if (m_propsNodes.count(tag))
+        if (m_propsNodes.count(tag) > 0)
         {
           m_propsNodes.at(tag)->StartAnimations();
         }

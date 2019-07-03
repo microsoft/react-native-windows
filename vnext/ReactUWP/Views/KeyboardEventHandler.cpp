@@ -192,7 +192,7 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(KeyboardEventPhase
 
   bool shouldMarkHandled = false;
   if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
-    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
+        shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   else
     shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, event);
 
