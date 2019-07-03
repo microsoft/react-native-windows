@@ -7,7 +7,7 @@
 
 #include "MessageQueueShim.h"
 
-using namespace ::facebook::react::test;
+using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
 

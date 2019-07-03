@@ -131,7 +131,7 @@ function launchServer(options) {
   const opts = {
     cwd: options.root,
     detached: true,
-    stdio: options.verbose ? 'inherit' : 'ignore'
+    stdio: options.verbose ? 'inherit' : 'ignore',
   };
 
   return Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts));
@@ -140,5 +140,5 @@ function launchServer(options) {
 module.exports = {
   deployToDesktop,
   deployToDevice,
-  startServerInNewWindow
+  startServerInNewWindow,
 };

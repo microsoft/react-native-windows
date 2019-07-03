@@ -1,16 +1,17 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
- // TODO Hx: Implement this module.
+// TODO Hx: Implement this module.
 
 'use strict';
 
 class HMRLoadingView {
-  static showMessage(message: string) {
-  }
+  static showMessage(message: string) {}
 
-  static hide() {
-  }
+  static hide() {}
 }
 
 module.exports = HMRLoadingView;

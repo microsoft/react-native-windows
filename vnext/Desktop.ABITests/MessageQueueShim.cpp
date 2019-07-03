@@ -3,7 +3,7 @@
 namespace ABITests
 {
 	MessageQueueShim::MessageQueueShim()
-	: m_messageQueueThread { std::make_shared<::facebook::react::test::TestMessageQueueThread>() }
+	: m_messageQueueThread { std::make_shared<Microsoft::React::Test::TestMessageQueueThread>() }
 	{
 	}
 

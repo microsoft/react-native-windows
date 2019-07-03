@@ -61,11 +61,50 @@
     <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\OInstance.cpp">
-      <Filter>Shared</Filter>
+    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\InstanceManager.cpp">
-      <Filter>Shared</Filter>
+    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
     </ClCompile>
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp">
       <Filter>Executors</Filter>
@@ -142,26 +181,11 @@
     <ClCompile Include="Pch\pch.cpp">
       <Filter>Pch</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorageModule.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\AsyncStorageManager.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\FollyDynamicConverter.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\KeyValueStorage.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Shared\AsyncStorage\StorageFileIO.cpp">
-      <Filter>Shared</Filter>
-    </ClCompile>
     <ClCompile Include="Views\VirtualTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\Logging.cpp">
-      <Filter>Shared</Filter>
+    <ClCompile Include="Views\module.g.cpp">
+      <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Modules\LinkingManagerModule.cpp">
       <Filter>Modules</Filter>
@@ -175,7 +199,6 @@
     <ClCompile Include="Polyester\IconViewManager.cpp">
       <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\Shared\MemoryTracker.cpp" />
     <ClCompile Include="Views\SwitchViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -197,10 +220,19 @@
     <ClCompile Include="Modules\AppStateModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AppThemeModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\DatePickerViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicAutomationProperties.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\DynamicAutomationPeer.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\ViewControl.cpp">
@@ -212,15 +244,12 @@
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp">
       <Filter>Views\Impl</Filter>
     </ClCompile>
-    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ScrollContentViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="UwpPreparedScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="UwpScriptStore.cpp">
-      <Filter>Utils</Filter>
     <ClCompile Include="Views\Image\ImageViewManager.cpp">
       <Filter>Views\Image</Filter>
     </ClCompile>
@@ -235,6 +264,27 @@
     </ClCompile>
     <ClCompile Include="Modules\ImageViewManagerModule.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Helpers.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\KeyboardEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +356,51 @@
     </ClInclude>
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DecayAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\EventAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\TransformAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Modules</Filter>
@@ -400,6 +495,9 @@
     <ClInclude Include="Modules\AppStateModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\AppThemeModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -424,10 +522,25 @@
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
       <Filter>Views\cppwinrt</Filter>
     </ClInclude>
+    <ClInclude Include="Views\cppwinrt\ViewControl.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicAutomationProperties.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\DynamicAutomationPeer.h">
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Views\FlyoutViewManager.h">
@@ -436,7 +549,9 @@
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h">
       <Filter>Views\Impl</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
     <ClInclude Include="Views\ScrollContentViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -454,18 +569,6 @@
     </ClInclude>
     <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
       <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.0.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.1.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\Microsoft.UI.Composition.Effects.2.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\Microsoft.UI.Composition.Effects.h">
-      <Filter>Views\cppwinrt\winrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
       <Filter>Views\cppwinrt</Filter>
@@ -488,11 +591,38 @@
     <ClInclude Include="Views\Image\BorderEffect.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
-    <ClInclude Include="UwpPreparedScriptStore.h">
+    <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="UwpScriptStore.h">
+    <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNode.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\AnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\FacadeType.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h">
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -545,12 +675,6 @@
     <None Include="Sandbox\sources">
       <Filter>Sandbox</Filter>
     </None>
-    <None Include="..\Shared\sources.inc">
-      <Filter>Shared</Filter>
-    </None>
-    <None Include="..\Shared\winrt\sources">
-      <Filter>Shared</Filter>
-    </None>
     <None Include="Threading\sources">
       <Filter>Threading</Filter>
     </None>
@@ -567,6 +691,9 @@
   <ItemGroup>
     <Filter Include="Modules">
       <UniqueIdentifier>{c08ab955-f1a5-41c1-9cc6-5f8bcefaf7e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\Animated">
+      <UniqueIdentifier>{A4613589-965A-4B1F-85DB-CEEC21D101DA}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
       <UniqueIdentifier>{f74fe3a1-618b-482c-ba94-adc3e6e90ab8}</UniqueIdentifier>
@@ -591,9 +718,6 @@
     </Filter>
     <Filter Include="Executors">
       <UniqueIdentifier>{5fbd1830-96ea-41cc-afa6-75f5361a8daa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shared">
-      <UniqueIdentifier>{ae08ff60-1246-49b2-9d8d-dc3ac814d8c4}</UniqueIdentifier>
     </Filter>
     <Filter Include="ABI">
       <UniqueIdentifier>{80eca5f5-e4e9-487a-9e75-e750931c1b56}</UniqueIdentifier>
@@ -642,5 +766,8 @@
     <MidlRT Include="ABI\idl\ReactControl.idl">
       <Filter>ABI\idl</Filter>
     </MidlRT>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
   </ItemGroup>
 </Project>

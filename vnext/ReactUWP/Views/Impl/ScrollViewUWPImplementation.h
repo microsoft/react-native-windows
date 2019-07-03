@@ -14,32 +14,33 @@
 #include <winrt/Windows.UI.Xaml.Controls.h>
 
 namespace winrt {
-  using namespace Windows::Foundation;
-  using namespace Windows::Foundation::Collections;
-  using namespace Windows::UI::Xaml;
-  using namespace Windows::UI::Xaml::Controls;
-  using namespace Windows::UI::Xaml::Controls::Primitives;
-}
+using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
+} // namespace winrt
 
 namespace react {
 namespace uwp {
 
-class ScrollViewUWPImplementation
-{
-public:
-  ScrollViewUWPImplementation(const winrt::ScrollViewer& scrollViewer);
+class ScrollViewUWPImplementation {
+ public:
+  ScrollViewUWPImplementation(const winrt::ScrollViewer &scrollViewer);
 
   void SetHorizontal(bool isHorizontal);
   void SnapToInterval(float interval);
-  void SnapToOffsets(const winrt::IVectorView<float>& offsets);
+  void SnapToOffsets(const winrt::IVectorView<float> &offsets);
 
   void UpdateScrollableSize() const;
 
   winrt::ScrollViewer ScrollViewer() const;
-  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager() const;
+  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager()
+      const;
 
-private:
+ private:
   winrt::weak_ref<winrt::ScrollViewer> m_scrollViewer{};
 };
 
-} }
+} // namespace uwp
+} // namespace react

@@ -1,23 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "../Chakra/Utf8DebugExtensions.h"
-#include "UnicodeTestStrings.h"
 #include <CppUnitTest.h>
 #include <string>
 #include <vector>
+#include "../Chakra/Utf8DebugExtensions.h"
+#include "UnicodeTestStrings.h"
 
 using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
-TEST_CLASS(StringConversionTest_Desktop)
-{
-private:
+TEST_CLASS(StringConversionTest_Desktop) {
+ private:
   JsRuntimeHandle runtime;
 
-  TEST_METHOD_INITIALIZE(Setup)
-  {
+  TEST_METHOD_INITIALIZE(Setup) {
     JsContextRef context;
 
     unsigned currentSourceContext = 0;
@@ -30,24 +28,20 @@ private:
     JsSetCurrentContext(context);
   }
 
-  TEST_METHOD_CLEANUP(TearDown)
-  {
+  TEST_METHOD_CLEANUP(TearDown) {
     // Dispose runtime
     JsSetCurrentContext(JS_INVALID_REFERENCE);
     JsDisposeRuntime(runtime);
   }
 
-  TEST_METHOD(StringConversionTest_WIN32Test)
-  {
+  TEST_METHOD(StringConversionTest_WIN32Test) {
     JsValueRef value;
     string str;
-    for (size_t i = 0; i < g_utf8TestStrings.size(); i++)
-    {
-      JsPointerToStringUtf8(g_utf8TestStrings[i].c_str(), g_utf8TestStrings[i].length(), &value);
+    for (size_t i = 0; i < g_utf8TestStrings.size(); i++) {
+      JsPointerToStringUtf8(
+          g_utf8TestStrings[i].c_str(), g_utf8TestStrings[i].length(), &value);
       JsStringToStdStringUtf8(value, str);
       Assert::IsTrue(str.compare(g_utf8TestStrings[i]) == 0);
     }
-
   }
-
 };

@@ -22,64 +22,90 @@ namespace facebook {
 namespace react {
 class RAMBundleRegistry;
 }
-}
+} // namespace facebook
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
 class MessageQueueThread;
 
-class WebSocketJSExecutor : public facebook::react::JSExecutor
-{
-public:
-  WebSocketJSExecutor(std::shared_ptr<facebook::react::ExecutorDelegate> delegate, std::shared_ptr<facebook::react::MessageQueueThread> messageQueueThread);
+class WebSocketJSExecutor : public facebook::react::JSExecutor {
+ public:
+  WebSocketJSExecutor(
+      std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
+      std::shared_ptr<facebook::react::MessageQueueThread> messageQueueThread);
   ~WebSocketJSExecutor() override;
 
-  virtual void loadApplicationScript(std::unique_ptr<const facebook::react::JSBigString> script,
+  virtual void loadApplicationScript(
+      std::unique_ptr<const facebook::react::JSBigString> script,
 #if !defined(OSS_RN)
-    uint64_t scriptVersion,
+      uint64_t scriptVersion,
 #endif
-    std::string sourceURL
+      std::string sourceURL
 #if !defined(OSS_RN)
-    , std::string&& bytecodeFileName
+      ,
+      std::string &&bytecodeFileName
 #endif
-  ) override;
+      ) override;
   virtual void setBundleRegistry(
-    std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) override;
-  virtual void registerBundle(uint32_t bundleId, const std::string& bundlePath) override;
-  virtual void callFunction(const std::string& moduleId, const std::string& methodId, const folly::dynamic& arguments) override;
-  virtual void invokeCallback(const double callbackId, const folly::dynamic& arguments) override;
-  virtual void setGlobalVariable(std::string propName, std::unique_ptr<const facebook::react::JSBigString> jsonValue) override;
-  virtual void* getJavaScriptContext() override;
+      std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry)
+      override;
+  virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath)
+      override;
+  virtual void callFunction(
+      const std::string &moduleId,
+      const std::string &methodId,
+      const folly::dynamic &arguments) override;
+  virtual void invokeCallback(
+      const double callbackId,
+      const folly::dynamic &arguments) override;
+  virtual void setGlobalVariable(
+      std::string propName,
+      std::unique_ptr<const facebook::react::JSBigString> jsonValue) override;
+  virtual void *getJavaScriptContext() override;
   virtual std::string getDescription() override;
 #ifdef WITH_JSC_MEMORY_PRESSURE
-    virtual void handleMemoryPressure(int pressureLevel) override;
+  virtual void handleMemoryPressure(int pressureLevel) override;
 #endif
   virtual void destroy() override;
 
-  winrt::Windows::Foundation::IAsyncAction ConnectAsync(const std::string& webSocketServerUrl, const std::function<void(std::string)>& errorCallback);
+  winrt::Windows::Foundation::IAsyncAction ConnectAsync(
+      const std::string &webSocketServerUrl,
+      const std::function<void(std::string)> &errorCallback);
 
-private:
-  enum class State
-  {
+ private:
+  enum class State {
     Disconnected,
-    Connected,    // Websocket is connected, still need to prepare the runtime.
-    Running,      // Runtime is running.
-    Disposed,     // Executor has been shutdown.
+    Connected, // Websocket is connected, still need to prepare the runtime.
+    Running, // Runtime is running.
+    Disposed, // Executor has been shutdown.
     Error
   };
 
-private:
+ private:
   bool PrepareJavaScriptRuntime();
-  std::string Call(const std::string& methodName, folly::dynamic& arguments);
-  std::future<std::string> SendMessageAsync(int requestId, const std::string& message);
-  void OnMessageReceived(const std::string& msg);
+  std::string Call(const std::string &methodName, folly::dynamic &arguments);
+  std::future<std::string> SendMessageAsync(
+      int requestId,
+      const std::string &message);
+  void OnMessageReceived(const std::string &msg);
   void flush();
 
-  void SetState(State state) noexcept { m_state = state; }
-  bool IsConnected() const noexcept { return m_state == State::Connected; }
-  bool IsRunning() const noexcept { return m_state == State::Running; }
-  bool IsInError() const noexcept { return m_state == State::Error; }
-  bool IsDisposed() const noexcept { return m_state == State::Disposed; }
+  void SetState(State state) noexcept {
+    m_state = state;
+  }
+  bool IsConnected() const noexcept {
+    return m_state == State::Connected;
+  }
+  bool IsRunning() const noexcept {
+    return m_state == State::Running;
+  }
+  bool IsInError() const noexcept {
+    return m_state == State::Error;
+  }
+  bool IsDisposed() const noexcept {
+    return m_state == State::Disposed;
+  }
   void OnHitError(std::string message);
 
   const int ConnectTimeoutMilliseconds = 5000;
@@ -91,8 +117,10 @@ private:
   // WebSocket
   winrt::Windows::Networking::Sockets::MessageWebSocket m_socket;
   winrt::Windows::Storage::Streams::DataWriter m_socketDataWriter;
-  winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker m_msgReceived;
-  winrt::Windows::Networking::Sockets::MessageWebSocket::Closed_revoker m_closed;
+  winrt::Windows::Networking::Sockets::MessageWebSocket::MessageReceived_revoker
+      m_msgReceived;
+  winrt::Windows::Networking::Sockets::MessageWebSocket::Closed_revoker
+      m_closed;
 
   folly::dynamic m_injectedObjects = folly::dynamic::object;
 
@@ -102,7 +130,8 @@ private:
   State m_state = State::Disconnected;
   std::function<void(std::string)> m_errorCallback;
 
-  std::atomic<LONG> m_requestId { 0 };
+  std::atomic<LONG> m_requestId{0};
 };
 
-}}
+} // namespace uwp
+} // namespace react

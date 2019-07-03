@@ -5,21 +5,18 @@
 
 #include <IReactRootView.h>
 
-namespace facebook {
-namespace react {
-namespace test {
+namespace Microsoft::React::Test {
 
-class TestRootView : public facebook::react::IReactRootView
-{
+class TestRootView : public facebook::react::IReactRootView {
   int64_t m_tag;
   std::string m_name;
   int64_t m_width;
   int64_t m_height;
 
-public:
-  TestRootView(const std::string& name, int64_t width = 0, int64_t height = 0);
+ public:
+  TestRootView(const std::string &name, int64_t width = 0, int64_t height = 0);
 
-  #pragma region IReactRootView members
+#pragma region IReactRootView members
 
   void ResetView() override;
   std::string JSComponentName() const noexcept override;
@@ -28,7 +25,7 @@ public:
   int64_t GetTag() const override;
   void SetTag(int64_t tag) override;
 
-  #pragma endregion
+#pragma endregion
 };
 
-} } } // namespace facebook::react::test
+} // namespace Microsoft::React::Test
