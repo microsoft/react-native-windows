@@ -1,9 +1,10 @@
 #include "LayoutAnimation.h"
 
-#include <exception>
 #include <folly/dynamic.h>
+#include <exception>
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
 namespace {
 
@@ -36,8 +37,7 @@ constexpr auto c_delaySz = "delay";
 constexpr auto c_initialVelocitySz = "initialVelocity";
 constexpr auto c_springDampingSz = "springDamping";
 
-LayoutAnimation::AnimationType AnimationTypeFromConfig(folly::dynamic& config)
-{
+LayoutAnimation::AnimationType AnimationTypeFromConfig(folly::dynamic &config) {
   if (config.isNull())
     return LayoutAnimation::AnimationType::None;
 
@@ -54,14 +54,14 @@ LayoutAnimation::AnimationType AnimationTypeFromConfig(folly::dynamic& config)
     return LayoutAnimation::AnimationType::Spring;
   else if (type == c_keyboardSz)
     return LayoutAnimation::AnimationType::Keyboard;
-  else
-  {
-    throw std::exception("Unknown animation type requested for LayoutAnimations.");
+  else {
+    throw std::exception(
+        "Unknown animation type requested for LayoutAnimations.");
   }
 }
 
-LayoutAnimation::AnimatableProperty AnimatablePropertyFromConfig(folly::dynamic& config)
-{
+LayoutAnimation::AnimatableProperty AnimatablePropertyFromConfig(
+    folly::dynamic &config) {
   if (config.isNull())
     return LayoutAnimation::AnimatableProperty::None;
 
@@ -76,66 +76,83 @@ LayoutAnimation::AnimatableProperty AnimatablePropertyFromConfig(folly::dynamic&
     return LayoutAnimation::AnimatableProperty::ScaleY;
   else if (animProp == c_scaleXYSz)
     return LayoutAnimation::AnimatableProperty::ScaleXY;
-  else
-  {
+  else {
     throw std::exception("Unknown property used for LayoutAnimations.");
   }
 }
 
-void SetAnimationSpecificProperties(folly::dynamic&& config, LayoutAnimation::LayoutAnimationProperties& props)
-{
-  if (config.isNull())
-  {
-    throw std::exception("Cannot set animation-specific properties with null config.");
+void SetAnimationSpecificProperties(
+    folly::dynamic &&config,
+    LayoutAnimation::LayoutAnimationProperties &props) {
+  if (config.isNull()) {
+    throw std::exception(
+        "Cannot set animation-specific properties with null config.");
   }
 
-  if (config[c_typeSz] == c_springSz)
-  {
-    props.springAnimationProperties.initialVelocity = (config.find(c_initialVelocitySz) != config.items().end()) ? static_cast<float>(config[c_initialVelocitySz].asDouble()) : c_defaultInitialVelocity;
-    props.springAnimationProperties.springDamping = (config.find(c_springDampingSz) != config.items().end()) ? static_cast<float>(config[c_springDampingSz].asDouble()) : c_defaultSpringDamping;
+  if (config[c_typeSz] == c_springSz) {
+    props.springAnimationProperties.initialVelocity =
+        (config.find(c_initialVelocitySz) != config.items().end())
+        ? static_cast<float>(config[c_initialVelocitySz].asDouble())
+        : c_defaultInitialVelocity;
+    props.springAnimationProperties.springDamping =
+        (config.find(c_springDampingSz) != config.items().end())
+        ? static_cast<float>(config[c_springDampingSz].asDouble())
+        : c_defaultSpringDamping;
   }
 }
 
-void SetAnimationProperties(folly::dynamic&& config, LayoutAnimation::LayoutAnimationProperties& props, float defaultDuration)
-{
-  if (config.isNull())
-  {
+void SetAnimationProperties(
+    folly::dynamic &&config,
+    LayoutAnimation::LayoutAnimationProperties &props,
+    float defaultDuration) {
+  if (config.isNull()) {
     props.animationType = LayoutAnimation::AnimationType::None;
     return;
   }
 
   props.animationType = AnimationTypeFromConfig(config);
   props.animatedProp = AnimatablePropertyFromConfig(config);
-  props.delay = (config.find(c_delaySz) != config.items().end()) ? static_cast<float>(config[c_delaySz].asDouble()) : c_defaultDelay;
-  props.duration = (config.find(c_durationSz) != config.items().end()) ? static_cast<float>(config[c_durationSz].asDouble()) : defaultDuration;
+  props.delay = (config.find(c_delaySz) != config.items().end())
+      ? static_cast<float>(config[c_delaySz].asDouble())
+      : c_defaultDelay;
+  props.duration = (config.find(c_durationSz) != config.items().end())
+      ? static_cast<float>(config[c_durationSz].asDouble())
+      : defaultDuration;
 
-  if (props.animationType == LayoutAnimation::AnimationType::Spring)
-  {
+  if (props.animationType == LayoutAnimation::AnimationType::Spring) {
     SetAnimationSpecificProperties(std::move(config), props);
   }
 }
 
 } // anonymous namespace
 
-LayoutAnimation::LayoutAnimation(folly::dynamic config)
-{
-  if (config.isNull())
-  {
+LayoutAnimation::LayoutAnimation(folly::dynamic config) {
+  if (config.isNull()) {
     throw std::exception("Cannot construct LayoutAnimation with null config.");
   }
 
   auto duration = config[c_durationSz];
 
-  if (duration.isNull())
-  {
+  if (duration.isNull()) {
     throw std::exception("LayoutAnimation must include default duration.");
   }
 
-  auto defaultDuration = static_cast<float>(duration.asDouble()); // duration provided in ms
+  auto defaultDuration =
+      static_cast<float>(duration.asDouble()); // duration provided in ms
 
-  SetAnimationProperties(std::move(config[c_createSz]), m_props.createAnimationProps, defaultDuration);
-  SetAnimationProperties(std::move(config[c_updateSz]), m_props.updateAnimationProps, defaultDuration);
-  SetAnimationProperties(std::move(config[c_deleteSz]), m_props.deleteAnimationProps, defaultDuration);
+  SetAnimationProperties(
+      std::move(config[c_createSz]),
+      m_props.createAnimationProps,
+      defaultDuration);
+  SetAnimationProperties(
+      std::move(config[c_updateSz]),
+      m_props.updateAnimationProps,
+      defaultDuration);
+  SetAnimationProperties(
+      std::move(config[c_deleteSz]),
+      m_props.deleteAnimationProps,
+      defaultDuration);
 }
 
-}} // namespace facebook::react
+} // namespace react
+} // namespace facebook

@@ -1,12 +1,22 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-import { ViewProps } from 'react-native';
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
+import {ViewProps} from 'react-native';
 
 export interface IDatePickerProps extends ViewProps {
   selectedDate?: Date;
   placeholderText?: string;
-  dateFormat?: 'day month year' | 'dayofweek day month' | 'longdate' | 'shortdate';
-  dayOfWeekFormat?: '{dayofweek.abbreviated(2)}' | '{dayofweek.abbreviated(3)}' | '{dayofweek.full}';
+  dateFormat?:
+    | 'day month year'
+    | 'dayofweek day month'
+    | 'longdate'
+    | 'shortdate';
+  dayOfWeekFormat?:
+    | '{dayofweek.abbreviated(2)}'
+    | '{dayofweek.abbreviated(3)}'
+    | '{dayofweek.full}';
   firstDayOfWeek?: DayOfWeek;
   maxDate?: Date;
   minDate?: Date;

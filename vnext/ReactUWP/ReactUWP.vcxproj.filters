@@ -767,4 +767,7 @@
       <Filter>ABI\idl</Filter>
     </MidlRT>
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
 </Project>

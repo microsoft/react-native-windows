@@ -7,17 +7,18 @@
 
 using std::string;
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
-void LazyDevSupportManager::EnsureDevSupportManager() noexcept
-{
+void LazyDevSupportManager::EnsureDevSupportManager() noexcept {
   if (!m_dsm)
     m_dsm = std::make_unique<DevSupportManager>();
 }
 
 #pragma region LazyDevSupportManager
 
-JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(const DevSettings& settings) /*override*/
+JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(
+    const DevSettings &settings) /*override*/
 {
   EnsureDevSupportManager();
 
@@ -25,7 +26,8 @@ JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(const DevSettings& s
 }
 
 #if !defined(OSS_RN)
-JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings& settings) /*override*/
+JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(
+    const DevSettings &settings) /*override*/
 {
   EnsureDevSupportManager();
 
@@ -33,14 +35,19 @@ JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings&
 }
 #endif
 
-string LazyDevSupportManager::GetJavaScriptFromServer(const string& debugHost, const string& jsBundleName, const string& platform) /*override*/
+string LazyDevSupportManager::GetJavaScriptFromServer(
+    const string &debugHost,
+    const string &jsBundleName,
+    const string &platform) /*override*/
 {
   EnsureDevSupportManager();
 
   return m_dsm->GetJavaScriptFromServer(debugHost, jsBundleName, platform);
 }
 
-void LazyDevSupportManager::StartPollingLiveReload(const string& debugHost, std::function<void()> onChangeCallback) /*override*/
+void LazyDevSupportManager::StartPollingLiveReload(
+    const string &debugHost,
+    std::function<void()> onChangeCallback) /*override*/
 {
   EnsureDevSupportManager();
 
@@ -63,9 +70,9 @@ bool LazyDevSupportManager::HasException() /*override*/
 
 #pragma endregion LazyDevSupportManager
 
-std::shared_ptr<IDevSupportManager> CreateDevSupportManager()
-{
+std::shared_ptr<IDevSupportManager> CreateDevSupportManager() {
   return std::make_shared<LazyDevSupportManager>();
 }
 
-} } // namespace facebook::react
+} // namespace react
+} // namespace facebook

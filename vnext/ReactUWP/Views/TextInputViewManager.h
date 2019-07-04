@@ -5,26 +5,31 @@
 
 #include <Views/ControlViewManager.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class TextInputViewManager : public ControlViewManager
-{
+class TextInputViewManager : public ControlViewManager {
   using Super = ControlViewManager;
-public:
-  TextInputViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
+ public:
+  TextInputViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+
+  const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-  facebook::react::ShadowNode* createShadow() const override;
+  facebook::react::ShadowNode *createShadow() const override;
 
-  void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
+  void DispatchCommand(
+      XamlView viewToUpdate,
+      int64_t commandId,
+      const folly::dynamic &commandArgs) override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
   friend class TextInputShadowNode;
 };
 
-} }
+} // namespace uwp
+} // namespace react

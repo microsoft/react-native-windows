@@ -1,15 +1,16 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-/* tslint:disable */
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 import React = require('react');
-import { Text, View, Button } from 'react-native';
-import { AppTheme } from '../../src/index.uwp';
+import {Text, View, Button} from 'react-native';
+import {AppTheme} from '../index.uwp';
 
 class ThemeExample extends React.Component {
   state = {
-    currentTheme: AppTheme.currentTheme
+    currentTheme: AppTheme.currentTheme,
   };
 
   componentDidMount() {
@@ -20,19 +21,24 @@ class ThemeExample extends React.Component {
     AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
   }
 
-  onAppThemeChanged = (event: any) => {
+  onAppThemeChanged = (_event: any) => {
     const currentTheme = AppTheme.currentTheme;
     this.setState({currentTheme});
   };
 
-  _onPress = () => {
-  }
+  _onPress = () => {};
 
   public render() {
     return (
       <View>
-        <Text style={{color: 'red'}}>currentTheme: {this.state.currentTheme}</Text>
-        <Button onPress={ this._onPress } title={this.state.currentTheme} color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'}></Button>
+        <Text style={{color: 'red'}}>
+          currentTheme: {this.state.currentTheme}
+        </Text>
+        <Button
+          onPress={this._onPress}
+          title={this.state.currentTheme}
+          color={this.state.currentTheme === 'dark' ? 'grey' : 'orange'}
+        />
       </View>
     );
   }
@@ -47,5 +53,5 @@ export const examples = [
     render: function(): JSX.Element {
       return <ThemeExample />;
     },
-  }
+  },
 ];

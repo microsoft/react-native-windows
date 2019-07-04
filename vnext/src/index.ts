@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 export * from './Libraries/Components/CheckBox/CheckBox';
 export * from './Libraries/Components/DatePicker/DatePicker';
 export * from './Libraries/Components/DatePicker/DatePickerProps';

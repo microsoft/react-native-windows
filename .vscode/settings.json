@@ -39,5 +39,7 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "clang-format.language.javascript.enable": false,
+  "clang-format.language.typescript.enable": false
 }

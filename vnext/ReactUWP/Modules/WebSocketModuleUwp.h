@@ -6,12 +6,11 @@
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-
-class WebSocketModule : public facebook::xplat::module::CxxModule
-{
-public:
+class WebSocketModule : public facebook::xplat::module::CxxModule {
+ public:
   WebSocketModule();
   virtual ~WebSocketModule();
 
@@ -20,11 +19,12 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char* name;
+  static const char *name;
 
-private:
+ private:
   class WebSocket;
   std::shared_ptr<WebSocket> m_webSocket;
 };
 
-} }
+} // namespace uwp
+} // namespace react

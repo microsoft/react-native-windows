@@ -4,9 +4,9 @@
 #include "TestRunner.h"
 #include "unicode.h"
 
-#include <cxxreact/Instance.h>
 #include <DevSettings.h>
 #include <InstanceManager.h>
+#include <cxxreact/Instance.h>
 #include "TestInstance.h"
 #include "TestModule.h"
 
@@ -28,60 +28,54 @@ using std::unique_ptr;
 using std::vector;
 using std::wstring;
 
-namespace Microsoft::React::Test
-{
+namespace Microsoft::React::Test {
 
-void TestRunner::AwaitEvent(HANDLE& event, TestResult& result)
-{
+void TestRunner::AwaitEvent(HANDLE &event, TestResult &result) {
   DWORD done = ::WaitForSingleObject(event, INFINITE);
 
   if (WAIT_OBJECT_0 != done)
     result.Status = TestStatus::Failed;
 }
 
-TestRunner::TestRunner()
-{
-}
+TestRunner::TestRunner() {}
 
-TestResult TestRunner::RunTest(string&& bundlePath, string&& appName, NativeLoggingHook&& loggingCallback)
-{
+TestResult TestRunner::RunTest(
+    string &&bundlePath,
+    string &&appName,
+    NativeLoggingHook &&loggingCallback) {
   // Set up
   HANDLE functionCalled = CreateEvent(
-    /* lpEventAttributes */ NULL,
-    /* bManualReset      */ FALSE,
-    /* bInitialState     */ FALSE,
-    /* lpName            */ nullptr
-  );
+      /* lpEventAttributes */ NULL,
+      /* bManualReset      */ FALSE,
+      /* bInitialState     */ FALSE,
+      /* lpName            */ nullptr);
   assert(functionCalled != NULL);
-  TestResult result { TestStatus::Pending, wstring() };
+  TestResult result{TestStatus::Pending, wstring()};
 
-  //TODO: Defer MessageQueueThread creation to variant implementations (Win32, WinRT).
-  vector<tuple<string, CxxModule::Provider>> modules
-  {
-    make_tuple(
+  // TODO: Defer MessageQueueThread creation to variant implementations (Win32,
+  // WinRT).
+  vector<tuple<string, CxxModule::Provider>> modules{make_tuple(
       TestModule::name,
-      [this, &result, &functionCalled]() -> unique_ptr<CxxModule>
-      {
-        return make_unique<TestModule>([this, &result, &functionCalled](bool success)
-        {
-          if (TestStatus::Pending != result.Status)
-            return;
+      [this, &result, &functionCalled]() -> unique_ptr<CxxModule> {
+        return make_unique<TestModule>(
+            [this, &result, &functionCalled](bool success) {
+              if (TestStatus::Pending != result.Status)
+                return;
 
-          result.Status = success ? TestStatus::Passed : TestStatus::Failed;
-          result.Message = L"markTestSucceeded(false)";
-          ::SetEvent(functionCalled);
-        });
-      }
-    )
-  };
+              result.Status = success ? TestStatus::Passed : TestStatus::Failed;
+              result.Message = L"markTestSucceeded(false)";
+              ::SetEvent(functionCalled);
+            });
+      })};
 
-  // Note, further configuration should be done in each Windows variant's TestRunner implementation.
+  // Note, further configuration should be done in each Windows variant's
+  // TestRunner implementation.
   shared_ptr<DevSettings> devSettings = make_shared<DevSettings>();
-  devSettings->useWebDebugger = false; // WebSocketJSExecutor can't register native log hooks.
+  devSettings->useWebDebugger =
+      false; // WebSocketJSExecutor can't register native log hooks.
   devSettings->debugHost = "localhost:8081";
-  devSettings->liveReloadCallback = [](){}; // Enables ChakraExecutor
-  devSettings->errorCallback = [&result](string message)
-  {
+  devSettings->liveReloadCallback = []() {}; // Enables ChakraExecutor
+  devSettings->errorCallback = [&result](string message) {
     result.Message = facebook::react::unicode::utf8ToUtf16(message);
     result.Status = TestStatus::Failed;
   };
@@ -90,32 +84,28 @@ TestResult TestRunner::RunTest(string&& bundlePath, string&& appName, NativeLogg
   // React instance scope
   {
     shared_ptr<ITestInstance> instance = GetInstance(
-     std::move(bundlePath),
-     std::move(modules),
-     std::move(devSettings)
-   );
+        std::move(bundlePath), std::move(modules), std::move(devSettings));
 
-    InitializeLogging([&result, &functionCalled](RCTLogLevel logLevel, const char* message)
-    {
-      if (TestStatus::Pending != result.Status)
-        return;
+    InitializeLogging(
+        [&result, &functionCalled](RCTLogLevel logLevel, const char *message) {
+          if (TestStatus::Pending != result.Status)
+            return;
 
-      switch (logLevel)
-      {
-      case RCTLogLevel::Error:
-      case RCTLogLevel::Fatal:
-        result.Message = facebook::react::unicode::utf8ToUtf16(message);
-        result.Status = TestStatus::Failed;
-        ::SetEvent(functionCalled);
-        break;
+          switch (logLevel) {
+            case RCTLogLevel::Error:
+            case RCTLogLevel::Fatal:
+              result.Message = facebook::react::unicode::utf8ToUtf16(message);
+              result.Status = TestStatus::Failed;
+              ::SetEvent(functionCalled);
+              break;
 
-      case RCTLogLevel::Info:
-      case RCTLogLevel::Trace:
-      case RCTLogLevel::Warning:
-      default:
-        break;
-      }
-    });
+            case RCTLogLevel::Info:
+            case RCTLogLevel::Trace:
+            case RCTLogLevel::Warning:
+            default:
+              break;
+          }
+        });
 
     instance->AttachMeasuredRootView(move(appName));
 

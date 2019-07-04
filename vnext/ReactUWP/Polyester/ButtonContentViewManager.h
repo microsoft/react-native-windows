@@ -5,22 +5,27 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react { namespace uwp { namespace polyester {
+namespace react {
+namespace uwp {
+namespace polyester {
 
-class ButtonContentViewManager : public FrameworkElementViewManager
-{
+class ButtonContentViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
-public:
-  ButtonContentViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
+ public:
+  ButtonContentViewManager(
+      const std::shared_ptr<IReactInstance> &reactInstance);
+
+  const char *GetName() const override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} } }
+} // namespace polyester
+} // namespace uwp
+} // namespace react

@@ -3,25 +3,29 @@
 
 #include "pch.h"
 
-#include <cxxreact/SystraceSection.h>
 #include <Tracing.h>
+#include <cxxreact/SystraceSection.h>
 
-#include "ChakraTracing.h"
 #include "ChakraHelpers.h"
 #include "ChakraPlatform.h"
+#include "ChakraTracing.h"
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
 namespace {
 
-INativeTraceHandler* g_nativeTracingHook = nullptr;
+INativeTraceHandler *g_nativeTracingHook = nullptr;
 
 static const int TRACE_TAG_REACT_APPS = 1 << 17;
 
-static JsValueRef __stdcall nativeTraceBeginSectionJNF(JsValueRef /*function*/, bool /*isConstructCall*/, JsValueRef arguments[], unsigned short argumentCount, void* /*callbackState*/)
-{
-  if (g_nativeTracingHook)
-  {
+static JsValueRef __stdcall nativeTraceBeginSectionJNF(
+    JsValueRef /*function*/,
+    bool /*isConstructCall*/,
+    JsValueRef arguments[],
+    unsigned short argumentCount,
+    void * /*callbackState*/) {
+  if (g_nativeTracingHook) {
     // arguments[0]: 'this'
     // arguments[1]: TRACE_TAG_REACT_APPS, constant int (1 << 17)
     // arguments[2]: profileName, string | undefined
@@ -43,19 +47,21 @@ static JsValueRef __stdcall nativeTraceBeginSectionJNF(JsValueRef /*function*/, 
     int profileNameLength = 0;
     std::string profileName;
     CHAKRA_ASSERTDO(JsGetValueType(arguments[2], &argumentType));
-    if (argumentType == JsValueType::JsString)
-    {
+    if (argumentType == JsValueType::JsString) {
       CHAKRA_ASSERTDO(JsGetStringLength(arguments[2], &profileNameLength));
       profileName.resize(profileNameLength);
 
       // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
 #if !defined(USE_EDGEMODE_JSRT)
-      CHAKRA_ASSERTDO(JsCopyString(arguments[2], const_cast<char*>(profileName.data()), profileNameLength + 1 /* length */, nullptr /* written */));
+      CHAKRA_ASSERTDO(JsCopyString(
+          arguments[2],
+          const_cast<char *>(profileName.data()),
+          profileNameLength + 1 /* length */,
+          nullptr /* written */));
 #endif
     }
 #ifndef NDEBUG
-    else
-    {
+    else {
       assert(argumentType == JsValueType::JsUndefined);
     }
 #endif
@@ -64,19 +70,21 @@ static JsValueRef __stdcall nativeTraceBeginSectionJNF(JsValueRef /*function*/, 
     int argsLength = 0;
     std::string argsStr;
     CHAKRA_ASSERTDO(JsGetValueType(arguments[3], &argumentType));
-    if (argumentType == JsValueType::JsString)
-    {
+    if (argumentType == JsValueType::JsString) {
       CHAKRA_ASSERTDO(JsGetStringLength(arguments[3], &argsLength));
       argsStr.resize(argsLength + 1);
 
       // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
 #if !defined(USE_EDGEMODE_JSRT)
-      CHAKRA_ASSERTDO(JsCopyString(arguments[3], const_cast<char*>(argsStr.data()), argsLength + 1 /* length */, nullptr /* written */));
+      CHAKRA_ASSERTDO(JsCopyString(
+          arguments[3],
+          const_cast<char *>(argsStr.data()),
+          argsLength + 1 /* length */,
+          nullptr /* written */));
 #endif
     }
 #ifndef NDEBUG
-    else
-    {
+    else {
       assert(argumentType == JsValueType::JsUndefined);
     }
 #endif
@@ -89,10 +97,13 @@ static JsValueRef __stdcall nativeTraceBeginSectionJNF(JsValueRef /*function*/, 
   return returnValue;
 }
 
-static JsValueRef __stdcall nativeTraceEndSectionJNF(JsValueRef /*function*/, bool /*isConstructCall*/, JsValueRef arguments[], unsigned short argumentCount, void* /*callbackState*/)
-{
-  if (g_nativeTracingHook)
-  {
+static JsValueRef __stdcall nativeTraceEndSectionJNF(
+    JsValueRef /*function*/,
+    bool /*isConstructCall*/,
+    JsValueRef arguments[],
+    unsigned short argumentCount,
+    void * /*callbackState*/) {
+  if (g_nativeTracingHook) {
     // arguments[0]: 'this'
     // arguments[1]: TRACE_TAG_REACT_APPS, constant int (1 << 17)
     assert(argumentCount == 2);
@@ -116,8 +127,10 @@ static JsValueRef __stdcall nativeTraceEndSectionJNF(JsValueRef /*function*/, bo
   return returnValue;
 }
 
-static void beginOrEndAsync(bool isEnd, JsValueRef arguments[], unsigned short argumentCount)
-{
+static void beginOrEndAsync(
+    bool isEnd,
+    JsValueRef arguments[],
+    unsigned short argumentCount) {
   // arguments[0]: 'this'
   // arguments[1]: TRACE_TAG_REACT_APPS, constant int (1 << 17)
   // arguments[2]: profileName, string | undefined
@@ -140,19 +153,21 @@ static void beginOrEndAsync(bool isEnd, JsValueRef arguments[], unsigned short a
   int profileNameLength = 0;
   std::string profileName;
   CHAKRA_ASSERTDO(JsGetValueType(arguments[2], &argumentType));
-  if (argumentType == JsValueType::JsString)
-  {
+  if (argumentType == JsValueType::JsString) {
     CHAKRA_ASSERTDO(JsGetStringLength(arguments[2], &profileNameLength));
     profileName.resize(profileNameLength);
 
     // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
 #if !defined(USE_EDGEMODE_JSRT)
-    CHAKRA_ASSERTDO(JsCopyString(arguments[2], const_cast<char*>(profileName.data()), profileNameLength + 1 /* length */, nullptr /* written */));
+    CHAKRA_ASSERTDO(JsCopyString(
+        arguments[2],
+        const_cast<char *>(profileName.data()),
+        profileNameLength + 1 /* length */,
+        nullptr /* written */));
 #endif
   }
 #ifndef NDEBUG
-  else
-  {
+  else {
     assert(argumentType == JsValueType::JsUndefined);
   }
 #endif
@@ -175,20 +190,20 @@ static void beginOrEndAsync(bool isEnd, JsValueRef arguments[], unsigned short a
 #endif
 
   /* Call hook */
-  if (isEnd)
-  {
+  if (isEnd) {
     g_nativeTracingHook->JSEndAsyncSection(profileName.c_str(), cookie);
-  }
-  else
-  {
+  } else {
     g_nativeTracingHook->JSBeginAsyncSection(profileName.c_str(), cookie);
   }
 }
 
-static JsValueRef __stdcall nativeTraceBeginAsyncSectionJNF(JsValueRef /*function*/, bool /*isConstructCall*/, JsValueRef arguments[], unsigned short argumentCount, void* /*callbackState*/)
-{
-  if (g_nativeTracingHook)
-  {
+static JsValueRef __stdcall nativeTraceBeginAsyncSectionJNF(
+    JsValueRef /*function*/,
+    bool /*isConstructCall*/,
+    JsValueRef arguments[],
+    unsigned short argumentCount,
+    void * /*callbackState*/) {
+  if (g_nativeTracingHook) {
     beginOrEndAsync(false /* isEnd */, arguments, argumentCount);
   }
   JsValueRef returnValue;
@@ -196,10 +211,13 @@ static JsValueRef __stdcall nativeTraceBeginAsyncSectionJNF(JsValueRef /*functio
   return returnValue;
 }
 
-static JsValueRef __stdcall nativeTraceEndAsyncSectionJNF(JsValueRef /*function*/, bool /*isConstructCall*/, JsValueRef arguments[], unsigned short argumentCount, void* /*callbackState*/)
-{
-  if (g_nativeTracingHook)
-  {
+static JsValueRef __stdcall nativeTraceEndAsyncSectionJNF(
+    JsValueRef /*function*/,
+    bool /*isConstructCall*/,
+    JsValueRef arguments[],
+    unsigned short argumentCount,
+    void * /*callbackState*/) {
+  if (g_nativeTracingHook) {
     beginOrEndAsync(true /* isEnd */, arguments, argumentCount);
   }
   JsValueRef returnValue;
@@ -207,10 +225,13 @@ static JsValueRef __stdcall nativeTraceEndAsyncSectionJNF(JsValueRef /*function*
   return returnValue;
 }
 
-static JsValueRef __stdcall nativeTraceCounterJNF(JsValueRef /*function*/, bool /*isConstructCall*/, JsValueRef arguments[], unsigned short argumentCount, void* /*callbackState*/)
-{
-  if (g_nativeTracingHook)
-  {
+static JsValueRef __stdcall nativeTraceCounterJNF(
+    JsValueRef /*function*/,
+    bool /*isConstructCall*/,
+    JsValueRef arguments[],
+    unsigned short argumentCount,
+    void * /*callbackState*/) {
+  if (g_nativeTracingHook) {
     // arguments[0]: 'this'
     // arguments[1]: TRACE_TAG_REACT_APPS, constant int (1 << 17)
     // arguments[2]: profileName, string | undefined
@@ -232,19 +253,21 @@ static JsValueRef __stdcall nativeTraceCounterJNF(JsValueRef /*function*/, bool 
     int profileNameLength = 0;
     std::string profileName;
     CHAKRA_ASSERTDO(JsGetValueType(arguments[2], &argumentType));
-    if (argumentType == JsValueType::JsString)
-    {
+    if (argumentType == JsValueType::JsString) {
       CHAKRA_ASSERTDO(JsGetStringLength(arguments[2], &profileNameLength));
       profileName.resize(profileNameLength);
 
       // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
 #if !defined(USE_EDGEMODE_JSRT)
-      CHAKRA_ASSERTDO(JsCopyString(arguments[2], const_cast<char*>(profileName.data()), profileNameLength + 1 /* length */, nullptr /* written */));
+      CHAKRA_ASSERTDO(JsCopyString(
+          arguments[2],
+          const_cast<char *>(profileName.data()),
+          profileNameLength + 1 /* length */,
+          nullptr /* written */));
 #endif
     }
 #ifndef NDEBUG
-    else
-    {
+    else {
       assert(argumentType == JsValueType::JsUndefined);
     }
 #endif
@@ -267,34 +290,34 @@ static JsValueRef __stdcall nativeTraceCounterJNF(JsValueRef /*function*/, bool 
 
 } // end anonymous namespace
 
-void SystraceBeginSection(const char* name, const char* args) noexcept
-{
-  if (g_nativeTracingHook)
-  {
+void SystraceBeginSection(const char *name, const char *args) noexcept {
+  if (g_nativeTracingHook) {
     g_nativeTracingHook->NativeBeginSection(name, args);
   }
 }
 
-void SystraceEndSection(const char* name, const char* args, std::chrono::nanoseconds duration) noexcept
-{
-  if (g_nativeTracingHook)
-  {
+void SystraceEndSection(
+    const char *name,
+    const char *args,
+    std::chrono::nanoseconds duration) noexcept {
+  if (g_nativeTracingHook) {
     g_nativeTracingHook->NativeEndSection(name, args, duration);
   }
 }
 
-void addNativeTracingHooks()
-{
+void addNativeTracingHooks() {
   installGlobalFunction("nativeTraceBeginSection", nativeTraceBeginSectionJNF);
   installGlobalFunction("nativeTraceEndSection", nativeTraceEndSectionJNF);
-  installGlobalFunction("nativeTraceBeginAsyncSection", nativeTraceBeginAsyncSectionJNF);
-  installGlobalFunction("nativeTraceEndAsyncSection", nativeTraceEndAsyncSectionJNF);
+  installGlobalFunction(
+      "nativeTraceBeginAsyncSection", nativeTraceBeginAsyncSectionJNF);
+  installGlobalFunction(
+      "nativeTraceEndAsyncSection", nativeTraceEndAsyncSectionJNF);
   installGlobalFunction("nativeTraceCounter", nativeTraceCounterJNF);
 }
 
-void InitializeTracing(INativeTraceHandler* handler)
-{
+void InitializeTracing(INativeTraceHandler *handler) {
   g_nativeTracingHook = handler;
 }
 
-}}
+} // namespace react
+} // namespace facebook
