@@ -58,8 +58,8 @@ if ($List) {
 
 # Ensure test services are online.
 if (! $NoServers) {
-	$packager = Test-Packager
-	$wsServer = Test-WebSocketServer
+	$packager = Find-Packager
+	$wsServer = Find-WebSocketServer
 	$notFound = $false
 
 	if (!$packager) {
