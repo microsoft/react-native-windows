@@ -5,17 +5,15 @@
 # IntegrationTests.ps1
 #
 param (
-	[switch] $NoRun,
-
 	[switch] $NoServers,
-
-	[string[]] $Tests,
 
 	[ValidateSet('x64', 'x86')]
 	[string] $Platform = 'x64',
 
 	[ValidateSet('Debug', 'Release')]
 	[string] $Configuration = 'Debug',
+
+	[string[]] $Tests,
 
 	[switch] $Preload,
 
@@ -27,6 +25,8 @@ param (
 		"$PSScriptRoot\..\target\$Platform\$Configuration\" +
 		"React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
 	),
+
+	[switch] $NoRun,
 
 	[switch] $List,
 
