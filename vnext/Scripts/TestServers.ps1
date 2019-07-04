@@ -79,14 +79,36 @@ function Start-WebSocketServer {
 						-NodePath $NodePath
 }
 
-function Stop-Packager {
-	param (
-	)
+function Test-Packager {
+	try {
+		return Get-Process -Id (Get-NetTCPConnection -ErrorAction Ignore -LocalPort 8081).OwningProcess
+	}
+	catch {
+		return $null
+	}
+}
 
+function Test-WebSocketServer {
+	try {
+		return Get-Process -Id (Get-NetTCPConnection -ErrorAction Ignore -LocalPort 5555).OwningProcess
+	}
+	catch {
+		return $null
+	}
 }
 
 function Stop-WebSocketServer {
-	param (
-	)
+	$proc = Test-WebSocketServer
 
+	if ($proc) {
+		Stop-Process $proc
+	}
+}
+
+function Stop-Packager {
+	$proc = Test-Packager
+
+	if ($proc) {
+		Stop-Process $proc
+	}
 }

@@ -5,7 +5,7 @@
 # IntegrationTests.ps1
 #
 param (
-	[switch] $Setup,
+	# [switch] $Setup,
 	[switch] $NoRun,
 
 
@@ -16,7 +16,7 @@ param (
 	[string[]] $Tests,
 
 
-	[switch] $RequireServers = $Setup.IsPresent,
+	[switch] $NoServers,# = $Setup.IsPresent,
 
 
 	[switch] $Cleanup,
@@ -48,44 +48,43 @@ param (
 . $PSScriptRoot\TestServers.ps1
 
 function Cleanup() {
-	# Expected netstat header:
-	# P1 P2     P3                     P4                     P5              P6
-	#    Proto  Local Address          Foreign Address        State           PID
-	try {
-		$process = (netstat -ano | Select-String ':8081')[0] | ConvertFrom-String
-		(Get-Process -Id $process.p6).Kill()
-	}
-	catch {
-		Write-Host 'Metro bundler process not found.'
-	}
-
-	try {
-		$process = (netstat -ano | Select-String ':5555')[0] | ConvertFrom-String
-		(Get-Process -Id $process.p6).Kill()
-	}
-	catch {
-		Write-Host 'WebSocket server process not found.'
-	}
-
 	Stop-Packager
-
 	Stop-WebSocketServer
 }
 
 #TODO: Cleanup Watchman logs, free ports 5555 and 8081.
 
-$procs = @()
+if ($List) {
+	# https://github.com/Microsoft/vstest/issues/1732: Can't print full test names directly to console.
+	& $VsTest $Assembly --ListFullyQualifiedTests --ListTestsTargetPath:$env:TEMP\ReactWindowsIntegrationTestsList.txt
+	Get-Content $env:TEMP\ReactWindowsIntegrationTestsList.txt
 
-if($List.IsPresent) {
-	Write-Host '-List is present. Skipping setup.'
-	$Setup = $false
+	Exit
 }
 
-if ($Setup) {
-	$procs += Start-Packager -ReactNativeLocation $ReactNativeLocation -NpmPath $NpmPath
-	$procs += Start-WebSocketServer -ReactNativeLocation $ReactNativeLocation -NodePath $NodePath
+# Ensure test services are online.
+if (! $NoServers) {
+	$packager = Test-Packager
+	$wsServer = Test-WebSocketServer
+	$notFound = $false
 
-	if ($Preload) {
+	if (!$packager) {
+		Write-Warning 'Packager not found. Attempting to start...'
+		Start-Packager -ReactNativeLocation $ReactNativeLocation -NpmPath $NpmPath
+		$notFound = $true
+	} else {
+		Write-Host 'Found Packager.'
+	}
+
+	if (!$wsServer) {
+		Write-Warning 'WebSocket server not found. Attempting to start...'
+		Start-WebSocketServer -ReactNativeLocation $ReactNativeLocation -NodePath $NodePath
+		$notFound = $true
+	} else {
+		Write-Host 'Found WebSocket server.'
+	}
+
+	if ($Preload -and $notFound) {
 		Start-Sleep -Seconds $Delay
 
 		# Preload the RNTesterApp integration bundle for better performance in integration tests.
@@ -97,44 +96,9 @@ if ($NoRun) {
 	Exit
 }
 
-if ($List) {
-	# https://github.com/Microsoft/vstest/issues/1732: Can't print full test names directly to console.
-	& $VsTest $Assembly --ListFullyQualifiedTests --ListTestsTargetPath:$env:TEMP\ReactWindowsIntegrationTestsList.txt
-	Get-Content $env:TEMP\ReactWindowsIntegrationTestsList.txt
-
-	Exit
-}
-
-# Validate other options.
-if ($List) {
-	Write-Warning '-Run switch is present. -List will be ignored.'
-}
-# Ensure server ports are open.
-# 5555 - String-suffixing WebSocket server
-# 8081 - Packager
-$ports = (5555, 8081)
-foreach ($port in $ports) {
-	try {
-		$tcpClient = New-Object System.Net.Sockets.TcpClient
-		$tcpClient.Connect("127.0.0.1", $port)
-		Write-Host "Found service on TCP port $port."
-	}
-	catch {
-		if ($RequireServers) {
-			Write-Error "Test service on port $currentPort not found."
-			Exit
-		}
-
-		Write-Warning 'Not all test servers found.'
-	}
-	finally {
-		$tcpClient.Dispose()
-	}
-}
-
 # Run Integration Test assemblies.
 & $VsTest $Assembly --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
 
-if ($Cleanup) {
-	Cleanup
-}
+# if ($Cleanup) {
+# 	Cleanup
+# }
