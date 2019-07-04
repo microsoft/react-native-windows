@@ -5,34 +5,34 @@
 # IntegrationTests.ps1
 #
 param (
-	# [switch] $Setup,
 	[switch] $NoRun,
 
+	[switch] $NoServers,
+
+	[string[]] $Tests,
 
 	[ValidateSet('x64', 'x86')]
 	[string] $Platform = 'x64',
+
 	[ValidateSet('Debug', 'Release')]
 	[string] $Configuration = 'Debug',
-	[string[]] $Tests,
 
-
-	[switch] $NoServers,# = $Setup.IsPresent,
-
-
-	[switch] $Cleanup,
-	$Assembly =
-		"$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll",
-	$VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
-	[UInt32] $Delay = 10,
-	[switch] $List,
 	[switch] $Preload,
-	[string] $ReactNativeHome = "$($PSScriptRoot | Split-Path)\node_modules\react-native",
 
+	[UInt32] $Delay = 10,
 
+	[ValidateScript({Test-Path $_})]
 	[string[]] $Assemblies =
 	(
-		"$PSScriptRoot\..\target\$Platform\$Configuration\React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
+		"$PSScriptRoot\..\target\$Platform\$Configuration\" +
+		"React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
 	),
+
+	[switch] $List,
+
+	[ValidateScript({Test-Path $_})]
+	[string] $VsTest =	"${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\" +
+						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
 	[ValidateScript({Test-Path $_})]
 	[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)\node_modules\react-native",
@@ -47,18 +47,12 @@ param (
 # Import test server functions.
 . $PSScriptRoot\TestServers.ps1
 
-function Cleanup() {
-	Stop-Packager
-	Stop-WebSocketServer
-}
-
-#TODO: Cleanup Watchman logs, free ports 5555 and 8081.
-
 if ($List) {
 	# https://github.com/Microsoft/vstest/issues/1732: Can't print full test names directly to console.
-	& $VsTest $Assembly --ListFullyQualifiedTests --ListTestsTargetPath:$env:TEMP\ReactWindowsIntegrationTestsList.txt
-	Get-Content $env:TEMP\ReactWindowsIntegrationTestsList.txt
+	& $VsTest ($Assemblies -join ' ') --ListFullyQualifiedTests `
+		--ListTestsTargetPath:$env:TEMP\ReactWindowsIntegrationTestsList.txt
 
+	Get-Content $env:TEMP\ReactWindowsIntegrationTestsList.txt
 	Exit
 }
 
@@ -70,7 +64,7 @@ if (! $NoServers) {
 
 	if (!$packager) {
 		Write-Warning 'Packager not found. Attempting to start...'
-		Start-Packager -ReactNativeLocation $ReactNativeLocation -NpmPath $NpmPath
+		Start-Packager -ReactNativeLocation ($PSScriptRoot | Split-Path) -NpmPath $NpmPath
 		$notFound = $true
 	} else {
 		Write-Host 'Found Packager.'
@@ -97,8 +91,4 @@ if ($NoRun) {
 }
 
 # Run Integration Test assemblies.
-& $VsTest $Assembly --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
-
-# if ($Cleanup) {
-# 	Cleanup
-# }
+& $VsTest ($Assemblies -join ' ') --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
