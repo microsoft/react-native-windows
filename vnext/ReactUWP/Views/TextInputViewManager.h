@@ -19,11 +19,6 @@ class TextInputViewManager : public ControlViewManager {
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   facebook::react::ShadowNode *createShadow() const override;
 
-  void DispatchCommand(
-      XamlView viewToUpdate,
-      int64_t commandId,
-      const folly::dynamic &commandArgs) override;
-
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
  protected:

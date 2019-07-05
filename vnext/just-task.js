@@ -8,6 +8,7 @@
 const path = require('path');
 const {
   task,
+  copyTask,
   series,
   condition,
   option,
@@ -25,6 +26,9 @@ option('clean');
 task('eslint', () => {
   return eslintTask();
 });
+task('copyFlowFiles', () => {
+  return copyTask(['src/**/*.js'], '.');
+});
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -33,14 +37,21 @@ task('ts', () => {
       sourceRoot: path.relative(libPath, srcPath),
     }),
     target: 'es5',
-    outDir: 'lib',
     module: 'commonjs',
   });
 });
 task('clean', () => {
   return cleanTask(
-    ['lib', 'temp', 'dist', 'coverage'].map(p => path.join(process.cwd(), p)),
+    ['Libraries', 'RNTester', 'lib'].map(p => path.join(process.cwd(), p)),
   );
 });
 
-task('build', series(condition('clean', () => argv().clean), 'eslint', 'ts'));
+task(
+  'build',
+  series(
+    condition('clean', () => true || argv().clean),
+    'eslint',
+    'copyFlowFiles',
+    'ts',
+  ),
+);

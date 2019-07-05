@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, View} from 'react-native';
-import {DatePicker, Picker, DayOfWeek} from '../../src/index.uwp';
+import {DatePicker, Picker, DayOfWeek} from '../index.uwp';
 
 interface IDatePickerExampleState {
   dateFormat:

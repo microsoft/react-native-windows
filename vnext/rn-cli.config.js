@@ -82,7 +82,7 @@ if (
   !fs.existsSync(
     path.resolve(
       __dirname,
-      'lib/Libraries/Components/AccessibilityInfo/AccessibilityInfo.uwp.js',
+      'Libraries/Components/AccessibilityInfo/AccessibilityInfo.uwp.js',
     ),
   )
 ) {

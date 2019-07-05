@@ -40,6 +40,8 @@ public:
 
   void onBatchComplete() override;
 
+  void focus(folly::dynamic&& args);
+  void blur(folly::dynamic&& args);
 private:
   void dispatchFunction(std::function<void()> func);
   void processQueue();
