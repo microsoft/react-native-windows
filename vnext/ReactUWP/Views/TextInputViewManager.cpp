@@ -266,7 +266,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         textBox.ClearValue(winrt::TextBox::PlaceholderTextProperty());
     } else if (propertyName == "placeholderTextColor") {
       if (textBox.try_as<winrt::ITextBlock6>()) {
-        if (propertyValue.isNumber())
+        if (IsValidColorValue(propertyValue))
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         else if (propertyValue.isNull())
           textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
@@ -287,7 +287,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           textBox.Select(selection.start, selection.end - selection.start);
       }
     } else if (propertyName == "selectionColor") {
-      if (propertyValue.isNumber())
+      if (IsValidColorValue(propertyValue))
         textBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::SelectionHighlightColorProperty());
