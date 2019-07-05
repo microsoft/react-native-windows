@@ -44,8 +44,6 @@ struct json_type_traits<react::uwp::HandledKeyboardEvent> {
         event.handledEventPhase = asEnum<HandledEventPhase>(propertyValue);
     }
 
-    // To simplify the implementaion, key from JS is converted to upper case.
-    toUpperInplace(event.code);
     return event;
   }
 };
