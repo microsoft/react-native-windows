@@ -95,11 +95,14 @@ class FlyoutShadowNode : public ShadowNodeBase {
   float m_verticalOffset = 0;
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
+  static std::int32_t s_cOpenFlyouts;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
       m_previewKeyboardEventHandlerOnRoot;
 };
+
+std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
 
 FlyoutShadowNode::~FlyoutShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
@@ -168,6 +171,7 @@ void FlyoutShadowNode::createView() {
 void FlyoutShadowNode::onDropViewInstance() {
   m_isOpen = false;
   m_flyout.Hide();
+  s_cOpenFlyouts -= 1;
 }
 
 void FlyoutShadowNode::removeAllChildren() {
@@ -241,6 +245,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
 
   if (updateIsOpen) {
     if (m_isOpen) {
+      s_cOpenFlyouts += 1;
       AdjustDefaultFlyoutStyle();
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
@@ -253,6 +258,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         popup.IsLightDismissEnabled(m_isLightDismissEnabled);
     } else {
       m_flyout.Hide();
+      s_cOpenFlyouts -= 1;
     }
   }
 
@@ -294,6 +300,14 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle() {
       winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
   flyoutStyle.Setters().Append(
       winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
+  // When multiple flyouts are overlapping, XAML's theme shadows don't render
+  // properly. As a workaround (temporary) we disable shadows when multiple
+  // flyouts are open.
+  if (s_cOpenFlyouts > 1) {
+    flyoutStyle.Setters().Append(winrt::Setter(
+		  winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
+		  winrt::box_value(false)));       
+  }
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
 
