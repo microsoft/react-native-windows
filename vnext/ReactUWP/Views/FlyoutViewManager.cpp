@@ -95,14 +95,14 @@ class FlyoutShadowNode : public ShadowNodeBase {
   float m_verticalOffset = 0;
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
-  static std::int32_t s_cOpenFlyouts;
+  static thread_local std::int32_t s_cOpenFlyouts;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
       m_previewKeyboardEventHandlerOnRoot;
 };
 
-std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
+thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
 
 FlyoutShadowNode::~FlyoutShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
