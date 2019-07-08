@@ -5,8 +5,8 @@
 
 import React = require('react');
 import { Button, Text, View } from 'react-native';
-import { CheckBox, MenuFlyout, Picker, MenuFlyoutItem, MenuFlyoutSubItem } from '../../src/index.uwp';
-import { Placement  } from '../../src/Libraries/Components/MenuFlyout/MenuFlyoutProps';
+import { CheckBox, MenuFlyout, Picker, MenuFlyoutItem, MenuFlyoutSubItem } from '../index.uwp';
+import { Placement  } from '../Libraries/Components/MenuFlyout/MenuFlyoutProps';
 
 interface IMenuFlyoutExampleState {
   isMenuFlyoutVisible: boolean;
