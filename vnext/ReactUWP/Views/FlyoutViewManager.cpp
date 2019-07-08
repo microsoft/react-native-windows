@@ -305,8 +305,8 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle() {
   // flyouts are open.
   if (s_cOpenFlyouts > 1) {
     flyoutStyle.Setters().Append(winrt::Setter(
-		  winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
-		  winrt::box_value(false)));       
+        winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
+        winrt::box_value(false)));
   }
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }

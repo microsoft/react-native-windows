@@ -7,7 +7,8 @@
 
 #include <memory>
 
-namespace facebook { namespace react {
+namespace facebook {
+namespace react {
 
 class MessageQueueueThread;
 
@@ -15,6 +16,7 @@ class MessageQueueueThread;
 // @param A MessageQueueThread on which this native module lives.
 // @return Native timing module
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
-  const std::shared_ptr<MessageQueueThread>& nativeThread) noexcept;
+    const std::shared_ptr<MessageQueueThread> &nativeThread) noexcept;
 
-}}
+} // namespace react
+} // namespace facebook

@@ -18,7 +18,7 @@ using namespace Windows::UI::Xaml::Automation::Provider;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
-}
+} // namespace winrt
 
 namespace winrt::react::uwp::implementation {
 

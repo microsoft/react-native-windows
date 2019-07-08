@@ -33,8 +33,7 @@ void ChakraJSIRuntimeHolder::initRuntime() noexcept {
 Logger ChakraJSIRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
     facebook::react::NativeLoggingHook loggingCallback) noexcept {
   return [loggingCallback = std::move(loggingCallback)](
-             const char *message, LogLevel logLevel)
-      ->void {
+             const char *message, LogLevel logLevel) -> void {
     loggingCallback(
         static_cast<facebook::react::RCTLogLevel>(logLevel), message);
   };

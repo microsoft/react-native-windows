@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "InterpolationAnimatedNode.h"
+
 #include "ExtrapolationType.h"
+#include "InterpolationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
+
 
 namespace react {
 namespace uwp {

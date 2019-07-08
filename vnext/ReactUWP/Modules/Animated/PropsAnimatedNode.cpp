@@ -3,10 +3,10 @@
 
 #include "pch.h"
 
-#include "PropsAnimatedNode.h"
 #include <ReactUWP\Modules\NativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
+#include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
 namespace react {

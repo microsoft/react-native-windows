@@ -71,7 +71,7 @@ TEST_METHOD(ProcessThreadsPerResource) {
           threadCount.store(count);
       });
       ws->SetOnClose([this, &threadCount](
-          IWebSocket::CloseCode, const string & /*reason*/) {
+                         IWebSocket::CloseCode, const string & /*reason*/) {
         auto count = this->GetCurrentThreadCount();
         if (count > threadCount.load())
           threadCount.store(count);

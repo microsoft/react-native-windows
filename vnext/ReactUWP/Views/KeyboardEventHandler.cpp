@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Views/KeyboardEventHandler.h"
+
 #include <winrt/Windows.UI.Core.h>
 #include "Utils/Helpers.h"
 #include "Utils/PropertyHandlerUtils.h"
+#include "Views/KeyboardEventHandler.h"
+
 
 using namespace std::placeholders;
 

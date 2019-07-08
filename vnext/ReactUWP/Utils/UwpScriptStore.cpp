@@ -1,10 +1,12 @@
 #include "pch.h"
-#include "Utils/UwpScriptStore.h"
+
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Storage.h>
 #include <future>
+#include "Utils/UwpScriptStore.h"
 #include "unicode.h"
+
 
 namespace winrt {
 using namespace winrt::Windows::Foundation;

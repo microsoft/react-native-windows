@@ -24,7 +24,8 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
-class ReactControl : public std::enable_shared_from_this<ReactControl>, public IXamlReactControl {
+class ReactControl : public std::enable_shared_from_this<ReactControl>,
+                     public IXamlReactControl {
  public:
   ReactControl(IXamlRootView *parent, XamlView rootView);
 
@@ -38,7 +39,7 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
 
   void AttachRoot() noexcept;
   void DetachRoot() noexcept;
-  void blur(XamlView const& xamlView) noexcept override;
+  void blur(XamlView const &xamlView) noexcept override;
 
   void DetachInstance();
   void Reload(bool shouldRetireCurrentInstance);
@@ -57,7 +58,7 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
  private:
   void HandleInstanceError();
   void HandleInstanceErrorOnUIThread();
-  void PrepareXamlRootView(XamlView const& rootView);
+  void PrepareXamlRootView(XamlView const &rootView);
   void EnsureFocusSafeHarbor();
 
   IXamlRootView *m_pParent;
@@ -76,7 +77,7 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
   //  safe harbor
   //  m_xamlRootView
   //    JS created children
-  XamlView m_xamlRootView{ nullptr };
+  XamlView m_xamlRootView{nullptr};
   XamlView m_rootView;
 
   ReactInstanceCreator m_instanceCreator;
@@ -86,7 +87,8 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
   ErrorCallbackCookie m_errorCallbackCookie{0};
 
   winrt::ContentControl m_focusSafeHarbor{nullptr};
-  winrt::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
+  winrt::ContentControl::LosingFocus_revoker
+      m_focusSafeHarborLosingFocusRevoker{};
   winrt::Grid m_redBoxGrid{nullptr};
   winrt::TextBlock m_errorTextBlock{nullptr};
 };

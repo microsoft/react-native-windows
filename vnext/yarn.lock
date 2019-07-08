@@ -1646,14 +1646,7 @@ circular-json@^0.3.1:
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
 
-clang-format-check@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/clang-format-check/-/clang-format-check-1.1.1.tgz#a4041de536d46306e319a31db019bf789a01d24b"
-  integrity sha512-O94boaV8esst6evCoUfb6ir95gl5Sfuc2yvii7mGISvWh1fBMT9RaC2mJqQiqT9FBU54h/vBlLMhJrPi07RVBA==
-  dependencies:
-    clang-format "^1.2.4"
-
-clang-format@^1.2.4:
+clang-format@1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/clang-format/-/clang-format-1.2.4.tgz#4bb4b0a98180428deb093cf20982e9fc1af20b6c"
   integrity sha512-sw+nrGUp3hvmANd1qF8vZPuezSYQAiXgGBiEtkXTtJnnu6b00fCqkkDIsnRKrNgg4nv6NYZE92ejvOMIXZoejw==

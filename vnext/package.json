@@ -15,7 +15,7 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
-    "format": "node Scripts\formatFiles.js -i -style=file -assume-filename=../.clang-format",
+    "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
     "watch": "tsc -w"
