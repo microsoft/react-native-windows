@@ -52,6 +52,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./FlyoutExample.uwp'),
   },
   {
+    key: 'FlyoutContextFlyoutExample',
+    module: require('./FlyoutContextFlyoutExample.uwp'),
+  },
+  {
     key: 'GlyphExample',
     module: require('./GlyphExample'),
   },
