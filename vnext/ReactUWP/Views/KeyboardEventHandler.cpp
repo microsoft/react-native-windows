@@ -209,6 +209,8 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
   bool shouldMarkHandled = false;
+  if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
+        shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   if (phase == KeyboardEventPhase::PreviewKeyDown ||
       phase == KeyboardEventPhase::KeyDown)
     shouldMarkHandled =

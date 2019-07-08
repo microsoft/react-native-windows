@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -9,37 +9,32 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
+    <!-- #2702: We need to figure out how we want to consume the Google Test'
+    Nuget for Win32. For now, we do not build this project for Win32. -->
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}</ProjectGuid>
-    <ProjectName>React.Windows.Desktop.DLL</ProjectName>
-    <TargetName>react-native-win32</TargetName>
+    <ProjectGuid>{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}</ProjectGuid>
+    <ProjectName>JSI.Desktop.UnitTests</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <PropertyGroup Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <!-- We cannot include Warnings.props here because Google Test only builds at warning level 3. -->
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" />
+  <ImportGroup Label="Shared">
+    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(FollyDir);$(ReactNativeWindowsDir)stubs;$(MSBuildProjectDirectory);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -48,51 +43,51 @@
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
-      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;_USRDLL;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      
+      <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
+      string literals. It prevents code like
+        wchar_t* str = L"hello";
+      from compiling. -->
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>Shlwapi.lib;Version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
-    <Link>
-      <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
-    </Link>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
     <Link>
-      <ModuleDefinitionFile>react-native-win32.oss.x64.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
-    <Link>
-      <ModuleDefinitionFile>react-native-win32.x86.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>react-native-win32.oss.x86.def</ModuleDefinitionFile>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
+    <ClInclude Include="..\Desktop.IntegrationTests\TestMessageQueueThread.h" />
+    <ClInclude Include="JsiRuntimeUnitTests.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
+    <ClCompile Include="..\Desktop.IntegrationTests\TestMessageQueueThread.cpp" />
+    <ClCompile Include="ChakraCoreRuntimeUnitTests.cpp" />
+    <ClCompile Include="JsiRuntimeUnitTests.cpp" />
+    <ClCompile Include="RunUnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="react-native-win32.x64.def" />
-    <None Include="react-native-win32.x86.def" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">
@@ -111,15 +106,15 @@
       <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Version.rc" />
-  </ItemGroup>
+  <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets')" />
+    <Import Project="$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets" Condition="Exists('$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" />
+    <Import Project="$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets" Condition="Exists('$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -129,7 +124,9 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets'))" />
   </Target>
 </Project>

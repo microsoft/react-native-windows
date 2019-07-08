@@ -220,14 +220,14 @@ void NativeAnimatedNodeManager::ExtractAnimatedNodeOffset(int64_t tag) {
 }
 
 void NativeAnimatedNodeManager::AddAnimatedEventToView(
-    int64_t viewTag,
-    const std::string &eventName,
-    const folly::dynamic &eventMapping,
-    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
+	int64_t viewTag,
+	const std::string &eventName,
+	const folly::dynamic &eventMapping,
+	const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   const auto valueNodeTag = static_cast<int64_t>(
-      eventMapping.find("animatedValueTag").dereference().second.asDouble());
-  const auto pathList =
-      eventMapping.find("nativeEventPath").dereference().second.getString();
+	  eventMapping.find("animatedValueTag").dereference().second.asDouble());
+  const auto pathList = 
+	  eventMapping.find("nativeEventPath").dereference().second;
 
   const auto key = std::make_tuple(viewTag, eventName);
   if (m_eventDrivers.count(key)) {
@@ -242,20 +242,21 @@ void NativeAnimatedNodeManager::AddAnimatedEventToView(
 }
 
 void NativeAnimatedNodeManager::RemoveAnimatedEventFromView(
-    int64_t viewTag,
-    const std::string &eventName,
-    int64_t animatedValueTag) {
+	int64_t viewTag,
+	const std::string &eventName,
+	int64_t animatedValueTag) {
   const auto key = std::make_tuple(viewTag, eventName);
   if (m_eventDrivers.count(key)) {
-    auto &drivers = m_eventDrivers.at(key);
+    auto& drivers = m_eventDrivers.at(key);
 
-    for (auto iterator = drivers.begin(); iterator != drivers.end();
-         iterator++) {
+    for (auto iterator = drivers.begin(); iterator != drivers.end();) {
       if (const auto value = iterator->get()->AnimatedValue()) {
-        if (value->Tag() == animatedValueTag) {
-          m_eventDrivers.at(key).erase(iterator);
+        if(value->Tag() == animatedValueTag) {
+            iterator = drivers.erase(iterator);
+            continue;
         }
       }
+      ++iterator;
     }
 
     if (!drivers.size()) {
@@ -266,12 +267,14 @@ void NativeAnimatedNodeManager::RemoveAnimatedEventFromView(
 
 void NativeAnimatedNodeManager::ProcessDelayedPropsNodes() {
   // If StartAnimations fails we'll put the props nodes back into this queue to
-  // try again when the next batch completes. Because of this we need to copy
-  // the props to change into a local and clear the member before we begin.
+  // try again when the next batch completes. Because of this we need to copy the
+  // props to change into a local and clear the member before we begin.
   const auto delayedPropsNodes = m_delayedPropsNodes;
   m_delayedPropsNodes.clear();
   for (const auto tag : delayedPropsNodes) {
-    m_propsNodes.at(tag)->StartAnimations();
+    if (m_propsNodes.count(tag) > 0) {
+        m_propsNodes.at(tag)->StartAnimations();
+    }
   }
 }
 

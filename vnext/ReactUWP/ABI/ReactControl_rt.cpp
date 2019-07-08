@@ -165,6 +165,10 @@ void ReactControl::DetachRoot() noexcept {
   m_pInnerControl->DetachRoot();
 }
 
+std::shared_ptr<::react::uwp::IXamlReactControl> ReactControl::GetXamlReactControl() const noexcept {
+  return m_pInnerControl;
+}
+
 void ReactControl::ResetView() {
   return m_pInnerControl->ResetView();
 }
