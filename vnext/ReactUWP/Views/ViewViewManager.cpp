@@ -13,7 +13,6 @@
 #include <Utils/AccessibilityUtils.h>
 #include <Utils/PropertyUtils.h>
 
-
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
 
@@ -22,7 +21,6 @@
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
-
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
@@ -36,7 +34,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
-}
+} // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -570,5 +568,5 @@ void ViewViewManager::SetLayoutProps(
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
-}
-}
+} // namespace uwp
+} // namespace react

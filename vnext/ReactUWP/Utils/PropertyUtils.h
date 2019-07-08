@@ -133,7 +133,6 @@ bool TryUpdateBackgroundBrush(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-
   if (propertyName == "backgroundColor") {
     if (IsValidColorValue(propertyValue))
       element.Background(BrushFrom(propertyValue));
@@ -164,7 +163,6 @@ bool TryUpdateForeground(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-
   if (propertyName == "color") {
     if (IsValidColorValue(propertyValue))
       element.Foreground(BrushFrom(propertyValue));

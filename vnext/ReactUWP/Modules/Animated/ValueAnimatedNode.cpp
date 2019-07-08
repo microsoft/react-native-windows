@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "ValueAnimatedNode.h"
+
 #include "NativeAnimatedNodeManager.h"
+#include "ValueAnimatedNode.h"
 
 namespace react {
 namespace uwp {

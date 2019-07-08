@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Views/KeyboardEventHandler.h"
+
 #include <winrt/Windows.UI.Core.h>
 #include "Utils/Helpers.h"
 #include "Utils/PropertyHandlerUtils.h"
+#include "Views/KeyboardEventHandler.h"
 
 using namespace std::placeholders;
 
@@ -209,6 +210,10 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
   bool shouldMarkHandled = false;
+  if (phase == KeyboardEventPhase::PreviewKeyDown ||
+      phase == KeyboardEventPhase::KeyDown)
+    shouldMarkHandled =
+        ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   if (phase == KeyboardEventPhase::PreviewKeyDown ||
       phase == KeyboardEventPhase::KeyDown)
     shouldMarkHandled =

@@ -64,7 +64,7 @@ class IUIManager {
 
   virtual void focus(int64_t tag) = 0;
   virtual void blur(int64_t tag) = 0;
-  
+
   // needed for control specific native modules to get the shadow node from the
   // UIManager given its tag
   virtual ShadowNode *FindShadowNodeForTag(int64_t tag) = 0;

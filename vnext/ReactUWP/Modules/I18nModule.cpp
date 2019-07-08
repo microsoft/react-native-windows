@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "I18nModule.h"
 
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
