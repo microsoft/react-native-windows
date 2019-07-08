@@ -13,7 +13,6 @@
 #include "StyleAnimatedNode.h"
 #include "SubtractionAnimatedNode.h"
 
-
 #include "DecayAnimationDriver.h"
 #include "FrameAnimationDriver.h"
 

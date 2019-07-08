@@ -7,7 +7,6 @@
 #include "Utils/UwpScriptStore.h"
 #include "unicode.h"
 
-
 namespace winrt {
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Storage;

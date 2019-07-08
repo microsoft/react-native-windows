@@ -8,7 +8,6 @@
 #include "Utils/PropertyHandlerUtils.h"
 #include "Views/KeyboardEventHandler.h"
 
-
 using namespace std::placeholders;
 
 static constexpr auto ALT_KEY = "altKey";

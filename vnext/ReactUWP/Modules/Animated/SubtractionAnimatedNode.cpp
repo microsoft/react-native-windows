@@ -6,7 +6,6 @@
 #include "NativeAnimatedNodeManager.h"
 #include "SubtractionAnimatedNode.h"
 
-
 namespace react {
 namespace uwp {
 SubtractionAnimatedNode::SubtractionAnimatedNode(

@@ -6,7 +6,6 @@
 #include <Modules/NativeUIManager.h>
 #include "Helpers.h"
 
-
 namespace react {
 namespace uwp {
 

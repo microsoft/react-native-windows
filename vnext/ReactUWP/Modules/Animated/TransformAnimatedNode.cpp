@@ -6,7 +6,6 @@
 #include "FacadeType.h"
 #include "TransformAnimatedNode.h"
 
-
 namespace react {
 namespace uwp {
 TransformAnimatedNode::TransformAnimatedNode(

@@ -6,7 +6,6 @@
 #include "jsi/jsi.h"
 #include "unicode.h"
 
-
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize("", off)

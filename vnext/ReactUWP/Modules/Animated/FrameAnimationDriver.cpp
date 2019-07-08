@@ -6,7 +6,6 @@
 #include <jsi/jsi.h>
 #include "FrameAnimationDriver.h"
 
-
 namespace react {
 namespace uwp {
 FrameAnimationDriver::FrameAnimationDriver(

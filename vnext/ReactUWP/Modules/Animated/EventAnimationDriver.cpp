@@ -7,7 +7,6 @@
 #include "EventAnimationDriver.h"
 #include "NativeAnimatedNodeManager.h"
 
-
 namespace react {
 namespace uwp {
 EventAnimationDriver::EventAnimationDriver(

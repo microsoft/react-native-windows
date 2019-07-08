@@ -6,7 +6,6 @@
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 
-
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
 

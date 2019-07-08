@@ -6,7 +6,6 @@
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
-
 namespace react {
 namespace uwp {
 ValueAnimatedNode::ValueAnimatedNode(

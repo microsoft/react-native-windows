@@ -2,4 +2,4 @@
 **/*.g.h
 node_modules/**
 packages/**
-**/winrt/impl/**
+**/cppwinrt/winrt/**

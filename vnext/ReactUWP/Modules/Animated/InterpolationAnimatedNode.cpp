@@ -7,7 +7,6 @@
 #include "InterpolationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-
 namespace react {
 namespace uwp {
 InterpolationAnimatedNode::InterpolationAnimatedNode(
