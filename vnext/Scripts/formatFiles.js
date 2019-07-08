@@ -6,19 +6,33 @@
 
 const fs = require('fs');
 const path = require('path');
-const spawn = require('child_process').spawn;
+const {spawn, execSync} = require('child_process');
 const glob = require('glob');
 const async = require('async');
 const {getNativeBinary} = require('clang-format');
 
+const VERIFY_FLAG = '-verify';
+
 function main() {
   // Run clang-format.
   try {
+    let verify = process.argv.indexOf(VERIFY_FLAG) > 0;
+    const args = process.argv.slice(2).filter(_ => _ !== VERIFY_FLAG);
+
     // Pass all arguments to clang-format, including e.g. -version etc.
-    spawnClangFormat(process.argv.slice(2), process.exit, 'inherit');
+    spawnClangFormat(args, verify ? queryNoOpenFiles : process.exit, 'inherit');
   } catch (e) {
     process.stdout.write(e.message);
     process.exit(1);
+  }
+}
+
+function queryNoOpenFiles() {
+  const opened = execSync('git status -s').toString();
+  if (opened) {
+    console.error('The following files have incorrect formatting:');
+    console.error(opened);
+    process.exit(2);
   }
 }
 
