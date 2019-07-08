@@ -158,10 +158,9 @@ void TouchEventHandler::OnPointerConcluded(
   // Only if the view has a Tag can we process this
   int64_t tag;
   winrt::FrameworkElement sourceElement(nullptr);
-  if (!TagFromOriginalSource(args, &tag, &sourceElement))
-    return;
+  if (TagFromOriginalSource(args, &tag, &sourceElement))
+    UpdateReactPointer(m_pointers[pointerIndex], args, sourceElement);
 
-  UpdateReactPointer(m_pointers[pointerIndex], args, sourceElement);
   DispatchTouchEvent(eventType, pointerIndex);
 
   m_pointers.erase(cbegin(m_pointers) + pointerIndex);
