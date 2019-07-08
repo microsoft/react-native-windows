@@ -266,7 +266,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         textBox.ClearValue(winrt::TextBox::PlaceholderTextProperty());
     } else if (propertyName == "placeholderTextColor") {
       if (textBox.try_as<winrt::ITextBlock6>()) {
-        if (propertyValue.isNumber())
+        if (IsValidColorValue(propertyValue))
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         else if (propertyValue.isNull())
           textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
@@ -287,7 +287,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           textBox.Select(selection.start, selection.end - selection.start);
       }
     } else if (propertyName == "selectionColor") {
-      if (propertyValue.isNumber())
+      if (IsValidColorValue(propertyValue))
         textBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::SelectionHighlightColorProperty());
@@ -373,41 +373,6 @@ facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
 XamlView TextInputViewManager::CreateViewCore(int64_t tag) {
   winrt::TextBox textBox;
   return textBox;
-}
-
-void TextInputViewManager::DispatchCommand(
-    XamlView viewToUpdate,
-    int64_t commandId,
-    const folly::dynamic &commandArgs) {
-  auto textBox = viewToUpdate.as<winrt::TextBox>();
-  if (textBox == nullptr)
-    return;
-
-  switch (static_cast<FocusCommand>(commandId)) {
-    case FocusCommand::SetFocus: {
-      textBox.Focus(winrt::FocusState::Programmatic);
-      break;
-    }
-
-    case FocusCommand::Blur: {
-      auto focusedUIElement = winrt::FocusManager::GetFocusedElement();
-      if (focusedUIElement == nullptr)
-        break;
-
-      // Verify that the textBox hasn't already lost focus.
-      if (focusedUIElement.try_as<winrt::TextBox>() != textBox)
-        break;
-
-      auto content = winrt::Windows::UI::Xaml::Window::Current().Content();
-      if (content == nullptr)
-        break;
-
-      auto frame = content.try_as<winrt::Windows::UI::Xaml::Controls::Frame>();
-      if (frame != nullptr)
-        frame.Focus(winrt::FocusState::Programmatic);
-      break;
-    }
-  }
 }
 
 YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {

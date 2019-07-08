@@ -9,8 +9,6 @@
 namespace react {
 namespace uwp {
 
-enum class FocusCommand { SetFocus = 1, Blur = 2 };
-
 class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
 
@@ -28,12 +26,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   void StartTransformAnimation(
       winrt::UIElement uielement,
       winrt::Windows::UI::Composition::CompositionPropertySet transformPS);
-
-  folly::dynamic GetCommands() const override;
-  void DispatchCommand(
-      XamlView viewToUpdate,
-      int64_t commandId,
-      const folly::dynamic &commandArgs) override;
 
  protected:
   virtual void TransferProperties(XamlView oldView, XamlView newView) override;

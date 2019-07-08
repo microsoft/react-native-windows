@@ -127,10 +127,11 @@ jobs:
           workingDirectory: vnext
 
       - task: CmdLine@2
-        displayName: Remove SampleApp.uwp.bundle
+        displayName: Create RNTester bundle
         inputs:
-          script: del SampleApp.uwp.bundle
+          script: node Scripts\cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.uwp.bundle --platform uwp
           workingDirectory: vnext
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
   - job: CliInit
     displayName: Verify react-native init
@@ -175,7 +176,7 @@ jobs:
       - task: CmdLine@2
         displayName: Init new project
         inputs:
-          script: react-native init testcli
+          script: react-native init testcli --version 0.59.10
           workingDirectory: $(Agent.BuildDirectory)
 
       - task: CmdLine@2
@@ -276,44 +277,31 @@ jobs:
         timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
-          testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
+          testSelector: 'testAssemblies'
           testAssemblyVer2: 'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll' # Required when testSelector == TestAssemblies
-          #testPlan: # Required when testSelector == TestPlan
-          #testSuite: # Required when testSelector == TestPlan
-          #testConfiguration: # Required when testSelector == TestPlan
-          #tcmTestRun: '$(test.RunId)' # Optional
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          #testFiltercriteria: # Optional
-          #runOnlyImpactedTests: False # Optional
-          #runAllTestsAfterXBuilds: '50' # Optional
-          #uiTests: false # Optional
-          #vstestLocationMethod: 'version' # Optional. Options: version, location
-          vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
-          #vstestLocation: # Optional
-          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings # Optional
-          #overrideTestrunParameters: # Optional
-          #pathtoCustomTestAdapters: # Optional
-          #runInParallel: False # Optional
-          runTestsInIsolation: true # Optional
-          #codeCoverageEnabled: False # Optional
-          #otherConsoleOptions: # Optional
-          #distributionBatchType: 'basedOnTestCases' # Optional. Options: basedOnTestCases, basedOnExecutionTime, basedOnAssembly
-          #batchingBasedOnAgentsOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customBatchSize
-          #customBatchSizeValue: '10' # Required when distributionBatchType == BasedOnTestCases && BatchingBasedOnAgentsOption == CustomBatchSize
-          #batchingBasedOnExecutionTimeOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customTimeBatchSize
-          #customRunTimePerBatchValue: '60' # Required when distributionBatchType == BasedOnExecutionTime && BatchingBasedOnExecutionTimeOption == CustomTimeBatchSize
-          #dontDistribute: False # Optional
-          #testRunTitle: # Optional
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          publishRunAttachments: true # Optional
-          #diagnosticsEnabled: True # Optional
-          collectDumpOn: 'onAbortOnly' # Optional. Options: onAbortOnly, always, never
-          #rerunFailedTests: False # Optional
-          #rerunType: 'basedOnTestFailurePercentage' # Optional. Options: basedOnTestFailurePercentage, basedOnTestFailureCount
-          #rerunFailedThreshold: '30' # Optional
-          #rerunFailedTestCasesMaxLimit: '5' # Optional
-          #rerunMaxAttempts: '3' # Optional
+          vsTestVersion: '15.0'
+          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: 'onAbortOnly'
+
+      - task: VSTest@2
+        displayName: Run Desktop Unit Tests (Google Test)
+        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: 'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'  # Required when testSelector == TestAssemblies
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+          vsTestVersion: '15.0'
+          pathtoCustomTestAdapters: '$(Build.SourcesDirectory)\vnext\packages\GoogleTestAdapter.0.16.1\build\_common'
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: 'onAbortOnly'
 
       - task: PowerShell@2
         displayName: Set up test servers
@@ -327,45 +315,16 @@ jobs:
         displayName: Run Desktop Integration Tests
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
-          testSelector: 'testAssemblies' # Options: testAssemblies, testPlan, testRun
+          testSelector: 'testAssemblies'
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
-          #testPlan: # Required when testSelector == TestPlan
-          #testSuite: # Required when testSelector == TestPlan
-          #testConfiguration: # Required when testSelector == TestPlan
-          #tcmTestRun: '$(test.RunId)' # Optional
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
-          #runOnlyImpactedTests: False # Optional
-          #runAllTestsAfterXBuilds: '50' # Optional
-          #uiTests: false # Optional
-          #vstestLocationMethod: 'version' # Optional. Options: version, location
-          vsTestVersion: '15.0' # Optional. Options: latest, 15.0, 14.0, toolsInstaller
-          #vstestLocation: # Optional
-          #runSettingsFile: # Optional
-          #overrideTestrunParameters: # Optional
-          #pathtoCustomTestAdapters: # Optional
-          #runInParallel: False # Optional
-          runTestsInIsolation: true # Optional
-          #codeCoverageEnabled: False # Optional
-          #otherConsoleOptions: '--Tests:"RNTesterIntegrationTests"' # TODO re-add WebSocketModuleIntegrationTest  # Optional
-          #distributionBatchType: 'basedOnTestCases' # Optional. Options: basedOnTestCases, basedOnExecutionTime, basedOnAssembly
-          #batchingBasedOnAgentsOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customBatchSize
-          #customBatchSizeValue: '10' # Required when distributionBatchType == BasedOnTestCases && BatchingBasedOnAgentsOption == CustomBatchSize
-          #batchingBasedOnExecutionTimeOption: 'autoBatchSize' # Optional. Options: autoBatchSize, customTimeBatchSize
-          #customRunTimePerBatchValue: '60' # Required when distributionBatchType == BasedOnExecutionTime && BatchingBasedOnExecutionTimeOption == CustomTimeBatchSize
-          #dontDistribute: False # Optional
-          #testRunTitle: # Optional
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          publishRunAttachments: true # Optional
-          #diagnosticsEnabled: True # Optional
-          collectDumpOn: 'onAbortOnly' # Optional. Options: onAbortOnly, always, never
-          #rerunFailedTests: False # Optional
-          #rerunType: 'basedOnTestFailurePercentage' # Optional. Options: basedOnTestFailurePercentage, basedOnTestFailureCount
-          #rerunFailedThreshold: '30' # Optional
-          #rerunFailedTestCasesMaxLimit: '5' # Optional
-          #rerunMaxAttempts: '3' # Optional
-
+          vsTestVersion: '15.0'
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: 'onAbortOnly'
 
       - template: templates/stop-packagers.yml
 

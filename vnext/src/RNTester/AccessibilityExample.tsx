@@ -12,7 +12,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import {AppTheme} from '../../src/index.uwp';
+import {AppTheme} from '../index.uwp';
 import {IAppThemeChangedEvent} from 'src/Libraries/AppTheme/AppThemeTypes';
 
 class AccessibilityBaseExample extends React.Component {
