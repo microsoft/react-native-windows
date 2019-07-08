@@ -32,8 +32,8 @@ let placementValues: string[] = [
   'left-edge-aligned-top',
   'right-edge-aligned-top',
   'left-edge-aligned-bottom',
-  'right-edge-aligned-bottom'
-]
+  'right-edge-aligned-bottom',
+];
 
 class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
@@ -47,7 +47,7 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
     popupCheckBoxState: true,
     placementOptions: 'top',
     target: undefined,
-    openMessage: "closed"
+    openMessage: 'closed',
   };
 
   public constructor(props: any) {
@@ -57,7 +57,7 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
   public render() {
     return (
       <View>
-        <View style={{ flexDirection: "row", paddingTop: 20 }}>
+        <View style={{ flexDirection: 'row', paddingTop: 20 }}>
           <Text style={{ padding: 10 }}>Placement Options: </Text>
           <Picker
             style={{ width: 200, height: 35 }}
@@ -71,26 +71,27 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             ))}
           </Picker>
         </View>
-        <View style={{ justifyContent: "center", padding: 20, width: 200 }}>
+        <View style={{ justifyContent: 'center', padding: 20, width: 200 }}>
           <Button
             onPress={this._onPress}
             title={this.state.buttonTitle}
             ref={ref => {
-              if(!this.state.target)
-                this.setState({target: ref})
+              if (!this.state.target) {
+                  this.setState({target: ref});
+                }
             }}
           />
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <Text style={{ padding: 10 }}>isAttachedAsContextMenu: </Text>
           <CheckBox
-            style={{ justifyContent: "center", padding: 20 }}
+            style={{ justifyContent: 'center', padding: 20 }}
             checked={this.state.popupCheckBoxState}
             onValueChange={value =>
               this.setState({
                 popupCheckBoxState: value,
                 attachAsContextMenu: value,
-                isMenuFlyoutVisible: false
+                isMenuFlyoutVisible: false,
               })
             }
           />
@@ -103,22 +104,18 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
             placement={this.state.placementOptions}
             onOpen = {this._onOpen}
           >
-            <MenuFlyoutSubItem text='Delete'>
-            <MenuFlyoutItem text="Yes" onClick = {this._onDeleteYesClicked}></MenuFlyoutItem>
-            <MenuFlyoutItem text="No" onClick = {this._onDeleteNoClicked}></MenuFlyoutItem>
+            <MenuFlyoutSubItem text="Delete">
+            <MenuFlyoutItem text="Yes" onClick = {this._onDeleteYesClicked} />
+            <MenuFlyoutItem text="No" onClick = {this._onDeleteNoClicked} />
             </MenuFlyoutSubItem>
-            <MenuFlyoutItem text="Edit" onClick = {this._onEditClicked}></MenuFlyoutItem>
+            <MenuFlyoutItem text="Edit" onClick = {this._onEditClicked} />
           </MenuFlyout>
-            
-            )}   
-
-          <Text style={{ padding: 10 }}>{"button clicked: " + this.state.buttonClicked}</Text>
-          <Text style={{ padding: 10 }}>{"MenuFlyout state: " + this.state.openMessage}</Text>
- 
- 
+            )}
+          <Text style={{ padding: 10 }}>{'button clicked: ' + this.state.buttonClicked}</Text>
+          <Text style={{ padding: 10 }}>{'MenuFlyout state: ' + this.state.openMessage}</Text>
       </View>
-    );
-  }
+      );
+    }
 
 
   _onPress = () => {
@@ -129,9 +126,9 @@ class MenuFlyoutExample extends React.Component<{}, IMenuFlyoutExampleState> {
 
   _onMenuFlyoutDismissed = (isOpen: boolean) => {
     this.setState({ isMenuFlyoutVisible: isOpen });
-    this.setState({ buttonTitle: 'Open MenuFlyout', openMessage: "dismissed"});
+    this.setState({ buttonTitle: 'Open MenuFlyout', openMessage: 'dismissed'});
   }
- 
+
   _onEditClicked = () => {
     this.setState({buttonClicked: 'edit clicked' });
   }
@@ -143,9 +140,8 @@ _onDeleteNoClicked = () => {
   this.setState({buttonClicked: 'delete No clicked' });
 }
 _onOpen = () => {
-  this.setState({openMessage: "Open"});
+  this.setState({openMessage: 'Open'});
 }
-
 }
 
 
@@ -158,5 +154,5 @@ export const examples = [
     render: function (): JSX.Element {
       return <MenuFlyoutExample />;
     },
-  }
+  },
 ];

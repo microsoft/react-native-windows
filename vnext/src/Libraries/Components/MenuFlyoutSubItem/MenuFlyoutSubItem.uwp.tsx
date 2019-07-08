@@ -8,7 +8,7 @@ import { IMenuFlyoutSubItemProps } from './MenuFlyoutSubItemProps';
 
 const styles = StyleSheet.create({
   rctMenuFlyoutSubItem: {
-    position: 'absolute'
+    position: 'absolute',
   },
 });
 

@@ -5,6 +5,7 @@
 #pragma once
 
 #include <Views/FrameworkElementViewManager.h>
+#include "folly/dynamic.h"
 
 namespace react { namespace uwp {
 

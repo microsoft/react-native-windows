@@ -8,7 +8,7 @@ import { IMenuFlyoutProps } from './MenuFlyoutProps';
 
 const styles = StyleSheet.create({
   rctMenuFlyout: {
-    position: 'absolute'
+    position: 'absolute',
   },
 });
 
@@ -39,7 +39,7 @@ export class MenuFlyout extends React.Component<IMenuFlyoutProps, IMenuFlyoutTar
 
       return {
         target: newtarget,
-        targetRef: nextProps.target
+        targetRef: nextProps.target,
       };
     }
 
