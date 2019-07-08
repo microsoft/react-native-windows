@@ -8,14 +8,20 @@
 #include <memory>
 #include <vector>
 
-namespace facebook { namespace react { class MessageQueueThread;  } }
+namespace facebook {
+namespace react {
+class MessageQueueThread;
+}
+} // namespace facebook
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class LocationObserverModule : public facebook::xplat::module::CxxModule
-{
-public:
-  LocationObserverModule(const std::shared_ptr<facebook::react::MessageQueueThread>& defaultQueueThread);
+class LocationObserverModule : public facebook::xplat::module::CxxModule {
+ public:
+  LocationObserverModule(
+      const std::shared_ptr<facebook::react::MessageQueueThread>
+          &defaultQueueThread);
   virtual ~LocationObserverModule();
 
   // CxxModule
@@ -23,11 +29,12 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char* name;
+  static const char *name;
 
-private:
+ private:
   class LocationObserver;
   std::shared_ptr<LocationObserver> m_locationObserver;
 };
 
-} }
+} // namespace uwp
+} // namespace react

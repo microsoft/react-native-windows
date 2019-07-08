@@ -14,10 +14,13 @@ indent_size = 2
 end_of_line = crlf
 
 # Xml project files
-[*.{csproj,vcxproj,pssproj,vcxproj.filters,targets,props}]
+[*.{config,csproj,njsproj,props,targets,vcxitems,vcxproj,vcxproj.filters}]
 end_of_line = crlf
 insert_final_newline = false
 
 [*.ps1]
 indent_style = tab
 indent_size = 4
+
+[package.json]
+insert_final_newline = false

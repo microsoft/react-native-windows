@@ -12,6 +12,28 @@ const win32VersionRcPath = path.resolve(
   __dirname,
   "../vnext/Desktop.DLL/Version.rc"
 );
+const uwpVersionRcPath = path.resolve(
+  __dirname,
+  "../vnext/ReactUWP/Version.rc"
+);
+
+function updateRcVersion(releaseVersion, versionGroups, rcPath)
+{
+  let versionRC = fs.readFileSync(rcPath).toString();
+  versionRC = versionRC.replace(
+    /#define VER_FILEVERSION_STR\s+"[^"]+"/,
+    `#define VER_FILEVERSION_STR "${releaseVersion}"`
+  );
+  versionRC = versionRC.replace(
+    /#define VER_FILEVERSION\s+.+/,
+    `#define VER_FILEVERSION ${releaseVersion.split(".")[0]},${
+      releaseVersion.split(".")[1]
+    },${releaseVersion.split(".")[2].split("-")[0]},${parseInt(
+      versionGroups[3]
+    ) + 1}`
+  );
+  fs.writeFileSync(rcPath, versionRC);
+}
 
 function updateVersionsInFiles() {
   const branchVersionSuffix = publishBranchName.match(/(fb.*merge)|(fabric)/)
@@ -45,20 +67,8 @@ function updateVersionsInFiles() {
   fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
   console.log(`Updating package.json to version ${releaseVersion}`);
 
-  let versionRC = fs.readFileSync(win32VersionRcPath).toString();
-  versionRC = versionRC.replace(
-    /#define VER_FILEVERSION_STR\s+"[^"]+"/,
-    `#define VER_FILEVERSION_STR "${releaseVersion}"`
-  );
-  versionRC = versionRC.replace(
-    /#define VER_FILEVERSION\s+.+/,
-    `#define VER_FILEVERSION ${releaseVersion.split(".")[0]},${
-      releaseVersion.split(".")[1]
-    },${releaseVersion.split(".")[2].split("-")[0]},${parseInt(
-      versionGroups[3]
-    ) + 1}`
-  );
-  fs.writeFileSync(win32VersionRcPath, versionRC);
+  updateRcVersion(releaseVersion, versionGroups, win32VersionRcPath);
+  updateRcVersion(releaseVersion, versionGroups, uwpVersionRcPath);
 
   return releaseVersion;
 }
@@ -67,5 +77,6 @@ module.exports = {
   pkgJsonPath,
   publishBranchName,
   updateVersionsInFiles,
-  win32VersionRcPath
+  win32VersionRcPath,
+  uwpVersionRcPath
 };

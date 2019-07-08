@@ -1,0 +1,111 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// This file was used to generate the files in the cppwinrt subfolders
+//
+// If you modify this file, be sure to run buildcppwinrt.cmd in this folder
+// to generate new headers
+
+namespace react.uwp
+{
+	enum AccessibilityRoles
+	{
+		None = 0,
+		Button,
+		Link,
+		Search,
+		Image,
+		KeyboardKey,
+		Text,
+		Adjustable,
+		ImageButton,
+		Header,
+		Summary,
+		Alert,
+		CheckBox,
+		ComboBox,
+		Menu,
+		MenuBar,
+		MenuItem,
+		ProgressBar,
+		Radio,
+		RadioGroup,
+		ScrollBar,
+		SpinButton,
+		Switch,
+		Tab,
+		TabList,
+		Timer,
+		ToolBar,
+		Unknown,
+		CountRoles
+	};
+
+	enum AccessibilityStates
+	{
+		Selected = 0,
+		Disabled,
+		Checked,
+		Unchecked,
+		Busy,
+		Expanded,
+		Collapsed,
+		CountStates
+	};
+
+	delegate void AccessibilityInvokeEventHandler();
+
+	[default_interface]
+	[webhosthidden]
+	runtimeclass DynamicAutomationProperties
+	{
+		// Attached Properties
+		static Windows.UI.Xaml.DependencyProperty AccessibilityRoleProperty { get; };
+		static void SetAccessibilityRole(Windows.UI.Xaml.UIElement element, AccessibilityRoles value);
+		static AccessibilityRoles GetAccessibilityRole(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateSelectedProperty { get; };
+		static void SetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateSelected(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateDisabledProperty { get; };
+		static void SetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateDisabled(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateCheckedProperty { get; };
+		static void SetAccessibilityStateChecked(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateChecked(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateUncheckedProperty { get; };
+		static void SetAccessibilityStateUnchecked(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateUnchecked(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateBusyProperty { get; };
+		static void SetAccessibilityStateBusy(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateBusy(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateExpandedProperty { get; };
+		static void SetAccessibilityStateExpanded(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateExpanded(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityStateCollapsedProperty { get; };
+		static void SetAccessibilityStateCollapsed(Windows.UI.Xaml.UIElement element, Boolean value);
+		static Boolean GetAccessibilityStateCollapsed(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
+		static void SetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityInvokeEventHandler value);
+		static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element);
+	}
+
+	[default_interface]
+	[webhosthidden]
+	runtimeclass DynamicAutomationPeer :
+		Windows.UI.Xaml.Automation.Peers.FrameworkElementAutomationPeer,
+		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,
+		Windows.UI.Xaml.Automation.Provider.ISelectionProvider,
+		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider,
+		Windows.UI.Xaml.Automation.Provider.IToggleProvider
+	{
+		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
+	}
+}

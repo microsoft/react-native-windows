@@ -9,18 +9,18 @@
 namespace facebook {
 namespace react {
 
-class WebSocketJSExecutorFactory : public JSExecutorFactory
-{
-public:
+class WebSocketJSExecutorFactory : public JSExecutorFactory {
+ public:
   WebSocketJSExecutorFactory() = default;
-  WebSocketJSExecutorFactory(JSECreator&& jsExecutorFactory);
+  WebSocketJSExecutorFactory(JSECreator &&jsExecutorFactory);
 
   virtual std::unique_ptr<JSExecutor> createJSExecutor(
-    std::shared_ptr<ExecutorDelegate> delegate,
-    std::shared_ptr<MessageQueueThread> jsQueue) override;
+      std::shared_ptr<ExecutorDelegate> delegate,
+      std::shared_ptr<MessageQueueThread> jsQueue) override;
 
-private:
+ private:
   JSECreator m_jseCreator;
 };
 
-}}// namespace facebook::react
+} // namespace react
+} // namespace facebook

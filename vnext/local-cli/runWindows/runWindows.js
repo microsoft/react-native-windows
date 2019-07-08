@@ -97,6 +97,6 @@ module.exports = {
     default: false,
   }, {
     command: '--no-packager',
-    description: 'Do not launch packager while building'
-  }]
+    description: 'Do not launch packager while building',
+  }],
 };

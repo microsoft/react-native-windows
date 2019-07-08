@@ -4,8 +4,8 @@
 #pragma once
 
 #include <ReactWindowsCore/ReactWindowsAPI.h>
-#include "InstanceFactory.h"
 #include "IReactInstance.h"
+#include "InstanceFactory.h"
 
 #include <NativeModuleProvider.h>
 #include "ViewManagerProvider.h"

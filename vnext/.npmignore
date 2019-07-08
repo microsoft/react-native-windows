@@ -1,8 +1,9 @@
+.eslintignore
+.eslintrc.js
 .vs
 .vscode
 **/*.inc
-**/dirs
-**/sources
+**/*.windesktop.*
 build
 CMakeLists.txt
 Desktop
@@ -23,11 +24,12 @@ ReactWin32SandboxSample
 ReactWindows-TestNuspec.bat
 ReactWindows-UWP.sln
 ReactWindows.sln
+RNTester.*
+RNTester/
 Scripts/layoutFilesForNuget.bat.bat
 src/
 target
 tsconfig.json
-tslint.json
 Universal.IntegrationTests
 Universal.SampleApp
 Universal.UnitTests

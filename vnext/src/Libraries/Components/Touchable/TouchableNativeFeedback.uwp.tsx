@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
 import * as React from 'react';
@@ -7,7 +10,7 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableNativeFeedbackProps
+  TouchableNativeFeedbackProps,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -19,12 +22,12 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10
+    margin: 10,
   },
   info: {
     color: '#333333',
-    margin: 20
-  }
+    margin: 20,
+  },
 });
 
 class DummyTouchableNativeFeedback extends React.Component<
