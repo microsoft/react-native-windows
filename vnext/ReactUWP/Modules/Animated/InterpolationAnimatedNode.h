@@ -28,14 +28,20 @@ class InterpolationAnimatedNode : public ValueAnimatedNode {
       const winrt::Compositor &compositor,
       ValueAnimatedNode &parent);
 
-  winrt::hstring GetExpression(const winrt::hstring &value);
-  winrt::hstring GetInterpolateExpression(const winrt::hstring &value);
-  winrt::hstring GetLeftExpression(const winrt::hstring &value);
-  winrt::hstring GetRightExpression(const winrt::hstring &value);
-  winrt::ExpressionAnimation m_rawValueAnimation{nullptr};
-  winrt::ExpressionAnimation m_offsetAnimation{nullptr};
-  std::array<double, 2> m_inputRange;
-  std::array<double, 2> m_outputRange;
+  winrt::hstring GetExpression(const winrt::hstring& value);
+  winrt::hstring GetInterpolateExpression(
+    const winrt::hstring& value,
+    const std::wstring& inputMin,
+    const std::wstring& inputMax,
+    const std::wstring& outputMin,
+    const std::wstring& outputMax);
+  winrt::hstring GetLeftExpression(const winrt::hstring& value, const winrt::hstring& leftInterpolateExpression);
+  winrt::hstring GetRightExpression(const winrt::hstring&, const winrt::hstring& rightInterpolateExpression);
+
+  winrt::ExpressionAnimation m_rawValueAnimation{ nullptr };
+  winrt::ExpressionAnimation m_offsetAnimation{ nullptr };
+  std::vector<double> m_inputRanges;
+  std::vector<double> m_outputRanges;
   std::string m_extrapolateLeft;
   std::string m_extrapolateRight;
 
@@ -48,11 +54,9 @@ class InterpolationAnimatedNode : public ValueAnimatedNode {
   static constexpr std::string_view s_extrapolateLeftName{"extrapolateLeft"};
   static constexpr std::string_view s_extrapolateRightName{"extrapolateRight"};
 
-  static constexpr std::wstring_view s_parentPropsName{L"parentProps"};
-  static constexpr std::wstring_view s_inputMinName{L"inputMin"};
-  static constexpr std::wstring_view s_inputMaxName{L"inputMax"};
-  static constexpr std::wstring_view s_outputMinName{L"outputMin"};
-  static constexpr std::wstring_view s_outputMaxName{L"outputMax"};
+  static constexpr std::wstring_view s_parentPropsName{ L"p" };
+  static constexpr std::wstring_view s_inputName{ L"i" };
+  static constexpr std::wstring_view s_outputName{ L"o" };
 };
 } // namespace uwp
 } // namespace react
