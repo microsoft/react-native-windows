@@ -80,6 +80,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic &&props) override;
+  winrt::Flyout GetFlyout();
 
  private:
   void SetTargetFrameworkElement();
@@ -268,6 +269,10 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
+winrt::Flyout FlyoutShadowNode::GetFlyout() {
+  return m_flyout;
+}
+
 void FlyoutShadowNode::SetTargetFrameworkElement() {
   auto wkinstance = GetViewManager()->GetReactInstance();
   auto instance = wkinstance.lock();
@@ -363,7 +368,31 @@ void FlyoutViewManager::SetLayoutProps(
     float left,
     float top,
     float width,
-    float height) {}
+    float height) {
+  auto *pFlyoutShadowNode = static_cast<FlyoutShadowNode *>(&nodeToUpdate);
+
+  if (pFlyoutShadowNode->GetFlyout()) {
+    auto flyout = pFlyoutShadowNode->GetFlyout();
+
+    if (winrt::FlyoutPlacementMode::Full == flyout.Placement()) {
+      winrt::Style flyoutStyle({L"Windows.UI.Xaml.Controls.FlyoutPresenter",
+                                winrt::TypeKind::Metadata});
+
+      // If the height or width of the container is less than the child's
+      // height/width + 2, the content is added in a Scroll View.
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::FrameworkElement::MaxWidthProperty(),
+          winrt::box_value(width + 2)));
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::FrameworkElement::MaxHeightProperty(),
+          winrt::box_value(height + 2)));
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::Control::PaddingProperty(), winrt::box_value(0)));
+
+      flyout.FlyoutPresenterStyle(flyoutStyle);
+    }
+  }
+}
 
 } // namespace uwp
 } // namespace react
