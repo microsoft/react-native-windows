@@ -8,14 +8,6 @@
 
 #include <Utils/PropertyUtils.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.h>
-
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 

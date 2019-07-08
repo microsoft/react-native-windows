@@ -11,12 +11,10 @@
 #include <IReactInstance.h>
 
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-} // namespace winrt
+namespace winrt{
+using ToggleButton = Windows::UI::Xaml::Controls::Primitives::ToggleButton;
+}
 
 namespace react {
 namespace uwp {
@@ -32,6 +30,9 @@ class CheckBoxShadowNode : public ShadowNodeBase {
  private:
   static void
   OnCheckedChanged(IReactInstance &instance, int64_t tag, bool newValue);
+
+  winrt::CheckBox::Checked_revoker m_checkBoxCheckedRevoker{};
+  winrt::CheckBox::Unchecked_revoker m_checkBoxUncheckedRevoker{};
 };
 
 void CheckBoxShadowNode::createView() {
@@ -39,16 +40,18 @@ void CheckBoxShadowNode::createView() {
 
   auto checkbox = GetView().as<winrt::CheckBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  checkbox.Checked([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnCheckedChanged(*instance, m_tag, true);
-  });
-  checkbox.Unchecked([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnCheckedChanged(*instance, m_tag, false);
-  });
+  m_checkBoxCheckedRevoker =
+      checkbox.Checked(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          OnCheckedChanged(*instance, m_tag, true);
+      });
+  m_checkBoxUncheckedRevoker =
+      checkbox.Unchecked(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          OnCheckedChanged(*instance, m_tag, false);
+      });
 }
 
 void CheckBoxShadowNode::updateProperties(const folly::dynamic &&props) {
@@ -112,8 +115,7 @@ void CheckBoxViewManager::UpdateProperties(
       if (propertyValue.isBool())
         checkbox.IsChecked(propertyValue.asBool());
       else if (pair.second.isNull())
-        checkbox.ClearValue(
-            winrt::Primitives::ToggleButton::IsCheckedProperty());
+        checkbox.ClearValue(winrt::ToggleButton::IsCheckedProperty());
     }
   }
 

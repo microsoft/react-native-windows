@@ -5,6 +5,10 @@
 
 #include "ContentControlViewManager.h"
 
+namespace winrt{
+using Button = winrt::Windows::UI::Xaml::Controls::Button;
+}
+
 namespace react {
 namespace uwp {
 namespace polyester {
@@ -25,6 +29,9 @@ class ButtonViewManager : public ContentControlViewManager {
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
+
+ private:
+  winrt::Button::Click_revoker m_buttonClickRevoker{};
 };
 
 } // namespace polyester

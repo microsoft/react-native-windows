@@ -18,25 +18,11 @@
 #include <IReactInstance.h>
 
 #include <winrt/Windows.System.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-#include <winrt/Windows.UI.Xaml.Media.h>
-#include <winrt/Windows.UI.Xaml.h>
-
 
 #if defined(_DEBUG)
 // Currently only used for tagging controls in debug
 #include <winrt/Windows.Foundation.h>
 #endif
-
-namespace winrt {
-using namespace Windows::System;
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
-using namespace Windows::UI::Xaml::Media;
-}
 
 namespace react {
 namespace uwp {
@@ -294,17 +280,20 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag) {
   auto contentControl =
       winrt::make<winrt::react::uwp::implementation::ViewControl>();
 
-  contentControl.GotFocus([=](auto &&, auto &&) {
+  m_contentControlGotFocusRevoker = contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
     DispatchEvent(
         tag, "topFocus", std::move(folly::dynamic::object("target", tag)));
   });
 
-  contentControl.LostFocus([=](auto &&, auto &&) {
+  m_contentControlLostFocusRevoker =
+      contentControl.LostFocus(winrt::auto_revoke,
+      [=](auto &&, auto &&) {
     DispatchEvent(
         tag, "topBlur", std::move(folly::dynamic::object("target", tag)));
   });
 
-  contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const &e) {
+  m_contentControlKeyDownRevoker = contentControl.KeyDown(
+      winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &e) {
     if (e.Key() == winrt::VirtualKey::Enter ||
         e.Key() == winrt::VirtualKey::Space) {
       auto instance = m_wkReactInstance.lock();

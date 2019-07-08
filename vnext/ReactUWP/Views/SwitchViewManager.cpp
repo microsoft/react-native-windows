@@ -8,13 +8,6 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 
@@ -28,6 +21,8 @@ class SwitchShadowNode : public ShadowNodeBase {
 
  private:
   static void OnToggled(IReactInstance &instance, int64_t tag, bool newValue);
+
+  winrt::ToggleSwitch::Toggled_revoker m_toggleSwitchToggledRevoker{};
 };
 
 void SwitchShadowNode::createView() {
@@ -35,11 +30,12 @@ void SwitchShadowNode::createView() {
 
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  toggleSwitch.Toggled([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnToggled(*instance, m_tag, toggleSwitch.IsOn());
-  });
+  m_toggleSwitchToggledRevoker =
+      toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          OnToggled(*instance, m_tag, toggleSwitch.IsOn());
+      });
 }
 
 void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {
