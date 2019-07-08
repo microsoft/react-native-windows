@@ -23,6 +23,7 @@
 // thread.
 
 #include "pch.h"
+
 #include "ViewLifetimeControl.h"
 
 using namespace Platform;

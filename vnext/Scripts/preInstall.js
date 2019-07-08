@@ -29,6 +29,6 @@ if (replaceDep) {
             console.log('Using forked RN');
             pkgJson.devDependencies['react-native'] = `https://github.com/Microsoft/react-native/archive/v${pkgJson.devDependencies['react-native']}.tar.gz`;
         }
-        fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+        fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
     }
 }

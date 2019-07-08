@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "DecayAnimationDriver.h"
+
 #include <jsi/jsi.h>
 #include <math.h>
+#include "DecayAnimationDriver.h"
 
 namespace react {
 namespace uwp {

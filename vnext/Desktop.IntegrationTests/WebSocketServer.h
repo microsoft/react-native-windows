@@ -121,4 +121,4 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer> {
   void SetOnError(std::function<void(IWebSocket::Error &&)> &&func);
 };
 
-} // Microsoft::React::Test
+} // namespace Microsoft::React::Test

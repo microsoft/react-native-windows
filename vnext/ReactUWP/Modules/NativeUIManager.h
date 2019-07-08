@@ -92,8 +92,9 @@ class NativeUIManager : public facebook::react::INativeUIManager {
   void DoLayout();
   void UpdateExtraLayout(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
- 
-  std::weak_ptr<react::uwp::IXamlReactControl> GetParentXamlReactControl(int64_t tag) const;
+
+  std::weak_ptr<react::uwp::IXamlReactControl> GetParentXamlReactControl(
+      int64_t tag) const;
 
  private:
   facebook::react::INativeUIManagerHost *m_host = nullptr;
