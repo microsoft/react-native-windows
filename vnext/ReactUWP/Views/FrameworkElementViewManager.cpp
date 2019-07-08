@@ -106,16 +106,11 @@ void FrameworkElementViewManager::TransferProperties(
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
-  props.update(folly::dynamic::object("accessible", "boolean")
-    ("accessibilityRole", "string")
-    ("accessibilityStates", "array")
-    ("accessibilityHint", "string")
-    ("accessibilityLabel", "string")
-    ("accessibilityPosInSet", "number")
-    ("accessibilitySetSize", "number")
-    ("testID", "string")
-    ("tooltip", "string")
-  );
+  props.update(folly::dynamic::object("accessible", "boolean")(
+      "accessibilityRole", "string")("accessibilityStates", "array")(
+      "accessibilityHint", "string")("accessibilityLabel", "string")(
+      "accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
+      "testID", "string")("tooltip", "string"));
   return props;
 }
 
