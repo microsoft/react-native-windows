@@ -156,7 +156,8 @@ void TouchEventHandler::OnPointerConcluded(
     return;
 
   const auto pointerIndex = *optPointerIndex;
-  // Only if the view has a Tag can we process this
+  // if the view has a Tag, update the pointer info.
+  // Regardless of that, ensure we Dispatch & cleanup the pointer
   int64_t tag;
   winrt::FrameworkElement sourceElement(nullptr);
   if (TagFromOriginalSource(args, &tag, &sourceElement))
