@@ -11,6 +11,10 @@
 namespace react {
 namespace uwp {
 
+struct IXamlReactControl {
+  virtual void blur(XamlView const& xamlView) noexcept = 0;
+};
+
 struct IXamlRootView : public facebook::react::IReactRootView {
   virtual std::shared_ptr<IReactInstance> GetReactInstance() const noexcept = 0;
   virtual XamlView GetXamlView() const noexcept = 0;
@@ -22,6 +26,8 @@ struct IXamlRootView : public facebook::react::IReactRootView {
 
   virtual void AttachRoot() noexcept = 0;
   virtual void DetachRoot() noexcept = 0;
+
+  virtual std::shared_ptr<IXamlReactControl> GetXamlReactControl() const noexcept = 0;
 };
 
 } // namespace uwp
