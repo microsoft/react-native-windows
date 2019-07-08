@@ -1,0 +1,5 @@
+**/*.g.cpp
+**/*.g.h
+node_modules/**
+packages/**
+**/winrt/impl/**
