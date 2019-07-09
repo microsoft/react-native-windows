@@ -18,7 +18,6 @@ class MenuFlyoutSubItemViewManager : public FrameworkElementViewManager {
   const char *GetName() const override;
   facebook::react::ShadowNode *createShadow() const override;
   folly::dynamic GetNativeProps() const override;
-  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
       XamlView viewToUpdate,

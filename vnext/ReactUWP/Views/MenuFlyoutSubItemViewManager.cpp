@@ -99,13 +99,6 @@ folly::dynamic MenuFlyoutSubItemViewManager::GetNativeProps() const {
   return props;
 }
 
-folly::dynamic
-MenuFlyoutSubItemViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
-  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  return directEvents;
-}
-
 void MenuFlyoutSubItemViewManager::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
     XamlView viewToUpdate,
