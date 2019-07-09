@@ -3,10 +3,10 @@
 
 #include "pch.h"
 
-#include "PropsAnimatedNode.h"
 #include <ReactUWP\Modules\NativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
 #include "NativeAnimatedNodeManager.h"
+#include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
 namespace react {
@@ -124,55 +124,56 @@ void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
 }
 
 void PropsAnimatedNode::MakeAnimation(
-	int64_t valueNodeTag,
-	FacadeType facadeType) {
+    int64_t valueNodeTag,
+    FacadeType facadeType) {
   if (const auto manager = m_manager.lock()) {
     if (const auto valueNode = manager->GetValueAnimatedNode(valueNodeTag)) {
       const auto animation =
-		  winrt::Window::Current().Compositor().CreateExpressionAnimation();
+          winrt::Window::Current().Compositor().CreateExpressionAnimation();
       animation.SetReferenceParameter(
-		  L"ValuePropSet", valueNode->PropertySet());
-      animation.Expression(static_cast<winrt::hstring>(L"ValuePropSet.") +
-		  ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
-		  ValueAnimatedNode::s_offsetName);
-      switch (facadeType){
+          L"ValuePropSet", valueNode->PropertySet());
+      animation.Expression(
+          static_cast<winrt::hstring>(L"ValuePropSet.") +
+          ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+          ValueAnimatedNode::s_offsetName);
+      switch (facadeType) {
         case FacadeType::Opacity:
           animation.Target(L"Opacity");
           break;
         case FacadeType::Rotation:
-          m_rotationAxis = { 0,0,1 };
+          m_rotationAxis = {0, 0, 1};
           animation.Expression(
-			  static_cast<winrt::hstring>(L"(ValuePropSet.") + 
-			  ValueAnimatedNode::s_valueName + L" + ValuePropSet." + 
-			  ValueAnimatedNode::s_offsetName + L") * 180 / PI");
+              static_cast<winrt::hstring>(L"(ValuePropSet.") +
+              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::RotationX:
           animation.Expression(
-			  static_cast<winrt::hstring>(L"(ValuePropSet.") + 
-			  ValueAnimatedNode::s_valueName + L" + ValuePropSet." + 
-			  ValueAnimatedNode::s_offsetName + L") * 180 / PI");
-          m_rotationAxis = { 1,0,0 };
+              static_cast<winrt::hstring>(L"(ValuePropSet.") +
+              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              ValueAnimatedNode::s_offsetName + L") * 180 / PI");
+          m_rotationAxis = {1, 0, 0};
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::RotationY:
           animation.Expression(
-			  static_cast<winrt::hstring>(L"(ValuePropSet.") + 
-			  ValueAnimatedNode::s_valueName + L" + ValuePropSet." + 
-			  ValueAnimatedNode::s_offsetName + L") * 180 / PI");
-          m_rotationAxis = { 0,1,0 };
+              static_cast<winrt::hstring>(L"(ValuePropSet.") +
+              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              ValueAnimatedNode::s_offsetName + L") * 180 / PI");
+          m_rotationAxis = {0, 1, 0};
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::Scale:
           animation.Expression(
-			  static_cast<winrt::hstring>(L"Vector3(ValuePropSet.") + 
-			  ValueAnimatedNode::s_valueName + L" + ValuePropSet." + 
-			  ValueAnimatedNode::s_offsetName + L", ValuePropSet." + 
-			  ValueAnimatedNode::s_valueName + L" + ValuePropSet." + 
-			  ValueAnimatedNode::s_offsetName + L", 0)");
+              static_cast<winrt::hstring>(L"Vector3(ValuePropSet.") +
+              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              ValueAnimatedNode::s_offsetName + L", ValuePropSet." +
+              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              ValueAnimatedNode::s_offsetName + L", 0)");
           animation.Target(L"Scale");
           m_needsCenterPointAnimation = true;
           break;

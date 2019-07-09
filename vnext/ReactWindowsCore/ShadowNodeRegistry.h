@@ -34,7 +34,7 @@ struct ShadowNodeRegistry {
 
   std::unordered_set<int64_t> &getAllRoots();
 
-  ShadowNode* getParentRootShadowNode(int64_t nodeTag);
+  ShadowNode *getParentRootShadowNode(int64_t nodeTag);
 
  private:
   std::unordered_set<int64_t> m_roots;

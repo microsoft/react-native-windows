@@ -186,7 +186,7 @@ dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
                     //    ("topMouseMove",
                     //    folly::dynamic::object("registrationName",
                     //    "onMouseMove"))
-                    );
+  );
   return eventTypes;
 }
 
@@ -310,5 +310,5 @@ bool ViewManagerBase::RequiresYogaNode() const {
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
-}
-}
+} // namespace uwp
+} // namespace react

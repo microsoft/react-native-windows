@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "AppStateModuleUwp.h"
 
 #include <winrt/Windows.UI.Xaml.h>

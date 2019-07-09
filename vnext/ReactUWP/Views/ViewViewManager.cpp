@@ -13,7 +13,6 @@
 #include <Utils/AccessibilityUtils.h>
 #include <Utils/PropertyUtils.h>
 
-
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
 
@@ -559,5 +558,5 @@ void ViewViewManager::SetLayoutProps(
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
-}
-}
+} // namespace uwp
+} // namespace react
