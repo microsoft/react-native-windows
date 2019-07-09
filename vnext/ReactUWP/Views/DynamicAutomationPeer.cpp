@@ -30,6 +30,16 @@ winrt::hstring DynamicAutomationPeer::GetClassNameCore() const {
   return L"DynamicAutomationPeer";
 }
 
+winrt::hstring DynamicAutomationPeer::GetNameCore() const {
+  winrt::hstring name = Super::GetNameCore();
+
+  if (name.empty()) {
+    name = GetContentName();
+  }
+
+  return name;
+}
+
 winrt::AutomationControlType
 DynamicAutomationPeer::GetAutomationControlTypeCore() const {
   auto accessibilityRole = GetAccessibilityRole();
@@ -78,6 +88,10 @@ DynamicAutomationPeer::GetAutomationControlTypeCore() const {
       return winrt::AutomationControlType::Tab;
     case winrt::react::uwp::AccessibilityRoles::ToolBar:
       return winrt::AutomationControlType::ToolBar;
+    case winrt::react::uwp::AccessibilityRoles::List:
+      return winrt::AutomationControlType::List;
+    case winrt::react::uwp::AccessibilityRoles::ListItem:
+      return winrt::AutomationControlType::ListItem;
     case winrt::react::uwp::AccessibilityRoles::None:
     case winrt::react::uwp::AccessibilityRoles::Search:
     case winrt::react::uwp::AccessibilityRoles::RadioGroup:
@@ -122,7 +136,7 @@ bool DynamicAutomationPeer::IsEnabledCore() const {
 // IInvokeProvider
 
 void DynamicAutomationPeer::Invoke() const {
-  if (auto invokeHandler = GetAccessibilityInvokeEventHandler()) {
+  if (auto const &invokeHandler = GetAccessibilityInvokeEventHandler()) {
     invokeHandler();
   }
 }
@@ -185,15 +199,41 @@ winrt::ToggleState DynamicAutomationPeer::ToggleState() const {
 }
 
 void DynamicAutomationPeer::Toggle() const {
-  if (auto invokeHandler = GetAccessibilityInvokeEventHandler()) {
+  if (auto const &invokeHandler = GetAccessibilityInvokeEventHandler()) {
     invokeHandler();
   }
+}
+
+winrt::hstring DynamicAutomationPeer::GetContentName() const {
+  winrt::hstring name = L"";
+
+  try {
+    if (auto const &owner = Owner()) {
+      if (auto const &viewControl =
+              owner.try_as<winrt::react::uwp::ViewControl>()) {
+        auto viewPanel = viewControl.GetPanel();
+
+        for (auto const &child : viewPanel.Children()) {
+          if (auto const &textBlock = child.try_as<winrt::TextBlock>()) {
+            name = (name.empty() ? L"" : L" ") + name + textBlock.Text();
+          } else if (
+              auto const &stringableName = child.try_as<winrt::IStringable>()) {
+            name =
+                (name.empty() ? L"" : L" ") + name + stringableName.ToString();
+          }
+        }
+      }
+    }
+  } catch (...) {
+  }
+
+  return name;
 }
 
 winrt::react::uwp::AccessibilityRoles
 DynamicAutomationPeer::GetAccessibilityRole() const {
   try {
-    if (auto owner = Owner()) {
+    if (auto const &owner = Owner()) {
       return DynamicAutomationProperties::GetAccessibilityRole(owner);
     }
   } catch (...) {
@@ -205,7 +245,7 @@ DynamicAutomationPeer::GetAccessibilityRole() const {
 bool DynamicAutomationPeer::GetAccessibilityState(
     winrt::react::uwp::AccessibilityStates state) const {
   try {
-    if (auto owner = Owner()) {
+    if (auto const &owner = Owner()) {
       switch (state) {
         case winrt::react::uwp::AccessibilityStates::Selected:
           return DynamicAutomationProperties::GetAccessibilityStateSelected(
@@ -238,7 +278,7 @@ bool DynamicAutomationPeer::GetAccessibilityState(
 winrt::react::uwp::AccessibilityInvokeEventHandler
 DynamicAutomationPeer::GetAccessibilityInvokeEventHandler() const {
   try {
-    if (auto owner = Owner()) {
+    if (auto const &owner = Owner()) {
       return DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(
           owner);
     }
