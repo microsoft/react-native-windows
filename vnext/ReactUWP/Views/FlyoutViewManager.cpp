@@ -372,7 +372,6 @@ void FlyoutViewManager::SetLayoutProps(
   auto *pFlyoutShadowNode = static_cast<FlyoutShadowNode *>(&nodeToUpdate);
 
   if (auto flyout = pFlyoutShadowNode->GetFlyout()) {
-
     if (winrt::FlyoutPlacementMode::Full == flyout.Placement()) {
       winrt::Style flyoutStyle({L"Windows.UI.Xaml.Controls.FlyoutPresenter",
                                 winrt::TypeKind::Metadata});
