@@ -3,6 +3,5 @@
 import { ViewProps } from 'react-native';
 
 export interface IMenuFlyoutSubItemProps extends ViewProps {
-
   text?: string;
 }

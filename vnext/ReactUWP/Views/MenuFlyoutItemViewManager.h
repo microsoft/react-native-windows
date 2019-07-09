@@ -2,9 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include <Views/FrameworkElementViewManager.h>
+
+namespace winrt {
+using MenuFlyoutItem = winrt::Windows::UI::Xaml::Controls::MenuFlyoutItem;
+}
 
 namespace react {
 namespace uwp {
@@ -31,6 +33,9 @@ class MenuFlyoutItemViewManager : public FrameworkElementViewManager {
  protected:
   XamlView CreateViewCore(int64_t tag) override;
   friend class MenuFlyoutItemShadowNode;
+
+ private:
+  winrt::MenuFlyoutItem::Click_revoker m_menuFlyoutItemClickRevoker{};
 };
 
 } // namespace uwp

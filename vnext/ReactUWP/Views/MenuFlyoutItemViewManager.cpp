@@ -84,14 +84,16 @@ const char *MenuFlyoutItemViewManager::GetName() const {
 }
 
 XamlView MenuFlyoutItemViewManager::CreateViewCore(int64_t tag) {
-  auto MenuFlyoutItem = winrt::MenuFlyoutItem();
+  winrt::MenuFlyoutItem MenuFlyoutItem = winrt::MenuFlyoutItem();
 
+  /* m_menuFlyoutItemClickRevoker =*/
   MenuFlyoutItem.Click([=](auto &&, auto &&) {
-    auto instance = m_wkReactInstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (instance != nullptr)
+    if (auto instance = m_wkReactInstance.lock()) {
+      folly::dynamic eventData = folly::dynamic::object("target", tag);
       instance->DispatchEvent(tag, "topClick", std::move(eventData));
+    }
   });
+
   return MenuFlyoutItem;
 }
 

@@ -5,24 +5,39 @@
 #pragma once
 
 #include <Views/FrameworkElementViewManager.h>
+#include "folly/dynamic.h"
 
-namespace react { namespace uwp {
+namespace winrt {
+using MenuFlyout = winrt::Windows::UI::Xaml::Controls::MenuFlyout;
+}
 
-class MenuFlyoutViewManager : public FrameworkElementViewManager
-{
+namespace react {
+namespace uwp {
+
+class MenuFlyoutViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
-public:
-  MenuFlyoutViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
-  facebook::react::ShadowNode* createShadow() const override;
+ public:
+  MenuFlyoutViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+
+  const char *GetName() const override;
+  facebook::react::ShadowNode *createShadow() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-  void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height) override;
+  void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      XamlView viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
   friend class MenuFlyoutShadowNode;
+
+ private:
 };
 
-} }
+} // namespace uwp
+} // namespace react

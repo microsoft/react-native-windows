@@ -44,7 +44,7 @@ set(SOURCES
 	Views/ControlViewManager.cpp
 	Views/DatePickerViewManager.cpp
 	Views/FlyoutViewManager.cpp
-  	Views/MenuFlyoutViewManager.cpp
+	Views/MenuFlyoutViewManager.cpp
 	Views/MenuFlyoutSubItemViewManager.cpp
 	Views/MenuFlyoutItemViewManager.cpp
 	Views/FrameworkElementViewManager.cpp

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include "FlyoutViewManager.h"
 #include "MenuFlyoutViewManager.h"
 
 #include <Views/ShadowNodeBase.h>
@@ -13,40 +14,10 @@
 #include <Utils/PropertyHandlerUtils.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
-namespace winrt {
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Interop;
-} // namespace winrt
-
-static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
-    placementModeMinVersion = {{"top", winrt::FlyoutPlacementMode::Top},
-                               {"bottom", winrt::FlyoutPlacementMode::Bottom},
-                               {"left", winrt::FlyoutPlacementMode::Left},
-                               {"right", winrt::FlyoutPlacementMode::Right},
-                               {"full", winrt::FlyoutPlacementMode::Full}};
-
-static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
-    placementModeRS5 = {{"top", winrt::FlyoutPlacementMode::Top},
-                        {"bottom", winrt::FlyoutPlacementMode::Bottom},
-                        {"left", winrt::FlyoutPlacementMode::Left},
-                        {"right", winrt::FlyoutPlacementMode::Right},
-                        {"full", winrt::FlyoutPlacementMode::Full},
-                        {"top-edge-aligned-left",
-                         winrt::FlyoutPlacementMode::TopEdgeAlignedLeft},
-                        {"top-edge-aligned-right",
-                         winrt::FlyoutPlacementMode::TopEdgeAlignedRight},
-                        {"bottom-edge-aligned-left",
-                         winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft},
-                        {"bottom-edge-aligned-right",
-                         winrt::FlyoutPlacementMode::BottomEdgeAlignedRight},
-                        {"left-edge-aligned-top",
-                         winrt::FlyoutPlacementMode::LeftEdgeAlignedTop},
-                        {"left-edge-aligned-bottom",
-                         winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom},
-                        {"right-edge-aligned-top",
-                         winrt::FlyoutPlacementMode::RightEdgeAlignedTop},
-                        {"right-edge-aligned-bottom",
-                         winrt::FlyoutPlacementMode::RightEdgeAlignedBottom}};
+// namespace winrt {
+// using namespace Windows::UI::Xaml::Controls::Primitives;
+// using namespace Windows::UI::Xaml::Interop;
+//} // namespace winrt
 
 template <>
 struct json_type_traits<winrt::FlyoutPlacementMode> {
@@ -99,6 +70,7 @@ class MenuFlyoutShadowNode : public ShadowNodeBase {
   float m_verticalOffset = 0;
   bool m_isFlyoutShowOptionsSupported = false; // not sure if needed
   winrt::FlyoutShowOptions m_showOptions = nullptr;
+  winrt::MenuFlyout::Opened_revoker m_menuFlyoutOpenRevoker{};
 
   std::unique_ptr<TouchEventHandler> m_touchEventHandler;
 };
@@ -128,12 +100,13 @@ void MenuFlyoutShadowNode::createView() {
   auto wkinstance = GetViewManager()->GetReactInstance();
   m_touchEventHandler = std::make_unique<TouchEventHandler>(wkinstance);
 
-  m_menuFlyout.Opened([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", m_tag);
-    if (instance != nullptr)
-      instance->DispatchEvent(m_tag, "topOpen", std::move(eventData));
-  });
+  m_menuFlyoutOpenRevoker =
+      m_menuFlyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
+        if (auto instance = wkinstance.lock()) {
+          folly::dynamic eventData = folly::dynamic::object("target", m_tag);
+          instance->DispatchEvent(m_tag, "topOpen", std::move(eventData));
+        }
+      });
 
   // cancel closing if lighDismiss is false
   m_menuFlyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/,
@@ -333,8 +306,8 @@ void MenuFlyoutShadowNode::AdjustDefaultFlyoutStyle() {
 }
 
 winrt::Popup MenuFlyoutShadowNode::GetMenuFlyoutParentPopup() const {
-  // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against
-  // RS6
+  // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running
+  // against RS6
   winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups =
       winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
   if (popups.Size() > 0)

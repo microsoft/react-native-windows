@@ -6,6 +6,41 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
+namespace winrt {
+using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace Windows::UI::Xaml::Interop;
+} // namespace winrt
+
+static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
+    placementModeMinVersion = {{"top", winrt::FlyoutPlacementMode::Top},
+                               {"bottom", winrt::FlyoutPlacementMode::Bottom},
+                               {"left", winrt::FlyoutPlacementMode::Left},
+                               {"right", winrt::FlyoutPlacementMode::Right},
+                               {"full", winrt::FlyoutPlacementMode::Full}};
+
+static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
+    placementModeRS5 = {{"top", winrt::FlyoutPlacementMode::Top},
+                        {"bottom", winrt::FlyoutPlacementMode::Bottom},
+                        {"left", winrt::FlyoutPlacementMode::Left},
+                        {"right", winrt::FlyoutPlacementMode::Right},
+                        {"full", winrt::FlyoutPlacementMode::Full},
+                        {"top-edge-aligned-left",
+                         winrt::FlyoutPlacementMode::TopEdgeAlignedLeft},
+                        {"top-edge-aligned-right",
+                         winrt::FlyoutPlacementMode::TopEdgeAlignedRight},
+                        {"bottom-edge-aligned-left",
+                         winrt::FlyoutPlacementMode::BottomEdgeAlignedLeft},
+                        {"bottom-edge-aligned-right",
+                         winrt::FlyoutPlacementMode::BottomEdgeAlignedRight},
+                        {"left-edge-aligned-top",
+                         winrt::FlyoutPlacementMode::LeftEdgeAlignedTop},
+                        {"left-edge-aligned-bottom",
+                         winrt::FlyoutPlacementMode::LeftEdgeAlignedBottom},
+                        {"right-edge-aligned-top",
+                         winrt::FlyoutPlacementMode::RightEdgeAlignedTop},
+                        {"right-edge-aligned-bottom",
+                         winrt::FlyoutPlacementMode::RightEdgeAlignedBottom}};
+
 namespace react {
 namespace uwp {
 

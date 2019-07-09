@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "MenuFlyoutSubItemViewManager.h"
+
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include "MenuFlyoutSubItemViewManager.h"
 #include "TouchEventHandler.h"
-#include "pch.h"
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/PropertyHandlerUtils.h>
