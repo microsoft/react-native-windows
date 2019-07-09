@@ -349,13 +349,12 @@ XamlView ViewViewManager::CreateViewCore(int64_t tag) {
 folly::dynamic ViewViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("accessible", "boolean")(
-      "accessibilityRole", "string")("accessibilityStates", "array")(
-      "pointerEvents", "string")("onClick", "function")(
-      "onMouseEnter", "function")("onMouseLeave", "function")
-               //  ("onMouseMove", "function")
-               ("acceptsKeyboardFocus", "boolean")(
-                   "enableFocusRing", "boolean")("tabIndex", "number"));
+  props.update(
+      folly::dynamic::object("pointerEvents", "string")("onClick", "function")(
+          "onMouseEnter", "function")("onMouseLeave", "function")
+      //("onMouseMove", "function")
+      ("acceptsKeyboardFocus", "boolean")("enableFocusRing", "boolean")(
+          "tabIndex", "number"));
 
   return props;
 }
