@@ -46,12 +46,13 @@ folly::dynamic ButtonViewManager::GetExportedCustomDirectEventTypeConstants()
 
 XamlView ButtonViewManager::CreateViewCore(int64_t tag) {
   winrt::Button button = winrt::Button();
-  m_buttonClickRevoker = button.Click(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto instance = m_wkReactInstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (instance != nullptr)
-      instance->DispatchEvent(tag, "topClick", std::move(eventData));
-  });
+  m_buttonClickRevoker =
+      button.Click(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = m_wkReactInstance.lock();
+        folly::dynamic eventData = folly::dynamic::object("target", tag);
+        if (instance != nullptr)
+          instance->DispatchEvent(tag, "topClick", std::move(eventData));
+      });
 
   return button;
 }

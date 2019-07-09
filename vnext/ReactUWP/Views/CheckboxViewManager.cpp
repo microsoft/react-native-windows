@@ -12,7 +12,7 @@
 
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
-namespace winrt{
+namespace winrt {
 using ToggleButton = Windows::UI::Xaml::Controls::Primitives::ToggleButton;
 }
 

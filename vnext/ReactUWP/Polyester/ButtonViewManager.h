@@ -5,7 +5,7 @@
 
 #include "ContentControlViewManager.h"
 
-namespace winrt{
+namespace winrt {
 using Button = winrt::Windows::UI::Xaml::Controls::Button;
 }
 
