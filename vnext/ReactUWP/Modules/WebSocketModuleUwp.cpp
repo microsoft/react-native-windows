@@ -101,8 +101,8 @@ struct lessthrow_await_adapter {
       winrt::impl::com_callback_args args{};
       args.data = handle.address();
 
-      auto callback = [](winrt::impl::com_callback_args *
-                         args) noexcept->int32_t {
+      auto callback =
+          [](winrt::impl::com_callback_args * args) noexcept->int32_t {
         std::experimental::coroutine_handle<>::from_address(args->data)();
         return S_OK;
       };

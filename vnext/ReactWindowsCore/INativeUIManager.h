@@ -24,6 +24,7 @@ struct INativeUIManagerHost {
   virtual std::unordered_set<int64_t> &GetAllRootTags() = 0;
   virtual ShadowNode &GetShadowNodeForTag(int64_t tag) = 0;
   virtual ShadowNode *FindShadowNodeForTag(int64_t tag) = 0;
+  virtual ShadowNode *FindParentRootShadowNode(int64_t tag) = 0;
 };
 
 struct INativeUIManager {
@@ -60,6 +61,8 @@ struct INativeUIManager {
       facebook::react::ShadowNode &shadowNode,
       facebook::react::ShadowNode &shadowRoot,
       facebook::xplat::module::CxxModule::Callback callback) = 0;
+  virtual void focus(int64_t reactTag) = 0;
+  virtual void blur(int64_t reactTag) = 0;
 };
 
 } // namespace react

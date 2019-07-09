@@ -13,7 +13,7 @@
  *
  * This class is responsible for coordinating the "focused"
  * state for TextInputs. All calls relating to the keyboard
- * should be funneled through here
+ * should be funneled through here.
  */
 
 'use strict';
@@ -38,11 +38,7 @@ function currentlyFocusedField(): ?number {
  */
 function focusTextInput(textFieldID: ?number) {
   if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
-    UIManager.dispatchViewManagerCommand(
-      textFieldID,
-      UIManager.getViewManagerConfig('RCTTextInput').Commands.SetFocus,
-      null,
-    );
+    UIManager.focus(textFieldID);
   }
 }
 
@@ -54,11 +50,7 @@ function focusTextInput(textFieldID: ?number) {
 function blurTextInput(textFieldID: ?number) {
   if (currentlyFocusedID === textFieldID && textFieldID !== null) {
     currentlyFocusedID = null;
-    UIManager.dispatchViewManagerCommand(
-      textFieldID,
-      UIManager.getViewManagerConfig('RCTTextInput').Commands.Blur,
-      null,
-    );
+    UIManager.blur(textFieldID);
   }
 }
 

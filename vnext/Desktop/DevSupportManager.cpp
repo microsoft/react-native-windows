@@ -43,8 +43,8 @@ void DevSupportManager::StopPollingLiveReload() {
 JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
     const DevSettings &settings) {
   return [settings](
-      shared_ptr<ExecutorDelegate> delegate,
-      shared_ptr<MessageQueueThread> jsQueue) {
+             shared_ptr<ExecutorDelegate> delegate,
+             shared_ptr<MessageQueueThread> jsQueue) {
     auto websocketJSE = make_unique<WebSocketJSExecutor>(delegate, jsQueue);
     websocketJSE
         ->ConnectAsync(
@@ -101,11 +101,9 @@ string DevSupportManager::GetJavaScriptFromServer(
 void DevSupportManager::StartPollingLiveReload(
     const string &debugHost,
     std::function<void()> onChangeCallback) {
-  auto t = create_task([
-    this,
-    debugHost,
-    onChangeCallback = move(onChangeCallback)
-  ] {
+  auto t = create_task([this,
+                        debugHost,
+                        onChangeCallback = move(onChangeCallback)] {
     cancellation_token token = m_liveReloadCts.get_token();
     while (!token.is_canceled()) {
       try {

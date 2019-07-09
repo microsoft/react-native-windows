@@ -42,5 +42,5 @@ HasDynamicAutomationProperties(
 
   return false;
 }
-}
-}
+} // namespace uwp
+} // namespace react

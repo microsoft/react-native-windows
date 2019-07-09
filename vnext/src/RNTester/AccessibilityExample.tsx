@@ -250,7 +250,7 @@ class TouchableExamples extends React.Component<{}, any> {
         </TouchableHighlight>
         <Text
           accessibilityLiveRegion="polite"
-          accessibilityLabel={'Pressed ' + this.state.pressedCount + 'times'}>
+          accessibilityLabel={'Pressed ' + this.state.pressedCount + ' times'}>
           Pressed {this.state.pressedCount} times
         </Text>
       </View>
@@ -297,34 +297,33 @@ class AccessibilityStateExamples extends React.Component {
           The following list of TouchableHighlights toggles
           accessibilityState.selected when touched:
         </Text>
-        <View accessibilityLabel="List of selectable items">
-          <FlatList
-            data={selectableItems}
-            renderItem={item => (
-              <TouchableHighlight
-                style={{
-                  width: 100,
-                  height: 50,
-                  backgroundColor: this.state.itemsSelected[item.index]
-                    ? 'gray'
-                    : 'lightskyblue',
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={'Selectable item ' + (item.index + 1)}
-                accessibilityStates={
-                  this.state.itemsSelected[item.index] ? ['selected'] : []
-                }
-                onPress={() => this.selectPress(item.index)}>
-                <Text>
-                  {this.state.itemsSelected[item.index]
-                    ? 'Selected'
-                    : 'Unselected'}{' '}
-                </Text>
-              </TouchableHighlight>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
+        <FlatList
+          accessibilityLabel="List of selectable items"
+          data={selectableItems}
+          renderItem={item => (
+            <TouchableHighlight
+              style={{
+                width: 100,
+                height: 50,
+                backgroundColor: this.state.itemsSelected[item.index]
+                  ? 'gray'
+                  : 'lightskyblue',
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={'Selectable item ' + (item.index + 1)}
+              accessibilityStates={
+                this.state.itemsSelected[item.index] ? ['selected'] : []
+              }
+              onPress={() => this.selectPress(item.index)}>
+              <Text>
+                {this.state.itemsSelected[item.index]
+                  ? 'Selected'
+                  : 'Unselected'}
+              </Text>
+            </TouchableHighlight>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     );
   }
@@ -338,6 +337,46 @@ class AccessibilityStateExamples extends React.Component {
     tmp[index] = !tmp[index];
     this.setState({itemsSelected: tmp});
   };
+}
+
+class AccessibilityListExamples extends React.Component {
+  public render() {
+    var items = [{}, {}, {}];
+    return (
+      <View>
+        <Text>
+          The following uses accessibilityRole: 'list', 'listitem',
+          accessibilitySetSize, and accessibilityPosInSet.
+        </Text>
+        <View
+          //@ts-ignore
+          accessibilityRole="list"
+          //@ts-check
+        >
+          <FlatList
+            data={items}
+            renderItem={item => (
+              <View
+                style={{
+                  width: 100,
+                  height: 50,
+                  backgroundColor: 'lightskyblue',
+                }}
+                //@ts-ignore
+                accessibilityRole="listitem"
+                accessibilitySetSize={items.length}
+                accessibilityPosInSet={item.index + 1}
+                //@ts-check
+              >
+                <Text>Item {item.index + 1}</Text>
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
 export const displayName = (_undefined?: string) => {};
@@ -366,6 +405,12 @@ export const examples = [
     title: 'States',
     render: function(): JSX.Element {
       return <AccessibilityStateExamples />;
+    },
+  },
+  {
+    title: 'Lists',
+    render: function(): JSX.Element {
+      return <AccessibilityListExamples />;
     },
   },
 ];

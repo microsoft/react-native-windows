@@ -79,12 +79,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     key: 'ScrollViewSimpleExample',
     module: require('react-native/RNTester/js/ScrollViewSimpleExample'),
   },
-  /*  TODO: Enable SectionList when Animation is supported
   {
     key: 'SectionListExample',
     module: require('react-native/RNTester/js/SectionListExample'),
   },
-  */
   {
     key: 'SwitchExample',
     module: require('react-native/RNTester/js/SwitchExample'),
@@ -124,6 +122,10 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'AccessibilityExample',
     module: require('./AccessibilityExample'),
+  },
+  {
+    key: 'AnimatedExample',
+    module: require('react-native/RNTester/js/AnimatedExample'),
   },
   {
     key: 'AppStateExample',

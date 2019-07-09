@@ -7,11 +7,11 @@
 #include <folly/dynamic.h>
 #include <map>
 
-namespace react { namespace windows {
+namespace react {
+namespace windows {
 
-class AppTheme
-{
-public:
+class AppTheme {
+ public:
   static inline const std::string dark = "dark";
   static inline const std::string light = "light";
 
@@ -23,20 +23,22 @@ public:
   virtual folly::dynamic getHighContrastColors();
 };
 
-class AppThemeModule : public facebook::xplat::module::CxxModule
-{
-public:
+class AppThemeModule : public facebook::xplat::module::CxxModule {
+ public:
   static inline const std::string name = "RTCAppTheme";
 
-  AppThemeModule(std::shared_ptr<AppTheme> && appTheme);
+  AppThemeModule(std::shared_ptr<AppTheme> &&appTheme);
 
   // CxxModule
-  std::string getName() override { return name; };
+  std::string getName() override {
+    return name;
+  };
   auto getConstants() -> std::map<std::string, folly::dynamic> override;
   auto getMethods() -> std::vector<Method> override;
 
-private:
+ private:
   std::shared_ptr<AppTheme> m_appTheme;
 };
 
-} } // namespace react::windows
+} // namespace windows
+} // namespace react

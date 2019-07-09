@@ -67,7 +67,7 @@ const Header = ({onBack, title}: {onBack?: () => void; title: string}) => (
       </View>
       {onBack && (
         <View style={styles.headerLeft}>
-          <Button title="Back" onPress={onBack} />
+          <Button title="Back" onPress={onBack} accessibilityLabel="Back" />
         </View>
       )}
     </View>

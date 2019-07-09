@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "ClipboardModule.h"
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>

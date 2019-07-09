@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "NativeAnimatedNodeManager.h"
+
 #include "AdditionAnimatedNode.h"
 #include "DiffClampAnimatedNode.h"
 #include "DivisionAnimatedNode.h"
 #include "InterpolationAnimatedNode.h"
 #include "ModulusAnimatedNode.h"
 #include "MultiplicationAnimatedNode.h"
+#include "NativeAnimatedNodeManager.h"
 #include "StyleAnimatedNode.h"
 #include "SubtractionAnimatedNode.h"
 
@@ -227,7 +228,7 @@ void NativeAnimatedNodeManager::AddAnimatedEventToView(
   const auto valueNodeTag = static_cast<int64_t>(
       eventMapping.find("animatedValueTag").dereference().second.asDouble());
   const auto pathList =
-      eventMapping.find("nativeEventPath").dereference().second.getString();
+      eventMapping.find("nativeEventPath").dereference().second;
 
   const auto key = std::make_tuple(viewTag, eventName);
   if (m_eventDrivers.count(key)) {
@@ -249,13 +250,14 @@ void NativeAnimatedNodeManager::RemoveAnimatedEventFromView(
   if (m_eventDrivers.count(key)) {
     auto &drivers = m_eventDrivers.at(key);
 
-    for (auto iterator = drivers.begin(); iterator != drivers.end();
-         iterator++) {
+    for (auto iterator = drivers.begin(); iterator != drivers.end();) {
       if (const auto value = iterator->get()->AnimatedValue()) {
         if (value->Tag() == animatedValueTag) {
-          m_eventDrivers.at(key).erase(iterator);
+          iterator = drivers.erase(iterator);
+          continue;
         }
       }
+      ++iterator;
     }
 
     if (!drivers.size()) {
@@ -271,7 +273,9 @@ void NativeAnimatedNodeManager::ProcessDelayedPropsNodes() {
   const auto delayedPropsNodes = m_delayedPropsNodes;
   m_delayedPropsNodes.clear();
   for (const auto tag : delayedPropsNodes) {
-    m_propsNodes.at(tag)->StartAnimations();
+    if (m_propsNodes.count(tag) > 0) {
+      m_propsNodes.at(tag)->StartAnimations();
+    }
   }
 }
 

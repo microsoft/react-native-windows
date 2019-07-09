@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "AdditionAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 

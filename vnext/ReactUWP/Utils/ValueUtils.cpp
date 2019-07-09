@@ -88,8 +88,12 @@ SolidColorBrushFrom(const folly::dynamic &d) {
           L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
           L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
           L"  <SolidColorBrush"
-          L"      x:Key='" + resourceName + L"'"
-          L"      Color='{ThemeResource " + resourceName + "}' />"
+          L"      x:Key='" +
+          resourceName +
+          L"'"
+          L"      Color='{ThemeResource " +
+          resourceName +
+          "}' />"
           L"</ResourceDictionary>";
 
       auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
