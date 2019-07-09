@@ -6,23 +6,32 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class  MenuFlyoutItemViewManager : public FrameworkElementViewManager
-{
+class MenuFlyoutItemViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
-public:
-   MenuFlyoutItemViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
-  facebook::react::ShadowNode* createShadow() const override;
+ public:
+  MenuFlyoutItemViewManager(
+      const std::shared_ptr<IReactInstance> &reactInstance);
+
+  const char *GetName() const override;
+  facebook::react::ShadowNode *createShadow() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
-  void SetLayoutProps(ShadowNodeBase& nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height) override;
+  void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      XamlView viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
   friend class MenuFlyoutItemShadowNode;
 };
 
-} }
+} // namespace uwp
+} // namespace react

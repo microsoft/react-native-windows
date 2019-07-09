@@ -23,10 +23,10 @@
 #include <Views/CheckboxViewManager.h>
 #include <Views/DatePickerViewManager.h>
 #include <Views/FlyoutViewManager.h>
-#include <Views/MenuFlyoutViewManager.h>
+#include <Views/Image/ImageViewManager.h>
 #include <Views/MenuFlyoutItemViewManager.h>
 #include <Views/MenuFlyoutSubItemViewManager.h>
-#include <Views/Image/ImageViewManager.h>
+#include <Views/MenuFlyoutViewManager.h>
 #include <Views/PickerViewManager.h>
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
@@ -108,7 +108,8 @@ CreateUIManager(
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(instance));
   viewManagers.push_back(std::make_unique<MenuFlyoutViewManager>(instance));
   viewManagers.push_back(std::make_unique<MenuFlyoutItemViewManager>(instance));
-  viewManagers.push_back(std::make_unique<MenuFlyoutSubItemViewManager>(instance));
+  viewManagers.push_back(
+      std::make_unique<MenuFlyoutSubItemViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
   viewManagers.push_back(std::make_unique<PickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
