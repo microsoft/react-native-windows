@@ -101,6 +101,9 @@ class FlyoutShadowNode : public ShadowNodeBase {
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
       m_previewKeyboardEventHandlerOnRoot;
+
+  winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
+  winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
 };
 
 thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
@@ -133,20 +136,23 @@ void FlyoutShadowNode::createView() {
   m_previewKeyboardEventHandlerOnRoot =
       std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
-  m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/,
-                       winrt::FlyoutBaseClosingEventArgs args) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled &&
-        m_isOpen) {
-      args.Cancel(true);
-    }
-  });
+  m_flyoutClosingRevoker = m_flyout.Closing(
+      winrt::auto_revoke,
+      [=](winrt::FlyoutBase /*flyoutbase*/,
+          winrt::FlyoutBaseClosingEventArgs args) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr && !m_isLightDismissEnabled &&
+            m_isOpen) {
+          args.Cancel(true);
+        }
+      });
 
-  m_flyout.Closed([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnFlyoutClosed(*instance, m_tag, false);
-  });
+  m_flyoutClosedRevoker =
+      m_flyout.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          OnFlyoutClosed(*instance, m_tag, false);
+      });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
