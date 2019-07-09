@@ -37,7 +37,7 @@ using namespace ::winrt::Windows::UI::Xaml::Controls::Primitives;
 using namespace ::winrt::Windows::UI::Composition;
 
 // using namespace ::winrt::Windows::UI::Xaml::Controls;
-Msing Control = ::winrt::Windows::UI::Xaml::Controls::Control;
+using Control = ::winrt::Windows::UI::Xaml::Controls::Control;
 using ComboBox = ::winrt::Windows::UI::Xaml::Controls::ComboBox;
 using ContentControl = ::winrt::Windows::UI::Xaml::Controls::ContentControl;
 using CheckBox = ::winrt::Windows::UI::Xaml::Controls::CheckBox;
