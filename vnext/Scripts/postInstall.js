@@ -21,5 +21,5 @@ if (replaceDep) {
     pkgJson.devDependencies['react-native'] = pkgJson.rnDepVersion;
 
     delete pkgJson.rnDepVersion;
-    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
+    fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
 }

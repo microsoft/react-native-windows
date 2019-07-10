@@ -6,6 +6,7 @@
 //
 
 #include "pch.h"
+
 #include "MainPage.xaml.h"
 
 using namespace Microsoft::React::Test;
