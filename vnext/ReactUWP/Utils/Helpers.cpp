@@ -39,7 +39,7 @@ void toUpperInplace(string &str) {
   });
 }
 
-string myToUpper(string &str) {
+string toUpperOutOfPlace(string &str) {
   std::string retVal("");
   for (auto &c : str) {
     retVal.push_back(static_cast<char>(std::toupper(c)));

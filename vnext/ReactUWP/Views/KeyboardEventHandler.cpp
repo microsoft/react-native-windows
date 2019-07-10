@@ -226,7 +226,7 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(
     std::vector<HandledKeyboardEvent> const &handledEvents,
     HandledKeyboardEvent currentEvent) {
   for (auto const &event : handledEvents) {
-    if (event.key == myToUpper(currentEvent.key) &&
+    if (event.key == toUpperOutOfPlace(currentEvent.key) &&
         (event.altKey == currentEvent.altKey) &&
         (event.ctrlKey == currentEvent.ctrlKey) &&
         (event.shiftKey == currentEvent.shiftKey) &&

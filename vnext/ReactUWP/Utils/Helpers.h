@@ -28,7 +28,7 @@ inline typename T asEnum(folly::dynamic const &obj) {
 }
 
 void toUpperInplace(string &str);
-string myToUpper(string &str);
+string toUpperOutOfPlace(string &str);
 
 ReactId getViewId(
     _In_ IReactInstance *instance,
