@@ -340,10 +340,7 @@ void FlyoutShadowNode::UpdateTargetContextFlyout() {
   auto wkinstance = GetViewManager()->GetReactInstance();
   auto instance = wkinstance.lock();
 
-  if (instance == nullptr)
-    return;
-
-  if (m_targetElement != nullptr) {
+  if (instance && m_targetElement) {
     if (m_isContextFlyout) {
       m_targetElement.ContextFlyout(m_flyout);
     } else {
