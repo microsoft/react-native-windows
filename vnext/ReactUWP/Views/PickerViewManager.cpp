@@ -13,12 +13,6 @@
 
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
-namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-} // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -50,6 +44,8 @@ class PickerShadowNode : public ShadowNodeBase {
 
   // FUTURE: remove when we can require RS5+
   bool m_isEditableComboboxSupported;
+
+  winrt::ComboBox::SelectionChanged_revoker m_comboBoxSelectionChangedRevoker{};
 };
 
 PickerShadowNode::PickerShadowNode() : Super() {
@@ -72,20 +68,21 @@ void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<winrt::ComboBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  combobox.SelectionChanged([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr) {
-      int32_t index = combobox.SelectedIndex();
-      folly::dynamic value;
-      if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
-        value = m_items.at(index)["value"];
-      folly::dynamic text;
-      if (m_isEditableComboboxSupported && index == -1)
-        text = HstringToDynamic(combobox.Text());
-      OnSelectionChanged(
-          *instance, m_tag, std::move(value), index, std::move(text));
-    }
-  });
+  m_comboBoxSelectionChangedRevoker =
+      combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr) {
+          int32_t index = combobox.SelectedIndex();
+          folly::dynamic value;
+          if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
+            value = m_items.at(index)["value"];
+          folly::dynamic text;
+          if (m_isEditableComboboxSupported && index == -1)
+            text = HstringToDynamic(combobox.Text());
+          OnSelectionChanged(
+              *instance, m_tag, std::move(value), index, std::move(text));
+        }
+      });
 }
 
 void PickerShadowNode::updateProperties(const folly::dynamic &&props) {

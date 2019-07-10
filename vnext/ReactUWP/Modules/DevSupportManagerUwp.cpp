@@ -172,7 +172,6 @@ void DevSupportManager::StartPollingLiveReload(
                 winrt::Windows::Web::Http::HttpStatusCode::ResetContent &&
             !cancelled) {
           onChangeCallback();
-          break;
         }
       } catch (winrt::hresult_error const &e) {
         // Continue to poll on known error conditions
