@@ -122,6 +122,8 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(
        accessibilityRole == winrt::react::uwp::AccessibilityRoles::Switch ||
        accessibilityRole == winrt::react::uwp::AccessibilityRoles::Radio)) {
     return *this;
+  } else if (patternInterface == winrt::PatternInterface::ExpandCollapse) {
+    return *this;
   }
 
   return Super::GetPatternCore(patternInterface);
@@ -131,6 +133,18 @@ bool DynamicAutomationPeer::IsEnabledCore() const {
   bool disabled =
       GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Disabled);
   return !disabled && Super::IsEnabledCore();
+}
+
+winrt::hstring DynamicAutomationPeer::GetItemStatusCore() const {
+  winrt::hstring itemStatus = Super::GetItemStatusCore();
+
+  if (itemStatus.empty()) {
+    if (GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Busy)) {
+      itemStatus = L"Busy";
+    }
+  }
+
+  return itemStatus;
 }
 
 // IInvokeProvider
@@ -203,6 +217,35 @@ void DynamicAutomationPeer::Toggle() const {
     invokeHandler();
   }
 }
+
+// IExpandCollapseProvider
+
+winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
+  bool expandedState =
+      GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Expanded);
+  bool collapsedState =
+      GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Collapsed);
+
+  if (!expandedState && collapsedState) {
+    return winrt::ExpandCollapseState::Collapsed;
+  } else if (expandedState && !collapsedState) {
+    return winrt::ExpandCollapseState::Expanded;
+  } else if (expandedState && collapsedState) {
+    return winrt::ExpandCollapseState::PartiallyExpanded;
+  }
+
+  return winrt::ExpandCollapseState::LeafNode;
+}
+
+void DynamicAutomationPeer::Expand() const {
+  // Right now RN does not have "expand" events, so this is a no-op
+}
+
+void DynamicAutomationPeer::Collapse() const {
+  // Right now RN does not have "collapse" events, so this is a no-op
+}
+
+// Private Methods
 
 winrt::hstring DynamicAutomationPeer::GetContentName() const {
   winrt::hstring name = L"";
