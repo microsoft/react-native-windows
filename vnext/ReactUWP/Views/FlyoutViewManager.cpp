@@ -100,7 +100,8 @@ class FlyoutShadowNode : public ShadowNodeBase {
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
   static thread_local std::int32_t s_cOpenFlyouts;
-  bool m_attachAsContextFlyout = false;
+  bool m_isContextFlyout = false;
+  winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
@@ -152,11 +153,12 @@ void FlyoutShadowNode::createView() {
       OnFlyoutClosed(*instance, m_tag, false);
   });
 
-  m_flyout.Opened([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnFlyoutOpened(*instance, m_tag, false);
-  });
+  m_flyoutOpenedRevoker =
+      m_flyout.Opened(winrt::auto_revoke, [wkinstance, this](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (instance && !m_updating)
+          OnFlyoutOpened(*instance, m_tag, false);
+      });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
@@ -228,13 +230,13 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
           popup.IsLightDismissEnabled(m_isLightDismissEnabled);
       }
     } else if (propertyName == "isOpen") {
-      if (propertyValue.isBool() && !m_attachAsContextFlyout) {
+      if (propertyValue.isBool() && !m_isContextFlyout) {
         m_isOpen = propertyValue.asBool();
         updateIsOpen = true;
       }
-    } else if (propertyName == "attachAsContextFlyout") {
+    } else if (propertyName == "isContextFlyout") {
       if (propertyValue.isBool()) {
-        m_attachAsContextFlyout = propertyValue.asBool();
+        m_isContextFlyout = propertyValue.asBool();
         updateContextFlyout = true;
         m_isOpen = false;
         updateIsOpen = true;
@@ -261,7 +263,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
 
   if (updateTargetElement || m_targetElement == nullptr) {
     SetTargetFrameworkElement();
-    if (!m_attachAsContextFlyout) {
+    if (!m_isContextFlyout) {
       winrt::FlyoutBase::SetAttachedFlyout(m_targetElement, m_flyout);
     }
   }
@@ -331,7 +333,7 @@ void FlyoutShadowNode::UpdateTargetContextFlyout() {
     return;
 
   if (m_targetElement != nullptr) {
-    if (m_attachAsContextFlyout) {
+    if (m_isContextFlyout) {
       m_targetElement.ContextFlyout(m_flyout);
     } else {
       m_targetElement.ClearValue(winrt::UIElement::ContextFlyoutProperty());
@@ -390,7 +392,7 @@ folly::dynamic FlyoutViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(folly::dynamic::object("horizontalOffset", "number")(
-      "isLightDismissEnabled", "boolean")("attachAsContextFlyout", "boolean")(
+      "isLightDismissEnabled", "boolean")("isContextFlyout", "boolean")(
       "isOpen", "boolean")("placement", "number")("target", "number")(
       "verticalOffset", "number"));
 

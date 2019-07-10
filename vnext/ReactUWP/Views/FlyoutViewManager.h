@@ -5,6 +5,10 @@
 #pragma once
 
 #include <Views/FrameworkElementViewManager.h>
+namespace winrt {
+
+using Flyout = winrt::Windows::UI::Xaml::Controls::Flyout;
+}
 
 namespace react {
 namespace uwp {

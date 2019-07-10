@@ -103,7 +103,7 @@ class ContextFlyoutExample extends React.Component<
         {this.state.target && (
           <Flyout
             isOpen={this.state.isFlyoutVisible}
-            attachAsContextFlyout={this.state.attachAsContextMenu}
+            isContextFlyout={this.state.attachAsContextMenu}
             onDismiss={this._onFlyoutDismissed}
             target={this.state.target}
             placement={this.state.placementOptions}
@@ -152,7 +152,7 @@ class ContextFlyoutExample extends React.Component<
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<Flyout> attachAsContextFlyout Example';
+export const title = '<Flyout> isContextFlyout Example';
 export const description =
   'Example of Flyout Assigned to ContextFlyout property of a UIElement';
 export const examples = [

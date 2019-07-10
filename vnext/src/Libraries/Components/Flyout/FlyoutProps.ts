@@ -24,7 +24,7 @@ export interface IFlyoutProps extends ViewProps {
   horizontalOffset?: number;
   isLightDismissEnabled?: boolean;
   isOpen?: boolean;
-  attachAsContextFlyout?: boolean;
+  isContextFlyout?: boolean;
   onDismiss?: (isOpen: boolean) => void;
   onOpen?: () => void;
   placement?: Placement;
