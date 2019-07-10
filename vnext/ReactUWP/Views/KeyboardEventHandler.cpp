@@ -209,8 +209,6 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
   bool shouldMarkHandled = false;
-  if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
-        shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   if (phase == KeyboardEventPhase::PreviewKeyDown ||
       phase == KeyboardEventPhase::KeyDown)
     shouldMarkHandled =
@@ -227,7 +225,7 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(
     std::vector<HandledKeyboardEvent> const &handledEvents,
     HandledKeyboardEvent currentEvent) {
   for (auto const &event : handledEvents) {
-    if (event.key == currentEvent.key &&
+    if (event.key == myToUpper(currentEvent.key) &&
         (event.altKey == currentEvent.altKey) &&
         (event.ctrlKey == currentEvent.ctrlKey) &&
         (event.shiftKey == currentEvent.shiftKey) &&

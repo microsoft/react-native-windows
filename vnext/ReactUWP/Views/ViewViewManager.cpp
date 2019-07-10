@@ -304,28 +304,28 @@ XamlView ViewViewManager::CreateViewControl(int64_t tag) {
         tag, "topBlur", std::move(folly::dynamic::object("target", tag)));
   });
 
-  contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const &e) {
-    if (e.Key() == winrt::VirtualKey::Enter ||
-        e.Key() == winrt::VirtualKey::Space) {
-      auto instance = m_wkReactInstance.lock();
-      if (instance != nullptr) {
-        auto pNativeUiManager =
-            static_cast<NativeUIManager *>(instance->NativeUIManager());
-        facebook::react::INativeUIManagerHost *pUIManagerHost =
-            pNativeUiManager->getHost();
+  //contentControl.KeyDown([=](auto &&, winrt::KeyRoutedEventArgs const &e) {
+  //  if (e.Key() == winrt::VirtualKey::Enter ||
+  //      e.Key() == winrt::VirtualKey::Space) {
+  //    auto instance = m_wkReactInstance.lock();
+  //    if (instance != nullptr) {
+  //      auto pNativeUiManager =
+  //          static_cast<NativeUIManager *>(instance->NativeUIManager());
+  //      facebook::react::INativeUIManagerHost *pUIManagerHost =
+  //          pNativeUiManager->getHost();
 
-        auto pViewShadowNode = static_cast<ViewShadowNode *>(
-            pUIManagerHost->FindShadowNodeForTag(tag));
-        if (pViewShadowNode != nullptr && pViewShadowNode->OnClick()) {
-          DispatchEvent(
-              tag,
-              "topClick",
-              std::move(folly::dynamic::object("target", tag)));
-          e.Handled(true);
-        }
-      }
-    }
-  });
+  //      auto pViewShadowNode = static_cast<ViewShadowNode *>(
+  //          pUIManagerHost->FindShadowNodeForTag(tag));
+  //      if (pViewShadowNode != nullptr && pViewShadowNode->OnClick()) {
+  //        DispatchEvent(
+  //            tag,
+  //            "topClick",
+  //            std::move(folly::dynamic::object("target", tag)));
+  //        e.Handled(true);
+  //      }
+  //    }
+  //  }
+  //});
 
   return contentControl.try_as<XamlView>();
 }
