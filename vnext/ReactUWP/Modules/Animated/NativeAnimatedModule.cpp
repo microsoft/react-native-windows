@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "NativeAnimatedModule.h"
 
 #include <cxxreact/Instance.h>

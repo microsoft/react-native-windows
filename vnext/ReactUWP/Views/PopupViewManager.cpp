@@ -9,18 +9,11 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
-
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
+
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 namespace winrt {
-using namespace Windows::Foundation;
-using namespace Windows::UI::Core;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 } // namespace winrt
 
@@ -48,6 +41,8 @@ class PopupShadowNode : public ShadowNodeBase {
       m_previewKeyboardEventHandlerOnRoot;
 
   int64_t m_targetTag;
+  winrt::Popup::Closed_revoker m_popupClosedRevoker{};
+  winrt::Popup::Opened_revoker m_popupOpenedRevoker{};
 };
 
 PopupShadowNode::~PopupShadowNode() {
@@ -64,17 +59,19 @@ void PopupShadowNode::createView() {
   m_previewKeyboardEventHandlerOnRoot =
       std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
-  popup.Closed([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnPopupClosed(*instance, m_tag, false);
-  });
+  m_popupClosedRevoker =
+      popup.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          OnPopupClosed(*instance, m_tag, false);
+      });
 
-  popup.Opened([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      SetAnchorPosition(popup);
-  });
+  m_popupOpenedRevoker =
+      popup.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          SetAnchorPosition(popup);
+      });
 }
 
 void PopupShadowNode::AddView(ShadowNode &child, int64_t index) {

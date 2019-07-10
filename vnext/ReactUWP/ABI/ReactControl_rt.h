@@ -62,7 +62,8 @@ class ReactControl : public Microsoft::WRL::RuntimeClass<
   virtual void AttachRoot() noexcept override;
   virtual void DetachRoot() noexcept override;
 
-  virtual std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl() const noexcept override;
+  virtual std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl()
+      const noexcept override;
 
   // IReactRootView implementations
   virtual void ResetView() override;

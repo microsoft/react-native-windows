@@ -45,13 +45,17 @@ interface IKeyboardableComponentState {
   lastKeyUp: string | null;
   lastKeyDownCapture: string | null;
   lastKeyUpCapture: string | null;
+  lastKeyDownCode: string | null;
+  lastKeyUpCode: string | null;
+  lastKeyDownCaptureCode: string | null;
+  lastKeyUpCaptureCode: string | null;
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
-  {key: 'a', handledEventPhase: HandledEventPhase.Capturing},
-  {key: 'b'},
-  {key: 'c', handledEventPhase: HandledEventPhase.Bubbling},
-  {key: 'Tab', handledEventPhase: HandledEventPhase.Capturing},
+  {code: 'KeyA', handledEventPhase: HandledEventPhase.Capturing},
+  {code: 'KeyB'},
+  {code: 'Digit1', handledEventPhase: HandledEventPhase.Bubbling},
+  {code: 'Tab', handledEventPhase: HandledEventPhase.Capturing},
 ];
 
 class ViewWindowsKeyboardExample extends React.Component<
@@ -65,6 +69,10 @@ class ViewWindowsKeyboardExample extends React.Component<
       lastKeyUp: null,
       lastKeyDownCapture: null,
       lastKeyUpCapture: null,
+      lastKeyDownCode: null,
+      lastKeyUpCode: null,
+      lastKeyDownCaptureCode: null,
+      lastKeyUpCaptureCode: null,
     };
   }
 
@@ -80,26 +88,47 @@ class ViewWindowsKeyboardExample extends React.Component<
           keyDownEvents={handledNativeKeyboardEvents}
           keyUpEvents={handledNativeKeyboardEvents}>
           <ViewWindows style={styles.keyEnterVisualizer}>
-            <Text>OnKeyDown</Text>
+            <Text>OnKeyDown Key and Code</Text>
             <Text>
               {this.state.lastKeyDown !== null ? this.state.lastKeyDown : ' '}
             </Text>
-            <Text>OnKeyDownCapture</Text>
+            <Text>
+              {this.state.lastKeyDownCode !== null
+                ? this.state.lastKeyDownCode
+                : ' '}
+            </Text>
+            <Text>OnKeyDownCapture Key and Code</Text>
             <Text>
               {this.state.lastKeyDownCapture !== null
                 ? this.state.lastKeyDownCapture
                 : ' '}
             </Text>
+            <Text>
+              {this.state.lastKeyDownCaptureCode !== null
+                ? this.state.lastKeyDownCaptureCode
+                : ' '}
+            </Text>
           </ViewWindows>
           <ViewWindows style={styles.keyEnterVisualizer}>
-            <Text>OnKeyUp</Text>
+            <Text>OnKeyUp Key and Code</Text>
             <Text>
               {this.state.lastKeyUp !== null ? this.state.lastKeyUp : ' '}
             </Text>
-            <Text>OnKeyUpCapture</Text>
+            <Text>
+              {this.state.lastKeyUpCode !== null
+                ? this.state.lastKeyUpCode
+                : ' '}
+            </Text>
+
+            <Text>OnKeyUpCapture Key and Code</Text>
             <Text>
               {this.state.lastKeyUpCapture !== null
                 ? this.state.lastKeyUpCapture
+                : ' '}
+            </Text>
+            <Text>
+              {this.state.lastKeyUpCaptureCode !== null
+                ? this.state.lastKeyUpCaptureCode
                 : ' '}
             </Text>
           </ViewWindows>
@@ -112,16 +141,28 @@ class ViewWindowsKeyboardExample extends React.Component<
   }
 
   private _onKeyUp = (ev: IKeyboardEvent) => {
-    this.setState({lastKeyUp: ev.nativeEvent.key, lastKeyDown: null});
+    this.setState({
+      lastKeyUp: ev.nativeEvent.key,
+      lastKeyDown: null,
+      lastKeyUpCode: ev.nativeEvent.code,
+      lastKeyDownCode: null,
+    });
   };
 
   private _onKeyDown = (ev: IKeyboardEvent) => {
-    this.setState({lastKeyDown: ev.nativeEvent.key, lastKeyUp: null});
+    this.setState({
+      lastKeyDown: ev.nativeEvent.key,
+      lastKeyUp: null,
+      lastKeyDownCode: ev.nativeEvent.code,
+      lastKeyUpCode: null,
+    });
   };
   private _onKeyUpCapture = (ev: IKeyboardEvent) => {
     this.setState({
       lastKeyUpCapture: ev.nativeEvent.key,
       lastKeyDownCapture: null,
+      lastKeyUpCaptureCode: ev.nativeEvent.code,
+      lastKeyDownCaptureCode: null,
     });
   };
 
@@ -129,6 +170,8 @@ class ViewWindowsKeyboardExample extends React.Component<
     this.setState({
       lastKeyDownCapture: ev.nativeEvent.key,
       lastKeyUpCapture: null,
+      lastKeyDownCaptureCode: ev.nativeEvent.code,
+      lastKeyUpCaptureCode: null,
     });
   };
 }

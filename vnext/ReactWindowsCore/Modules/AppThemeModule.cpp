@@ -5,7 +5,8 @@
 
 #include "AppThemeModule.h"
 
-namespace react { namespace windows {
+namespace react {
+namespace windows {
 
 //
 // AppTheme
@@ -14,18 +15,15 @@ namespace react { namespace windows {
 AppTheme::AppTheme() = default;
 AppTheme::~AppTheme() = default;
 
-const std::string AppTheme::getCurrentTheme()
-{
+const std::string AppTheme::getCurrentTheme() {
   return AppTheme::light;
 }
 
-bool AppTheme::getIsHighContrast()
-{
+bool AppTheme::getIsHighContrast() {
   return false;
 }
 
-folly::dynamic AppTheme::getHighContrastColors()
-{
+folly::dynamic AppTheme::getHighContrastColors() {
   return {};
 }
 
@@ -33,23 +31,21 @@ folly::dynamic AppTheme::getHighContrastColors()
 // AppThemeModule
 //
 
-AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme>&& appTheme)
-  : m_appTheme(std::move(appTheme))
-{
-}
+AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme)
+    : m_appTheme(std::move(appTheme)) {}
 
-auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic>
-{
+auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic> {
   return {
-    { "initialAppTheme", folly::dynamic { m_appTheme->getCurrentTheme() } },
-    { "initialHighContrast", folly::dynamic { m_appTheme->getIsHighContrast() }},
-    { "initialHighContrastColors", folly::dynamic {m_appTheme->getHighContrastColors()}}
-  };
+      {"initialAppTheme", folly::dynamic{m_appTheme->getCurrentTheme()}},
+      {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
+      {"initialHighContrastColors",
+       folly::dynamic{m_appTheme->getHighContrastColors()}}};
 }
 
-auto AppThemeModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method>
-{
-  return { };
+auto AppThemeModule::getMethods()
+    -> std::vector<facebook::xplat::module::CxxModule::Method> {
+  return {};
 }
 
-} } // namespace react::windows
+} // namespace windows
+} // namespace react

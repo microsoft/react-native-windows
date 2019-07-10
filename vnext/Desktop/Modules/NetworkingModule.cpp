@@ -123,7 +123,7 @@ NetworkingModule::getMethods() {
                     params["incrementalUpdates"].asBool(),
                     params["timeout"].asInt(),
                     [](int64_t) {} // ISS:2306365 - Convert from 'cb' parameter.
-                    );
+                );
                 // ISS:2306365 - Callback?
               }),
           Method(

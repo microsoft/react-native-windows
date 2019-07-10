@@ -27,6 +27,7 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
       winrt::Windows::UI::Xaml::FrameworkElement const &owner);
 
   winrt::hstring GetClassNameCore() const;
+  winrt::hstring GetNameCore() const;
 
   winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType
   GetAutomationControlTypeCore() const;
@@ -63,6 +64,7 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   void Toggle() const;
 
  private:
+  winrt::hstring GetContentName() const;
   winrt::react::uwp::AccessibilityRoles GetAccessibilityRole() const;
   bool GetAccessibilityState(
       winrt::react::uwp::AccessibilityStates state) const;

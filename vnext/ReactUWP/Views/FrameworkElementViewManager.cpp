@@ -73,6 +73,10 @@ void FrameworkElementViewManager::TransferProperties(
       oldView, newView, winrt::AutomationProperties::HelpTextProperty());
   TransferProperty(
       oldView, newView, winrt::AutomationProperties::LiveSettingProperty());
+  TransferProperty(
+      oldView, newView, winrt::AutomationProperties::PositionInSetProperty());
+  TransferProperty(
+      oldView, newView, winrt::AutomationProperties::SizeOfSetProperty());
   auto accessibilityView =
       winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
@@ -102,8 +106,11 @@ void FrameworkElementViewManager::TransferProperties(
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
-  props.update(folly::dynamic::object("accessibilityHint", "string")(
-      "accessibilityLabel", "string")("testID", "string")("tooltip", "string"));
+  props.update(folly::dynamic::object("accessible", "boolean")(
+      "accessibilityRole", "string")("accessibilityStates", "array")(
+      "accessibilityHint", "string")("accessibilityLabel", "string")(
+      "accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
+      "testID", "string")("tooltip", "string"));
   return props;
 }
 
@@ -290,6 +297,29 @@ void FrameworkElementViewManager::UpdateProperties(
               winrt::AutomationProperties::LiveSettingProperty());
         }
         AnnounceLiveRegionChangedIfNeeded(element);
+      } else if (propertyName == "accessibilityPosInSet") {
+        if (propertyValue.isNumber()) {
+          auto value = static_cast<int>(propertyValue.getInt());
+          auto boxedValue =
+              winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+
+          element.SetValue(
+              winrt::AutomationProperties::PositionInSetProperty(), boxedValue);
+        } else if (propertyValue.isNull()) {
+          element.ClearValue(
+              winrt::AutomationProperties::PositionInSetProperty());
+        }
+      } else if (propertyName == "accessibilitySetSize") {
+        if (propertyValue.isNumber()) {
+          auto value = static_cast<int>(propertyValue.getInt());
+          auto boxedValue =
+              winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+
+          element.SetValue(
+              winrt::AutomationProperties::SizeOfSetProperty(), boxedValue);
+        } else if (propertyValue.isNull()) {
+          element.ClearValue(winrt::AutomationProperties::SizeOfSetProperty());
+        }
       } else if (propertyName == "accessibilityRole") {
         if (propertyValue.isString()) {
           const std::string &role = propertyValue.getString();
@@ -374,6 +404,12 @@ void FrameworkElementViewManager::UpdateProperties(
           else if (role == "toolbar")
             DynamicAutomationProperties::SetAccessibilityRole(
                 element, winrt::react::uwp::AccessibilityRoles::ToolBar);
+          else if (role == "list")
+            DynamicAutomationProperties::SetAccessibilityRole(
+                element, winrt::react::uwp::AccessibilityRoles::List);
+          else if (role == "listitem")
+            DynamicAutomationProperties::SetAccessibilityRole(
+                element, winrt::react::uwp::AccessibilityRoles::ListItem);
           else
             DynamicAutomationProperties::SetAccessibilityRole(
                 element, winrt::react::uwp::AccessibilityRoles::Unknown);

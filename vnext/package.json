@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.75",
+  "version": "0.59.0-vnext.83",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,24 +15,12 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
+    "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
+    "format:verify": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
     "watch": "tsc -w"
   },
-  "disabledTasks": [
-    "api-doc",
-    "copy",
-    "jest",
-    "native-bundle:filtered",
-    "pack-nuget",
-    "publish-nuget",
-    "react-test",
-    "reka",
-    "trickle",
-    "ts:amd",
-    "verify-ts-api",
-    "webpack"
-  ],
   "rnpm": {
     "haste": {
       "platforms": [
@@ -65,6 +53,7 @@
     "@types/react-native": "~0.57.51",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
+    "clang-format": "1.2.4",
     "eslint": "5.1.0",
     "eslint-plugin-prettier": "2.6.0",
     "just-scripts": "^0.24.2",

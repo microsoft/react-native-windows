@@ -82,6 +82,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic &&props) override;
+  winrt::Flyout GetFlyout();
 
  private:
   void SetTargetFrameworkElement();
@@ -106,6 +107,9 @@ class FlyoutShadowNode : public ShadowNodeBase {
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
       m_previewKeyboardEventHandlerOnRoot;
+
+  winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
+  winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
 };
 
 thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
@@ -138,20 +142,23 @@ void FlyoutShadowNode::createView() {
   m_previewKeyboardEventHandlerOnRoot =
       std::make_unique<PreviewKeyboardEventHandlerOnRoot>(wkinstance);
 
-  m_flyout.Closing([=](winrt::FlyoutBase /*flyoutbase*/,
-                       winrt::FlyoutBaseClosingEventArgs args) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr && !m_isLightDismissEnabled &&
-        m_isOpen) {
-      args.Cancel(true);
-    }
-  });
+  m_flyoutClosingRevoker = m_flyout.Closing(
+      winrt::auto_revoke,
+      [=](winrt::FlyoutBase /*flyoutbase*/,
+          winrt::FlyoutBaseClosingEventArgs args) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr && !m_isLightDismissEnabled &&
+            m_isOpen) {
+          args.Cancel(true);
+        }
+      });
 
-  m_flyout.Closed([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    if (!m_updating && instance != nullptr)
-      OnFlyoutClosed(*instance, m_tag, false);
-  });
+  m_flyoutClosedRevoker =
+      m_flyout.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (!m_updating && instance != nullptr)
+          OnFlyoutClosed(*instance, m_tag, false);
+      });
 
   m_flyoutOpenedRevoker =
       m_flyout.Opened(winrt::auto_revoke, [wkinstance, this](auto &&, auto &&) {
@@ -302,6 +309,10 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
+winrt::Flyout FlyoutShadowNode::GetFlyout() {
+  return m_flyout;
+}
+
 void FlyoutShadowNode::SetTargetFrameworkElement() {
   auto wkinstance = GetViewManager()->GetReactInstance();
   auto instance = wkinstance.lock();
@@ -354,9 +365,15 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle() {
   // properly. As a workaround (temporary) we disable shadows when multiple
   // flyouts are open.
   if (s_cOpenFlyouts > 1) {
-    flyoutStyle.Setters().Append(winrt::Setter(
-        winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
-        winrt::box_value(false)));
+    static bool isDisableShadowsSupported =
+        winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
+            L"Windows.UI.Xaml.Controls.FlyoutPresenter",
+            L"IsDefaultShadowEnabled");
+    if (isDisableShadowsSupported) {
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
+          winrt::box_value(false)));
+    }
   }
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
@@ -416,7 +433,29 @@ void FlyoutViewManager::SetLayoutProps(
     float left,
     float top,
     float width,
-    float height) {}
+    float height) {
+  auto *pFlyoutShadowNode = static_cast<FlyoutShadowNode *>(&nodeToUpdate);
+
+  if (auto flyout = pFlyoutShadowNode->GetFlyout()) {
+    if (winrt::FlyoutPlacementMode::Full == flyout.Placement()) {
+      winrt::Style flyoutStyle({L"Windows.UI.Xaml.Controls.FlyoutPresenter",
+                                winrt::TypeKind::Metadata});
+
+      // If the height or width of the container is less than the child's
+      // height/width + 2, the content is added in a Scroll View.
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::FrameworkElement::MaxWidthProperty(),
+          winrt::box_value(width + 2)));
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::FrameworkElement::MaxHeightProperty(),
+          winrt::box_value(height + 2)));
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::Control::PaddingProperty(), winrt::box_value(0)));
+
+      flyout.FlyoutPresenterStyle(flyoutStyle);
+    }
+  }
+}
 
 } // namespace uwp
 } // namespace react

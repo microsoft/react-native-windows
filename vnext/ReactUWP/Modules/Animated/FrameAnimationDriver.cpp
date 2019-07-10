@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "FrameAnimationDriver.h"
+
 #include <jsi/jsi.h>
+#include "FrameAnimationDriver.h"
 
 namespace react {
 namespace uwp {
@@ -39,11 +40,11 @@ FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
   auto normalizedProgress = 0.0f;
   auto step = 1.0f / m_frames.size();
   auto fromValue = GetAnimatedValue()->RawValue();
-  for (auto frame : m_frames){
+  for (auto frame : m_frames) {
     normalizedProgress = std::min(normalizedProgress += step, 1.0f);
     animation.InsertKeyFrame(
-		normalizedProgress,
-		static_cast<float>(fromValue + (frame * (m_toValue - fromValue))));
+        normalizedProgress,
+        static_cast<float>(fromValue + (frame * (m_toValue - fromValue))));
   }
 
   animation.IterationCount(static_cast<int32_t>(m_iterations));

@@ -7,7 +7,6 @@
 #include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.h>
 
-
 #include <ReactWindowsCore/ReactWindowsAPI.h>
 
 namespace react {
@@ -20,5 +19,5 @@ AnnounceLiveRegionChangedIfNeeded(
 REACTWINDOWS_API_(bool)
 HasDynamicAutomationProperties(
     const winrt::Windows::UI::Xaml::UIElement &element);
-}
-}
+} // namespace uwp
+} // namespace react
