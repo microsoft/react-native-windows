@@ -26,12 +26,13 @@ void ControlViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
-  const auto controlXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(control);
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
 
-  if (controlXD != nullptr) {
+  if (control != nullptr) {
+    const auto controlXD =
+        XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(control);
+
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
       const folly::dynamic &propertyValue = pair.second;

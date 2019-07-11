@@ -119,9 +119,10 @@ void FrameworkElementViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
   auto element(nodeToUpdate->GetView().as<winrt::FrameworkElement>());
-  const auto elementXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(element);
-  if (elementXD != nullptr) {
+  if (element != nullptr) {
+    const auto elementXD =
+        XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(element);
+
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
       const folly::dynamic &propertyValue = pair.second;
