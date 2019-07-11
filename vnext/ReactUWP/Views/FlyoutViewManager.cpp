@@ -311,13 +311,21 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle() {
       winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
   flyoutStyle.Setters().Append(
       winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
+  flyoutStyle.Setters().Append(winrt::Setter(
+      winrt::Control::BorderThicknessProperty(), winrt::box_value(0)));
   // When multiple flyouts are overlapping, XAML's theme shadows don't render
   // properly. As a workaround (temporary) we disable shadows when multiple
   // flyouts are open.
   if (s_cOpenFlyouts > 1) {
-    flyoutStyle.Setters().Append(winrt::Setter(
-        winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
-        winrt::box_value(false)));
+    static bool isDisableShadowsSupported =
+        winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
+            L"Windows.UI.Xaml.Controls.FlyoutPresenter",
+            L"IsDefaultShadowEnabled");
+    if (isDisableShadowsSupported) {
+      flyoutStyle.Setters().Append(winrt::Setter(
+          winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
+          winrt::box_value(false)));
+    }
   }
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }

@@ -41,11 +41,12 @@ struct ModifiedKeyState {
 struct ReactKeyboardEvent : ModifiedKeyState {
   int64_t target{0};
   std::string key{};
+  std::string code{};
 };
 
 struct HandledKeyboardEvent : ModifiedKeyState {
   HandledEventPhase handledEventPhase{HandledEventPhase::Bubbling};
-  std::string key{};
+  std::string code{};
 };
 
 typedef std::function<
@@ -158,6 +159,7 @@ struct KeyboardHelper {
       winrt::KeyRoutedEventArgs const &args);
   static std::string
   FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
+  static std::string CodeFromVirtualKey(winrt::VirtualKey key);
 };
 } // namespace uwp
 } // namespace react
