@@ -4,6 +4,7 @@
 #pragma once
 
 #include <winrt/Windows.UI.Xaml.Core.Direct.h>
+#include <winrt/Windows.UI.Xaml.h>
 
 namespace XD {
 using namespace winrt::Windows::UI::Xaml::Core::Direct;
@@ -11,9 +12,10 @@ using namespace winrt::Windows::UI::Xaml::Core::Direct;
 
 class XamlDirectInstance {
  public:
-  static XD::IXamlDirect GetInstance();
+  static XD::IXamlDirect GetXamlDirect();
 
  private:
-  static XD::IXamlDirect m_xamlDirectInstance;
+  static XD::IXamlDirect m_xamlDirect;
   XamlDirectInstance();
 };
+

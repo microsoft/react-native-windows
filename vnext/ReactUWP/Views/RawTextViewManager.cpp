@@ -8,6 +8,7 @@
 #include <Views/ShadowNodeBase.h>
 
 #include <Utils/ValueUtils.h>
+#include <Utils/XamlDirectInstance.h>
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
@@ -41,7 +42,8 @@ XamlView RawTextViewManager::CreateViewCore(int64_t tag) {
 void RawTextViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
-  auto run = nodeToUpdate->GetView().as<winrt::Run>();
+  auto run = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      nodeToUpdate->GetView().as<winrt::Run>());
   if (run == nullptr)
     return;
 
@@ -50,7 +52,8 @@ void RawTextViewManager::UpdateProperties(
     const folly::dynamic &propertyValue = pair.second;
 
     if (propertyName == "text") {
-      run.Text(asHstring(propertyValue));
+      XamlDirectInstance::GetXamlDirect().SetStringProperty(
+          run, XD::XamlPropertyIndex::Run_Text, asHstring(propertyValue));
     }
   }
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);

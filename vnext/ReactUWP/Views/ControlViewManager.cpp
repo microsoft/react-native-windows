@@ -7,6 +7,7 @@
 #include <Views/ShadowNodeBase.h>
 
 #include <Utils/PropertyUtils.h>
+#include <Utils/XamlDirectInstance.h>
 
 namespace react {
 namespace uwp {
@@ -25,10 +26,12 @@ void ControlViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
+  const auto controlXD =
+      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(control);
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
 
-  if (control != nullptr) {
+  if (controlXD != nullptr) {
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
       const folly::dynamic &propertyValue = pair.second;
@@ -36,22 +39,32 @@ void ControlViewManager::UpdateProperties(
       if (TryUpdateBackgroundBrush(control, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateBorderProperties(
-                     nodeToUpdate, control, propertyName, propertyValue)) {
+                     nodeToUpdate, control, controlXD, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
         continue;
       } else if (
           implementsPadding &&
           TryUpdatePadding(
-              nodeToUpdate, control, propertyName, propertyValue)) {
+              nodeToUpdate,
+              control,
+              controlXD,
+              propertyName,
+              propertyValue,
+              XD::XamlPropertyIndex::Control_Padding)) {
         continue;
       } else if (propertyName == "tabIndex") {
         if (propertyValue.isNumber()) {
           auto tabIndex = propertyValue.asDouble();
           if (tabIndex == static_cast<int32_t>(tabIndex))
-            control.TabIndex(static_cast<int32_t>(tabIndex));
+            XamlDirectInstance::GetXamlDirect().SetInt32Property(
+                controlXD,
+                XD::XamlPropertyIndex::Control_TabIndex,
+                static_cast<int32_t>(tabIndex));
         } else if (propertyValue.isNull()) {
-          control.ClearValue(winrt::Control::TabIndexProperty());
+            XamlDirectInstance::GetXamlDirect().ClearProperty(
+                controlXD,
+                XD::XamlPropertyIndex::Control_TabIndex);
         }
       }
     }

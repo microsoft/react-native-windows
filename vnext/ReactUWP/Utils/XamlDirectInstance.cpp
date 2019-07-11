@@ -1,14 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <Utils\XamlDirectInstance.h>
 #include "pch.h"
 
-XD::IXamlDirect XamlDirectInstance::m_xamlDirectInstance = NULL;
+#include <winrt/Windows.UI.Xaml.Core.Direct.h>
+#include <winrt/Windows.UI.Xaml.h>
+#include "Utils\XamlDirectInstance.h"
 
-XD::IXamlDirect XamlDirectInstance::GetInstance() {
-  if (m_xamlDirectInstance == NULL) {
-    m_xamlDirectInstance = XD::XamlDirect::GetDefault();
-  }
-  return m_xamlDirectInstance;
+namespace XD {
+  using namespace winrt::Windows::UI::Xaml::Core::Direct;
 }
+
+XD::IXamlDirect XamlDirectInstance::m_xamlDirect = NULL;
+
+XD::IXamlDirect XamlDirectInstance::GetXamlDirect() {
+  if (m_xamlDirect == NULL) {
+    m_xamlDirect = XD::XamlDirect::GetDefault();
+  }
+  return m_xamlDirect;
+}
+

@@ -9,6 +9,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
+#include <Utils/XamlDirectInstance.h>
 #include <winrt/Windows.UI.Core.h>
 
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
@@ -85,7 +86,9 @@ void PopupShadowNode::AddView(ShadowNode &child, int64_t index) {
 void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
 
-  auto popup = GetView().as<winrt::Popup>();
+  const auto popup = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetView().as<winrt::Popup>());
+
   if (popup == nullptr)
     return;
 
@@ -100,24 +103,40 @@ void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
         m_targetTag = -1;
     } else if (propertyName == "isOpen") {
       if (propertyValue.isBool())
-        popup.IsOpen(propertyValue.getBool());
+        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+            popup,
+            XD::XamlPropertyIndex::Popup_IsOpen,
+            propertyValue.getBool());
       else if (propertyValue.isNull())
-        popup.ClearValue(winrt::Popup::IsOpenProperty());
+        XamlDirectInstance::GetXamlDirect().ClearProperty(
+            popup, XD::XamlPropertyIndex::Popup_IsOpen);
     } else if (propertyName == "isLightDismissEnabled") {
       if (propertyValue.isBool())
-        popup.IsLightDismissEnabled(propertyValue.getBool());
+        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+            popup,
+            XD::XamlPropertyIndex::Popup_IsLightDismissEnabled,
+            propertyValue.getBool());
       else if (propertyValue.isNull())
-        popup.ClearValue(winrt::Popup::IsLightDismissEnabledProperty());
+        XamlDirectInstance::GetXamlDirect().ClearProperty(
+            popup, XD::XamlPropertyIndex::Popup_IsLightDismissEnabled);
     } else if (propertyName == "horizontalOffset") {
       if (propertyValue.isNumber())
-        popup.HorizontalOffset(propertyValue.asDouble());
+        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+            popup,
+            XD::XamlPropertyIndex::Popup_HorizontalOffset,
+            propertyValue.asDouble());
       else if (propertyValue.isNull())
-        popup.ClearValue(winrt::Popup::HorizontalOffsetProperty());
+        XamlDirectInstance::GetXamlDirect().ClearProperty(
+            popup, XD::XamlPropertyIndex::Popup_HorizontalOffset);
     } else if (propertyName == "verticalOffset") {
       if (propertyValue.isNumber())
-        popup.VerticalOffset(propertyValue.asDouble());
+        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+            popup,
+            XD::XamlPropertyIndex::Popup_VerticalOffset,
+            propertyValue.asDouble());
       else if (propertyValue.isNull())
-        popup.ClearValue(winrt::Popup::VerticalOffsetProperty());
+        XamlDirectInstance::GetXamlDirect().ClearProperty(
+            popup, XD::XamlPropertyIndex::Popup_VerticalOffset);
     }
   }
 
@@ -224,9 +243,14 @@ XamlView PopupViewManager::CreateViewCore(int64_t tag) {
 void PopupViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   assert(index == 0);
 
-  auto popup = parent.as<winrt::Popup>();
-  if (popup != nullptr)
-    popup.Child(child.as<winrt::UIElement>());
+  auto popup = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      parent.as<winrt::Popup>());
+  if (popup != nullptr) {
+    auto childView = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+        child.as<winrt::UIElement>());
+    XamlDirectInstance::GetXamlDirect().SetXamlDirectObjectProperty(
+    popup, XD::XamlPropertyIndex::Popup_Child, childView);
+  }
 }
 
 folly::dynamic PopupViewManager::GetExportedCustomDirectEventTypeConstants()
