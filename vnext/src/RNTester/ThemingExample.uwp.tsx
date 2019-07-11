@@ -31,6 +31,11 @@ class ThemeExample extends React.Component {
   public render() {
     return (
       <View>
+        <Text>
+          {
+            'This is temporarily not working as the sample app was not usable in a dark theme, so it is currently forced to be Light themed. In order to change the theme to follow the system default, delete RequestedTheme="Light" from App.xaml'
+          }
+        </Text>
         <Text style={{color: 'red'}}>
           currentTheme: {this.state.currentTheme}
         </Text>
