@@ -127,18 +127,16 @@ void FrameworkElementViewManager::UpdateProperties(
       const folly::dynamic &propertyValue = pair.second;
 
       if (propertyName == "opacity") {
-        if (propertyValue.isNumber()) {
+        if(propertyValue.isNumber()) {
           double opacity = propertyValue.asDouble();
           if (opacity >= 0 && opacity <= 1)
-            XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
-                elementXD, XD::XamlPropertyIndex::UIElement_Opacity, opacity);
+            element.Opacity(opacity);
           // else
           // TODO report error
-        } else if (propertyValue.isNull()) {
-          XamlDirectInstance::GetXamlDirect().ClearProperty(
-              elementXD, XD::XamlPropertyIndex::UIElement_Opacity);
-          continue;
         }
+        else if (propertyValue.isNull())
+          element.ClearValue(winrt::UIElement::OpacityProperty());
+
       } else if (propertyName == "transform") {
         if (element.try_as<winrt::IUIElement10>()) // Works on 19H1+
         {
@@ -545,11 +543,7 @@ void FrameworkElementViewManager::UpdateProperties(
           XamlDirectInstance::GetXamlDirect().ClearProperty(
               elementXD, XD::XamlPropertyIndex::Canvas_ZIndex);
         }
-      } else if (TryUpdateFlowDirection(
-                     elementXD,
-                     propertyName,
-                     propertyValue,
-                     XD::XamlPropertyIndex::FrameworkElement_FlowDirection)) {
+      } else if (TryUpdateFlowDirection(element, propertyName, propertyValue)) {
         continue;
       }
     }

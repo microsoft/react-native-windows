@@ -316,10 +316,7 @@ void ViewPanel::FinalizeProperties() {
 
     // TODO: Can Binding be used here?
     if (hasBorderBrush)
-      XamlDirectInstance::GetXamlDirect().SetColorProperty(
-          m_border_xd,
-          XD::XamlPropertyIndex::Border_BorderBrush,
-          BorderBrush().as<winrt::SolidColorBrush>().Color());
+      m_border.BorderBrush(BorderBrush());
     else
       XamlDirectInstance::GetXamlDirect().ClearProperty(
           m_border_xd, XD::XamlPropertyIndex::Border_BorderBrush);
@@ -352,10 +349,7 @@ void ViewPanel::FinalizeProperties() {
 
   if (scenario == Scenario::OuterBorder) {
     if (hasBackground)
-      XamlDirectInstance::GetXamlDirect().SetColorProperty(
-          m_border_xd,
-          XD::XamlPropertyIndex::Border_Background,
-          ViewBackground().as<winrt::SolidColorBrush>().Color());
+      m_border.Background(ViewBackground());
     else
       XamlDirectInstance::GetXamlDirect().ClearProperty(
           m_border_xd, XD::XamlPropertyIndex::Border_Background);

@@ -305,11 +305,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "placeholderTextColor") {
       if (textBox.try_as<winrt::ITextBlock6>()) {
         if (IsValidColorValue(propertyValue))
-          XamlDirectInstance::GetXamlDirect().SetColorProperty(
-              textBoxXD,
-              XD::XamlPropertyIndex::TextBox_PlaceholderForeground,
-              SolidColorBrushFrom(propertyValue).Color());
-        else if (propertyValue.isNull())
+          textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
           XamlDirectInstance::GetXamlDirect().ClearProperty(
               textBoxXD, XD::XamlPropertyIndex::TextBox_PlaceholderForeground);
       }
@@ -336,10 +332,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue))
-        XamlDirectInstance::GetXamlDirect().SetColorProperty(
-            textBoxXD,
-            XD::XamlPropertyIndex::TextBox_SelectionHighlightColor,
-            SolidColorBrushFrom(propertyValue).Color());
+        textBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       else if (propertyValue.isNull())
         XamlDirectInstance::GetXamlDirect().ClearProperty(
             textBoxXD, XD::XamlPropertyIndex::TextBox_SelectionHighlightColor);

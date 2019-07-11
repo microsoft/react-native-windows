@@ -12,7 +12,6 @@
 #include <Modules/NativeUIManager.h>
 #include <Utils/AccessibilityUtils.h>
 #include <Utils/PropertyUtils.h>
-#include <Utils/XamlDirectInstance.h>
 
 #include <INativeUIManager.h>
 #include <IReactInstance.h>
@@ -196,7 +195,6 @@ template <>
 bool TryUpdateBorderProperties(
     ShadowNodeBase *node,
     const winrt::react::uwp::ViewPanel &element,
-    const XD::IXamlDirectObject &elementXD,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   bool isBorderProperty = true;
@@ -209,39 +207,31 @@ bool TryUpdateBorderProperties(
   } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Left, propertyValue.asDouble());
+          node, element, ShadowEdges::Left, propertyValue.asDouble());
   } else if (propertyName == "borderTopWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Top, propertyValue.asDouble());
+          node, element, ShadowEdges::Top, propertyValue.asDouble());
   } else if (propertyName == "borderRightWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Right, propertyValue.asDouble());
+          node, element, ShadowEdges::Right, propertyValue.asDouble());
   } else if (propertyName == "borderBottomWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Bottom,
-          propertyValue.asDouble());
+          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
   } else if (propertyName == "borderStartWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Start, propertyValue.asDouble());
+          node, element, ShadowEdges::Start, propertyValue.asDouble());
   } else if (propertyName == "borderEndWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::End, propertyValue.asDouble());
+          node, element, ShadowEdges::End, propertyValue.asDouble());
   } else if (propertyName == "borderWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::AllEdges,
-          propertyValue.asDouble());
+          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
   } else {
     isBorderProperty = false;
   }
@@ -376,6 +366,7 @@ void ViewViewManager::UpdateProperties(
   bool shouldBeControl = pViewShadowNode->IsControl();
 
   auto pPanel = pViewShadowNode->GetViewPanel();
+
   if (pPanel != nullptr) {
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
@@ -384,7 +375,7 @@ void ViewViewManager::UpdateProperties(
       if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateBorderProperties(
-                     nodeToUpdate, pPanel, NULL, propertyName, propertyValue)) {
+                     nodeToUpdate, pPanel, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateCornerRadius(
                      nodeToUpdate, pPanel, propertyName, propertyValue)) {

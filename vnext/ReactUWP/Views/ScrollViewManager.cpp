@@ -164,10 +164,10 @@ void ScrollViewShadowNode::updateProperties(
       const auto [valid, showsHorizontalScrollIndicator] =
           getPropertyAndValidity(propertyValue, true);
       if (valid) {
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
             scrollViewerXD,
             XD::XamlPropertyIndex::ScrollViewer_HorizontalScrollBarVisibility,
-            static_cast<bool>(
+            static_cast<int32_t>(
                 showsHorizontalScrollIndicator
                     ? winrt::ScrollBarVisibility::Visible
                     : winrt::ScrollBarVisibility::Hidden));
@@ -176,10 +176,10 @@ void ScrollViewShadowNode::updateProperties(
       const auto [valid, showsVerticalScrollIndicator] =
           getPropertyAndValidity(propertyValue, true);
       if (valid) {
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
             scrollViewerXD,
             XD::XamlPropertyIndex::ScrollViewer_VerticalScrollBarVisibility,
-            static_cast<bool>(
+            static_cast<INT32>(
                 showsVerticalScrollIndicator
                     ? winrt::ScrollBarVisibility::Visible
                     : winrt::ScrollBarVisibility::Hidden));

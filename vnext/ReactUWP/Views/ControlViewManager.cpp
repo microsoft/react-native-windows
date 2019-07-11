@@ -39,19 +39,14 @@ void ControlViewManager::UpdateProperties(
       if (TryUpdateBackgroundBrush(control, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateBorderProperties(
-                     nodeToUpdate, control, controlXD, propertyName, propertyValue)) {
+                     nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
         continue;
       } else if (
           implementsPadding &&
           TryUpdatePadding(
-              nodeToUpdate,
-              control,
-              controlXD,
-              propertyName,
-              propertyValue,
-              XD::XamlPropertyIndex::Control_Padding)) {
+              nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
       } else if (propertyName == "tabIndex") {
         if (propertyValue.isNumber()) {

@@ -59,10 +59,6 @@ void DatePickerShadowNode::createView() {
 
 void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
-
-  /*auto datePicker = GetView().as<winrt::CalendarDatePicker>();
-  if (datePicker == nullptr)
-    return;*/
   const auto datePicker =
       XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
       GetView().as<winrt::CalendarDatePicker>());

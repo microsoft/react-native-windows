@@ -70,12 +70,7 @@ void TextViewManager::UpdateProperties(
                    textBlock, propertyName, propertyValue)) {
       continue;
     } else if (TryUpdatePadding(
-                   nodeToUpdate,
-                   textBlock,
-                   textBlockXD,
-                   propertyName,
-                   propertyValue,
-                   XD::XamlPropertyIndex::TextBlock_Padding)) {
+                   nodeToUpdate, textBlock, propertyName, propertyValue)) {
       continue;
     } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
       continue;
@@ -127,10 +122,7 @@ void TextViewManager::UpdateProperties(
             XD::XamlPropertyIndex::TextBlock_IsTextScaleFactorEnabled);
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
-        XamlDirectInstance::GetXamlDirect().SetColorProperty(
-            textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_SelectionHighlightColor,
-            SolidColorBrushFrom(propertyValue).Color());
+        textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       } else
         XamlDirectInstance::GetXamlDirect().ClearProperty(
             textBlockXD,

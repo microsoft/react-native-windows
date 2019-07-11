@@ -14,8 +14,6 @@
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 
-#include <Utils/XamlDirectInstance.h>
-
 #include <Views/ShadowNodeBase.h>
 
 #include <Views/ViewPanel.h>
@@ -98,38 +96,29 @@ inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(
 }
 
 template <class T>
-static inline void UpdatePadding(
+void UpdatePadding(
     ShadowNodeBase *node,
     const T &element,
-    const XD::IXamlDirectObject &elementXD,
     ShadowEdges edge,
-    double margin,
-    const XD::XamlPropertyIndex &propertyIndex) {
+    double margin) {
   node->m_padding[edge] = margin;
   winrt::Thickness thickness = GetThickness(
       node->m_padding,
       element.FlowDirection() == winrt::FlowDirection::RightToLeft);
-  XamlDirectInstance::GetXamlDirect().SetThicknessProperty(
-      elementXD, propertyIndex, thickness);
+  element.Padding(thickness);
 }
 
 template <class T>
 void SetBorderThickness(
     ShadowNodeBase *node,
     const T &element,
-    const XD::IXamlDirectObject &elementXD,
     ShadowEdges edge,
     double margin) {
   node->m_border[edge] = margin;
   winrt::Thickness thickness = GetThickness(
       node->m_border,
       element.FlowDirection() == winrt::FlowDirection::RightToLeft);
-  if (elementXD == nullptr) {
-    element.BorderThickness(thickness);
-  } else {
-    XamlDirectInstance::GetXamlDirect().SetThicknessProperty(
-        elementXD, XD::XamlPropertyIndex::Control_BorderThickness, thickness);
-  }
+  element.BorderThickness(thickness);
 }
 
 template <class T>
@@ -190,10 +179,10 @@ template <class T>
 bool TryUpdateBorderProperties(
     ShadowNodeBase *node,
     const T &element,
-    const XD::IXamlDirectObject &elementXD,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   bool isBorderProperty = true;
+
   if (propertyName == "borderColor") {
     if (IsValidColorValue(propertyValue))
       element.BorderBrush(BrushFrom(propertyValue));
@@ -202,43 +191,31 @@ bool TryUpdateBorderProperties(
   } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Left, propertyValue.asDouble());
+          node, element, ShadowEdges::Left, propertyValue.asDouble());
   } else if (propertyName == "borderTopWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Top, propertyValue.asDouble());
+          node, element, ShadowEdges::Top, propertyValue.asDouble());
   } else if (propertyName == "borderRightWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Right,
-          propertyValue.asDouble());
+          node, element, ShadowEdges::Right, propertyValue.asDouble());
   } else if (propertyName == "borderBottomWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Bottom,
-          propertyValue.asDouble());
+          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
   } else if (propertyName == "borderStartWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::Start, propertyValue.asDouble());
+          node, element, ShadowEdges::Start, propertyValue.asDouble());
   } else if (propertyName == "borderEndWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node, element, elementXD, ShadowEdges::End, propertyValue.asDouble());
+          node, element, ShadowEdges::End, propertyValue.asDouble());
   } else if (propertyName == "borderWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::AllEdges,
-          propertyValue.asDouble());
+          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
   } else {
     isBorderProperty = false;
   }
@@ -247,102 +224,53 @@ bool TryUpdateBorderProperties(
 }
 
 template <class T>
-static inline bool TryUpdatePadding(
+bool TryUpdatePadding(
     ShadowNodeBase *node,
     const T &element,
-    const XD::IXamlDirectObject &elementXD,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue,
-    const XD::XamlPropertyIndex &propertyIndex) {
+    const folly::dynamic &propertyValue) {
   bool isPaddingProperty = true;
 
   if (propertyName == "paddingLeft") {
     if (propertyValue.isNumber())
-      UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Left,
-          propertyValue.asDouble(),
-          propertyIndex);
+      UpdatePadding(node, element, ShadowEdges::Left, propertyValue.asDouble());
   } else if (propertyName == "paddingTop") {
     if (propertyValue.isNumber())
-      UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Top,
-          propertyValue.asDouble(),
-          propertyIndex);
+      UpdatePadding(node, element, ShadowEdges::Top, propertyValue.asDouble());
   } else if (propertyName == "paddingRight") {
     if (propertyValue.isNumber())
       UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Right,
-          propertyValue.asDouble(),
-          propertyIndex);
+          node, element, ShadowEdges::Right, propertyValue.asDouble());
   } else if (propertyName == "paddingBottom") {
     if (propertyValue.isNumber())
       UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Bottom,
-          propertyValue.asDouble(),
-          propertyIndex);
+          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
   } else if (propertyName == "paddingStart") {
     if (propertyValue.isNumber())
       UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Start,
-          propertyValue.asDouble(),
-          propertyIndex);
+          node, element, ShadowEdges::Start, propertyValue.asDouble());
   } else if (propertyName == "paddingEnd") {
     if (propertyValue.isNumber())
-      UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::End,
-          propertyValue.asDouble(),
-          propertyIndex);
+      UpdatePadding(node, element, ShadowEdges::End, propertyValue.asDouble());
   } else if (propertyName == "paddingHorizontal") {
     if (propertyValue.isNumber())
       UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Horizontal,
-          propertyValue.asDouble(),
-          propertyIndex);
+          node, element, ShadowEdges::Horizontal, propertyValue.asDouble());
   } else if (propertyName == "paddingVertical") {
     if (propertyValue.isNumber())
       UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::Vertical,
-          propertyValue.asDouble(),
-          propertyIndex);
+          node, element, ShadowEdges::Vertical, propertyValue.asDouble());
   } else if (propertyName == "padding") {
     if (propertyValue.isNumber())
       UpdatePadding(
-          node,
-          element,
-          elementXD,
-          ShadowEdges::AllEdges,
-          propertyValue.asDouble(),
-          propertyIndex);
+          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
   } else {
     isPaddingProperty = false;
   }
 
   return isPaddingProperty;
 }
+
 template <class T>
 bool TryUpdateCornerRadius(
     ShadowNodeBase *node,
@@ -392,6 +320,7 @@ bool TryUpdateCornerRadius(
 
   return true;
 }
+
 template <class T>
 bool TryUpdateFontProperties(
     const T &element,
@@ -564,36 +493,27 @@ bool TryUpdateTextDecorationLine(
   return false;
 }
 
-static inline void SetFlowDirection(
-    const XD::IXamlDirectObject &elementXD,
-    const std::string &value,
-    const XD::XamlPropertyIndex &propertyIndex) {
+template <class T>
+void SetFlowDirection(const T &element, const std::string &value) {
   if (value == "rtl")
-    XamlDirectInstance::GetXamlDirect().SetEnumProperty(
-        elementXD,
-        propertyIndex,
-        static_cast<uint32_t>(winrt::FlowDirection::RightToLeft));
+    element.FlowDirection(winrt::FlowDirection::RightToLeft);
   else if (value == "ltr")
-    XamlDirectInstance::GetXamlDirect().SetEnumProperty(
-        elementXD,
-        propertyIndex,
-        static_cast<uint32_t>(winrt::FlowDirection::LeftToRight));
+    element.FlowDirection(winrt::FlowDirection::LeftToRight);
   else // 'auto', 'inherit'
-    XamlDirectInstance::GetXamlDirect().ClearProperty(elementXD, propertyIndex);
+    element.ClearValue(winrt::FrameworkElement::FlowDirectionProperty());
 }
 
-static inline bool TryUpdateFlowDirection(
-    const XD::IXamlDirectObject &elementXD,
+template <class T>
+bool TryUpdateFlowDirection(
+    const T &element,
     const std::string &propertyName,
-    const folly::dynamic &propertyValue,
-    const XD::XamlPropertyIndex &propertyIndex) {
+    const folly::dynamic &propertyValue) {
   if ((propertyName == "writingDirection") || (propertyName == "direction")) {
     if (propertyValue.isString()) {
       const std::string &value = propertyValue.getString();
-      SetFlowDirection(elementXD, value, propertyIndex);
+      SetFlowDirection(element, value);
     } else if (propertyValue.isNull()) {
-      XamlDirectInstance::GetXamlDirect().ClearProperty(
-          elementXD, propertyIndex);
+      element.ClearValue(T::FlowDirectionProperty());
     }
 
     return true;
