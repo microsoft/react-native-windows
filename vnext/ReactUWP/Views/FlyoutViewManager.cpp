@@ -78,7 +78,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   static void
   OnFlyoutClosed(IReactInstance &instance, int64_t tag, bool newValue);
   static void
-  OnFlyoutOpened(IReactInstance &instance, int64_t tag, bool newValue);
+  OnFlyoutOpened(IReactInstance &instance, int64_t tag);
   void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic &&props) override;
@@ -164,7 +164,7 @@ void FlyoutShadowNode::createView() {
       m_flyout.Opened(winrt::auto_revoke, [wkinstance, this](auto &&, auto &&) {
         auto instance = wkinstance.lock();
         if (instance && !m_updating)
-          OnFlyoutOpened(*instance, m_tag, false);
+          OnFlyoutOpened(*instance, m_tag);
       });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
@@ -189,8 +189,7 @@ void FlyoutShadowNode::createView() {
 }
 /*static*/ void FlyoutShadowNode::OnFlyoutOpened(
     IReactInstance &instance,
-    int64_t tag,
-    bool newValue) {
+    int64_t tag) {
   folly::dynamic eventData = folly::dynamic::object("target", tag);
   instance.DispatchEvent(tag, "topOpen", std::move(eventData));
 }
@@ -237,7 +236,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
           popup.IsLightDismissEnabled(m_isLightDismissEnabled);
       }
     } else if (propertyName == "isOpen") {
-      if (propertyValue.isBool() && !m_isContextFlyout) {
+      if (propertyValue.isBool()) {
         m_isOpen = propertyValue.asBool();
         updateIsOpen = true;
       }
