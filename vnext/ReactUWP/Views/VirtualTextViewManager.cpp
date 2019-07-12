@@ -67,33 +67,26 @@ void VirtualTextViewManager::AddView(
     XamlView parent,
     XamlView child,
     int64_t index) {
-  auto spanXD = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Span>());
-  auto inlines =
-      GetXamlDirect().GetXamlDirectObjectProperty(
-          spanXD, XDPropertyIndex::Span_Inlines);
+  auto spanXD = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Span>());
+  auto inlines = GetXamlDirect().GetXamlDirectObjectProperty(
+      spanXD, XDPropertyIndex::Span_Inlines);
   auto childXD = GetXamlDirect().GetXamlDirectObject(child);
   GetXamlDirect().InsertIntoCollectionAt(
       inlines, static_cast<uint32_t>(index), childXD);
 }
 
 void VirtualTextViewManager::RemoveAllChildren(XamlView parent) {
-  auto spanXD = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Span>());
-  auto inlines =
-      GetXamlDirect().GetXamlDirectObjectProperty(
-          spanXD, XDPropertyIndex::Span_Inlines);
+  auto spanXD = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Span>());
+  auto inlines = GetXamlDirect().GetXamlDirectObjectProperty(
+      spanXD, XDPropertyIndex::Span_Inlines);
   GetXamlDirect().ClearCollection(inlines);
 }
 
 void VirtualTextViewManager::RemoveChildAt(XamlView parent, int64_t index) {
-  auto spanXD = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Span>());
-  auto inlines =
-      GetXamlDirect().GetXamlDirectObjectProperty(
-          spanXD, XDPropertyIndex::Span_Inlines);
-  GetXamlDirect().RemoveFromCollectionAt(
-      inlines, static_cast<uint32_t>(index));
+  auto spanXD = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Span>());
+  auto inlines = GetXamlDirect().GetXamlDirectObjectProperty(
+      spanXD, XDPropertyIndex::Span_Inlines);
+  GetXamlDirect().RemoveFromCollectionAt(inlines, static_cast<uint32_t>(index));
 }
 
 bool VirtualTextViewManager::RequiresYogaNode() const {

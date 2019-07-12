@@ -236,10 +236,8 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
 
   auto control = textBox.as<winrt::Control>();
 
-  const auto textBoxXD =
-      GetXamlDirect().GetXamlDirectObject(textBox);
-  const auto controlXD =
-      GetXamlDirect().GetXamlDirectObject(control);
+  const auto textBoxXD = GetXamlDirect().GetXamlDirectObject(textBox);
+  const auto controlXD = GetXamlDirect().GetXamlDirectObject(control);
 
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();
@@ -254,12 +252,12 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       continue;
     } else if (propertyName == "multiline") {
       if (propertyValue.isBool())
-      GetXamlDirect().SetEnumProperty(
-          textBoxXD,
-          XDPropertyIndex::TextBox_TextWrapping,
-          static_cast<uint32_t>(
-              propertyValue.asBool() ? winrt::TextWrapping::Wrap
-                                     : winrt::TextWrapping::NoWrap));
+        GetXamlDirect().SetEnumProperty(
+            textBoxXD,
+            XDPropertyIndex::TextBox_TextWrapping,
+            static_cast<uint32_t>(
+                propertyValue.asBool() ? winrt::TextWrapping::Wrap
+                                       : winrt::TextWrapping::NoWrap));
       else if (propertyValue.isNull())
         GetXamlDirect().ClearProperty(
             textBoxXD, XDPropertyIndex::TextBox_TextWrapping);
@@ -306,8 +304,8 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (textBox.try_as<winrt::ITextBlock6>()) {
         if (IsValidColorValue(propertyValue))
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
-          GetXamlDirect().ClearProperty(
-              textBoxXD, XDPropertyIndex::TextBox_PlaceholderForeground);
+        GetXamlDirect().ClearProperty(
+            textBoxXD, XDPropertyIndex::TextBox_PlaceholderForeground);
       }
     } else if (propertyName == "scrollEnabled") {
       if (propertyValue.isBool() &&

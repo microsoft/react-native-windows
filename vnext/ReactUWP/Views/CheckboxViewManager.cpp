@@ -99,10 +99,8 @@ XamlView CheckBoxViewManager::CreateViewCore(int64_t tag) {
 void CheckBoxViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
-
-  const auto checkbox =
-      GetXamlDirect().GetXamlDirectObject(
-          nodeToUpdate->GetView().as<winrt::CheckBox>());
+  const auto checkbox = GetXamlDirect().GetXamlDirectObject(
+      nodeToUpdate->GetView().as<winrt::CheckBox>());
 
   if (checkbox == nullptr)
     return;
@@ -115,9 +113,8 @@ void CheckBoxViewManager::UpdateProperties(
       if (propertyValue.isBool())
         GetXamlDirect().SetBooleanProperty(
             checkbox,
-         XDPropertyIndex::Control_IsEnabled,
-         !propertyValue.asBool()
-       );
+            XDPropertyIndex::Control_IsEnabled,
+            !propertyValue.asBool());
       else if (pair.second.isNull())
         GetXamlDirect().ClearProperty(
             checkbox, XDPropertyIndex::Control_IsEnabled);

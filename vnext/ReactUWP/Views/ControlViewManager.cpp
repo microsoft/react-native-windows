@@ -30,8 +30,7 @@ void ControlViewManager::UpdateProperties(
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
 
   if (control != nullptr) {
-    const auto controlXD =
-        GetXamlDirect().GetXamlDirectObject(control);
+    const auto controlXD = GetXamlDirect().GetXamlDirectObject(control);
 
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
@@ -58,9 +57,8 @@ void ControlViewManager::UpdateProperties(
                 XDPropertyIndex::Control_TabIndex,
                 static_cast<int32_t>(tabIndex));
         } else if (propertyValue.isNull()) {
-            GetXamlDirect().ClearProperty(
-                controlXD,
-                XDPropertyIndex::Control_TabIndex);
+          GetXamlDirect().ClearProperty(
+              controlXD, XDPropertyIndex::Control_TabIndex);
         }
       }
     }

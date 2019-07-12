@@ -35,38 +35,32 @@ XamlView RootViewManager::CreateViewCore(int64_t tag) {
 }
 
 void RootViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
-  auto panel = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Panel>());
+  auto panel = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Panel>());
   if (panel != nullptr) {
-    auto children =
-        GetXamlDirect().GetXamlDirectObjectProperty(
-            panel, XDPropertyIndex::Panel_Children);
-    auto childView = GetXamlDirect().GetXamlDirectObject(
-        child.as<winrt::UIElement>());
+    auto children = GetXamlDirect().GetXamlDirectObjectProperty(
+        panel, XDPropertyIndex::Panel_Children);
+    auto childView =
+        GetXamlDirect().GetXamlDirectObject(child.as<winrt::UIElement>());
     GetXamlDirect().InsertIntoCollectionAt(
         children, static_cast<uint32_t>(index), childView);
   }
 }
 
 void RootViewManager::RemoveAllChildren(XamlView parent) {
-  auto panel = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Panel>());
+  auto panel = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Panel>());
   if (panel != nullptr) {
-    auto children =
-        GetXamlDirect().GetXamlDirectObjectProperty(
-            panel, XDPropertyIndex::Panel_Children);
+    auto children = GetXamlDirect().GetXamlDirectObjectProperty(
+        panel, XDPropertyIndex::Panel_Children);
     GetXamlDirect().ClearCollection(children);
   }
 }
 
 void RootViewManager::RemoveChildAt(XamlView parent, int64_t index) {
-  auto panel = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Panel>());
+  auto panel = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Panel>());
 
   if (panel != nullptr) {
-    auto children =
-        GetXamlDirect().GetXamlDirectObjectProperty(
-            panel, XDPropertyIndex::Panel_Children);
+    auto children = GetXamlDirect().GetXamlDirectObjectProperty(
+        panel, XDPropertyIndex::Panel_Children);
     GetXamlDirect().RemoveFromCollectionAt(
         children, static_cast<uint32_t>(index));
   }

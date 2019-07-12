@@ -37,10 +37,8 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag) {
 void ActivityIndicatorViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
-
-  const auto progressRing =
-      GetXamlDirect().GetXamlDirectObject(
-          nodeToUpdate->GetView().as<winrt::ProgressRing>());
+  const auto progressRing = GetXamlDirect().GetXamlDirectObject(
+      nodeToUpdate->GetView().as<winrt::ProgressRing>());
 
   if (progressRing == nullptr)
     return;
@@ -57,8 +55,7 @@ void ActivityIndicatorViewManager::UpdateProperties(
             propertyValue.asBool());
       else if (pair.second.isNull())
         GetXamlDirect().ClearProperty(
-            progressRing,
-            XDPropertyIndex::ProgressRing_IsActive);
+            progressRing, XDPropertyIndex::ProgressRing_IsActive);
     }
   }
 

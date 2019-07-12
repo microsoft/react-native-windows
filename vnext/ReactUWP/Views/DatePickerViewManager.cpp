@@ -59,12 +59,11 @@ void DatePickerShadowNode::createView() {
 
 void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
-  const auto datePicker =
-      GetXamlDirect().GetXamlDirectObject(
+  const auto datePicker = GetXamlDirect().GetXamlDirectObject(
       GetView().as<winrt::CalendarDatePicker>());
 
   if (datePicker == nullptr)
-    return;  
+    return;
 
   bool updateSelectedDate = false;
   bool updateMaxDate = false;
@@ -82,8 +81,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
             asHstring(propertyValue));
       else if (propertyValue.isNull())
         GetXamlDirect().ClearProperty(
-            datePicker,
-            XDPropertyIndex::CalendarDatePicker_DayOfWeekFormat);
+            datePicker, XDPropertyIndex::CalendarDatePicker_DayOfWeekFormat);
     } else if (propertyName == "dateFormat") {
       if (propertyValue.isString())
         GetXamlDirect().SetStringProperty(
@@ -101,8 +99,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
             static_cast<int32_t>(propertyValue.asDouble()));
       else if (propertyValue.isNull())
         GetXamlDirect().ClearProperty(
-            datePicker,
-            XDPropertyIndex::CalendarDatePicker_FirstDayOfWeek);
+            datePicker, XDPropertyIndex::CalendarDatePicker_FirstDayOfWeek);
     } else if (propertyName == "maxDate") {
       if (propertyValue.isNumber()) {
         m_maxTime = static_cast<int64_t>(propertyValue.asDouble());
@@ -127,8 +124,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
             asHstring(propertyValue));
       else if (propertyValue.isNull())
         GetXamlDirect().ClearProperty(
-            datePicker,
-            XDPropertyIndex::CalendarDatePicker_PlaceholderText);
+            datePicker, XDPropertyIndex::CalendarDatePicker_PlaceholderText);
     } else if (propertyName == "selectedDate") {
       if (propertyValue.isNumber()) {
         m_selectedTime = static_cast<int64_t>(propertyValue.asDouble());

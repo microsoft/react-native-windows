@@ -86,8 +86,8 @@ void PopupShadowNode::AddView(ShadowNode &child, int64_t index) {
 void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
 
-  const auto popup = GetXamlDirect().GetXamlDirectObject(
-      GetView().as<winrt::Popup>());
+  const auto popup =
+      GetXamlDirect().GetXamlDirectObject(GetView().as<winrt::Popup>());
 
   if (popup == nullptr)
     return;
@@ -104,12 +104,9 @@ void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "isOpen") {
       if (propertyValue.isBool())
         GetXamlDirect().SetBooleanProperty(
-            popup,
-            XDPropertyIndex::Popup_IsOpen,
-            propertyValue.getBool());
+            popup, XDPropertyIndex::Popup_IsOpen, propertyValue.getBool());
       else if (propertyValue.isNull())
-        GetXamlDirect().ClearProperty(
-            popup, XDPropertyIndex::Popup_IsOpen);
+        GetXamlDirect().ClearProperty(popup, XDPropertyIndex::Popup_IsOpen);
     } else if (propertyName == "isLightDismissEnabled") {
       if (propertyValue.isBool())
         GetXamlDirect().SetBooleanProperty(
@@ -243,13 +240,12 @@ XamlView PopupViewManager::CreateViewCore(int64_t tag) {
 void PopupViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   assert(index == 0);
 
-  auto popup = GetXamlDirect().GetXamlDirectObject(
-      parent.as<winrt::Popup>());
+  auto popup = GetXamlDirect().GetXamlDirectObject(parent.as<winrt::Popup>());
   if (popup != nullptr) {
-    auto childView = GetXamlDirect().GetXamlDirectObject(
-        child.as<winrt::UIElement>());
+    auto childView =
+        GetXamlDirect().GetXamlDirectObject(child.as<winrt::UIElement>());
     GetXamlDirect().SetXamlDirectObjectProperty(
-    popup, XDPropertyIndex::Popup_Child, childView);
+        popup, XDPropertyIndex::Popup_Child, childView);
   }
 }
 

@@ -90,8 +90,8 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
 
   bool updateSelectedIndex = false;
-  const auto combobox = GetXamlDirect().GetXamlDirectObject(
-      GetView().as<winrt::ComboBox>());
+  const auto combobox =
+      GetXamlDirect().GetXamlDirectObject(GetView().as<winrt::ComboBox>());
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
@@ -144,9 +144,7 @@ void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
   // changing
   if (updateSelectedIndex)
     GetXamlDirect().SetInt32Property(
-        combobox,
-        XDPropertyIndex::Selector_SelectedIndex,
-        m_selectedIndex);
+        combobox, XDPropertyIndex::Selector_SelectedIndex, m_selectedIndex);
 
   Super::updateProperties(std::move(props));
   m_updating = false;

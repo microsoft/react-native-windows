@@ -120,22 +120,20 @@ void FrameworkElementViewManager::UpdateProperties(
     const folly::dynamic &reactDiffMap) {
   auto element(nodeToUpdate->GetView().as<winrt::FrameworkElement>());
   if (element != nullptr) {
-    const auto elementXD =
-        GetXamlDirect().GetXamlDirectObject(element);
+    const auto elementXD = GetXamlDirect().GetXamlDirectObject(element);
 
     for (const auto &pair : reactDiffMap.items()) {
       const std::string &propertyName = pair.first.getString();
       const folly::dynamic &propertyValue = pair.second;
 
       if (propertyName == "opacity") {
-        if(propertyValue.isNumber()) {
+        if (propertyValue.isNumber()) {
           double opacity = propertyValue.asDouble();
           if (opacity >= 0 && opacity <= 1)
             element.Opacity(opacity);
           // else
           // TODO report error
-        }
-        else if (propertyValue.isNull())
+        } else if (propertyValue.isNull())
           element.ClearValue(winrt::UIElement::OpacityProperty());
 
       } else if (propertyName == "transform") {
@@ -188,9 +186,7 @@ void FrameworkElementViewManager::UpdateProperties(
           double width = propertyValue.asDouble();
           if (width >= 0)
             GetXamlDirect().SetDoubleProperty(
-                elementXD,
-                XDPropertyIndex::FrameworkElement_Width,
-                width);
+                elementXD, XDPropertyIndex::FrameworkElement_Width, width);
           // else
           // TODO report error
         } else if (propertyValue.isNull()) {
@@ -204,9 +200,7 @@ void FrameworkElementViewManager::UpdateProperties(
           double height = propertyValue.asDouble();
           if (height >= 0)
             GetXamlDirect().SetDoubleProperty(
-                elementXD,
-                XDPropertyIndex::FrameworkElement_Height,
-                height);
+                elementXD, XDPropertyIndex::FrameworkElement_Height, height);
           // else
           // TODO report error
         } else if (propertyValue.isNull()) {
@@ -280,9 +274,7 @@ void FrameworkElementViewManager::UpdateProperties(
         if (propertyValue.isString()) {
           auto value = react::uwp::asHstring(propertyValue);
           GetXamlDirect().SetStringProperty(
-              elementXD,
-              XDPropertyIndex::AutomationProperties_HelpText,
-              value);
+              elementXD, XDPropertyIndex::AutomationProperties_HelpText, value);
         } else if (propertyValue.isNull()) {
           GetXamlDirect().ClearProperty(
               elementXD, XDPropertyIndex::AutomationProperties_HelpText);
@@ -291,9 +283,7 @@ void FrameworkElementViewManager::UpdateProperties(
         if (propertyValue.isString()) {
           auto value = react::uwp::asHstring(propertyValue);
           GetXamlDirect().SetStringProperty(
-              elementXD,
-              XDPropertyIndex::AutomationProperties_Name,
-              value);
+              elementXD, XDPropertyIndex::AutomationProperties_Name, value);
         } else if (propertyValue.isNull()) {
           GetXamlDirect().ClearProperty(
               elementXD, XDPropertyIndex::AutomationProperties_Name);
@@ -319,14 +309,13 @@ void FrameworkElementViewManager::UpdateProperties(
             liveSetting = winrt::AutomationLiveSetting::Assertive;
           }
 
-        GetXamlDirect().SetEnumProperty(
+          GetXamlDirect().SetEnumProperty(
               elementXD,
               XDPropertyIndex::AutomationProperties_LiveSetting,
               static_cast<uint32_t>(liveSetting));
         } else if (propertyValue.isNull()) {
           GetXamlDirect().ClearProperty(
-              elementXD,
-              XDPropertyIndex::AutomationProperties_LiveSetting);
+              elementXD, XDPropertyIndex::AutomationProperties_LiveSetting);
         }
         AnnounceLiveRegionChangedIfNeeded(element);
       } else if (propertyName == "accessibilityPosInSet") {
@@ -338,8 +327,7 @@ void FrameworkElementViewManager::UpdateProperties(
               value);
         } else if (propertyValue.isNull()) {
           GetXamlDirect().ClearProperty(
-              elementXD,
-              XDPropertyIndex::AutomationProperties_AutomationId);
+              elementXD, XDPropertyIndex::AutomationProperties_AutomationId);
         }
       } else if (propertyName == "accessibilitySetSize") {
         if (propertyValue.isNumber()) {
@@ -519,8 +507,7 @@ void FrameworkElementViewManager::UpdateProperties(
               value);
         } else if (propertyValue.isNull()) {
           GetXamlDirect().ClearProperty(
-              elementXD,
-              XDPropertyIndex::AutomationProperties_AutomationId);
+              elementXD, XDPropertyIndex::AutomationProperties_AutomationId);
         }
       } else if (propertyName == "tooltip") {
         if (propertyValue.isString()) {
@@ -530,9 +517,7 @@ void FrameworkElementViewManager::UpdateProperties(
               XDPropertyIndex::TextBlock_Text,
               asHstring(propertyValue));
           GetXamlDirect().SetXamlDirectObjectProperty(
-              elementXD,
-              XDPropertyIndex::ToolTipService_ToolTip,
-              tooltip);
+              elementXD, XDPropertyIndex::ToolTipService_ToolTip, tooltip);
         }
       } else if (propertyName == "zIndex") {
         if (propertyValue.isNumber()) {
