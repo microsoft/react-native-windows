@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
@@ -400,7 +400,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="..\packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets" Condition="Exists('..\packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -408,7 +408,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.Core.Direct.2.0.190315001-prerelease\build\native\Microsoft.UI.Xaml.Core.Direct.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />
