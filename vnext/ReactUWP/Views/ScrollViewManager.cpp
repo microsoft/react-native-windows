@@ -38,7 +38,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   std::tuple<bool, T> getPropertyAndValidity(
       folly::dynamic propertyValue,
       T defaultValue);
-  void SetScrollMode(const XD::IXamlDirectObject &scrollViewerXD);
+  void SetScrollMode(const winrt::Windows::Foundation::IInspectable &scrollViewerXD);
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
@@ -414,7 +414,7 @@ std::tuple<bool, T> ScrollViewShadowNode::getPropertyAndValidity(
 }
 
 void ScrollViewShadowNode::SetScrollMode(
-    const XD::IXamlDirectObject &scrollViewerXD) {
+    const winrt::Windows::Foundation::IInspectable &scrollViewerXD) {
   const auto horizontalScrollingEnabled =
       m_isScrollingEnabled && m_isHorizontal;
   const auto verticalScrollingEnabled = m_isScrollingEnabled && !m_isHorizontal;

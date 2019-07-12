@@ -107,7 +107,7 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
   // Child Elements
   winrt::Windows::UI::Xaml::Controls::Border m_border{nullptr};
-  XD::IXamlDirectObject m_border_xd;
+  winrt::Windows::Foundation::IInspectable m_border_xd;
   bool m_hasOuterBorder;
 
  private:

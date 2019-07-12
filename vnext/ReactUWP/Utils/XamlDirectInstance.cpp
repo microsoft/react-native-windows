@@ -7,13 +7,13 @@
 #include "Utils/XamlDirectInstance.h"
 
 namespace XD {
-  using namespace winrt::Windows::UI::Xaml::Core::Direct;
+  using namespace winrt::Microsoft::UI::Xaml::Core::Direct;
 }
 
-XD::IXamlDirect XamlDirectInstance::m_xamlDirect = NULL;
+XD::IXamlDirect XamlDirectInstance::m_xamlDirect = nullptr;
 
 XD::IXamlDirect XamlDirectInstance::GetXamlDirect() {
-  if (m_xamlDirect == NULL) {
+  if (m_xamlDirect == nullptr) {
     m_xamlDirect = XD::XamlDirect::GetDefault();
   }
   return m_xamlDirect;

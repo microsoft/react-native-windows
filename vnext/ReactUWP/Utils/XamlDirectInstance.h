@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Xaml.Core.Direct.h>
+#include "winrt/Microsoft.UI.Xaml.Core.Direct.h"
 #include <winrt/Windows.UI.Xaml.h>
 
 namespace XD {
-using namespace winrt::Windows::UI::Xaml::Core::Direct;
+using namespace winrt::Microsoft::UI::Xaml::Core::Direct;
 }
 
 class XamlDirectInstance {
