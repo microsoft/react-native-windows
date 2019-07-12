@@ -6,19 +6,19 @@
 
 #pragma once
 
-#include <sstream>
 #include <glog/logging.h>
+#include <sstream>
 
-static inline void nyi() { int *a = nullptr; *a = 0; }
+static inline void nyi() {
+  int *a = nullptr;
+  *a = 0;
+}
 
 namespace double_conversion {
 
 class StringBuilder {
-public:
-  StringBuilder(char* buffer, size_t)
-    : m_buffer(buffer)
-  {
-  }
+ public:
+  StringBuilder(char *buffer, size_t) : m_buffer(buffer) {}
 
   size_t position() {
     return m_ss.str().length();
@@ -29,12 +29,12 @@ public:
     memcpy(m_buffer, str.c_str(), str.length());
   }
 
-  char* m_buffer;
+  char *m_buffer;
   std::stringstream m_ss;
 };
 
 class DoubleToStringConverter {
-public:
+ public:
   enum DtoaMode {
     // Produce the shortest correct representation.
     // For example the output of 0.299999999999999988897 is (the less accurate
@@ -76,64 +76,67 @@ public:
     UNIQUE_ZERO = 8
   };
 
-  DoubleToStringConverter(int, const char*, const char*, char, int, int, int, int) {
+  DoubleToStringConverter(
+      int,
+      const char *,
+      const char *,
+      char,
+      int,
+      int,
+      int,
+      int) {
     // nyi();
   }
 
-  bool ToShortest(double d, StringBuilder* s) {
+  bool ToShortest(double d, StringBuilder *s) {
     s->m_ss << d;
-    if (s->m_ss.fail())
-    {
+    if (s->m_ss.fail()) {
       s->m_ss.clear();
       return false;
     }
     return true;
   }
 
-  void ToShortestSingle(float value, StringBuilder* s) {
+  void ToShortestSingle(float value, StringBuilder *s) {
     s->m_ss << value;
   }
 
-  bool ToFixed(double d, unsigned int, StringBuilder* s) {
+  bool ToFixed(double d, unsigned int, StringBuilder *s) {
     s->m_ss << d;
-    if (s->m_ss.fail())
-    {
+    if (s->m_ss.fail()) {
       s->m_ss.clear();
       return false;
     }
     return true;
   }
 
-  void ToPrecision(double d, unsigned int, StringBuilder* s) {
+  void ToPrecision(double d, unsigned int, StringBuilder *s) {
     s->m_ss << d;
   }
 
-  bool ToExponential(double value,
-                     int requested_digits,
-                     StringBuilder* s) const {
+  bool ToExponential(double value, int requested_digits, StringBuilder *s)
+      const {
     s->m_ss << value;
-    if (s->m_ss.fail())
-    {
+    if (s->m_ss.fail()) {
       s->m_ss.clear();
       return false;
     }
     return true;
   }
-
 };
 
 class StringToDoubleConverter {
-public:
+ public:
   enum AtodMode {
     ALLOW_TRAILING_JUNK,
     ALLOW_LEADING_SPACES,
   };
 
-  StringToDoubleConverter(int, double, double, void*, void*) {
+  StringToDoubleConverter(int, double, double, void *, void *) {
     // nyi();
   }
 
-  double StringToDouble(const char* s, int l, int* consumed) {
+  double StringToDouble(const char *s, int l, int *consumed) {
     size_t idx = 0;
     std::string str(s, l);
     double d = std::stod(str.c_str(), &idx);

@@ -309,6 +309,9 @@ void UwpReactInstance::Start(
           auto uwpInstance =
               std::static_pointer_cast<UwpReactInstance>(strongThis);
 
+          // Mark the instance in needs reload state
+          uwpInstance->SetAsNeedsReload();
+
           // Invoke every callback registered
           for (auto const &current : uwpInstance->m_liveReloadCallbacks)
             current.second();
@@ -414,6 +417,11 @@ LiveReloadCallbackCookie UwpReactInstance::RegisterLiveReloadCallback(
   // Add callback to map with new cookie
   LiveReloadCallbackCookie cookie = ++g_nextLiveReloadCallbackCookie;
   m_liveReloadCallbacks[cookie] = callback;
+
+  // Its possible this instance is already in a reload state, if so
+  // trigger immediate reload
+  if (NeedsReload())
+    callback();
 
   return cookie;
 }

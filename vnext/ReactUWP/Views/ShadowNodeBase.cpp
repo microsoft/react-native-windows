@@ -10,7 +10,6 @@
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>
 #include <WindowsNumerics.h>
-#include <winrt/Windows.UI.Composition.h>
 #include "Views/KeyboardEventHandler.h"
 
 using namespace std::placeholders;

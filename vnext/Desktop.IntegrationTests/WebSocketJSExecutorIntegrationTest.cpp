@@ -8,7 +8,6 @@
 #include "MockExecutorDelegate.h"
 #include "TestMessageQueueThread.h"
 
-
 using namespace facebook::react;
 using namespace Microsoft::React;
 using namespace Microsoft::React::Test;
@@ -91,7 +90,7 @@ TEST_METHOD(LoadApplicationScriptSucceeds) {
       ,
       ""
 #endif
-      );
+  );
 
   jsQueue->quitSynchronous();
 
@@ -128,7 +127,7 @@ TEST_METHOD(LoadApplicationScriptHandles404) {
       ,
       ""
 #endif
-      );
+  );
 
   jsThread->quitSynchronous();
 
@@ -165,7 +164,7 @@ TEST_METHOD(LoadApplicationScriptHandlesNonExistingBundle) {
       ,
       ""
 #endif
-      );
+  );
 
   jsThread->quitSynchronous();
 

@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 #include <pch.h>
-#include "TouchEventHandler.h"
+
 #include <Views/ShadowNodeBase.h>
+#include "TouchEventHandler.h"
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
@@ -155,13 +156,13 @@ void TouchEventHandler::OnPointerConcluded(
     return;
 
   const auto pointerIndex = *optPointerIndex;
-  // Only if the view has a Tag can we process this
+  // if the view has a Tag, update the pointer info.
+  // Regardless of that, ensure we Dispatch & cleanup the pointer
   int64_t tag;
   winrt::FrameworkElement sourceElement(nullptr);
-  if (!TagFromOriginalSource(args, &tag, &sourceElement))
-    return;
+  if (TagFromOriginalSource(args, &tag, &sourceElement))
+    UpdateReactPointer(m_pointers[pointerIndex], args, sourceElement);
 
-  UpdateReactPointer(m_pointers[pointerIndex], args, sourceElement);
   DispatchTouchEvent(eventType, pointerIndex);
 
   m_pointers.erase(cbegin(m_pointers) + pointerIndex);

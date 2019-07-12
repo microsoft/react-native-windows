@@ -36,6 +36,9 @@ class ValueAnimatedNode : public AnimatedNode {
   void AddActiveAnimation(int64_t animationTag);
   void RemoveActiveAnimation(int64_t animationTag);
 
+  static constexpr std::wstring_view s_valueName{L"v"};
+  static constexpr std::wstring_view s_offsetName{L"o"};
+
  protected:
   winrt::CompositionPropertySet m_propertySet{nullptr};
 
@@ -43,9 +46,6 @@ class ValueAnimatedNode : public AnimatedNode {
 
   static constexpr std::string_view s_jsValueName{"value"};
   static constexpr std::string_view s_jsOffsetName{"offset"};
-
-  static constexpr std::wstring_view s_valueName{L"value"};
-  static constexpr std::wstring_view s_offsetName{L"offset"};
 
  private:
   std::unordered_set<int64_t> m_dependentPropsNodes{};

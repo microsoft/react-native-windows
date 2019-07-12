@@ -386,4 +386,4 @@ void WebSocketServer::SetOnError(function<void(IWebSocket::Error &&)> &&func) {
 
 #pragma endregion WebSocketServer
 
-} // Microsoft::React::Test
+} // namespace Microsoft::React::Test

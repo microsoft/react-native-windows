@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
-#include "StyleAnimatedNode.h"
 #include "FacadeType.h"
 #include "NativeAnimatedNodeManager.h"
+#include "StyleAnimatedNode.h"
 
 namespace react {
 namespace uwp {
