@@ -136,7 +136,7 @@ void ScrollViewShadowNode::updateProperties(
   m_updating = true;
 
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
-  const auto scrollViewerXD = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(scrollViewer);
+  const auto scrollViewerXD = GetXamlDirect().GetXamlDirectObject(scrollViewer);
   if (scrollViewerXD == nullptr)
     return;
 
@@ -164,9 +164,9 @@ void ScrollViewShadowNode::updateProperties(
       const auto [valid, showsHorizontalScrollIndicator] =
           getPropertyAndValidity(propertyValue, true);
       if (valid) {
-        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+        GetXamlDirect().SetEnumProperty(
             scrollViewerXD,
-            XD::XamlPropertyIndex::ScrollViewer_HorizontalScrollBarVisibility,
+            XDPropertyIndex::ScrollViewer_HorizontalScrollBarVisibility,
             static_cast<int32_t>(
                 showsHorizontalScrollIndicator
                     ? winrt::ScrollBarVisibility::Visible
@@ -176,9 +176,9 @@ void ScrollViewShadowNode::updateProperties(
       const auto [valid, showsVerticalScrollIndicator] =
           getPropertyAndValidity(propertyValue, true);
       if (valid) {
-        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+        GetXamlDirect().SetEnumProperty(
             scrollViewerXD,
-            XD::XamlPropertyIndex::ScrollViewer_VerticalScrollBarVisibility,
+            XDPropertyIndex::ScrollViewer_VerticalScrollBarVisibility,
             static_cast<INT32>(
                 showsVerticalScrollIndicator
                     ? winrt::ScrollBarVisibility::Visible
@@ -188,18 +188,18 @@ void ScrollViewShadowNode::updateProperties(
       const auto [valid, minimumZoomScale] =
           getPropertyAndValidity(propertyValue, 1.0);
       if (valid) {
-        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+        GetXamlDirect().SetDoubleProperty(
             scrollViewerXD,
-            XD::XamlPropertyIndex::ScrollViewer_MinZoomFactor,
+            XDPropertyIndex::ScrollViewer_MinZoomFactor,
             static_cast<float>(minimumZoomScale));
       }
     } else if (propertyName == "maximumZoomScale") {
       const auto [valid, maximumZoomScale] =
           getPropertyAndValidity(propertyValue, 1.0);
       if (valid) {
-        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+        GetXamlDirect().SetDoubleProperty(
             scrollViewerXD,
-            XD::XamlPropertyIndex::ScrollViewer_MaxZoomFactor,
+            XDPropertyIndex::ScrollViewer_MaxZoomFactor,
             static_cast<float>(maximumZoomScale));
       }
     } else if (propertyName == "zoomScale") {
@@ -228,13 +228,13 @@ void ScrollViewShadowNode::updateProperties(
           propertyValue, winrt::SnapPointsAlignment::Near);
       if (valid) {
         const auto snapToAlignmentInt32 = static_cast<int32_t>(snapToAlignment);
-        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+        GetXamlDirect().SetEnumProperty(
             scrollViewerXD,
-            XD::XamlPropertyIndex::ScrollViewer_HorizontalSnapPointsAlignment,
+            XDPropertyIndex::ScrollViewer_HorizontalSnapPointsAlignment,
             snapToAlignmentInt32);
-        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+        GetXamlDirect().SetEnumProperty(
             scrollViewerXD,
-            XD::XamlPropertyIndex::ScrollViewer_VerticalSnapPointsAlignment,
+            XDPropertyIndex::ScrollViewer_VerticalSnapPointsAlignment,
             snapToAlignmentInt32);
       }
     }
@@ -418,15 +418,15 @@ void ScrollViewShadowNode::SetScrollMode(
   const auto horizontalScrollingEnabled =
       m_isScrollingEnabled && m_isHorizontal;
   const auto verticalScrollingEnabled = m_isScrollingEnabled && !m_isHorizontal;
-  XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+  GetXamlDirect().SetEnumProperty(
       scrollViewerXD,
-      XD::XamlPropertyIndex::ScrollViewer_HorizontalScrollMode,
+      XDPropertyIndex::ScrollViewer_HorizontalScrollMode,
       static_cast<int32_t>(
           horizontalScrollingEnabled ? winrt::ScrollMode::Auto
                                      : winrt::ScrollMode::Disabled));
-  XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+  GetXamlDirect().SetEnumProperty(
       scrollViewerXD,
-      XD::XamlPropertyIndex::ScrollViewer_VerticalScrollMode,
+      XDPropertyIndex::ScrollViewer_VerticalScrollMode,
       static_cast<int32_t>(
           verticalScrollingEnabled ? winrt::ScrollMode::Auto
                                    : winrt::ScrollMode::Disabled));

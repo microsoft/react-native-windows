@@ -8,7 +8,7 @@
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 
-#include "Utils/XamlDirectInstance.h"
+#include <Utils/XamlDirect.h>
 
 #include "cppwinrt/ViewPanel.g.h"
 

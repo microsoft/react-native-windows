@@ -212,7 +212,7 @@
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
-    <ClInclude Include="Utils\XamlDirectInstance.h" />
+    <ClInclude Include="Utils\XamlDirect.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
@@ -316,7 +316,6 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
-    <ClCompile Include="Utils\XamlDirectInstance.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />

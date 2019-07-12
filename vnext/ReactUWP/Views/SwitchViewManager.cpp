@@ -6,7 +6,7 @@
 #include <Views/ShadowNodeBase.h>
 #include "SwitchViewManager.h"
 
-#include <Utils/XamlDirectInstance.h>
+#include <Utils/XamlDirect.h>
 
 #include <IReactInstance.h>
 
@@ -88,7 +88,7 @@ void SwitchViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
   const auto toggleSwitch =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
           nodeToUpdate->GetView().as<winrt::ToggleSwitch>());
 
   if (toggleSwitch == nullptr)
@@ -100,22 +100,22 @@ void SwitchViewManager::UpdateProperties(
 
     if (propertyName == "disabled") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             toggleSwitch,
-            XD::XamlPropertyIndex::Control_IsEnabled,
+            XDPropertyIndex::Control_IsEnabled,
             !propertyValue.asBool());
       else if (pair.second.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            toggleSwitch, XD::XamlPropertyIndex::Control_IsEnabled);
+        GetXamlDirect().ClearProperty(
+            toggleSwitch, XDPropertyIndex::Control_IsEnabled);
     } else if (propertyName == "value") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             toggleSwitch,
-            XD::XamlPropertyIndex::ToggleSwitch_IsOn,
+            XDPropertyIndex::ToggleSwitch_IsOn,
             propertyValue.asBool());
       else if (pair.second.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            toggleSwitch, XD::XamlPropertyIndex::ToggleSwitch_IsOn);
+        GetXamlDirect().ClearProperty(
+            toggleSwitch, XDPropertyIndex::ToggleSwitch_IsOn);
     }
   }
 

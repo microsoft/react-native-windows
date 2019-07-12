@@ -9,7 +9,7 @@
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
-#include <Utils/XamlDirectInstance.h>
+#include <Utils/XamlDirect.h>
 
 #include <winrt/Windows.UI.Xaml.Documents.h>
 
@@ -55,7 +55,7 @@ void TextViewManager::UpdateProperties(
   auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
 
   const auto textBlockXD =
-    XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(textBlock);
+    GetXamlDirect().GetXamlDirectObject(textBlock);
 
   if (textBlockXD == nullptr)
     return;
@@ -84,49 +84,49 @@ void TextViewManager::UpdateProperties(
       continue;
     } else if (propertyName == "numberOfLines") {
       if (propertyValue.isNumber())
-        XamlDirectInstance::GetXamlDirect().SetInt32Property(
+        GetXamlDirect().SetInt32Property(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_MaxLines,
+            XDPropertyIndex::TextBlock_MaxLines,
             static_cast<int32_t>(propertyValue.asDouble()));
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            textBlockXD, XD::XamlPropertyIndex::TextBlock_MaxLines);
+        GetXamlDirect().ClearProperty(
+            textBlockXD, XDPropertyIndex::TextBlock_MaxLines);
     } else if (propertyName == "lineHeight") {
       if (propertyValue.isNumber())
-        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+        GetXamlDirect().SetDoubleProperty(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_LineHeight,
+            XDPropertyIndex::TextBlock_LineHeight,
             propertyValue.asDouble());
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            textBlockXD, XD::XamlPropertyIndex::TextBlock_LineHeight);
+        GetXamlDirect().ClearProperty(
+            textBlockXD, XDPropertyIndex::TextBlock_LineHeight);
     } else if (propertyName == "selectable") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_IsTextSelectionEnabled,
+            XDPropertyIndex::TextBlock_IsTextSelectionEnabled,
             propertyValue.asBool());
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_IsTextSelectionEnabled);
+            XDPropertyIndex::TextBlock_IsTextSelectionEnabled);
     } else if (propertyName == "allowFontScaling") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_IsTextScaleFactorEnabled,
+            XDPropertyIndex::TextBlock_IsTextScaleFactorEnabled,
             propertyValue.asBool());
       else
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_IsTextScaleFactorEnabled);
+            XDPropertyIndex::TextBlock_IsTextScaleFactorEnabled);
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
         textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       } else
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             textBlockXD,
-            XD::XamlPropertyIndex::TextBlock_SelectionHighlightColor);
+            XDPropertyIndex::TextBlock_SelectionHighlightColor);
     }
   }
 
@@ -135,36 +135,36 @@ void TextViewManager::UpdateProperties(
 
 void TextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   const auto textBlockXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
       parent.as<winrt::TextBlock>());
   const auto childInlineXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
       child.as<winrt::Inline>());
   const auto textBlockInlinesXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObjectProperty(
-          textBlockXD, XD::XamlPropertyIndex::TextBlock_Inlines);
-  XamlDirectInstance::GetXamlDirect().InsertIntoCollectionAt(
+      GetXamlDirect().GetXamlDirectObjectProperty(
+          textBlockXD, XDPropertyIndex::TextBlock_Inlines);
+  GetXamlDirect().InsertIntoCollectionAt(
       textBlockInlinesXD, static_cast<uint32_t>(index), childInlineXD);
 }
 
 void TextViewManager::RemoveAllChildren(XamlView parent) {
   const auto textBlockXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
       parent.as<winrt::TextBlock>());
   const auto textBlockInlinesXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObjectProperty(
-          textBlockXD, XD::XamlPropertyIndex::TextBlock_Inlines);
-  XamlDirectInstance::GetXamlDirect().ClearCollection(textBlockInlinesXD);
+      GetXamlDirect().GetXamlDirectObjectProperty(
+          textBlockXD, XDPropertyIndex::TextBlock_Inlines);
+  GetXamlDirect().ClearCollection(textBlockInlinesXD);
 }
 
 void TextViewManager::RemoveChildAt(XamlView parent, int64_t index) {
   const auto textBlockXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
       parent.as<winrt::TextBlock>());
   const auto textBlockInlinesXD =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObjectProperty(
-          textBlockXD, XD::XamlPropertyIndex::TextBlock_Inlines);
-  XamlDirectInstance::GetXamlDirect().RemoveFromCollectionAt(
+      GetXamlDirect().GetXamlDirectObjectProperty(
+          textBlockXD, XDPropertyIndex::TextBlock_Inlines);
+  GetXamlDirect().RemoveFromCollectionAt(
       textBlockInlinesXD, static_cast<uint32_t>(index));
 }
 

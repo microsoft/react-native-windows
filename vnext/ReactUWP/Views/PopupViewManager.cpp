@@ -9,7 +9,7 @@
 
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
-#include <Utils/XamlDirectInstance.h>
+#include <Utils/XamlDirect.h>
 #include <winrt/Windows.UI.Core.h>
 
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
@@ -86,7 +86,7 @@ void PopupShadowNode::AddView(ShadowNode &child, int64_t index) {
 void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
 
-  const auto popup = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+  const auto popup = GetXamlDirect().GetXamlDirectObject(
       GetView().as<winrt::Popup>());
 
   if (popup == nullptr)
@@ -103,40 +103,40 @@ void PopupShadowNode::updateProperties(const folly::dynamic &&props) {
         m_targetTag = -1;
     } else if (propertyName == "isOpen") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             popup,
-            XD::XamlPropertyIndex::Popup_IsOpen,
+            XDPropertyIndex::Popup_IsOpen,
             propertyValue.getBool());
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            popup, XD::XamlPropertyIndex::Popup_IsOpen);
+        GetXamlDirect().ClearProperty(
+            popup, XDPropertyIndex::Popup_IsOpen);
     } else if (propertyName == "isLightDismissEnabled") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             popup,
-            XD::XamlPropertyIndex::Popup_IsLightDismissEnabled,
+            XDPropertyIndex::Popup_IsLightDismissEnabled,
             propertyValue.getBool());
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            popup, XD::XamlPropertyIndex::Popup_IsLightDismissEnabled);
+        GetXamlDirect().ClearProperty(
+            popup, XDPropertyIndex::Popup_IsLightDismissEnabled);
     } else if (propertyName == "horizontalOffset") {
       if (propertyValue.isNumber())
-        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+        GetXamlDirect().SetDoubleProperty(
             popup,
-            XD::XamlPropertyIndex::Popup_HorizontalOffset,
+            XDPropertyIndex::Popup_HorizontalOffset,
             propertyValue.asDouble());
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            popup, XD::XamlPropertyIndex::Popup_HorizontalOffset);
+        GetXamlDirect().ClearProperty(
+            popup, XDPropertyIndex::Popup_HorizontalOffset);
     } else if (propertyName == "verticalOffset") {
       if (propertyValue.isNumber())
-        XamlDirectInstance::GetXamlDirect().SetDoubleProperty(
+        GetXamlDirect().SetDoubleProperty(
             popup,
-            XD::XamlPropertyIndex::Popup_VerticalOffset,
+            XDPropertyIndex::Popup_VerticalOffset,
             propertyValue.asDouble());
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            popup, XD::XamlPropertyIndex::Popup_VerticalOffset);
+        GetXamlDirect().ClearProperty(
+            popup, XDPropertyIndex::Popup_VerticalOffset);
     }
   }
 
@@ -243,13 +243,13 @@ XamlView PopupViewManager::CreateViewCore(int64_t tag) {
 void PopupViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   assert(index == 0);
 
-  auto popup = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+  auto popup = GetXamlDirect().GetXamlDirectObject(
       parent.as<winrt::Popup>());
   if (popup != nullptr) {
-    auto childView = XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+    auto childView = GetXamlDirect().GetXamlDirectObject(
         child.as<winrt::UIElement>());
-    XamlDirectInstance::GetXamlDirect().SetXamlDirectObjectProperty(
-    popup, XD::XamlPropertyIndex::Popup_Child, childView);
+    GetXamlDirect().SetXamlDirectObjectProperty(
+    popup, XDPropertyIndex::Popup_Child, childView);
   }
 }
 

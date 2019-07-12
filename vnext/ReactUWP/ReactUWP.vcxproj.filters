@@ -286,7 +286,6 @@
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\XamlDirectInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -625,7 +624,7 @@
     <ClInclude Include="Modules\Animated\ExtrapolationType.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\XamlDirectInstance.h">
+    <ClInclude Include="Utils\XamlDirect.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,7 +7,7 @@
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
-#include <Utils/XamlDirectInstance.h>
+#include <Utils/XamlDirect.h>
 
 namespace react {
 namespace uwp {
@@ -39,7 +39,7 @@ void ActivityIndicatorViewManager::UpdateProperties(
     const folly::dynamic &reactDiffMap) {
 
   const auto progressRing =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
           nodeToUpdate->GetView().as<winrt::ProgressRing>());
 
   if (progressRing == nullptr)
@@ -51,14 +51,14 @@ void ActivityIndicatorViewManager::UpdateProperties(
 
     if (propertyName == "animating") {
       if (propertyValue.isBool())
-        XamlDirectInstance::GetXamlDirect().SetBooleanProperty(
+        GetXamlDirect().SetBooleanProperty(
             progressRing,
-            XD::XamlPropertyIndex::ProgressRing_IsActive,
+            XDPropertyIndex::ProgressRing_IsActive,
             propertyValue.asBool());
       else if (pair.second.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             progressRing,
-            XD::XamlPropertyIndex::ProgressRing_IsActive);
+            XDPropertyIndex::ProgressRing_IsActive);
     }
   }
 

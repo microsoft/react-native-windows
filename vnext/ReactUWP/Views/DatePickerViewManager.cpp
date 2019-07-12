@@ -7,7 +7,7 @@
 #include "DatePickerViewManager.h"
 
 #include <Utils/ValueUtils.h>
-#include <Utils/XamlDirectInstance.h>
+#include <Utils/XamlDirect.h>
 
 #include <IReactInstance.h>
 
@@ -60,7 +60,7 @@ void DatePickerShadowNode::createView() {
 void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
   const auto datePicker =
-      XamlDirectInstance::GetXamlDirect().GetXamlDirectObject(
+      GetXamlDirect().GetXamlDirectObject(
       GetView().as<winrt::CalendarDatePicker>());
 
   if (datePicker == nullptr)
@@ -76,66 +76,66 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
 
     if (propertyName == "dayOfWeekFormat") {
       if (propertyValue.isString())
-        XamlDirectInstance::GetXamlDirect().SetStringProperty(
+        GetXamlDirect().SetStringProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_DayOfWeekFormat,
+            XDPropertyIndex::CalendarDatePicker_DayOfWeekFormat,
             asHstring(propertyValue));
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_DayOfWeekFormat);
+            XDPropertyIndex::CalendarDatePicker_DayOfWeekFormat);
     } else if (propertyName == "dateFormat") {
       if (propertyValue.isString())
-        XamlDirectInstance::GetXamlDirect().SetStringProperty(
+        GetXamlDirect().SetStringProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_DateFormat,
+            XDPropertyIndex::CalendarDatePicker_DateFormat,
             asHstring(propertyValue));
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            datePicker, XD::XamlPropertyIndex::CalendarDatePicker_DateFormat);
+        GetXamlDirect().ClearProperty(
+            datePicker, XDPropertyIndex::CalendarDatePicker_DateFormat);
     } else if (propertyName == "firstDayOfWeek") {
       if (propertyValue.isNumber())
-        XamlDirectInstance::GetXamlDirect().SetEnumProperty(
+        GetXamlDirect().SetEnumProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_FirstDayOfWeek,
+            XDPropertyIndex::CalendarDatePicker_FirstDayOfWeek,
             static_cast<int32_t>(propertyValue.asDouble()));
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_FirstDayOfWeek);
+            XDPropertyIndex::CalendarDatePicker_FirstDayOfWeek);
     } else if (propertyName == "maxDate") {
       if (propertyValue.isNumber()) {
         m_maxTime = static_cast<int64_t>(propertyValue.asDouble());
         updateMaxDate = true;
       } else if (propertyValue.isNull()) {
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            datePicker, XD::XamlPropertyIndex::CalendarDatePicker_MaxDate);
+        GetXamlDirect().ClearProperty(
+            datePicker, XDPropertyIndex::CalendarDatePicker_MaxDate);
       }
     } else if (propertyName == "minDate") {
       if (propertyValue.isNumber()) {
         m_minTime = static_cast<int64_t>(propertyValue.asDouble());
         updateMinDate = true;
       } else if (propertyValue.isNull()) {
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            datePicker, XD::XamlPropertyIndex::CalendarDatePicker_MinDate);
+        GetXamlDirect().ClearProperty(
+            datePicker, XDPropertyIndex::CalendarDatePicker_MinDate);
       }
     } else if (propertyName == "placeholderText") {
       if (propertyValue.isString())
-        XamlDirectInstance::GetXamlDirect().SetStringProperty(
+        GetXamlDirect().SetStringProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_PlaceholderText,
+            XDPropertyIndex::CalendarDatePicker_PlaceholderText,
             asHstring(propertyValue));
       else if (propertyValue.isNull())
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
+        GetXamlDirect().ClearProperty(
             datePicker,
-            XD::XamlPropertyIndex::CalendarDatePicker_PlaceholderText);
+            XDPropertyIndex::CalendarDatePicker_PlaceholderText);
     } else if (propertyName == "selectedDate") {
       if (propertyValue.isNumber()) {
         m_selectedTime = static_cast<int64_t>(propertyValue.asDouble());
         updateSelectedDate = true;
       } else if (propertyValue.isNull()) {
-        XamlDirectInstance::GetXamlDirect().ClearProperty(
-            datePicker, XD::XamlPropertyIndex::CalendarDatePicker_Date);
+        GetXamlDirect().ClearProperty(
+            datePicker, XDPropertyIndex::CalendarDatePicker_Date);
       }
     } else if (propertyName == "timeZoneOffsetInSeconds") {
       if (propertyValue.isNumber())
@@ -147,21 +147,21 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   }
 
   if (updateMaxDate)
-    XamlDirectInstance::GetXamlDirect().SetDateTimeProperty(
+    GetXamlDirect().SetDateTimeProperty(
         datePicker,
-        XD::XamlPropertyIndex::CalendarDatePicker_MaxDate,
+        XDPropertyIndex::CalendarDatePicker_MaxDate,
         DateTimeFrom(m_maxTime, m_timeZoneOffsetInSeconds));
 
   if (updateMinDate)
-    XamlDirectInstance::GetXamlDirect().SetDateTimeProperty(
+    GetXamlDirect().SetDateTimeProperty(
         datePicker,
-        XD::XamlPropertyIndex::CalendarDatePicker_MinDate,
+        XDPropertyIndex::CalendarDatePicker_MinDate,
         DateTimeFrom(m_minTime, m_timeZoneOffsetInSeconds));
 
   if (updateSelectedDate)
-    XamlDirectInstance::GetXamlDirect().SetDateTimeProperty(
+    GetXamlDirect().SetDateTimeProperty(
         datePicker,
-        XD::XamlPropertyIndex::CalendarDatePicker_Date,
+        XDPropertyIndex::CalendarDatePicker_Date,
         DateTimeFrom(m_selectedTime, m_timeZoneOffsetInSeconds));
 
   Super::updateProperties(std::move(props));
