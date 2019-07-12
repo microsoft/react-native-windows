@@ -19,6 +19,8 @@
 namespace react {
 namespace uwp {
 
+struct IXamlReactControl;
+
 struct YogaNodeDeleter {
   void operator()(YGNodeRef node) {
     YGNodeFree(node);
@@ -69,6 +71,9 @@ class NativeUIManager : public facebook::react::INativeUIManager {
       facebook::react::ShadowNode &shadowRoot,
       facebook::xplat::module::CxxModule::Callback callback) override;
 
+  void focus(int64_t reactTag) override;
+  void blur(int64_t reactTag) override;
+
   // Other public functions
   void DirtyYogaNode(int64_t tag);
   void AddBatchCompletedCallback(std::function<void()> callback);
@@ -88,6 +93,9 @@ class NativeUIManager : public facebook::react::INativeUIManager {
   void UpdateExtraLayout(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
 
+  std::weak_ptr<react::uwp::IXamlReactControl> GetParentXamlReactControl(
+      int64_t tag) const;
+
  private:
   facebook::react::INativeUIManagerHost *m_host = nullptr;
   bool m_inBatch = false;
@@ -97,6 +105,8 @@ class NativeUIManager : public facebook::react::INativeUIManager {
   std::vector<winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker>
       m_sizeChangedVector;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
+
+  std::map<int64_t, std::weak_ptr<IXamlReactControl>> m_tagsToXamlReactControl;
 };
 
 } // namespace uwp

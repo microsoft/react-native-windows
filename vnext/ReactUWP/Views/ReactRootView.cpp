@@ -68,6 +68,11 @@ void ReactRootView::DetachRoot() noexcept {
   m_pimpl->DetachRoot();
 }
 
+std::shared_ptr<::react::uwp::IXamlReactControl>
+ReactRootView::GetXamlReactControl() const noexcept {
+  return m_pimpl;
+}
+
 void ReactRootView::ResetView() {
   return m_pimpl->ResetView();
 }

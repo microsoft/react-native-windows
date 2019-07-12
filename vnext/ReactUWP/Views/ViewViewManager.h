@@ -6,6 +6,10 @@
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ViewPanel.h>
 
+namespace winrt {
+using ContentControl = winrt::Windows::UI::Xaml::Controls::ContentControl;
+}
+
 namespace react {
 namespace uwp {
 
@@ -50,6 +54,10 @@ class ViewViewManager : public FrameworkElementViewManager {
       folly::dynamic &&eventData);
 
   XamlView CreateViewControl(int64_t tag);
+
+  winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
+  winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
+  winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
 };
 
 } // namespace uwp

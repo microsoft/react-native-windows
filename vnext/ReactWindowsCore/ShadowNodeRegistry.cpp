@@ -59,5 +59,17 @@ std::unordered_set<int64_t> &ShadowNodeRegistry::getAllRoots() {
   return m_roots;
 }
 
+// iterate its parent to get the root shadow node
+ShadowNode *ShadowNodeRegistry::getParentRootShadowNode(int64_t nodeTag) {
+  auto node = findNode(nodeTag);
+  while (node) {
+    if (m_roots.find(node->m_tag) != m_roots.end()) {
+      return node;
+    }
+    node = findNode(node->m_parent);
+  }
+  return nullptr;
+}
+
 } // namespace react
 } // namespace facebook

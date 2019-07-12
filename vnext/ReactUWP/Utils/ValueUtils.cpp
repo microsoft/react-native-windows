@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <Utils/ValueUtils.h>
+#include <winrt/Windows.UI.Xaml.Markup.h>
 #include "unicode.h"
 
 #include <folly/dynamic.h>
@@ -60,14 +61,68 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
 
 REACTWINDOWS_API_(winrt::SolidColorBrush)
 SolidColorBrushFrom(const folly::dynamic &d) {
+  if (d.isObject()) {
+    winrt::hstring resourceName{
+        winrt::to_hstring(d.find("windowsbrush")->second.asString())};
+
+    thread_local static std::
+        map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>>
+            accentColorMap = {{L"SystemAccentColor", {nullptr}},
+                              {L"SystemAccentColorLight1", {nullptr}},
+                              {L"SystemAccentColorLight2", {nullptr}},
+                              {L"SystemAccentColorLight3", {nullptr}},
+                              {L"SystemAccentColorDark1", {nullptr}},
+                              {L"SystemAccentColorDark2", {nullptr}},
+                              {L"SystemAccentColorDark3", {nullptr}},
+                              {L"SystemListAccentLowColor", {nullptr}},
+                              {L"SystemListAccentMediumColor", {nullptr}},
+                              {L"SystemListAccentHighColor", {nullptr}}};
+
+    if (accentColorMap.find(resourceName) != accentColorMap.end()) {
+      if (auto brush = accentColorMap.at(resourceName).get()) {
+        return brush;
+      }
+
+      winrt::hstring xamlString =
+          L"<ResourceDictionary"
+          L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
+          L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+          L"  <SolidColorBrush"
+          L"      x:Key='" +
+          resourceName +
+          L"'"
+          L"      Color='{ThemeResource " +
+          resourceName +
+          "}' />"
+          L"</ResourceDictionary>";
+
+      auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
+          winrt::Markup::XamlReader::Load(xamlString))};
+
+      auto brush{winrt::unbox_value<winrt::SolidColorBrush>(
+          dictionary.Lookup(winrt::box_value(resourceName)))};
+
+      accentColorMap[resourceName] = winrt::make_weak(brush);
+
+      return brush;
+    }
+
+    winrt::IInspectable resource{
+        winrt::Application::Current().Resources().Lookup(
+            winrt::box_value(resourceName))};
+
+    if (resource) {
+      winrt::unbox_value<winrt::SolidColorBrush>(resource);
+    }
+  }
+
   thread_local static std::
       map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp>
           solidColorBrushCache;
 
-  const auto color = ColorFrom(d);
+  const auto color = d.isNumber() ? ColorFrom(d) : winrt::Colors::Transparent();
   if (solidColorBrushCache.count(color) != 0) {
-    auto brush = solidColorBrushCache[color].get();
-    if (brush != nullptr) {
+    if (auto brush = solidColorBrushCache[color].get()) {
       return brush;
     }
   }
@@ -146,6 +201,11 @@ REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr) {
 
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d) {
   return winrt::hstring(asWStr(d));
+}
+
+REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d) {
+  return d.isObject() ? (d.find("windowsbrush") != d.items().end())
+                      : d.isNumber();
 }
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {

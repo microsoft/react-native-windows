@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "SubtractionAnimatedNode.h"
+
 #include "NativeAnimatedNodeManager.h"
+#include "SubtractionAnimatedNode.h"
 
 namespace react {
 namespace uwp {

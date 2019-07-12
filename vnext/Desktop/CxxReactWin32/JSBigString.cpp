@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include <cxxreact/JSBigString.h>
 
 namespace facebook {

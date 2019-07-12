@@ -6,7 +6,7 @@
 'use strict';
 
 import RNTesterList from './RNTesterList.uwp';
-import {RNTesterAction} from './RNTesterActions';
+import {RNTesterAction} from './RNTesterActions.uwp';
 
 interface IRNTesterNavigationState {
   openExample?: string;

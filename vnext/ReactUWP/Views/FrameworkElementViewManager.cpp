@@ -73,6 +73,10 @@ void FrameworkElementViewManager::TransferProperties(
       oldView, newView, winrt::AutomationProperties::HelpTextProperty());
   TransferProperty(
       oldView, newView, winrt::AutomationProperties::LiveSettingProperty());
+  TransferProperty(
+      oldView, newView, winrt::AutomationProperties::PositionInSetProperty());
+  TransferProperty(
+      oldView, newView, winrt::AutomationProperties::SizeOfSetProperty());
   auto accessibilityView =
       winrt::AutomationProperties::GetAccessibilityView(oldView);
   winrt::AutomationProperties::SetAccessibilityView(newView, accessibilityView);
@@ -85,11 +89,31 @@ void FrameworkElementViewManager::TransferProperties(
   TransferProperty(
       oldView,
       newView,
+      DynamicAutomationProperties::AccessibilityStateSelectedProperty());
+  TransferProperty(
+      oldView,
+      newView,
       DynamicAutomationProperties::AccessibilityStateDisabledProperty());
   TransferProperty(
       oldView,
       newView,
-      DynamicAutomationProperties::AccessibilityStateSelectedProperty());
+      DynamicAutomationProperties::AccessibilityStateCheckedProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateBusyProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateExpandedProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
   TransferProperty(
       oldView,
       newView,
@@ -102,8 +126,11 @@ void FrameworkElementViewManager::TransferProperties(
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
-  props.update(folly::dynamic::object("accessibilityHint", "string")(
-      "accessibilityLabel", "string")("testID", "string")("tooltip", "string"));
+  props.update(folly::dynamic::object("accessible", "boolean")(
+      "accessibilityRole", "string")("accessibilityStates", "array")(
+      "accessibilityHint", "string")("accessibilityLabel", "string")(
+      "accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
+      "testID", "string")("tooltip", "string"));
   return props;
 }
 
@@ -290,6 +317,29 @@ void FrameworkElementViewManager::UpdateProperties(
               winrt::AutomationProperties::LiveSettingProperty());
         }
         AnnounceLiveRegionChangedIfNeeded(element);
+      } else if (propertyName == "accessibilityPosInSet") {
+        if (propertyValue.isNumber()) {
+          auto value = static_cast<int>(propertyValue.getInt());
+          auto boxedValue =
+              winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+
+          element.SetValue(
+              winrt::AutomationProperties::PositionInSetProperty(), boxedValue);
+        } else if (propertyValue.isNull()) {
+          element.ClearValue(
+              winrt::AutomationProperties::PositionInSetProperty());
+        }
+      } else if (propertyName == "accessibilitySetSize") {
+        if (propertyValue.isNumber()) {
+          auto value = static_cast<int>(propertyValue.getInt());
+          auto boxedValue =
+              winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+
+          element.SetValue(
+              winrt::AutomationProperties::SizeOfSetProperty(), boxedValue);
+        } else if (propertyValue.isNull()) {
+          element.ClearValue(winrt::AutomationProperties::SizeOfSetProperty());
+        }
       } else if (propertyName == "accessibilityRole") {
         if (propertyValue.isString()) {
           const std::string &role = propertyValue.getString();
@@ -374,6 +424,12 @@ void FrameworkElementViewManager::UpdateProperties(
           else if (role == "toolbar")
             DynamicAutomationProperties::SetAccessibilityRole(
                 element, winrt::react::uwp::AccessibilityRoles::ToolBar);
+          else if (role == "list")
+            DynamicAutomationProperties::SetAccessibilityRole(
+                element, winrt::react::uwp::AccessibilityRoles::List);
+          else if (role == "listitem")
+            DynamicAutomationProperties::SetAccessibilityRole(
+                element, winrt::react::uwp::AccessibilityRoles::ListItem);
           else
             DynamicAutomationProperties::SetAccessibilityRole(
                 element, winrt::react::uwp::AccessibilityRoles::Unknown);
@@ -518,42 +574,6 @@ void FrameworkElementViewManager::StartTransformAnimation(
   expression.SetReferenceParameter(L"PS", transformPS);
   expression.Target(L"TransformMatrix");
   uielement.StartAnimation(expression);
-}
-
-folly::dynamic FrameworkElementViewManager::GetCommands() const {
-  // Don't update SetFocus/Blur commands in subclass, otherwise commands may not
-  // match with what defined in js side.
-  auto commands = Super::GetCommands();
-  commands.update(folly::dynamic::object(
-      "SetFocus",
-      static_cast<std::underlying_type_t<FocusCommand>>(
-          FocusCommand::SetFocus)));
-  commands.update(folly::dynamic::object(
-      "Blur",
-      static_cast<std::underlying_type_t<FocusCommand>>(FocusCommand::Blur)));
-  return commands;
-}
-
-void FrameworkElementViewManager::DispatchCommand(
-    XamlView viewToUpdate,
-    int64_t commandId,
-    const folly::dynamic &commandArgs) {
-  assert(viewToUpdate);
-
-  auto focusCommand = (static_cast<FocusCommand>(commandId));
-  if (focusCommand == FocusCommand::SetFocus)
-    winrt::FocusManager::TryFocusAsync(
-        viewToUpdate, winrt::FocusState::Programmatic);
-  else if (focusCommand == FocusCommand::Blur) {
-    // UWP doesn't have the blur concept. Here we use FocusState::Pointer to
-    // move away to keyboard focused visual. Only blur if current UI is focused
-    // to avoid problem described in PR #2687
-    if (viewToUpdate ==
-        winrt::FocusManager::GetFocusedElement()
-            .try_as<winrt::DependencyObject>())
-      winrt::FocusManager::TryFocusAsync(
-          viewToUpdate, winrt::FocusState::Pointer);
-  }
 }
 
 // Used in scenario where View changes its backing Xaml element.

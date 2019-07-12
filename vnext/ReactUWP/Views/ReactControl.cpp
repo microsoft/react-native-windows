@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include <pch.h>
+
 #include "ReactControl.h"
 
 #include <CxxMessageQueue.h>
@@ -25,10 +26,22 @@
 namespace react {
 namespace uwp {
 
+ReactControl::ReactControl(IXamlRootView *parent, XamlView rootView)
+    : m_pParent(parent), m_rootView(rootView) {
+  PrepareXamlRootView(rootView);
+}
+
 ReactControl::~ReactControl() {
   if (m_reactInstance != nullptr) {
     m_reactInstance->UnregisterLiveReloadCallback(m_liveReloadCallbackCookie);
     m_reactInstance->UnregisterErrorCallback(m_errorCallbackCookie);
+  }
+
+  // remove safe harbor and child grid from visual tree
+  if (m_focusSafeHarbor) {
+    if (auto root = m_focusSafeHarbor.Parent().try_as<winrt::Panel>()) {
+      root.Children().Clear();
+    }
   }
 }
 
@@ -125,7 +138,6 @@ void ReactControl::AttachRoot() noexcept {
 
   auto initialProps = m_initialProps;
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
-
   m_isAttached = true;
 }
 
@@ -156,6 +168,20 @@ void ReactControl::DetachRoot() noexcept {
   }
 
   m_isAttached = false;
+}
+
+// Xaml doesn't provide Blur.
+// If 'focus safe harbor' exists, make harbor to allow tabstop and focus on
+// harbor with ::Pointer otherwise, just changing the FocusState to ::Pointer
+// for the element.
+void ReactControl::blur(XamlView const &xamlView) noexcept {
+  EnsureFocusSafeHarbor();
+  if (m_focusSafeHarbor) {
+    m_focusSafeHarbor.IsTabStop(true);
+    winrt::FocusManager::TryFocusAsync(
+        m_focusSafeHarbor, winrt::FocusState::Pointer);
+  } else
+    winrt::FocusManager::TryFocusAsync(xamlView, winrt::FocusState::Pointer);
 }
 
 void ReactControl::DetachInstance() {
@@ -233,6 +259,43 @@ int64_t ReactControl::GetActualWidth() const {
   assert(element != nullptr);
 
   return static_cast<int64_t>(element.ActualWidth());
+}
+
+void ReactControl::PrepareXamlRootView(XamlView const &rootView) {
+  if (auto panel = rootView.try_as<winrt::Panel>()) {
+    // Xaml don't have blur concept.
+    // A ContentControl is created in the middle to act as a 'focus safe harbor'
+    // When a XamlView is blurred, make the ContentControl to allow tabstop, and
+    // move the pointer focus to safe harbor When the safe harbor is
+    // LosingFocus, disable tabstop on ContentControl. The creation of safe
+    // harbor is delayed to EnsureFocusSafeHarbor
+    auto children = panel.Children();
+    children.Clear();
+
+    auto newRootView = winrt::Grid();
+    children.Append(newRootView);
+    m_xamlRootView = newRootView;
+  } else
+    m_xamlRootView = rootView;
+}
+
+void ReactControl::EnsureFocusSafeHarbor() {
+  if (!m_focusSafeHarbor && m_xamlRootView != m_rootView) {
+    // focus safe harbor is delayed to be inserted to the visual tree
+    auto panel = m_rootView.try_as<winrt::Panel>();
+    assert(panel.Children().Size() == 1);
+
+    m_focusSafeHarbor = winrt::ContentControl();
+    m_focusSafeHarbor.Width(0.0);
+    m_focusSafeHarbor.IsTabStop(false);
+    panel.Children().InsertAt(0, m_focusSafeHarbor);
+
+    m_focusSafeHarborLosingFocusRevoker = m_focusSafeHarbor.LosingFocus(
+        winrt::auto_revoke,
+        [this](const auto &sender, const winrt::LosingFocusEventArgs &args) {
+          m_focusSafeHarbor.IsTabStop(false);
+        });
+  }
 }
 
 } // namespace uwp

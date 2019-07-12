@@ -84,7 +84,7 @@ void WebSocketJSExecutor::loadApplicationScript(
     ,
     std::string && /*bytecodeFileName*/
 #endif
-    ) {
+) {
   int requestId = ++m_requestId;
 
   if (!IsRunning()) {

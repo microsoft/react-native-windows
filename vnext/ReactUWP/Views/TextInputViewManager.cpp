@@ -13,18 +13,6 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-#include <winrt/Windows.UI.Xaml.Input.h>
-
-namespace winrt {
-using namespace Windows::Foundation;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Input;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 struct Selection {
@@ -90,6 +78,16 @@ class TextInputShadowNode : public ShadowNodeBase {
   // EventCount is introduced to resolve this problem
   uint32_t m_nativeEventCount{0}; // EventCount to javascript
   uint32_t m_mostRecentEventCount{0}; // EventCount from javascript
+
+ private:
+  winrt::TextBox::TextChanging_revoker m_textBoxTextChangingRevoker{};
+  winrt::TextBox::TextChanged_revoker m_textBoxTextChangedRevoker{};
+  winrt::TextBox::GotFocus_revoker m_textBoxGotFocusRevoker{};
+  winrt::TextBox::LostFocus_revoker m_textBoxLostFocusRevoker{};
+  winrt::TextBox::SelectionChanged_revoker m_textBoxSelectionChangedRevoker{};
+  winrt::TextBox::SizeChanged_revoker m_textBoxSizeChangedRevoker{};
+  winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
+  winrt::TextBox::CharacterReceived_revoker m_textBoxCharacterReceivedRevoker{};
 };
 
 void TextInputShadowNode::createView() {
@@ -111,89 +109,102 @@ void TextInputShadowNode::createView() {
   //
   // TextChanging is used to drop the Javascript response of 'A' and expect
   // another TextChanged event with correct event count.
-  textBox.TextChanging([=](auto &&, auto &&) { m_nativeEventCount++; });
+  m_textBoxTextChangingRevoker = textBox.TextChanging(
+      winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
 
-  textBox.TextChanged([=](auto &&, auto &&) {
-    if (auto instance = wkinstance.lock()) {
-      m_nativeEventCount++;
-      folly::dynamic eventData = folly::dynamic::object("target", tag)(
-          "text", HstringToDynamic(textBox.Text()))(
-          "eventCount", m_nativeEventCount);
-      instance->DispatchEvent(tag, "topTextInputChange", std::move(eventData));
-    }
-  });
+  m_textBoxTextChangedRevoker =
+      textBox.TextChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
+        if (auto instance = wkinstance.lock()) {
+          m_nativeEventCount++;
+          folly::dynamic eventData = folly::dynamic::object("target", tag)(
+              "text", HstringToDynamic(textBox.Text()))(
+              "eventCount", m_nativeEventCount);
+          instance->DispatchEvent(
+              tag, "topTextInputChange", std::move(eventData));
+        }
+      });
 
-  textBox.GotFocus([=](auto &&, auto &&) {
-    if (m_shouldClearTextOnFocus)
-      textBox.ClearValue(winrt::TextBox::TextProperty());
+  m_textBoxGotFocusRevoker =
+      textBox.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+        if (m_shouldClearTextOnFocus)
+          textBox.ClearValue(winrt::TextBox::TextProperty());
 
-    if (m_shouldSelectTextOnFocus)
-      textBox.SelectAll();
+        if (m_shouldSelectTextOnFocus)
+          textBox.SelectAll();
 
-    auto instance = wkinstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (!m_updating && instance != nullptr)
-      instance->DispatchEvent(tag, "topTextInputFocus", std::move(eventData));
-  });
+        auto instance = wkinstance.lock();
+        folly::dynamic eventData = folly::dynamic::object("target", tag);
+        if (!m_updating && instance != nullptr)
+          instance->DispatchEvent(
+              tag, "topTextInputFocus", std::move(eventData));
+      });
 
-  textBox.LostFocus([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
-    folly::dynamic eventDataEndEditing = folly::dynamic::object("target", tag)(
-        "text", HstringToDynamic(textBox.Text()));
-    if (!m_updating && instance != nullptr) {
-      instance->DispatchEvent(
-          tag, "topTextInputBlur", std::move(eventDataBlur));
-      instance->DispatchEvent(
-          tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
-    }
-  });
+  m_textBoxLostFocusRevoker =
+      textBox.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
+        folly::dynamic eventDataEndEditing = folly::dynamic::object(
+            "target", tag)("text", HstringToDynamic(textBox.Text()));
+        if (!m_updating && instance != nullptr) {
+          instance->DispatchEvent(
+              tag, "topTextInputBlur", std::move(eventDataBlur));
+          instance->DispatchEvent(
+              tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
+        }
+      });
 
-  textBox.SelectionChanged([=](auto &&, auto &&) {
-    auto instance = wkinstance.lock();
-    folly::dynamic selectionData =
-        folly::dynamic::object("start", textBox.SelectionStart())(
-            "end", textBox.SelectionStart() + textBox.SelectionLength());
-    folly::dynamic eventData = folly::dynamic::object("target", tag)(
-        "selection", std::move(selectionData));
-    if (!m_updating && instance != nullptr)
-      instance->DispatchEvent(
-          tag, "topTextInputSelectionChange", std::move(eventData));
-  });
+  m_textBoxSelectionChangedRevoker =
+      textBox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        folly::dynamic selectionData =
+            folly::dynamic::object("start", textBox.SelectionStart())(
+                "end", textBox.SelectionStart() + textBox.SelectionLength());
+        folly::dynamic eventData = folly::dynamic::object("target", tag)(
+            "selection", std::move(selectionData));
+        if (!m_updating && instance != nullptr)
+          instance->DispatchEvent(
+              tag, "topTextInputSelectionChange", std::move(eventData));
+      });
 
-  textBox.SizeChanged([=](auto &&, winrt::SizeChangedEventArgs const &args) {
-    if (textBox.TextWrapping() == winrt::TextWrapping::Wrap) {
-      auto instance = wkinstance.lock();
-      folly::dynamic contentSizeData = folly::dynamic::object(
-          "width", args.NewSize().Width)("height", args.NewSize().Height);
-      folly::dynamic eventData = folly::dynamic::object("target", tag)(
-          "contentSize", std::move(contentSizeData));
-      if (!m_updating && instance != nullptr)
-        instance->DispatchEvent(
-            tag, "topTextInputContentSizeChange", std::move(eventData));
-    }
-  });
+  m_textBoxSizeChangedRevoker = textBox.SizeChanged(
+      winrt::auto_revoke,
+      [=](auto &&, winrt::SizeChangedEventArgs const &args) {
+        if (textBox.TextWrapping() == winrt::TextWrapping::Wrap) {
+          auto instance = wkinstance.lock();
+          folly::dynamic contentSizeData = folly::dynamic::object(
+              "width", args.NewSize().Width)("height", args.NewSize().Height);
+          folly::dynamic eventData = folly::dynamic::object("target", tag)(
+              "contentSize", std::move(contentSizeData));
+          if (!m_updating && instance != nullptr)
+            instance->DispatchEvent(
+                tag, "topTextInputContentSizeChange", std::move(eventData));
+        }
+      });
 
   if (textBox.ApplyTemplate()) {
-    textBox.GetTemplateChild(asHstring("ContentElement"))
-        .as<winrt::ScrollViewer>()
-        .ViewChanging(
-            [=](auto &&, winrt::ScrollViewerViewChangingEventArgs const &args) {
-              auto instance = wkinstance.lock();
-              if (!m_updating && instance != nullptr) {
-                folly::dynamic offsetData = folly::dynamic::object(
-                    "x", args.FinalView().HorizontalOffset())(
-                    "y", args.FinalView().VerticalOffset());
-                folly::dynamic eventData = folly::dynamic::object(
-                    "target", tag)("contentOffset", std::move(offsetData));
-                instance->DispatchEvent(
-                    tag, "topTextInputOnScroll", std::move(eventData));
-              }
-            });
+    m_scrollViewerViewChangingRevoker =
+        textBox.GetTemplateChild(asHstring("ContentElement"))
+            .as<winrt::ScrollViewer>()
+            .ViewChanging(
+                winrt::auto_revoke,
+                [=](auto &&,
+                    winrt::ScrollViewerViewChangingEventArgs const &args) {
+                  auto instance = wkinstance.lock();
+                  if (!m_updating && instance != nullptr) {
+                    folly::dynamic offsetData = folly::dynamic::object(
+                        "x", args.FinalView().HorizontalOffset())(
+                        "y", args.FinalView().VerticalOffset());
+                    folly::dynamic eventData = folly::dynamic::object(
+                        "target", tag)("contentOffset", std::move(offsetData));
+                    instance->DispatchEvent(
+                        tag, "topTextInputOnScroll", std::move(eventData));
+                  }
+                });
   }
 
   if (textBox.try_as<winrt::IUIElement7>()) {
-    textBox.CharacterReceived(
+    m_textBoxCharacterReceivedRevoker = textBox.CharacterReceived(
+        winrt::auto_revoke,
         [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
           auto instance = wkinstance.lock();
           std::string key;
@@ -266,7 +277,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         textBox.ClearValue(winrt::TextBox::PlaceholderTextProperty());
     } else if (propertyName == "placeholderTextColor") {
       if (textBox.try_as<winrt::ITextBlock6>()) {
-        if (propertyValue.isNumber())
+        if (IsValidColorValue(propertyValue))
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         else if (propertyValue.isNull())
           textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
@@ -287,7 +298,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           textBox.Select(selection.start, selection.end - selection.start);
       }
     } else if (propertyName == "selectionColor") {
-      if (propertyValue.isNumber())
+      if (IsValidColorValue(propertyValue))
         textBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::SelectionHighlightColorProperty());
@@ -373,41 +384,6 @@ facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
 XamlView TextInputViewManager::CreateViewCore(int64_t tag) {
   winrt::TextBox textBox;
   return textBox;
-}
-
-void TextInputViewManager::DispatchCommand(
-    XamlView viewToUpdate,
-    int64_t commandId,
-    const folly::dynamic &commandArgs) {
-  auto textBox = viewToUpdate.as<winrt::TextBox>();
-  if (textBox == nullptr)
-    return;
-
-  switch (static_cast<FocusCommand>(commandId)) {
-    case FocusCommand::SetFocus: {
-      textBox.Focus(winrt::FocusState::Programmatic);
-      break;
-    }
-
-    case FocusCommand::Blur: {
-      auto focusedUIElement = winrt::FocusManager::GetFocusedElement();
-      if (focusedUIElement == nullptr)
-        break;
-
-      // Verify that the textBox hasn't already lost focus.
-      if (focusedUIElement.try_as<winrt::TextBox>() != textBox)
-        break;
-
-      auto content = winrt::Windows::UI::Xaml::Window::Current().Content();
-      if (content == nullptr)
-        break;
-
-      auto frame = content.try_as<winrt::Windows::UI::Xaml::Controls::Frame>();
-      if (frame != nullptr)
-        frame.Focus(winrt::FocusState::Programmatic);
-      break;
-    }
-  }
 }
 
 YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
