@@ -5,21 +5,14 @@
  */
 'use strict';
 
-import {NativeEventEmitter} from 'react-native';
+const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
 import {IHighContrastColors} from './AppThemeTypes';
 
-class AppThemeModule extends NativeEventEmitter {
-  get currentTheme(): string {
-    return '';
-  }
-
-  get isHighContrast(): boolean {
-    return false;
-  }
-
-  get currentHighContrastColorValues(): IHighContrastColors {
-    return {} as IHighContrastColors;
-  }
+class AppThemeModule extends MissingNativeEventEmitterShim {
+  public isAvailable = false;
+  public currentTheme = '';
+  public isHighContrast = false;
+  public currentHighContrastColors = {} as IHighContrastColors;
 }
 
 export const AppTheme = new AppThemeModule();
