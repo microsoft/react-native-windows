@@ -1,4 +1,8 @@
 /lib
+/Libraries
 /local-cli/generator-windows/templates/App.windows.js
 /node_modules
 /packages
+/RNTester
+/index.*
+/RNTester.*

@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, View, Button} from 'react-native';
-import {AppTheme} from '../../src/index.uwp';
+import {AppTheme} from '../index.uwp';
 
 class ThemeExample extends React.Component {
   state = {
