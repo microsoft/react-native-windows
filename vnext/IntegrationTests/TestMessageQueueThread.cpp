@@ -39,17 +39,17 @@ TestMessageQueueThread::TestMessageQueueThread(
   assert(m_queueMutex != NULL);
 
   m_queueItemPresent = CreateEvent(
-    /* lpEventAttributes */ NULL,
-    /* bManualReset */ FALSE,
-    /* bInitialState */ FALSE,
-    /* lpName */ nullptr);
+      /* lpEventAttributes */ NULL,
+      /* bManualReset */ FALSE,
+      /* bInitialState */ FALSE,
+      /* lpName */ nullptr);
   assert(m_queueItemPresent != NULL);
 
-   m_queueItemProcessed = CreateEvent(
-    /* lpEventAttributes */ NULL,
-    /* bManualReset */ FALSE,
-    /* bInitialState */ FALSE,
-    /* lpName */ nullptr);
+  m_queueItemProcessed = CreateEvent(
+      /* lpEventAttributes */ NULL,
+      /* bManualReset */ FALSE,
+      /* bInitialState */ FALSE,
+      /* lpName */ nullptr);
   assert(m_queueItemPresent != NULL);
 
   for (int i = 0; i < static_cast<int>(ThreadSignalIndex::Count); ++i) {
@@ -108,8 +108,7 @@ void TestMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
 
   if (IsWorkerThread()) {
     func();
-  }
-  else {
+  } else {
     {
       Lock queueLock(m_queueMutex);
       m_queue.push(move(func));
@@ -126,23 +125,25 @@ void TestMessageQueueThread::quitSynchronous() noexcept {
   m_state = State::QuitSynchronousHasBeenCalled;
 }
 
-bool TestMessageQueueThread::IsEmpty() const noexcept
-{
+bool TestMessageQueueThread::IsEmpty() const noexcept {
   Lock queueLock(m_queueMutex);
   return m_queue.empty();
 }
 
-bool TestMessageQueueThread::DispatchOne(std::chrono::milliseconds timeout) noexcept
-{
+bool TestMessageQueueThread::DispatchOne(
+    std::chrono::milliseconds timeout) noexcept {
   assert(m_mode == Mode::ManualDispatch);
 
-  DWORD timeoutMilliseconds = timeout == std::chrono::milliseconds::max() ? INFINITE : static_cast<DWORD>(timeout.count());
+  DWORD timeoutMilliseconds = timeout == std::chrono::milliseconds::max()
+      ? INFINITE
+      : static_cast<DWORD>(timeout.count());
 
-  switch (WaitForSingleObject(m_queueItemPresent, timeoutMilliseconds))
-  {
+  switch (WaitForSingleObject(m_queueItemPresent, timeoutMilliseconds)) {
     case WAIT_OBJECT_0:
-      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
-	  return WaitForSingleObject(m_queueItemProcessed, timeoutMilliseconds) == WAIT_OBJECT_0;
+      SetEvent(m_threadSignals[static_cast<int>(
+          ThreadSignalIndex::FunctorAvailable)]);
+      return WaitForSingleObject(m_queueItemProcessed, timeoutMilliseconds) ==
+          WAIT_OBJECT_0;
 
     default:
       return false;
@@ -167,7 +168,8 @@ void TestMessageQueueThread::quitInternal() noexcept {
 void TestMessageQueueThread::SignalDispatch() noexcept {
   switch (m_mode) {
     case Mode::AutoDispatch:
-      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+      SetEvent(m_threadSignals[static_cast<int>(
+          ThreadSignalIndex::FunctorAvailable)]);
       break;
 
     case Mode::ManualDispatch:
@@ -194,22 +196,20 @@ TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
         /* dwMilliseconds */ INFINITE);
 
     switch (waitResult) {
-      case static_cast<DWORD>(ThreadSignalIndex::FunctorAvailable) :
+      case static_cast<DWORD>(ThreadSignalIndex::FunctorAvailable): {
+        VoidFunctor func;
         {
-          VoidFunctor func;
-          {
-            Lock queueLock(instance->m_queueMutex);
-            assert(instance->m_queue.size() > 0);
-            func = instance->m_queue.front();
-            instance->m_queue.pop();
-            if (instance->m_queue.size() > 0) {
-              instance->SignalDispatch();
-            }
+          Lock queueLock(instance->m_queueMutex);
+          assert(instance->m_queue.size() > 0);
+          func = instance->m_queue.front();
+          instance->m_queue.pop();
+          if (instance->m_queue.size() > 0) {
+            instance->SignalDispatch();
           }
-          func();
-          SetEvent(instance->m_queueItemProcessed);
         }
-        break;
+        func();
+        SetEvent(instance->m_queueItemProcessed);
+      } break;
 
       case static_cast<DWORD>(ThreadSignalIndex::QuitRequested):
         instance->m_continueDispatchLoop = false;
