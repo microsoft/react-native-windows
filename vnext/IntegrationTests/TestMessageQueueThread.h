@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include <atomic>
-#include <cxxreact/MessageQueueThread.h>
 #include <Windows.h>
+#include <cxxreact/MessageQueueThread.h>
+#include <atomic>
 #include <queue>
 
 namespace Microsoft::React::Test {
@@ -23,11 +23,7 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
 
  public:
   using VoidFunctor = std::function<void()>;
-  enum class Mode
-  {
-    AutoDispatch,
-	ManualDispatch
-  };
+  enum class Mode { AutoDispatch, ManualDispatch };
 
   TestMessageQueueThread(
       Mode mode = Mode::AutoDispatch,

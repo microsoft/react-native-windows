@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "NativeLogEventSource.h"
+
 #include "NativeLogEventSource.g.cpp"
 
 #include <Logging.h>

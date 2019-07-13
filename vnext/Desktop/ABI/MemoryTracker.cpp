@@ -1,7 +1,9 @@
 #include "pch.h"
 
 #include "MemoryTracker.h"
+
 #include "MemoryTracker.g.cpp"
+
 #include "MessageQueueShim.h"
 
 namespace winrt::facebook::react::implementation {
