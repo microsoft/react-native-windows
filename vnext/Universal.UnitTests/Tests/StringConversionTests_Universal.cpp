@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+#include "pch.h"
 #include <../Chakra/Utf8DebugExtensions.h>
 #include <CppUnitTest.h>
 #include <string>
 #include <vector>
-#include "pch.h"
 
 using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
