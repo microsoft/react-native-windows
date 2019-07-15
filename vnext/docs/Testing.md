@@ -18,8 +18,8 @@ Isolated, self-contained tests covering concrete implementations against mock de
 ### Integration Tests
 *Implemented in the React.Windows.Desktop.IntegrationTests project.*<br/>
 Higher-level workflows interacting with real external dependencies (i.e. file system, networking servers).<br/>
-These tests should can still run on the local development host.
+These tests can run on the local development host.
 ```powershell
-& Scripts\IntegrationTests -Setup # Sets and starts up runtime dependencies.
-& Scripts\IntegrationTests.ps1
+# Starts test services and runs tests.
+& Scripts\IntegrationTests
 ```
