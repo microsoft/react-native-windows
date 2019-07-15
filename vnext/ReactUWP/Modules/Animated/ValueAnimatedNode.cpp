@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "ValueAnimatedNode.h"
+
 #include "NativeAnimatedNodeManager.h"
+#include "ValueAnimatedNode.h"
 
 namespace react {
 namespace uwp {
@@ -87,7 +88,8 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
       for (const auto &props : m_dependentPropsNodes) {
-        manager->GetPropsAnimatedNode(props)->DisposeCompletedAnimation(Tag());
+        if (const auto propsNode = manager->GetPropsAnimatedNode(props))
+          propsNode->DisposeCompletedAnimation(Tag());
       }
     }
   }

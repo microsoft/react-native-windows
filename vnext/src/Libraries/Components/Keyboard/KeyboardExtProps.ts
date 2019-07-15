@@ -26,6 +26,7 @@ export interface INativeKeyboardEvent {
   metaKey: boolean;
   shiftKey: boolean;
   key: string;
+  code: string;
   eventPhase: EventPhase;
 }
 
@@ -34,7 +35,7 @@ export interface IHandledKeyboardEvent {
   ctrlKey?: boolean;
   metaKey?: boolean;
   shiftKey?: boolean;
-  key: string;
+  code: string;
   handledEventPhase?: HandledEventPhase;
 }
 

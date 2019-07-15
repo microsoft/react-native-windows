@@ -10,14 +10,9 @@
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
-#include <winrt/Windows.UI.Text.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
 
 namespace winrt {
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Documents;
 } // namespace winrt
 
@@ -105,7 +100,7 @@ void TextViewManager::UpdateProperties(
         textBlock.ClearValue(
             winrt::TextBlock::IsTextScaleFactorEnabledProperty());
     } else if (propertyName == "selectionColor") {
-      if (propertyValue.isNumber()) {
+      if (IsValidColorValue(propertyValue)) {
         textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
       } else
         textBlock.ClearValue(

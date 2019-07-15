@@ -37,6 +37,7 @@ DateTimeToDynamic(
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d);
 REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr);
+REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d);
 
 REACTWINDOWS_API_(winrt::Windows::Foundation::TimeSpan)
 TimeSpanFromMs(double ms);

@@ -10,19 +10,9 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Globalization.DateTimeFormatting.h>
-#include <winrt/Windows.Globalization.h>
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Windows.UI.Xaml.Controls.h>
-
 namespace winrt {
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::Globalization;
-using namespace Windows::Globalization::DateTimeFormatting;
-using namespace Windows::Foundation;
-} // namespace winrt
+using DayOfWeek = Windows::Globalization::DayOfWeek;
+}
 
 namespace react {
 namespace uwp {
@@ -45,6 +35,9 @@ class DatePickerShadowNode : public ShadowNodeBase {
       m_minTime; // These values are expected to be in milliseconds
   int64_t m_timeZoneOffsetInSeconds =
       0; // Timezone offset is expected to be in seconds
+
+  winrt::CalendarDatePicker::DateChanged_revoker
+      m_dataPickerDateChangedRevoker{};
 };
 
 void DatePickerShadowNode::createView() {
@@ -53,7 +46,8 @@ void DatePickerShadowNode::createView() {
   auto datePicker = GetView().as<winrt::CalendarDatePicker>();
   auto wkinstance = GetViewManager()->GetReactInstance();
 
-  datePicker.DateChanged(
+  m_dataPickerDateChangedRevoker = datePicker.DateChanged(
+      winrt::auto_revoke,
       [=](winrt::CalendarDatePicker /*picker*/,
           winrt::CalendarDatePickerDateChangedEventArgs args) {
         auto instance = wkinstance.lock();

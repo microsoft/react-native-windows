@@ -13,15 +13,6 @@
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 
-namespace winrt {
-using namespace Windows::Foundation;
-using namespace Windows::UI;
-using namespace Windows::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-using namespace Windows::UI::Xaml::Controls::Primitives;
-using namespace Windows::UI::Xaml::Media;
-} // namespace winrt
-
 namespace react {
 namespace uwp {
 namespace polyester {
@@ -55,12 +46,13 @@ folly::dynamic ButtonViewManager::GetExportedCustomDirectEventTypeConstants()
 
 XamlView ButtonViewManager::CreateViewCore(int64_t tag) {
   winrt::Button button = winrt::Button();
-  button.Click([=](auto &&, auto &&) {
-    auto instance = m_wkReactInstance.lock();
-    folly::dynamic eventData = folly::dynamic::object("target", tag);
-    if (instance != nullptr)
-      instance->DispatchEvent(tag, "topClick", std::move(eventData));
-  });
+  m_buttonClickRevoker =
+      button.Click(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = m_wkReactInstance.lock();
+        folly::dynamic eventData = folly::dynamic::object("target", tag);
+        if (instance != nullptr)
+          instance->DispatchEvent(tag, "topClick", std::move(eventData));
+      });
 
   return button;
 }

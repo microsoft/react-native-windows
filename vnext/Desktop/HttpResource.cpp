@@ -176,7 +176,7 @@ void HttpResource::SetOnError(
 
 #pragma endregion HttpResource members
 
-} // namespace Microsoft::React::Experimental
+} // namespace Experimental
 
 #pragma region IHttpResource static members
 

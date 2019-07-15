@@ -39,5 +39,9 @@
     "javascriptreact",
     "typescript",
     "typescriptreact"
-  ]
+  ],
+  "clang-format.language.javascript.enable": false,
+  "clang-format.language.typescript.enable": false,
+  "clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
+  "clang-format.executable": "${workspaceRoot}/vnext/node_modules/.bin/clang-format"
 }

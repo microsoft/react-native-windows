@@ -5,7 +5,6 @@
 
 using namespace facebook::react;
 
-using std::move;
 using std::make_unique;
 using std::move;
 using std::shared_ptr;

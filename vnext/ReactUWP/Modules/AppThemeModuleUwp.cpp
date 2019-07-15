@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include "AppThemeModuleUwp.h"
 
 #include <Utils\ValueUtils.h>

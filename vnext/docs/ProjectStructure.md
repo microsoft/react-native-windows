@@ -13,6 +13,7 @@ Sample applications are not covered.
 - [FollyWin32\FollyWin32.vcxproj](#FollyWin32)
 - [IntegrationTestScripts\IntegrationTests.njsproj](#IntegrationTests-Node-Project)
 - [IntegrationTests\React.Windows.IntegrationTests.vcxproj](#React.Windows.IntegrationTests)
+- [JSI.Desktop.UnitTests\JSI.Desktop.UnitTests](#JSI.Desktop.UnitTests)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
 - **[ReactUWP\ReactUWP.vcxproj](#ReactUWP)**
 - [ReactWindowsCore\ReactWindowsCore.vcxproj](#ReactWindowsCore)
@@ -68,14 +69,18 @@ Shared library that exports the intended public API surface for [React.Windows.D
 **Main artifact to use in Windows Desktop applications.**
 
 ### React.Windows.Desktop.UnitTests
-*VSTest Dynamic Library*
+*VSTest Dynamic Library*<br/>
 Set of isolated (mocked) tests for types defined in [React.Windows.Desktop](#React.Windows.Desktop).
 
 ### React.Windows.Desktop.IntegrationTests
-*VSTest Dynamic Library*
+*VSTest Dynamic Library*<br/>
 Set of component tests that validate functionality against external runtime components
 (i.e. networking servers, file system, React Native applications, external processes).<br/>
 Validates [React.Windows.Desktop.DLL](#React.Windows.Desktop.DLL).
+
+### JSI.Desktop.UnitTests
+*Google Test Executable*<br/>
+Set of unit tests for jsi::runtime.
 
 ### FollyWin32
 *Static Library*<br/>

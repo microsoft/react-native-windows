@@ -12,7 +12,7 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import {AppTheme} from '../../src/index.uwp';
+import {AppTheme} from '../index.uwp';
 import {IAppThemeChangedEvent} from 'src/Libraries/AppTheme/AppThemeTypes';
 
 class AccessibilityBaseExample extends React.Component {
@@ -250,7 +250,7 @@ class TouchableExamples extends React.Component<{}, any> {
         </TouchableHighlight>
         <Text
           accessibilityLiveRegion="polite"
-          accessibilityLabel={'Pressed ' + this.state.pressedCount + 'times'}>
+          accessibilityLabel={'Pressed ' + this.state.pressedCount + ' times'}>
           Pressed {this.state.pressedCount} times
         </Text>
       </View>
@@ -266,6 +266,9 @@ class AccessibilityStateExamples extends React.Component {
   public state = {
     viewDisabled: false,
     itemsSelected: [false, false, false],
+    viewChecked: false,
+    viewBusy: false,
+    viewCollapsed: false,
   };
 
   public render() {
@@ -286,7 +289,7 @@ class AccessibilityStateExamples extends React.Component {
           style={{
             backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue',
           }}
-          accessibilityRole="text"
+          accessibilityRole="none"
           accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
           <Text>
             This View should be{' '}
@@ -297,33 +300,105 @@ class AccessibilityStateExamples extends React.Component {
           The following list of TouchableHighlights toggles
           accessibilityState.selected when touched:
         </Text>
-        <View accessibilityLabel="List of selectable items">
-          <FlatList
-            data={selectableItems}
-            renderItem={item => (
-              <TouchableHighlight
-                style={{
-                  width: 100,
-                  height: 50,
-                  backgroundColor: this.state.itemsSelected[item.index]
-                    ? 'gray'
-                    : 'lightskyblue',
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={'Selectable item ' + (item.index + 1)}
-                accessibilityStates={
-                  this.state.itemsSelected[item.index] ? ['selected'] : []
-                }
-                onPress={() => this.selectPress(item.index)}>
-                <Text>
-                  {this.state.itemsSelected[item.index]
-                    ? 'Selected'
-                    : 'Unselected'}{' '}
-                </Text>
-              </TouchableHighlight>
-            )}
-            keyExtractor={(item, index) => index.toString()}
-          />
+        <FlatList
+          accessibilityLabel="List of selectable items"
+          data={selectableItems}
+          renderItem={item => (
+            <TouchableHighlight
+              style={{
+                width: 100,
+                height: 50,
+                backgroundColor: this.state.itemsSelected[item.index]
+                  ? 'gray'
+                  : 'lightskyblue',
+              }}
+              accessibilityRole="button"
+              accessibilityLabel={'Selectable item ' + (item.index + 1)}
+              accessibilityStates={
+                this.state.itemsSelected[item.index] ? ['selected'] : []
+              }
+              onPress={() => this.selectPress(item.index)}>
+              <Text>
+                {this.state.itemsSelected[item.index]
+                  ? 'Selected'
+                  : 'Unselected'}
+              </Text>
+            </TouchableHighlight>
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
+        <Text>
+          The following TouchableHighlight toggles accessibilityState.checked
+          and accessibilityState.unchecked for the View under it:
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          accessibilityRole="button"
+          onPress={this.checkedPress}>
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: this.state.viewChecked ? 'gray' : 'lightskyblue',
+          }}
+          //@ts-ignore
+          accessibilityRole="checkbox"
+          //@ts-ignore
+          accessibilityStates={
+            this.state.viewChecked ? ['checked'] : ['unchecked']
+          }>
+          <Text>
+            This View should be{' '}
+            {this.state.viewChecked ? 'Checked' : 'Unchecked'} according to UIA
+          </Text>
+        </View>
+        <Text>
+          The following TouchableHighlight toggles accessibilityState.busy for
+          the View under it:
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          accessibilityRole="button"
+          onPress={this.busyPress}>
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: this.state.viewBusy ? 'gray' : 'lightskyblue',
+          }}
+          accessibilityRole="none"
+          //@ts-ignore
+          accessibilityStates={this.state.viewBusy ? ['busy'] : []}>
+          <Text>
+            This View should be {this.state.viewBusy ? 'Busy' : 'Not Busy'}{' '}
+            according to UIA
+          </Text>
+        </View>
+        <Text>
+          The following TouchableHighlight toggles accessibilityState.expanded
+          and accessibilityState.collapsed for the View under it:
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          accessibilityRole="button"
+          onPress={this.collapsePress}>
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: this.state.viewCollapsed ? 'gray' : 'lightskyblue',
+            height: this.state.viewCollapsed ? 25 : 50,
+          }}
+          accessibilityRole="none"
+          //@ts-ignore
+          accessibilityStates={
+            this.state.viewCollapsed ? ['collapsed'] : ['expanded']
+          }>
+          <Text>
+            This View should be{' '}
+            {this.state.viewCollapsed ? 'Collapsed' : 'Expanded'} according to
+            UIA
+          </Text>
         </View>
       </View>
     );
@@ -338,6 +413,54 @@ class AccessibilityStateExamples extends React.Component {
     tmp[index] = !tmp[index];
     this.setState({itemsSelected: tmp});
   };
+
+  private checkedPress = () => {
+    this.setState({viewChecked: !this.state.viewChecked});
+  };
+
+  private busyPress = () => {
+    this.setState({viewBusy: !this.state.viewBusy});
+  };
+
+  private collapsePress = () => {
+    this.setState({viewCollapsed: !this.state.viewCollapsed});
+  };
+}
+
+class AccessibilityListExamples extends React.Component {
+  public render() {
+    var items = [{}, {}, {}];
+    return (
+      <View>
+        <Text>
+          The following uses accessibilityRole: 'list', 'listitem',
+          accessibilitySetSize, and accessibilityPosInSet.
+        </Text>
+        <View
+          //@ts-ignore
+          accessibilityRole="list">
+          <FlatList
+            data={items}
+            renderItem={item => (
+              <View
+                style={{
+                  width: 100,
+                  height: 50,
+                  backgroundColor: 'lightskyblue',
+                }}
+                //@ts-ignore
+                accessibilityRole="listitem"
+                accessibilitySetSize={items.length}
+                accessibilityPosInSet={item.index + 1}>
+                <Text>Item {item.index + 1}</Text>
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
 export const displayName = (_undefined?: string) => {};
@@ -366,6 +489,12 @@ export const examples = [
     title: 'States',
     render: function(): JSX.Element {
       return <AccessibilityStateExamples />;
+    },
+  },
+  {
+    title: 'Lists',
+    render: function(): JSX.Element {
+      return <AccessibilityListExamples />;
     },
   },
 ];
