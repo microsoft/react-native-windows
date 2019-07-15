@@ -27,6 +27,7 @@ export interface IFlyoutProps extends ViewProps {
   isContextFlyout?: boolean;
   onDismiss?: (isOpen: boolean) => void;
   onOpen?: () => void;
+  onOpening?: () => void;
   placement?: Placement;
   target?: React.ReactNode;
   verticalOffset?: number;

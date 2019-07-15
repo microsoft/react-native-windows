@@ -77,8 +77,9 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void createView() override;
   static void
   OnFlyoutClosed(IReactInstance &instance, int64_t tag, bool newValue);
-  static void
-  OnFlyoutOpened(IReactInstance &instance, int64_t tag);
+  static void OnFlyoutOpened(IReactInstance &instance, int64_t tag);
+  static void OnFlyoutOpening(IReactInstance &instance, int64_t tag);
+
   void onDropViewInstance() override;
   void removeAllChildren() override;
   void updateProperties(const folly::dynamic &&props) override;
@@ -103,6 +104,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   static thread_local std::int32_t s_cOpenFlyouts;
   bool m_isContextFlyout = false;
   winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
+  winrt::Flyout::Opening_revoker m_flyoutOpeningRevoker{};
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
@@ -167,6 +169,13 @@ void FlyoutShadowNode::createView() {
           OnFlyoutOpened(*instance, m_tag);
       });
 
+  m_flyoutOpeningRevoker = m_flyout.Opening(
+      winrt::auto_revoke, [wkinstance, this](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+        if (instance && !m_updating)
+          OnFlyoutOpening(*instance, m_tag);
+      });
+
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
     if (auto instance = wkinstance.lock()) {
@@ -192,6 +201,12 @@ void FlyoutShadowNode::createView() {
     int64_t tag) {
   folly::dynamic eventData = folly::dynamic::object("target", tag);
   instance.DispatchEvent(tag, "topOpen", std::move(eventData));
+}
+/*static*/ void FlyoutShadowNode::OnFlyoutOpening(
+    IReactInstance &instance,
+    int64_t tag) {
+  folly::dynamic eventData = folly::dynamic::object("target", tag);
+  instance.DispatchEvent(tag, "topOpening", std::move(eventData));
 }
 
 void FlyoutShadowNode::onDropViewInstance() {
@@ -244,8 +259,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isBool()) {
         m_isContextFlyout = propertyValue.asBool();
         updateContextFlyout = true;
-        m_isOpen = false;
-        updateIsOpen = true;
       }
     } else if (propertyName == "placement") {
       auto placement = json_type_traits<winrt::FlyoutPlacementMode>::parseJson(
@@ -421,6 +434,8 @@ folly::dynamic FlyoutViewManager::GetExportedCustomDirectEventTypeConstants()
       folly::dynamic::object("registrationName", "onDismiss");
   directEvents["topOpen"] =
       folly::dynamic::object("registrationName", "onOpen");
+  directEvents["topOpening"] =
+      folly::dynamic::object("registrationName", "onOpening");
 
   return directEvents;
 }
