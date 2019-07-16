@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 //
 // HostingPane.xaml.h
@@ -33,10 +33,15 @@ namespace WindowsSampleApp {
         Windows::UI::Xaml::Input::ICommand ^ get();
       }
 
-      private : void
-                OnTextChanged_JavaScriptFilename(
-                    Platform::Object ^ sender,
-                    Windows::UI::Xaml::Controls::TextChangedEventArgs args);
+      private
+      : void OnSelectionChanged_JavaScriptFilename(
+            Platform::Object ^ sender,
+            Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
+
+ private:
+  void OnSelectionChanged_ReactAppName(
+      Platform::Object ^ sender,
+      Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
   void OnLoadClicked(Platform::Object ^ sender, Platform::Object ^ args);
   void OnUnloadClicked(Platform::Object ^ sender, Platform::Object ^ args);
   void OnReloadClicked(Platform::Object ^ sender, Platform::Object ^ args);
@@ -52,6 +57,9 @@ namespace WindowsSampleApp {
   internal : std::shared_ptr<react::uwp::IReactInstance> getInstance();
   void markAsNeedsReload();
 
+  void InitComboBoxes();
+  void LoadKnownApps();
+
  private:
   std::wstring m_loadedJSComponentName;
   std::wstring m_loadedBundleFileName;
@@ -60,6 +68,9 @@ namespace WindowsSampleApp {
 
   std::shared_ptr<react::uwp::IXamlRootView> m_rootView;
   std::shared_ptr<react::uwp::IReactInstance> m_instance;
+
+  Platform::Collections::Vector<Platform::String ^> ^ m_jsFileNames;
+  Platform::Collections::Vector<Platform::String ^> ^ m_ReactAppNames;
 };
 
 } // namespace WindowsSampleApp

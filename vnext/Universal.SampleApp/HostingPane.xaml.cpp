@@ -170,6 +170,8 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
 HostingPane::HostingPane() {
   InitializeComponent();
 
+  InitComboBoxes();
+
   LoadFilenameSettings();
 
   m_instanceCreator = std::make_shared<HostingPaneReactInstanceCreator>(this);
@@ -276,7 +278,9 @@ void HostingPane::UpdateUI() {
 
   x_ReloadButton->IsEnabled = rootLoaded;
   x_UnloadButton->IsEnabled = rootLoaded;
-  x_LoadButton->IsEnabled = !x_JavaScriptFilename->Text->IsEmpty();
+  x_LoadButton->IsEnabled =
+      !x_JavaScriptFilename->SelectedItem->ToString()->IsEmpty() &&
+      !x_ReactAppName->SelectedItem->ToString()->IsEmpty();
 }
 
 void HostingPane::DetachAndClearRoot() {
@@ -289,9 +293,16 @@ void HostingPane::DetachAndClearRoot() {
   }
 }
 
-void HostingPane::OnTextChanged_JavaScriptFilename(
+void HostingPane::OnSelectionChanged_JavaScriptFilename(
     Platform::Object ^ sender,
-    Windows::UI::Xaml::Controls::TextChangedEventArgs args) {
+    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args) {
+  LoadKnownApps();
+  UpdateUI();
+}
+
+void HostingPane::OnSelectionChanged_ReactAppName(
+    Platform::Object ^ sender,
+    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args) {
   UpdateUI();
 }
 
@@ -352,8 +363,15 @@ void HostingPane::LoadFilenameSettings() {
     filename = c_filenameSettingDefault;
   }
 
-  x_JavaScriptFilename->Text =
+  String ^ jsFileName =
       reinterpret_cast<Platform::String ^>(winrt::get_abi(filename));
+
+  uint32_t index = 0;
+  if (!m_jsFileNames->IndexOf(jsFileName, &index)) {
+    m_jsFileNames->Append(jsFileName);
+  }
+
+  x_JavaScriptFilename->SelectedItem = jsFileName;
 
   winrt::hstring appname;
   if (container.Values().HasKey(c_appnameSetting)) {
@@ -366,15 +384,23 @@ void HostingPane::LoadFilenameSettings() {
     appname = c_appnameSettingDefault;
   }
 
-  x_ReactAppName->Text =
+  String ^ reactAppName =
       reinterpret_cast<Platform::String ^>(winrt::get_abi(appname));
+
+  if (!m_ReactAppNames->IndexOf(reactAppName, &index)) {
+    m_ReactAppNames->Append(reactAppName);
+  }
+
+  x_ReactAppName->SelectedItem = reactAppName;
 }
 
 void HostingPane::StoreFilenameSettings() {
   auto container = GetJsSettings();
 
-  const wchar_t *currentFilename = x_JavaScriptFilename->Text->Data();
-  const wchar_t *currentAppname = x_ReactAppName->Text->Data();
+  const wchar_t *currentFilename =
+      x_JavaScriptFilename->SelectedItem->ToString()->Data();
+  const wchar_t *currentAppname =
+      x_ReactAppName->SelectedItem->ToString()->Data();
 
   container.Values().Insert(
       c_filenameSetting,
@@ -385,4 +411,52 @@ void HostingPane::StoreFilenameSettings() {
 
   m_loadedBundleFileName = currentFilename;
   m_loadedJSComponentName = currentAppname;
+}
+
+void HostingPane::InitComboBoxes() {
+  m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
+
+  m_jsFileNames->Append(L"Playground\\Playground\\index.uwp");
+  m_jsFileNames->Append(L"RNTester");
+  m_jsFileNames->Append(L"Universal.SampleApp\\accessible.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\click.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\control.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\flexbox.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\geosample");
+  m_jsFileNames->Append(L"Universal.SampleApp\\image.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\index.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\mouse.uwp");
+  m_jsFileNames->Append(
+      L"Universal.SampleApp\\ReadingPaneSamples\\CallbackTest.index.uwp");
+  m_jsFileNames->Append(
+      L"Universal.SampleApp\\ReadingPaneSamples\\TicTacToe.index.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\simple.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\test.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\text.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\view.uwp");
+
+  x_JavaScriptFilename->ItemsSource = m_jsFileNames;
+
+  m_ReactAppNames = ref new Platform::Collections::Vector<String ^>();
+
+  x_ReactAppName->ItemsSource = m_ReactAppNames;
+}
+
+void HostingPane::LoadKnownApps() {
+  m_ReactAppNames->Clear();
+
+  std::wstring jsFileName =
+      x_JavaScriptFilename->SelectedItem->ToString()->Data();
+
+  if (jsFileName == L"Playground\\Playground\\index.uwp") {
+    m_ReactAppNames->Append(L"Playground");
+  } else if (jsFileName == L"RNTester") {
+    m_ReactAppNames->Append(L"RNTesterApp");
+  } else if (jsFileName.rfind(L"Universal.SampleApp\\", 0) == 0) {
+    m_ReactAppNames->Append(L"Bootstrap");
+  }
+
+  if (m_ReactAppNames->Size > 0) {
+    x_ReactAppName->SelectedIndex = 0;
+  }
 }
