@@ -69,6 +69,9 @@ jobs:
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -78,6 +81,9 @@ jobs:
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: arm
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: arm64
     pool:
       name: OE Standard Pool
       demands:

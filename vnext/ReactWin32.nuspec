@@ -14,8 +14,10 @@
   <files>
     <file src="target\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
     <file src="target\x64\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="target\arm64\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\chpe" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
     <file src="target\x86\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
     <file src="target\x64\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="target\arm64\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\chpe" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
     <file src="inc\cxxreact\*" target="inc\cxxreact"/>
     <file src="inc\jsi\*" target="inc\jsi"/>
