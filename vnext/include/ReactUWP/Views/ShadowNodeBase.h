@@ -89,6 +89,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   int64_t GetParent() const {
     return m_parent;
   }
+  XamlView GetWindowedPopupChildView() const {
+    return m_windowedPopupChildView;
+  }
 
   void ReplaceView(XamlView view);
 
@@ -109,6 +112,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   bool m_updating = false;
   winrt::Windows::UI::Composition::CompositionPropertySet m_transformPS{
       nullptr};
+  XamlView m_windowedPopupChildView = nullptr;
 
  public:
   double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;

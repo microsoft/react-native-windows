@@ -33,6 +33,7 @@ struct ShadowNode {
   int64_t m_parent = -1;
   IViewManager *m_viewManager = nullptr;
   bool m_zombie = false;
+  bool m_isWindowedPopup = false;
 };
 
 } // namespace react

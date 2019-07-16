@@ -48,6 +48,7 @@ class PopupShadowNode : public ShadowNodeBase {
 PopupShadowNode::~PopupShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
   m_previewKeyboardEventHandlerOnRoot->unhook();
+  m_windowedPopupChildView = nullptr;
 }
 
 void PopupShadowNode::createView() {
@@ -62,6 +63,8 @@ void PopupShadowNode::createView() {
   m_popupClosedRevoker =
       popup.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
+        m_isWindowedPopup = false;
+        m_windowedPopupChildView = nullptr;
         if (!m_updating && instance != nullptr)
           OnPopupClosed(*instance, m_tag, false);
       });
@@ -69,6 +72,7 @@ void PopupShadowNode::createView() {
   m_popupOpenedRevoker =
       popup.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
+        m_isWindowedPopup = true;
         if (!m_updating && instance != nullptr)
           SetAnchorPosition(popup);
       });
@@ -80,6 +84,7 @@ void PopupShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto childView = static_cast<ShadowNodeBase &>(child).GetView();
   m_touchEventHanadler->AddTouchHandlers(childView);
   m_previewKeyboardEventHandlerOnRoot->hook(childView);
+  m_windowedPopupChildView = childView.as<XamlView>();
 }
 
 void PopupShadowNode::updateProperties(const folly::dynamic &&props) {

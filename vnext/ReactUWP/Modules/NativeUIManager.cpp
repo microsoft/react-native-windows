@@ -1102,6 +1102,12 @@ void NativeUIManager::measure(
   }
 
   auto feRootView = xamlRootView.as<winrt::FrameworkElement>();
+  if (shadowRoot.m_isWindowedPopup) {
+    if (nodeRoot.GetWindowedPopupChildView() != nullptr) {
+      feRootView =
+          nodeRoot.GetWindowedPopupChildView().as<winrt::FrameworkElement>();
+    }
+  }
 
   winrt::Rect rectInParentCoords =
       GetRectOfElementInParentCoords(feView, feRootView);
