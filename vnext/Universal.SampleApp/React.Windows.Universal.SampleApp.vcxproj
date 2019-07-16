@@ -107,6 +107,7 @@
     <None Include="Bundle\Universal.SampleApp\index.uwp.bundle">
       <DeploymentContent>true</DeploymentContent>
     </None>
+    <None Include="calculator.uwp.js" />
     <None Include="image.uwp.js" />
     <None Include="index.uwp.js" />
     <None Include="packages.config" />
