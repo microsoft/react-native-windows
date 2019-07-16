@@ -15,6 +15,20 @@ steps:
     enabled: false
 
   - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: debug arm64'
+    inputs:
+      PathtoPublish: 'vnext\target\ARM64\Debug'
+      ArtifactName: 'ReactWindows-debug-arm64'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'arm64'))
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: ship arm64'
+    inputs:
+      PathtoPublish: 'vnext\target\ARM64\Release'
+      ArtifactName: 'ReactWindows-ship-arm64'
+    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'arm64'))
+
+  - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: debug arm'
     inputs:
       PathtoPublish: 'vnext\target\ARM\Debug'
