@@ -59,8 +59,11 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
   TransferProperty(oldView, newView, winrt::FrameworkElement::MinHeightProperty());
   TransferProperty(oldView, newView, winrt::FrameworkElement::MaxWidthProperty());
   TransferProperty(oldView, newView, winrt::FrameworkElement::MaxHeightProperty());
+  TransferProperty(oldView, newView, winrt::FrameworkElement::FlowDirectionProperty());
+  TransferProperty(oldView, newView, winrt::Canvas::ZIndexProperty());
 
   // Accessibility Properties
+  TransferProperty(oldView, newView, winrt::AutomationProperties::AutomationIdProperty());
   TransferProperty(oldView, newView, winrt::AutomationProperties::NameProperty());
   TransferProperty(oldView, newView, winrt::AutomationProperties::HelpTextProperty());
   TransferProperty(oldView, newView, winrt::AutomationProperties::LiveSettingProperty());
@@ -398,11 +401,24 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate,
 
           element.SetValue(winrt::Canvas::ZIndexProperty(), boxedValue);
         }
-        else if (propertyValue.isNull())
+        else if (propertyValue.isNull()) 
         {
           element.ClearValue(winrt::Canvas::ZIndexProperty());
         }
       }
+      /* else if (propertyName == "flowDirectionProperty")
+      {
+        if (propertyValue.isNumber())
+        {
+          auto value = static_cast<int>(propertyValue.asDouble());
+          auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
+          element.SetValue(winrt::FrameworkElement::FlowDirectionProperty(), boxedValue);
+        }
+        else if (propertyValue.isNull())
+        {
+          element.ClearValue(winrt::FrameworkElement::FlowDirectionProperty());
+        }
+      } */
       else if (TryUpdateFlowDirection(element, propertyName, propertyValue))
       {
         continue;
