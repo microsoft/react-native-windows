@@ -59,6 +59,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertySheets", "{6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}"
 	ProjectSection(SolutionItems) = preProject
 		PropertySheets\ARM.props = PropertySheets\ARM.props
+		PropertySheets\ARM64.props = PropertySheets\ARM64.props
 		PropertySheets\Debug.props = PropertySheets\Debug.props
 		PropertySheets\React.Cpp.props = PropertySheets\React.Cpp.props
 		PropertySheets\Release.props = PropertySheets\Release.props
@@ -71,6 +72,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StaticLibrary", "StaticLibrary", "{43A78B84-278B-4B99-8887-4029D551173E}"
 	ProjectSection(SolutionItems) = preProject
 		PropertySheets\StaticLibrary\ARM.props = PropertySheets\StaticLibrary\ARM.props
+		PropertySheets\StaticLibrary\ARM64.props = PropertySheets\StaticLibrary\ARM64.props
 		PropertySheets\StaticLibrary\Debug.props = PropertySheets\StaticLibrary\Debug.props
 		PropertySheets\StaticLibrary\Release.props = PropertySheets\StaticLibrary\Release.props
 		PropertySheets\StaticLibrary\Win32.props = PropertySheets\StaticLibrary\Win32.props
@@ -81,6 +83,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{102E37B8-4BE5-4DC1-A650-16706EFB3306}"
 	ProjectSection(SolutionItems) = preProject
 		PropertySheets\Application\ARM.props = PropertySheets\Application\ARM.props
+		PropertySheets\Application\ARM64.props = PropertySheets\Application\ARM64.props
 		PropertySheets\Application\Debug.props = PropertySheets\Application\Debug.props
 		PropertySheets\Application\Release.props = PropertySheets\Application\Release.props
 		PropertySheets\Application\Win32.props = PropertySheets\Application\Win32.props
@@ -91,6 +94,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DynamicLibrary", "DynamicLibrary", "{2EB5E646-7EB4-4FED-B1A8-0AEEF2D32268}"
 	ProjectSection(SolutionItems) = preProject
 		PropertySheets\DynamicLibrary\ARM.props = PropertySheets\DynamicLibrary\ARM.props
+		PropertySheets\DynamicLibrary\ARM64.props = PropertySheets\DynamicLibrary\ARM64.props
 		PropertySheets\DynamicLibrary\Debug.props = PropertySheets\DynamicLibrary\Debug.props
 		PropertySheets\DynamicLibrary\Release.props = PropertySheets\DynamicLibrary\Release.props
 		PropertySheets\DynamicLibrary\Win32.props = PropertySheets\DynamicLibrary\Win32.props
