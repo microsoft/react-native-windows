@@ -55,8 +55,10 @@ void FrameworkElementViewManager::TransferProperties(
   TransferProperty(oldView, newView, winrt::UIElement::OpacityProperty());
 
   // Layout Properties
-  TransferProperty(oldView, newView, winrt::FrameworkElement::WidthProperty());
-  TransferProperty(oldView, newView, winrt::FrameworkElement::HeightProperty());
+  TransferProperty(
+      oldView, newView, winrt::FrameworkElement::WidthProperty());
+  TransferProperty(
+      oldView, newView, winrt::FrameworkElement::HeightProperty());
   TransferProperty(
       oldView, newView, winrt::FrameworkElement::MinWidthProperty());
   TransferProperty(
@@ -65,12 +67,15 @@ void FrameworkElementViewManager::TransferProperties(
       oldView, newView, winrt::FrameworkElement::MaxWidthProperty());
   TransferProperty(
       oldView, newView, winrt::FrameworkElement::MaxHeightProperty());
-  TransferProperty(oldView, newView, winrt::FrameworkElement::FlowDirectionProperty());
-  TransferProperty(oldView, newView, winrt::Canvas::ZIndexProperty());
+  TransferProperty(
+      oldView, newView, winrt::FrameworkElement::FlowDirectionProperty());
+  TransferProperty(
+      oldView, newView, winrt::Canvas::ZIndexProperty());
 
 
   // Accessibility Properties
-  TransferProperty(oldView, newView, winrt::AutomationProperties::AutomationIdProperty());
+  TransferProperty(
+      oldView, newView, winrt::AutomationProperties::AutomationIdProperty());
   TransferProperty(
       oldView, newView, winrt::AutomationProperties::NameProperty());
   TransferProperty(
