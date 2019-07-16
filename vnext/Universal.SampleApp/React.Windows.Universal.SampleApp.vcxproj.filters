@@ -80,6 +80,13 @@
     </None>
     <None Include="image.uwp.js" />
     <None Include="calculator.uwp.js" />
+    <None Include="click.uwp.js" />
+    <None Include="control.uwp.js" />
+    <None Include="flexbox.uwp.js" />
+    <None Include="geosample.js" />
+    <None Include="mouse.uwp.js" />
+    <None Include="test.uwp.js" />
+    <None Include="view.uwp.js" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

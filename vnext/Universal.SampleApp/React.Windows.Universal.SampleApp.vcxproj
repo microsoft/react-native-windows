@@ -108,12 +108,19 @@
       <DeploymentContent>true</DeploymentContent>
     </None>
     <None Include="calculator.uwp.js" />
+    <None Include="click.uwp.js" />
+    <None Include="control.uwp.js" />
+    <None Include="flexbox.uwp.js" />
+    <None Include="geosample.js" />
     <None Include="image.uwp.js" />
     <None Include="index.uwp.js" />
+    <None Include="mouse.uwp.js" />
     <None Include="packages.config" />
     <None Include="React.Windows.Universal.SampleApp_TemporaryKey.pfx" />
     <None Include="simple.uwp.js" />
+    <None Include="test.uwp.js" />
     <None Include="text.uwp.js" />
+    <None Include="view.uwp.js" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
