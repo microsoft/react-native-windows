@@ -266,6 +266,9 @@ class AccessibilityStateExamples extends React.Component {
   public state = {
     viewDisabled: false,
     itemsSelected: [false, false, false],
+    viewChecked: false,
+    viewBusy: false,
+    viewCollapsed: false,
   };
 
   public render() {
@@ -286,7 +289,7 @@ class AccessibilityStateExamples extends React.Component {
           style={{
             backgroundColor: this.state.viewDisabled ? 'gray' : 'lightskyblue',
           }}
-          accessibilityRole="text"
+          accessibilityRole="none"
           accessibilityStates={this.state.viewDisabled ? ['disabled'] : []}>
           <Text>
             This View should be{' '}
@@ -324,6 +327,79 @@ class AccessibilityStateExamples extends React.Component {
           )}
           keyExtractor={(item, index) => index.toString()}
         />
+        <Text>
+          The following TouchableHighlight toggles accessibilityState.checked
+          and accessibilityState.unchecked for the View under it:
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          accessibilityRole="button"
+          onPress={this.checkedPress}>
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: this.state.viewChecked ? 'gray' : 'lightskyblue',
+          }}
+          //@ts-ignore
+          accessibilityRole="checkbox"
+          //@ts-ignore
+          accessibilityStates={
+            this.state.viewChecked ? ['checked'] : ['unchecked']
+          }>
+          <Text>
+            This View should be{' '}
+            {this.state.viewChecked ? 'Checked' : 'Unchecked'} according to UIA
+          </Text>
+        </View>
+        <Text>
+          The following TouchableHighlight toggles accessibilityState.busy for
+          the View under it:
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          accessibilityRole="button"
+          onPress={this.busyPress}>
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: this.state.viewBusy ? 'gray' : 'lightskyblue',
+          }}
+          accessibilityRole="none"
+          //@ts-ignore
+          accessibilityStates={this.state.viewBusy ? ['busy'] : []}>
+          <Text>
+            This View should be {this.state.viewBusy ? 'Busy' : 'Not Busy'}{' '}
+            according to UIA
+          </Text>
+        </View>
+        <Text>
+          The following TouchableHighlight toggles accessibilityState.expanded
+          and accessibilityState.collapsed for the View under it:
+        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          accessibilityRole="button"
+          onPress={this.collapsePress}>
+          <Text>Toggle</Text>
+        </TouchableHighlight>
+        <View
+          style={{
+            backgroundColor: this.state.viewCollapsed ? 'gray' : 'lightskyblue',
+            height: this.state.viewCollapsed ? 25 : 50,
+          }}
+          accessibilityRole="none"
+          //@ts-ignore
+          accessibilityStates={
+            this.state.viewCollapsed ? ['collapsed'] : ['expanded']
+          }>
+          <Text>
+            This View should be{' '}
+            {this.state.viewCollapsed ? 'Collapsed' : 'Expanded'} according to
+            UIA
+          </Text>
+        </View>
       </View>
     );
   }
@@ -336,6 +412,18 @@ class AccessibilityStateExamples extends React.Component {
     let tmp = this.state.itemsSelected;
     tmp[index] = !tmp[index];
     this.setState({itemsSelected: tmp});
+  };
+
+  private checkedPress = () => {
+    this.setState({viewChecked: !this.state.viewChecked});
+  };
+
+  private busyPress = () => {
+    this.setState({viewBusy: !this.state.viewBusy});
+  };
+
+  private collapsePress = () => {
+    this.setState({viewCollapsed: !this.state.viewCollapsed});
   };
 }
 
@@ -350,9 +438,7 @@ class AccessibilityListExamples extends React.Component {
         </Text>
         <View
           //@ts-ignore
-          accessibilityRole="list"
-          //@ts-check
-        >
+          accessibilityRole="list">
           <FlatList
             data={items}
             renderItem={item => (
@@ -365,9 +451,7 @@ class AccessibilityListExamples extends React.Component {
                 //@ts-ignore
                 accessibilityRole="listitem"
                 accessibilitySetSize={items.length}
-                accessibilityPosInSet={item.index + 1}
-                //@ts-check
-              >
+                accessibilityPosInSet={item.index + 1}>
                 <Text>Item {item.index + 1}</Text>
               </View>
             )}

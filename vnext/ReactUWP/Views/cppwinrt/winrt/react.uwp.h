@@ -1745,6 +1745,23 @@ struct property_react_uwp_IViewPanelStatics
 
 struct property_react_uwp_DynamicAutomationPeer
 { struct named {
+    struct ExpandCollapseState
+    {
+        struct name { static constexpr std::wstring_view value{ L"ExpandCollapseState"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::Automation::ExpandCollapseState;
+        using target_type = winrt::react::uwp::DynamicAutomationPeer;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.ExpandCollapseState();
+            }
+        };
+    };
     struct IsSelected
     {
         struct name { static constexpr std::wstring_view value{ L"IsSelected"sv }; };
@@ -1830,7 +1847,7 @@ struct property_react_uwp_DynamicAutomationPeer
             }
         };
     };};
-    struct list { using type = impl::typelist<named::IsSelected, named::SelectionContainer, named::CanSelectMultiple, named::IsSelectionRequired, named::ToggleState>; };
+    struct list { using type = impl::typelist<named::ExpandCollapseState, named::IsSelected, named::SelectionContainer, named::CanSelectMultiple, named::IsSelectionRequired, named::ToggleState>; };
 };
 
 struct property_react_uwp_DynamicAutomationProperties
