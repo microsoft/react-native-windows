@@ -5,34 +5,31 @@
 
 #include <Views/ViewPanel.h>
 
-#include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
 
 #include "cppwinrt/ViewControl.g.h"
-namespace winrt::react::uwp::implementation
-{
+namespace winrt::react::uwp::implementation {
 
 //
 // ViewControl is a ContentControl that ViewViewManager uses to wrap a ViewPanel
 // when we want that ViewPanel to be keyboard focusable
 //
-struct ViewControl : ViewControlT<ViewControl>
-{
+struct ViewControl : ViewControlT<ViewControl> {
   using Super = ViewControlT<ViewControl>;
-public:
+
+ public:
   // Constructors
   ViewControl();
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer
+  OnCreateAutomationPeer();
 
   winrt::react::uwp::ViewPanel GetPanel() const;
 };
 
-} // winrt::react::uwp::implementation
+} // namespace winrt::react::uwp::implementation
 
-namespace winrt::react::uwp::factory_implementation
-{
-  struct ViewControl : ViewControlT<ViewControl, implementation::ViewControl>
-  {
-  };
-}
+namespace winrt::react::uwp::factory_implementation {
+struct ViewControl : ViewControlT<ViewControl, implementation::ViewControl> {};
+} // namespace winrt::react::uwp::factory_implementation

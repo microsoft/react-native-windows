@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 //
 // MainPage.xaml.cpp
@@ -6,9 +6,10 @@
 //
 
 #include "pch.h"
+
 #include "MainPage.xaml.h"
 
-using namespace facebook;
+using namespace Microsoft::React::Test;
 
 using namespace Platform;
 using namespace Windows::Foundation;
@@ -21,9 +22,9 @@ using namespace Windows::UI::Xaml::Input;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+// The Blank Page item template is documented at
+// https://go.microsoft.com/fwlink/?LinkId=234238
 
-MainPage::MainPage()
-{
-	InitializeComponent();
+MainPage::MainPage() {
+  InitializeComponent();
 }

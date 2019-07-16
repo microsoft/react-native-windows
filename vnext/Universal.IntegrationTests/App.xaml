@@ -1,8 +1,8 @@
-﻿<Application
-    x:Class="facebook.react.test.App"
+<Application
+    x:Class="Microsoft.React.Test.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:facebook.react.test.App"
+    xmlns:local="using:Microsoft.React.Test"
     RequestedTheme="Light">
 
 </Application>

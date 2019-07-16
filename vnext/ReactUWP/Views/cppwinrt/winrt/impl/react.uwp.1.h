@@ -2,6 +2,7 @@
 
 #pragma once
 #include "winrt/impl/Windows.UI.Xaml.0.h"
+#include "winrt/impl/Windows.UI.Xaml.Automation.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Automation.Provider.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Controls.0.h"
 #include "winrt/impl/Windows.UI.Xaml.Media.0.h"

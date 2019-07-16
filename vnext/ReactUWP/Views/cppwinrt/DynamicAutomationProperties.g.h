@@ -3,6 +3,7 @@
 #pragma once
 
 #include "winrt/Windows.UI.Xaml.h"
+#include "winrt/Windows.UI.Xaml.Automation.h"
 #include "winrt/Windows.UI.Xaml.Automation.Provider.h"
 #include "winrt/Windows.UI.Xaml.Controls.h"
 #include "winrt/Windows.UI.Xaml.Media.h"
@@ -75,6 +76,21 @@ struct WINRT_EBO DynamicAutomationPropertiesT : implements<D, Windows::Foundatio
         return T::GetAccessibilityRole(element);
     }
 
+    Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty()
+    {
+        return T::AccessibilityStateSelectedProperty();
+    }
+
+    void SetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const& element, bool value)
+    {
+        T::SetAccessibilityStateSelected(element, value);
+    }
+
+    bool GetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityStateSelected(element);
+    }
+
     Windows::UI::Xaml::DependencyProperty AccessibilityStateDisabledProperty()
     {
         return T::AccessibilityStateDisabledProperty();
@@ -90,19 +106,79 @@ struct WINRT_EBO DynamicAutomationPropertiesT : implements<D, Windows::Foundatio
         return T::GetAccessibilityStateDisabled(element);
     }
 
-    Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty()
+    Windows::UI::Xaml::DependencyProperty AccessibilityStateCheckedProperty()
     {
-        return T::AccessibilityStateSelectedProperty();
+        return T::AccessibilityStateCheckedProperty();
     }
 
-    void SetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const& element, bool value)
+    void SetAccessibilityStateChecked(Windows::UI::Xaml::UIElement const& element, bool value)
     {
-        T::SetAccessibilityStateSelected(element, value);
+        T::SetAccessibilityStateChecked(element, value);
     }
 
-    bool GetAccessibilityStateSelected(Windows::UI::Xaml::UIElement const& element)
+    bool GetAccessibilityStateChecked(Windows::UI::Xaml::UIElement const& element)
     {
-        return T::GetAccessibilityStateSelected(element);
+        return T::GetAccessibilityStateChecked(element);
+    }
+
+    Windows::UI::Xaml::DependencyProperty AccessibilityStateUncheckedProperty()
+    {
+        return T::AccessibilityStateUncheckedProperty();
+    }
+
+    void SetAccessibilityStateUnchecked(Windows::UI::Xaml::UIElement const& element, bool value)
+    {
+        T::SetAccessibilityStateUnchecked(element, value);
+    }
+
+    bool GetAccessibilityStateUnchecked(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityStateUnchecked(element);
+    }
+
+    Windows::UI::Xaml::DependencyProperty AccessibilityStateBusyProperty()
+    {
+        return T::AccessibilityStateBusyProperty();
+    }
+
+    void SetAccessibilityStateBusy(Windows::UI::Xaml::UIElement const& element, bool value)
+    {
+        T::SetAccessibilityStateBusy(element, value);
+    }
+
+    bool GetAccessibilityStateBusy(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityStateBusy(element);
+    }
+
+    Windows::UI::Xaml::DependencyProperty AccessibilityStateExpandedProperty()
+    {
+        return T::AccessibilityStateExpandedProperty();
+    }
+
+    void SetAccessibilityStateExpanded(Windows::UI::Xaml::UIElement const& element, bool value)
+    {
+        T::SetAccessibilityStateExpanded(element, value);
+    }
+
+    bool GetAccessibilityStateExpanded(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityStateExpanded(element);
+    }
+
+    Windows::UI::Xaml::DependencyProperty AccessibilityStateCollapsedProperty()
+    {
+        return T::AccessibilityStateCollapsedProperty();
+    }
+
+    void SetAccessibilityStateCollapsed(Windows::UI::Xaml::UIElement const& element, bool value)
+    {
+        T::SetAccessibilityStateCollapsed(element, value);
+    }
+
+    bool GetAccessibilityStateCollapsed(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityStateCollapsed(element);
     }
 
     Windows::UI::Xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty()

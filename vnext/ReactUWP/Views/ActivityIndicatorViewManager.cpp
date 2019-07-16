@@ -8,55 +8,43 @@
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.h>
+namespace react {
+namespace uwp {
 
-namespace winrt {
-  using namespace Windows::UI::Xaml::Controls;
-}
+ActivityIndicatorViewManager::ActivityIndicatorViewManager(
+    const std::shared_ptr<IReactInstance> &reactInstance)
+    : Super(reactInstance) {}
 
-namespace react { namespace uwp {
-
-ActivityIndicatorViewManager::ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : Super(reactInstance)
-{
-}
-
-const char* ActivityIndicatorViewManager::GetName() const
-{
+const char *ActivityIndicatorViewManager::GetName() const {
   return "RCTActivityIndicatorView";
 }
 
-folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const
-{
+folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object
-    ("animating", "boolean")
-    ("color", "Color")
-  );
+  props.update(
+      folly::dynamic::object("animating", "boolean")("color", "Color"));
 
   return props;
 }
 
-XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag)
-{
+XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag) {
   auto progressRing = winrt::ProgressRing();
   return progressRing;
 }
 
-void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, const folly::dynamic& reactDiffMap)
-{
+void ActivityIndicatorViewManager::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    const folly::dynamic &reactDiffMap) {
   auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
   if (progressRing == nullptr)
     return;
 
-  for (const auto& pair : reactDiffMap.items())
-  {
-    const std::string& propertyName = pair.first.getString();
-    const folly::dynamic& propertyValue = pair.second;
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
 
-    if (propertyName == "animating")
-    {
+    if (propertyName == "animating") {
       if (propertyValue.isBool())
         progressRing.IsActive(propertyValue.asBool());
       else if (pair.second.isNull())
@@ -67,4 +55,5 @@ void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
-}}
+} // namespace uwp
+} // namespace react

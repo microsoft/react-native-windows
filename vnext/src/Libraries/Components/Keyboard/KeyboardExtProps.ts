@@ -1,20 +1,23 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 
 'use strict';
 
-import * as RN  from 'react-native';
+import * as RN from 'react-native';
 
 export enum EventPhase {
   None = 0,
   Capturing,
   AtTarget,
-  Bubbling
+  Bubbling,
 }
 
 export enum HandledEventPhase {
   Capturing = EventPhase.Capturing,
-  Bubbling = EventPhase.Bubbling
+  Bubbling = EventPhase.Bubbling,
 }
 
 export interface INativeKeyboardEvent {
@@ -23,6 +26,7 @@ export interface INativeKeyboardEvent {
   metaKey: boolean;
   shiftKey: boolean;
   key: string;
+  code: string;
   eventPhase: EventPhase;
 }
 
@@ -31,7 +35,7 @@ export interface IHandledKeyboardEvent {
   ctrlKey?: boolean;
   metaKey?: boolean;
   shiftKey?: boolean;
-  key: string;
+  code: string;
   handledEventPhase?: HandledEventPhase;
 }
 

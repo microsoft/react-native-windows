@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
 #include <cxxreact/JSBigString.h>
 
 namespace facebook {
@@ -17,11 +18,17 @@ JSBigFileString::JSBigFileString(int fd, size_t size, off_t offset /*= 0*/) {
   std::terminate();
 }
 
+#pragma warning(push)
+#pragma warning(disable : 4722) // 'function' : destructor never returns,
+                                // potential memory leak
+
 JSBigFileString::~JSBigFileString() {
   std::terminate();
 }
 
-const char* JSBigFileString::c_str() const {
+#pragma warning(pop)
+
+const char *JSBigFileString::c_str() const {
   std::terminate();
 }
 
@@ -33,9 +40,10 @@ int JSBigFileString::fd() const {
   std::terminate();
 }
 
-std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(const std::string& sourceURL) {
+std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(
+    const std::string &sourceURL) {
   std::terminate();
 }
 
-}  // namespace react
-}  // namespace facebook
+} // namespace react
+} // namespace facebook

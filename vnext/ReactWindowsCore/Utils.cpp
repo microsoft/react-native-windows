@@ -8,15 +8,14 @@ using namespace std;
 
 namespace Microsoft::React {
 
-Url::Url(const string& source)
-{
-                  //      ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
-  regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
-                  //     protocol             host       port     path        query
+Url::Url(const string &source) {
+  //      ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
+  regex expression(
+      "(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
+  //     protocol             host       port     path        query
   cmatch match;
   int index = 0;
-  if (regex_match(source.c_str(), match, expression))
-  {
+  if (regex_match(source.c_str(), match, expression)) {
     ++index;
     this->scheme = string(match[index].first, match[index].second);
 
@@ -35,15 +34,12 @@ Url::Url(const string& source)
     ++index;
     ++index;
     this->queryString = string(match[index].first, match[index].second);
-  }
-  else
-  {
+  } else {
     throw std::exception("Could not parse URL.");
   }
 }
 
-string Url::Target()
-{
+string Url::Target() {
   if (1 > queryString.length())
     return path;
   else
@@ -52,31 +48,30 @@ string Url::Target()
 
 } // namespace Microsoft::React
 
-// Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise dont need
-// And we probably want to look at some other functionality for reporting errors at
-// some point anyway.  For now, just stub them out.
+// Folly/folly/SafeAssert.cpp brings in a bunch of file APIs that we otherwise
+// dont need And we probably want to look at some other functionality for
+// reporting errors at some point anyway.  For now, just stub them out.
 namespace folly::detail {
 
 namespace {
-void writeStderr(const char* s, size_t len) {
+void writeStderr(const char *s, size_t len) {
   // nyi
   std::terminate();
 }
-void writeStderr(const char* s) {
+void writeStderr(const char *s) {
   // nyi
   std::terminate();
 }
 } // namespace
 
 void assertionFailure(
-    const char* expr,
-    const char* msg,
-    const char* file,
+    const char *expr,
+    const char *msg,
+    const char *file,
     unsigned int line,
-    const char* function) {
+    const char *function) {
   // nyi
   std::terminate();
 }
 
 } // namespace folly::detail
-

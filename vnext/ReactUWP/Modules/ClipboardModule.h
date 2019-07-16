@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include <folly/dynamic.h>
 #include <cxxreact/CxxModule.h>
+#include <folly/dynamic.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class ClipboardModule final : public facebook::xplat::module::CxxModule
-{
-public:
+class ClipboardModule final : public facebook::xplat::module::CxxModule {
+ public:
   virtual ~ClipboardModule();
 
   // CxxModule
@@ -18,11 +18,14 @@ public:
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char* name;
+  static const char *name;
 
-private:
-  static void SetClipboardText(const std::string& text);
-  static void GetClipboardText(const Callback& cbSuccess, const Callback& cbFail);
+ private:
+  static void SetClipboardText(const std::string &text);
+  static void GetClipboardText(
+      const Callback &cbSuccess,
+      const Callback &cbFail);
 };
 
-} } // namespace react::uwp
+} // namespace uwp
+} // namespace react

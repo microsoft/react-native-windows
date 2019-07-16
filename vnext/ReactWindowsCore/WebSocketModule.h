@@ -12,17 +12,15 @@ namespace Microsoft::React {
 /// Realizes <c>NativeModules</c> projection.
 /// <remarks>See react-native/Libraries/WebSocket/WebSocket.js</remarks>
 ///
-class WebSocketModule : public facebook::xplat::module::CxxModule
-{
-public:
-  enum MethodId
-  {
-    Connect    = 0,
-    Close      = 1,
-    Send       = 2,
+class WebSocketModule : public facebook::xplat::module::CxxModule {
+ public:
+  enum MethodId {
+    Connect = 0,
+    Close = 1,
+    Send = 2,
     SendBinary = 3,
-    Ping       = 4,
-    SIZE       = 5
+    Ping = 4,
+    SIZE = 5
   };
 
   WebSocketModule();
@@ -43,16 +41,18 @@ public:
   /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
   virtual std::vector<Method> getMethods();
 
-private:
+ private:
   /// <summary>
   /// Notifies an event to the current React Instance.
   /// </summary>
-  void SendEvent(std::string&& eventName, folly::dynamic&& parameters);
+  void SendEvent(std::string &&eventName, folly::dynamic &&parameters);
 
   /// <summary>
   /// Creates or retrieves a raw <c>IWebSocket</c> pointer.
   /// </summary>
-  IWebSocket* GetOrCreateWebSocket(int64_t id, std::string&& url = std::string());
+  IWebSocket *GetOrCreateWebSocket(
+      int64_t id,
+      std::string &&url = std::string());
 
   /// <summary>
   /// Keeps <c>IWebSocket</c> instances identified by <c>id</c>.
@@ -61,7 +61,7 @@ private:
   std::map<int64_t, std::unique_ptr<IWebSocket>> m_webSockets;
 };
 
-} // Microsoft::React
+} // namespace Microsoft::React
 
 // Deprecated. Keeping for compatibility.
 namespace facebook::react {

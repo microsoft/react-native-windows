@@ -6,38 +6,31 @@
 namespace facebook {
 namespace react {
 
-/*static*/ std::unique_ptr<const JSBigAbiString> JSBigAbiString::Make(AbiSafe::AbiStringPtr&& abiString) noexcept
-{
+/*static*/ std::unique_ptr<const JSBigAbiString> JSBigAbiString::Make(
+    AbiSafe::AbiStringPtr &&abiString) noexcept {
   return std::make_unique<const JSBigAbiString>(std::move(abiString));
 }
 
-JSBigAbiString::JSBigAbiString(AbiSafe::AbiStringPtr&& abiString) noexcept
-  : m_abiString { std::move(abiString) }
-{
-}
+JSBigAbiString::JSBigAbiString(AbiSafe::AbiStringPtr &&abiString) noexcept
+    : m_abiString{std::move(abiString)} {}
 
-bool JSBigAbiString::isAscii() const
-{
+bool JSBigAbiString::isAscii() const {
   return false;
 }
 
-const char* JSBigAbiString::c_str() const
-{
+const char *JSBigAbiString::c_str() const {
   EnsureStringLoaded();
   return m_charSpan.Data;
 }
 
-size_t JSBigAbiString::size() const
-{
+size_t JSBigAbiString::size() const {
   EnsureStringLoaded();
   return m_charSpan.Size;
 }
 
-void JSBigAbiString::EnsureStringLoaded() const noexcept
-{
-  if (!m_charSpan.Data)
-  {
-    const_cast<JSBigAbiString*>(this)->m_charSpan = m_abiString->GetSpan();
+void JSBigAbiString::EnsureStringLoaded() const noexcept {
+  if (!m_charSpan.Data) {
+    const_cast<JSBigAbiString *>(this)->m_charSpan = m_abiString->GetSpan();
   }
 }
 

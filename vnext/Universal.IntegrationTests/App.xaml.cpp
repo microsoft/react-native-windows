@@ -6,10 +6,10 @@
 //
 
 #include "pch.h"
+
 #include "MainPage.xaml.h"
 
-using namespace facebook::react::test;
-
+using namespace Microsoft::React::Test;
 using namespace Platform;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
@@ -24,70 +24,72 @@ using namespace Windows::UI::Xaml::Interop;
 using namespace Windows::UI::Xaml::Media;
 using namespace Windows::UI::Xaml::Navigation;
 
-// The Blank Application template is documented at https://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
+// The Blank Application template is documented at
+// https://go.microsoft.com/fwlink/?LinkId=402347&clcid=0x409
 
 /// <summary>
-/// Initializes the singleton application object.  This is the first line of authored code
-/// executed, and as such is the logical equivalent of main() or WinMain().
+/// Initializes the singleton application object.  This is the first line of
+/// authored code executed, and as such is the logical equivalent of main() or
+/// WinMain().
 /// </summary>
-App::App()
-{
-	InitializeComponent();
-	Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
+App::App() {
+  InitializeComponent();
+  Suspending += ref new SuspendingEventHandler(this, &App::OnSuspending);
 }
 
 /// <summary>
-/// Invoked when the application is launched normally by the end user.	Other entry points
-/// will be used such as when the application is launched to open a specific file.
+/// Invoked when the application is launched normally by the end user.	Other
+/// entry points will be used such as when the application is launched to open a
+/// specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs^ e)
-{
-	auto rootFrame = dynamic_cast<Frame^>(Window::Current->Content);
+void App::OnLaunched(
+    Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ e) {
+  auto rootFrame = dynamic_cast<Frame ^>(Window::Current->Content);
 
-	// Do not repeat app initialization when the Window already has content,
-	// just ensure that the window is active
-	if (rootFrame == nullptr)
-	{
-		// Create a Frame to act as the navigation context and associate it with
-		// a SuspensionManager key
-		rootFrame = ref new Frame();
+  // Do not repeat app initialization when the Window already has content,
+  // just ensure that the window is active
+  if (rootFrame == nullptr) {
+    // Create a Frame to act as the navigation context and associate it with
+    // a SuspensionManager key
+    rootFrame = ref new Frame();
 
-		rootFrame->NavigationFailed += ref new Windows::UI::Xaml::Navigation::NavigationFailedEventHandler(this, &App::OnNavigationFailed);
+    rootFrame->NavigationFailed +=
+        ref new Windows::UI::Xaml::Navigation::NavigationFailedEventHandler(
+            this, &App::OnNavigationFailed);
 
-		if (e->PreviousExecutionState == ApplicationExecutionState::Terminated)
-		{
-			// TODO: Restore the saved session state only when appropriate, scheduling the
-			// final launch steps after the restore is complete
+    if (e->PreviousExecutionState == ApplicationExecutionState::Terminated) {
+      // TODO: Restore the saved session state only when appropriate, scheduling
+      // the final launch steps after the restore is complete
+    }
 
-		}
+    // Place the frame in the current Window
+    Window::Current->Content = rootFrame;
+  }
 
-		// Place the frame in the current Window
-		Window::Current->Content = rootFrame;
-	}
+  Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::
+      UnitTestClient::CreateDefaultUI();
 
-	Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::UnitTestClient::CreateDefaultUI();
+  rootFrame->Navigate(TypeName(MainPage::typeid), e->Arguments);
 
-  rootFrame->Navigate(TypeName(facebook::MainPage::typeid), e->Arguments);
+  Window::Current->Activate();
 
-	Window::Current->Activate();
-
-	Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::UnitTestClient::Run(e->Arguments);
+  Microsoft::VisualStudio::TestPlatform::TestExecutor::WinRTCore::
+      UnitTestClient::Run(e->Arguments);
 }
 
 /// <summary>
-/// Invoked when application execution is being suspended.	Application state is saved
-/// without knowing whether the application will be terminated or resumed with the contents
-/// of memory still intact.
+/// Invoked when application execution is being suspended.	Application
+/// state is saved without knowing whether the application will be terminated or
+/// resumed with the contents of memory still intact.
 /// </summary>
 /// <param name="sender">The source of the suspend request.</param>
 /// <param name="e">Details about the suspend request.</param>
-void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
-{
-	(void) sender;	// Unused parameter
-	(void) e;	// Unused parameter
+void App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ e) {
+  (void)sender; // Unused parameter
+  (void)e; // Unused parameter
 
-	//TODO: Save application state and stop any background activity
+  // TODO: Save application state and stop any background activity
 }
 
 /// <summary>
@@ -95,7 +97,9 @@ void App::OnSuspending(Object^ sender, SuspendingEventArgs^ e)
 /// </summary>
 /// <param name="sender">The Frame which failed navigation</param>
 /// <param name="e">Details about the navigation failure</param>
-void App::OnNavigationFailed(Platform::Object ^sender, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^e)
-{
-	throw ref new FailureException("Failed to load Page " + e->SourcePageType.Name);
+void App::OnNavigationFailed(
+    Platform::Object ^ sender,
+    Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^ e) {
+  throw ref new FailureException(
+      "Failed to load Page " + e->SourcePageType.Name);
 }

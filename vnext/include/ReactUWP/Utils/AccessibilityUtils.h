@@ -3,14 +3,21 @@
 
 #pragma once
 
-#include <winrt/Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
+#include <winrt/Windows.UI.Xaml.h>
 
 #include <ReactWindowsCore/ReactWindowsAPI.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-REACTWINDOWS_API_(void) AnnounceLiveRegionChangedIfNeeded(const winrt::Windows::UI::Xaml::FrameworkElement& element);
+REACTWINDOWS_API_(void)
+AnnounceLiveRegionChangedIfNeeded(
+    const winrt::Windows::UI::Xaml::FrameworkElement &element);
 
-} }
+REACTWINDOWS_API_(bool)
+HasDynamicAutomationProperties(
+    const winrt::Windows::UI::Xaml::UIElement &element);
+} // namespace uwp
+} // namespace react
