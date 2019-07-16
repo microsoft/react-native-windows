@@ -264,7 +264,7 @@ const getTextValue = (props: Props): string => {
   } else if (Array.isArray(props.children)) {
     let textVal = '';
     for (var child of props.children) {
-      if (typeof child === 'string') {
+      if (typeof child === 'string' || typeof child === 'number') {
         textVal += child;
       } else {
         return '';
