@@ -59,6 +59,10 @@ void TextViewManager::UpdateProperties(
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
 
+    if (propertyName == "text") {
+      textBlock.Text(asHstring(propertyValue));
+    }
+
     if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
       continue;
     } else if (TryUpdateFontProperties(
