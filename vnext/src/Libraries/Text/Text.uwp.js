@@ -145,10 +145,11 @@ class TouchableText extends React.Component<Props, State> {
         };
       }
     }
-    if (typeof props.children === 'string') {
+    const textVal = getTextValue(props);
+    if (textVal) {
       props = {
         ...props,
-        text: props.children,
+        text: textVal,
         children: null,
       };
     }
@@ -256,6 +257,22 @@ class TouchableText extends React.Component<Props, State> {
         : this.props.pressRetentionOffset;
   }
 }
+
+const getTextValue = (props: Props): string => {
+  if (typeof props.children === 'string') {
+    return props.children;
+  } else if (Array.isArray(props.children)) {
+    let textVal = '';
+    for (var child of props.children) {
+      if (typeof child === 'string') {
+        textVal += child;
+      } else {
+        return '';
+      }
+    }
+    return textVal;
+  }
+};
 
 const isTouchable = (props: Props): boolean =>
   props.onPress != null ||
