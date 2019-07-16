@@ -261,6 +261,8 @@ class TouchableText extends React.Component<Props, State> {
 const getTextValue = (props: Props): string => {
   if (typeof props.children === 'string') {
     return props.children;
+  } else if (typeof props.children === 'number') {
+    return '' + props.children;
   } else if (Array.isArray(props.children)) {
     let textVal = '';
     for (var child of props.children) {
