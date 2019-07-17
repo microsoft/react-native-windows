@@ -23,7 +23,9 @@ const alertMessage =
 /**
  * Simple alert examples.
  */
-class SimpleAlertExampleBlock extends React.Component {
+type Props = $ReadOnly<{||}>;
+
+class SimpleAlertExampleBlock extends React.Component<Props> {
   componentDidMount() {
     // This is basically the tag of the RCTView corresponding to the non-collapsable View child
     this._rootViewHint = ReactNative.findNodeHandle(this);

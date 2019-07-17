@@ -51,9 +51,6 @@ type State = {|
 |};
 
 class ListViewGridLayoutExample extends React.Component<RNTesterProps, State> {
-  static title = '<ListView> - Grid Layout';
-  static description = 'Flexbox grid layout.';
-
   state = {
     dataSource: this.getInitialDataSource(),
     windowWidth: Dimensions.get("window").width,
@@ -170,4 +167,13 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = ListViewGridLayoutExample;
+exports.title = '<ListView> - Grid Layout';
+exports.description = 'Flexbox grid layout.';
+exports.examples = [
+  {
+    title: 'Simple list view with grid layout',
+    render: function(): React.Element<typeof ListViewGridLayoutExample> {
+      return <ListViewGridLayoutExample />;
+    },
+  },
+];
