@@ -258,17 +258,17 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2
-        displayName: yarn install
+        displayName: npm install
         inputs:
-          script: yarn install --frozen-lockfile
+          script: npm install
           workingDirectory: vnext
 
       - template: templates/stop-packagers.yml
 
       - task: CmdLine@2
-        displayName: yarn build
+        displayName: npm run build
         inputs:
-          script: yarn build
+          script: npm run build
           workingDirectory: vnext
 
       - template: templates/install-SDK.yml
