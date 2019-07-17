@@ -12,13 +12,16 @@ using namespace winrt::facebook::react;
 using namespace winrt;
 
 namespace ABITests {
+
+#ifdef PERF_TESTS
+
 TEST_CLASS(PerfTests) {
   static const uint32_t iterations = 100000000;
 
   static void HandleLogEvents(
       ::winrt::facebook::react::LogLevel l, hstring const &m) {}
 
-  TEST_METHOD(TimeNewAbiInitializeLogging01) {
+  TEST_METHOD(TimeNewAbiInitializeLogging) {
     // ensure the DLL has been loaded before starting perf measurements
     uint32_t loggingRegistrationToken =
         NativeLogEventSource::InitializeLogging(HandleLogEvents);
@@ -41,28 +44,7 @@ TEST_CLASS(PerfTests) {
     NativeLogEventSource::UninitializeLogging(loggingRegistrationToken);
   }
 
-  TEST_METHOD(TimeNewAbiInitializeLogging02) {
-    // ensure the DLL has been loaded before starting perf measurements
-    uint32_t loggingRegistrationToken =
-        NativeLogEventSource::InitializeLogging(HandleLogEvents);
-
-    LARGE_INTEGER accu{0}, a{0}, b{0};
-
-    for (int i = 0; i < iterations; ++i) {
-      QueryPerformanceCounter(&a);
-
-      NativeLogEventSource::InitializeLogging(HandleLogEvents);
-
-      QueryPerformanceCounter(&b);
-      accu.QuadPart += (b.QuadPart - a.QuadPart);
-    }
-
-    PrintResult("TimeNewAbiInitializeLogging02", iterations, accu.QuadPart);
-
-    NativeLogEventSource::UninitializeLogging(loggingRegistrationToken);
-  }
-
-  TEST_METHOD(TimeOldAbiInitializeLogging01) {
+  TEST_METHOD(TimeOldAbiInitializeLogging) {
     LARGE_INTEGER accu{0}, a{0}, b{0};
 
     QueryPerformanceCounter(&a);
@@ -78,23 +60,6 @@ TEST_CLASS(PerfTests) {
     PrintResult("TimeOldAbiInitializeLogging01", iterations, accu.QuadPart);
   }
 
-  TEST_METHOD(TimeOldAbiInitializeLogging02) {
-    LARGE_INTEGER accu{0}, a{0}, b{0};
-
-    for (int i = 0; i < iterations; ++i) {
-      auto callback = [](::facebook::react::RCTLogLevel l, const char *m) {};
-
-      QueryPerformanceCounter(&a);
-
-      ::facebook::react::InitializeLogging(std::move(callback));
-
-      QueryPerformanceCounter(&b);
-      accu.QuadPart += b.QuadPart - a.QuadPart;
-    }
-
-    PrintResult("TimeOldAbiInitializeLogging02", iterations, accu.QuadPart);
-  }
-
   static void PrintResult(
       const char *testName, uint32_t iterations, LONGLONG accu) {
     LARGE_INTEGER freq{0};
@@ -108,5 +73,7 @@ TEST_CLASS(PerfTests) {
     Logger::WriteMessage(ss.str().c_str());
   }
 };
+
+#endif // PERF_TESTS
 
 } // namespace ABITests

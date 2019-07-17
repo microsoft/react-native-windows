@@ -95,10 +95,11 @@ TestMessageQueueThread::~TestMessageQueueThread() {
 }
 
 void TestMessageQueueThread::runOnQueue(VoidFunctor &&func) noexcept {
-  assert(m_state == State::Running);
-  Lock queueLock(m_queueMutex);
-  m_queue.push(move(func));
-  SignalDispatch();
+  if (m_state == State::Running) {
+    Lock queueLock(m_queueMutex);
+    m_queue.push(move(func));
+    SignalDispatch();
+  }
 }
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
@@ -123,6 +124,7 @@ void TestMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
 void TestMessageQueueThread::quitSynchronous() noexcept {
   assert(m_state == State::Running);
   m_state = State::QuitSynchronousHasBeenCalled;
+  quitInternal();
 }
 
 bool TestMessageQueueThread::IsEmpty() const noexcept {
@@ -151,8 +153,6 @@ bool TestMessageQueueThread::DispatchOne(
 }
 
 void TestMessageQueueThread::quitInternal() noexcept {
-  assert(GetCurrentThreadId() == m_creatorThreadId);
-
   if (m_state != State::WorkerThreadHasExited) {
     SetEvent(
         m_threadSignals[static_cast<int>(ThreadSignalIndex::QuitRequested)]);
