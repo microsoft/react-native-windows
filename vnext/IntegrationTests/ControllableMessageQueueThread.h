@@ -10,7 +10,8 @@
 
 namespace Microsoft::React::Test {
 
-class ControllableMessageQueueThread : public facebook::react::MessageQueueThread {
+class ControllableMessageQueueThread
+    : public facebook::react::MessageQueueThread {
   class Lock {
    public:
     Lock(HANDLE mutex) noexcept;

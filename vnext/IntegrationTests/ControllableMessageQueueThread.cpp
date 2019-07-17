@@ -12,7 +12,8 @@ namespace Microsoft::React::Test {
 
 #pragma region TestMessageQueueThread members
 
-ControllableMessageQueueThread::Lock::Lock(HANDLE mutex) noexcept : m_mutex{mutex} {
+ControllableMessageQueueThread::Lock::Lock(HANDLE mutex) noexcept
+    : m_mutex{mutex} {
   assert(mutex != NULL);
   DWORD waitResult = WaitForSingleObject(m_mutex, INFINITE);
   assert(waitResult == WAIT_OBJECT_0);
@@ -104,7 +105,8 @@ void ControllableMessageQueueThread::runOnQueue(VoidFunctor &&func) noexcept {
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
 // used for initialization and cleanup.
-void ControllableMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
+void ControllableMessageQueueThread::runOnQueueSync(
+    VoidFunctor &&func) noexcept {
   assert(m_state == State::Running);
 
   if (IsWorkerThread()) {

@@ -3,10 +3,10 @@
 
 #pragma once
 
-#include <atomic>
-#include <cxxreact/MessageQueueThread.h>
-#include <queue>
 #include <Windows.h>
+#include <cxxreact/MessageQueueThread.h>
+#include <atomic>
+#include <queue>
 
 namespace Microsoft::React::Test {
 
