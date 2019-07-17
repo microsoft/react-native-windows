@@ -66,10 +66,10 @@ void AnimationDriver::StopAnimation() {
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
     animatedValue->RemoveActiveAnimation(m_id);
 
-    if (m_scopedBatch)
-    {
-      m_endCallback(
-        std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
+    if (m_scopedBatch) {
+      if (m_endCallback)
+        m_endCallback(std::vector<folly::dynamic>{
+            folly::dynamic::object("finished", false)});
       m_scopedBatch.Completed(m_scopedBatchCompletedToken);
       m_scopedBatch = nullptr;
     }
