@@ -64,8 +64,15 @@ void AnimationDriver::StartAnimation() {
 void AnimationDriver::StopAnimation() {
   if (const auto animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
-    m_endCallback(
-        std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
+    animatedValue->RemoveActiveAnimation(m_id);
+
+    if (m_scopedBatch) {
+      if (m_endCallback)
+        m_endCallback(std::vector<folly::dynamic>{
+            folly::dynamic::object("finished", false)});
+      m_scopedBatch.Completed(m_scopedBatchCompletedToken);
+      m_scopedBatch = nullptr;
+    }
   }
 }
 
