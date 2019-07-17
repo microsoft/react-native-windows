@@ -10,6 +10,11 @@ namespace react {
 namespace uwp {
 namespace polyester {
 
+//
+// ContentControlShadowNode
+// - required for subclasses of ContentControlViewManager with a custom
+// shadownode
+//
 class ContentControlShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
 
@@ -25,6 +30,9 @@ class ContentControlShadowNode : public ShadowNodeBase {
   bool m_paddingDirty = false;
 };
 
+//
+// ContentControlViewManager
+//
 class ContentControlViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 
