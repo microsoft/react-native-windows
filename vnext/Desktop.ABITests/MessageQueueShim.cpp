@@ -1,9 +1,11 @@
 #include "MessageQueueShim.h"
 
+#include <IntegrationTests/ControllableMessageQueueThread.h>
+
 namespace ABITests {
 MessageQueueShim::MessageQueueShim()
-    : m_messageQueueThread{
-          std::make_shared<Microsoft::React::Test::TestMessageQueueThread>()} {}
+    : m_messageQueueThread{std::make_shared<
+          Microsoft::React::Test::ControllableMessageQueueThread>()} {}
 
 MessageQueueShim::MessageQueueShim(
     std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread)

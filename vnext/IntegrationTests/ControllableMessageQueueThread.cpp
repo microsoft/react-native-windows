@@ -1,29 +1,34 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "TestMessageQueueThread.h"
+#include "ControllableMessageQueueThread.h"
 
 #include <assert.h>
+
+#pragma push_macro("max")
+#undef max
 
 namespace Microsoft::React::Test {
 
 #pragma region TestMessageQueueThread members
 
-TestMessageQueueThread::Lock::Lock(HANDLE mutex) noexcept : m_mutex{mutex} {
+ControllableMessageQueueThread::Lock::Lock(HANDLE mutex) noexcept : m_mutex{mutex} {
   assert(mutex != NULL);
   DWORD waitResult = WaitForSingleObject(m_mutex, INFINITE);
   assert(waitResult == WAIT_OBJECT_0);
 }
 
-TestMessageQueueThread::Lock::~Lock() noexcept {
+ControllableMessageQueueThread::Lock::~Lock() noexcept {
   ReleaseMutex(m_mutex);
   m_mutex = NULL;
 }
 
-TestMessageQueueThread::TestMessageQueueThread(
+ControllableMessageQueueThread::ControllableMessageQueueThread(
+    Mode mode,
     VoidFunctor &&initializeThread,
     VoidFunctor &&uninitializeThread) noexcept
-    : m_initializeThread{move(initializeThread)},
+    : m_mode{mode},
+      m_initializeThread{move(initializeThread)},
       m_uninitializeThread{move(uninitializeThread)} {
   m_creatorThreadId = GetCurrentThreadId();
 
@@ -32,6 +37,20 @@ TestMessageQueueThread::TestMessageQueueThread(
       /* bInitialOwner */ FALSE,
       /* lpName */ nullptr);
   assert(m_queueMutex != NULL);
+
+  m_queueItemPresent = CreateEvent(
+      /* lpEventAttributes */ NULL,
+      /* bManualReset */ FALSE,
+      /* bInitialState */ FALSE,
+      /* lpName */ nullptr);
+  assert(m_queueItemPresent != NULL);
+
+  m_queueItemProcessed = CreateEvent(
+      /* lpEventAttributes */ NULL,
+      /* bManualReset */ FALSE,
+      /* bInitialState */ FALSE,
+      /* lpName */ nullptr);
+  assert(m_queueItemPresent != NULL);
 
   for (int i = 0; i < static_cast<int>(ThreadSignalIndex::Count); ++i) {
     m_threadSignals[i] = CreateEvent(
@@ -45,7 +64,7 @@ TestMessageQueueThread::TestMessageQueueThread(
   m_workerThread = CreateThread(
       /* lpThreadAttributes */ NULL,
       /* dwStackSize */ 0,
-      /* ThreadProc lpStartAddress */ TestMessageQueueThread::Dispatch,
+      /* ThreadProc lpStartAddress */ ControllableMessageQueueThread::Dispatch,
       /* lpParameter */ this,
       /* dwCreationFlags */ 0,
       /* lpThreadId */ nullptr);
@@ -53,7 +72,7 @@ TestMessageQueueThread::TestMessageQueueThread(
   assert(m_workerThread != NULL);
 }
 
-TestMessageQueueThread::~TestMessageQueueThread() {
+ControllableMessageQueueThread::~ControllableMessageQueueThread() {
   quitInternal();
 
   for (int i = 0; i < static_cast<int>(ThreadSignalIndex::Count); ++i) {
@@ -62,54 +81,78 @@ TestMessageQueueThread::~TestMessageQueueThread() {
     m_threadSignals[i] = NULL;
   }
 
+  assert(m_queueItemProcessed != NULL);
+  CloseHandle(m_queueItemProcessed);
+  m_queueItemProcessed = NULL;
+
+  assert(m_queueItemPresent != NULL);
+  CloseHandle(m_queueItemPresent);
+  m_queueItemPresent = NULL;
+
   assert(m_queueMutex != NULL);
   CloseHandle(m_queueMutex);
   m_queueMutex = NULL;
 }
 
-void TestMessageQueueThread::runOnQueue(VoidFunctor &&func) noexcept {
-  assert(m_state == State::Running);
-
-  Lock queueLock(m_queueMutex);
-  m_queue.push(move(func));
-  SetEvent(
-      m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+void ControllableMessageQueueThread::runOnQueue(VoidFunctor &&func) noexcept {
+  if (m_state == State::Running) {
+    Lock queueLock(m_queueMutex);
+    m_queue.push(move(func));
+    SignalDispatch();
+  }
 }
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
 // used for initialization and cleanup.
-void TestMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
+void ControllableMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
   assert(m_state == State::Running);
 
   if (IsWorkerThread()) {
     func();
   } else {
-    HANDLE done = CreateEvent(NULL, FALSE, FALSE, nullptr);
-    assert(done != NULL);
-
     {
       Lock queueLock(m_queueMutex);
       m_queue.push(move(func));
-      m_queue.push([done]() { SetEvent(done); });
-      SetEvent(m_threadSignals[static_cast<int>(
-          ThreadSignalIndex::FunctorAvailable)]);
     }
 
-    DWORD waitResult = WaitForSingleObject(done, INFINITE);
-    assert(waitResult == WAIT_OBJECT_0);
-    CloseHandle(done);
+    SignalDispatch();
+    DWORD waitResult = WaitForSingleObject(m_queueItemProcessed, INFINITE);
   }
 }
 
 // Once quitSynchronous() returns, no further work should run on the queue.
-void TestMessageQueueThread::quitSynchronous() noexcept {
+void ControllableMessageQueueThread::quitSynchronous() noexcept {
   assert(m_state == State::Running);
   m_state = State::QuitSynchronousHasBeenCalled;
+  quitInternal();
 }
 
-void TestMessageQueueThread::quitInternal() noexcept {
-  assert(GetCurrentThreadId() == m_creatorThreadId);
+bool ControllableMessageQueueThread::IsEmpty() const noexcept {
+  Lock queueLock(m_queueMutex);
+  return m_queue.empty();
+}
 
+bool ControllableMessageQueueThread::DispatchOne(
+    std::chrono::milliseconds timeout) noexcept {
+  assert(m_mode == Mode::ManualDispatch);
+
+  DWORD timeoutMilliseconds = timeout == std::chrono::milliseconds::max()
+      ? INFINITE
+      : static_cast<DWORD>(timeout.count());
+
+  switch (WaitForSingleObject(m_queueItemPresent, timeoutMilliseconds)) {
+    case WAIT_OBJECT_0:
+      SetEvent(m_threadSignals[static_cast<int>(
+          ThreadSignalIndex::FunctorAvailable)]);
+      return WaitForSingleObject(m_queueItemProcessed, timeoutMilliseconds) ==
+          WAIT_OBJECT_0;
+
+    default:
+      return false;
+  }
+}
+
+void ControllableMessageQueueThread::quitInternal() noexcept {
   if (m_state != State::WorkerThreadHasExited) {
     SetEvent(
         m_threadSignals[static_cast<int>(ThreadSignalIndex::QuitRequested)]);
@@ -122,10 +165,23 @@ void TestMessageQueueThread::quitInternal() noexcept {
   }
 }
 
+void ControllableMessageQueueThread::SignalDispatch() noexcept {
+  switch (m_mode) {
+    case Mode::AutoDispatch:
+      SetEvent(m_threadSignals[static_cast<int>(
+          ThreadSignalIndex::FunctorAvailable)]);
+      break;
+
+    case Mode::ManualDispatch:
+      SetEvent(m_queueItemPresent);
+      break;
+  }
+}
+
 /*static*/ DWORD WINAPI
-TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
-  TestMessageQueueThread *instance =
-      static_cast<TestMessageQueueThread *>(lpParameter);
+ControllableMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
+  ControllableMessageQueueThread *instance =
+      static_cast<ControllableMessageQueueThread *>(lpParameter);
   assert(instance != nullptr);
 
   if (instance->m_initializeThread) {
@@ -148,11 +204,11 @@ TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
           func = instance->m_queue.front();
           instance->m_queue.pop();
           if (instance->m_queue.size() > 0) {
-            SetEvent(instance->m_threadSignals[static_cast<int>(
-                ThreadSignalIndex::FunctorAvailable)]);
+            instance->SignalDispatch();
           }
         }
         func();
+        SetEvent(instance->m_queueItemProcessed);
       } break;
 
       case static_cast<DWORD>(ThreadSignalIndex::QuitRequested):
@@ -172,7 +228,7 @@ TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
   return 0;
 }
 
-bool TestMessageQueueThread::IsWorkerThread() {
+bool ControllableMessageQueueThread::IsWorkerThread() {
   return m_workerThread != NULL &&
       GetCurrentThreadId() == GetThreadId(m_workerThread);
 }
@@ -180,3 +236,5 @@ bool TestMessageQueueThread::IsWorkerThread() {
 #pragma endregion namespace TestMessageQueueThread members
 
 } // namespace Microsoft::React::Test
+
+#pragma pop_macro("max")

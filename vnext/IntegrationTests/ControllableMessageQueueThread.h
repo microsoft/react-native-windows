@@ -3,14 +3,14 @@
 
 #pragma once
 
-#include <atomic>
-#include <cxxreact/MessageQueueThread.h>
-#include <queue>
 #include <Windows.h>
+#include <cxxreact/MessageQueueThread.h>
+#include <atomic>
+#include <queue>
 
 namespace Microsoft::React::Test {
 
-class TestMessageQueueThread : public facebook::react::MessageQueueThread {
+class ControllableMessageQueueThread : public facebook::react::MessageQueueThread {
   class Lock {
    public:
     Lock(HANDLE mutex) noexcept;
@@ -23,14 +23,16 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
 
  public:
   using VoidFunctor = std::function<void()>;
+  enum class Mode { AutoDispatch, ManualDispatch };
 
-  TestMessageQueueThread(
+  ControllableMessageQueueThread(
+      Mode mode = Mode::AutoDispatch,
       VoidFunctor &&initializeThread = nullptr,
       VoidFunctor &&uninitializeThread = nullptr) noexcept;
 
 #pragma region MessageQueueThread members
 
-  ~TestMessageQueueThread() override;
+  ~ControllableMessageQueueThread() override;
 
   void runOnQueue(VoidFunctor &&func) noexcept override;
 
@@ -42,6 +44,9 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
   void quitSynchronous() noexcept override;
 
 #pragma endregion MessageQueueThread members
+
+  bool IsEmpty() const noexcept;
+  bool DispatchOne(std::chrono::milliseconds timeout) noexcept;
 
  private:
   enum class State {
@@ -56,12 +61,14 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
     Count // ensure this is the last member
   };
 
+  void SignalDispatch() noexcept;
   static DWORD WINAPI Dispatch(LPVOID lpParameter) noexcept;
 
   bool IsWorkerThread();
 
   void quitInternal() noexcept;
 
+  std::atomic<Mode> m_mode{Mode::AutoDispatch};
   std::atomic<State> m_state{State::Running};
   DWORD m_creatorThreadId;
 
@@ -70,6 +77,8 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
   HANDLE m_threadSignals[static_cast<long>(ThreadSignalIndex::Count)];
   HANDLE m_workerThread = NULL;
   HANDLE m_queueMutex = NULL;
+  HANDLE m_queueItemPresent = NULL;
+  HANDLE m_queueItemProcessed = NULL;
   bool m_continueDispatchLoop = true;
   std::queue<VoidFunctor> m_queue;
 };

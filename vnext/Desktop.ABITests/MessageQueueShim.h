@@ -1,6 +1,6 @@
 #pragma once
 
-#include <IntegrationTests/TestMessageQueueThread.h>
+#include <cxxreact/MessageQueueThread.h>
 #include <winrt/facebook.react.h>
 
 namespace ABITests {

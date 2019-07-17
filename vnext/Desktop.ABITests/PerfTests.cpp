@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IntegrationTests/TestMessageQueueThread.h>
 #include <winrt/facebook.react.h>
 
 #include <ReactWindowsCore/Logging.h>
@@ -39,7 +38,7 @@ TEST_CLASS(PerfTests) {
     QueryPerformanceCounter(&b);
     accu.QuadPart = b.QuadPart - a.QuadPart;
 
-    PrintResult("TimeNewAbiInitializeLogging01", iterations, accu.QuadPart);
+    PrintResult("TimeNewAbiInitializeLogging", iterations, accu.QuadPart);
 
     NativeLogEventSource::UninitializeLogging(loggingRegistrationToken);
   }
@@ -57,7 +56,7 @@ TEST_CLASS(PerfTests) {
     QueryPerformanceCounter(&b);
     accu.QuadPart += b.QuadPart - a.QuadPart;
 
-    PrintResult("TimeOldAbiInitializeLogging01", iterations, accu.QuadPart);
+    PrintResult("TimeOldAbiInitializeLogging", iterations, accu.QuadPart);
   }
 
   static void PrintResult(

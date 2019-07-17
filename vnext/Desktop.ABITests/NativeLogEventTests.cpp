@@ -34,12 +34,12 @@ TEST_CLASS(NativeLogEventTests) {
     std::vector<std::pair<::winrt::facebook::react::LogLevel, std::wstring>>
         logMessages;
 
-    NativeLogHandler handler(
+    NativeLogHandler handler{
         [&logMessages](::winrt::facebook::react::LogLevel l, hstring const &m) {
           logMessages.emplace_back(l, m.c_str());
-        });
+        }};
 
-    NativeLogInitializationGuard initializationGuard(handler);
+    NativeLogInitializationGuard initializationGuard{handler};
 
     // TODO:
     // Interact with RNW in such a way that it incurs logging, then verify the
