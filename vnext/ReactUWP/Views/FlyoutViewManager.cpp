@@ -369,6 +369,8 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle() {
       winrt::FrameworkElement::MaxWidthProperty(), winrt::box_value(50000)));
   flyoutStyle.Setters().Append(winrt::Setter(
       winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(50000)));
+  flyoutStyle.Setters().Append(winrt::Setter(
+      winrt::FrameworkElement::MinHeightProperty(), winrt::box_value(0)));
   flyoutStyle.Setters().Append(
       winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
   flyoutStyle.Setters().Append(winrt::Setter(
