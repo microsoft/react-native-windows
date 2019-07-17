@@ -93,15 +93,10 @@
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp">
-      <Filter>jsi</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp">
-      <Filter>jsi</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp">
-      <Filter>jsi</Filter>
-    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -209,15 +204,8 @@
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
       <Filter>yoga</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h">
-      <Filter>jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h">
-      <Filter>jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h">
-      <Filter>jsi</Filter>
-    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
