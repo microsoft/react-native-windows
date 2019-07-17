@@ -27,8 +27,6 @@ inline typename T asEnum(folly::dynamic const &obj) {
   return static_cast<T>(obj.asInt());
 }
 
-void toUpperInplace(string &str);
-
 ReactId getViewId(
     _In_ IReactInstance *instance,
     winrt::FrameworkElement const &fe);

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.86",
+  "version": "0.59.0-vnext.92",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -10,8 +10,6 @@
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
   "types": "index.d.ts",
   "scripts": {
-    "preinstall": "node Scripts/preInstall.js",
-    "postinstall": "node Scripts/postInstall.js",
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "node Scripts/cli.js start",
@@ -51,19 +49,17 @@
     "@types/es6-promise": "0.0.32",
     "@types/react": "16.8.15",
     "@types/react-native": "~0.57.51",
-    "@typescript-eslint/eslint-plugin": "^1.5.0",
-    "@typescript-eslint/parser": "^1.5.0",
     "clang-format": "1.2.4",
     "eslint": "5.1.0",
     "eslint-plugin-prettier": "2.6.0",
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
     "react": "16.8.3",
-    "react-native": "0.59.0-microsoft.15",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz",
     "typescript": "3.5.1"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.15 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.15.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.17 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz"
   }
 }

@@ -57,7 +57,6 @@ class ViewViewManager : public FrameworkElementViewManager {
 
   winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
-  winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
 };
 
 } // namespace uwp
