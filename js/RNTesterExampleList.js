@@ -85,7 +85,7 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
         key: 'a',
       },
       {
-        data: this.props.list.OtherExamples.filter(filter),
+        data: this.props.list.OtherExamples,
         title: 'OTHERS',
         key: 'b',
       },

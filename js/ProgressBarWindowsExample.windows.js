@@ -59,10 +59,6 @@ var MovingBar = createReactClass({
 
 class ProgressBarWindowsExample extends React.Component {
 
-  static title = '<ProgressBarWindows>';
-  static description = 'Visual indicator of progress of some operation. ' +
-        'Shows a horizontal bar with either percent indeterminate progress.';
-
   render() {
     return (
       <RNTesterPage title="ProgressBar Examples">
@@ -86,4 +82,13 @@ class ProgressBarWindowsExample extends React.Component {
   }
 }
 
-module.exports = ProgressBarWindowsExample;
+exports.title = '<ProgressBarWindows>';
+exports.description = 'Horizontal bar to show the progress of some operation.';
+exports.examples = [
+  {
+    title: 'Simple progress bar',
+    render: function(): React.Element<typeof ProgressBarWindowsExample> {
+      return <ProgressBarWindowsExample />;
+    },
+  },
+];
