@@ -5,6 +5,7 @@
 # IntegrationTests.ps1
 #
 param (
+	[Parameter(HelpMessage="Don't start nor use test servers.")]
 	[switch] $NoServers,
 
 	[ValidateSet('x64', 'x86')]
@@ -91,4 +92,4 @@ if ($NoRun) {
 }
 
 # Run Integration Test assemblies.
-& $VsTest ($Assemblies -join ' ') --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
+& $VsTest $Assemblies --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]

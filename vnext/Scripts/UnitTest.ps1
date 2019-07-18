@@ -24,4 +24,4 @@ param (
 )
 
 # Run Unit Test assemblies.
-& $VsTest ($Assemblies -join ' ') --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
+& $VsTest $Assemblies --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
