@@ -1,1 +1,2 @@
 * @microsoft/react-native-windows-write
+/vnext/Desktop.DLL/*.def @microsoft/react-native-windows-write @aeulitz

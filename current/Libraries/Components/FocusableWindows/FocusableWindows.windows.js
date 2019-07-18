@@ -185,7 +185,7 @@ FocusableWindowsTemplate.propTypes = Object.assign({}, ViewPropTypes, FocusableW
 function createFocusableComponent(Component: any) {
   class FocusableWindows extends React.Component {
 
-    static keys = UIManager.WindowsControl.Constants.Keys;
+    static keys = UIManager.getViewManagerConfig('WindowsControl').Constants.Keys;
 
     _focusable: any;
     _component: any;
@@ -300,7 +300,7 @@ function createFocusableComponent(Component: any) {
       if (this._focusable) {
         UIManager.dispatchViewManagerCommand(
           ReactNative.findNodeHandle(this._focusable),
-          UIManager.WindowsControl.Commands.focus,
+          UIManager.getViewManagerConfig('WindowsControl').Commands.focus,
           null);
       }
     }
@@ -309,7 +309,7 @@ function createFocusableComponent(Component: any) {
       if (this._focusable) {
         UIManager.dispatchViewManagerCommand(
           ReactNative.findNodeHandle(this._focusable),
-          UIManager.WindowsControl.Commands.blur,
+          UIManager.getViewManagerConfig('WindowsControl').Commands.blur,
           null);
       }
     }
