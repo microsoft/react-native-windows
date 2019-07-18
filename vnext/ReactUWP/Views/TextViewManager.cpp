@@ -25,7 +25,7 @@ class TextShadowNode : public ShadowNodeBase {
  private:
   ShadowNode *m_firstChildNode;
 
- public:  
+ public:
   TextShadowNode() {
     m_firstChildNode = nullptr;
   };
@@ -43,8 +43,7 @@ class TextShadowNode : public ShadowNodeBase {
         textBlock.Text(run.Text());
         return;
       }
-    }
-    else if (index == 1 && m_firstChildNode != nullptr) {
+    } else if (index == 1 && m_firstChildNode != nullptr) {
       auto textBlock = this->GetView().as<winrt::TextBlock>();
       textBlock.ClearValue(winrt::TextBlock::TextProperty());
       Super::AddView(*m_firstChildNode, 0);
