@@ -8,11 +8,11 @@
 #include <Views/ShadowNodeBase.h>
 
 #include <Utils/ValueUtils.h>
+#include <INativeUIManager.h>
 
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
-#include <ReactUWP\Modules\NativeUIManager.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
