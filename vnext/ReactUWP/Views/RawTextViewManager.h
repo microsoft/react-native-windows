@@ -15,6 +15,7 @@ class RawTextViewManager : public ViewManagerBase {
 
  public:
   RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+
   const char *GetName() const override;
   void UpdateProperties(
       ShadowNodeBase *nodeToUpdate,
