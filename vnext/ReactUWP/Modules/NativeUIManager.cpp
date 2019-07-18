@@ -1093,19 +1093,33 @@ void NativeUIManager::measure(
     return;
   }
 
-  // Retrieve the XAML element for the root view containing this view
-  ShadowNodeBase &nodeRoot = static_cast<ShadowNodeBase &>(shadowRoot);
-  XamlView xamlRootView = nodeRoot.GetView();
-  if (xamlRootView == nullptr) {
-    callback(args);
-    return;
+  // Traverse up the react node tree to find any windowed popups.
+  // If there are none, then we use the top-level root provided by our caller.
+  winrt::FrameworkElement feRootView = nullptr;
+  int64_t rootTag = shadowNode.m_tag;
+  while (true) {
+    auto &currNode = m_host->GetShadowNodeForTag(rootTag);
+    if (currNode.m_parent == -1)
+      break;
+    ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
+    if (rootNode.IsWindowed()) {
+      if (auto childView = rootNode.GetChildView().try_as<winrt::FrameworkElement>()) {
+        feRootView = childView;
+      }
+      break;
+    }
+    rootTag = currNode.m_parent;
   }
 
-  auto feRootView = xamlRootView.as<winrt::FrameworkElement>();
-  if (shadowRoot.m_isWindowedPopup) {
-    if (nodeRoot.GetWindowedPopupChildView() != nullptr) {
-      feRootView =
-          nodeRoot.GetWindowedPopupChildView().as<winrt::FrameworkElement>();
+  if (feRootView == nullptr) {
+    // Retrieve the XAML element for the root view containing this view
+    if (auto xamlRootView =
+            static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
+      feRootView = xamlRootView.as<winrt::FrameworkElement>();
+    }
+    if (feRootView == nullptr) {
+      callback(args);
+      return;
     }
   }
 

@@ -388,8 +388,6 @@ void UIManager::measure(
     auto &currNode = m_nodeRegistry.getNode(rootTag);
     if (currNode.m_parent == -1)
       break;
-    if (currNode.m_isWindowedPopup)
-      break;
     rootTag = currNode.m_parent;
   }
   auto &rootNode = m_nodeRegistry.getNode(rootTag);
