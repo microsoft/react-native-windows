@@ -58,6 +58,7 @@ EXPORTS
 ?makeV8Runtime@v8runtime@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@XZ
 
 
+SomeBogusFunctionThatBreaksEverything
 YGNodeNew
 YGNodeNewWithConfig
 YGNodeFree
