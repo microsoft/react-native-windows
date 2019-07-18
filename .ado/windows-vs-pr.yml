@@ -158,7 +158,6 @@ jobs:
         displayName: yarn install (local react-native-windows)
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn build (local react-native-windows)
@@ -261,7 +260,6 @@ jobs:
         displayName: yarn install
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
 
       - template: templates/stop-packagers.yml
 
@@ -368,7 +366,6 @@ jobs:
         displayName: yarn install
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn format:verify

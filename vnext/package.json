@@ -61,5 +61,11 @@
   "peerDependencies": {
     "react": "16.8.3",
     "react-native": "^0.59.0 || 0.59.0-microsoft.17 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major",
+      "minor"
+    ]
   }
 }

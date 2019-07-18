@@ -97,12 +97,12 @@ A new Command Prompt window will open with the React packager as well as a `reac
 
 * Install dependencies. This step may take a while on the first run due to dependency download.
     ```cmd
+    yarn
     cd vnext
-    npm install
     nuget restore
     ```
 
-* Run `npm run build` in the vnext folder.
+* Run `yarn build` in the vnext folder.
 
 * Run `Scripts\launchPackager.bat`.	This is needed to ensure the JS files can be packaged and bundled to the UWP app.
 
