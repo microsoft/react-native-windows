@@ -12,7 +12,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
-#include <ReactUWP\Base\UwpReactInstance.h>
 #include <ReactUWP\Modules\NativeUIManager.h>
 
 namespace winrt {

@@ -33,7 +33,6 @@ class TextShadowNode : public ShadowNodeBase {
     return true;
   }
 
-  
   void AddView(ShadowNode &child, int64_t index) override {
     if (index == 0) {
       auto run =
@@ -52,6 +51,11 @@ class TextShadowNode : public ShadowNodeBase {
       m_firstChildNode = nullptr;
     }
     Super::AddView(child, index);
+  }
+
+  void removeAllChildren() {
+    m_firstChildNode = nullptr;
+    Super::removeAllChildren();
   }
 };
 
