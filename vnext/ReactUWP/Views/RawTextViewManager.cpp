@@ -25,6 +25,16 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
+  //RawTextShadowNode
+
+  // overide UpdateProperties
+  // Call parent SetText for text property
+  // Also call Super::UpdateProperties (keep Run Consistent)
+
+  // SetParent. (for propogating property update)
+
+  // ClearParent. call when index = 1 and during cleanup.
+
 RawTextViewManager::RawTextViewManager(
     const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -51,6 +61,12 @@ void RawTextViewManager::UpdateProperties(
 
     if (propertyName == "text") {
       run.Text(asHstring(propertyValue));
+      auto parent = m_parentNodes[nodeToUpdate->m_tag];
+      if (parent != nullptr) {
+        auto view = static_cast<ShadowNodeBase &>(*parent).GetView();
+        auto textBlock = view.as<winrt::TextBlock>();
+        textBlock.Text(run.Text());
+      }
     }
   }
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
@@ -66,6 +82,14 @@ void RawTextViewManager::SetLayoutProps(
 
 bool RawTextViewManager::RequiresYogaNode() const {
   return false;
+}
+
+void RawTextViewManager::AddParent(facebook::react::ShadowNode *parent, int64_t childTag) {
+  m_parentNodes[childTag] = parent;
+}
+
+void RawTextViewManager::RemoveParent(int64_t childTag) {
+  m_parentNodes.erase(childTag);
 }
 
 } // namespace uwp

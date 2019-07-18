@@ -51,6 +51,7 @@ void App::OnLaunched(
   }
 #endif
 
+  DebugSettings->IsTextPerformanceVisualizationEnabled = true;
   auto rootFrame = dynamic_cast<Frame ^>(Window::Current->Content);
 
   // Do not repeat app initialization when the Window already has content,

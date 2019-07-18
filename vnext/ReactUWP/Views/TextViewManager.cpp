@@ -6,6 +6,7 @@
 #include "TextViewManager.h"
 
 #include <Views/ShadowNodeBase.h>
+#include <Views/RawTextViewManager.h>
 
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
@@ -22,10 +23,53 @@ namespace uwp {
 class TextShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
 
+ private:
+  ShadowNode *m_firstChildNode;
  public:
-  TextShadowNode() = default;
+  TextShadowNode() {
+    m_firstChildNode = nullptr;
+  };
   bool ImplementsPadding() override {
     return true;
+  }
+
+  
+  void AddView(ShadowNode &child, int64_t index) override {
+    // when index is 0
+    // 1. store reference to the child shadowNode.
+    // 2. SetText on TextViewManager and pass text from the Run
+    //
+    // Expose SetParent on RawText ShadowNode send in this
+
+    
+
+    // here if index == 1
+    // 1. Use m_firstChildNode grab run with GetView. 
+    // 2. Clear text property on text view manager. (Expose ClearText on TextViewManager)
+    // 3. AddView at index 0 with run from step 1.
+    // 4. AddView at index 1 with child parameter.
+    if (index == 0) {
+      auto run =
+          static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
+      if (run != nullptr) {
+        m_firstChildNode = &child;
+        auto textBlock = this->GetView().as<winrt::TextBlock>();
+        textBlock.Text(run.Text());
+        auto rawTextManager =
+            static_cast<RawTextViewManager *>(m_firstChildNode->m_viewManager);
+        rawTextManager->AddParent(this, m_firstChildNode->m_tag);
+        return;
+      }
+    }
+    else if (index == 1 && m_firstChildNode != nullptr) {
+      auto rawTextManager =
+          static_cast<RawTextViewManager *>(m_firstChildNode->m_viewManager);
+      rawTextManager->RemoveParent(m_firstChildNode->m_tag);
+      auto textBlock = this->GetView().as<winrt::TextBlock>();
+      textBlock.ClearValue(winrt::TextBlock::TextProperty());
+      Super::AddView(*m_firstChildNode, 0);
+    }
+    Super::AddView(child, index);
   }
 };
 
@@ -54,7 +98,7 @@ void TextViewManager::UpdateProperties(
   auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
   if (textBlock == nullptr)
     return;
-
+  
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
