@@ -1103,8 +1103,8 @@ void NativeUIManager::measure(
       break;
     ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
     if (rootNode.IsWindowed()) {
-      if (auto childView = rootNode.GetChildView().try_as<winrt::FrameworkElement>()) {
-        feRootView = childView;
+      if (auto childView = rootNode.GetChildView()) {
+        feRootView = childView.try_as<winrt::FrameworkElement>();
       }
       break;
     }

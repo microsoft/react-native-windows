@@ -82,6 +82,8 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   winrt::Flyout GetFlyout();
 
+  XamlView GetChildView() const override;
+
  private:
   void SetTargetFrameworkElement();
   void AdjustDefaultFlyoutStyle();
@@ -111,7 +113,6 @@ thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
 FlyoutShadowNode::~FlyoutShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
   m_previewKeyboardEventHandlerOnRoot->unhook();
-  m_childView = nullptr;
 }
 
 void FlyoutShadowNode::AddView(ShadowNode &child, int64_t index) {
@@ -121,7 +122,6 @@ void FlyoutShadowNode::AddView(ShadowNode &child, int64_t index) {
 
   if (m_flyout != nullptr) {
     m_flyout.Content(childView.as<winrt::UIElement>());
-    m_childView = childView;
   }
 }
 
@@ -170,6 +170,12 @@ void FlyoutShadowNode::createView() {
   }
 }
 
+XamlView FlyoutShadowNode::GetChildView() const {
+  if (m_flyout == nullptr)
+    return nullptr;
+  return m_flyout.Content().as<XamlView>();
+}
+
 /*static*/ void FlyoutShadowNode::OnFlyoutClosed(
     IReactInstance &instance,
     int64_t tag,
@@ -184,7 +190,6 @@ void FlyoutShadowNode::onDropViewInstance() {
   m_flyout.Hide();
   s_cOpenFlyouts -= 1;
   m_isWindowed = false;
-  m_childView = nullptr;
 }
 
 void FlyoutShadowNode::removeAllChildren() {
@@ -273,7 +278,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
       m_flyout.Hide();
       s_cOpenFlyouts -= 1;
       m_isWindowed = false;
-      m_childView = nullptr;
     }
   }
 

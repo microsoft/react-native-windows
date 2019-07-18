@@ -89,8 +89,8 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   int64_t GetParent() const {
     return m_parent;
   }
-  XamlView GetChildView() const {
-    return m_childView;
+  virtual XamlView GetChildView() const {
+    return nullptr;
   }
   bool IsWindowed() {
     return m_isWindowed;
@@ -115,7 +115,6 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   bool m_updating = false;
   winrt::Windows::UI::Composition::CompositionPropertySet m_transformPS{
       nullptr};
-  XamlView m_childView = nullptr;
   bool m_isWindowed = false;
 
  public:
