@@ -236,7 +236,7 @@
       <Version>10.0.3</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
-      <Version>4.0.0-preview00001</Version>
+      <Version>4.1.5</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
