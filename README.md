@@ -35,6 +35,10 @@ Our intent is to provide a compatibility layer that will support existing apps, 
 
 We anticipate that there will be increased activity on the repository related to this refactoring effort, but that overall effort allocated to the existing architecture will be minimized. Please continue to report issues as you encounter them, but be sure to use the [correct template](https://github.com/microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) for issues related to the existing `react-native-windows` package (version 0.57 and earlier).
 
+### Updates
+
+Both the `current` and `vnext` implementations of `react-native-windows` have been upgraded to support [React Native version 0.59](https://facebook.github.io/react-native/blog/2019/03/12/releasing-react-native-059). Please see the [July 2019 Updates Blog](blog/July2019Updates.md) for all the latest updates!
+
 ## Quick Links
 
 - [Getting Started](#getting-started)
@@ -92,7 +96,7 @@ For information on parity status with Android and iOS, including details on impl
 
 If you encounter a bug with the React Native Windows plugin, we would like to hear about it. Search the [existing issues](https://github.com/microsoft/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. It’s helpful if you include the version of Windows, React Native, React Native Windows plugin, and device family (i.e., mobile, desktop, Xbox, etc.) you’re using. Please include a stack trace and reduced repro case when appropriate, too. 
 
-Please use either the [current](https://github.com/microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) vs. [vnext](https://github.com/microsoft/react-native-windows/issues/new?labels=vnext&template=vnext.md) issue template as appropriate. 
+Please use the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new/choose) to file your issues. 
 
 The GitHub issues are intended for bug reports and feature requests. For help and questions with using the React Native Windows plugin please make use of the resources listed in the [Getting Help](#getting-help) section. 
 
