@@ -35,19 +35,6 @@ class TextShadowNode : public ShadowNodeBase {
 
   
   void AddView(ShadowNode &child, int64_t index) override {
-    // when index is 0
-    // 1. store reference to the child shadowNode.
-    // 2. SetText on TextViewManager and pass text from the Run
-    //
-    // Expose SetParent on RawText ShadowNode send in this
-
-    
-
-    // here if index == 1
-    // 1. Use m_firstChildNode grab run with GetView. 
-    // 2. Clear text property on text view manager. (Expose ClearText on TextViewManager)
-    // 3. AddView at index 0 with run from step 1.
-    // 4. AddView at index 1 with child parameter.
     if (index == 0) {
       auto run =
           static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
@@ -98,7 +85,7 @@ void TextViewManager::UpdateProperties(
   auto textBlock = nodeToUpdate->GetView().as<winrt::TextBlock>();
   if (textBlock == nullptr)
     return;
-  
+
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;

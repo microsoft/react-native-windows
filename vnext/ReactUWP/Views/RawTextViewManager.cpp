@@ -25,16 +25,6 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
-  //RawTextShadowNode
-
-  // overide UpdateProperties
-  // Call parent SetText for text property
-  // Also call Super::UpdateProperties (keep Run Consistent)
-
-  // SetParent. (for propogating property update)
-
-  // ClearParent. call when index = 1 and during cleanup.
-
 RawTextViewManager::RawTextViewManager(
     const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
