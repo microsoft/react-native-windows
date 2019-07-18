@@ -53,18 +53,18 @@ void RawTextViewManager::UpdateProperties(
 
     if (propertyName == "text") {
       run.Text(asHstring(propertyValue));
-      std::shared_ptr<IReactInstance> instance =
-          this->m_wkReactInstance.lock();
-      auto nativeUI =
-          static_cast<UwpReactInstance &>(*instance).NativeUIManager();
-      auto host = static_cast<NativeUIManager &>(*nativeUI).getHost();
-      auto parent = host->FindShadowNodeForTag(nodeToUpdate->GetParent());     
-      if (parent != nullptr && parent->m_children.size() == 1) {
-        auto view = static_cast<ShadowNodeBase &>(*parent).GetView();
-        auto textBlock = view.try_as<winrt::TextBlock>();
-        if (textBlock != nullptr) {
-          textBlock.Text(run.Text());
-        }        
+      if (nodeToUpdate->GetParent() != -1) {
+        auto parent = this->m_wkReactInstance.lock()
+                        ->NativeUIManager()
+                        ->getHost()
+                        ->FindShadowNodeForTag(nodeToUpdate->GetParent());
+        if (parent->m_children.size() == 1) {
+          auto view = static_cast<ShadowNodeBase &>(*parent).GetView();
+          auto textBlock = view.try_as<winrt::TextBlock>();
+          if (textBlock != nullptr) {
+            textBlock.Text(run.Text());
+          }
+        }
       }
     }
   }
