@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -34,9 +34,6 @@ class MultiColumnExample extends React.PureComponent<
   $FlowFixMeProps,
   $FlowFixMeState,
 > {
-  static title = '<FlatList> - MultiColumn';
-  static description = 'Performant, scrollable grid of data.';
-
   state = {
     data: genItemData(1000),
     filterText: '',
@@ -96,7 +93,6 @@ class MultiColumnExample extends React.PureComponent<
           renderItem={this._renderItemComponent}
           disableVirtualization={!this.state.virtualized}
           onViewableItemsChanged={this._onViewableItemsChanged}
-          legacyImplementation={false}
         />
       </RNTesterPage>
     );
@@ -164,4 +160,13 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = MultiColumnExample;
+exports.title = '<FlatList> - MultiColumn';
+exports.description = 'Performant, scrollable grid of data.';
+exports.examples = [
+  {
+    title: 'Simple flat list multi column',
+    render: function(): React.Element<typeof MultiColumnExample> {
+      return <MultiColumnExample />;
+    },
+  },
+];

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,10 +10,9 @@
 
 'use strict';
 
-var React = require('react');
-var createReactClass = require('create-react-class');
-var ReactNative = require('react-native');
-var {
+const React = require('react');
+const ReactNative = require('react-native');
+const {
   Dimensions,
   Image,
   ListView,
@@ -22,8 +21,11 @@ var {
   Text,
   View,
 } = ReactNative;
+const ListViewDataSource = require('ListViewDataSource');
 
-var THUMB_URLS = [
+import type {RNTesterProps} from 'RNTesterTypes';
+
+const THUMB_URLS = [
   require('./Thumbnails/like.png'),
   require('./Thumbnails/dislike.png'),
   require('./Thumbnails/call.png'),
@@ -44,27 +46,25 @@ const ITEM_MARGIN = 3;
 const ITEM_TOTAL_WIDTH = ITEM_WIDTH + ITEM_MARGIN * 2;
 const ITEM_TOTAL_HEIGHT = ITEM_HEIGHT + ITEM_MARGIN * 2;
 
-var ListViewGridLayoutExample = createReactClass({
-  displayName: 'ListViewGridLayoutExample',
+type State = {|
+  dataSource: ListViewDataSource,
+|};
 
-  statics: {
-    title: '<ListView> - Grid Layout',
-    description: 'Flexbox grid layout.',
-  },
+class ListViewGridLayoutExample extends React.Component<RNTesterProps, State> {
+  state = {
+    dataSource: this.getInitialDataSource(),
+    windowWidth: Dimensions.get("window").width,
+    windowHeight: Dimensions.get("window").height,
+  };
 
-  getInitialState: function() {
-    var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    var dims = Dimensions.get("window");
-    return {
-      dataSource: ds.cloneWithRows(this._genRows({})),
-      windowWidth: dims.width,
-      windowHeight: dims.height,
-    };
-  },
+  getInitialDataSource() {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    return ds.cloneWithRows(this._genRows({}));
+  }
 
-  _pressData: ({}: {[key: number]: boolean}),
+  _pressData: {[key: number]: boolean} = {};
 
-  UNSAFE_componentWillMount: function() {
+  UNSAFE_componentWillMount() {
     this._pressData = {};
     Dimensions.addEventListener("change", dims => {
       this.setState({
@@ -72,9 +72,9 @@ var ListViewGridLayoutExample = createReactClass({
         windowHeight: dims.window.height
       });
     });
-  },
+  }
 
-  render: function() {
+  render() {
     const pageSize = Math.floor(this.state.windowWidth / ITEM_TOTAL_WIDTH);
     const initialListSize = Math.ceil(this.state.windowHeight / ITEM_TOTAL_HEIGHT) * pageSize;
 
@@ -90,11 +90,11 @@ var ListViewGridLayoutExample = createReactClass({
         renderRow={this._renderRow}
       />
     );
-  },
+  }
 
-  _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-    var rowHash = Math.abs(hashCode(rowData));
-    var imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];
+  _renderRow = (rowData: string, sectionID: number, rowID: number) => {
+    const rowHash = Math.abs(hashCode(rowData));
+    const imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];
     return (
       <TouchableHighlight
         onPress={() => this._pressRow(rowID)}
@@ -107,37 +107,37 @@ var ListViewGridLayoutExample = createReactClass({
         </View>
       </TouchableHighlight>
     );
-  },
+  };
 
-  _genRows: function(pressData: {[key: number]: boolean}): Array<string> {
-    var dataBlob = [];
-    for (var ii = 0; ii < 100; ii++) {
-      var pressedText = pressData[ii] ? ' (X)' : '';
+  _genRows(pressData: {[key: number]: boolean}): Array<string> {
+    const dataBlob = [];
+    for (let ii = 0; ii < 100; ii++) {
+      const pressedText = pressData[ii] ? ' (X)' : '';
       dataBlob.push('Cell ' + ii + pressedText);
     }
     return dataBlob;
-  },
+  }
 
-  _pressRow: function(rowID: number) {
+  _pressRow = (rowID: number) => {
     this._pressData[rowID] = !this._pressData[rowID];
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(
         this._genRows(this._pressData),
       ),
     });
-  },
-});
+  };
+}
 
 /* eslint no-bitwise: 0 */
-var hashCode = function(str) {
-  var hash = 15;
-  for (var ii = str.length - 1; ii >= 0; ii--) {
+const hashCode = function(str) {
+  let hash = 15;
+  for (let ii = str.length - 1; ii >= 0; ii--) {
     hash = (hash << 5) - hash + str.charCodeAt(ii);
   }
   return hash;
 };
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   list: {
     justifyContent: 'space-around',
     flexDirection: 'row',
@@ -167,4 +167,13 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = ListViewGridLayoutExample;
+exports.title = '<ListView> - Grid Layout';
+exports.description = 'Flexbox grid layout.';
+exports.examples = [
+  {
+    title: 'Simple list view with grid layout',
+    render: function(): React.Element<typeof ListViewGridLayoutExample> {
+      return <ListViewGridLayoutExample />;
+    },
+  },
+];

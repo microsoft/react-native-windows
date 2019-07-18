@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015-present, Facebook, Inc.
+ * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,9 +10,9 @@
 
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
-var {StyleSheet, Text, View} = ReactNative;
+const React = require('react');
+const ReactNative = require('react-native');
+const {StyleSheet, Text, View} = ReactNative;
 
 class ExampleBox extends React.Component<$FlowFixMeProps, $FlowFixMeState> {
   state = {
@@ -254,7 +254,7 @@ type ExampleClass = {
   description: string,
 };
 
-var exampleClasses: Array<ExampleClass> = [
+const exampleClasses: Array<ExampleClass> = [
   {
     Component: NoneExample,
     title: '`none`',
@@ -275,7 +275,7 @@ var exampleClasses: Array<ExampleClass> = [
   },
 ];
 
-var infoToExample = info => {
+const infoToExample = info => {
   return {
     title: info.title,
     description: info.description,
@@ -285,7 +285,7 @@ var infoToExample = info => {
   };
 };
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   text: {
     fontSize: 10,
     color: '#5577cc',
@@ -320,9 +320,6 @@ var styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#f0f0f0',
     backgroundColor: '#f9f9f9',
-  },
-  bottomSpacer: {
-    marginBottom: 100,
   },
 });
 

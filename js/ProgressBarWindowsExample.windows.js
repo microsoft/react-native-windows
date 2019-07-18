@@ -29,11 +29,9 @@ var createReactClass = require('create-react-class');
 var RNTesterBlock = require('RNTesterBlock');
 var RNTesterPage = require('RNTesterPage');
 
-var TimerMixin = require('react-timer-mixin');
-
 var MovingBar = createReactClass({
   displayName: 'MovingBar',
-  mixins: [TimerMixin],
+  _intervalID: null,
 
   getInitialState: function() {
     return {
@@ -42,12 +40,16 @@ var MovingBar = createReactClass({
   },
 
   componentDidMount: function() {
-    this.setInterval(
-      () => {
-        var progress = (this.state.progress + 0.1) % 100;
-        this.setState({progress: progress});
-      }, 10
-    );
+    this._intervalID = setInterval(() => {
+      const progress = (this.state.progress + 0.02) % 1;
+      this.setState({progress});
+    }, 50);
+  },
+
+  componentWillUnmount: function() {
+    if (this._intervalID != null) {
+      clearInterval(this._intervalID);
+    }
   },
 
   render: function() {
@@ -56,10 +58,6 @@ var MovingBar = createReactClass({
 });
 
 class ProgressBarWindowsExample extends React.Component {
-
-  static title = '<ProgressBarWindows>';
-  static description = 'Visual indicator of progress of some operation. ' +
-        'Shows a horizontal bar with either percent indeterminate progress.';
 
   render() {
     return (
@@ -84,4 +82,13 @@ class ProgressBarWindowsExample extends React.Component {
   }
 }
 
-module.exports = ProgressBarWindowsExample;
+exports.title = '<ProgressBarWindows>';
+exports.description = 'Horizontal bar to show the progress of some operation.';
+exports.examples = [
+  {
+    title: 'Simple progress bar',
+    render: function(): React.Element<typeof ProgressBarWindowsExample> {
+      return <ProgressBarWindowsExample />;
+    },
+  },
+];

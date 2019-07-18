@@ -102,9 +102,7 @@ class ProgressBar extends React.Component {
 }
 
 class FlipViewWindowsExample extends React.Component {
-  static title = '<FlipViewWindows>';
-  static description = 'Container that allows to flip left and right between child views.';
-
+  
   state = {
     page: 0,
     animationsAreEnabled: true,
@@ -249,4 +247,15 @@ var styles = StyleSheet.create({
   },
 });
 
-module.exports = FlipViewWindowsExample;
+exports.title = '<FlipViewWindows>';
+exports.description =
+  'Container that allows to flip left and right between child views.';
+
+exports.examples = [
+  {
+    title: 'Basic FlipView',
+    render(): React.Element<typeof FlipViewWindowsExample> {
+      return <FlipViewWindowsExample />;
+    },
+  },
+];
