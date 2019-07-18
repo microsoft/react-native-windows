@@ -25,7 +25,8 @@ class TextShadowNode : public ShadowNodeBase {
 
  private:
   ShadowNode *m_firstChildNode;
- public:
+
+ public:  
   TextShadowNode() {
     m_firstChildNode = nullptr;
   };
@@ -42,19 +43,14 @@ class TextShadowNode : public ShadowNodeBase {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<winrt::TextBlock>();
         textBlock.Text(run.Text());
-        auto rawTextManager =
-            static_cast<RawTextViewManager *>(m_firstChildNode->m_viewManager);
-        rawTextManager->AddParent(this, m_firstChildNode->m_tag);
         return;
       }
     }
     else if (index == 1 && m_firstChildNode != nullptr) {
-      auto rawTextManager =
-          static_cast<RawTextViewManager *>(m_firstChildNode->m_viewManager);
-      rawTextManager->RemoveParent(m_firstChildNode->m_tag);
       auto textBlock = this->GetView().as<winrt::TextBlock>();
       textBlock.ClearValue(winrt::TextBlock::TextProperty());
       Super::AddView(*m_firstChildNode, 0);
+      m_firstChildNode = nullptr;
     }
     Super::AddView(child, index);
   }

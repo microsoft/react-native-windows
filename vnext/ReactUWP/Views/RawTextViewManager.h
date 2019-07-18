@@ -13,9 +13,6 @@ namespace uwp {
 class RawTextViewManager : public ViewManagerBase {
   using Super = ViewManagerBase;
 
- private:
-  std::map<int64_t, facebook::react::ShadowNode*> m_parentNodes;
-
  public:
   RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
   const char *GetName() const override;
@@ -31,8 +28,6 @@ class RawTextViewManager : public ViewManagerBase {
       float width,
       float height) override;
   bool RequiresYogaNode() const override;
-  void AddParent(facebook::react::ShadowNode *parent, int64_t tag);
-  void RemoveParent(int64_t tag);
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;

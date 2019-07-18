@@ -12,6 +12,8 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
+#include <ReactUWP\Base\UwpReactInstance.h>
+#include <ReactUWP\Modules\NativeUIManager.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -51,11 +53,18 @@ void RawTextViewManager::UpdateProperties(
 
     if (propertyName == "text") {
       run.Text(asHstring(propertyValue));
-      auto parent = m_parentNodes[nodeToUpdate->m_tag];
-      if (parent != nullptr) {
+      std::shared_ptr<IReactInstance> instance =
+          this->m_wkReactInstance.lock();
+      auto nativeUI =
+          static_cast<UwpReactInstance &>(*instance).NativeUIManager();
+      auto host = static_cast<NativeUIManager &>(*nativeUI).getHost();
+      auto parent = host->FindShadowNodeForTag(nodeToUpdate->GetParent());     
+      if (parent != nullptr && parent->m_children.size() == 1) {
         auto view = static_cast<ShadowNodeBase &>(*parent).GetView();
-        auto textBlock = view.as<winrt::TextBlock>();
-        textBlock.Text(run.Text());
+        auto textBlock = view.try_as<winrt::TextBlock>();
+        if (textBlock != nullptr) {
+          textBlock.Text(run.Text());
+        }        
       }
     }
   }
@@ -72,14 +81,6 @@ void RawTextViewManager::SetLayoutProps(
 
 bool RawTextViewManager::RequiresYogaNode() const {
   return false;
-}
-
-void RawTextViewManager::AddParent(facebook::react::ShadowNode *parent, int64_t childTag) {
-  m_parentNodes[childTag] = parent;
-}
-
-void RawTextViewManager::RemoveParent(int64_t childTag) {
-  m_parentNodes.erase(childTag);
 }
 
 } // namespace uwp
