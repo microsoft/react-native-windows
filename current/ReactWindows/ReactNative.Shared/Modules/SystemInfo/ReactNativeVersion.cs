@@ -1,8 +1,3 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Portions derived from React Native:
-// Copyright (c) 2015-present, Facebook, Inc.
-// Licensed under the MIT License.
-
 using Newtonsoft.Json.Linq;
 
 namespace ReactNative.Modules.SystemInfo
@@ -22,9 +17,9 @@ namespace ReactNative.Modules.SystemInfo
                 return new JObject
                 {
                     { "major", 0 },
-                    { "minor", 0 },
+                    { "minor", 59 },
                     { "patch", 0 },
-                    { "prerelease", null }
+                    { "prerelease", "rc.0" },
                 };
             }
         }
