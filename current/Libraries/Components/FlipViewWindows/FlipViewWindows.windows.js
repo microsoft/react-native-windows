@@ -140,7 +140,7 @@ class FlipViewWindows extends React.Component {
   setPage = (selectedPage: number) => {
     UIManager.dispatchViewManagerCommand(
       ReactNative.findNodeHandle(this),
-      UIManager.WindowsFlipView.Commands.setPage,
+      UIManager.getViewManagerConfig('WindowsFlipView').Commands.setPage,
       [selectedPage],
     );
   };
