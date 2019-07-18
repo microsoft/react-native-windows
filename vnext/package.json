@@ -65,7 +65,8 @@
   "beachball": {
     "disallowedChangeTypes": [
       "major",
-      "minor"
+      "minor",
+      "patch"
     ]
   }
 }
