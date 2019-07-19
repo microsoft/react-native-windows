@@ -455,7 +455,7 @@ jobs:
           #createLogFile: false # Optional
           #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
 
-     - task: PowerShell@2
+      - task: PowerShell@2
         displayName: Start Winium
         inputs:
           targetType: inline # filePath | inline
