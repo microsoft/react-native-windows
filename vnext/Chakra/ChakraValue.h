@@ -10,6 +10,18 @@
 
 #include <folly/dynamic.h>
 
+/* definition to expand macro then apply to pragma message */
+#define VALUE_TO_STRING(x) #x
+#define VALUE(x) VALUE_TO_STRING(x)
+#define VAR_NAME_VALUE(var) #var "=" VALUE(var)
+
+#pragma message(VAR_NAME_VALUE(FOLLY_HAS_STRING_VIEW))
+#pragma message(VAR_NAME_VALUE(FOLLY_MOBILE))
+#pragma message(VAR_NAME_VALUE(FOLLY_SSE))
+#pragma message(VAR_NAME_VALUE(FOLLY_SSE_MINOR))
+#pragma message(VAR_NAME_VALUE(FOLLY_HAVE_MEMRCHR))
+#pragma message(VAR_NAME_VALUE(FOLLY_NEON))
+
 #if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
 #else

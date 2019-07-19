@@ -133,7 +133,11 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      vmImage: vs2017-win2016
+      name: OE Standard Pool
+      demands:
+      - OnPrem -equals False
+      - msbuild
+      - Cmd
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -145,17 +149,17 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2
-        displayName: yarn install
+        displayName: npm install
         inputs:
-          script: yarn install --frozen-lockfile
+          script: npm install
           workingDirectory: vnext
 
       - template: templates/stop-packagers.yml
 
       - task: CmdLine@2
-        displayName: yarn build
+        displayName: npm run build
         inputs:
-          script: yarn build
+          script: npm run build
           workingDirectory: vnext
 
       - template: templates/install-SDK.yml
