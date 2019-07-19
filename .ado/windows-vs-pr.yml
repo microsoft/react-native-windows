@@ -469,7 +469,7 @@ jobs:
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
-          searchFolder: '$(Build.SourcesDirectory)\'current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
+          searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
           vsTestVersion: '15.0'
           #runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
