@@ -12,7 +12,7 @@
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
-    "start": "node Scripts/cli.js start",
+    "start": "react-native start",
     "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
     "format:verify": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
     "lint": "just-scripts eslint",

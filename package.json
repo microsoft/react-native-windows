@@ -16,6 +16,10 @@
     "packages": [
       "packages/*",
       "vnext"
+    ],
+    "nohoist": [
+      "**/react-native",
+      "**/react-native/**"
     ]
   },
   "devDependencies": {
