@@ -25,17 +25,12 @@
 
 This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc. 
 
-## Status
+## Status and roadmap
 
-We are in the process of re-implementing react-native-windows in C++, for better performance, and to better align with the shared C++ react-native core as it evolves. This effort is currently taking place in the [vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) subdirectory within this GitHub repo. You can read more about this effort [here](vnext/README.md). We are tracking progress on this work through [Projects](https://github.com/microsoft/react-native-windows/projects) and [Issues](https://github.com/microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Arnwcpp) on this GitHub repo.
+We are in the process of re-implementing react-native-windows in C++, for better performance, and to better align with the shared C++ react-native core as it evolves. Please see the [Roadmap 2019](blog/Roadmap2019.md) blog for details on this effort and investment roadmap for the upcoming months.
 
-The ["current"](https://github.com/microsoft/react-native-windows/tree/master/current) subdirectory holds the earlier C# implementation for `react-native-windows`. 
-
-Our intent is to provide a compatibility layer that will support existing apps, view managers, and native modules written in C# with minimal breaking changes.
-
-We anticipate that there will be increased activity on the repository related to this refactoring effort, but that overall effort allocated to the existing architecture will be minimized. Please continue to report issues as you encounter them, but be sure to use the [correct template](https://github.com/microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) for issues related to the existing `react-native-windows` package (version 0.57 and earlier).
-
-### Updates
+### Latest updates 
+*Last updated: July 2019*
 
 Both the `current` and `vnext` implementations of `react-native-windows` have been upgraded to support [React Native version 0.59](https://facebook.github.io/react-native/blog/2019/03/12/releasing-react-native-059). Please see the [July 2019 Updates Blog](blog/July2019Updates.md) for all the latest updates!
 
