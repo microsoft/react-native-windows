@@ -56,6 +56,13 @@ class TextShadowNode : public ShadowNodeBase {
     m_firstChildNode = nullptr;
     Super::removeAllChildren();
   }
+
+  void RemoveChildAt(int64_t indexToRemove) {
+    if (indexToRemove == 0) {
+      m_firstChildNode = nullptr;
+    }
+    Super::RemoveChildAt(indexToRemove);
+  }
 };
 
 TextViewManager::TextViewManager(
