@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>BOOST_BEAST_NO_INTRINSICS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
 
 </Project>
