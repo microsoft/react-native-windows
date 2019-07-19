@@ -21,5 +21,5 @@ Higher-level workflows interacting with real external dependencies (i.e. file sy
 These tests can run on the local development host.
 ```powershell
 # Starts test services and runs tests.
-& Scripts\IntegrationTests
+& Scripts\IntegrationTests.ps1
 ```
