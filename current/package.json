@@ -32,8 +32,8 @@
     "README.md"
   ],
   "peerDependencies": {
-    "react": "16.6.3",
-    "react-native": "~0.58.0"
+    "react": "16.8.6",
+    "react-native": "~0.59.0"
   },
   "devDependencies": {
     "babel-eslint": "9.0.0",
@@ -43,20 +43,20 @@
     "eslint-plugin-flowtype": "2.43.0",
     "eslint-plugin-prettier": "2.6.0",
     "eslint-plugin-react": "7.8.2",
-    "flow-bin": "^0.86.0",
+    "flow-bin": "^0.92.0",
     "https-proxy-agent": "^2.2.1",
     "jasmine": "^2.6.0",
     "jasmine-reporters": "^2.2.1",
     "minimist": "^1.2.0",
     "prettier": "1.13.6",
-    "react": "16.6.3",
-    "react-devtools-core": "^3.4.2",
-    "react-native": "~0.58.0"
+    "react": "16.8.6",
+    "react-devtools-core": "^3.6.0",
+    "react-native": "~0.59.0"
   },
   "dependencies": {
-    "chalk": "^1.1.1",
+    "chalk": "^2.4.1",
     "glob": "^7.1.1",
-    "react-native-local-cli": "^1.0.0-alpha.5",
+    "@react-native-community/cli": "^1.2.1",
     "shelljs": "^0.7.8",
     "username": "^3.0.0",
     "uuid": "^2.0.1",

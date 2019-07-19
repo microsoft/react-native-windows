@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ABI">
+      <UniqueIdentifier>{b7a226dc-4029-4213-b426-37eb7d0907a4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{63472e53-239b-4816-af09-ed2789b8fa95}</UniqueIdentifier>
     </Filter>
@@ -30,6 +33,32 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="ABI\MemoryTracker.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="ABI\MessageQueue.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="ABI\NativeLogging.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+    <Midl Include="ABI\NativeTracing.idl">
+      <Filter>ABI</Filter>
+    </Midl>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ABI\MemoryTracker.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\MessageQueueShim.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\NativeLogEventSource.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
+    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
+      <Filter>ABI</Filter>
+    </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
     </ClCompile>
@@ -79,6 +108,22 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ABI\MemoryTracker.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\MessageQueueShim.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\NativeLogEventSource.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="ABI\NativeTraceEventSource.h">
+      <Filter>ABI</Filter>
+    </ClInclude>
+    <ClInclude Include="TimingModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

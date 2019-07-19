@@ -22,21 +22,6 @@ namespace react {
 namespace uwp {
 namespace polyester {
 
-class ContentControlShadowNode : public ShadowNodeBase {
-  using Super = ShadowNodeBase;
-
- public:
-  ContentControlShadowNode() = default;
-  void createView() override;
-  bool IsExternalLayoutDirty() const override {
-    return m_paddingDirty;
-  }
-  void DoExtraLayoutPrep(YGNodeRef yogaNode) override;
-
- private:
-  bool m_paddingDirty = false;
-};
-
 void ContentControlShadowNode::DoExtraLayoutPrep(YGNodeRef yogaNode) {
   if (!m_paddingDirty)
     return;
