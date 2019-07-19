@@ -22,5 +22,11 @@
     <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\ssleay32.lib" target="lib\x64\Debug" />
     <file src="$vcpkgroot$\installed\x64-windows-static\lib\libeay32.lib" target="lib\x64\Release" />
     <file src="$vcpkgroot$\installed\x64-windows-static\lib\ssleay32.lib" target="lib\x64\Release" />
+
+    <file src="$vcpkgroot$\installed\arm64-windows-static\include\openssl\**\*.*" target="include\ARM64\openssl" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\debug\lib\libeay32.lib" target="lib\ARM64\Debug" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\debug\lib\ssleay32.lib" target="lib\ARM64\Debug" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\lib\libeay32.lib" target="lib\ARM64\Release" />
+    <file src="$vcpkgroot$\installed\arm64-windows-static\lib\ssleay32.lib" target="lib\ARM64\Release" />
   </files>
 </package>
