@@ -24,7 +24,7 @@ We are making steady progress in this workstream and will be investing more in [
 ## NEW Features!
 
 We have introduced several new features, including:
-   1. Keyboarding APIs to enable keyboard and gamepad invocation scenarios with good default behaviors for JS components like `Button`. See [Proposal draft](https://github.com/ReactWindows/discussions-and-proposals/blob/harinikmsft-keyboardapis/proposals/0000-keyboard-apis.md) for more details. 
+   1. **Keyboarding APIs** to enable keyboard and gamepad invocation scenarios with good default behaviors for JS components like `Button`. See [Proposal draft](https://github.com/ReactWindows/discussions-and-proposals/blob/harinikmsft-keyboardapis/proposals/0000-keyboard-apis.md) for more details. 
    
    *Example usage:*
 
@@ -37,7 +37,7 @@ We have introduced several new features, including:
   
    ```
 
-   2. New APIs for handling theming and high contrast scenarios through styles. See [Proposal comment](https://github.com/react-native-community/discussions-and-proposals/issues/126#issuecomment-500561803) for details.
+   2. New APIs for **handling theming and high contrast** scenarios through styles. See [Proposal comment](https://github.com/react-native-community/discussions-and-proposals/issues/126#issuecomment-500561803) for details.
 
    *Example usage:*
 
@@ -57,7 +57,7 @@ We have introduced several new features, including:
    </TextInput>
    ```
 
-   3. New APIs for better accessibility in lists. See [Proposal](https://github.com/react-native-community/discussions-and-proposals/pull/146) for detailed documentation. 
+   3. New APIs for **better accessibility in lists**. See [Proposal](https://github.com/react-native-community/discussions-and-proposals/pull/146) for detailed documentation. 
 
    *Example usage:*
 
@@ -74,13 +74,13 @@ We have introduced several new features, including:
    ```
 
  
-This marks the beginning of a journey where we actively will be contributing back to React Native and the wider community as almost all these APIs have been designed to be platform neutral/aligned with React programming model with a view to enhance the overall React Native API story for desktop and other targets. You can read about our proposals process [here](https://github.com/microsoft/react-native-windows/tree/master/vnext/proposals). 
+This marks the beginning of a journey where we actively will be contributing back to React Native and the wider community as almost all these APIs have been designed to be platform neutral/aligned with React programming model with a view to enhance the overall React Native API story for desktop and other targets. You can read about and participate in our proposals process [here](https://github.com/microsoft/react-native-windows/tree/master/vnext/proposals). 
 
 We are working on better documentation and samples for these new updates, stay tuned!
 
 ## Onboarding and developer experience
 
-We have been steadily addressing onboarding issues with the CLI, VS 2019 toolchain etc., to ensure reliability of your development experience. Thank you to those who have spun the wheels on this project so far and filed issues, please continue to report issues as you see them. 
+We have been steadily addressing onboarding issues with the CLI, VS 2019 toolchain etc., to ensure reliability of your development experience - **you can use VS 2019** to build React Native for Windows vNext projects. Thank you to those who have spun the wheels on this project so far and filed issues, please continue to report issues as you see them. 
 
 We are also happy to report that we have begun a collaboration with VS Code for adding [React Native extension](https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native) support for React Native Windows. Through this extension, you will be able to debug your JS directly in VS Code without needing the Chrome debugger and several other useful tooling (including intellisense). We are in the early stages here, but since the work is happening in OSS, you can start trying this out using [these instructions](https://github.com/microsoft/react-native-windows/wiki/VS-Code-Debugging).
 
@@ -93,10 +93,10 @@ We are tracking the next set of work for React Native for Windows through [Miles
 
    - Upgrade to RN v0.60
    - Complete feature parity for all “lean-core” RN APIs 
-	- Native extensions developer story
-	- More new features around mouse hover, styling JS components, custom tab navigation, directional focus etc., 
-	- Improved developer experience, documentation and onboarding reliability
-	- Strategic performance investments and test infrastructure bring up
+   - Native extensions developer story
+   - More new features around mouse hover, styling JS components, custom tab navigation, directional focus etc., 
+   - Improved developer experience, documentation and onboarding reliability
+   - Strategic performance investments and test infrastructure bring up
    - React-Native-Windows targeting [WinUI 3.0](https://github.com/microsoft/microsoft-ui-xaml/blob/master/docs/roadmap.md#winui-3-q4-2019---2020). 
 
 Please see the [Roadmap 2019](blog/Roadmap2019.md) blog for more details. 
