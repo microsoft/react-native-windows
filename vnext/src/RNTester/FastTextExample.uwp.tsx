@@ -66,6 +66,27 @@ class ChangingStateExample extends React.Component<{}, any> {
   }
 }
 
+class FastToSlowTextExample extends React.Component<{}, any> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {text: ''};
+  }
+  public render() {
+    return (
+      <View>
+        <Button
+          title={'UPDATE STATE'}
+          onPress={() => this.setState({text: 'second string'})}
+        />
+        <Text>
+          {'first string'}
+          {!!this.state.text && <Text>{this.state.text}</Text>}
+        </Text>
+      </View>
+    );
+  }
+}
+
 class SlowExamples extends React.Component<{}, any> {
   constructor(props: {}) {
     super(props);
@@ -115,6 +136,12 @@ export const examples = [
     title: 'Changing states within text example',
     render: function() {
       return <ChangingStateExample />;
+    },
+  },
+  {
+    title: 'Fast to slow text example',
+    render: function() {
+      return <FastToSlowTextExample />;
     },
   },
   {
