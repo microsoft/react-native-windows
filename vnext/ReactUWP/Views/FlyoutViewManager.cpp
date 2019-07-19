@@ -82,7 +82,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   winrt::Flyout GetFlyout();
 
-  XamlView GetChildView() const override;
   bool IsWindowed() override {
     return true;
   }
@@ -170,12 +169,6 @@ void FlyoutShadowNode::createView() {
       }
     }
   }
-}
-
-XamlView FlyoutShadowNode::GetChildView() const {
-  if (m_flyout == nullptr)
-    return nullptr;
-  return m_flyout.Content().as<XamlView>();
 }
 
 /*static*/ void FlyoutShadowNode::OnFlyoutClosed(

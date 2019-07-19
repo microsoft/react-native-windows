@@ -35,7 +35,6 @@ class PopupShadowNode : public ShadowNodeBase {
       const winrt::Windows::UI::Xaml::Controls::Primitives::Popup &popup);
   winrt::Windows::Foundation::Size GetAppWindowSize();
 
-  XamlView GetChildView() const override;
   bool IsWindowed() override {
     return true;
   }
@@ -197,10 +196,6 @@ winrt::Size PopupShadowNode::GetAppWindowSize() {
   }
 
   return windowSize;
-}
-
-XamlView PopupShadowNode::GetChildView() const {
-  return m_view.as<winrt::Popup>().Child().as<XamlView>();
 }
 
 PopupViewManager::PopupViewManager(

@@ -1097,17 +1097,19 @@ void NativeUIManager::measure(
   // If there are none, then we use the top-level root provided by our caller.
   winrt::FrameworkElement feRootView = nullptr;
   int64_t rootTag = shadowNode.m_tag;
+  int64_t childTag = rootTag;
   while (true) {
     auto &currNode = m_host->GetShadowNodeForTag(rootTag);
     if (currNode.m_parent == -1)
       break;
     ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
     if (rootNode.IsWindowed()) {
-      if (auto childView = rootNode.GetChildView()) {
-        feRootView = childView.try_as<winrt::FrameworkElement>();
-      }
+      ShadowNodeBase &childNode =
+          static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
+      feRootView = childNode.GetView().try_as<winrt::FrameworkElement>();
       break;
     }
+    childTag = currNode.m_tag;
     rootTag = currNode.m_parent;
   }
 
