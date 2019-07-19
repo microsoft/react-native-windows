@@ -36,6 +36,9 @@ class PopupShadowNode : public ShadowNodeBase {
   winrt::Windows::Foundation::Size GetAppWindowSize();
 
   XamlView GetChildView() const override;
+  bool IsWindowed() override {
+    return true;
+  }
 
  private:
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
@@ -64,7 +67,6 @@ void PopupShadowNode::createView() {
   m_popupClosedRevoker =
       popup.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
-        m_isWindowed = false;
         if (!m_updating && instance != nullptr)
           OnPopupClosed(*instance, m_tag, false);
       });
@@ -72,7 +74,6 @@ void PopupShadowNode::createView() {
   m_popupOpenedRevoker =
       popup.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
-        m_isWindowed = true;
         if (!m_updating && instance != nullptr)
           SetAnchorPosition(popup);
       });

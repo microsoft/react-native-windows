@@ -83,6 +83,9 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Flyout GetFlyout();
 
   XamlView GetChildView() const override;
+  bool IsWindowed() override {
+    return true;
+  }
 
  private:
   void SetTargetFrameworkElement();
@@ -129,7 +132,6 @@ void FlyoutShadowNode::createView() {
   Super::createView();
 
   m_flyout = winrt::Flyout();
-  m_isWindowed = true;
   m_isFlyoutShowOptionsSupported = !!(m_flyout.try_as<winrt::IFlyoutBase5>());
 
   if (m_isFlyoutShowOptionsSupported)
@@ -189,7 +191,6 @@ void FlyoutShadowNode::onDropViewInstance() {
   m_isOpen = false;
   m_flyout.Hide();
   s_cOpenFlyouts -= 1;
-  m_isWindowed = false;
 }
 
 void FlyoutShadowNode::removeAllChildren() {
@@ -277,7 +278,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
     } else {
       m_flyout.Hide();
       s_cOpenFlyouts -= 1;
-      m_isWindowed = false;
     }
   }
 
