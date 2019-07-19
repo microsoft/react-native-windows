@@ -19,7 +19,7 @@
     ]
   },
   "devDependencies": {
-    "beachball": "^1.10.0",
+    "beachball": "^1.10.1",
     "lerna": "^3.15.0"
   }
 }
