@@ -445,9 +445,9 @@ jobs:
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           #msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           #msbuildLocation: # Optional
-          platform: ${{ parameters.BuildPlatform }} # Optional
-          configuration:  ${{ parameters.BuildConfiguration }}  # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          platform: $(BuildPlatform) # Optional
+          configuration:  $(BuildConfiguration)  # Optional
+          #msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           #clean: true # Optional
           #maximumCpuCount: false # Optional
           #restoreNugetPackages: false # Optional
@@ -477,13 +477,3 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: 'onAbortOnly'
-
-      - task: PowerShell@2
-        displayName: Download/Extract Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            curl -o $(System.DefaultWorkingDirectory)\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
-            mkdir $(System.DefaultWorkingDirectory)\winium
-            Add-Type -A 'System.IO.Compression.FileSystem'
-            '[IO.Compression.ZipFile]::ExtractToDirectory("$(System.DefaultWorkingDirectory)\winium.zip", "$(System.DefaultWorkingDirectory)\winium")'
