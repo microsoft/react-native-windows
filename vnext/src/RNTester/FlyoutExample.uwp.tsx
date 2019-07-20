@@ -71,11 +71,11 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
         <View style={{justifyContent: 'center', padding: 20, width: 200}}>
           <Button onPress={this._onPress} title={this.state.buttonTitle} />
         </View>
-        <View style={{flexDirection: 'row', paddingTop: 20}}>
+        <View style={{flexDirection: 'row', paddingTop: 200}}>
           <Text style={{padding: 10, width: 300, height: 32}}>
             Text Input to Anchor flyout to:{' '}
           </Text>
-          <TextInput style={{height: 32, width: 300}} ref={this._setRef} />
+          <TextInput style={{height: 32, width: 250}} ref={this._setRef} />
         </View>
         {this.state.isFlyoutVisible && (
           <Flyout
