@@ -406,7 +406,7 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: PowerShell@2
-        displayName: Download/Extract Winium
+        displayName: Download Winium
         inputs:
           targetType: inline # filePath | inline
           script: |
@@ -419,7 +419,7 @@ jobs:
           destinationFolder: $(System.DefaultWorkingDirectory)\winium
 
       - task: NuGetCommand@2
-        displayName: NuGet restore - current\ReactWindows\ReactNative.sln
+        displayName: NuGet restore
         inputs:
           command: restore
           restoreSolution: current/ReactWindows/ReactNative.sln
