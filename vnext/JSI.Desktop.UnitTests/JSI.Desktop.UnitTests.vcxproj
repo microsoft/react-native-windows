@@ -44,7 +44,7 @@
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      
+
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
@@ -116,7 +116,7 @@
     <Import Project="$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets" Condition="Exists('$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" />
     <Import Project="$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets" Condition="Exists('$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
-    <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets')" />
+    <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.37\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.37\build\native\ChakraCore.Debugger.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -128,6 +128,6 @@
     <Error Condition="!Exists('$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.37\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.37\build\native\ChakraCore.Debugger.targets'))" />
   </Target>
 </Project>
