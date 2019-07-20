@@ -428,6 +428,12 @@ jobs:
           script: npm install -g react-native-cli
 
       - task: CmdLine@2
+        displayName: npm install
+        inputs:
+          script: npm install
+          workingDirectory: current
+
+      - task: CmdLine@2
         displayName: Make Bundle Dir
         inputs:
           script: mkdir current\ReactWindows\Playground.Net46\ReactAssets
@@ -435,7 +441,8 @@ jobs:
       - task: CmdLine@2
         displayName: Make Bundle
         inputs:
-          script: react-native bundle --platform windows --entry-file ./current/ReactWindows/Playground.Net46/index.windows.js --bundle-output ./current/ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./current/ReactWindows/Playground.Net46/ReactAssets --dev false; echo "Suppressing error"
+          script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false; echo "Suppressing error"
+          workingDirectory: current
 
       - task: MSBuild@1
         displayName: MSBuild
