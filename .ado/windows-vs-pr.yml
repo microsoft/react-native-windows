@@ -444,7 +444,7 @@ jobs:
       - task: CmdLine@2
         displayName: Make Bundle
         inputs:
-          script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false; echo "Suppressing error"
+          script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
           workingDirectory: current
 
       - task: MSBuild@1
@@ -487,3 +487,11 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: 'onAbortOnly'
+        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+
+      - task: CmdLine@2
+        displayName: npm test
+        inputs:
+          script: npm test
+          workingDirectory: current
+        condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
