@@ -411,9 +411,12 @@ jobs:
           targetType: inline # filePath | inline
           script: |
             curl -o $(System.DefaultWorkingDirectory)\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
-            mkdir $(System.DefaultWorkingDirectory)\winium
-            Add-Type -A 'System.IO.Compression.FileSystem'
-            '[IO.Compression.ZipFile]::ExtractToDirectory("$(System.DefaultWorkingDirectory)\winium.zip", "$(System.DefaultWorkingDirectory)\winium")'
+
+      - task: ExtractFiles@1
+        displayName: Extract Winium
+        inputs:
+          archiveFilePatterns: $(System.DefaultWorkingDirectory)\winium.zip
+          destinationFolder: $(System.DefaultWorkingDirectory)\winium
 
       - task: NuGetCommand@2
         displayName: NuGet restore - current\ReactWindows\ReactNative.sln
