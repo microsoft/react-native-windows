@@ -402,7 +402,7 @@ jobs:
         clean: true # whether to fetch clean each time
         # fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: PowerShell@2
