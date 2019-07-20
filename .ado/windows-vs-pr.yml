@@ -467,7 +467,7 @@ jobs:
         inputs:
           targetType: inline # filePath | inline
           script: |
-            $winium = Start-Process -PassThru C:\winium\Winium.Desktop.Driver.exe
+            $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
             Start-Sleep -s 5
 
       - task: VSTest@2
