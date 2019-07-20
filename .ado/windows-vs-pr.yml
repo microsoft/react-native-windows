@@ -384,6 +384,7 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x64
           UTTestOutputConfigDir: Debug
+        X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
           UTTestOutputConfigDir: Release
