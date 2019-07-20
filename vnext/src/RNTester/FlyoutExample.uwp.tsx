@@ -11,6 +11,7 @@ import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;
+  isFlyoutTwoVisible: boolean;
   buttonTitle: string;
   isLightDismissEnabled: boolean;
   popupCheckBoxState: boolean;
@@ -35,10 +36,12 @@ let placementValues: string[] = [
 
 class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   // tslint:disable-next-line:no-any
-  private _textInput: any;
+  private _anchor: any;
+  private _anchorTwo: any;
 
   public state: IFlyoutExampleState = {
     isFlyoutVisible: false,
+    isFlyoutTwoVisible: false,
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
     popupCheckBoxState: true,
@@ -47,7 +50,8 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
   public constructor(props: any) {
     super(props);
-    this._textInput = React.createRef();
+    this._anchor = React.createRef();
+    this._anchorTwo = React.createRef();
   }
 
   public render() {
@@ -78,10 +82,10 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
             isOpen={this.state.isFlyoutVisible}
             isLightDismissEnabled={this.state.isLightDismissEnabled}
             onDismiss={this._onFlyoutDismissed}
-            target={this._textInput}
+            target={this._anchor}
             placement={this.state.placementOptions}>
             <View
-              style={{backgroundColor: 'lightgray', width: 200, height: 300}}>
+              style={{backgroundColor: 'lightgray', width: 300, height: 400}}>
               <Text
                 style={{
                   justifyContent: 'center',
@@ -105,6 +109,48 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 />
               </View>
               <TextInput style={{height: 32, width: 100}} />
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  paddingTop: 10,
+                  marginLeft: 50
+                }}>
+                Placement Options
+              </Text>
+              <Picker
+                style={{borderBottomWidth: 1,
+                  borderTopWidth: 1,
+                  borderLeftWidth: 1,
+                  borderRightWidth: 1,
+                  width: 200,
+                  marginLeft: 50,
+               } } 
+                selectedValue={this.state.placementOptions}
+                onValueChange={value => this.setState({placementOptions: value})}
+              >
+                { placementValues.map(item => <Picker.Item key={item} label={item} value={item} /> ) }
+              </Picker>
+              <View
+                style={{
+                  width: 150,
+                  marginLeft: 75,
+                  marginTop: 10
+                }}>
+                  <Button onPress={this._onPressTwo} title={'Open Another Flyout'}  ref={this._setRefTwo} />
+                </View>
+            </View>
+          </Flyout>
+        )}
+        {this.state.isFlyoutTwoVisible && (
+          <Flyout
+            isOpen={this.state.isFlyoutTwoVisible}
+            isLightDismissEnabled={true}
+            onDismiss={this._onFlyoutTwoDismissed}
+            target={this._anchorTwo}
+            placement={this.state.placementOptions}>
+            <View
+              style={{backgroundColor: 'lightblue', width: 200, height: 300}}>
+              <Text>Save time in Word with new buttons that show up where you need them. To change the way a picture fits in your document, click it and a button for layout options appears next to it. When you work on a table, click where you want to add a row or a column, and then click the plus sign.</Text>
             </View>
           </Flyout>
         )}
@@ -113,7 +159,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   }
 
   private _setRef = (textInput: TextInput) => {
-    this._textInput = textInput;
+    this._anchor = textInput;
   };
 
   _onPress = () => {
@@ -126,8 +172,22 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
   _onFlyoutDismissed = (_isOpen: boolean) => {
     this.setState({isFlyoutVisible: false});
+    this.setState({isFlyoutTwoVisible: false});
     this.setState({buttonTitle: 'Open Flyout'});
   };
+
+  _setRefTwo = (element: any) => {
+    this._anchorTwo = element;
+  };
+
+  _onPressTwo = () => {
+    this.setState({isFlyoutTwoVisible: true});
+  };
+
+  _onFlyoutTwoDismissed = (_isOpen: boolean) => {
+    this.setState({isFlyoutTwoVisible: false});
+  };
+
 }
 
 export const displayName = (_undefined?: string) => {};
