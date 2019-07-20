@@ -29,8 +29,27 @@ namespace uwp {
 // ViewShadowNode
 
 class ViewShadowNode : public ShadowNodeBase {
+  using Super = ShadowNodeBase;
+
  public:
   ViewShadowNode() = default;
+
+  void createView() override {
+    Super::createView();
+
+    auto panel = GetViewPanel();
+
+    DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(
+        panel, [=]() {
+          if (OnClick())
+            DispatchEvent(
+                "topClick", std::move(folly::dynamic::object("target", m_tag)));
+          else
+            DispatchEvent(
+                "topAccessibilityTap",
+                std::move(folly::dynamic::object("target", m_tag)));
+        });
+  }
 
   bool ShouldUpdateView(bool isControl, bool hasOuterBorder) {
     return (IsControl() != isControl) || (HasOuterBorder() != hasOuterBorder);
@@ -151,6 +170,46 @@ class ViewShadowNode : public ShadowNodeBase {
     return IsControl() ? m_view.as<winrt::react::uwp::ViewControl>() : nullptr;
   }
 
+  XamlView CreateViewControl() {
+    auto contentControl =
+        winrt::make<winrt::react::uwp::implementation::ViewControl>();
+
+    m_contentControlGotFocusRevoker =
+        contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+          DispatchEvent(
+              "topFocus", std::move(folly::dynamic::object("target", m_tag)));
+        });
+
+    m_contentControlLostFocusRevoker =
+        contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+          DispatchEvent(
+              "topBlur", std::move(folly::dynamic::object("target", m_tag)));
+        });
+
+    // FUTURE: The space/enter handler can be removed in August 2019, still here
+    // to enable transitioning to new events if native code is updated before JS
+    m_contentControlKeyDownRevoker = contentControl.KeyDown(
+        winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &e) {
+          if (e.Key() == winrt::VirtualKey::Enter ||
+              e.Key() == winrt::VirtualKey::Space) {
+            if (OnClick()) {
+              DispatchEvent(
+                  "topClick",
+                  std::move(folly::dynamic::object("target", m_tag)));
+              e.Handled(true);
+            }
+          }
+        });
+
+    return contentControl.try_as<XamlView>();
+  }
+
+  void DispatchEvent(std::string eventName, folly::dynamic &&eventData) {
+    auto instance = GetViewManager()->GetReactInstance().lock();
+    if (instance != nullptr)
+      instance->DispatchEvent(m_tag, eventName, std::move(eventData));
+  }
+
  private:
   bool m_isControl = false;
   bool m_hasOuterBorder = false;
@@ -158,6 +217,10 @@ class ViewShadowNode : public ShadowNodeBase {
   bool m_enableFocusRing = true;
   bool m_onClick = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
+
+  winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
+  winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
+  winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
 };
 
 // ViewPanel uses a ViewBackground property, not Background, so need to
@@ -264,60 +327,9 @@ facebook::react::ShadowNode *ViewViewManager::createShadow() const {
   return new ViewShadowNode();
 }
 
-void ViewViewManager::DispatchEvent(
-    int64_t viewTag,
-    std::string eventName,
-    folly::dynamic &&eventData) {
-  auto instance = m_wkReactInstance.lock();
-  if (instance != nullptr)
-    instance->DispatchEvent(viewTag, eventName, std::move(eventData));
-}
-
-XamlView ViewViewManager::CreateViewControl(int64_t tag) {
-  // Create the ViewControl as the outer/containing element, nest the ViewPanel,
-  // set default properties
-  auto contentControl =
-      winrt::make<winrt::react::uwp::implementation::ViewControl>();
-
-  m_contentControlGotFocusRevoker =
-      contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-        DispatchEvent(
-            tag, "topFocus", std::move(folly::dynamic::object("target", tag)));
-      });
-
-  m_contentControlLostFocusRevoker =
-      contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-        DispatchEvent(
-            tag, "topBlur", std::move(folly::dynamic::object("target", tag)));
-      });
-
-  return contentControl.try_as<XamlView>();
-}
-
 XamlView ViewViewManager::CreateViewCore(int64_t tag) {
   auto panel = winrt::make<winrt::react::uwp::implementation::ViewPanel>();
   panel.VerticalAlignment(winrt::VerticalAlignment::Top);
-
-  DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
-    auto instance = m_wkReactInstance.lock();
-    if (instance != nullptr) {
-      auto pNativeUiManager =
-          static_cast<NativeUIManager *>(instance->NativeUIManager());
-      facebook::react::INativeUIManagerHost *pUIManagerHost =
-          pNativeUiManager->getHost();
-
-      auto pViewShadowNode = static_cast<ViewShadowNode *>(
-          pUIManagerHost->FindShadowNodeForTag(tag));
-      if (pViewShadowNode != nullptr && pViewShadowNode->OnClick())
-        DispatchEvent(
-            tag, "topClick", std::move(folly::dynamic::object("target", tag)));
-      else
-        DispatchEvent(
-            tag,
-            "topAccessibilityTap",
-            std::move(folly::dynamic::object("target", tag)));
-    }
-  });
 
   return panel.as<XamlView>();
 }
@@ -429,8 +441,6 @@ void ViewViewManager::TryUpdateView(
   //      This means Panel under Border and/or Border under Control
   //
 
-  int64_t tag = pViewShadowNode->m_tag;
-
   XamlView oldXamlView(pViewShadowNode->GetView());
   XamlView newXamlView(nullptr);
 
@@ -439,7 +449,7 @@ void ViewViewManager::TryUpdateView(
   if (useControl) {
     newXamlView = pViewShadowNode->GetControl().try_as<XamlView>();
     if (newXamlView == nullptr)
-      newXamlView = CreateViewControl(tag);
+      newXamlView = pViewShadowNode->CreateViewControl();
   } else if (pViewShadowNode->IsControl()) {
     pViewShadowNode->GetControl().Content(nullptr);
   }

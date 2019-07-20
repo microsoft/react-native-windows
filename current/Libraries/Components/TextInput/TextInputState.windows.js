@@ -49,13 +49,13 @@ function focusTextInput(textFieldID: ?number) {
     } else if (Platform.OS === 'android') {
       UIManager.dispatchViewManagerCommand(
         textFieldID,
-        UIManager.AndroidTextInput.Commands.focusTextInput,
+        UIManager.getViewManagerConfig('AndroidTextInput').Commands.focusTextInput,
         null,
       );
     } else if (Platform.OS === 'windows') {
       UIManager.dispatchViewManagerCommand(
         textFieldID,
-        UIManager.RCTTextBox.Commands.focusTextInput,
+        UIManager.getViewManagerConfig('RCTTextBox').Commands.focusTextInput,
         null
       )
     }
@@ -75,13 +75,13 @@ function blurTextInput(textFieldID: ?number) {
     } else if (Platform.OS === 'android') {
       UIManager.dispatchViewManagerCommand(
         textFieldID,
-        UIManager.AndroidTextInput.Commands.blurTextInput,
+        UIManager.getViewManagerConfig('AndroidTextInput').Commands.blurTextInput,
         null,
       );
     } else if (Platform.OS === 'windows') {
       UIManager.dispatchViewManagerCommand(
         textFieldID,
-        UIManager.RCTTextBox.Commands.blurTextInput,
+        UIManager.getViewManagerConfig('RCTTextBox').Commands.blurTextInput,
         null
       );
     }

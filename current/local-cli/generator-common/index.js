@@ -1,9 +1,9 @@
 const fs = require('fs');
 const chalk = require('chalk');
 const path = require('path');
-const copyAndReplace = require('react-native-local-cli/util/copyAndReplace');
-const walk = require('react-native-local-cli/util/walk');
-const prompt = require('react-native-local-cli/generator/promptSync')();
+const copyAndReplace = require('@react-native-community/cli/build/tools/copyAndReplace').default;
+const walk = require('@react-native-community/cli/build/tools/walk').default;
+const prompt = require('@react-native-community/cli/build/tools/generator/promptSync').default();
 
 function createDir(destPath) {
   if (!fs.existsSync(destPath)) {
