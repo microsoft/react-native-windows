@@ -384,17 +384,28 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x64
           UTTestOutputConfigDir: Debug
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          UTTestOutputConfigDir: Release
+        X64DebugBundle:
+          BuildConfiguration: DebugBundle
+          BuildPlatform: x64
+          UTTestOutputConfigDir: Debug
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: ARM
           UTTestOutputConfigDir: Debug
         X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+          UTTestOutputConfigDir: Release
+        X86ReleaseBundle:
           BuildConfiguration: ReleaseBundle
           BuildPlatform: x86
           UTTestOutputConfigDir: Release
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:
