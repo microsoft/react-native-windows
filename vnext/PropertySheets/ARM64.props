@@ -9,7 +9,12 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>BOOST_BEAST_NO_INTRINSICS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--
+        BOOST_BEAST_NO_INTRINSICS     - No CPUID intrinsics for ARM64.
+        BOOST_PREDEF_HARDWARE_SIMD_H  - Avoid including <boost/predef/hardware/simd.h>
+                                        TODO: This is a hack. Find alternative.
+      -->
+      <PreprocessorDefinitions>BOOST_BEAST_NO_INTRINSICS;BOOST_PREDEF_HARDWARE_SIMD_H;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
