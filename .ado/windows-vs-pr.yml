@@ -469,7 +469,7 @@ jobs:
           solution: current/ReactWindows/ReactNative.sln
           #msbuildLocationMethod: 'version' # Optional. Options: version, location
           msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          #msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           #msbuildLocation: # Optional
           platform: $(BuildPlatform) # Optional
           configuration:  $(BuildConfiguration)  # Optional
