@@ -83,7 +83,7 @@ jobs:
           workingDirectory: vnext
 
       - template: templates/install-SDK.yml
-      
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
@@ -190,7 +190,7 @@ jobs:
         inputs:
           script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
           workingDirectory: $(Agent.BuildDirectory)\testcli
-        
+
       - task: CmdLine@2
         displayName: Apply windows template
         inputs:
@@ -224,7 +224,7 @@ jobs:
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - job: RnwNativePRBuild
-    displayName: Windows Visual Studio with Win32 PR
+    displayName: Windows Desktop PR
     strategy:
       matrix:
         X64Debug:
@@ -235,7 +235,10 @@ jobs:
           BuildPlatform: x86
         ArmDebug:
           BuildConfiguration: Debug
-          BuildPlatform: arm
+        BuildPlatform: ARM
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -244,7 +247,10 @@ jobs:
           BuildPlatform: x86
         ArmRelease:
           BuildConfiguration: Release
-          BuildPlatform: arm
+          BuildPlatform: ARM
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
     pool:
       vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
@@ -281,7 +287,7 @@ jobs:
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+        condition: and(succeeded(), notIn(variables['BuildPlatform'], 'ARM', 'ARM64'))
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll' # Required when testSelector == TestAssemblies
@@ -297,6 +303,7 @@ jobs:
       - task: VSTest@2
         displayName: Run Desktop Unit Tests (Google Test)
         timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        condition: and(succeeded(), notIn(variables['BuildPlatform'], 'ARM', 'ARM64'))
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'  # Required when testSelector == TestAssemblies
@@ -311,7 +318,7 @@ jobs:
 
       - task: PowerShell@2
         displayName: Set up test servers
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+        condition: and(succeeded(), notIn(variables['BuildPlatform'], 'ARM', 'ARM64'))
         inputs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
@@ -319,7 +326,7 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM', 'ARM64'))
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
@@ -348,7 +355,7 @@ jobs:
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
         inputs:
-          versionSpec: '>=4.6.0' 
+          versionSpec: '>=4.6.0'
 
       - template: templates/prep-and-pack-nuget.yml
 
