@@ -235,10 +235,10 @@ jobs:
           BuildPlatform: x86
         ArmDebug:
           BuildConfiguration: Debug
-        BuildPlatform: ARM
+        BuildPlatform: arm
         Arm64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: ARM64
+          BuildPlatform: arm64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -247,10 +247,10 @@ jobs:
           BuildPlatform: x86
         ArmRelease:
           BuildConfiguration: Release
-          BuildPlatform: ARM
+          BuildPlatform: arm
         Arm64Release:
           BuildConfiguration: Release
-          BuildPlatform: ARM64
+          BuildPlatform: arm64
     pool:
       vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
