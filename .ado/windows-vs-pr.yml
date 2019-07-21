@@ -384,10 +384,10 @@ jobs:
         #  BuildConfiguration: Debug
         #  BuildPlatform: x64
         #  UTTestOutputConfigDir: Debug
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-          UTTestOutputConfigDir: Release
+        #X64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x64
+        #  UTTestOutputConfigDir: Release
         X64DebugBundle:
           BuildConfiguration: DebugBundle
           BuildPlatform: x64
@@ -404,10 +404,10 @@ jobs:
         #  BuildConfiguration: Release
         #  BuildPlatform: x86
         #  UTTestOutputConfigDir: Release
-        X86ReleaseBundle:
-          BuildConfiguration: ReleaseBundle
-          BuildPlatform: x86
-          UTTestOutputConfigDir: Release
+        #X86ReleaseBundle:
+        #  BuildConfiguration: ReleaseBundle
+        #  BuildPlatform: x86
+        #  UTTestOutputConfigDir: Release
     pool:
       vmImage: vs2017-win2016
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
@@ -469,7 +469,7 @@ jobs:
           solution: current/ReactWindows/ReactNative.sln
           #msbuildLocationMethod: 'version' # Optional. Options: version, location
           msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          #msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           #msbuildLocation: # Optional
           platform: $(BuildPlatform) # Optional
           configuration:  $(BuildConfiguration)  # Optional
