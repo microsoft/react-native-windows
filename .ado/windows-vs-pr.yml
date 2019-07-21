@@ -384,10 +384,10 @@ jobs:
         #  BuildConfiguration: Debug
         #  BuildPlatform: x64
         #  UTTestOutputConfigDir: Debug
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-          UTTestOutputConfigDir: Release
+        #X64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x64
+        #  UTTestOutputConfigDir: Release
         X64DebugBundle:
           BuildConfiguration: DebugBundle
           BuildPlatform: x64
@@ -409,7 +409,7 @@ jobs:
         #  BuildPlatform: x86
         #  UTTestOutputConfigDir: Release
     pool:
-      vmImage: windows-2019
+      vmImage: vs2017-win2016
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -463,19 +463,12 @@ jobs:
           script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
           workingDirectory: current
 
-      - task: powershell@2
-        inputs:
-          targetType: filePath
-          filePath: vnext\Scripts\Install-WindowsSdkISO.ps1
-          arguments: 14393
-        displayName: 'Install SDK 14393'
-
       - task: MSBuild@1
         displayName: MSBuild
         inputs:
           solution: current/ReactWindows/ReactNative.sln
           #msbuildLocationMethod: 'version' # Optional. Options: version, location
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           #msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           #msbuildLocation: # Optional
           platform: $(BuildPlatform) # Optional
