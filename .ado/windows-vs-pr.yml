@@ -463,6 +463,13 @@ jobs:
           script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
           workingDirectory: current
 
+      - task: powershell@2
+        inputs:
+          targetType: filePath
+          filePath: vnext\Scripts\Install-WindowsSdkISO.ps1
+          arguments: 14393
+        displayName: 'Install SDK 14393'
+
       - task: MSBuild@1
         displayName: MSBuild
         inputs:
