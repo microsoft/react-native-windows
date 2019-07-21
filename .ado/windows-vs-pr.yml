@@ -384,10 +384,10 @@ jobs:
         #  BuildConfiguration: Debug
         #  BuildPlatform: x64
         #  UTTestOutputConfigDir: Debug
-        #X64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Release
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          UTTestOutputConfigDir: Release
         X64DebugBundle:
           BuildConfiguration: DebugBundle
           BuildPlatform: x64
@@ -404,10 +404,10 @@ jobs:
         #  BuildConfiguration: Release
         #  BuildPlatform: x86
         #  UTTestOutputConfigDir: Release
-        #X86ReleaseBundle:
-        #  BuildConfiguration: ReleaseBundle
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
+        X86ReleaseBundle:
+          BuildConfiguration: ReleaseBundle
+          BuildPlatform: x86
+          UTTestOutputConfigDir: Release
     pool:
       vmImage: vs2017-win2016
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
