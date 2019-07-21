@@ -22,6 +22,7 @@ class ButtonViewManager : public ContentControlViewManager {
   const char *GetName() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  facebook::react::ShadowNode *createShadow() const override;
 
   void UpdateProperties(
       ShadowNodeBase *nodeToUpdate,
@@ -29,9 +30,6 @@ class ButtonViewManager : public ContentControlViewManager {
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
-
- private:
-  winrt::Button::Click_revoker m_buttonClickRevoker{};
 };
 
 } // namespace polyester

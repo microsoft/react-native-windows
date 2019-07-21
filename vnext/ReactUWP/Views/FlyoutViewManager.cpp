@@ -82,6 +82,10 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   winrt::Flyout GetFlyout();
 
+  bool IsWindowed() override {
+    return true;
+  }
+
  private:
   void SetTargetFrameworkElement();
   void AdjustDefaultFlyoutStyle();
@@ -118,8 +122,9 @@ void FlyoutShadowNode::AddView(ShadowNode &child, int64_t index) {
   m_touchEventHanadler->AddTouchHandlers(childView);
   m_previewKeyboardEventHandlerOnRoot->hook(childView);
 
-  if (m_flyout != nullptr)
+  if (m_flyout != nullptr) {
     m_flyout.Content(childView.as<winrt::UIElement>());
+  }
 }
 
 void FlyoutShadowNode::createView() {
