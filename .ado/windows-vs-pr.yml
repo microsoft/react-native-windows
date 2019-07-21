@@ -326,7 +326,7 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM', 'ARM64'))
+        condition: and(succeeded(), notIn(variables['BuildPlatform'], 'ARM', 'ARM64'))
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
