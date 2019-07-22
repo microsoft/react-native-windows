@@ -130,8 +130,12 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   marginLeft: 50,
                 }}
                 selectedValue={this.state.placementOptions}
-                onValueChange={ value => this.setState({placementOptions: value })}>
-                { placementValues.map(item => <Picker.Item key={item} label={item} value={item} /> )}
+                onValueChange={value =>
+                  this.setState({placementOptions: value})
+                }>
+                {placementValues.map(item => (
+                  <Picker.Item key={item} label={item} value={item} />
+                ))}
               </Picker>
               <View
                 style={{
@@ -139,11 +143,12 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   marginLeft: 75,
                   marginTop: 10,
                 }}>
-                  <Button
-                    onPress={this._onPressTwo} 
-                    title={'Open Another Flyout'}
-                    ref={this._setRefTwo} />
-                </View>
+                <Button
+                  onPress={this._onPressTwo}
+                  title={'Open Another Flyout'}
+                  ref={this._setRefTwo}
+                />
+              </View>
             </View>
           </Flyout>
         )}
@@ -193,7 +198,6 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   _onFlyoutTwoDismissed = (_isOpen: boolean) => {
     this.setState({isFlyoutTwoVisible: false});
   };
-
 }
 
 export const displayName = (_undefined?: string) => {};
