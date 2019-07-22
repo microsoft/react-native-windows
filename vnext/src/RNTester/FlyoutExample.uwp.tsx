@@ -11,6 +11,7 @@ import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;
+  isInnerFlyoutVisible: boolean;
   buttonTitle: string;
   isLightDismissEnabled: boolean;
   popupCheckBoxState: boolean;
@@ -39,6 +40,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
   public state: IFlyoutExampleState = {
     isFlyoutVisible: false,
+    isInnerFlyoutVisible: false,
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
     popupCheckBoxState: true,
@@ -87,7 +89,8 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   justifyContent: 'center',
                   paddingTop: 10,
                   paddingBottom: 30,
-                }}>
+                }}
+                selectable={true}>
                 This is a flyout
               </Text>
               <Button onPress={this._onFlyoutButtonPressed} title="Close" />
@@ -104,13 +107,41 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   }
                 />
               </View>
-              <TextInput style={{height: 32, width: 100}} />
+              <Button
+                onPress={this._onFlyoutButtonPressed2}
+                title="Open Flyout 2"
+                ref={ref => {
+                  this._buttonRef = ref;
+                }}
+              />
+              <Flyout
+                isOpen={this.state.isInnerFlyoutVisible}
+                isLightDismissEnabled={true}
+                onDismiss={this._onInnerFlyoutDismissed}
+                target={this._buttonRef}
+                placement="bottom">
+                <View>
+                  <Text>test</Text>
+                </View>
+              </Flyout>
+              <Picker
+                style={{width: 200, height: 35}}
+                selectedValue={this.state.placementOptions}
+                onValueChange={value =>
+                  this.setState({placementOptions: value})
+                }>
+                {placementValues.map(item => (
+                  <Picker.Item key={item} label={item} value={item} />
+                ))}
+              </Picker>
             </View>
           </Flyout>
         )}
       </View>
     );
   }
+
+  private _buttonRef: React.ReactNode;
 
   private _setRef = (textInput: TextInput) => {
     this._textInput = textInput;
@@ -124,9 +155,17 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
   };
 
+  _onFlyoutButtonPressed2 = () => {
+    this.setState({isInnerFlyoutVisible: true});
+  };
+
   _onFlyoutDismissed = (_isOpen: boolean) => {
     this.setState({isFlyoutVisible: false});
     this.setState({buttonTitle: 'Open Flyout'});
+  };
+
+  _onInnerFlyoutDismissed = (_isOpen: boolean) => {
+    this.setState({isInnerFlyoutVisible: false});
   };
 }
 
