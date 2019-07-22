@@ -55,6 +55,9 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   }
 
   public render() {
+    const lorumIpsum =
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.';
+
     return (
       <View>
         <View style={{flexDirection: 'row', paddingTop: 20}}>
@@ -113,30 +116,33 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 style={{
                   justifyContent: 'center',
                   paddingTop: 10,
-                  marginLeft: 50
+                  marginLeft: 50,
                 }}>
                 Placement Options
               </Text>
               <Picker
-                style={{borderBottomWidth: 1,
+                style={{
+                  borderBottomWidth: 1,
                   borderTopWidth: 1,
                   borderLeftWidth: 1,
                   borderRightWidth: 1,
                   width: 200,
                   marginLeft: 50,
-               } } 
+                }}
                 selectedValue={this.state.placementOptions}
-                onValueChange={value => this.setState({placementOptions: value})}
-              >
-                { placementValues.map(item => <Picker.Item key={item} label={item} value={item} /> ) }
+                onValueChange={ value => this.setState({placementOptions: value })}>
+                { placementValues.map(item => <Picker.Item key={item} label={item} value={item} /> )}
               </Picker>
               <View
                 style={{
                   width: 150,
                   marginLeft: 75,
-                  marginTop: 10
+                  marginTop: 10,
                 }}>
-                  <Button onPress={this._onPressTwo} title={'Open Another Flyout'}  ref={this._setRefTwo} />
+                  <Button
+                    onPress={this._onPressTwo} 
+                    title={'Open Another Flyout'}
+                    ref={this._setRefTwo} />
                 </View>
             </View>
           </Flyout>
@@ -150,7 +156,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
             placement={this.state.placementOptions}>
             <View
               style={{backgroundColor: 'lightblue', width: 200, height: 300}}>
-              <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.</Text>
+              <Text>{lorumIpsum}</Text>
             </View>
           </Flyout>
         )}
