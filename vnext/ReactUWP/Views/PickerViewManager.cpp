@@ -46,6 +46,7 @@ class PickerShadowNode : public ShadowNodeBase {
   bool m_isEditableComboboxSupported;
 
   winrt::ComboBox::SelectionChanged_revoker m_comboBoxSelectionChangedRevoker{};
+  winrt::ComboBox::DropDownClosed_revoker m_comboBoxDropDownClosedRevoker{};
 };
 
 PickerShadowNode::PickerShadowNode() : Super() {
@@ -68,6 +69,9 @@ void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<winrt::ComboBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
+
+  combobox.AllowFocusOnInteraction(true);
+
   m_comboBoxSelectionChangedRevoker =
       combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
@@ -82,6 +86,14 @@ void PickerShadowNode::createView() {
           OnSelectionChanged(
               *instance, m_tag, std::move(value), index, std::move(text));
         }
+      });
+
+  m_comboBoxDropDownClosedRevoker =
+      combobox.DropDownClosed(winrt::auto_revoke, [=](auto &&, auto &&) {
+        // When the drop down closes, attempt to move focus to its anchor textbox
+        // to prevent cases where focus can land on an outer flyout content
+        // and therefore trigger a unexpected flyout dismissal
+        winrt::FocusManager::TryFocusAsync(combobox, winrt::FocusState::Programmatic);
       });
 }
 
