@@ -99,4 +99,4 @@ We are tracking the next set of work for React Native for Windows through [Miles
    - Strategic performance investments and test infrastructure bring up
    - React-Native-Windows targeting [WinUI 3.0](https://github.com/microsoft/microsoft-ui-xaml/blob/master/docs/roadmap.md#winui-3-q4-2019---2020). 
 
-Please see the [Roadmap 2019](blog/Roadmap2019.md) blog for more details. 
+Please see the [Roadmap 2019](Roadmap2019.md) blog for more details. 
