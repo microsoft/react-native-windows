@@ -104,6 +104,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/TouchableExample'),
   },
   {
+    key: 'TransferProperties',
+    module: require('./TransferProperties'),
+  },
+  {
     key: 'TransparentHitTestExample',
     module: require('react-native/RNTester/js/TransparentHitTestExample'),
   },
