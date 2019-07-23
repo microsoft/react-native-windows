@@ -19,10 +19,13 @@ void DeviceInfo::update() {
       GetForCurrentView();
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
-  // TODO: get window / parent element size
+  auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
+
+  // TODO: get parent element (not window) size
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
-      folly::dynamic::object("width", 100)("height", 100)(
+      folly::dynamic::object("width", window.Bounds().Width)(
+          "height", window.Bounds().Height)(
           "scale", static_cast<int>(displayInfo.ResolutionScale()) / 100)(
           "fontScale", uiSettings.TextScaleFactor())(
           "densityDpi", displayInfo.LogicalDpi()))(
