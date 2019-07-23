@@ -94,7 +94,7 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
 
       m_surfaceLoadedRevoker = surface.LoadCompleted(
           winrt::auto_revoke,
-          [weak_this = std::move(weak_this), surface](
+          [weak_this, surface](
               winrt::LoadedImageSurface const & /*sender*/,
               winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
             if (auto strong_this{weak_this.get()}) {
