@@ -90,10 +90,11 @@ void PickerShadowNode::createView() {
 
   m_comboBoxDropDownClosedRevoker =
       combobox.DropDownClosed(winrt::auto_revoke, [=](auto &&, auto &&) {
-        // When the drop down closes, attempt to move focus to its anchor textbox
-        // to prevent cases where focus can land on an outer flyout content
-        // and therefore trigger a unexpected flyout dismissal
-        winrt::FocusManager::TryFocusAsync(combobox, winrt::FocusState::Programmatic);
+        // When the drop down closes, attempt to move focus to its anchor
+        // textbox to prevent cases where focus can land on an outer flyout
+        // content and therefore trigger a unexpected flyout dismissal
+        winrt::FocusManager::TryFocusAsync(
+            combobox, winrt::FocusState::Programmatic);
       });
 }
 
