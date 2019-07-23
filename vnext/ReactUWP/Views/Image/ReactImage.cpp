@@ -74,7 +74,7 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
   try {
     m_imageSource = source;
     // get weak reference before any co_await calls
-    auto weak_this = get_weak();
+    auto weak_this{get_weak()};
 
     winrt::InMemoryRandomAccessStream memoryStream;
     if (needsDownload) {
