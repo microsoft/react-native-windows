@@ -73,6 +73,8 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
 
   try {
     m_imageSource = source;
+    // get weak reference before any co_await calls
+    auto weak_this{get_weak()};
 
     winrt::InMemoryRandomAccessStream memoryStream;
     if (needsDownload) {
@@ -92,7 +94,7 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
 
       m_surfaceLoadedRevoker = surface.LoadCompleted(
           winrt::auto_revoke,
-          [weak_this{get_weak()}, surface](
+          [weak_this, surface](
               winrt::LoadedImageSurface const & /*sender*/,
               winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
             if (auto strong_this{weak_this.get()}) {
