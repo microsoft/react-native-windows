@@ -21,8 +21,8 @@ void DeviceInfo::update() {
 
   auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
 
-      // TODO: get parent element (not window) size
-      m_dimensions = folly::dynamic::object(
+  // TODO: get parent element (not window) size
+  m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
       folly::dynamic::object("width", window.Bounds().Width)(
           "height", window.Bounds().Height)(
