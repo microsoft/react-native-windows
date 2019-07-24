@@ -41,7 +41,6 @@ jobs:
         displayName: Beachball Publish (for master)
         inputs:
           script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext
-          workingDirectory: vnext
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
