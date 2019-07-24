@@ -349,7 +349,7 @@ jobs:
       - template: templates/prep-and-pack-nuget.yml
 
   - job: RNWFormatting
-    displayName: Verify native code formatting
+    displayName: Verify change files + formatting
     pool:
       vmImage: vs2017-win2016
     steps:
@@ -364,6 +364,11 @@ jobs:
         displayName: yarn install
         inputs:
           script: yarn install --frozen-lockfile
+
+      - task: CmdLine@2
+        displayName: Check for change files
+        inputs:
+          script: yarn checkchange
 
       - task: CmdLine@2
         displayName: yarn format:verify
