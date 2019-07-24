@@ -1,0 +1,8 @@
+{
+  "comment": "export unicode functions via dllexport instead of .def files, many were not being exported",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "andrewh@microsoft.com",
+  "commit": "7c4b62a0003f85bfa011d44be113a95db1346560",
+  "date": "2019-07-24T23:36:54.926Z"
+}
