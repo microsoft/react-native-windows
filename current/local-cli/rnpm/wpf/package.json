@@ -21,6 +21,6 @@
     "react-native": ">=0.31.0"
   },
   "dependencies": {
-    "rnpm-plugin-windows": ">=0.2.9"
+    "rnpm-plugin-windows": ">=0.2.11 <1.0.0"
   }
 }
