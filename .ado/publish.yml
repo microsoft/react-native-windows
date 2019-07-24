@@ -40,20 +40,20 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
         displayName: Beachball Publish (for other branches)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -y
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
         displayName: Set Version Env Vars
         name: setVersionEnvVars
         inputs:
-          script: node ../.ado/setVersionEnvVars.js
+          script: node ./.ado/setVersionEnvVars.js
 
   - job: RnwNativeBuild
     displayName: React-Native-Windows Native Build
@@ -108,7 +108,7 @@ jobs:
       displayName: Set Version Env Vars
       name: setVersionEnvVars
       inputs:
-        script: node ../.ado/setVersionEnvVars.js
+        script: node ./.ado/setVersionEnvVars.js
 
     - template: templates/vs-build.yml
       parameters:
