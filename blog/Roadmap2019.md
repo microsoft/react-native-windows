@@ -10,7 +10,7 @@ The ["current"](https://github.com/microsoft/react-native-windows/tree/master/cu
 Please continue to report issues as you encounter them, but be sure to use the [correct template](https://github.com/microsoft/react-native-windows/issues/new?assignees=rozele&labels=.NET&template=DOTNET.md) for issues related to the existing `react-native-windows` package.
 
 ## vnext
-The ["vnext"](https://github.com/microsoft/react-native-windows/tree/master/vnext) subdirectory holds the newer, high performance implementation for `react-native-windows` written in C++ to better align with the shared C++ react-native core as it evolves. This is the new architecture where all the ongoing feature investments are being made at this time. You can read more about this effort [here](vnext/README.md). 
+The ["vnext"](https://github.com/microsoft/react-native-windows/tree/master/vnext) subdirectory holds the newer, high performance implementation for `react-native-windows` written in C++ to better align with the shared C++ react-native core as it evolves. This is the new architecture where all the ongoing feature investments are being made at this time. You can read more about this effort [here](/vnext/README.md). 
 
 Our intent is to provide a compatibility layer for vnext that will support existing apps, view managers, and native modules written in C# with minimal breaking changes.
 
