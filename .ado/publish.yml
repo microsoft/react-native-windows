@@ -115,7 +115,6 @@ jobs:
       parameters:
         BuildConfiguration: $(BuildConfiguration)
         BuildPlatform: $(BuildPlatform)
-      env: 
         RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
         RNW_PKG_VERSION: $(RNW_PKG_VERSION)
 
