@@ -117,7 +117,7 @@ jobs:
         BuildPlatform: $(BuildPlatform)
       env: 
         RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
-        RNW_PKG_VERSION:$(RNW_PKG_VERSION)
+        RNW_PKG_VERSION: $(RNW_PKG_VERSION)
 
     - template: templates/publish-build-artifacts-for-nuget.yml
 
