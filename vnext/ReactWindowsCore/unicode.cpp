@@ -103,7 +103,9 @@ REACTWINDOWS_EXPORT std::wstring utf8ToUtf16(const std::string_view &utf8) {
 }
 #endif
 
-REACTWINDOWS_EXPORT std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Len) {
+REACTWINDOWS_EXPORT std::string utf16ToUtf8(
+    const wchar_t *utf16,
+    size_t utf16Len) {
   std::string utf8{};
 
   // A small optimization.
@@ -176,7 +178,9 @@ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Le
   return utf8;
 }
 
-REACTWINDOWS_EXPORT std::string utf16ToUtf8(const char16_t *utf16, size_t utf16Len) {
+REACTWINDOWS_EXPORT std::string utf16ToUtf8(
+    const char16_t *utf16,
+    size_t utf16Len) {
   return utf16ToUtf8(
       utilities::checkedReinterpretCast<const wchar_t *>(utf16), utf16Len);
 }
