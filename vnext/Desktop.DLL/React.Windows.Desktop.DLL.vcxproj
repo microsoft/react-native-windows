@@ -113,7 +113,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Version.rc" />
+    <ResourceCompile Include="Version.rc">
+      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!='' AND '$(RNW_PKG_VERSION)'!=''">RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);RNW_PKG_VERSION=$(RNW_PKG_VERSION);_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

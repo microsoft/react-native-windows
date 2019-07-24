@@ -61,7 +61,6 @@ jobs:
         displayName: yarn install (Using microsoft/react-native)
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
         # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
@@ -71,7 +70,6 @@ jobs:
         displayName: yarn install (Using facebook/react-native)
         inputs:
           script: yarn install
-          workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
       - template: templates/stop-packagers.yml
@@ -158,7 +156,6 @@ jobs:
         displayName: yarn install (local react-native-windows)
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn build (local react-native-windows)
@@ -261,7 +258,6 @@ jobs:
         displayName: yarn install
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
 
       - template: templates/stop-packagers.yml
 
@@ -368,7 +364,6 @@ jobs:
         displayName: yarn install
         inputs:
           script: yarn install --frozen-lockfile
-          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: yarn format:verify

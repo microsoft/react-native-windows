@@ -1,0 +1,19 @@
+{
+  "name": "react-native-windows-extended",
+  "entries": [
+    {
+      "date": "Wed, 24 Jul 2019 21:03:23 GMT",
+      "tag": "react-native-windows-extended_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Initial commit",
+            "author": "acoates@microsoft.com",
+            "commit": "a0e9f6710d762a92d67a40c939dffa52914130b2"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -160,6 +160,11 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   existingPkgJson.peerDependencies['react-native'] = rnDependency;
   existingPkgJson.devDependencies['react-native'] = pkgJson.version;
 
+  const rnwePkgJsonPath = path.resolve(__dirname, '../packages/react-native-windows-extended/package.json');
+  let rnwePkgJson = JSON.parse(fs.readFileSync(rnwePkgJsonPath, 'utf8'));
+  rnwePkgJson.peerDependencies['react-native'] = rnDependency;
+  rnwePkgJson.devDependencies['react-native'] = pkgJson.version;
+
   branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
 
   exec(`npm install -g yarn`);
@@ -167,6 +172,7 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   exec(`git checkout -b ${branchName} --track origin/${finalTargetBranchName}`);
   exec(`git pull`);
   fs.writeFileSync(pkgJsonPath, JSON.stringify(existingPkgJson, null, 2));
+  fs.writeFileSync(rnwePkgJsonPath, JSON.stringify(rnwePkgJson, null, 2));
   
   process.chdir(path.resolve(__dirname, '../vnext'));
   
@@ -175,6 +181,7 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
 
   exec(`git add ${path.resolve(__dirname, '../vnext/yarn.lock')}`);
   exec(`git add ${pkgJsonPath}`);
+  exec(`git add ${rnwePkgJsonPath}`)
   exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
   exec(`git push origin ${branchName}`);
 
