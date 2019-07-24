@@ -108,7 +108,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
 
   winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
   winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
-  int64_t m_token;
+  int64_t m_tokenContentPropertyChangeCallback;
 };
 
 thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
@@ -180,20 +180,21 @@ void FlyoutShadowNode::createView() {
   // flyout presenter.
   m_flyout.AllowFocusOnInteraction(false);
 
-  m_token = m_flyout.RegisterPropertyChangedCallback(
-      winrt::Flyout::ContentProperty(),
-      [=](winrt::DependencyObject sender, winrt::DependencyProperty dp) {
-        if (auto flyout = sender.try_as<winrt::Flyout>()) {
-          if (auto content = flyout.Content()) {
-            auto children = content.GetChildrenInTabFocusOrder();
+  m_tokenContentPropertyChangeCallback =
+      m_flyout.RegisterPropertyChangedCallback(
+          winrt::Flyout::ContentProperty(),
+          [=](winrt::DependencyObject sender, winrt::DependencyProperty dp) {
+            if (auto flyout = sender.try_as<winrt::Flyout>()) {
+              if (auto content = flyout.Content()) {
+                auto children = content.GetChildrenInTabFocusOrder();
 
-            for (auto child : children) {
-              if (auto fe = child.try_as<winrt::FrameworkElement>())
-                fe.AllowFocusOnInteraction(true);
+                for (auto child : children) {
+                  if (auto fe = child.try_as<winrt::FrameworkElement>())
+                    fe.AllowFocusOnInteraction(true);
+                }
+              }
             }
-          }
-        }
-      });
+          });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
