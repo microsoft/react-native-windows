@@ -366,6 +366,11 @@ jobs:
           script: yarn install --frozen-lockfile
 
       - task: CmdLine@2
+        displayName: Check for change files
+        inputs:
+          script: yarn checkchange
+
+      - task: CmdLine@2
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
