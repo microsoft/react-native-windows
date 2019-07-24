@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Wed, 24 Jul 2019 23:18:37 GMT",
+      "tag": "react-native-windows-extended_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add validation for change files",
+            "author": "acoates@microsoft.com",
+            "commit": "2931402c0ab502fcd5eeae7bb44a934840013e0f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jul 2019 21:03:23 GMT",
       "tag": "react-native-windows-extended_v0.0.2",
       "version": "0.0.2",
