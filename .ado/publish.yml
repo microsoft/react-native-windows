@@ -105,11 +105,11 @@ jobs:
         workingDirectory: vnext
       condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ../.ado/setVersionEnvVars.js
+    - task: CmdLine@2
+      displayName: Set Version Env Vars
+      name: setVersionEnvVars
+      inputs:
+        script: node ../.ado/setVersionEnvVars.js
 
     - template: templates/vs-build.yml
       parameters:
