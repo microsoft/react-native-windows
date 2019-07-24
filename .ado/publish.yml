@@ -11,6 +11,7 @@ trigger:
     include:
       - vnext/*
     exclude:
+      - change/*
       - vnext/package.json
       - vnext/yarn.lock
       - vnext/Desktop.DLL/Version.rc
@@ -37,21 +38,23 @@ jobs:
       - template: templates/npm-install-and-build.yml
 
       - task: CmdLine@2
-        displayName: Update package version
-        name: updateVersionTask
+        displayName: Beachball Publish (for master)
         inputs:
-          script: node ../.ado/updateVersion.js
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext
           workingDirectory: vnext
+        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - task: Npm@1
-        displayName: npm public publish (vnext)
+      - task: CmdLine@2
+        displayName: Beachball Publish (for other branches)
         inputs:
-          command: custom
-          workingDir: vnext
-          verbose: false
-          customCommand: publish --access public --tag $(npmTag)
-          customEndpoint: 'React-Native-Windows NPM'
-          publishEndpoint: 'React-Native-Windows NPM'
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -y
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+
+      - task: CmdLine@2
+        displayName: Set Version Env Vars
+        name: setVersionEnvVars
+        inputs:
+          script: node ../.ado/setVersionEnvVars.js
 
   - job: RnwNativeBuild
     displayName: React-Native-Windows Native Build
@@ -92,13 +95,27 @@ jobs:
       inputs:
         script: git checkout $(publishCommitId)
 
-
     - template: templates/npm-install-and-build.yml
+
+    # Update version numbers as will be done by npm publish
+    - task: CmdLine@2
+      displayName: Beachball bump
+      inputs:
+        script: node ./node_modules/beachball/bin/beachball.js bump
+        workingDirectory: vnext
+      condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+
+      - task: CmdLine@2
+        displayName: Set Version Env Vars
+        name: setVersionEnvVars
+        inputs:
+          script: node ../.ado/setVersionEnvVars.js
 
     - template: templates/vs-build.yml
       parameters:
         BuildConfiguration: $(BuildConfiguration)
         BuildPlatform: $(BuildPlatform)
+      env: { RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR), RNW_PKG_VERSION:$(RNW_PKG_VERSION) }
 
     - template: templates/publish-build-artifacts-for-nuget.yml
 
@@ -117,8 +134,7 @@ jobs:
     pool:
       name: OE Standard Pool
     variables:
-      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.publishCommitId'] ]
-      npmVersion: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.npmVersion'] ]
+      npmVersion: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.npmVersion'] ]
 
     steps:
       - checkout: none #skip checking out the default repository resource
@@ -130,7 +146,7 @@ jobs:
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
-          publishCommitId: $(publishCommitId)
+          publishCommitId: $(Build.SourceVersion)
           npmVersion: $(npmVersion)
 
       - task: NuGetCommand@2
