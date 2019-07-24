@@ -54,7 +54,10 @@
     <ClCompile>
       <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--
+        REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
+      -->
+      <PreprocessorDefinitions>REACTWINDOWS_BUILD;FOLLY_NO_CONFIG;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>

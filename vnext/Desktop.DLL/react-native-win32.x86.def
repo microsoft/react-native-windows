@@ -44,8 +44,6 @@ EXPORTS
 ?toJson@folly@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABUdynamic@1@@Z
 ?typeName@dynamic@folly@@QBEPBDXZ
 ?updateProperties@ShadowNode@react@facebook@@UAEX$$QBUdynamic@folly@@@Z
-?utf16ToUtf8@unicode@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?utf8ToUtf16@unicode@react@facebook@@YG?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
 ?Make@IWebSocket@React@Microsoft@@SG?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z

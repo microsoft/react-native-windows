@@ -9,6 +9,8 @@
 #include <string_view>
 #endif
 
+#include "ReactWindowsAPI.h"
+
 namespace facebook {
 namespace react {
 namespace unicode {
@@ -50,11 +52,11 @@ class UnicodeConversionException : public std::runtime_error {
 //
 // For (2), utf8 must be null terminated. The behavior is undefined otherwise.
 //
-/* (1) */ std::wstring utf8ToUtf16(const char *utf8, size_t utf8Len);
-/* (2) */ std::wstring utf8ToUtf16(const char *utf8);
-/* (3) */ std::wstring utf8ToUtf16(const std::string &utf8);
+/* (1) */ REACTWINDOWS_EXPORT std::wstring utf8ToUtf16(const char *utf8, size_t utf8Len);
+/* (2) */ REACTWINDOWS_EXPORT std::wstring utf8ToUtf16(const char *utf8);
+/* (3) */ REACTWINDOWS_EXPORT std::wstring utf8ToUtf16(const std::string &utf8);
 #if _HAS_CXX17
-/* (4) */ std::wstring utf8ToUtf16(const std::string_view &utf8);
+/* (4) */ REACTWINDOWS_EXPORT std::wstring utf8ToUtf16(const std::string_view &utf8);
 #endif
 
 // The following functions convert UTF-16BE strings to UTF-8 strings. Their
@@ -67,15 +69,15 @@ class UnicodeConversionException : public std::runtime_error {
 // For (3) and (4), utf16 must be null terminated. The behavior is undefined
 // otherwise.
 //
-/* (1) */ std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Len);
-/* (2) */ std::string utf16ToUtf8(const char16_t *utf16, size_t utf16Len);
-/* (3) */ std::string utf16ToUtf8(const wchar_t *utf16);
-/* (4) */ std::string utf16ToUtf8(const char16_t *utf16);
-/* (5) */ std::string utf16ToUtf8(const std::wstring &utf16);
-/* (6) */ std::string utf16ToUtf8(const std::u16string &utf16);
+/* (1) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Len);
+/* (2) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const char16_t *utf16, size_t utf16Len);
+/* (3) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const wchar_t *utf16);
+/* (4) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const char16_t *utf16);
+/* (5) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const std::wstring &utf16);
+/* (6) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const std::u16string &utf16);
 #if _HAS_CXX17
-/* (7) */ std::string utf16ToUtf8(const std::wstring_view &utf16);
-/* (8) */ std::string utf16ToUtf8(const std::u16string_view &utf16);
+/* (7) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const std::wstring_view &utf16);
+/* (8) */ REACTWINDOWS_EXPORT std::string utf16ToUtf8(const std::u16string_view &utf16);
 #endif
 
 } // namespace unicode
