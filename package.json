@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "change": "node ./node_modules/beachball/bin/beachball.js change",
-    "checkchange": "node ./node_modules/beachball/bin/beachball.js check || echo To run \"beachball\" and generate change files, run \"yarn check\" from the root of the repo.",
+    "checkchange": "node ./node_modules/beachball/bin/beachball.js check",
     "clean": "lerna run clean"
   },
   "repository": {

@@ -349,7 +349,7 @@ jobs:
       - template: templates/prep-and-pack-nuget.yml
 
   - job: RNWFormatting
-    displayName: Verify native code formatting
+    displayName: Verify change files + formatting
     pool:
       vmImage: vs2017-win2016
     steps:
