@@ -101,7 +101,6 @@ jobs:
       displayName: Beachball bump
       inputs:
         script: node ./node_modules/beachball/bin/beachball.js bump
-        workingDirectory: vnext
       condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
     - task: CmdLine@2
