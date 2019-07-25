@@ -1,6 +1,8 @@
 parameters:
   BuildConfiguration: ''
   BuildPlatform: ''
+  RNW_PKG_VERSION_STR: 'Private Build'
+  RNW_PKG_VERSION: '1000,0,0,0'
 
 steps:
 
@@ -61,3 +63,6 @@ steps:
       #logProjectEvents: false # Optional
       #createLogFile: false # Optional
       #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
+    env: 
+      RNW_PKG_VERSION_STR: ${{ parameters.RNW_PKG_VERSION_STR }}
+      RNW_PKG_VERSION: ${{ parameters.RNW_PKG_VERSION }}

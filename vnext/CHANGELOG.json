@@ -1,0 +1,33 @@
+{
+  "name": "react-native-windows",
+  "entries": [
+    {
+      "date": "Thu, 25 Jul 2019 00:29:50 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.106",
+      "version": "0.59.0-vnext.106",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixes to ReactImage lifetime with downloading Images",
+            "author": "acoates@microsoft.com",
+            "commit": "7c3709fb706341455fcf66aedb184530742253c6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jul 2019 21:03:23 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.105",
+      "version": "0.59.0-vnext.105",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Hookup beachball for publishing",
+            "author": "acoates@microsoft.com",
+            "commit": "a0e9f6710d762a92d67a40c939dffa52914130b2"
+          }
+        ]
+      }
+    }
+  ]
+}

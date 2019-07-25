@@ -1,54 +1,32 @@
 {
-  "name": "react-native-windows",
-  "version": "0.59.0-vnext.106",
-  "license": "MIT",
+  "name": "react-native-windows-extended",
+  "version": "0.0.2",
+  "description": "Additional react-native-windows components that are not part of RN lean-core.",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:microsoft/react-native-windows.git",
-    "directory": "vnext"
+    "directory": "packages/react-native-windows-extended"
   },
-  "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
-  "types": "index.d.ts",
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "react-native start",
-    "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
-    "format:verify": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
     "watch": "tsc -w"
   },
-  "rnpm": {
-    "haste": {
-      "platforms": [
-        "uwp"
-      ],
-      "providesModuleNodeModules": [
-        "react-native-windows"
-      ]
-    },
-    "plugin": "./local-cli/index.js"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.4.0",
-    "create-react-class": "^15.6.3",
-    "fbjs": "^1.0.0",
-    "prop-types": "^15.5.8",
-    "react-native-local-cli": "^1.0.0-alpha.5",
-    "react-timer-mixin": "^0.13.2",
-    "regenerator-runtime": "^0.13.2",
-    "shelljs": "^0.7.8",
-    "username": "^3.0.0",
-    "uuid": "^2.0.1",
-    "xml-parser": "^1.2.1"
-  },
+  "license": "MIT",
+  "private": false,
+  "dependencies": {},
   "devDependencies": {
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/react": "16.8.15",
     "@types/react-native": "~0.57.51",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
     "clang-format": "1.2.4",
     "eslint": "5.1.0",
     "eslint-plugin-prettier": "2.6.0",
@@ -64,9 +42,7 @@
   },
   "beachball": {
     "disallowedChangeTypes": [
-      "major",
-      "minor",
-      "patch"
+      "major"
     ]
   }
 }
