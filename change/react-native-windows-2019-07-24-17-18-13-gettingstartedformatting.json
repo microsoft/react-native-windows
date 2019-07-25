@@ -1,8 +1,0 @@
-{
-  "comment": "Fixes to ReactImage lifetime with downloading Images",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "7c3709fb706341455fcf66aedb184530742253c6",
-  "date": "2019-07-25T00:18:13.748Z"
-}
