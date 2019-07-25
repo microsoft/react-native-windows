@@ -157,12 +157,14 @@ void FlyoutShadowNode::createView() {
       m_flyout.Closed(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
         if (!m_updating && instance != nullptr) {
-          // When the flyout closes, attempt to move focus to
-          // its anchor element to prevent cases where focus can land on
-          // an outer flyout content and therefore trigger a unexpected flyout
-          // dismissal
-          winrt::FocusManager::TryFocusAsync(
-              m_targetElement, winrt::FocusState::Programmatic);
+          if (m_targetElement != nullptr) {
+            // When the flyout closes, attempt to move focus to
+            // its anchor element to prevent cases where focus can land on
+            // an outer flyout content and therefore trigger a unexpected flyout
+            // dismissal
+            winrt::FocusManager::TryFocusAsync(
+                m_targetElement, winrt::FocusState::Programmatic);
+          }
 
           OnFlyoutClosed(*instance, m_tag, false);
         }
