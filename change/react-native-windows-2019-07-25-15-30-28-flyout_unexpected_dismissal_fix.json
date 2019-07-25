@@ -1,0 +1,8 @@
+{
+  "comment": "Fix for flyouts unexpectedly dismissing when opening picker",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "ruaraki@microsoft.com",
+  "commit": "9986ed1f6ddab24d1839d6ebde652f063e3c3679",
+  "date": "2019-07-25T22:30:27.997Z"
+}
