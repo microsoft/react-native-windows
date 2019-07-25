@@ -178,8 +178,7 @@ void FlyoutShadowNode::createView() {
   // However, turning AllowFocusOnInteraction off at the root of the flyout and
   // flyout presenter turns it off for all children of the flyout. In order to
   // make sure that interactions with the content of the flyout still work as
-  // expected, AllowFocusOnInteraction is turned on for all children of the
-  // flyout presenter.
+  // expected, AllowFocusOnInteraction is turned on the content element.
   m_flyout.AllowFocusOnInteraction(false);
 
   m_tokenContentPropertyChangeCallback =
@@ -188,11 +187,8 @@ void FlyoutShadowNode::createView() {
           [=](winrt::DependencyObject sender, winrt::DependencyProperty dp) {
             if (auto flyout = sender.try_as<winrt::Flyout>()) {
               if (auto content = flyout.Content()) {
-                auto children = content.GetChildrenInTabFocusOrder();
-
-                for (auto child : children) {
-                  if (auto fe = child.try_as<winrt::FrameworkElement>())
-                    fe.AllowFocusOnInteraction(true);
+                if (auto fe = content.try_as<winrt::FrameworkElement>()) {
+                  fe.AllowFocusOnInteraction(true);
                 }
               }
             }
