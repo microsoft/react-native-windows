@@ -52,7 +52,7 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   ImageSource Source() {
     return m_imageSource;
   }
-  winrt::fire_and_forget Source(ImageSource source);
+  winrt::fire_and_forget Source(ImageSource source, const winrt::Windows::Foundation::Size &maxSize);
 
   react::uwp::ResizeMode ResizeMode() {
     return m_brush->ResizeMode();

@@ -30,9 +30,14 @@ class ImageViewManager : public FrameworkElementViewManager {
   XamlView CreateViewCore(int64_t tag) override;
 
  private:
+  winrt::Windows::Foundation::Size getMaxSize(const folly::dynamic &reactDiffMap);
+  float tryGetPropAsFloat(
+      const folly::dynamic &reactDiffMap,
+      const char *prop);
   void setSource(
       winrt::Windows::UI::Xaml::Controls::Canvas canvas,
-      const folly::dynamic &sources);
+      const folly::dynamic &sources,
+      const winrt::Windows::Foundation::Size &maxSize);
 };
 } // namespace uwp
 } // namespace react

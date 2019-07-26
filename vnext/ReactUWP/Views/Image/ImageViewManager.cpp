@@ -130,7 +130,7 @@ void ImageViewManager::UpdateProperties(
     const folly::dynamic &propertyValue{pair.second};
 
     if (propertyName == "source") {
-      setSource(canvas, propertyValue);
+      setSource(canvas, propertyValue, getMaxSize(reactDiffMap));
     } else if (propertyName == "resizeMode") {
       auto resizeMode{
           json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
@@ -161,9 +161,39 @@ void ImageViewManager::EmitImageEvent(
   reactInstance->DispatchEvent(tag, eventName, std::move(eventData));
 }
 
+winrt::Size ImageViewManager::getMaxSize(const folly::dynamic &reactDiffMap) {
+  float width{0};
+  float height{0};
+
+  width = tryGetPropAsFloat(reactDiffMap, "maxWidth");
+  if (width == 0) {
+    width = tryGetPropAsFloat(reactDiffMap, "width");
+  }
+
+  height = tryGetPropAsFloat(reactDiffMap, "maxHeight");
+  if (height == 0) {
+    height = tryGetPropAsFloat(reactDiffMap, "height");
+  }
+
+  return {width, height};
+}
+
+float ImageViewManager::tryGetPropAsFloat(
+    const folly::dynamic &reactDiffMap,
+    const char* prop) {
+  if (reactDiffMap.find(prop) != reactDiffMap.items().end() &&
+      reactDiffMap[prop].isNumber()) {
+    return folly::to<float>(reactDiffMap[prop].asDouble());
+  }
+
+  return 0;
+}
+
 void ImageViewManager::setSource(
     winrt::Canvas canvas,
-    const folly::dynamic &data) {
+    const folly::dynamic &data,
+    const winrt::Size &maxSize) {
+
   auto instance{m_wkReactInstance.lock()};
   if (instance == nullptr)
     return;
@@ -174,7 +204,7 @@ void ImageViewManager::setSource(
   auto reactImage{canvas.as<ReactImage>()};
 
   EmitImageEvent(canvas, "topLoadStart", sources[0]);
-  reactImage->Source(sources[0]);
+  reactImage->Source(sources[0], maxSize);
 }
 
 folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants()
