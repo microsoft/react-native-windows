@@ -1,0 +1,8 @@
+{
+  "comment": "change process.env.TEMP to os.tmpdir()",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "commit": "d00df17e45a8142c5581a4174f600eeef42fdee2",
+  "date": "2019-07-26T23:52:24.691Z"
+}
