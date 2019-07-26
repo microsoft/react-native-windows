@@ -1,8 +1,0 @@
-{
-  "comment": "use win32 file api to avoid runtime broker slowing us down",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "stecrain@microsoft.com",
-  "commit": "6a9d6e7e6112f6b963b9a5c0079defbad4272f06",
-  "date": "2019-07-26T02:36:19.282Z"
-}

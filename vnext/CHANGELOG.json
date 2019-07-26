@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jul 2019 05:43:01 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.107",
+      "version": "0.59.0-vnext.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "use win32 file api to avoid runtime broker slowing us down",
+            "author": "stecrain@microsoft.com",
+            "commit": "6a9d6e7e6112f6b963b9a5c0079defbad4272f06"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Jul 2019 00:29:50 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.106",
       "version": "0.59.0-vnext.106",
