@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Jul 2019 05:43:01 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jul 2019 07:23:20 GMT and should not be manually modified.
+
+## 0.59.0-vnext.108
+Fri, 26 Jul 2019 07:23:20 GMT
+
+### Changes
+
+- Fix for flyouts unexpectedly dismissing when opening picker (ruaraki@microsoft.com)
 
 ## 0.59.0-vnext.107
 Fri, 26 Jul 2019 05:43:01 GMT

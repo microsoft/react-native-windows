@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jul 2019 07:23:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.108",
+      "version": "0.59.0-vnext.108",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix for flyouts unexpectedly dismissing when opening picker",
+            "author": "ruaraki@microsoft.com",
+            "commit": "9986ed1f6ddab24d1839d6ebde652f063e3c3679"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jul 2019 05:43:01 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.107",
       "version": "0.59.0-vnext.107",
