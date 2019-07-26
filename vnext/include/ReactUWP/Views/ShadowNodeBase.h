@@ -89,6 +89,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   int64_t GetParent() const {
     return m_parent;
   }
+  virtual bool IsWindowed() {
+    return false;
+  }
 
   void ReplaceView(XamlView view);
 

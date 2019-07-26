@@ -73,5 +73,8 @@
     },
     "plugin": "./local-cli/index.js",
     "platform": "./local-cli/platform.js"
+  },
+  "beachball": {
+    "shouldPublish": false
   }
 }
