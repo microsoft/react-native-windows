@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jul 2019 08:32:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.109",
+      "version": "0.59.0-vnext.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add null checks to fix crashes with reload / shutdown with pending text updates",
+            "author": "andrewh@microsoft.com",
+            "commit": "65e7555091669243138b490a111a79b72d7879e0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jul 2019 07:23:20 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.108",
       "version": "0.59.0-vnext.108",

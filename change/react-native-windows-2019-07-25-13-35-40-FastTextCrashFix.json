@@ -1,8 +1,0 @@
-{
-  "comment": "add null checks to fix crashes with reload / shutdown with pending text updates",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "andrewh@microsoft.com",
-  "commit": "65e7555091669243138b490a111a79b72d7879e0",
-  "date": "2019-07-25T20:35:40.904Z"
-}

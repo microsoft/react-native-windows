@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Jul 2019 07:23:20 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jul 2019 08:32:04 GMT and should not be manually modified.
+
+## 0.59.0-vnext.109
+Fri, 26 Jul 2019 08:32:04 GMT
+
+### Changes
+
+- add null checks to fix crashes with reload / shutdown with pending text updates (andrewh@microsoft.com)
 
 ## 0.59.0-vnext.108
 Fri, 26 Jul 2019 07:23:20 GMT
