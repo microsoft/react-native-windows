@@ -105,6 +105,10 @@ packages/
 *.nuget.props
 *.nuget.targets
 
+#Allow root packages folder though
+!/packages
+
+
 #ncrunch
 *ncrunch*
 *crunch*.local.xml
