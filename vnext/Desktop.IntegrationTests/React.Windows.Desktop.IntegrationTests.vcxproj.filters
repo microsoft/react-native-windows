@@ -33,9 +33,6 @@
     <ClCompile Include="HttpResourceIntegrationTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="TestMessageQueueThread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DesktopTestRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DesktopTestInstance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TestMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebSocketServer.h">

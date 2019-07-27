@@ -23,7 +23,7 @@ var UIManager = require('UIManager');
 var View = require('View');
 var ViewPropTypes = require('ViewPropTypes');
 
-var SplitViewConsts = UIManager.WindowsSplitView.Constants;
+var SplitViewConsts = UIManager.getViewManagerConfig('WindowsSplitView').Constants;
 
 var createReactClass = require('create-react-class');
 var dismissKeyboard = require('dismissKeyboard');
@@ -182,7 +182,7 @@ var SplitViewWindows = createReactClass({
   openPane: function() {
     UIManager.dispatchViewManagerCommand(
       this._getPaneLayoutHandle(),
-      UIManager.WindowsSplitView.Commands.openPane,
+      UIManager.getViewManagerConfig('WindowsSplitView').Commands.openPane,
       null
     );
   },
@@ -193,7 +193,7 @@ var SplitViewWindows = createReactClass({
   closePane: function() {
     UIManager.dispatchViewManagerCommand(
       this._getPaneLayoutHandle(),
-      UIManager.WindowsSplitView.Commands.closePane,
+      UIManager.getViewManagerConfig('WindowsSplitView').Commands.closePane,
       null
     );
   },

@@ -44,13 +44,18 @@ Cpp11BracedListStyle: true
 DerivePointerAlignment: false
 DisableFormat:   false
 ForEachMacros:   [ FOR_EACH_RANGE, FOR_EACH, ]
+IncludeBlocks: Preserve
 IncludeCategories:
-  - Regex:           '^<.*\.h(pp)?>'
+  - Regex:           'pch.h'
+    Priority:        -1
+  - Regex:           '.*\.g\..*'
     Priority:        1
-  - Regex:           '^<.*'
+  - Regex:           '^<.*\.h(pp)?>'
     Priority:        2
-  - Regex:           '.*'
+  - Regex:           '^<.*'
     Priority:        3
+  - Regex:           '.*'
+    Priority:        4
 IndentCaseLabels: true
 IndentWidth:     2
 IndentWrappedFunctionNames: false

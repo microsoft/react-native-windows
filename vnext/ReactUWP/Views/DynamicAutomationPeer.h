@@ -37,6 +37,8 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
 
   bool IsEnabledCore() const;
 
+  winrt::hstring GetItemStatusCore() const;
+
   // IInvokeProvider
   void Invoke() const;
 
@@ -63,9 +65,17 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   winrt::Windows::UI::Xaml::Automation::ToggleState ToggleState() const;
   void Toggle() const;
 
+  // IExpandCollapseProvider
+  winrt::Windows::UI::Xaml::Automation::ExpandCollapseState
+  ExpandCollapseState() const;
+  void Expand() const;
+  void Collapse() const;
+
  private:
   winrt::hstring GetContentName() const;
   winrt::react::uwp::AccessibilityRoles GetAccessibilityRole() const;
+  bool HasAccessibilityState(
+      winrt::react::uwp::AccessibilityStates state) const;
   bool GetAccessibilityState(
       winrt::react::uwp::AccessibilityStates state) const;
   winrt::react::uwp::AccessibilityInvokeEventHandler

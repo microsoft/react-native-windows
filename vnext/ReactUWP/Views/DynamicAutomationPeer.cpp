@@ -113,14 +113,25 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(
        accessibilityRole == winrt::react::uwp::AccessibilityRoles::Radio)) {
     return *this;
   } else if (
-      patternInterface == winrt::PatternInterface::Selection ||
-      patternInterface == winrt::PatternInterface::SelectionItem) {
+      (patternInterface == winrt::PatternInterface::Selection ||
+       patternInterface == winrt::PatternInterface::SelectionItem) &&
+      HasAccessibilityState(winrt::react::uwp::AccessibilityStates::Selected)) {
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::Toggle &&
       (accessibilityRole == winrt::react::uwp::AccessibilityRoles::CheckBox ||
        accessibilityRole == winrt::react::uwp::AccessibilityRoles::Switch ||
-       accessibilityRole == winrt::react::uwp::AccessibilityRoles::Radio)) {
+       accessibilityRole == winrt::react::uwp::AccessibilityRoles::Radio) &&
+      (HasAccessibilityState(winrt::react::uwp::AccessibilityStates::Checked) ||
+       HasAccessibilityState(
+           winrt::react::uwp::AccessibilityStates::Unchecked))) {
+    return *this;
+  } else if (
+      patternInterface == winrt::PatternInterface::ExpandCollapse &&
+      (HasAccessibilityState(
+           winrt::react::uwp::AccessibilityStates::Expanded) ||
+       HasAccessibilityState(
+           winrt::react::uwp::AccessibilityStates::Collapsed))) {
     return *this;
   }
 
@@ -129,8 +140,22 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(
 
 bool DynamicAutomationPeer::IsEnabledCore() const {
   bool disabled =
+      HasAccessibilityState(winrt::react::uwp::AccessibilityStates::Disabled) &&
       GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Disabled);
   return !disabled && Super::IsEnabledCore();
+}
+
+winrt::hstring DynamicAutomationPeer::GetItemStatusCore() const {
+  winrt::hstring itemStatus = Super::GetItemStatusCore();
+
+  if (itemStatus.empty()) {
+    if (HasAccessibilityState(winrt::react::uwp::AccessibilityStates::Busy) &&
+        GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Busy)) {
+      itemStatus = L"Busy";
+    }
+  }
+
+  return itemStatus;
 }
 
 // IInvokeProvider
@@ -204,6 +229,35 @@ void DynamicAutomationPeer::Toggle() const {
   }
 }
 
+// IExpandCollapseProvider
+
+winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
+  bool expandedState =
+      GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Expanded);
+  bool collapsedState =
+      GetAccessibilityState(winrt::react::uwp::AccessibilityStates::Collapsed);
+
+  if (!expandedState && collapsedState) {
+    return winrt::ExpandCollapseState::Collapsed;
+  } else if (expandedState && !collapsedState) {
+    return winrt::ExpandCollapseState::Expanded;
+  } else if (expandedState && collapsedState) {
+    return winrt::ExpandCollapseState::PartiallyExpanded;
+  }
+
+  return winrt::ExpandCollapseState::LeafNode;
+}
+
+void DynamicAutomationPeer::Expand() const {
+  // Right now RN does not have "expand" events, so this is a no-op
+}
+
+void DynamicAutomationPeer::Collapse() const {
+  // Right now RN does not have "collapse" events, so this is a no-op
+}
+
+// Private Methods
+
 winrt::hstring DynamicAutomationPeer::GetContentName() const {
   winrt::hstring name = L"";
 
@@ -240,6 +294,54 @@ DynamicAutomationPeer::GetAccessibilityRole() const {
   }
 
   return winrt::react::uwp::AccessibilityRoles::None;
+}
+
+bool DynamicAutomationPeer::HasAccessibilityState(
+    winrt::react::uwp::AccessibilityStates state) const {
+  try {
+    if (auto const &owner = Owner()) {
+      winrt::IInspectable value = nullptr;
+      switch (state) {
+        case winrt::react::uwp::AccessibilityStates::Selected:
+          value =
+              owner.ReadLocalValue(DynamicAutomationProperties::
+                                       AccessibilityStateSelectedProperty());
+          break;
+        case winrt::react::uwp::AccessibilityStates::Disabled:
+          value =
+              owner.ReadLocalValue(DynamicAutomationProperties::
+                                       AccessibilityStateDisabledProperty());
+          break;
+        case winrt::react::uwp::AccessibilityStates::Checked:
+          value = owner.ReadLocalValue(
+              DynamicAutomationProperties::AccessibilityStateCheckedProperty());
+          break;
+        case winrt::react::uwp::AccessibilityStates::Unchecked:
+          value =
+              owner.ReadLocalValue(DynamicAutomationProperties::
+                                       AccessibilityStateUncheckedProperty());
+          break;
+        case winrt::react::uwp::AccessibilityStates::Busy:
+          value = owner.ReadLocalValue(
+              DynamicAutomationProperties::AccessibilityStateBusyProperty());
+          break;
+        case winrt::react::uwp::AccessibilityStates::Expanded:
+          value =
+              owner.ReadLocalValue(DynamicAutomationProperties::
+                                       AccessibilityStateExpandedProperty());
+          break;
+        case winrt::react::uwp::AccessibilityStates::Collapsed:
+          value =
+              owner.ReadLocalValue(DynamicAutomationProperties::
+                                       AccessibilityStateCollapsedProperty());
+          break;
+      }
+      return (value != winrt::DependencyProperty::UnsetValue());
+    }
+  } catch (...) {
+  }
+
+  return false;
 }
 
 bool DynamicAutomationPeer::GetAccessibilityState(

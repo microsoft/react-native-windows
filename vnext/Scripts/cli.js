@@ -5,15 +5,14 @@
  */
 
 const {execSync} = require('child_process');
-const {realpathSync} = require('fs');
-const {resolve} = require('path');
-
 const args = process.argv.slice(2).join(' ');
 
-// sdx-platform needs to specify the config file since rn has issues with symlinked node_modules
-execSync(
-  `node node_modules/react-native/local-cli/cli.js ${args} --config ${realpathSync(
-    resolve(__dirname, '../rn-cli.config.js'),
-  )}`,
-  {stdio: 'inherit'},
+console.warn('You should be able to use the react-native cli directly now...');
+console.warn(
+  'Stack of callers printed here for diagnosis of who is using the Scripts/cli.js wrapper',
 );
+console.warn(new Error().stack);
+
+execSync(`node node_modules/react-native/local-cli/cli.js ${args}`, {
+  stdio: 'inherit',
+});

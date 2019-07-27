@@ -5,8 +5,8 @@
 // Implementation of the MainPage class.
 //
 
-#include "MainPage.xaml.h"
 #include "pch.h"
+#include "MainPage.xaml.h"
 
 using namespace ReactUWPUnitTests;
 using namespace Platform;
