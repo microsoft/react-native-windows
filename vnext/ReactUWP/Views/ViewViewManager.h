@@ -46,18 +46,6 @@ class ViewViewManager : public FrameworkElementViewManager {
       ViewShadowNode *viewShadowNode,
       winrt::react::uwp::ViewPanel &pPanel,
       bool useControl);
-
- private:
-  void DispatchEvent(
-      int64_t viewTag,
-      std::string eventName,
-      folly::dynamic &&eventData);
-
-  XamlView CreateViewControl(int64_t tag);
-
-  winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
-  winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
-  winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
 };
 
 } // namespace uwp

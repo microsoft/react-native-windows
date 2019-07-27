@@ -4,9 +4,9 @@ const chalk = require('chalk');
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
 
-function runWpf(config, args, options) {
+function runWpf(argv, config, options) {
   // Fix up options
-  options.root = options.root || process.cwd();
+  options.root = options.root || config.root || process.cwd();
 
   const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
@@ -31,7 +31,7 @@ function runWpf(config, args, options) {
     return;
   }
 
-  return deploy.startServerInNewWindow(options)
+  return deploy.startServerInNewWindow(options, config.reactNativePath)
     .then(() => {
       return deploy.deployToDesktop(options);
     })
@@ -82,5 +82,9 @@ module.exports = {
   }, {
     command: '--no-packager',
     description: 'Do not launch packager while building'
+  }, {
+    command: '--port [number]',
+    default: process.env.RCT_METRO_PORT || 8081,
+    parse: val => Number(val)
   }]
 };

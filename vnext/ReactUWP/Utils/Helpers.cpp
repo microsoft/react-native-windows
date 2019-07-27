@@ -33,11 +33,5 @@ ReactId getViewId(
   return reactId;
 };
 
-void toUpperInplace(string &str) {
-  std::for_each(str.begin(), str.end(), [](char &c) {
-    c = static_cast<char>(std::toupper(c));
-  });
-}
-
 } // namespace uwp
 }; // namespace react

@@ -88,7 +88,8 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
       for (const auto &props : m_dependentPropsNodes) {
-        manager->GetPropsAnimatedNode(props)->DisposeCompletedAnimation(Tag());
+        if (const auto propsNode = manager->GetPropsAnimatedNode(props))
+          propsNode->DisposeCompletedAnimation(Tag());
       }
     }
   }

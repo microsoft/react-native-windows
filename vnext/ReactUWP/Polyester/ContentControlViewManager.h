@@ -4,11 +4,35 @@
 #pragma once
 
 #include <Views/ControlViewManager.h>
+#include <Views/ShadowNodeBase.h>
 
 namespace react {
 namespace uwp {
 namespace polyester {
 
+//
+// ContentControlShadowNode
+// - required for subclasses of ContentControlViewManager with a custom
+// shadownode
+//
+class ContentControlShadowNode : public ShadowNodeBase {
+  using Super = ShadowNodeBase;
+
+ public:
+  ContentControlShadowNode() = default;
+  void createView() override;
+  bool IsExternalLayoutDirty() const override {
+    return m_paddingDirty;
+  }
+  void DoExtraLayoutPrep(YGNodeRef yogaNode) override;
+
+ private:
+  bool m_paddingDirty = false;
+};
+
+//
+// ContentControlViewManager
+//
 class ContentControlViewManager : public ControlViewManager {
   using Super = ControlViewManager;
 

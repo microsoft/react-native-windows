@@ -44,6 +44,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('./DatePickerExample.uwp'),
   },
   {
+    key: 'FastTextExample',
+    module: require('./FastTextExample'),
+  },
+  {
     key: 'FlatListExample',
     module: require('react-native/RNTester/js/FlatListExample'),
   },
@@ -98,6 +102,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'TouchableExample',
     module: require('react-native/RNTester/js/TouchableExample'),
+  },
+  {
+    key: 'TransferProperties',
+    module: require('./TransferProperties'),
   },
   {
     key: 'TransparentHitTestExample',

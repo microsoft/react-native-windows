@@ -22,10 +22,46 @@ namespace uwp {
 class TextShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
 
+ private:
+  ShadowNode *m_firstChildNode;
+
  public:
-  TextShadowNode() = default;
+  TextShadowNode() {
+    m_firstChildNode = nullptr;
+  };
   bool ImplementsPadding() override {
     return true;
+  }
+
+  void AddView(ShadowNode &child, int64_t index) override {
+    if (index == 0) {
+      auto run =
+          static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>();
+      if (run != nullptr) {
+        m_firstChildNode = &child;
+        auto textBlock = this->GetView().as<winrt::TextBlock>();
+        textBlock.Text(run.Text());
+        return;
+      }
+    } else if (index == 1 && m_firstChildNode != nullptr) {
+      auto textBlock = this->GetView().as<winrt::TextBlock>();
+      textBlock.ClearValue(winrt::TextBlock::TextProperty());
+      Super::AddView(*m_firstChildNode, 0);
+      m_firstChildNode = nullptr;
+    }
+    Super::AddView(child, index);
+  }
+
+  void removeAllChildren() {
+    m_firstChildNode = nullptr;
+    Super::removeAllChildren();
+  }
+
+  void RemoveChildAt(int64_t indexToRemove) {
+    if (indexToRemove == 0) {
+      m_firstChildNode = nullptr;
+    }
+    Super::RemoveChildAt(indexToRemove);
   }
 };
 

@@ -65,8 +65,13 @@ void FrameworkElementViewManager::TransferProperties(
       oldView, newView, winrt::FrameworkElement::MaxWidthProperty());
   TransferProperty(
       oldView, newView, winrt::FrameworkElement::MaxHeightProperty());
+  TransferProperty(
+      oldView, newView, winrt::FrameworkElement::FlowDirectionProperty());
+  TransferProperty(oldView, newView, winrt::Canvas::ZIndexProperty());
 
   // Accessibility Properties
+  TransferProperty(
+      oldView, newView, winrt::AutomationProperties::AutomationIdProperty());
   TransferProperty(
       oldView, newView, winrt::AutomationProperties::NameProperty());
   TransferProperty(
@@ -89,11 +94,31 @@ void FrameworkElementViewManager::TransferProperties(
   TransferProperty(
       oldView,
       newView,
+      DynamicAutomationProperties::AccessibilityStateSelectedProperty());
+  TransferProperty(
+      oldView,
+      newView,
       DynamicAutomationProperties::AccessibilityStateDisabledProperty());
   TransferProperty(
       oldView,
       newView,
-      DynamicAutomationProperties::AccessibilityStateSelectedProperty());
+      DynamicAutomationProperties::AccessibilityStateCheckedProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateBusyProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateExpandedProperty());
+  TransferProperty(
+      oldView,
+      newView,
+      DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
   TransferProperty(
       oldView,
       newView,

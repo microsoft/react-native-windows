@@ -1,0 +1,29 @@
+{
+  "name": "react-native-windows-repo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "change": "node ./node_modules/beachball/bin/beachball.js change",
+    "checkchange": "node ./node_modules/beachball/bin/beachball.js check",
+    "clean": "lerna run clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git"
+  },
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "vnext"
+    ],
+    "nohoist": [
+      "**/react-native",
+      "**/react-native/**"
+    ]
+  },
+  "devDependencies": {
+    "beachball": "^1.10.3",
+    "lerna": "^3.15.0"
+  }
+}
