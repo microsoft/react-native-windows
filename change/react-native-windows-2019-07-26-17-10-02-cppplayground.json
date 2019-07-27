@@ -1,0 +1,8 @@
+{
+  "comment": "Allow run-windows to be more flexible about project layout to support default c++ layouts",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "b32f883ea9281b4bff5be7a9318be44cd4cc9e74",
+  "date": "2019-07-27T00:10:02.888Z"
+}
