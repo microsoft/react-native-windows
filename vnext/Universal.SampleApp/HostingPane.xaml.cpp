@@ -163,6 +163,10 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
       pane->markAsNeedsReload();
   }
 
+  void persistUseWebDebugger(bool useWebDebugger) {
+    // TODO:  implement this
+  }
+
  private:
   Platform::WeakReference m_wrPane;
 };

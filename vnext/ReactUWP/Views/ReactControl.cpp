@@ -22,6 +22,7 @@
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.UI.Xaml.Markup.h>
 
 namespace react {
 namespace uwp {
@@ -29,6 +30,7 @@ namespace uwp {
 ReactControl::ReactControl(IXamlRootView *parent, XamlView rootView)
     : m_pParent(parent), m_rootView(rootView) {
   PrepareXamlRootView(rootView);
+  ShowDeveloperMenu();
 }
 
 ReactControl::~ReactControl() {
@@ -297,6 +299,67 @@ void ReactControl::EnsureFocusSafeHarbor() {
         });
   }
 }
+
+#if 0
+
+Buttons should look like this:
+Reload JavaScript
+Start / Stop JS Remote Debugging
+Enable / Disable Hot Reloading
+Enable / Disable Live Reload
+Show Inspector
+
+About handling keyboard “globally” in island scenario :
+
+From any element, get XamlRoot, then XamlRoot.Content, and sign up for keyboard events on it.
+This won’t work correctly if focus is on a parentless popup.Need to open an issue for this.
+#endif
+
+void ReactControl::ShowDeveloperMenu() {
+  assert(m_developerMenuRoot == nullptr);
+
+  winrt::hstring xamlString =
+      L"<Grid Background='White'" // TODO:  Is there a theme brush I can use that's light/dark aware?
+      L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
+      L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+      L"  <StackPanel HorizontalAlignment='Center'>"
+      L"    <TextBlock Margin='0,0,0,10' FontSize='48'>Developer Menu</TextBlock>"
+      L"    <Button x:Name='Reload'>Reload Javascript</Button>"
+      L"    <Button x:Name='RemoteDebug'></Button>"
+      L"    <Button x:Name='LiveReload'>Enable Live Reload</Button>"
+      L"    <Button x:Name='Cancel'>Cancel</Button>"
+      L"  </StackPanel>"
+      L"</Grid>";
+  m_developerMenuRoot = winrt::unbox_value<winrt::Grid>(
+      winrt::Markup::XamlReader::Load(xamlString));
+  auto remoteDebugJSButton =
+      m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
+  remoteDebugJSButton.Content(winrt::box_value(L"Enable Remote JS Debugging"));
+  m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
+      winrt::auto_revoke,
+      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
+        m_instanceCreator->persistUseWebDebugger(false);
+        Reload(true);
+      });
+
+  auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
+  xamlRootGrid.Children().Append(m_developerMenuRoot);
+}
+
+void ReactControl::DismissDeveloperMenu() {
+  assert(m_developerMenuRoot != nullptr);
+  auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
+  uint32_t indexToRemove = 0;
+  xamlRootGrid.Children().IndexOf(m_developerMenuRoot, indexToRemove);
+  xamlRootGrid.Children().RemoveAt(indexToRemove);
+  m_developerMenuRoot = nullptr;
+}
+
+bool ReactControl::IsDeveloperMenuShowing() const {
+  return (m_developerMenuRoot != nullptr);
+}
+
 
 } // namespace uwp
 } // namespace react

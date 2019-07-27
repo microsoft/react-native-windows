@@ -35,6 +35,13 @@ struct InstanceReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     reinterpret_cast<Instance *>(spInstance.Get())->markAsNeedsReload();
   }
 
+  void persistUseWebDebugger(bool useWebDebugger) {
+    Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
+    m_wrInstance.As(&spInstance);
+    reinterpret_cast<Instance *>(spInstance.Get())
+        ->persistUseWebDebugger(useWebDebugger);
+  }
+
  private:
   Microsoft::WRL::WeakRef m_wrInstance;
   Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> m_instance;
@@ -61,7 +68,11 @@ std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance() {
         ::react::uwp::CreateReactInstance(m_spModuleProvider /*moduleLoader*/);
     ::react::uwp::ReactInstanceSettings innerSettings;
     innerSettings.UseLiveReload = m_settings.UseLiveReload;
+
+//    static bool useIt = true;
     innerSettings.UseWebDebugger = m_settings.UseWebDebugger;
+//    innerSettings.UseWebDebugger = useIt;
+//    useIt = !useIt;
     m_instance->Start(m_instance, innerSettings);
     m_instance->loadBundle(std::string(m_jsBundleName));
   }
@@ -74,6 +85,10 @@ void Instance::markAsNeedsReload() {
 
   m_instance->SetAsNeedsReload();
   m_instance = nullptr;
+}
+
+void Instance::persistUseWebDebugger(bool useWebDebugger) {
+  m_settings.UseWebDebugger = useWebDebugger;
 }
 
 HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings) {

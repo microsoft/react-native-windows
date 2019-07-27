@@ -60,6 +60,9 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>,
   void HandleInstanceErrorOnUIThread();
   void PrepareXamlRootView(XamlView const &rootView);
   void EnsureFocusSafeHarbor();
+  void ShowDeveloperMenu();
+  void DismissDeveloperMenu();
+  bool IsDeveloperMenuShowing() const;
 
   IXamlRootView *m_pParent;
 
@@ -91,6 +94,8 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>,
       m_focusSafeHarborLosingFocusRevoker{};
   winrt::Grid m_redBoxGrid{nullptr};
   winrt::TextBlock m_errorTextBlock{nullptr};
+  winrt::Grid m_developerMenuRoot{nullptr};
+  winrt::Button::Click_revoker m_remoteDebugJSRevoker{};
 };
 
 } // namespace uwp
