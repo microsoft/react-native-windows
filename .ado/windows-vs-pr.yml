@@ -78,7 +78,6 @@ jobs:
         displayName: yarn build
         inputs:
           script: yarn build
-          workingDirectory: vnext
 
       - template: templates/install-SDK.yml
       
@@ -107,16 +106,13 @@ jobs:
         displayName: NuGet restore - Playground
         inputs:
           command: restore
-          restoreSolution: vnext/Playground/Playground.sln
-          feedsToUse: config
-          nugetConfigPath: vnext/NuGet.config
-          restoreDirectory: packages/
+          restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: MSBuild@1
         displayName: MSBuild - Playground
         inputs:
-          solution: vnext/Playground/Playground.sln
+          solution: packages/playground/windows/Playground.sln
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional

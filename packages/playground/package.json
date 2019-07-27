@@ -8,7 +8,7 @@
     "prestart": "node prestart.js",
     "start": "react-native start",
     "lint": "just-scripts eslint",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
   "dependencies": {
