@@ -110,11 +110,6 @@ There are two ways to install and work with React Native for Windows (vnext):
 * Make sure Chrome is running if you're not already running it
 
 #### Running the Playground app
-* Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS.
-    ```cmd
-    cd Playground
-    ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory packages
-    ```
 
 * Build solution.
     * Using MSBuild
