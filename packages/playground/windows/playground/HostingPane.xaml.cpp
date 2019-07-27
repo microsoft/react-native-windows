@@ -10,6 +10,7 @@
 #include "HostingPane.xaml.h"
 
 #include <ReactUWP/ReactUwp.h>
+#include <ViewManager.h>
 
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.UI.Xaml.h>
@@ -138,8 +139,8 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
 
     /*
         viewManagers.emplace_back(
-            std::make_unique<CustomFrameworkElementViewManager>(instance));
-            */
+          std::make_unique<CustomFrameworkElementViewManager>(instance));
+    */
 
     return viewManagers;
   }
