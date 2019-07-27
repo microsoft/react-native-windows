@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jul 2019 08:32:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.109",
+      "version": "0.59.0-vnext.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add null checks to fix crashes with reload / shutdown with pending text updates",
+            "author": "andrewh@microsoft.com",
+            "commit": "65e7555091669243138b490a111a79b72d7879e0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jul 2019 07:23:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.108",
+      "version": "0.59.0-vnext.108",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix for flyouts unexpectedly dismissing when opening picker",
+            "author": "ruaraki@microsoft.com",
+            "commit": "9986ed1f6ddab24d1839d6ebde652f063e3c3679"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jul 2019 05:43:01 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.107",
+      "version": "0.59.0-vnext.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "use win32 file api to avoid runtime broker slowing us down",
+            "author": "stecrain@microsoft.com",
+            "commit": "6a9d6e7e6112f6b963b9a5c0079defbad4272f06"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Jul 2019 00:29:50 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.106",
       "version": "0.59.0-vnext.106",

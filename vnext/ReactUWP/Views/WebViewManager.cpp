@@ -54,6 +54,10 @@ void WebViewManager::setSource(XamlView viewToUpdate, const WebSource &source) {
     return;
   auto view = viewToUpdate.as<winrt::WebView>();
 
+  // non-uri sources not yet supported
+  if (source.uri.length() == 0)
+    return;
+
   auto uriString = source.uri;
   if (source.packagerAsset && uriString.find("assets") == 0)
     uriString.replace(0, 6, "ms-appx://");

@@ -3,6 +3,7 @@
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "Utils/UwpPreparedScriptStore.h"
+#include "Utils/UwpScriptStore.h"
 #include "jsi/jsi.h"
 #include "unicode.h"
 
@@ -93,9 +94,9 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
   try {
     if (m_byteCodeFileAsync != nullptr) {
       auto file = m_byteCodeFileAsync.get();
-      auto fileprops = file.GetBasicPropertiesAsync().get();
-      facebook::jsi::ScriptVersion_t byteCodeVersion =
-          fileprops.DateModified().time_since_epoch().count();
+      auto byteCodeVersion =
+          UwpScriptStore::GetFileVersion(file.Path().c_str());
+
       if (byteCodeVersion >= scriptSignature.version) {
         return file;
       }
@@ -113,9 +114,8 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
                   .LocalCacheFolder()
                   .GetFileAsync(fileName)
                   .get();
-  auto fileprops = file.GetBasicPropertiesAsync().get();
-  facebook::jsi::ScriptVersion_t byteCodeVersion =
-      fileprops.DateModified().time_since_epoch().count();
+
+  auto byteCodeVersion = UwpScriptStore::GetFileVersion(file.Path().c_str());
 
   return byteCodeVersion > scriptSignature.version ? file : nullptr;
 }
