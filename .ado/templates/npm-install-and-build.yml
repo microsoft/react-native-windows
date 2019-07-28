@@ -4,13 +4,11 @@ steps:
     displayName: Ensure yarn
     inputs:
       script: npm install -g yarn
-      workingDirectory: vnext
 
   - task: CmdLine@2
     displayName: yarn install
     inputs:
       script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-      workingDirectory: vnext
 
   - template: stop-packagers.yml
 
@@ -18,4 +16,3 @@ steps:
     displayName: yarn build
     inputs:
       script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-      workingDirectory: vnext
