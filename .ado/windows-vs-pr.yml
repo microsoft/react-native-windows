@@ -119,6 +119,7 @@ jobs:
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           clean: true # Optional
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
