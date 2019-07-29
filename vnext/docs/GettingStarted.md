@@ -110,11 +110,6 @@ There are two ways to install and work with React Native for Windows (vnext):
 * Make sure Chrome is running if you're not already running it
 
 #### Running the Playground app
-* Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS.
-    ```cmd
-    cd Playground
-    ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory packages
-    ```
 
 * Build solution.
     * Using MSBuild
@@ -156,9 +151,7 @@ You now see your new app and Chrome should have loaded `http://localhost:8081/de
 
  The selected React Native component (defaulted to `Bootstrap`) should get loaded in the bottom of the application window. Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
- Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window before pressing "Load":
-   - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`
-   - RNTester: JavaScript file: `RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`
+ Try out the various samples by selecting from the comboboxes at the top of the application window and pressing "Load".
 
 ## Troubleshooting
 * If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/microsoft/react-native-windows/issues/2311) is tracking a known issue on this.

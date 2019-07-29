@@ -2,10 +2,8 @@
 <Project>
 
   <PropertyGroup>
-    <ReactNativeDir>$(MSBuildThisFileDirectory)\..\..\..\node_modules\react-native</ReactNativeDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
+    <ReactNativeDir>$(MSBuildThisFileDirectory)\..\node_modules\react-native</ReactNativeDir>
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\..\..\..\vnext</ReactNativeWindowsDir>
     <FollyDir>$(ReactNativeDir)\folly</FollyDir>
     <YogaDir>$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
   </PropertyGroup>

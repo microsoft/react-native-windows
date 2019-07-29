@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 28 Jul 2019 12:44:00 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.110",
+      "version": "0.59.0-vnext.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow run-windows to be more flexible about project layout to support default c++ layouts",
+            "author": "acoates@microsoft.com",
+            "commit": "b32f883ea9281b4bff5be7a9318be44cd4cc9e74"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jul 2019 08:32:04 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.109",
       "version": "0.59.0-vnext.109",

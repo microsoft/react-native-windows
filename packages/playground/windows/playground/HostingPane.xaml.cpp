@@ -10,6 +10,7 @@
 #include "HostingPane.xaml.h"
 
 #include <ReactUWP/ReactUwp.h>
+#include <ViewManager.h>
 
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.UI.Xaml.h>
@@ -23,9 +24,7 @@
 #include <unicode.h>
 #include <codecvt>
 
-#include "CustomViewManager.h"
-
-using namespace WindowsSampleApp;
+using namespace Playground;
 
 using namespace Microsoft::WRL;
 using namespace Platform;
@@ -138,8 +137,10 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
 
-    viewManagers.emplace_back(
-        std::make_unique<CustomFrameworkElementViewManager>(instance));
+    /*
+        viewManagers.emplace_back(
+          std::make_unique<CustomFrameworkElementViewManager>(instance));
+    */
 
     return viewManagers;
   }
@@ -335,8 +336,7 @@ void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
 static const wchar_t *c_containerName = L"js";
 static const wchar_t *c_filenameSetting = L"filename";
 static const wchar_t *c_appnameSetting = L"appname";
-static const wchar_t *c_filenameSettingDefault =
-    L"Universal.SampleApp\\index.uwp";
+static const wchar_t *c_filenameSettingDefault = L"Samples\\index";
 static const wchar_t *c_appnameSettingDefault = L"Bootstrap";
 
 static winrt::Windows::Storage::ApplicationDataContainer GetJsSettings() {
@@ -416,25 +416,20 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
-  m_jsFileNames->Append(L"Playground\\Playground\\index.uwp");
-  m_jsFileNames->Append(L"RNTester");
-  m_jsFileNames->Append(L"Universal.SampleApp\\accessible.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\calculator.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\click.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\control.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\flexbox.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\geosample");
-  m_jsFileNames->Append(L"Universal.SampleApp\\image.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\index.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\mouse.uwp");
-  m_jsFileNames->Append(
-      L"Universal.SampleApp\\ReadingPaneSamples\\CallbackTest.index.uwp");
-  m_jsFileNames->Append(
-      L"Universal.SampleApp\\ReadingPaneSamples\\TicTacToe.index.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\simple.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\test.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\text.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\view.uwp");
+  m_jsFileNames->Append(L"Samples\\accessible");
+  m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\click");
+  m_jsFileNames->Append(L"Samples\\control");
+  m_jsFileNames->Append(L"Samples\\flexbox");
+  m_jsFileNames->Append(L"Samples\\focusTest");
+  m_jsFileNames->Append(L"Samples\\geosample");
+  m_jsFileNames->Append(L"Samples\\image");
+  m_jsFileNames->Append(L"Samples\\index");
+  m_jsFileNames->Append(L"Samples\\mouse");
+  m_jsFileNames->Append(L"Samples\\simple");
+  m_jsFileNames->Append(L"Samples\\text");
+  m_jsFileNames->Append(L"Samples\\ticTacToe");
+  m_jsFileNames->Append(L"Samples\\view");
 
   x_JavaScriptFilename->ItemsSource = m_jsFileNames;
 
@@ -449,11 +444,7 @@ void HostingPane::LoadKnownApps() {
   std::wstring jsFileName =
       x_JavaScriptFilename->SelectedItem->ToString()->Data();
 
-  if (jsFileName == L"Playground\\Playground\\index.uwp") {
-    m_ReactAppNames->Append(L"Playground");
-  } else if (jsFileName == L"RNTester") {
-    m_ReactAppNames->Append(L"RNTesterApp");
-  } else if (jsFileName.rfind(L"Universal.SampleApp\\", 0) == 0) {
+  if (jsFileName.rfind(L"Samples\\", 0) == 0) {
     m_ReactAppNames->Append(L"Bootstrap");
   }
 

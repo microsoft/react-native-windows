@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.109",
+  "version": "0.59.0-vnext.110",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
     "format:verify": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
     "lint": "just-scripts eslint",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
   "rnpm": {

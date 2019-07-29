@@ -2,10 +2,22 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8b88ffae-4dbc-49a2-afa5-d2477d4ad189}</ProjectGuid>
-    <RootNamespace>WindowsSampleApp</RootNamespace>
+    <RootNamespace>Playground</RootNamespace>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ReactNativeDir>$(MSBuildThisFileDirectory)..\..\node_modules\react-native</ReactNativeDir>
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)..\..\..\..\vnext\</ReactNativeWindowsDir>
+    <FollyDir>$(ReactNativeDir)\folly</FollyDir>
+    <YogaDir>$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
+  </PropertyGroup>
+  <!-- We need some way to tell if we are using the microsoft/react-native version of the facebook one... -->
+  <!-- For now we are using the existance of the glog stub... but we probably want a better long term solution -->
+  <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
+    <OSS_RN>true</OSS_RN>
+    <FollyDir>$(SolutionDir)node_modules\.folly\folly-2019.06.10.00</FollyDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -51,7 +63,7 @@
   </ImportGroup>
   <PropertyGroup>
     <PackageCertificateThumbprint>867D41FE5091AED426000143497EA4DFC29A8097</PackageCertificateThumbprint>
-    <PackageCertificateKeyFile>React.Windows.Universal.SampleApp_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Playground_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -63,7 +75,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(BaseOutDir)\ReactUWP\React.UWP.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
@@ -72,7 +84,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CustomViewManager.h" />
     <ClInclude Include="HostingPane.xaml.h">
       <DependentUpon>HostingPane.xaml</DependentUpon>
     </ClInclude>
@@ -102,25 +113,12 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="accessible.uwp.js" />
-    <None Include="bundle.js" />
-    <None Include="bundle.meta" />
-    <None Include="Bundle\Universal.SampleApp\index.uwp.bundle">
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-    <None Include="calculator.uwp.js" />
-    <None Include="click.uwp.js" />
-    <None Include="control.uwp.js" />
-    <None Include="flexbox.uwp.js" />
-    <None Include="geosample.js" />
     <None Include="image.uwp.js" />
     <None Include="index.uwp.js" />
-    <None Include="mouse.uwp.js" />
     <None Include="packages.config" />
-    <None Include="React.Windows.Universal.SampleApp_TemporaryKey.pfx" />
+    <None Include="Playground_TemporaryKey.pfx" />
     <None Include="simple.uwp.js" />
-    <None Include="test.uwp.js" />
     <None Include="text.uwp.js" />
-    <None Include="view.uwp.js" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
@@ -135,7 +133,6 @@
     <ClCompile Include="App.xaml.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="CustomViewManager.cpp" />
     <ClCompile Include="HostingPane.xaml.cpp">
       <DependentUpon>HostingPane.xaml</DependentUpon>
     </ClCompile>
@@ -152,7 +149,7 @@
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReactUWP\ReactUWP.vcxproj">
+    <ProjectReference Include="$(ReactNativeWindowsDir)\ReactUWP\ReactUWP.vcxproj">
       <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
     </ProjectReference>
   </ItemGroup>
