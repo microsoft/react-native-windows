@@ -34,7 +34,15 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/npm-install-and-build.yml
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
 
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
@@ -89,7 +97,15 @@ jobs:
       inputs:
         script: git checkout $(publishCommitId)
 
-    - template: templates/npm-install-and-build.yml
+    - task: CmdLine@2
+      displayName: yarn install
+      inputs:
+        script: yarn install --frozen-lockfile
+
+    - task: CmdLine@2
+      displayName: yarn build
+      inputs:
+        script: yarn build
 
     # Update version numbers as will be done by npm publish
     - task: CmdLine@2
