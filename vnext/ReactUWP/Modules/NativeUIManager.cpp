@@ -239,6 +239,8 @@ static float NumberOrDefault(const folly::dynamic &value, float defaultValue) {
     result = static_cast<float>(value.asDouble());
   else if (value.isNull())
     result = defaultValue;
+  else if (value.isString())
+    result = std::stof(value.getString());
   else
     assert(false);
 

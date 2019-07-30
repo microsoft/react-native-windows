@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build": "lerna run build --stream",
     "change": "node ./node_modules/beachball/bin/beachball.js change",
     "checkchange": "node ./node_modules/beachball/bin/beachball.js check",
-    "clean": "lerna run clean"
+    "clean": "lerna run clean --stream"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,7 @@
     ]
   },
   "devDependencies": {
-    "beachball": "^1.10.1",
-    "lerna": "^3.15.0"
+    "beachball": "^1.10.3",
+    "lerna": "^3.16.1"
   }
 }

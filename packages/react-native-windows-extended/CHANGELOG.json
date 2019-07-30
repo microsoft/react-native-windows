@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 26 Jul 2019 05:43:01 GMT",
+      "tag": "react-native-windows-extended_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Make react-native-windows-extended use react-native-windows",
+            "author": "acoates@microsoft.com",
+            "commit": "6172818eb183d94321f4b4175e0c62d38a0ba489"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jul 2019 23:18:37 GMT",
       "tag": "react-native-windows-extended_v0.0.2",
       "version": "0.0.2",

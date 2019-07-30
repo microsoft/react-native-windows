@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-extended",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Additional react-native-windows components that are not part of RN lean-core.",
   "main": "lib/index.js",
   "repository": {
@@ -11,14 +11,15 @@
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
-    "start": "react-native start",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
     "watch": "tsc -w"
   },
   "license": "MIT",
   "private": false,
-  "dependencies": {},
+  "dependencies": {
+    "react-native-windows": "0.59.0-vnext.110"
+  },
   "devDependencies": {
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/es6-collections": "^0.5.29",

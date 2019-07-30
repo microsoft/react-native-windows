@@ -4,4 +4,3 @@
  * @format
  */
 export * from './SampleComponent/SampleComponent';
-
