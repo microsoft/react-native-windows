@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.95",
+  "version": "0.59.0-vnext.110",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,11 +12,11 @@
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
-    "start": "node Scripts/cli.js start",
+    "start": "react-native start",
     "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
     "format:verify": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
     "lint": "just-scripts eslint",
-    "lint:fix": "eslint ./**/*.js ./**/*.ts ./**/*.tsx --fix",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
   "rnpm": {
@@ -61,5 +61,12 @@
   "peerDependencies": {
     "react": "16.8.3",
     "react-native": "^0.59.0 || 0.59.0-microsoft.17 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz"
+  },
+  "beachball": {
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
   }
 }

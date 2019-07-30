@@ -419,6 +419,7 @@ void HostingPane::InitComboBoxes() {
   m_jsFileNames->Append(L"Playground\\Playground\\index.uwp");
   m_jsFileNames->Append(L"RNTester");
   m_jsFileNames->Append(L"Universal.SampleApp\\accessible.uwp");
+  m_jsFileNames->Append(L"Universal.SampleApp\\calculator.uwp");
   m_jsFileNames->Append(L"Universal.SampleApp\\click.uwp");
   m_jsFileNames->Append(L"Universal.SampleApp\\control.uwp");
   m_jsFileNames->Append(L"Universal.SampleApp\\flexbox.uwp");

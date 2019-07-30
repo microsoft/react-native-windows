@@ -17,9 +17,9 @@ This is a summary of setup steps needed to install and work with React Native fo
 
 ## Dependencies
 * Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of [Node.js](https://nodejs.org) is installed. [Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. On an elevated Command Prompt, run:
-```
-choco install nodejs
-```
+  ```
+  choco install nodejs
+  ```
 * Install [Chrome](https://www.google.com/chrome/) (*optional*, but needed for JS debugging)
 
 ## Installing React Native for Windows (vnext)
@@ -32,36 +32,37 @@ There are two ways to install and work with React Native for Windows (vnext):
 #### Installing React Native
 
 * Install React Native command line interface using NPM:
-```
-npm install -g react-native-cli
-```
+  ```
+  npm install -g react-native-cli
+  ```
 * Initialize your React Native project
 
-Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
-```
-react-native init <project name> --version 0.59.10
-```
-Navigate into this newly created directory:
-```
-cd <project name>
-```
+  Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
+  ```
+  react-native init <project name> --version 0.59.10
+  ```
+  Navigate into this newly created directory:
+  ```
+  cd <project name>
+  ```
 
 #### Installing React Native Windows (vnext)
 
 * Install the React Native Windows command line interface ([rnpm-plugin-windows](https://www.npmjs.com/package/rnpm-plugin-windows)).
-If you are using NPM, run
-```
-npm install --save rnpm-plugin-windows
-```
-If you are using Yarn, run
-```
-yarn add rnpm-plugin-windows
-```
+
+  If you are using Yarn, run
+  ```
+  yarn add rnpm-plugin-windows
+  ```
+  Alternatively, if you are using NPM, run
+  ```
+  npm install --save rnpm-plugin-windows
+  ```
 
 * Next, initialize your React Native Windows `vnext` in the project directory. This step may take a while during first run due to dependency download.
-```
-react-native windows --template vnext
-```
+  ```
+  react-native windows --template vnext
+  ```
 
 #### Running a React Native Windows App
 
@@ -69,11 +70,11 @@ react-native windows --template vnext
 
 - Without Visual Studio
 
-In your React Native Windows project directory, run:
-```
-react-native run-windows
-```
-A new Command Prompt window will open with the React packager as well as a `react-native-windows` app. This step may take a while during first run since it involves building the entire project and all dependencies. You can now start developing! :tada:
+  In your React Native Windows project directory, run:
+  ```
+  react-native run-windows
+  ```
+  A new Command Prompt window will open with the React packager as well as a `react-native-windows` app. This step may take a while during first run since it involves building the entire project and all dependencies. You can now start developing! :tada:
 
 - With Visual Studio
 
@@ -97,23 +98,18 @@ A new Command Prompt window will open with the React packager as well as a `reac
 
 * Install dependencies. This step may take a while on the first run due to dependency download.
     ```cmd
+    yarn
     cd vnext
-    npm install
     nuget restore
     ```
 
-* Run `npm run build` in the vnext folder.
+* Run `yarn build` in the vnext folder.
 
 * Run `Scripts\launchPackager.bat`.	This is needed to ensure the JS files can be packaged and bundled to the UWP app.
 
 * Make sure Chrome is running if you're not already running it
 
 #### Running the Playground app
-* Nuget restore through the command line. There is an outstanding issue [#2312](https://github.com/microsoft/react-native-windows/issues/2312) that blocks restoring Nuget dependencies using VS.
-    ```cmd
-    cd Playground
-    ..\react-native-windows\vnext\Playground>nuget restore Playground.sln -PackagesDirectory packages
-    ```
 
 * Build solution.
     * Using MSBuild
@@ -155,9 +151,7 @@ You now see your new app and Chrome should have loaded `http://localhost:8081/de
 
  The selected React Native component (defaulted to `Bootstrap`) should get loaded in the bottom of the application window. Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
- Try these samples by entering the JS file name and App names below into the textboxes at the top of the application window before pressing "Load":
-   - Sample: JavaScript file: `Universal.SampleApp\index.uwp` App Name: `Bootstrap`
-   - RNTester: JavaScript file: `RNTester\RNTesterApp.uwp` App Name: `RNTesterApp`
+ Try out the various samples by selecting from the comboboxes at the top of the application window and pressing "Load".
 
 ## Troubleshooting
 * If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/microsoft/react-native-windows/issues/2311) is tracking a known issue on this.
