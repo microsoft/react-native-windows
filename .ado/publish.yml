@@ -23,8 +23,7 @@ jobs:
   - job: RnwNpmPublish
     displayName: React-Native-Windows Npm Build Rev Publish
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -81,11 +80,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      name: OE Standard Pool
-      demands:
-      - OnPrem -equals False
-      - msbuild
-      - Cmd
+      vmImage: vs2017-win2016
 
     steps:
 
@@ -131,7 +126,7 @@ jobs:
       - RnwNativeBuild
     displayName: React-Native-Windows Build and Publish Nuget
     pool:
-      name: OE Standard Pool
+      vmImage: vs2017-win2016
     variables:
       npmVersion: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.npmVersion'] ]
 
@@ -148,9 +143,15 @@ jobs:
           publishCommitId: $(Build.SourceVersion)
           npmVersion: $(npmVersion)
 
-      - task: NuGetCommand@2
-        displayName: 'NuGet push'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish final nuget artifacts'
         inputs:
-          command: push
-          packagesToPush: '$(System.DefaultWorkingDirectory)/NugetRoot/*.nupkg'
-          publishVstsFeed: '86ec7889-a365-4cd1-90df-6e18cc2ea59f'
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/NugetRoot'
+          ArtifactName: 'ReactWindows-final-nuget'
+
+      #- task: NuGetCommand@2
+      #  displayName: 'NuGet push'
+      #  inputs:
+      #    command: push
+      #    packagesToPush: '$(System.DefaultWorkingDirectory)/NugetRoot/*.nupkg'
+      #    publishVstsFeed: '86ec7889-a365-4cd1-90df-6e18cc2ea59f'
