@@ -164,7 +164,7 @@ jobs:
       - task: PublishBuildArtifacts@1
         displayName: 'Publish final nuget artifacts'
         inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/NugetRoot'
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/NugetRootFinal'
           ArtifactName: 'ReactWindows-final-nuget'
 
       #- task: NuGetCommand@2
