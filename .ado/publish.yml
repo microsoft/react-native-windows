@@ -120,6 +120,8 @@ jobs:
       inputs:
         script: node ./.ado/setVersionEnvVars.js
 
+    - template: templates/install-SDK.yml
+
     - template: templates/vs-build.yml
       parameters:
         BuildConfiguration: $(BuildConfiguration)
