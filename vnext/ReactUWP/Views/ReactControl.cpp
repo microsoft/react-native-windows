@@ -12,6 +12,7 @@
 
 #include <INativeUIManager.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/KeyboardEventHandler.h>
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
@@ -30,7 +31,6 @@ namespace uwp {
 ReactControl::ReactControl(IXamlRootView *parent, XamlView rootView)
     : m_pParent(parent), m_rootView(rootView) {
   PrepareXamlRootView(rootView);
-  ShowDeveloperMenu();
 }
 
 ReactControl::~ReactControl() {
@@ -141,6 +141,26 @@ void ReactControl::AttachRoot() noexcept {
   auto initialProps = m_initialProps;
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
   m_isAttached = true;
+
+  if (m_xamlRootView.try_as<winrt::IUIElement7>()) {
+    auto rootElement = m_xamlRootView.as<winrt::FrameworkElement>();
+    m_rootViewLURevoker = rootElement.LayoutUpdated(
+      winrt::auto_revoke,
+      [this, rootElement](const auto& sender, const auto& args) {
+        m_rootViewLURevoker.revoke();
+        m_rootViewPKDRevoker = rootElement.XamlRoot().Content().PreviewKeyDown(
+          winrt::auto_revoke,
+          [this](const auto& sender, const winrt::KeyRoutedEventArgs& args) {
+            if (args.Key() == winrt::Windows::System::VirtualKey::F10 &&
+              KeyboardHelper::IsModifiedKeyPressed(
+                winrt::CoreWindow::GetForCurrentThread(),
+                winrt::VirtualKey::Shift)) {
+              ShowDeveloperMenu();
+            }
+          });
+      }
+    );
+  }
 }
 
 void ReactControl::DetachRoot() noexcept {
@@ -323,25 +343,35 @@ void ReactControl::ShowDeveloperMenu() {
       L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
       L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
       L"  <StackPanel HorizontalAlignment='Center'>"
-      L"    <TextBlock Margin='0,0,0,10' FontSize='48'>Developer Menu</TextBlock>"
-      L"    <Button x:Name='Reload'>Reload Javascript</Button>"
-      L"    <Button x:Name='RemoteDebug'></Button>"
-      L"    <Button x:Name='LiveReload'>Enable Live Reload</Button>"
-      L"    <Button x:Name='Cancel'>Cancel</Button>"
+      L"    <TextBlock Margin='0,0,0,10' FontSize='40'>Developer Menu</TextBlock>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Show Inspector (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
       L"  </StackPanel>"
       L"</Grid>";
   m_developerMenuRoot = winrt::unbox_value<winrt::Grid>(
       winrt::Markup::XamlReader::Load(xamlString));
   auto remoteDebugJSButton =
-      m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
-  remoteDebugJSButton.Content(winrt::box_value(L"Enable Remote JS Debugging"));
+    m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
+  auto cancelButton =
+    m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
+  bool useWebDebugger = m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
+  remoteDebugJSButton.Content(winrt::box_value(
+    useWebDebugger ? L"Disable Remote JS Debugging" : L"Enable Remote JS Debugging"));
   m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
       winrt::auto_revoke,
-      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+      [this, useWebDebugger](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
-        m_instanceCreator->persistUseWebDebugger(false);
+        m_instanceCreator->persistUseWebDebugger(!useWebDebugger);
         Reload(true);
       });
+  m_cancelRevoker = cancelButton.Click(
+    winrt::auto_revoke,
+    [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+      DismissDeveloperMenu();
+    });
 
   auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
   xamlRootGrid.Children().Append(m_developerMenuRoot);

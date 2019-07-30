@@ -96,6 +96,9 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>,
   winrt::TextBlock m_errorTextBlock{nullptr};
   winrt::Grid m_developerMenuRoot{nullptr};
   winrt::Button::Click_revoker m_remoteDebugJSRevoker{};
+  winrt::Button::Click_revoker m_cancelRevoker{};
+  winrt::FrameworkElement::LayoutUpdated_revoker m_rootViewLURevoker{};
+  winrt::UIElement::PreviewKeyDown_revoker m_rootViewPKDRevoker{};
 };
 
 } // namespace uwp
