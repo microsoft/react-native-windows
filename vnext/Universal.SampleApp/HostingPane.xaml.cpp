@@ -164,7 +164,10 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   }
 
   void persistUseWebDebugger(bool useWebDebugger) {
-    // TODO:  implement this
+    HostingPane^ pane = m_wrPane.Resolve<HostingPane>();
+    if (pane) {
+      pane->persistUseWebDebugger(useWebDebugger);
+    }    
   }
 
  private:
@@ -236,6 +239,10 @@ void HostingPane::markAsNeedsReload() {
   if (m_instance != nullptr)
     m_instance->SetAsNeedsReload();
   m_instance = nullptr;
+}
+
+void HostingPane::persistUseWebDebugger(bool useWebDebugger) {
+  x_UseWebDebuggerCheckBox->IsChecked = useWebDebugger;
 }
 
 void HostingPane::LoadReactNative() {
