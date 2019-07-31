@@ -35,11 +35,6 @@ import type {
   AccessibilityTraits,
 } from 'ViewAccessibility';
 
-// [TODO(macOS ISS#2323203)
-const {DraggedTypes} = require('DraggedType');
-import type {DraggedTypesType} from 'DraggedType';
-// ]TODO(macOS ISS#2323203)
-
 type TargetEvent = SyntheticEvent<
   $ReadOnly<{|
     target: number,
@@ -83,7 +78,6 @@ export type Props = $ReadOnly<{|
   onDragEnter?: ?Function,
   onDragLeave?: ?Function,
   onDrop?: ?Function,
-  draggedTypes?: ?DraggedTypesType, // ]TODO(macOS ISS#2323203)
   pressRetentionOffset?: ?EdgeInsetsProp,
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
@@ -154,19 +148,6 @@ const TouchableWithoutFeedback = ((createReactClass({
      * Fired when an element is dropped on a valid drop target
      */
     onDrop: PropTypes.func, // TODO(macOS ISS#2323203)
-    /**
-     * Enables Drag'n'Drop Support for certain types of dragged types
-     *
-     * Possible values for `draggedTypes` are:
-     *
-     * - `'fileUrl'`
-     *
-     * @platform macos
-     */
-    draggedTypes: PropTypes.oneOfType([
-      PropTypes.oneOf(DraggedTypes),
-      PropTypes.arrayOf(PropTypes.oneOf(DraggedTypes)),
-    ]), // TODO(macOS ISS#2323203)
     tooltip: PropTypes.string, // TODO(macOS/win ISS#2323203)
     /**
      * Called when the touch is released, but not if cancelled (e.g. by a scroll
@@ -353,7 +334,6 @@ const TouchableWithoutFeedback = ((createReactClass({
       onDragEnter: this.props.onDragEnter, // [TODO(macOS ISS#2323203)
       onDragLeave: this.props.onDragLeave, // [TODO(macOS ISS#2323203)
       onDrop: this.props.onDrop, // [TODO(macOS ISS#2323203)
-      draggedTypes: this.props.draggedTypes, // ]TODO(macOS ISS#2323203)
       children,
     });
   },
