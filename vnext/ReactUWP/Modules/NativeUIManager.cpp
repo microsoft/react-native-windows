@@ -1011,14 +1011,17 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   if (shadowNode == nullptr)
     return;
 
-  if (shadowNode->IsExternalLayoutDirty()) {
+  auto comboBox = shadowNode->GetView().try_as<winrt::ComboBox>();
+  if (comboBox != nullptr) {
     YGNodeRef yogaNode = GetYogaNode(tag);
-    if (yogaNode)
-      shadowNode->DoExtraLayoutPrep(yogaNode);
+    if (yogaNode) {
+      comboBox.UpdateLayout();
+    }
   }
 
-  for (int64_t child : shadowNode->m_children)
+  for (int64_t child : shadowNode->m_children) {
     UpdateExtraLayout(child);
+  }
 }
 
 void NativeUIManager::DoLayout() {
