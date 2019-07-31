@@ -1013,10 +1013,7 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
 
   auto comboBox = shadowNode->GetView().try_as<winrt::ComboBox>();
   if (comboBox != nullptr) {
-    YGNodeRef yogaNode = GetYogaNode(tag);
-    if (yogaNode) {
-      comboBox.UpdateLayout();
-    }
+    comboBox.UpdateLayout();
   }
 
   for (int64_t child : shadowNode->m_children) {
