@@ -1011,9 +1011,11 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   if (shadowNode == nullptr)
     return;
 
-  auto comboBox = shadowNode->GetView().try_as<winrt::ComboBox>();
-  if (comboBox != nullptr) {
-    comboBox.UpdateLayout();
+  // This should now be generalized to identifying any control in a list of problematic elements.
+
+  auto control = shadowNode->GetView().try_as<winrt::Control>();
+  if (control != nullptr) {
+    control.UpdateLayout();
   }
 
   for (int64_t child : shadowNode->m_children) {
