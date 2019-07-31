@@ -82,7 +82,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   winrt::Flyout GetFlyout();
   void AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight);
-  
+
   bool IsWindowed() override {
     return true;
   }
@@ -342,13 +342,16 @@ void FlyoutShadowNode::SetTargetFrameworkElement() {
   }
 }
 
-void FlyoutShadowNode::AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight) {
+void FlyoutShadowNode::AdjustDefaultFlyoutStyle(
+    float maxWidth,
+    float maxHeight) {
   winrt::Style flyoutStyle(
       {L"Windows.UI.Xaml.Controls.FlyoutPresenter", winrt::TypeKind::Metadata});
   flyoutStyle.Setters().Append(winrt::Setter(
       winrt::FrameworkElement::MaxWidthProperty(), winrt::box_value(maxWidth)));
   flyoutStyle.Setters().Append(winrt::Setter(
-      winrt::FrameworkElement::MaxHeightProperty(), winrt::box_value(maxHeight)));
+      winrt::FrameworkElement::MaxHeightProperty(),
+      winrt::box_value(maxHeight)));
   flyoutStyle.Setters().Append(
       winrt::Setter(winrt::Control::PaddingProperty(), winrt::box_value(0)));
   flyoutStyle.Setters().Append(winrt::Setter(
