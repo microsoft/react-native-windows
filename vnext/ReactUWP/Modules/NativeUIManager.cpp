@@ -1011,8 +1011,6 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   if (shadowNode == nullptr)
     return;
 
-  // This should now be generalized to identifying any control in a list of problematic elements.
-
   auto control = shadowNode->GetView().try_as<winrt::Control>();
   if (control != nullptr) {
     control.UpdateLayout();
