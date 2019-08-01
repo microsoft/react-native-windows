@@ -8,8 +8,7 @@ jobs:
   - job: RNWUpdateRNVersion
     displayName: React-Native-Windows Update React-Native
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: windows-2019
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:

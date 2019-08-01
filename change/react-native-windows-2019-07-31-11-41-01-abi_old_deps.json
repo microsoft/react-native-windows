@@ -1,0 +1,8 @@
+{
+  "comment": "Remove unneeded exports from react-native-win32",
+  "type": "none",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "commit": "6733f93b1217941a1c1103d13ba364dd096e516e",
+  "date": "2019-07-31T18:41:01.413Z"
+}
