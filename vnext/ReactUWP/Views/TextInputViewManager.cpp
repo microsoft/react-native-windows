@@ -88,6 +88,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   winrt::TextBox::SizeChanged_revoker m_textBoxSizeChangedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
   winrt::TextBox::CharacterReceived_revoker m_textBoxCharacterReceivedRevoker{};
+  winrt::TextBox::Loaded_revoker m_textboxLoadedRevoker{};
 };
 
 void TextInputShadowNode::createView() {
@@ -181,41 +182,42 @@ void TextInputShadowNode::createView() {
         }
       });
 
-  if (textBox.ApplyTemplate()) {
-    m_scrollViewerViewChangingRevoker =
-        textBox.GetTemplateChild(asHstring("ContentElement"))
-            .as<winrt::ScrollViewer>()
-            .ViewChanging(
-                winrt::auto_revoke,
-                [=](auto &&,
-                    winrt::ScrollViewerViewChangingEventArgs const &args) {
-                  auto instance = wkinstance.lock();
-                  if (!m_updating && instance != nullptr) {
-                    folly::dynamic offsetData = folly::dynamic::object(
-                        "x", args.FinalView().HorizontalOffset())(
-                        "y", args.FinalView().VerticalOffset());
-                    folly::dynamic eventData = folly::dynamic::object(
-                        "target", tag)("contentOffset", std::move(offsetData));
-                    instance->DispatchEvent(
-                        tag, "topTextInputOnScroll", std::move(eventData));
-                  }
-                });
-  }
+  m_textboxLoadedRevoker =
+      textBox.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto textBoxView = textBox.GetTemplateChild(asHstring("ContentElement"))
+                           .as<winrt::ScrollViewer>();
+    if (textBoxView) {
+      m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
+          winrt::auto_revoke,
+          [=](auto &&, winrt::ScrollViewerViewChangingEventArgs const &args) {
+            auto instance = wkinstance.lock();
+            if (!m_updating && instance != nullptr) {
+              folly::dynamic offsetData = folly::dynamic::object(
+                  "x", args.FinalView().HorizontalOffset())(
+                  "y", args.FinalView().VerticalOffset());
+              folly::dynamic eventData = folly::dynamic::object("target", tag)(
+                  "contentOffset", std::move(offsetData));
+              instance->DispatchEvent(
+                  tag, "topTextInputOnScroll", std::move(eventData));
+            }
+          });
+      }
+  });
 
   if (textBox.try_as<winrt::IUIElement7>()) {
     m_textBoxCharacterReceivedRevoker = textBox.CharacterReceived(
-        winrt::auto_revoke,
-        [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
-          auto instance = wkinstance.lock();
-          std::string key;
-          wchar_t s[2] = L" ";
-          s[0] = args.Character();
-          key = facebook::react::unicode::utf16ToUtf8(s, 1);
+      winrt::auto_revoke,
+      [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
+        auto instance = wkinstance.lock();
+        std::string key;
+        wchar_t s[2] = L" ";
+        s[0] = args.Character();
+        key = facebook::react::unicode::utf16ToUtf8(s, 1);
 
-          if (key.compare("\r") == 0) {
-            key = "Enter";
-          } else if (key.compare("\b") == 0) {
-            key = "Backspace";
+        if (key.compare("\r") == 0) {
+          key = "Enter";
+        } else if (key.compare("\b") == 0) {
+          key = "Backspace";
           }
 
           if (!m_updating && instance != nullptr) {
@@ -276,7 +278,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       else if (propertyValue.isNull())
         textBox.ClearValue(winrt::TextBox::PlaceholderTextProperty());
     } else if (propertyName == "placeholderTextColor") {
-      if (textBox.try_as<winrt::ITextBlock6>()) {
+      if (textBox.try_as<winrt::ITextBox6>()) {
         if (IsValidColorValue(propertyValue))
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         else if (propertyValue.isNull())
