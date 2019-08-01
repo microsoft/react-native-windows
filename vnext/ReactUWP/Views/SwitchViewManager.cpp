@@ -52,8 +52,8 @@ void SwitchShadowNode::createView() {
           OnToggled(*instance, m_tag, toggleSwitch.IsOn());
       });
 
-  //properties can come down early before native XAML element added into tree
-  //hook up loading event which is called right at beginning of Measure
+  // properties can come down early before native XAML element added into tree
+  // hook up loading event which is called right at beginning of Measure
   m_toggleSwitchLoadingRevoker =
       toggleSwitch.Loading(winrt::auto_revoke, [=](auto &&, auto &&) {
         UpdateThumbColor();
@@ -88,7 +88,7 @@ void SwitchShadowNode::UpdateTrackColor() {
     return;
 
   folly::dynamic trackColor =
-  toggleSwitch.IsOn() ? m_onTrackColor : m_offTrackColor;
+      toggleSwitch.IsOn() ? m_onTrackColor : m_offTrackColor;
   if (IsValidColorValue(trackColor)) {
     toggleSwitch.ApplyTemplate();
     winrt::Rectangle knob =

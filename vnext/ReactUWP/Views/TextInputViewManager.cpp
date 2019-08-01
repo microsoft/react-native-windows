@@ -184,40 +184,41 @@ void TextInputShadowNode::createView() {
 
   m_textboxLoadedRevoker =
       textBox.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
-    auto textBoxView = textBox.GetTemplateChild(asHstring("ContentElement"))
-                           .as<winrt::ScrollViewer>();
-    if (textBoxView) {
-      m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
-          winrt::auto_revoke,
-          [=](auto &&, winrt::ScrollViewerViewChangingEventArgs const &args) {
-            auto instance = wkinstance.lock();
-            if (!m_updating && instance != nullptr) {
-              folly::dynamic offsetData = folly::dynamic::object(
-                  "x", args.FinalView().HorizontalOffset())(
-                  "y", args.FinalView().VerticalOffset());
-              folly::dynamic eventData = folly::dynamic::object("target", tag)(
-                  "contentOffset", std::move(offsetData));
-              instance->DispatchEvent(
-                  tag, "topTextInputOnScroll", std::move(eventData));
-            }
-          });
-      }
-  });
+        auto textBoxView = textBox.GetTemplateChild(asHstring("ContentElement"))
+                               .as<winrt::ScrollViewer>();
+        if (textBoxView) {
+          m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
+              winrt::auto_revoke,
+              [=](auto &&,
+                  winrt::ScrollViewerViewChangingEventArgs const &args) {
+                auto instance = wkinstance.lock();
+                if (!m_updating && instance != nullptr) {
+                  folly::dynamic offsetData = folly::dynamic::object(
+                      "x", args.FinalView().HorizontalOffset())(
+                      "y", args.FinalView().VerticalOffset());
+                  folly::dynamic eventData = folly::dynamic::object(
+                      "target", tag)("contentOffset", std::move(offsetData));
+                  instance->DispatchEvent(
+                      tag, "topTextInputOnScroll", std::move(eventData));
+                }
+              });
+        }
+      });
 
   if (textBox.try_as<winrt::IUIElement7>()) {
     m_textBoxCharacterReceivedRevoker = textBox.CharacterReceived(
-      winrt::auto_revoke,
-      [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
-        auto instance = wkinstance.lock();
-        std::string key;
-        wchar_t s[2] = L" ";
-        s[0] = args.Character();
-        key = facebook::react::unicode::utf16ToUtf8(s, 1);
+        winrt::auto_revoke,
+        [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
+          auto instance = wkinstance.lock();
+          std::string key;
+          wchar_t s[2] = L" ";
+          s[0] = args.Character();
+          key = facebook::react::unicode::utf16ToUtf8(s, 1);
 
-        if (key.compare("\r") == 0) {
-          key = "Enter";
-        } else if (key.compare("\b") == 0) {
-          key = "Backspace";
+          if (key.compare("\r") == 0) {
+            key = "Enter";
+          } else if (key.compare("\b") == 0) {
+            key = "Backspace";
           }
 
           if (!m_updating && instance != nullptr) {
