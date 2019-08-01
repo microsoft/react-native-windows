@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <!-- Since these packages have been hoisted, we need to let the build system know where to find them -->
   <PropertyGroup>
     <ReactNativeDir>$(MSBuildThisFileDirectory)\..\node_modules\react-native</ReactNativeDir>
     <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\..\..\..\vnext</ReactNativeWindowsDir>
-    <FollyDir>$(ReactNativeDir)\folly</FollyDir>
-    <YogaDir>$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
   </PropertyGroup>
 
 </Project>

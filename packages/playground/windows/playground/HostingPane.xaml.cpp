@@ -418,6 +418,7 @@ void HostingPane::InitComboBoxes() {
 
   m_jsFileNames->Append(L"Samples\\accessible");
   m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\calculator");
   m_jsFileNames->Append(L"Samples\\click");
   m_jsFileNames->Append(L"Samples\\control");
   m_jsFileNames->Append(L"Samples\\flexbox");

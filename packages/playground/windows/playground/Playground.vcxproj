@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="EnsureReactNativeProjectDir">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8b88ffae-4dbc-49a2-afa5-d2477d4ad189}</ProjectGuid>
     <RootNamespace>Playground</RootNamespace>
@@ -15,10 +15,7 @@
   </PropertyGroup>
   <!-- We need some way to tell if we are using the microsoft/react-native version of the facebook one... -->
   <!-- For now we are using the existance of the glog stub... but we probably want a better long term solution -->
-  <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
-    <OSS_RN>true</OSS_RN>
-    <FollyDir>$(SolutionDir)node_modules\.folly\folly-2019.06.10.00</FollyDir>
-  </PropertyGroup>
+
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -78,11 +75,7 @@
       <AdditionalDependencies>$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
   <ItemGroup>
     <ClInclude Include="HostingPane.xaml.h">
       <DependentUpon>HostingPane.xaml</DependentUpon>
@@ -165,5 +158,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+  </Target>
+  <Target Name="EnsureReactNativeProjectDir" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ReactNativeProjectDir)' == ''" Text="You must use launchSln.cmd or otherwise set the ReactNativeProjectDir enviroment variable before launching the solution." />
   </Target>
 </Project>
