@@ -243,14 +243,18 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(
 template <typename T>
 void UpdateModifiedKeyStatusTo(T &event) {
   auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
-  event.altKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Menu);
-  event.shiftKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Shift);
-  event.metaKey =
-      KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::LeftWindows) ||
-      KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::RightWindows);
-  event.ctrlKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Control);
-  event.capLocked =
-    KeyboardHelper::IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
+  event.altKey =
+      KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Menu);
+  event.shiftKey = KeyboardHelper::IsModifiedKeyPressed(
+      coreWindow, winrt::VirtualKey::Shift);
+  event.metaKey = KeyboardHelper::IsModifiedKeyPressed(
+                      coreWindow, winrt::VirtualKey::LeftWindows) ||
+      KeyboardHelper::IsModifiedKeyPressed(
+                      coreWindow, winrt::VirtualKey::RightWindows);
+  event.ctrlKey = KeyboardHelper::IsModifiedKeyPressed(
+      coreWindow, winrt::VirtualKey::Control);
+  event.capLocked = KeyboardHelper::IsModifiedKeyLocked(
+      coreWindow, winrt::VirtualKey::CapitalLock);
 };
 
 void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
@@ -658,7 +662,8 @@ inline winrt::VirtualKey GetLeftOrRightModifiedKey(
     winrt::CoreWindow const &coreWindow,
     winrt::VirtualKey leftKey,
     winrt::VirtualKey rightKey) {
-  return KeyboardHelper::IsModifiedKeyPressed(coreWindow, leftKey) ? leftKey : rightKey;
+  return KeyboardHelper::IsModifiedKeyPressed(coreWindow, leftKey) ? leftKey
+                                                                   : rightKey;
 }
 
 std::string KeyboardHelper::CodeFromVirtualKey(winrt::VirtualKey virtualKey) {
@@ -693,19 +698,19 @@ std::string KeyboardHelper::CodeFromVirtualKey(winrt::VirtualKey virtualKey) {
 }
 
 bool KeyboardHelper::IsModifiedKeyPressed(
-  winrt::CoreWindow const &coreWindow,
-  winrt::VirtualKey virtualKey) {
+    winrt::CoreWindow const &coreWindow,
+    winrt::VirtualKey virtualKey) {
   return (coreWindow.GetKeyState(virtualKey) &
-    winrt::CoreVirtualKeyStates::Down) ==
-    winrt::CoreVirtualKeyStates::Down;
+          winrt::CoreVirtualKeyStates::Down) ==
+      winrt::CoreVirtualKeyStates::Down;
 }
 
 bool KeyboardHelper::IsModifiedKeyLocked(
-  winrt::CoreWindow const &coreWindow,
-  winrt::VirtualKey virtualKey) {
+    winrt::CoreWindow const &coreWindow,
+    winrt::VirtualKey virtualKey) {
   return (coreWindow.GetKeyState(virtualKey) &
-    winrt::CoreVirtualKeyStates::Locked) ==
-    winrt::CoreVirtualKeyStates::Locked;
+          winrt::CoreVirtualKeyStates::Locked) ==
+      winrt::CoreVirtualKeyStates::Locked;
 }
 
 } // namespace uwp

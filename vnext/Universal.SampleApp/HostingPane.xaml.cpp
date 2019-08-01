@@ -164,10 +164,10 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   }
 
   void persistUseWebDebugger(bool useWebDebugger) {
-    HostingPane^ pane = m_wrPane.Resolve<HostingPane>();
+    HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
     if (pane) {
       pane->persistUseWebDebugger(useWebDebugger);
-    }    
+    }
   }
 
  private:

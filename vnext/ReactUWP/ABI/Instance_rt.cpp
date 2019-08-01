@@ -68,11 +68,7 @@ std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance() {
         ::react::uwp::CreateReactInstance(m_spModuleProvider /*moduleLoader*/);
     ::react::uwp::ReactInstanceSettings innerSettings;
     innerSettings.UseLiveReload = m_settings.UseLiveReload;
-
-//    static bool useIt = true;
     innerSettings.UseWebDebugger = m_settings.UseWebDebugger;
-//    innerSettings.UseWebDebugger = useIt;
-//    useIt = !useIt;
     m_instance->Start(m_instance, innerSettings);
     m_instance->loadBundle(std::string(m_jsBundleName));
   }

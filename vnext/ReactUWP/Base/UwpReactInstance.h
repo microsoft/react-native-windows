@@ -90,7 +90,7 @@ class UwpReactInstance
   ExpressionAnimationStore &GetExpressionAnimationStore() override {
     return m_expressionAnimationStore;
   }
-  const ReactInstanceSettings& GetReactInstanceSettings() const override {
+  const ReactInstanceSettings &GetReactInstanceSettings() const override {
     return m_reactInstanceSettings;
   }
   std::string GetBundleRootPath() const noexcept override {

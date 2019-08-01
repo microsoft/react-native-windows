@@ -161,12 +161,11 @@ struct KeyboardHelper {
   FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   static std::string CodeFromVirtualKey(winrt::VirtualKey key);
   static bool IsModifiedKeyPressed(
-    winrt::CoreWindow const &coreWindow,
-    winrt::VirtualKey virtualKey);
+      winrt::CoreWindow const &coreWindow,
+      winrt::VirtualKey virtualKey);
   static bool IsModifiedKeyLocked(
-    winrt::CoreWindow const &coreWindow,
-    winrt::VirtualKey virtualKey);
-
+      winrt::CoreWindow const &coreWindow,
+      winrt::VirtualKey virtualKey);
 };
 } // namespace uwp
 } // namespace react
