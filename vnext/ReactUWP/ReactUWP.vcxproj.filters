@@ -223,6 +223,9 @@
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AlertModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -496,6 +499,9 @@
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\AppThemeModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\AlertModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="Views\DatePickerViewManager.h">

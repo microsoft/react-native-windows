@@ -16,3 +16,4 @@ export * from './Libraries/Components/View/ViewWindowsProps';
 export * from './Libraries/Components/View/ViewWindows.uwp';
 export * from './Libraries/AppTheme/AppTheme.uwp';
 export * from './Libraries/AppTheme/AppThemeTypes';
+export * from './Libraries/Modules/Alert/Alert.uwp';

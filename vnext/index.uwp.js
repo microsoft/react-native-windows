@@ -19,4 +19,5 @@ __export(require("./Libraries/Components/Keyboard/KeyboardExt.uwp"));
 __export(require("./Libraries/Components/Keyboard/KeyboardExtProps"));
 __export(require("./Libraries/Components/View/ViewWindows.uwp"));
 __export(require("./Libraries/AppTheme/AppTheme.uwp"));
+__export(require("./Libraries/Modules/Alert/Alert.uwp"));
 //# sourceMappingURL=index.uwp.js.map
