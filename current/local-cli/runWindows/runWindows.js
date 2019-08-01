@@ -4,9 +4,9 @@ const chalk = require('chalk');
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
 
-function runWindows(config, args, options) {
+function runWindows(argv, config, options) {
   // Fix up options
-  options.root = options.root || process.cwd();
+  options.root = options.root || config.root || process.cwd();
 
   const slnFile = build.getSolutionFile(options);
   if (!slnFile) {
@@ -31,7 +31,7 @@ function runWindows(config, args, options) {
     return;
   }
 
-  return deploy.startServerInNewWindow(options)
+  return deploy.startServerInNewWindow(options, config.reactNativePath)
     .then(() => {
       if (options.device || options.emulator || options.target) {
         return deploy.deployToDevice(options);
@@ -64,6 +64,7 @@ runWindows({
  *    proxy: Boolean - Run using remote JS proxy
  *    verbose: Boolean - Enables logging
  *    no-packager: Boolean - Do not launch packager while building
+ *    port: Integer - port number that should be used by the packager
  */
 module.exports = {
   name: 'run-windows',
@@ -98,5 +99,9 @@ module.exports = {
   }, {
     command: '--no-packager',
     description: 'Do not launch packager while building'
+  }, {
+    command: '--port [number]',
+    default: process.env.RCT_METRO_PORT || 8081,
+    parse: val => Number(val)
   }]
 };

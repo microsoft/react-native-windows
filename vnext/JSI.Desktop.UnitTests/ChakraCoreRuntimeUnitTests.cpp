@@ -6,7 +6,7 @@
 
 // TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
 // there.
-#include "Desktop.IntegrationTests/TestMessageQueueThread.h"
+#include <IntegrationTests/TestMessageQueueThread.h>
 
 #include <gtest/gtest.h>
 

@@ -70,6 +70,8 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
   winrt::hstring scheme{uri.SchemeName()};
   bool needsDownload = (scheme == L"http") || (scheme == L"https");
   bool inlineData = scheme == L"data";
+  // get weak reference before any co_await calls
+  auto weak_this{get_weak()};
 
   try {
     m_imageSource = source;
@@ -81,35 +83,38 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
       memoryStream = co_await GetImageInlineDataAsync(source);
     }
 
-    if ((needsDownload || inlineData) && !memoryStream) {
-      m_onLoadEndEvent(*this, false);
-    }
+    if (auto strong_this{weak_this.get()}) {
+      if ((needsDownload || inlineData) && !memoryStream) {
+        strong_this->m_onLoadEndEvent(*strong_this, false);
+      }
 
-    if (!needsDownload || memoryStream) {
-      auto surface = needsDownload || inlineData
-          ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
-          : winrt::LoadedImageSurface::StartLoadFromUri(uri);
+      if (!needsDownload || memoryStream) {
+        auto surface = needsDownload || inlineData
+            ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
+            : winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
-      m_surfaceLoadedRevoker = surface.LoadCompleted(
-          winrt::auto_revoke,
-          [weak_this{get_weak()}, surface](
-              winrt::LoadedImageSurface const & /*sender*/,
-              winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
-            if (auto strong_this{weak_this.get()}) {
-              bool succeeded{false};
-              if (args.Status() ==
-                  winrt::LoadedImageSourceLoadStatus::Success) {
-                strong_this->m_brush->Source(surface);
-                succeeded = true;
+        strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
+            winrt::auto_revoke,
+            [weak_this, surface](
+                winrt::LoadedImageSurface const & /*sender*/,
+                winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
+              if (auto strong_this{weak_this.get()}) {
+                bool succeeded{false};
+                if (args.Status() ==
+                    winrt::LoadedImageSourceLoadStatus::Success) {
+                  strong_this->m_brush->Source(surface);
+                  succeeded = true;
+                }
+                strong_this->m_onLoadEndEvent(*strong_this, succeeded);
               }
-              strong_this->m_onLoadEndEvent(*strong_this, succeeded);
-            }
-          });
+            });
+      }
     }
   } catch (winrt::hresult_error const &) {
-    m_onLoadEndEvent(*this, false);
+    if (auto strong_this{weak_this.get()})
+      strong_this->m_onLoadEndEvent(*strong_this, false);
   }
-}
+} // namespace uwp
 
 winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(
     ImageSource source) {
