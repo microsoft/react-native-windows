@@ -304,6 +304,7 @@ void ReactControl::EnsureFocusSafeHarbor() {
   }
 }
 
+// Set keyboard event listener for developer menu
 void ReactControl::InitializeDeveloperMenu() {
   auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
