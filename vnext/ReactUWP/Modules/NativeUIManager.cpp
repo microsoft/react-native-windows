@@ -901,6 +901,11 @@ void NativeUIManager::CreateView(
   auto *pViewManager = node.GetViewManager();
 
   if (pViewManager->RequiresYogaNode()) {
+    // Generate list of controls that need to have layout rerun on them.
+    if (const auto control = node.GetView().try_as<winrt::Control>()) {
+      m_controlNodes.push_back(node.m_tag);
+    }
+
     auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node());
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
@@ -1011,17 +1016,21 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   if (shadowNode == nullptr)
     return;
 
-  auto control = shadowNode->GetView().try_as<winrt::Control>();
-  if (control != nullptr) {
-    control.UpdateLayout();
-  }
-
   for (int64_t child : shadowNode->m_children) {
     UpdateExtraLayout(child);
   }
 }
 
 void NativeUIManager::DoLayout() {
+  // Process vector of controls needing extra layout here.
+  const auto controlNodes = m_controlNodes;
+  for (const int64_t tag : controlNodes) {
+    ShadowNodeBase &node = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+    if (node.needsForceLayout()) {
+      auto control = node.GetView().try_as<winrt::Control>();
+      control.UpdateLayout();
+    }
+  }
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
     UpdateExtraLayout(rootTag);

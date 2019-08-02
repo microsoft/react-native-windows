@@ -24,6 +24,7 @@ class PickerShadowNode : public ShadowNodeBase {
   PickerShadowNode();
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
+  bool needsForceLayout() override;
 
  private:
   void RepopulateItems();
@@ -167,6 +168,10 @@ void PickerShadowNode::RepopulateItems() {
       folly::dynamic::object("target", tag)("value", std::move(value))(
           "itemIndex", selectedIndex)("text", std::move(text));
   instance.DispatchEvent(tag, "topChange", std::move(eventData));
+}
+
+bool PickerShadowNode::needsForceLayout() {
+  return true;
 }
 
 PickerViewManager::PickerViewManager(
