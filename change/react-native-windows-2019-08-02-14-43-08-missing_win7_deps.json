@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Delay-load dependencies absent on Win7",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "cf3f5017c2cd26c36067fde73da9606e851b9474",
+  "date": "2019-08-02T21:43:07.992Z"
+}
