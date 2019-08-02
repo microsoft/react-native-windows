@@ -143,6 +143,7 @@ void ReactControl::AttachRoot() noexcept {
   m_isAttached = true;
 
 #ifdef DEBUG
+  // TODO:  Enable this in retail builds via a new API
   InitializeDeveloperMenu();
 #endif
 }
