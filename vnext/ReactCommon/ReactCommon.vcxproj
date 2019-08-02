@@ -81,6 +81,15 @@
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
   </ImportGroup>
   <ItemGroup>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\RuntimeHolder.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\threadsafe.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
@@ -106,14 +115,10 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\instrumentation.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi-inl.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
@@ -139,17 +144,16 @@
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-posix.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp"  Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp"  Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp"  Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'"/>
-    <ClCompile Include="nov8.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' != 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="nov8.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' != 'true'" />
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
