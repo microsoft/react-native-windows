@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Jul 2019 08:32:04 GMT and should not be manually modified.
+This log was last generated on Sun, 28 Jul 2019 12:44:00 GMT and should not be manually modified.
+
+## 0.59.0-vnext.110
+Sun, 28 Jul 2019 12:44:00 GMT
+
+### Changes
+
+- Allow run-windows to be more flexible about project layout to support default c++ layouts (acoates@microsoft.com)
 
 ## 0.59.0-vnext.109
 Fri, 26 Jul 2019 08:32:04 GMT

@@ -1,15 +1,13 @@
-<Page
-    x:Class="playground.MainPage"
+﻿<Page
+    x:Class="Playground.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:playground"
+    xmlns:local="using:Playground"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:react="using:react.uwp"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    mc:Ignorable="d">
 
-    <Grid>
-    <react:ReactControl x:Name="RootElement" />
+  <Grid x:Name="x_PaneContainer">
+    <Grid.ColumnDefinitions/>
   </Grid>
 </Page>

@@ -90,6 +90,9 @@ class UwpReactInstance
   ExpressionAnimationStore &GetExpressionAnimationStore() override {
     return m_expressionAnimationStore;
   }
+  const ReactInstanceSettings &GetReactInstanceSettings() const override {
+    return m_reactInstanceSettings;
+  }
   std::string GetBundleRootPath() const noexcept override {
     return m_bundleRootPath;
   }
@@ -127,6 +130,7 @@ class UwpReactInstance
   std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 
   std::string m_bundleRootPath;
+  ReactInstanceSettings m_reactInstanceSettings;
 };
 
 } // namespace uwp

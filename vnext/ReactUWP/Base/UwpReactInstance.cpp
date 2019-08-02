@@ -253,6 +253,8 @@ void UwpReactInstance::Start(
   if (m_started)
     return;
 
+  m_reactInstanceSettings = settings;
+
   assert(
       m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr &&
       m_jsThread == nullptr && m_initThread == nullptr &&
