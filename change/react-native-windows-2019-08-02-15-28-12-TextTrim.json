@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix single line text trimming issue",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "3dada0ce2e01c1455eb2f786b097429202c311b1",
+  "date": "2019-08-02T22:28:12.732Z"
+}
