@@ -7,15 +7,6 @@ trigger:
       - master
       - 0.58-vnext-stable
       - fabric
-  paths:
-    include:
-      - vnext/*
-    exclude:
-      - change/*
-      - vnext/package.json
-      - vnext/yarn.lock
-      - vnext/Desktop.DLL/Version.rc
-      - vnext/ReactUWP/Version.rc
 
 pr: none
 
