@@ -1025,7 +1025,8 @@ void NativeUIManager::DoLayout() {
   // Process vector of controls needing extra layout here.
   const auto controlNodes = m_controlNodes;
   for (const int64_t tag : controlNodes) {
-    ShadowNodeBase &node = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+    ShadowNodeBase &node =
+        static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
     if (node.needsForceLayout()) {
       auto control = node.GetView().try_as<winrt::Control>();
       control.UpdateLayout();
