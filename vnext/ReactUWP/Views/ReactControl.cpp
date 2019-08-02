@@ -144,6 +144,7 @@ void ReactControl::AttachRoot() noexcept {
 
 #ifdef DEBUG
   // TODO:  Enable this in retail builds via a new API
+  // https://github.com/microsoft/react-native-windows/issues/2870
   InitializeDeveloperMenu();
 #endif
 }
