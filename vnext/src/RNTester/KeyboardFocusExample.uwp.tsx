@@ -5,7 +5,15 @@
  */
 
 import * as React from 'react';
-import {View, StyleSheet, Text, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {
   supportKeyboard,
   IKeyboardEvent,
@@ -45,6 +53,9 @@ const styles = StyleSheet.create({
 interface IKeyboardFocusComponentState {
   selected: string;
   keyOnKeyDown: string;
+  focusMessageHighlight: string;
+  focusMessageOpacity: string;
+  focusMessageWithoutFeedback: string;
 }
 
 // tslint:disable-next-line
@@ -52,6 +63,9 @@ const pickerRef = React.createRef<any>();
 const viewWindowsRef = React.createRef<View>();
 const textInputRef = React.createRef<TextInput>();
 const textInputRef2 = React.createRef<TextInput>();
+const touchableHighlightRef = React.createRef<TouchableHighlight>();
+const touchableOpacityRef = React.createRef<TouchableOpacity>();
+const touchableWithoutFeedbackRef = React.createRef<TouchableWithoutFeedback>();
 
 // tslint:disable-next-line
 const checkBoxRef = React.createRef<any>();
@@ -65,6 +79,9 @@ class KeyboardFocusExample extends React.Component<
     this.state = {
       selected: '',
       keyOnKeyDown: 'unknown',
+      focusMessageHighlight: '',
+      focusMessageOpacity: '',
+      focusMessageWithoutFeedback: '',
     };
   }
 
@@ -75,6 +92,8 @@ class KeyboardFocusExample extends React.Component<
       'TextInput',
       'TextInput2',
       'CheckBox',
+      'TouchableHighlight',
+      'TouchableOpacity',
     ];
 
     return (
@@ -130,6 +149,38 @@ class KeyboardFocusExample extends React.Component<
           <CheckBox ref={checkBoxRef} />
           <Text>Checkbox accept focus</Text>
         </View>
+        <View>
+          <TouchableHighlight
+            ref={touchableHighlightRef}
+            onFocus={this._touchableHighlightFocus}
+            onBlur={this._touchableHighlightBlur}>
+            <View style={{width: 50, height: 50, backgroundColor: 'blue'}} />
+          </TouchableHighlight>
+          <Text>
+            Last focus event for TouchableHighlight:{' '}
+            {this.state.focusMessageHighlight}
+          </Text>
+          <TouchableOpacity
+            ref={touchableOpacityRef}
+            onFocus={this._touchableOpacityFocus}
+            onBlur={this._touchableOpacityBlur}>
+            <View style={{width: 50, height: 50, backgroundColor: 'yellow'}} />
+          </TouchableOpacity>
+          <Text>
+            Last focus event for TouchableOpacity:{' '}
+            {this.state.focusMessageOpacity}
+          </Text>
+          <TouchableWithoutFeedback
+            ref={touchableWithoutFeedbackRef}
+            onFocus={this._touchableWithoutFeedbackFocus}
+            onBlur={this._touchableWithoutFeedbackBlur}>
+            <View style={{width: 50, height: 50, backgroundColor: 'green'}} />
+          </TouchableWithoutFeedback>
+          <Text>
+            Last focus event for TouchableWithoutFeedback:{' '}
+            {this.state.focusMessageWithoutFeedback}
+          </Text>
+        </View>
       </View>
     );
   }
@@ -166,7 +217,39 @@ class KeyboardFocusExample extends React.Component<
       case 'CheckBox':
         checkBoxRef.current && checkBoxRef.current.focus();
         break;
+      case 'TouchableHighlight':
+        touchableHighlightRef.current && touchableHighlightRef.current.focus();
+        break;
+      case 'TouchableOpacity':
+        touchableOpacityRef.current && touchableOpacityRef.current.focus();
+        break;
+      case 'TouchableWithoutFeedback':
+        // TouchableWithoutFeedback doesn't have a focus method, since it doesn't have NativeMethodsMixin applied
+        break;
     }
+  };
+
+  private _touchableHighlightFocus = () => {
+    this.setState({focusMessageHighlight: 'TouchableHighlight onFocus'});
+  };
+  private _touchableHighlightBlur = () => {
+    this.setState({focusMessageHighlight: 'TouchableHighlight onBlur'});
+  };
+  private _touchableOpacityFocus = () => {
+    this.setState({focusMessageOpacity: 'TouchableOpacity onFocus'});
+  };
+  private _touchableOpacityBlur = () => {
+    this.setState({focusMessageOpacity: 'TouchableOpacity onBlur'});
+  };
+  private _touchableWithoutFeedbackFocus = () => {
+    this.setState({
+      focusMessageWithoutFeedback: 'TouchableWithoutFeedback onFocus',
+    });
+  };
+  private _touchableWithoutFeedbackBlur = () => {
+    this.setState({
+      focusMessageWithoutFeedback: 'TouchableWithoutFeedback onBlur',
+    });
   };
 }
 export const displayName = (_undefined?: string) => {};
