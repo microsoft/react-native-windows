@@ -1031,6 +1031,8 @@ void NativeUIManager::DoLayout() {
       control.UpdateLayout();
     }
   }
+  // Values need to be cleared from the vector before next call to DoLayout.
+  m_controlNodes.clear();
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
     UpdateExtraLayout(rootTag);
