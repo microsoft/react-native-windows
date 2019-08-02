@@ -22,7 +22,9 @@ class SpringAnimationDriver : public AnimationDriver {
   MakeAnimation(const folly::dynamic &config) override;
 
  private:
-  std::tuple<float, double> GetValueAndVelocityForTime(double time, double startValue);
+  std::tuple<float, double> GetValueAndVelocityForTime(
+      double time,
+      double startValue);
   bool IsAtRest(
       double currentVelocity,
       double currentPosition,
@@ -39,19 +41,16 @@ class SpringAnimationDriver : public AnimationDriver {
   bool m_overshootClampingEnabled{0};
   int m_iterations{0};
 
-  static constexpr std::string_view s_springStiffnessParameterName{
-      "stiffness"};
+  static constexpr std::string_view s_springStiffnessParameterName{"stiffness"};
   static constexpr std::string_view s_springDampingParameterName{"damping"};
-  static constexpr std::string_view s_springMassParameterName{
-      "mass"};
+  static constexpr std::string_view s_springMassParameterName{"mass"};
   static constexpr std::string_view s_initialVelocityParameterName{
       "initialVelocity"};
   static constexpr std::string_view s_endValueParameterName{"toValue"};
   static constexpr std::string_view s_restSpeedThresholdParameterName{
       "restSpeedThreshold"};
   static constexpr std::string_view
-      s_displacementFromRestThresholdParameterName{
-      "restDisplacementThreshold"};
+      s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
   static constexpr std::string_view s_overshootClampingEnabledParameterName{
       "overshootClamping"};
   static constexpr std::string_view s_iterationsParameterName{"iterations"};

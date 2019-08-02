@@ -39,9 +39,8 @@ SpringAnimationDriver::SpringAnimationDriver(
       config.find(s_overshootClampingEnabledParameterName)
           .dereference()
           .second.asBool();
-  m_iterations = static_cast<int>(config.find(s_iterationsParameterName)
-                     .dereference()
-                     .second.asDouble());
+  m_iterations = static_cast<int>(
+      config.find(s_iterationsParameterName).dereference().second.asDouble());
 }
 
 std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
@@ -79,9 +78,11 @@ SpringAnimationDriver::MakeAnimation(const folly::dynamic &config) {
   animation.Duration(duration);
 
   auto normalizedProgress = 0.0f;
-  animation.InsertKeyFrame(normalizedProgress, static_cast<float>(startValue), easingFunction);
+  animation.InsertKeyFrame(
+      normalizedProgress, static_cast<float>(startValue), easingFunction);
   for (const auto keyFrame : keyFrames) {
-    normalizedProgress = std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
+    normalizedProgress =
+        std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
     animation.InsertKeyFrame(normalizedProgress, keyFrame, easingFunction);
   }
   animation.IterationCount(static_cast<int32_t>(m_iterations));
@@ -105,7 +106,8 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
 
   if (zeta < 1) {
     const auto envelope = std::exp(-zeta * omega0 * time);
-    const auto value = static_cast<float>(m_endValue -
+    const auto value = static_cast<float>(
+        m_endValue -
         envelope *
             ((v0 + zeta * omega0 * x0) / omega1 * std::sin(omega1 * time) +
              x0 * std::cos(omega1 * time)));
@@ -118,8 +120,9 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
     return std::make_tuple(value, velocity);
   } else {
     const auto envelope = std::exp(-omega0 * time);
-    const auto value =
-        static_cast<float>(m_endValue * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0)));
+    const auto value = static_cast<float>(
+        m_endValue *
+        (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0)));
     const auto velocity =
         envelope * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0));
     return std::make_tuple(value, velocity);
