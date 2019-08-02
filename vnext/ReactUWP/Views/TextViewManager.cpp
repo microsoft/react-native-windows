@@ -114,9 +114,18 @@ void TextViewManager::UpdateProperties(
                    textBlock, propertyName, propertyValue)) {
       continue;
     } else if (propertyName == "numberOfLines") {
-      if (propertyValue.isNumber())
-        textBlock.MaxLines(static_cast<int32_t>(propertyValue.asDouble()));
-      else if (propertyValue.isNull())
+      if (propertyValue.isNumber()) {
+        auto numberLines = static_cast<int32_t>(propertyValue.asDouble());
+        if (numberLines == 1) {
+          textBlock.TextWrapping(
+              winrt::TextWrapping::NoWrap); // setting no wrap for single line
+                                            // text for better trimming
+                                            // experience
+        } else {
+          textBlock.TextWrapping(winrt::TextWrapping::Wrap);
+        }
+        textBlock.MaxLines(numberLines);
+      } else if (propertyValue.isNull())
         textBlock.ClearValue(winrt::TextBlock::MaxLinesProperty());
     } else if (propertyName == "lineHeight") {
       if (propertyValue.isNumber())
