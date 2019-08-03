@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Refreshing the JSI headers and incorporating the supporting changes in the JSI implementations",
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "commit": "3719f5c1148ebc30edcbbd8541344f5837ec6d71",
+  "date": "2019-08-03T00:19:52.817Z"
+}
