@@ -59,9 +59,10 @@ class ChakraJsiRuntime final : public jsi::Runtime {
   ChakraJsiRuntime(ChakraJsiRuntimeArgs &&args) noexcept;
   ~ChakraJsiRuntime() noexcept;
 
-  void evaluateJavaScript(
-      std::unique_ptr<const jsi::Buffer> buffer,
+  jsi::Value evaluateJavaScript(
+      const std::shared_ptr<const jsi::Buffer> &buffer,
       const std::string &sourceURL) override;
+
   jsi::Object global() override;
 
   std::string description() override;
@@ -242,9 +243,20 @@ class ChakraJsiRuntime final : public jsi::Runtime {
       const jsi::Buffer &serializedScriptBuffer,
       const std::string &sourceURL);
 
+  std::shared_ptr<const facebook::jsi::PreparedJavaScript> prepareJavaScript(
+      const std::shared_ptr<const facebook::jsi::Buffer> &,
+      std::string) override;
+  facebook::jsi::Value evaluatePreparedJavaScript(
+      const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &)
+      override;
+
   PointerValue *cloneString(const Runtime::PointerValue *pv) override;
   PointerValue *cloneObject(const Runtime::PointerValue *pv) override;
   PointerValue *clonePropNameID(const Runtime::PointerValue *pv) override;
+  facebook::jsi::Runtime::PointerValue *cloneSymbol(
+      const facebook::jsi::Runtime::PointerValue *) override;
+
+  std::string symbolToString(const facebook::jsi::Symbol &) override;
 
   jsi::PropNameID createPropNameIDFromAscii(const char *str, size_t length)
       override;
@@ -312,6 +324,10 @@ class ChakraJsiRuntime final : public jsi::Runtime {
 
   bool strictEquals(const jsi::String &a, const jsi::String &b) const override;
   bool strictEquals(const jsi::Object &a, const jsi::Object &b) const override;
+  bool strictEquals(
+      const facebook::jsi::Symbol &,
+      const facebook::jsi::Symbol &) const override;
+
   bool instanceOf(const jsi::Object &o, const jsi::Function &f) override;
 
  private:
