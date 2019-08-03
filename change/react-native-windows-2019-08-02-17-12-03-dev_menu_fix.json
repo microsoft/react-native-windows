@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "change dev menu shortcut to ctrl+shift+D",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "e6d894573c2ac8e4678038c866a7ff1e7d00508a",
-  "date": "2019-08-03T00:12:03.113Z"
-}

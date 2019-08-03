@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 03 Aug 2019 17:26:50 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.116",
+      "version": "0.59.0-vnext.116",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "change dev menu shortcut to ctrl+shift+D",
+            "author": "kmelmon@microsoft.com",
+            "commit": "e6d894573c2ac8e4678038c866a7ff1e7d00508a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 03 Aug 2019 04:30:38 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.115",
       "version": "0.59.0-vnext.115",
