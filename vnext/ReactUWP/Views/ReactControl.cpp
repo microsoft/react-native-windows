@@ -312,16 +312,13 @@ void ReactControl::InitializeDeveloperMenu() {
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
       winrt::auto_revoke,
       [this](const auto &sender, const winrt::AcceleratorKeyEventArgs &args) {
-        if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D)
-          &&
-          KeyboardHelper::IsModifiedKeyPressed(
-            winrt::CoreWindow::GetForCurrentThread(),
-            winrt::VirtualKey::Shift)
-          &&
-          KeyboardHelper::IsModifiedKeyPressed(
-            winrt::CoreWindow::GetForCurrentThread(),
-            winrt::VirtualKey::Control)
-          ) {
+        if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
+            KeyboardHelper::IsModifiedKeyPressed(
+                winrt::CoreWindow::GetForCurrentThread(),
+                winrt::VirtualKey::Shift) &&
+            KeyboardHelper::IsModifiedKeyPressed(
+                winrt::CoreWindow::GetForCurrentThread(),
+                winrt::VirtualKey::Control)) {
           if (!IsDeveloperMenuShowing()) {
             ShowDeveloperMenu();
           }
