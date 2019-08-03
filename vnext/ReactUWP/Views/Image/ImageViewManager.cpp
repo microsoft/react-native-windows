@@ -13,7 +13,6 @@
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
-#include <Views/ShadowNodeBase.h>
 #include "ReactImage.h"
 
 namespace winrt {
@@ -70,37 +69,112 @@ struct json_type_traits<react::uwp::ResizeMode> {
 namespace react {
 namespace uwp {
 
-class ImageShadowNode : public ShadowNodeBase {
- public:
-  ImageShadowNode() = default;
+// ImageShadowNode
+void ImageShadowNode::createView() {
+  ShadowNodeBase::createView();
+  auto reactImage{m_view.as<ReactImage>()};
 
-  void createView() override {
-    ShadowNodeBase::createView();
+  m_onLoadEndToken = reactImage->OnLoadEnd(
+      [this, reactImage](const auto &, const bool &succeeded) {
+        ImageSource source{reactImage->Source()};
+
+        EmitImageEvent(
+            succeeded ? "topLoad" : "topError",
+            source);
+        EmitImageEvent("topLoadEnd", source);
+      });
+}
+
+void ImageShadowNode::onDropViewInstance() {
+  auto reactImage{m_view.as<ReactImage>()};
+  reactImage->OnLoadEnd(m_onLoadEndToken);
+}
+
+void ImageShadowNode::updateProperties(const folly::dynamic &&props) {
+  if (auto reactImage{m_view.as<ReactImage>()}) {
+    updateMaxSize(props);
+
+    for (const auto &pair : props.items()) {
+      const std::string &propertyName{pair.first.getString()};
+      const folly::dynamic &propertyValue{pair.second};
+
+      if (propertyName == "source") {
+        setSource(propertyValue, m_maxSize);
+      } else if (propertyName == "resizeMode") {
+        auto resizeMode{
+            json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
+        reactImage->ResizeMode(resizeMode);
+      }
+
+      // TODO: overflow
+
+      GetViewManager()->UpdateProperties(this, props);
+    }
+  }
+}
+
+void ImageShadowNode::EmitImageEvent(
+    const char *eventName,
+    ImageSource &source) {
+  if (auto instance{GetViewManager()->GetReactInstance().lock()}) {
+
+    auto canvas{m_view.as<winrt::Canvas>()};
+    int64_t tag = canvas.Tag().as<winrt::IPropertyValue>().GetInt64();
+
+    folly::dynamic imageSource = folly::dynamic::object()("url", source.uri)(
+        "width", source.width)("height", source.height);
+
+    folly::dynamic eventData =
+        folly::dynamic::object()("target", tag)("source", imageSource);
+
+    instance->DispatchEvent(tag, eventName, std::move(eventData));
+  }
+}
+
+void ImageShadowNode::setSource(
+    const folly::dynamic &data,
+    const winrt::Size &maxSize) {
+  if (auto instance{GetViewManager()->GetReactInstance().lock()}) {
+    auto sources{json_type_traits<std::vector<ImageSource>>::parseJson(data)};
+    sources[0].bundleRootPath = instance->GetBundleRootPath();
+
     auto reactImage{m_view.as<ReactImage>()};
 
-    m_onLoadEndToken = reactImage->OnLoadEnd(
-        [imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
-         reactImage](const auto &, const bool &succeeded) {
-          ImageSource source{reactImage->Source()};
+    EmitImageEvent("topLoadStart", sources[0]);
+    reactImage->Source(sources[0], maxSize);
+  }
+}
 
-          imageViewManager->EmitImageEvent(
-              reactImage.as<winrt::Canvas>(),
-              succeeded ? "topLoad" : "topError",
-              source);
-          imageViewManager->EmitImageEvent(
-              reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
-        });
+void ImageShadowNode::updateMaxSize(const folly::dynamic &props) {
+  float width = tryGetPropAsFloat(props, "maxWidth");
+  if (width == 0) {
+    width = tryGetPropAsFloat(props, "width");
+  }
+  if (width != 0) {
+    m_maxSize.Width = width;
   }
 
-  void onDropViewInstance() override {
-    auto reactImage{m_view.as<ReactImage>()};
-    reactImage->OnLoadEnd(m_onLoadEndToken);
+  float height = tryGetPropAsFloat(props, "maxHeight");
+  if (height == 0) {
+    height = tryGetPropAsFloat(props, "height");
+  }
+  if (height != 0) {
+    m_maxSize.Height = height;
+  }
+}
+
+float ImageShadowNode::tryGetPropAsFloat(
+    const folly::dynamic &props,
+    const char *propName) {
+  if (props.find(propName) != props.items().end() &&
+      props[propName].isNumber()) {
+    return folly::to<float>(props[propName].asDouble());
   }
 
- private:
-  winrt::event_token m_onLoadEndToken;
-};
+  return 0;
+}
 
+// ImageViewManager
 ImageViewManager::ImageViewManager(
     const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -115,96 +189,6 @@ XamlView ImageViewManager::CreateViewCore(int64_t tag) {
 
 facebook::react::ShadowNode *ImageViewManager::createShadow() const {
   return new ImageShadowNode();
-}
-
-void ImageViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
-  auto canvas{nodeToUpdate->GetView().as<winrt::Canvas>()};
-
-  if (canvas == nullptr)
-    return;
-
-  for (const auto &pair : reactDiffMap.items()) {
-    const std::string &propertyName{pair.first.getString()};
-    const folly::dynamic &propertyValue{pair.second};
-
-    if (propertyName == "source") {
-      setSource(canvas, propertyValue, getMaxSize(reactDiffMap));
-    } else if (propertyName == "resizeMode") {
-      auto resizeMode{
-          json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
-      auto reactImage{canvas.as<ReactImage>()};
-      reactImage->ResizeMode(resizeMode);
-    }
-
-    // TODO: overflow
-  }
-
-  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
-}
-
-void ImageViewManager::EmitImageEvent(
-    winrt::Canvas canvas,
-    const char *eventName,
-    ImageSource &source) {
-  auto reactInstance{m_wkReactInstance.lock()};
-  if (reactInstance == nullptr)
-    return;
-
-  int64_t tag = canvas.Tag().as<winrt::IPropertyValue>().GetInt64();
-  folly::dynamic imageSource = folly::dynamic::object()("url", source.uri)(
-      "width", source.width)("height", source.height);
-
-  folly::dynamic eventData =
-      folly::dynamic::object()("target", tag)("source", imageSource);
-  reactInstance->DispatchEvent(tag, eventName, std::move(eventData));
-}
-
-winrt::Size ImageViewManager::getMaxSize(const folly::dynamic &reactDiffMap) {
-  float width{0};
-  float height{0};
-
-  width = tryGetPropAsFloat(reactDiffMap, "maxWidth");
-  if (width == 0) {
-    width = tryGetPropAsFloat(reactDiffMap, "width");
-  }
-
-  height = tryGetPropAsFloat(reactDiffMap, "maxHeight");
-  if (height == 0) {
-    height = tryGetPropAsFloat(reactDiffMap, "height");
-  }
-
-  return {width, height};
-}
-
-float ImageViewManager::tryGetPropAsFloat(
-    const folly::dynamic &reactDiffMap,
-    const char* prop) {
-  if (reactDiffMap.find(prop) != reactDiffMap.items().end() &&
-      reactDiffMap[prop].isNumber()) {
-    return folly::to<float>(reactDiffMap[prop].asDouble());
-  }
-
-  return 0;
-}
-
-void ImageViewManager::setSource(
-    winrt::Canvas canvas,
-    const folly::dynamic &data,
-    const winrt::Size &maxSize) {
-
-  auto instance{m_wkReactInstance.lock()};
-  if (instance == nullptr)
-    return;
-
-  auto sources{json_type_traits<std::vector<ImageSource>>::parseJson(data)};
-  sources[0].bundleRootPath = instance->GetBundleRootPath();
-
-  auto reactImage{canvas.as<ReactImage>()};
-
-  EmitImageEvent(canvas, "topLoadStart", sources[0]);
-  reactImage->Source(sources[0], maxSize);
 }
 
 folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants()

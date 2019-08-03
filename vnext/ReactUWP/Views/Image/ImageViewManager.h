@@ -2,10 +2,34 @@
 // Licensed under the MIT License.
 
 #include <Views/FrameworkElementViewManager.h>
+#include <Views/ShadowNodeBase.h>
 #include "ReactImage.h"
 
 namespace react {
 namespace uwp {
+
+class ImageShadowNode : public ShadowNodeBase {
+ public:
+  ImageShadowNode() = default;
+
+  void createView() override;
+  void onDropViewInstance() override;
+  void updateProperties(const folly::dynamic &&props) override;
+
+  winrt::Windows::Foundation::Size m_maxSize{};
+
+ private:
+  void EmitImageEvent(
+      const char *eventName,
+      ImageSource &source);
+  void setSource(const folly::dynamic &data, const winrt::Size &maxSize);
+  void updateMaxSize(const folly::dynamic &props);
+  float tryGetPropAsFloat(
+      const folly::dynamic &props,
+      const char *propName);
+
+  winrt::event_token m_onLoadEndToken;
+};
 
 class ImageViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
@@ -14,30 +38,14 @@ class ImageViewManager : public FrameworkElementViewManager {
   ImageViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
-  void UpdateProperties(
-      ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap) override;
 
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   folly::dynamic GetNativeProps() const override;
   facebook::react::ShadowNode *createShadow() const override;
-  void EmitImageEvent(
-      winrt::Windows::UI::Xaml::Controls::Canvas canvas,
-      const char *eventName,
-      ImageSource &source);
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
 
- private:
-  winrt::Windows::Foundation::Size getMaxSize(const folly::dynamic &reactDiffMap);
-  float tryGetPropAsFloat(
-      const folly::dynamic &reactDiffMap,
-      const char *prop);
-  void setSource(
-      winrt::Windows::UI::Xaml::Controls::Canvas canvas,
-      const folly::dynamic &sources,
-      const winrt::Windows::Foundation::Size &maxSize);
 };
 } // namespace uwp
 } // namespace react
