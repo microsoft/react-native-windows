@@ -1,6 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 28 Jul 2019 12:44:00 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Aug 2019 04:30:38 GMT and should not be manually modified.
+
+## 0.59.0-vnext.115
+Sat, 03 Aug 2019 04:30:38 GMT
+
+### Changes
+
+- change process.env.TEMP to os.tmpdir() (email not defined)
+,- fix onFocus/onBlur events for Touchables (andrewh@microsoft.com)
+,- New switch props (thumbColor and trackColor), and fix few bugs found in TextInputViewManager (dida@ntdev.microsoft.com)
+,- addedundefined developer menu (kmelmon@microsoft.com)
+,- fix image not firing on load. (stecrain@microsoft.com)
+,- Delay-load dependencies absent on Win7 (acoates@microsoft.com)
+,- Add the SpringAnimationDriver (stpete@microsoft.com)
 
 ## 0.59.0-vnext.110
 Sun, 28 Jul 2019 12:44:00 GMT

@@ -1,8 +1,0 @@
-{
-  "comment": "fix image not firing on load.",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "stecrain@microsoft.com",
-  "commit": "d394cb68a28a8595935188f222c837a9f7c8d6a5",
-  "date": "2019-08-02T14:32:57.828Z"
-}

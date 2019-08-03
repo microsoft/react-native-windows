@@ -2,6 +2,27 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Sat, 03 Aug 2019 04:30:38 GMT",
+      "tag": "react-native-windows-extended_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Delay-load dependencies absent on Win7",
+            "author": "acoates@microsoft.com",
+            "commit": "cf3f5017c2cd26c36067fde73da9606e851b9474"
+          }
+        ],
+        "minor": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jul 2019 05:43:01 GMT",
       "tag": "react-native-windows-extended_v0.0.3",
       "version": "0.0.3",
