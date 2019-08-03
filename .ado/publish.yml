@@ -26,6 +26,13 @@ jobs:
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: CmdLine@2
+        displayName: Configure git
+        inputs:
+          script: |
+            git config --global user.email "53619745+rnbot@users.noreply.github.com"
+            git config --global user.name "React-Native-Windows Bot"
+
+      - task: CmdLine@2
         displayName: yarn install
         inputs:
           script: yarn install --frozen-lockfile
