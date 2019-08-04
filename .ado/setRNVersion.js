@@ -4,11 +4,13 @@
 
 const path = require('path');
 const fs = require('fs');
+const child_process = require('child_process');
 
-if (process.argv.length < 3) {
-  throw new Error('Need to provide react-native version as arg');
+if (process.argv.length < 4) {
+  throw new Error('Need to provide react-native version, and root dir as arg');
 }
 const rnVersion = process.argv[2];
+const rootPath = process.argv[3];
 
 if (!rnVersion.match(/^\d+\.\d+.\d+-microsoft\.\d+$/)) {
   throw new Error('Version format must be X.X.X-microsoft.X');
@@ -33,3 +35,9 @@ replaceDeps(pkgJson.peerDependencies);
 replaceDeps(pkgJson.devDependencies);
 
 fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
+
+// Generate change file
+const beachballPath = path.resolve(rootPath, 'node_modules/beachball/bin/beachball.js');
+const changeType = pkgJson.name === 'react-native-windows' ? 'hotfix' : 'minor';
+const changeDescription = `"Updating react-native to version: ${rnVersion}"`;
+child_process.execSync(`node ${beachballPath} change --package ${pkgJson.name} --type ${changeType} --message ${changeDescription}`);
