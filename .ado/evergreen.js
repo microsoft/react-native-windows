@@ -161,7 +161,7 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   exec(`git pull`);
 
   console.log(`Updating react-native to version: ${pkgJson.version}`);
-  execSync(`lerna exec node ${path.resolve(__dirname, 'setRNVersion.js')} ${pkgJson.version}`);
+  execSync(`node ${path.resolve(__dirname, '../node_modules/lerna/cli.js')} exec node ${path.resolve(__dirname, 'setRNVersion.js')} ${pkgJson.version}`);
 
   process.chdir(path.resolve(__dirname, '..'));
 
