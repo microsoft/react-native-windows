@@ -1,5 +1,4 @@
 // @ts-check
-
 // Script to keep sdx-platform up to date with GitHub/Microsoft/react-native
 
 const path = require('path');
@@ -63,10 +62,10 @@ function createPr() {
         head: branchName,
         base: finalTargetBranchName,
         title: `Update to react-native@${rnVersion}`,
-        body: `Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n\`\`\`\n${listOfChanges}\n\`\`\`` 
+        body: `Automatic update to latest version published from @Microsoft/react-native, includes these changes:\n\`\`\`\n${listOfChanges}\n\`\`\``
       }
     },
-    function(err, httpResponse, body) {
+    function (err, httpResponse, body) {
       console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
       //console.log("Body Response:", body);
       //console.log("err: " + err + "  body.errorCode" + body.errorCode);
@@ -84,8 +83,8 @@ function createPr() {
       request.post(
         {
           url: `https://api.github.com/repos/microsoft/react-native-windows/issues/${prId}/comments`,
-          json:true,
-          headers:{
+          json: true,
+          headers: {
             Authorization: "Basic " + gitHubToken,
             "Content-Type": 'application/json',
             "User-Agent": "RNW-Evergreen Script"
@@ -94,30 +93,30 @@ function createPr() {
             body: "/azp run"
           }
         }
-      , function(err, httpResponse, body) {
-        console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
+        , function (err, httpResponse, body) {
+          console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
 
-        // Trigger AutoMerge
-        request.post(
-          {
-            url:`https://api.github.com/repos/microsoft/react-native-windows/issues/${prId}/labels`,
-            json:true,
-            headers:{
-              Authorization: "Basic " + gitHubToken,
-              "Content-Type": 'application/json',
-              "User-Agent": "RNW-Evergreen Script"
-            },
-            body: {
-              labels: ["AutoMerge"]
-            }
-          },function(err, httpResponse, body) {
-            console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
-          });
+          // Trigger AutoMerge
+          request.post(
+            {
+              url: `https://api.github.com/repos/microsoft/react-native-windows/issues/${prId}/labels`,
+              json: true,
+              headers: {
+                Authorization: "Basic " + gitHubToken,
+                "Content-Type": 'application/json',
+                "User-Agent": "RNW-Evergreen Script"
+              },
+              body: {
+                labels: ["AutoMerge"]
+              }
+            }, function (err, httpResponse, body) {
+              console.log('HTTP Response \r\n -------------------------------------------------------------------------', httpResponse);
+            });
         });
-      });
-    }
+    });
+}
 
-request.get('https://raw.githubusercontent.com/microsoft/react-native/master/package.json', function(error, response, body) {
+request.get('https://raw.githubusercontent.com/microsoft/react-native/master/package.json', function (error, response, body) {
   console.log(`Get react-native's package.json request result: `);
   console.log('error:', error); // Print the error if one occurred
   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
@@ -137,10 +136,9 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   rnVersion = pkgJson.version;
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
+  const existingRnVersion = existingPkgJson.devDependencies.slice(existingPkgJson.devDependencies['react-native'].indexOf('archive/v') + 1, existingPkgJson.devDependencies['react-native'].indexOf('.tar.gz'));
 
-  const rnDependency = `^${pkgJson.version.slice(0, pkgJson.version.indexOf('-'))} || ${pkgJson.version} || https://github.com/microsoft/react-native/archive/v${pkgJson.version}.tar.gz`;
-
-  if (existingPkgJson.peerDependencies['react-native'] === rnDependency) {
+  if (existingRnVersion === pkgJson.version) {
     console.log(`Already at latest react-native version: ${pkgJson.version}.`);
     console.log('Nothing to do...exiting');
     process.exitCode = 0;
@@ -166,7 +164,7 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   execSync(`lerna exec node ${path.resolve(__dirname, 'setRNVersion.js')} ${pkgJson.version}`);
 
   process.chdir(path.resolve(__dirname, '..'));
-  
+
   // Run yarn install to update yarn.lock
   exec(`yarn install`);
 
