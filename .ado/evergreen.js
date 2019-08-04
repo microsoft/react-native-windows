@@ -136,7 +136,7 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   rnVersion = pkgJson.version;
 
   let existingPkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
-  const existingRnVersion = existingPkgJson.devDependencies['react-native'].slice(existingPkgJson.devDependencies['react-native'].indexOf('archive/v') + 1, existingPkgJson.devDependencies['react-native'].indexOf('.tar.gz'));
+  const existingRnVersion = existingPkgJson.devDependencies['react-native'].slice(existingPkgJson.devDependencies['react-native'].indexOf('archive/v') + 9, existingPkgJson.devDependencies['react-native'].indexOf('.tar.gz'));
 
   if (existingRnVersion === pkgJson.version) {
     console.log(`Already at latest react-native version: ${pkgJson.version}.`);
