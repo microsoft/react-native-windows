@@ -152,7 +152,7 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   } catch (e) {
   }
   exec(`git fetch msrn`);
-  listOfChanges = execSync(`git log --pretty=oneline --abbrev-commit v${existingPkgJson.devDependencies['react-native']}..v${pkgJson.version}`).toString();
+  listOfChanges = execSync(`git log --pretty=oneline --abbrev-commit v${existingRnVersion}..v${pkgJson.version}`).toString();
 
 
   branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
