@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 03 Aug 2019 04:30:38 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Aug 2019 17:26:50 GMT and should not be manually modified.
+
+## 0.59.0-vnext.116
+Sat, 03 Aug 2019 17:26:50 GMT
+
+### Changes
+
+- change dev menu shortcut to ctrl+shift+D (kmelmon@microsoft.com)
 
 ## 0.59.0-vnext.115
 Sat, 03 Aug 2019 04:30:38 GMT
