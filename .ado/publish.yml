@@ -64,7 +64,7 @@ jobs:
     displayName: React-Native-Windows Native Build
     dependsOn: RnwNpmPublish
     variables:
-      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.publishCommitId'] ]
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
     strategy:
       matrix:
         X64Debug:
@@ -105,13 +105,6 @@ jobs:
       inputs:
         script: yarn build
 
-    # Update version numbers as will be done by npm publish
-    - task: CmdLine@2
-      displayName: Beachball bump
-      inputs:
-        script: node ./node_modules/beachball/bin/beachball.js bump
-      condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
-
     - task: CmdLine@2
       displayName: Set Version Env Vars
       name: setVersionEnvVars
@@ -145,6 +138,7 @@ jobs:
       vmImage: vs2017-win2016
     variables:
       npmVersion: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.npmVersion'] ]
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
 
     steps:
       - checkout: none #skip checking out the default repository resource
@@ -156,7 +150,7 @@ jobs:
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
-          publishCommitId: $(Build.SourceVersion)
+          publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
 
       - task: PublishBuildArtifacts@1
