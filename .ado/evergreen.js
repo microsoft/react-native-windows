@@ -154,26 +154,28 @@ request.get('https://raw.githubusercontent.com/microsoft/react-native/master/pac
   exec(`git fetch msrn`);
   listOfChanges = execSync(`git log --pretty=oneline --abbrev-commit v${existingRnVersion}..v${pkgJson.version}`).toString();
 
-
   branchName = branchNamePrefix + sanitizeBranchName(pkgJson.version);
 
   exec(`git checkout -b ${branchName} --track origin/${finalTargetBranchName}`);
   exec(`git pull`);
+  process.chdir(path.resolve(__dirname, '..'));
 
   console.log(`Updating react-native to version: ${pkgJson.version}`);
   const lernaLocation = path.resolve(__dirname, '../node_modules/lerna/cli.js');
   const setRNVersion = path.resolve(__dirname, 'setRNVersion.js');
   const repoRoot = path.resolve(__dirname, '..');
-  execSync(`node ${lernaLocation} exec node ${setRNVersion} ${pkgJson.version} ${repoRoot}`);
+  // Update versions in package.json files
+  execSync(`node ${lernaLocation} exec node ${setRNVersion} ${pkgJson.version}`);
+  exec(`git add ${path.resolve(__dirname, '../yarn.lock')}`);
+  exec(`git add ${path.resolve(__dirname, '..')}`);
+  exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
 
-  process.chdir(path.resolve(__dirname, '..'));
+  // Create change files
+  execSync(`node ${lernaLocation} exec node ${setRNVersion} ${pkgJson.version} ${repoRoot}`);
 
   // Run yarn install to update yarn.lock
   exec(`yarn install`);
 
-  exec(`git add ${path.resolve(__dirname, '../yarn.lock')}`);
-  exec(`git add ${path.resolve(__dirname, '..')}`);
-  exec(`git commit -m "Update to react-native@${pkgJson.version}"`);
   exec(`git push origin ${branchName}`);
 
   if (autopr) createPr();
