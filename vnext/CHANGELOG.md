@@ -1,6 +1,40 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 28 Jul 2019 12:44:00 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Aug 2019 06:09:37 GMT and should not be manually modified.
+
+## 0.59.0-vnext.118
+Mon, 05 Aug 2019 06:09:37 GMT
+
+### Changes
+
+- Include additional jsi headers in nuget (acoates@microsoft.com)
+
+## 0.59.0-vnext.117
+Mon, 05 Aug 2019 00:09:47 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.33 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.116
+Sat, 03 Aug 2019 17:26:50 GMT
+
+### Changes
+
+- change dev menu shortcut to ctrl+shift+D (kmelmon@microsoft.com)
+
+## 0.59.0-vnext.115
+Sat, 03 Aug 2019 04:30:38 GMT
+
+### Changes
+
+- change process.env.TEMP to os.tmpdir() (email not defined)
+,- fix onFocus/onBlur events for Touchables (andrewh@microsoft.com)
+,- New switch props (thumbColor and trackColor), and fix few bugs found in TextInputViewManager (dida@ntdev.microsoft.com)
+,- addedundefined developer menu (kmelmon@microsoft.com)
+,- fix image not firing on load. (stecrain@microsoft.com)
+,- Delay-load dependencies absent on Win7 (acoates@microsoft.com)
+,- Add the SpringAnimationDriver (stpete@microsoft.com)
 
 ## 0.59.0-vnext.110
 Sun, 28 Jul 2019 12:44:00 GMT

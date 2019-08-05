@@ -1,6 +1,27 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Fri, 26 Jul 2019 05:43:01 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Aug 2019 16:01:04 GMT and should not be manually modified.
+
+## 0.4.1
+Mon, 05 Aug 2019 16:01:04 GMT
+
+### Patches
+
+- Fix single line text trimming issue (dida@ntdev.microsoft.com)
+
+## 0.4.0
+Mon, 05 Aug 2019 00:09:47 GMT
+
+### Minor changes
+
+- Updating react-native to version: 0.59.0-microsoft.33 (53619745+rnbot@users.noreply.github.com)
+
+## 0.3.0
+Sat, 03 Aug 2019 04:30:38 GMT
+
+### Minor changes
+
+- Add the SpringAnimationDriver (stpete@microsoft.com)
 
 ## 0.0.3
 Fri, 26 Jul 2019 05:43:01 GMT

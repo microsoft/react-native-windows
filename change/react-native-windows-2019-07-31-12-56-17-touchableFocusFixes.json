@@ -1,8 +1,0 @@
-{
-  "comment": "fix onFocus/onBlur events for Touchables",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "andrewh@microsoft.com",
-  "commit": "a23c9ae02f95d7088ff1f50778127d2ab7593d0a",
-  "date": "2019-07-31T19:56:17.818Z"
-}

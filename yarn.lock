@@ -2394,10 +2394,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-beachball@^1.11.1:
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.11.1.tgz#8d625980119c46ff3400cf97bcb429a37c596928"
-  integrity sha512-3Yx4J19MM4FwoPTQ1XJWXyRWTHATQraB5hiwavR3Jln0sy7T9W6dQnN7aeKzmiMdvxmnuTpZpmdWeO0eR5OFjA==
+beachball@^1.11.5:
+  version "1.11.5"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.11.5.tgz#4b5ee60a6517f211bdafa9a8485a32160029761a"
+  integrity sha512-5W3TjLy40VnGnL7Cg8y6oqybPsKe3j1InGe+Nj6UcF51wpJoYpNxm4Akm1RS9us5y265PlEh1CaiPtpoWTx0/A==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
@@ -7595,9 +7595,9 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz":
-  version "0.59.0-microsoft.17"
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz#74acdba3594c0a309792883f54baaa3d5da14e75"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.30.tar.gz":
+  version "0.59.0-microsoft.30"
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.30.tar.gz#a9e1ff5cd56d92556ff3bd621cf5e2ab86ae0289"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
