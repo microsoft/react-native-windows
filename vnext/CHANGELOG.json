@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2019 06:09:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.118",
+      "version": "0.59.0-vnext.118",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include additional jsi headers in nuget",
+            "author": "acoates@microsoft.com",
+            "commit": "cb05d87a6468b75ef9a356a18408ab5f54d43671"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Aug 2019 00:09:47 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.117",
       "version": "0.59.0-vnext.117",

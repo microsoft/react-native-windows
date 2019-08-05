@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include additional jsi headers in nuget",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "cb05d87a6468b75ef9a356a18408ab5f54d43671",
-  "date": "2019-08-05T04:55:43.503Z"
-}

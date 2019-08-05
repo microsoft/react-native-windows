@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Aug 2019 00:09:47 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Aug 2019 06:09:37 GMT and should not be manually modified.
+
+## 0.59.0-vnext.118
+Mon, 05 Aug 2019 06:09:37 GMT
+
+### Changes
+
+- Include additional jsi headers in nuget (acoates@microsoft.com)
 
 ## 0.59.0-vnext.117
 Mon, 05 Aug 2019 00:09:47 GMT
