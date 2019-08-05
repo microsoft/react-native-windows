@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "NativeModuleBase.idl";
+import "ReactContext.idl";
+
+namespace Microsoft.ReactNative.Bridge {
+  [webhosthidden]
+  interface IReactPackage {
+    IVectorView<Microsoft.ReactNative.Bridge.NativeModuleBase> CreateNativeModules(Microsoft.ReactNative.Bridge.ReactContext reactContext);
+
+    // TODO support view managers
+    //IVectorView<Microsoft.ReactNative.Bridge.ViewManagerBase> CreateViewManagers(Microsoft.ReactNative.Bridge.ReactContext reactContext);
+
+    // TODO support Turbo modules.  The API needed for TurboModules (mimicking what Android does)...
+    // Given a module name, it returns an instance of NativeModuleBase for the name.
+    // parameter: name
+    // parameter: reactContext
+    // return: NativeModuleBase
+    // Microsoft.ReactNative.Bridge.NativeModuleBase GetModule(String name, Microsoft.ReactNative.Bridge.ReactContext reactContext);
+  };
+}
