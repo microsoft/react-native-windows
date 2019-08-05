@@ -56,6 +56,7 @@ namespace WindowsSampleApp {
 
   internal : std::shared_ptr<react::uwp::IReactInstance> getInstance();
   void markAsNeedsReload();
+  void persistUseWebDebugger(bool useWebDebugger);
 
   void InitComboBoxes();
   void LoadKnownApps();

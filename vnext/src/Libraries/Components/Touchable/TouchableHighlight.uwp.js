@@ -425,6 +425,8 @@ const TouchableHighlight = ((createReactClass({
       <View
         onKeyUp={this._onKeyUp}
         onKeyDown={this._onKeyDown}
+        onFocus={this.touchableHandleFocus}
+        onBlur={this.touchableHandleBlur}
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityHint={this.props.accessibilityHint} // TODO(OSS Candidate ISS#2710739)

@@ -5,7 +5,6 @@
   "scripts": {
     "build": "lerna run build --stream",
     "change": "node ./node_modules/beachball/bin/beachball.js change",
-    "checkchange": "node ./node_modules/beachball/bin/beachball.js check",
     "clean": "lerna run clean --stream"
   },
   "repository": {
@@ -24,7 +23,7 @@
     ]
   },
   "devDependencies": {
-    "beachball": "^1.10.3",
+    "beachball": "^1.11.5",
     "lerna": "^3.16.1"
   }
 }

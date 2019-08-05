@@ -2,6 +2,69 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2019 17:37:47 GMT",
+      "tag": "react-native-windows-extended_v0.5.0",
+      "version": "0.5.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.34",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "f3416579d1f50e7c66e96a662acd3bb8ebca6bfc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Aug 2019 16:01:04 GMT",
+      "tag": "react-native-windows-extended_v0.4.1",
+      "version": "0.4.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix single line text trimming issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "3dada0ce2e01c1455eb2f786b097429202c311b1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Aug 2019 00:09:47 GMT",
+      "tag": "react-native-windows-extended_v0.4.0",
+      "version": "0.4.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.33",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "71ff4820fe1877aa98e8462acd901097d8ad04d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Aug 2019 04:30:38 GMT",
+      "tag": "react-native-windows-extended_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Delay-load dependencies absent on Win7",
+            "author": "acoates@microsoft.com",
+            "commit": "cf3f5017c2cd26c36067fde73da9606e851b9474"
+          }
+        ],
+        "minor": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jul 2019 05:43:01 GMT",
       "tag": "react-native-windows-extended_v0.0.3",
       "version": "0.0.3",
