@@ -53,7 +53,7 @@ jobs:
       - task: CmdLine@2
         displayName: Modify package.json to use unforked RN
         inputs:
-          script: node scripts/modifyDevDepToUseUnforkedRN.js
+          script: node scripts/useUnForkedRN.js
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
