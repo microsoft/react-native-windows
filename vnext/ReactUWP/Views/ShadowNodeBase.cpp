@@ -31,7 +31,7 @@ void ShadowNodeBase::createView() {
   m_view = GetViewManager()->CreateView(this->m_tag);
 }
 
-bool ShadowNodeBase::needsForceLayout() {
+bool ShadowNodeBase::NeedsForceLayout() {
   return false;
 }
 

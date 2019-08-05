@@ -170,7 +170,7 @@ void PickerShadowNode::RepopulateItems() {
   instance.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
-bool PickerShadowNode::needsForceLayout() {
+bool PickerShadowNode::NeedsForceLayout() {
   return true;
 }
 
