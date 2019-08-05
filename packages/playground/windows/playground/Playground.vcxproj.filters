@@ -65,15 +65,7 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bundle.js" />
-    <None Include="bundle.meta" />
-    <None Include="text.uwp.js" />
-    <None Include="index.uwp.js" />
-    <None Include="packages.config" />
-    <None Include="accessible.uwp.js" />
-    <None Include="simple.uwp.js" />
     <None Include="Playground_TemporaryKey.pfx" />
-    <None Include="image.uwp.js" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml" />

@@ -38,6 +38,7 @@
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
@@ -45,9 +46,10 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+    <ReactNativeWindowsExtendedDir Condition="'$(ReactNativeWindowsExtendedDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows-extended\package.json'))\node_modules\react-native-windows-extended\</ReactNativeWindowsExtendedDir>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPackageDirectories.props" />
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
@@ -68,6 +70,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(ReactNativeWindowsDir)target\$(PlatformTarget)\$(Configuration)\ReactUWP\React.uwp.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -133,10 +136,13 @@
     <ProjectReference Include="$(ReactNativeWindowsDir)\ReactUWP\ReactUWP.vcxproj">
       <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
     </ProjectReference>
+    <ProjectReference Include="$(ReactNativeWindowsExtendedDir)windows\react-native-windows-extended.vcxproj">
+      <Project>{e9851bd0-9751-4de7-9ccb-0d2e7493658c}</Project>
+    </ProjectReference>
   </ItemGroup>
-    <ItemDefinitionGroup>
+  <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\react-native-windows-extended\windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsExtendedDir)windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
