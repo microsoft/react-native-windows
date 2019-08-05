@@ -108,8 +108,6 @@ jobs:
           command: restore
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-        env:
-         ReactNativeProjectDir: $(Build.SourcesDirectory)\packages\playground
 
       - task: MSBuild@1
         displayName: MSBuild - Playground

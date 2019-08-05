@@ -2,28 +2,18 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!--
-   For a standard project we determine all the correct directories assuming the folder layout is:
+   Projects should include the following code in their project file before importing this file:
 
-   app.json
-        node_modules
-            react-native-windows
-            react-native
-
-   However, if you are using yarn workspaces, their app.json may not be in a directory above react-native-windows, since the react-native-windows
-   package may have been hoised to the root of the repo.  We also dont know if react-native was hoisted or not, and wouldn't be able to find it
-   from the location of react-native-windows. In that case, the app will have to set an env variable to set ReactNativeProjectDir to allow us to 
-   find their project root.  And from there we can load a react.override.props file which can specify the location of react-native and react-native-windows.
-  -->
   <PropertyGroup>
-    <ReactNativeProjectDir Condition="'$(ReactNativeProjectDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), app.json))</ReactNativeProjectDir>
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
   </PropertyGroup>
 
-  <Import Project="$(ReactNativeProjectDir)\windows\react.overrides.props" Condition="Exists('$(ReactNativeProjectDir)\windows\react.overrides.props')" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPackageDirectories.props" />
+  -->
 
   <PropertyGroup>
-    <!-- These are the default values if the app hasn't overridden them using env vars -->
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizeDirectory($(MSBuildThisFileDirectory)\..\))</ReactNativeWindowsDir>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(ReactNativeWindowsDir)node_modules\react-native</ReactNativeDir>
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)\..\</ReactNativeWindowsDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativeDir>
     <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
   </PropertyGroup>
 
@@ -34,6 +24,14 @@
 
   <PropertyGroup Condition="Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
     <FollyDir Condition="'$(FollyDir)' == ''">$(ReactNativeDir)\folly</FollyDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Normalize the directory names -->
+    <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory($(ReactNativeWindowsDir)))</ReactNativeWindowsDir>
+    <ReactNativeDir>$([MSBuild]::NormalizeDirectory($(ReactNativeDir)))</ReactNativeDir>
+    <YogaDir>$([MSBuild]::NormalizeDirectory($(YogaDir)))</YogaDir>
+    <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
   </PropertyGroup>
 
 </Project>
