@@ -901,8 +901,8 @@ void NativeUIManager::CreateView(
   auto *pViewManager = node.GetViewManager();
 
   if (pViewManager->RequiresYogaNode()) {
-    // Generate list of controls that need to have layout rerun on them.
-    if (const auto control = node.GetView().try_as<winrt::Control>() && node.NeedsForceLayout()) {
+    // Generate list of RN controls that need to have layout rerun on them.
+    if (node.NeedsForceLayout()) {
       m_controlNodes.push_back(node.m_tag);
     }
 
@@ -1027,8 +1027,8 @@ void NativeUIManager::DoLayout() {
   for (const int64_t tag : controlNodes) {
     ShadowNodeBase &node =
         static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto control = node.GetView().try_as<winrt::FrameworkElement>();
-    control.UpdateLayout();
+    auto element = node.GetView().try_as<winrt::FrameworkElement>();
+    element.UpdateLayout();
   }
   // Values need to be cleared from the vector before next call to DoLayout.
   m_controlNodes.clear();

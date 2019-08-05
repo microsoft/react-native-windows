@@ -24,7 +24,7 @@ class PickerShadowNode : public ShadowNodeBase {
   PickerShadowNode();
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
-  bool needsForceLayout() override;
+  bool NeedsForceLayout() override;
 
  private:
   void RepopulateItems();
