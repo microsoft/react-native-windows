@@ -1,6 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Mon, 05 Aug 2019 00:09:47 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Aug 2019 16:01:04 GMT and should not be manually modified.
+
+## 0.4.1
+Mon, 05 Aug 2019 16:01:04 GMT
+
+### Patches
+
+- Fix single line text trimming issue (dida@ntdev.microsoft.com)
 
 ## 0.4.0
 Mon, 05 Aug 2019 00:09:47 GMT

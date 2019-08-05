@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2019 16:01:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.118",
+      "version": "0.59.0-vnext.118",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix single line text trimming issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "3dada0ce2e01c1455eb2f786b097429202c311b1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Aug 2019 06:09:37 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.118",
       "version": "0.59.0-vnext.118",
