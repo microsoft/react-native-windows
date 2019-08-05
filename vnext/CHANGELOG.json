@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2019 17:37:47 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.119",
+      "version": "0.59.0-vnext.119",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Put back a couple of win32 dll exports",
+            "author": "acoates@microsoft.com",
+            "commit": "2bb4ecdd5a57770e9063ee34d9dd2bcad7746c47"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.34",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fbe67a429145e08afb446b9fb901e13f22a0cc0f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Aug 2019 16:01:04 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.118",
       "version": "0.59.0-vnext.118",

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Put back a couple of win32 dll exports",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "2bb4ecdd5a57770e9063ee34d9dd2bcad7746c47",
-  "date": "2019-08-05T16:33:28.815Z"
-}
