@@ -286,6 +286,9 @@
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="Base\HermesRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -623,6 +626,9 @@
     </ClInclude>
     <ClInclude Include="Modules\Animated\ExtrapolationType.h">
       <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\HermesRuntimeHolder.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
