@@ -19,11 +19,11 @@
 
   <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
     <OSS_RN>true</OSS_RN>
-    <FollyDir Condition="'$FollyDir' == ''">$(SolutionDir)node_modules\.folly\folly-2019.06.10.00</FollyDir>
+    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-2019.06.10.00</FollyDir>
   </PropertyGroup>
 
   <PropertyGroup Condition="Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
-    <FollyDir Condition="'$(FollyDir)' == ''">$(ReactNativeDir)\folly</FollyDir>
+    <FollyDir Condition="'$(FollyDir)' == ''">$(ReactNativeDir)\folly\</FollyDir>
   </PropertyGroup>
 
   <PropertyGroup>

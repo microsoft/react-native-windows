@@ -269,13 +269,13 @@
     <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
   <Target Name="DownloadFollyIfNotUseMicrosoftReactNative" BeforeTargets="PrepareForBuild">
-    <Warning Text="Folly required to build without microsoft/react-native. - Downloading folly..." Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip')" />
-    <DownloadFile Condition="'$(OSS_RN)'=='true' AND !Exists('$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.06.10.00.zip" DestinationFolder="$(SolutionDir)node_modules\.follyzip" />
+    <Warning Text="Folly required to build without microsoft/react-native. - Downloading folly..." Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)..\.follyzip\folly-2019.06.10.00.zip')" />
+    <DownloadFile Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)..\.follyzip\folly-2019.06.10.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.06.10.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
   </Target>
   <Target Name="UnzipFollyIfNotUseMicrosoftReactNative" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFollyIfNotUseMicrosoftReactNative">
-    <Warning Text="Folly required to build without microsoft/react-native. - Unzipping folly..." Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" />
+    <Warning Text="Folly required to build without microsoft/react-native. - Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)folly\dynamic.h')" />
     <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, unzip seems to have completed dispite errors -->
-    <Unzip Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(SolutionDir)node_modules\.follyzip\folly-2019.06.10.00.zip" DestinationFolder="$(SolutionDir)node_modules\.folly" OverwriteReadOnlyFiles="true" />
+    <Unzip Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.06.10.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(OSS_RN)'!='true' AND !Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
