@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Aug 2019 15:46:10 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Aug 2019 18:30:23 GMT and should not be manually modified.
+
+## 0.59.0-vnext.122
+Tue, 06 Aug 2019 18:30:23 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.36 (53619745+rnbot@users.noreply.github.com)
 
 ## 0.59.0-vnext.121
 Tue, 06 Aug 2019 15:46:10 GMT
