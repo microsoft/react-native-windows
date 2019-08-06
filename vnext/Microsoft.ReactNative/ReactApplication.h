@@ -20,14 +20,13 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
 
   virtual Microsoft::ReactNative::ReactNativeHost HostCore();
 
-  virtual void
-  OnLaunched(Activation::LaunchActivatedEventArgs const &);
+  virtual void OnLaunched(Activation::LaunchActivatedEventArgs const &);
 
-  virtual void
-  OnSuspending(IInspectable const &, SuspendingEventArgs const &);
+  virtual void OnSuspending(IInspectable const &, SuspendingEventArgs const &);
 
-  virtual void
-  OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &);
+  virtual void OnNavigationFailed(
+      IInspectable const &,
+      NavigationFailedEventArgs const &);
 
  protected:
   virtual winrt::Microsoft::ReactNative::
@@ -39,8 +38,7 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
   Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   Microsoft::ReactNative::ReactApplicationDelegate m_delegate{nullptr};
 
-  void OnCreate(
-      Activation::LaunchActivatedEventArgs const &e);
+  void OnCreate(Activation::LaunchActivatedEventArgs const &e);
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 

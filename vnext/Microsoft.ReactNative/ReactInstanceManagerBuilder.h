@@ -26,16 +26,17 @@ class ReactInstanceManagerBuilder {
     return m_instanceSettings;
   }
 
-  void InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const& settings) {
+  void InstanceSettings(
+      Microsoft::ReactNative::ReactInstanceSettings const &settings) {
     m_instanceSettings = settings;
   }
 
-  void InitialLifecycleState(LifecycleState const& state) {
+  void InitialLifecycleState(LifecycleState const &state) {
     m_initialLifecycleState = state;
     m_isLifecycleStateSet = TRUE;
   };
 
-  void Packages(IVectorView<IReactPackage> const& packages) {
+  void Packages(IVectorView<IReactPackage> const &packages) {
     m_packages = packages;
   }
 

@@ -21,18 +21,16 @@ void ReactRootView::OnCreate(
 
   if (Dispatcher().HasThreadAccess()) {
     SystemNavigationManager::GetForCurrentView().BackRequested(
-      [host = std::move(host)]
-      (IInspectable sender, BackRequestedEventArgs e) {
-        ReactRootView::OnBackRequested(host, sender, e);
-      }
-    );
+        [host = std::move(host)](
+            IInspectable sender, BackRequestedEventArgs e) {
+          ReactRootView::OnBackRequested(host, sender, e);
+        });
 
     Window::Current().CoreWindow().Dispatcher().AcceleratorKeyActivated(
-      [host = std::move(host)]
-      (CoreDispatcher sender, AcceleratorKeyEventArgs e) {
-        ReactRootView::OnAcceleratorKeyActivated(host, sender, e);
-      }
-    );
+        [host = std::move(host)](
+            CoreDispatcher sender, AcceleratorKeyEventArgs e) {
+          ReactRootView::OnAcceleratorKeyActivated(host, sender, e);
+        });
   }
 }
 
@@ -75,8 +73,8 @@ fire_and_forget ReactRootView::StartReactApplicationAsync(
 
 void ReactRootView::OnBackRequested(
     ReactNative::ReactNativeHost const &host,
-    IInspectable const& /*sender*/,
-    BackRequestedEventArgs const& e) {
+    IInspectable const & /*sender*/,
+    BackRequestedEventArgs const &e) {
   auto hostImpl = host.as<ReactNativeHost>();
   if (hostImpl->HasInstance()) {
     hostImpl->ReactInstanceManager().OnBackPressed();
@@ -86,8 +84,8 @@ void ReactRootView::OnBackRequested(
 
 void ReactRootView::OnAcceleratorKeyActivated(
     ReactNative::ReactNativeHost const &host,
-    CoreDispatcher const& /*sender*/,
-    AcceleratorKeyEventArgs const& /*e*/) {
+    CoreDispatcher const & /*sender*/,
+    AcceleratorKeyEventArgs const & /*e*/) {
   // TODO: Add DevSupportManager which may also be the right place for
   // some of the properties currently on the ReactInstanceSettings.
   // It should also be wired up to a Developer menu that can be

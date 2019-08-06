@@ -12,8 +12,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 winrt::Microsoft::ReactNative::ReactInstanceManager
 ReactInstanceManagerBuilder::Build() {
   if (!m_isLifecycleStateSet) {
-    throw hresult_invalid_operation(
-        L"Initial lifecycle state was not set.");
+    throw hresult_invalid_operation(L"Initial lifecycle state was not set.");
   }
 
   if (!m_useDeveloperSupport && m_jsBundleFile.empty()) {

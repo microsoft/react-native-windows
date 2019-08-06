@@ -17,4 +17,4 @@ auto ViewManagersProvider::GetViewManagers(
 
   return viewManagers;
 }
-} // namespace Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative::Bridge

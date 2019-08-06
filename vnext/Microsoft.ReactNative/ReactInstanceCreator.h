@@ -33,8 +33,8 @@ struct ReactInstanceCreator : react::uwp::IReactInstanceCreator {
   std::shared_ptr<react::uwp::IReactInstance> getInstance();
   void markAsNeedsReload();
 
-  // TODO: Remove this wart. AFAIK, it was only added for the Universal.SampleApp
-  // It's here because of the abstract base class.  The
+  // TODO: Remove this wart. AFAIK, it was only added for the
+  // Universal.SampleApp It's here because of the abstract base class.  The
   // ReactInstanceSettings in this project has a UseWebDebugger property
   // that should be used instead as it automatically "persists" by virtue
   // of being attached to the ReactNativeHost.

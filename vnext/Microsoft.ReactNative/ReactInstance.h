@@ -20,7 +20,7 @@ struct ReactInstance : ReactInstanceT<ReactInstance> {
   ReactInstance() = default;
   ReactInstance(
       std::shared_ptr<react::uwp::IReactInstance> instance,
-      IVectorView<Bridge::NativeModuleBase> const& modules)
+      IVectorView<Bridge::NativeModuleBase> const &modules)
       : m_instance(instance) {
     if (instance == nullptr) {
       throw hresult_null_argument(L"instance");

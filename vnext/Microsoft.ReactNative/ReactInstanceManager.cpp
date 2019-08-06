@@ -25,7 +25,7 @@ ReactInstanceManager::ReactInstanceManager(
     std::string jsMainModuleName,
     IVectorView<IReactPackage> &packages,
     bool useDeveloperSupport,
-    /*TODO*/LifecycleState initialLifecycleState)
+    /*TODO*/ LifecycleState initialLifecycleState)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
@@ -78,8 +78,7 @@ void ReactInstanceManager::OnLeavingBackground() {
 
 // Used when the application resumes to reset the back button handling in
 // JavaScript.
-void ReactInstanceManager::OnResume(OnResumeAction const &/*action*/) {
-
+void ReactInstanceManager::OnResume(OnResumeAction const & /*action*/) {
   OutputDebugStringW(L"TODO: ReactInstanceManager::OnResume not implemented");
 
   // see the ReactInstanceManager.cs from the C# implementation
@@ -96,7 +95,8 @@ void ReactInstanceManager::OnResume(OnResumeAction const &/*action*/) {
 }
 
 void ReactInstanceManager::OnBackPressed() {
-  throw hresult_not_implemented(L"TODO: ReactInstanceManager::OnBackPressed not implemented");
+  throw hresult_not_implemented(
+      L"TODO: ReactInstanceManager::OnBackPressed not implemented");
 
   // DispatcherHelpers.AssertOnDispatcher();
   // var reactContext = _currentReactContext;

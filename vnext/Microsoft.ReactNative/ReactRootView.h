@@ -26,8 +26,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
 
   void OnCreate(ReactNative::ReactNativeHost const &host);
   fire_and_forget StartReactApplicationAsync(
-      ReactNative::ReactInstanceManager const
-          &instanceManager,
+      ReactNative::ReactInstanceManager const &instanceManager,
       hstring componentName,
       folly::dynamic initialProps);
 
@@ -39,12 +38,12 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
 
   static void OnBackRequested(
       ReactNative::ReactNativeHost const &host,
-      IInspectable const& sender,
-      BackRequestedEventArgs const& e);
+      IInspectable const &sender,
+      BackRequestedEventArgs const &e);
 
   static void OnAcceleratorKeyActivated(
       ReactNative::ReactNativeHost const &host,
-      CoreDispatcher const& sender,
+      CoreDispatcher const &sender,
       AcceleratorKeyEventArgs const &e);
 
   static bool IsKeyDown(CoreAcceleratorKeyEventType t);

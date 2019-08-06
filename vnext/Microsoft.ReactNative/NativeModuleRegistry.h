@@ -13,7 +13,7 @@ namespace winrt::Microsoft::ReactNative::Bridge::implementation {
 
 struct NativeModuleRegistry : NativeModuleRegistryT<NativeModuleRegistry> {
   NativeModuleRegistry() = default;
-  NativeModuleRegistry(IVectorView<Bridge::NativeModuleBase> const& modules)
+  NativeModuleRegistry(IVectorView<Bridge::NativeModuleBase> const &modules)
       : m_modules(modules) {
     if (modules == nullptr || modules.Size() == 0) {
       throw hresult_invalid_argument(L"List of modules is empty.");
@@ -30,10 +30,10 @@ struct NativeModuleRegistry : NativeModuleRegistryT<NativeModuleRegistry> {
 
 } // namespace winrt::Microsoft::ReactNative::Bridge::implementation
 
- namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation {
+namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation {
 
-  struct NativeModuleRegistry : NativeModuleRegistryT<
-                                    NativeModuleRegistry,
-                                    implementation::NativeModuleRegistry> {};
+struct NativeModuleRegistry : NativeModuleRegistryT<
+                                  NativeModuleRegistry,
+                                  implementation::NativeModuleRegistry> {};
 
-} // namespace winrt::Microsoft.ReactNative::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation

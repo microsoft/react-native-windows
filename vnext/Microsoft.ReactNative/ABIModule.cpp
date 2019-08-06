@@ -64,37 +64,33 @@ auto ABIModule::WrapAction(
     hstring methodName,
     Bridge::Method const &nativeMethod)
     -> facebook::xplat::module::CxxModule::Method {
-
   return facebook::xplat::module::CxxModule::Method(
-    to_string(methodName),
-    [this, nativeMethod = std::move(nativeMethod)]
-    (folly::dynamic args) {
-      hstring str = to_hstring(folly::toJson(args));
-      auto methodArgs =
-        single_threaded_vector<IInspectable>({box_value(str)});
+      to_string(methodName),
+      [this, nativeMethod = std::move(nativeMethod)](folly::dynamic args) {
+        hstring str = to_hstring(folly::toJson(args));
+        auto methodArgs =
+            single_threaded_vector<IInspectable>({box_value(str)});
 
         nativeMethod(methodArgs.GetView(), nullptr, nullptr);
-    });
+      });
 }
 
 auto ABIModule::WrapCallback(
     hstring methodName,
     Bridge::Method const &nativeMethod)
     -> facebook::xplat::module::CxxModule::Method {
-
   return facebook::xplat::module::CxxModule::Method(
       to_string(methodName),
-      [this, nativeMethod = std::move(nativeMethod)]
-      (folly::dynamic args, Callback jsMethod) {
+      [this, nativeMethod = std::move(nativeMethod)](
+          folly::dynamic args, Callback jsMethod) {
         std::string strArgs = folly::toJson(args);
         auto strValue = to_hstring(strArgs);
         auto abiParameter =
             single_threaded_vector<IInspectable>({box_value(strValue)});
 
         auto jsCallbackABI =
-            Bridge::Callback(
-              [jsMethod = std::move(jsMethod)]
-              (IVectorView<IInspectable> argValues) {
+            Bridge::Callback([jsMethod = std::move(jsMethod)](
+                                 IVectorView<IInspectable> argValues) {
               // when invoked convert the args and callback to the
               // javascript method
               std::vector<folly::dynamic> args;
@@ -108,8 +104,7 @@ auto ABIModule::WrapCallback(
               jsMethod(args);
             });
 
-        nativeMethod(
-            abiParameter.GetView(), jsCallbackABI, nullptr);
+        nativeMethod(abiParameter.GetView(), jsCallbackABI, nullptr);
       });
 }
 
@@ -117,52 +112,47 @@ auto ABIModule::WrapPromise(
     hstring methodName,
     Bridge::Method const &nativeMethod)
     -> facebook::xplat::module::CxxModule::Method {
-
   return facebook::xplat::module::CxxModule::Method(
-    to_string(methodName),
-    [this, nativeMethod = std::move(nativeMethod)]
-    (folly::dynamic args, Callback cbResolve, Callback cbReject) {
-      hstring strArgs = to_hstring(folly::toJson(args));
-      auto abiParameter =
-          single_threaded_vector<IInspectable>({box_value(strArgs)});
+      to_string(methodName),
+      [this, nativeMethod = std::move(nativeMethod)](
+          folly::dynamic args, Callback cbResolve, Callback cbReject) {
+        hstring strArgs = to_hstring(folly::toJson(args));
+        auto abiParameter =
+            single_threaded_vector<IInspectable>({box_value(strArgs)});
 
-      // Create a wrapper for the callback into JS that the native
-      // code can invoke.
-      auto jsResolveCallback =
-        Bridge::Callback(
-         [cbResolve = std::move(cbResolve)](
-         IVectorView<IInspectable> methodArgs) {
-            if (cbResolve == nullptr)
-              return;
+        // Create a wrapper for the callback into JS that the native
+        // code can invoke.
+        auto jsResolveCallback =
+            Bridge::Callback([cbResolve = std::move(cbResolve)](
+                                 IVectorView<IInspectable> methodArgs) {
+              if (cbResolve == nullptr)
+                return;
 
-            if (methodArgs == nullptr || methodArgs.Size() < 1)
-              throw hresult_invalid_argument();
+              if (methodArgs == nullptr || methodArgs.Size() < 1)
+                throw hresult_invalid_argument();
 
-            auto object = ConvertToDynamic(methodArgs.GetAt(0));
-            cbResolve(std::vector<folly::dynamic>{object});
-          });
+              auto object = ConvertToDynamic(methodArgs.GetAt(0));
+              cbResolve(std::vector<folly::dynamic>{object});
+            });
 
-      auto jsRejectCallback =
-        Bridge::Callback(
-          [cbReject = std::move(cbReject)](
-          IVectorView<IInspectable> methodArgs) {
-            if (cbReject == nullptr)
-              return;
+        auto jsRejectCallback =
+            Bridge::Callback([cbReject = std::move(cbReject)](
+                                 IVectorView<IInspectable> methodArgs) {
+              if (cbReject == nullptr)
+                return;
 
-            std::vector<folly::dynamic> args;
-            for (auto arg : methodArgs) {
-              auto dynamicObject = ConvertToDynamic(arg);
-              args.push_back(dynamicObject);
-            }
+              std::vector<folly::dynamic> args;
+              for (auto arg : methodArgs) {
+                auto dynamicObject = ConvertToDynamic(arg);
+                args.push_back(dynamicObject);
+              }
 
-            cbReject(args);
-          });
+              cbReject(args);
+            });
 
-      nativeMethod(
-        abiParameter.GetView(),
-        jsResolveCallback,
-        jsRejectCallback);
-    });
+        nativeMethod(
+            abiParameter.GetView(), jsResolveCallback, jsRejectCallback);
+      });
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

@@ -15,4 +15,4 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 // Convert a WinRT IInspectable into a folly::dynamic object
 folly::dynamic ConvertToDynamic(IInspectable const &object);
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Bridge

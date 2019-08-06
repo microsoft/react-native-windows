@@ -17,8 +17,8 @@ namespace {
 static void ApplyArguments(
     winrt::Microsoft::ReactNative::ReactNativeHost host,
     std::wstring arguments) {
-   //Microsoft::ReactNative::implementation::ReactNativeHost* hostImpl {
-   //get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
+  // Microsoft::ReactNative::implementation::ReactNativeHost* hostImpl {
+  // get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
   if (!arguments.empty() && host.HasInstance()) {
     // TODO: check for 'remoteDebugging'.  Return if not found.  Otherwise,
     // validate a value is provided and then parse it to set the
@@ -57,11 +57,13 @@ void ReactApplicationDelegate::OnActivated(
       auto protocolArgs = args.as<IProtocolActivatedEventArgs>();
       // auto uri = protocolArgs.Uri;
 
-      // TODO: Need to support deep linking by integrating with the Linking module
+      // TODO: Need to support deep linking by integrating with the Linking
+      // module
       throw winrt::hresult_not_implemented(
           L"Integration with Linking not yet implemented.");
       if (args.PreviousExecutionState() != ApplicationExecutionState::Running) {
-        // TODO... Figure out the right activation path for PreviousExecutionState
+        // TODO... Figure out the right activation path for
+        // PreviousExecutionState
         throw winrt::hresult_not_implemented(
             L"ReactApplicationDelegate.OnActivated doesn't handle PreviousExecutionState other than Running");
       } else {

@@ -61,16 +61,14 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
  private:
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings;
-  Microsoft::ReactNative::ReactInstanceManager m_reactInstanceManager{
-      nullptr};
+  Microsoft::ReactNative::ReactInstanceManager m_reactInstanceManager{nullptr};
   hstring m_mainComponentName{};
   hstring m_javascriptMainModuleName{};
 
   std::shared_ptr<ReactRootView> m_reactRootView{nullptr};
 
   void Init();
-  Microsoft::ReactNative::ReactInstanceManager
-  CreateReactInstanceManager();
+  Microsoft::ReactNative::ReactInstanceManager CreateReactInstanceManager();
   std::shared_ptr<ReactRootView> CreateRootView();
 };
 } // namespace winrt::Microsoft::ReactNative::implementation

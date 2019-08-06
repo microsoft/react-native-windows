@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "ReactSupport.h"
 #include <ReactUWP/ViewManagerProvider.h>
 #include <ReactWindowsCore/ViewManager.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include "ReactSupport.h"
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 class ViewManagersProvider final : public react::uwp::ViewManagerProvider {
@@ -15,4 +15,4 @@ class ViewManagersProvider final : public react::uwp::ViewManagerProvider {
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override;
 };
-} // namespace Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative::Bridge

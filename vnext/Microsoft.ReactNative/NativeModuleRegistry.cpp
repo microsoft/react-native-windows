@@ -6,6 +6,4 @@
 
 using namespace winrt;
 
-namespace winrt::Microsoft::ReactNative::Bridge::implementation
-{
-}
+namespace winrt::Microsoft::ReactNative::Bridge::implementation {}

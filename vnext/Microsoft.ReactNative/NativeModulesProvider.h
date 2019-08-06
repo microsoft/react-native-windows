@@ -2,11 +2,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include <NativeModuleProvider.h>
+#include <winrt/Microsoft.ReactNative.Bridge.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include "NativeModuleBase.h"
 #include "ReactSupport.h"
-#include <NativeModuleProvider.h>
-#include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Microsoft.ReactNative.Bridge.h>
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
@@ -24,6 +24,7 @@ class NativeModulesProvider final
 
  private:
   std::vector<NativeModuleBase> m_modules;
-  std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{nullptr};
+  std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{
+      nullptr};
 };
-} // namespace winrt::Microsoft::ReactNative::Bridge::implementation
+} // namespace winrt::Microsoft::ReactNative::Bridge
