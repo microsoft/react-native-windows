@@ -136,6 +136,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/AppStateExample'),
   },
   {
+    key: 'AlertExampleUwp',
+    module: require('./AlertExampleUwp'),
+  },
+  {
     key: 'ThemingExample',
     module: require('./ThemingExample'),
   },

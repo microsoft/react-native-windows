@@ -13,6 +13,8 @@ namespace uwp {
 
 class AlertModule final : public facebook::xplat::module::CxxModule {
  public:
+
+  AlertModule();
   virtual ~AlertModule();
   
   // CxxModule
@@ -21,8 +23,11 @@ class AlertModule final : public facebook::xplat::module::CxxModule {
   auto getMethods() -> std::vector<Method> override;
 
   static const char *name;
+ 
 
  private:
+
+
 
 };
 

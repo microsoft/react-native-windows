@@ -21,6 +21,12 @@ import RNTesterList from './RNTesterList.uwp';
 import RNTesterNavigationReducer from './RNTesterNavigationReducer.uwp';
 import {RNTesterAction} from './RNTesterActions.uwp';
 
+// tslint:disable-next-line:no-var-requires
+
+const MessageQueue = require('react-native/Libraries/BatchedBridge/MessageQueue.js');
+
+MessageQueue.spy(true);
+
 const styles = StyleSheet.create({
   headerContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
