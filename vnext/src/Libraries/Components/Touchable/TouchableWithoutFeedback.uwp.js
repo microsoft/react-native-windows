@@ -55,6 +55,8 @@ export type Props = $ReadOnly<{|
   accessibilityRole?: ?AccessibilityRole,
   accessibilityStates?: ?AccessibilityStates,
   accessibilityTraits?: ?AccessibilityTraits,
+  accessibilityPosInSet?: ?number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
+  accessibilitySetSize?: ?number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
   children?: ?React.Node,
   delayLongPress?: ?number,
   delayPressIn?: ?number,
@@ -109,6 +111,8 @@ const TouchableWithoutFeedback = ((createReactClass({
       PropTypes.oneOf(DeprecatedAccessibilityTraits),
       PropTypes.arrayOf(PropTypes.oneOf(DeprecatedAccessibilityTraits)),
     ]),
+    accessibilityPosInSet: PropTypes.number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
+    accessibilitySetSize: PropTypes.number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
     onAccessibilityTap: PropTypes.func, // TODO(OSS Candidate ISS#2710739)
     tabIndex: PropTypes.number, // TODO(macOS/win ISS#2323203)
 
@@ -306,6 +310,10 @@ const TouchableWithoutFeedback = ((createReactClass({
       accessibilityRole: this.props.accessibilityRole,
       accessibilityStates: this.props.accessibilityStates,
       accessibilityTraits: this.props.accessibilityTraits,
+
+      accessibilityPosInSet: this.props.accessibilityPosInSet, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
+      accessibilitySetSize: this.props.accessibilitySetSize, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
+
       onAccessibilityTap: this.props.onAccessibilityTap, // TODO(OSS Candidate ISS#2710739)
       acceptsKeyboardFocus:
         (this.props.acceptsKeyboardFocus === undefined ||
