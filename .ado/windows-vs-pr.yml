@@ -122,10 +122,10 @@ jobs:
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
       - task: CmdLine@2
-        displayName: Create SampleApp bundle
+        displayName: Create Playground bundle
         inputs:
-          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
-          workingDirectory: vnext
+          script: npx react-native bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+          workingDirectory: packages\playground
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
