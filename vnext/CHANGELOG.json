@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 06 Aug 2019 15:46:10 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.121",
+      "version": "0.59.0-vnext.121",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Modify how we setup build directories to better support monorepos",
+            "author": "acoates@microsoft.com",
+            "commit": "aa937aaa1c78b0e8e910a52155b30cb288c914fc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Aug 2019 00:59:54 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.120",
       "version": "0.59.0-vnext.120",

@@ -1,8 +1,0 @@
-{
-  "comment": "Modify how we setup build directories to better support monorepos",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "aa937aaa1c78b0e8e910a52155b30cb288c914fc",
-  "date": "2019-08-05T21:57:42.869Z"
-}
