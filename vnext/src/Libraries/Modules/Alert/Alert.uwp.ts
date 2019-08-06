@@ -5,14 +5,13 @@
  */
 'use strict';
 
-import {NativeEventEmitter, NativeModules} from 'react-native';
+import {NativeModules} from 'react-native';
 const AlertNative = NativeModules.RCTAlert;
 
-export class AlertModule extends NativeEventEmitter {
-  constructor() {
-    super(AlertNative);
+export class Alert {
+  public static showAlert() {
+    AlertNative.showAlert('test');
   }
 }
 
-export const Alert = new AlertModule();
 export default Alert;

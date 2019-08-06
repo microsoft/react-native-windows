@@ -26,8 +26,7 @@ class AlertModule final : public facebook::xplat::module::CxxModule {
  
 
  private:
-
-
+  static void showAlert(const std::string &text);
 
 };
 

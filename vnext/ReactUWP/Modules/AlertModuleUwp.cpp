@@ -7,6 +7,10 @@
 
 #include <Utils\ValueUtils.h>
 
+#pragma warning(push)
+#pragma warning(disable : 4146)
+#include <cxxreact/JsArgumentHelpers.h>
+#pragma warning(pop)
 namespace winrt {
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -41,21 +45,31 @@ AlertModule::getMethods() {
       Method(
           "showAlert",
           [](folly::dynamic args) {
-
+            AlertModule::showAlert(
+                facebook::xplat::jsArgAsString(args, 0));
           }),
 
   };
 }
 
-AlertModule::AlertModule() {
+/*static*/ void AlertModule::showAlert(const std::string &text) {
   winrt::Button button{};
-  //winrt::ContentDialog dialog{};
-  // dialog.Title(winrt::box_value(L"title"));
-  // dialog.Content(winrt::box_value(L"content"));
-  // dialog.PrimaryButtonText(L"primary");
-  // dialog.CloseButtonText(L"close");
+  button.Content(winrt::box_value(L"test"));
+}
 
-  // dialog.ShowAsync();
+//AlertModule::showAlert() {
+//  
+//  // winrt::ContentDialog dialog{};
+//  // dialog.Title(winrt::box_value(L"title"));
+//  // dialog.Content(winrt::box_value(L"content"));
+//  // dialog.PrimaryButtonText(L"primary");
+//  // dialog.CloseButtonText(L"close");
+//
+//  // dialog.ShowAsync();
+//}
+
+AlertModule::AlertModule() {
+ 
 }
 
 } // namespace uwp
