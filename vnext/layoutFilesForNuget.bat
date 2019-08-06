@@ -45,10 +45,6 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %RNROOT%\ReactCommon\cxxreact\NativeModule.h                   %DESTROOT%\inc\cxxreact
 %COPYCMD%  %RNROOT%\ReactCommon\cxxreact\PlatformBundleInfo.h             %DESTROOT%\inc\cxxreact
 
-%COPYCMD%  %RNROOT%\ReactCommon\jsi\jsi.h                                 %DESTROOT%\inc\jsi
-%COPYCMD%  %RNROOT%\ReactCommon\jsi\jsi-inl.h                             %DESTROOT%\inc\jsi
-%COPYCMD%  %RNROOT%\ReactCommon\jsi\ScriptStore.h                         %DESTROOT%\inc\jsi
-%COPYCMD%  %RNROOT%\ReactCommon\jsi\V8Runtime.h                           %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\Chakra\ChakraCoreDebugger.h                          %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeArgs.h                        %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeFactory.h                     %DESTROOT%\inc\jsi
@@ -56,6 +52,7 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %RNROOT%\ReactCommon\Yoga\Yoga\*.h                             %DESTROOT%\inc\yoga
 
 %COPYCMD%  %RNROOT%\Folly                                                 %DESTROOT%\inc\Folly
+%COPYCMD%  %RNROOT%\ReactCommon\jsi                                       %DESTROOT%\inc\jsi
 %COPYCMD%  %SRCROOT%\stubs                                                %DESTROOT%\inc\stubs
 %COPYCMD%  %SRCROOT%\Desktop\*.h                                          %DESTROOT%\inc\ReactWin32
 %COPYCMD%  %SRCROOT%\ReactWindowsCore\*.h                                 %DESTROOT%\inc\ReactWindowsCore

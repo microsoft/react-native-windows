@@ -1,6 +1,7 @@
 // @ts-check
 const fs = require("fs");
 const path = require("path");
+const child_process = require('child_process');
 
 const pkgJsonPath = path.resolve(__dirname, "../vnext/package.json");
 
@@ -22,3 +23,7 @@ console.log(
 );
 
 console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${pkgJson.version}`);
+
+// Record commit number, so that additional build tasks can sync to changes
+const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString();
+console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${commitId}`);

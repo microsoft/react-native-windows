@@ -288,6 +288,8 @@
     </ClCompile>
     <ClCompile Include="Base\HermesRuntimeHolder.cpp">
       <Filter>Base</Filter>
+    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -629,6 +631,8 @@
     </ClInclude>
     <ClInclude Include="Base\HermesRuntimeHolder.h">
       <Filter>Base</Filter>
+    <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
