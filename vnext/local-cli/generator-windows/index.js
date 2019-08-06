@@ -90,7 +90,6 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcPath, 'App.windows.js'), to: 'App.windows.js' },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
     { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
-    { from: path.join(srcPath, projDir, 'react.overrides.props'), to: path.join(windowsDir, 'react.overrides.props') },
     { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
     { from: path.join(srcPath, 'app.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'app.windows.bundle') },
