@@ -70,11 +70,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
     <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h" />
