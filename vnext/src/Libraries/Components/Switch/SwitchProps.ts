@@ -18,6 +18,11 @@ export interface ISwitchProps extends ViewProps {
   trackColor?: ISwitchTrackColorProps;
   onChange?: (event: ISwitchChangeEvent) => void;
   onValueChange?: (value: boolean) => void;
+
+  // deprecated
+  thumbTintColor?: string;
+  tintColor?: string;
+  onTintColor?: string;
 }
 
 export interface ISwitchChangeEvent {

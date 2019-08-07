@@ -39,6 +39,41 @@ class Switch extends React.Component<ISwitchProps> {
 
   public render(): JSX.Element {
     const props = {...this.props};
+    let _thumbColor = this.props.thumbColor;
+    let _trackColorForFalse = this.props.trackColor
+      ? this.props.trackColor.false
+      : undefined;
+    let _trackColorForTrue = this.props.trackColor
+      ? this.props.trackColor.true
+      : undefined;
+
+    if (this.props.thumbTintColor !== undefined) {
+      _thumbColor = this.props.thumbTintColor;
+      if (__DEV__) {
+        console.warn(
+          'Switch: `thumbTintColor` is deprecated, use `thumbColor` instead.',
+        );
+      }
+    }
+
+    if (this.props.tintColor !== undefined) {
+      _trackColorForFalse = this.props.tintColor;
+      if (__DEV__) {
+        console.warn(
+          'Switch: `tintColor` is deprecated, use `trackColor` instead.',
+        );
+      }
+    }
+
+    if (this.props.onTintColor !== undefined) {
+      _thumbColor = this.props.onTintColor;
+      if (__DEV__) {
+        console.warn(
+          'Switch: `onTintColor` is deprecated, use `trackColor` instead.',
+        );
+      }
+    }
+
     props.onResponderTerminationRequest = () => false;
     props.onStartShouldSetResponder = () => true;
     props.style = [styles.rctSwitch, this.props.style];
@@ -46,20 +81,12 @@ class Switch extends React.Component<ISwitchProps> {
     props.accessibilityRole = this.props.accessibilityRole
       ? this.props.accessibilityRole
       : 'button';
+    props.thumbTintColor = _thumbColor;
+    props.tintColor = _trackColorForFalse;
+    props.onTintColor = _trackColorForTrue;
 
     return (
-      <RCTSwitch
-        {...props}
-        thumbTintColor={this.props.thumbColor}
-        tintColor={
-          this.props.trackColor ? this.props.trackColor.false : undefined
-        }
-        onTintColor={
-          this.props.trackColor ? this.props.trackColor.true : undefined
-        }
-        onChange={this._onChange}
-        ref={this._setRef}
-      />
+      <RCTSwitch {...props} onChange={this._onChange} ref={this._setRef} />
     );
   }
 
