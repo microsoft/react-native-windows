@@ -1,7 +1,7 @@
 #pragma once
 
-#include <jsi/jsi.h>
 #include <jsi/RuntimeHolder.h>
+#include <jsi/jsi.h>
 
 namespace react {
 namespace uwp {
