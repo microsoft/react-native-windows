@@ -22,3 +22,11 @@ const link = (name, target) => {
 };
 
 link('react-native-windows', path.resolve(__dirname, '../../vnext'));
+link(
+  'react-native',
+  path.resolve(require.resolve('react-native/package.json'), '..'),
+);
+link(
+  'rnpm-plugin-windows',
+  path.resolve(require.resolve('rnpm-plugin-windows/package.json'), '..'),
+);

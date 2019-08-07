@@ -31,7 +31,6 @@ src/
 target
 tsconfig.json
 Universal.IntegrationTests
-Universal.SampleApp
 Universal.UnitTests
 win32
 WindowsSampleCSharpApp
