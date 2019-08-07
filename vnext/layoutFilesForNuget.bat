@@ -14,7 +14,7 @@ set DESTROOT=%~1
 set SRCROOT=%~dp0
 :: Remove trailing \ from srcroot
 IF %SRCROOT:~-1%==\ SET SRCROOT=%SRCROOT:~0,-1%
-set RNROOT=%~dp0node_modules\react-native
+set RNROOT=%~dp0..\node_modules\react-native
 
 echo Source root: %SRCROOT%
 echo Dest root: %DESTROOT%
