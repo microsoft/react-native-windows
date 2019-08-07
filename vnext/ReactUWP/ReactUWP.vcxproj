@@ -407,7 +407,6 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="..\packages\vcpkg-export-20190805-175352.1.0.0\build\native\vcpkg-export-20190805-175352.targets" Condition="Exists('..\packages\vcpkg-export-20190805-175352.1.0.0\build\native\vcpkg-export-20190805-175352.targets')" />
     <Import Project="..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
