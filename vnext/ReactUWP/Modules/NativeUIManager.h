@@ -105,7 +105,7 @@ class NativeUIManager : public facebook::react::INativeUIManager {
   std::vector<winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker>
       m_sizeChangedVector;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
-  std::vector<int64_t> m_controlNodes;
+  std::vector<int64_t> m_extraLayoutNodes;
 
   std::map<int64_t, std::weak_ptr<IXamlReactControl>> m_tagsToXamlReactControl;
 };

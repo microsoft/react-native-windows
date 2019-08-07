@@ -903,7 +903,7 @@ void NativeUIManager::CreateView(
   if (pViewManager->RequiresYogaNode()) {
     // Generate list of RN controls that need to have layout rerun on them.
     if (node.NeedsForceLayout()) {
-      m_controlNodes.push_back(node.m_tag);
+      m_extraLayoutNodes.push_back(node.m_tag);
     }
 
     auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node());
@@ -1022,16 +1022,16 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
 }
 
 void NativeUIManager::DoLayout() {
-  // Process vector of controls needing extra layout here.
-  const auto controlNodes = m_controlNodes;
-  for (const int64_t tag : controlNodes) {
+  // Process vector of RN controls needing extra layout here.
+  const auto extraLayoutNodes = m_extraLayoutNodes;
+  for (const int64_t tag : extraLayoutNodes) {
     ShadowNodeBase &node =
         static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
     auto element = node.GetView().try_as<winrt::FrameworkElement>();
     element.UpdateLayout();
   }
   // Values need to be cleared from the vector before next call to DoLayout.
-  m_controlNodes.clear();
+  m_extraLayoutNodes.clear();
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
     UpdateExtraLayout(rootTag);
