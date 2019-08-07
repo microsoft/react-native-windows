@@ -48,7 +48,18 @@ class Switch extends React.Component<ISwitchProps> {
       : 'button';
 
     return (
-      <RCTSwitch {...props} onChange={this._onChange} ref={this._setRef} />
+      <RCTSwitch
+        {...props}
+        thumbTintColor={this.props.thumbColor}
+        tintColor={
+          this.props.trackColor ? this.props.trackColor.false : undefined
+        }
+        onTintColor={
+          this.props.trackColor ? this.props.trackColor.true : undefined
+        }
+        onChange={this._onChange}
+        ref={this._setRef}
+      />
     );
   }
 
