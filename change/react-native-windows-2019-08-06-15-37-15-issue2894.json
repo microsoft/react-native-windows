@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Adding accessibilityPosInSet and accessibilitySizeOfSet props to ViewWindows, #2894",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "ea705d4d7b9bdd0a9ac618d1db273b17f1c47536",
+  "date": "2019-08-06T22:37:15.757Z"
+}
