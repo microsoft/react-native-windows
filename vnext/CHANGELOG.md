@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Aug 2019 16:00:25 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Aug 2019 17:07:35 GMT and should not be manually modified.
+
+## 0.59.0-vnext.125
+Wed, 07 Aug 2019 17:07:35 GMT
+
+### Changes
+
+- Adding accessibilityPosInSet and accessibilitySizeOfSet props to ViewWindows, #2894 (jthysell@microsoft.com)
 
 ## 0.59.0-vnext.124
 Wed, 07 Aug 2019 16:00:25 GMT

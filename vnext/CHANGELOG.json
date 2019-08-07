@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Aug 2019 17:07:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding accessibilityPosInSet and accessibilitySizeOfSet props to ViewWindows, #2894",
+            "author": "jthysell@microsoft.com",
+            "commit": "ea705d4d7b9bdd0a9ac618d1db273b17f1c47536"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Aug 2019 16:00:25 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.124",
       "version": "0.59.0-vnext.124",
