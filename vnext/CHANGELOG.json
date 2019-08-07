@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Aug 2019 20:23:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Change workspace to hoist react-native",
+            "author": "acoates@microsoft.com",
+            "commit": "836b61b23f29867982545d7463a1ddecefb14ae8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Aug 2019 17:07:35 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.125",
       "version": "0.59.0-vnext.125",
