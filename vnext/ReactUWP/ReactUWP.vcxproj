@@ -407,7 +407,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" />
+    <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -415,8 +415,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
-    <Error Condition="!Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />
