@@ -24,6 +24,8 @@
 #include <unicode.h>
 #include <codecvt>
 
+#include <react-native-windows-extended.h>
+
 using namespace Playground;
 
 using namespace Microsoft::WRL;
@@ -137,10 +139,8 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
       const std::shared_ptr<react::uwp::IReactInstance> &instance) override {
     std::vector<react::uwp::NativeViewManager> viewManagers;
 
-    /*
-        viewManagers.emplace_back(
-          std::make_unique<CustomFrameworkElementViewManager>(instance));
-    */
+    viewManagers.emplace_back(
+        react_native_windows_extended::CreateCustomViewManager(instance));
 
     return viewManagers;
   }
@@ -167,7 +167,7 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   void persistUseWebDebugger(bool useWebDebugger) {
     HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
     if (pane)
-        pane->persistUseWebDebugger(useWebDebugger);
+      pane->persistUseWebDebugger(useWebDebugger);
   }
 
  private:
@@ -346,8 +346,8 @@ void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
 static const wchar_t *c_containerName = L"js";
 static const wchar_t *c_filenameSetting = L"filename";
 static const wchar_t *c_appnameSetting = L"appname";
-static const wchar_t *c_filenameSettingDefault = L"Samples\\index";
-static const wchar_t *c_appnameSettingDefault = L"Bootstrap";
+static const wchar_t *c_filenameSettingDefault = L"Samples\\rntester";
+static const wchar_t *c_appnameSettingDefault = L"RNTesterApp";
 
 static winrt::Windows::Storage::ApplicationDataContainer GetJsSettings() {
   auto localSettings =
@@ -426,9 +426,12 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
+  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\accessible");
   m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\calculator");
   m_jsFileNames->Append(L"Samples\\click");
+  m_jsFileNames->Append(L"Samples\\customViewManager");
   m_jsFileNames->Append(L"Samples\\control");
   m_jsFileNames->Append(L"Samples\\flexbox");
   m_jsFileNames->Append(L"Samples\\focusTest");
@@ -454,7 +457,9 @@ void HostingPane::LoadKnownApps() {
   std::wstring jsFileName =
       x_JavaScriptFilename->SelectedItem->ToString()->Data();
 
-  if (jsFileName.rfind(L"Samples\\", 0) == 0) {
+  if (jsFileName.rfind(L"Samples\\rntester", 0) == 0) {
+    m_ReactAppNames->Append(L"RNTesterApp");
+  } else if (jsFileName.rfind(L"Samples\\", 0) == 0) {
     m_ReactAppNames->Append(L"Bootstrap");
   }
 

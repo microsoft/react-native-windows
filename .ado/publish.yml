@@ -117,12 +117,12 @@ jobs:
 
     - template: templates/publish-build-artifacts-for-nuget.yml
 
-    - task: PublishSymbols@2
-      displayName: 'Publish symbols path'
-      inputs:
-        SearchPattern: 'vnext/target/**/*.pdb'
-        SymbolServerType: TeamServices
-
+    # Disable for now, not sure this works on github projects anyway.
+    # - task: PublishSymbols@2
+    #   displayName: 'Publish symbols path'
+    #   inputs:
+    #     SearchPattern: 'vnext/target/**/*.pdb'
+    #     SymbolServerType: TeamServices
 
   - job: RNWNuget
     dependsOn:

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -39,7 +40,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UnmergedWinmdDirectory>$(IntDir)UnmergedWinMD</UnmergedWinmdDirectory>
+    <UnmergedWinmdDirectory>$([MSBuild]::NormalizePath($(IntDir)UnmergedWinMD))</UnmergedWinmdDirectory>
     <!-- MDMERGE.EXE fails if output dir has trailing slash. -->
     <MergedWinmdDirectory>$(OutDir.TrimEnd("/\"))</MergedWinmdDirectory>
     <IdlHeaderDirectory>$(MSBuildThisFileDirectory)GeneratedWinmdHeader</IdlHeaderDirectory>
@@ -73,6 +74,7 @@
       -->
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=uwp;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -92,11 +94,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
@@ -157,7 +155,8 @@
     <ClInclude Include="ABI\HStringHelper.h" />
     <ClInclude Include="ABI\Instance_rt.h" />
     <ClInclude Include="ABI\ReactControl_rt.h" />
-    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'" />
+    <ClInclude Include="Base\HermesRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClInclude Include="Base\UwpReactInstance.h" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
@@ -258,7 +257,8 @@
     <ClCompile Include="ABI\HStringHelper.cpp" />
     <ClCompile Include="ABI\Instance_rt.cpp" />
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'" />
+    <ClCompile Include="Base\HermesRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
@@ -403,6 +403,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
+    <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -410,6 +411,8 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

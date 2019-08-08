@@ -2,6 +2,179 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2019 20:57:44 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.126",
+      "version": "0.59.0-vnext.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Moving picker fix",
+            "author": "decrowle@microsoft.com",
+            "commit": "8455d973a19be1d5e9bfee6329099d5657c64826"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 19:59:38 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Minor documentation update",
+            "author": "email not defined",
+            "commit": "fc5669b454531d630ad69dbe6fc2cb27706ffe43"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 05:33:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Initial commit of Microsoft.ReactNative",
+            "author": "micahl@microsoft.com",
+            "commit": "bc4d343d873b14a6c93ea20b6948099c184d8269"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 03:25:36 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bareborn integration of Hermes Javascript engine",
+            "author": "anandrag@microsoft.com",
+            "commit": "01ff3b60161ff00ff00c85762fa238433e61809b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Aug 2019 20:23:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Change workspace to hoist react-native",
+            "author": "acoates@microsoft.com",
+            "commit": "836b61b23f29867982545d7463a1ddecefb14ae8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Aug 2019 17:07:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding accessibilityPosInSet and accessibilitySizeOfSet props to ViewWindows, #2894",
+            "author": "jthysell@microsoft.com",
+            "commit": "ea705d4d7b9bdd0a9ac618d1db273b17f1c47536"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Aug 2019 16:00:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.124",
+      "version": "0.59.0-vnext.124",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.38",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "e0790b61ebbd68578b7ffaa971f4b5b3ea0a58e8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 21:09:10 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.123",
+      "version": "0.59.0-vnext.123",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.37",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "220e4e5d6549a1a240fb9ffb87b6e468280f661b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 18:30:23 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.122",
+      "version": "0.59.0-vnext.122",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.36",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "e73598301418d1d5b09070862b70fe9f8acc3729"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 15:46:10 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.121",
+      "version": "0.59.0-vnext.121",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Modify how we setup build directories to better support monorepos",
+            "author": "acoates@microsoft.com",
+            "commit": "aa937aaa1c78b0e8e910a52155b30cb288c914fc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 00:59:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.120",
+      "version": "0.59.0-vnext.120",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.35",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "d0a4a3560dfecf5804cc41f76c136836e263c96f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Aug 2019 17:37:47 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.119",
+      "version": "0.59.0-vnext.119",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Put back a couple of win32 dll exports",
+            "author": "acoates@microsoft.com",
+            "commit": "2bb4ecdd5a57770e9063ee34d9dd2bcad7746c47"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.34",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fbe67a429145e08afb446b9fb901e13f22a0cc0f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Aug 2019 16:01:04 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.118",
       "version": "0.59.0-vnext.118",
