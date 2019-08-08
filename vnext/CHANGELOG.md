@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Aug 2019 17:07:35 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2019 20:57:44 GMT and should not be manually modified.
+
+## 0.59.0-vnext.126
+Thu, 08 Aug 2019 20:57:44 GMT
+
+### Changes
+
+- Moving picker fix (decrowle@microsoft.com)
 
 ## 0.59.0-vnext.125
 Wed, 07 Aug 2019 17:07:35 GMT

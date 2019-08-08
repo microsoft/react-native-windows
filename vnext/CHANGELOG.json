@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2019 20:57:44 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.126",
+      "version": "0.59.0-vnext.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Moving picker fix",
+            "author": "decrowle@microsoft.com",
+            "commit": "8455d973a19be1d5e9bfee6329099d5657c64826"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2019 19:59:38 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.125",
       "version": "0.59.0-vnext.125",
