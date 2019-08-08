@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add textDecoration support to Nested Text",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "60bfc5c026ca83fefef229d44908b2eef088ef1b",
+  "date": "2019-08-08T19:58:13.838Z"
+}
