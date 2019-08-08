@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "fix hit-testing bug",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "c29be1a6030585716c40280d10f963f3c3acd8b0",
+  "date": "2019-08-08T19:17:05.480Z"
+}
