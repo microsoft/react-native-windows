@@ -1,0 +1,8 @@
+{
+  "comment": "Clear m_needsForceLayout between calls to DoLayout",
+  "type": "patch",
+  "packageName": "react-native-windows-extended",
+  "email": "decrowle@microsoft.com",
+  "commit": "a783433937d1558283ba587db05b76ab0981a34c",
+  "date": "2019-08-02T20:57:41.153Z"
+}
