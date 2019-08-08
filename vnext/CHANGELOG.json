@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2019 22:19:50 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.127",
+      "version": "0.59.0-vnext.127",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add textDecoration support to Nested Text",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "60bfc5c026ca83fefef229d44908b2eef088ef1b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2019 20:57:44 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.126",
       "version": "0.59.0-vnext.126",
