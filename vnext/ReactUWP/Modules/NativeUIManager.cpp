@@ -1027,7 +1027,7 @@ void NativeUIManager::DoLayout() {
   for (const int64_t tag : extraLayoutNodes) {
     ShadowNodeBase &node =
         static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto element = node.GetView().try_as<winrt::FrameworkElement>();
+    auto element = node.GetView().as<winrt::FrameworkElement>();
     element.UpdateLayout();
   }
   // Values need to be cleared from the vector before next call to DoLayout.
