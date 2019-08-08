@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2019 03:25:36 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Bareborn integration of Hermes Javascript engine",
+            "author": "anandrag@microsoft.com",
+            "commit": "01ff3b60161ff00ff00c85762fa238433e61809b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Aug 2019 20:23:35 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.125",
       "version": "0.59.0-vnext.125",
