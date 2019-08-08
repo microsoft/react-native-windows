@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2019 23:35:13 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.128",
+      "version": "0.59.0-vnext.128",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix hit-testing bug",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c29be1a6030585716c40280d10f963f3c3acd8b0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2019 22:19:50 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.127",
       "version": "0.59.0-vnext.127",

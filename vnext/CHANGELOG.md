@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Aug 2019 22:19:50 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2019 23:35:13 GMT and should not be manually modified.
+
+## 0.59.0-vnext.128
+Thu, 08 Aug 2019 23:35:13 GMT
+
+### Changes
+
+- fix hit-testing bug (kmelmon@microsoft.com)
 
 ## 0.59.0-vnext.127
 Thu, 08 Aug 2019 22:19:50 GMT
