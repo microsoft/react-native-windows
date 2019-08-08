@@ -167,7 +167,7 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
   void persistUseWebDebugger(bool useWebDebugger) {
     HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
     if (pane)
-        pane->persistUseWebDebugger(useWebDebugger);
+      pane->persistUseWebDebugger(useWebDebugger);
   }
 
  private:
@@ -346,8 +346,8 @@ void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
 static const wchar_t *c_containerName = L"js";
 static const wchar_t *c_filenameSetting = L"filename";
 static const wchar_t *c_appnameSetting = L"appname";
-static const wchar_t *c_filenameSettingDefault = L"Samples\\index";
-static const wchar_t *c_appnameSettingDefault = L"Bootstrap";
+static const wchar_t *c_filenameSettingDefault = L"Samples\\rntester";
+static const wchar_t *c_appnameSettingDefault = L"RNTesterApp";
 
 static winrt::Windows::Storage::ApplicationDataContainer GetJsSettings() {
   auto localSettings =
@@ -426,6 +426,7 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
+  m_jsFileNames->Append(L"Samples\\rntester");
   m_jsFileNames->Append(L"Samples\\accessible");
   m_jsFileNames->Append(L"Samples\\callbackTest");
   m_jsFileNames->Append(L"Samples\\calculator");
@@ -456,7 +457,9 @@ void HostingPane::LoadKnownApps() {
   std::wstring jsFileName =
       x_JavaScriptFilename->SelectedItem->ToString()->Data();
 
-  if (jsFileName.rfind(L"Samples\\", 0) == 0) {
+  if (jsFileName.rfind(L"Samples\\rntester", 0) == 0) {
+    m_ReactAppNames->Append(L"RNTesterApp");
+  } else if (jsFileName.rfind(L"Samples\\", 0) == 0) {
     m_ReactAppNames->Append(L"Bootstrap");
   }
 

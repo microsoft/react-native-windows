@@ -11,9 +11,6 @@
     <Filter Include="Utilities">
       <UniqueIdentifier>{3b677e86-ff39-4eac-a41d-f9970085d111}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Bundle\Universal.SampleApp">
-      <UniqueIdentifier>{aaa65596-f836-44db-88c4-1c45048565e4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />

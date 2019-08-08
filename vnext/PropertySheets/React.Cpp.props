@@ -15,6 +15,10 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <USE_HERMES>false</USE_HERMES>
+  </PropertyGroup>
+
   <ImportGroup Label="Defaults">
     <Import Project="$(Platform).props" />
     <Import Project="$(Configuration).props" />

@@ -317,6 +317,8 @@ const TouchableOpacity = ((createReactClass({
         accessibilityHint={this.props.accessibilityHint} // TODO(OSS Candidate ISS#2710739)
         accessibilityRole={this.props.accessibilityRole}
         accessibilityStates={this.props.accessibilityStates}
+        accessibilityPosInSet={this.props.accessibilityPosInSet} // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
+        accessibilitySetSize={this.props.accessibilitySetSize} // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
         onAccessibilityTap={this.props.onAccessibilityTap} // TODO(OSS Candidate ISS#2710739)
         acceptsKeyboardFocus={
           (this.props.acceptsKeyboardFocus === undefined ||

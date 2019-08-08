@@ -12,13 +12,22 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const link = (name, target) => {
   const p = path.join(__dirname, 'node_modules', name);
 
   if (!fs.existsSync(p)) {
-    fs.symlinkSync(target, p, 'dir');
+    fs.symlinkSync(target, p, os.platform() === 'win32' ? 'junction' : 'dir');
   }
 };
 
 link('react-native-windows', path.resolve(__dirname, '../../vnext'));
+link(
+  'react-native',
+  path.resolve(require.resolve('react-native/package.json'), '..'),
+);
+link(
+  'rnpm-plugin-windows',
+  path.resolve(require.resolve('rnpm-plugin-windows/package.json'), '..'),
+);

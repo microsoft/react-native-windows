@@ -1,6 +1,48 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Aug 2019 15:46:10 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2019 22:19:50 GMT and should not be manually modified.
+
+## 0.59.0-vnext.127
+Thu, 08 Aug 2019 22:19:50 GMT
+
+### Changes
+
+- Add textDecoration support to Nested Text (dida@ntdev.microsoft.com)
+
+## 0.59.0-vnext.126
+Thu, 08 Aug 2019 20:57:44 GMT
+
+### Changes
+
+- Moving picker fix (decrowle@microsoft.com)
+
+## 0.59.0-vnext.125
+Wed, 07 Aug 2019 17:07:35 GMT
+
+### Changes
+
+- Adding accessibilityPosInSet and accessibilitySizeOfSet props to ViewWindows, #2894 (jthysell@microsoft.com)
+
+## 0.59.0-vnext.124
+Wed, 07 Aug 2019 16:00:25 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.38 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.123
+Tue, 06 Aug 2019 21:09:10 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.37 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.122
+Tue, 06 Aug 2019 18:30:23 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.36 (53619745+rnbot@users.noreply.github.com)
 
 ## 0.59.0-vnext.121
 Tue, 06 Aug 2019 15:46:10 GMT

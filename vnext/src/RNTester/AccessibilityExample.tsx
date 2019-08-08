@@ -458,6 +458,29 @@ class AccessibilityListExamples extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
         </View>
+        <View
+          //@ts-ignore
+          accessibilityRole="list">
+          <Text>The following does the same, but with Touchables.</Text>
+          <FlatList
+            data={items}
+            renderItem={item => (
+              <TouchableHighlight
+                style={{
+                  width: 100,
+                  height: 50,
+                  backgroundColor: 'lightskyblue',
+                }}
+                //@ts-ignore
+                accessibilityRole="listitem"
+                accessibilitySetSize={items.length}
+                accessibilityPosInSet={item.index + 1}>
+                <Text>Touchable {item.index + 1}</Text>
+              </TouchableHighlight>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
       </View>
     );
   }

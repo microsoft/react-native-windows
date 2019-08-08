@@ -7,13 +7,9 @@
 
 const {realpathSync} = require('fs');
 const path = require('path');
-const utils = require('../Scripts/utils');
 
-const rnProjectRoot = utils.getDirectoryNameOfFileAbove(__dirname, 'app.json');
 const rnRoot = realpathSync(
-  rnProjectRoot
-    ? path.resolve(rnProjectRoot, './node_modules/react-native')
-    : path.resolve(__dirname, '../node_modules/react-native'),
+  path.resolve(require.resolve('react-native/package.json'), '..'),
 );
 
 function createHaste(pluginRoots, pluginNameReducers) {
