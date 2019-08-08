@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Aug 2019 20:57:44 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2019 22:19:50 GMT and should not be manually modified.
+
+## 0.59.0-vnext.127
+Thu, 08 Aug 2019 22:19:50 GMT
+
+### Changes
+
+- Add textDecoration support to Nested Text (dida@ntdev.microsoft.com)
 
 ## 0.59.0-vnext.126
 Thu, 08 Aug 2019 20:57:44 GMT
