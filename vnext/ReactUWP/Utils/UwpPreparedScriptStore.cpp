@@ -26,7 +26,7 @@ UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
   }
 }
 
-std::unique_ptr<const facebook::jsi::Buffer>
+std::shared_ptr<const facebook::jsi::Buffer>
 UwpPreparedScriptStore::tryGetPreparedScript(
     const facebook::jsi::ScriptSignature &scriptSignature,
     const facebook::jsi::JSRuntimeSignature &runtimeSignature,
@@ -43,7 +43,7 @@ UwpPreparedScriptStore::tryGetPreparedScript(
     }
 
     auto buffer = winrt::FileIO::ReadBufferAsync(byteCodeFile).get();
-    auto bytecodeBuffer(std::make_unique<ByteCodeBuffer>(buffer.Length()));
+    auto bytecodeBuffer(std::make_shared<ByteCodeBuffer>(buffer.Length()));
     auto dataReader{winrt::Streams::DataReader::FromBuffer(buffer)};
     dataReader.ReadBytes(winrt::array_view<uint8_t>{
         &bytecodeBuffer->data()[0],
