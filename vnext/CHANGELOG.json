@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2019 19:59:38 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Minor documentation update",
+            "author": "email not defined",
+            "commit": "fc5669b454531d630ad69dbe6fc2cb27706ffe43"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2019 05:33:20 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.125",
       "version": "0.59.0-vnext.125",
