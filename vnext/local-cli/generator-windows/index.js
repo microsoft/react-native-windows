@@ -4,11 +4,12 @@ const path = require('path');
 const username = require('username');
 const uuid = require('uuid');
 const childProcess = require('child_process');
+const fs = require('fs');
 const os = require('os');
 const {
   createDir,
   copyAndReplaceAll,
-  copyAndReplaceWithChangedCallback
+  copyAndReplaceWithChangedCallback,
 } = require('../generator-common');
 
 const windowsDir = 'windows';
@@ -24,7 +25,7 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
       '$pwd = ConvertTo-SecureString -String password -Force -AsPlainText',
       `New-Item -ErrorAction Ignore -ItemType directory -Path ${path.join(windowsDir, newProjectName)}`,
       `Export-PfxCertificate -Cert "cert:\\CurrentUser\\My\\$($cert.Thumbprint)" -FilePath ${path.join(windowsDir, newProjectName, newProjectName)}_TemporaryKey.pfx -Password $pwd`,
-      '$cert.Thumbprint'
+      '$cert.Thumbprint',
     ];
     const certGenProcess = childProcess.spawnSync('powershell', ['-command', certGenCommand.join(';')]);
 
@@ -82,14 +83,13 @@ function copyProjectTemplateAndReplace(
     '<%=projectGuid%>': projectGuid,
     '<%=packageGuid%>': packageGuid,
     '<%=currentUser%>': currentUser,
-    '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : ''
+    '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',
   };
 
   [
     { from: path.join(srcPath, 'App.windows.js'), to: 'App.windows.js' },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
     { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
-    { from: path.join(srcPath, projDir, 'react.overrides.props'), to: path.join(windowsDir, 'react.overrides.props') },
     { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
     { from: path.join(srcPath, 'app.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'app.windows.bundle') },
@@ -102,6 +102,36 @@ function copyProjectTemplateAndReplace(
   console.log(chalk.white('   react-native run-windows'));
 }
 
+function installDependencies(options) {
+  const cwd = process.cwd();
+
+  // Extract react-native peer dependency version
+  const vnextPackageJsonPath = path.join(cwd, 'node_modules', 'react-native-windows', 'package.json');
+  const vnextPackageJson = JSON.parse(fs.readFileSync(vnextPackageJsonPath, { encoding: 'UTF8' }));
+  let reactNativeVersion = vnextPackageJson.peerDependencies['react-native'];
+  const depDelim = ' || ';
+  const delimIndex = reactNativeVersion.indexOf(depDelim);
+  if (delimIndex !== -1) {
+    reactNativeVersion = reactNativeVersion.slice(0, delimIndex);
+  }
+
+  console.log(chalk.green('Updating to compatible version of react-native:'));
+  console.log(chalk.white(`    ${reactNativeVersion}`));
+
+  // Patch package.json to have proper react-native version and install
+  const projectPackageJsonPath = path.join(cwd, 'package.json');
+  const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
+  projectPackageJson.scripts.start = 'node node_modules/react-native-windows/Scripts/cli.js start';
+  projectPackageJson.dependencies['react-native'] = reactNativeVersion;
+  fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
+
+  // Install dependencies using correct package manager
+  const isYarn = fs.existsSync(path.join(cwd, 'yarn.lock'));
+  const execOptions = options && options.verbose ? { stdio: 'inherit' } : {};
+  childProcess.execSync(isYarn ? 'yarn' : 'npm i', execOptions);
+}
+
 module.exports = {
-  copyProjectTemplateAndReplace
+  copyProjectTemplateAndReplace,
+  installDependencies,
 };

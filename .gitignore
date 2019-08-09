@@ -105,6 +105,10 @@ packages/
 *.nuget.props
 *.nuget.targets
 
+#Allow root packages folder though
+!/packages
+
+
 #ncrunch
 *ncrunch*
 *crunch*.local.xml
@@ -118,7 +122,6 @@ packages/
 #Other files
 *.DotSettings
 .vs/
-.vscode/
 *project.lock.json
 jsconfig.json
 package-lock.json

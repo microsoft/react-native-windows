@@ -1,6 +1,7 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
+ * @format
  */
 
 import React, { Component } from 'react';
@@ -20,6 +21,9 @@ class <%=name%> extends Component {
         </Text>
         <Text style={styles.instructions}>
           To get started, edit app.windows.js
+        </Text>
+        <Text style={styles.instructions}>
+          To show the Developer Menu, enter Ctrl+Shift+D
         </Text>
       </View>
     );

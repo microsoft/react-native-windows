@@ -11,4 +11,7 @@
     <None Include="react-native-win32.x64.def" />
     <None Include="react-native-win32.x86.def" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
 </Project>

@@ -7,13 +7,15 @@
 //#define FBXPLATMODULE
 
 #include <iostream>
-#pragma warning( push )
-#pragma warning( disable : 4995 )
-#pragma warning( disable : 4068 )
-#pragma warning( disable : 4146 )
-#pragma warning( disable : 4100 )
-#pragma warning( disable : 4324 ) // structure was padded due to alignment specifier
-#pragma warning( disable : 4643 ) // Forward declaring 'T' in namespace std is not permitted by the C++ Standard.
+#pragma warning(push)
+#pragma warning(disable : 4995)
+#pragma warning(disable : 4068)
+#pragma warning(disable : 4146)
+#pragma warning(disable : 4100)
+#pragma warning( \
+    disable : 4324) // structure was padded due to alignment specifier
+#pragma warning(disable : 4643) // Forward declaring 'T' in namespace std is not
+                                // permitted by the C++ Standard.
 #pragma push_macro("CHECK")
 #pragma push_macro("Check")
 #pragma push_macro("max")
@@ -33,8 +35,6 @@
 #pragma pop_macro("max")
 #pragma pop_macro("Check")
 #pragma pop_macro("CHECK")
-#pragma warning( pop )
+#pragma warning(pop)
 
 //#endif
-
-

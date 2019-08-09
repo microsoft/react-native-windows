@@ -10,48 +10,42 @@
 
 #include <IReactInstance.h>
 
-#include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 
 namespace winrt {
-  using namespace Windows::Foundation;
-  using namespace Windows::UI;
-  using namespace Windows::UI::Xaml;
-  using namespace Windows::UI::Xaml::Controls;
-  using namespace Windows::UI::Xaml::Controls::Primitives;
-  using namespace Windows::UI::Xaml::Media;
-}
+using namespace Windows::Foundation;
+using namespace Windows::UI;
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace Windows::UI::Xaml::Media;
+} // namespace winrt
 
-namespace react { namespace uwp { namespace polyester {
+namespace react {
+namespace uwp {
+namespace polyester {
 
-HyperlinkViewManager::HyperlinkViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-  : ContentControlViewManager(reactInstance)
-{
-}
+HyperlinkViewManager::HyperlinkViewManager(
+    const std::shared_ptr<IReactInstance> &reactInstance)
+    : ContentControlViewManager(reactInstance) {}
 
-const char* HyperlinkViewManager::GetName() const
-{
+const char *HyperlinkViewManager::GetName() const {
   return "PLYHyperlink";
 }
 
-folly::dynamic HyperlinkViewManager::GetNativeProps() const
-{
+folly::dynamic HyperlinkViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object
-    ("disabled", "boolean")
-    ("url", "string")
-    ("tooltip", "string")
-  );
+  props.update(folly::dynamic::object("disabled", "boolean")("url", "string")(
+      "tooltip", "string"));
 
   return props;
 }
 
-XamlView HyperlinkViewManager::CreateViewCore(int64_t tag)
-{
+XamlView HyperlinkViewManager::CreateViewCore(int64_t tag) {
   auto button = winrt::HyperlinkButton();
-  button.Click([=](auto &&, auto &&)
-  {
+  button.Click([=](auto &&, auto &&) {
     auto instance = m_wkReactInstance.lock();
     folly::dynamic eventData = folly::dynamic::object("target", tag);
     if (instance != nullptr)
@@ -61,47 +55,44 @@ XamlView HyperlinkViewManager::CreateViewCore(int64_t tag)
   return button;
 }
 
-folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants() const
-{
+folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
+    const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
+  directEvents["topClick"] =
+      folly::dynamic::object("registrationName", "onClick");
 
   return directEvents;
 }
 
-void HyperlinkViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
-{
+void HyperlinkViewManager::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    const folly::dynamic &reactDiffMap) {
   auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)
     return;
 
-  for (auto& pair : reactDiffMap.items())
-  {
-    const folly::dynamic& propertyName = pair.first;
-    const folly::dynamic& propertyValue = pair.second;
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
 
-   if (propertyName.asString() == "disabled")
-   {
+    if (propertyName == "disabled") {
       if (propertyValue.isBool())
         button.IsEnabled(!propertyValue.asBool());
-   }
-   else if (propertyName.asString() == "tooltip")
-   {
-     if (propertyValue.isString())
-     {
-       winrt::TextBlock tooltip = winrt::TextBlock();
-       tooltip.Text(asHstring(propertyValue));
-       winrt::ToolTipService::SetToolTip(button, tooltip);
-     }
-   }
-   else if (propertyName.asString() == "url")
-   {
-     winrt::Uri myUri(asHstring(propertyValue));
-     button.NavigateUri(myUri);
-   }
+    } else if (propertyName == "tooltip") {
+      if (propertyValue.isString()) {
+        winrt::TextBlock tooltip = winrt::TextBlock();
+        tooltip.Text(asHstring(propertyValue));
+        winrt::ToolTipService::SetToolTip(button, tooltip);
+      }
+    } else if (propertyName == "url") {
+      winrt::Uri myUri(asHstring(propertyValue));
+      button.NavigateUri(myUri);
+    }
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
-}}}
+} // namespace polyester
+} // namespace uwp
+} // namespace react

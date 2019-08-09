@@ -18,7 +18,13 @@ function pushd(pathArg) {
 
 function getAppPackage(options) {
   const configuration = options.release ? 'Release' : 'Debug';
-  return glob.sync(`windows/*/AppPackages/*_${options.arch}_${configuration}_*`)[0];
+  const packageFolder = options.arch === 'x86' ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}` : `*_${options.arch}_${configuration}_*`;
+  const appPackageGlob = `windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+  const appPackage = glob.sync(appPackageGlob)[0];
+  if (!appPackage) {
+    throw new Error(`Unable to find app package using search path: "${appPackageGlob}"`);
+  }
+  return appPackage;
 }
 
 function getWindowsStoreAppUtils(options) {
@@ -31,7 +37,12 @@ function getWindowsStoreAppUtils(options) {
 
 function getAppxManifest(options) {
   const configuration = options.release ? 'Release' : 'Debug';
-  const appxPath = glob.sync(path.join(options.root, `windows/*/bin/${options.arch}/${configuration}/AppxManifest.xml`))[0];
+  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${configuration}/*}/AppxManifest.xml`;
+  const appxPath = glob.sync(path.join(options.root, appxManifestGlob))[0];
+
+  if (!appxPath) {
+    throw new Error(`Unable to find AppxManifest from "${options.root}", using search path: "${appxManifestGlob}" `);
+  }
   return parse(fs.readFileSync(appxPath, 'utf8'));
 }
 
@@ -131,7 +142,7 @@ function launchServer(options) {
   const opts = {
     cwd: options.root,
     detached: true,
-    stdio: options.verbose ? 'inherit' : 'ignore'
+    stdio: options.verbose ? 'inherit' : 'ignore',
   };
 
   return Promise.resolve(spawn('cmd.exe', ['/C', 'start', launchPackagerScript], opts));
@@ -140,5 +151,5 @@ function launchServer(options) {
 module.exports = {
   deployToDesktop,
   deployToDevice,
-  startServerInNewWindow
+  startServerInNewWindow,
 };

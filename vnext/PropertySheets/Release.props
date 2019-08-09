@@ -12,6 +12,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <Optimization>MinSpace</Optimization>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 

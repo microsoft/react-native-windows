@@ -1,68 +1,155 @@
-name: $(Date:yyyyMMdd).$(Rev:.r)
+name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 trigger:
   batch: true
   branches:
     include:
       - master
-      - fb59merge
+      - 0.58-vnext-stable
       - fabric
-  paths:
-    include:
-      - vnext/*
-    exclude:
-      - vnext/package.json
-      - vnext/yarn.lock
 
 pr: none
 
 jobs:
-  - job: RNWGithubPublish
-    displayName: React-Native-Windows GitHub Publish
+  - job: RnwNpmPublish
+    displayName: React-Native-Windows Npm Build Rev Publish
     pool:
-      name: OE Standard Pool
-      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
+      vmImage: vs2017-win2016
     timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      # The Hosted 2019 pool machines look like they already have this, so it wouldn't be needed..
-      - task: CmdLine@2
-        displayName: Ensure yarn
-        inputs:
-          script: npm install -g yarn
-          workingDirectory: vnext
+      - template: templates/configure-git.yml
 
       - task: CmdLine@2
         displayName: yarn install
         inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd install --frozen-lockfile
-          workingDirectory: vnext
+          script: yarn install --frozen-lockfile
 
       - task: CmdLine@2
         displayName: yarn build
         inputs:
-          script: $(APPDATA)\npm\node_modules\yarn\bin\yarn.cmd build
-          workingDirectory: vnext
+          script: yarn build
 
       - task: CmdLine@2
-        displayName: Update package version
+        displayName: Beachball Publish (for master)
         inputs:
-          script: node ../.ado/updateVersion.js
-          workingDirectory: vnext
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes
+        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
-      - task: Npm@1
-        displayName: npm public publish (vnext)
+      - task: CmdLine@2
+        displayName: Beachball Publish (for other branches)
         inputs:
-          command: custom
-          workingDir: vnext
-          verbose: false
-          customCommand: publish --access public --tag $(npmTag)
-          customEndpoint: 'React-Native-Windows NPM'
-          publishEndpoint: 'React-Native-Windows NPM'
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes
+        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
+
+      - task: CmdLine@2
+        displayName: Set Version Env Vars
+        name: setVersionEnvVars
+        inputs:
+          script: node ./.ado/setVersionEnvVars.js
+
+  - job: RnwNativeBuild
+    displayName: React-Native-Windows Native Build
+    dependsOn: RnwNpmPublish
+    variables:
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      vmImage: vs2017-win2016
+
+    steps:
+
+      # Sync to point where the version numbers have been updated
+    - task: CmdLine@2
+      inputs:
+        script: git checkout $(publishCommitId)
+
+    - task: CmdLine@2
+      displayName: yarn install
+      inputs:
+        script: yarn install --frozen-lockfile
+
+    - task: CmdLine@2
+      displayName: yarn build
+      inputs:
+        script: yarn build
+
+    - task: CmdLine@2
+      displayName: Set Version Env Vars
+      name: setVersionEnvVars
+      inputs:
+        script: node ./.ado/setVersionEnvVars.js
+
+    - template: templates/install-SDK.yml
+
+    - template: templates/vs-build.yml
+      parameters:
+        BuildConfiguration: $(BuildConfiguration)
+        BuildPlatform: $(BuildPlatform)
+        RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
+        RNW_PKG_VERSION: $(RNW_PKG_VERSION)
+
+    - template: templates/publish-build-artifacts-for-nuget.yml
+
+    # Disable for now, not sure this works on github projects anyway.
+    # - task: PublishSymbols@2
+    #   displayName: 'Publish symbols path'
+    #   inputs:
+    #     SearchPattern: 'vnext/target/**/*.pdb'
+    #     SymbolServerType: TeamServices
+
+  - job: RNWNuget
+    dependsOn:
+      - RnwNpmPublish
+      - RnwNativeBuild
+    displayName: React-Native-Windows Build and Publish Nuget
+    pool:
+      vmImage: vs2017-win2016
+    variables:
+      npmVersion: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.npmVersion'] ]
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
+
+    steps:
+      - checkout: none #skip checking out the default repository resource
+
+      # The commit tag in the nuspec requires that we use at least nuget 4.6
+      - task: NuGetToolInstaller@0
+        inputs:
+          versionSpec: '>=4.6.0' 
+
+      - template: templates/prep-and-pack-nuget.yml
+        parameters:
+          publishCommitId: $(publishCommitId)
+          npmVersion: $(npmVersion)
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish final nuget artifacts'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/NugetRootFinal'
+          ArtifactName: 'ReactWindows-final-nuget'

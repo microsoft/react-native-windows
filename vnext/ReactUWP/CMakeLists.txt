@@ -7,6 +7,7 @@ set(SOURCES
 	ABI/idl/ReactControl.idl
 	ABI/Instance_rt.cpp
 	ABI/ReactControl_rt.cpp
+	Base/ChakraJSIRuntimeHolder.cpp
 	Base/InstanceFactory.cpp
 	Base/UwpReactInstance.cpp
 	CxxReactUWP/JSBigString.cpp
@@ -37,6 +38,7 @@ set(SOURCES
 	Threading/WorkerMessageQueueThread.cpp
 	Utils/LocalBundleReader.cpp
 	Utils/ValueUtils.cpp
+	Utils/AccessibilityUtils.cpp
 	Views/ActivityIndicatorViewManager.cpp
 	Views/CheckboxViewManager.cpp
 	Views/ControlViewManager.cpp
@@ -44,6 +46,8 @@ set(SOURCES
 	Views/FlyoutViewManager.cpp
 	Views/FrameworkElementViewManager.cpp
 	Views/ImageViewManager.cpp
+	Views/Impl/ScrollViewUWPImplementation.cpp
+	Views/Impl/SnapPointManagingContentControl.cpp
 	Views/PickerViewManager.cpp
 	Views/PopupViewManager.cpp
 	Views/RawTextViewManager.cpp
@@ -70,6 +74,7 @@ add_definitions(-DRN_PLATFORM=uwp)
 target_compile_definitions(React.UWPStatic PRIVATE UNICODE _UNICODE JSI_EXPORT REACTWINDOWS_BUILD REACTWINDOWS_STATIC)
 target_compile_options(React.UWPStatic PRIVATE /await /wd4996)
 
+target_include_directories(React.UWPStatic PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/../shared")
 target_include_directories(React.UWPStatic PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/ABI/idl")
 
 target_include_directories(React.UWPStatic PRIVATE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/..")

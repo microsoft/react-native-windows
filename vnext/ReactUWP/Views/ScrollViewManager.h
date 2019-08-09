@@ -3,38 +3,40 @@
 
 #pragma once
 
+#include "pch.h"
+
 #include <Views/ControlViewManager.h>
+#include "Impl/ScrollViewUWPImplementation.h"
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class ScrollViewManager : public ControlViewManager
-{
+class ScrollViewManager : public ControlViewManager {
   using Super = ControlViewManager;
-public:
-  ScrollViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
+ public:
+  ScrollViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+
+  const char *GetName() const override;
   folly::dynamic GetCommands() const override;
   folly::dynamic GetNativeProps() const override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+
+  facebook::react::ShadowNode *createShadow() const override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
   void RemoveChildAt(XamlView parent, int64_t index) override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
-  void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic& commandArgs) override;
+  void SnapToInterval(XamlView parent, float interval);
+  void SnapToOffsets(XamlView parent, const winrt::IVectorView<float> &offsets);
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
 
-private:
-  void AddHandlers(winrt::Windows::UI::Xaml::Controls::ScrollViewer& scrollViewer, int64_t tag);
-  void EmitScrollEvent(
-    winrt::Windows::UI::Xaml::Controls::ScrollViewer& scrollViewer,
-    int64_t tag,
-    const char* eventName,
-    double x, double y, double zoom);
+ private:
+  friend class ScrollViewShadowNode;
 };
 
-} }
+} // namespace uwp
+} // namespace react

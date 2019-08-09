@@ -16,7 +16,8 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <FullProgramDatabaseFile>true</FullProgramDatabaseFile>
+      <FullProgramDatabaseFile>DebugFull</FullProgramDatabaseFile>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
 

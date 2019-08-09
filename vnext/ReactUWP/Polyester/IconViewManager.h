@@ -5,24 +5,24 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react { namespace uwp { namespace polyester {
+namespace react {
+namespace uwp {
+namespace polyester {
 
-class IconViewManager : public FrameworkElementViewManager
-{
+class IconViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
-public:
-  IconViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  const char* GetName() const override;
+ public:
+  IconViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
+
+  const char *GetName() const override;
+  facebook::react::ShadowNode *createShadow() const override;
   folly::dynamic GetNativeProps() const override;
 
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
-
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
-
-private:
-  static void UpdateFontColorProps(winrt::Windows::UI::Xaml::Documents::Glyphs glyphs);
 };
 
-} } }
+} // namespace polyester
+} // namespace uwp
+} // namespace react

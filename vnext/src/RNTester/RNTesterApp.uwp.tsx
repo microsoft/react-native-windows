@@ -1,26 +1,35 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
 import * as React from 'react';
-import { AsyncStorage, Button, AppRegistry, StyleSheet, Text, View } from 'react-native';
+import {
+  AsyncStorage,
+  Button,
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
 import RNTesterList from './RNTesterList.uwp';
-import RNTesterNavigationReducer from './RNTesterNavigationReducer';
-import {RNTesterAction} from './RNTesterActions';
+import RNTesterNavigationReducer from './RNTesterNavigationReducer.uwp';
+import {RNTesterAction} from './RNTesterActions.uwp';
 
 const styles = StyleSheet.create({
   headerContainer: {
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: '#96969A',
-    backgroundColor: '#F5F5F6'
+    backgroundColor: '#F5F5F6',
   },
   header: {
     height: 40,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   headerLeft: {},
   headerCenter: {
@@ -28,16 +37,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 7,
     left: 0,
-    right: 0
+    right: 0,
   },
   title: {
     fontSize: 19,
     fontWeight: '600',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   exampleContainer: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 interface IRNTesterNavigationState {
@@ -50,7 +59,7 @@ interface IRNTesterAppProps {
 
 const APP_STATE_KEY = 'RNTesterAppState.v2';
 
-const Header = ({ onBack, title }: { onBack?: () => void; title: string }) => (
+const Header = ({onBack, title}: {onBack?: () => void; title: string}) => (
   <View style={styles.headerContainer}>
     <View style={styles.header}>
       <View style={styles.headerCenter}>
@@ -58,14 +67,17 @@ const Header = ({ onBack, title }: { onBack?: () => void; title: string }) => (
       </View>
       {onBack && (
         <View style={styles.headerLeft}>
-          <Button title="Back" onPress={onBack} />
+          <Button title="Back" onPress={onBack} accessibilityLabel="Back" />
         </View>
       )}
     </View>
   </View>
 );
 
-class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigationState> {
+class RNTesterApp extends React.Component<
+  IRNTesterAppProps,
+  IRNTesterNavigationState
+> {
   public render(): JSX.Element {
     if (!this.state) {
       return <Text>null state</Text>;
@@ -88,7 +100,10 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
     return (
       <View style={styles.exampleContainer}>
         <Header title="RNTester" />
-        <RNTesterExampleList onNavigate={this._handleAction} list={RNTesterList} />
+        <RNTesterExampleList
+          onNavigate={this._handleAction}
+          list={RNTesterList}
+        />
       </View>
     );
   }
@@ -108,7 +123,10 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
         const launchAction = exampleAction || urlAction;
      if (err || !storedString) {
       */
-    const initialAction: RNTesterAction = /*launchAction ||*/ { type: 'InitialAction' };
+    const initialAction: RNTesterAction = /*launchAction ||*/ {
+      type: 'InitialAction',
+    };
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState(RNTesterNavigationReducer(undefined, initialAction));
     return;
     /*
@@ -138,7 +156,9 @@ class RNTesterApp extends React.Component<IRNTesterAppProps, IRNTesterNavigation
     }
     const newState = RNTesterNavigationReducer(this.state, action);
     if (this.state !== newState) {
-      this.setState(newState, () => AsyncStorage.setItem(APP_STATE_KEY, JSON.stringify(this.state)));
+      this.setState(newState, () =>
+        AsyncStorage.setItem(APP_STATE_KEY, JSON.stringify(this.state)),
+      );
     }
   };
 }

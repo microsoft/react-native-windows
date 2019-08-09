@@ -43,6 +43,10 @@ node_modules
 /bots/node_modules/
 
 /lib
+/Libraries
+/RNTester
+/RNTester.*
+/index.*
 
 # Visual Studio
 .vs/

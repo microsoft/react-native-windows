@@ -5,18 +5,21 @@
 
 #include <Views/FrameworkElementViewManager.h>
 
-namespace react { namespace uwp {
+namespace react {
+namespace uwp {
 
-class TextViewManager : public FrameworkElementViewManager
-{
+class TextViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
-public:
-  TextViewManager(const std::shared_ptr<IReactInstance>& reactInstance);
 
-  facebook::react::ShadowNode* createShadow() const override;
+ public:
+  TextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
-  const char* GetName() const override;
-  void UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap) override;
+  facebook::react::ShadowNode *createShadow() const override;
+
+  const char *GetName() const override;
+  void UpdateProperties(
+      ShadowNodeBase *nodeToUpdate,
+      const folly::dynamic &reactDiffMap) override;
 
   void AddView(XamlView parent, XamlView child, int64_t index) override;
   void RemoveAllChildren(XamlView parent) override;
@@ -24,8 +27,9 @@ public:
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
-protected:
+ protected:
   XamlView CreateViewCore(int64_t tag) override;
 };
 
-} }
+} // namespace uwp
+} // namespace react

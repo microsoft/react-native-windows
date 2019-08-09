@@ -1,15 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27310.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Universal.SampleApp", "Universal.SampleApp\React.Windows.Universal.SampleApp.vcxproj", "{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
-		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}
-		{11C084A3-A57C-4296-A679-CAC17B603144} = {11C084A3-A57C-4296-A679-CAC17B603144}
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B} = {2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactUWP", "ReactUWP\ReactUWP.vcxproj", "{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}"
@@ -45,7 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		NuGet.Config = NuGet.Config
+		ReactUwp.nuspec = ReactUwp.nuspec
 		ReactWin32.nuspec = ReactWin32.nuspec
 		README.md = README.md
 	EndProjectSection
@@ -116,10 +110,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReactNative", "ReactNative"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Folly", "Folly", "{41F31595-2F20-4D6B-A6CF-60444415012A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.ABITests", "Desktop.ABITests\React.Windows.Desktop.ABITests.vcxproj", "{44DCED9B-9C4C-48FE-8545-0930192BBC16}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Desktop.UnitTests", "JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.vcxproj", "{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
+		Chakra\Chakra.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
+		Shared\Shared.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
@@ -133,24 +134,6 @@ Global
 		Release|ARM = Release|ARM
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.ActiveCfg = Debug|ARM
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.Build.0 = Debug|ARM
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.Deploy.0 = Debug|ARM
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x64.ActiveCfg = Debug|x64
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x64.Build.0 = Debug|x64
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x64.Deploy.0 = Debug|x64
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x86.ActiveCfg = Debug|Win32
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x86.Build.0 = Debug|Win32
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x86.Deploy.0 = Debug|Win32
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|ARM.ActiveCfg = Release|ARM
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|ARM.Build.0 = Release|ARM
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|ARM.Deploy.0 = Release|ARM
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x64.ActiveCfg = Release|x64
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x64.Build.0 = Release|x64
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x64.Deploy.0 = Release|x64
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x86.ActiveCfg = Release|Win32
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x86.Build.0 = Release|Win32
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x86.Deploy.0 = Release|Win32
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.Build.0 = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x64.ActiveCfg = Debug|x64
@@ -287,12 +270,29 @@ Global
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Release|x64.Build.0 = Release|x64
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Release|x86.ActiveCfg = Release|Win32
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Release|x86.Build.0 = Release|Win32
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Debug|ARM.ActiveCfg = Debug|Win32
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Debug|x64.ActiveCfg = Debug|x64
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Debug|x64.Build.0 = Debug|x64
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Debug|x86.ActiveCfg = Debug|Win32
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Debug|x86.Build.0 = Debug|Win32
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Release|ARM.ActiveCfg = Release|Win32
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Release|x64.ActiveCfg = Release|x64
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Release|x64.Build.0 = Release|x64
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Release|x86.ActiveCfg = Release|Win32
+		{44DCED9B-9C4C-48FE-8545-0930192BBC16}.Release|x86.Build.0 = Release|Win32
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Debug|ARM.ActiveCfg = Debug|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Debug|x64.ActiveCfg = Debug|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Debug|x64.Build.0 = Debug|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Debug|x86.ActiveCfg = Debug|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|ARM.ActiveCfg = Release|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x64.ActiveCfg = Release|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x64.Build.0 = Release|x64
+		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189} = {41B38B66-3EFF-4661-AEE3-CD5E40F56BCD}
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {41F31595-2F20-4D6B-A6CF-60444415012A}
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {F90FDFD1-2C76-4DCD-B248-F6FB2BB15BDF}
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953} = {41F31595-2F20-4D6B-A6CF-60444415012A}

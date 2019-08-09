@@ -1,14 +1,20 @@
+; **************************************************************************************************
+; * To improve ABI safety, the CXE team is redesigning the API of the react-native-win32 DLL. To not
+; * jeopardize this effort, please do not add anything to the DLL exports without checking with the
+; * CXE team first.
+; **************************************************************************************************
+
 EXPORTS
 ?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
 ??0TypeError@folly@@QEAA@AEBU01@@Z
 ??0TypeError@folly@@QEAA@$$QEAU01@@Z
 ??0ColdClass@cold_detail@folly@@QEAA@XZ
 ?get_ptrImpl@dynamic@folly@@AEGBAPEBU12@AEBU12@@Z
+?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ??Adynamic@folly@@QEGAAAEAU01@V?$Range@PEBD@1@@Z
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??0LayoutAnimation@react@facebook@@QEAA@Udynamic@folly@@@Z
-??0JSBigStringResourceDll@react@facebook@@QEAA@PEAUHINSTANCE__@@PEAUHRSRC__@@@Z
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@@Z
 ??0TypeError@folly@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@W4Type@dynamic@1@1@Z
 ??1ShadowNode@react@facebook@@UEAA@XZ
@@ -17,16 +23,11 @@ EXPORTS
 ??4dynamic@folly@@QEAAAEAU01@AEBU01@@Z
 ??8dynamic@folly@@QEBA_NAEBU01@@Z
 ?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
-?callJSFunction@Instance@react@facebook@@UEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
-?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PEB_W@Z
 ?createI18nModule@windows@react@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
 ?createIUIManager@react@facebook@@YA?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@$$QEAV?$vector@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@V?$allocator@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@@2@@4@PEAUINativeUIManager@12@@Z
 ?CreateMemoryTracker@react@facebook@@YA?AV?$shared_ptr@VMemoryTracker@react@facebook@@@std@@$$QEAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?CreateReactInstance@react@facebook@@YA?AV?$shared_ptr@UInstanceWrapper@react@facebook@@@std@@$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@4@$$QEAV?$vector@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6A?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@V?$allocator@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6A?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@@2@@4@V?$shared_ptr@VIUIManager@react@facebook@@@4@V?$shared_ptr@VMessageQueueThread@react@facebook@@@4@3V?$shared_ptr@UDevSettings@react@facebook@@@4@@Z
-?CreateReactInstance@react@facebook@@YA?AV?$shared_ptr@UInstanceWrapper@react@facebook@@@std@@$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@4@0$$QEAV?$vector@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6A?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@V?$allocator@V?$tuple@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6A?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@std@@@2@@4@V?$shared_ptr@VIUIManager@react@facebook@@@4@V?$shared_ptr@VMessageQueueThread@react@facebook@@@4@3V?$shared_ptr@UDevSettings@react@facebook@@@4@@Z
-?CreateTimingModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
-?CreateWebSocketModule@React@Microsoft@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?destroy@dynamic@folly@@AEAAXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UEAAX_JAEBUdynamic@folly@@@Z
 ?GetConstants@ViewManagerBase@react@facebook@@UEBA?AUdynamic@folly@@XZ
@@ -34,28 +35,17 @@ EXPORTS
 ?hash@dynamic@folly@@QEBA_KXZ
 ?InitializeLogging@react@facebook@@YAX$$QEAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PEBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPEAUINativeTraceHandler@12@@Z
-?loadScriptFromString@Instance@react@facebook@@UEAAXV?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@std@@_KV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N$$QEAV65@@Z
-?Make@IHttpResource@react@facebook@@SA?AV?$unique_ptr@UIHttpResource@react@facebook@@U?$default_delete@UIHttpResource@react@facebook@@@std@@@std@@XZ
 ?Make@IWebSocket@React@Microsoft@@SA?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
-?Make@JSBigStringResourceDll@react@facebook@@SA?AV?$unique_ptr@$$CBVJSBigStringResourceDll@react@facebook@@U?$default_delete@$$CBVJSBigStringResourceDll@react@facebook@@@std@@@std@@PEAUHINSTANCE__@@PEAUHRSRC__@@@Z
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
 ?MakeLegacy@IWebSocket@React@Microsoft@@SA?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
-?setGlobalVariable@Instance@react@facebook@@UEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
 ?size@dynamic@folly@@QEBA_KXZ
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PEAV?$Range@PEBD@2@@Z
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ?updateProperties@ShadowNode@react@facebook@@UEAAX$$QEBUdynamic@folly@@@Z
 ?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
-?asFunction@Object@jsi@facebook@@QEHAA?AVFunction@23@AEAVRuntime@23@@Z
-??1Value@jsi@facebook@@QEAA@XZ
-??1Buffer@jsi@facebook@@UEAA@XZ
-?makeChakraJsiRuntime@chakraruntime@jsi@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QEAUChakraJsiRuntimeArgs@123@@Z
-?makeV8Runtime@v8runtime@facebook@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@XZ
-
 
 YGNodeNew
 YGNodeNewWithConfig
@@ -180,3 +170,6 @@ YGConfigGetDefault
 YGConfigSetContext
 YGConfigGetContext
 YGUnitToString
+
+DllCanUnloadNow = WINRT_CanUnloadNow                    PRIVATE
+DllGetActivationFactory = WINRT_GetActivationFactory    PRIVATE

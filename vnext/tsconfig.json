@@ -4,7 +4,7 @@
     "target": "es6",
     "module": "commonjs",
     "jsx": "react",
-    "outDir": "lib",
+    "outDir": ".",
     "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
@@ -12,7 +12,9 @@
     "skipLibCheck": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "strict": true
+    "strict": true,
+    "rootDir": "src"
   },
+  "include": ["src"],
   "exclude": ["node_modules", "dist", "lib"]
 }

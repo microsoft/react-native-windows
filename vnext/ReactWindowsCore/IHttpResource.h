@@ -5,11 +5,9 @@
 
 #include <Folly/dynamic.h>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React {
 
-struct IHttpResource
-{
+struct IHttpResource {
   typedef std::map<std::string, std::string> Headers;
 
   static std::unique_ptr<IHttpResource> Make() noexcept;
@@ -17,20 +15,22 @@ struct IHttpResource
   virtual ~IHttpResource() noexcept {}
 
   virtual void SendRequest(
-    const std::string& method,
-    const std::string& url,
-    const Headers&     headers,
-    folly::dynamic     bodyData, //ISS:2365799 - Make non-folly.
-    const std::string& responseType,
-    bool               useIncrementalUpdates,
-    std::int64_t       timeout,
-    std::function<void(int64_t)>&& callback) noexcept = 0;
+      const std::string &method,
+      const std::string &url,
+      const Headers &headers,
+      folly::dynamic bodyData, // ISS:2365799 - Make non-folly.
+      const std::string &responseType,
+      bool useIncrementalUpdates,
+      std::int64_t timeout,
+      std::function<void(int64_t)> &&callback) noexcept = 0;
   virtual void AbortRequest() noexcept = 0;
   virtual void ClearCookies() noexcept = 0;
 
-  virtual void SetOnRequest(std::function<void()>&& handler) noexcept = 0;
-  virtual void SetOnResponse(std::function<void(const std::string&)>&& handler) noexcept = 0;
-  virtual void SetOnError(std::function<void(const std::string&)>&& handler) noexcept = 0;
+  virtual void SetOnRequest(std::function<void()> &&handler) noexcept = 0;
+  virtual void SetOnResponse(
+      std::function<void(const std::string &)> &&handler) noexcept = 0;
+  virtual void SetOnError(
+      std::function<void(const std::string &)> &&handler) noexcept = 0;
 };
 
-} } // namespace facebook::react
+} // namespace Microsoft::React

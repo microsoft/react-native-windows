@@ -1,10 +1,13 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
 
 import * as React from 'react';
-import { StyleSheet, requireNativeComponent } from 'react-native';
-import { ICheckBoxProps, ICheckBoxChangeEvent } from './CheckBoxProps';
+import {StyleSheet, requireNativeComponent} from 'react-native';
+import {ICheckBoxProps, ICheckBoxChangeEvent} from './CheckBoxProps';
 
 const styles = StyleSheet.create({
   rctCheckBox: {
@@ -42,17 +45,13 @@ export class CheckBox extends React.Component<ICheckBoxProps> {
     props.style = [styles.rctCheckBox, this.props.style];
 
     return (
-      <RCTCheckBox
-        {...props}
-        onChange={this._onChange}
-        ref={this._setRef}
-      />
+      <RCTCheckBox {...props} onChange={this._onChange} ref={this._setRef} />
     );
   }
 
-  private _setRef = (checkBox: CheckBox/*RCTCheckBox*/) => {
+  private _setRef = (checkBox: CheckBox /*RCTCheckBox*/) => {
     this._rctCheckBox = checkBox;
-  }
+  };
 
   private _onChange = (event: ICheckBoxChangeEvent) => {
     if (this._rctCheckBox) {
@@ -64,7 +63,7 @@ export class CheckBox extends React.Component<ICheckBoxProps> {
     this.props.onChange && this.props.onChange(event);
     this.props.onValueChange &&
       this.props.onValueChange(event.nativeEvent.value);
-  }
+  };
 }
 
 export default CheckBox;

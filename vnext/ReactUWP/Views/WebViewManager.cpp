@@ -21,71 +21,76 @@
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml::Controls;
+} // namespace winrt
+
+namespace react {
+namespace uwp {
+
+WebViewManager::WebViewManager(
+    const std::shared_ptr<IReactInstance> &reactInstance)
+    : Super(reactInstance) {
+  SetupPropertyHandlersInternal();
 }
 
-namespace react { namespace uwp {
+const char *WebViewManager::GetName() const {
+  return "RCTWebView";
+}
 
-  WebViewManager::WebViewManager(const std::shared_ptr<IReactInstance>& reactInstance)
-    : Super(reactInstance)
-  {
-    SetupPropertyHandlersInternal();
-  }
+XamlView WebViewManager::CreateViewCore(int64_t tag) {
+  return winrt::WebView();
+}
 
-  const char* WebViewManager::GetName() const
-  {
-    return "RCTWebView";
-  }
+void WebViewManager::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    const folly::dynamic &reactDiffMap) {
+  XamlView view = nodeToUpdate->GetView();
+  UpdatePropertiesInternal(view, reactDiffMap);
+  Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+}
 
-  XamlView WebViewManager::CreateViewCore(int64_t tag)
-  {
-    return winrt::WebView();
-  }
+void WebViewManager::setSource(XamlView viewToUpdate, const WebSource &source) {
+  auto instance = m_wkReactInstance.lock();
+  if (instance == nullptr)
+    return;
+  auto view = viewToUpdate.as<winrt::WebView>();
 
-  void WebViewManager::UpdateProperties(ShadowNodeBase* nodeToUpdate, folly::dynamic reactDiffMap)
-  {
-    XamlView view = nodeToUpdate->GetView();
-    UpdatePropertiesInternal(view, reactDiffMap);
-    Super::UpdateProperties(nodeToUpdate, reactDiffMap);
-  }
+  // non-uri sources not yet supported
+  if (source.uri.length() == 0)
+    return;
 
-  void WebViewManager::setSource(XamlView viewToUpdate, const WebSource& source) {
-    auto instance = m_wkReactInstance.lock();
-    if (instance == nullptr)
-      return;
-    auto view = viewToUpdate.as<winrt::WebView>();
+  auto uriString = source.uri;
+  if (source.packagerAsset && uriString.find("assets") == 0)
+    uriString.replace(0, 6, "ms-appx://");
 
-    auto uriString = source.uri;
-    if (source.packagerAsset && uriString.find("assets") == 0)
-      uriString.replace(0, 6, "ms-appx://");
+  auto uri = winrt::Uri(winrt::hstring(asWStr(uriString).c_str()));
 
-    auto uri = winrt::Uri(winrt::hstring(asWStr(uriString).c_str()));
+  auto tag = GetTag(view);
+  folly::dynamic eventData = folly::dynamic::object("target", tag);
+  instance->DispatchEvent(tag, "topLoadStart", std::move(eventData));
 
-    auto tag = GetTag(view);
-    folly::dynamic eventData = folly::dynamic::object("target", tag);
-    instance->DispatchEvent(tag, "topLoadStart", std::move(eventData));
+  view.Navigate(uri);
+}
 
-    view.Navigate(uri);
-  }
+folly::dynamic WebViewManager::GetExportedCustomDirectEventTypeConstants()
+    const {
+  auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
+  directEvents["topLoadStart"] =
+      folly::dynamic::object("registrationName", "onLoadStart");
+  directEvents["topLoad"] =
+      folly::dynamic::object("registrationName", "onLoad");
+  directEvents["topLoadEnd"] =
+      folly::dynamic::object("registrationName", "onLoadEnd");
 
-  folly::dynamic WebViewManager::GetExportedCustomDirectEventTypeConstants() const
-  {
-    auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-    directEvents["topLoadStart"] = folly::dynamic::object("registrationName", "onLoadStart");
-    directEvents["topLoad"] = folly::dynamic::object("registrationName", "onLoad");
-    directEvents["topLoadEnd"] = folly::dynamic::object("registrationName", "onLoadEnd");
+  return directEvents;
+}
 
-    return directEvents;
-  }
+folly::dynamic WebViewManager::GetNativeProps() const {
+  auto props = Super::GetNativeProps();
+  // TODO: implement native props propagation from property map
+  props.update(folly::dynamic::object("source", "Map"));
 
+  return props;
+}
 
-  folly::dynamic WebViewManager::GetNativeProps() const {
-    auto props = Super::GetNativeProps();
-    // TODO: implement native props propagation from property map
-    props.update(folly::dynamic::object
-      ("source", "Map")
-    );
-
-    return props;
-  }
-
-} }
+} // namespace uwp
+} // namespace react

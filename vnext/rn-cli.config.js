@@ -1,65 +1,51 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
+
 const path = require('path');
-
 const fs = require('fs');
-
-const utils = require('./Scripts/utils');
-
-const platforms = ['ios', 'android', 'windesktop', 'uwp', 'web', 'macos'];
 
 /**
  * This cli config is needed for development purposes, e.g. for running
  * integration tests during local development or on CI services.
  */
 
-let config;
+const rootRnPath = path.resolve(require.resolve('react-native'), '../../..');
 
-// In sdx-platform we use metro-resources to handle all the sym linking....
-if (fs.existsSync(path.resolve(__dirname, '../../scripts/metro-resources.js'))) {
-  const sdxHelpers = require('../../scripts/metro-resources');
+let config = {
+  extraNodeModules: {
+    'react-native': rootRnPath,
+    'react-native-windows': __dirname,
+  },
+  watchFolders: [
+    __dirname,
+    // Include hoisted modules
+    path.resolve(__dirname, '..', 'node_modules'),
+  ],
+  getPolyfills: require('react-native/rn-get-polyfills'),
+  resolver: {
+    platforms: ['ios', 'android', 'windesktop', 'uwp', 'web', 'macos'],
+    providesModuleNodeModules: ['react-native', 'react-native-windows'],
+    hasteImplModulePath: path.resolve(__dirname, 'jest/hasteImpl.js'),
+  },
+  projectRoot: __dirname,
+};
 
-  config = sdxHelpers.createConfig({
-    getPlatforms() {
-      return platforms;
-    },
-    projectRoot: __dirname,
-    getPolyfills: require('../react-native/rn-get-polyfills'),
-    roots: [__dirname],
-  });
-
-  config.resolver.extraNodeModules['react-native'] = path.resolve(__dirname, '../react-native');
-  config.resolver.extraNodeModules['react-native/Libraries/Image/AssetRegistry'] = path.resolve(__dirname, '../react-native/Libraries/Image/AssetRegistry.js');
-  config.resolver.providesModuleNodeModules = ['react-native', 'react-native-windows'];
-} else {
-  const rootRnPath = path.resolve(require.resolve('react-native'), '../../..');
-
-  config = {
-    getPolyfills: require('react-native/rn-get-polyfills'),
-    resolver: {
-      extraNodeModules: {},
-      platforms,
-      providesModuleNodeModules: ['react-native-windows'],
-    },
-    projectRoot: utils.getDirectoryNameOfFileAbove(__dirname, 'app.json') || __dirname
-  };
-
-  config.resolver.extraNodeModules['react-native'] = rootRnPath;
-  config.resolver.extraNodeModules['react-native-windows'] = __dirname;
-  config.resolver.extraNodeModules['react-native/Libraries/Image/AssetRegistry'] = path.resolve(
-    rootRnPath,
-    'Libraries/Image/AssetRegistry.js'
+// Check that we have built our JS files before running the bundler, otherwise we'll get a harder to diagnose "Unable to resolve module" error
+if (
+  !fs.existsSync(
+    path.resolve(
+      __dirname,
+      'Libraries/Components/AccessibilityInfo/AccessibilityInfo.uwp.js',
+    ),
+  )
+) {
+  throw new Error(
+    '[31m\nThis package must be built before running the bundler.  Did you mean to run "[39m[33myarn build[39m[31m" first?[39m\n',
   );
 }
 
-config.resolver.extraNodeModules['SnapshotViewIOS'] = path.resolve(__dirname, 'Libraries/RCTTest/SnapshotViewIOS');
-config.resolver.hasteImplModulePath = path.resolve(__dirname, 'jest/hasteImpl.js');
-
-// Check that we have built our JS files before running the bundler, otherwise we'll get a harder to diagnose "Unable to resolve module" error
-if (!fs.existsSync(path.resolve(__dirname, 'lib/Libraries/Components/AccessibilityInfo/AccessibilityInfo.uwp.js'))) {
-  throw new Error(`[31m\nThis package must be built before running the bundler.  Did you mean to run "[39m[33myarn build[39m[31m" first?[39m\n`);
-}
-
 module.exports = config;
-

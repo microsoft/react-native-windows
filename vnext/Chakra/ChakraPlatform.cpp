@@ -3,7 +3,9 @@
 
 #include "pch.h"
 
+#if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
+#endif
 #include "ChakraPlatform.h"
 
 namespace facebook {
@@ -19,8 +21,12 @@ namespace JSNativeHooks {
 LoggingHook loggingHook = nullptr;
 NowHook nowHook = nullptr;
 
-JsValueRef __stdcall nowHookJNF(JsValueRef function, bool isConstructCall, JsValueRef arguments[], unsigned short argumentCount, void* callbackState)
-{
+JsValueRef __stdcall nowHookJNF(
+    JsValueRef function,
+    bool isConstructCall,
+    JsValueRef arguments[],
+    unsigned short argumentCount,
+    void *callbackState) {
   assert(argumentCount == 1);
   double now = nowHook != nullptr ? nowHook() : 0;
   JsValueRef value;
@@ -28,10 +34,11 @@ JsValueRef __stdcall nowHookJNF(JsValueRef function, bool isConstructCall, JsVal
   return value;
 }
 
-}
+} // namespace JSNativeHooks
 
 #if __clang__
 #pragma clang diagnostic pop
 #endif
 
-} }
+} // namespace react
+} // namespace facebook

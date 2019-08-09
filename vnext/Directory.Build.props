@@ -1,47 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <Import Project="$(MSBuildThisFileDirectory)\PropertySheets\ReactPackageDirectories.props" />
+
   <PropertyGroup>
     <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
 
     <Platform Condition="'$(Platform)' == ''">x64</Platform>
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
 
-    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)</ReactNativeWindowsDir>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
 
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <!-- NOTE: This assignment of `Platform` won't persist thourgh the build. -->
-    <Platform Condition="'$(Platform)'=='Win32'">x86</Platform>
-    <BaseIntDir>$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseOutDir>$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
+    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
+    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
 
-    <!-- Windows Desktop -->
     <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
     <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <FollyDir>$(ReactNativeWindowsDir)node_modules\react-native\folly</FollyDir>
-    <ReactNativeDir>$(ReactNativeWindowsDir)node_modules\react-native</ReactNativeDir>
-    <YogaDir>$(ReactNativeWindowsDir)node_modules\react-native\ReactCommon\yoga</YogaDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ReactNativeProjectDir>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), app.json))</ReactNativeProjectDir>
-  </PropertyGroup>
-  <Import Project="$(ReactNativeProjectDir)\windows\react.overrides.props" Condition="$([System.IO.File]::Exists($(ReactNativeProjectDir)\windows\react.overrides.props))" />
-
-<!-- Uncomment this (and modify the path below) to build react-native-win against a public version of react-native -->
-<!--
-  <PropertyGroup>
-	  <ReactNativeDir>G:\repos\react-native-github</ReactNativeDir>
-      <OSS_RN>true</OSS_RN>
-  </PropertyGroup>
--->
+  <Import
+    Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../')))"
+   Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
 </Project>

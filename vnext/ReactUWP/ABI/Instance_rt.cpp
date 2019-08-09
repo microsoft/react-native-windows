@@ -3,10 +3,11 @@
 
 #include <pch.h>
 
-#include "comTemplateLibrary.h"
 #include "HStringHelper.h"
 #include "Instance_rt.h"
-#include <Windows.Foundation.h>
+#include "comTemplateLibrary.h"
+
+#include "XamlView.h"
 
 namespace ABI {
 namespace react {
@@ -14,56 +15,57 @@ namespace uwp {
 
 ActivatableClassWithFactory(Instance, InstanceStatics);
 
-struct InstanceReactInstanceCreator : ::react::uwp::IReactInstanceCreator
-{
-  InstanceReactInstanceCreator(Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance>& outer)
-  {
+struct InstanceReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
+  InstanceReactInstanceCreator(
+      Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> &outer) {
     outer.AsWeak(&m_wrInstance);
   }
 
-  std::shared_ptr<::react::uwp::IReactInstance> getInstance()
-  {
+  std::shared_ptr<::react::uwp::IReactInstance> getInstance() {
     Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
     m_wrInstance.As(&spInstance);
     if (!spInstance)
       return nullptr;
-    return reinterpret_cast<Instance*>(spInstance.Get())->getInstance();
+    return reinterpret_cast<Instance *>(spInstance.Get())->getInstance();
   }
 
-  void markAsNeedsReload()
-  {
+  void markAsNeedsReload() {
     Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
     m_wrInstance.As(&spInstance);
-    reinterpret_cast<Instance*>(spInstance.Get())->markAsNeedsReload();
+    reinterpret_cast<Instance *>(spInstance.Get())->markAsNeedsReload();
   }
 
-private:
+  void persistUseWebDebugger(bool useWebDebugger) {
+    Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
+    m_wrInstance.As(&spInstance);
+    reinterpret_cast<Instance *>(spInstance.Get())
+        ->persistUseWebDebugger(useWebDebugger);
+  }
+
+ private:
   Microsoft::WRL::WeakRef m_wrInstance;
   Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> m_instance;
 };
 
-Instance::Instance(HSTRING bundleFileName)
-{
+Instance::Instance(HSTRING bundleFileName) {
   m_jsBundleName = HSTRINGToString(bundleFileName);
   Microsoft::WRL::ComPtr<IInstance> spThis(this);
   m_instanceCreator = std::make_shared<InstanceReactInstanceCreator>(spThis);
 }
 
-Instance::Instance(const ::react::uwp::ReactInstanceCreator& instanceCreator)
-{
+Instance::Instance(const ::react::uwp::ReactInstanceCreator &instanceCreator) {
   m_outerInstanceCreator = instanceCreator;
-  Microsoft::WRL::ComPtr<IInstance>spThis(this);
+  Microsoft::WRL::ComPtr<IInstance> spThis(this);
   m_instanceCreator = std::make_shared<InstanceReactInstanceCreator>(spThis);
 }
 
-std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance()
-{
+std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance() {
   if (m_outerInstanceCreator)
     return m_outerInstanceCreator->getInstance();
 
-  if (!m_instance)
-  {
-    m_instance = ::react::uwp::CreateReactInstance(m_spModuleProvider /*moduleLoader*/);
+  if (!m_instance) {
+    m_instance =
+        ::react::uwp::CreateReactInstance(m_spModuleProvider /*moduleLoader*/);
     ::react::uwp::ReactInstanceSettings innerSettings;
     innerSettings.UseLiveReload = m_settings.UseLiveReload;
     innerSettings.UseWebDebugger = m_settings.UseWebDebugger;
@@ -73,8 +75,7 @@ std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance()
   return m_instance;
 }
 
-void Instance::markAsNeedsReload()
-{
+void Instance::markAsNeedsReload() {
   if (m_outerInstanceCreator)
     return m_outerInstanceCreator->markAsNeedsReload();
 
@@ -82,8 +83,11 @@ void Instance::markAsNeedsReload()
   m_instance = nullptr;
 }
 
-HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings)
-{
+void Instance::persistUseWebDebugger(bool useWebDebugger) {
+  m_settings.UseWebDebugger = useWebDebugger;
+}
+
+HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings) {
   if (m_outerInstanceCreator || m_instance)
     return E_FAIL;
 
@@ -94,8 +98,7 @@ HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings)
   return S_OK;
 }
 
-HRESULT Instance::RegisterModule(ABI::react::uwp::IModule* pModule)
-{
+HRESULT Instance::RegisterModule(ABI::react::uwp::IModule *pModule) {
   if (m_outerInstanceCreator || m_instance)
     return E_FAIL;
 
@@ -107,17 +110,35 @@ HRESULT Instance::RegisterModule(ABI::react::uwp::IModule* pModule)
   return S_OK;
 }
 
-const ::react::uwp::ReactInstanceCreator& Instance::GetReactInstanceCreator()
-{
+HRESULT Instance::SetXamlViewCreatedTestHook(
+    ABI::react::uwp::IXamlTestHookDelegate *pXamlTestHookDelegate) {
+  if (m_instance == nullptr)
+    return E_FAIL;
+
+  Microsoft::WRL::ComPtr<ABI::react::uwp::IXamlTestHookDelegate>
+      spXamlTestHookDelegate(pXamlTestHookDelegate);
+  std::function<void(::react::uwp::XamlView)> f =
+      [spXamlTestHookDelegate](::react::uwp::XamlView params) {
+        auto spParams = params.as<ABI::Windows::UI::Xaml::IDependencyObject>();
+        spXamlTestHookDelegate->Invoke(spParams.get());
+      };
+
+  m_instance->SetXamlViewCreatedTestHook(std::move(f));
+
+  return S_OK;
+}
+
+const ::react::uwp::ReactInstanceCreator &Instance::GetReactInstanceCreator() {
   return m_instanceCreator;
 }
 
-HRESULT InstanceStatics::Create(_In_ HSTRING bundleFileName, _Outptr_ ABI::react::uwp::IInstance** ppInstance)
-{
+HRESULT InstanceStatics::Create(
+    _In_ HSTRING bundleFileName,
+    _Outptr_ ABI::react::uwp::IInstance **ppInstance) {
   auto instance = Microsoft::WRL::Make<Instance>(bundleFileName);
   return instance.CopyTo(ppInstance);
 }
 
-} // uwp
-} // react
-} // ABI
+} // namespace uwp
+} // namespace react
+} // namespace ABI

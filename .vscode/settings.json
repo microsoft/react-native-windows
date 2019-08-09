@@ -1,0 +1,47 @@
+{
+  "files.exclude": {
+    "**/.git": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/lib": true,
+    "**/dist": true
+  },
+  "editor.formatOnSave": true,
+  // turn off formatting for JS and JSX, we will do this via eslint
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.packageManager": "yarn",
+  "eslint.autoFixOnSave": true,
+  "eslint.enable": true,
+  "eslint.validate": [
+    {"language": "javascript", "autoFix": true},
+    {"language": "javascriptreact", "autoFix": true},
+    {"language": "typescript", "autoFix": true},
+    {"language": "typescriptreact", "autoFix": true}
+  ],
+  "eslint.options": {
+    "configFile": "./vnext/.eslintrc.js"
+  },
+  // These should run through eslint
+  "prettier.disableLanguages": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "clang-format.language.javascript.enable": false,
+  "clang-format.language.typescript.enable": false,
+  "clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
+  "clang-format.executable": "${workspaceRoot}/vnext/node_modules/.bin/clang-format"
+}
