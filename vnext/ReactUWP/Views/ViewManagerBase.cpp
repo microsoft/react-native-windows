@@ -201,7 +201,7 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
 #ifdef DEBUG
   auto element = view.try_as<winrt::FrameworkElement>();
   if (element) {
-    element.Name(std::to_wstring(tag));
+    element.Name(L"<reacttag>: " + std::to_wstring(tag));
   }
 #endif
 
