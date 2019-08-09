@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, View, Button} from 'react-native';
-import {AppTheme} from '../index.uwp';
+import {AppTheme, IAppThemeChangedEvent} from '../index.uwp';
 
 class ThemeExample extends React.Component {
   state = {
@@ -21,8 +21,8 @@ class ThemeExample extends React.Component {
     AppTheme.removeListener('appThemeChanged', this.onAppThemeChanged);
   }
 
-  onAppThemeChanged = (_event: any) => {
-    const currentTheme = AppTheme.currentTheme;
+  onAppThemeChanged = (event: IAppThemeChangedEvent) => {
+    const currentTheme = event.currentTheme;
     this.setState({currentTheme});
   };
 
