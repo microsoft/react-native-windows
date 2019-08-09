@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "use more specific typing for currentTheme, improve examples",
-  "packageName": "react-native-windows",
-  "email": "andrewh@microsoft.com",
-  "commit": "042f72c1a9c89dcd47a639be33bc08ab55379ba3",
-  "date": "2019-08-09T02:39:15.996Z"
-}
