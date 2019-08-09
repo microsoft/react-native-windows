@@ -15,8 +15,10 @@ export interface IHighContrastColors {
   WindowTextColor: string;
 }
 
+export type AppThemeTypes = 'light' | 'dark';
+
 export interface IAppThemeChangedEvent {
-  currentTheme: 'light' | 'dark';
+  currentTheme: AppThemeTypes;
 }
 
 export interface IHighContrastChangedEvent {
