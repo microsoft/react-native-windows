@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Aug 2019 04:18:45 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.130",
+      "version": "0.59.0-vnext.130",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added list, listitem roles to ViewAccessibility.uwp.js",
+            "author": "jthysell@microsoft.com",
+            "commit": "892d0d0cdeec88c705e9c4c2f62cc2372c3e065e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Aug 2019 03:27:03 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.129",
       "version": "0.59.0-vnext.129",

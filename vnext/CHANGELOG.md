@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Aug 2019 03:27:03 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Aug 2019 04:18:45 GMT and should not be manually modified.
+
+## 0.59.0-vnext.130
+Fri, 09 Aug 2019 04:18:45 GMT
+
+### Changes
+
+- Added list, listitem roles to ViewAccessibility.uwp.js (jthysell@microsoft.com)
 
 ## 0.59.0-vnext.129
 Fri, 09 Aug 2019 03:27:03 GMT
