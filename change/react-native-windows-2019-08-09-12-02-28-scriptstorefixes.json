@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update UwpPreparedScriptStore to use shared_ptrs",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "3e295a75c08380a6ce80a9672f14b98da3b68078",
-  "date": "2019-08-09T19:02:28.458Z"
-}

@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Aug 2019 19:20:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.132",
+      "version": "0.59.0-vnext.132",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update UwpPreparedScriptStore to use shared_ptrs",
+            "author": "jthysell@microsoft.com",
+            "commit": "3e295a75c08380a6ce80a9672f14b98da3b68078"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Aug 2019 06:07:04 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.131",
       "version": "0.59.0-vnext.131",

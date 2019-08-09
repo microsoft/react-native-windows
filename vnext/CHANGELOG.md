@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Aug 2019 06:07:04 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Aug 2019 19:20:03 GMT and should not be manually modified.
+
+## 0.59.0-vnext.132
+Fri, 09 Aug 2019 19:20:03 GMT
+
+### Changes
+
+- Update UwpPreparedScriptStore to use shared_ptrs (jthysell@microsoft.com)
 
 ## 0.59.0-vnext.131
 Fri, 09 Aug 2019 06:07:04 GMT
