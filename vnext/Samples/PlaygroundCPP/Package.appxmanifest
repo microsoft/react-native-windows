@@ -2,12 +2,12 @@
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
   <Identity
     Name="f7f3bd52-47fc-4b10-820c-d21716a92eff"
-    Publisher="CN=micahl"
+    Publisher="CN=Microsoft"
     Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="f7f3bd52-47fc-4b10-820c-d21716a92eff" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
   <Properties>
     <DisplayName>Playground</DisplayName>
-    <PublisherDisplayName>micahl</PublisherDisplayName>
+    <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
