@@ -3,9 +3,7 @@
 
 #include "pch.h"
 #include "ReactContext.h"
-#if __has_include("Bridge.ReactContext.g.cpp")
 #include "Bridge.ReactContext.g.cpp"
-#endif
 
 using namespace winrt;
 using namespace Microsoft::ReactNative::Bridge;

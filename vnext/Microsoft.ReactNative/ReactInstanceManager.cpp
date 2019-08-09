@@ -3,9 +3,7 @@
 
 #include "pch.h"
 #include "ReactInstanceManager.h"
-#if __has_include("ReactInstanceManager.g.cpp")
 #include "ReactInstanceManager.g.cpp"
-#endif
 
 #include "ReactInstanceCreator.h"
 

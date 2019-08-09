@@ -20,7 +20,7 @@ auto ABIModule::getConstants() -> std::map<std::string, folly::dynamic> {
     std::string key = to_string(pair.Key());
     folly::dynamic value = ConvertToDynamic(pair.Value());
 
-    constants.emplace(key, value);
+    constants.emplace(std::move(key), std::move(value));
   }
 
   return constants;
@@ -54,6 +54,8 @@ auto ABIModule::getMethods()
         methods.push_back(methodWithPromise);
         break;
       }
+      default:
+        assert(FALSE);
     }
   }
 

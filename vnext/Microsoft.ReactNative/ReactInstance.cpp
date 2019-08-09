@@ -3,9 +3,7 @@
 
 #include "pch.h"
 #include "ReactInstance.h"
-#if __has_include("Bridge.ReactInstance.g.cpp")
 #include "Bridge.ReactInstance.g.cpp"
-#endif
 
 #include "ReactSupport.h"
 

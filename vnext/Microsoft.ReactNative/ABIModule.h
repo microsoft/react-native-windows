@@ -24,7 +24,6 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 class ABIModule : public facebook::xplat::module::CxxModule {
  public:
   ABIModule(NativeModuleBase const &module) : m_module(module) {
-    assert(module != nullptr);
   }
 
   std::string getName() override;

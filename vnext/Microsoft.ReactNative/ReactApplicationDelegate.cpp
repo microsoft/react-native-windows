@@ -3,9 +3,7 @@
 
 #include "pch.h"
 #include "ReactApplicationDelegate.h"
-#if __has_include("ReactApplicationDelegate.g.cpp")
 #include "ReactApplicationDelegate.g.cpp"
-#endif
 #include "ReactNativeHost.h"
 
 using namespace winrt;

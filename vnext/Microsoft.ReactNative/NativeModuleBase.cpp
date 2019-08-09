@@ -3,9 +3,7 @@
 
 #include "pch.h"
 #include "NativeModuleBase.h"
-#if __has_include("Bridge.NativeModuleBase.g.cpp")
 #include "Bridge.NativeModuleBase.g.cpp"
-#endif
 
 using namespace winrt;
 using namespace Windows::Foundation;
