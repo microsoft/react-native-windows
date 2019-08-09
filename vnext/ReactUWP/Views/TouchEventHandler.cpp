@@ -459,7 +459,7 @@ std::set<int64_t> TouchEventHandler::GetTagsAtPoint(
   winrt::UIElement root(m_xamlView.as<winrt::UIElement>());
 
   winrt::Point point = e.GetCurrentPoint(root).Position();
-  auto transform = root.TransformToVisual(winrt::Window::Current().Content());
+  auto transform = root.TransformToVisual(nullptr);
   point = transform.TransformPoint(point);
 
   auto elements =

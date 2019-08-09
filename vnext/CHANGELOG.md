@@ -1,6 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Aug 2019 22:19:50 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Aug 2019 06:07:04 GMT and should not be manually modified.
+
+## 0.59.0-vnext.131
+Fri, 09 Aug 2019 06:07:04 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.40 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.130
+Fri, 09 Aug 2019 04:18:45 GMT
+
+### Changes
+
+- Added list, listitem roles to ViewAccessibility.uwp.js (jthysell@microsoft.com)
+
+## 0.59.0-vnext.129
+Fri, 09 Aug 2019 03:27:03 GMT
+
+### Changes
+
+- Fix Sample/index.tsx layout, set Tag as Name in debug (andrewh@microsoft.com)
+
+## 0.59.0-vnext.128
+Thu, 08 Aug 2019 23:35:13 GMT
+
+### Changes
+
+- fix hit-testing bug (kmelmon@microsoft.com)
 
 ## 0.59.0-vnext.127
 Thu, 08 Aug 2019 22:19:50 GMT
