@@ -1,12 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative;
 using Microsoft.ReactNative.Bridge;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Playground
 {
@@ -64,21 +59,25 @@ namespace Playground
           })
       };
 
-    public static void Method3(IReadOnlyList<object> args, Callback callback, Callback ignored)
+    public static void Method3(
+      IReadOnlyList<object> args,
+      Callback callback,
+      Callback ignored)
     {
-      // At the moment the input args are packed into a single JSON-formatted string.
+      // At the moment the input args are packed into a single JSON-formatted
+      // string.
       Debug.WriteLine($"SampleModule.method3({String.Join(", ", args)})");
 
       // Invoke the callback with some arguments. Using JSON isn't required.  We
-      // could have used other basic types instead (e.g. int, double, float, bool,
-      // etc.)
+      // could have used other basic types instead (e.g. int, double, float,
+      // bool, etc.)
       string text = @"{ ""result"" : true }";
       // This uses the built-in Windows.Data.Json.JsonObject, but any
       // object whose ToString() returns a json-formatted text could be used
       // (e.g. the Newtonsoft.Json.Linq.JObject). No automatic conversion
-      // is done on a string passed directly as arguments. It comes out as a string
-      // on the other side and would need to be parsed (e.g. JSON.parse()).
-      // Simple... what goes in is what comes out.
+      // is done on a string passed directly as arguments. It comes out as a
+      // string on the other side and would need to be parsed (e.g.
+      // JSON.parse()).  Simple... what goes in is what comes out.
       var json = Windows.Data.Json.JsonObject.Parse(text);
       callback(new[] { json });
     }

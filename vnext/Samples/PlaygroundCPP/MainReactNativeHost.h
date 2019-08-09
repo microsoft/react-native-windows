@@ -32,8 +32,8 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
     return TRUE;
   };
   IVectorView<IReactPackage> Packages() {
-    auto packages = single_threaded_vector<IReactPackage>(
-        {winrt::make<SamplePackage>()});
+    auto packages =
+        single_threaded_vector<IReactPackage>({winrt::make<SamplePackage>()});
     return packages.GetView();
   };
 };

@@ -21,6 +21,5 @@ struct SamplePackage : SamplePackageT<SamplePackage> {
 
 namespace winrt::Playground::factory_implementation {
 struct SamplePackage
-    : SamplePackageT<SamplePackage, implementation::SamplePackage> {
-};
+    : SamplePackageT<SamplePackage, implementation::SamplePackage> {};
 } // namespace winrt::Playground::factory_implementation
