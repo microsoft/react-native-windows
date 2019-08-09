@@ -26,7 +26,7 @@ UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
   }
 }
 
-std::unique_ptr<const facebook::jsi::Buffer>
+std::shared_ptr<const facebook::jsi::Buffer>
 UwpPreparedScriptStore::tryGetPreparedScript(
     const facebook::jsi::ScriptSignature &scriptSignature,
     const facebook::jsi::JSRuntimeSignature &runtimeSignature,
