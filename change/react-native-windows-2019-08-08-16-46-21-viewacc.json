@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Added list, listitem roles to ViewAccessibility.uwp.js",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "892d0d0cdeec88c705e9c4c2f62cc2372c3e065e",
+  "date": "2019-08-08T23:46:21.592Z"
+}
