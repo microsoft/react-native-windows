@@ -14,7 +14,7 @@ const NativeAppTheme = NativeModules.RTCAppTheme;
 class AppThemeModule extends NativeEventEmitter {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
-  private _currentTheme: string;
+  private _currentTheme: 'light' | 'dark';
   private _highContrastColors: IHighContrastColors;
 
   constructor() {
@@ -34,13 +34,13 @@ class AppThemeModule extends NativeEventEmitter {
     this._currentTheme = NativeAppTheme.initialAppTheme;
     this.addListener(
       'appThemeChanged',
-      ({currentTheme}: {currentTheme: string}) => {
+      ({currentTheme}: {currentTheme: 'light' | 'dark'}) => {
         this._currentTheme = currentTheme;
       },
     );
   }
 
-  get currentTheme(): string {
+  get currentTheme(): 'light' | 'dark' {
     return this._currentTheme;
   }
 

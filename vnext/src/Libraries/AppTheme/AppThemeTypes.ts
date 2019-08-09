@@ -16,7 +16,7 @@ export interface IHighContrastColors {
 }
 
 export interface IAppThemeChangedEvent {
-  currentTheme: string;
+  currentTheme: 'light' | 'dark';
 }
 
 export interface IHighContrastChangedEvent {

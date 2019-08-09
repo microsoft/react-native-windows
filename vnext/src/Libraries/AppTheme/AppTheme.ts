@@ -10,7 +10,7 @@ import {IHighContrastColors} from './AppThemeTypes';
 
 class AppThemeModule extends MissingNativeEventEmitterShim {
   public isAvailable = false;
-  public currentTheme = '';
+  public currentTheme: 'light' | 'dark' = 'light';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
 }
