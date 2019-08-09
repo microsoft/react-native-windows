@@ -1,0 +1,40 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IReactPackage.idl";
+import "NativeModuleBase.idl";
+import "ReactInstanceManager.idl";
+import "ReactInstanceSettings.idl";
+import "ReactRootView.idl";
+
+namespace Microsoft.ReactNative
+{
+  [webhosthidden]
+  delegate void OnResumeAction();
+
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass ReactNativeHost
+  {
+    ReactNativeHost();
+
+    ReactInstanceManager ReactInstanceManager{ get; };
+    ReactInstanceSettings InstanceSettings { get; };
+
+    Boolean HasInstance{ get; };
+
+    overridable IVectorView<Microsoft.ReactNative.Bridge.IReactPackage> Packages{ get; };
+
+    overridable String MainComponentName{ get; };
+    overridable Boolean UseDeveloperSupport{ get; };
+    overridable String JavaScriptMainModuleName{ get; };
+    overridable String JavaScriptBundleFile{ get; };
+
+    Windows.UI.Xaml.UIElement GetOrCreateRootView(IInspectable initialProps);
+
+    void OnSuspend();
+    void OnEnteredBackground();
+    void OnLeavingBackground();
+    void OnResume(OnResumeAction action);
+  };
+}

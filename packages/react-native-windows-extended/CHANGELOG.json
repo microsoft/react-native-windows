@@ -2,6 +2,34 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 09 Aug 2019 06:07:04 GMT",
+      "tag": "react-native-windows-extended_v0.10.0",
+      "version": "0.10.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.40",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "8936ee1519492000f358ac29b12adf4efd3a7108"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 20:57:44 GMT",
+      "tag": "react-native-windows-extended_v0.9.1",
+      "version": "0.9.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Clear m_needsForceLayout between calls to DoLayout",
+            "author": "decrowle@microsoft.com",
+            "commit": "a783433937d1558283ba587db05b76ab0981a34c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Aug 2019 16:00:25 GMT",
       "tag": "react-native-windows-extended_v0.9.0",
       "version": "0.9.0",

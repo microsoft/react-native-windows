@@ -196,6 +196,15 @@ XamlView ViewManagerBase::CreateView(int64_t tag) {
   // Set the tag if the element type supports it
   SetTag(view, tag);
 
+  // In Debug, set the element name to the tag for convienent
+  // searching within VisualStudio's Live Visual Tree pane
+#ifdef DEBUG
+  auto element = view.try_as<winrt::FrameworkElement>();
+  if (element) {
+    element.Name(L"<reacttag>: " + std::to_wstring(tag));
+  }
+#endif
+
   auto instance = m_wkReactInstance.lock();
   if (instance != nullptr)
     instance->CallXamlViewCreatedTestHook(view);

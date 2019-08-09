@@ -1,0 +1,16 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "ReactApplication.idl";
+
+namespace Microsoft.ReactNative
+{
+    [webhosthidden]
+	unsealed runtimeclass ReactApplicationDelegate
+	{
+		ReactApplicationDelegate();
+    ReactApplicationDelegate(Windows.UI.Xaml.Application application);
+		void OnActivated(Windows.ApplicationModel.Activation.IActivatedEventArgs args);
+		Windows.UI.Xaml.UIElement OnCreate(String args);
+	}
+}

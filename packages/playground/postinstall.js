@@ -12,12 +12,13 @@
 
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const link = (name, target) => {
   const p = path.join(__dirname, 'node_modules', name);
 
   if (!fs.existsSync(p)) {
-    fs.symlinkSync(target, p, 'dir');
+    fs.symlinkSync(target, p, os.platform() === 'win32' ? 'junction' : 'dir');
   }
 };
 
