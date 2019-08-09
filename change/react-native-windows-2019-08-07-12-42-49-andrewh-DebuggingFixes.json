@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Sample/index.tsx layout, set Tag as Name in debug",
-  "packageName": "react-native-windows",
-  "email": "andrewh@microsoft.com",
-  "commit": "2b96e796ca606187775291a81d3f922466e69a04",
-  "date": "2019-08-07T19:42:49.563Z"
-}

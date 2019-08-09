@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Aug 2019 03:27:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.129",
+      "version": "0.59.0-vnext.129",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Sample/index.tsx layout, set Tag as Name in debug",
+            "author": "andrewh@microsoft.com",
+            "commit": "2b96e796ca606187775291a81d3f922466e69a04"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2019 23:35:13 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.128",
       "version": "0.59.0-vnext.128",

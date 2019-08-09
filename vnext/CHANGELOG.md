@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Aug 2019 23:35:13 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Aug 2019 03:27:03 GMT and should not be manually modified.
+
+## 0.59.0-vnext.129
+Fri, 09 Aug 2019 03:27:03 GMT
+
+### Changes
+
+- Fix Sample/index.tsx layout, set Tag as Name in debug (andrewh@microsoft.com)
 
 ## 0.59.0-vnext.128
 Thu, 08 Aug 2019 23:35:13 GMT
