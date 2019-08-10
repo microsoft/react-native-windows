@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix switch shimmy issue",
-  "packageName": "react-native-windows",
-  "email": "ruaraki@microsoft.com",
-  "commit": "693b2ed5fdeb73cfae4b558bf804544227d149fb",
-  "date": "2019-08-07T18:10:11.178Z"
-}

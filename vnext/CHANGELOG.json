@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Aug 2019 19:21:55 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.134",
+      "version": "0.59.0-vnext.134",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix switch shimmy issue",
+            "author": "ruaraki@microsoft.com",
+            "commit": "693b2ed5fdeb73cfae4b558bf804544227d149fb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Aug 2019 22:37:48 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.133",
       "version": "0.59.0-vnext.133",
