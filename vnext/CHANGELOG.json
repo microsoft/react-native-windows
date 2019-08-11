@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 11 Aug 2019 04:57:41 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.135",
+      "version": "0.59.0-vnext.135",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.41",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "0a2407117ab0b7f28ad90d23ce1b498f0e5a47cd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Aug 2019 19:21:55 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.134",
       "version": "0.59.0-vnext.134",

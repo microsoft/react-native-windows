@@ -14,8 +14,8 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.41.tar.gz",
-    "react-native-windows": "0.59.0-vnext.134",
-    "react-native-windows-extended": "0.10.0",
+    "react-native-windows": "0.59.0-vnext.135",
+    "react-native-windows-extended": "0.11.0",
     "rnpm-plugin-windows": "^0.2.11"
   },
   "devDependencies": {
