@@ -8,6 +8,7 @@
 const child_process = require('child_process');
 const ora = require('ora');
 const spinners = require('cli-spinners');
+const chalk = require('chalk');
 
 function setSpinnerText(spinner, prefix, text) {
   text = prefix + spinnerString(text);
@@ -35,16 +36,33 @@ function newSpinner(text) {
   return ora(options).start();
 }
 
-function commandWithProgress(spinner, taskDoingName, command, args) {
+function commandWithProgress(spinner, taskDoingName, command, args, verbose) {
   return new Promise(function(resolve, reject) {
-    const cp = child_process.spawn(command, args);
-    cp.stdout.on('data', chunk => {
-      setSpinnerText(spinner, taskDoingName + ': ', chunk.toString());
-    });
-    cp.stderr.on('data', chunk => {
-      setSpinnerText(spinner, taskDoingName + ': ERROR: ', chunk.toString());
-    });
+    const spawnOptions = verbose ? {stdio: 'inherit'} : {};
+
+    if (verbose) {
+      spinner.stop();
+    }
+
+    const cp = child_process.spawn(command, args, spawnOptions);
+
+    if (!verbose) {
+      cp.stdout.on('data', chunk => {
+        const text = chunk.toString();
+        setSpinnerText(spinner, taskDoingName + ': ', text);
+      });
+      cp.stderr.on('data', chunk => {
+        const text = chunk.toString();
+        if (verbose) {
+          console.error(chalk.red(text));
+        }
+        setSpinnerText(spinner, taskDoingName + ': ERROR: ', text);
+      });
+    }
     cp.on('error', e => {
+      if (verbose) {
+        console.error(chalk.red(e.toString()));
+      }
       spinner.fail(e.toString());
       reject(e);
     }).on('close', function(code) {

@@ -78,7 +78,7 @@ function handleResponseError(e) {
 }
 
 // Errors: 0x80073d10 - bad architecture
-async function deployToDevice(options) {
+async function deployToDevice(options, verbose) {
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -96,36 +96,24 @@ async function deployToDevice(options) {
   const device = deployTool.findDevice(deployTarget);
 
   try {
-    await deployTool.uninstallAppPackage(appName, device, options.verbose);
+    await deployTool.uninstallAppPackage(appName, device, verbose);
   } catch (e) {
     newWarn('Failed to uninstall app from ' + device.name);
   }
 
   const appxFile = glob.sync(path.join(appPackageFolder, '*.appx'))[0];
   try {
-    await deployTool.installAppPackage(
-      appxFile,
-      device,
-      true,
-      false,
-      options.verbose,
-    );
+    await deployTool.installAppPackage(appxFile, device, true, false, verbose);
   } catch (e) {
     if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
-      await deployTool.installAppPackage(
-        appxFile,
-        device,
-        true,
-        true,
-        options.verbose,
-      );
+      await deployTool.installAppPackage(appxFile, device, true, true, verbose);
     } else {
       handleResponseError(e);
     }
   }
 }
 
-async function deployToDesktop(options) {
+async function deployToDesktop(options, verbose) {
   const appPackageFolder = getAppPackage(options);
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifest = getAppxManifest(options);
@@ -137,7 +125,6 @@ async function deployToDesktop(options) {
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
   const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
-  // const execOptions = options.verbose ? { stdio: 'inherit' } : {};
 
   const popd = pushd(options.root);
 
@@ -149,6 +136,7 @@ async function deployToDesktop(options) {
     `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}" ; Uninstall-App ${appName}`.split(
       ' ',
     ),
+    verbose,
   );
 
   const installingText = 'Installing new version of the app';
@@ -159,6 +147,7 @@ async function deployToDesktop(options) {
     `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`.split(
       ' ',
     ),
+    verbose,
   );
 
   const loopbackText = 'Verifying loopbackExempt';
@@ -173,6 +162,7 @@ async function deployToDesktop(options) {
     loopbackText,
     'CheckNetIsolation',
     `LoopbackExempt -a -n=${appFamilyName}`.split(' '),
+    verbose,
   );
 
   const startingText = 'Starting the app';
@@ -183,12 +173,13 @@ async function deployToDesktop(options) {
     `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`.split(
       ' ',
     ),
+    verbose,
   );
 
   popd();
 }
 
-function startServerInNewWindow(options) {
+function startServerInNewWindow(options, verbose) {
   return new Promise(resolve => {
     if (options.packager) {
       http
@@ -200,14 +191,14 @@ function startServerInNewWindow(options) {
           }
           resolve();
         })
-        .on('error', () => resolve(launchServer(options)));
+        .on('error', () => resolve(launchServer(options, verbose)));
     } else {
       resolve();
     }
   });
 }
 
-function launchServer(options) {
+function launchServer(options, verbose) {
   newSuccess('Starting the React-Native Server');
   const launchPackagerScript = path.join(
     'node_modules/react-native-windows/Scripts/launchPackager.bat',
@@ -215,7 +206,7 @@ function launchServer(options) {
   const opts = {
     cwd: options.root,
     detached: true,
-    stdio: options.verbose ? 'inherit' : 'ignore',
+    stdio: verbose ? 'inherit' : 'ignore',
   };
 
   return Promise.resolve(

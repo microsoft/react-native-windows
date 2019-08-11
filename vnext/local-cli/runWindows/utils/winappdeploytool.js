@@ -135,7 +135,7 @@ class WinAppDeployTool {
     if (pin) {
       args.push('-pin', pin);
     }
-    await commandWithProgress(newSpinner(text), text, this.path, args);
+    await commandWithProgress(newSpinner(text), text, this.path, args, verbose);
   }
 
   async uninstallAppPackage(packageInfo, targetDevice, verbose) {
@@ -145,6 +145,7 @@ class WinAppDeployTool {
       text,
       this.path,
       `uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`.split(' '),
+      verbose,
     );
   }
 }

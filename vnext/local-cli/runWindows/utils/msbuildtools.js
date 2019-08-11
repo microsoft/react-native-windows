@@ -19,6 +19,7 @@ const {
   newInfo,
   newSpinner,
   newSuccess,
+  newError,
 } = require('./commandWithProgress');
 
 const MSBUILD_VERSIONS = ['16.0', '15.0', '14.0', '12.0', '4.0'];
@@ -46,7 +47,8 @@ class MSBuildTools {
     newInfo(`Build configuration: ${buildType}`);
     newInfo(`Build platform: ${buildArch}`);
 
-    const verbosityOption = verbose ? 'normal' : 'quiet';
+    //const verbosityOption = verbose ? 'normal' : 'quiet';
+    const verbosityOption = 'normal';
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -76,7 +78,7 @@ class MSBuildTools {
     try {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
-      console.log(chalk.red(e.message));
+      newError(e.message);
       return;
     }
 
@@ -87,9 +89,8 @@ class MSBuildTools {
       progressName,
       path.join(this.path, 'msbuild.exe'),
       [slnFile].concat(args),
+      verbose,
     );
-    // Always inherit from stdio as we're controlling verbosity output above.
-    // child_process.execSync(cmd, {stdio: 'inherit'});
   }
 }
 

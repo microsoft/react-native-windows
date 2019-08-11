@@ -29,18 +29,23 @@ async function buildSolution(slnFile, buildType, buildArch, verbose) {
   await msBuildTools.buildProject(slnFile, buildType, buildArch, null, verbose);
 }
 
-async function nugetRestore(nugetPath, slnFile) {
+async function nugetRestore(nugetPath, slnFile, verbose) {
   const text = 'Restoring NuGets';
   const spinner = newSpinner(text);
-  //const verboseOption = verbose ? 'normal' : 'quiet';
 
-  await commandWithProgress(spinner, text, nugetPath, [
-    'restore',
-    `${slnFile}`,
-    '-NonInteractive',
-    '-Verbosity',
-    'normal',
-  ]);
+  await commandWithProgress(
+    spinner,
+    text,
+    nugetPath,
+    [
+      'restore',
+      `${slnFile}`,
+      '-NonInteractive',
+      '-Verbosity',
+      verbose ? 'normal' : 'quiet',
+    ],
+    verbose,
+  );
 }
 
 async function restoreNuGetPackages(options, slnFile, verbose) {
@@ -58,11 +63,12 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
       `Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`.split(
         ' ',
       ),
+      verbose,
     );
   }
   ensureNugetSpinner.succeed('Found NuGet Binary');
 
-  await nugetRestore(nugetPath, slnFile);
+  await nugetRestore(nugetPath, slnFile, verbose);
 }
 
 function getSolutionFile(options) {

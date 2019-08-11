@@ -8,9 +8,14 @@
 
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
-const {newError} = require('./utils/commandWithProgress');
+const {newError, newInfo} = require('./utils/commandWithProgress');
 
 async function runWindows(config, args, options) {
+  const verbose = options.logging;
+  if (verbose) {
+    newInfo('Verbose: ON');
+  }
+
   // Fix up options
   options.root = options.root || process.cwd();
 
@@ -23,33 +28,28 @@ async function runWindows(config, args, options) {
   }
 
   try {
-    await build.restoreNuGetPackages(options, slnFile, options.verbose);
+    await build.restoreNuGetPackages(options, slnFile, verbose);
   } catch (e) {
-    newError('Failed to restore the NuGet packages');
+    newError('Failed to restore the NuGet packages: ' + e.toString());
     return;
   }
 
   // Get build/deploy options
   const buildType = options.release ? 'Release' : 'Debug';
   try {
-    await build.buildSolution(
-      slnFile,
-      buildType,
-      options.arch,
-      true /* verbose*/,
-    );
+    await build.buildSolution(slnFile, buildType, options.arch, verbose);
   } catch (e) {
     newError(`Build failed with message ${e}. Check your build configuration.`);
     return;
   }
 
-  await deploy.startServerInNewWindow(options);
+  await deploy.startServerInNewWindow(options, verbose);
 
   try {
     if (options.device || options.emulator || options.target) {
-      await deploy.deployToDevice(options);
+      await deploy.deployToDevice(options, verbose);
     } else {
-      await deploy.deployToDesktop(options);
+      await deploy.deployToDesktop(options, verbose);
     }
   } catch (e) {
     newError(`Failed to deploy: ${e.message}`);
@@ -117,7 +117,7 @@ module.exports = {
       description: 'Deploys the app in remote debugging mode.',
     },
     {
-      command: '--verbose',
+      command: '--logging',
       description: 'Enables logging',
       default: false,
     },
