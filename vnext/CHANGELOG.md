@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Aug 2019 22:37:48 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Aug 2019 19:21:55 GMT and should not be manually modified.
+
+## 0.59.0-vnext.134
+Sat, 10 Aug 2019 19:21:55 GMT
+
+### Changes
+
+- Fix switch shimmy issue (ruaraki@microsoft.com)
 
 ## 0.59.0-vnext.133
 Fri, 09 Aug 2019 22:37:48 GMT
