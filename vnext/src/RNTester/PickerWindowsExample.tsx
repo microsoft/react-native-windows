@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Button, Text, View} from 'react-native';
-import {Picker} from '../index.uwp';
+import {Picker} from '../index.windows';
 
 interface MakesModels {
   name: string;

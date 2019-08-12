@@ -20,7 +20,7 @@ import {
   CheckBox,
   ViewWindows,
   Picker,
-} from '../index.uwp';
+} from '../index.windows';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);

@@ -38,7 +38,7 @@ export default class Bootstrap extends React.Component<
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>Subject: {this.state.subject}</Text>
         <Text style={styles.instructions}>
-          To get started, edit index.uwp.js
+          To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}

@@ -22,7 +22,7 @@
   "rnpm": {
     "haste": {
       "platforms": [
-        "uwp"
+        "windows"
       ],
       "providesModuleNodeModules": [
         "react-native-windows"
