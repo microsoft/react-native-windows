@@ -1,7 +1,19 @@
 #include <winver.h>
 
-#define VER_FILEVERSION 0,59,0,97
-#define VER_FILEVERSION_STR "0.59.0-vnext.97"
+#define XSTRINGIZE(s) STRINGIZE(s)
+#define STRINGIZE(s) #s
+
+#ifdef RNW_PKG_VERSION_STR
+#define VER_FILEVERSION_STR STRINGIZE(RNW_PKG_VERSION_STR)
+#else
+#define VER_FILEVERSION_STR "Private Build"
+#endif
+
+#ifdef RNW_PKG_VERSION
+#define VER_FILEVERSION RNW_PKG_VERSION
+#else
+#define VER_FILEVERSION 1000,0,0,0
+#endif
 
 #ifndef DEBUG
 #define VER_DEBUG                   0

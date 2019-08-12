@@ -12,8 +12,11 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
-import {AppTheme} from '../index.uwp';
-import {IAppThemeChangedEvent} from 'src/Libraries/AppTheme/AppThemeTypes';
+import {
+  AppTheme,
+  IAppThemeChangedEvent,
+  IHighContrastChangedEvent,
+} from '../index.windows';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
@@ -54,15 +57,15 @@ class HighContrastExample extends React.Component {
   }
 
   // TODO: Make args props
-  onHighContrastChanged = (_event: IAppThemeChangedEvent) => {
+  onHighContrastChanged = (event: IHighContrastChangedEvent) => {
     this.setState({
-      isHighContrast: AppTheme.isHighContrast,
-      highContrastColorValues: AppTheme.currentHighContrastColors,
+      isHighContrast: event.isHighContrast,
+      highContrastColorValues: event.highContrastColors,
     });
   };
 
-  onAppThemeChanged = (_event: any) => {
-    this.setState({currentTheme: AppTheme.currentTheme});
+  onAppThemeChanged = (event: IAppThemeChangedEvent) => {
+    this.setState({currentTheme: event.currentTheme});
   };
 
   public render() {
@@ -454,6 +457,29 @@ class AccessibilityListExamples extends React.Component {
                 accessibilityPosInSet={item.index + 1}>
                 <Text>Item {item.index + 1}</Text>
               </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        <View
+          //@ts-ignore
+          accessibilityRole="list">
+          <Text>The following does the same, but with Touchables.</Text>
+          <FlatList
+            data={items}
+            renderItem={item => (
+              <TouchableHighlight
+                style={{
+                  width: 100,
+                  height: 50,
+                  backgroundColor: 'lightskyblue',
+                }}
+                //@ts-ignore
+                accessibilityRole="listitem"
+                accessibilitySetSize={items.length}
+                accessibilityPosInSet={item.index + 1}>
+                <Text>Touchable {item.index + 1}</Text>
+              </TouchableHighlight>
             )}
             keyExtractor={(item, index) => index.toString()}
           />

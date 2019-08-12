@@ -24,10 +24,7 @@ class PickerShadowNode : public ShadowNodeBase {
   PickerShadowNode();
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
-  bool IsExternalLayoutDirty() const override {
-    return m_hasNewItems;
-  }
-  void DoExtraLayoutPrep(YGNodeRef yogaNode) override;
+  bool NeedsForceLayout() override;
 
  private:
   void RepopulateItems();
@@ -40,12 +37,12 @@ class PickerShadowNode : public ShadowNodeBase {
 
   folly::dynamic m_items;
   int32_t m_selectedIndex = -1;
-  bool m_hasNewItems = false;
 
   // FUTURE: remove when we can require RS5+
   bool m_isEditableComboboxSupported;
 
   winrt::ComboBox::SelectionChanged_revoker m_comboBoxSelectionChangedRevoker{};
+  winrt::ComboBox::DropDownClosed_revoker m_comboBoxDropDownClosedRevoker{};
 };
 
 PickerShadowNode::PickerShadowNode() : Super() {
@@ -54,20 +51,13 @@ PickerShadowNode::PickerShadowNode() : Super() {
           L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
 }
 
-void PickerShadowNode::DoExtraLayoutPrep(YGNodeRef yogaNode) {
-  if (!m_hasNewItems)
-    return;
-
-  m_hasNewItems = false;
-
-  auto comboBox = GetView().try_as<winrt::ComboBox>();
-  comboBox.UpdateLayout();
-}
-
 void PickerShadowNode::createView() {
   Super::createView();
   auto combobox = GetView().as<winrt::ComboBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
+
+  combobox.AllowFocusOnInteraction(true);
+
   m_comboBoxSelectionChangedRevoker =
       combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
         auto instance = wkinstance.lock();
@@ -82,6 +72,15 @@ void PickerShadowNode::createView() {
           OnSelectionChanged(
               *instance, m_tag, std::move(value), index, std::move(text));
         }
+      });
+
+  m_comboBoxDropDownClosedRevoker =
+      combobox.DropDownClosed(winrt::auto_revoke, [=](auto &&, auto &&) {
+        // When the drop down closes, attempt to move focus to its anchor
+        // textbox to prevent cases where focus can land on an outer flyout
+        // content and therefore trigger a unexpected flyout dismissal
+        winrt::FocusManager::TryFocusAsync(
+            combobox, winrt::FocusState::Programmatic);
       });
 }
 
@@ -154,7 +153,6 @@ void PickerShadowNode::RepopulateItems() {
 
       comboBoxItems.Append(comboboxItem);
     }
-    m_hasNewItems = true;
   }
   if (m_selectedIndex < static_cast<int32_t>(m_items.size()))
     combobox.SelectedIndex(m_selectedIndex);
@@ -170,6 +168,10 @@ void PickerShadowNode::RepopulateItems() {
       folly::dynamic::object("target", tag)("value", std::move(value))(
           "itemIndex", selectedIndex)("text", std::move(text));
   instance.DispatchEvent(tag, "topChange", std::move(eventData));
+}
+
+bool PickerShadowNode::NeedsForceLayout() {
+  return true;
 }
 
 PickerViewManager::PickerViewManager(

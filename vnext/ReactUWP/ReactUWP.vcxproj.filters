@@ -13,9 +13,6 @@
     <ClCompile Include="Base\InstanceFactory.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -286,6 +283,15 @@
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\HermesRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -340,9 +346,6 @@
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="Base\UwpReactInstance.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\XamlView.h">
@@ -623,6 +626,15 @@
     </ClInclude>
     <ClInclude Include="Modules\Animated\ExtrapolationType.h">
       <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\HermesRuntimeHolder.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
+      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

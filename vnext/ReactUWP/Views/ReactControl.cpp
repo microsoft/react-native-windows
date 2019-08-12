@@ -11,6 +11,7 @@
 #include "unicode.h"
 
 #include <INativeUIManager.h>
+#include <Views/KeyboardEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 
 #include <winrt/Windows.ApplicationModel.Core.h>
@@ -20,6 +21,7 @@
 #include <winrt/Windows.UI.Input.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
+#include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 
@@ -139,6 +141,12 @@ void ReactControl::AttachRoot() noexcept {
   auto initialProps = m_initialProps;
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
   m_isAttached = true;
+
+#ifdef DEBUG
+  // TODO:  Enable this in retail builds via a new API
+  // https://github.com/microsoft/react-native-windows/issues/2870
+  InitializeDeveloperMenu();
+#endif
 }
 
 void ReactControl::DetachRoot() noexcept {
@@ -296,6 +304,84 @@ void ReactControl::EnsureFocusSafeHarbor() {
           m_focusSafeHarbor.IsTabStop(false);
         });
   }
+}
+
+// Set keyboard event listener for developer menu
+void ReactControl::InitializeDeveloperMenu() {
+  auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
+  m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
+      winrt::auto_revoke,
+      [this](const auto &sender, const winrt::AcceleratorKeyEventArgs &args) {
+        if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
+            KeyboardHelper::IsModifiedKeyPressed(
+                winrt::CoreWindow::GetForCurrentThread(),
+                winrt::VirtualKey::Shift) &&
+            KeyboardHelper::IsModifiedKeyPressed(
+                winrt::CoreWindow::GetForCurrentThread(),
+                winrt::VirtualKey::Control)) {
+          if (!IsDeveloperMenuShowing()) {
+            ShowDeveloperMenu();
+          }
+        }
+      });
+}
+
+void ReactControl::ShowDeveloperMenu() {
+  assert(m_developerMenuRoot == nullptr);
+
+  winrt::hstring xamlString =
+      L"<Grid Background='{ThemeResource SystemControlBackgroundChromeMediumBrush}'"
+      L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
+      L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+      L"  <StackPanel HorizontalAlignment='Center'>"
+      L"    <TextBlock Margin='0,0,0,10' FontSize='40'>Developer Menu</TextBlock>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Show Inspector (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
+      L"  </StackPanel>"
+      L"</Grid>";
+  m_developerMenuRoot = winrt::unbox_value<winrt::Grid>(
+      winrt::Markup::XamlReader::Load(xamlString));
+  auto remoteDebugJSButton =
+      m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
+  auto cancelButton =
+      m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
+  bool useWebDebugger =
+      m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
+  remoteDebugJSButton.Content(winrt::box_value(
+      useWebDebugger ? L"Disable Remote JS Debugging"
+                     : L"Enable Remote JS Debugging"));
+  m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
+      winrt::auto_revoke,
+      [this, useWebDebugger](
+          const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
+        m_instanceCreator->persistUseWebDebugger(!useWebDebugger);
+        Reload(true);
+      });
+  m_cancelRevoker = cancelButton.Click(
+      winrt::auto_revoke,
+      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
+      });
+
+  auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
+  xamlRootGrid.Children().Append(m_developerMenuRoot);
+}
+
+void ReactControl::DismissDeveloperMenu() {
+  assert(m_developerMenuRoot != nullptr);
+  auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
+  uint32_t indexToRemove = 0;
+  xamlRootGrid.Children().IndexOf(m_developerMenuRoot, indexToRemove);
+  xamlRootGrid.Children().RemoveAt(indexToRemove);
+  m_developerMenuRoot = nullptr;
+}
+
+bool ReactControl::IsDeveloperMenuShowing() const {
+  return (m_developerMenuRoot != nullptr);
 }
 
 } // namespace uwp

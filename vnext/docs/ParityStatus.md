@@ -42,7 +42,7 @@ These set of components and modules are not part of [React Native Lean Core](htt
 
 ### Components
 
-|Component| vnext Status | Issues | Current Status |
+|Component| `vnext` version Status | `vnext` Issues remaining | `current` version Status |
 |:-|:-|:-|:-|
 |Modal|Not Started|*nothing logged*|Partial (Beta)|
 |Navigator|Not Started|*nothing logged*|**Complete**|
@@ -54,13 +54,13 @@ These set of components and modules are not part of [React Native Lean Core](htt
 
 ### Modules
 
-|Module| vnext Status | Issues | Current Status|
+|Module| `vnext` version Status | `vnext` Issues remaining | `current` version Status|
 |:-|:-|:-|:-|
 |AsyncStorage|Partial|[2271](https://github.com/microsoft/react-native-windows/issues/2271)|**Complete**|
 |BackAndroid|Partial|*nothing logged*|Partial|
 |Clipboard|**Complete**|-|**Complete**|
 |Geolocation|**Complete**|-|**Complete**|
-|NetInfo|Not Started|*nothing logged*|Partial|
+|NetInfo|Not Started|*nothing logged*|**Complete**|
 |AppRegistry|Not Started|*nothing logged*|**Complete**|
 |NativeMethodsMixin|Not Started|*nothing logged*|**Complete**|
 |PixelRatio|Not Started|*nothing logged*|**Complete**|
