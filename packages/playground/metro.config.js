@@ -35,7 +35,7 @@ module.exports = {
       'react-native-windows-extended': rnwePath,
     },
     // Include the macos platform in addition to the defaults because the fork includes macos, but doesn't declare it
-    platforms: ['ios', 'android', 'windesktop', 'uwp', 'web', 'macos'],
+    platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],
     providesModuleNodeModules: ['react-native', 'react-native-windows'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.60 when haste is removed

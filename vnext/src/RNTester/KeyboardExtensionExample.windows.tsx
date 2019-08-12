@@ -11,7 +11,7 @@ import {
   IHandledKeyboardEvent,
   IKeyboardEvent,
   HandledEventPhase,
-} from '../index.uwp';
+} from '../index.windows';
 
 const ViewWindows = supportKeyboard(View);
 

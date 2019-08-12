@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Button, Text, TextInput, View} from 'react-native';
-import {CheckBox, Flyout, Picker} from '../index.uwp';
+import {CheckBox, Flyout, Picker} from '../index.windows';
 import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {

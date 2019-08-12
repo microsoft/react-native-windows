@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, View, Button} from 'react-native';
-import {AppTheme, IAppThemeChangedEvent} from '../index.uwp';
+import {AppTheme, IAppThemeChangedEvent} from '../index.windows';
 
 class ThemeExample extends React.Component {
   state = {
