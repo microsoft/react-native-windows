@@ -32,8 +32,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
+    "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
+    "ora": "^3.4.0",
     "prop-types": "^15.5.8",
     "react-native-local-cli": "^1.0.0-alpha.5",
     "react-timer-mixin": "^0.13.2",
@@ -47,6 +49,7 @@
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
+    "@types/ora": "^3.2.0",
     "@types/react": "16.8.15",
     "@types/react-native": "~0.57.51",
     "clang-format": "1.2.4",
