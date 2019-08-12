@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Aug 2019 23:13:59 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.138",
+      "version": "0.59.0-vnext.138",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename platform uwp->windows",
+            "author": "acoates@microsoft.com",
+            "commit": "ba23aa45d9286f9e1b4449c1a3c54ab4bfabd0b1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Aug 2019 21:06:24 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.137",
       "version": "0.59.0-vnext.137",
