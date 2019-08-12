@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Aug 2019 21:06:24 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.137",
+      "version": "0.59.0-vnext.137",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve output of run-windows command",
+            "author": "acoates@microsoft.com",
+            "commit": "647f554a28d747bfa410f3e8b5e70fbce48ff38f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Aug 2019 20:02:04 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.136",
       "version": "0.59.0-vnext.136",

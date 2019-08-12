@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Improve output of run-windows command",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "647f554a28d747bfa410f3e8b5e70fbce48ff38f",
-  "date": "2019-08-11T04:53:58.893Z"
-}
