@@ -41,7 +41,7 @@ xcopy /q %AppRoot%images\* %AppName%\images\
 xcopy /q %AppRoot%app.json %AppName%\
 xcopy /q %AppRoot%index.js %AppName%\
 
-call react-native bundle  --platform uwp --dev false --entry-file %AppName%\index.js --bundle-output %AppRoot%Bundle\index.windows.bundle --assets-dest %AppRoot%Bundle
+call react-native bundle  --platform windows --dev false --entry-file %AppName%\index.js --bundle-output %AppRoot%Bundle\index.windows.bundle --assets-dest %AppRoot%Bundle
 
 rmdir /s /q %AppName%
 
