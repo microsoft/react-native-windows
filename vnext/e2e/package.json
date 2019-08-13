@@ -1,0 +1,20 @@
+{
+  "name": "e2e",
+  "version": "1.0.0",
+  "description": "e2e test",
+  "main": "index",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/selenium-webdriver": "^4.0.1",
+    "@babel/preset-typescript": "^7.3.3",
+    "appium": "^1.14.1",
+    "jest": "^24.8.0",
+    "selenium-appium": "0.0.8",
+    "selenium-webdriver": "^4.0.0-alpha.4",
+    "typescript": "3.5.1"
+  },
+  "author": "",
+  "license": "ISC"
+}

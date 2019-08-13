@@ -1,0 +1,49 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ReactUWPTestApp">
+
+  <Style x:Key="AutomationHelperStyle" TargetType="Control">
+  </Style>
+
+  <Style TargetType="local:TestFrame" >
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="local:TestFrame">
+          <Grid x:Name="RootGrid">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="TestFrameBar" VerticalAlignment="Top" HorizontalAlignment="Left">
+              <StackPanel Orientation="Horizontal">
+                <Button x:Name="HomeButton" AutomationProperties.AutomationId="__HomeButton">
+                  <SymbolIcon Symbol="Home"/>
+                </Button>
+                <Button x:Name="BackButton" 
+                                        AutomationProperties.AutomationId="__BackButton" 
+                                        Width="48"
+                                        Visibility="Collapsed"
+                                        Foreground="White"
+                                        Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                  <SymbolIcon Symbol="Back"/>
+                </Button>
+                <TextBlock x:Name="CurrentPageTextBlock" AutomationProperties.AutomationId="__CurrentPage"  FontSize="18" VerticalAlignment="Center" Margin="10,0,0,0"/>
+              </StackPanel>
+            </Grid>
+
+            <ContentPresenter Grid.Row="1"
+                                    Content="{TemplateBinding Content}"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                    ContentTransitions="{TemplateBinding ContentTransitions}"
+                                    Padding="{TemplateBinding Padding}"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>

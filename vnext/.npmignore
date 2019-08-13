@@ -35,3 +35,5 @@ Universal.UnitTests
 win32
 WindowsSampleCSharpApp
 yarn.lock
+e2e
+ReactUWPTestApp

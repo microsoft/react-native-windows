@@ -1,0 +1,38 @@
+<Page
+    x:Class="ReactUWPTestApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ReactUWPTestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+  <Page.Resources>
+    <local:NavigateToTestCommand x:Name="NavigateToTestCommand"/>
+  </Page.Resources>
+
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer HorizontalAlignment="Center" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+      <ItemsControl x:Name="itemsControl">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <ItemsWrapGrid Orientation="Vertical"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Button
+                        Content="{Binding AutomationId}"
+                        CommandParameter="{Binding}"
+                        Command="{StaticResource NavigateToTestCommand}"
+                        AutomationProperties.AutomationId="{Binding AutomationId}"
+                        MinWidth="250"
+                        Margin="2"
+                        />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
+  </Grid>
+</Page>

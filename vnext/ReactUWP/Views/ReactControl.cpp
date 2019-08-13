@@ -19,11 +19,16 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
+
+namespace winrt {
+using namespace Windows::UI::Xaml::Automation;
+} // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -71,6 +76,10 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
     // Create Grid & TextBlock to hold error text
     if (m_errorTextBlock == nullptr) {
       m_errorTextBlock = winrt::TextBlock();
+      auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(
+          L"_ReactControlErrorBox");
+      m_errorTextBlock.SetValue(
+          winrt::AutomationProperties::AutomationIdProperty(), boxedValue);
       m_redBoxGrid = winrt::Grid();
       m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::Colors::Crimson()));
       m_redBoxGrid.Children().Append(m_errorTextBlock);

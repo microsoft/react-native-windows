@@ -16,5 +16,5 @@
     "rootDir": "src"
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "lib"]
+  "exclude": ["node_modules", "dist", "lib", "e2e"]
 }
