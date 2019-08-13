@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 13 Aug 2019 19:56:52 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.139",
+      "version": "0.59.0-vnext.139",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.43",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "de0e7ae1f8bf55738f01daeea2eb6e490b2fcbbd"
+          },
+          {
+            "comment": "Change windows template to not use cli wrapper",
+            "author": "acoates@microsoft.com",
+            "commit": "6c3e9c7990947949d7b9bdcfa11c76833c3cc6c3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Aug 2019 23:13:59 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.138",
       "version": "0.59.0-vnext.138",
