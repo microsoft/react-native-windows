@@ -371,7 +371,6 @@ jobs:
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
-          workingDirectory: vnext
 
   - job: CurrentPR
     displayName: Current (C#) PR
