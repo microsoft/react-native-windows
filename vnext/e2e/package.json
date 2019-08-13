@@ -4,7 +4,8 @@
   "description": "e2e test",
   "main": "index",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "appium": "appium"
   },
   "devDependencies": {
     "@types/selenium-webdriver": "^4.0.1",
