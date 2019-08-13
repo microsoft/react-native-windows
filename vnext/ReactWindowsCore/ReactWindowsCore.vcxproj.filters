@@ -227,6 +227,9 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BatchingMessageQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

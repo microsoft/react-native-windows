@@ -87,6 +87,7 @@
     <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="BatchingMessageQueue.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
     <ClInclude Include="DevSettings.h" />
