@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Change windows template to not use cli wrapper",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "6c3e9c7990947949d7b9bdcfa11c76833c3cc6c3",
+  "date": "2019-08-13T19:04:15.977Z"
+}
