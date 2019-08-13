@@ -121,7 +121,7 @@ function installDependencies(options) {
   // Patch package.json to have proper react-native version and install
   const projectPackageJsonPath = path.join(cwd, 'package.json');
   const projectPackageJson = JSON.parse(fs.readFileSync(projectPackageJsonPath, { encoding: 'UTF8' }));
-  projectPackageJson.scripts.start = 'node node_modules/react-native-windows/Scripts/cli.js start';
+  projectPackageJson.scripts.start = 'react-native start';
   projectPackageJson.dependencies['react-native'] = reactNativeVersion;
   fs.writeFileSync(projectPackageJsonPath, JSON.stringify(projectPackageJson, null, 2));
 
