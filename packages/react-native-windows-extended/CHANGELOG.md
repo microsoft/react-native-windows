@@ -1,6 +1,34 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Wed, 07 Aug 2019 16:00:25 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Aug 2019 20:02:04 GMT and should not be manually modified.
+
+## 0.12.0
+Mon, 12 Aug 2019 20:02:04 GMT
+
+### Minor changes
+
+- Updating react-native to version: 0.59.0-microsoft.42 (53619745+rnbot@users.noreply.github.com)
+
+## 0.11.0
+Sun, 11 Aug 2019 04:57:41 GMT
+
+### Minor changes
+
+- Updating react-native to version: 0.59.0-microsoft.41 (53619745+rnbot@users.noreply.github.com)
+
+## 0.10.0
+Fri, 09 Aug 2019 06:07:04 GMT
+
+### Minor changes
+
+- Updating react-native to version: 0.59.0-microsoft.40 (53619745+rnbot@users.noreply.github.com)
+
+## 0.9.1
+Thu, 08 Aug 2019 20:57:44 GMT
+
+### Patches
+
+- Clear m_needsForceLayout between calls to DoLayout (decrowle@microsoft.com)
 
 ## 0.9.0
 Wed, 07 Aug 2019 16:00:25 GMT

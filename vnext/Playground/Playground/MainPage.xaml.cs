@@ -23,7 +23,7 @@ namespace Playground
     /// </summary>
     public sealed partial class MainPage : Page
     {
-    const string JSFILENAME = "Playground/Playground/index.uwp";
+    const string JSFILENAME = "Playground/Playground/index.windows";
     const string JSCOMPONENTNAME = "Playground";
 
     public MainPage()

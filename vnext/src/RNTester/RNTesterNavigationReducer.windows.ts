@@ -5,8 +5,8 @@
  */
 'use strict';
 
-import RNTesterList from './RNTesterList.uwp';
-import {RNTesterAction} from './RNTesterActions.uwp';
+import RNTesterList from './RNTesterList.windows';
+import {RNTesterAction} from './RNTesterActions.windows';
 
 interface IRNTesterNavigationState {
   openExample?: string;

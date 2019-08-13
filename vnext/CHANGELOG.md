@@ -1,6 +1,97 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Aug 2019 17:07:35 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Aug 2019 23:13:59 GMT and should not be manually modified.
+
+## 0.59.0-vnext.138
+Mon, 12 Aug 2019 23:13:59 GMT
+
+### Changes
+
+- Rename platform uwp->windows (acoates@microsoft.com)
+
+## 0.59.0-vnext.137
+Mon, 12 Aug 2019 21:06:24 GMT
+
+### Changes
+
+- Improve output of run-windows command (acoates@microsoft.com)
+
+## 0.59.0-vnext.136
+Mon, 12 Aug 2019 20:02:04 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.42 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.135
+Sun, 11 Aug 2019 04:57:41 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.41 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.134
+Sat, 10 Aug 2019 19:21:55 GMT
+
+### Changes
+
+- Fix switch shimmy issue (ruaraki@microsoft.com)
+
+## 0.59.0-vnext.133
+Fri, 09 Aug 2019 22:37:48 GMT
+
+### Changes
+
+- use more specific typing for currentTheme, improve examples (andrewh@microsoft.com)
+
+## 0.59.0-vnext.132
+Fri, 09 Aug 2019 19:20:03 GMT
+
+### Changes
+
+- Update UwpPreparedScriptStore to use shared_ptrs (jthysell@microsoft.com)
+
+## 0.59.0-vnext.131
+Fri, 09 Aug 2019 06:07:04 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.40 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.130
+Fri, 09 Aug 2019 04:18:45 GMT
+
+### Changes
+
+- Added list, listitem roles to ViewAccessibility.uwp.js (jthysell@microsoft.com)
+
+## 0.59.0-vnext.129
+Fri, 09 Aug 2019 03:27:03 GMT
+
+### Changes
+
+- Fix Sample/index.tsx layout, set Tag as Name in debug (andrewh@microsoft.com)
+
+## 0.59.0-vnext.128
+Thu, 08 Aug 2019 23:35:13 GMT
+
+### Changes
+
+- fix hit-testing bug (kmelmon@microsoft.com)
+
+## 0.59.0-vnext.127
+Thu, 08 Aug 2019 22:19:50 GMT
+
+### Changes
+
+- Add textDecoration support to Nested Text (dida@ntdev.microsoft.com)
+
+## 0.59.0-vnext.126
+Thu, 08 Aug 2019 20:57:44 GMT
+
+### Changes
+
+- Moving picker fix (decrowle@microsoft.com)
 
 ## 0.59.0-vnext.125
 Wed, 07 Aug 2019 17:07:35 GMT

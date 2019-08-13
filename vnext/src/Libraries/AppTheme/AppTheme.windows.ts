@@ -7,14 +7,18 @@
 
 import {NativeEventEmitter, NativeModules} from 'react-native';
 const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
-import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
+import {
+  AppThemeTypes,
+  IHighContrastColors,
+  IHighContrastChangedEvent,
+} from './AppThemeTypes';
 
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
-  private _currentTheme: string;
+  private _currentTheme: AppThemeTypes;
   private _highContrastColors: IHighContrastColors;
 
   constructor() {
@@ -34,13 +38,13 @@ class AppThemeModule extends NativeEventEmitter {
     this._currentTheme = NativeAppTheme.initialAppTheme;
     this.addListener(
       'appThemeChanged',
-      ({currentTheme}: {currentTheme: string}) => {
+      ({currentTheme}: {currentTheme: AppThemeTypes}) => {
         this._currentTheme = currentTheme;
       },
     );
   }
 
-  get currentTheme(): string {
+  get currentTheme(): AppThemeTypes {
     return this._currentTheme;
   }
 

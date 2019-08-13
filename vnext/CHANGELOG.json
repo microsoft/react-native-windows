@@ -2,6 +2,202 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Aug 2019 23:13:59 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.138",
+      "version": "0.59.0-vnext.138",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename platform uwp->windows",
+            "author": "acoates@microsoft.com",
+            "commit": "ba23aa45d9286f9e1b4449c1a3c54ab4bfabd0b1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Aug 2019 21:06:24 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.137",
+      "version": "0.59.0-vnext.137",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve output of run-windows command",
+            "author": "acoates@microsoft.com",
+            "commit": "647f554a28d747bfa410f3e8b5e70fbce48ff38f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Aug 2019 20:02:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.136",
+      "version": "0.59.0-vnext.136",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.42",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "273785b7bacea929236c77210ad102455b8d17b5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 11 Aug 2019 04:57:41 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.135",
+      "version": "0.59.0-vnext.135",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.41",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "0a2407117ab0b7f28ad90d23ce1b498f0e5a47cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Aug 2019 19:21:55 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.134",
+      "version": "0.59.0-vnext.134",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix switch shimmy issue",
+            "author": "ruaraki@microsoft.com",
+            "commit": "693b2ed5fdeb73cfae4b558bf804544227d149fb"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Aug 2019 22:37:48 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.133",
+      "version": "0.59.0-vnext.133",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "use more specific typing for currentTheme, improve examples",
+            "author": "andrewh@microsoft.com",
+            "commit": "042f72c1a9c89dcd47a639be33bc08ab55379ba3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Aug 2019 19:20:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.132",
+      "version": "0.59.0-vnext.132",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update UwpPreparedScriptStore to use shared_ptrs",
+            "author": "jthysell@microsoft.com",
+            "commit": "3e295a75c08380a6ce80a9672f14b98da3b68078"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Aug 2019 06:07:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.131",
+      "version": "0.59.0-vnext.131",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.40",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "3b4a0f3fb87bf853a28904f98f934f0f68d6ed2a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Aug 2019 04:18:45 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.130",
+      "version": "0.59.0-vnext.130",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added list, listitem roles to ViewAccessibility.uwp.js",
+            "author": "jthysell@microsoft.com",
+            "commit": "892d0d0cdeec88c705e9c4c2f62cc2372c3e065e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Aug 2019 03:27:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.129",
+      "version": "0.59.0-vnext.129",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Sample/index.tsx layout, set Tag as Name in debug",
+            "author": "andrewh@microsoft.com",
+            "commit": "2b96e796ca606187775291a81d3f922466e69a04"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 23:35:13 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.128",
+      "version": "0.59.0-vnext.128",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix hit-testing bug",
+            "author": "kmelmon@microsoft.com",
+            "commit": "c29be1a6030585716c40280d10f963f3c3acd8b0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 22:19:50 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.127",
+      "version": "0.59.0-vnext.127",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add textDecoration support to Nested Text",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "60bfc5c026ca83fefef229d44908b2eef088ef1b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 20:57:44 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.126",
+      "version": "0.59.0-vnext.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Moving picker fix",
+            "author": "decrowle@microsoft.com",
+            "commit": "8455d973a19be1d5e9bfee6329099d5657c64826"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 19:59:38 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.125",
+      "version": "0.59.0-vnext.125",
+      "comments": {
+        "none": [
+          {
+            "comment": "Minor documentation update",
+            "author": "email not defined",
+            "commit": "fc5669b454531d630ad69dbe6fc2cb27706ffe43"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2019 05:33:20 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.125",
       "version": "0.59.0-vnext.125",
