@@ -37,11 +37,11 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'CustomViewExample',
-    module: require('./CustomViewExample.uwp'),
+    module: require('./CustomViewExample.windows'),
   },
   {
     key: 'DatePickerExample',
-    module: require('./DatePickerExample.uwp'),
+    module: require('./DatePickerExample.windows'),
   },
   {
     key: 'FastTextExample',
@@ -53,7 +53,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'FlyoutExample',
-    module: require('./FlyoutExample.uwp'),
+    module: require('./FlyoutExample.windows'),
   },
   {
     key: 'GlyphExample',
@@ -68,16 +68,16 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/LayoutEventsExample'),
   },
   {
-    key: 'PickerUWPExample',
-    module: require('./PickerUWPExample'),
+    key: 'PickerWindowsExample',
+    module: require('./PickerWindowsExample'),
   },
   {
     key: 'PopupExample',
-    module: require('./PopupExample.uwp'),
+    module: require('./PopupExample.windows'),
   },
   {
     key: 'KeyboardExtensionExample',
-    module: require('./KeyboardExtensionExample.uwp'),
+    module: require('./KeyboardExtensionExample.windows'),
   },
   {
     key: 'ScrollViewSimpleExample',
@@ -93,11 +93,11 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'TextExample',
-    module: require('./TextExample.uwp').default,
+    module: require('./TextExample.windows').default,
   },
   {
     key: 'TextInputExample',
-    module: require('./TextInputExample.uwp'),
+    module: require('./TextInputExample.windows'),
   },
   {
     key: 'TouchableExample',
@@ -125,7 +125,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
 const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'KeyboardFocusExample',
-    module: require('./KeyboardFocusExample.uwp'),
+    module: require('./KeyboardFocusExample.windows'),
   },
   {
     key: 'AccessibilityExample',
@@ -148,7 +148,7 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/BorderExample'),
   },
   {
-    key: 'BoxShadowExample - UWP NotYetImplemented',
+    key: 'BoxShadowExample - windows NotYetImplemented',
     module: require('react-native/RNTester/js/BoxShadowExample'),
   },
   {

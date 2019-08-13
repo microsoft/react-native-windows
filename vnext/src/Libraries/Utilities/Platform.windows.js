@@ -9,7 +9,7 @@
 const NativeModules = require('NativeModules');
 
 const Platform = {
-  OS: 'uwp',
+  OS: 'windows',
   get Version() {
     const constants = NativeModules.PlatformConstants;
     return constants && constants.Version;
@@ -18,7 +18,7 @@ const Platform = {
     const constants = NativeModules.PlatformConstants;
     return constants && constants.isTesting;
   },
-  select: (obj: Object) => ('uwp' in obj ? obj.uwp : obj.default),
+  select: (obj: Object) => ('windows' in obj ? obj.windows : obj.default),
 };
 
 module.exports = Platform;

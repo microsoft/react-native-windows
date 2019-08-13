@@ -3,6 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
+// @ts-check
 'use strict';
 
 const EOL = require('os').EOL;
@@ -13,6 +14,13 @@ const chalk = require('chalk');
 const shell = require('shelljs');
 const Version = require('./version');
 const checkRequirements = require('./checkRequirements');
+const {
+  commandWithProgress,
+  newInfo,
+  newSpinner,
+  newSuccess,
+  newError,
+} = require('./commandWithProgress');
 
 const MSBUILD_VERSIONS = ['16.0', '15.0', '14.0', '12.0', '4.0'];
 
@@ -34,12 +42,13 @@ class MSBuildTools {
     results.forEach(result => console.log(chalk.white(result)));
   }
 
-  buildProject(slnFile, buildType, buildArch, config, verbose) {
-    console.log(chalk.green(`Building Solution: ${slnFile}`));
-    console.log(chalk.green(`Build configuration: ${buildType}`));
-    console.log(chalk.green(`Build platform: ${buildArch}`));
+  async buildProject(slnFile, buildType, buildArch, config, verbose) {
+    newSuccess(`Found Solution: ${slnFile}`);
+    newInfo(`Build configuration: ${buildType}`);
+    newInfo(`Build platform: ${buildArch}`);
 
-    const verbosityOption = verbose ? 'normal' : 'quiet';
+    //const verbosityOption = verbose ? 'normal' : 'quiet';
+    const verbosityOption = 'normal';
     const args = [
       `/clp:NoSummary;NoItemAndPropertyList;Verbosity=${verbosityOption}`,
       '/nologo',
@@ -69,15 +78,19 @@ class MSBuildTools {
     try {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
-      console.log(chalk.red(e.message));
+      newError(e.message);
       return;
     }
 
-    const cmd =
-      `"${path.join(this.path, 'msbuild.exe')}" ` +
-      ['"' + slnFile + '"'].concat(args).join(' ');
-    // Always inherit from stdio as we're controlling verbosity output above.
-    child_process.execSync(cmd, {stdio: 'inherit'});
+    const progressName = 'Building Solution';
+    const spinner = newSpinner(progressName);
+    await commandWithProgress(
+      spinner,
+      progressName,
+      path.join(this.path, 'msbuild.exe'),
+      [slnFile].concat(args),
+      verbose,
+    );
   }
 }
 
@@ -135,7 +148,7 @@ function checkMSBuildVersion(version) {
 
   // We found something so return MSBuild Tools.
   if (toolsPath) {
-    console.log(chalk.green(`Found MSBuild v${version} at ${toolsPath}`));
+    newSuccess(`Found MSBuild v${version} at ${toolsPath}`);
     return new MSBuildTools(version, toolsPath);
   } else {
     return null;

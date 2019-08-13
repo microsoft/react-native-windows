@@ -23,6 +23,13 @@
 ## Automatic
 The playground app can be run in a completely automatic way by using `react-native run-windows`.
 
+If you haven't already, install the react-native-cli  (One time only!)
+```cmd
+npm install -g react-native-cli
+```
+
+Then 
+
 ```cmd
 cd packages\playground
 react-native run-windows
