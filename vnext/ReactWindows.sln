@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29009.5
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
@@ -114,8 +114,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.ABITe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Desktop.UnitTests", "JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.vcxproj", "{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Shared", "JSI\Shared\JSI.Shared.vcxitems", "{0CC28589-39E4-4288-B162-97B959F8B843}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Universal", "JSI\Universal\JSI.Universal.vcxproj", "{A62D504A-16B8-41D2-9F19-E2E86019E5E4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Desktop", "JSI\Desktop\JSI.Desktop.vcxproj", "{17DD1B17-3094-40DD-9373-AC2497932ECA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
+		JSI\Shared\JSI.Shared.vcxitems*{17dd1b17-3094-40dd-9373-ac2497932eca}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
@@ -123,6 +131,7 @@ Global
 		Shared\Shared.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
+		JSI\Shared\JSI.Shared.vcxitems*{a62d504a-16b8-41d2-9f19-e2e86019e5e4}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -288,6 +297,26 @@ Global
 		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x64.ActiveCfg = Release|x64
 		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x64.Build.0 = Release|x64
 		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x86.ActiveCfg = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|ARM.ActiveCfg = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x64.ActiveCfg = Debug|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x64.Build.0 = Debug|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x86.Build.0 = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|ARM.ActiveCfg = Release|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x64.ActiveCfg = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x64.Build.0 = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x86.ActiveCfg = Release|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x86.Build.0 = Release|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|ARM.ActiveCfg = Debug|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x64.ActiveCfg = Debug|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x64.Build.0 = Debug|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x86.ActiveCfg = Debug|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x86.Build.0 = Debug|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|ARM.ActiveCfg = Release|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x64.ActiveCfg = Release|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x64.Build.0 = Release|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x86.ActiveCfg = Release|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

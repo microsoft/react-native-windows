@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{0cc28589-39e4-4288-b162-97b959f8b843}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h" />
+  </ItemGroup>
+</Project>
