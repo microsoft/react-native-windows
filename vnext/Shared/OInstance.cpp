@@ -50,10 +50,6 @@
 #include <jsiexecutor/jsireact/JSIExecutor.h>
 #endif
 
-#include <../reactuwp/threading/UIMessageQueueThread.h>
-
-extern BatchingUIMessageQueueThread* g_theDude;
-
 namespace {
 
 #if (defined(_MSC_VER) && !defined(WINRT))
@@ -227,7 +223,7 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         m_uiThread(std::move(uithread)) {}
   virtual ~BridgeUIBatchInstanceCallback() = default;
   void onBatchComplete() override {
-    g_theDude->onBatchComplete();
+//    g_theDude->onBatchComplete();
 #if 0
     if (auto uithread = m_uiThread.lock()) {
       std::weak_ptr<IUIManager> weakUiManager(m_weakUiManager);

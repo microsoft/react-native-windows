@@ -68,6 +68,8 @@ class IUIManager {
   // needed for control specific native modules to get the shadow node from the
   // UIManager given its tag
   virtual ShadowNode *FindShadowNodeForTag(int64_t tag) = 0;
+
+  virtual bool supportsBatchedMessageQueue() { return false; }
 };
 
 std::shared_ptr<IUIManager> createIUIManager(
