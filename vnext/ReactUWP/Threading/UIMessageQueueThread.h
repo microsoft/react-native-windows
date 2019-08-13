@@ -28,3 +28,4 @@ class UIMessageQueueThread : public facebook::react::MessageQueueThread {
 
 } // namespace uwp
 } // namespace react
+

@@ -49,7 +49,7 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
-#include <Modules/BatchingUIManagerModule.h>
+#include <Modules/UIManagerModule.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -62,6 +62,7 @@
 #include <ReactWindowsCore/IUIManager.h>
 #include <Threading/JSQueueThread.h>
 #include <Threading/UIMessageQueueThread.h>
+#include <Threading/BatchingUIMessageQueueThread.h>
 #include <Threading/WorkerMessageQueueThread.h>
 
 #include <cxxreact/CxxNativeModule.h>
@@ -132,7 +133,7 @@ CreateUIManager(
       std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createBatchingUIManager(
+  return createIUIManager(
       std::move(viewManagers), new NativeUIManager());
 }
 
@@ -146,6 +147,7 @@ UwpReactInstance::UwpReactInstance(
 std::vector<facebook::react::NativeModuleDescription> GetModules(
     std::shared_ptr<facebook::react::IUIManager> uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
+    winrt::CoreDispatcher& coreDispatcher,
     std::shared_ptr<DeviceInfo> deviceInfo,
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     const I18nModule::I18nInfo &&i18nInfo,
@@ -158,9 +160,9 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       "UIManager",
       [uiManager = std::move(uiManager)]() {
-        return facebook::react::createBatchingUIManagerModule(uiManager);
+        return facebook::react::createUIManagerModule(uiManager);
       },
-      messageQueue);
+    std::make_shared <BatchingUIMessageQueueThread>(coreDispatcher));
 
   modules.emplace_back(
       react::uwp::WebSocketModule::name,
@@ -344,6 +346,7 @@ void UwpReactInstance::Start(
         GetModules(
             m_uiManager,
             m_defaultNativeThread,
+            m_uiDispatcher,
             deviceInfo,
             devSettings,
             std::move(i18nInfo),

@@ -16,6 +16,8 @@ using namespace std;
 using namespace folly;
 using namespace facebook::xplat;
 
+facebook::react::UIManager* g_theUIManager;
+
 namespace facebook {
 namespace react {
 
@@ -25,6 +27,7 @@ UIManager::UIManager(
     : m_viewManagers(std::move(viewManagers)),
       m_nativeUIManager(nativeManager) {
   m_nativeUIManager->setHost(this);
+  g_theUIManager = this;
 }
 
 UIManager::~UIManager() {

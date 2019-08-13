@@ -11,13 +11,17 @@ using namespace folly;
 using namespace facebook::xplat;
 using namespace std;
 
+//facebook::react::BatchingUIManager* g_theUIManager;
+
 namespace facebook {
 namespace react {
+
 
 BatchingUIManager::BatchingUIManager(
     std::vector<std::unique_ptr<IViewManager>> &&viewManagers,
     INativeUIManager *nativeManager)
     : UIManager(std::move(viewManagers), nativeManager) {
+//  g_theUIManager = this;
   m_queue =
       std::make_unique<folly::ProducerConsumerQueue<std::function<void()>>>(
           2048);
