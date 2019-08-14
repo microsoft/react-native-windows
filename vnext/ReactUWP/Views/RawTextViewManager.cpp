@@ -7,6 +7,7 @@
 
 #include <Views/ShadowNodeBase.h>
 
+#include <INativeUIManager.h>
 #include <Utils/ValueUtils.h>
 
 #include <winrt/Windows.Foundation.h>
@@ -51,6 +52,22 @@ void RawTextViewManager::UpdateProperties(
 
     if (propertyName == "text") {
       run.Text(asHstring(propertyValue));
+      if (nodeToUpdate->GetParent() != -1) {
+        auto instance = this->m_wkReactInstance.lock();
+        const ShadowNodeBase *parent = nullptr;
+        if (instance) {
+          parent = static_cast<ShadowNodeBase *>(
+              instance->NativeUIManager()->getHost()->FindShadowNodeForTag(
+                  nodeToUpdate->GetParent()));
+          if (parent && parent->m_children.size() == 1) {
+            auto view = parent->GetView();
+            auto textBlock = view.try_as<winrt::TextBlock>();
+            if (textBlock != nullptr) {
+              textBlock.Text(run.Text());
+            }
+          }
+        }
+      }
     }
   }
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);

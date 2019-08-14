@@ -35,6 +35,10 @@ class PopupShadowNode : public ShadowNodeBase {
       const winrt::Windows::UI::Xaml::Controls::Primitives::Popup &popup);
   winrt::Windows::Foundation::Size GetAppWindowSize();
 
+  bool IsWindowed() override {
+    return true;
+  }
+
  private:
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>

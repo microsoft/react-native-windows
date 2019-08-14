@@ -74,7 +74,11 @@
 #endif
 
 #if !defined(OSS_RN)
+#if defined(USE_HERMES)
+#include "HermesRuntimeHolder.h"
+#else
 #include "ChakraJSIRuntimeHolder.h"
+#endif
 #endif
 
 #include <tuple>
@@ -259,6 +263,8 @@ void UwpReactInstance::Start(
   if (m_started)
     return;
 
+  m_reactInstanceSettings = settings;
+
   assert(
       m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr &&
       m_jsThread == nullptr && m_initThread == nullptr &&
@@ -365,6 +371,12 @@ void UwpReactInstance::Start(
 
 #if !defined(OSS_RN)
     if (settings.UseJsi) {
+
+// Currently assuming we have only two JSI implementations, i.e. Hermes & Chakra
+// based .. And we switch at compile time.
+#if defined(USE_HERMES)
+      devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+#else
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
           nullptr;
@@ -380,6 +392,7 @@ void UwpReactInstance::Start(
           jsQueue,
           std::move(scriptStore),
           std::move(preparedScriptStore));
+#endif
     }
 #endif
 

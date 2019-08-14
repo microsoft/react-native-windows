@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -58,17 +58,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
   <ItemGroup>
     <ClCompile Include="ChakraJSIRuntimeHolder.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
     <ClCompile Include="RNTesterIntegrationTests.cpp" />
     <ClCompile Include="DesktopTestInstance.cpp" />
-    <ClCompile Include="TestMessageQueueThread.cpp" />
     <ClCompile Include="DesktopTestRunner.cpp" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
     <ClCompile Include="WebSocketJSExecutorIntegrationTest.cpp" />
@@ -102,7 +97,6 @@
   <ItemGroup>
     <ClInclude Include="ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="DesktopTestInstance.h" />
-    <ClInclude Include="TestMessageQueueThread.h" />
     <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

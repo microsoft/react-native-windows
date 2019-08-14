@@ -48,7 +48,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath);$(ReactNativeDir)\ReactCommon;$(FollyDir)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(FollyDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -60,26 +60,26 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
   <ItemGroup>
     <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
       <Project>{11C084A3-A57C-4296-A679-CAC17B603144}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ControllableMessageQueueThread.cpp" />
     <ClCompile Include="TestInstance.cpp" />
+    <ClCompile Include="TestMessageQueueThread.cpp" />
     <ClCompile Include="TestModule.cpp" />
     <ClCompile Include="TestRootView.cpp" />
     <ClCompile Include="TestRunner.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ControllableMessageQueueThread.h" />
     <ClInclude Include="MockExecutorDelegate.h" />
     <ClInclude Include="TestInstance.h" />
     <ClInclude Include="TestModule.h" />
+    <ClInclude Include="TestMessageQueueThread.h" />
     <ClInclude Include="TestRootView.h" />
     <ClInclude Include="TestRunner.h" />
   </ItemGroup>

@@ -113,6 +113,10 @@ XamlView ImageViewManager::CreateViewCore(int64_t tag) {
   return ReactImage::Create().as<winrt::Canvas>();
 }
 
+facebook::react::ShadowNode *ImageViewManager::createShadow() const {
+  return new ImageShadowNode();
+}
+
 void ImageViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {

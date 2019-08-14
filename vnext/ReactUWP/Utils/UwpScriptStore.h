@@ -15,9 +15,13 @@ class UwpScriptStore : public facebook::jsi::ScriptStore {
   UwpScriptStore(const UwpScriptStore &) = delete;
   void operator=(const UwpScriptStore &) = delete;
 
+ public:
+  static facebook::jsi::ScriptVersion_t GetFileVersion(
+      const std::wstring &filePath);
+
  private:
-  std::future<winrt::Windows::Foundation::DateTime> getBundleModifiedDate(
-      const std::string &bundlePath);
+  std::future<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(
+      const std::string &bundleUri);
 };
 
 } // namespace uwp
