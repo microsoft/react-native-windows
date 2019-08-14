@@ -1,0 +1,15 @@
+{
+  "name": "react-native-windows-repo-scripts",
+  "version": "0.0.1",
+  "description": "Private scripts for development dependencies inside react-native-window repo",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git",
+    "directory": "packages/scripts"
+  },
+  "devDependencies": {
+    "clang-format": "1.2.4"
+  }
+}
