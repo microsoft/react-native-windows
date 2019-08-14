@@ -40,13 +40,13 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
         displayName: Beachball Publish (for other branches)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
