@@ -13,6 +13,7 @@
 #include "InstanceManager.h"
 #include "Sandbox/SandboxEndpoint.h"
 #include "ViewManager.h"
+#include "BatchingMessageQueue.h"
 
 namespace facebook {
 namespace react {
