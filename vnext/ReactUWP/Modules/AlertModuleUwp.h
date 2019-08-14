@@ -22,10 +22,10 @@ class AlertModule final : public facebook::xplat::module::CxxModule {
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
-  static const char *name;
-
  private:
   static winrt::fire_and_forget showAlert(folly::dynamic &args, Callback actionResult);
+
+  static const char *name;
 
 };
 

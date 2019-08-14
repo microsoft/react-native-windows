@@ -54,11 +54,11 @@ AlertModule::getMethods() {
 
 /*static*/ winrt::fire_and_forget AlertModule::showAlert(folly::dynamic &args, Callback actionResult) {
 
-  std::wstring alertTitle;
-  std::wstring alertContent;
-  std::wstring alertPrimaryButtonText;
-  std::wstring alertSecondaryButtonText;
-  std::wstring alertCloseButtonText;
+  winrt::hstring alertTitle;
+  winrt::hstring alertContent;
+  winrt::hstring alertPrimaryButtonText;
+  winrt::hstring alertSecondaryButtonText;
+  winrt::hstring alertCloseButtonText;
 
   for (auto arg : args) {
   
