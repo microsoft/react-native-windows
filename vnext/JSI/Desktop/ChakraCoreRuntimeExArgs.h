@@ -7,7 +7,7 @@
 
 namespace facebook::jsi::chakra {
 
-struct OfficeChakraCoreRuntimeArgs {
+struct ChakraCoreRuntimeExArgs {
   bool m_asyncPreparedScriptGeneration = true;
 
   std::shared_ptr<ScriptStore> m_scriptStore;

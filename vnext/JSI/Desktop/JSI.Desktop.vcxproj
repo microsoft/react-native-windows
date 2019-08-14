@@ -28,7 +28,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-    <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
@@ -78,15 +78,15 @@
   <ItemGroup>
     <ClCompile Include="ChakraCoreRuntime.cpp" />
     <ClCompile Include="ChakraCoreRuntimeFactory.cpp" />
-    <ClCompile Include="OfficeChakraCoreRuntime.cpp" />
-    <ClCompile Include="OfficeChakraCoreRuntimeFactory.cpp" />
+    <ClCompile Include="ChakraCoreRuntimeEx.cpp" />
+    <ClCompile Include="ChakraCoreRuntimeExFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChakraCoreRuntime.h" />
     <ClInclude Include="ChakraCoreRuntimeFactory.h" />
-    <ClInclude Include="OfficeChakraCoreRuntime.h" />
-    <ClInclude Include="OfficeChakraCoreRuntimeArgs.h" />
-    <ClInclude Include="OfficeChakraCoreRuntimeFactory.h" />
+    <ClInclude Include="ChakraCoreRuntimeEx.h" />
+    <ClInclude Include="ChakraCoreRuntimeExArgs.h" />
+    <ClInclude Include="ChakraCoreRuntimeExFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

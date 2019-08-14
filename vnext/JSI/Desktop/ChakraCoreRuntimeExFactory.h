@@ -4,7 +4,7 @@
 #pragma once
 
 #include "ChakraRuntimeArgs.h"
-#include "OfficeChakraCoreRuntimeArgs.h"
+#include "ChakraCoreRuntimeExArgs.h"
 
 #include <memory>
 
@@ -14,9 +14,9 @@ class Runtime;
 
 namespace chakra {
 
-std::unique_ptr<Runtime> makeOfficeChakraCoreRuntime(
+std::unique_ptr<Runtime> makeChakraCoreRuntimeEx(
     ChakraRuntimeArgs &&args,
-    OfficeChakraCoreRuntimeArgs &&officeArgs);
+    ChakraCoreRuntimeExArgs &&officeArgs);
 
 } // namespace chakra
 } // namespace facebook::jsi

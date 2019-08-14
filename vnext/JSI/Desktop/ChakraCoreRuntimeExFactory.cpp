@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "OfficeChakraCoreRuntimeFactory.h"
+#include "ChakraCoreRuntimeExFactory.h"
 
-#include "OfficeChakraCoreRuntime.h"
+#include "ChakraCoreRuntimeEx.h"
 
 namespace facebook::jsi::chakra {
 
-std::unique_ptr<Runtime> makeOfficeChakraCoreRuntime(
+std::unique_ptr<Runtime> makeChakraCoreRuntimeEx(
     ChakraRuntimeArgs &&args,
-    OfficeChakraCoreRuntimeArgs &&officeArgs) {
-  return std::make_unique<OfficeChakraCoreRuntime>(
+    ChakraCoreRuntimeExArgs &&officeArgs) {
+  return std::make_unique<ChakraCoreRuntimeEx>(
       std::move(args), std::move(officeArgs));
 }
 

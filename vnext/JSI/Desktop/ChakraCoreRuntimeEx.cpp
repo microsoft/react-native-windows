@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "OfficeChakraCoreRuntime.h"
+#include "ChakraCoreRuntimeEx.h"
 
 #include "ChakraCoreRuntimeFactory.h"
 #include "jsi/decorator.h"
@@ -95,9 +95,9 @@ void persistPreparedScriptHelper(
 
 } // namespace
 
-OfficeChakraCoreRuntime::OfficeChakraCoreRuntime(
+ChakraCoreRuntimeEx::ChakraCoreRuntimeEx(
     ChakraRuntimeArgs &&args,
-    OfficeChakraCoreRuntimeArgs &&officeArgs) noexcept
+    ChakraCoreRuntimeExArgs &&officeArgs) noexcept
     // Since the constructor and destructor of RuntimeDecorator do not access
     // its cached m_runtime, using m_runtime before it's initialized here is
     // safe. See comments on the RuntimeDecorator constructor for more
@@ -113,7 +113,7 @@ OfficeChakraCoreRuntime::OfficeChakraCoreRuntime(
   // setupNativePromiseContinuation();
 }
 
-Value OfficeChakraCoreRuntime::evaluateJavaScript(
+Value ChakraCoreRuntimeEx::evaluateJavaScript(
     const std::shared_ptr<const Buffer> &unused,
     const std::string &sourceURL) {
   assert(unused == nullptr);
@@ -150,8 +150,8 @@ Value OfficeChakraCoreRuntime::evaluateJavaScript(
           m_runtime, sourceURL, script.buffer, preparedScript)));
 }
 
-uint64_t OfficeChakraCoreRuntime::s_version = 0;
-std::once_flag OfficeChakraCoreRuntime::s_versionInitFlag;
+uint64_t ChakraCoreRuntimeEx::s_version = 0;
+std::once_flag ChakraCoreRuntimeEx::s_versionInitFlag;
 
 } // namespace chakra
 } // namespace jsi

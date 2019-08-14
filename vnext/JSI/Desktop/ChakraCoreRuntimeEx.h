@@ -6,26 +6,26 @@
 // TODO (yicyao): Fix this.
 #include "ChakraCoreRuntime.h"
 #include "ChakraRuntimeArgs.h"
-#include "OfficeChakraCoreRuntimeArgs.h"
+#include "ChakraCoreRuntimeExArgs.h"
 #include "jsi/decorator.h"
 
 namespace facebook {
 namespace jsi {
 namespace chakra {
 
-// TODO (yicyao): Think about changing: OfficeChakraCoreRuntime to be an
+// TODO (yicyao): Think about changing: ChakraCoreRuntimeEx to be an
 // instantiation of a template.
-class OfficeChakraCoreRuntime : public RuntimeDecorator<Runtime, Runtime> {
+class ChakraCoreRuntimeEx : public RuntimeDecorator<Runtime, Runtime> {
  public:
-  OfficeChakraCoreRuntime(
+  ChakraCoreRuntimeEx(
       ChakraRuntimeArgs &&args,
-      OfficeChakraCoreRuntimeArgs &&officeArgs) noexcept;
+      ChakraCoreRuntimeExArgs &&officeArgs) noexcept;
 
   //============================================================================
   // Below are functions inherited from Runtime.
   // Note that the performance characteristics detailed by the comments in jsi.h
-  // is for HermesRuntime and might not apply to OfficeChakraCoreRuntime.
-  // TODO (yicyao): Do some perf measurements for OfficeChakraCoreRuntime.
+  // is for HermesRuntime and might not apply to ChakraCoreRuntimeEx.
+  // TODO (yicyao): Do some perf measurements for ChakraCoreRuntimeEx.
 
   // This function does not use unused at all, so unused should always be
   // nullptr. Instead, it looks up the script and prepared script corresponding
@@ -42,7 +42,7 @@ class OfficeChakraCoreRuntime : public RuntimeDecorator<Runtime, Runtime> {
 
  private:
   ChakraCoreRuntime m_runtime;
-  OfficeChakraCoreRuntimeArgs m_args;
+  ChakraCoreRuntimeExArgs m_args;
 
   static uint64_t s_version;
   static std::once_flag s_versionInitFlag;
