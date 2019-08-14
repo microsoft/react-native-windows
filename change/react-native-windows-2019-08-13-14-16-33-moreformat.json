@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Run clang-format across all packages in the repo",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "a3a5776a4a59571d72459846ae199f10fe173177",
-  "date": "2019-08-13T21:16:33.532Z"
-}

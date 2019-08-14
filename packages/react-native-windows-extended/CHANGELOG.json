@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Wed, 14 Aug 2019 14:23:33 GMT",
+      "tag": "react-native-windows-extended_v0.13.0",
+      "version": "0.13.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Run clang-format across all packages in the repo",
+            "author": "acoates@microsoft.com",
+            "commit": "a3a5776a4a59571d72459846ae199f10fe173177"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Aug 2019 19:56:52 GMT",
       "tag": "react-native-windows-extended_v0.13.0",
       "version": "0.13.0",
