@@ -28,6 +28,7 @@
   <ImportGroup Label="Shared">
     <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
     <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
+    <Import Project="..\JSI\Shared\JSI.Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -92,6 +93,9 @@
     </ProjectReference>
     <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
       <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj">
+      <Project>{17dd1b17-3094-40dd-9373-ac2497932eca}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</Project>
