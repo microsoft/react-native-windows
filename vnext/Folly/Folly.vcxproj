@@ -248,7 +248,7 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
-      <DisableSpecificWarnings>4146;4251;4800;4804;4305;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4018;4146;4251;4800;4804;4305;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -269,15 +269,15 @@
     <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
   <Target Name="DownloadFollyIfNotUseMicrosoftReactNative" BeforeTargets="PrepareForBuild">
-    <Warning Text="Folly required to build without microsoft/react-native. - Downloading folly..." Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)..\.follyzip\folly-2019.06.10.00.zip')" />
-    <DownloadFile Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)..\.follyzip\folly-2019.06.10.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.06.10.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
+    <Warning Text="Folly required to build without microsoft/react-native. - Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.08.12.00.zip')" />
+    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.08.12.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.08.12.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
   </Target>
   <Target Name="UnzipFollyIfNotUseMicrosoftReactNative" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFollyIfNotUseMicrosoftReactNative">
-    <Warning Text="Folly required to build without microsoft/react-native. - Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)folly\dynamic.h')" />
+    <Warning Text="Folly required to build without microsoft/react-native. - Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />
     <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, unzip seems to have completed dispite errors -->
-    <Unzip Condition="'$(OSS_RN)'=='true' AND !Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.06.10.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
+    <Unzip Condition="!Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.08.12.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(OSS_RN)'!='true' AND !Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
+    <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
 </Project>
