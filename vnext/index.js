@@ -19,4 +19,5 @@ __export(require("./Libraries/Components/Keyboard/KeyboardExt"));
 __export(require("./Libraries/Components/Keyboard/KeyboardExtProps"));
 __export(require("./Libraries/Components/View/ViewWindows"));
 __export(require("./Libraries/AppTheme/AppTheme"));
+__export(require("./Libraries/Modules/Alert/Alert.uwp"));
 //# sourceMappingURL=index.js.map

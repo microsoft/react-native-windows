@@ -23,10 +23,9 @@ class AlertModule final : public facebook::xplat::module::CxxModule {
   auto getMethods() -> std::vector<Method> override;
 
   static const char *name;
- 
 
  private:
-  static void showAlert(const std::string &text);
+  static winrt::fire_and_forget showAlert(folly::dynamic &args, Callback actionResult);
 
 };
 
