@@ -8,8 +8,9 @@
     "appium": "appium"
   },
   "devDependencies": {
-    "@types/selenium-webdriver": "^4.0.1",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.17",
+    "@types/selenium-webdriver": "^4.0.1",
     "appium": "^1.14.1",
     "jest": "^24.8.0",
     "selenium-appium": "0.0.8",

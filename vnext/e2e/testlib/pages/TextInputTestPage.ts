@@ -15,6 +15,15 @@ export class TextInputTestPage extends TestPage {
     return [until.elementLocated(this.textInputLocator)];
   }
 
+  async typeOnTextInput(text: string) {
+    const element = await this.getTextInput();
+    await element.clear();
+    await element.sendKeys(text);
+  }
+  getTextInputText() {
+    return this.getTextInput().getText();
+  }
+
   getTextInput() {
     return webDriver2.findElement(this.textInputLocator);
   }
