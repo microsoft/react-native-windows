@@ -28,6 +28,8 @@ namespace uwp {
 
 const char *AlertModule::name = "RCTAlert";
 
+AlertModule::AlertModule() {}
+
 AlertModule::~AlertModule() = default;
 
 std::string AlertModule::getName() {
@@ -54,43 +56,40 @@ AlertModule::getMethods() {
 
   std::wstring alertTitle;
   std::wstring alertContent;
-  std::wstring alertPBT;
-  std::wstring alertSBT;
-  std::wstring alertCBT;
+  std::wstring alertPrimaryButtonText;
+  std::wstring alertSecondaryButtonText;
+  std::wstring alertCloseButtonText;
 
-  for (auto arr : args) {
+  for (auto arg : args) {
   
-  for (auto &pair : arr.items()) {
-    const std::string &propertyName = pair.first.getString();
-    const folly::dynamic &propertyValue = pair.second;
+    for (auto &pair : arg.items()) {
+      const std::string &propertyName = pair.first.getString();
+      const folly::dynamic &propertyValue = pair.second;
         
       if (propertyName == "title") {
         alertTitle = react::uwp::asHstring(propertyValue);
-      }
-        
-      if (propertyName == "message") {
+      }        
+      else if (propertyName == "message") {
         alertContent = react::uwp::asHstring(propertyValue);
+      }    
+      else if (propertyName == "buttonPositive") {
+        alertPrimaryButtonText = react::uwp::asHstring(propertyValue);
       }
-    
-      if (propertyName == "buttonPositive") {
-        alertPBT = react::uwp::asHstring(propertyValue);
+      else if (propertyName == "buttonNegative") {
+        alertSecondaryButtonText = react::uwp::asHstring(propertyValue);
       }
-      if (propertyName == "buttonNegative") {
-        alertSBT = react::uwp::asHstring(propertyValue);
+      else if (propertyName == "buttonNeutral") {
+        alertCloseButtonText = react::uwp::asHstring(propertyValue);
       }
-      if (propertyName == "buttonNeutral") {
-        alertCBT = react::uwp::asHstring(propertyValue);
-      }
+    }
   }
- }
 
   winrt::ContentDialog dialog{};
   dialog.Title(winrt::box_value(alertTitle.c_str()));
   dialog.Content(winrt::box_value(alertContent.c_str()));
-  dialog.PrimaryButtonText(alertPBT.c_str());
-  dialog.SecondaryButtonText(alertSBT.c_str());
-  dialog.CloseButtonText(alertCBT.c_str());
-  winrt::ContentDialogResult::Primary;
+  dialog.PrimaryButtonText(alertPrimaryButtonText.c_str());
+  dialog.SecondaryButtonText(alertSecondaryButtonText.c_str());
+  dialog.CloseButtonText(alertCloseButtonText.c_str());
   auto result = co_await dialog.ShowAsync();
 
   switch (result) {
@@ -106,10 +105,6 @@ AlertModule::getMethods() {
     default:
       break;
   }
-}
-
-AlertModule::AlertModule() {
-
 }
 
 } // namespace uwp
