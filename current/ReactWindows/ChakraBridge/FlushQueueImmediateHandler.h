@@ -9,6 +9,7 @@ using namespace Platform;
 
 namespace ChakraBridge {
 
-public delegate void FlushQueueImmediateHandler(String^);
+public
+delegate void FlushQueueImmediateHandler(String ^);
 
-}
+} // namespace ChakraBridge

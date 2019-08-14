@@ -4,10 +4,13 @@
  */
 'use strict';
 
-const fs = require('fs');
+/// These constants control which files are formatted
+const includeEndsWith = ['.h', '.cpp'];
+const excludePathContains = ['cppwinrt/winrt'];
+const excludePathEndsWith = ['.g.h', '.g.cpp'];
+
 const path = require('path');
-const {spawn, execSync} = require('child_process');
-const glob = require('glob');
+const {spawn, spawnSync, execSync} = require('child_process');
 const async = require('async');
 const {getNativeBinary} = require('clang-format');
 
@@ -40,6 +43,36 @@ function errorFromExitCode(exitCode) {
   return new Error(`clang-format exited with exit code ${exitCode}.`);
 }
 
+function git(args, options) {
+  const results = spawnSync('git', args, options);
+
+  if (results.status === 0) {
+    return {
+      stderr: results.stderr.toString().trim(),
+      stdout: results.stdout.toString().trim(),
+      success: true,
+    };
+  } else {
+    return {
+      stderr: results.stderr.toString().trim(),
+      stdout: results.stdout.toString().trim(),
+      success: false,
+    };
+  }
+}
+
+function listAllTrackedFiles(cwd) {
+  const results = git(['ls-tree', '-r', '--name-only', '--full-tree', 'HEAD'], {
+    cwd,
+  });
+
+  if (results.success) {
+    return results.stdout.split('\n');
+  }
+
+  return [];
+}
+
 /**
  * Spawn the clang-format binary with given arguments.
  */
@@ -55,19 +88,15 @@ function spawnClangFormat(args, done, stdio) {
     return;
   }
 
-  // extract glob, if present
-  //const filesGlob = getGlobArg(args);
-  const allFilesGlobs = ['**/*.cpp', '**/*.h'];
+  let files = listAllTrackedFiles(path.resolve(__dirname, '../..'));
 
-  const ignoreGlobs = fs
-    .readFileSync(path.resolve(__dirname, '../../.clang-format-ignore'))
-    .toString()
-    .split('\n');
-
-  let files = [];
-  allFilesGlobs.forEach(filesGlob => {
-    files = files.concat(glob.sync(filesGlob, {ignore: ignoreGlobs}));
-  });
+  // Apply file filters from constants
+  files = files.filter(
+    file =>
+      includeEndsWith.some(_ => file.endsWith(_)) &&
+      !excludePathContains.some(_ => file.indexOf(_) > 0) &&
+      !excludePathEndsWith.some(_ => file.endsWith(_)),
+  );
 
   // split file array into chunks of 30
   let i,

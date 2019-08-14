@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
-#include <ViewManager.h>
 #include <IReactInstance.h>
+#include <ViewManager.h>
+#include <memory>
 
 namespace react_native_windows_extended {
 
