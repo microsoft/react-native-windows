@@ -1,0 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace SampleApp
+{
+  [default_interface]
+  runtimeclass SampleModule : Microsoft.ReactNative.Bridge.NativeModuleBase
+  {
+    SampleModule();
+  }
+}
