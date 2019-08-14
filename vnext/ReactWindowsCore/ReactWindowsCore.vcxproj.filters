@@ -60,9 +60,6 @@
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -123,9 +120,6 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\ExceptionsManagerModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\BatchingUIManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\AppThemeModule.h">
@@ -227,7 +221,7 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BatchingMessageQueue.h">
+    <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -78,7 +78,6 @@ class UIManager : public IUIManager, INativeUIManagerHost {
   ShadowNode &GetShadowNodeForTag(int64_t tag) override;
   ShadowNode *FindShadowNodeForTag(int64_t tag) override;
   ShadowNode *FindParentRootShadowNode(int64_t tag) override;
-  bool supportsBatchedUIMessageQueueThread() { return true; }
 
  private:
   std::vector<std::unique_ptr<IViewManager>> m_viewManagers;

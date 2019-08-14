@@ -62,7 +62,6 @@
 #include <ReactWindowsCore/IUIManager.h>
 #include <Threading/JSQueueThread.h>
 #include <Threading/UIMessageQueueThread.h>
-#include <Threading/BatchingUIMessageQueueThread.h>
 #include <Threading/WorkerMessageQueueThread.h>
 
 #include <cxxreact/CxxNativeModule.h>
@@ -147,7 +146,6 @@ UwpReactInstance::UwpReactInstance(
 std::vector<facebook::react::NativeModuleDescription> GetModules(
     std::shared_ptr<facebook::react::IUIManager> uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
-    winrt::CoreDispatcher& coreDispatcher,
     std::shared_ptr<DeviceInfo> deviceInfo,
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     const I18nModule::I18nInfo &&i18nInfo,
@@ -162,7 +160,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       [uiManager = std::move(uiManager)]() {
         return facebook::react::createUIManagerModule(uiManager);
       },
-    std::make_shared <BatchingUIMessageQueueThread>(coreDispatcher));
+      messageQueue);
 
   modules.emplace_back(
       react::uwp::WebSocketModule::name,
@@ -346,7 +344,6 @@ void UwpReactInstance::Start(
         GetModules(
             m_uiManager,
             m_defaultNativeThread,
-            m_uiDispatcher,
             deviceInfo,
             devSettings,
             std::move(i18nInfo),

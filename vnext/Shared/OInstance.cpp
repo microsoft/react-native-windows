@@ -39,6 +39,7 @@
 #include <IDevSupportManager.h>
 #include <IReactRootView.h>
 #include <IUIManager.h>
+#include <BatchingMessageQueueThread.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 
@@ -223,17 +224,26 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         m_uiThread(std::move(uithread)) {}
   virtual ~BridgeUIBatchInstanceCallback() = default;
   void onBatchComplete() override {
-//    g_theDude->onBatchComplete();
-#if 0
     if (auto uithread = m_uiThread.lock()) {
-      std::weak_ptr<IUIManager> weakUiManager(m_weakUiManager);
-      uithread->runOnQueue([weakUiManager]() {
-        auto uiManager = weakUiManager.lock();
-        if (uiManager != nullptr)
-          uiManager->onBatchComplete();
-      });
+      facebook::react::BatchingMessageQueueThread* batchingUIThread = dynamic_cast<facebook::react::BatchingMessageQueueThread*>(uithread.get());
+      if (batchingUIThread != nullptr) {
+        batchingUIThread->onBatchComplete();
+        std::weak_ptr<IUIManager> weakUiManager(m_weakUiManager);
+        batchingUIThread->runOnQueueUnbatched([weakUiManager]() {
+          auto uiManager = weakUiManager.lock();
+          if (uiManager != nullptr)
+            uiManager->onBatchComplete();
+          });
+      }
+      else {
+        std::weak_ptr<IUIManager> weakUiManager(m_weakUiManager);
+        uithread->runOnQueue([weakUiManager]() {
+          auto uiManager = weakUiManager.lock();
+          if (uiManager != nullptr)
+            uiManager->onBatchComplete();
+          });
+      }
     }
-#endif
   }
   void incrementPendingJSCalls() override {}
   void decrementPendingJSCalls() override {}

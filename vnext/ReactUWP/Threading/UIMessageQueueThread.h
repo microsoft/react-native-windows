@@ -22,6 +22,7 @@ class UIMessageQueueThread : public facebook::react::BatchingMessageQueueThread 
   virtual void runOnQueueSync(std::function<void()> &&func);
   virtual void quitSynchronous();
 
+  void runOnQueueUnbatched(std::function<void()>&&) override;
   void onBatchComplete() override;
 
 private:

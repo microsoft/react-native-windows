@@ -32,9 +32,6 @@ void UIMessageQueueThread::runOnQueue(std::function<void()> &&func) {
             ++cCalls);
         OutputDebugStringA(buffer);
 #endif
-
-        func();
-      });
 }
 
 void UIMessageQueueThread::ensureQueue(){
@@ -55,6 +52,14 @@ void UIMessageQueueThread::onBatchComplete() {
         }
       });
   }
+}
+
+void UIMessageQueueThread::runOnQueueUnbatched(std::function<void()> &&func) {
+  m_uiDispatcher.RunAsync(
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      [func = std::move(func)]() {
+        func();
+      });
 }
 
 void UIMessageQueueThread::runOnQueueSync(std::function<void()> &&func) {

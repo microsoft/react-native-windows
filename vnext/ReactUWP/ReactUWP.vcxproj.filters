@@ -289,9 +289,6 @@
     <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
       <Filter>Base</Filter>
     </ClCompile>
-    <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -632,9 +629,6 @@
     </ClInclude>
     <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
       <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
-      <Filter>Threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
