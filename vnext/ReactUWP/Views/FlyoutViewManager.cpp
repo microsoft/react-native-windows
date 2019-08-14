@@ -198,7 +198,7 @@ void FlyoutShadowNode::createView() {
           });
 
   // When multiple flyouts are overlapping, XAML's theme shadows don't render
-  // properly. As a workaround we enable a z-index translation based on an 
+  // properly. As a workaround we enable a z-index translation based on an
   // elevation derived from the count of open flyouts. We apply this
   // translation on open of the flyout.
   // (Translation is only supported on RS5+)
@@ -216,7 +216,7 @@ void FlyoutShadowNode::createView() {
           }
         });
   }
-  
+
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
     if (auto instance = wkinstance.lock()) {
@@ -418,8 +418,7 @@ winrt::FlyoutPresenter FlyoutShadowNode::GetFlyoutPresenter() const {
 
 FlyoutViewManager::FlyoutViewManager(
     const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {
-}
+    : Super(reactInstance) {}
 
 const char *FlyoutViewManager::GetName() const {
   return "RCTFlyout";
