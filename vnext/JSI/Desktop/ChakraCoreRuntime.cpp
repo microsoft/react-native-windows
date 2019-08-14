@@ -153,7 +153,7 @@ std::string ChakraCoreRuntime::utf8(const String &str) {
           getChakraObjectRef(str), result.data(), length, &writtenLength),
       "JsCopyString");
 
-  assert(length = writtenLength);
+  assert(length == writtenLength);
   return result;
 }
 
