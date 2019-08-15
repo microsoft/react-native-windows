@@ -13,12 +13,10 @@ namespace winrt::SampleApp::implementation {
 struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   MainReactNativeHost() {
     auto instanceSettings = InstanceSettings();
-#if DEBUG
+    instanceSettings.UseWebDebugger(
+        false); // Disabled temporarily because of issue #2877
     instanceSettings.UseLiveReload(
         true); // true by default in debug builds already
-    instanceSettings.UseWebDebugger(
-        true); // true by default in debug builds already
-#endif
     instanceSettings.UseJsi(true);
   };
 
