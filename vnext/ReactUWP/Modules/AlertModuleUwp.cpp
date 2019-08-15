@@ -52,8 +52,9 @@ AlertModule::getMethods() {
   };
 }
 
-/*static*/ winrt::fire_and_forget AlertModule::showAlert(folly::dynamic &args, Callback actionResult) {
-
+/*static*/ winrt::fire_and_forget AlertModule::showAlert(
+    folly::dynamic &args,
+    Callback actionResult) {
   winrt::hstring alertTitle;
   winrt::hstring alertContent;
   winrt::hstring alertPrimaryButtonText;
@@ -61,24 +62,19 @@ AlertModule::getMethods() {
   winrt::hstring alertCloseButtonText;
 
   for (auto arg : args) {
-  
     for (auto &pair : arg.items()) {
       const std::string &propertyName = pair.first.getString();
       const folly::dynamic &propertyValue = pair.second;
-        
+
       if (propertyName == "title") {
         alertTitle = react::uwp::asHstring(propertyValue);
-      }        
-      else if (propertyName == "message") {
+      } else if (propertyName == "message") {
         alertContent = react::uwp::asHstring(propertyValue);
-      }    
-      else if (propertyName == "buttonPositive") {
+      } else if (propertyName == "buttonPositive") {
         alertPrimaryButtonText = react::uwp::asHstring(propertyValue);
-      }
-      else if (propertyName == "buttonNegative") {
+      } else if (propertyName == "buttonNegative") {
         alertSecondaryButtonText = react::uwp::asHstring(propertyValue);
-      }
-      else if (propertyName == "buttonNeutral") {
+      } else if (propertyName == "buttonNeutral") {
         alertCloseButtonText = react::uwp::asHstring(propertyValue);
       }
     }
@@ -93,13 +89,13 @@ AlertModule::getMethods() {
   auto result = co_await dialog.ShowAsync();
 
   switch (result) {
-    case winrt::ContentDialogResult::Primary :
+    case winrt::ContentDialogResult::Primary:
       actionResult({"positive"});
       break;
-    case winrt::ContentDialogResult::Secondary :
+    case winrt::ContentDialogResult::Secondary:
       actionResult({"negative"});
       break;
-    case winrt::ContentDialogResult::None :
+    case winrt::ContentDialogResult::None:
       actionResult({"neutral"});
       break;
     default:
