@@ -10,12 +10,11 @@ namespace react {
 
 class BatchingMessageQueueThread : public MessageQueueThread {
  public:
-   void runOnQueue(std::function<void()>&&) override {}
-   void runOnQueueSync(std::function<void()>&&) override {}
-   void quitSynchronous() override {}
+  void runOnQueue(std::function<void()> &&) override {}
+  void runOnQueueSync(std::function<void()> &&) override {}
+  void quitSynchronous() override {}
 
-   virtual void runOnQueueUnbatched(std::function<void()>&&) {}
-   virtual void onBatchComplete() {}
+  virtual void onBatchComplete() {}
 };
 
 } // namespace react

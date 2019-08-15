@@ -10,7 +10,8 @@ namespace react {
 namespace uwp {
 
 // Executes the function on the provided UI Dispatcher
-class UIMessageQueueThread : public facebook::react::BatchingMessageQueueThread {
+class UIMessageQueueThread
+    : public facebook::react::BatchingMessageQueueThread {
  public:
   UIMessageQueueThread() = delete;
   UIMessageQueueThread(const UIMessageQueueThread &other) = delete;
@@ -22,14 +23,13 @@ class UIMessageQueueThread : public facebook::react::BatchingMessageQueueThread 
   virtual void runOnQueueSync(std::function<void()> &&func);
   virtual void quitSynchronous();
 
-  void runOnQueueUnbatched(std::function<void()>&&) override;
   void onBatchComplete() override;
 
-private:
+ private:
   void ensureQueue();
 
-private:
-  winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{ nullptr };
+ private:
+  winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{nullptr};
 
   typedef std::vector<std::function<void()>> WorkItemQueue;
   std::shared_ptr<WorkItemQueue> m_queue;
@@ -37,4 +37,3 @@ private:
 
 } // namespace uwp
 } // namespace react
-

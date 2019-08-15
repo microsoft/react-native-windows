@@ -49,7 +49,6 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
-#include <Modules/UIManagerModule.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -57,6 +56,7 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
+#include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/IUIManager.h>
@@ -132,8 +132,7 @@ CreateUIManager(
       std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createIUIManager(
-      std::move(viewManagers), new NativeUIManager());
+  return createIUIManager(std::move(viewManagers), new NativeUIManager());
 }
 
 UwpReactInstance::UwpReactInstance(
