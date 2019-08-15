@@ -1,6 +1,0 @@
-export { HomePage, clickAndWaitForHomePage, clickAndWaitForPage } from './pages/HomePage'
-export { Locators } from './pages/Locators'
-export { TextInputTestPage } from './pages/TextInputTestPage'
-export { webDriver2 } from './testsetup'
-export { AnyPage } from './pages/AnyPage'
-export { TestPage } from './pages/TestPage'

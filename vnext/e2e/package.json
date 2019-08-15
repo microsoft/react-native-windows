@@ -4,19 +4,29 @@
   "description": "e2e test",
   "main": "index",
   "scripts": {
-    "test": "jest",
+    "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
+    "test": "rimraf reports/* && npm run prettier && wdio",
+    "dev": "npm run prettier && wdio --spec",
     "appium": "appium"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.3.3",
-    "@types/jest": "^24.0.17",
-    "@types/selenium-webdriver": "^4.0.1",
-    "appium": "^1.14.1",
-    "jest": "^24.8.0",
-    "selenium-appium": "0.0.8",
-    "selenium-webdriver": "^4.0.0-alpha.4",
-    "typescript": "3.5.1"
-  },
-  "author": "",
-  "license": "ISC"
+    "@wdio/appium-service": "^5.12.1",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.14.8",
+    "@wdio/cli": "^5.10.1",
+    "@wdio/local-runner": "^5.10.1",
+    "@wdio/mocha-framework": "^5.10.1",
+    "@wdio/junit-reporter": "^5.12.1",
+    "@wdio/sync": "^5.10.1",
+    "@wdio/dot-reporter": "5.11.7",
+    "chai": "^4.2.0",
+    "prettier": "^1.18.2",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.8.0",
+    "typescript": "^3.5.1",
+    "webdriverio": "^5.10.1",
+    "appium": "1.14.1",
+    "rimraf": "3.0.0"
+  }
 }
