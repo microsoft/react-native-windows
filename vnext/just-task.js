@@ -42,6 +42,14 @@ task('eslint', () => {
 task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
 });
+task('copyRNTester_temp_until_msrn_fork_rdy', () => {
+  return copyTask(['RN_Tester_temp_until_msrn_fork_rdy/**/*.js'], './RNTester');
+});
+
+task('initRNLibraries', () => {
+  require('./Scripts/copyRNLibraries').copyRNLibraries();
+});
+
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -64,7 +72,9 @@ task(
   series(
     condition('clean', () => true || argv().clean),
     'eslint',
+    'initRNLibraries',
     'copyFlowFiles',
+    'copyRNTester_temp_until_msrn_fork_rdy',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),
     'apiExtractorUpdate',
