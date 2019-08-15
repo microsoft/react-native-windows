@@ -37,6 +37,7 @@ void UIMessageQueueThread::runOnQueue(std::function<void()> &&func) {
 void UIMessageQueueThread::ensureQueue() {
   if (m_queue == nullptr) {
     m_queue = std::make_unique<WorkItemQueue>();
+    m_queue->reserve(2048);
   }
 }
 
