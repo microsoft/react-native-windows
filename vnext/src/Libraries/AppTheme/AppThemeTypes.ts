@@ -4,6 +4,9 @@
  * @format
  */
 
+/**
+ * Color information for high contrast
+ */
 export interface IHighContrastColors {
   ButtonFaceColor: string;
   ButtonTextColor: string;
