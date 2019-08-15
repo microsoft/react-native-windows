@@ -19,3 +19,4 @@ export * from './Libraries/Components/View/ViewWindowsProps';
 export * from './Libraries/Components/View/ViewWindows';
 export * from './Libraries/AppTheme/AppTheme';
 export * from './Libraries/AppTheme/AppThemeTypes';
+export * from './Libraries/Modules/Alert/Alert.windows';
