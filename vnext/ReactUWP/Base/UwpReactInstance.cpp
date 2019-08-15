@@ -46,6 +46,7 @@
 
 // Modules
 #include <AsyncStorageModule.h>
+#include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
@@ -218,6 +219,11 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
         return std::make_unique<react::windows::AppThemeModule>(
             std::move(appTheme));
       },
+      messageQueue);
+
+  modules.emplace_back(
+      AlertModule::name,
+      []() { return std::make_unique<AlertModule>(); },
       messageQueue);
 
   modules.emplace_back(
