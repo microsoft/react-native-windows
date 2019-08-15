@@ -6,41 +6,39 @@
 #include <stdint.h>
 #include "JsModulesUnbundle.h"
 
-class JsIndexedModulesUnbundle : public JsModulesUnbundle
-{
-public:
-    JsIndexedModulesUnbundle(const wchar_t* szSourcePath);
-	~JsIndexedModulesUnbundle();
-	virtual JsModulesUnbundleModule* GetModule(uint32_t index) override;
-	virtual JsErrorCode GetStartupCode(wchar_t** pszScript) override;
-private:
-    wchar_t* sourcePath;
-	HANDLE fileHandle;
-	HANDLE mapHandle;
-	BYTE* byteBuffer;
+class JsIndexedModulesUnbundle : public JsModulesUnbundle {
+ public:
+  JsIndexedModulesUnbundle(const wchar_t *szSourcePath);
+  ~JsIndexedModulesUnbundle();
+  virtual JsModulesUnbundleModule *GetModule(uint32_t index) override;
+  virtual JsErrorCode GetStartupCode(wchar_t **pszScript) override;
 
-	struct ModuleData {
-		uint32_t offset;
-		uint32_t length;
-	};
+ private:
+  wchar_t *sourcePath;
+  HANDLE fileHandle;
+  HANDLE mapHandle;
+  BYTE *byteBuffer;
 
-	static_assert(
-		sizeof(ModuleData) == 8,
-		"ModuleData must not have any padding and use sizes matching input files");
+  struct ModuleData {
+    uint32_t offset;
+    uint32_t length;
+  };
 
-	struct ModuleTable {
-		size_t numEntries;
-		ModuleData* modules;
-		ModuleTable() : numEntries(0) {};
-		ModuleTable(size_t entries) :
-			numEntries(entries),
-			modules(new ModuleData[numEntries]) {};
-		size_t byteLength() const {
-			return numEntries * sizeof(ModuleData);
-		}
-	};
+  static_assert(
+      sizeof(ModuleData) == 8,
+      "ModuleData must not have any padding and use sizes matching input files");
 
-	ModuleTable moduleTable;
-	uint32_t baseOffset;
+  struct ModuleTable {
+    size_t numEntries;
+    ModuleData *modules;
+    ModuleTable() : numEntries(0){};
+    ModuleTable(size_t entries)
+        : numEntries(entries), modules(new ModuleData[numEntries]){};
+    size_t byteLength() const {
+      return numEntries * sizeof(ModuleData);
+    }
+  };
+
+  ModuleTable moduleTable;
+  uint32_t baseOffset;
 };
-
