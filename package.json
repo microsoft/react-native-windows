@@ -23,5 +23,8 @@
   "devDependencies": {
     "beachball": "^1.11.5",
     "lerna": "^3.16.1"
+  },
+  "resolutions": {
+    "**/eslint-plugin-react": "^7.14.1"
   }
 }

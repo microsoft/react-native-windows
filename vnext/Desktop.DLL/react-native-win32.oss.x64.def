@@ -43,7 +43,6 @@ YGNodeNewWithConfig
 YGNodeFree
 YGNodeFreeRecursive
 YGNodeReset
-YGNodeGetInstanceCount
 YGNodeInsertChild
 YGNodeRemoveChild
 YGNodeGetChild
@@ -58,11 +57,8 @@ YGNodeCanUseCachedMeasurement
 YGNodeCopyStyle
 YGNodeGetContext
 YGNodeSetContext
-YGNodeGetMeasureFunc
 YGNodeSetMeasureFunc
-YGNodeGetBaselineFunc
 YGNodeSetBaselineFunc
-YGNodeGetPrintFunc
 YGNodeSetPrintFunc
 YGNodeGetHasNewLayout
 YGNodeSetHasNewLayout
@@ -142,8 +138,6 @@ YGNodeLayoutGetMargin
 YGNodeLayoutGetBorder
 YGNodeLayoutGetPadding
 YGConfigSetLogger
-YGLog
-YGLogWithConfig
 YGAssert
 YGAssertWithNode
 YGAssertWithConfig
@@ -152,7 +146,6 @@ YGConfigSetUseLegacyStretchBehaviour
 YGConfigNew
 YGConfigFree
 YGConfigCopy
-YGConfigGetInstanceCount
 YGConfigSetExperimentalFeatureEnabled
 YGConfigIsExperimentalFeatureEnabled
 YGConfigSetUseWebDefaults
