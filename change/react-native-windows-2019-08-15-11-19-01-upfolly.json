@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Always use unforked version of folly + Update folly to v2019.08.12.00",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "e7555cae73f86d0b67c378eada98129726b4fe33",
+  "date": "2019-08-15T18:19:01.132Z"
+}
