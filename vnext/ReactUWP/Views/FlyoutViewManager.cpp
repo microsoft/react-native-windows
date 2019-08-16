@@ -18,19 +18,20 @@ using namespace Windows::UI::Xaml::Interop;
 } // namespace winrt
 
 static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
-    placementModeMinVersion = {{"top", winrt::FlyoutPlacementMode::Top},
-                               {"top-edge-aligned-left", winrt::FlyoutPlacementMode::Top},
-                               {"top-edge-aligned-right", winrt::FlyoutPlacementMode::Top},
-                               {"bottom", winrt::FlyoutPlacementMode::Bottom},
-                               {"bottom-edge-aligned-left", winrt::FlyoutPlacementMode::Bottom},
-                               {"bottom-edge-aligned-right", winrt::FlyoutPlacementMode::Bottom},
-                               {"left", winrt::FlyoutPlacementMode::Left},
-                               {"left-edge-aligned-top", winrt::FlyoutPlacementMode::Left},
-                               {"left-edge-aligned-bottom", winrt::FlyoutPlacementMode::Left},
-                               {"right", winrt::FlyoutPlacementMode::Right},
-                               {"right-edge-aligned-top", winrt::FlyoutPlacementMode::Right},
-                               {"right-edge-aligned-bottom", winrt::FlyoutPlacementMode::Right},
-                               {"full", winrt::FlyoutPlacementMode::Full}};
+    placementModeMinVersion = {
+        {"top", winrt::FlyoutPlacementMode::Top},
+        {"top-edge-aligned-left", winrt::FlyoutPlacementMode::Top},
+        {"top-edge-aligned-right", winrt::FlyoutPlacementMode::Top},
+        {"bottom", winrt::FlyoutPlacementMode::Bottom},
+        {"bottom-edge-aligned-left", winrt::FlyoutPlacementMode::Bottom},
+        {"bottom-edge-aligned-right", winrt::FlyoutPlacementMode::Bottom},
+        {"left", winrt::FlyoutPlacementMode::Left},
+        {"left-edge-aligned-top", winrt::FlyoutPlacementMode::Left},
+        {"left-edge-aligned-bottom", winrt::FlyoutPlacementMode::Left},
+        {"right", winrt::FlyoutPlacementMode::Right},
+        {"right-edge-aligned-top", winrt::FlyoutPlacementMode::Right},
+        {"right-edge-aligned-bottom", winrt::FlyoutPlacementMode::Right},
+        {"full", winrt::FlyoutPlacementMode::Full}};
 
 static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
     placementModeRS5 = {{"top", winrt::FlyoutPlacementMode::Top},
