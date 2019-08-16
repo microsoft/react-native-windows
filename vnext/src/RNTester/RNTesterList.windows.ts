@@ -140,6 +140,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/AppStateExample'),
   },
   {
+    key: 'AlertExample',
+    module: require('./AlertExample.windows'),
+  },
+  {
     key: 'ThemingExample',
     module: require('./ThemingExample'),
   },

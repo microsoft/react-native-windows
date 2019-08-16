@@ -1,6 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Aug 2019 23:13:59 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Aug 2019 19:56:52 GMT and should not be manually modified.
+
+## 0.59.0-vnext.139
+Tue, 13 Aug 2019 19:56:52 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.43 (53619745+rnbot@users.noreply.github.com)
+,- Change windows template to not use cli wrapper (acoates@microsoft.com)
 
 ## 0.59.0-vnext.138
 Mon, 12 Aug 2019 23:13:59 GMT
