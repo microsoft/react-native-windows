@@ -84,10 +84,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

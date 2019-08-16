@@ -14,18 +14,18 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' != 'true'"/>
   </ItemGroup>
 </Project>
