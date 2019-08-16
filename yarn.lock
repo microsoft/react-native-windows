@@ -7734,17 +7734,9 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-<<<<<<< HEAD
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.42.tar.gz":
-  version "0.59.0-microsoft.42"
-  uid "053d931ad633c689d80ec332e4580521beee979f"
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.42.tar.gz#053d931ad633c689d80ec332e4580521beee979f"
-=======
 "react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.43.tar.gz":
   version "0.59.0-microsoft.43"
-  uid "1f1287774e85b2db033491bc8b245049203187ad"
   resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.43.tar.gz#1f1287774e85b2db033491bc8b245049203187ad"
->>>>>>> upstream/master
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
