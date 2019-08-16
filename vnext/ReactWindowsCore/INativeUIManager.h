@@ -63,6 +63,11 @@ struct INativeUIManager {
       facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual void focus(int64_t reactTag) = 0;
   virtual void blur(int64_t reactTag) = 0;
+  virtual void findSubviewIn(
+      facebook::react::ShadowNode &shadowNode,
+      int64_t x,
+      int64_t y,
+      facebook::xplat::module::CxxModule::Callback callback) = 0;
 };
 
 } // namespace react

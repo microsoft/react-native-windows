@@ -1158,6 +1158,17 @@ void NativeUIManager::measure(
   callback(args);
 }
 
+void NativeUIManager::findSubviewIn(
+  facebook::react::ShadowNode& shadowNode,
+  int64_t x,
+  int64_t y,
+  facebook::xplat::module::CxxModule::Callback callback)
+{
+  // not implemented
+  assert(false);
+  callback({});
+}
+
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(
           m_host->FindShadowNodeForTag(reactTag))) {
