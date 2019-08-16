@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix UWP PR PublicRNX86Debug build.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "811bfdbc8a7a9bf3f3e2b1241475a131fa220e54",
+  "date": "2019-08-16T00:23:16.042Z"
+}
