@@ -16,7 +16,7 @@ import {
   AppTheme,
   IAppThemeChangedEvent,
   IHighContrastChangedEvent,
-} from '../index.uwp';
+} from '../index.windows';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {
