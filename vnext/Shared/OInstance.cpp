@@ -433,6 +433,7 @@ InstanceImpl::InstanceImpl(
 #if !defined(OSS_RN)
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
+      assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
           m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
