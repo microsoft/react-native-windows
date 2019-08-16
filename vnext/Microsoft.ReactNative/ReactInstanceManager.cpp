@@ -25,7 +25,7 @@ ReactInstanceManager::ReactInstanceManager(
     std::string jsMainModuleName,
     IVectorView<IReactPackage> &packages,
     bool useDeveloperSupport,
-    /*TODO*/ LifecycleState initialLifecycleState)
+    /*TODO*/ LifecycleState /*initialLifecycleState*/)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
