@@ -28,6 +28,7 @@
 #undef min
 #undef OUT
 #undef IN
+#define FOLLY_MOBILE 1
 #include <folly/dynamic.h>
 #pragma pop_macro("IN")
 #pragma pop_macro("OUT")
