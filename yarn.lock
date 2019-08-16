@@ -7734,9 +7734,51 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
+react-native-windows-extended@0.12.0:
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/react-native-windows-extended/-/react-native-windows-extended-0.12.0.tgz#058692879095984d545d0041753f67790d07dd11"
+  integrity sha512-UvxtKgmAwYVLmLCd/ewMifNxCYscGZjDv6OzaP4NDu8zpVZspjK7jgyMJtpE3PRC28cFbJv9w0tik+GMTloj7w==
+  dependencies:
+    react-native-windows "0.59.0-vnext.136"
+
+react-native-windows@0.59.0-vnext.136:
+  version "0.59.0-vnext.136"
+  resolved "https://registry.yarnpkg.com/react-native-windows/-/react-native-windows-0.59.0-vnext.136.tgz#67c603415c7b52dd1fc42520b79bdb2528185f56"
+  integrity sha512-iTo2v/Xd/2w9UNxu+uiEE4JpWHnBIkMPvnBmiR/4MiVPbImvA/B3HxLeidM+yqi6u/Pzl07bL0VGp+2ji0RQng==
+  dependencies:
+    "@babel/runtime" "^7.4.0"
+    create-react-class "^15.6.3"
+    fbjs "^1.0.0"
+    prop-types "^15.5.8"
+    react-native-local-cli "^1.0.0-alpha.5"
+    react-timer-mixin "^0.13.2"
+    regenerator-runtime "^0.13.2"
+    shelljs "^0.7.8"
+    username "^3.0.0"
+    uuid "^2.0.1"
+    xml-parser "^1.2.1"
+
+react-native-windows@0.59.0-vnext.138:
+  version "0.59.0-vnext.138"
+  resolved "https://registry.yarnpkg.com/react-native-windows/-/react-native-windows-0.59.0-vnext.138.tgz#ca341465626da5c89d59216aa1fa0d2f33802c97"
+  integrity sha512-4ICnQHhtHRp2nvyZVf74G9c5BbuaHqYcjZhakQ7p6WgqB5gwWNrGhrzLWixV0kGXo+ny+ZIgmRbgJ2/giS94bA==
+  dependencies:
+    "@babel/runtime" "^7.4.0"
+    cli-spinners "^2.2.0"
+    create-react-class "^15.6.3"
+    fbjs "^1.0.0"
+    ora "^3.4.0"
+    prop-types "^15.5.8"
+    react-native-local-cli "^1.0.0-alpha.5"
+    react-timer-mixin "^0.13.2"
+    regenerator-runtime "^0.13.2"
+    shelljs "^0.7.8"
+    username "^3.0.0"
+    uuid "^2.0.1"
+    xml-parser "^1.2.1"
+
 "react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.43.tar.gz":
   version "0.59.0-microsoft.43"
-  uid "1f1287774e85b2db033491bc8b245049203187ad"
   resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.43.tar.gz#1f1287774e85b2db033491bc8b245049203187ad"
   dependencies:
     "@babel/core" "^7.4.0"
