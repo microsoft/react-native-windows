@@ -387,11 +387,12 @@ void UwpReactInstance::Start(
         preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(
             winrt::to_hstring(settings.ByteCodeFileUri));
       }
-      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::ChakraJSIRuntimeHolder>(
-          devSettings,
-          jsQueue,
-          std::move(scriptStore),
-          std::move(preparedScriptStore));
+      devSettings->jsiRuntimeHolder =
+          std::make_shared<facebook::react::ChakraJSIRuntimeHolder>(
+              devSettings,
+              jsQueue,
+              std::move(scriptStore),
+              std::move(preparedScriptStore));
 #endif
     }
 #endif

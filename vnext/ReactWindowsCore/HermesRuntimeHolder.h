@@ -1,7 +1,7 @@
 #pragma once
-#include <thread>
 #include <jsi/RuntimeHolder.h>
 #include <jsi/jsi.h>
+#include <thread>
 
 namespace facebook {
 namespace react {

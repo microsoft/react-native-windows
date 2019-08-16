@@ -439,7 +439,8 @@ InstanceImpl::InstanceImpl(
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
 #if defined(USE_HERMES)
-          m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<HermesRuntimeHolder>();
           break;
 #else
           assert(false); // Hermes is not available in this build, fallthrough
@@ -451,7 +452,8 @@ InstanceImpl::InstanceImpl(
                   m_devSettings, jsQueue, nullptr, nullptr);
           break;
       }
-      jsef = std::make_shared<OJSIExecutorFactory>(m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     } else
 #endif
     {
