@@ -7,6 +7,12 @@
 import {IKeyboardProps} from '../Keyboard/KeyboardExtProps';
 import {ViewProps} from 'react-native';
 
+/**
+ * @remarks
+ * Props type for {@link ViewWindows}
+ *
+ * Extends: {@link IKeyboardProps} and {@link https://facebook.github.io/react-native/docs/view | react-native's ViewProps}
+ */
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
   acceptsKeyboardFocus?: boolean;
   // tslint:disable-next-line:no-any

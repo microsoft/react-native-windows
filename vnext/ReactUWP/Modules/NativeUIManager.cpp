@@ -1016,6 +1016,12 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   if (shadowNode == nullptr)
     return;
 
+  if (shadowNode->IsExternalLayoutDirty()) {
+    YGNodeRef yogaNode = GetYogaNode(tag);
+    if (yogaNode)
+      shadowNode->DoExtraLayoutPrep(yogaNode);
+  }
+
   for (int64_t child : shadowNode->m_children) {
     UpdateExtraLayout(child);
   }

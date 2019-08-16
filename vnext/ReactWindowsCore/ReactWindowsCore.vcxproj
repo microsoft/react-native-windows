@@ -70,7 +70,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
     <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h" />
@@ -87,6 +87,7 @@
     <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="BatchingMessageQueueThread.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
     <ClInclude Include="DevSettings.h" />
@@ -103,7 +104,6 @@
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\AppThemeModule.h" />
-    <ClInclude Include="Modules\BatchingUIManagerModule.h" />
     <ClInclude Include="Modules\ExceptionsManagerModule.h" />
     <ClInclude Include="Modules\I18nModule.h" />
     <ClInclude Include="Modules\UIManagerModule.h" />
@@ -130,7 +130,6 @@
     <ClCompile Include="Modules\AppStateModule.cpp" />
     <ClCompile Include="Modules\AppThemeModule.cpp" />
     <ClCompile Include="Modules\AsyncStorageModule.cpp" />
-    <ClCompile Include="Modules\BatchingUIManagerModule.cpp" />
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
