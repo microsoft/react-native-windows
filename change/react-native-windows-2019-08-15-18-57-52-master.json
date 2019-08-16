@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "restore accidental deletion",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "3b9f508518f7a3ea39c379c6ab8c4b31e571b499",
+  "date": "2019-08-16T01:57:52.030Z"
+}
