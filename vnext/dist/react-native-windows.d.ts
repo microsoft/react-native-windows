@@ -4,6 +4,10 @@ import { StyleProp } from 'react-native';
 import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
+export declare class Alert {
+    static alert(title: string | null, message?: string | null, buttons?: Buttons, options?: Options): void;
+}
+
 export declare const AppTheme: AppThemeModule;
 
 declare class AppThemeModule extends MissingNativeEventEmitterShim {
@@ -14,6 +18,12 @@ declare class AppThemeModule extends MissingNativeEventEmitterShim {
 }
 
 export declare type AppThemeTypes = 'light' | 'dark';
+
+export declare type Buttons = Array<{
+    text?: string;
+    onPress?: Function | null;
+    style?: string;
+}>;
 
 export declare class CheckBox extends React.Component<ICheckBoxProps> {
     render(): JSX.Element | null;
@@ -225,6 +235,11 @@ export declare interface IViewWindowsProps extends IKeyboardProps, ViewProps {
 }
 
 declare const MissingNativeEventEmitterShim: any;
+
+declare type Options = {
+    cancelable?: boolean | null;
+    onDismiss?: Function | null;
+};
 
 export declare class Picker extends React.Component<IPickerProps> {
     static Item: typeof PickerItem;

@@ -34,6 +34,7 @@
 #include <Utils/LocalBundleReader.h>
 #endif
 
+#include <BatchingMessageQueueThread.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
 #include <IDevSupportManager.h>
@@ -229,6 +230,12 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         if (uiManager != nullptr)
           uiManager->onBatchComplete();
       });
+      facebook::react::BatchingMessageQueueThread *batchingUIThread =
+          dynamic_cast<facebook::react::BatchingMessageQueueThread *>(
+              uithread.get());
+      if (batchingUIThread != nullptr) {
+        batchingUIThread->onBatchComplete();
+      }
     }
   }
   void incrementPendingJSCalls() override {}

@@ -8,6 +8,7 @@
 
 |  Class | Description |
 |  --- | --- |
+|  [Alert](./react-native-windows.alert.md) |  |
 |  [CheckBox](./react-native-windows.checkbox.md) |  |
 |  [DatePicker](./react-native-windows.datepicker.md) |  |
 |  [Flyout](./react-native-windows.flyout.md) |  |
@@ -52,6 +53,7 @@
 |  Type Alias | Description |
 |  --- | --- |
 |  [AppThemeTypes](./react-native-windows.appthemetypes.md) |  |
+|  [Buttons](./react-native-windows.buttons.md) |  |
 |  [IKeyboardEvent](./react-native-windows.ikeyboardevent.md) |  |
 |  [Placement](./react-native-windows.placement.md) |  |
 
