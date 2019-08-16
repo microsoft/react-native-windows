@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "react-native-windows-extended.h"
-#include "CustomViewManager.h"
 #include <ViewManager.h>
+#include "CustomViewManager.h"
 
 namespace react_native_windows_extended {
 

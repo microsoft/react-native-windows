@@ -187,6 +187,7 @@
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Modules\AppStateModuleUwp.h" />
     <ClInclude Include="Modules\AppThemeModuleUwp.h" />
+    <ClInclude Include="Modules\AlertModuleUwp.h" />
     <ClInclude Include="Modules\ClipboardModule.h" />
     <ClInclude Include="Modules\DeviceInfoModule.h" />
     <ClInclude Include="Modules\DevSupportManagerUwp.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="Utils\Helpers.cpp" />
     <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
+    <ClCompile Include="Modules\AlertModuleUwp.cpp" />
     <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />

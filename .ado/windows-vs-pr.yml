@@ -75,9 +75,9 @@ jobs:
       - template: templates/stop-packagers.yml
 
       - task: CmdLine@2
-        displayName: yarn build
+        displayName: yarn buildci
         inputs:
-          script: yarn build
+          script: yarn buildci
 
       - template: templates/install-SDK.yml
       
@@ -371,7 +371,6 @@ jobs:
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
-          workingDirectory: vnext
 
   - job: CurrentPR
     displayName: Current (C#) PR

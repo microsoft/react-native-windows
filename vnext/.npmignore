@@ -4,6 +4,7 @@
 .vscode
 **/*.inc
 **/*.windesktop.*
+api-extractor.json
 build
 CMakeLists.txt
 Desktop
@@ -29,6 +30,7 @@ RNTester/
 Scripts/layoutFilesForNuget.bat.bat
 src/
 target
+temp
 tsconfig.json
 Universal.IntegrationTests
 Universal.UnitTests
