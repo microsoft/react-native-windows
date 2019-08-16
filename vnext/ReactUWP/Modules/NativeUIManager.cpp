@@ -1165,14 +1165,66 @@ void NativeUIManager::measure(
 }
 
 void NativeUIManager::findSubviewIn(
-  facebook::react::ShadowNode& shadowNode,
-  int64_t x,
-  int64_t y,
-  facebook::xplat::module::CxxModule::Callback callback)
-{
-  // not implemented
-  assert(false);
-  callback({});
+    facebook::react::ShadowNode &shadowNode,
+    float x,
+    float y,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
+  auto view = node.GetView();
+
+  auto rootUIView = view.as<winrt::UIElement>();
+  if (rootUIView == nullptr) {
+    callback({});
+    return;
+  }
+
+  winrt::Point point{x, y};
+
+  // Transform the point to app window coordinates because
+  // FindElementsInHostCoordinate() work in that metric
+  auto appWindowTransform = rootUIView.TransformToVisual(nullptr);
+  auto pointInAppWindow = appWindowTransform.TransformPoint(point);
+
+  // Perform hit test to find the top most z-index element that intersects with
+  // the queried point
+  auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(
+                             pointInAppWindow, rootUIView)
+                             .First();
+  if (!hitTestElements.HasCurrent()) {
+    callback({});
+    return;
+  }
+
+  auto foundElement = hitTestElements.Current().as<winrt::FrameworkElement>();
+  int64_t tag = 0;
+
+  // The hit test element may not have a react Tag assigned.
+  // Traverse up the hierary until we find an element with tag.
+  while (foundElement != nullptr) {
+    auto reactView = foundElement.as<react::uwp::XamlView>();
+    tag = react::uwp::GetTag(reactView);
+    if (tag != 0) {
+      break;
+    }
+    foundElement = foundElement.Parent().as<winrt::FrameworkElement>();
+  }
+
+  if (foundElement == nullptr) {
+    callback({});
+    return;
+  }
+
+  // We need to return the top left coordinate relative to the passed root view, not the app window.
+  auto rootUITransform = foundElement.TransformToVisual(rootUIView);
+  winrt::Point topLeftInRootCoordinates = rootUITransform.TransformPoint({0, 0});
+
+  std::vector<folly::dynamic> args;
+  args.push_back(tag);
+  args.push_back(topLeftInRootCoordinates.X);
+  args.push_back(topLeftInRootCoordinates.Y);
+  args.push_back(foundElement.ActualWidth());
+  args.push_back(foundElement.ActualHeight());
+  callback(args);
 }
 
 void NativeUIManager::focus(int64_t reactTag) {

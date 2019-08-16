@@ -65,8 +65,8 @@ struct INativeUIManager {
   virtual void blur(int64_t reactTag) = 0;
   virtual void findSubviewIn(
       facebook::react::ShadowNode &shadowNode,
-      int64_t x,
-      int64_t y,
+      float x,
+      float y,
       facebook::xplat::module::CxxModule::Callback callback) = 0;
 };
 
