@@ -10,6 +10,14 @@ import { StyleProp } from 'react-native';
 import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
+// @public (undocumented)
+export class Alert {
+    // Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts
+    // 
+    // (undocumented)
+    static alert(title: string | null, message?: string | null, buttons?: Buttons, options?: Options): void;
+}
+
 // Warning: (ae-forgotten-export) The symbol "AppThemeModule" needs to be exported by the entry point index.d.ts
 // 
 // @public (undocumented)
@@ -17,6 +25,13 @@ export const AppTheme: AppThemeModule;
 
 // @public (undocumented)
 export type AppThemeTypes = 'light' | 'dark';
+
+// @public (undocumented)
+export type Buttons = Array<{
+    text?: string;
+    onPress?: Function | null;
+    style?: string;
+}>;
 
 // Warning: (ae-forgotten-export) The symbol "ICheckBoxProps" needs to be exported by the entry point index.d.ts
 // 

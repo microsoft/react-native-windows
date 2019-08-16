@@ -46,10 +46,10 @@
 
 // Modules
 #include <AsyncStorageModule.h>
+#include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
-#include <Modules/BatchingUIManagerModule.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -57,6 +57,7 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
+#include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/IUIManager.h>
@@ -132,8 +133,7 @@ CreateUIManager(
       std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createBatchingUIManager(
-      std::move(viewManagers), new NativeUIManager());
+  return createIUIManager(std::move(viewManagers), new NativeUIManager());
 }
 
 UwpReactInstance::UwpReactInstance(
@@ -158,7 +158,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       "UIManager",
       [uiManager = std::move(uiManager)]() {
-        return facebook::react::createBatchingUIManagerModule(uiManager);
+        return facebook::react::createUIManagerModule(uiManager);
       },
       messageQueue);
 
@@ -218,6 +218,11 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
         return std::make_unique<react::windows::AppThemeModule>(
             std::move(appTheme));
       },
+      messageQueue);
+
+  modules.emplace_back(
+      AlertModule::name,
+      []() { return std::make_unique<AlertModule>(); },
       messageQueue);
 
   modules.emplace_back(
