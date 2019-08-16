@@ -883,19 +883,19 @@ TEST_P(JsiRuntimeUnitTests, EqualsTest) {
   EXPECT_TRUE(Value::strictEquals(rt, +0.0, -0.0));
   EXPECT_TRUE(Value::strictEquals(rt, -0.0, +0.0));
 
-  //Function noop = Function::createFromHostFunction(
+  // Function noop = Function::createFromHostFunction(
   //    rt,
   //    PropNameID::forAscii(rt, "noop"),
   //    0,
   //    [](const Runtime &, const Value &, const Value *, size_t) {
   //      return Value();
   //    });
-  //auto noopDup = Value(rt, noop).getObject(rt);
-  //EXPECT_TRUE(Object::strictEquals(rt, noop, noopDup));
-  //EXPECT_TRUE(Object::strictEquals(rt, noopDup, noop));
-  //EXPECT_FALSE(Object::strictEquals(rt, noop, rt.global()));
-  //EXPECT_TRUE(Object::strictEquals(rt, noop, noop));
-  //EXPECT_TRUE(Value::strictEquals(rt, Value(rt, noop), Value(rt, noop)));
+  // auto noopDup = Value(rt, noop).getObject(rt);
+  // EXPECT_TRUE(Object::strictEquals(rt, noop, noopDup));
+  // EXPECT_TRUE(Object::strictEquals(rt, noopDup, noop));
+  // EXPECT_FALSE(Object::strictEquals(rt, noop, rt.global()));
+  // EXPECT_TRUE(Object::strictEquals(rt, noop, noop));
+  // EXPECT_TRUE(Value::strictEquals(rt, Value(rt, noop), Value(rt, noop)));
 
   String str = String::createFromAscii(rt, "rick");
   String strDup = String::createFromAscii(rt, "rick");
@@ -905,7 +905,7 @@ TEST_P(JsiRuntimeUnitTests, EqualsTest) {
   EXPECT_TRUE(String::strictEquals(rt, strDup, str));
   EXPECT_FALSE(String::strictEquals(rt, str, otherStr));
   EXPECT_TRUE(Value::strictEquals(rt, Value(rt, str), Value(rt, str)));
-  //EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), Value(rt, noop)));
+  // EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), Value(rt, noop)));
   EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), 1.0));
 }
 

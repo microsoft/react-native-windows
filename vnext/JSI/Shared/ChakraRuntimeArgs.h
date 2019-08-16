@@ -6,7 +6,6 @@
 namespace facebook::jsi::chakra {
 
 struct ChakraRuntimeArgs {
-
   // When this flag is set to true, the runtime will not do any work (such as
   // garbage collection) on background threads.
   bool disableBackgroundWork{false};

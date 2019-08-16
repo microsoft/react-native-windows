@@ -5,8 +5,8 @@
 
 // TODO (yicyao): Fix this.
 #include "ChakraCoreRuntime.h"
-#include "ChakraRuntimeArgs.h"
 #include "ChakraCoreRuntimeExArgs.h"
+#include "ChakraRuntimeArgs.h"
 #include "jsi/decorator.h"
 
 namespace facebook {
