@@ -66,7 +66,7 @@ class InspectorOverlay extends React.Component<Props> {
       <View
         onStartShouldSetResponder={this.shouldSetResponser}
         onResponderMove={this.findViewForTouchEvent}
-        style={[styles.inspector, {height: "100%"}]}>
+        style={[styles.inspector, {height: '100%'}]}>
         {content}
       </View>
     );
