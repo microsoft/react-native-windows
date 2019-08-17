@@ -13,11 +13,9 @@ const fs = require('fs');
  * integration tests during local development or on CI services.
  */
 
-const rootRnPath = path.resolve(require.resolve('react-native'), '../../..');
-
 let config = {
   extraNodeModules: {
-    'react-native': rootRnPath,
+    'react-native': __dirname,
     'react-native-windows': __dirname,
   },
   watchFolders: [

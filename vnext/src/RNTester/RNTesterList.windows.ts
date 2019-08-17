@@ -128,8 +128,8 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('./KeyboardFocusExample.windows'),
   },
   {
-    key: 'AccessibilityExample',
-    module: require('./AccessibilityExample'),
+    key: 'AccessibilityExampleWindows',
+    module: require('./AccessibilityExampleWindows'),
   },
   {
     key: 'AnimatedExample',
@@ -163,10 +163,12 @@ const APIExamples: Array<IRNTesterExample> = [
     key: 'Dimensions',
     module: require('react-native/RNTester/js/DimensionsExample'),
   },
+  /* -- GeoLocation needs to be moved out of core
   {
     key: 'GeolocationExample',
     module: require('react-native/RNTester/js/GeolocationExample'),
   },
+  */
   {
     key: 'KeyboardExample',
     module: require('./KeyboardExample'),

@@ -4,8 +4,9 @@
  * @format
  */
 
-import * as React from 'react';
 import {IViewWindowsProps} from './ViewWindowsProps';
+import * as React from 'react';
+import {View, NativeMethodsMixin} from 'react-native';
 
 /**
  * Same as {@link https://facebook.github.io/react-native/docs/view | react-native's View}, but with extra windows specific functionality
@@ -14,10 +15,12 @@ import {IViewWindowsProps} from './ViewWindowsProps';
  * Prop type: {@link IViewWindowsProps}.
  *
  */
-export class ViewWindows extends React.Component<IViewWindowsProps> {
-  public render(): JSX.Element | null {
-    return null;
-  }
-}
-
-export default ViewWindows;
+export const ViewWindows = React.forwardRef(
+  (props: IViewWindowsProps, ref: React.Ref<any>) => (
+    <View ref={ref} {...props} />
+  ),
+);
+export type ViewWindows = React.ForwardRefExoticComponent<
+  IViewWindowsProps & React.RefAttributes<View>
+> &
+  NativeMethodsMixin;

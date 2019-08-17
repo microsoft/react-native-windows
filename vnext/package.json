@@ -8,7 +8,8 @@
     "directory": "vnext"
   },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
-  "types": "index.d.ts",
+  "main": "Libraries/react-native/react-native-implementation.windows.js",
+  "typings": "Libraries/react-native/typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",

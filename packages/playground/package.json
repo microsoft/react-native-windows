@@ -6,7 +6,7 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "postinstall": "node postinstall.js",
-    "start": "react-native start",
+    "start": "react-native start --reactNativePath ../../vnext",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"

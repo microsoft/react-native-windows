@@ -7,13 +7,14 @@
 import * as React from 'react';
 import {
   AppRegistry,
+  CheckBox,
   StyleSheet,
   Switch,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import {CheckBox, DatePicker, Picker} from 'react-native-windows';
+import {DatePicker, Picker} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -83,7 +84,7 @@ export default class Bootstrap extends React.Component<
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
             onValueChange={value => this.setState({focusable: value})}
-            checked={this.state.focusable}
+            value={this.state.focusable}
           />
           <Text>acceptsKeyboardFocus</Text>
         </View>
@@ -91,7 +92,7 @@ export default class Bootstrap extends React.Component<
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
             onValueChange={value => this.setState({hasBorder: value})}
-            checked={this.state.hasBorder}
+            value={this.state.hasBorder}
           />
           <Text>hasBorder</Text>
         </View>
@@ -99,7 +100,7 @@ export default class Bootstrap extends React.Component<
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
             onValueChange={value => this.setState({radius: value})}
-            checked={this.state.radius}
+            value={this.state.radius}
           />
           <Text>hasRadius</Text>
         </View>
@@ -139,7 +140,7 @@ export default class Bootstrap extends React.Component<
           style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
           <CheckBox
             onValueChange={value => this.setState({focusable: value})}
-            checked={this.state.focusable}
+            value={this.state.focusable}
           />
           <Text>acceptsKeyboardFocus</Text>
         </View>

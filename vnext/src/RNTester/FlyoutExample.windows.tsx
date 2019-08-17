@@ -5,8 +5,8 @@
  */
 
 import React = require('react');
-import {Button, Text, TextInput, View} from 'react-native';
-import {CheckBox, Flyout, Picker} from '../index.windows';
+import {Button, CheckBox, Text, TextInput, View} from 'react-native';
+import {Flyout, Picker} from 'react-native-windows';
 import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
@@ -102,7 +102,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 <Text style={{padding: 10}}>isLightDismissEnabled: </Text>
                 <CheckBox
                   style={{justifyContent: 'center', padding: 20}}
-                  checked={this.state.popupCheckBoxState}
+                  value={this.state.popupCheckBoxState}
                   onValueChange={value =>
                     this.setState({
                       popupCheckBoxState: value,

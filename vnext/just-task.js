@@ -43,7 +43,14 @@ task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
 });
 task('copyRNTester_temp_until_msrn_fork_rdy', () => {
-  return copyTask(['RN_Tester_temp_until_msrn_fork_rdy/**/*.js'], './RNTester');
+  return copyTask(
+    [
+      'RN_Tester_temp_until_msrn_fork_rdy/**/*.js',
+      'RN_Tester_temp_until_msrn_fork_rdy/**/*.gif',
+      'RN_Tester_temp_until_msrn_fork_rdy/**/*.png',
+    ],
+    './RNTester',
+  );
 });
 
 task('initRNLibraries', () => {

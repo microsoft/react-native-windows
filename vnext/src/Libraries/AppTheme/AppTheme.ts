@@ -16,4 +16,4 @@ class AppThemeModule extends MissingNativeEventEmitterShim {
 }
 
 export const AppTheme = new AppThemeModule();
-export default AppTheme;
+export type AppTheme = AppThemeModule;

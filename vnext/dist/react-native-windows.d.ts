@@ -1,14 +1,23 @@
+/**
+ * @packagedocumentation
+ *
+ * This package provides Windows specific components and provides JS implementations for some react-native primitives
+ * Cross platform React-native primitives should be imported from 'react-native'
+ * Windows specific components need to be imported from 'react-native-windows'
+ *
+ */
+
+import { NativeMethodsMixin } from 'react-native';
 import * as React from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
+import { View } from 'react-native';
 import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
-export declare class Alert {
-    static alert(title: string | null, message?: string | null, buttons?: Buttons, options?: Options): void;
-}
-
 export declare const AppTheme: AppThemeModule;
+
+export declare type AppTheme = AppThemeModule;
 
 declare class AppThemeModule extends MissingNativeEventEmitterShim {
     isAvailable: boolean;
@@ -18,16 +27,6 @@ declare class AppThemeModule extends MissingNativeEventEmitterShim {
 }
 
 export declare type AppThemeTypes = 'light' | 'dark';
-
-export declare type Buttons = Array<{
-    text?: string;
-    onPress?: Function | null;
-    style?: string;
-}>;
-
-export declare class CheckBox extends React.Component<ICheckBoxProps> {
-    render(): JSX.Element | null;
-}
 
 export declare class DatePicker extends React.Component<IDatePickerProps> {
     render(): JSX.Element | null;
@@ -77,20 +76,6 @@ export declare enum HandledEventPhase {
 
 export declare interface IAppThemeChangedEvent {
     currentTheme: AppThemeTypes;
-}
-
-declare interface ICheckBoxChangeEvent {
-    nativeEvent: {
-        value: boolean;
-    };
-}
-
-declare interface ICheckBoxProps extends ViewProps {
-    checked?: boolean;
-    disabled?: boolean;
-    onChange?: (event: ICheckBoxChangeEvent) => void;
-    onValueChange?: (value: boolean) => void;
-    defaultChecked?: boolean;
 }
 
 export declare interface IDatePickerChangeEvent {
@@ -236,11 +221,6 @@ export declare interface IViewWindowsProps extends IKeyboardProps, ViewProps {
 
 declare const MissingNativeEventEmitterShim: any;
 
-declare type Options = {
-    cancelable?: boolean | null;
-    onDismiss?: Function | null;
-};
-
 export declare class Picker extends React.Component<IPickerProps> {
     static Item: typeof PickerItem;
     render(): JSX.Element | null;
@@ -293,8 +273,8 @@ export declare const supportKeyboard: <P extends object>(_Component: React.Compo
  * Prop type: {@link IViewWindowsProps}.
  *
  */
-export declare class ViewWindows extends React.Component<IViewWindowsProps> {
-    render(): JSX.Element | null;
-}
+export declare const ViewWindows: React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<any>>;
+
+export declare type ViewWindows = React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<View>> & NativeMethodsMixin;
 
 export { }

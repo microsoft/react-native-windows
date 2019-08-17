@@ -121,5 +121,3 @@ export class Picker extends React.Component<IPickerProps, State> {
       );
   };
 }
-
-export default Picker;

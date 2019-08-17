@@ -4,42 +4,24 @@
 
 ```ts
 
+import { NativeMethodsMixin } from 'react-native';
 import * as React from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
+import { View } from 'react-native';
 import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
-// @public (undocumented)
-export class Alert {
-    // Warning: (ae-forgotten-export) The symbol "Options" needs to be exported by the entry point index.d.ts
-    // 
-    // (undocumented)
-    static alert(title: string | null, message?: string | null, buttons?: Buttons, options?: Options): void;
-}
-
-// Warning: (ae-forgotten-export) The symbol "AppThemeModule" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "AppThemeModule" needs to be exported by the entry point typings-index.d.ts
 // 
 // @public (undocumented)
 export const AppTheme: AppThemeModule;
 
 // @public (undocumented)
+export type AppTheme = AppThemeModule;
+
+// @public (undocumented)
 export type AppThemeTypes = 'light' | 'dark';
-
-// @public (undocumented)
-export type Buttons = Array<{
-    text?: string;
-    onPress?: Function | null;
-    style?: string;
-}>;
-
-// Warning: (ae-forgotten-export) The symbol "ICheckBoxProps" needs to be exported by the entry point index.d.ts
-// 
-// @public (undocumented)
-export class CheckBox extends React.Component<ICheckBoxProps> {
-    // (undocumented)
-    render(): JSX.Element | null;
-}
 
 // @public (undocumented)
 export class DatePicker extends React.Component<IDatePickerProps> {
@@ -83,7 +65,7 @@ export class Flyout extends React.Component<IFlyoutProps> {
     render(): JSX.Element | null;
 }
 
-// Warning: (ae-forgotten-export) The symbol "GlyphProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "GlyphProps" needs to be exported by the entry point typings-index.d.ts
 // 
 // @public (undocumented)
 export class Glyph extends React.PureComponent<GlyphProps> {
@@ -262,11 +244,11 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
     children?: any;
 }
 
-// Warning: (ae-forgotten-export) The symbol "IPickerProps" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "IPickerProps" needs to be exported by the entry point typings-index.d.ts
 // 
 // @public (undocumented)
 export class Picker extends React.Component<IPickerProps> {
-    // Warning: (ae-forgotten-export) The symbol "PickerItem" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "PickerItem" needs to be exported by the entry point typings-index.d.ts
     // 
     // (undocumented)
     static Item: typeof PickerItem;
@@ -315,12 +297,10 @@ export const supportKeyboard: <P extends object>(_Component: React.ComponentType
 };
 
 // @public
-export class ViewWindows extends React.Component<IViewWindowsProps> {
-    // (undocumented)
-    render(): JSX.Element | null;
-}
+export const ViewWindows: React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<any>>;
 
+// @public (undocumented)
+export type ViewWindows = React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<View>> & NativeMethodsMixin;
 
-// (No @packageDocumentation comment for this package)
 
 ```

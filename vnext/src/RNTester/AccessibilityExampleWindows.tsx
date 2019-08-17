@@ -16,7 +16,7 @@ import {
   AppTheme,
   IAppThemeChangedEvent,
   IHighContrastChangedEvent,
-} from '../index.windows';
+} from 'react-native-windows';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {

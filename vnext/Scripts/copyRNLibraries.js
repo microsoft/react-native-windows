@@ -1,3 +1,6 @@
+/**
+ * @format
+ */
 // @ts-check
 const path = require('path');
 const fs = require('fs');
@@ -55,12 +58,19 @@ exports.copyRNLibraries = () => {
   const baseDir = path.resolve(__dirname, '..');
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'Libraries'), baseDir);
 
+  fs.writeFileSync(
+    path.resolve(__dirname, '../rn-get-polyfills.js'),
+    fs.readFileSync(path.resolve(rnPath, 'rn-get-polyfills.js')),
+  );
+
   if (fs.existsSync(path.resolve(rnPath, 'RNTester'))) {
-    console.warn('Now that we are back to using the fork, we can delete the RNTester_temp_until_msrn_fork_rdy folder!');
+    console.warn(
+      'Now that we are back to using the fork, we can delete the RNTester_temp_until_msrn_fork_rdy folder!',
+    );
     copyJSFolderRecursiveSync(path.resolve(rnPath, 'RNTester'), baseDir);
   }
 
-/*
+  /*
   if (!fs.existsSync(path.resolve(__dirname, '../lib/local-cli'))) {
     fs.mkdirSync(path.resolve(__dirname, '../lib/local-cli'));
   }
