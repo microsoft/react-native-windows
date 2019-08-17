@@ -467,3 +467,13 @@ void HostingPane::LoadKnownApps() {
     x_ReactAppName->SelectedIndex = 0;
   }
 }
+
+void Playground::HostingPane::OnToggleButtonClicked(
+    Platform::Object ^ sender,
+    Windows::UI::Xaml::RoutedEventArgs ^ e) {
+
+   m_instance->CallJsFunction(
+      "RCTDeviceEventEmitter",
+      "emit",
+      folly::dynamic::array("toggleElementInspector", nullptr));
+}

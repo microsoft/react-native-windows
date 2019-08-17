@@ -401,7 +401,7 @@ void UIManager::findSubviewIn(
     facebook::xplat::module::CxxModule::Callback callback) {
   auto &node = m_nodeRegistry.getNode(reactTag);
   float x = static_cast<float>(jsArgAsDouble(coordinates, 0));
-  float y = static_cast<float>((coordinates, 1));
+  float y = static_cast<float>(jsArgAsDouble(coordinates, 1));
   m_nativeUIManager->findSubviewIn(node, x, y, callback);
 }
 
