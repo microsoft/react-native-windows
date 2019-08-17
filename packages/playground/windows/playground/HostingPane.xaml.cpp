@@ -289,6 +289,7 @@ void HostingPane::UpdateUI() {
 
   x_ReloadButton->IsEnabled = rootLoaded;
   x_UnloadButton->IsEnabled = rootLoaded;
+  x_ToggleInspectorButton->IsEnabled = rootLoaded;
   x_LoadButton->IsEnabled =
       !x_JavaScriptFilename->SelectedItem->ToString()->IsEmpty() &&
       !x_ReactAppName->SelectedItem->ToString()->IsEmpty();

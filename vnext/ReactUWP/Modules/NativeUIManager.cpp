@@ -1196,14 +1196,18 @@ void NativeUIManager::findSubviewIn(
   }
 
   auto foundElement = hitTestElements.Current().as<winrt::FrameworkElement>();
-  int64_t tag = 0;
+  int64_t foundTag {};
 
   // The hit test element may not have a react Tag assigned.
   // Traverse up the hierary until we find an element with tag.
   while (foundElement != nullptr) {
     auto reactView = foundElement.as<react::uwp::XamlView>();
-    tag = react::uwp::GetTag(reactView);
-    if (tag != 0) {
+    if (!reactView) {
+      foundElement == nullptr;
+      break;
+    }
+    if (auto tag = react::uwp::TryGetTag(reactView); tag != std::nullopt) {
+      foundTag = *tag;
       break;
     }
     foundElement = foundElement.Parent().as<winrt::FrameworkElement>();
@@ -1214,16 +1218,15 @@ void NativeUIManager::findSubviewIn(
     return;
   }
 
-  // We need to return the top left coordinate relative to the passed root view, not the app window.
-  auto rootUITransform = foundElement.TransformToVisual(rootUIView);
-  winrt::Point topLeftInRootCoordinates = rootUITransform.TransformPoint({0, 0});
+  auto box = GetRectOfElementInParentCoords(foundElement, rootUIView);
 
   std::vector<folly::dynamic> args;
-  args.push_back(tag);
-  args.push_back(topLeftInRootCoordinates.X);
-  args.push_back(topLeftInRootCoordinates.Y);
-  args.push_back(foundElement.ActualWidth());
-  args.push_back(foundElement.ActualHeight());
+  args.push_back(foundTag);
+  args.push_back(box.X);
+  args.push_back(box.Y);
+  args.push_back(box.Width);
+  args.push_back(box.Height);
+
   callback(args);
 }
 

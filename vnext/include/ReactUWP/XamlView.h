@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <optional>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
 
@@ -19,6 +20,17 @@ typedef winrt::DependencyObject XamlView;
 
 inline int64_t GetTag(XamlView view) {
   return view.GetValue(winrt::FrameworkElement::TagProperty())
+      .as<winrt::IPropertyValue>()
+      .GetInt64();
+}
+
+inline std::optional<int64_t> TryGetTag(XamlView view) {
+  auto tagProp = view.GetValue(winrt::FrameworkElement::TagProperty());
+  if (tagProp == nullptr) {
+    return std::nullopt;
+  }
+
+  return tagProp
       .as<winrt::IPropertyValue>()
       .GetInt64();
 }

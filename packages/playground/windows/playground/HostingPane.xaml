@@ -117,7 +117,7 @@
         VerticalAlignment="Center"
         IsChecked="true"
         Content="Reuse Instance"/>
-         <Button x:Name="x_ToggleInspector"
+         <Button x:Name="x_ToggleInspectorButton"
          Margin="5,2"
         VerticalAlignment="Center"
         Content="Toggle Inspector"
