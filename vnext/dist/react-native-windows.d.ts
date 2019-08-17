@@ -7,7 +7,6 @@
  *
  */
 
-import { NativeMethodsMixin } from 'react-native';
 import * as React from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
@@ -198,7 +197,7 @@ export declare interface IPopupProps extends ViewProps {
 
 /**
  * @remarks
- * Props type for {@link ViewWindows}
+ * Props type for ViewWindows component
  *
  * Extends: {@link IKeyboardProps} and {@link https://facebook.github.io/react-native/docs/view | react-native's ViewProps}
  */
@@ -273,8 +272,10 @@ export declare const supportKeyboard: <P extends object>(_Component: React.Compo
  * Prop type: {@link IViewWindowsProps}.
  *
  */
-export declare const ViewWindows: React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<any>>;
+export declare const ViewWindows: ViewWindowsType;
 
-export declare type ViewWindows = React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<View>> & NativeMethodsMixin;
+export declare type ViewWindows = ViewWindowsType;
+
+declare type ViewWindowsType = React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<View>> & View;
 
 export { }

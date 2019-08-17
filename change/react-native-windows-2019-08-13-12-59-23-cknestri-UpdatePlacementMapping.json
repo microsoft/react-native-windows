@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update placement mapping",
+  "packageName": "react-native-windows",
+  "email": "cknestri@microsoft.com",
+  "commit": "bb7d84a80d835eb96c3e107836ef748648e9f717",
+  "date": "2019-08-13T19:59:23.504Z"
+}

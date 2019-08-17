@@ -4,7 +4,6 @@
 
 ```ts
 
-import { NativeMethodsMixin } from 'react-native';
 import * as React from 'react';
 import * as RN from 'react-native';
 import { StyleProp } from 'react-native';
@@ -296,11 +295,13 @@ export const supportKeyboard: <P extends object>(_Component: React.ComponentType
     contextType?: React.Context<any> | undefined;
 };
 
+// Warning: (ae-forgotten-export) The symbol "ViewWindowsType" needs to be exported by the entry point typings-index.d.ts
+// 
 // @public
-export const ViewWindows: React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<any>>;
+export const ViewWindows: ViewWindowsType;
 
 // @public (undocumented)
-export type ViewWindows = React.ForwardRefExoticComponent<IViewWindowsProps & React.RefAttributes<View>> & NativeMethodsMixin;
+export type ViewWindows = ViewWindowsType;
 
 
 ```

@@ -50,7 +50,6 @@
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
-#include <Modules/BatchingUIManagerModule.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -58,6 +57,7 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
+#include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/IUIManager.h>
@@ -133,8 +133,7 @@ CreateUIManager(
       std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createBatchingUIManager(
-      std::move(viewManagers), new NativeUIManager());
+  return createIUIManager(std::move(viewManagers), new NativeUIManager());
 }
 
 UwpReactInstance::UwpReactInstance(
@@ -159,7 +158,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       "UIManager",
       [uiManager = std::move(uiManager)]() {
-        return facebook::react::createBatchingUIManagerModule(uiManager);
+        return facebook::react::createUIManagerModule(uiManager);
       },
       messageQueue);
 
@@ -375,7 +374,8 @@ void UwpReactInstance::Start(
 // Currently assuming we have only two JSI implementations, i.e. Hermes & Chakra
 // based .. And we switch at compile time.
 #if defined(USE_HERMES)
-      devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>();
+      devSettings->jsiRuntimeHolder =
+          std::make_shared<facebook::react::HermesRuntimeHolder>();
 #else
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
@@ -387,11 +387,12 @@ void UwpReactInstance::Start(
         preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(
             winrt::to_hstring(settings.ByteCodeFileUri));
       }
-      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(
-          devSettings,
-          jsQueue,
-          std::move(scriptStore),
-          std::move(preparedScriptStore));
+      devSettings->jsiRuntimeHolder =
+          std::make_shared<facebook::react::ChakraJSIRuntimeHolder>(
+              devSettings,
+              jsQueue,
+              std::move(scriptStore),
+              std::move(preparedScriptStore));
 #endif
     }
 #endif

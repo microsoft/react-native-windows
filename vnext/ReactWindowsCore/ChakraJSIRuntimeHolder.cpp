@@ -8,8 +8,8 @@ using namespace facebook;
 using namespace facebook::react;
 using namespace facebook::jsi::chakraruntime;
 
+namespace facebook {
 namespace react {
-namespace uwp {
 
 std::shared_ptr<facebook::jsi::Runtime>
 ChakraJSIRuntimeHolder::getRuntime() noexcept {
@@ -65,5 +65,5 @@ ChakraJsiRuntimeArgs ChakraJSIRuntimeHolder::RuntimeArgsFromDevSettings(
   return runtimeArgs;
 }
 
-} // namespace uwp
 } // namespace react
+} // namespace facebook
