@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Improved fix for overlapping XAML theme shadows on Flyouts",
+  "packageName": "react-native-windows-extended",
+  "email": "kenander@microsoft.com",
+  "commit": "98aea907b03f8b75d57924352a0e015a24a97d79",
+  "date": "2019-08-15T20:06:05.010Z"
+}
