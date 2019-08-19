@@ -338,7 +338,7 @@ void ReactControl::ShowDeveloperMenu() {
       L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript (TBD) </Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
-      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Show Inspector (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Show Inspector</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
       L"  </StackPanel>"
       L"</Grid>";
@@ -348,6 +348,8 @@ void ReactControl::ShowDeveloperMenu() {
       m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
   auto cancelButton =
       m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
+  auto toggleInspector =
+      m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
   bool useWebDebugger =
       m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
   remoteDebugJSButton.Content(winrt::box_value(
@@ -366,6 +368,11 @@ void ReactControl::ShowDeveloperMenu() {
       [this](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
       });
+  m_toggleInspectorRevoker = toggleInspector.Click(
+      winrt::auto_revoke,
+      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+        ToggleInspector();
+      });
 
   auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
   xamlRootGrid.Children().Append(m_developerMenuRoot);
@@ -382,6 +389,15 @@ void ReactControl::DismissDeveloperMenu() {
 
 bool ReactControl::IsDeveloperMenuShowing() const {
   return (m_developerMenuRoot != nullptr);
+}
+
+void ReactControl::ToggleInspector() {
+  if (m_reactInstance) {
+    m_reactInstance->CallJsFunction(
+      "RCTDeviceEventEmitter",
+      "emit",
+      folly::dynamic::array("toggleElementInspector", nullptr));
+  }
 }
 
 } // namespace uwp

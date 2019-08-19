@@ -1188,29 +1188,22 @@ void NativeUIManager::findSubviewIn(
   // Perform hit test to find the top most z-index element that intersects with
   // the queried point
   auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(
-                             pointInAppWindow, rootUIView)
-                             .First();
-  if (!hitTestElements.HasCurrent()) {
-    callback({});
-    return;
-  }
+      pointInAppWindow, rootUIView);
 
-  auto foundElement = hitTestElements.Current().as<winrt::FrameworkElement>();
-  int64_t foundTag {};
+  int64_t foundTag{};
+  winrt::FrameworkElement foundElement = nullptr;
 
-  // The hit test element may not have a react Tag assigned.
-  // Traverse up the hierary until we find an element with tag.
-  while (foundElement != nullptr) {
-    auto reactView = foundElement.as<react::uwp::XamlView>();
-    if (auto tag = react::uwp::TryGetTag(reactView); tag != std::nullopt) {
-      foundTag = *tag;
-      break;
+  for (const auto &elem : hitTestElements) {
+    if (foundElement = elem.try_as<winrt::FrameworkElement>()) {
+      auto tag = foundElement.Tag();
+      if (tag != nullptr) {
+        foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
+        break;
+      }
     }
-    foundElement = foundElement.Parent().as<winrt::FrameworkElement>();
   }
 
   if (foundElement == nullptr) {
-    assert(false);
     callback({});
     return;
   }

@@ -24,17 +24,6 @@ inline int64_t GetTag(XamlView view) {
       .GetInt64();
 }
 
-inline std::optional<int64_t> TryGetTag(XamlView view) {
-  auto tagProp = view.GetValue(winrt::FrameworkElement::TagProperty());
-  if (tagProp == nullptr) {
-    return std::nullopt;
-  }
-
-  return tagProp
-      .as<winrt::IPropertyValue>()
-      .GetInt64();
-}
-
 inline void SetTag(XamlView view, int64_t tag) {
   view.SetValue(
       winrt::FrameworkElement::TagProperty(),
