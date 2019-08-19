@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 20:59:57 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix flyout full placement mode",
+            "author": "kmelmon@microsoft.com",
+            "commit": "1b2aa741fbf54409ca278ab51ef6d3ea5f6ea469"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2019 16:43:43 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.140",
       "version": "0.59.0-vnext.140",

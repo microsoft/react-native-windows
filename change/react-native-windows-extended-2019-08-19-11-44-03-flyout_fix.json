@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix flyout full placement mode",
-  "packageName": "react-native-windows-extended",
-  "email": "kmelmon@microsoft.com",
-  "commit": "6575b6459c5dbc4cc8dae39abbb0be8021613eaa",
-  "date": "2019-08-19T18:44:03.366Z"
-}

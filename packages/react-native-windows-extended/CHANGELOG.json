@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 20:59:57 GMT",
+      "tag": "react-native-windows-extended_v0.13.2",
+      "version": "0.13.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix flyout full placement mode",
+            "author": "kmelmon@microsoft.com",
+            "commit": "6575b6459c5dbc4cc8dae39abbb0be8021613eaa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2019 16:43:43 GMT",
       "tag": "react-native-windows-extended_v0.13.1",
       "version": "0.13.1",
