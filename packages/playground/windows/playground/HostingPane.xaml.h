@@ -45,7 +45,6 @@ namespace Playground {
   void OnLoadClicked(Platform::Object ^ sender, Platform::Object ^ args);
   void OnUnloadClicked(Platform::Object ^ sender, Platform::Object ^ args);
   void OnReloadClicked(Platform::Object ^ sender, Platform::Object ^ args);
-  void OnToggleButtonClicked(Platform::Object ^ sender, Windows::UI::Xaml::RoutedEventArgs ^ e);
 
   void DetachAndClearRoot();
   void LoadReactNative();

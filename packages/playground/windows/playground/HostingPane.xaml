@@ -117,12 +117,7 @@
         VerticalAlignment="Center"
         IsChecked="true"
         Content="Reuse Instance"/>
-         <Button x:Name="x_ToggleInspectorButton"
-         Margin="5,2"
-        VerticalAlignment="Center"
-        Content="Toggle Inspector"
-               Click="OnToggleButtonClicked" />
-      </StackPanel>
+    </StackPanel>
 
     <Grid x:Name="RootElement"
       Grid.Row="3"

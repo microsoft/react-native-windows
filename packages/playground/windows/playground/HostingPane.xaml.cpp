@@ -289,7 +289,6 @@ void HostingPane::UpdateUI() {
 
   x_ReloadButton->IsEnabled = rootLoaded;
   x_UnloadButton->IsEnabled = rootLoaded;
-  x_ToggleInspectorButton->IsEnabled = rootLoaded;
   x_LoadButton->IsEnabled =
       !x_JavaScriptFilename->SelectedItem->ToString()->IsEmpty() &&
       !x_ReactAppName->SelectedItem->ToString()->IsEmpty();
@@ -467,14 +466,4 @@ void HostingPane::LoadKnownApps() {
   if (m_ReactAppNames->Size > 0) {
     x_ReactAppName->SelectedIndex = 0;
   }
-}
-
-void Playground::HostingPane::OnToggleButtonClicked(
-    Platform::Object ^ sender,
-    Windows::UI::Xaml::RoutedEventArgs ^ e) {
-
-   m_instance->CallJsFunction(
-      "RCTDeviceEventEmitter",
-      "emit",
-      folly::dynamic::array("toggleElementInspector", nullptr));
 }
