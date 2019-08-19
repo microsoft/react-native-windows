@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add ChakraCore to JSIEngineOverride.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "f136c3e3ee4557df3fe8fe3b203e02f13b971a5e",
-  "date": "2019-08-19T21:08:46.591Z"
-}

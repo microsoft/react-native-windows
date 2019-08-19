@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 22:09:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add ChakraCore to JSIEngineOverride.",
+            "author": "yicyao@microsoft.com",
+            "commit": "f136c3e3ee4557df3fe8fe3b203e02f13b971a5e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2019 20:59:57 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.141",
       "version": "0.59.0-vnext.141",
