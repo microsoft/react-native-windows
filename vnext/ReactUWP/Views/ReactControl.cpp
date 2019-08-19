@@ -338,7 +338,7 @@ void ReactControl::ShowDeveloperMenu() {
       L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript (TBD) </Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
-      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Show Inspector</Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Toggle Inspector</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
       L"  </StackPanel>"
       L"</Grid>";
@@ -371,6 +371,7 @@ void ReactControl::ShowDeveloperMenu() {
   m_toggleInspectorRevoker = toggleInspector.Click(
       winrt::auto_revoke,
       [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
         ToggleInspector();
       });
 
