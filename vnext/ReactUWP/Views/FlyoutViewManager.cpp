@@ -82,6 +82,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   winrt::Flyout GetFlyout();
   void AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight);
+  void SetSize(float width, float height);
 
   bool IsWindowed() override {
     return true;
@@ -98,6 +99,8 @@ class FlyoutShadowNode : public ShadowNodeBase {
   int64_t m_targetTag = -1;
   float m_horizontalOffset = 0;
   float m_verticalOffset = 0;
+  float m_width = 0;
+  float m_height = 0;
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
   static thread_local std::int32_t s_cOpenFlyouts;
@@ -293,7 +296,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   if (updateIsOpen) {
     if (m_isOpen) {
       s_cOpenFlyouts += 1;
-      AdjustDefaultFlyoutStyle(50000, 50000);
+      AdjustDefaultFlyoutStyle(m_width, m_height);
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
       } else {
@@ -380,6 +383,11 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle(
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
 }
 
+void FlyoutShadowNode::SetSize(float width, float height) {
+  m_width = width;
+  m_height = height;
+}
+
 winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const {
   // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against
   // RS6
@@ -434,11 +442,9 @@ void FlyoutViewManager::SetLayoutProps(
     float width,
     float height) {
   auto *pFlyoutShadowNode = static_cast<FlyoutShadowNode *>(&nodeToUpdate);
-
+  pFlyoutShadowNode->SetSize(width, height);
   if (auto flyout = pFlyoutShadowNode->GetFlyout()) {
-    if (winrt::FlyoutPlacementMode::Full == flyout.Placement()) {
-      pFlyoutShadowNode->AdjustDefaultFlyoutStyle(width, height);
-    }
+    pFlyoutShadowNode->AdjustDefaultFlyoutStyle(width, height);
   }
 }
 
