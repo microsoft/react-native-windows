@@ -10,7 +10,7 @@ export * from './Libraries/Components/DatePicker/DatePickerProps';
 export * from './Libraries/Components/Flyout/FlyoutProps';
 export * from './Libraries/Components/Flyout/Flyout';
 export * from './Libraries/Components/Glyph/Glyph';
-export * from './Libraries/Components/Picker/PickerWindows';
+export * from './Libraries/Components/Picker/Picker';
 export * from './Libraries/Components/Popup/PopupProps';
 export * from './Libraries/Components/Popup/Popup';
 export * from './Libraries/Components/Keyboard/KeyboardExt';
