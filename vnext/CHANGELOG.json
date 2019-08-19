@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 23:00:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fixed Picker Export",
+            "author": "askhetan@microsoft.com",
+            "commit": "253178c2b9d72500f70a0b957bca20dc0fcbdb16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2019 22:09:54 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.141",
       "version": "0.59.0-vnext.141",
