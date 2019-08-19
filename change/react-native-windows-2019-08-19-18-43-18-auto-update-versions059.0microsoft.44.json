@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Updating react-native to version: 0.59.0-microsoft.44",
+  "packageName": "react-native-windows",
+  "email": "53619745+rnbot@users.noreply.github.com",
+  "commit": "845708c9ceb4f9d098a61579d70f0df1e7232d82",
+  "date": "2019-08-19T18:43:18.068Z"
+}
