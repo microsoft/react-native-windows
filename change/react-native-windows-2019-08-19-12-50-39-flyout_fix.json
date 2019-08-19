@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "fix flyout full placement mode",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "1b2aa741fbf54409ca278ab51ef6d3ea5f6ea469",
+  "date": "2019-08-19T19:50:39.381Z"
+}
