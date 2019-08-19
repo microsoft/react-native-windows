@@ -1,6 +1,35 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Aug 2019 21:06:24 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2019 16:43:43 GMT and should not be manually modified.
+
+## 0.59.0-vnext.140
+Mon, 19 Aug 2019 16:43:43 GMT
+
+### Changes
+
+- Update placement mapping (cknestri@microsoft.com)
+,- Start API documentation (acoates@microsoft.com)
+,- Always use unforked version of folly + Update folly to v2019.08.12.00 (acoates@microsoft.com)
+,- resolved build error (email not defined)
+,- Improved fix for overlapping XAML theme shadows on Flyouts (kenander@microsoft.com)
+,- add batching queue (kmelmon@microsoft.com)
+,- restore accidental deletion (kmelmon@microsoft.com)
+,- Microsoft.ReactNative SampleApps (jthysell@microsoft.com)
+
+## 0.59.0-vnext.139
+Tue, 13 Aug 2019 19:56:52 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.43 (53619745+rnbot@users.noreply.github.com)
+,- Change windows template to not use cli wrapper (acoates@microsoft.com)
+
+## 0.59.0-vnext.138
+Mon, 12 Aug 2019 23:13:59 GMT
+
+### Changes
+
+- Rename platform uwp->windows (acoates@microsoft.com)
 
 ## 0.59.0-vnext.137
 Mon, 12 Aug 2019 21:06:24 GMT

@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 16:43:43 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.140",
+      "version": "0.59.0-vnext.140",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update placement mapping",
+            "author": "cknestri@microsoft.com",
+            "commit": "bb7d84a80d835eb96c3e107836ef748648e9f717"
+          },
+          {
+            "comment": "Start API documentation",
+            "author": "acoates@microsoft.com",
+            "commit": "7f82c81c53a99f76887407104a382c334445e74d"
+          },
+          {
+            "comment": "Always use unforked version of folly + Update folly to v2019.08.12.00",
+            "author": "acoates@microsoft.com",
+            "commit": "e7555cae73f86d0b67c378eada98129726b4fe33"
+          },
+          {
+            "comment": "resolved build error",
+            "author": "email not defined",
+            "commit": "7f55f7e84013c47faf4c4ddfbaaf28665cb12d20"
+          },
+          {
+            "comment": "Improved fix for overlapping XAML theme shadows on Flyouts",
+            "author": "kenander@microsoft.com",
+            "commit": "98aea907b03f8b75d57924352a0e015a24a97d79"
+          },
+          {
+            "comment": "add batching queue",
+            "author": "kmelmon@microsoft.com",
+            "commit": "6e932b57e348b1ade2f6c0a72af6886ebccddb45"
+          },
+          {
+            "comment": "restore accidental deletion",
+            "author": "kmelmon@microsoft.com",
+            "commit": "3b9f508518f7a3ea39c379c6ab8c4b31e571b499"
+          },
+          {
+            "comment": "Microsoft.ReactNative SampleApps",
+            "author": "jthysell@microsoft.com",
+            "commit": "2496b0086fd07744a2315b5491ec05d7d4e3fe67"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add jsiEngineOverride option to devsettings",
+            "author": "tudorm@microsoft.com",
+            "commit": "086aba4eb8a1e1ab0b80c212290a541bf63c2ba9"
+          },
+          {
+            "comment": "Add dist folder to gitignore",
+            "author": "acoates@microsoft.com",
+            "commit": "8e90e7508fdfdd7cd27dada1d2f9413d24e28637"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Aug 2019 14:23:33 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.139",
+      "version": "0.59.0-vnext.139",
+      "comments": {
+        "none": [
+          {
+            "comment": "Run clang-format across all packages in the repo",
+            "author": "acoates@microsoft.com",
+            "commit": "a3a5776a4a59571d72459846ae199f10fe173177"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Aug 2019 19:56:52 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.139",
+      "version": "0.59.0-vnext.139",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.43",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "de0e7ae1f8bf55738f01daeea2eb6e490b2fcbbd"
+          },
+          {
+            "comment": "Change windows template to not use cli wrapper",
+            "author": "acoates@microsoft.com",
+            "commit": "6c3e9c7990947949d7b9bdcfa11c76833c3cc6c3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Aug 2019 23:13:59 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.138",
+      "version": "0.59.0-vnext.138",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Rename platform uwp->windows",
+            "author": "acoates@microsoft.com",
+            "commit": "ba23aa45d9286f9e1b4449c1a3c54ab4bfabd0b1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Aug 2019 21:06:24 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.137",
       "version": "0.59.0-vnext.137",

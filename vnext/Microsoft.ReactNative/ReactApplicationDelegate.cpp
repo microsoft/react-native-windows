@@ -59,8 +59,6 @@ void ReactApplicationDelegate::OnActivated(
 
       // TODO: Need to support deep linking by integrating with the Linking
       // module
-      throw winrt::hresult_not_implemented(
-          L"Integration with Linking not yet implemented.");
       if (args.PreviousExecutionState() != ApplicationExecutionState::Running) {
         // TODO... Figure out the right activation path for
         // PreviousExecutionState
@@ -68,7 +66,7 @@ void ReactApplicationDelegate::OnActivated(
             L"ReactApplicationDelegate.OnActivated doesn't handle PreviousExecutionState other than Running");
       } else {
         // TODO... Figure out the right activation path
-        throw winrt::hresult_not_implemented(
+        OutputDebugStringW(
             L"ReactApplicationDelegate.OnActivated doesn't handle PreviousExecutionState when its Running");
       }
       break;

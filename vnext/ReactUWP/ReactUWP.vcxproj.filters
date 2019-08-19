@@ -220,6 +220,9 @@
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\AlertModuleUwp.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -285,12 +288,6 @@
     </ClCompile>
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\HermesRuntimeHolder.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
-      <Filter>Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -501,6 +498,9 @@
     <ClInclude Include="Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\AlertModuleUwp.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -629,12 +629,6 @@
     </ClInclude>
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
       <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="Base\HermesRuntimeHolder.h">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
-      <Filter>Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

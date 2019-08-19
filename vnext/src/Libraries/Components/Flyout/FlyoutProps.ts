@@ -3,6 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
+import * as React from 'react';
 import {ViewProps} from 'react-native';
 
 export type Placement =

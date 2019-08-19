@@ -54,13 +54,16 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HermesRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppThemeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
@@ -123,9 +126,6 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\ExceptionsManagerModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\BatchingUIManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\AppThemeModule.h">
@@ -225,6 +225,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebSocketJSExecutorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HermesRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChakraJSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
