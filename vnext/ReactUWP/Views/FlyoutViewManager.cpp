@@ -329,7 +329,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
     if (m_isOpen) {
       s_cOpenFlyouts += 1;
       m_elevation = s_cOpenFlyouts - 1;
-      AdjustDefaultFlyoutStyle(50000, 50000);
+      AdjustDefaultFlyoutStyle(m_width, m_height);
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
       } else {
