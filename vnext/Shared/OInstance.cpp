@@ -447,6 +447,7 @@ InstanceImpl::InstanceImpl(
           assert(false); // Hermes is not available in this build, fallthrough
 #endif
         case JSIEngineOverride::Chakra:
+        case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<ChakraJSIRuntimeHolder>(

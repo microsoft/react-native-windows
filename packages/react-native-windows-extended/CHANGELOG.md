@@ -1,6 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Mon, 19 Aug 2019 16:43:43 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2019 20:59:57 GMT and should not be manually modified.
+
+## 0.13.2
+Mon, 19 Aug 2019 20:59:57 GMT
+
+### Patches
+
+- fix flyout full placement mode (kmelmon@microsoft.com)
 
 ## 0.13.1
 Mon, 19 Aug 2019 16:43:43 GMT

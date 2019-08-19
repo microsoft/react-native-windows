@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 23:00:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fixed Picker Export",
+            "author": "askhetan@microsoft.com",
+            "commit": "253178c2b9d72500f70a0b957bca20dc0fcbdb16"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 22:09:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add ChakraCore to JSIEngineOverride.",
+            "author": "yicyao@microsoft.com",
+            "commit": "f136c3e3ee4557df3fe8fe3b203e02f13b971a5e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 20:59:57 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix flyout full placement mode",
+            "author": "kmelmon@microsoft.com",
+            "commit": "1b2aa741fbf54409ca278ab51ef6d3ea5f6ea469"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2019 16:43:43 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.140",
       "version": "0.59.0-vnext.140",

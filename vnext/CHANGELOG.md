@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Aug 2019 16:43:43 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2019 20:59:57 GMT and should not be manually modified.
+
+## 0.59.0-vnext.141
+Mon, 19 Aug 2019 20:59:57 GMT
+
+### Changes
+
+- fix flyout full placement mode (kmelmon@microsoft.com)
 
 ## 0.59.0-vnext.140
 Mon, 19 Aug 2019 16:43:43 GMT
