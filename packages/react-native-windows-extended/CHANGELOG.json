@@ -2,6 +2,30 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2019 16:43:43 GMT",
+      "tag": "react-native-windows-extended_v0.13.1",
+      "version": "0.13.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start API documentation",
+            "author": "acoates@microsoft.com",
+            "commit": "7f82c81c53a99f76887407104a382c334445e74d"
+          },
+          {
+            "comment": "Improved fix for overlapping XAML theme shadows on Flyouts",
+            "author": "kenander@microsoft.com",
+            "commit": "98aea907b03f8b75d57924352a0e015a24a97d79"
+          },
+          {
+            "comment": "Ensure folly is downloaded before react-native-windows-extended builds",
+            "author": "acoates@microsoft.com",
+            "commit": "95216a199075a15cf10e92522a05e1a8091b4e52"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Aug 2019 14:23:33 GMT",
       "tag": "react-native-windows-extended_v0.13.0",
       "version": "0.13.0",
