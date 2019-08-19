@@ -570,7 +570,8 @@ UIManagerModule::getMethods() {
       Method(
           "findSubviewIn",
           [manager](dynamic args, Callback cb) {
-            manager->findSubviewIn(jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
+            manager->findSubviewIn(
+                jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
           }),
       Method(
           "focus",

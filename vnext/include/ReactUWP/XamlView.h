@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <optional>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.h>
 

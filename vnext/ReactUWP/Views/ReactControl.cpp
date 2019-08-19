@@ -395,9 +395,9 @@ bool ReactControl::IsDeveloperMenuShowing() const {
 void ReactControl::ToggleInspector() {
   if (m_reactInstance) {
     m_reactInstance->CallJsFunction(
-      "RCTDeviceEventEmitter",
-      "emit",
-      folly::dynamic::array("toggleElementInspector", nullptr));
+        "RCTDeviceEventEmitter",
+        "emit",
+        folly::dynamic::array("toggleElementInspector", nullptr));
   }
 }
 
