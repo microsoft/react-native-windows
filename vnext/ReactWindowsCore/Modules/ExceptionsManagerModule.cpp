@@ -129,6 +129,9 @@ std::string ExceptionsManagerModule::RetrieveValueFromMap(
     if (type == folly::dynamic::STRING) {
       value = iterator->second.asString();
     } else {
+      if (iterator->second.isNull()) {
+        return "<Unknown>";
+      }
       assert(iterator->second.isNumber());
       std::stringstream stream;
       stream << static_cast<int64_t>(iterator->second.asDouble());
