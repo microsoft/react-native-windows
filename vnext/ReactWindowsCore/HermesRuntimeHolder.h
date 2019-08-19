@@ -1,10 +1,10 @@
 #pragma once
-
 #include <jsi/RuntimeHolder.h>
 #include <jsi/jsi.h>
+#include <thread>
 
+namespace facebook {
 namespace react {
-namespace uwp {
 
 class HermesRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
@@ -18,5 +18,5 @@ class HermesRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   std::thread::id own_thread_id_;
 };
 
-} // namespace uwp
 } // namespace react
+} // namespace facebook
