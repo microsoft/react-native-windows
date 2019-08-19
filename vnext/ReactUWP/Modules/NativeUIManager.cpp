@@ -1202,10 +1202,6 @@ void NativeUIManager::findSubviewIn(
   // Traverse up the hierary until we find an element with tag.
   while (foundElement != nullptr) {
     auto reactView = foundElement.as<react::uwp::XamlView>();
-    if (!reactView) {
-      foundElement == nullptr;
-      break;
-    }
     if (auto tag = react::uwp::TryGetTag(reactView); tag != std::nullopt) {
       foundTag = *tag;
       break;
@@ -1214,6 +1210,7 @@ void NativeUIManager::findSubviewIn(
   }
 
   if (foundElement == nullptr) {
+    assert(false);
     callback({});
     return;
   }
