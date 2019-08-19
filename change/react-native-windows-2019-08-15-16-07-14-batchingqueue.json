@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add batching queue",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "6e932b57e348b1ade2f6c0a72af6886ebccddb45",
-  "date": "2019-08-15T23:07:14.622Z"
-}
