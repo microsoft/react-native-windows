@@ -40,12 +40,11 @@ jobs:
       if: ${{matrix.UseRNFork}} == 'false'
       run: yarn install
       
-    - name: yarn buildci
-      run: yarn buildci
+    - run: yarn buildci
      
     - name: Install SDK
       run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
-        shell: powershell
+      shell: powershell
         
     - name: NuGet restore
       run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
