@@ -6,12 +6,12 @@
 'use strict';
 
 import {NativeEventEmitter, NativeModules} from 'react-native';
-const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
 import {
   AppThemeTypes,
   IHighContrastColors,
   IHighContrastChangedEvent,
 } from './AppThemeTypes';
+const invariant = require('invariant');
 
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
@@ -57,13 +57,46 @@ class AppThemeModule extends NativeEventEmitter {
   }
 }
 
+function throwMissingNativeModule() {
+  invariant(
+    false,
+    'Cannot use AppTheme module when native RTCAppTheme is not included in the build.\n' +
+      'Either include it, or check AppTheme.isAvailable before calling any methods.',
+  );
+}
+
 // This module depends on the native `RCTAppTheme` module. If you don't include it,
 // `AppTheme.isAvailable` will return `false`, and any method calls will throw.
-class MissingNativeAppThemeShim extends MissingNativeEventEmitterShim {
+class MissingNativeAppThemeShim {
   public isAvailable = false;
   public currentTheme = '';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
+
+  addEventListener() {
+    throwMissingNativeModule();
+  }
+
+  removeEventListener() {
+    throwMissingNativeModule();
+  }
+
+  // EventEmitter
+  addListener(_eventType: string, _listener: () => void): any {
+    throwMissingNativeModule();
+  }
+
+  removeAllListeners() {
+    throwMissingNativeModule();
+  }
+
+  removeListener(_eventType: string, _listener: () => void) {
+    throwMissingNativeModule();
+  }
+
+  removeSubscription() {
+    throwMissingNativeModule();
+  }
 }
 
 export const AppTheme = NativeAppTheme
