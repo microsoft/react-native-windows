@@ -16,8 +16,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <USE_HERMES>false</USE_HERMES>
-    <USE_V8>false</USE_V8>
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
+    <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">

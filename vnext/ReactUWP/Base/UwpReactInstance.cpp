@@ -374,20 +374,23 @@ void UwpReactInstance::Start(
 
 #if !defined(OSS_RN)
     if (settings.UseJsi) {
+      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
+          nullptr;
 
 #if defined(USE_HERMES)
       devSettings->jsiRuntimeHolder =
           std::make_shared<facebook::react::HermesRuntimeHolder>();
 #elif defined(USE_V8)
-      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
+      preparedScriptStore =
           std::make_unique<react::uwp::BasePreparedScriptStoreImpl>();
 
-      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-          devSettings,
-          jsQueue,
-          std::move(scriptStore),
-          std::move(preparedScriptStore));
+      devSettings->jsiRuntimeHolder =
+          std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              devSettings,
+              jsQueue,
+              std::move(scriptStore),
+              std::move(preparedScriptStore));
 #else
       if (settings.EnableByteCodeCacheing ||
           !settings.ByteCodeFileUri.empty()) {

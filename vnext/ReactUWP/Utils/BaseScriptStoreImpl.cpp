@@ -2,18 +2,15 @@
 
 #include "BaseScriptStoreImpl.h"
 
-#include <fstream>
-
-#include <winrt/Windows.Storage.FileProperties.h>
-#include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Storage.h>
 
 #include <codecvt>
 #include <locale>
+#include <fstream>
 
 using namespace facebook;
 
 namespace winrt {
-using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Storage;
 }; // namespace winrt
 
@@ -91,7 +88,7 @@ private:
   size_t size_;
 };
 
-constexpr const char* PERSIST_MAGIC = "CHAKRAPREP";
+constexpr const char* PERSIST_MAGIC = "RNWPREP";
 constexpr const char* PERSIST_EOF = "EOF";
 
 int constexpr length__(const char* str)
