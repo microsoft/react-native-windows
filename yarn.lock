@@ -7736,7 +7736,6 @@ react-native-local-cli@^1.0.0-alpha.5:
 
 "react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.43.tar.gz":
   version "0.59.0-microsoft.43"
-  uid "1f1287774e85b2db033491bc8b245049203187ad"
   resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.43.tar.gz#1f1287774e85b2db033491bc8b245049203187ad"
   dependencies:
     "@babel/core" "^7.4.0"

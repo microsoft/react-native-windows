@@ -1,6 +1,41 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Aug 2019 19:56:52 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2019 07:26:49 GMT and should not be manually modified.
+
+## 0.59.0-vnext.143
+Tue, 20 Aug 2019 07:26:49 GMT
+
+### Changes
+
+- Don't use DefaultNativeMessageQueueThread in live reload (andrewh@microsoft.com)
+
+## 0.59.0-vnext.142
+Tue, 20 Aug 2019 03:02:53 GMT
+
+### Changes
+
+- add additional new warning disable to MsoFolly.h (andrewh@microsoft.com)
+
+## 0.59.0-vnext.141
+Mon, 19 Aug 2019 20:59:57 GMT
+
+### Changes
+
+- fix flyout full placement mode (kmelmon@microsoft.com)
+
+## 0.59.0-vnext.140
+Mon, 19 Aug 2019 16:43:43 GMT
+
+### Changes
+
+- Update placement mapping (cknestri@microsoft.com)
+,- Start API documentation (acoates@microsoft.com)
+,- Always use unforked version of folly + Update folly to v2019.08.12.00 (acoates@microsoft.com)
+,- resolved build error (email not defined)
+,- Improved fix for overlapping XAML theme shadows on Flyouts (kenander@microsoft.com)
+,- add batching queue (kmelmon@microsoft.com)
+,- restore accidental deletion (kmelmon@microsoft.com)
+,- Microsoft.ReactNative SampleApps (jthysell@microsoft.com)
 
 ## 0.59.0-vnext.139
 Tue, 13 Aug 2019 19:56:52 GMT

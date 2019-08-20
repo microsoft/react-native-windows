@@ -49,6 +49,11 @@
 #include <jsi/RuntimeHolder.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
+#if defined(USE_HERMES)
+#include "HermesRuntimeHolder.h"
+#endif
+#include "ChakraJSIRuntimeHolder.h"
+
 #endif
 
 namespace {
@@ -428,6 +433,27 @@ InstanceImpl::InstanceImpl(
 #if !defined(OSS_RN)
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
+      assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+    } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
+      switch (m_devSettings->jsiEngineOverride) {
+        case JSIEngineOverride::Hermes:
+#if defined(USE_HERMES)
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<HermesRuntimeHolder>();
+          break;
+#else
+          assert(false); // Hermes is not available in this build, fallthrough
+#endif
+        case JSIEngineOverride::Chakra:
+        case JSIEngineOverride::ChakraCore:
+        default: // TODO: Add other engines once supported
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<ChakraJSIRuntimeHolder>(
+                  m_devSettings, jsQueue, nullptr, nullptr);
+          break;
+      }
       jsef = std::make_shared<OJSIExecutorFactory>(
           m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     } else
