@@ -78,8 +78,8 @@ jobs:
     - name: NuGet restore
       run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
       
-    - name: Build ReactWindows-UWP.sln
-      run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
-      env:
-        BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-        BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+    #- name: Build ReactWindows-UWP.sln
+    #  run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+    #  env:
+    #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+    #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
