@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Remove old playground app",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "5bf9e186a2956530be7386520a4489674f31f530",
+  "date": "2019-08-20T21:21:31.649Z"
+}

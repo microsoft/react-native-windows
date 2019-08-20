@@ -93,9 +93,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp">
       <Filter>jsi</Filter>
     </ClCompile>
-    <ClCompile Include="nov8.cpp">
-      <Filter>jsi</Filter>
-    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>

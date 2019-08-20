@@ -1,6 +1,29 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 13 Aug 2019 19:56:52 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2019 21:54:07 GMT and should not be manually modified.
+
+## 0.13.3
+Tue, 20 Aug 2019 21:54:07 GMT
+
+### Patches
+
+- Minor fixes made in RN60 update that can be brought right to master (acoates@microsoft.com)
+
+## 0.13.2
+Mon, 19 Aug 2019 20:59:57 GMT
+
+### Patches
+
+- fix flyout full placement mode (kmelmon@microsoft.com)
+
+## 0.13.1
+Mon, 19 Aug 2019 16:43:43 GMT
+
+### Patches
+
+- Start API documentation (acoates@microsoft.com)
+,- Improved fix for overlapping XAML theme shadows on Flyouts (kenander@microsoft.com)
+,- Ensure folly is downloaded before react-native-windows-extended builds (acoates@microsoft.com)
 
 ## 0.13.0
 Tue, 13 Aug 2019 19:56:52 GMT
