@@ -114,7 +114,7 @@ jobs:
       - name: Remove node_modules
         run: cd vnext && rd /S /Q node_modules
 
-      - name:Install react-native cli
+      - name: Install react-native cli
         run: npm install -g react-native-cli
 
       - name: Dump GitHub context
