@@ -8,67 +8,42 @@ jobs:
 
     runs-on: windows-2016
     
-    strategy:
-      matrix:
-        include:
-        - BuildConfiguration: Debug
-          BuildPlatform: x64
-          UseRNFork: true
-        - BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: true
-        - BuildConfiguration: Debug
-          BuildPlatform: arm
-          UseRNFork: true
-        - BuildConfiguration: Release
-          BuildPlatform: x64
-          UseRNFork: true
-        - BuildConfiguration: Release
-          BuildPlatform: x86
-          UseRNFork: true
-        - BuildConfiguration: Release
-          BuildPlatform: arm
-          UseRNFork: true
-        - BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: false
+    # strategy:
+    #  matrix:
+    #    include:
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x64
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x86
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: arm
+    #      UseRNFork: true
+    #    - BuildConfiguration: Release
+    #      BuildPlatform: x64
+    #      UseRNFork: true
+    #    - BuildConfiguration: Release
+    #      BuildPlatform: x86
+    #      UseRNFork: true
+    #    - BuildConfiguration: Release
+    #      BuildPlatform: arm
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x86
+    #      UseRNFork: false
     
     steps:
     - uses: actions/checkout@v1
-    
-    - name: Dump GitHub context
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: echo "$GITHUB_CONTEXT"
-    - name: Dump strategy context
-      env:
-        STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-      run: echo "$STRATEGY_CONTEXT"
-    - name: Dump matrix context
-      env:
-        MATRIX_CONTEXT: ${{ toJson(matrix) }}
-      run: echo "$MATRIX_CONTEXT"
-    - name: Dump job context
-      env:
-        JOB_CONTEXT: ${{ toJson(job) }}
-      run: echo "$JOB_CONTEXT"
-    - name: Dump runner context
-      env:
-        RUNNER_CONTEXT: ${{ toJson(runner) }}
-      run: echo "$RUNNER_CONTEXT"
-    - name: Dump steps context
-      env:
-        STEPS_CONTEXT: ${{ toJson(steps) }}
-      run: echo "$STEPS_CONTEXT"
-    
+
     #- name: Switch to fork
     #  if: ${{ matrix.UseRNFork }} == 'false'
     #  run: node scripts/useUnForkedRN.js
     #  working-directory: vnext
       
-    #- name: yarn install (Using microsoft/react-native)
+    - name: yarn install (Using microsoft/react-native)
     #  if: ${{ matrix.UseRNFork }} == 'true'
-    #  run: yarn install --frozen-lockfile
+      run: yarn install --frozen-lockfile
       
       # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
       # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
@@ -77,17 +52,19 @@ jobs:
     #  if: ${{ matrix.UseRNFork }} == 'false'
     #  run: yarn install
       
-    #- run: yarn buildci
+    - run: yarn buildci
      
-    #- name: Install SDK
-    #  run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
-    #  shell: powershell
+    - name: Install SDK
+      run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+      shell: powershell
         
-    #- name: NuGet restore
-    #  run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+    - name: NuGet restore
+      run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
       
-    #- name: Build ReactWindows-UWP.sln
-    #  run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
-    #  env:
+    - name: Build ReactWindows-UWP.sln
+      run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+      env:
+        BUILDPLATFORM: x64
+        BUILDCONFIGURATION: Debug
     #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
     #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
