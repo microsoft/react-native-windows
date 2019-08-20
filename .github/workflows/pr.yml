@@ -8,15 +8,15 @@ jobs:
 
     runs-on: windows-2016
     
-    strategy:
-      matrix:
-        include:
-        - BuildConfiguration: Debug
-          BuildPlatform: x64
-          UseRNFork: true
-        - BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: true
+    #strategy:
+    #  matrix:
+    #    include:
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x64
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x86
+    #      UseRNFork: true
     #    - BuildConfiguration: Debug
     #      BuildPlatform: arm
     #      UseRNFork: true
@@ -70,7 +70,25 @@ jobs:
     - name: Build ReactWindows-UWP.sln
       run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
       env:
-        BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-        BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
-    #    BUILDPLATFORM: x64
-    #    BUILDCONFIGURATION: Debug
+        BUILDPLATFORM: x64
+        BUILDCONFIGURATION: Debug
+    #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+    #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+
+    - name: NuGet restore
+      run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+      
+    - name: Build ReactWindows-UWP.sln
+      run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+      env:
+        BUILDPLATFORM: x64
+        BUILDCONFIGURATION: Debug
+        
+    # todo work out how to specify working-directory for run command
+    - name: Create Playground bundle
+      run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+        
+    - name: Create RNTester bundle
+    #  if: ${{ matrix.UseRNFork }} == 'true'
+      run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+        
