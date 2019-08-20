@@ -67,7 +67,8 @@ void BatchingUIMessageQueueThread::onBatchComplete() {
   }
 }
 
-void BatchingUIMessageQueueThread::runOnQueueSync(std::function<void()> &&func) {
+void BatchingUIMessageQueueThread::runOnQueueSync(
+    std::function<void()> &&func) {
   // Not supported
   // TODO: crash
 }

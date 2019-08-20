@@ -267,15 +267,16 @@ void UwpReactInstance::Start(
 
   assert(
       m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr &&
-      m_batchingNativeThread == nullptr && m_jsThread == nullptr && m_initThread == nullptr &&
-      m_instanceWrapper == nullptr);
+      m_batchingNativeThread == nullptr && m_jsThread == nullptr &&
+      m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
   m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread =
       std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
   m_batchingNativeThread =
-      std::make_shared<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher);
+      std::make_shared<react::uwp::BatchingUIMessageQueueThread>(
+          m_uiDispatcher);
 
   // Objects that must be created on the UI thread
   std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();

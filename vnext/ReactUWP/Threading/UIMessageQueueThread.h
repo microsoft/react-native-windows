@@ -10,8 +10,7 @@ namespace react {
 namespace uwp {
 
 // Executes the function on the provided UI Dispatcher
-class UIMessageQueueThread
-    : public facebook::react::MessageQueueThread {
+class UIMessageQueueThread : public facebook::react::MessageQueueThread {
  public:
   UIMessageQueueThread() = delete;
   UIMessageQueueThread(const UIMessageQueueThread &other) = delete;
