@@ -77,13 +77,12 @@
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #elif defined(USE_V8)
+#include "Utils/BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #else
 #include "ChakraJSIRuntimeHolder.h"
 #endif
 #endif
-
-#include "Utils/BaseScriptStoreImpl.h"
 
 #include <tuple>
 
