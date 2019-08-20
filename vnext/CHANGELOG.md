@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Aug 2019 07:26:49 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2019 21:54:07 GMT and should not be manually modified.
+
+## 0.59.0-vnext.144
+Tue, 20 Aug 2019 21:54:07 GMT
+
+### Changes
+
+- Minor fixes made in RN60 update that can be brought right to master (acoates@microsoft.com)
 
 ## 0.59.0-vnext.143
 Tue, 20 Aug 2019 07:26:49 GMT

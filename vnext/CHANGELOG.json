@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Aug 2019 21:54:07 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.144",
+      "version": "0.59.0-vnext.144",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor fixes made in RN60 update that can be brought right to master",
+            "author": "acoates@microsoft.com",
+            "commit": "a8071bd1692c9f1bc15eaeaa2043eab90cf6dfe0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Aug 2019 07:26:49 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.143",
       "version": "0.59.0-vnext.143",
