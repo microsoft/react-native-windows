@@ -88,7 +88,96 @@ jobs:
     - name: Create Playground bundle
       run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
         
+    # todo work out how to specify working-directory for run command
     - name: Create RNTester bundle
     #  if: ${{ matrix.UseRNFork }} == 'true'
       run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
         
+
+  CliInit:
+    name: Verify react-native init
+
+    runs-on: windows-2016
+
+    steps:
+      - uses: actions/checkout@v1
+            
+      - name: yarn install (local react-native-windows)
+        run: yarn install --frozen-lockfile
+      
+    # todo work out how to specify working-directory for run command
+      - name: yarn build (local react-native-windows)
+        run: cd vnext && yarn build
+
+    # yarn ends up copying the whole node_modules folder when doing an install of a file package
+    # Delete node_modules, so that resolution is more like when installing from a published npm package
+      - name: Remove node_modules
+        run: cd vnext && rd /S /Q node_modules
+
+      - name:Install react-native cli
+        run: npm install -g react-native-cli
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+
+
+
+
+
+     # - task: CmdLine@2
+     #   displayName: Init new project
+     #   inputs:
+     #     script: react-native init testcli --version 0.59.10
+     #     workingDirectory: $(Agent.BuildDirectory)
+
+     # - task: CmdLine@2
+     #   displayName: Install rnpm-plugin-windows
+     #   inputs:
+     #     script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
+     #     workingDirectory: $(Agent.BuildDirectory)\testcli
+        
+     # - task: CmdLine@2
+     #   displayName: Apply windows template
+     #   inputs:
+     #     script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+     #     workingDirectory: $(Agent.BuildDirectory)\testcli
+
+     # - template: templates/install-SDK.yml
+
+     # - task: NuGetCommand@2
+     #   displayName: NuGet restore
+     #   inputs:
+     #     command: restore
+     #     restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+
+     # - task: MSBuild@1
+     #   displayName: MSBuild - Build the project
+     #   inputs:
+     #     solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+     #     msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+     #     msbuildArchitecture: 'x86' # Optional. Options: x86, x64
+     #     platform: x64 # Optional
+     #     configuration: Debug # Optional
+     #     restoreNugetPackages: true
+     #     msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+     #     clean: true # Optional
+
+     # - task: CmdLine@2
+     #   displayName: Create bundle
+     #   inputs:
+     #     script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
+     #     workingDirectory: $(Agent.BuildDirectory)\testcli
