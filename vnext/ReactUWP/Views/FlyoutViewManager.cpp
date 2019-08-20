@@ -18,11 +18,20 @@ using namespace Windows::UI::Xaml::Interop;
 } // namespace winrt
 
 static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
-    placementModeMinVersion = {{"top", winrt::FlyoutPlacementMode::Top},
-                               {"bottom", winrt::FlyoutPlacementMode::Bottom},
-                               {"left", winrt::FlyoutPlacementMode::Left},
-                               {"right", winrt::FlyoutPlacementMode::Right},
-                               {"full", winrt::FlyoutPlacementMode::Full}};
+    placementModeMinVersion = {
+        {"top", winrt::FlyoutPlacementMode::Top},
+        {"top-edge-aligned-left", winrt::FlyoutPlacementMode::Top},
+        {"top-edge-aligned-right", winrt::FlyoutPlacementMode::Top},
+        {"bottom", winrt::FlyoutPlacementMode::Bottom},
+        {"bottom-edge-aligned-left", winrt::FlyoutPlacementMode::Bottom},
+        {"bottom-edge-aligned-right", winrt::FlyoutPlacementMode::Bottom},
+        {"left", winrt::FlyoutPlacementMode::Left},
+        {"left-edge-aligned-top", winrt::FlyoutPlacementMode::Left},
+        {"left-edge-aligned-bottom", winrt::FlyoutPlacementMode::Left},
+        {"right", winrt::FlyoutPlacementMode::Right},
+        {"right-edge-aligned-top", winrt::FlyoutPlacementMode::Right},
+        {"right-edge-aligned-bottom", winrt::FlyoutPlacementMode::Right},
+        {"full", winrt::FlyoutPlacementMode::Full}};
 
 static const std::unordered_map<std::string, winrt::FlyoutPlacementMode>
     placementModeRS5 = {{"top", winrt::FlyoutPlacementMode::Top},
@@ -82,6 +91,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
   winrt::Flyout GetFlyout();
   void AdjustDefaultFlyoutStyle(float maxWidth, float maxHeight);
+  void SetSize(float width, float height);
 
   bool IsWindowed() override {
     return true;
@@ -90,6 +100,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
  private:
   void SetTargetFrameworkElement();
   winrt::Popup GetFlyoutParentPopup() const;
+  winrt::FlyoutPresenter GetFlyoutPresenter() const;
 
   winrt::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
@@ -98,9 +109,12 @@ class FlyoutShadowNode : public ShadowNodeBase {
   int64_t m_targetTag = -1;
   float m_horizontalOffset = 0;
   float m_verticalOffset = 0;
+  float m_width = 0;
+  float m_height = 0;
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
   static thread_local std::int32_t s_cOpenFlyouts;
+  std::int32_t m_elevation = 0;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
@@ -109,6 +123,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Flyout::Closing_revoker m_flyoutClosingRevoker{};
   winrt::Flyout::Closed_revoker m_flyoutClosedRevoker{};
   int64_t m_tokenContentPropertyChangeCallback;
+  winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
 };
 
 thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
@@ -193,6 +208,26 @@ void FlyoutShadowNode::createView() {
               }
             }
           });
+
+  // When multiple flyouts are overlapping, XAML's theme shadows don't render
+  // properly. As a workaround we enable a z-index translation based on an
+  // elevation derived from the count of open flyouts. We apply this
+  // translation on open of the flyout.
+  // (Translation is only supported on RS5+)
+  if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
+    m_flyoutOpenedRevoker =
+        m_flyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
+          auto instance = wkinstance.lock();
+
+          if (!m_updating && instance != nullptr && m_elevation > 0) {
+            if (auto flyoutPresenter = GetFlyoutPresenter()) {
+              winrt::Numerics::float3 translation{
+                  0, 0, (float)32 * m_elevation};
+              flyoutPresenter.Translation(translation);
+            }
+          }
+        });
+  }
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
@@ -293,7 +328,8 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   if (updateIsOpen) {
     if (m_isOpen) {
       s_cOpenFlyouts += 1;
-      AdjustDefaultFlyoutStyle(50000, 50000);
+      m_elevation = s_cOpenFlyouts - 1;
+      AdjustDefaultFlyoutStyle(m_width, m_height);
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
       } else {
@@ -362,22 +398,12 @@ void FlyoutShadowNode::AdjustDefaultFlyoutStyle(
   flyoutStyle.Setters().Append(winrt::Setter(
       winrt::Control::BackgroundProperty(),
       winrt::box_value<winrt::SolidColorBrush>(winrt::Colors::Transparent())));
-
-  // When multiple flyouts are overlapping, XAML's theme shadows don't render
-  // properly. As a workaround (temporary) we disable shadows when multiple
-  // flyouts are open.
-  if (s_cOpenFlyouts > 1) {
-    static bool isDisableShadowsSupported =
-        winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-            L"Windows.UI.Xaml.Controls.FlyoutPresenter",
-            L"IsDefaultShadowEnabled");
-    if (isDisableShadowsSupported) {
-      flyoutStyle.Setters().Append(winrt::Setter(
-          winrt::FlyoutPresenter::IsDefaultShadowEnabledProperty(),
-          winrt::box_value(false)));
-    }
-  }
   m_flyout.FlyoutPresenterStyle(flyoutStyle);
+}
+
+void FlyoutShadowNode::SetSize(float width, float height) {
+  m_width = width;
+  m_height = height;
 }
 
 winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const {
@@ -388,6 +414,23 @@ winrt::Popup FlyoutShadowNode::GetFlyoutParentPopup() const {
   if (popups.Size() > 0)
     return popups.GetAt(0);
   return nullptr;
+}
+
+winrt::FlyoutPresenter FlyoutShadowNode::GetFlyoutPresenter() const {
+  if (m_flyout == nullptr || m_flyout.Content() == nullptr)
+    return nullptr;
+
+  auto parent = winrt::VisualTreeHelper::GetParent(m_flyout.Content());
+  if (parent == nullptr)
+    return nullptr;
+
+  auto scope = parent.try_as<winrt::FlyoutPresenter>();
+  while (parent != nullptr && scope == nullptr) {
+    parent = winrt::VisualTreeHelper::GetParent(parent);
+    scope = parent.try_as<winrt::FlyoutPresenter>();
+  }
+
+  return scope;
 }
 
 FlyoutViewManager::FlyoutViewManager(
@@ -434,11 +477,9 @@ void FlyoutViewManager::SetLayoutProps(
     float width,
     float height) {
   auto *pFlyoutShadowNode = static_cast<FlyoutShadowNode *>(&nodeToUpdate);
-
+  pFlyoutShadowNode->SetSize(width, height);
   if (auto flyout = pFlyoutShadowNode->GetFlyout()) {
-    if (winrt::FlyoutPlacementMode::Full == flyout.Placement()) {
-      pFlyoutShadowNode->AdjustDefaultFlyoutStyle(width, height);
-    }
+    pFlyoutShadowNode->AdjustDefaultFlyoutStyle(width, height);
   }
 }
 
