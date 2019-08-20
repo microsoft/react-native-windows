@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Aug 2019 03:02:53 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2019 07:26:49 GMT and should not be manually modified.
+
+## 0.59.0-vnext.143
+Tue, 20 Aug 2019 07:26:49 GMT
+
+### Changes
+
+- Don't use DefaultNativeMessageQueueThread in live reload (andrewh@microsoft.com)
 
 ## 0.59.0-vnext.142
 Tue, 20 Aug 2019 03:02:53 GMT
