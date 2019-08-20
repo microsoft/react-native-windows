@@ -10,9 +10,6 @@ jobs:
     
     strategy:
       matrix:
-        BuildConfiguration: [Debug, Release]
-        BuildPlatform: [x64, x86, arm]
-        UseRNFork: [true]
         include:
         - BuildConfiguration: Debug
           BuildPlatform: x64
