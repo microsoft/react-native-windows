@@ -16,9 +16,6 @@ jobs:
         include:
         - BuildConfiguration: Debug
           BuildPlatform: x86
-          UseRNFork: true
-        - BuildConfiguration: Debug
-          BuildPlatform: x86
           UseRNFork: false
     
     steps:
