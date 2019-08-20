@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Minor fixes made in RN60 update that can be brought right to master",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "a8071bd1692c9f1bc15eaeaa2043eab90cf6dfe0",
+  "date": "2019-08-20T18:01:47.091Z"
+}

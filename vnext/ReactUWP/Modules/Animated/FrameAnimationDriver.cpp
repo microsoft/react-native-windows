@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <jsi/jsi.h>
 #include "FrameAnimationDriver.h"
 
 namespace react {
