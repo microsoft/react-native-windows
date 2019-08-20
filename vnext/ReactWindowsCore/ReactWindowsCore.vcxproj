@@ -175,4 +175,10 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
   </Target>
+    <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'"
+     Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.
+     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />
+  </Target>
+
 </Project>
