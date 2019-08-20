@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Don't use DefaultNativeMessageQueueThread in live reload",
+  "packageName": "react-native-windows",
+  "email": "andrewh@microsoft.com",
+  "commit": "89ddedf6f1b193bfea345981e7312f8468382055",
+  "date": "2019-08-20T05:43:52.625Z"
+}
