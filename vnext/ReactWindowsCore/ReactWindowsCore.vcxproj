@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" />
+  <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -172,7 +172,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="'$(USE_HERMES)' == 'true' AND !Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
+    <Error Condition="'$(USE_HERMES)' == 'true' AND !Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
   </Target>
 </Project>
