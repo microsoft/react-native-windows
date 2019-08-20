@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <ReactWindowsCore/BatchingMessageQueueThread.h>
+#include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.Core.h>
 
 namespace react {
@@ -11,7 +11,7 @@ namespace uwp {
 
 // Executes the function on the provided UI Dispatcher
 class UIMessageQueueThread
-    : public facebook::react::BatchingMessageQueueThread {
+    : public facebook::react::MessageQueueThread {
  public:
   UIMessageQueueThread() = delete;
   UIMessageQueueThread(const UIMessageQueueThread &other) = delete;
@@ -23,21 +23,8 @@ class UIMessageQueueThread
   virtual void runOnQueueSync(std::function<void()> &&func);
   virtual void quitSynchronous();
 
-  void onBatchComplete() override;
-
- private:
-  void ensureQueue();
-  void threadCheck();
-
  private:
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{nullptr};
-
-  typedef std::vector<std::function<void()>> WorkItemQueue;
-  std::shared_ptr<WorkItemQueue> m_queue;
-
-#if DEBUG
-  DWORD m_expectedThreadId = 0;
-#endif
 };
 
 } // namespace uwp
