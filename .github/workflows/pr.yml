@@ -3,11 +3,15 @@ name: CI
 on: [push]
 
 jobs:
+
+  # This job verifies the basic UWP projects
   UWPPR:
     name: UWP PR
 
     runs-on: windows-2016
     
+    # Can't appear to enable matrix right now:
+    # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
     #strategy:
     #  matrix:
     #    include:
@@ -93,7 +97,7 @@ jobs:
     #  if: ${{ matrix.UseRNFork }} == 'true'
       run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
         
-
+  # This job verifies creating a new react-native app, installing react-native-windows, applying the vnext template, and building it
   CliInit:
     name: Verify react-native init
 
@@ -105,42 +109,17 @@ jobs:
       - name: yarn install (local react-native-windows)
         run: yarn install --frozen-lockfile
       
-    # todo work out how to specify working-directory for run command
+      # todo work out how to specify working-directory for run command
       - name: yarn build (local react-native-windows)
         run: cd vnext && yarn build
 
-    # yarn ends up copying the whole node_modules folder when doing an install of a file package
-    # Delete node_modules, so that resolution is more like when installing from a published npm package
+      # yarn ends up copying the whole node_modules folder when doing an install of a file package
+      # Delete node_modules, so that resolution is more like when installing from a published npm package
       - name: Remove node_modules
         run: cd vnext && rd /S /Q node_modules
 
       - name: Install react-native cli
         run: npm install -g react-native-cli
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "%GITHUB_CONTEXT%"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "%STRATEGY_CONTEXT%"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "%MATRIX_CONTEXT%"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "%JOB_CONTEXT%"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "%RUNNER_CONTEXT%"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "%STEPS_CONTEXT%"
 
       - name: Init new project
         run: cd ${{ runner.temp }} && react-native init testcli --version 0.59.10
