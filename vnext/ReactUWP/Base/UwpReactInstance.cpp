@@ -76,11 +76,18 @@
 #if !defined(OSS_RN)
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
+#elif defined(USE_V8)
+#include "V8JSIRuntimeHolder.h"
 #else
 #include "ChakraJSIRuntimeHolder.h"
 #endif
 #endif
 
+#include <Windows.storage.h>
+#include "Utils/BaseScriptStoreImpl.h"
+
+#include <codecvt>
+#include <locale>
 #include <tuple>
 
 namespace react {
@@ -371,11 +378,27 @@ void UwpReactInstance::Start(
 #if !defined(OSS_RN)
     if (settings.UseJsi) {
 
-// Currently assuming we have only two JSI implementations, i.e. Hermes & Chakra
-// based .. And we switch at compile time.
 #if defined(USE_HERMES)
       devSettings->jsiRuntimeHolder =
           std::make_shared<facebook::react::HermesRuntimeHolder>();
+#elif defined(USE_V8)
+      auto local = winrt::Windows::Storage::ApplicationData::Current()
+                       .LocalFolder()
+                       .Path();
+      std::string local_path =
+          std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(
+              std::wstring(local.c_str(), local.size()));
+
+      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
+          std::make_unique<react::uwp::BasePreparedScriptStoreImpl>(
+              local_path + "\\");
+
+      devSettings->jsiRuntimeHolder = std::make_shared<V8JSIRuntimeHolder>(
+          devSettings,
+          jsQueue,
+          std::move(scriptStore),
+          std::move(preparedScriptStore));
 #else
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =

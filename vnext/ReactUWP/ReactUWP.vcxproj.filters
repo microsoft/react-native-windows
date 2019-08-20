@@ -289,6 +289,18 @@
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Base\V8JSIRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\BaseScriptStoreImpl.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+>>>>>>> Barebone V8 integration
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -629,6 +641,15 @@
     </ClInclude>
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
       <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\V8JSIRuntimeHolder.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\BaseScriptStoreImpl.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
