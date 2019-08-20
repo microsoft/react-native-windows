@@ -1,6 +1,6 @@
 name: CI
 
-on: [check_suite]
+on: [push]
 
 jobs:
   UWPPR:
@@ -60,6 +60,9 @@ jobs:
       
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
+      
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
         
     - name: NuGet restore
       run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
