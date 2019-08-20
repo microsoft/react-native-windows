@@ -1,0 +1,8 @@
+{
+  "comment": "Fix building for consumers without hermes",
+  "type": "prerelease",
+  "packageName": "react-native-windows",
+  "email": "stecrain@microsoft.com",
+  "commit": "c6836b9e4e7289ebacae7dd5cd25270397fd269c",
+  "date": "2019-08-20T15:01:26.025Z"
+}
