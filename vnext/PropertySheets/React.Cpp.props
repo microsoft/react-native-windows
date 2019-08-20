@@ -16,7 +16,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <USE_HERMES>false</USE_HERMES>
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">
