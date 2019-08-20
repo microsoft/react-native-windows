@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Aug 2019 23:40:14 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.145",
+      "version": "0.59.0-vnext.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Light up Inspector debugging tool.",
+            "author": "kinhln@microsoft.com",
+            "commit": "e848576428aea2112b46ed8e9205fc386c387305"
+          },
+          {
+            "comment": "Remove old playground app",
+            "author": "acoates@microsoft.com",
+            "commit": "5bf9e186a2956530be7386520a4489674f31f530"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Aug 2019 21:54:07 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.144",
       "version": "0.59.0-vnext.144",

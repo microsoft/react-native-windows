@@ -1,6 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Aug 2019 21:54:07 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2019 23:40:14 GMT and should not be manually modified.
+
+## 0.59.0-vnext.145
+Tue, 20 Aug 2019 23:40:14 GMT
+
+### Changes
+
+- Light up Inspector debugging tool. (kinhln@microsoft.com)
+,- Remove old playground app (acoates@microsoft.com)
 
 ## 0.59.0-vnext.144
 Tue, 20 Aug 2019 21:54:07 GMT
