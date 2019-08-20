@@ -1,14 +1,16 @@
 #include "pch.h"
 
 #include "V8JSIRuntimeHolder.h"
+#include <V8JsiRuntime.h>
 
 #include <queue>
+#include <atomic>
 
 using namespace facebook;
 using namespace facebook::react;
 
+namespace facebook {
 namespace react {
-namespace uwp {
 
 class ReactQueueBackedTaskRunner {
  public:
@@ -192,5 +194,5 @@ void V8JSIRuntimeHolder::initRuntime() noexcept {
   own_thread_id_ = std::this_thread::get_id();
 }
 
-} // namespace uwp
 } // namespace react
+} // namespace facebook

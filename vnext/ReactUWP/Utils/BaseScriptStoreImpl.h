@@ -23,10 +23,13 @@ public:
   LocalFileSimpleBufferStore(const std::string& storeDirectory)
 		: storeDirectory_(storeDirectory) {}
 
+  LocalFileSimpleBufferStore() : storeDirectory_(getApplicationLocalFolder()) {}
+
   std::unique_ptr<const facebook::jsi::Buffer> getBuffer(const std::string& bufferId) noexcept override;
   bool persistBuffer(const std::string& bufferId, std::unique_ptr<const facebook::jsi::Buffer>) noexcept override;
 
 private:
+  std::string getApplicationLocalFolder();
   std::string storeDirectory_;
 };
 
@@ -62,6 +65,10 @@ public:
 
   BasePreparedScriptStoreImpl(const std::string& storeDirectory)
 	  : bufferStore_(std::make_shared<LocalFileSimpleBufferStore>(storeDirectory)) {}
+
+  BasePreparedScriptStoreImpl()
+      : bufferStore_(
+            std::make_shared<LocalFileSimpleBufferStore>()) {}
 
   BasePreparedScriptStoreImpl(std::shared_ptr<BufferStore> bufferStore)
     : bufferStore_(std::move(bufferStore)) {}

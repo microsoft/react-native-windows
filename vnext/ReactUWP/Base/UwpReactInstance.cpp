@@ -83,11 +83,8 @@
 #endif
 #endif
 
-#include <Windows.storage.h>
 #include "Utils/BaseScriptStoreImpl.h"
 
-#include <codecvt>
-#include <locale>
 #include <tuple>
 
 namespace react {
@@ -382,28 +379,16 @@ void UwpReactInstance::Start(
       devSettings->jsiRuntimeHolder =
           std::make_shared<facebook::react::HermesRuntimeHolder>();
 #elif defined(USE_V8)
-      auto local = winrt::Windows::Storage::ApplicationData::Current()
-                       .LocalFolder()
-                       .Path();
-      std::string local_path =
-          std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(
-              std::wstring(local.c_str(), local.size()));
-
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
-          std::make_unique<react::uwp::BasePreparedScriptStoreImpl>(
-              local_path + "\\");
+          std::make_unique<react::uwp::BasePreparedScriptStoreImpl>();
 
-      devSettings->jsiRuntimeHolder = std::make_shared<V8JSIRuntimeHolder>(
+      devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
           devSettings,
           jsQueue,
           std::move(scriptStore),
           std::move(preparedScriptStore));
 #else
-      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
-          nullptr;
-
       if (settings.EnableByteCodeCacheing ||
           !settings.ByteCodeFileUri.empty()) {
         scriptStore = std::make_unique<UwpScriptStore>();

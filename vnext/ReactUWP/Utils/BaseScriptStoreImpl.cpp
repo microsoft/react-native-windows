@@ -4,7 +4,18 @@
 
 #include <fstream>
 
+#include <winrt/Windows.Storage.FileProperties.h>
+#include <winrt/Windows.Storage.Streams.h>
+
+#include <codecvt>
+#include <locale>
+
 using namespace facebook;
+
+namespace winrt {
+using namespace winrt::Windows::Foundation;
+using namespace winrt::Windows::Storage;
+}; // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -178,6 +189,15 @@ std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const s
   }
 
   return buffer;
+}
+
+std::string LocalFileSimpleBufferStore::getApplicationLocalFolder() {
+  auto local =
+      winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+
+  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(
+             std::wstring(local.c_str(), local.size())) +
+      "\\";
 }
 
 bool LocalFileSimpleBufferStore::persistBuffer(const std::string& relativeUrl, std::unique_ptr<const jsi::Buffer> buffer) noexcept {

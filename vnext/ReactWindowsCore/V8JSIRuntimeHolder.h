@@ -5,12 +5,10 @@
 #include <jsi/RuntimeHolder.h>
 #include <jsi/ScriptStore.h>
 
-#include <V8JsiRuntime.h>
-
 #include <Logging.h>
 
+namespace facebook {
 namespace react {
-namespace uwp {
 
 class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
@@ -22,8 +20,7 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
       std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
       std::unique_ptr<facebook::jsi::PreparedScriptStore>
           &&preparedScriptStore) noexcept
-      :
-        jsQueue_(std::move(jsQueue)),
+      : jsQueue_(std::move(jsQueue)),
         scriptStore_(std::move(scriptStore)),
         preparedScriptStore_(std::move(preparedScriptStore)) {}
 
@@ -40,5 +37,5 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   std::thread::id own_thread_id_;
 };
 
-} // namespace uwp
 } // namespace react
+} // namespace facebook

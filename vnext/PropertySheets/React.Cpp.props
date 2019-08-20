@@ -17,7 +17,7 @@
 
   <PropertyGroup>
     <USE_HERMES>false</USE_HERMES>
-    <USE_V8>false</USE_V8>
+    <USE_V8>true</USE_V8>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">
