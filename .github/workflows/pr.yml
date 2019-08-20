@@ -15,6 +15,24 @@ jobs:
         UseRNFork: [true]
         include:
         - BuildConfiguration: Debug
+          BuildPlatform: x64
+          UseRNFork: true
+        - BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: true
+        - BuildConfiguration: Debug
+          BuildPlatform: arm
+          UseRNFork: true
+        - BuildConfiguration: Release
+          BuildPlatform: x64
+          UseRNFork: true
+        - BuildConfiguration: Release
+          BuildPlatform: x86
+          UseRNFork: true
+        - BuildConfiguration: Release
+          BuildPlatform: arm
+          UseRNFork: true
+        - BuildConfiguration: Debug
           BuildPlatform: x86
           UseRNFork: false
     
