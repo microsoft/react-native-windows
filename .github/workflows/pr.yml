@@ -1,6 +1,6 @@
 name: CI
 
-on: [check_run]
+on: [check_suite]
 
 jobs:
   UWPPR:
@@ -57,6 +57,9 @@ jobs:
     - name: Install SDK
       run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
       shell: powershell
+      
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
         
     - name: NuGet restore
       run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
