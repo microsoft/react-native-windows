@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Only send focus/blur from OriginalSource, remove Click event for enter/space",
+  "packageName": "react-native-windows",
+  "email": "andrewh@microsoft.com",
+  "commit": "bb3ed51419101c4de0d51016cad3fd8703a0bb0e",
+  "date": "2019-08-20T21:12:15.173Z"
+}
