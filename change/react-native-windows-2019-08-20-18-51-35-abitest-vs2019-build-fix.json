@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix VS2019 build for Desktop.ABITests.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "5b296935b88eb24fac55688e234a9ae548a61e7a",
+  "date": "2019-08-21T01:51:35.742Z"
+}
