@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "Barebone V8 integration",
+  "packageName": "react-native-windows-extended",
+  "email": "anandrag@microsoft.com",
+  "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f",
+  "date": "2019-08-20T21:49:53.525Z"
+}

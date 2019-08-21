@@ -116,9 +116,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
@@ -150,9 +147,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
