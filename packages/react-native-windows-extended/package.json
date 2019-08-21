@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-extended",
-  "version": "0.13.3",
+  "version": "0.14.0",
   "description": "Additional react-native-windows components that are not part of RN lean-core.",
   "main": "lib/index.js",
   "repository": {

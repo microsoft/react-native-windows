@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 21:34:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "none": [
+          {
+            "comment": "Barebone V8 Integration",
+            "author": "anandrag@microsoft.com",
+            "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 20:44:12 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.148",
       "version": "0.59.0-vnext.148",
