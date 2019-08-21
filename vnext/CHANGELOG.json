@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 23:36:09 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "none": [
+          {
+            "comment": "Disable BatchingMessageQueueThread on win32.",
+            "author": "yicyao@microsoft.com",
+            "commit": "ce46ec516491f57991e3e7791a1a7fa0ca1e4735"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 21:34:46 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.148",
       "version": "0.59.0-vnext.148",

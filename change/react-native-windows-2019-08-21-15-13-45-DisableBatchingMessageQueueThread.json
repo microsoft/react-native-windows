@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Disable BatchingMessageQueueThread on win32.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "ce46ec516491f57991e3e7791a1a7fa0ca1e4735",
-  "date": "2019-08-21T22:13:45.101Z"
-}
