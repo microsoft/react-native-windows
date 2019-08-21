@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Aug 2019 23:40:14 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2019 00:42:37 GMT and should not be manually modified.
+
+## 0.59.0-vnext.146
+Wed, 21 Aug 2019 00:42:37 GMT
+
+### Changes
+
+- revert fix, not quite working (email not defined)
 
 ## 0.59.0-vnext.145
 Tue, 20 Aug 2019 23:40:14 GMT

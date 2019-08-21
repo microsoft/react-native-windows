@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 00:42:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.146",
+      "version": "0.59.0-vnext.146",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "revert fix, not quite working",
+            "author": "email not defined",
+            "commit": "70cfc1a7ebb44aad77a8410d73e27ab8a5e41e87"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Aug 2019 23:40:14 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.145",
       "version": "0.59.0-vnext.145",
