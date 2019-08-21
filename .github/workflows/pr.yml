@@ -200,11 +200,14 @@ jobs:
 
       - name: Download/Extract Winium
         run: |
-          curl -o ${{ runner.workspace }}\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
+          curl -o ${{ runner.temp }}\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
           mkdir ${{ runner.temp }}\winium
           Add-Type -A 'System.IO.Compression.FileSystem'
-          '[IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.workspace }}\winium.zip", "${{ runner.temp }}\winium")'
+          '[IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.temp }}\winium.zip", "${{ runner.temp }}\winium")'
         shell: powershell
+
+      - run: dir ${{ runner.temp }}
+      - run: dir ${{ runner.temp }}\winium
 
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
@@ -239,10 +242,9 @@ jobs:
             Start-Sleep -s 5
         shell: powershell
 
-      # TOOD add run UTs if !arm
-      #- name: UTs
-      #  if: ${{ matrix.BuildPlatform }} != 'ARM'
-      #  run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+      - name: UTs
+        if: ${{ matrix.BuildPlatform }} != 'ARM'
+        run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
 
 
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
@@ -254,4 +256,46 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
+
+  RnwNativePRBuild:
+    name: Windows Visual Studio with Win32 PR
+    runs-on: windows-2016
+    strategy:
+      matrix:
+        BuildConfiguration: [Debug, Release]
+        BuildPlatform: [x64, x86, arm]
+    steps:
+
+      - uses: actions/checkout@v1
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
+      - run: yarn build
+      
+      - name: Install SDK
+        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+        shell: powershell
+
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: NuGet restore
+        run: nuget.exe restore vnext\ReactWindows.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: Build ReactWindows.sln
+        run: msbuild vnext\ReactWindows.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}"
+        env:
+          RNW_PKG_VERSION_STR: Private Build
+          RNW_PKG_VERSION: 1000,0,0,0
+
+      - name: Run Desktop Unit Tests
+        if: ${{ matrix.BuildPlatform }} != 'arm'
+        run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+
+      - name: Run Desktop Unit Tests (Google Test)
+        run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
 
