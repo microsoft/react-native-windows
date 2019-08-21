@@ -78,8 +78,6 @@ jobs:
       env:
         BUILDPLATFORM: ${{ matrix.BuildPlatform }}
         BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
-        BUILDPLATFORM: x64
-        BUILDCONFIGURATION: Debug
 
     - name: NuGet restore
       run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
