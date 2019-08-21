@@ -235,12 +235,14 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         if (uiManager != nullptr)
           uiManager->onBatchComplete();
       });
+#ifdef WINRT
       facebook::react::BatchingMessageQueueThread *batchingUIThread =
           dynamic_cast<facebook::react::BatchingMessageQueueThread *>(
               uithread.get());
       if (batchingUIThread != nullptr) {
         batchingUIThread->onBatchComplete();
       }
+#endif
     }
   }
   void incrementPendingJSCalls() override {}
