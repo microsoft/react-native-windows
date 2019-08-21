@@ -4,7 +4,7 @@ jobs:
   # This job is much the same as UWPPR, but runs after replacing the version of react-native
   # we are using with facebook/react-native instead of microsoft/react-native
   UWPPublicRN:
-    name: UWP with facebook/react-native
+    name: vnext with facebook/react-native
     runs-on: windows-2016
     steps:
       - uses: actions/checkout@v1
@@ -48,7 +48,7 @@ jobs:
 
   # This job verifies the basic UWP projects
   UWPPR:
-    name: UWP PR
+    name: vnext ReactWindows-UWP.sln
     runs-on: windows-2016
     # Can't appear to enable matrix right now:
     # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
@@ -187,7 +187,7 @@ jobs:
           curl -o ${{ runner.temp }}\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
           mkdir ${{ runner.temp }}\winium
           Add-Type -A 'System.IO.Compression.FileSystem'
-          '[IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.temp }}\winium.zip", "${{ runner.temp }}\winium")'
+          [IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.temp }}\winium.zip", "${{ runner.temp }}\winium")
         shell: powershell
 
       - run: dir ${{ runner.temp }}
@@ -239,7 +239,7 @@ jobs:
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
   RnwNativePRBuild:
-    name: Windows Visual Studio with Win32 PR
+    name: vnext Windows.sln
     runs-on: windows-2016
     strategy:
       matrix:
@@ -271,8 +271,10 @@ jobs:
         env:
           RNW_PKG_VERSION_STR: Private Build
           RNW_PKG_VERSION: 1000,0,0,0
-  #    - name: Run Desktop Unit Tests
-  #      if: ${{ matrix.BuildPlatform }} != 'arm'
-  #      run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+
+      - name: Run Desktop Unit Tests
+        if: ${{ matrix.BuildPlatform }} != 'arm'
+        run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+
   #    - name: Run Desktop Unit Tests (Google Test)
   #      run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
