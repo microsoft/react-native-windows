@@ -227,9 +227,10 @@ jobs:
           Start-Sleep -s 5
         shell: powershell
 
-      # - name: UTs
+      - name: UTs
       #   if: ${{ matrix.BuildPlatform }} != 'ARM'
-      #   run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+        run: "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
       # It currently fails, so commenting this out for now
       #- task: CmdLine@2
@@ -274,6 +275,6 @@ jobs:
           RNW_PKG_VERSION: 1000,0,0,0
       # - name: Run Desktop Unit Tests
       #   if: ${{ matrix.BuildPlatform }} != 'arm'
-      #   run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+      #   run: "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
   #    - name: Run Desktop Unit Tests (Google Test)
-  #      run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
+  #      run: "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
