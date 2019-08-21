@@ -19,10 +19,19 @@ jobs:
         UseRNFork: [true,false]
         exclude:
         - BuildConfiguration: Release
+          BuildPlatform: x64
           UseRNFork: false
-        - BuildPlatform: arm
+        - BuildConfiguration: Release
+          BuildPlatform: x86
           UseRNFork: false
-        - BuildPlatform: x64
+        - BuildConfiguration: Release
+          BuildPlatform: arm
+          UseRNFork: false
+        - BuildConfiguration: Debug
+          BuildPlatform: arm
+          UseRNFork: false
+        - BuildConfiguration: Debug
+          BuildPlatform: x64
           UseRNFork: false
     #    include:
     #    - BuildConfiguration: Debug
