@@ -191,7 +191,6 @@ jobs:
     strategy:
       matrix:
       #TODO add DebugBundle
-        BuildConfiguration: [Debug]
         BuildPlatform: [x64, x86, ARM]
     steps:
 
@@ -231,16 +230,19 @@ jobs:
       - name: Build ReactWindows-UWP.sln
         run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
         env:
-          BUILDPLATFORM: x64
+          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
           BUILDCONFIGURATION: Debug
 
       - name: Start Winium
         run: |
-            $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
+            $winium = Start-Process -PassThru ${{ runner.temp }}\winium\Winium.Desktop.Driver.exe
             Start-Sleep -s 5
         shell: powershell
 
       # TOOD add run UTs if !arm
+      - name: UTs
+        if: ${{ matrix.BuildPlatform }} != 'ARM'
+        run: "%VCINSTALLDIR%\Common7\IDE\Extensions\TestPlatform\vstest.console.exe" current\ReactWindows\ReactNative.Net46.Tests\bin\${{ BuildPlatform }}\Debug\ReactNative.Net46.Tests.dll
 
 
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
