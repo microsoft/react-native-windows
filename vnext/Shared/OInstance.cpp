@@ -54,7 +54,11 @@
 #endif
 #include "ChakraJSIRuntimeHolder.h"
 
+#include <tracing/rnwtrace.h>
+
 #endif
+
+#include <fstream>
 
 namespace {
 
@@ -170,11 +174,18 @@ bool GetLastWriteTime(const std::string &fileName, uint64_t &result) noexcept {
 
 } // namespace
 
+using namespace facebook;
+
 namespace facebook {
 namespace react {
 
 #if !defined(OSS_RN)
 namespace {
+
+void runtimeInstaller(jsi::Runtime &runtime) {
+  ::init_tracing(runtime);
+}
+
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -195,7 +206,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         std::move(delegate),
         logger,
         JSIExecutor::defaultTimeoutInvoker,
-        nullptr);
+        runtimeInstaller);
   }
 
   OJSIExecutorFactory(

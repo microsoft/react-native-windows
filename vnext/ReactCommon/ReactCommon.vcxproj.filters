@@ -111,6 +111,9 @@
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)fbsystrace\fbsystrace.cpp">
+      <Filter>cxxreact</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
       <Filter>privatedata</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeWindowsDir)fbsystrace\fbsystrace.h">
+      <Filter>cxxreact</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

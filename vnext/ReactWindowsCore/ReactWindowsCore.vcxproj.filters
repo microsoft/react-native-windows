@@ -25,6 +25,12 @@
     <Filter Include="Source Files\AsyncStorage">
       <UniqueIdentifier>{efe7ad3d-598a-4633-a2b7-2de458833b88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="etw">
+      <UniqueIdentifier>{06a27269-2c1f-418a-9e70-82d17deb7de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tracing">
+      <UniqueIdentifier>{4cc2fae5-bc38-4aff-aa49-33225485e2de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CxxMessageQueue.cpp">
@@ -52,9 +58,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ViewManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HermesRuntimeHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
@@ -89,6 +92,10 @@
     </ClCompile>
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)fbsystrace\fbsystrace.cpp" />
+    <ClCompile Include="tracing\rnwtrace.cpp">
+      <Filter>tracing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,17 +234,29 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HermesRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ChakraJSIRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="etw\react_native_windows.h">
+      <Filter>etw</Filter>
+    </ClInclude>
+    <ClInclude Include="tracing\rnwtrace.h">
+      <Filter>tracing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="etw\react_native_windows.man">
+      <Filter>etw</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="etw\react_native_windows.rc">
+      <Filter>etw</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

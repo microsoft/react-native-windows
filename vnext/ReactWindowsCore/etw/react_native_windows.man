@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<instrumentationManifest xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd" xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace">
+	<instrumentation>
+		<events>
+			<provider
+        name="React-Native-Windows-Provider"
+        guid="{E7EF5273-98FE-4C41-9C65-5B0E01B986D8}"
+        symbol="REACT_NATIVE_WINDOWS"
+        resourceFileName="d:\\work\\rnwetw.dll"
+				messageFileName="d:\\work\\rnwetw.dll">
+        <templates>
+          <template tid="tidBeginSection">
+            <data name="tag" inType="win:UInt64" />
+            <data name="profileName" inType="win:AnsiString" />
+            <data name="args" inType="win:AnsiString" />
+          </template>
+          <template tid="tidEndSection">
+            <data name="tag" inType="win:UInt64" />
+          </template>
+          <template tid="tidAsyncSection">
+            <data name="tag" inType="win:UInt64" />
+            <data name="profileName" inType="win:AnsiString" />
+            <data name="cookie" inType="win:Int32" />
+          </template>
+          <template tid="tidCounter">
+            <data name="tag" inType="win:UInt64" />
+            <data name="profileName" inType="win:AnsiString" />
+            <data name="value" inType="win:Int32" />
+          </template>
+        </templates>
+
+        <events>
+          <event value="1" symbol="JS_BEGIN_SECTION" template="tidBeginSection" level="win:Informational" opcode="win:Info" />
+          <event value="2" symbol="JS_END_SECTION" template="tidEndSection" level="win:Informational" opcode="win:Info" />
+          <event value="3" symbol="JS_ASYNC_BEGIN_SECTION" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="4" symbol="JS_ASYNC_END_SECTION" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="5" symbol="JS_ASYNC_BEGIN_FLOW" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="6" symbol="JS_ASYNC_END_FLOW" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="7" symbol="JS_COUNTER" template="tidCounter" level="win:Informational" opcode="win:Info" />
+
+          <event value="8" symbol="NATIVE_BEGIN_SECTION" template="tidBeginSection" level="win:Informational" opcode="win:Info" />
+          <event value="9" symbol="NATIVE_END_SECTION" template="tidEndSection" level="win:Informational" opcode="win:Info" />
+          <event value="10" symbol="NATIVE_ASYNC_BEGIN_SECTION" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="11" symbol="NATIVE_ASYNC_END_SECTION" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="12" symbol="NATIVE_ASYNC_BEGIN_FLOW" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="13" symbol="NATIVE_ASYNC_END_FLOW" template="tidAsyncSection" level="win:Informational" opcode="win:Info" />
+          <event value="14" symbol="NATIVE_COUNTER" template="tidCounter" level="win:Informational" opcode="win:Info" />
+        </events>
+      </provider>
+		</events>
+	</instrumentation>
+</instrumentationManifest>
