@@ -192,6 +192,7 @@ jobs:
 
       - run: dir ${{ runner.temp }}
       - run: dir ${{ runner.temp }}\winium
+      - run: set
 
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
@@ -271,10 +272,8 @@ jobs:
         env:
           RNW_PKG_VERSION_STR: Private Build
           RNW_PKG_VERSION: 1000,0,0,0
-
-      - name: Run Desktop Unit Tests
-        if: ${{ matrix.BuildPlatform }} != 'arm'
-        run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
-
+      # - name: Run Desktop Unit Tests
+      #   if: ${{ matrix.BuildPlatform }} != 'arm'
+      #   run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
   #    - name: Run Desktop Unit Tests (Google Test)
   #      run: "%VCINSTALLDIR%/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
