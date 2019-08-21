@@ -12,8 +12,10 @@ jobs:
     
     # Can't appear to enable matrix right now:
     # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
-    #strategy:
-    #  matrix:
+    strategy:
+      matrix:
+        BuildConfiguration: [Debug, Release]
+        BuildPlatform: [x64, x86, arm]
     #    include:
     #    - BuildConfiguration: Debug
     #      BuildPlatform: x64
@@ -74,10 +76,10 @@ jobs:
     - name: Build ReactWindows-UWP.sln
       run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
       env:
+        BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+        BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
         BUILDPLATFORM: x64
         BUILDCONFIGURATION: Debug
-    #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-    #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
 
     - name: NuGet restore
       run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
