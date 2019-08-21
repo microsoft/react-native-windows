@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 06:12:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add default message queue that uses CoreDispatcher",
+            "author": "email not defined",
+            "commit": "39964628a16497bb525fd3fffdd93e32ff9298d8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 00:42:37 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.146",
       "version": "0.59.0-vnext.146",

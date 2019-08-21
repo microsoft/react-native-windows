@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Aug 2019 00:42:37 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2019 06:12:54 GMT and should not be manually modified.
+
+## 0.59.0-vnext.147
+Wed, 21 Aug 2019 06:12:54 GMT
+
+### Changes
+
+- add default message queue that uses CoreDispatcher (email not defined)
 
 ## 0.59.0-vnext.146
 Wed, 21 Aug 2019 00:42:37 GMT
