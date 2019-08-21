@@ -96,7 +96,7 @@ class NetworkingModule::NetworkingHelper
 
 std::int64_t NetworkingModule::NetworkingHelper::s_lastRequestId = 0;
 
-std::future<void> SendRequestAsync(
+winrt::fire_and_forget SendRequestAsync(
     std::shared_ptr<NetworkingModule::NetworkingHelper> networking,
     winrt::Windows::Web::Http::HttpClient httpClient,
     winrt::Windows::Web::Http::HttpRequestMessage request,
