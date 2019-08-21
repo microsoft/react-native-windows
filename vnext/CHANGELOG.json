@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 20:44:12 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Only send focus/blur from OriginalSource, remove Click event for enter/space",
+            "author": "andrewh@microsoft.com",
+            "commit": "bb3ed51419101c4de0d51016cad3fd8703a0bb0e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 18:17:53 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.147",
       "version": "0.59.0-vnext.147",
