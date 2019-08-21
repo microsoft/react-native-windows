@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 06:12:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add default message queue that uses CoreDispatcher",
+            "author": "email not defined",
+            "commit": "39964628a16497bb525fd3fffdd93e32ff9298d8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 00:42:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.146",
+      "version": "0.59.0-vnext.146",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "revert fix, not quite working",
+            "author": "email not defined",
+            "commit": "70cfc1a7ebb44aad77a8410d73e27ab8a5e41e87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 23:40:14 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.145",
+      "version": "0.59.0-vnext.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Light up Inspector debugging tool.",
+            "author": "kinhln@microsoft.com",
+            "commit": "e848576428aea2112b46ed8e9205fc386c387305"
+          },
+          {
+            "comment": "Remove old playground app",
+            "author": "acoates@microsoft.com",
+            "commit": "5bf9e186a2956530be7386520a4489674f31f530"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Aug 2019 21:54:07 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.144",
       "version": "0.59.0-vnext.144",
