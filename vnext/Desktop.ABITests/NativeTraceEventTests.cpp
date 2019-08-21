@@ -3,8 +3,8 @@
 
 #include <CppUnitTest.h>
 #include <winrt/facebook.react.h>
-#include <stack>
 #include <functional>
+#include <stack>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::facebook::react;
