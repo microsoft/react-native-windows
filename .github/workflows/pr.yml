@@ -10,59 +10,54 @@ jobs:
     name: UWP with facebook/react-native
 
     runs-on: windows-2016
-    
+
     steps:
     - uses: actions/checkout@v1
 
     - name: Switch to fork
       run: cd vnext && node scripts/useUnForkedRN.js
-      
+
       # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
       # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
       # using the non fork version.
     - name: yarn install (Using facebook/react-native)
       run: yarn install
-      
+
     - run: yarn buildci
-     
+
     - name: Install SDK
       run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
       shell: powershell
-      
+
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-      
+
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-        
+
     - name: NuGet restore
       run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
-      
+
     - name: Build ReactWindows-UWP.sln
       run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
 
     - name: NuGet restore
       run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
-      
+
     - name: Build ReactWindows-UWP.sln
       run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
-        
+
     # todo work out how to specify working-directory for run command
     - name: Create Playground bundle
       run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
-        
-    # todo work out how to specify working-directory for run command
-    - name: Create RNTester bundle
-    #  if: ${{ matrix.UseRNFork }} == 'true'
-      run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
-        
+
 
   # This job verifies the basic UWP projects
   UWPPR:
     name: UWP PR
 
     runs-on: windows-2016
-    
+
     # Can't appear to enable matrix right now:
     # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
     # Ideally we'd share more of the build def between UWPPublicRN and this job, but due to the issues with matrix right now
@@ -71,28 +66,28 @@ jobs:
       matrix:
         BuildConfiguration: [Debug, Release]
         BuildPlatform: [x64, x86, arm]
-    
+
     steps:
     - uses: actions/checkout@v1
 
     - name: yarn install (Using microsoft/react-native)
       run: yarn install --frozen-lockfile
-      
+
     - run: yarn buildci
-     
+
     - name: Install SDK
       run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
       shell: powershell
-      
+
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-      
+
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-        
+
     - name: NuGet restore
       run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
-      
+
     - name: Build ReactWindows-UWP.sln
       run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
       env:
@@ -101,22 +96,22 @@ jobs:
 
     - name: NuGet restore
       run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
-      
+
     - name: Build ReactWindows-UWP.sln
       run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
       env:
         BUILDPLATFORM: ${{ matrix.BuildPlatform }}
         BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
-        
+
     # todo work out how to specify working-directory for run command
     - name: Create Playground bundle
       run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
-        
+
     # todo work out how to specify working-directory for run command
     - name: Create RNTester bundle
     #  if: ${{ matrix.UseRNFork }} == 'true'
       run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
-        
+
   # This job verifies creating a new react-native app, installing react-native-windows, applying the vnext template, and building it
   CliInit:
     name: Verify react-native init
@@ -125,10 +120,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-            
-      - name: yarn install (local react-native-windows)
+
+      - name: yarn install
         run: yarn install --frozen-lockfile
-      
+
       # todo work out how to specify working-directory for run command
       - name: yarn build (local react-native-windows)
         run: cd vnext && yarn build
@@ -168,6 +163,91 @@ jobs:
         env:
           BUILDPLATFORM: x64
           BUILDCONFIGURATION: Debug
-          
+
       - name: Create bundle
         run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
+
+  RNWFormatting:
+    name: Verify change files + formatting
+
+    runs-on: windows-2016
+
+      - uses: actions/checkout@v1
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Check for change files
+        run: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
+
+      - run: yarn format:verify
+
+  CurrentPR:
+    name: Current (C#) PR
+
+    runs-on: windows-2016
+
+    strategy:
+      matrix:
+      #TODO add DebugBundle
+        BuildConfiguration: [Debug]
+        BuildPlatform: [x64, x86, ARM]
+    steps:
+
+      - uses: actions/checkout@v1
+        submodules: true
+
+      - name: Download/Extract Winium
+        run: |
+          curl -o ${{ runner.workspace }}\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
+          mkdir ${{ runner.temp }}\winium
+          Add-Type -A 'System.IO.Compression.FileSystem'
+          '[IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.workspace }}\winium.zip", "${{ runner.temp }}\winium")'
+        shell: powershell
+
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: NuGet restore
+        run: nuget.exe restore current/ReactWindows/ReactNative.sln -Verbosity Detailed -NonInteractive
+
+      - name: Install react-native-cli
+        run: npm install -g react-native-cli
+
+      - name: npm install
+        run: cd current && npm install
+
+      - name: Make Bundle Dir
+        run: mkdir current\ReactWindows\Playground.Net46\ReactAssets
+
+      - name: Make Bundle
+        run: cd current && react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
+
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: Build ReactWindows-UWP.sln
+        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+        env:
+          BUILDPLATFORM: x64
+          BUILDCONFIGURATION: Debug
+
+      - name: Start Winium
+        run: |
+            $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
+            Start-Sleep -s 5
+        shell: powershell
+
+      # TOOD add run UTs if !arm
+
+
+      # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
+      # It currently fails, so commenting this out for now
+      #- task: CmdLine@2
+      #  displayName: npm test
+      #  inputs:
+      #    script: npm test
+      #    workingDirectory: current
+      #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
+
+
