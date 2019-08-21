@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 18:17:53 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix VS2019 build for Desktop.ABITests.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5b296935b88eb24fac55688e234a9ae548a61e7a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 06:12:54 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.147",
       "version": "0.59.0-vnext.147",
