@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "add default message queue that uses CoreDispatcher",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "commit": "39964628a16497bb525fd3fffdd93e32ff9298d8",
+  "date": "2019-08-20T18:20:04.956Z"
+}

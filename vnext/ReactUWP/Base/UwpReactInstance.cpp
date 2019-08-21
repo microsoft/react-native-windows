@@ -7,6 +7,7 @@
 
 // ReactUWP
 #include <ReactUWP/IXamlRootView.h>
+#include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
@@ -266,13 +267,16 @@ void UwpReactInstance::Start(
 
   assert(
       m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr &&
-      m_jsThread == nullptr && m_initThread == nullptr &&
-      m_instanceWrapper == nullptr);
+      m_batchingNativeThread == nullptr && m_jsThread == nullptr &&
+      m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
   m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread =
       std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
+  m_batchingNativeThread =
+      std::make_shared<react::uwp::BatchingUIMessageQueueThread>(
+          m_uiDispatcher);
 
   // Objects that must be created on the UI thread
   std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
@@ -348,7 +352,7 @@ void UwpReactInstance::Start(
     std::vector<facebook::react::NativeModuleDescription> cxxModules =
         GetModules(
             m_uiManager,
-            m_defaultNativeThread,
+            m_batchingNativeThread,
             deviceInfo,
             devSettings,
             std::move(i18nInfo),
@@ -358,7 +362,7 @@ void UwpReactInstance::Start(
 
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =
-          m_moduleProvider->GetModules(m_defaultNativeThread);
+          m_moduleProvider->GetModules(m_batchingNativeThread);
       cxxModules.insert(
           std::end(cxxModules),
           std::begin(customCxxModules),
@@ -404,7 +408,7 @@ void UwpReactInstance::Start(
           std::move(cxxModules),
           m_uiManager,
           jsQueue,
-          m_defaultNativeThread,
+          m_batchingNativeThread,
           std::move(devSettings));
     } catch (std::exception &e) {
       OnHitError(e.what());
