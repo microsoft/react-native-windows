@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props" Condition="Exists('..\packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -64,6 +63,7 @@
       -->
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
@@ -127,6 +127,7 @@
     <ClInclude Include="WebSocketModule.h" />
     <ClInclude Include="ChakraJSIRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
+    <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
+    <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -165,15 +167,16 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" />
+    <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
+    <Import Project="$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.props'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
     <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'"
