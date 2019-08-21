@@ -16,15 +16,14 @@ jobs:
       matrix:
         BuildConfiguration: [Debug, Release]
         BuildPlatform: [x64, x86, arm]
-        UseRNFork: true
-        include:
-        - BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: true
-        - BuildConfiguration: Debug
-          BuildPlatform: x86
+        UseRNFork: [true,false]
+        exclude:
+        - BuildConfiguration: Release
           UseRNFork: false
-    
+        - BuildPlatform: arm
+          UseRNFork: false
+        - BuildPlatform: x64
+          UseRNFork: false
     #    include:
     #    - BuildConfiguration: Debug
     #      BuildPlatform: x64
