@@ -190,8 +190,8 @@ jobs:
 
     strategy:
       matrix:
-      #TODO add DebugBundle
-        BuildPlatform: [x64, x86, ARM]
+        #TODO add DebugBundle
+        - BuildPlatform: [x64, x86, ARM]
     steps:
 
       - uses: actions/checkout@v1
