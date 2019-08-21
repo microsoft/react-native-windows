@@ -56,14 +56,14 @@ jobs:
     #  working-directory: vnext
       
     - name: yarn install (Using microsoft/react-native)
-      if: ${{ matrix.UseRNFork }} == 'true'
+      # if: ${{ matrix.UseRNFork }} == 'true'
       run: yarn install --frozen-lockfile
       
       # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
       # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
       # using the non fork version.
     - name: yarn install (Using facebook/react-native)
-      if: ${{ matrix.UseRNFork }} == 'false'
+      # if: ${{ matrix.UseRNFork }} == 'false'
       run: yarn install
       
     - run: yarn buildci
