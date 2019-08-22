@@ -320,16 +320,16 @@ jobs:
 
       - uses: actions/upload-artifact@master
         if: matrix.BuildConfiguration == 'Debug'
-        name: Publish Artifacts ${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
+        name: Publish Artifacts (Debug)
         with:
           name: ReactWindows-debug-${{ matrix.BuildPlatform }}
           path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
       - uses: actions/upload-artifact@master
         if: matrix.BuildConfiguration == 'Release'
-        name: Publish Artifacts ${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
+        name: Publish Artifacts (Release)
         with:
-          name: ReactWindows-debug-ship
+          name: ReactWindows-ship-${{ matrix.BuildPlatform }}
           path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
       - uses: actions/upload-artifact@master
