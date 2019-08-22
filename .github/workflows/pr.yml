@@ -319,9 +319,17 @@ jobs:
         run: vnext\layoutFilesForNuget.bat ${{ runner.temp }}\artifacts
 
       - uses: actions/upload-artifact@master
+        if: matrix.BuildConfiguration == 'Debug'
         name: Publish Artifacts ${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
         with:
-          name: ReactWindows-${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
+          name: ReactWindows-debug-${{ matrix.BuildPlatform }}
+          path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+
+      - uses: actions/upload-artifact@master
+        if: matrix.BuildConfiguration == 'Release'
+        name: Publish Artifacts ${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
+        with:
+          name: ReactWindows-debug-ship
           path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
       - uses: actions/upload-artifact@master
