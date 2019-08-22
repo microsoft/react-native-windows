@@ -97,6 +97,9 @@
     <ClCompile Include="tracing\rnwtrace.cpp">
       <Filter>tracing</Filter>
     </ClCompile>
+    <ClCompile Include="V8JSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
@@ -240,12 +243,14 @@
     <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="etw\react_native_windows.h">
       <Filter>etw</Filter>
     </ClInclude>
     <ClInclude Include="tracing\rnwtrace.h">
       <Filter>tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="V8JSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
