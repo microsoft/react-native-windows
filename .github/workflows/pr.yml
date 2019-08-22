@@ -377,6 +377,11 @@ jobs:
           name: ReactWindows-ship-x64
           path: ${{ runner.temp }}\artifacts\ReactWindows-ship-x64
 
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-source
+          path: ${{ runner.temp }}\artifacts\ReactWindows-source
+
       - name: Copy files from build artifacts to nuget root
         run: |
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-source ${{ runner.temp }}\NugetRoot /E /MOVE /NP
