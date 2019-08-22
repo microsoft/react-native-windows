@@ -20,12 +20,14 @@ namespace uwp {
   if (langs.Size() > 0) {
     locale = facebook::react::unicode::utf16ToUtf8(langs.GetAt(0));
 
+    /*
+    IFDEF
     auto layoutDirection =
         winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
             .GetForCurrentView()
             .QualifierValues()
             .Lookup(L"LayoutDirection");
-    isRTL = layoutDirection != L"LTR";
+    isRTL = layoutDirection != L"LTR";*/
   }
 
   return std::make_pair<std::string, bool>(std::move(locale), std::move(isRTL));

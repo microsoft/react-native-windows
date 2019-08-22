@@ -15,26 +15,30 @@ namespace uwp {
 //
 
 void DeviceInfo::update() {
-  auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::
-      GetForCurrentView();
+
+  // IFDEF
+  //auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::
+  //    GetForCurrentView();
+
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
-  auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
+  //IFDEF
+  //auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
 
   // TODO: get parent element (not window) size
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
-      folly::dynamic::object("width", window.Bounds().Width)(
-          "height", window.Bounds().Height)(
-          "scale", static_cast<int>(displayInfo.ResolutionScale()) / 100)(
+      folly::dynamic::object("width", 100)(
+          "height", 100)(
+          "scale", static_cast<int>(100) / 100)(
           "fontScale", uiSettings.TextScaleFactor())(
-          "densityDpi", displayInfo.LogicalDpi()))(
+          "densityDpi", 100))(
       "screenPhysicalPixels",
-      folly::dynamic::object("width", displayInfo.ScreenWidthInRawPixels())(
-          "height", displayInfo.ScreenHeightInRawPixels())(
-          "scale", static_cast<int>(displayInfo.ResolutionScale()) / 100)(
-          "fontScale", uiSettings.TextScaleFactor())(
-          "densityDpi", displayInfo.LogicalDpi()));
+      folly::dynamic::object("width", 100)(
+          "height", 100)(
+          "scale", static_cast<int>(100) / 100)(
+          "fontScale", 100)(
+          "densityDpi", 100));
 }
 
 //
