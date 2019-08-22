@@ -1,6 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 20 Aug 2019 21:54:07 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2019 21:34:46 GMT and should not be manually modified.
+
+## 0.14.0
+Wed, 21 Aug 2019 21:34:46 GMT
+
+### Minor changes
+
+- Barebone V8 integration (anandrag@microsoft.com)
 
 ## 0.13.3
 Tue, 20 Aug 2019 21:54:07 GMT

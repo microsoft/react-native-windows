@@ -2,6 +2,62 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2019 15:43:48 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.149",
+      "version": "0.59.0-vnext.149",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve Networking error reporting",
+            "author": "andrewh@microsoft.com",
+            "commit": "507a55b4f67a37870b2b1f02e48d30e1c0db883a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 23:36:09 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "none": [
+          {
+            "comment": "Disable BatchingMessageQueueThread on win32.",
+            "author": "yicyao@microsoft.com",
+            "commit": "ce46ec516491f57991e3e7791a1a7fa0ca1e4735"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 21:34:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "none": [
+          {
+            "comment": "Barebone V8 Integration",
+            "author": "anandrag@microsoft.com",
+            "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 20:44:12 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Only send focus/blur from OriginalSource, remove Click event for enter/space",
+            "author": "andrewh@microsoft.com",
+            "commit": "bb3ed51419101c4de0d51016cad3fd8703a0bb0e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 18:17:53 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.147",
       "version": "0.59.0-vnext.147",
