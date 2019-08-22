@@ -350,32 +350,32 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: ReactWindows-debug-arm
-          path: ${{ runner.temp }}\artifacts
+          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-arm
 
       - uses: actions/download-artifact@master
         with:
           name: ReactWindows-ship-arm
-          path: ${{ runner.temp }}\artifacts
+          path: ${{ runner.temp }}\artifacts\ReactWindows-ship-arm
 
       - uses: actions/download-artifact@master
         with:
           name: ReactWindows-debug-x86
-          path: ${{ runner.temp }}\artifacts
+          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-x86
 
       - uses: actions/download-artifact@master
         with:
           name: ReactWindows-debug-x86
-          path: ${{ runner.temp }}\artifacts
+          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-x86
 
       - uses: actions/download-artifact@master
         with:
           name: ReactWindows-debug-x64
-          path: ${{ runner.temp }}\artifacts
+          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-x64
 
       - uses: actions/download-artifact@master
         with:
           name: ReactWindows-debug-x64
-          path: ${{ runner.temp }}\artifacts
+          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-x64
 
       - name: Copy files from build artifacts to nuget root
         run: |
