@@ -318,10 +318,6 @@ jobs:
         if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
         run: vnext\layoutFilesForNuget.bat ${{ runner.temp }}\artifacts
 
-      - name: Stage Sources
-        run: vnext\Scripts\Tfs\Layout-Headers.ps1 -TargetRoot ${{ runner.temp }}\artifacts
-        shell: powershell
-
       - uses: actions/upload-artifact@master
         name: Publish Artifacts ${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
         with:

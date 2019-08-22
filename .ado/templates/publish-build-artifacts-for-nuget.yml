@@ -6,14 +6,6 @@ steps:
       arguments: "$(build.artifactstagingdirectory)"
     condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
 
-  - task: PowerShell@2
-    displayName: "Stage Sources"
-    inputs:
-      targetType: filePath
-      filePath: 'vnext\Scripts\Tfs\Layout-Headers.ps1'
-      arguments: "-TargetRoot $(Build.ArtifactStagingDirectory)"
-    enabled: false
-
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: debug arm"
     inputs:
