@@ -209,6 +209,8 @@ jobs:
 
       - run: echo %VS140COMNTOOLS%
 
+      - run: dir /s vstest.console.exe c:\
+
       - run: |
           dir "%VS140COMNTOOLS%"
       - run: |
