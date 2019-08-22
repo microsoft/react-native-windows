@@ -31,13 +31,13 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: NuGet restore
-        run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
         run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
 
       - name: NuGet restore
-        run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
         run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
@@ -77,7 +77,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: NuGet restore
-        run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
         run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
@@ -86,7 +86,7 @@ jobs:
           BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
 
       - name: NuGet restore
-        run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
         run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
@@ -252,8 +252,6 @@ jobs:
           Start-Sleep -s 5
         shell: powershell
 
-      - run: dir /s ReactNative.Net46.Tests.dll
-
       - name: UTs
         # if: ${{ matrix.BuildPlatform }} != 'ARM'
         run: |
@@ -293,7 +291,7 @@ jobs:
         uses: warrenbuckley/Setup-Nuget@v1
 
       - name: NuGet restore
-        run: nuget.exe restore vnext\ReactWindows.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore vnext\ReactWindows.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
