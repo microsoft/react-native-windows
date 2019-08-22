@@ -40,7 +40,7 @@ jobs:
         run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
-        run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
+        run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
 
       # todo work out how to specify working-directory for run command
       - name: Create Playground bundle
@@ -148,7 +148,7 @@ jobs:
         run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
       - name: Build ReactWindows-UWP.sln
-        run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x86 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+        run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x86 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
         env:
           BUILDPLATFORM: x64
           BUILDCONFIGURATION: Debug
@@ -241,7 +241,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-UWP.sln
-        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
         env:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
           BUILDCONFIGURATION: Debug
@@ -299,7 +299,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows.sln
-        run: msbuild vnext\ReactWindows.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}"
+        run: msbuild vnext\ReactWindows.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
         env:
           RNW_PKG_VERSION_STR: Private Build
           RNW_PKG_VERSION: 1000,0,0,0
