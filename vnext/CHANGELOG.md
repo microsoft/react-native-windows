@@ -1,6 +1,49 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Aug 2019 03:02:53 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2019 20:44:12 GMT and should not be manually modified.
+
+## 0.59.0-vnext.148
+Wed, 21 Aug 2019 20:44:12 GMT
+
+### Changes
+
+- Only send focus/blur from OriginalSource, remove Click event for enter/space (andrewh@microsoft.com)
+
+## 0.59.0-vnext.147
+Wed, 21 Aug 2019 06:12:54 GMT
+
+### Changes
+
+- add default message queue that uses CoreDispatcher (email not defined)
+
+## 0.59.0-vnext.146
+Wed, 21 Aug 2019 00:42:37 GMT
+
+### Changes
+
+- revert fix, not quite working (email not defined)
+
+## 0.59.0-vnext.145
+Tue, 20 Aug 2019 23:40:14 GMT
+
+### Changes
+
+- Light up Inspector debugging tool. (kinhln@microsoft.com)
+,- Remove old playground app (acoates@microsoft.com)
+
+## 0.59.0-vnext.144
+Tue, 20 Aug 2019 21:54:07 GMT
+
+### Changes
+
+- Minor fixes made in RN60 update that can be brought right to master (acoates@microsoft.com)
+
+## 0.59.0-vnext.143
+Tue, 20 Aug 2019 07:26:49 GMT
+
+### Changes
+
+- Don't use DefaultNativeMessageQueueThread in live reload (andrewh@microsoft.com)
 
 ## 0.59.0-vnext.142
 Tue, 20 Aug 2019 03:02:53 GMT

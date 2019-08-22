@@ -29,7 +29,9 @@ namespace react {
 namespace uwp {
 
 ReactControl::ReactControl(IXamlRootView *parent, XamlView rootView)
-    : m_pParent(parent), m_rootView(rootView) {
+    : m_pParent(parent),
+      m_rootView(rootView),
+      m_uiDispatcher(winrt::CoreWindow::GetForCurrentThread().Dispatcher()) {
   PrepareXamlRootView(rootView);
 }
 
@@ -54,11 +56,12 @@ std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const
 
 void ReactControl::HandleInstanceError() {
   auto weakThis = weak_from_this();
-  m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue([weakThis]() {
-    if (auto This = weakThis.lock()) {
-      This->HandleInstanceErrorOnUIThread();
-    }
-  });
+  m_uiDispatcher.RunAsync(
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+        if (auto This = weakThis.lock()) {
+          This->HandleInstanceErrorOnUIThread();
+        }
+      });
 }
 
 void ReactControl::HandleInstanceErrorOnUIThread() {
@@ -118,10 +121,11 @@ void ReactControl::AttachRoot() noexcept {
       [this]() { HandleInstanceError(); });
 
   // Register callback from instance for live reload
-  m_liveReloadCallbackCookie =
-      m_reactInstance->RegisterLiveReloadCallback([this]() {
+  m_liveReloadCallbackCookie = m_reactInstance->RegisterLiveReloadCallback(
+      [this, uiDispatcher = m_uiDispatcher]() {
         auto weakThis = weak_from_this();
-        m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue(
+        uiDispatcher.RunAsync(
+            winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
             [weakThis]() {
               if (auto This = weakThis.lock()) {
                 This->Reload(true);
@@ -205,7 +209,9 @@ void ReactControl::DetachInstance() {
     // pending calls in these queues.
     // TODO prevent or check if even more is queued while these drain.
     CreateWorkerMessageQueue()->runOnQueue([instance]() {});
-    instance->DefaultNativeMessageQueueThread()->runOnQueue([instance]() {});
+    m_uiDispatcher.RunAsync(
+        winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
+        [instance]() {});
 
     // Clear members with a dependency on the reactInstance
     m_touchEventHandler.reset();
@@ -216,7 +222,8 @@ void ReactControl::Reload(bool shouldRetireCurrentInstance) {
   // DetachRoot the current view and detach it
   DetachRoot();
 
-  m_reactInstance->DefaultNativeMessageQueueThread()->runOnQueue(
+  m_uiDispatcher.RunAsync(
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
       [this, shouldRetireCurrentInstance]() {
         if (shouldRetireCurrentInstance && m_reactInstance != nullptr)
           m_instanceCreator->markAsNeedsReload();
@@ -338,7 +345,7 @@ void ReactControl::ShowDeveloperMenu() {
       L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript (TBD) </Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
-      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Show Inspector (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Toggle Inspector</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
       L"  </StackPanel>"
       L"</Grid>";
@@ -348,6 +355,8 @@ void ReactControl::ShowDeveloperMenu() {
       m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
   auto cancelButton =
       m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
+  auto toggleInspector =
+      m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
   bool useWebDebugger =
       m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
   remoteDebugJSButton.Content(winrt::box_value(
@@ -366,6 +375,12 @@ void ReactControl::ShowDeveloperMenu() {
       [this](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
       });
+  m_toggleInspectorRevoker = toggleInspector.Click(
+      winrt::auto_revoke,
+      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
+        ToggleInspector();
+      });
 
   auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
   xamlRootGrid.Children().Append(m_developerMenuRoot);
@@ -382,6 +397,15 @@ void ReactControl::DismissDeveloperMenu() {
 
 bool ReactControl::IsDeveloperMenuShowing() const {
   return (m_developerMenuRoot != nullptr);
+}
+
+void ReactControl::ToggleInspector() {
+  if (m_reactInstance) {
+    m_reactInstance->CallJsFunction(
+        "RCTDeviceEventEmitter",
+        "emit",
+        folly::dynamic::array("toggleElementInspector", nullptr));
+  }
 }
 
 } // namespace uwp

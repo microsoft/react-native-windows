@@ -1,0 +1,153 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  # This job verifies the basic UWP projects
+  UWPPR:
+    name: UWP PR
+
+    runs-on: windows-2016
+    
+    # Can't appear to enable matrix right now:
+    # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
+    #strategy:
+    #  matrix:
+    #    include:
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x64
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x86
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: arm
+    #      UseRNFork: true
+    #    - BuildConfiguration: Release
+    #      BuildPlatform: x64
+    #      UseRNFork: true
+    #    - BuildConfiguration: Release
+    #      BuildPlatform: x86
+    #      UseRNFork: true
+    #    - BuildConfiguration: Release
+    #      BuildPlatform: arm
+    #      UseRNFork: true
+    #    - BuildConfiguration: Debug
+    #      BuildPlatform: x86
+    #      UseRNFork: false
+    
+    steps:
+    - uses: actions/checkout@v1
+
+    #- name: Switch to fork
+    #  if: ${{ matrix.UseRNFork }} == 'false'
+    #  run: node scripts/useUnForkedRN.js
+    #  working-directory: vnext
+      
+    - name: yarn install (Using microsoft/react-native)
+    #  if: ${{ matrix.UseRNFork }} == 'true'
+      run: yarn install --frozen-lockfile
+      
+      # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
+      # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
+      # using the non fork version.
+    #- name: yarn install (Using facebook/react-native)
+    #  if: ${{ matrix.UseRNFork }} == 'false'
+    #  run: yarn install
+      
+    - run: yarn buildci
+     
+    - name: Install SDK
+      run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+      shell: powershell
+      
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+      
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+        
+    - name: NuGet restore
+      run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+      
+    - name: Build ReactWindows-UWP.sln
+      run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+      env:
+        BUILDPLATFORM: x64
+        BUILDCONFIGURATION: Debug
+    #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+    #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+
+    - name: NuGet restore
+      run: nuget.exe restore packages/playground/windows/Playground.sln -PackagesDirectory packages/ -Verbosity Detailed -NonInteractive
+      
+    - name: Build ReactWindows-UWP.sln
+      run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+      env:
+        BUILDPLATFORM: x64
+        BUILDCONFIGURATION: Debug
+        
+    # todo work out how to specify working-directory for run command
+    - name: Create Playground bundle
+      run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+        
+    # todo work out how to specify working-directory for run command
+    - name: Create RNTester bundle
+    #  if: ${{ matrix.UseRNFork }} == 'true'
+      run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+        
+  # This job verifies creating a new react-native app, installing react-native-windows, applying the vnext template, and building it
+  CliInit:
+    name: Verify react-native init
+
+    runs-on: windows-2016
+
+    steps:
+      - uses: actions/checkout@v1
+            
+      - name: yarn install (local react-native-windows)
+        run: yarn install --frozen-lockfile
+      
+      # todo work out how to specify working-directory for run command
+      - name: yarn build (local react-native-windows)
+        run: cd vnext && yarn build
+
+      # yarn ends up copying the whole node_modules folder when doing an install of a file package
+      # Delete node_modules, so that resolution is more like when installing from a published npm package
+      - name: Remove node_modules
+        run: cd vnext && rd /S /Q node_modules
+
+      - name: Install react-native cli
+        run: npm install -g react-native-cli
+
+      - name: Init new project
+        run: cd ${{ runner.temp }} && react-native init testcli --version 0.59.10
+        
+      - name: Install rnpm-plugin-windows
+        run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
+
+      - name: Apply windows template
+        run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext
+
+      - name: Install SDK
+        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+        shell: powershell
+
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: NuGet restore
+        run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
+
+      - name: Build ReactWindows-UWP.sln
+        run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /t:"Clean" /p:PreferredToolArchitecture=x86 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+        env:
+          BUILDPLATFORM: x64
+          BUILDCONFIGURATION: Debug
+          
+      - name: Create bundle
+        run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle

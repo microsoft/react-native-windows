@@ -17,54 +17,25 @@ UIMessageQueueThread::UIMessageQueueThread(
 UIMessageQueueThread::~UIMessageQueueThread() {}
 
 void UIMessageQueueThread::runOnQueue(std::function<void()> &&func) {
-  threadCheck();
-  ensureQueue();
-  m_queue->emplace_back(std::move(func));
+  m_uiDispatcher.RunAsync(
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
+      [func = std::move(func)]() {
 
 //#define TRACK_UI_CALLS
 #ifdef TRACK_UI_CALLS
-  char buffer[1024];
-  static uint32_t cCalls = 0;
-  _snprintf_s(
-      buffer,
-      _countof(buffer),
-      _TRUNCATE,
-      "UIMessageQueueThread Calls: %u\r\n",
-      ++cCalls);
-  OutputDebugStringA(buffer);
+        char buffer[1024];
+        static uint32_t cCalls = 0;
+        _snprintf_s(
+            buffer,
+            _countof(buffer),
+            _TRUNCATE,
+            "UIMessageQueueThread Calls: %u\r\n",
+            ++cCalls);
+        OutputDebugStringA(buffer);
 #endif
-}
 
-void UIMessageQueueThread::threadCheck() {
-#if DEBUG
-  if (m_expectedThreadId == 0) {
-    m_expectedThreadId = GetCurrentThreadId();
-  } else {
-    assert(m_expectedThreadId == GetCurrentThreadId());
-  }
-#endif
-}
-
-void UIMessageQueueThread::ensureQueue() {
-  if (m_queue == nullptr) {
-    m_queue = std::make_unique<WorkItemQueue>();
-    m_queue->reserve(2048);
-  }
-}
-
-void UIMessageQueueThread::onBatchComplete() {
-  threadCheck();
-  std::shared_ptr<WorkItemQueue> queue = m_queue;
-  m_queue = nullptr;
-  if (queue) {
-    m_uiDispatcher.RunAsync(
-        winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-        [queue{std::move(queue)}]() {
-          for (auto &func : *queue) {
-            func();
-          }
-        });
-  }
+        func();
+      });
 }
 
 void UIMessageQueueThread::runOnQueueSync(std::function<void()> &&func) {

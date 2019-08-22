@@ -2,6 +2,34 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Wed, 21 Aug 2019 21:34:46 GMT",
+      "tag": "react-native-windows-extended_v0.14.0",
+      "version": "0.14.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Barebone V8 integration",
+            "author": "anandrag@microsoft.com",
+            "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 21:54:07 GMT",
+      "tag": "react-native-windows-extended_v0.13.3",
+      "version": "0.13.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Minor fixes made in RN60 update that can be brought right to master",
+            "author": "acoates@microsoft.com",
+            "commit": "a8071bd1692c9f1bc15eaeaa2043eab90cf6dfe0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2019 20:59:57 GMT",
       "tag": "react-native-windows-extended_v0.13.2",
       "version": "0.13.2",
