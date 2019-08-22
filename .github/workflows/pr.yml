@@ -210,6 +210,18 @@ jobs:
       - run: echo %VS140COMNTOOLS%
 
       - run: |
+          dir "%VS140COMNTOOLS%"
+      - run: |
+          dir "%VS140COMNTOOLS%.."
+      - run: |
+          dir "%VS140COMNTOOLS%../IDE"
+
+      - run: |
+          dir "%VS140COMNTOOLS%../IDE/Extensions"
+      - run: |
+          dir "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform"
+
+      - run: |
           "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe"
 
       - name: Download/Extract Winium
