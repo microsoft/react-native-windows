@@ -209,12 +209,8 @@ jobs:
 
       - run: echo %VS140COMNTOOLS%
 
-      - run: "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe"
-
-      - name: Run Desktop Unit Tests
-        # if: ${{ matrix.BuildPlatform }} != 'arm'
-        run: |
-          "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+      - run: |
+          "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe"
 
       - name: Download/Extract Winium
         run: |
