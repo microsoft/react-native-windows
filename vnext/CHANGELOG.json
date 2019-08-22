@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2019 15:43:48 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.149",
+      "version": "0.59.0-vnext.149",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve Networking error reporting",
+            "author": "andrewh@microsoft.com",
+            "commit": "507a55b4f67a37870b2b1f02e48d30e1c0db883a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2019 23:36:09 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.148",
       "version": "0.59.0-vnext.148",

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Improve Networking error reporting",
-  "packageName": "react-native-windows",
-  "email": "andrewh@microsoft.com",
-  "commit": "507a55b4f67a37870b2b1f02e48d30e1c0db883a",
-  "date": "2019-08-21T20:38:20.759Z"
-}

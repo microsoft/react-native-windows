@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Aug 2019 20:44:12 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Aug 2019 15:43:48 GMT and should not be manually modified.
+
+## 0.59.0-vnext.149
+Thu, 22 Aug 2019 15:43:48 GMT
+
+### Changes
+
+- Improve Networking error reporting (andrewh@microsoft.com)
 
 ## 0.59.0-vnext.148
 Wed, 21 Aug 2019 20:44:12 GMT
