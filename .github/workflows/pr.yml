@@ -252,10 +252,14 @@ jobs:
           Start-Sleep -s 5
         shell: powershell
 
+      - run: dir /s ReactNative.Net46.Tests.dll
+
       - name: UTs
         # if: ${{ matrix.BuildPlatform }} != 'ARM'
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+          if NOT %BUILDPLATFORM% == arm "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+        env:
+          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
 
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
       # It currently fails, so commenting this out for now
@@ -303,7 +307,9 @@ jobs:
       - name: Run Desktop Unit Tests
         # if: ${{ matrix.BuildPlatform }} != 'arm'
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+          if NOT %BUILDPLATFORM% == arm "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+        env:
+          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
 
       - name: Run Desktop Unit Tests (Google Test)
         run: |
