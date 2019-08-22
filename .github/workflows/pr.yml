@@ -207,25 +207,6 @@ jobs:
           STEPS_CONTEXT: ${{ toJson(steps) }}
         run: echo "%STEPS_CONTEXT%"
 
-      - run: echo %VS140COMNTOOLS%
-
-      - run: cd /D c:\ && dir /s vstest.console.exe
-
-      - run: |
-          dir "%VS140COMNTOOLS%"
-      - run: |
-          dir "%VS140COMNTOOLS%.."
-      - run: |
-          dir "%VS140COMNTOOLS%../IDE"
-
-      - run: |
-          dir "%VS140COMNTOOLS%../IDE/Extensions"
-      - run: |
-          dir "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform"
-
-      - run: |
-          "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe"
-
       - name: Download/Extract Winium
         run: |
           curl -o ${{ runner.temp }}\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
@@ -274,7 +255,7 @@ jobs:
       - name: UTs
         # if: ${{ matrix.BuildPlatform }} != 'ARM'
         run: |
-          "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
 
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
       # It currently fails, so commenting this out for now
@@ -322,8 +303,8 @@ jobs:
       - name: Run Desktop Unit Tests
         # if: ${{ matrix.BuildPlatform }} != 'arm'
         run: |
-          "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
 
       - name: Run Desktop Unit Tests (Google Test)
         run: |
-          "%VS140COMNTOOLS%../IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
