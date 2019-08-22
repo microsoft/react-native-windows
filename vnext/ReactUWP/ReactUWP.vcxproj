@@ -99,6 +99,9 @@
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
     <Link>
