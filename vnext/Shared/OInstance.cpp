@@ -240,7 +240,7 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
       // without RTTI, which means that dynamic_casting will crash. For now, we
       // disable the optimization based on BatchingMessageQueueThread for Win32.
       facebook::react::BatchingMessageQueueThread *batchingUIThread =
-          dynamic_cast<facebook::react::BatchingMessageQueueThread *>(
+          static_cast<facebook::react::BatchingMessageQueueThread *>(
               uithread.get());
       if (batchingUIThread != nullptr) {
         batchingUIThread->onBatchComplete();

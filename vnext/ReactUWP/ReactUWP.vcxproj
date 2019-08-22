@@ -109,6 +109,9 @@
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
     <Link>

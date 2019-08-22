@@ -87,9 +87,6 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
@@ -231,9 +228,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BatchingMessageQueueThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="V8JSIRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
