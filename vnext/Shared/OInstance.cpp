@@ -70,6 +70,10 @@ std::string GetJSBundleDirectory(
       jsBundleDirectory += '\\';
 
     return jsBundleDirectory += jsBundleRelativePath;
+  } else if (!PathIsRelativeA(jsBundleRelativePath.c_str()))
+  {
+    // If the given path is an absolute path, return it as-is
+    return jsBundleRelativePath;
   }
   // Otherwise use the path of the executable file to construct the absolute
   // path.
@@ -235,12 +239,14 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         if (uiManager != nullptr)
           uiManager->onBatchComplete();
       });
+#ifdef WINRT
       facebook::react::BatchingMessageQueueThread *batchingUIThread =
           dynamic_cast<facebook::react::BatchingMessageQueueThread *>(
               uithread.get());
       if (batchingUIThread != nullptr) {
         batchingUIThread->onBatchComplete();
       }
+#endif
     }
   }
   void incrementPendingJSCalls() override {}
@@ -511,7 +517,8 @@ InstanceImpl::InstanceImpl(
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.
   const bool isNativeModulesProxyAvailable =
-      m_devSettings->jsiRuntimeHolder != nullptr &&
+      ((m_devSettings->jsiRuntimeHolder != nullptr) ||
+       (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default)) &&
       !m_devSettings->useWebDebugger;
   if (!isNativeModulesProxyAvailable) {
     folly::dynamic configArray = folly::dynamic::array;
