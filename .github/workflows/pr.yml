@@ -310,5 +310,81 @@ jobs:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
 
       - name: Run Desktop Unit Tests (Google Test)
+        if: matrix.BuildPlatform != 'arm'
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
+
+      - name: "Copy Nuget source files"
+        if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
+        run: vnext\layoutFilesForNuget.bat ${{ runner.temp }}\artifacts
+
+      - name: Stage Sources
+        run: vnext\Scripts\Tfs\Layout-Headers.ps1 -TargetRoot ${{ runner.temp }}\artifacts
+        shell: powershell
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifacts ${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
+        with:
+          name: ReactWindows-${{ matrix.BuildConfiguration }}-${{ matrix.BuildPlatform }}
+          path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifacts - Nuget Source files
+        if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
+        with:
+          name: ReactWindows-source
+          path: ${{ runner.temp }}\artifacts
+
+  RNWNugetPR:
+    name: React-Native-Windows Build and Pack Nuget
+    runs-on: windows-2016
+    needs: RnwNativePRBuild
+    steps:
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-debug-arm
+          path: ${{ runner.temp }}\artifacts
+
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-ship-arm
+          path: ${{ runner.temp }}\artifacts
+
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-debug-x86
+          path: ${{ runner.temp }}\artifacts
+
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-debug-x86
+          path: ${{ runner.temp }}\artifacts
+
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-debug-x64
+          path: ${{ runner.temp }}\artifacts
+
+      - uses: actions/download-artifact@master
+        with:
+          name: ReactWindows-debug-x64
+          path: ${{ runner.temp }}\artifacts
+
+      - name: Copy files from build artifacts to nuget root
+        run: |
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-source ${{ runner.temp }}\NugetRoot /E /MOVE /NP
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x64 ${{ runner.temp }}\NugetRoot\target\x64\Debug /E /MOVE /NP
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x86 ${{ runner.temp }}\NugetRoot\target\x86\Debug /E /MOVE /NP
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-x64 ${{ runner.temp }}\NugetRoot\target\x64\ship /E /MOVE /NP
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-x86 ${{ runner.temp }}\NugetRoot\target\x86\ship /E /MOVE /NP
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-arm ${{ runner.temp }}\NugetRoot\target\arm\debug /E /MOVE /NP
+          robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-arm ${{ runner.temp }}\NugetRoot\target\arm\ship /E /MOVE /NP
+
+      - name: NuGet pack
+        run: nuget pack ${{ runner.temp }}\NugetRoot\ReactUwp.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
+
+      - name: NuGet pack
+        run: nuget pack ${{ runner.temp }}\NugetRoot\ReactWin32.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
