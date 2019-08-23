@@ -177,6 +177,7 @@
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Utils\BaseScriptStoreImpl.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
