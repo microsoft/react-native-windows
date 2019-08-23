@@ -7,16 +7,16 @@ jobs:
     name: vnext with facebook/react-native
     runs-on: windows-2016
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-      - name: Switch to fork
+      - name: Switch to facebook/react-native
         run: cd vnext && node scripts/useUnForkedRN.js
 
         # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
         # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
         # using the non fork version.
-      - name: yarn install (Using facebook/react-native)
-        run: yarn install
+      - run: yarn install
 
       - run: yarn buildci
 
@@ -59,9 +59,10 @@ jobs:
         BuildConfiguration: [Debug, Release]
         BuildPlatform: [x64, x86, arm]
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
-      - name: yarn install (Using microsoft/react-native)
+      - name: yarn install
         run: yarn install --frozen-lockfile
 
       - run: yarn buildci
@@ -108,7 +109,8 @@ jobs:
     name: Verify react-native init
     runs-on: windows-2016
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
       - name: yarn install
         run: yarn install --frozen-lockfile
@@ -160,7 +162,8 @@ jobs:
     name: Verify change files + formatting
     runs-on: windows-2016
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
       - name: yarn install
         run: yarn install --frozen-lockfile
@@ -178,34 +181,10 @@ jobs:
         #TODO add DebugBundle
         BuildPlatform: [x64, x86, ARM]
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
         with:
           submodules: true
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "%GITHUB_CONTEXT%"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "%STRATEGY_CONTEXT%"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "%MATRIX_CONTEXT%"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "%JOB_CONTEXT%"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "%RUNNER_CONTEXT%"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "%STEPS_CONTEXT%"
 
       - name: Download/Extract Winium
         run: |
@@ -214,10 +193,6 @@ jobs:
           Add-Type -A 'System.IO.Compression.FileSystem'
           [IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.temp }}\winium.zip", "${{ runner.temp }}\winium")
         shell: powershell
-
-      - run: dir ${{ runner.temp }}
-      - run: dir ${{ runner.temp }}\winium
-      - run: set
 
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
@@ -276,7 +251,8 @@ jobs:
         BuildConfiguration: [Debug, Release]
         BuildPlatform: [x64, x86, arm]
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
       - name: yarn install
         run: yarn install --frozen-lockfile
@@ -394,8 +370,8 @@ jobs:
           echo This makes errorlevel 0
           dir c:\
 
-      - name: NuGet pack
+      - name: NuGet Pack ReactUwp
         run: nuget pack ${{ runner.temp }}\NugetRoot\ReactUwp.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
 
-      - name: NuGet pack
+      - name: NuGet Pack ReactWin32
         run: nuget pack ${{ runner.temp }}\NugetRoot\ReactWin32.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
