@@ -17,7 +17,8 @@ jobs:
 
       - run: git config --global user.email "53619745+rnbot@users.noreply.github.com"
       - run: git config --global user.name "React-Native-Windows Bot"
-      - run: git remote set-url origin https://rnbot:${{ secrets.GIT_TOKEN }}@github.com/microsoft/react-native.git
+      - name: git remote set-url origin https://rnbot@github.com/microsoft/react-native-windows.git
+        run: git remote set-url origin https://rnbot:${{ secrets.GIT_TOKEN }}@github.com/microsoft/react-native-windows.git
 
       - name: yarn install
         run: yarn install --frozen-lockfile
