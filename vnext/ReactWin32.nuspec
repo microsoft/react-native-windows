@@ -12,10 +12,16 @@
       commit="$CommitId$" />
   </metadata>
   <files>
+
     <file src="target\x86\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
     <file src="target\x64\Debug\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\debug\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
     <file src="target\x86\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
     <file src="target\x64\Ship\React.Windows.Desktop.DLL\react-native-win32.*" target="lib\ship\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+
+    <file src="target\x86\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**" target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="target\x64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**" target="lib\debug\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="target\x86\Ship\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**" target="lib\ship\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="target\x64\Ship\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**" target="lib\ship\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
     <file src="inc\cxxreact\*" target="inc\cxxreact"/>
     <file src="inc\jsi\**\*.*" target="inc\jsi"/>
@@ -40,6 +46,11 @@
     <file src="inc\ReactWindowsCore\Sandbox\SandboxEndpoint.h" target="inc"/>
     <file src="inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Tracing.h" target="inc"/>
+
+    <!-- Test DLL -->
+    <file src="Test\WebSocketServer.h" target="inc\Test" />
+    <file src="Desktop.Test.DLL\React.Windows.Desktop.Test.x64.def" target="inc\Test" />
+    <file src="Desktop.Test.DLL\React.Windows.Desktop.Test.x86.def" target="inc\Test" />
 
     <!-- Required for win32 -->
     <file src="inc\ReactWindowsCore\DevServerHelper.h" target="inc"/>
