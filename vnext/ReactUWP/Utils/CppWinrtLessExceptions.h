@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 //
-// Helper file for places where the winrt API throws exceptions in 'expected' cases
-// and we want to avoid them to allow developers to have break on exceptions
-// enabled to find bugs
+// Helper file for places where the winrt API throws exceptions in 'expected'
+// cases and we want to avoid them to allow developers to have break on
+// exceptions enabled to find bugs
 //
 
-// This assumes RS5 winrtcpp SDK.  Set the define DEFAULT_CPPWINRT_EXCEPTIONS 
-// if winrtcpp internals change and break this lessthrow_await_adapter - 
+// This assumes RS5 winrtcpp SDK.  Set the define DEFAULT_CPPWINRT_EXCEPTIONS
+// if winrtcpp internals change and break this lessthrow_await_adapter -
 // based on await_adapter but doesn't throw from
 // await_resume for APIs that fail in normal usage.
 //
-// When we can assume Windows 10 20H1 new APIs which may exist with less throwing by
-// default (TryConnectAsync, httpClient.TryGetAsync APIs may exist then), this
-// could go away (or cppwinrt API could add nothrow accessors)
+// When we can assume Windows 10 20H1 new APIs which may exist with less
+// throwing by default (TryConnectAsync, httpClient.TryGetAsync APIs may exist
+// then), this could go away (or cppwinrt API could add nothrow accessors)
 //
 
 #include "winrt/base.h"
@@ -33,7 +33,7 @@ struct lessthrow_await_adapter {
 
   void await_suspend(std::experimental::coroutine_handle<> handle) const {
     auto context =
-     winrt::capture<winrt::impl::IContextCallback>(WINRT_CoGetObjectContext);
+        winrt::capture<winrt::impl::IContextCallback>(WINRT_CoGetObjectContext);
 
     async.Completed([handle, context = std::move(context)](
                         auto const &, winrt::Windows::Foundation::AsyncStatus) {
