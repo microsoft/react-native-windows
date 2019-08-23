@@ -62,7 +62,7 @@
       <AdditionalOptions>%(AdditionalOptions) /bigobj /Zc:twoPhase-</AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <!--
-        BOOST_ASIO_HAS_IOCP - Prevent Acces Violation crash on consuming projects.
+        BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
       -->
       <PreprocessorDefinitions>BOOST_ASIO_HAS_IOCP;_WIN32_WINNT=_WIN32_WINNT_WIN7;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

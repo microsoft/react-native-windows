@@ -56,6 +56,8 @@
       <SubSystem>Windows</SubSystem>
       <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <!-- <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile> -->
     </Link>
   </ItemDefinitionGroup>
@@ -68,6 +70,12 @@
     <ProjectReference Include="..\Test\React.Windows.Test.vcxproj">
       <Project>{cd0415c6-d908-4212-9481-49be41f58d27}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
