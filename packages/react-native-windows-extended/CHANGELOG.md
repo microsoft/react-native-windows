@@ -1,6 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 22 Aug 2019 21:17:45 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Aug 2019 01:27:19 GMT and should not be manually modified.
+
+## 0.14.2
+Fri, 23 Aug 2019 01:27:19 GMT
+
+### Patches
+
+- turn off RTTI (email not defined)
 
 ## 0.14.1
 Thu, 22 Aug 2019 21:17:45 GMT

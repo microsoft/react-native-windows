@@ -1,6 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 22 Aug 2019 21:17:45 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Aug 2019 01:27:19 GMT and should not be manually modified.
+
+## 0.59.0-vnext.151
+Fri, 23 Aug 2019 01:27:19 GMT
+
+### Changes
+
+- turn off RTTI (email not defined)
 
 ## 0.59.0-vnext.150
 Thu, 22 Aug 2019 21:17:45 GMT

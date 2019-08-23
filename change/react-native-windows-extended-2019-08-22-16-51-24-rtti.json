@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "turn off RTTI",
-  "packageName": "react-native-windows-extended",
-  "email": "email not defined",
-  "commit": "04c67ee201b29f72b321a978b25d961d8b7c7ca2",
-  "date": "2019-08-22T23:51:15.719Z"
-}
