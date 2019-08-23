@@ -32,11 +32,8 @@ jobs:
       #   if: github.ref != 'refs/heads/master'
       #   run: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n ${{ secrets.NPM_AUTH }} --yes -m "applying package updates ***NO_CI***"
       #
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ./.ado/setVersionEnvVars.js
+      - name: Create versionEnvVars script
+        run: node ./.ado/setVersionEnvVars.js
 
       - uses: actions/upload-artifact@master
         name: Publish VersionEnvVars
