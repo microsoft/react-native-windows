@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <jsi/jsi.h>
 #include "EventAnimationDriver.h"
 #include "NativeAnimatedNodeManager.h"
 

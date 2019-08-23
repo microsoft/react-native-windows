@@ -1016,6 +1016,12 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   if (shadowNode == nullptr)
     return;
 
+  if (shadowNode->IsExternalLayoutDirty()) {
+    YGNodeRef yogaNode = GetYogaNode(tag);
+    if (yogaNode)
+      shadowNode->DoExtraLayoutPrep(yogaNode);
+  }
+
   for (int64_t child : shadowNode->m_children) {
     UpdateExtraLayout(child);
   }
@@ -1154,6 +1160,62 @@ void NativeUIManager::measure(
   // Global Position
   args.push_back(rectInParentCoords.X);
   args.push_back(rectInParentCoords.Y);
+
+  callback(args);
+}
+
+void NativeUIManager::findSubviewIn(
+    facebook::react::ShadowNode &shadowNode,
+    float x,
+    float y,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
+  auto view = node.GetView();
+
+  auto rootUIView = view.as<winrt::UIElement>();
+  if (rootUIView == nullptr) {
+    callback({});
+    return;
+  }
+
+  winrt::Point point{x, y};
+
+  // Transform the point to app window coordinates because
+  // FindElementsInHostCoordinate() work in that metric
+  auto appWindowTransform = rootUIView.TransformToVisual(nullptr);
+  auto pointInAppWindow = appWindowTransform.TransformPoint(point);
+
+  // Perform hit test to find the top most z-index element that intersects with
+  // the queried point
+  auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(
+      pointInAppWindow, rootUIView);
+
+  int64_t foundTag{};
+  winrt::FrameworkElement foundElement = nullptr;
+
+  for (const auto &elem : hitTestElements) {
+    if (foundElement = elem.try_as<winrt::FrameworkElement>()) {
+      auto tag = foundElement.Tag();
+      if (tag != nullptr) {
+        foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
+        break;
+      }
+    }
+  }
+
+  if (foundElement == nullptr) {
+    callback({});
+    return;
+  }
+
+  auto box = GetRectOfElementInParentCoords(foundElement, rootUIView);
+
+  std::vector<folly::dynamic> args;
+  args.push_back(foundTag);
+  args.push_back(box.X);
+  args.push_back(box.Y);
+  args.push_back(box.Width);
+  args.push_back(box.Height);
 
   callback(args);
 }

@@ -31,7 +31,7 @@ task('ts', () => {
       inlineSources: true,
       sourceRoot: path.relative(libPath, srcPath),
     }),
-    target: 'es5',
+    target: 'es6',
     module: 'commonjs',
   });
 });

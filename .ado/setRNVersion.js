@@ -34,7 +34,7 @@ if (process.argv.length === 4) {
 
     // Generate change file
     const beachballPath = path.resolve(rootPath, 'node_modules/beachball/bin/beachball.js');
-    const changeType = pkgJson.name === 'react-native-windows' ? 'prerelease' : 'minor';
+    const changeType = pkgJson.name === 'react-native-windows' ? 'prerelease' : 'patch';
     const changeDescription = `"Updating react-native to version: ${rnVersion}"`;
     child_process.execSync(`node ${beachballPath} change --package ${pkgJson.name} --type ${changeType} --message ${changeDescription}`);
   }

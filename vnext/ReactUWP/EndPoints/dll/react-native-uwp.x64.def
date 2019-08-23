@@ -5,8 +5,6 @@ EXPORTS
 ??0ColdClass@cold_detail@folly@@QEAA@XZ
 ??0TypeError@folly@@QEAA@AEBU01@@Z
 ??0TypeError@folly@@QEAA@$$QEAU01@@Z
-?asanPendingSafeInserts@detail@f14@folly@@3_KA
-?asanRehashState@detail@f14@folly@@3_KA
 ?logTaggedMarker@ReactMarker@react@facebook@@3P6AXW4ReactMarkerId@123@PEBD@ZEA
 ?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ?destroy@dynamic@folly@@AEAAXXZ

@@ -1,6 +1,120 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Aug 2019 20:02:04 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Aug 2019 01:27:19 GMT and should not be manually modified.
+
+## 0.59.0-vnext.151
+Fri, 23 Aug 2019 01:27:19 GMT
+
+### Changes
+
+- turn off RTTI (email not defined)
+
+## 0.59.0-vnext.150
+Thu, 22 Aug 2019 21:17:45 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.49 (53619745+rnbot@users.noreply.github.com)
+
+## 0.59.0-vnext.149
+Thu, 22 Aug 2019 15:43:48 GMT
+
+### Changes
+
+- Improve Networking error reporting (andrewh@microsoft.com)
+
+## 0.59.0-vnext.148
+Wed, 21 Aug 2019 20:44:12 GMT
+
+### Changes
+
+- Only send focus/blur from OriginalSource, remove Click event for enter/space (andrewh@microsoft.com)
+
+## 0.59.0-vnext.147
+Wed, 21 Aug 2019 06:12:54 GMT
+
+### Changes
+
+- add default message queue that uses CoreDispatcher (email not defined)
+
+## 0.59.0-vnext.146
+Wed, 21 Aug 2019 00:42:37 GMT
+
+### Changes
+
+- revert fix, not quite working (email not defined)
+
+## 0.59.0-vnext.145
+Tue, 20 Aug 2019 23:40:14 GMT
+
+### Changes
+
+- Light up Inspector debugging tool. (kinhln@microsoft.com)
+,- Remove old playground app (acoates@microsoft.com)
+
+## 0.59.0-vnext.144
+Tue, 20 Aug 2019 21:54:07 GMT
+
+### Changes
+
+- Minor fixes made in RN60 update that can be brought right to master (acoates@microsoft.com)
+
+## 0.59.0-vnext.143
+Tue, 20 Aug 2019 07:26:49 GMT
+
+### Changes
+
+- Don't use DefaultNativeMessageQueueThread in live reload (andrewh@microsoft.com)
+
+## 0.59.0-vnext.142
+Tue, 20 Aug 2019 03:02:53 GMT
+
+### Changes
+
+- add additional new warning disable to MsoFolly.h (andrewh@microsoft.com)
+
+## 0.59.0-vnext.141
+Mon, 19 Aug 2019 20:59:57 GMT
+
+### Changes
+
+- fix flyout full placement mode (kmelmon@microsoft.com)
+
+## 0.59.0-vnext.140
+Mon, 19 Aug 2019 16:43:43 GMT
+
+### Changes
+
+- Update placement mapping (cknestri@microsoft.com)
+,- Start API documentation (acoates@microsoft.com)
+,- Always use unforked version of folly + Update folly to v2019.08.12.00 (acoates@microsoft.com)
+,- resolved build error (email not defined)
+,- Improved fix for overlapping XAML theme shadows on Flyouts (kenander@microsoft.com)
+,- add batching queue (kmelmon@microsoft.com)
+,- restore accidental deletion (kmelmon@microsoft.com)
+,- Microsoft.ReactNative SampleApps (jthysell@microsoft.com)
+
+## 0.59.0-vnext.139
+Tue, 13 Aug 2019 19:56:52 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.43 (53619745+rnbot@users.noreply.github.com)
+,- Change windows template to not use cli wrapper (acoates@microsoft.com)
+
+## 0.59.0-vnext.138
+Mon, 12 Aug 2019 23:13:59 GMT
+
+### Changes
+
+- Rename platform uwp->windows (acoates@microsoft.com)
+
+## 0.59.0-vnext.137
+Mon, 12 Aug 2019 21:06:24 GMT
+
+### Changes
+
+- Improve output of run-windows command (acoates@microsoft.com)
 
 ## 0.59.0-vnext.136
 Mon, 12 Aug 2019 20:02:04 GMT

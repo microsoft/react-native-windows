@@ -40,13 +40,13 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
         displayName: Beachball Publish (for other branches)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
@@ -84,38 +84,38 @@ jobs:
       vmImage: vs2017-win2016
 
     steps:
-
       # Sync to point where the version numbers have been updated
-    - task: CmdLine@2
-      inputs:
-        script: git checkout $(publishCommitId)
+      - task: CmdLine@2
+        inputs:
+          script: git checkout $(publishCommitId)
 
-    - task: CmdLine@2
-      displayName: yarn install
-      inputs:
-        script: yarn install --frozen-lockfile
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
 
-    - task: CmdLine@2
-      displayName: yarn build
-      inputs:
-        script: yarn build
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
 
-    - task: CmdLine@2
-      displayName: Set Version Env Vars
-      name: setVersionEnvVars
-      inputs:
-        script: node ./.ado/setVersionEnvVars.js
+      - task: CmdLine@2
+        displayName: Set Version Env Vars
+        name: setVersionEnvVars
+        inputs:
+          script: node ./.ado/setVersionEnvVars.js
 
-    - template: templates/install-SDK.yml
+      - template: templates/install-SDK.yml
 
-    - template: templates/vs-build.yml
-      parameters:
-        BuildConfiguration: $(BuildConfiguration)
-        BuildPlatform: $(BuildPlatform)
-        RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
-        RNW_PKG_VERSION: $(RNW_PKG_VERSION)
+      - template: templates/vs-build.yml
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildPlatform: $(BuildPlatform)
+          RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
+          RNW_PKG_VERSION: $(RNW_PKG_VERSION)
 
-    - template: templates/publish-build-artifacts-for-nuget.yml
+      - template: templates/publish-build-artifacts-for-nuget.yml
+
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -123,7 +123,6 @@ jobs:
     #   inputs:
     #     SearchPattern: 'vnext/target/**/*.pdb'
     #     SymbolServerType: TeamServices
-
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
@@ -141,7 +140,7 @@ jobs:
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
         inputs:
-          versionSpec: '>=4.6.0' 
+          versionSpec: ">=4.6.0"
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
@@ -149,7 +148,7 @@ jobs:
           npmVersion: $(npmVersion)
 
       - task: PublishBuildArtifacts@1
-        displayName: 'Publish final nuget artifacts'
+        displayName: "Publish final nuget artifacts"
         inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/NugetRootFinal'
-          ArtifactName: 'ReactWindows-final-nuget'
+          PathtoPublish: "$(System.DefaultWorkingDirectory)/NugetRootFinal"
+          ArtifactName: "ReactWindows-final-nuget"

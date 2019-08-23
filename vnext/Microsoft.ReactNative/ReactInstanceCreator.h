@@ -38,7 +38,7 @@ struct ReactInstanceCreator : react::uwp::IReactInstanceCreator {
   // ReactInstanceSettings in this project has a UseWebDebugger property
   // that should be used instead as it automatically "persists" by virtue
   // of being attached to the ReactNativeHost.
-  void persistUseWebDebugger(bool useWebDebugger){};
+  void persistUseWebDebugger(bool /*useWebDebugger*/){};
 
  private:
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{};

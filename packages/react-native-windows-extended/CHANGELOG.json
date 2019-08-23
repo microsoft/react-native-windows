@@ -2,6 +2,128 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 23 Aug 2019 01:27:19 GMT",
+      "tag": "react-native-windows-extended_v0.14.2",
+      "version": "0.14.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "turn off RTTI",
+            "author": "email not defined",
+            "commit": "04c67ee201b29f72b321a978b25d961d8b7c7ca2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Aug 2019 21:17:45 GMT",
+      "tag": "react-native-windows-extended_v0.14.1",
+      "version": "0.14.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.49",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "c462866d62f7660734256ded6ad1e1a296f8c9c6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 21:34:46 GMT",
+      "tag": "react-native-windows-extended_v0.14.0",
+      "version": "0.14.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Barebone V8 integration",
+            "author": "anandrag@microsoft.com",
+            "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 21:54:07 GMT",
+      "tag": "react-native-windows-extended_v0.13.3",
+      "version": "0.13.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Minor fixes made in RN60 update that can be brought right to master",
+            "author": "acoates@microsoft.com",
+            "commit": "a8071bd1692c9f1bc15eaeaa2043eab90cf6dfe0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 20:59:57 GMT",
+      "tag": "react-native-windows-extended_v0.13.2",
+      "version": "0.13.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix flyout full placement mode",
+            "author": "kmelmon@microsoft.com",
+            "commit": "6575b6459c5dbc4cc8dae39abbb0be8021613eaa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 16:43:43 GMT",
+      "tag": "react-native-windows-extended_v0.13.1",
+      "version": "0.13.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start API documentation",
+            "author": "acoates@microsoft.com",
+            "commit": "7f82c81c53a99f76887407104a382c334445e74d"
+          },
+          {
+            "comment": "Improved fix for overlapping XAML theme shadows on Flyouts",
+            "author": "kenander@microsoft.com",
+            "commit": "98aea907b03f8b75d57924352a0e015a24a97d79"
+          },
+          {
+            "comment": "Ensure folly is downloaded before react-native-windows-extended builds",
+            "author": "acoates@microsoft.com",
+            "commit": "95216a199075a15cf10e92522a05e1a8091b4e52"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Aug 2019 14:23:33 GMT",
+      "tag": "react-native-windows-extended_v0.13.0",
+      "version": "0.13.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Run clang-format across all packages in the repo",
+            "author": "acoates@microsoft.com",
+            "commit": "a3a5776a4a59571d72459846ae199f10fe173177"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Aug 2019 19:56:52 GMT",
+      "tag": "react-native-windows-extended_v0.13.0",
+      "version": "0.13.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.43",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "f5dfae49beb8cc69a0e0853155227a9ecaa2296c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Aug 2019 20:02:04 GMT",
       "tag": "react-native-windows-extended_v0.12.0",
       "version": "0.12.0",

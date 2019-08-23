@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <jsi/jsi.h>
 #include <math.h>
 #include "DecayAnimationDriver.h"
 
