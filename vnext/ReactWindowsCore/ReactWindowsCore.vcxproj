@@ -67,6 +67,12 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -178,10 +184,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
-    <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'"
-     Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.
-     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />
+  <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'" Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.&#xD;&#xA;     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />
   </Target>
-
 </Project>
