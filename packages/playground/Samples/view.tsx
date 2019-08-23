@@ -19,6 +19,7 @@ export default class Bootstrap extends React.Component<
   {},
   {
     focusable: boolean;
+    hasStyle: boolean;
     hasBorder: boolean;
     radius: boolean;
     padding: number;
@@ -29,6 +30,7 @@ export default class Bootstrap extends React.Component<
     super(props);
     this.state = {
       focusable: true,
+      hasStyle: true,
       hasBorder: true,
       radius: true,
       padding: 0,
@@ -42,7 +44,6 @@ export default class Bootstrap extends React.Component<
         margin: 20,
         padding: 15,
         backgroundColor: 'orange',
-        borderRadius: 0,
       },
       innerBorder: {
         margin: 20,
@@ -50,7 +51,6 @@ export default class Bootstrap extends React.Component<
         backgroundColor: 'lime',
         borderColor: 'navy',
         borderWidth: 1,
-        borderRadius: 0,
       },
       outerBorder: {
         margin: 20,
@@ -88,6 +88,14 @@ export default class Bootstrap extends React.Component<
           <Text>acceptsKeyboardFocus</Text>
         </View>
 
+        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
+          <CheckBox
+            onValueChange={value => this.setState({ hasStyle: value })}
+            checked={this.state.hasStyle}
+          />
+          <Text>hasStyle</Text>
+        </View>
+
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
             onValueChange={value => this.setState({hasBorder: value})}
@@ -105,126 +113,29 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <View
-          acceptsKeyboardFocus={this.state.focusable ? true : false}
-          style={
-            !this.state.hasBorder
-              ? this.state.radius
-                ? styles.radial
-                : styles.noBorder
-              : this.state.radius
-                ? styles.outerBorder
-                : styles.innerBorder
-          }
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            acceptsKeyboardFocus: true,
-          }}>
-          <Text>The text!</Text>
-        </View>
-      </View>
-    );
-  }
-
-  fullrender() {
-    return (
-      <View
-        accessible={true}
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <View
-          style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
-          <CheckBox
-            onValueChange={value => this.setState({focusable: value})}
-            checked={this.state.focusable}
-          />
-          <Text>acceptsKeyboardFocus</Text>
-        </View>
-        <View
-          acceptsKeyboardFocus={this.state.focusable ? true : false}
           style={{
-            padding: 15,
-            backgroundColor: 'lime',
-            borderColor: 'navy',
-            borderWidth: 2,
-            borderRadius: 0,
-          }}
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            acceptsKeyboardFocus: true,
+            flex: 1,
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 250,
+            backgroundColor: 'azure',
           }}>
-          <Text>TEXT</Text>
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
           <View
-            style={{
-              height: 25,
-              width: 75,
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <DatePicker
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <Picker
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <Switch
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <CheckBox
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <TextInput
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-            placeholder={'type something ...'}
-            placeholderTextColor={'maroon'}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <Text
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}>
-            type nothing ...
-          </Text>
+            acceptsKeyboardFocus={this.state.focusable ? true : false}
+            style={
+              this.state.hasStyle
+                ? this.state.hasBorder
+                  ? this.state.radius
+                    ? styles.outerBorder
+                    : styles.innerBorder
+                  : this.state.radius
+                    ? styles.radial
+                    : styles.noBorder
+                : null
+            }>
+            <Text>The text!</Text>
+          </View>
         </View>
       </View>
     );

@@ -19,36 +19,31 @@ import {CheckBox, DatePicker, Picker} from 'react-native-windows';
 export default class Bootstrap extends Component {
   constructor(props) {
     super(props);
-    this.state = {focusable: true, hasBorder: true, radius: true};
+    this.state = {
+      isFocusable: true,
+      hasStyle: true,
+      hasBorder: true,
+      hasRadius: false,
+      };
   }
 
   render() {
     const styles = StyleSheet.create({
       noBorder: {
-        margin: 20,
-        padding: 15,
         backgroundColor: 'orange',
-        borderRadius: 0,
       },
       innerBorder: {
-        margin: 20,
-        padding: 15,
         backgroundColor: 'lime',
         borderColor: 'navy',
         borderWidth: 1,
-        borderRadius: 0,
       },
       outerBorder: {
-        margin: 20,
-        padding: 15,
         backgroundColor: 'pink',
         borderColor: 'crimson',
         borderWidth: 1,
         borderRadius: 10,
       },
       radial: {
-        margin: 20,
-        padding: 15,
         backgroundColor: 'magenta',
         borderRadius: 10,
       },
@@ -62,16 +57,22 @@ export default class Bootstrap extends Component {
           alignSelf: 'center',
           alignItems: 'center',
           justifyContent: 'center',
-          width: 250,
-          backgroundColor: 'azure',
           paddingHorizontal: 20,
         }}>
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
-            onValueChange={value => this.setState({focusable: value})}
-            checked={this.state.focusable}
+            onValueChange={value => this.setState({isFocusable: value})}
+            checked={this.state.isFocusable}
           />
           <Text>acceptsKeyboardFocus</Text>
+        </View>
+
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+          <CheckBox
+            onValueChange={value => this.setState({hasStyle: value})}
+            checked={this.state.hasStyle}
+          />
+          <Text>hasStyle</Text>
         </View>
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
@@ -84,25 +85,30 @@ export default class Bootstrap extends Component {
 
         <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
-            onValueChange={value => this.setState({radius: value})}
-            checked={this.state.radius}
+            onValueChange={value => this.setState({hasRadius: value})}
+            checked={this.state.hasRadius}
           />
           <Text>hasRadius</Text>
         </View>
 
-        <View
-          enableFocusRing={true}
-          acceptsKeyboardFocus={this.state.focusable ? true : false}
-          style={
-            !this.state.hasBorder
-              ? this.state.radius
-                ? styles.radial
-                : styles.noBorder
-              : this.state.radius
-                ? styles.outerBorder
-                : styles.innerBorder
-          }>
-          <Text>The text!</Text>
+        <View style={{ flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: 250, backgroundColor: 'azure', }}>
+          <View
+            enableFocusRing={true}
+            tabIndex={-1}
+            acceptsKeyboardFocus={this.state.isFocusable ? true : false}
+            style={
+              this.state.hasStyle
+                ? this.state.hasBorder
+                  ? this.state.hasRadius
+                    ? styles.outerBorder
+                    : styles.innerBorder
+                  : this.state.hasRadius
+                    ? styles.radial
+                    : styles.noBorder
+                : null
+            }>
+            <Text>The text!</Text>
+          </View>
         </View>
       </View>
     );
@@ -121,14 +127,14 @@ export default class Bootstrap extends Component {
         <View
           style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
           <CheckBox
-            onValueChange={value => this.setState({focusable: value})}
-            checked={this.state.focusable}
+            onValueChange={value => this.setState({isFocusable: value})}
+            checked={this.state.isFocusable}
           />
           <Text>acceptsKeyboardFocus</Text>
         </View>
         <View
           enableFocusRing={true}
-          acceptsKeyboardFocus={this.state.focusable ? true : false}
+          acceptsKeyboardFocus={this.state.isFocusable ? true : false}
           style={{
             padding: 15,
             backgroundColor: 'lime',
