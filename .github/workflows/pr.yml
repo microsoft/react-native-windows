@@ -391,7 +391,8 @@ jobs:
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-x86 ${{ runner.temp }}\NugetRoot\target\x86\ship /E /MOVE /NP
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-arm ${{ runner.temp }}\NugetRoot\target\arm\debug /E /MOVE /NP
           robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-arm ${{ runner.temp }}\NugetRoot\target\arm\ship /E /MOVE /NP
-          echo This makes last error code 0
+          echo This makes errorlevel 0
+          dir c:\
 
       - name: NuGet pack
         run: nuget pack ${{ runner.temp }}\NugetRoot\ReactUwp.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
