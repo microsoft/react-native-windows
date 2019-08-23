@@ -106,7 +106,8 @@ namespace react.uwp
 		Windows.UI.Xaml.Automation.Provider.IInvokeProvider,
 		Windows.UI.Xaml.Automation.Provider.ISelectionProvider,
 		Windows.UI.Xaml.Automation.Provider.ISelectionItemProvider,
-		Windows.UI.Xaml.Automation.Provider.IToggleProvider
+		Windows.UI.Xaml.Automation.Provider.IToggleProvider,
+		Windows.UI.Xaml.Automation.Provider.IExpandCollapseProvider
 	{
 		DynamicAutomationPeer(Windows.UI.Xaml.FrameworkElement owner);
 	}

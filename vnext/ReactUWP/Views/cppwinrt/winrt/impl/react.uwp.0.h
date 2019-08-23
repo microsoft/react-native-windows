@@ -14,6 +14,7 @@ struct UIElement;
 
 WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation {
 
+enum class ExpandCollapseState;
 enum class ToggleState;
 
 }
