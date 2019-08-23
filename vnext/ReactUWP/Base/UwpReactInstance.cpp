@@ -77,6 +77,9 @@
 #if !defined(OSS_RN)
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
+#elif defined(USE_V8)
+#include "Utils/BaseScriptStoreImpl.h"
+#include "V8JSIRuntimeHolder.h"
 #else
 #include "ChakraJSIRuntimeHolder.h"
 #endif
@@ -374,17 +377,24 @@ void UwpReactInstance::Start(
 
 #if !defined(OSS_RN)
     if (settings.UseJsi) {
-
-// Currently assuming we have only two JSI implementations, i.e. Hermes & Chakra
-// based .. And we switch at compile time.
-#if defined(USE_HERMES)
-      devSettings->jsiRuntimeHolder =
-          std::make_shared<facebook::react::HermesRuntimeHolder>();
-#else
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
           nullptr;
 
+#if defined(USE_HERMES)
+      devSettings->jsiRuntimeHolder =
+          std::make_shared<facebook::react::HermesRuntimeHolder>();
+#elif defined(USE_V8)
+      preparedScriptStore =
+          std::make_unique<react::uwp::BasePreparedScriptStoreImpl>();
+
+      devSettings->jsiRuntimeHolder =
+          std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+              devSettings,
+              jsQueue,
+              std::move(scriptStore),
+              std::move(preparedScriptStore));
+#else
       if (settings.EnableByteCodeCacheing ||
           !settings.ByteCodeFileUri.empty()) {
         scriptStore = std::make_unique<UwpScriptStore>();

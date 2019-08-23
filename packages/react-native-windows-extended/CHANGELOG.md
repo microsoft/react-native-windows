@@ -1,6 +1,27 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 20 Aug 2019 21:54:07 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Aug 2019 01:27:19 GMT and should not be manually modified.
+
+## 0.14.2
+Fri, 23 Aug 2019 01:27:19 GMT
+
+### Patches
+
+- turn off RTTI (email not defined)
+
+## 0.14.1
+Thu, 22 Aug 2019 21:17:45 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.49 (53619745+rnbot@users.noreply.github.com)
+
+## 0.14.0
+Wed, 21 Aug 2019 21:34:46 GMT
+
+### Minor changes
+
+- Barebone V8 integration (anandrag@microsoft.com)
 
 ## 0.13.3
 Tue, 20 Aug 2019 21:54:07 GMT

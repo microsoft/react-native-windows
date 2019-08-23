@@ -235,12 +235,16 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         if (uiManager != nullptr)
           uiManager->onBatchComplete();
       });
+#ifdef WINRT
+      // For UWP we use a batching message queue to optimize the usage
+      // of the CoreDispatcher.  Win32 already has an optimized queue.
       facebook::react::BatchingMessageQueueThread *batchingUIThread =
-          dynamic_cast<facebook::react::BatchingMessageQueueThread *>(
+          static_cast<facebook::react::BatchingMessageQueueThread *>(
               uithread.get());
       if (batchingUIThread != nullptr) {
         batchingUIThread->onBatchComplete();
       }
+#endif
     }
   }
   void incrementPendingJSCalls() override {}
