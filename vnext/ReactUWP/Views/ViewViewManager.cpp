@@ -219,7 +219,6 @@ class ViewShadowNode : public ShadowNodeBase {
   winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
   winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
-  bool m_isTabStop = true;
 };
 
 // ViewPanel uses a ViewBackground property, not Background, so need to
@@ -451,8 +450,10 @@ void ViewViewManager::TryUpdateView(
 
   // If we need a Control then get existing reference or create it
   if (useControl) {
-    newXamlView = isControl ? pViewShadowNode->GetControl().try_as<XamlView>()
-                            : CreateViewControl(tag);
+    newXamlView = pViewShadowNode->GetControl().try_as<XamlView>();
+    if (newXamlView == nullptr) {
+      newXamlView = pViewShadowNode->CreateViewControl();
+    }
   }
 
   // Clean up child of Control if needed
