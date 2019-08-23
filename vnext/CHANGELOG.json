@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Aug 2019 01:27:19 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.151",
+      "version": "0.59.0-vnext.151",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "turn off RTTI",
+            "author": "email not defined",
+            "commit": "04c67ee201b29f72b321a978b25d961d8b7c7ca2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Aug 2019 21:17:45 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.150",
       "version": "0.59.0-vnext.150",
