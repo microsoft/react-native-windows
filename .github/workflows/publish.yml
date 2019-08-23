@@ -110,7 +110,7 @@ jobs:
   RNWNugetPublish:
     name: React-Native-Windows Build and Pack Nuget
     runs-on: windows-2016
-    needs: RnwNativePRBuild
+    needs: RnwNativePublishBuild
     steps:
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
