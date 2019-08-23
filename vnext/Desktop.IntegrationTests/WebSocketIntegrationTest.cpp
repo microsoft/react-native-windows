@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 #include <IWebSocket.h>
-#include <WebSocketServer.h>
+#include <Test/WebSocketServer.h>
 
 #include <condition_variable>
 #include <future>
@@ -22,20 +22,23 @@ using std::chrono::milliseconds;
 
 using CloseCode = IWebSocket::CloseCode;
 
-TEST_CLASS(WebSocketIntegrationTest){TEST_METHOD(ConnectClose){
+TEST_CLASS(WebSocketIntegrationTest)
+{
+  TEST_METHOD(ConnectClose)
+  {
     auto server = make_shared<Test::WebSocketServer>(5556);
-auto ws = IWebSocket::Make("ws://localhost:5556/");
-Assert::IsFalse(nullptr == ws);
-bool connected = false;
-string message;
-ws->SetOnConnect([&connected]() { connected = true; });
+    auto ws = IWebSocket::Make("ws://localhost:5556/");
+    Assert::IsFalse(nullptr == ws);
+    bool connected = false;
+    string message;
+    ws->SetOnConnect([&connected]() { connected = true; });
 
-server->Start();
-ws->Connect();
-ws->Close(CloseCode::Normal, "Closing");
-server->Stop();
+    server->Start();
+    ws->Connect();
+    ws->Close(CloseCode::Normal, "Closing");
+    server->Stop();
 
-Assert::IsTrue(connected);
+    Assert::IsTrue(connected);
 }
 
 TEST_METHOD(ConnectNoClose) {
