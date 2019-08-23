@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "move cppwinrt less exception helper, use in DevSupportManager",
+  "packageName": "react-native-windows",
+  "email": "andrewh@microsoft.com",
+  "commit": "5df0fd5e75089b6639308d76fd60cacf33e3be5e",
+  "date": "2019-08-23T20:55:55.498Z"
+}
