@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix change log formatting",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "ab4c0542d84c69f7de0a6643f18a3777e3223f01",
-  "date": "2019-08-24T04:20:04.971Z"
-}
