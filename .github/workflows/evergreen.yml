@@ -1,0 +1,24 @@
+name: Evergreen
+on:
+  schedule:
+    # 3am everyday
+    cron: 0 3 * * *
+jobs:
+  # This job is much the same as UWPPR, but runs after replacing the version of react-native
+  # we are using with facebook/react-native instead of microsoft/react-native
+  RNWUpdateRNVersion:
+    name: React-Native-Windows Update React-Native
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - run: git config --global user.email "53619745+rnbot@users.noreply.github.com"
+      - run: git config --global user.name "React-Native-Windows Bot"
+      - name: Run git remote set-url origin https://rnbot@github.com/microsoft/react-native-windows.git
+        run: git remote set-url origin https://rnbot:${{ secrets.GIT_TOKEN }}@github.com/microsoft/react-native-windows.git
+
+      - run: yarn install --frozen-lockfile
+
+      - name: Run evergreen.js
+        run: node .ado/evergreen.js autopr ${{ secrets.GIT_TOKEN }}
