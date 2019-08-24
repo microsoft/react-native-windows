@@ -35,6 +35,8 @@ jobs:
       #
       - name: Create versionEnvVars script
         run: node ./.ado/setVersionEnvVars.js
+        env:
+          RUNNER_TEMP: ${{ runner.temp }}
 
       - uses: actions/upload-artifact@master
         name: Publish VersionEnvVars
