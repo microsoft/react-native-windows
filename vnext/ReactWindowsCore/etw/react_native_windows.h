@@ -550,43 +550,48 @@ Remarks:
 // Provider "React-Native-Windows-Provider" event count 14
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-// Provider GUID = e7ef5273-98fe-4c41-9c65-5b0e01b986d8
-EXTERN_C __declspec(selectany) const GUID REACT_NATIVE_WINDOWS = {0xe7ef5273, 0x98fe, 0x4c41, {0x9c, 0x65, 0x5b, 0x0e, 0x01, 0xb9, 0x86, 0xd8}};
+// Provider GUID = cec49226-329e-4ea2-a16a-c37c6c0b2cd7
+EXTERN_C __declspec(selectany) const GUID REACT_NATIVE_WINDOWS = {0xcec49226, 0x329e, 0x4ea2, {0xa1, 0x6a, 0xc3, 0x7c, 0x6c, 0x0b, 0x2c, 0xd7}};
 
 #ifndef REACT_NATIVE_WINDOWS_Traits
 #define REACT_NATIVE_WINDOWS_Traits NULL
 #endif // REACT_NATIVE_WINDOWS_Traits
 
 //
+// Tasks
+//
+#define REACT_NATIVE_WINDOWS_TASK_Systrace 0x1
+
+//
 // Event Descriptors
 //
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_BEGIN_SECTION = {0x1, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_BEGIN_SECTION = {0x1, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_BEGIN_SECTION_value 0x1
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_END_SECTION = {0x2, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_END_SECTION = {0x2, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_END_SECTION_value 0x2
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_SECTION = {0x3, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_SECTION = {0x3, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_ASYNC_BEGIN_SECTION_value 0x3
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_SECTION = {0x4, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_SECTION = {0x4, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_ASYNC_END_SECTION_value 0x4
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_FLOW = {0x5, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_FLOW = {0x5, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_ASYNC_BEGIN_FLOW_value 0x5
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_FLOW = {0x6, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_FLOW = {0x6, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_ASYNC_END_FLOW_value 0x6
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_COUNTER = {0x7, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_COUNTER = {0x7, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define JS_COUNTER_value 0x7
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_BEGIN_SECTION = {0x8, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_BEGIN_SECTION = {0x8, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_BEGIN_SECTION_value 0x8
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_END_SECTION = {0x9, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_END_SECTION = {0x9, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_END_SECTION_value 0x9
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_SECTION = {0xa, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_SECTION = {0xa, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_ASYNC_BEGIN_SECTION_value 0xa
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_SECTION = {0xb, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_SECTION = {0xb, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_ASYNC_END_SECTION_value 0xb
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_FLOW = {0xc, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_FLOW = {0xc, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_ASYNC_BEGIN_FLOW_value 0xc
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_FLOW = {0xd, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_FLOW = {0xd, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_ASYNC_END_FLOW_value 0xd
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_COUNTER = {0xe, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_COUNTER = {0xe, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
 #define NATIVE_COUNTER_value 0xe
 
 //
@@ -660,11 +665,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_BEGIN_SECTION
 //
-#define EventWriteJS_BEGIN_SECTION(tag, profileName, args) \
+#define EventWriteJS_BEGIN_SECTION(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
         MCGEN_EVENT_ENABLED(JS_BEGIN_SECTION) \
-        ? McTemplateU0xss(&REACT_NATIVE_WINDOWS_Context, &JS_BEGIN_SECTION, tag, profileName, args) : 0
-#define EventWriteJS_BEGIN_SECTION_AssumeEnabled(tag, profileName, args) \
-        McTemplateU0xss(&REACT_NATIVE_WINDOWS_Context, &JS_BEGIN_SECTION, tag, profileName, args)
+        ? McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &JS_BEGIN_SECTION, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) : 0
+#define EventWriteJS_BEGIN_SECTION_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &JS_BEGIN_SECTION, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 
 //
 // Enablement check macro for JS_END_SECTION
@@ -674,11 +679,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_END_SECTION
 //
-#define EventWriteJS_END_SECTION(tag) \
+#define EventWriteJS_END_SECTION(tag, profileName, duration) \
         MCGEN_EVENT_ENABLED(JS_END_SECTION) \
-        ? McTemplateU0x(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, tag) : 0
-#define EventWriteJS_END_SECTION_AssumeEnabled(tag) \
-        McTemplateU0x(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, tag)
+        ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, tag, profileName, duration) : 0
+#define EventWriteJS_END_SECTION_AssumeEnabled(tag, profileName, duration) \
+        McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, tag, profileName, duration)
 
 //
 // Enablement check macro for JS_ASYNC_BEGIN_SECTION
@@ -688,11 +693,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_ASYNC_BEGIN_SECTION
 //
-#define EventWriteJS_ASYNC_BEGIN_SECTION(tag, profileName, cookie) \
+#define EventWriteJS_ASYNC_BEGIN_SECTION(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(JS_ASYNC_BEGIN_SECTION) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_SECTION, tag, profileName, cookie) : 0
-#define EventWriteJS_ASYNC_BEGIN_SECTION_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_SECTION, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_SECTION, tag, profileName, cookie, duration) : 0
+#define EventWriteJS_ASYNC_BEGIN_SECTION_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_SECTION, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for JS_ASYNC_END_SECTION
@@ -702,11 +707,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_ASYNC_END_SECTION
 //
-#define EventWriteJS_ASYNC_END_SECTION(tag, profileName, cookie) \
+#define EventWriteJS_ASYNC_END_SECTION(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(JS_ASYNC_END_SECTION) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_SECTION, tag, profileName, cookie) : 0
-#define EventWriteJS_ASYNC_END_SECTION_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_SECTION, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_SECTION, tag, profileName, cookie, duration) : 0
+#define EventWriteJS_ASYNC_END_SECTION_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_SECTION, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for JS_ASYNC_BEGIN_FLOW
@@ -716,11 +721,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_ASYNC_BEGIN_FLOW
 //
-#define EventWriteJS_ASYNC_BEGIN_FLOW(tag, profileName, cookie) \
+#define EventWriteJS_ASYNC_BEGIN_FLOW(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(JS_ASYNC_BEGIN_FLOW) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_FLOW, tag, profileName, cookie) : 0
-#define EventWriteJS_ASYNC_BEGIN_FLOW_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_FLOW, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_FLOW, tag, profileName, cookie, duration) : 0
+#define EventWriteJS_ASYNC_BEGIN_FLOW_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_BEGIN_FLOW, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for JS_ASYNC_END_FLOW
@@ -730,11 +735,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_ASYNC_END_FLOW
 //
-#define EventWriteJS_ASYNC_END_FLOW(tag, profileName, cookie) \
+#define EventWriteJS_ASYNC_END_FLOW(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(JS_ASYNC_END_FLOW) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_FLOW, tag, profileName, cookie) : 0
-#define EventWriteJS_ASYNC_END_FLOW_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_FLOW, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_FLOW, tag, profileName, cookie, duration) : 0
+#define EventWriteJS_ASYNC_END_FLOW_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &JS_ASYNC_END_FLOW, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for JS_COUNTER
@@ -758,11 +763,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_BEGIN_SECTION
 //
-#define EventWriteNATIVE_BEGIN_SECTION(tag, profileName, args) \
+#define EventWriteNATIVE_BEGIN_SECTION(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
         MCGEN_EVENT_ENABLED(NATIVE_BEGIN_SECTION) \
-        ? McTemplateU0xss(&REACT_NATIVE_WINDOWS_Context, &NATIVE_BEGIN_SECTION, tag, profileName, args) : 0
-#define EventWriteNATIVE_BEGIN_SECTION_AssumeEnabled(tag, profileName, args) \
-        McTemplateU0xss(&REACT_NATIVE_WINDOWS_Context, &NATIVE_BEGIN_SECTION, tag, profileName, args)
+        ? McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &NATIVE_BEGIN_SECTION, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) : 0
+#define EventWriteNATIVE_BEGIN_SECTION_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &NATIVE_BEGIN_SECTION, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
 
 //
 // Enablement check macro for NATIVE_END_SECTION
@@ -772,11 +777,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_END_SECTION
 //
-#define EventWriteNATIVE_END_SECTION(tag) \
+#define EventWriteNATIVE_END_SECTION(tag, profileName, duration) \
         MCGEN_EVENT_ENABLED(NATIVE_END_SECTION) \
-        ? McTemplateU0x(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, tag) : 0
-#define EventWriteNATIVE_END_SECTION_AssumeEnabled(tag) \
-        McTemplateU0x(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, tag)
+        ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, tag, profileName, duration) : 0
+#define EventWriteNATIVE_END_SECTION_AssumeEnabled(tag, profileName, duration) \
+        McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, tag, profileName, duration)
 
 //
 // Enablement check macro for NATIVE_ASYNC_BEGIN_SECTION
@@ -786,11 +791,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_ASYNC_BEGIN_SECTION
 //
-#define EventWriteNATIVE_ASYNC_BEGIN_SECTION(tag, profileName, cookie) \
+#define EventWriteNATIVE_ASYNC_BEGIN_SECTION(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(NATIVE_ASYNC_BEGIN_SECTION) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_SECTION, tag, profileName, cookie) : 0
-#define EventWriteNATIVE_ASYNC_BEGIN_SECTION_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_SECTION, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_SECTION, tag, profileName, cookie, duration) : 0
+#define EventWriteNATIVE_ASYNC_BEGIN_SECTION_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_SECTION, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for NATIVE_ASYNC_END_SECTION
@@ -800,11 +805,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_ASYNC_END_SECTION
 //
-#define EventWriteNATIVE_ASYNC_END_SECTION(tag, profileName, cookie) \
+#define EventWriteNATIVE_ASYNC_END_SECTION(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(NATIVE_ASYNC_END_SECTION) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_SECTION, tag, profileName, cookie) : 0
-#define EventWriteNATIVE_ASYNC_END_SECTION_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_SECTION, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_SECTION, tag, profileName, cookie, duration) : 0
+#define EventWriteNATIVE_ASYNC_END_SECTION_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_SECTION, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for NATIVE_ASYNC_BEGIN_FLOW
@@ -814,11 +819,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_ASYNC_BEGIN_FLOW
 //
-#define EventWriteNATIVE_ASYNC_BEGIN_FLOW(tag, profileName, cookie) \
+#define EventWriteNATIVE_ASYNC_BEGIN_FLOW(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(NATIVE_ASYNC_BEGIN_FLOW) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_FLOW, tag, profileName, cookie) : 0
-#define EventWriteNATIVE_ASYNC_BEGIN_FLOW_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_FLOW, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_FLOW, tag, profileName, cookie, duration) : 0
+#define EventWriteNATIVE_ASYNC_BEGIN_FLOW_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_BEGIN_FLOW, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for NATIVE_ASYNC_END_FLOW
@@ -828,11 +833,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_ASYNC_END_FLOW
 //
-#define EventWriteNATIVE_ASYNC_END_FLOW(tag, profileName, cookie) \
+#define EventWriteNATIVE_ASYNC_END_FLOW(tag, profileName, cookie, duration) \
         MCGEN_EVENT_ENABLED(NATIVE_ASYNC_END_FLOW) \
-        ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_FLOW, tag, profileName, cookie) : 0
-#define EventWriteNATIVE_ASYNC_END_FLOW_AssumeEnabled(tag, profileName, cookie) \
-        McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_FLOW, tag, profileName, cookie)
+        ? McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_FLOW, tag, profileName, cookie, duration) : 0
+#define EventWriteNATIVE_ASYNC_END_FLOW_AssumeEnabled(tag, profileName, cookie, duration) \
+        McTemplateU0xsdg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_ASYNC_END_FLOW, tag, profileName, cookie, duration)
 
 //
 // Enablement check macro for NATIVE_COUNTER
@@ -861,30 +866,7 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 // Template Functions
 //
 //
-//Template from manifest : tidEndSection
-//
-#ifndef McTemplateU0x_def
-#define McTemplateU0x_def
-ETW_INLINE
-ULONG
-McTemplateU0x(
-    _In_ PMCGEN_TRACE_CONTEXT Context,
-    _In_ PCEVENT_DESCRIPTOR Descriptor,
-    _In_ const unsigned __int64  _Arg0
-    )
-{
-#define McTemplateU0x_ARGCOUNT 1
-
-    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0x_ARGCOUNT + 1];
-
-    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const unsigned __int64)  );
-
-    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0x_ARGCOUNT + 1, EventData);
-}
-#endif // McTemplateU0x_def
-
-//
-//Template from manifest : tidAsyncSection
+//Template from manifest : tidCounter
 //
 #ifndef McTemplateU0xsd_def
 #define McTemplateU0xsd_def
@@ -915,23 +897,95 @@ McTemplateU0xsd(
 #endif // McTemplateU0xsd_def
 
 //
-//Template from manifest : tidBeginSection
+//Template from manifest : tidAsyncSection
 //
-#ifndef McTemplateU0xss_def
-#define McTemplateU0xss_def
+#ifndef McTemplateU0xsdg_def
+#define McTemplateU0xsdg_def
 ETW_INLINE
 ULONG
-McTemplateU0xss(
+McTemplateU0xsdg(
     _In_ PMCGEN_TRACE_CONTEXT Context,
     _In_ PCEVENT_DESCRIPTOR Descriptor,
     _In_ const unsigned __int64  _Arg0,
     _In_opt_ PCSTR  _Arg1,
-    _In_opt_ PCSTR  _Arg2
+    _In_ const signed int  _Arg2,
+    _In_ const double  _Arg3
     )
 {
-#define McTemplateU0xss_ARGCOUNT 3
+#define McTemplateU0xsdg_ARGCOUNT 4
 
-    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xss_ARGCOUNT + 1];
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xsdg_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const unsigned __int64)  );
+
+    EventDataDescCreate(&EventData[2],
+                        (_Arg1 != NULL) ? _Arg1 : "NULL",
+                        (_Arg1 != NULL) ? (ULONG)((strlen(_Arg1) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const signed int)  );
+
+    EventDataDescCreate(&EventData[4],&_Arg3, sizeof(const double)  );
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xsdg_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0xsdg_def
+
+//
+//Template from manifest : tidEndSection
+//
+#ifndef McTemplateU0xsg_def
+#define McTemplateU0xsg_def
+ETW_INLINE
+ULONG
+McTemplateU0xsg(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_ const unsigned __int64  _Arg0,
+    _In_opt_ PCSTR  _Arg1,
+    _In_ const double  _Arg2
+    )
+{
+#define McTemplateU0xsg_ARGCOUNT 3
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xsg_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const unsigned __int64)  );
+
+    EventDataDescCreate(&EventData[2],
+                        (_Arg1 != NULL) ? _Arg1 : "NULL",
+                        (_Arg1 != NULL) ? (ULONG)((strlen(_Arg1) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const double)  );
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xsg_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0xsg_def
+
+//
+//Template from manifest : tidBeginSection
+//
+#ifndef McTemplateU0xsssssssss_def
+#define McTemplateU0xsssssssss_def
+ETW_INLINE
+ULONG
+McTemplateU0xsssssssss(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_ const unsigned __int64  _Arg0,
+    _In_opt_ PCSTR  _Arg1,
+    _In_opt_ PCSTR  _Arg2,
+    _In_opt_ PCSTR  _Arg3,
+    _In_opt_ PCSTR  _Arg4,
+    _In_opt_ PCSTR  _Arg5,
+    _In_opt_ PCSTR  _Arg6,
+    _In_opt_ PCSTR  _Arg7,
+    _In_opt_ PCSTR  _Arg8,
+    _In_opt_ PCSTR  _Arg9
+    )
+{
+#define McTemplateU0xsssssssss_ARGCOUNT 10
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xsssssssss_ARGCOUNT + 1];
 
     EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const unsigned __int64)  );
 
@@ -943,12 +997,43 @@ McTemplateU0xss(
                         (_Arg2 != NULL) ? _Arg2 : "NULL",
                         (_Arg2 != NULL) ? (ULONG)((strlen(_Arg2) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
 
-    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xss_ARGCOUNT + 1, EventData);
+    EventDataDescCreate(&EventData[4],
+                        (_Arg3 != NULL) ? _Arg3 : "NULL",
+                        (_Arg3 != NULL) ? (ULONG)((strlen(_Arg3) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[5],
+                        (_Arg4 != NULL) ? _Arg4 : "NULL",
+                        (_Arg4 != NULL) ? (ULONG)((strlen(_Arg4) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[6],
+                        (_Arg5 != NULL) ? _Arg5 : "NULL",
+                        (_Arg5 != NULL) ? (ULONG)((strlen(_Arg5) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[7],
+                        (_Arg6 != NULL) ? _Arg6 : "NULL",
+                        (_Arg6 != NULL) ? (ULONG)((strlen(_Arg6) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[8],
+                        (_Arg7 != NULL) ? _Arg7 : "NULL",
+                        (_Arg7 != NULL) ? (ULONG)((strlen(_Arg7) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[9],
+                        (_Arg8 != NULL) ? _Arg8 : "NULL",
+                        (_Arg8 != NULL) ? (ULONG)((strlen(_Arg8) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[10],
+                        (_Arg9 != NULL) ? _Arg9 : "NULL",
+                        (_Arg9 != NULL) ? (ULONG)((strlen(_Arg9) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xsssssssss_ARGCOUNT + 1, EventData);
 }
-#endif // McTemplateU0xss_def
+#endif // McTemplateU0xsssssssss_def
 
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 #if defined(__cplusplus)
 };
 #endif
+
+#define MSG_opcode_Info                      0x30000000L
+#define MSG_level_Informational              0x50000004L

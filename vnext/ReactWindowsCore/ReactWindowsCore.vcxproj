@@ -64,7 +64,7 @@
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeWindowsDir)fbsystrace;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
@@ -128,7 +128,7 @@
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="tracing\rnwtrace.h" />
+    <ClInclude Include="tracing\fbsystrace.h" />
     <ClInclude Include="Tracing.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="Utils.h" />
@@ -155,17 +155,18 @@
     <ClCompile Include="Modules\UIManagerModule.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="tracing\rnwtrace.cpp" />
+    <ClCompile Include="tracing\tracing.cpp" />
     <ClCompile Include="unicode.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
-    <ClCompile Include="$(ReactNativeWindowsDir)fbsystrace\fbsystrace.cpp" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="etw\react_native_windows.man" />
+    <None Include="etw\react_native_windows.man">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +178,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="etw\react_native_windows.rc" />
+    <ResourceCompile Include="etw\react_native_windows.rc">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

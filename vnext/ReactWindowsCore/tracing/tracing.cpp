@@ -3,12 +3,72 @@
 
 #include "pch.h"
 
-#include "rnwtrace.h"
-
-#include "windows.h"
+#include <windows.h>
 #include "etw/react_native_windows.h"
 
-#include <fstream>
+#include "tracing/fbsystrace.h"
+
+#include <jsi/jsi.h>
+
+#include <array>
+#include <string>
+
+void trace_begin_section(
+    uint64_t tag,
+    const std::string &profile_name,
+    std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> &&args,
+    uint8_t size) {
+  EventWriteNATIVE_BEGIN_SECTION(
+      tag,
+      profile_name.c_str(),
+      args[0].c_str(),
+      args[1].c_str(),
+      args[2].c_str(),
+      args[3].c_str(),
+      args[4].c_str(),
+      args[5].c_str(),
+      args[6].c_str(),
+      args[7].c_str());
+}
+
+void trace_end_section(
+    uint64_t tag,
+    const std::string &profile_name,
+    double duration) {
+  EventWriteNATIVE_END_SECTION(tag, profile_name.c_str(), duration);
+}
+
+namespace fbsystrace {
+
+/*static */ std::
+    unordered_map<int, std::chrono::high_resolution_clock::time_point>
+        FbSystraceAsyncFlow::tracker_;
+
+/*static*/ void
+FbSystraceAsyncFlow::begin(uint64_t tag, const char *name, int cookie) {
+  tracker_[cookie] = std::chrono::high_resolution_clock::now();
+  EventWriteNATIVE_ASYNC_BEGIN_FLOW(tag, name, cookie, 0);
+}
+
+/*static */ void
+FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
+  auto search = tracker_.find(cookie);
+  double duration = -1;
+
+  if (search != tracker_.end()) {
+    duration = std::chrono::duration_cast<std::chrono::duration<double>>(
+                   std::chrono::high_resolution_clock::now() - search->second)
+                   .count();
+  }
+
+  EventWriteNATIVE_ASYNC_END_FLOW(tag, name, cookie, duration);
+}
+
+} // namespace fbsystrace
+
+void fbsystrace_end_async_flow(uint64_t tag, const char *name, int callId) {
+  fbsystrace::FbSystraceAsyncFlow::end(tag, name, callId);
+}
 
 using namespace facebook;
 
@@ -16,96 +76,49 @@ void nativeTraceBeginSection(
     uint64_t tag,
     const std::string &profile_name,
     const std::string &args) {
-
-  EventWriteJS_BEGIN_SECTION(tag, profile_name.c_str(), args.c_str());
-  
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceBeginSection"
-         << " ###### " << tag << " ####### " << profile_name << " ####### "
-         << args << std::endl;
-  stream.close();*/
+  EventWriteJS_BEGIN_SECTION(
+      tag,
+      profile_name.c_str(),
+      args.c_str(),
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr,
+      nullptr);
 }
 
 void nativeTraceEndSection(uint64_t tag) {
-  EventWriteJS_END_SECTION(tag);
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceEndSection"
-         << " ###### " << tag << std::endl;
-  stream.close();*/
+  EventWriteJS_END_SECTION(tag, "", 0);
 }
 
 void nativeTraceBeginAsyncSection(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
-
-  EventWriteJS_ASYNC_BEGIN_SECTION(tag, profile_name.c_str(), cookie);
-
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceBeginAsyncSection"
-         << " ###### " << tag << " ####### " << profile_name << " ####### "
-         << cookie << std::endl;
-  stream.close();*/
+  EventWriteJS_ASYNC_BEGIN_SECTION(tag, profile_name.c_str(), cookie, 0);
 }
 
 void nativeTraceEndAsyncSection(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
-  EventWriteJS_ASYNC_END_SECTION(tag, profile_name.c_str(), cookie);
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceEndAsyncSection"
-         << " ###### " << tag << " ####### " << profile_name << " ####### "
-         << cookie << std::endl;
-  stream.close();*/
+  EventWriteJS_ASYNC_END_SECTION(tag, profile_name.c_str(), cookie, 0);
 }
 
 void nativeTraceBeginAsyncFlow(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
-  EventWriteJS_ASYNC_BEGIN_FLOW(tag, profile_name.c_str(), cookie);
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceBeginAsyncFlow"
-         << " ###### " << tag << " ####### " << profile_name << " ####### "
-         << cookie << std::endl;
-  stream.close();*/
+  EventWriteJS_ASYNC_BEGIN_FLOW(tag, profile_name.c_str(), cookie, 0);
 }
 
 void nativeTraceEndAsyncFlow(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
-  EventWriteJS_ASYNC_END_FLOW(tag, profile_name.c_str(), cookie);
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceEndAsyncFlow"
-         << " ###### " << tag << " ####### " << profile_name << " ####### "
-         << cookie << std::endl;
-  stream.close();*/
+  EventWriteJS_ASYNC_END_FLOW(tag, profile_name.c_str(), cookie, 0);
 }
 
 void nativeTraceCounter(
@@ -113,15 +126,6 @@ void nativeTraceCounter(
     const std::string &profile_name,
     int value) {
   EventWriteJS_COUNTER(tag, profile_name.c_str(), value);
-  /*std::ofstream stream;
-  stream.open(
-      "C:\\Users\\anandrag.REDMOND\\AppData\\Local\\Packages\\59b7e31b-a8fe-4fc7-85d6-a0a2475ad32e_kc2bncckyf4ap\\LocalState\\jstrace.txt",
-      std::ios_base::app);
-
-  stream << "nativeTraceCounter"
-         << " ###### " << tag << " ####### " << profile_name << " ####### "
-         << value << std::endl;
-  stream.close();*/
 }
 
 void init_tracing(jsi::Runtime &runtime) {
@@ -348,6 +352,4 @@ void init_tracing(jsi::Runtime &runtime) {
 
             return jsi::Value::undefined();
           }));
-
-  EventRegisterReact_Native_Windows_Provider();
 }

@@ -54,11 +54,14 @@
 #endif
 #include "ChakraJSIRuntimeHolder.h"
 
-#include <tracing/rnwtrace.h>
+void init_tracing(facebook::jsi::Runtime &runtime);
 
 #endif
 
 #include <fstream>
+
+#include <etw/react_native_windows.h>
+#include "windows.h"
 
 namespace {
 
@@ -556,6 +559,9 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 void InstanceImpl::loadBundleInternal(
     std::string &&jsBundleRelativePath,
     bool synchronously) {
+
+  EventRegisterReact_Native_Windows_Provider();
+
   std::string bytecodeFileNameCopy{m_devSettings->bytecodeFileName};
 
   // load JS

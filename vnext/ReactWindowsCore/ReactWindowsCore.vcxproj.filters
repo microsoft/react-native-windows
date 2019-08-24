@@ -93,12 +93,8 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeWindowsDir)fbsystrace\fbsystrace.cpp" />
-    <ClCompile Include="tracing\rnwtrace.cpp">
+    <ClCompile Include="tracing\tracing.cpp">
       <Filter>tracing</Filter>
-    </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,10 +242,8 @@
     <ClInclude Include="etw\react_native_windows.h">
       <Filter>etw</Filter>
     </ClInclude>
-    <ClInclude Include="tracing\rnwtrace.h">
-      <Filter>tracing</Filter>
-    </ClInclude>
-    <ClInclude Include="V8JSIRuntimeHolder.h">
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="tracing\fbsystrace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
