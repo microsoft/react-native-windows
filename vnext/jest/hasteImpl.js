@@ -7,13 +7,9 @@
 
 const {realpathSync} = require('fs');
 const path = require('path');
-const utils = require('../Scripts/utils');
 
-const rnProjectRoot = utils.getDirectoryNameOfFileAbove(__dirname, 'app.json');
 const rnRoot = realpathSync(
-  rnProjectRoot
-    ? path.resolve(rnProjectRoot, './node_modules/react-native')
-    : path.resolve(__dirname, '../node_modules/react-native'),
+  path.resolve(require.resolve('react-native/package.json'), '..'),
 );
 
 function createHaste(pluginRoots, pluginNameReducers) {
@@ -39,7 +35,7 @@ function createHaste(pluginRoots, pluginNameReducers) {
     // strip .js/.js.flow suffix
     [/^(.*)\.js(\.flow)?$/, '$1'],
     // strip platform suffix
-    [/^(.*)\.(android|ios|native|windesktop|uwp|macos)$/, '$1'],
+    [/^(.*)\.(android|ios|native|windesktop|windows|macos)$/, '$1'],
     // strip plugin platform suffixes
     ...pluginNameReducers,
   ];
@@ -84,5 +80,5 @@ function createHaste(pluginRoots, pluginNameReducers) {
 
 module.exports = createHaste(
   [path.resolve(__dirname, '..') + path.sep],
-  [[/^(.*)\.(uwp)$/, '$1'], [/^(.*)\.(windesktop)$/, '$1']],
+  [[/^(.*)\.(windows)$/, '$1'], [/^(.*)\.(windesktop)$/, '$1']],
 );

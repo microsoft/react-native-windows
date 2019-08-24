@@ -4,6 +4,7 @@
 .vscode
 **/*.inc
 **/*.windesktop.*
+api-extractor.json
 build
 CMakeLists.txt
 Desktop
@@ -16,7 +17,6 @@ IntegrationTestScripts
 NuGet.Config
 package-deps.json
 packages
-Playground
 react-native-windows.build.log
 ReactUwp.nuspec
 ReactWin32.nuspec
@@ -29,9 +29,9 @@ RNTester/
 Scripts/layoutFilesForNuget.bat.bat
 src/
 target
+temp
 tsconfig.json
 Universal.IntegrationTests
-Universal.SampleApp
 Universal.UnitTests
 win32
 WindowsSampleCSharpApp

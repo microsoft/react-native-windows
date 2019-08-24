@@ -1,0 +1,29 @@
+{
+  "name": "SampleApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "postinstall": "node postinstall.js",
+    "start": "react-native start",
+    "lint": "just-scripts eslint",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "react": "16.8.3",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.49.tar.gz",
+    "react-native-windows": "0.59.0-vnext.151",
+    "react-native-windows-extended": "0.14.2",
+    "rnpm-plugin-windows": "^0.2.11"
+  },
+  "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@types/react": "16.8.15",
+    "@types/react-native": "~0.57.51",
+    "metro-react-native-babel-preset": "0.55.0",
+    "react-test-renderer": "16.8.3"
+  }
+}
