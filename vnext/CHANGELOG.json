@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Aug 2019 04:09:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.152",
+      "version": "0.59.0-vnext.152",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move cppwinrt less exception helper, use in DevSupportManager",
+            "author": "andrewh@microsoft.com",
+            "commit": "5df0fd5e75089b6639308d76fd60cacf33e3be5e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Aug 2019 01:27:19 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.151",
       "version": "0.59.0-vnext.151",

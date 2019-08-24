@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Aug 2019 01:27:19 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Aug 2019 04:09:20 GMT and should not be manually modified.
 
+## 0.59.0-vnext.152
+Sat, 24 Aug 2019 04:09:20 GMT
+
+### Changes
+
+- move cppwinrt less exception helper, use in DevSupportManager (andrewh@microsoft.com)
 ## 0.59.0-vnext.151
 Fri, 23 Aug 2019 01:27:19 GMT
 
