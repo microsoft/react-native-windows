@@ -1,15 +1,16 @@
 name: Evergreen
-on:
-  schedule:
-    # 3am everyday
-    cron: 0 3 * * *
+on: repository_dispatch
+
 jobs:
-  # This job is much the same as UWPPR, but runs after replacing the version of react-native
-  # we are using with facebook/react-native instead of microsoft/react-native
   RNWUpdateRNVersion:
     name: React-Native-Windows Update React-Native
     runs-on: windows-2019
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "%GITHUB_CONTEXT%"
+
       - name: Checkout
         uses: actions/checkout@v1
 
