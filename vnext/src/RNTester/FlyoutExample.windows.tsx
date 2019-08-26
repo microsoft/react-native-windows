@@ -14,7 +14,7 @@ interface IFlyoutExampleState {
   isFlyoutTwoVisible: boolean;
   buttonTitle: string;
   isLightDismissEnabled: boolean;
-  isOverlayEnabled: boolean,
+  isOverlayEnabled: boolean;
   popupCheckBoxState: boolean;
   placementOptions: Placement;
 }
