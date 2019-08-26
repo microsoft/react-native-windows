@@ -117,7 +117,6 @@
     <ClInclude Include="Modules\UIManagerModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Sandbox\SandboxEndpoint.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
@@ -158,6 +157,7 @@
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="etw\react_native_windows.man" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

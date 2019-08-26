@@ -123,7 +123,6 @@
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h" />
-    <ClInclude Include="$(ReactNativeWindowsDir)fbsystrace\fbsystrace.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp" />

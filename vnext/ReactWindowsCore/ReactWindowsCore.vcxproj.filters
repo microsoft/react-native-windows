@@ -242,7 +242,6 @@
     <ClInclude Include="etw\react_native_windows.h">
       <Filter>etw</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="tracing\fbsystrace.h">
       <Filter>tracing</Filter>
     </ClInclude>
@@ -252,10 +251,5 @@
     <None Include="etw\react_native_windows.man">
       <Filter>etw</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="etw\react_native_windows.rc">
-      <Filter>etw</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>
