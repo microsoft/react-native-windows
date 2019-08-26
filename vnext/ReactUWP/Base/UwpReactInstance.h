@@ -90,6 +90,9 @@ class UwpReactInstance
   ExpressionAnimationStore &GetExpressionAnimationStore() override {
     return m_expressionAnimationStore;
   }
+  const ReactInstanceSettings &GetReactInstanceSettings() const override {
+    return m_reactInstanceSettings;
+  }
   std::string GetBundleRootPath() const noexcept override {
     return m_bundleRootPath;
   }
@@ -110,6 +113,7 @@ class UwpReactInstance
   std::shared_ptr<WorkerMessageQueueThread> m_initThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_defaultNativeThread;
+  std::shared_ptr<facebook::react::MessageQueueThread> m_batchingNativeThread;
   std::shared_ptr<facebook::react::IUIManager> m_uiManager;
   std::shared_ptr<facebook::react::InstanceWrapper> m_instanceWrapper;
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{nullptr};
@@ -127,6 +131,7 @@ class UwpReactInstance
   std::function<void(XamlView)> m_xamlViewCreatedTestHook;
 
   std::string m_bundleRootPath;
+  ReactInstanceSettings m_reactInstanceSettings;
 };
 
 } // namespace uwp

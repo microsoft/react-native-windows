@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Text, View} from 'react-native';
-import {Glyph} from '../index.uwp';
+import {Glyph} from '../index.windows';
 
 class GlyphExamples extends React.Component {
   public render() {

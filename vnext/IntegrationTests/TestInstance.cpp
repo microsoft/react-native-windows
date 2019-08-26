@@ -98,6 +98,12 @@ void TestNativeUIManager::measure(
     facebook::react::ShadowNode &shadowRoot,
     facebook::xplat::module::CxxModule::Callback callback) {}
 
+void TestNativeUIManager::findSubviewIn(
+    facebook::react::ShadowNode &shadowNode,
+    float x,
+    float y,
+    facebook::xplat::module::CxxModule::Callback callback) {}
+
 void TestNativeUIManager::AddRootView(
     facebook::react::ShadowNode &shadowNode,
     facebook::react::IReactRootView *pReactRootView) {}

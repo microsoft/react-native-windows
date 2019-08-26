@@ -15,6 +15,7 @@
 
 #include "DecayAnimationDriver.h"
 #include "FrameAnimationDriver.h"
+#include "SpringAnimationDriver.h"
 
 #include "AnimatedNodeType.h"
 #include "AnimationType.h"
@@ -173,7 +174,14 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
               manager));
       break;
     case AnimationType::Spring:
-      // TODO: implement spring animations tracked by issue #2681
+      m_activeAnimations.emplace(
+          animationId,
+          std::make_unique<SpringAnimationDriver>(
+              animationId,
+              animatedNodeTag,
+              endCallback,
+              animationConfig,
+              manager));
       break;
     default:
       assert(false);

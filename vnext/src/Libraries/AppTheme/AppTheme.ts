@@ -6,11 +6,11 @@
 'use strict';
 
 const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
-import {IHighContrastColors} from './AppThemeTypes';
+import {AppThemeTypes, IHighContrastColors} from './AppThemeTypes';
 
 class AppThemeModule extends MissingNativeEventEmitterShim {
   public isAvailable = false;
-  public currentTheme = '';
+  public currentTheme: AppThemeTypes = 'light';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
 }

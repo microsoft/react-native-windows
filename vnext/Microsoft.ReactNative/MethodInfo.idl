@@ -1,0 +1,23 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative.Bridge
+{
+  enum ReturnType {
+    Void,
+    Callback,
+    Promise
+};
+
+  delegate void Callback(IVectorView<IInspectable> args);
+  delegate void Method(IVectorView<IInspectable> args, Callback first, Callback second);
+
+  [default_interface]
+  runtimeclass MethodInfo
+  {
+    MethodInfo(String name, ReturnType type, Method method);
+    String Name { get; };
+    ReturnType ReturnType { get; };
+    Method Method { get; };
+  }
+}
