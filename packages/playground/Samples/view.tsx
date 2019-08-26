@@ -5,15 +5,8 @@
  */
 
 import * as React from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Switch,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-import {CheckBox, DatePicker, Picker} from 'react-native-windows';
+import {AppRegistry, StyleSheet, Text, View} from 'react-native';
+import {CheckBox} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -88,9 +81,9 @@ export default class Bootstrap extends React.Component<
           <Text>acceptsKeyboardFocus</Text>
         </View>
 
-        <View style={{ flexDirection: 'row', alignSelf: 'flex-start' }}>
+        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
           <CheckBox
-            onValueChange={value => this.setState({ hasStyle: value })}
+            onValueChange={value => this.setState({hasStyle: value})}
             checked={this.state.hasStyle}
           />
           <Text>hasStyle</Text>
@@ -133,7 +126,11 @@ export default class Bootstrap extends React.Component<
                     ? styles.radial
                     : styles.noBorder
                 : null
-            }>
+            }
+            {...{
+              // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+              acceptsKeyboardFocus: true,
+            }}>
             <Text>The text!</Text>
           </View>
         </View>
