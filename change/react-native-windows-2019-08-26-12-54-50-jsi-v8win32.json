@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Enable experimental V8 JSI Executor support (off by default)",
+  "packageName": "react-native-windows",
+  "email": "tudorm@microsoft.com",
+  "commit": "4798503947087341f2efb87470aa2f7ececd0aba",
+  "date": "2019-08-26T19:54:50.853Z"
+}
