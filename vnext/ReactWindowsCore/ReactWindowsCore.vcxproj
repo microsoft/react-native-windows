@@ -76,12 +76,6 @@
       <AdditionalDependencies Condition="'$(USE_HERMES)'=='true'">hermes.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
-    <Lib>
-      <TargetMachine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MachineX64</TargetMachine>
-    </Lib>
-    <Lib>
-      <TargetMachine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MachineX86</TargetMachine>
-    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
@@ -164,9 +158,6 @@
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="etw\react_native_windows.man">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -176,11 +167,6 @@
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="etw\react_native_windows.rc">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </ResourceCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

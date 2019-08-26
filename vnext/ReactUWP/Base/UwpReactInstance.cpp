@@ -375,13 +375,6 @@ void UwpReactInstance::Start(
     std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue =
         CreateAndStartJSQueueThread();
 
-    auto local = winrt::Windows::Storage::ApplicationData::Current()
-                     .LocalFolder()
-                     .Path();
-
-    std::wstring localstr = std::wstring(
-               std::wstring(local.c_str(), local.size()));
-
 #if !defined(OSS_RN)
     if (settings.UseJsi) {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;

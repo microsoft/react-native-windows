@@ -144,9 +144,6 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsExtendedDir)windows;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
-    <Link>
-      <TargetMachine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MachineX86</TargetMachine>
-    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Font Include="Assets\seguiemj.ttf" />
