@@ -547,7 +547,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "React-Native-Windows-Provider" event count 14
+// Provider "React-Native-Windows-Provider" event count 20
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = cec49226-329e-4ea2-a16a-c37c6c0b2cd7
@@ -558,41 +558,66 @@ EXTERN_C __declspec(selectany) const GUID REACT_NATIVE_WINDOWS = {0xcec49226, 0x
 #endif // REACT_NATIVE_WINDOWS_Traits
 
 //
+// Opcodes
+//
+#define SYNC_SECTION_START 0xa
+#define SYNC_SECTION_END 0xb
+#define ASYNC_SECTION_START 0xc
+#define ASYNC_SECTION_END 0xd
+#define COUNTER 0xe
+
+//
 // Tasks
 //
-#define REACT_NATIVE_WINDOWS_TASK_Systrace 0x1
+#define REACT_NATIVE_WINDOWS_TASK_GenericSystraceJS 0x1
+#define REACT_NATIVE_WINDOWS_TASK_GenericSystraceNative 0x2
+#define REACT_NATIVE_WINDOWS_TASK_EvaluateScript 0x3
+#define REACT_NATIVE_WINDOWS_TASK_CallJSFunction 0x4
+#define REACT_NATIVE_WINDOWS_TASK_CallNativeModules 0x5
 
 //
 // Event Descriptors
 //
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_BEGIN_SECTION = {0x1, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_BEGIN_SECTION = {0x1, 0x0, 0x0, 0x4, 0xa, 0x1, 0x0};
 #define JS_BEGIN_SECTION_value 0x1
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_END_SECTION = {0x2, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_END_SECTION = {0x2, 0x0, 0x0, 0x4, 0xb, 0x1, 0x0};
 #define JS_END_SECTION_value 0x2
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_SECTION = {0x3, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_SECTION = {0x3, 0x0, 0x0, 0x4, 0xc, 0x1, 0x0};
 #define JS_ASYNC_BEGIN_SECTION_value 0x3
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_SECTION = {0x4, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_SECTION = {0x4, 0x0, 0x0, 0x4, 0xd, 0x1, 0x0};
 #define JS_ASYNC_END_SECTION_value 0x4
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_FLOW = {0x5, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_BEGIN_FLOW = {0x5, 0x0, 0x0, 0x4, 0xc, 0x1, 0x0};
 #define JS_ASYNC_BEGIN_FLOW_value 0x5
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_FLOW = {0x6, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_ASYNC_END_FLOW = {0x6, 0x0, 0x0, 0x4, 0xd, 0x1, 0x0};
 #define JS_ASYNC_END_FLOW_value 0x6
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_COUNTER = {0x7, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR JS_COUNTER = {0x7, 0x0, 0x0, 0x4, 0xe, 0x1, 0x0};
 #define JS_COUNTER_value 0x7
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_BEGIN_SECTION = {0x8, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_BEGIN_SECTION_value 0x8
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_END_SECTION = {0x9, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_END_SECTION_value 0x9
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_SECTION = {0xa, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_ASYNC_BEGIN_SECTION_value 0xa
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_SECTION = {0xb, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_ASYNC_END_SECTION_value 0xb
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_FLOW = {0xc, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_ASYNC_BEGIN_FLOW_value 0xc
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_FLOW = {0xd, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_ASYNC_END_FLOW_value 0xd
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_COUNTER = {0xe, 0x0, 0x0, 0x4, 0x0, 0x1, 0x0};
-#define NATIVE_COUNTER_value 0xe
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR EVALUATE_SCRIPT_BEGIN = {0x8, 0x0, 0x0, 0x4, 0xa, 0x3, 0x0};
+#define EVALUATE_SCRIPT_BEGIN_value 0x8
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR EVALUATE_SCRIPT_END = {0x9, 0x0, 0x0, 0x4, 0xb, 0x3, 0x0};
+#define EVALUATE_SCRIPT_END_value 0x9
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CALL_JSFUNCTION_BEGIN = {0xa, 0x0, 0x0, 0x4, 0xa, 0x4, 0x0};
+#define CALL_JSFUNCTION_BEGIN_value 0xa
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CALL_JSFUNCTION_END = {0xb, 0x0, 0x0, 0x4, 0xb, 0x4, 0x0};
+#define CALL_JSFUNCTION_END_value 0xb
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CALL_NATIVEMODULES_BEGIN = {0xc, 0x0, 0x0, 0x4, 0xa, 0x5, 0x0};
+#define CALL_NATIVEMODULES_BEGIN_value 0xc
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CALL_NATIVEMODULES_END = {0xd, 0x0, 0x0, 0x4, 0xb, 0x5, 0x0};
+#define CALL_NATIVEMODULES_END_value 0xd
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_BEGIN_SECTION = {0xe, 0x0, 0x0, 0x4, 0xa, 0x2, 0x0};
+#define NATIVE_BEGIN_SECTION_value 0xe
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_END_SECTION = {0xf, 0x0, 0x0, 0x4, 0xb, 0x2, 0x0};
+#define NATIVE_END_SECTION_value 0xf
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_SECTION = {0x10, 0x0, 0x0, 0x4, 0xc, 0x2, 0x0};
+#define NATIVE_ASYNC_BEGIN_SECTION_value 0x10
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_SECTION = {0x11, 0x0, 0x0, 0x4, 0xd, 0x2, 0x0};
+#define NATIVE_ASYNC_END_SECTION_value 0x11
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_BEGIN_FLOW = {0x12, 0x0, 0x0, 0x4, 0xc, 0x2, 0x0};
+#define NATIVE_ASYNC_BEGIN_FLOW_value 0x12
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_ASYNC_END_FLOW = {0x13, 0x0, 0x0, 0x4, 0xd, 0x2, 0x0};
+#define NATIVE_ASYNC_END_FLOW_value 0x13
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR NATIVE_COUNTER = {0x14, 0x0, 0x0, 0x4, 0xe, 0x2, 0x0};
+#define NATIVE_COUNTER_value 0x14
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -754,6 +779,90 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
         ? McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_COUNTER, tag, profileName, value) : 0
 #define EventWriteJS_COUNTER_AssumeEnabled(tag, profileName, value) \
         McTemplateU0xsd(&REACT_NATIVE_WINDOWS_Context, &JS_COUNTER, tag, profileName, value)
+
+//
+// Enablement check macro for EVALUATE_SCRIPT_BEGIN
+//
+#define EventEnabledEVALUATE_SCRIPT_BEGIN() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for EVALUATE_SCRIPT_BEGIN
+//
+#define EventWriteEVALUATE_SCRIPT_BEGIN(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        MCGEN_EVENT_ENABLED(EVALUATE_SCRIPT_BEGIN) \
+        ? McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_BEGIN, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) : 0
+#define EventWriteEVALUATE_SCRIPT_BEGIN_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_BEGIN, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+
+//
+// Enablement check macro for EVALUATE_SCRIPT_END
+//
+#define EventEnabledEVALUATE_SCRIPT_END() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for EVALUATE_SCRIPT_END
+//
+#define EventWriteEVALUATE_SCRIPT_END(tag, profileName, duration) \
+        MCGEN_EVENT_ENABLED(EVALUATE_SCRIPT_END) \
+        ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_END, tag, profileName, duration) : 0
+#define EventWriteEVALUATE_SCRIPT_END_AssumeEnabled(tag, profileName, duration) \
+        McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_END, tag, profileName, duration)
+
+//
+// Enablement check macro for CALL_JSFUNCTION_BEGIN
+//
+#define EventEnabledCALL_JSFUNCTION_BEGIN() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for CALL_JSFUNCTION_BEGIN
+//
+#define EventWriteCALL_JSFUNCTION_BEGIN(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        MCGEN_EVENT_ENABLED(CALL_JSFUNCTION_BEGIN) \
+        ? McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_BEGIN, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) : 0
+#define EventWriteCALL_JSFUNCTION_BEGIN_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_BEGIN, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+
+//
+// Enablement check macro for CALL_JSFUNCTION_END
+//
+#define EventEnabledCALL_JSFUNCTION_END() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for CALL_JSFUNCTION_END
+//
+#define EventWriteCALL_JSFUNCTION_END(tag, profileName, duration) \
+        MCGEN_EVENT_ENABLED(CALL_JSFUNCTION_END) \
+        ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_END, tag, profileName, duration) : 0
+#define EventWriteCALL_JSFUNCTION_END_AssumeEnabled(tag, profileName, duration) \
+        McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_END, tag, profileName, duration)
+
+//
+// Enablement check macro for CALL_NATIVEMODULES_BEGIN
+//
+#define EventEnabledCALL_NATIVEMODULES_BEGIN() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for CALL_NATIVEMODULES_BEGIN
+//
+#define EventWriteCALL_NATIVEMODULES_BEGIN(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        MCGEN_EVENT_ENABLED(CALL_NATIVEMODULES_BEGIN) \
+        ? McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_BEGIN, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) : 0
+#define EventWriteCALL_NATIVEMODULES_BEGIN_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+        McTemplateU0xsssssssss(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_BEGIN, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7)
+
+//
+// Enablement check macro for CALL_NATIVEMODULES_END
+//
+#define EventEnabledCALL_NATIVEMODULES_END() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for CALL_NATIVEMODULES_END
+//
+#define EventWriteCALL_NATIVEMODULES_END(tag, profileName, duration) \
+        MCGEN_EVENT_ENABLED(CALL_NATIVEMODULES_END) \
+        ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_END, tag, profileName, duration) : 0
+#define EventWriteCALL_NATIVEMODULES_END_AssumeEnabled(tag, profileName, duration) \
+        McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_END, tag, profileName, duration)
 
 //
 // Enablement check macro for NATIVE_BEGIN_SECTION
@@ -1035,5 +1144,4 @@ McTemplateU0xsssssssss(
 };
 #endif
 
-#define MSG_opcode_Info                      0x30000000L
 #define MSG_level_Informational              0x50000004L

@@ -13,30 +13,7 @@
 #include <array>
 #include <string>
 
-void trace_begin_section(
-    uint64_t tag,
-    const std::string &profile_name,
-    std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> &&args,
-    uint8_t size) {
-  EventWriteNATIVE_BEGIN_SECTION(
-      tag,
-      profile_name.c_str(),
-      args[0].c_str(),
-      args[1].c_str(),
-      args[2].c_str(),
-      args[3].c_str(),
-      args[4].c_str(),
-      args[5].c_str(),
-      args[6].c_str(),
-      args[7].c_str());
-}
-
-void trace_end_section(
-    uint64_t tag,
-    const std::string &profile_name,
-    double duration) {
-  EventWriteNATIVE_END_SECTION(tag, profile_name.c_str(), duration);
-}
+using namespace facebook;
 
 namespace fbsystrace {
 
@@ -59,6 +36,9 @@ FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
     duration = std::chrono::duration_cast<std::chrono::duration<double>>(
                    std::chrono::high_resolution_clock::now() - search->second)
                    .count();
+
+    // Flow has ended. Clear the cookie tracker.
+    tracker_.erase(cookie);
   }
 
   EventWriteNATIVE_ASYNC_END_FLOW(tag, name, cookie, duration);
@@ -70,9 +50,102 @@ void fbsystrace_end_async_flow(uint64_t tag, const char *name, int callId) {
   fbsystrace::FbSystraceAsyncFlow::end(tag, name, callId);
 }
 
-using namespace facebook;
+namespace facebook {
+namespace react {
+namespace tracing {
 
-void nativeTraceBeginSection(
+void trace_begin_section(
+    uint64_t tag,
+    const std::string &profile_name,
+    std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> &&args,
+    uint8_t size,
+    TraceTask task) {
+  switch (task) {
+    case TraceTask::EvaluateScript:
+      EventWriteEVALUATE_SCRIPT_BEGIN(
+          tag,
+          profile_name.c_str(),
+          args[0].c_str(),
+          args[1].c_str(),
+          args[2].c_str(),
+          args[3].c_str(),
+          args[4].c_str(),
+          args[5].c_str(),
+          args[6].c_str(),
+          args[7].c_str());
+      break;
+
+    case TraceTask::CallJSFunction:
+      EventWriteCALL_JSFUNCTION_BEGIN(
+          tag,
+          profile_name.c_str(),
+          args[0].c_str(),
+          args[1].c_str(),
+          args[2].c_str(),
+          args[3].c_str(),
+          args[4].c_str(),
+          args[5].c_str(),
+          args[6].c_str(),
+          args[7].c_str());
+      break;
+
+    case TraceTask::CallNativeModules:
+      EventWriteCALL_NATIVEMODULES_BEGIN(
+          tag,
+          profile_name.c_str(),
+          args[0].c_str(),
+          args[1].c_str(),
+          args[2].c_str(),
+          args[3].c_str(),
+          args[4].c_str(),
+          args[5].c_str(),
+          args[6].c_str(),
+          args[7].c_str());
+      break;
+
+    case TraceTask::Unknown:
+    default:
+      EventWriteNATIVE_BEGIN_SECTION(
+          tag,
+          profile_name.c_str(),
+          args[0].c_str(),
+          args[1].c_str(),
+          args[2].c_str(),
+          args[3].c_str(),
+          args[4].c_str(),
+          args[5].c_str(),
+          args[6].c_str(),
+          args[7].c_str());
+      break;
+  }
+}
+
+void trace_end_section(
+    uint64_t tag,
+    const std::string &profile_name,
+    double duration,
+    TraceTask task) {
+  switch (task) {
+    case TraceTask::EvaluateScript:
+      EventWriteEVALUATE_SCRIPT_END(tag, profile_name.c_str(), duration);
+      break;
+
+    case TraceTask::CallJSFunction:
+      EventWriteCALL_JSFUNCTION_END(tag, profile_name.c_str(), duration);
+      break;
+
+    case TraceTask::CallNativeModules:
+      EventWriteCALL_NATIVEMODULES_END(tag, profile_name.c_str(), duration);
+      break;
+
+    case TraceTask::Unknown:
+    default:
+      EventWriteNATIVE_END_SECTION(tag, profile_name.c_str(), duration);
+      break;
+  }
+}
+
+void syncSectionBeginJSHook(
     uint64_t tag,
     const std::string &profile_name,
     const std::string &args) {
@@ -89,46 +162,43 @@ void nativeTraceBeginSection(
       nullptr);
 }
 
-void nativeTraceEndSection(uint64_t tag) {
+void syncSectionEndJSHook(uint64_t tag) {
   EventWriteJS_END_SECTION(tag, "", 0);
 }
 
-void nativeTraceBeginAsyncSection(
+void asyncSectionBeginJSHook(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
   EventWriteJS_ASYNC_BEGIN_SECTION(tag, profile_name.c_str(), cookie, 0);
 }
 
-void nativeTraceEndAsyncSection(
+void asyncSectionEndJSHook(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
   EventWriteJS_ASYNC_END_SECTION(tag, profile_name.c_str(), cookie, 0);
 }
 
-void nativeTraceBeginAsyncFlow(
+void asyncFlowBeginJSHook(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
   EventWriteJS_ASYNC_BEGIN_FLOW(tag, profile_name.c_str(), cookie, 0);
 }
 
-void nativeTraceEndAsyncFlow(
+void asyncFlowEndJSHook(
     uint64_t tag,
     const std::string &profile_name,
     int cookie) {
   EventWriteJS_ASYNC_END_FLOW(tag, profile_name.c_str(), cookie, 0);
 }
 
-void nativeTraceCounter(
-    uint64_t tag,
-    const std::string &profile_name,
-    int value) {
+void counterJSHook(uint64_t tag, const std::string &profile_name, int value) {
   EventWriteJS_COUNTER(tag, profile_name.c_str(), value);
 }
 
-void init_tracing(jsi::Runtime &runtime) {
+void initializeJSHooks(jsi::Runtime &runtime) {
   runtime.global().setProperty(runtime, "__RCTProfileIsProfiling", true);
 
   runtime.global().setProperty(
@@ -161,7 +231,7 @@ void init_tracing(jsi::Runtime &runtime) {
                   args = "<undefined>";
               }
 
-              nativeTraceBeginSection(tag, profile_name, args);
+              syncSectionBeginJSHook(tag, profile_name, args);
             } else {
               throw std::runtime_error(
                   "nativeTraceBeginSection called without any arguments.");
@@ -182,7 +252,7 @@ void init_tracing(jsi::Runtime &runtime) {
              size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
-              nativeTraceEndSection(tag);
+              syncSectionEndJSHook(tag);
             } else {
               throw std::runtime_error(
                   "nativeTraceEndSection called without any arguments.");
@@ -214,7 +284,7 @@ void init_tracing(jsi::Runtime &runtime) {
                 cookie = static_cast<int>(args[2].asNumber());
               }
 
-              nativeTraceBeginAsyncSection(tag, profile_name, cookie);
+              asyncSectionBeginJSHook(tag, profile_name, cookie);
             } else {
               throw std::runtime_error(
                   "nativeTraceBeginAsyncSection called without any arguments.");
@@ -247,7 +317,7 @@ void init_tracing(jsi::Runtime &runtime) {
                 cookie = static_cast<int>(args[2].asNumber());
               }
 
-              nativeTraceEndAsyncSection(tag, profile_name, cookie);
+              asyncSectionEndJSHook(tag, profile_name, cookie);
             } else {
               throw std::runtime_error(
                   "nativeTraceEndAsyncSection called without any arguments.");
@@ -279,7 +349,7 @@ void init_tracing(jsi::Runtime &runtime) {
                 cookie = static_cast<int>(args[2].asNumber());
               }
 
-              nativeTraceBeginAsyncFlow(tag, profile_name, cookie);
+              asyncFlowBeginJSHook(tag, profile_name, cookie);
             } else {
               throw std::runtime_error(
                   "nativeTraceBeginAsyncFlow called without any arguments.");
@@ -311,7 +381,7 @@ void init_tracing(jsi::Runtime &runtime) {
                 cookie = static_cast<int>(args[2].asNumber());
               }
 
-              nativeTraceEndAsyncFlow(tag, profile_name, cookie);
+              asyncFlowEndJSHook(tag, profile_name, cookie);
             } else {
               throw std::runtime_error(
                   "nativeTraceEndAsyncFlow called without any arguments.");
@@ -344,7 +414,7 @@ void init_tracing(jsi::Runtime &runtime) {
                 value = static_cast<int>(args[2].asNumber());
               }
 
-              nativeTraceCounter(tag, profile_name, value);
+              counterJSHook(tag, profile_name, value);
             } else {
               throw std::runtime_error(
                   "nativeTraceEndAsyncFlow called without any arguments.");
@@ -353,3 +423,11 @@ void init_tracing(jsi::Runtime &runtime) {
             return jsi::Value::undefined();
           }));
 }
+
+void initializeETW() {
+  EventRegisterReact_Native_Windows_Provider();
+}
+
+} // namespace tracing
+} // namespace react
+} // namespace facebook

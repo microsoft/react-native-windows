@@ -54,14 +54,19 @@
 #endif
 #include "ChakraJSIRuntimeHolder.h"
 
-void init_tracing(facebook::jsi::Runtime &runtime);
+// foreward declaration.
+namespace facebook {
+namespace react {
+namespace tracing {
+void initializeETW();
+void initializeJSHooks(facebook::jsi::Runtime &runtime);
+} // namespace tracing
+} // namespace react
+} // namespace facebook
 
 #endif
 
 #include <fstream>
-
-#include <etw/react_native_windows.h>
-#include "windows.h"
 
 namespace {
 
@@ -186,7 +191,7 @@ namespace react {
 namespace {
 
 void runtimeInstaller(jsi::Runtime &runtime) {
-  ::init_tracing(runtime);
+  facebook::react::tracing::initializeJSHooks(runtime);
 }
 
 class OJSIExecutorFactory : public JSExecutorFactory {
@@ -559,8 +564,8 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 void InstanceImpl::loadBundleInternal(
     std::string &&jsBundleRelativePath,
     bool synchronously) {
-
-  EventRegisterReact_Native_Windows_Provider();
+  // TODO :: Find a better place to initialize ETW.
+  facebook::react::tracing::initializeETW();
 
   std::string bytecodeFileNameCopy{m_devSettings->bytecodeFileName};
 

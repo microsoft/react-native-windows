@@ -244,7 +244,7 @@
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="tracing\fbsystrace.h">
-      <Filter>Header Files</Filter>
+      <Filter>tracing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

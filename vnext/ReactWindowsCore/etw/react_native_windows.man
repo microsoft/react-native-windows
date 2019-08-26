@@ -4,27 +4,46 @@
 		<events>
 			<provider name="React-Native-Windows-Provider" guid="{CEC49226-329E-4EA2-A16A-C37C6C0B2CD7}" symbol="REACT_NATIVE_WINDOWS" resourceFileName="C:\\Users\\anandrag.REDMOND\\source\\repos\\rnw_etw_res\\x64\\Debug\\rnw_etw_res.dll" messageFileName="C:\\Users\\anandrag.REDMOND\\source\\repos\\rnw_etw_res\x64\Debug\rnw_etw_res.dll">
 				<events>
-					<event symbol="JS_BEGIN_SECTION" value="1" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidBeginSection"></event>
-					<event symbol="JS_END_SECTION" value="2" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidEndSection"></event>
-					<event symbol="JS_ASYNC_BEGIN_SECTION" value="3" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="JS_ASYNC_END_SECTION" value="4" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="JS_ASYNC_BEGIN_FLOW" value="5" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="JS_ASYNC_END_FLOW" value="6" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="JS_COUNTER" value="7" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidCounter"></event>
-					<event symbol="NATIVE_BEGIN_SECTION" value="8" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidBeginSection"></event>
-					<event symbol="NATIVE_END_SECTION" value="9" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidEndSection"></event>
-					<event symbol="NATIVE_ASYNC_BEGIN_SECTION" value="10" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="NATIVE_ASYNC_END_SECTION" value="11" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="NATIVE_ASYNC_BEGIN_FLOW" value="12" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="NATIVE_ASYNC_END_FLOW" value="13" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidAsyncSection"></event>
-					<event symbol="NATIVE_COUNTER" value="14" version="0" level="win:Informational" task="Systrace" opcode="SystraceOp" template="tidCounter"></event>
+					<event symbol="JS_BEGIN_SECTION" value="1" version="0" level="win:Informational" task="GenericSystraceJS" opcode="SyncSectionStart" template="tidBeginSection"></event>
+					<event symbol="JS_END_SECTION" value="2" version="0" level="win:Informational" task="GenericSystraceJS" opcode="SyncSectionEnd" template="tidEndSection"></event>
+					<event symbol="JS_ASYNC_BEGIN_SECTION" value="3" version="0" level="win:Informational" task="GenericSystraceJS" opcode="AsyncSectionStart" template="tidAsyncSection"></event>
+					<event symbol="JS_ASYNC_END_SECTION" value="4" version="0" level="win:Informational" task="GenericSystraceJS" opcode="AsyncSectionEnd" template="tidAsyncSection"></event>
+					<event symbol="JS_ASYNC_BEGIN_FLOW" value="5" version="0" level="win:Informational" task="GenericSystraceJS" opcode="AsyncSectionStart" template="tidAsyncSection"></event>
+					<event symbol="JS_ASYNC_END_FLOW" value="6" version="0" level="win:Informational" task="GenericSystraceJS" opcode="AsyncSectionEnd" template="tidAsyncSection"></event>
+					<event symbol="JS_COUNTER" value="7" version="0" level="win:Informational" task="GenericSystraceJS" opcode="Counter" template="tidCounter"></event>
+
+          <event symbol="EVALUATE_SCRIPT_BEGIN" value="8" version="0" level="win:Informational" task="EvaluateScript" opcode="SyncSectionStart" template="tidBeginSection"></event>
+          <event symbol="EVALUATE_SCRIPT_END" value="9" version="0" level="win:Informational" task="EvaluateScript" opcode="SyncSectionEnd" template="tidEndSection"></event>
+
+          <event symbol="CALL_JSFUNCTION_BEGIN" value="10" version="0" level="win:Informational" task="CallJSFunction" opcode="SyncSectionStart" template="tidBeginSection"></event>
+          <event symbol="CALL_JSFUNCTION_END" value="11" version="0" level="win:Informational" task="CallJSFunction" opcode="SyncSectionEnd" template="tidEndSection"></event>
+
+          <event symbol="CALL_NATIVEMODULES_BEGIN" value="12" version="0" level="win:Informational" task="CallNativeModules" opcode="SyncSectionStart" template="tidBeginSection"></event>
+          <event symbol="CALL_NATIVEMODULES_END" value="13" version="0" level="win:Informational" task="CallNativeModules" opcode="SyncSectionEnd" template="tidEndSection"></event>
+          
+          <event symbol="NATIVE_BEGIN_SECTION" value="14" version="0" level="win:Informational" task="GenericSystraceNative" opcode="SyncSectionStart" template="tidBeginSection"></event>
+					<event symbol="NATIVE_END_SECTION" value="15" version="0" level="win:Informational" task="GenericSystraceNative" opcode="SyncSectionEnd" template="tidEndSection"></event>
+					<event symbol="NATIVE_ASYNC_BEGIN_SECTION" value="16" version="0" level="win:Informational" task="GenericSystraceNative" opcode="AsyncSectionStart" template="tidAsyncSection"></event>
+					<event symbol="NATIVE_ASYNC_END_SECTION" value="17" version="0" level="win:Informational" task="GenericSystraceNative" opcode="AsyncSectionEnd" template="tidAsyncSection"></event>
+					<event symbol="NATIVE_ASYNC_BEGIN_FLOW" value="18" version="0" level="win:Informational" task="GenericSystraceNative" opcode="AsyncSectionStart" template="tidAsyncSection"></event>
+					<event symbol="NATIVE_ASYNC_END_FLOW" value="19" version="0" level="win:Informational" task="GenericSystraceNative" opcode="AsyncSectionEnd" template="tidAsyncSection"></event>
+					<event symbol="NATIVE_COUNTER" value="20" version="0" level="win:Informational" task="GenericSystraceNative" opcode="Counter" template="tidCounter"></event>
 				</events>
 				<levels></levels>
 				<tasks>
-					<task name="Systrace" value="1" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="GenericSystraceJS" value="1"></task>
+          <task name="GenericSystraceNative" value="2"></task>
+
+          <task name="EvaluateScript" value="3"></task>
+          <task name="CallJSFunction" value="4"></task>
+          <task name="CallNativeModules" value="5"></task>
 				</tasks>
 				<opcodes>
-					<opcode name="SystraceOp" symbol="SYSTRACE_OP" value="10"></opcode>
+					<opcode name="SyncSectionStart" symbol="SYNC_SECTION_START" value="10"></opcode>
+          <opcode name="SyncSectionEnd" symbol="SYNC_SECTION_END" value="11"></opcode>
+          <opcode name="AsyncSectionStart" symbol="ASYNC_SECTION_START" value="12"></opcode>
+          <opcode name="AsyncSectionEnd" symbol="ASYNC_SECTION_END" value="13"></opcode>
+          <opcode name="Counter" symbol="COUNTER" value="14"></opcode>
 				</opcodes>
 				<templates>
 					<template tid="tidBeginSection">
