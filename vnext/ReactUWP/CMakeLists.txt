@@ -69,7 +69,7 @@ set(SOURCES
 
 add_library(React.UWPStatic ${SOURCES} ${DEF_FILE})
 
-add_definitions(-DRN_PLATFORM=uwp)
+add_definitions(-DRN_PLATFORM=windows)
 
 target_compile_definitions(React.UWPStatic PRIVATE UNICODE _UNICODE JSI_EXPORT REACTWINDOWS_BUILD REACTWINDOWS_STATIC)
 target_compile_options(React.UWPStatic PRIVATE /await /wd4996)

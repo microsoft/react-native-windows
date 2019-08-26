@@ -1,0 +1,20 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "ReactNativeHost.idl";
+import "ReactContext.idl";
+
+namespace Microsoft.ReactNative
+{
+    [webhosthidden]
+    runtimeclass ReactInstanceManager
+    {
+        ReactInstanceManager();
+        Microsoft.ReactNative.Bridge.ReactContext CurrentReactContext();
+        void OnSuspend();
+        void OnEnteredBackground();
+        void OnLeavingBackground();
+        void OnResume(OnResumeAction action);
+        void OnBackPressed();
+    }
+}

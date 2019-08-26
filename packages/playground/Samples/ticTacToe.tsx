@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 const newGameState = {
-  squares: Array(9).fill(null),
+  squares: Array<SquareValue>(9).fill(null),
   xIsNext: true,
 };
 

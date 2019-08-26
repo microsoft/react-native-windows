@@ -173,29 +173,22 @@ class ViewShadowNode : public ShadowNodeBase {
         winrt::make<winrt::react::uwp::implementation::ViewControl>();
 
     m_contentControlGotFocusRevoker =
-        contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-          DispatchEvent(
-              "topFocus", std::move(folly::dynamic::object("target", m_tag)));
+        contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
+          if (args.OriginalSource().try_as<winrt::UIElement>() ==
+              contentControl.as<winrt::UIElement>()) {
+            auto tag = m_tag;
+            DispatchEvent(
+                "topFocus", std::move(folly::dynamic::object("target", tag)));
+          }
         });
 
     m_contentControlLostFocusRevoker =
-        contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-          DispatchEvent(
-              "topBlur", std::move(folly::dynamic::object("target", m_tag)));
-        });
-
-    // FUTURE: The space/enter handler can be removed in August 2019, still here
-    // to enable transitioning to new events if native code is updated before JS
-    m_contentControlKeyDownRevoker = contentControl.KeyDown(
-        winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &e) {
-          if (e.Key() == winrt::VirtualKey::Enter ||
-              e.Key() == winrt::VirtualKey::Space) {
-            if (OnClick()) {
-              DispatchEvent(
-                  "topClick",
-                  std::move(folly::dynamic::object("target", m_tag)));
-              e.Handled(true);
-            }
+        contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
+          if (args.OriginalSource().try_as<winrt::UIElement>() ==
+              contentControl.as<winrt::UIElement>()) {
+            auto tag = m_tag;
+            DispatchEvent(
+                "topBlur", std::move(folly::dynamic::object("target", tag)));
           }
         });
 
@@ -218,7 +211,6 @@ class ViewShadowNode : public ShadowNodeBase {
 
   winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
-  winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
 };
 
 // ViewPanel uses a ViewBackground property, not Background, so need to

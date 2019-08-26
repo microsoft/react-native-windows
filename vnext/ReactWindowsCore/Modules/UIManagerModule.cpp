@@ -395,6 +395,16 @@ void UIManager::measure(
   m_nativeUIManager->measure(node, rootNode, callback);
 }
 
+void UIManager::findSubviewIn(
+    int64_t reactTag,
+    folly::dynamic &&coordinates,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  auto &node = m_nodeRegistry.getNode(reactTag);
+  float x = static_cast<float>(jsArgAsDouble(coordinates, 0));
+  float y = static_cast<float>(jsArgAsDouble(coordinates, 1));
+  m_nativeUIManager->findSubviewIn(node, x, y, callback);
+}
+
 void UIManager::onBatchComplete() {
   m_nativeUIManager->onBatchComplete();
 }
@@ -556,6 +566,12 @@ UIManagerModule::getMethods() {
           "measure",
           [manager](dynamic args, Callback cb) {
             manager->measure(jsArgAsInt(args, 0), cb);
+          }),
+      Method(
+          "findSubviewIn",
+          [manager](dynamic args, Callback cb) {
+            manager->findSubviewIn(
+                jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
           }),
       Method(
           "focus",

@@ -43,6 +43,7 @@ class Instance
 
   std::shared_ptr<::react::uwp::IReactInstance> getInstance();
   void markAsNeedsReload();
+  void persistUseWebDebugger(bool useWebDebugger);
 
  private:
   std::string m_jsBundleName;
