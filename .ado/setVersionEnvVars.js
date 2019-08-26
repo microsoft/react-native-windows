@@ -33,7 +33,8 @@ console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${versionE
 console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${versionEnvVars.publishCommitId}`);
 
 
-const dirPath = path.resolve(require('os').tmpdir(), 'versionEnvVars');
+const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
+const scriptPath = path.resolve(dirPath, 'versionEnvVars.json');
 if (!fs.existsSync(dirPath)) {
 fs.mkdirSync(dirPath);
 }
@@ -50,5 +51,6 @@ console.log("##[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
 console.log("::[set-env name=publishCommitId;]${versionEnvVars.publishCommitId}");
 console.log("##[set-env name=publishCommitId;]${versionEnvVars.publishCommitId}");
 `);
-fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.json'), JSON.stringify(versionEnvVars));
+fs.writeFileSync(scriptPath, JSON.stringify(versionEnvVars));
+console.log(`Wrote script to: ${scriptPath}`);
 

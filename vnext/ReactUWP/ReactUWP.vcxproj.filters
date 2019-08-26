@@ -627,6 +627,9 @@
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
