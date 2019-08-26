@@ -50,7 +50,11 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <VcpkgTriplet>x64-windows</VcpkgTriplet>
+    <!-- TODO: Figure out the right long-term way to integrate the Hermes and V8 dependencies -->
+    <VcpkgTriplet Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">x86-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='x64'">x64-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM'">arm-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM64'">arm64-windows</VcpkgTriplet>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
