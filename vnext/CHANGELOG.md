@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Aug 2019 15:32:08 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Aug 2019 21:10:00 GMT and should not be manually modified.
 
+## 0.59.0-vnext.155
+Mon, 26 Aug 2019 21:10:00 GMT
+
+### Changes
+
+- Enable experimental V8 JSI Executor support (off by default) (tudorm@microsoft.com)
 ## 0.59.0-vnext.154
 Sat, 24 Aug 2019 15:32:08 GMT
 

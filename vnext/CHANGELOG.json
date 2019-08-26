@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Aug 2019 21:10:00 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.155",
+      "version": "0.59.0-vnext.155",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental V8 JSI Executor support (off by default)",
+            "author": "tudorm@microsoft.com",
+            "commit": "4798503947087341f2efb87470aa2f7ececd0aba"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Aug 2019 15:32:08 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.154",
       "version": "0.59.0-vnext.154",
