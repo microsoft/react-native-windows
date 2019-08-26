@@ -17,6 +17,7 @@ export interface IFlyoutProps extends ViewProps
 |  [horizontalOffset](./react-native-windows.iflyoutprops.horizontaloffset.md) | <code>number</code> |  |
 |  [isLightDismissEnabled](./react-native-windows.iflyoutprops.islightdismissenabled.md) | <code>boolean</code> |  |
 |  [isOpen](./react-native-windows.iflyoutprops.isopen.md) | <code>boolean</code> |  |
+|  [isOverlayEnabled](./react-native-windows.iflyoutprops.isoverlayenabled.md) | <code>boolean</code> |  |
 |  [onDismiss](./react-native-windows.iflyoutprops.ondismiss.md) | <code>(isOpen: boolean) =&gt; void</code> |  |
 |  [placement](./react-native-windows.iflyoutprops.placement.md) | <code>Placement</code> |  |
 |  [target](./react-native-windows.iflyoutprops.target.md) | <code>React.ReactNode</code> |  |

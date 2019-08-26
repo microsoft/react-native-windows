@@ -146,6 +146,8 @@ export interface IFlyoutProps extends ViewProps {
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)
+    isOverlayEnabled?: boolean;
+    // (undocumented)
     onDismiss?: (isOpen: boolean) => void;
     // (undocumented)
     placement?: Placement;

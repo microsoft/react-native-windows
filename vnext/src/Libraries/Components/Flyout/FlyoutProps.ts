@@ -24,6 +24,7 @@ export type Placement =
 export interface IFlyoutProps extends ViewProps {
   horizontalOffset?: number;
   isLightDismissEnabled?: boolean;
+  isOverlayEnabled?: boolean;
   isOpen?: boolean;
   onDismiss?: (isOpen: boolean) => void;
   placement?: Placement;
