@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Use PreparedScriptStore for V8 in win32",
+  "packageName": "react-native-windows",
+  "email": "tudorm@microsoft.com",
+  "commit": "6e156a0cc14cfb9e88071fbb17f985d63df4e68c",
+  "date": "2019-08-27T23:51:16.382Z"
+}
