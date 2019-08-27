@@ -4,6 +4,8 @@
 
 ## IFlyoutProps.isOverlayEnabled property
 
+Specifies whether the area outside the flyout is darkened
+
 <b>Signature:</b>
 
 ```typescript

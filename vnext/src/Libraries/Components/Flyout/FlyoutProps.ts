@@ -29,7 +29,7 @@ export interface IFlyoutProps extends ViewProps {
    * Specifies whether the area outside the flyout is darkened
    */
   isOverlayEnabled?: boolean;
-  
+
   isOpen?: boolean;
   onDismiss?: (isOpen: boolean) => void;
   placement?: Placement;
