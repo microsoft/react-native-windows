@@ -109,6 +109,7 @@
     <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="BaseScriptStoreImpl.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="BatchingMessageQueueThread.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
@@ -148,6 +149,7 @@
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
     <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
+    <ClCompile Include="BaseScriptStoreImpl.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxMessageQueue.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />

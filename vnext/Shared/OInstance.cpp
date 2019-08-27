@@ -53,7 +53,7 @@
 #include "HermesRuntimeHolder.h"
 #endif
 #if defined(USE_V8)
-//#include "Utils/BaseScriptStoreImpl.h"
+#include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
 #include "ChakraJSIRuntimeHolder.h"
@@ -461,7 +461,7 @@ InstanceImpl::InstanceImpl(
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
-              nullptr; // std::make_unique<react::uwp::BasePreparedScriptStoreImpl>();
+              nullptr; // std::make_unique<facebook::react::BasePreparedScriptStoreImpl>();
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   m_devSettings,
