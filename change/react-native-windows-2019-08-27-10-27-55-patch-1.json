@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Enable windowsbrush themeresource colors",
+  "packageName": "react-native-windows",
+  "email": "thshea@microsoft.com",
+  "commit": "07bfeda8e5c600035134168e8dd0fab4da5947c3",
+  "date": "2019-08-27T17:27:55.368Z"
+}
