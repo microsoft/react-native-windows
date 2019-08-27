@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Refined logic for handling Flyout shadows",
+  "packageName": "react-native-windows",
+  "email": "kenander@microsoft.com",
+  "commit": "0c2f2798ece4ea8dbee6e0edbfc9d67a26aecc5a",
+  "date": "2019-08-27T20:40:22.021Z"
+}
