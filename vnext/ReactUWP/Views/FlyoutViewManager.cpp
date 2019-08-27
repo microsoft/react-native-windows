@@ -79,7 +79,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   using Super = ShadowNodeBase;
 
  public:
-  FlyoutShadowNode() = default;
+  FlyoutShadowNode();
   virtual ~FlyoutShadowNode();
 
   void AddView(ShadowNode &child, int64_t index) override;
@@ -111,7 +111,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
   static thread_local std::int32_t s_cOpenFlyouts;
-  std::int32_t m_elevation = 0;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
@@ -125,6 +124,11 @@ class FlyoutShadowNode : public ShadowNodeBase {
 
 thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
 
+FlyoutShadowNode::FlyoutShadowNode() : Super() {
+  // Handling inconsistent initialization of thread_local variables.
+  if (s_cOpenFlyouts < 0) {
+    s_cOpenFlyouts = 0;
+  }
 FlyoutShadowNode::~FlyoutShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
   m_previewKeyboardEventHandlerOnRoot->unhook();
@@ -216,10 +220,10 @@ void FlyoutShadowNode::createView() {
         m_flyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
           auto instance = wkinstance.lock();
 
-          if (!m_updating && instance != nullptr && m_elevation > 0) {
+          if (!m_updating && instance != nullptr) {
             if (auto flyoutPresenter = GetFlyoutPresenter()) {
               winrt::Numerics::float3 translation{
-                  0, 0, (float)32 * m_elevation};
+                  0, 0, (float)16 * s_cOpenFlyouts};
               flyoutPresenter.Translation(translation);
             }
           }
