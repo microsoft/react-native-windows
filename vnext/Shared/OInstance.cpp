@@ -460,8 +460,18 @@ InstanceImpl::InstanceImpl(
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
-              nullptr; // std::make_unique<facebook::react::BasePreparedScriptStoreImpl>();
+          std::unique_ptr<facebook::jsi::PreparedScriptStore>
+              preparedScriptStore = nullptr;
+          if (!m_devSettings->bytecodeFileName.empty()) {
+            // Take the root path of the bytecode location if provided
+            auto lastSepPosition =
+                m_devSettings->bytecodeFileName.find_last_of("/\\");
+            if (lastSepPosition != std::string::npos) {
+              preparedScriptStore = std::make_unique<
+                  facebook::react::BasePreparedScriptStoreImpl>(
+                  m_devSettings->bytecodeFileName.substr(0, lastSepPosition));
+            }
+          }
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   m_devSettings,
