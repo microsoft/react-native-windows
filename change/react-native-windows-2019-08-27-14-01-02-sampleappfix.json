@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed sampleapps build and updated CI",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "6c3463e5f85c02866f22195d4b65437228153158",
+  "date": "2019-08-27T21:01:02.572Z"
+}
