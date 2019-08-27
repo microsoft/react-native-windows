@@ -7734,9 +7734,35 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
+react-native-windows-extended@0.14.3:
+  version "0.14.3"
+  resolved "https://registry.yarnpkg.com/react-native-windows-extended/-/react-native-windows-extended-0.14.3.tgz#de55df840899fb20d1a6dd43c24f2a8d83e63ca0"
+  integrity sha512-yOTBMLg8mFbzWFjheU7S0q36VjLQ9JH4uomv1aEWwbwMa+ZUEWcTbnIGwWWdB8EZd2ZWGobLkmK3aj+ayUxy4Q==
+  dependencies:
+    react-native-windows "0.59.0-vnext.154"
+
+react-native-windows@0.59.0-vnext.154:
+  version "0.59.0-vnext.154"
+  resolved "https://registry.yarnpkg.com/react-native-windows/-/react-native-windows-0.59.0-vnext.154.tgz#23e8feac07230a1eb2d4c9c9d08a83baaf04542e"
+  integrity sha512-8B6g9gXFeYnrHO+BYrRksPFN1Zwz57EoQ3HbUfshN8Juw0f0YJ0ifEfRR0wesdcodIZ6RXPqfci6WDdCW9ptww==
+  dependencies:
+    "@babel/runtime" "^7.4.0"
+    cli-spinners "^2.2.0"
+    create-react-class "^15.6.3"
+    fbjs "^1.0.0"
+    glob "^7.1.1"
+    ora "^3.4.0"
+    prop-types "^15.5.8"
+    react-native-local-cli "^1.0.0-alpha.5"
+    react-timer-mixin "^0.13.2"
+    regenerator-runtime "^0.13.2"
+    shelljs "^0.7.8"
+    username "^3.0.0"
+    uuid "^2.0.1"
+    xml-parser "^1.2.1"
+
 "react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.68.tar.gz":
   version "0.59.0-microsoft.68"
-  uid "3a110fba5c597672d215b32727bb24234400f9f2"
   resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.68.tar.gz#3a110fba5c597672d215b32727bb24234400f9f2"
   dependencies:
     "@babel/core" "^7.4.0"
