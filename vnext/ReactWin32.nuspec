@@ -49,8 +49,8 @@
 
     <!-- Test DLL -->
     <file src="inc\Test\WebSocketServer.h" target="inc\Test" />
-    <file src="Desktop.Test.DLL\React.Windows.Desktop.Test.x64.def" target="inc\Test" />
-    <file src="Desktop.Test.DLL\React.Windows.Desktop.Test.x86.def" target="inc\Test" />
+    <file src="inc\React.Windows.Desktop.Test.x64.def" target="inc\Test" />
+    <file src="inc\React.Windows.Desktop.Test.x86.def" target="inc\Test" />
 
     <!-- Required for win32 -->
     <file src="inc\ReactWindowsCore\DevServerHelper.h" target="inc"/>
