@@ -129,6 +129,8 @@ FlyoutShadowNode::FlyoutShadowNode() : Super() {
   if (s_cOpenFlyouts < 0) {
     s_cOpenFlyouts = 0;
   }
+}
+
 FlyoutShadowNode::~FlyoutShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
   m_previewKeyboardEventHandlerOnRoot->unhook();
@@ -329,7 +331,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   if (updateIsOpen) {
     if (m_isOpen) {
       s_cOpenFlyouts += 1;
-      m_elevation = s_cOpenFlyouts - 1;
       AdjustDefaultFlyoutStyle(50000, 50000);
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
