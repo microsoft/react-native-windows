@@ -48,7 +48,7 @@
     <file src="inc\ReactWindowsCore\Tracing.h" target="inc"/>
 
     <!-- Test DLL -->
-    <file src="Test\WebSocketServer.h" target="inc\Test" />
+    <file src="inc\Test\WebSocketServer.h" target="inc\Test" />
     <file src="Desktop.Test.DLL\React.Windows.Desktop.Test.x64.def" target="inc\Test" />
     <file src="Desktop.Test.DLL\React.Windows.Desktop.Test.x86.def" target="inc\Test" />
 

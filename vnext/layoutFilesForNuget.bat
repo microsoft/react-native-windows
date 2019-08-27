@@ -59,6 +59,7 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\ReactWindowsCore\*.h                                 %DESTROOT%\inc\ReactWindowsCore
 %COPYCMD%  %SRCROOT%\ReactUWP\*.h                                         %DESTROOT%\inc\ReactUWP
 %COPYCMD%  %SRCROOT%\include                                              %DESTROOT%\inc\include
+%COPYCMD%  %SRCROOT%\Test\*.h                                              %DESTROOT%\inc\Test
 
 %COPYCMD%  %SRCROOT%\Desktop.DLL\react-native-win32.*.def                 %DESTROOT%\inc
 
