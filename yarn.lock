@@ -2500,9 +2500,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.11.5:
-  version "1.11.9"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.11.9.tgz#0865af3a8c6d2de34c24729bcbf1a0f969ad5ec8"
-  integrity sha512-p/M8eGCkORyuvMNeRRYH9lcXhbG+8C4dVUh8vTctLVw85Z23IjwhlNXlI6xkL3ZKMbQTOA2ebrRTQxC/iWQbHw==
+  version "1.12.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.12.1.tgz#a88493b57d3e97a90c4e873876382ba8a38b68e4"
+  integrity sha512-bZJmhmVAeULiaxBCyrcltAfF6EqFxuCWp89iC1nlGdQ9wjVcV+rag3ALah9NO/3zPsx/jtqLMQZtulQH8D2buw==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
