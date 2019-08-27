@@ -455,7 +455,8 @@ folly::dynamic FlyoutViewManager::GetNativeProps() const {
 
   props.update(folly::dynamic::object("horizontalOffset", "number")(
       "isLightDismissEnabled", "boolean")("isOpen", "boolean")(
-      "placement", "number")("target", "number")("verticalOffset", "number")("isOverlayEnabled", "boolean"));
+      "placement", "number")("target", "number")("verticalOffset", "number")(
+      "isOverlayEnabled", "boolean"));
 
   return props;
 }
