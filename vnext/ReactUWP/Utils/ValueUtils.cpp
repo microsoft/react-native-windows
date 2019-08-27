@@ -112,7 +112,7 @@ SolidColorBrushFrom(const folly::dynamic &d) {
             winrt::box_value(resourceName))};
 
     if (resource) {
-      winrt::unbox_value<winrt::SolidColorBrush>(resource);
+      return winrt::unbox_value<winrt::SolidColorBrush>(resource);
     }
   }
 
