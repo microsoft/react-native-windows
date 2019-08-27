@@ -289,11 +289,11 @@
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="Base\HermesRuntimeHolder.cpp">
-      <Filter>Base</Filter>
+    <ClCompile Include="Utils\BaseScriptStoreImpl.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
-      <Filter>Base</Filter>
+    <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
+      <Filter>Threading</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -636,11 +636,14 @@
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
-    <ClInclude Include="Base\HermesRuntimeHolder.h">
-      <Filter>Base</Filter>
+    <ClInclude Include="Utils\BaseScriptStoreImpl.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
-      <Filter>Base</Filter>
+    <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

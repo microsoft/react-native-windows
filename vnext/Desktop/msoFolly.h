@@ -12,6 +12,7 @@
 #pragma warning(disable : 4068)
 #pragma warning(disable : 4146)
 #pragma warning(disable : 4100)
+#pragma warning(disable : 4127)
 #pragma warning( \
     disable : 4324) // structure was padded due to alignment specifier
 #pragma warning(disable : 4643) // Forward declaring 'T' in namespace std is not

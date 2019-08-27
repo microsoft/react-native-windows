@@ -2,6 +2,366 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Aug 2019 04:41:01 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.156",
+      "version": "0.59.0-vnext.156",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.68",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7bb24475b6a2594ba8f61598b13276a9f20b0fd6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Aug 2019 21:10:00 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.155",
+      "version": "0.59.0-vnext.155",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable experimental V8 JSI Executor support (off by default)",
+            "author": "tudorm@microsoft.com",
+            "commit": "4798503947087341f2efb87470aa2f7ececd0aba"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Aug 2019 15:32:08 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.154",
+      "version": "0.59.0-vnext.154",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.67",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "3ca3a9d46a6aa0cd4c088373641b0a20bd30a0b5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Aug 2019 04:24:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.153",
+      "version": "0.59.0-vnext.153",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix change log formatting",
+            "author": "acoates@microsoft.com",
+            "commit": "ab4c0542d84c69f7de0a6643f18a3777e3223f01"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Aug 2019 04:09:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.152",
+      "version": "0.59.0-vnext.152",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "move cppwinrt less exception helper, use in DevSupportManager",
+            "author": "andrewh@microsoft.com",
+            "commit": "5df0fd5e75089b6639308d76fd60cacf33e3be5e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 23 Aug 2019 01:27:19 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.151",
+      "version": "0.59.0-vnext.151",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "turn off RTTI",
+            "author": "email not defined",
+            "commit": "04c67ee201b29f72b321a978b25d961d8b7c7ca2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Aug 2019 21:17:45 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.150",
+      "version": "0.59.0-vnext.150",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.49",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "54f7e93c4ac24028d8fa192574d4017ded52b7cc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Aug 2019 15:43:48 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.149",
+      "version": "0.59.0-vnext.149",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Improve Networking error reporting",
+            "author": "andrewh@microsoft.com",
+            "commit": "507a55b4f67a37870b2b1f02e48d30e1c0db883a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 23:36:09 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "none": [
+          {
+            "comment": "Disable BatchingMessageQueueThread on win32.",
+            "author": "yicyao@microsoft.com",
+            "commit": "ce46ec516491f57991e3e7791a1a7fa0ca1e4735"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 21:34:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "none": [
+          {
+            "comment": "Barebone V8 Integration",
+            "author": "anandrag@microsoft.com",
+            "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 20:44:12 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.148",
+      "version": "0.59.0-vnext.148",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Only send focus/blur from OriginalSource, remove Click event for enter/space",
+            "author": "andrewh@microsoft.com",
+            "commit": "bb3ed51419101c4de0d51016cad3fd8703a0bb0e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 18:17:53 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix VS2019 build for Desktop.ABITests.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5b296935b88eb24fac55688e234a9ae548a61e7a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 06:12:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.147",
+      "version": "0.59.0-vnext.147",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add default message queue that uses CoreDispatcher",
+            "author": "email not defined",
+            "commit": "39964628a16497bb525fd3fffdd93e32ff9298d8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 00:42:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.146",
+      "version": "0.59.0-vnext.146",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "revert fix, not quite working",
+            "author": "email not defined",
+            "commit": "70cfc1a7ebb44aad77a8410d73e27ab8a5e41e87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 23:40:14 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.145",
+      "version": "0.59.0-vnext.145",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Light up Inspector debugging tool.",
+            "author": "kinhln@microsoft.com",
+            "commit": "e848576428aea2112b46ed8e9205fc386c387305"
+          },
+          {
+            "comment": "Remove old playground app",
+            "author": "acoates@microsoft.com",
+            "commit": "5bf9e186a2956530be7386520a4489674f31f530"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 21:54:07 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.144",
+      "version": "0.59.0-vnext.144",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Minor fixes made in RN60 update that can be brought right to master",
+            "author": "acoates@microsoft.com",
+            "commit": "a8071bd1692c9f1bc15eaeaa2043eab90cf6dfe0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 07:26:49 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.143",
+      "version": "0.59.0-vnext.143",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Don't use DefaultNativeMessageQueueThread in live reload",
+            "author": "andrewh@microsoft.com",
+            "commit": "89ddedf6f1b193bfea345981e7312f8468382055"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 03:02:53 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.142",
+      "version": "0.59.0-vnext.142",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add additional new warning disable to MsoFolly.h",
+            "author": "andrewh@microsoft.com",
+            "commit": "98bbfb459f85f02f1c5fa5a270eb55e16cea6b2c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 23:00:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fixed Picker Export",
+            "author": "askhetan@microsoft.com",
+            "commit": "253178c2b9d72500f70a0b957bca20dc0fcbdb16"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 22:09:54 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add ChakraCore to JSIEngineOverride.",
+            "author": "yicyao@microsoft.com",
+            "commit": "f136c3e3ee4557df3fe8fe3b203e02f13b971a5e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 20:59:57 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.141",
+      "version": "0.59.0-vnext.141",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix flyout full placement mode",
+            "author": "kmelmon@microsoft.com",
+            "commit": "1b2aa741fbf54409ca278ab51ef6d3ea5f6ea469"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 16:43:43 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.140",
+      "version": "0.59.0-vnext.140",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update placement mapping",
+            "author": "cknestri@microsoft.com",
+            "commit": "bb7d84a80d835eb96c3e107836ef748648e9f717"
+          },
+          {
+            "comment": "Start API documentation",
+            "author": "acoates@microsoft.com",
+            "commit": "7f82c81c53a99f76887407104a382c334445e74d"
+          },
+          {
+            "comment": "Always use unforked version of folly + Update folly to v2019.08.12.00",
+            "author": "acoates@microsoft.com",
+            "commit": "e7555cae73f86d0b67c378eada98129726b4fe33"
+          },
+          {
+            "comment": "resolved build error",
+            "author": "email not defined",
+            "commit": "7f55f7e84013c47faf4c4ddfbaaf28665cb12d20"
+          },
+          {
+            "comment": "Improved fix for overlapping XAML theme shadows on Flyouts",
+            "author": "kenander@microsoft.com",
+            "commit": "98aea907b03f8b75d57924352a0e015a24a97d79"
+          },
+          {
+            "comment": "add batching queue",
+            "author": "kmelmon@microsoft.com",
+            "commit": "6e932b57e348b1ade2f6c0a72af6886ebccddb45"
+          },
+          {
+            "comment": "restore accidental deletion",
+            "author": "kmelmon@microsoft.com",
+            "commit": "3b9f508518f7a3ea39c379c6ab8c4b31e571b499"
+          },
+          {
+            "comment": "Microsoft.ReactNative SampleApps",
+            "author": "jthysell@microsoft.com",
+            "commit": "2496b0086fd07744a2315b5491ec05d7d4e3fe67"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add jsiEngineOverride option to devsettings",
+            "author": "tudorm@microsoft.com",
+            "commit": "086aba4eb8a1e1ab0b80c212290a541bf63c2ba9"
+          },
+          {
+            "comment": "Add dist folder to gitignore",
+            "author": "acoates@microsoft.com",
+            "commit": "8e90e7508fdfdd7cd27dada1d2f9413d24e28637"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Aug 2019 14:23:33 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.139",
       "version": "0.59.0-vnext.139",

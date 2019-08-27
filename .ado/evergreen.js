@@ -37,7 +37,8 @@ while (myArgs.length) {
     case 'autopr':
       autopr = true;
       // This args should be the result of new Buffer(":" + <githubToken>).toString("base64")
-      gitHubToken = myArgs[1];
+      //gitHubToken = myArgs[1];
+      gitHubToken = new Buffer(":" + myArgs[1]).toString("base64")
       myArgs = myArgs.slice(2);
       break;
     default:

@@ -54,6 +54,9 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\AppThemeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -83,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="V8JSIRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,7 +227,13 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ChakraJSIRuntimeHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="BatchingMessageQueueThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="V8JSIRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
