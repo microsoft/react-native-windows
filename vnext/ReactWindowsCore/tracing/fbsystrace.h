@@ -4,6 +4,7 @@
 #include <string.h>
 #include <array>
 #include <chrono>
+#include <mutex>
 #include <string>
 #include <unordered_map>
 
@@ -11,7 +12,8 @@
 #define TRACE_TAG_REACT_APPS 1 << 11
 
 // Assuming maximum 8 arguments.
-// TODO :: We assume this magic number "8" at a couple of other places without proper static verfications.
+// TODO :: We assume this magic number "8" at a couple of other places without
+// proper static verfications.
 #define SYSTRACE_SECTION_MAX_ARGS 8
 
 namespace facebook {
@@ -37,7 +39,9 @@ void trace_end_section(
     const std::string &profile_name,
     double duration,
     TraceTask task);
-}}}
+} // namespace tracing
+} // namespace react
+} // namespace facebook
 
 void fbsystrace_end_async_flow(uint64_t tag, const char *name, int callId);
 
@@ -47,11 +51,7 @@ class FbSystraceSection {
  public:
   void begin_section() {
     facebook::react::tracing::trace_begin_section(
-        tag_,
-        profile_name_,
-        std::move(args_),
-        index_,
-        task_);
+        tag_, profile_name_, std::move(args_), index_, task_);
   }
 
   void end_section() {
@@ -96,7 +96,6 @@ class FbSystraceSection {
       std::string &&v,
       ConvertsToStringPiece &&... rest)
       : tag_(tag), profile_name_(std::move(v)) {
-
     // Note : We don't want to add any fuzzy text search here as they are
     // usually a lot more expensive ..
     if (profile_name_.compare("JSIExecutor::loadApplicationScript") == 0) {
@@ -130,8 +129,8 @@ struct FbSystraceAsyncFlow {
   static void begin(uint64_t tag, const char *name, int cookie);
   static void end(uint64_t tag, const char *name, int cookie);
 
-  // Note : Currently we are not properly synchronozing access to this map
+  static std::mutex s_tracker_mutex_;
   static std::unordered_map<int, std::chrono::high_resolution_clock::time_point>
-      tracker_;
+      s_tracker_;
 };
 } // namespace fbsystrace

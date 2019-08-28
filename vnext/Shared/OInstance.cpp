@@ -191,7 +191,9 @@ namespace react {
 namespace {
 
 void runtimeInstaller(jsi::Runtime &runtime) {
+#ifdef ENABLE_JS_SYSTRACE
   facebook::react::tracing::initializeJSHooks(runtime);
+#endif
 }
 
 class OJSIExecutorFactory : public JSExecutorFactory {
@@ -413,6 +415,12 @@ InstanceImpl::InstanceImpl(
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 #endif
 
+#ifdef ENABLE_ETW_TRACING
+  // TODO :: Find a better place to initialize ETW once per process.
+  facebook::react::tracing::initializeETW();
+#endif
+
+
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
 
@@ -564,8 +572,6 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 void InstanceImpl::loadBundleInternal(
     std::string &&jsBundleRelativePath,
     bool synchronously) {
-  // TODO :: Find a better place to initialize ETW.
-  facebook::react::tracing::initializeETW();
 
   std::string bytecodeFileNameCopy{m_devSettings->bytecodeFileName};
 

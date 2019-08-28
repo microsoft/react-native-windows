@@ -17,8 +17,6 @@ namespace {
 
 INativeTraceHandler *g_nativeTracingHook = nullptr;
 
-static const int TRACE_TAG_REACT_APPS = 1 << 17;
-
 static JsValueRef __stdcall nativeTraceBeginSectionJNF(
     JsValueRef /*function*/,
     bool /*isConstructCall*/,
