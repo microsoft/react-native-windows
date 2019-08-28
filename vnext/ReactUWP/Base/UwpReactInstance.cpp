@@ -8,6 +8,7 @@
 // ReactUWP
 #include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
+#include <ReactUWP/Threading/HeadlessJSMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
@@ -275,14 +276,14 @@ void UwpReactInstance::Start(
 
   m_started = true;
 
-  // IFDEF
-  //m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
-  m_defaultNativeThread =
-      std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
-  m_batchingNativeThread =
-      std::make_shared<react::uwp::BatchingUIMessageQueueThread>(
-          m_uiDispatcher);
-      // std::make_unique<react::uwp::WorkerMessageQueueThread>();
+#ifdef HEADLESS_JS
+  m_defaultNativeThread = std::make_shared<react::uwp::HeadlessJSMessageQueueThread>();
+  m_batchingNativeThread = std::make_shared<react::uwp::HeadlessJSBatchingMessageQueueThread>();
+#else
+  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
+  m_batchingNativeThread = std::make_shared<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher);
+#endif
 
   // Objects that must be created on the UI thread
   std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
@@ -439,6 +440,15 @@ void UwpReactInstance::Start(
 void UwpReactInstance::AttachMeasuredRootView(
     IXamlRootView *pRootView,
     folly::dynamic &&initProps) {
+
+#ifdef HEADLESS_JS
+  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
+
+  static_pointer_cast<HeadlessJSMessageQueueThread>(m_defaultNativeThread)->setUIMessageQueue(std::make_unique<react::uwp::UIMessageQueueThread>(m_uiDispatcher));
+  static_pointer_cast<HeadlessJSBatchingMessageQueueThread>(m_batchingNativeThread)->setUIMessageQueue(std::make_unique<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher));
+#endif
+
+
   if (!IsInError())
     m_instanceWrapper->AttachMeasuredRootView(pRootView, std::move(initProps));
 }

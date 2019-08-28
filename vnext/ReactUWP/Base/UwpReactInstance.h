@@ -14,6 +14,8 @@
 #include <memory>
 #include <string>
 
+#define HEADLESS_JS
+
 namespace facebook {
 namespace react {
 struct NativeModuleProvider;

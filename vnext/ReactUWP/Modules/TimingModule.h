@@ -13,6 +13,9 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
+#define HEADLESS_JS 
+
+
 namespace react {
 namespace uwp {
 
@@ -73,15 +76,25 @@ class Timing {
 
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
+  
   void OnRendering(
+#ifndef HEADLESS_JS
       const winrt::Windows::Foundation::IInspectable &,
-      const winrt::Windows::Foundation::IInspectable &args);
+      const winrt::Windows::Foundation::IInspectable &args
+#endif
+  );
 
  private:
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
+
+#ifdef HEADLESS_JS
+  bool timerRunning;
+#else
   winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker
-      m_rendering;
+    m_rendering;
+#endif
+
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {

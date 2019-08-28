@@ -20,6 +20,8 @@
 #include <unknwnbase.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
+
+
 using namespace facebook::xplat;
 using namespace folly;
 namespace winrt {
@@ -76,10 +78,13 @@ bool TimerQueue::IsEmpty() {
 // Timing
 //
 
-Timing::Timing(TimingModule *parent) : m_parent(parent) {}
+Timing::Timing(TimingModule *parent) : m_parent(parent), timerRunning(false) { }
 
 void Timing::Disconnect() {
   m_parent = nullptr;
+#ifdef HEADLESS_JS
+
+#endif
 }
 
 std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
@@ -90,8 +95,11 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
 }
 
 void Timing::OnRendering(
+#ifndef HEADLESS_JS
     const winrt::IInspectable &,
-    const winrt::IInspectable &args) {
+    const winrt::IInspectable &args
+#endif
+) {
   std::vector<int64_t> readyTimers;
   auto now = winrt::DateTime::clock::now();
 
@@ -106,7 +114,14 @@ void Timing::OnRendering(
       m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
 
     if (m_timerQueue.IsEmpty())
+    {
+#ifdef HEADLESS_JS
+      timerRunning = false;
+#else
       m_rendering.revoke();
+#endif
+    }
+      
   }
 
   if (!readyTimers.empty()) {
@@ -143,9 +158,21 @@ void Timing::createTimer(
   }
 
   if (m_timerQueue.IsEmpty()) {
+#ifdef HEADLESS_JS
+    timerRunning = true;
+    std::thread ([this]() {
+      while (!m_timerQueue.IsEmpty()) {
+        if (!timerRunning) return;
+        std::this_thread::sleep_for(std::chrono::milliseconds(16));
+        if (!timerRunning) return;
+        OnRendering();
+      }
+      }).detach();
+#else
     m_rendering.revoke();
     m_rendering = winrt::CompositionTarget::Rendering(
-        winrt::auto_revoke, {this, &Timing::OnRendering});
+      winrt::auto_revoke, { this, &Timing::OnRendering });
+#endif
   }
 
   // Convert double duration in ms to TimeSpan
@@ -163,7 +190,14 @@ void Timing::deleteTimer(int64_t id) {
   m_timerQueue.Remove(id);
 
   if (m_timerQueue.IsEmpty())
+  {
+#ifdef HEADLESS_JS
+    timerRunning = false;
+#else
     m_rendering.revoke();
+#endif
+  }
+    
 }
 
 void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) {
