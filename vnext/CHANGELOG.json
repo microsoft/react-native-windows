@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 Aug 2019 02:44:14 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.157",
+      "version": "0.59.0-vnext.157",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Let View process color objects",
+            "author": "email not defined",
+            "commit": "7cf39b710a34011c6be3b94a5f0a8eb9627e5c3c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Aug 2019 04:41:01 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.156",
       "version": "0.59.0-vnext.156",
