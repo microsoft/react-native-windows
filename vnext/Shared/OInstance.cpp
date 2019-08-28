@@ -469,7 +469,8 @@ InstanceImpl::InstanceImpl(
             if (lastSepPosition != std::string::npos) {
               preparedScriptStore = std::make_unique<
                   facebook::react::BasePreparedScriptStoreImpl>(
-                  m_devSettings->bytecodeFileName.substr(0, lastSepPosition + 1));
+                  m_devSettings->bytecodeFileName.substr(
+                      0, lastSepPosition + 1));
             }
           }
           m_devSettings->jsiRuntimeHolder =
