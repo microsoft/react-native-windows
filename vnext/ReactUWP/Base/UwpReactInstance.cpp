@@ -77,7 +77,7 @@
 #if !defined(OSS_RN)
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
-#endif
+#endif // USE_HERMES
 #if defined(USE_V8)
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
