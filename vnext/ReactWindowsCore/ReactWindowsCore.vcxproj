@@ -94,14 +94,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\IUIManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\IViewManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h" />
     <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="AbiSafe.h" />

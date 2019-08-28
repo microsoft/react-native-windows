@@ -155,11 +155,7 @@
     <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
   </Target>
   <ItemGroup>
-    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
-    <ClInclude Include="..\include\ReactUWP\IReactInstance.h" />
-    <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
-    <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
@@ -167,7 +163,6 @@
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
     <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
-    <ClInclude Include="..\include\ReactUWP\XamlView.h" />
     <ClInclude Include="ABI\ABIModuleLoader.h" />
     <ClInclude Include="ABI\comTemplateLibrary.h" />
     <ClInclude Include="ABI\HStringHelper.h" />
