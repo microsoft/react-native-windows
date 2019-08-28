@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add isOverlayEnabled",
+  "packageName": "react-native-windows",
+  "email": "cknestri@microsoft.com",
+  "commit": "f37c74721d658c855ddd618a1677a271e2ab832a",
+  "date": "2019-08-26T18:16:27.113Z"
+}
