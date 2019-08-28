@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - master
+      - none # Disable GitHub Actions CI
 jobs:
   # This job is much the same as UWPPR, but runs after replacing the version of react-native
   # we are using with facebook/react-native instead of microsoft/react-native
