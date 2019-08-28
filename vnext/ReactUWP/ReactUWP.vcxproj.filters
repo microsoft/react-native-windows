@@ -645,6 +645,9 @@
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Threading\HeadlessJSMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
