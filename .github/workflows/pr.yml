@@ -9,6 +9,7 @@ jobs:
   UWPPublicRN:
     name: vnext with facebook/react-native
     runs-on: windows-2016
+    timeout-minutes: 45
     steps:
       - name: Skip NO CI
         if: contains( github.event.head_commit.message, '***NO_CI***')
@@ -57,6 +58,7 @@ jobs:
   UWPPR:
     name: vnext ReactWindows-UWP.sln
     runs-on: windows-2016
+    timeout-minutes: 45
     # Can't appear to enable matrix right now:
     # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
     # Ideally we'd share more of the build def between UWPPublicRN and this job, but due to the issues with matrix right now
@@ -115,6 +117,7 @@ jobs:
   CliInit:
     name: Verify react-native init
     runs-on: windows-2016
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -168,6 +171,7 @@ jobs:
   RNWFormatting:
     name: Verify change files + formatting
     runs-on: windows-2016
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -183,6 +187,7 @@ jobs:
   CurrentPR:
     name: Current (C#) PR
     runs-on: windows-2016
+    timeout-minutes: 10
     strategy:
       matrix:
         #TODO add DebugBundle
@@ -253,6 +258,7 @@ jobs:
   RnwNativePRBuild:
     name: vnext Windows.sln
     runs-on: windows-2016
+    timeout-minutes: 45
     strategy:
       matrix:
         BuildConfiguration: [Debug, Release]
@@ -326,6 +332,7 @@ jobs:
     name: React-Native-Windows Build and Pack Nuget
     runs-on: windows-2016
     needs: RnwNativePRBuild
+    timeout-minutes: 15
     steps:
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
