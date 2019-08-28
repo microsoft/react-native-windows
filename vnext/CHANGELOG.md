@@ -1,7 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 28 Aug 2019 18:34:51 GMT and should not be manually modified.
+This log was last generated on Wed, 28 Aug 2019 19:55:48 GMT and should not be manually modified.
 
+## 0.59.0-vnext.159
+Wed, 28 Aug 2019 19:55:48 GMT
+
+### Changes
+
+- Added React.Windows.Desktop.Test project. (julio@rochsquadron.net)
+- Add isOverlayEnabled (cknestri@microsoft.com)
 ## 0.59.0-vnext.158
 Wed, 28 Aug 2019 18:34:51 GMT
 
