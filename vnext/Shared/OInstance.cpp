@@ -421,7 +421,7 @@ InstanceImpl::InstanceImpl(
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 #endif
 
-#ifdef ENABLE_ETW_TRACING
+#ifdef ENABLE_TRACING
   // TODO :: Find a better place to initialize ETW once per process.
   facebook::react::tracing::initializeETW();
 #endif
