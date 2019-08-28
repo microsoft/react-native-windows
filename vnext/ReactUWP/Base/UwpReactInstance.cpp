@@ -446,8 +446,11 @@ void UwpReactInstance::AttachMeasuredRootView(
 
   static_pointer_cast<HeadlessJSMessageQueueThread>(m_defaultNativeThread)->setUIMessageQueue(std::make_unique<react::uwp::UIMessageQueueThread>(m_uiDispatcher));
   static_pointer_cast<HeadlessJSBatchingMessageQueueThread>(m_batchingNativeThread)->setUIMessageQueue(std::make_unique<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher));
+  
 #endif
 
+  react::uwp::AppTheme::uiThreadAvailable();
+  DeviceInfoModule::uiThreadAvailable();
 
   if (!IsInError())
     m_instanceWrapper->AttachMeasuredRootView(pRootView, std::move(initProps));

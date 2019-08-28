@@ -24,6 +24,8 @@ namespace uwp {
 // AppTheme
 //
 
+AppTheme *AppTheme::s_currentInstance = nullptr;
+
 AppTheme::AppTheme(
     const std::shared_ptr<IReactInstance> &reactInstance,
     const std::shared_ptr<facebook::react::MessageQueueThread>
@@ -35,9 +37,28 @@ AppTheme::AppTheme(
   m_isHighContrast = m_accessibilitySettings.HighContrast();
   m_highContrastColors = getHighContrastColors();
 
-  /*
-  IFDEF
+  s_currentInstance = this;
+}
 
+AppTheme::~AppTheme() = default;
+
+const std::string AppTheme::getCurrentTheme() {
+  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light
+                                                          : AppTheme::dark;
+}
+
+bool AppTheme::getIsHighContrast() {
+  return m_accessibilitySettings.HighContrast();
+  ;
+}
+
+/*static*/ void AppTheme::uiThreadAvailable() {
+  if (s_currentInstance != nullptr) {
+    s_currentInstance->connectNativeEventHandlers();
+  }
+}
+
+void AppTheme::connectNativeEventHandlers() {
   m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
       winrt::auto_revoke, [this](const auto &, const auto &) {
         folly::dynamic eventData = folly::dynamic::object(
@@ -61,19 +82,7 @@ AppTheme::AppTheme(
             fireEvent("appThemeChanged", std::move(eventData));
           }
         });
-      });*/
-}
-
-AppTheme::~AppTheme() = default;
-
-const std::string AppTheme::getCurrentTheme() {
-  return m_currentTheme == winrt::ApplicationTheme::Light ? AppTheme::light
-                                                          : AppTheme::dark;
-}
-
-bool AppTheme::getIsHighContrast() {
-  return m_accessibilitySettings.HighContrast();
-  ;
+      });
 }
 
 // Returns the RBG values for the 8 relevant High Contrast elements.

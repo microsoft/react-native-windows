@@ -18,16 +18,18 @@ namespace uwp {
 
   auto langs = winrt::Windows::Globalization::ApplicationLanguages::Languages();
   if (langs.Size() > 0) {
-    locale = facebook::react::unicode::utf16ToUtf8(langs.GetAt(0));
+    auto localHstring = langs.GetAt(0);
+    locale = facebook::react::unicode::utf16ToUtf8(localHstring);
 
-    /*
-    IFDEF
-    auto layoutDirection =
-        winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
-            .GetForCurrentView()
-            .QualifierValues()
-            .Lookup(L"LayoutDirection");
-    isRTL = layoutDirection != L"LTR";*/
+    // Using Win32 api to avoid requiring UI Thread
+    unsigned long reading_layout;
+    if (GetLocaleInfoEx(
+            localHstring.c_str(),
+            LOCALE_IREADINGLAYOUT | LOCALE_RETURN_NUMBER,
+            reinterpret_cast<LPTSTR>(&reading_layout),
+            sizeof(reading_layout) / sizeof(TCHAR))) {
+      isRTL = reading_layout == 1;
+    }
   }
 
   return std::make_pair<std::string, bool>(std::move(locale), std::move(isRTL));

@@ -3,8 +3,11 @@
 
 #pragma once
 
+#include <cxxReact/Instance.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
+#include <winrt/Windows.Graphics.Display.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include <memory>
 #include <vector>
 
@@ -36,10 +39,18 @@ class DeviceInfoModule : public facebook::xplat::module::CxxModule {
   std::map<std::string, folly::dynamic> getConstants() override;
   auto getMethods() -> std::vector<Method> override;
 
+  static void uiThreadAvailable();
+
   static const char *name;
 
  private:
+  folly::dynamic getDimensions(
+      winrt::Windows::Graphics::Display::DisplayInformation displayInfo,
+      winrt::Windows::UI::Core::CoreWindow window);
   std::shared_ptr<DeviceInfo> m_deviceInfo;
+  static DeviceInfoModule *s_currentInstance;
+
+  void sendDimensionsChangedEvent();
 };
 
 } // namespace uwp

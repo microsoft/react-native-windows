@@ -22,12 +22,15 @@ class AppTheme : public react::windows::AppTheme {
   const std::string getCurrentTheme() override;
   bool getIsHighContrast() override;
 
+  static void uiThreadAvailable();
+
  private:
   // High Contrast Color helper methods
   folly::dynamic getHighContrastColors();
   std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
   void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
+  void connectNativeEventHandlers();
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
@@ -43,6 +46,8 @@ class AppTheme : public react::windows::AppTheme {
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
   winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker
       m_colorValuesChangedRevoker{};
+
+  static AppTheme *s_currentInstance;
 };
 
 } // namespace uwp
