@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="include">
-      <UniqueIdentifier>{d58d8a95-1e57-49ea-a4f3-c0859b7f649d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{32892a40-82db-4c1b-9390-5893f9ddbb0b}</UniqueIdentifier>
     </Filter>
@@ -90,37 +87,13 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\IViewManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\IUIManager.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h">
-      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Sandbox\SandboxEndpoint.h">
       <Filter>Header Files\Sandbox</Filter>
@@ -237,9 +210,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BatchingMessageQueueThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="V8JSIRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

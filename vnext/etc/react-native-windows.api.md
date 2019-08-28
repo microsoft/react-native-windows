@@ -145,6 +145,7 @@ export interface IFlyoutProps extends ViewProps {
     isLightDismissEnabled?: boolean;
     // (undocumented)
     isOpen?: boolean;
+    isOverlayEnabled?: boolean;
     // (undocumented)
     onDismiss?: (isOpen: boolean) => void;
     // (undocumented)

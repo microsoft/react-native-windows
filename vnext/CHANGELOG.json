@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 Aug 2019 19:55:48 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.159",
+      "version": "0.59.0-vnext.159",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added React.Windows.Desktop.Test project.",
+            "author": "julio@rochsquadron.net",
+            "commit": "9c2625344704a467dc310e8ad9441b92eec40a2c"
+          },
+          {
+            "comment": "Add isOverlayEnabled",
+            "author": "cknestri@microsoft.com",
+            "commit": "f37c74721d658c855ddd618a1677a271e2ab832a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Aug 2019 18:34:51 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.158",
+      "version": "0.59.0-vnext.158",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.69",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "3275a72b08ca0f567b5d64253cac79ce53f3fe0e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Aug 2019 02:44:14 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.157",
+      "version": "0.59.0-vnext.157",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Let View process color objects",
+            "author": "email not defined",
+            "commit": "7cf39b710a34011c6be3b94a5f0a8eb9627e5c3c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Aug 2019 04:41:01 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.156",
       "version": "0.59.0-vnext.156",

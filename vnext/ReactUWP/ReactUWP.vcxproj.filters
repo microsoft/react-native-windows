@@ -297,20 +297,11 @@
     <ClInclude Include="Modules\DeviceInfoModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\DevSupportManagerUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h">
       <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\IXamlRootView.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\IReactInstance.h">
-      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Utils\LocalBundleReader.h">
       <Filter>Utils</Filter>
@@ -336,9 +327,6 @@
     <ClInclude Include="Utils\PropertyUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\ReactUwp.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -347,9 +335,6 @@
     </ClInclude>
     <ClInclude Include="Base\UwpReactInstance.h">
       <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactUWP\XamlView.h">
-      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Threading\WorkerMessageQueueThread.h">
       <Filter>Threading</Filter>
@@ -709,9 +694,6 @@
     </Filter>
     <Filter Include="Modules\Animated">
       <UniqueIdentifier>{A4613589-965A-4B1F-85DB-CEEC21D101DA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include">
-      <UniqueIdentifier>{f74fe3a1-618b-482c-ba94-adc3e6e90ab8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sandbox">
       <UniqueIdentifier>{b4b85434-3409-4179-bff4-b56db8c27ba3}</UniqueIdentifier>
