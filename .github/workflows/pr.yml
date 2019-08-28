@@ -10,10 +10,11 @@ jobs:
     name: vnext with facebook/react-native
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    timeout-minutes: 45
     steps:
       - name: Skip NO CI
         if: contains( github.event.head_commit.message, '***NO_CI***')
-        run: exit 123
+        run: exit 78
 
       - name: Checkout
         uses: actions/checkout@v1
@@ -70,6 +71,7 @@ jobs:
     name: vnext ReactWindows-UWP.sln
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    timeout-minutes: 45
     # Can't appear to enable matrix right now:
     # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
     # Ideally we'd share more of the build def between UWPPublicRN and this job, but due to the issues with matrix right now
@@ -143,6 +145,7 @@ jobs:
     name: Verify react-native init
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -197,6 +200,7 @@ jobs:
     name: Verify change files + formatting
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -213,6 +217,7 @@ jobs:
     name: Current (C#) PR
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    timeout-minutes: 10
     strategy:
       matrix:
         #TODO add DebugBundle
@@ -284,6 +289,7 @@ jobs:
     name: vnext Windows.sln
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    timeout-minutes: 45
     strategy:
       matrix:
         BuildConfiguration: [Debug, Release]
@@ -358,6 +364,7 @@ jobs:
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     needs: RnwNativePRBuild
+    timeout-minutes: 15
     steps:
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
