@@ -3,10 +3,8 @@
 
 #pragma once
 
-#include <Threading/UIMessageQueueThread.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <ReactWindowsCore/BatchingMessageQueueThread.h>
-#include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
 
 namespace react {
   namespace uwp {
@@ -14,37 +12,23 @@ namespace react {
     // TALK ABOUT HOW THIS IS A REALLY COOL HACK
 
 
-    class HeadlessJSMessageQueueThread : public facebook::react::MessageQueueThread {
+    class HeadlessJSMessageQueueThread
+      : public facebook::react::BatchingMessageQueueThread {
     public:
-      HeadlessJSMessageQueueThread();
+      HeadlessJSMessageQueueThread(bool isBatching);
       virtual ~HeadlessJSMessageQueueThread();
-
-      virtual void runOnQueue(std::function<void()>&& func);
-      virtual void runOnQueueSync(std::function<void()>&& func);
-      virtual void quitSynchronous();
-
-      void setUIMessageQueue(std::unique_ptr<UIMessageQueueThread> uiMessageQueueThread);
-
-    private:
-      std::unique_ptr<MessageQueueThread> m_workerMessageQueue;
-      std::unique_ptr<UIMessageQueueThread> m_uiThreadQueue;
-    };
-
-    class HeadlessJSBatchingMessageQueueThread : public facebook::react::BatchingMessageQueueThread {
-    public:
-      HeadlessJSBatchingMessageQueueThread();
-      virtual ~HeadlessJSBatchingMessageQueueThread();
 
       virtual void runOnQueue(std::function<void()>&& func);
       virtual void runOnQueueSync(std::function<void()>&& func);
       virtual void quitSynchronous();
       virtual void onBatchComplete();
 
-      void setUIMessageQueue(std::unique_ptr<BatchingUIMessageQueueThread> uiMessageQueueThread);
+      void setUIMessageQueue(std::unique_ptr<MessageQueueThread> uiMessageQueueThread);
 
     private:
       std::unique_ptr<MessageQueueThread> m_workerMessageQueue;
-      std::unique_ptr<BatchingUIMessageQueueThread> m_uiThreadQueue;
+      std::unique_ptr<MessageQueueThread> m_uiThreadQueue;
+      bool m_isBatching;
     };
 
   } // namespace uwp

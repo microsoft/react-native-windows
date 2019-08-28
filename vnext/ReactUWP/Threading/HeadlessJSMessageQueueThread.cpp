@@ -4,10 +4,14 @@
 #include "pch.h"
 #include "HeadlessJSMessageQueueThread.h"
 #include <Threading/WorkerMessageQueueThread.h>
+#include <memory>
 
 using namespace react::uwp;
 
-HeadlessJSMessageQueueThread::HeadlessJSMessageQueueThread(): m_uiThreadQueue(nullptr), m_workerMessageQueue(std::make_unique<WorkerMessageQueueThread>()) { }
+HeadlessJSMessageQueueThread::HeadlessJSMessageQueueThread(bool isBatching)
+    : m_uiThreadQueue(nullptr),
+      m_workerMessageQueue(std::make_unique<WorkerMessageQueueThread>()),
+      m_isBatching(isBatching) {}
 
 HeadlessJSMessageQueueThread::~HeadlessJSMessageQueueThread() {
   m_uiThreadQueue = nullptr;
@@ -48,65 +52,14 @@ void HeadlessJSMessageQueueThread::quitSynchronous()
   m_workerMessageQueue->quitSynchronous();
 }
 
-
-void HeadlessJSMessageQueueThread::setUIMessageQueue(std::unique_ptr<UIMessageQueueThread> uiMessageQueueThread)
-{
-  m_uiThreadQueue = std::move(uiMessageQueueThread);
-}
-
-
-
-HeadlessJSBatchingMessageQueueThread::HeadlessJSBatchingMessageQueueThread(): m_uiThreadQueue(nullptr), m_workerMessageQueue(std::make_unique<WorkerMessageQueueThread>()) { }
-
-HeadlessJSBatchingMessageQueueThread::~HeadlessJSBatchingMessageQueueThread()
-{
-  m_uiThreadQueue = nullptr;
-  m_workerMessageQueue = nullptr;
-}
-
-void HeadlessJSBatchingMessageQueueThread::runOnQueue(std::function<void()>&& func)
-{
-  if (m_uiThreadQueue != nullptr)
-  {
-    m_uiThreadQueue->runOnQueue(std::move(func));
-  }
-  else
-  {
-    m_workerMessageQueue->runOnQueue(std::move(func));
+void HeadlessJSMessageQueueThread::onBatchComplete() {
+  if (m_uiThreadQueue != nullptr && m_isBatching) {
+    static_cast<BatchingMessageQueueThread*>(
+        m_uiThreadQueue.get())
+        ->onBatchComplete();
   }
 }
 
-void HeadlessJSBatchingMessageQueueThread::runOnQueueSync(std::function<void()>&& func)
-{
-  if (m_uiThreadQueue != nullptr)
-  {
-    m_uiThreadQueue->runOnQueueSync(std::move(func));
-  }
-  else
-  {
-    m_workerMessageQueue->runOnQueueSync(std::move(func));
-  }
-}
-
-void HeadlessJSBatchingMessageQueueThread::quitSynchronous()
-{
-  if (m_uiThreadQueue != nullptr)
-  {
-    m_uiThreadQueue->quitSynchronous();
-  }
-
-  m_workerMessageQueue->quitSynchronous();
-}
-
-void HeadlessJSBatchingMessageQueueThread::onBatchComplete()
-{
-  if (m_uiThreadQueue != nullptr)
-  {
-    m_uiThreadQueue->onBatchComplete();
-  }
-}
-
-void HeadlessJSBatchingMessageQueueThread::setUIMessageQueue(std::unique_ptr<BatchingUIMessageQueueThread> uiMessageQueueThread)
-{
+void HeadlessJSMessageQueueThread::setUIMessageQueue(std::unique_ptr<MessageQueueThread> uiMessageQueueThread) {
   m_uiThreadQueue = std::move(uiMessageQueueThread);
 }
