@@ -9,42 +9,12 @@ namespace react {
 namespace uwp {
 
 //
-// DeviceInfo
-//
-
-void DeviceInfo::update() {
-  // IFDEF
-  // auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::
-  //    GetForCurrentView();
-
-  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
-
-  // IFDEF
-  // auto const &window =
-  // winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
-
-  // TODO: get parent element (not window) size
-
-  // Set Dummy values initially to avoid dependency on UI Thread
-  m_dimensions = folly::dynamic::object(
-      "windowPhysicalPixels",
-      folly::dynamic::object("width", 100)("height", 100)(
-          "scale", static_cast<int>(100) / 100)(
-          "fontScale", uiSettings.TextScaleFactor())("densityDpi", 100))(
-      "screenPhysicalPixels",
-      folly::dynamic::object("width", 100)("height", 100)(
-          "scale", static_cast<int>(100) / 100)("fontScale", 100)(
-          "densityDpi", 100));
-}
-
-//
 // DeviceInfoModule
 //
 const char *DeviceInfoModule::name = "DeviceInfo";
 DeviceInfoModule *DeviceInfoModule::s_currentInstance = nullptr;
 
-DeviceInfoModule::DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo)
-    : m_deviceInfo(std::move(deviceInfo)) {
+DeviceInfoModule::DeviceInfoModule() {
   s_currentInstance = this;
 }
 

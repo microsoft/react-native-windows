@@ -15,24 +15,9 @@ namespace react {
 namespace uwp {
 
 // TODO: Emit event to react when dimensions change.
-class DeviceInfo {
- public:
-  DeviceInfo() {
-    update();
-  }
-
-  folly::dynamic GetDimensionsConstants() {
-    return m_dimensions;
-  }
-  void update();
-
- private:
-  folly::dynamic m_dimensions;
-};
-
 class DeviceInfoModule : public facebook::xplat::module::CxxModule {
  public:
-  DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo);
+  DeviceInfoModule();
 
   // CxxModule
   std::string getName() override;
@@ -47,7 +32,6 @@ class DeviceInfoModule : public facebook::xplat::module::CxxModule {
   folly::dynamic getDimensions(
       winrt::Windows::Graphics::Display::DisplayInformation displayInfo,
       winrt::Windows::UI::Core::CoreWindow window);
-  std::shared_ptr<DeviceInfo> m_deviceInfo;
   static DeviceInfoModule *s_currentInstance;
 
   void sendDimensionsChangedEvent();

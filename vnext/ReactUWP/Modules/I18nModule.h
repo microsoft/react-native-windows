@@ -12,17 +12,15 @@ namespace uwp {
 
 class I18nModule final : public react::windows::II18nModule {
  public:
-  using I18nInfo = std::pair<std::string, bool>;
-  static I18nInfo GetI18nInfo(); // Must be called from a UI thread
-
   // II18nModule
-  I18nModule(I18nInfo &&i18nInfo);
+  I18nModule();
 
   std::string getLocaleIdentifier() override;
   bool getIsRTL() override;
 
  private:
-  I18nInfo m_i18nInfo;
+  bool m_isRtl;
+  std::string m_locale;
 };
 } // namespace uwp
 } // namespace react

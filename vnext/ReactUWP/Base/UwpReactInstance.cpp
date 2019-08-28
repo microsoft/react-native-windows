@@ -151,11 +151,7 @@ UwpReactInstance::UwpReactInstance(
 std::vector<facebook::react::NativeModuleDescription> GetModules(
     std::shared_ptr<facebook::react::IUIManager> uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
-    std::shared_ptr<DeviceInfo> deviceInfo,
     std::shared_ptr<facebook::react::DevSettings> devSettings,
-    const I18nModule::I18nInfo &&i18nInfo,
-    std::shared_ptr<facebook::react::AppState> appstate,
-    std::shared_ptr<react::windows::AppTheme> appTheme,
     std::weak_ptr<IReactInstance> uwpInstance) {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -186,7 +182,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       DeviceInfoModule::name,
-      [deviceInfo]() { return std::make_unique<DeviceInfoModule>(deviceInfo); },
+      []() { return std::make_unique<DeviceInfoModule>(); },
       messageQueue);
 
   modules.emplace_back(
@@ -211,17 +207,17 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       facebook::react::AppStateModule::name,
-      [appstate = std::move(appstate)]() mutable {
+      [uwpInstance]() mutable {
         return std::make_unique<facebook::react::AppStateModule>(
-            std::move(appstate));
+            std::make_shared<react::uwp::AppState>(uwpInstance));
       },
       std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
       react::windows::AppThemeModule::name,
-      [appTheme = std::move(appTheme)]() mutable {
+      [uwpInstance, messageQueue]() mutable {
         return std::make_unique<react::windows::AppThemeModule>(
-            std::move(appTheme));
+            std::make_shared<react::uwp::AppTheme>(uwpInstance, messageQueue));
       },
       messageQueue);
 
@@ -244,9 +240,9 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       "I18nManager",
-      [i18nInfo = std::move(i18nInfo)]() mutable {
+      []() mutable {
         return createI18nModule(
-            std::make_unique<I18nModule>(std::move(i18nInfo)));
+            std::make_unique<I18nModule>());
       },
       messageQueue);
 
@@ -291,25 +287,13 @@ void UwpReactInstance::Start(
           m_uiDispatcher);
 #endif
 
-  // Objects that must be created on the UI thread
-  std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
-  std::shared_ptr<facebook::react::AppState> appstate =
-      std::make_shared<react::uwp::AppState>(spThis);
-  std::shared_ptr<react::windows::AppTheme> appTheme =
-      std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
-  std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
-
   // TODO: Figure out threading. What thread should this really be on?
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(
       m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
-                                deviceInfo,
-                                settings,
-                                i18nInfo = std::move(i18nInfo),
-                                appstate = std::move(appstate),
-                                appTheme = std::move(appTheme)]() mutable {
+                                settings]() mutable {
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
     devSettings->debugBundlePath = settings.DebugBundlePath;
@@ -366,11 +350,7 @@ void UwpReactInstance::Start(
         GetModules(
             m_uiManager,
             m_batchingNativeThread,
-            deviceInfo,
             devSettings,
-            std::move(i18nInfo),
-            std::move(appstate),
-            std::move(appTheme),
             std::weak_ptr<IReactInstance>(spThis));
 
     if (m_moduleProvider != nullptr) {
