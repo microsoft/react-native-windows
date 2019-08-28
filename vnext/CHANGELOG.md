@@ -1,7 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 23 Aug 2019 01:27:19 GMT and should not be manually modified.
+This log was last generated on Wed, 28 Aug 2019 02:44:14 GMT and should not be manually modified.
 
+## 0.59.0-vnext.157
+Wed, 28 Aug 2019 02:44:14 GMT
+
+### Changes
+
+- Let View process color objects (email not defined)
+## 0.59.0-vnext.156
+Tue, 27 Aug 2019 04:41:01 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.68 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.155
+Mon, 26 Aug 2019 21:10:00 GMT
+
+### Changes
+
+- Enable experimental V8 JSI Executor support (off by default) (tudorm@microsoft.com)
+## 0.59.0-vnext.154
+Sat, 24 Aug 2019 15:32:08 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.67 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.153
+Sat, 24 Aug 2019 04:24:35 GMT
+
+### Changes
+
+- Fix change log formatting (acoates@microsoft.com)
+## 0.59.0-vnext.152
+Sat, 24 Aug 2019 04:09:20 GMT
+
+### Changes
+
+- move cppwinrt less exception helper, use in DevSupportManager (andrewh@microsoft.com)
 ## 0.59.0-vnext.151
 Fri, 23 Aug 2019 01:27:19 GMT
 
@@ -50,7 +86,7 @@ Tue, 20 Aug 2019 23:40:14 GMT
 ### Changes
 
 - Light up Inspector debugging tool. (kinhln@microsoft.com)
-,- Remove old playground app (acoates@microsoft.com)
+- Remove old playground app (acoates@microsoft.com)
 
 ## 0.59.0-vnext.144
 Tue, 20 Aug 2019 21:54:07 GMT
@@ -86,13 +122,13 @@ Mon, 19 Aug 2019 16:43:43 GMT
 ### Changes
 
 - Update placement mapping (cknestri@microsoft.com)
-,- Start API documentation (acoates@microsoft.com)
-,- Always use unforked version of folly + Update folly to v2019.08.12.00 (acoates@microsoft.com)
-,- resolved build error (email not defined)
-,- Improved fix for overlapping XAML theme shadows on Flyouts (kenander@microsoft.com)
-,- add batching queue (kmelmon@microsoft.com)
-,- restore accidental deletion (kmelmon@microsoft.com)
-,- Microsoft.ReactNative SampleApps (jthysell@microsoft.com)
+- Start API documentation (acoates@microsoft.com)
+- Always use unforked version of folly + Update folly to v2019.08.12.00 (acoates@microsoft.com)
+- resolved build error (email not defined)
+- Improved fix for overlapping XAML theme shadows on Flyouts (kenander@microsoft.com)
+- add batching queue (kmelmon@microsoft.com)
+- restore accidental deletion (kmelmon@microsoft.com)
+- Microsoft.ReactNative SampleApps (jthysell@microsoft.com)
 
 ## 0.59.0-vnext.139
 Tue, 13 Aug 2019 19:56:52 GMT
@@ -100,7 +136,7 @@ Tue, 13 Aug 2019 19:56:52 GMT
 ### Changes
 
 - Updating react-native to version: 0.59.0-microsoft.43 (53619745+rnbot@users.noreply.github.com)
-,- Change windows template to not use cli wrapper (acoates@microsoft.com)
+- Change windows template to not use cli wrapper (acoates@microsoft.com)
 
 ## 0.59.0-vnext.138
 Mon, 12 Aug 2019 23:13:59 GMT
@@ -241,7 +277,7 @@ Mon, 05 Aug 2019 17:37:47 GMT
 ### Changes
 
 - Put back a couple of win32 dll exports (acoates@microsoft.com)
-,- Updating react-native to version: 0.59.0-microsoft.34 (53619745+rnbot@users.noreply.github.com)
+- Updating react-native to version: 0.59.0-microsoft.34 (53619745+rnbot@users.noreply.github.com)
 
 ## 0.59.0-vnext.118
 Mon, 05 Aug 2019 06:09:37 GMT
@@ -270,12 +306,12 @@ Sat, 03 Aug 2019 04:30:38 GMT
 ### Changes
 
 - change process.env.TEMP to os.tmpdir() (email not defined)
-,- fix onFocus/onBlur events for Touchables (andrewh@microsoft.com)
-,- New switch props (thumbColor and trackColor), and fix few bugs found in TextInputViewManager (dida@ntdev.microsoft.com)
-,- addedundefined developer menu (kmelmon@microsoft.com)
-,- fix image not firing on load. (stecrain@microsoft.com)
-,- Delay-load dependencies absent on Win7 (acoates@microsoft.com)
-,- Add the SpringAnimationDriver (stpete@microsoft.com)
+- fix onFocus/onBlur events for Touchables (andrewh@microsoft.com)
+- New switch props (thumbColor and trackColor), and fix few bugs found in TextInputViewManager (dida@ntdev.microsoft.com)
+- addedundefined developer menu (kmelmon@microsoft.com)
+- fix image not firing on load. (stecrain@microsoft.com)
+- Delay-load dependencies absent on Win7 (acoates@microsoft.com)
+- Add the SpringAnimationDriver (stpete@microsoft.com)
 
 ## 0.59.0-vnext.110
 Sun, 28 Jul 2019 12:44:00 GMT
