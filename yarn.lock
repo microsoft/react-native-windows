@@ -12483,18 +12483,7 @@ wcwidth@^1.0.0, wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webdriver@^5.12.1:
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.12.1.tgz#db4fdbae174d544a4b5671ff4d102812f831c792"
-  integrity sha512-ywHkwUjY3vB2aqZ8pRDJsdFKx/GeMKF3rHJzxLHbrssytu4BuPQUDssbULUT/UwNG7R3cD+amBiomjmkHf3a+Q==
-  dependencies:
-    "@wdio/config" "^5.12.1"
-    "@wdio/logger" "^5.12.1"
-    deepmerge "^4.0.0"
-    lodash.merge "^4.6.1"
-    request "^2.83.0"
-
-"webdriver@git+https://github.com/react-native-windows/webdriver.git":
+webdriver@^5.12.1, "webdriver@git+https://github.com/react-native-windows/webdriver.git":
   version "5.12.1"
   resolved "git+https://github.com/react-native-windows/webdriver.git#43e84dbd1a6effdf305942304daa7e6bddea4fc4"
   dependencies:
