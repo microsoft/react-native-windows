@@ -8,11 +8,15 @@
 
 namespace winrt {
 using namespace Windows::UI::Xaml::Automation::Peers;
-}
+using namespace Windows::UI::Xaml;
+} // namespace winrt
 
 namespace winrt::react::uwp::implementation {
 
-ViewControl::ViewControl() : Super() {}
+ViewControl::ViewControl() : Super() {
+  VerticalContentAlignment(winrt::VerticalAlignment::Stretch);
+  HorizontalContentAlignment(winrt::HorizontalAlignment::Stretch);
+}
 
 winrt::AutomationPeer ViewControl::OnCreateAutomationPeer() {
   return winrt::make<winrt::react::uwp::implementation::DynamicAutomationPeer>(
