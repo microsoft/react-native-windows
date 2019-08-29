@@ -18,7 +18,7 @@ namespace uwp {
 
 typedef winrt::Windows::Foundation::DateTime TDateTime;
 typedef winrt::Windows::Foundation::TimeSpan TTimeSpan;
-
+#define HEADLESS_JS
 class TimingModule;
 
 struct Timer {
@@ -85,9 +85,7 @@ class Timing {
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
 
-#ifdef HEADLESS_JS
-  bool timerRunning;
-#else
+#ifndef HEADLESS_JS
   winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker
     m_rendering;
 #endif

@@ -78,11 +78,7 @@ bool TimerQueue::IsEmpty() {
 // Timing
 //
 
-Timing::Timing(TimingModule *parent) : m_parent(parent) {
-  #ifdef HEADLESS_JS
-  timerRunning = false;
-  #endif
-}
+Timing::Timing(TimingModule *parent) : m_parent(parent) {}
 
 void Timing::Disconnect() {
   m_parent = nullptr;
@@ -116,9 +112,7 @@ void Timing::OnRendering(
 
     if (m_timerQueue.IsEmpty())
     {
-#ifdef HEADLESS_JS
-      timerRunning = false;
-#else
+#ifndef HEADLESS_JS
       m_rendering.revoke();
 #endif
     }
@@ -160,12 +154,12 @@ void Timing::createTimer(
 
   if (m_timerQueue.IsEmpty()) {
 #ifdef HEADLESS_JS
-    timerRunning = true;
     std::thread ([this]() {
       while (!m_timerQueue.IsEmpty()) {
-        if (!timerRunning) return;
-        std::this_thread::sleep_for(std::chrono::milliseconds(16));
-        if (!timerRunning) return;
+        auto sleepDuraction = std::chrono::duration_cast<std::chrono::milliseconds>(
+            m_timerQueue.Front().TargetTime - winrt::DateTime::clock::now());
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(sleepDuraction));
         OnRendering();
       }
       }).detach();
@@ -192,9 +186,7 @@ void Timing::deleteTimer(int64_t id) {
 
   if (m_timerQueue.IsEmpty())
   {
-#ifdef HEADLESS_JS
-    timerRunning = false;
-#else
+#ifndef HEADLESS_JS
     m_rendering.revoke();
 #endif
   }
