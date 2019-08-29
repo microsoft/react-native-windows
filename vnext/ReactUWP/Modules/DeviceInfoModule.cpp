@@ -47,13 +47,12 @@ folly::dynamic DeviceInfo::getDimensions(
           displayInfo != nullptr ? displayInfo.LogicalDpi() : 100));
 }
 
-void DeviceInfo::update() {  
+void DeviceInfo::update() {
   m_dimensions = getDimensions(
       winrt::Windows::Graphics::Display::DisplayInformation::
           GetForCurrentView(),
       winrt::Windows::UI::Xaml::Window::Current().CoreWindow());
 }
-
 
 //
 // DeviceInfoModule
@@ -61,7 +60,8 @@ void DeviceInfo::update() {
 const char *DeviceInfoModule::name = "DeviceInfo";
 DeviceInfoModule *DeviceInfoModule::s_currentInstance = nullptr;
 
-DeviceInfoModule::DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo) : m_deviceInfo(std::move(deviceInfo)){
+DeviceInfoModule::DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo)
+    : m_deviceInfo(std::move(deviceInfo)) {
   s_currentInstance = this;
 }
 

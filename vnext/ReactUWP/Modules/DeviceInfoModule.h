@@ -46,7 +46,6 @@ class DeviceInfoModule : public facebook::xplat::module::CxxModule {
   static const char *name;
 
  private:
-
   static DeviceInfoModule *s_currentInstance;
 
   void sendDimensionsChangedEvent();

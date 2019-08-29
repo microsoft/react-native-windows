@@ -33,7 +33,6 @@ AppTheme::AppTheme(
     : react::windows::AppTheme(),
       m_wkReactInstance(reactInstance),
       m_queueThread(defaultQueueThread) {
-
   s_currentInstance = this;
 }
 
@@ -62,8 +61,7 @@ void AppTheme::uiDependentOperations() {
 
   m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
       winrt::auto_revoke,
-      [this](const auto &, const auto &) { fireHighContrastChanged();
-      });
+      [this](const auto &, const auto &) { fireHighContrastChanged(); });
 
   m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(
       winrt::auto_revoke, [this](const auto &, const auto &) {
