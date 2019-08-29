@@ -228,7 +228,7 @@ bool TryUpdateBackgroundBrush(
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.ViewBackground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::ViewBackgroundProperty());
@@ -255,7 +255,7 @@ bool TryUpdateBorderProperties(
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (propertyValue.isNumber())
+    if (IsValidColorValue(propertyValue))
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::BorderBrushProperty());

@@ -13,6 +13,7 @@
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
 namespace winrt {
+using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Interop;
 } // namespace winrt
@@ -315,6 +316,13 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         m_verticalOffset = 0;
 
       updateOffset = true;
+    } else if (propertyName == "isOverlayEnabled") {
+      auto overlayMode = winrt::LightDismissOverlayMode::Off;
+      if (propertyValue.isBool() && propertyValue.asBool()) {
+        overlayMode = winrt::LightDismissOverlayMode::On;
+      }
+
+      m_flyout.LightDismissOverlayMode(overlayMode);
     }
   }
 
@@ -452,7 +460,8 @@ folly::dynamic FlyoutViewManager::GetNativeProps() const {
 
   props.update(folly::dynamic::object("horizontalOffset", "number")(
       "isLightDismissEnabled", "boolean")("isOpen", "boolean")(
-      "placement", "number")("target", "number")("verticalOffset", "number"));
+      "placement", "number")("target", "number")("verticalOffset", "number")(
+      "isOverlayEnabled", "boolean"));
 
   return props;
 }
