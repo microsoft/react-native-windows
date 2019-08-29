@@ -110,6 +110,9 @@ class UwpReactInstance
   void OnHitError(const std::string &error) noexcept;
 
  private:
+#if defined(USE_V8)
+  static std::string getApplicationLocalFolder();
+#endif
   std::shared_ptr<WorkerMessageQueueThread> m_initThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_defaultNativeThread;
