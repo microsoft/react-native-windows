@@ -220,7 +220,8 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       react::windows::AppThemeModule::name,
       [uwpInstance, messageQueue]() mutable {
         return std::make_unique<react::windows::AppThemeModule>(
-            std::make_shared<react::uwp::AppTheme>(uwpInstance.lock(), messageQueue));
+            std::make_shared<react::uwp::AppTheme>(
+                uwpInstance.lock(), messageQueue));
       },
       messageQueue);
 
@@ -243,10 +244,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       "I18nManager",
-      []() mutable {
-        return createI18nModule(
-            std::make_unique<I18nModule>());
-      },
+      []() mutable { return createI18nModule(std::make_unique<I18nModule>()); },
       messageQueue);
 
   modules.emplace_back(
@@ -277,7 +275,8 @@ void UwpReactInstance::Start(
 
 #ifdef HEADLESS_JS
   m_defaultNativeThread =
-      std::make_shared<react::uwp::HeadlessJSMessageQueueThread>(/*isBatching*/ false);
+      std::make_shared<react::uwp::HeadlessJSMessageQueueThread>(
+          /*isBatching*/ false);
   m_batchingNativeThread =
       std::make_shared<react::uwp::HeadlessJSMessageQueueThread>(
           /*isBatching*/ true);
@@ -294,9 +293,7 @@ void UwpReactInstance::Start(
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(
       m_initThread);
-  m_initThread->runOnQueueSync([this,
-                                spThis,
-                                settings]() mutable {
+  m_initThread->runOnQueueSync([this, spThis, settings]() mutable {
     // Setup DevSettings based on our own internal structure
     auto devSettings(std::make_shared<facebook::react::DevSettings>());
     devSettings->debugBundlePath = settings.DebugBundlePath;

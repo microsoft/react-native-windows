@@ -18,34 +18,25 @@ HeadlessJSMessageQueueThread::~HeadlessJSMessageQueueThread() {
   m_workerMessageQueue = nullptr;
 }
 
-void HeadlessJSMessageQueueThread::runOnQueue(std::function<void()>&& func)
-{
-  if (m_uiThreadQueue != nullptr)
-  {
+void HeadlessJSMessageQueueThread::runOnQueue(std::function<void()> &&func) {
+  if (m_uiThreadQueue != nullptr) {
     m_uiThreadQueue->runOnQueue(std::move(func));
-  }
-  else
-  {
+  } else {
     m_workerMessageQueue->runOnQueue(std::move(func));
   }
 }
 
-void HeadlessJSMessageQueueThread::runOnQueueSync(std::function<void()>&& func)
-{
-  if (m_uiThreadQueue != nullptr)
-  {
+void HeadlessJSMessageQueueThread::runOnQueueSync(
+    std::function<void()> &&func) {
+  if (m_uiThreadQueue != nullptr) {
     m_uiThreadQueue->runOnQueueSync(std::move(func));
-  }
-  else
-  {
+  } else {
     m_workerMessageQueue->runOnQueueSync(std::move(func));
   }
 }
 
-void HeadlessJSMessageQueueThread::quitSynchronous()
-{
-  if (m_uiThreadQueue != nullptr)
-  {
+void HeadlessJSMessageQueueThread::quitSynchronous() {
+  if (m_uiThreadQueue != nullptr) {
     m_uiThreadQueue->quitSynchronous();
   }
 
@@ -54,12 +45,12 @@ void HeadlessJSMessageQueueThread::quitSynchronous()
 
 void HeadlessJSMessageQueueThread::onBatchComplete() {
   if (m_uiThreadQueue != nullptr && m_isBatching) {
-    static_cast<BatchingMessageQueueThread*>(
-        m_uiThreadQueue.get())
+    static_cast<BatchingMessageQueueThread *>(m_uiThreadQueue.get())
         ->onBatchComplete();
   }
 }
 
-void HeadlessJSMessageQueueThread::setUIMessageQueue(std::unique_ptr<MessageQueueThread> uiMessageQueueThread) {
+void HeadlessJSMessageQueueThread::setUIMessageQueue(
+    std::unique_ptr<MessageQueueThread> uiMessageQueueThread) {
   m_uiThreadQueue = std::move(uiMessageQueueThread);
 }

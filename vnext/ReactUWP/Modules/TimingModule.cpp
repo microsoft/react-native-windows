@@ -108,13 +108,11 @@ void Timing::OnRendering(
     if (next.Repeat)
       m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
 
-    if (m_timerQueue.IsEmpty())
-    {
+    if (m_timerQueue.IsEmpty()) {
 #ifndef HEADLESS_JS
       m_rendering.revoke();
 #endif
     }
-      
   }
 
   if (!readyTimers.empty()) {
@@ -152,19 +150,22 @@ void Timing::createTimer(
 
   if (m_timerQueue.IsEmpty()) {
 #ifdef HEADLESS_JS
-    std::thread ([this]() {
+    std::thread([this]() {
       while (!m_timerQueue.IsEmpty()) {
-        auto sleepDuraction = std::chrono::duration_cast<std::chrono::milliseconds>(
-            m_timerQueue.Front().TargetTime - winrt::DateTime::clock::now());
+        auto sleepDuraction =
+            std::chrono::duration_cast<std::chrono::milliseconds>(
+                m_timerQueue.Front().TargetTime -
+                winrt::DateTime::clock::now());
 
         std::this_thread::sleep_for(std::chrono::milliseconds(sleepDuraction));
         OnRendering();
       }
-      }).detach();
+    })
+        .detach();
 #else
     m_rendering.revoke();
     m_rendering = winrt::CompositionTarget::Rendering(
-      winrt::auto_revoke, { this, &Timing::OnRendering });
+        winrt::auto_revoke, {this, &Timing::OnRendering});
 #endif
   }
 
@@ -182,13 +183,11 @@ void Timing::createTimer(
 void Timing::deleteTimer(int64_t id) {
   m_timerQueue.Remove(id);
 
-  if (m_timerQueue.IsEmpty())
-  {
+  if (m_timerQueue.IsEmpty()) {
 #ifndef HEADLESS_JS
     m_rendering.revoke();
 #endif
   }
-    
 }
 
 void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) {

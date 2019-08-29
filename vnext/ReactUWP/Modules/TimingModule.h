@@ -73,7 +73,7 @@ class Timing {
 
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
-  
+
   void OnRendering(
 #ifndef HEADLESS_JS
       const winrt::Windows::Foundation::IInspectable &,
@@ -87,9 +87,8 @@ class Timing {
 
 #ifndef HEADLESS_JS
   winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker
-    m_rendering;
+      m_rendering;
 #endif
-
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {

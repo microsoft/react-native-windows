@@ -3,34 +3,37 @@
 
 #pragma once
 
-#include <cxxreact/MessageQueueThread.h>
 #include <ReactWindowsCore/BatchingMessageQueueThread.h>
+#include <cxxreact/MessageQueueThread.h>
 
 namespace react {
-  namespace uwp {
+namespace uwp {
 
-    /// This is a Message Queue Thread that wraps two seperate Message Queue Threads.
-    /// The idea is to allow starting a react instance before a Window or UI Dispatcher are available (running background tasks)
-    /// Then once AttachRootView is called a new Message Queue Thread can be provided with setUIMessageQueue.
+/// This is a Message Queue Thread that wraps two seperate Message Queue
+/// Threads. The idea is to allow starting a react instance before a Window or
+/// UI Dispatcher are available (running background tasks) Then once
+/// AttachRootView is called a new Message Queue Thread can be provided with
+/// setUIMessageQueue.
 
-    class HeadlessJSMessageQueueThread
-      : public facebook::react::BatchingMessageQueueThread {
-    public:
-      HeadlessJSMessageQueueThread(bool isBatching);
-      virtual ~HeadlessJSMessageQueueThread();
+class HeadlessJSMessageQueueThread
+    : public facebook::react::BatchingMessageQueueThread {
+ public:
+  HeadlessJSMessageQueueThread(bool isBatching);
+  virtual ~HeadlessJSMessageQueueThread();
 
-      virtual void runOnQueue(std::function<void()>&& func);
-      virtual void runOnQueueSync(std::function<void()>&& func);
-      virtual void quitSynchronous();
-      virtual void onBatchComplete();
+  virtual void runOnQueue(std::function<void()> &&func);
+  virtual void runOnQueueSync(std::function<void()> &&func);
+  virtual void quitSynchronous();
+  virtual void onBatchComplete();
 
-      void setUIMessageQueue(std::unique_ptr<MessageQueueThread> uiMessageQueueThread);
+  void setUIMessageQueue(
+      std::unique_ptr<MessageQueueThread> uiMessageQueueThread);
 
-    private:
-      std::unique_ptr<MessageQueueThread> m_workerMessageQueue;
-      std::unique_ptr<MessageQueueThread> m_uiThreadQueue;
-      bool m_isBatching;
-    };
+ private:
+  std::unique_ptr<MessageQueueThread> m_workerMessageQueue;
+  std::unique_ptr<MessageQueueThread> m_uiThreadQueue;
+  bool m_isBatching;
+};
 
-  } // namespace uwp
+} // namespace uwp
 } // namespace react
