@@ -39,6 +39,10 @@ void AnimationDriver::StartAnimation() {
   const auto animatedValue = GetAnimatedValue();
 
   if (animatedValue) {
+    auto const previousValue = animatedValue->Value();
+    auto const rawValue = animatedValue->RawValue();
+    auto const offsetValue = animatedValue->Offset();
+
     animatedValue->PropertySet().StartAnimation(
         ValueAnimatedNode::s_offsetName, animation);
     animatedValue->AddActiveAnimation(m_id);
@@ -61,17 +65,19 @@ void AnimationDriver::StartAnimation() {
   m_scopedBatch = scopedBatch;
 }
 
-void AnimationDriver::StopAnimation() {
+void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
   if (const auto animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
-    animatedValue->RemoveActiveAnimation(m_id);
+    if (!ignoreCompletedHandlers) {
+      animatedValue->RemoveActiveAnimation(m_id);
 
-    if (m_scopedBatch) {
-      if (m_endCallback)
-        m_endCallback(std::vector<folly::dynamic>{
-            folly::dynamic::object("finished", false)});
-      m_scopedBatch.Completed(m_scopedBatchCompletedToken);
-      m_scopedBatch = nullptr;
+      if (m_scopedBatch) {
+        if (m_endCallback)
+          m_endCallback(std::vector<folly::dynamic>{
+              folly::dynamic::object("finished", false)});
+        m_scopedBatch.Completed(m_scopedBatchCompletedToken);
+        m_scopedBatch = nullptr;
+      }
     }
   }
 }

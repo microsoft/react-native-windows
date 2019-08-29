@@ -160,6 +160,7 @@
     <ClInclude Include="Base\ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />

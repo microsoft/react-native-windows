@@ -13,6 +13,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 #include "TransformAnimatedNode.h"
+#include "TrackingAnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
 namespace react {
@@ -34,6 +35,7 @@ class StyleAnimatedNode;
 class PropsAnimatedNode;
 class ValueAnimatedNode;
 class TransformAnimatedNode;
+class TrackingAnimatedNode;
 class AnimationDriver;
 class EventAnimationDriver;
 class NativeAnimatedNodeManager {
@@ -48,6 +50,18 @@ class NativeAnimatedNodeManager {
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
   void DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
   void StopAnimation(int64_t animationId);
+  void RestartTrackingAnimatedNode(
+      int64_t animationId,
+      int64_t animatedToValueTag,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void StartTrackingAnimatedNode(
+      int64_t animationId,
+      int64_t animatedNodeTag,
+      int64_t animatedToValueTag,
+      const folly::dynamic &animationConfig,
+      const Callback &endCallback,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager,
+      bool track = true);
   void StartAnimatingNode(
       int64_t animationId,
       int64_t animatedNodeTag,
@@ -73,17 +87,14 @@ class NativeAnimatedNodeManager {
       int64_t propsNodeTag,
       const std::shared_ptr<IReactInstance> &instance);
 
-  AnimationDriver *GetAnimationNode(int64_t tag);
-
   AnimatedNode *GetAnimatedNode(int64_t tag);
   ValueAnimatedNode *GetValueAnimatedNode(int64_t tag);
   PropsAnimatedNode *GetPropsAnimatedNode(int64_t tag);
   StyleAnimatedNode *GetStyleAnimatedNode(int64_t tag);
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
+  TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
 
  private:
-  std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>>
-      m_animationNodes{};
   std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>>
       m_valueNodes{};
   std::unordered_map<int64_t, std::unique_ptr<PropsAnimatedNode>>
@@ -92,13 +103,20 @@ class NativeAnimatedNodeManager {
       m_styleNodes{};
   std::unordered_map<int64_t, std::unique_ptr<TransformAnimatedNode>>
       m_transformNodes{};
+  std::unordered_map<int64_t, std::unique_ptr<TrackingAnimatedNode>>
+      m_trackingNodes{};
   std::unordered_map<
       std::tuple<int64_t, std::string>,
       std::vector<std::unique_ptr<EventAnimationDriver>>>
       m_eventDrivers{};
   std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>>
       m_activeAnimations{};
+  std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
+
+  static constexpr std::string_view s_toValueIdName{"toValue"};
+  static constexpr std::string_view s_framesName{"frames"};
+  static constexpr std::string_view s_dynamicToValuesName{"dynamicToValues"};
 };
 } // namespace uwp
 } // namespace react

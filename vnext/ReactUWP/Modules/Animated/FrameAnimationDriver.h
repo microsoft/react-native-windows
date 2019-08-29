@@ -20,7 +20,13 @@ class FrameAnimationDriver : public AnimationDriver {
   std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
   MakeAnimation(const folly::dynamic &config) override;
 
- private:
+  double ToValue() override;
+
+  inline std::vector<double> Frames() override {
+    return m_frames;
+  }
+
+  private:
   std::vector<double> m_frames{};
   double m_toValue{0};
 };
