@@ -390,7 +390,7 @@ void ChakraExecutor::initOnJSVMThread() {
     installGlobalFunction("nativePerformanceNow", JSNativeHooks::nowHookJNF);
   }
 
-// JS Tracing enabled only in verbose mode. 
+// JS Tracing enabled only in verbose mode.
 #ifdef ENABLE_JS_SYSTRACE
   addNativeTracingHooks();
   setGlobalVariable(

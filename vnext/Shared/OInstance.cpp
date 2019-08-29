@@ -426,7 +426,6 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
-
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
 
@@ -606,7 +605,6 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 void InstanceImpl::loadBundleInternal(
     std::string &&jsBundleRelativePath,
     bool synchronously) {
-
   std::string bytecodeFileNameCopy{m_devSettings->bytecodeFileName};
 
   // load JS
