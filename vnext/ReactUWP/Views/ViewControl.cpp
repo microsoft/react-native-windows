@@ -9,7 +9,7 @@
 namespace winrt {
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml;
-}
+} // namespace winrt
 
 namespace winrt::react::uwp::implementation {
 
