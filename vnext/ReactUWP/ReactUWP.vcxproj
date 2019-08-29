@@ -99,6 +99,12 @@
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
     <Link>
@@ -109,6 +115,12 @@
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
     <Link>
@@ -119,6 +131,12 @@
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</RuntimeTypeInfo>
+    </ClCompile>
+    <ClCompile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</RuntimeTypeInfo>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'=='true'">
     <Link>
@@ -137,11 +155,7 @@
     <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
   </Target>
   <ItemGroup>
-    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
-    <ClInclude Include="..\include\ReactUWP\IReactInstance.h" />
-    <ClInclude Include="..\include\ReactUWP\IXamlRootView.h" />
-    <ClInclude Include="..\include\ReactUWP\ReactUwp.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
@@ -149,7 +163,6 @@
     <ClInclude Include="..\include\ReactUWP\Views\ShadowNodeBase.h" />
     <ClInclude Include="..\include\ReactUWP\Views\KeyboardEventHandler.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ViewManagerBase.h" />
-    <ClInclude Include="..\include\ReactUWP\XamlView.h" />
     <ClInclude Include="ABI\ABIModuleLoader.h" />
     <ClInclude Include="ABI\comTemplateLibrary.h" />
     <ClInclude Include="ABI\HStringHelper.h" />
@@ -157,8 +170,8 @@
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
-    <ClInclude Include="Utils\BaseScriptStoreImpl.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
@@ -261,7 +274,6 @@
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
-    <ClCompile Include="Utils\BaseScriptStoreImpl.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />

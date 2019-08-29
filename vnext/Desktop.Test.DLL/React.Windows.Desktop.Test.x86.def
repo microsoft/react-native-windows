@@ -1,0 +1,14 @@
+EXPORTS
+
+; Microsoft::React::Test::WebSocketServer
+?Accept@WebSocketServer@Test@React@Microsoft@@AAEXXZ
+?OnAccept@WebSocketServer@Test@React@Microsoft@@AAEXVerror_code@system@boost@@@Z
+??0WebSocketServer@Test@React@Microsoft@@QAE@G_N@Z
+??0WebSocketServer@Test@React@Microsoft@@QAE@H_N@Z
+?Start@WebSocketServer@Test@React@Microsoft@@QAEXXZ
+?Stop@WebSocketServer@Test@React@Microsoft@@QAEXXZ
+?SetOnConnection@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GXXZ@std@@@Z
+?SetOnHandshake@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GXAAU?$message@$0A@U?$basic_string_body@DU?$char_traits@D@std@@V?$allocator@D@2@@http@beast@boost@@V?$basic_fields@V?$allocator@D@std@@@234@@http@beast@boost@@@Z@std@@@Z
+?SetOnMessage@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z@std@@@Z
+?SetMessageFactory@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6G?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@$$QAV12@@Z@std@@@Z
+?SetOnError@WebSocketServer@Test@React@Microsoft@@QAEX$$QAV?$function@$$A6GX$$QAUError@IWebSocket@React@Microsoft@@@Z@std@@@Z

@@ -1,6 +1,53 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Wed, 21 Aug 2019 21:34:46 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Aug 2019 20:21:10 GMT and should not be manually modified.
+
+## 0.15.0
+Thu, 29 Aug 2019 20:21:10 GMT
+
+### Minor changes
+
+- View updates (randyfl@microsoft.com)
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.71 (53619745+rnbot@users.noreply.github.com)
+## 0.14.6
+Thu, 29 Aug 2019 01:33:54 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.70 (53619745+rnbot@users.noreply.github.com)
+## 0.14.5
+Wed, 28 Aug 2019 18:34:51 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.69 (53619745+rnbot@users.noreply.github.com)
+## 0.14.4
+Tue, 27 Aug 2019 04:41:01 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.68 (53619745+rnbot@users.noreply.github.com)
+## 0.14.3
+Sat, 24 Aug 2019 15:32:08 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.67 (53619745+rnbot@users.noreply.github.com)
+## 0.14.2
+Fri, 23 Aug 2019 01:27:19 GMT
+
+### Patches
+
+- turn off RTTI (email not defined)
+
+## 0.14.1
+Thu, 22 Aug 2019 21:17:45 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.49 (53619745+rnbot@users.noreply.github.com)
 
 ## 0.14.0
 Wed, 21 Aug 2019 21:34:46 GMT

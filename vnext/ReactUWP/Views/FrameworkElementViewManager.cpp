@@ -43,8 +43,8 @@ void FrameworkElementViewManager::TransferProperty(
     winrt::DependencyProperty dp) {
   auto oldValue = oldView.ReadLocalValue(dp);
   if (oldValue != nullptr) {
-    newView.SetValue(dp, oldValue);
     oldView.ClearValue(dp);
+    newView.SetValue(dp, oldValue);
   }
 }
 
@@ -68,6 +68,8 @@ void FrameworkElementViewManager::TransferProperties(
   TransferProperty(
       oldView, newView, winrt::FrameworkElement::FlowDirectionProperty());
   TransferProperty(oldView, newView, winrt::Canvas::ZIndexProperty());
+  TransferProperty(oldView, newView, ViewPanel::LeftProperty());
+  TransferProperty(oldView, newView, ViewPanel::TopProperty());
 
   // Accessibility Properties
   TransferProperty(
