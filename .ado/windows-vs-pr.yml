@@ -41,7 +41,7 @@ jobs:
           UseRNFork: false
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 45 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -139,7 +139,7 @@ jobs:
     displayName: Verify react-native init
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -242,7 +242,7 @@ jobs:
           BuildPlatform: arm
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -317,12 +317,13 @@ jobs:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
 
-
   - job: RNWNugetPR
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
       vmImage: vs2017-win2016
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: none #skip checking out the default repository resource
 
@@ -337,6 +338,8 @@ jobs:
     displayName: Verify change files + formatting
     pool:
       vmImage: vs2017-win2016
+    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
@@ -394,7 +397,7 @@ jobs:
         #  UTTestOutputConfigDir: Release
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:
