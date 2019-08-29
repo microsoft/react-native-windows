@@ -9,8 +9,9 @@
 namespace react {
   namespace uwp {
 
-    // TALK ABOUT HOW THIS IS A REALLY COOL HACK
-
+    /// This is a Message Queue Thread that wraps two seperate Message Queue Threads.
+    /// The idea is to allow starting a react instance before a Window or UI Dispatcher are available (running background tasks)
+    /// Then once AttachRootView is called a new Message Queue Thread can be provided with setUIMessageQueue.
 
     class HeadlessJSMessageQueueThread
       : public facebook::react::BatchingMessageQueueThread {
