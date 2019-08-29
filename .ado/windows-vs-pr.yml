@@ -132,7 +132,7 @@ jobs:
         displayName: NuGet restore - SampleApps
         inputs:
           command: restore
-          restoreSolution: ackages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: MSBuild@1
