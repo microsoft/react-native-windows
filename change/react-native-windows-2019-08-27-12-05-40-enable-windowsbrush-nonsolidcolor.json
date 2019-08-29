@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Allow windowsbrush: color syntax to use non-SolidColor brushes",
+  "packageName": "react-native-windows",
+  "email": "thshea@microsoft.com",
+  "commit": "1f35ddd032b48531ee572ca9d56850d46ce6025f",
+  "date": "2019-08-27T19:05:40.749Z"
+}
