@@ -18,6 +18,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactCommunity.Cpp.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
   </PropertyGroup>
@@ -34,7 +35,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -44,7 +45,6 @@
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
       -->
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;BOOST_ASIO_HAS_IOCP;_WINSOCK_DEPRECATED_NO_WARNINGS;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;REACTNATIVEWIN32_EXPORTS;FOLLY_NO_CONFIG;NOMINMAX;GLOG_NO_ABBREVIATED_SEVERITIES;_HAS_AUTO_PTR_ETC;CHAKRACORE;RN_EXPORT=;GTEST_LANG_CXX11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      
       <!-- /Zc:strictStrings enforces the standard C++ const qualifications for
       string literals. It prevents code like
         wchar_t* str = L"hello";
@@ -113,10 +113,9 @@
     <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
-    <Import Project="$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets" Condition="Exists('$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" />
-    <Import Project="$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets" Condition="Exists('$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets')" />
+    <Import Project="..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -125,9 +124,8 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\googletest.redist.1.8.3\build\native\googletest.redist.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\googletest.1.8.3\build\native\googletest.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.9\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.36\build\native\ChakraCore.Debugger.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
   </Target>
 </Project>

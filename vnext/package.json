@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.110",
+  "version": "0.59.0-vnext.161",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,8 +13,6 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "start": "react-native start",
-    "format": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
-    "format:verify": "node Scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
@@ -22,7 +20,7 @@
   "rnpm": {
     "haste": {
       "platforms": [
-        "uwp"
+        "windows"
       ],
       "providesModuleNodeModules": [
         "react-native-windows"
@@ -32,8 +30,11 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
+    "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
+    "glob": "^7.1.1",
+    "ora": "^3.4.0",
     "prop-types": "^15.5.8",
     "react-native-local-cli": "^1.0.0-alpha.5",
     "react-timer-mixin": "^0.13.2",
@@ -44,23 +45,25 @@
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.3.8",
+    "@microsoft/api-extractor": "^7.3.8",
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
-    "@types/react": "16.8.15",
+    "@types/ora": "^3.2.0",
     "@types/react-native": "~0.57.51",
-    "clang-format": "1.2.4",
-    "eslint": "5.1.0",
+    "@types/react": "16.8.15",
     "eslint-plugin-prettier": "2.6.0",
+    "eslint": "5.1.0",
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.70.tar.gz",
     "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz",
-    "typescript": "3.5.1"
+    "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.17 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.17.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.70 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.70.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [
