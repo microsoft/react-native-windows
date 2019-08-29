@@ -1,5 +1,5 @@
 {
-  "comment": "Fix building for consumers without hermes",
+  "comment": "Allow booting UwpReactInstance without a Window (background tasks)",
   "type": "prerelease",
   "packageName": "react-native-windows",
   "email": "stecrain@microsoft.com",
