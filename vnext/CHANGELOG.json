@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Aug 2019 01:41:01 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.161",
+      "version": "0.59.0-vnext.161",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Use PreparedScriptStore for V8 in win32",
+            "author": "tudorm@microsoft.com",
+            "commit": "6e156a0cc14cfb9e88071fbb17f985d63df4e68c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Aug 2019 01:33:54 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.160",
       "version": "0.59.0-vnext.160",

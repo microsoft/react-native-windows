@@ -24,6 +24,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseScriptStoreImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="CxxMessageQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -120,6 +123,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AsyncStorageModule.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScriptStoreImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CxxMessageQueue.h">

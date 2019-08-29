@@ -2,20 +2,10 @@
 
 #include "BaseScriptStoreImpl.h"
 
-#include <winrt/Windows.Storage.h>
-
-#include <codecvt>
 #include <fstream>
-#include <locale>
 
-using namespace facebook;
-
-namespace winrt {
-using namespace winrt::Windows::Storage;
-}; // namespace winrt
-
+namespace facebook {
 namespace react {
-namespace uwp {
 
 namespace {
 
@@ -172,15 +162,6 @@ std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(
   }
 
   return buffer;
-}
-
-std::string LocalFileSimpleBufferStore::getApplicationLocalFolder() {
-  auto local =
-      winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
-
-  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(
-             std::wstring(local.c_str(), local.size())) +
-      "\\";
 }
 
 bool LocalFileSimpleBufferStore::persistBuffer(
@@ -345,5 +326,5 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
   bufferStore_->persistBuffer(preparedScriptFilePath, std::move(newBuffer));
 }
 
-} // namespace uwp
 } // namespace react
+} // namespace facebook
