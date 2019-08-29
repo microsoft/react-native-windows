@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - master
+      - none # Disable GitHub Actions CI
 jobs:
   # This job is much the same as UWPPR, but runs after replacing the version of react-native
   # we are using with facebook/react-native instead of microsoft/react-native
@@ -332,7 +332,7 @@ jobs:
       - name: Run Desktop Unit Tests (Google Test)
         if: matrix.BuildPlatform == 'x64'
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe /TestAdapterPath:vnext\packages\GoogleTestAdapter.0.16.1\build\_common --InIsolation
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe /TestAdapterPath:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq" --InIsolation
 
       - name: "Copy Nuget source files"
         if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
