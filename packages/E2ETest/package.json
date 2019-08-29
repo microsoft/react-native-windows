@@ -1,0 +1,51 @@
+{
+  "name": "e2etest",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "postinstall": "node postinstall.js",
+    "start": "react-native start",
+    "lint": "just-scripts eslint",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "watch": "tsc -w",
+    "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
+    "test": "rimraf reports/* && npm run prettier && wdio",
+    "dev": "npm run prettier && wdio --spec"
+  },
+  "dependencies": {
+    "react": "16.8.3",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.69.tar.gz",
+    "react-native-windows": "0.59.0-vnext.159",
+    "react-native-windows-extended": "0.14.5",
+    "rnpm-plugin-windows": "^0.2.11"
+  },
+  "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@types/react": "16.8.15",
+    "@types/react-native": "~0.57.51",
+    "@wdio/appium-service": "^5.12.1",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^10.14.8",
+    "@wdio/cli": "^5.10.1",
+    "@wdio/local-runner": "^5.10.1",
+    "@wdio/mocha-framework": "^5.10.1",
+    "@wdio/junit-reporter": "^5.12.1",
+    "@wdio/sync": "^5.10.1",
+    "@wdio/dot-reporter": "5.11.7",
+    "chai": "^4.2.0",
+    "prettier": "^1.18.2",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.8.0",
+    "typescript": "^3.5.1",
+    "webdriverio": "^5.10.1",
+    "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
+    "appium": "1.14.1",
+    "rimraf": "3.0.0",
+    "metro-react-native-babel-preset": "0.55.0",
+    "react-test-renderer": "16.8.3"
+  }
+}
