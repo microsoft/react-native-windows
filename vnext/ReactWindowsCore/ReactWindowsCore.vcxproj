@@ -49,7 +49,13 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <!-- TODO: Figure out the right long-term way to integrate the Hermes and V8 dependencies -->
+    <VcpkgTriplet Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">x86-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='x64'">x64-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM'">arm-windows</VcpkgTriplet>
+    <VcpkgTriplet Condition="'$(Platform)'=='ARM64'">arm64-windows</VcpkgTriplet>
+  </PropertyGroup>
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
@@ -65,28 +71,30 @@
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(USE_V8)'=='true'">$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
     <Lib>
-      <AdditionalDependencies Condition="'$(USE_HERMES)'=='true'">hermes.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.0\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(USE_HERMES)'=='true'">$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(USE_V8)'=='true'">$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\installed\$(VcpkgTriplet)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies Condition="'$(USE_HERMES)'=='true'">hermes.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(USE_V8)'=='true'">v8jsi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\IUIManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\IViewManager.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h" />
-    <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h" />
     <ClInclude Include="..\include\ReactWindowsCore\unicode.h" />
     <ClInclude Include="..\include\ReactWindowsCore\ViewManager.h" />
     <ClInclude Include="AbiSafe.h" />
@@ -94,6 +102,7 @@
     <ClInclude Include="AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="BaseScriptStoreImpl.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="BatchingMessageQueueThread.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
@@ -133,6 +142,7 @@
     <ClCompile Include="AsyncStorage\AsyncStorageManager.cpp" />
     <ClCompile Include="AsyncStorage\FollyDynamicConverter.cpp" />
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp" />
+    <ClCompile Include="BaseScriptStoreImpl.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxMessageQueue.cpp" />
     <ClCompile Include="JSBigAbiString.cpp" />
     <ClCompile Include="LayoutAnimation.cpp" />
@@ -178,10 +188,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.1\build\native\ReactNative.Hermes.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.2\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>
-    <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'"
-     Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.
-     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />
+  <Target Name="EnsureReactNativewindowsDir" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(MSBuildThisFileDirectory)' != '$(ReactNativeWindowsDir)ReactWindowsCore\'" Text="The value of ReactNativeWindowsDir should be the actual location of the package, not a symlink.&#xD;&#xA;     MSBuildThisFileDirectory: '$(MSBuildThisFileDirectory)' - ReactNativeWindowsDir: '$(ReactNativeWindowsDir)ReactWindowsCore\''" />
   </Target>
-
 </Project>

@@ -234,7 +234,7 @@
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -244,6 +244,12 @@
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
