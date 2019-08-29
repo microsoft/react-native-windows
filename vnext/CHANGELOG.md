@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 Aug 2019 01:41:01 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Aug 2019 19:38:17 GMT and should not be manually modified.
 
+## 0.59.0-vnext.162
+Thu, 29 Aug 2019 19:38:17 GMT
+
+### Changes
+
+- Allow windowsbrush: color syntax to use non-SolidColor brushes (thshea@microsoft.com)
 ## 0.59.0-vnext.161
 Thu, 29 Aug 2019 01:41:01 GMT
 
