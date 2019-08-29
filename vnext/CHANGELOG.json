@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Aug 2019 20:21:10 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.163",
+      "version": "0.59.0-vnext.163",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.71",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "355971b39494c1a614b0db3f2de7c30b28788b4a"
+          },
+          {
+            "comment": "change file",
+            "author": "randyfl@microsoft.com",
+            "commit": "c8d5ae604e177fc6c119d2b1abd0448c09edfee7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 19:38:17 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.162",
+      "version": "0.59.0-vnext.162",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow windowsbrush: color syntax to use non-SolidColor brushes",
+            "author": "thshea@microsoft.com",
+            "commit": "1f35ddd032b48531ee572ca9d56850d46ce6025f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Aug 2019 01:41:01 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.161",
       "version": "0.59.0-vnext.161",

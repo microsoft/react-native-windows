@@ -18,6 +18,9 @@ struct dynamic;
 namespace react {
 namespace uwp {
 
+winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(
+    const folly::dynamic &d);
+
 REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::Brush)
 BrushFrom(const folly::dynamic &d);
