@@ -29,8 +29,10 @@ class AppTheme : public react::windows::AppTheme {
   folly::dynamic getHighContrastColors();
   std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
+  void fireHighContrastChanged();
+  void fireThemeChanged();
   void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
-  void connectNativeEventHandlers();
+  void uiDependentOperations();
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;

@@ -33,9 +33,6 @@ AppTheme::AppTheme(
     : react::windows::AppTheme(),
       m_wkReactInstance(reactInstance),
       m_queueThread(defaultQueueThread) {
-  m_currentTheme = winrt::Application::Current().RequestedTheme();
-  m_isHighContrast = m_accessibilitySettings.HighContrast();
-  m_highContrastColors = getHighContrastColors();
 
   s_currentInstance = this;
 }
@@ -54,18 +51,18 @@ bool AppTheme::getIsHighContrast() {
 
 /*static*/ void AppTheme::uiThreadAvailable() {
   if (s_currentInstance != nullptr) {
-    s_currentInstance->connectNativeEventHandlers();
+    s_currentInstance->uiDependentOperations();
   }
 }
 
-void AppTheme::connectNativeEventHandlers() {
-  m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
-      winrt::auto_revoke, [this](const auto &, const auto &) {
-        folly::dynamic eventData = folly::dynamic::object(
-            "highContrastColors", getHighContrastColors())(
-            "isHighContrast", getIsHighContrast());
+void AppTheme::uiDependentOperations() {
+  m_currentTheme = winrt::Application::Current().RequestedTheme();
+  m_isHighContrast = m_accessibilitySettings.HighContrast();
+  m_highContrastColors = getHighContrastColors();
 
-        fireEvent("highContrastChanged", std::move(eventData));
+  m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
+      winrt::auto_revoke,
+      [this](const auto &, const auto &) { fireHighContrastChanged();
       });
 
   m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(
@@ -76,13 +73,25 @@ void AppTheme::connectNativeEventHandlers() {
               !m_accessibilitySettings.HighContrast()) {
             m_currentTheme = winrt::Application::Current().RequestedTheme();
 
-            folly::dynamic eventData =
-                folly::dynamic::object("currentTheme", getCurrentTheme());
-
-            fireEvent("appThemeChanged", std::move(eventData));
+            fireThemeChanged();
           }
         });
       });
+}
+
+void AppTheme::fireHighContrastChanged() {
+  folly::dynamic eventData =
+      folly::dynamic::object("highContrastColors", getHighContrastColors())(
+          "isHighContrast", getIsHighContrast());
+
+  fireEvent("highContrastChanged", std::move(eventData));
+}
+
+void AppTheme::fireThemeChanged() {
+  folly::dynamic eventData =
+      folly::dynamic::object("currentTheme", getCurrentTheme());
+
+  fireEvent("appThemeChanged", std::move(eventData));
 }
 
 // Returns the RBG values for the 8 relevant High Contrast elements.
