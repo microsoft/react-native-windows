@@ -14,6 +14,15 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+const checkOrCreate_node_modules = () => {
+  const p = path.join(__dirname, 'node_modules');
+
+  if (!fs.existsSync(p)) {
+    fs.mkdirSync(p);
+  }
+};
+checkOrCreate_node_modules();
+
 const link = (name, target) => {
   const p = path.join(__dirname, 'node_modules', name);
 
