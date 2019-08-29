@@ -289,9 +289,6 @@
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\BaseScriptStoreImpl.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -620,9 +617,6 @@
     </ClInclude>
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
       <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\BaseScriptStoreImpl.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
       <Filter>Threading</Filter>

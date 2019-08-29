@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-extended",
-  "version": "0.14.5",
+  "version": "0.15.0",
   "description": "Additional react-native-windows components that are not part of RN lean-core.",
   "main": "lib/index.js",
   "repository": {
@@ -18,7 +18,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "react-native-windows": "0.59.0-vnext.159"
+    "react-native-windows": "0.59.0-vnext.164"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^0.0.5",
@@ -34,12 +34,12 @@
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
     "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.69.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.69 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.69.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.71 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [

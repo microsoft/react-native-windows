@@ -5,8 +5,7 @@
  */
 
 import React = require('react');
-import {Text, View, Button} from 'react-native';
-import {Alert} from '../index.windows';
+import {Alert, Text, View, Button} from 'react-native';
 
 class AlertExample extends React.Component {
   state = {

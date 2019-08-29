@@ -8,8 +8,8 @@
 #include <tuple>
 #include <vector>
 
+namespace facebook {
 namespace react {
-namespace uwp {
 
 struct BufferStore {
   virtual std::unique_ptr<const facebook::jsi::Buffer> getBuffer(
@@ -24,8 +24,6 @@ class LocalFileSimpleBufferStore : public BufferStore {
   LocalFileSimpleBufferStore(const std::string &storeDirectory)
       : storeDirectory_(storeDirectory) {}
 
-  LocalFileSimpleBufferStore() : storeDirectory_(getApplicationLocalFolder()) {}
-
   std::unique_ptr<const facebook::jsi::Buffer> getBuffer(
       const std::string &bufferId) noexcept override;
   bool persistBuffer(
@@ -33,7 +31,6 @@ class LocalFileSimpleBufferStore : public BufferStore {
       std::unique_ptr<const facebook::jsi::Buffer>) noexcept override;
 
  private:
-  std::string getApplicationLocalFolder();
   std::string storeDirectory_;
 };
 
@@ -71,9 +68,6 @@ class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
       : bufferStore_(
             std::make_shared<LocalFileSimpleBufferStore>(storeDirectory)) {}
 
-  BasePreparedScriptStoreImpl()
-      : bufferStore_(std::make_shared<LocalFileSimpleBufferStore>()) {}
-
   BasePreparedScriptStoreImpl(std::shared_ptr<BufferStore> bufferStore)
       : bufferStore_(std::move(bufferStore)) {}
 
@@ -105,5 +99,5 @@ class BaseScriptStoreImpl : public facebook::jsi::ScriptStore {
   std::shared_ptr<ScriptVersionProvider> versionProvider_;
 };
 
-} // namespace uwp
 } // namespace react
+} // namespace facebook
