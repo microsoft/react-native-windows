@@ -78,9 +78,7 @@ void ImageShadowNode::createView() {
       [this, reactImage](const auto &, const bool &succeeded) {
         ImageSource source{reactImage->Source()};
 
-        EmitImageEvent(
-            succeeded ? "topLoad" : "topError",
-            source);
+        EmitImageEvent(succeeded ? "topLoad" : "topError", source);
         EmitImageEvent("topLoadEnd", source);
       });
 }
@@ -117,7 +115,6 @@ void ImageShadowNode::EmitImageEvent(
     const char *eventName,
     ImageSource &source) {
   if (auto instance{GetViewManager()->GetReactInstance().lock()}) {
-
     auto canvas{m_view.as<winrt::Canvas>()};
     int64_t tag = canvas.Tag().as<winrt::IPropertyValue>().GetInt64();
 

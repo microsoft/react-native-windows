@@ -19,14 +19,10 @@ class ImageShadowNode : public ShadowNodeBase {
   winrt::Windows::Foundation::Size m_maxSize{};
 
  private:
-  void EmitImageEvent(
-      const char *eventName,
-      ImageSource &source);
+  void EmitImageEvent(const char *eventName, ImageSource &source);
   void setSource(const folly::dynamic &data, const winrt::Size &maxSize);
   void updateMaxSize(const folly::dynamic &props);
-  float tryGetPropAsFloat(
-      const folly::dynamic &props,
-      const char *propName);
+  float tryGetPropAsFloat(const folly::dynamic &props, const char *propName);
 
   winrt::event_token m_onLoadEndToken;
 };
@@ -45,7 +41,6 @@ class ImageViewManager : public FrameworkElementViewManager {
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
-
 };
 } // namespace uwp
 } // namespace react

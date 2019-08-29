@@ -55,7 +55,9 @@ void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
 }
 
-winrt::fire_and_forget ReactImage::Source(ImageSource source, const winrt::Size &maxSize) {
+winrt::fire_and_forget ReactImage::Source(
+    ImageSource source,
+    const winrt::Size &maxSize) {
   std::string uriString{source.uri};
   if (uriString.length() == 0) {
     m_onLoadEndEvent(*this, false);
@@ -90,7 +92,8 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source, const winrt::Size 
 
       if (!needsDownload || memoryStream) {
         auto surface = needsDownload || inlineData
-            ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream, maxSize)
+            ? winrt::LoadedImageSurface::StartLoadFromStream(
+                  memoryStream, maxSize)
             : winrt::LoadedImageSurface::StartLoadFromUri(uri, maxSize);
 
         strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
