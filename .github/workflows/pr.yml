@@ -301,7 +301,7 @@ jobs:
       - name: Run Desktop Unit Tests (Google Test)
         if: matrix.BuildPlatform == 'x64'
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe /TestAdapterPath:'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq' --InIsolation
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe /TestAdapterPath:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq" --InIsolation
 
       - name: "Copy Nuget source files"
         if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
