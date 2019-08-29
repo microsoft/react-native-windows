@@ -52,7 +52,12 @@ void HttpSession::Read()
   // Clear request.
   m_request = {};
 
-  http::async_read(m_socket, m_buffer, m_request, bind_executor(m_strand, std::bind(&HttpSession::OnRead, shared_from_this(), _1, _2)));
+  http::async_read(m_socket, m_buffer, m_request, bind_executor(m_strand, std::bind(
+    &HttpSession::OnRead,
+    shared_from_this(),
+    _1, // error code
+    _2  // transferred
+  )));
 }
 
 void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
@@ -81,7 +86,11 @@ void HttpSession::Respond()
     m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnGet(m_request));
 
     http::async_write(m_socket, *m_response, bind_executor(m_strand, std::bind(
-      &HttpSession::OnWrite, shared_from_this(), _1, _2, m_response->need_eof()
+      &HttpSession::OnWrite,
+      shared_from_this(),
+      _1,                     // error code
+      _2,                     // transferred
+      m_response->need_eof()  // close
     )));
 
     break;
@@ -94,7 +103,11 @@ void HttpSession::Respond()
     m_response->result(http::status::ok);
 
     http::async_write(m_socket, *m_response, bind_executor(m_strand, std::bind(
-      &HttpSession::OnWrite, shared_from_this(), _1, _2, m_response->need_eof()
+      &HttpSession::OnWrite,
+      shared_from_this(),
+      _1,                     // error code
+      _2,                     // transferred
+      m_response->need_eof()  // close
     )));
 
     break;
