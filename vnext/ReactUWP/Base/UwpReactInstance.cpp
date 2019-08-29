@@ -81,9 +81,15 @@
 #if !defined(OSS_RN)
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
-#elif defined(USE_V8)
-#include "Utils/BaseScriptStoreImpl.h"
+#endif // USE_HERMES
+#if defined(USE_V8)
+#include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
+
+#include <winrt/Windows.Storage.h>
+
+#include <codecvt>
+#include <locale>
 #else
 #include "ChakraJSIRuntimeHolder.h"
 #endif
@@ -379,7 +385,8 @@ void UwpReactInstance::Start(
           std::make_shared<facebook::react::HermesRuntimeHolder>();
 #elif defined(USE_V8)
       preparedScriptStore =
-          std::make_unique<react::uwp::BasePreparedScriptStoreImpl>();
+          std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(
+              getApplicationLocalFolder());
 
       devSettings->jsiRuntimeHolder =
           std::make_shared<facebook::react::V8JSIRuntimeHolder>(
@@ -598,6 +605,17 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
     m_xamlViewCreatedTestHook(view);
   }
 }
+
+#if defined(USE_V8)
+std::string UwpReactInstance::getApplicationLocalFolder() {
+  auto local =
+      winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+
+  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(
+             std::wstring(local.c_str(), local.size())) +
+      "\\";
+}
+#endif
 
 } // namespace uwp
 } // namespace react

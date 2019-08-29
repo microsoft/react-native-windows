@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 #include <IWebSocket.h>
-#include <WebSocketServer.h>
+#include <Test/WebSocketServer.h>
 
 #include <condition_variable>
 #include <future>
