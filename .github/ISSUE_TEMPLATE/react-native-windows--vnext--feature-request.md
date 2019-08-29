@@ -1,7 +1,7 @@
 ---
 name: React Native Windows (vNext) Feature request
 about: Suggest a new feature or idea
-title: "[PROPOSAL]: Your feature request"
+title: Your feature request
 labels: Proposal, vnext
 assignees: ''
 
