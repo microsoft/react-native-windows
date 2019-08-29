@@ -54,4 +54,4 @@ export class Alert {
   }
 }
 
-export default Alert;
+module.exports = Alert;
