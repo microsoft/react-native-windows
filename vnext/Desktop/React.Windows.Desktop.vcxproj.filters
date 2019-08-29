@@ -31,6 +31,9 @@
     <Filter Include="Source Files\Sandbox">
       <UniqueIdentifier>{fe618c6a-9de2-45a3-b40c-5029177e1063}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{3f37028f-20c7-4c5c-8504-11059529ab2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ABI\MemoryTracker.idl">
@@ -108,7 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MemoryTracker.h">
@@ -123,7 +128,6 @@
     <ClInclude Include="ABI\NativeTraceEventSource.h">
       <Filter>ABI</Filter>
     </ClInclude>
-    <ClInclude Include="TimingModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
