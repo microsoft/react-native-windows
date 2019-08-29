@@ -20,8 +20,6 @@
 #include <unknwnbase.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
-
-
 using namespace facebook::xplat;
 using namespace folly;
 namespace winrt {
