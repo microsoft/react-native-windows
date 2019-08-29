@@ -78,13 +78,14 @@ bool TimerQueue::IsEmpty() {
 // Timing
 //
 
-Timing::Timing(TimingModule *parent) : m_parent(parent), timerRunning(false) { }
+Timing::Timing(TimingModule *parent) : m_parent(parent) {
+  #ifdef HEADLESS_JS
+  timerRunning = false;
+  #endif
+}
 
 void Timing::Disconnect() {
   m_parent = nullptr;
-#ifdef HEADLESS_JS
-
-#endif
 }
 
 std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {

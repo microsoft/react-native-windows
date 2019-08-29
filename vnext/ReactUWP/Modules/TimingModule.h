@@ -13,9 +13,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 
-#define HEADLESS_JS 
-
-
 namespace react {
 namespace uwp {
 

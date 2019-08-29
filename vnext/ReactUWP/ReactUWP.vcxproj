@@ -75,6 +75,7 @@
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(HEADLESS_JS)'=='true'">HEADLESS_JS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=windows;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -174,7 +175,7 @@
     <ClInclude Include="ABI\Instance_rt.h" />
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
-    <ClInclude Include="Threading\HeadlessJSMessageQueueThread.h" />
+    <ClInclude Include="Threading\HeadlessJSMessageQueueThread.h" Condition="'$(HEADLESS_JS)'=='true'" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Utils\BaseScriptStoreImpl.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
@@ -280,7 +281,7 @@
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
-    <ClCompile Include="Threading\HeadlessJSMessageQueueThread.cpp" />
+    <ClCompile Include="Threading\HeadlessJSMessageQueueThread.cpp" Condition="'$(HEADLESS_JS)'=='true'" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Utils\BaseScriptStoreImpl.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />

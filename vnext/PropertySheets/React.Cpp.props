@@ -18,6 +18,7 @@
   <PropertyGroup>
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
     <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
+    <HEADLESS_JS Condition="'$(HEADLESS_JS)' == ''">false</HEADLESS_JS>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">

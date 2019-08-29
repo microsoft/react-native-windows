@@ -8,7 +8,10 @@
 // ReactUWP
 #include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
+
+#ifdef HEADLESS_JS
 #include <ReactUWP/Threading/HeadlessJSMessageQueueThread.h>
+#endif
 
 // ReactWindowsCore
 #include <CreateModules.h>
