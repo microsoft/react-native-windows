@@ -9,44 +9,19 @@ namespace react {
 namespace uwp {
 
 //
-// DeviceInfoModule
+// DeviceInfo
 //
-const char *DeviceInfoModule::name = "DeviceInfo";
-DeviceInfoModule *DeviceInfoModule::s_currentInstance = nullptr;
 
-DeviceInfoModule::DeviceInfoModule() {
-  s_currentInstance = this;
+DeviceInfo::DeviceInfo() {
+  m_dimensions = getDimensions(nullptr, nullptr);
 }
 
-std::string DeviceInfoModule::getName() {
-  return name;
-}
-
-/*static*/ void DeviceInfoModule::uiThreadAvailable() {
-  if (s_currentInstance != nullptr) {
-    s_currentInstance->sendDimensionsChangedEvent();
-  }
-}
-
-void DeviceInfoModule::sendDimensionsChangedEvent() {
-  if (auto instance = getInstance().lock()) {
-    auto args = getDimensions(
-        winrt::Windows::Graphics::Display::DisplayInformation::
-            GetForCurrentView(),
-        winrt::Windows::UI::Xaml::Window::Current().CoreWindow());
-
-    instance->callJSFunction(
-        "RCTDeviceEventEmitter",
-        "emit",
-        folly::dynamic::array("didUpdateDimensions", std::move(args)));
-  }
-}
-
-folly::dynamic DeviceInfoModule::getDimensions(
+folly::dynamic DeviceInfo::getDimensions(
     winrt::Windows::Graphics::Display::DisplayInformation displayInfo,
     winrt::Windows::UI::Core::CoreWindow window) {
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
+  // TODO: get parent element (not window) size
   return folly::dynamic::object(
       "windowPhysicalPixels",
       folly::dynamic::object(
@@ -72,10 +47,50 @@ folly::dynamic DeviceInfoModule::getDimensions(
           displayInfo != nullptr ? displayInfo.LogicalDpi() : 100));
 }
 
+void DeviceInfo::update() {  
+  m_dimensions = getDimensions(
+      winrt::Windows::Graphics::Display::DisplayInformation::
+          GetForCurrentView(),
+      winrt::Windows::UI::Xaml::Window::Current().CoreWindow());
+}
+
+
+//
+// DeviceInfoModule
+//
+const char *DeviceInfoModule::name = "DeviceInfo";
+DeviceInfoModule *DeviceInfoModule::s_currentInstance = nullptr;
+
+DeviceInfoModule::DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo) : m_deviceInfo(std::move(deviceInfo)){
+  s_currentInstance = this;
+}
+
+std::string DeviceInfoModule::getName() {
+  return name;
+}
+
+/*static*/ void DeviceInfoModule::uiThreadAvailable() {
+  if (s_currentInstance != nullptr) {
+    s_currentInstance->sendDimensionsChangedEvent();
+  }
+}
+
+void DeviceInfoModule::sendDimensionsChangedEvent() {
+  if (auto instance = getInstance().lock()) {
+    m_deviceInfo->update();
+    auto args = m_deviceInfo->GetDimensionsConstants();
+
+    instance->callJSFunction(
+        "RCTDeviceEventEmitter",
+        "emit",
+        folly::dynamic::array("didUpdateDimensions", std::move(args)));
+  }
+}
+
 std::map<std::string, folly::dynamic> DeviceInfoModule::getConstants() {
   // Set Dummy values initially to avoid dependency on UI Thread
   std::map<std::string, folly::dynamic> constants{
-      {"Dimensions", getDimensions(nullptr, nullptr)}};
+      {"Dimensions", m_deviceInfo->GetDimensionsConstants()}};
 
   return constants;
 }

@@ -185,7 +185,10 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       DeviceInfoModule::name,
-      []() { return std::make_unique<DeviceInfoModule>(); },
+      []() {
+        return std::make_unique<DeviceInfoModule>(
+            std::make_shared<DeviceInfo>());
+      },
       messageQueue);
 
   modules.emplace_back(

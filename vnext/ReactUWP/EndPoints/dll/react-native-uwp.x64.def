@@ -36,8 +36,10 @@ EXPORTS
 
 ??0AppState@react@facebook@@QEAA@XZ
 ??0AppStateModule@react@facebook@@QEAA@$$QEAV?$shared_ptr@VAppState@react@facebook@@@std@@@Z
+??0DeviceInfoModule@uwp@react@@QEAA@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
 ??0LocationObserverModule@uwp@react@@QEAA@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
 ??0NativeUIManager@uwp@react@@QEAA@XZ
+?update@DeviceInfo@uwp@react@@QEAAXXZ
 ??0WebSocketModule@uwp@react@@QEAA@XZ
 
 ?CreateTimingModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z

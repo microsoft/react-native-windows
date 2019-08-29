@@ -36,6 +36,8 @@ EXPORTS
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 
 ??0AppState@react@facebook@@QAE@XZ
+?update@DeviceInfo@uwp@react@@QAEXXZ	
+??0DeviceInfoModule@uwp@react@@QAE@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
 
 ??1DevSupportManager@uwp@react@@QAE@XZ
 ??0LocationObserverModule@uwp@react@@QAE@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
