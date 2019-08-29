@@ -209,7 +209,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       facebook::react::AppStateModule::name,
       [uwpInstance]() mutable {
         return std::make_unique<facebook::react::AppStateModule>(
-            std::make_shared<react::uwp::AppState>(uwpInstance));
+            std::make_shared<react::uwp::AppState>(uwpInstance.lock()));
       },
       std::make_shared<WorkerMessageQueueThread>());
 
@@ -217,7 +217,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       react::windows::AppThemeModule::name,
       [uwpInstance, messageQueue]() mutable {
         return std::make_unique<react::windows::AppThemeModule>(
-            std::make_shared<react::uwp::AppTheme>(uwpInstance, messageQueue));
+            std::make_shared<react::uwp::AppTheme>(uwpInstance.lock(), messageQueue));
       },
       messageQueue);
 
