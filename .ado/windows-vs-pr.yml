@@ -135,17 +135,18 @@ jobs:
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: MSBuild@1
-        displayName: MSBuild - SampleApps
-        inputs:
-          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+      # Disabled until we switch to VS 2019
+      #- task: MSBuild@1
+      #  displayName: MSBuild - SampleApps
+      #  inputs:
+      #    solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+      #    msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+      #    msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+      #    platform: $(BuildPlatform) # Optional
+      #    configuration: $(BuildConfiguration) # Optional
+      #    msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+      #    clean: true # Optional
+      #  condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
