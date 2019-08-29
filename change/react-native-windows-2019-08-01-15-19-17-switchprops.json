@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "New switch props (thumbColor and trackColor), and fix few bugs found in TextInputViewManager",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "1ecf51ddf43de87c8a9d090bc39ceeda563aceb7",
-  "date": "2019-08-01T22:19:16.988Z"
-}

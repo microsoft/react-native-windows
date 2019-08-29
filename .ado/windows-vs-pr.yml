@@ -3,7 +3,8 @@ name: $(Date:yyyyMMdd).$(Rev:.r)
 
 trigger: none # will disable CI builds entirely
 
-pr: none # disable on PRs until stable
+pr:
+  - master 
 
 jobs:
   - job: UWPPR
@@ -40,7 +41,7 @@ jobs:
           UseRNFork: false
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 45 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -53,7 +54,7 @@ jobs:
       - task: CmdLine@2
         displayName: Modify package.json to use unforked RN
         inputs:
-          script: node scripts/modifyDevDepToUseUnforkedRN.js
+          script: node scripts/useUnForkedRN.js
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
@@ -75,9 +76,9 @@ jobs:
       - template: templates/stop-packagers.yml
 
       - task: CmdLine@2
-        displayName: yarn build
+        displayName: yarn buildci
         inputs:
-          script: yarn build
+          script: yarn buildci
 
       - template: templates/install-SDK.yml
       
@@ -122,15 +123,15 @@ jobs:
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
       - task: CmdLine@2
-        displayName: Create SampleApp bundle
+        displayName: Create Playground bundle
         inputs:
-          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
-          workingDirectory: vnext
+          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+          workingDirectory: packages\playground
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
         inputs:
-          script: node Scripts\cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.uwp.bundle --platform uwp
+          script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -138,7 +139,7 @@ jobs:
     displayName: Verify react-native init
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -241,7 +242,7 @@ jobs:
           BuildPlatform: arm
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -277,25 +278,12 @@ jobs:
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies'
-          testAssemblyVer2: 'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll' # Required when testSelector == TestAssemblies
+          testAssemblyVer2: | # Required when testSelector == TestAssemblies
+            'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll'
+            'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           vsTestVersion: '15.0'
           runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
-
-      - task: VSTest@2
-        displayName: Run Desktop Unit Tests (Google Test)
-        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-        inputs:
-          testSelector: 'testAssemblies'
-          testAssemblyVer2: 'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'  # Required when testSelector == TestAssemblies
-          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: '15.0'
-          pathtoCustomTestAdapters: '$(Build.SourcesDirectory)\vnext\packages\GoogleTestAdapter.0.16.1\build\_common'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -329,19 +317,20 @@ jobs:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
 
-
   - job: RNWNugetPR
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
       vmImage: vs2017-win2016
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: none #skip checking out the default repository resource
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
         inputs:
-          versionSpec: '>=4.6.0' 
+          versionSpec: '>=4.6.0'
 
       - template: templates/prep-and-pack-nuget.yml
 
@@ -349,6 +338,8 @@ jobs:
     displayName: Verify change files + formatting
     pool:
       vmImage: vs2017-win2016
+    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
@@ -371,7 +362,6 @@ jobs:
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
-          workingDirectory: vnext
 
   - job: CurrentPR
     displayName: Current (C#) PR
@@ -407,7 +397,7 @@ jobs:
         #  UTTestOutputConfigDir: Release
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:

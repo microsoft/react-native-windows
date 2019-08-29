@@ -39,7 +39,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir)Desktop;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir)Desktop;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(MSBuildThisFileDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -53,11 +53,7 @@
       <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
-    <ClCompile>
-      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
   <ItemGroup>
     <ClCompile Include="AsyncStorageManagerTest.cpp" />
     <ClCompile Include="AsyncStorageTest.cpp" />

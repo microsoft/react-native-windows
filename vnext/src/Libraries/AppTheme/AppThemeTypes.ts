@@ -4,6 +4,9 @@
  * @format
  */
 
+/**
+ * Color information for high contrast
+ */
 export interface IHighContrastColors {
   ButtonFaceColor: string;
   ButtonTextColor: string;
@@ -15,8 +18,10 @@ export interface IHighContrastColors {
   WindowTextColor: string;
 }
 
+export type AppThemeTypes = 'light' | 'dark';
+
 export interface IAppThemeChangedEvent {
-  currentTheme: string;
+  currentTheme: AppThemeTypes;
 }
 
 export interface IHighContrastChangedEvent {

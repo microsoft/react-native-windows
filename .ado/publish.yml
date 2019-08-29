@@ -25,6 +25,8 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
+      - template: templates/configure-git.yml
+
       - task: CmdLine@2
         displayName: yarn install
         inputs:
@@ -38,13 +40,13 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
         displayName: Beachball Publish (for other branches)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes
+          script: node ./node_modules/beachball/bin/beachball.js publish --tag $(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
@@ -57,7 +59,7 @@ jobs:
     displayName: React-Native-Windows Native Build
     dependsOn: RnwNpmPublish
     variables:
-      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['updateVersionTask.publishCommitId'] ]
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
     strategy:
       matrix:
         X64Debug:
@@ -82,53 +84,45 @@ jobs:
       vmImage: vs2017-win2016
 
     steps:
-
       # Sync to point where the version numbers have been updated
-    - task: CmdLine@2
-      inputs:
-        script: git checkout $(publishCommitId)
+      - task: CmdLine@2
+        inputs:
+          script: git checkout $(publishCommitId)
 
-    - task: CmdLine@2
-      displayName: yarn install
-      inputs:
-        script: yarn install --frozen-lockfile
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
 
-    - task: CmdLine@2
-      displayName: yarn build
-      inputs:
-        script: yarn build
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
 
-    # Update version numbers as will be done by npm publish
-    - task: CmdLine@2
-      displayName: Beachball bump
-      inputs:
-        script: node ./node_modules/beachball/bin/beachball.js bump
-      condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
+      - task: CmdLine@2
+        displayName: Set Version Env Vars
+        name: setVersionEnvVars
+        inputs:
+          script: node ./.ado/setVersionEnvVars.js
 
-    - task: CmdLine@2
-      displayName: Set Version Env Vars
-      name: setVersionEnvVars
-      inputs:
-        script: node ./.ado/setVersionEnvVars.js
+      - template: templates/install-SDK.yml
 
-    - template: templates/install-SDK.yml
+      - template: templates/vs-build.yml
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildPlatform: $(BuildPlatform)
+          RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
+          RNW_PKG_VERSION: $(RNW_PKG_VERSION)
 
-    - template: templates/vs-build.yml
-      parameters:
-        BuildConfiguration: $(BuildConfiguration)
-        BuildPlatform: $(BuildPlatform)
-        RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
-        RNW_PKG_VERSION: $(RNW_PKG_VERSION)
-
-    - template: templates/publish-build-artifacts-for-nuget.yml
-
-    - task: PublishSymbols@2
-      displayName: 'Publish symbols path'
-      inputs:
-        SearchPattern: 'vnext/target/**/*.pdb'
-        SymbolServerType: TeamServices
+      - template: templates/publish-build-artifacts-for-nuget.yml
 
 
+    # Disable for now, not sure this works on github projects anyway.
+    # - task: PublishSymbols@2
+    #   displayName: 'Publish symbols path'
+    #   inputs:
+    #     SearchPattern: 'vnext/target/**/*.pdb'
+    #     SymbolServerType: TeamServices
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
@@ -138,6 +132,7 @@ jobs:
       vmImage: vs2017-win2016
     variables:
       npmVersion: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.npmVersion'] ]
+      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
 
     steps:
       - checkout: none #skip checking out the default repository resource
@@ -145,22 +140,15 @@ jobs:
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
         inputs:
-          versionSpec: '>=4.6.0' 
+          versionSpec: ">=4.6.0"
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
-          publishCommitId: $(Build.SourceVersion)
+          publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
 
       - task: PublishBuildArtifacts@1
-        displayName: 'Publish final nuget artifacts'
+        displayName: "Publish final nuget artifacts"
         inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/NugetRootFinal'
-          ArtifactName: 'ReactWindows-final-nuget'
-
-      #- task: NuGetCommand@2
-      #  displayName: 'NuGet push'
-      #  inputs:
-      #    command: push
-      #    packagesToPush: '$(System.DefaultWorkingDirectory)/NugetRoot/*.nupkg'
-      #    publishVstsFeed: '86ec7889-a365-4cd1-90df-6e18cc2ea59f'
+          PathtoPublish: "$(System.DefaultWorkingDirectory)/NugetRootFinal"
+          ArtifactName: "ReactWindows-final-nuget"

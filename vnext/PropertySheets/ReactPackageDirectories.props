@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+   Projects should include the following code in their project file before importing this file:
+
+  <PropertyGroup>
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+  </PropertyGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPackageDirectories.props" />
+  -->
+
+  <PropertyGroup>
+    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)\..\</ReactNativeWindowsDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativeDir>
+    <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
+    <OSS_RN>true</OSS_RN>
+    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-2019.08.12.00</FollyDir>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
+    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-2019.08.12.00</FollyDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Normalize the directory names -->
+    <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory($(ReactNativeWindowsDir)))</ReactNativeWindowsDir>
+    <ReactNativeDir>$([MSBuild]::NormalizeDirectory($(ReactNativeDir)))</ReactNativeDir>
+    <YogaDir>$([MSBuild]::NormalizeDirectory($(YogaDir)))</YogaDir>
+    <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
+  </PropertyGroup>
+
+</Project>
+
