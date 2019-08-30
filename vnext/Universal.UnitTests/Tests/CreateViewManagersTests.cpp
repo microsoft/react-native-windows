@@ -4,7 +4,7 @@
 
 #include <CppUnitTest.h>
 
-#include <Views/ImageViewManager.h>
+#include <Views/Image/ImageViewManager.h>
 #include <Views/RawTextViewManager.h>
 #include <Views/RootViewManager.h>
 #include <Views/ScrollViewManager.h>
