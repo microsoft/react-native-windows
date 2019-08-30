@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Fix double onPress issue in touchableOpacity (#3042)",
+  "packageName": "react-native-windows",
+  "email": "ngbu@microsoft.com",
+  "commit": "ba368131fb6bccfe02092cbe4cc90f9abf99d214",
+  "date": "2019-08-30T18:04:44.063Z"
+}
