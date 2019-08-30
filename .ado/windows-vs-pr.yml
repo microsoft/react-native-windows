@@ -4,7 +4,7 @@ name: $(Date:yyyyMMdd).$(Rev:.r)
 trigger: none # will disable CI builds entirely
 
 pr:
-  - master 
+  - master
 
 jobs:
   - job: UWPPR
@@ -81,7 +81,7 @@ jobs:
           script: yarn buildci
 
       - template: templates/install-SDK.yml
-      
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
@@ -96,7 +96,7 @@ jobs:
         displayName: MSBuild - ReactWindows-UWP
         inputs:
           solution: vnext/ReactWindows-UWP.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
@@ -114,7 +114,7 @@ jobs:
         displayName: MSBuild - Playground
         inputs:
           solution: packages/playground/windows/Playground.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
@@ -185,7 +185,7 @@ jobs:
         inputs:
           script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
           workingDirectory: $(Agent.BuildDirectory)\testcli
-        
+
       - task: CmdLine@2
         displayName: Apply windows template
         inputs:
@@ -204,7 +204,7 @@ jobs:
         displayName: MSBuild - Build the project
         inputs:
           solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x86' # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
@@ -279,10 +279,10 @@ jobs:
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: | # Required when testSelector == TestAssemblies
-            'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll'
-            'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'
+            React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
+            JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: '15.0'
+          vsTestVersion: '16.0'
           runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
           platform: $(BuildPlatform)
@@ -306,7 +306,7 @@ jobs:
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
-          vsTestVersion: '15.0'
+          vsTestVersion: '16.0'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -483,7 +483,7 @@ jobs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          vsTestVersion: '15.0'
+          vsTestVersion: '16.0'
           #runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
           platform: $(BuildPlatform)
