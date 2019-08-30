@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 30 Aug 2019 20:30:25 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Aug 2019 23:08:02 GMT and should not be manually modified.
 
+## 0.59.0-vnext.168
+Fri, 30 Aug 2019 23:08:02 GMT
+
+### Changes
+
+- set IsTabStop = false for SnapPointManagingContentControl (stecrain@microsoft.com)
 ## 0.59.0-vnext.167
 Fri, 30 Aug 2019 20:30:25 GMT
 

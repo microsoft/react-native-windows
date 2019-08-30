@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 Aug 2019 23:08:02 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.168",
+      "version": "0.59.0-vnext.168",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "set IsTabStop = false for SnapPointManagingContentControl",
+            "author": "stecrain@microsoft.com",
+            "commit": "5f41be48b33e46a650877325618f77fb634ac620"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Aug 2019 20:30:25 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.167",
       "version": "0.59.0-vnext.167",
