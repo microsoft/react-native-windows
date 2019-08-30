@@ -1,5 +1,5 @@
 {
-  "name": "SampleApp",
+  "name": "microsoft-reactnative-sampleapps",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -14,7 +14,7 @@
   "dependencies": {
     "react": "16.8.3",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz",
-    "react-native-windows": "0.59.0-vnext.163",
+    "react-native-windows": "0.59.0-vnext.165",
     "react-native-windows-extended": "0.15.0",
     "rnpm-plugin-windows": "^0.2.11"
   },

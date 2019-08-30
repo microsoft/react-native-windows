@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 Aug 2019 20:21:10 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Aug 2019 19:46:18 GMT and should not be manually modified.
 
+## 0.59.0-vnext.165
+Fri, 30 Aug 2019 19:46:18 GMT
+
+### Changes
+
+- Fixed sampleapps build and updated CI (jthysell@microsoft.com)
+## 0.59.0-vnext.164
+Thu, 29 Aug 2019 22:14:06 GMT
+
+### Changes
+
+- changed alert export (email not defined)
 ## 0.59.0-vnext.163
 Thu, 29 Aug 2019 20:21:10 GMT
 

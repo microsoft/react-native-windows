@@ -2,6 +2,56 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 Aug 2019 19:46:18 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.165",
+      "version": "0.59.0-vnext.165",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed sampleapps build and updated CI",
+            "author": "jthysell@microsoft.com",
+            "commit": "6c3463e5f85c02866f22195d4b65437228153158"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Introducing an ETW provider and routing react-native Systrace event to it",
+            "author": "anandrag@microsoft.com",
+            "commit": "508a8473eb379ab78b904b2c3e8477ac9018fbda"
+          },
+          {
+            "comment": "updating status doc",
+            "author": "yulikl@microsoft.com",
+            "commit": "965fc40267837813138f73543ad20a03ebe11268"
+          },
+          {
+            "comment": "fix double onpress issue",
+            "author": "ngbu@microsoft.com",
+            "commit": "af7dcea1b513568858c546682870fdce3ac0c67b"
+          },
+          {
+            "comment": "Fix double onPress issue in touchableOpacity (#3042)",
+            "author": "ngbu@microsoft.com",
+            "commit": "ba368131fb6bccfe02092cbe4cc90f9abf99d214"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 22:14:06 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.164",
+      "version": "0.59.0-vnext.164",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "changed alert export",
+            "author": "email not defined",
+            "commit": "822bf1b6f925f940199d0625c8d17208f2cd8e96"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Aug 2019 20:21:10 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.163",
       "version": "0.59.0-vnext.163",
