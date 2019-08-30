@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "fix double onpress issue",
+  "packageName": "react-native-windows",
+  "email": "ngbu@microsoft.com",
+  "commit": "af7dcea1b513568858c546682870fdce3ac0c67b",
+  "date": "2019-08-30T00:25:49.730Z"
+}
