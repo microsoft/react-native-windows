@@ -281,7 +281,7 @@ jobs:
           testAssemblyVer2: | # Required when testSelector == TestAssemblies
             React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
             JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
-          pathtoCustomTestAdapters: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
+          pathtoCustomTestAdapters: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           vsTestVersion: '16.0'
           runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
