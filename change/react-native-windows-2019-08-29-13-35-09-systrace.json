@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Introducing an ETW provider and routing react-native Systrace event to it",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "commit": "508a8473eb379ab78b904b2c3e8477ac9018fbda",
-  "date": "2019-08-29T20:35:09.701Z"
-}
