@@ -5,7 +5,9 @@
 namespace react {
 namespace uwp {
 
-SnapPointManagingContentControl::SnapPointManagingContentControl() {}
+SnapPointManagingContentControl::SnapPointManagingContentControl() {
+  IsTabStop(false);
+}
 
 /*static*/ winrt::com_ptr<SnapPointManagingContentControl>
 SnapPointManagingContentControl::Create() {
