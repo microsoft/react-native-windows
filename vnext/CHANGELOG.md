@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 30 Aug 2019 20:17:20 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Aug 2019 20:30:25 GMT and should not be manually modified.
 
+## 0.59.0-vnext.167
+Fri, 30 Aug 2019 20:30:25 GMT
+
+### Changes
+
+- fix double-apply TransformMatrix bug (email not defined)
 ## 0.59.0-vnext.166
 Fri, 30 Aug 2019 20:17:20 GMT
 
