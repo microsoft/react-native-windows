@@ -80,6 +80,8 @@ jobs:
         inputs:
           script: yarn buildci
 
+      - template: templates/install-SDK.yml
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
@@ -190,6 +192,8 @@ jobs:
           script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
+      - template: templates/install-SDK.yml
+
       - task: NuGetCommand@2
         displayName: NuGet restore
         inputs:
@@ -260,6 +264,8 @@ jobs:
         inputs:
           script: yarn build
           workingDirectory: vnext
+
+      - template: templates/install-SDK.yml
 
       - template: templates/vs-build.yml
         parameters:
