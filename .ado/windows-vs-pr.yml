@@ -41,7 +41,7 @@ jobs:
           UseRNFork: false
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 45 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
