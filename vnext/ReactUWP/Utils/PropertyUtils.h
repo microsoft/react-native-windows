@@ -314,6 +314,8 @@ bool TryUpdateCornerRadius(
     if (propertyValue.isNumber())
       UpdateCornerRadius(
           node, element, ShadowCorners::AllCorners, propertyValue.asDouble());
+    else if (propertyValue.isNull())
+      element.ClearValue(ViewPanel::CornerRadiusProperty());
   } else {
     return false;
   }
