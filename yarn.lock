@@ -2103,9 +2103,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.3.16"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.3.16.tgz#f3e88bfb71e12ee023fb2f939d010a0d28849432"
-  integrity sha512-9Xa3HFfLc6A2zpj6zXM6/Kq4vUXn2xTtnac0l5EPwUnhCKpGb3u5KOnfa9R5fXQ0lH4IthYzh303P4e0NUeSgg==
+  version "7.3.17"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.3.17.tgz#9f344d2f2b0691397df428c8207e9501bc134d9a"
+  integrity sha512-/QslG5P5DtMubFZSqPNv6fCwkBiXKgQol25EAhXEQ/TEGYwHfOUjH3bztrYfa+oJKf/8vlZ/R4wYYgxWszdToQ==
   dependencies:
     "@microsoft/api-extractor-model" "7.3.2"
     "@microsoft/node-core-library" "3.14.0"
