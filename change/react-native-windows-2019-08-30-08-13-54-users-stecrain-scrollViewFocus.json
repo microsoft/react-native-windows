@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "set IsTabStop = false for SnapPointManagingContentControl",
+  "packageName": "react-native-windows",
+  "email": "stecrain@microsoft.com",
+  "commit": "5f41be48b33e46a650877325618f77fb634ac620",
+  "date": "2019-08-30T15:13:54.060Z"
+}
