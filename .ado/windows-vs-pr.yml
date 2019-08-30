@@ -127,6 +127,31 @@ jobs:
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
           workingDirectory: packages\playground
+      
+      - task: NuGetCommand@2
+        displayName: NuGet restore - SampleApps
+        inputs:
+          command: restore
+          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - SampleApps
+        inputs:
+          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+          workingDirectory: packages\microsoft-reactnative-sampleapps
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
@@ -195,13 +220,13 @@ jobs:
       - template: templates/install-SDK.yml
 
       - task: NuGetCommand@2
-        displayName: NuGet restore
+        displayName: NuGet restore testcli
         inputs:
           command: restore
           restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
       - task: MSBuild@1
-        displayName: MSBuild - Build the project
+        displayName: MSBuild - testcli
         inputs:
           solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
           msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
@@ -213,7 +238,7 @@ jobs:
           clean: true # Optional
 
       - task: CmdLine@2
-        displayName: Create bundle
+        displayName: Create bundle testcli
         inputs:
           script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
           workingDirectory: $(Agent.BuildDirectory)\testcli
