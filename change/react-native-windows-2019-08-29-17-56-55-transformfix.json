@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "fix double-apply TransformMatrix bug",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "commit": "4f1cfdd19e87b767192562028ef2de406952dc6e",
+  "date": "2019-08-30T00:56:55.280Z"
+}
