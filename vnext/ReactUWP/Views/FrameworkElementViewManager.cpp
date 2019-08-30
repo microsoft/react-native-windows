@@ -134,7 +134,7 @@ void FrameworkElementViewManager::TransferProperties(
   // set on the new View a bit later in RefreshProperties() (as we need data
   // from the ShadowNode not available here).
   auto oldElement = oldView.try_as<winrt::UIElement>();
-  if (oldElement) {
+  if (oldElement && oldElement.try_as<winrt::IUIElement10>()) {
     oldElement.TransformMatrix(
         winrt::Windows::Foundation::Numerics::float4x4::identity());
   }
