@@ -404,7 +404,7 @@ const TouchableHighlight = ((createReactClass({
         ev.nativeEvent.code === 'GamepadA') &&
       !this.props.disabled
     ) {
-      this.touchableHandlePress();
+      this.touchableHandleActivePressOut(ev);
     }
   },
 
@@ -415,7 +415,7 @@ const TouchableHighlight = ((createReactClass({
         ev.nativeEvent.code === 'GamepadA') &&
       !this.props.disabled
     ) {
-      this.touchableHandleActivePressIn();
+      this.touchableHandleActivePressIn(ev);
     }
   },
 
