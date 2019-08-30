@@ -64,7 +64,7 @@ jobs:
 
       # todo work out how to specify working-directory for run command
       - name: Create SampleApp bundle
-      run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+        run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
 
   # This job verifies the basic UWP projects
   UWPPR:
