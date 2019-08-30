@@ -1,7 +1,57 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 27 Aug 2019 04:41:01 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Aug 2019 22:14:06 GMT and should not be manually modified.
 
+## 0.59.0-vnext.164
+Thu, 29 Aug 2019 22:14:06 GMT
+
+### Changes
+
+- changed alert export (email not defined)
+## 0.59.0-vnext.163
+Thu, 29 Aug 2019 20:21:10 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.71 (53619745+rnbot@users.noreply.github.com)
+- change file (randyfl@microsoft.com)
+## 0.59.0-vnext.162
+Thu, 29 Aug 2019 19:38:17 GMT
+
+### Changes
+
+- Allow windowsbrush: color syntax to use non-SolidColor brushes (thshea@microsoft.com)
+## 0.59.0-vnext.161
+Thu, 29 Aug 2019 01:41:01 GMT
+
+### Changes
+
+- Use PreparedScriptStore for V8 in win32 (tudorm@microsoft.com)
+## 0.59.0-vnext.160
+Thu, 29 Aug 2019 01:33:54 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.70 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.159
+Wed, 28 Aug 2019 19:55:48 GMT
+
+### Changes
+
+- Added React.Windows.Desktop.Test project. (julio@rochsquadron.net)
+- Add isOverlayEnabled (cknestri@microsoft.com)
+## 0.59.0-vnext.158
+Wed, 28 Aug 2019 18:34:51 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.69 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.157
+Wed, 28 Aug 2019 02:44:14 GMT
+
+### Changes
+
+- Let View process color objects (email not defined)
 ## 0.59.0-vnext.156
 Tue, 27 Aug 2019 04:41:01 GMT
 
