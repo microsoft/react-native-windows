@@ -127,7 +127,7 @@ jobs:
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
           workingDirectory: packages\playground
-      
+
       - task: NuGetCommand@2
         displayName: NuGet restore - SampleApps
         inputs:
@@ -309,7 +309,6 @@ jobs:
           pathtoCustomTestAdapters: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           vsTestVersion: '16.0'
-          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -510,7 +509,6 @@ jobs:
           testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
           vsTestVersion: '16.0'
-          #runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
