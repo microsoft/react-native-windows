@@ -129,6 +129,15 @@ void FrameworkElementViewManager::TransferProperties(
   auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
   oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
   winrt::ToolTipService::SetToolTip(newView, tooltip);
+
+  // Clear the TransformMatrix from the old View.  The TransformMatrix will be
+  // set on the new View a bit later in RefreshProperties() (as we need data
+  // from the ShadowNode not available here).
+  auto oldElement = oldView.try_as<winrt::UIElement>();
+  if (oldElement) {
+    oldElement.TransformMatrix(
+        winrt::Windows::Foundation::Numerics::float4x4::identity());
+  }
 }
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
