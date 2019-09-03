@@ -2,7 +2,7 @@
 ;Please keep the ABI surface in sync across all platforms. If you need to add a
 ;new EXPORT, add it to the other def files too. The EXPORTs are sorted to aid
 ;in comparisons.
-XPORTS
+EXPORTS
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??$str_to_integral@_K@detail@folly@@YA?AV?$Expected@_KW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
