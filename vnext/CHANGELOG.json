@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 03 Sep 2019 20:24:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.169",
+      "version": "0.59.0-vnext.169",
+      "comments": {
+        "none": [
+          {
+            "comment": "Ported HttpServer.",
+            "author": "julio@rochsquadron.net",
+            "commit": "e076e2024975cdd9fe14d8cd0d168a415e1addf1"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.72",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "ecff6489449ca142e78dd9a03b587109d088c029"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Aug 2019 23:08:02 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.168",
       "version": "0.59.0-vnext.168",
