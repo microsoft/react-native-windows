@@ -342,7 +342,7 @@ void ReactControl::ShowDeveloperMenu() {
       L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
       L"  <StackPanel HorizontalAlignment='Center'>"
       L"    <TextBlock Margin='0,0,0,10' FontSize='40'>Developer Menu</TextBlock>"
-      L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Toggle Inspector</Button>"
@@ -353,6 +353,8 @@ void ReactControl::ShowDeveloperMenu() {
       winrt::Markup::XamlReader::Load(xamlString));
   auto remoteDebugJSButton =
       m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
+  auto reloadJSButton =
+      m_developerMenuRoot.FindName(L"Reload").as<winrt::Button>();
   auto cancelButton =
       m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
   auto toggleInspector =
@@ -380,6 +382,12 @@ void ReactControl::ShowDeveloperMenu() {
       [this](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
         ToggleInspector();
+      });
+  m_reloadJSRevoker = reloadJSButton.Click(
+      winrt::auto_revoke,
+      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
+        Reload(true);
       });
 
   auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());

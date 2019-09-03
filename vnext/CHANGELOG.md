@@ -1,7 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 Aug 2019 22:14:06 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Sep 2019 21:49:49 GMT and should not be manually modified.
 
+## 0.59.0-vnext.170
+Tue, 03 Sep 2019 21:49:49 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.73 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.169
+Tue, 03 Sep 2019 20:24:37 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.72 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.168
+Fri, 30 Aug 2019 23:08:02 GMT
+
+### Changes
+
+- set IsTabStop = false for SnapPointManagingContentControl (stecrain@microsoft.com)
+## 0.59.0-vnext.167
+Fri, 30 Aug 2019 20:30:25 GMT
+
+### Changes
+
+- fix double-apply TransformMatrix bug (email not defined)
+## 0.59.0-vnext.166
+Fri, 30 Aug 2019 20:17:20 GMT
+
+### Changes
+
+- changed alert export (email not defined)
+## 0.59.0-vnext.165
+Fri, 30 Aug 2019 19:46:18 GMT
+
+### Changes
+
+- Fixed sampleapps build and updated CI (jthysell@microsoft.com)
 ## 0.59.0-vnext.164
 Thu, 29 Aug 2019 22:14:06 GMT
 

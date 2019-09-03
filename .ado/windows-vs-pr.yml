@@ -4,7 +4,7 @@ name: $(Date:yyyyMMdd).$(Rev:.r)
 trigger: none # will disable CI builds entirely
 
 pr:
-  - master 
+  - master
 
 jobs:
   - job: UWPPR
@@ -41,7 +41,7 @@ jobs:
           UseRNFork: false
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 45 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -81,7 +81,7 @@ jobs:
           script: yarn buildci
 
       - template: templates/install-SDK.yml
-      
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
@@ -96,7 +96,7 @@ jobs:
         displayName: MSBuild - ReactWindows-UWP
         inputs:
           solution: vnext/ReactWindows-UWP.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
@@ -114,7 +114,7 @@ jobs:
         displayName: MSBuild - Playground
         inputs:
           solution: packages/playground/windows/Playground.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
@@ -127,6 +127,31 @@ jobs:
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
           workingDirectory: packages\playground
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore - SampleApps
+        inputs:
+          command: restore
+          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+      - task: MSBuild@1
+        displayName: MSBuild - SampleApps
+        inputs:
+          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          clean: true # Optional
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
+
+      - task: CmdLine@2
+        displayName: Create SampleApp bundle
+        inputs:
+          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+          workingDirectory: packages\microsoft-reactnative-sampleapps
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
@@ -185,7 +210,7 @@ jobs:
         inputs:
           script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
           workingDirectory: $(Agent.BuildDirectory)\testcli
-        
+
       - task: CmdLine@2
         displayName: Apply windows template
         inputs:
@@ -195,16 +220,16 @@ jobs:
       - template: templates/install-SDK.yml
 
       - task: NuGetCommand@2
-        displayName: NuGet restore
+        displayName: NuGet restore testcli
         inputs:
           command: restore
           restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
       - task: MSBuild@1
-        displayName: MSBuild - Build the project
+        displayName: MSBuild - testcli
         inputs:
           solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x86' # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
@@ -213,7 +238,7 @@ jobs:
           clean: true # Optional
 
       - task: CmdLine@2
-        displayName: Create bundle
+        displayName: Create bundle testcli
         inputs:
           script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
           workingDirectory: $(Agent.BuildDirectory)\testcli
@@ -279,11 +304,11 @@ jobs:
         inputs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: | # Required when testSelector == TestAssemblies
-            'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll'
-            'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'
+            React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
+            JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
+          pathtoCustomTestAdapters: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: '15.0'
-          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
+          vsTestVersion: '16.0'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -306,7 +331,7 @@ jobs:
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
-          vsTestVersion: '15.0'
+          vsTestVersion: '16.0'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -483,8 +508,7 @@ jobs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          vsTestVersion: '15.0'
-          #runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
+          vsTestVersion: '16.0'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
