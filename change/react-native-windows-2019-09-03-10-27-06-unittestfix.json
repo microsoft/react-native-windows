@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "ReactUWP def cleanup and unit test fixes",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "14866ed13e3d4d0e390d3012fac7bdda1da9ab74",
+  "date": "2019-09-03T17:27:06.187Z"
+}
