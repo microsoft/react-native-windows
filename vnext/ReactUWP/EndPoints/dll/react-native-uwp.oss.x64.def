@@ -39,6 +39,7 @@ EXPORTS
 ?JsPointerToStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEBD_KPEAPEAX@Z
 ?JsStringToStdStringUtf8@react@facebook@@YA?AW4_JsErrorCode@@PEAXAEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 ?LoadJavaScriptInProxyMode@DevSupportManager@uwp@react@@UEAA?AV?$function@$$A6A?AV?$unique_ptr@VJSExecutor@react@facebook@@U?$default_delete@VJSExecutor@react@facebook@@@std@@@std@@V?$shared_ptr@VExecutorDelegate@react@facebook@@@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@Z@std@@AEBUDevSettings@3facebook@@@Z
+;?LoadJavaScriptInSandboxMode@DevSupportManager@uwp@react@@UEAA?AV?$function@$$A6A?AV?$unique_ptr@VJSExecutor@react@facebook@@U?$default_delete@VJSExecutor@react@facebook@@@std@@@std@@V?$shared_ptr@VExecutorDelegate@react@facebook@@@2@V?$shared_ptr@VMessageQueueThread@react@facebook@@@2@@Z@std@@AEBUDevSettings@3facebook@@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?StartPollingLiveReload@DevSupportManager@uwp@react@@UEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$function@$$A6AXXZ@5@@Z
 ?StopPollingLiveReload@DevSupportManager@uwp@react@@UEAAXXZ
@@ -58,8 +59,6 @@ EXPORTS
 ?print_as_pseudo_json@dynamic@folly@@AEBAXAEAV?$basic_ostream@DU?$char_traits@D@std@@@std@@@Z
 ?size@dynamic@folly@@QEBA_KXZ
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PEAV?$Range@PEBD@2@@Z
-?tlsMinstdRand@detail@f14@folly@@YA_K_K@Z
-?tlsPendingSafeInserts@detail@f14@folly@@YA_N_J@Z
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ?update@DeviceInfo@uwp@react@@QEAAXXZ
