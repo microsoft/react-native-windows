@@ -2303,9 +2303,9 @@
   integrity sha512-VQgHxyPMTj3hIlq9SY1mctqx+Jj8kpQfoLvDlVSDNOyuYs8JYfkuY3OW/4+dO657yPmNhHpePRx0/Tje5ImNVQ==
 
 "@types/chai@^4.1.7":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.0.tgz#2478260021408dec32c123a7cad3414beb811a07"
-  integrity sha512-zw8UvoBEImn392tLjxoavuonblX/4Yb9ha4KBU10FirCfwgzhKO0dvyJSF9ByxV1xK1r2AgnAi/tvQaLgxQqxA==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.2.1.tgz#de162553aceca778d989929d821c5d4942921ebc"
+  integrity sha512-LDKlQW/V8bQr5p9aoHye9p7x9faxq0GVeWAkn/Zgyyn848LIAzuR1sHQjGmUBFUpINuGWDG2NTM/ofA2aLMIew==
 
 "@types/es6-collections@^0.5.29":
   version "0.5.31"
@@ -10393,10 +10393,10 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz":
-  version "0.59.0-microsoft.71"
-  uid a6db762880ce9d859fa35d6b0a44b7fbaf714e0a
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz#a6db762880ce9d859fa35d6b0a44b7fbaf714e0a"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz":
+  version "0.59.0-microsoft.73"
+  uid a16940dc996787a7aca7169214e55e46f71f7cfc
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz#a16940dc996787a7aca7169214e55e46f71f7cfc"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
