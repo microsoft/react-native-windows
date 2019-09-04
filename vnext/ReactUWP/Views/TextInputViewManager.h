@@ -20,6 +20,7 @@ class TextInputViewManager : public ControlViewManager {
   facebook::react::ShadowNode *createShadow() const override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
+  virtual void TransferProperties(XamlView oldView, XamlView newView) override;
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
