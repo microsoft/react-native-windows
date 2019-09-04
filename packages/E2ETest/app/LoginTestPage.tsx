@@ -32,10 +32,13 @@ const styles = StyleSheet.create({
 export function LoginTestPage() {
   const [loginState, setLoginState] = useState('');
   const [userName, setUserName] = useState('');
+  const [password, setPassword] = useState('');
 
   const onPress = () => {
     if (userName === 'username') {
-      setLoginState('Success')
+      if (password === 'password') {
+        setLoginState('Success');
+      }
     } else {
       setLoginState('Fail');
     }
@@ -52,7 +55,8 @@ export function LoginTestPage() {
         placeholder='Password'
         testID={PASSWORD_ON_LOGIN}
         placeholderTextColor='rgba(225,225,225,0.7)'
-        secureTextEntry />
+        secureTextEntry 
+        onChange={(text) => { setPassword(text.nativeEvent.text) }} />
 
       <TouchableOpacity style={styles.buttonContainer}
         testID={SUBMIT_ON_LOGIN}
