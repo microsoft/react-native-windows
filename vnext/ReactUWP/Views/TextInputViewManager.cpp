@@ -122,10 +122,8 @@ void TextInputShadowNode::RegisterEvents() {
   // TextChanging is used to drop the Javascript response of 'A' and expect
   // another TextChanged event with correct event count.
   if (m_isTextBox) {
-    m_textBoxTextChangingRevoker =
-        control.as<winrt::TextBox>().TextChanging(
-            winrt::auto_revoke,
-            [=](auto &&, auto &&) { m_nativeEventCount++; });
+    m_textBoxTextChangingRevoker = control.as<winrt::TextBox>().TextChanging(
+        winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
   } else {
     if (control.try_as<winrt::IPasswordBox4>()) {
       m_passwordBoxPasswordChangingRevoker =
@@ -197,13 +195,11 @@ void TextInputShadowNode::RegisterEvents() {
         folly::dynamic eventDataEndEditing = {};
         if (m_isTextBox) {
           eventDataEndEditing = folly::dynamic::object("target", tag)(
-              "text",
-              HstringToDynamic(control.as<winrt::TextBox>().Text()));
+              "text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
         } else {
           eventDataEndEditing = folly::dynamic::object("target", tag)(
               "text",
-              HstringToDynamic(
-                  control.as<winrt::PasswordBox>().Password()));
+              HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
         }
         if (!m_updating && instance != nullptr) {
           instance->DispatchEvent(
@@ -249,9 +245,8 @@ void TextInputShadowNode::RegisterEvents() {
 
   m_controlLoadedRevoker =
       control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto textBoxView =
-            control.GetTemplateChild(asHstring("ContentElement"))
-                .as<winrt::ScrollViewer>();
+        auto textBoxView = control.GetTemplateChild(asHstring("ContentElement"))
+                               .as<winrt::ScrollViewer>();
         if (textBoxView) {
           m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
               winrt::auto_revoke,
@@ -314,8 +309,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isBool())
         control.IsTextScaleFactorEnabled(propertyValue.asBool());
       else if (propertyValue.isNull())
-        control.ClearValue(
-            winrt::Control::IsTextScaleFactorEnabledProperty());
+        control.ClearValue(winrt::Control::IsTextScaleFactorEnabledProperty());
     } else if (propertyName == "clearTextOnFocus") {
       if (propertyValue.isBool())
         m_shouldClearTextOnFocus = propertyValue.asBool();

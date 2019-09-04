@@ -36,9 +36,9 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       winrt::Windows::UI::Xaml::DependencyProperty dp);
 
   void TransferProperty(
-      XamlView oldView, 
-      XamlView newView, 
-      winrt::DependencyProperty oldViewDP, 
+      XamlView oldView,
+      XamlView newView,
+      winrt::DependencyProperty oldViewDP,
       winrt::DependencyProperty newViewDP);
 
  private:

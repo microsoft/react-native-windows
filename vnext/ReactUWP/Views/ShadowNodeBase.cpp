@@ -5,13 +5,13 @@
 
 #include <IReactInstance.h>
 
+#include <ReactUWP\Modules\NativeUIManager.h>
 #include <ViewManager.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
 #include <Views/ViewManagerBase.h>
 #include <WindowsNumerics.h>
 #include "Views/KeyboardEventHandler.h"
-#include <ReactUWP\Modules\NativeUIManager.h>
 
 using namespace std::placeholders;
 
@@ -79,7 +79,8 @@ void ShadowNodeBase::ReplaceChild(
 void ShadowNodeBase::ReparentView(XamlView view) {
   GetViewManager()->TransferProperties(m_view, view);
   if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
-    if (const auto nativeUIManager = static_cast<NativeUIManager *>(instance->NativeUIManager())){
+    if (const auto nativeUIManager =
+            static_cast<NativeUIManager *>(instance->NativeUIManager())) {
       int64_t parentTag = GetParent();
       auto host = nativeUIManager->getHost();
       auto pParentNode =
