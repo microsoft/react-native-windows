@@ -35,10 +35,8 @@ export function LoginTestPage() {
   const [password, setPassword] = useState('');
 
   const onPress = () => {
-    if (userName === 'username') {
-      if (password === 'password') {
-        setLoginState('Success');
-      }
+    if (userName === 'username' && password === 'password') {
+      setLoginState('Success');
     } else {
       setLoginState('Fail');
     }

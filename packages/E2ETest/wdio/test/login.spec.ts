@@ -26,7 +26,7 @@ describe('LoginTest', () => {
   });
 
   it('Login Fail', () => {
-    LoginPage.setLoginInfo('username@microsoft.com', 'abcdefg');
+    LoginPage.setLoginInfo('username', 'abcdefg');
     LoginPage.submitForm();
     assert.equal(LoginPage.getLoginResult(), 'Fail');
   });
