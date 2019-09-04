@@ -35,7 +35,7 @@ async function runWindows(config, args, options) {
   }
 
   // Get build/deploy options
-  const buildType = options.release ? 'Release' : 'Debug';
+  const buildType = deploy.getBuildConfiguration(options);
   try {
     await build.buildSolution(slnFile, buildType, options.arch, verbose);
   } catch (e) {
@@ -79,6 +79,8 @@ runWindows({
  *    proxy: Boolean - Run using remote JS proxy
  *    verbose: Boolean - Enables logging
  *    no-packager: Boolean - Do not launch packager while building
+ *    bundle: Boolean - Enable Bundle configuration.
+ *    no-launch: Boolean - Do not launch the app after deployment
  */
 module.exports = {
   name: 'run-windows',
@@ -124,6 +126,17 @@ module.exports = {
     {
       command: '--no-packager',
       description: 'Do not launch packager while building',
+    },
+    {
+      command: '--bundle',
+      description:
+        'Enable Bundle configuration and it would be ReleaseBundle/DebugBundle other than Release/Debug',
+      default: false,
+    },
+    {
+      command: '--no-launch',
+      description: 'Do not launch the app after deployment',
+      default: false,
     },
   ],
 };

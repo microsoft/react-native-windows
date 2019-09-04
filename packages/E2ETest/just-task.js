@@ -5,7 +5,6 @@
  * @ts-check
  */
 
-const path = require('path');
 const {
   task,
   series,
@@ -14,8 +13,7 @@ const {
   tscTask,
   eslintTask,
 } = require('just-scripts');
-const libPath = path.resolve(process.cwd(), 'lib');
-const srcPath = path.resolve(process.cwd(), 'src');
+const fs = require('fs');
 
 option('production');
 option('clean');
@@ -26,14 +24,19 @@ task('eslint', () => {
 task('ts', () => {
   return tscTask({
     pretty: true,
-    noEmit: true,
     ...(argv().production && {
       inlineSources: true,
-      sourceRoot: path.relative(libPath, srcPath),
     }),
     target: 'es6',
     module: 'commonjs',
   });
+});
+
+task('prepareBundle', () => {
+  const file = 'windows/ReactUWPTestApp/ReactAssets';
+  if (!fs.existsSync(file)) {
+    fs.mkdirSync(file);
+  }
 });
 
 task('build', series('eslint', 'ts'));

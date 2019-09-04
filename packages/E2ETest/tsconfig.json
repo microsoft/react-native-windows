@@ -4,7 +4,7 @@
     "target": "es6",
     "module": "commonjs",
     "jsx": "react",
-    "outDir": ".",
+    "outDir": "dist",
     "declaration": true,
     "sourceMap": true,
     "experimentalDecorators": true,
@@ -13,7 +13,6 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "strict": true,
-    "noEmit": true,
     "rootDir": ".",
     "esModuleInterop": true,
     "types": [
@@ -24,7 +23,8 @@
     ]
   },
   "include": [
-    "app", "wdio"
+    "app",
+    "wdio"
   ],
   "exclude": [
     "node_modules"

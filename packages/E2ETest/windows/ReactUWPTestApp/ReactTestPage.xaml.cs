@@ -12,7 +12,11 @@ namespace ReactUWPTestApp
 {
   public sealed partial class ReactTestPage : Page
   {
+#if BUNDLE
+    private static readonly string JSFileName = "ms-appx:///ReactAssets/index.windows.bundle";
+#else   
     private static readonly string JSFileName = "app/index";
+#endif
     private static readonly string JSComponentName = "ReactUWPTestApp";
     public ReactTestPage()
     {
@@ -24,9 +28,13 @@ namespace ReactUWPTestApp
     private void LoadReact()
     {
       InstanceSettings settings;
+#if BUNDLE
+      settings.UseWebDebugger = false;
+      settings.UseLiveReload = false;
+#else
       settings.UseWebDebugger = true;
       settings.UseLiveReload = true;
-
+#endif
       var instance = Instance.Create(JSFileName);
 
       instance.Start(settings);
