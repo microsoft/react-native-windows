@@ -14,24 +14,26 @@ class MemoryMappedBuffer : public facebook::jsi::Buffer {
   const uint8_t *data() const override;
 
  private:
-  static void fileDataDeleter(void *p) {
+  static void FileDataDeleter(void *p) {
     WerUnregisterMemoryBlock(p);
     UnmapViewOfFile(p);
   }
 
   std::unique_ptr<void, decltype(&CloseHandle)> m_fileMapping;
-  std::unique_ptr<void, decltype(&fileDataDeleter)> m_fileData;
-  uint32_t m_size;
-  uint32_t m_offset;
+  std::unique_ptr<void, decltype(&FileDataDeleter)> m_fileData;
+  uint32_t m_fileSize = 0;
+  uint32_t m_offset = 0;
 };
 
 MemoryMappedBuffer::MemoryMappedBuffer(
     const wchar_t *const filename,
     uint32_t offset)
     : m_fileMapping{nullptr, &CloseHandle},
-      m_fileData{nullptr, &fileDataDeleter},
-      m_size{0},
-      m_offset{0} {
+      m_fileData{nullptr, &FileDataDeleter},
+      m_offset{offset} {
+  // Because we still need to support Windows 7, and APIs such as CreateFile2
+  // and CreateFileMappingFromApp are only available on Windows 8+, we currently
+  // use APIs such as CreateFileW and CreateFileMapping for Win32.
 #if (defined(WINRT))
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
       CreateFile2(
@@ -60,36 +62,34 @@ MemoryMappedBuffer::MemoryMappedBuffer(
         std::to_string(GetLastError()));
   }
 
-  LARGE_INTEGER size;
-  if (!GetFileSizeEx(fileHandle.get(), &size)) {
+  LARGE_INTEGER fileSize;
+  if (!GetFileSizeEx(fileHandle.get(), &fileSize)) {
     throw facebook::jsi::JSINativeException(
         "GetFileSizeEx failed with last error " +
         std::to_string(GetLastError()));
   }
 
-  if (size.LowPart == 0) {
+  if (fileSize.LowPart == 0) {
     throw facebook::jsi::JSINativeException("Cannot memory map an empty file.");
   }
 
-  if (size.HighPart != 0) {
+  if (fileSize.HighPart != 0) {
     throw facebook::jsi::JSINativeException(
-        "MemoryMappedBuffer only support files whose size can fit within an "
+        "MemoryMappedBuffer only supports files whose size can fit within an "
         "uint32_t.");
   }
 
-  m_size = size.LowPart;
-  if (offset > m_size) {
-    m_size = 0;
+  m_fileSize = fileSize.LowPart;
+  if (m_offset > m_fileSize) {
     throw facebook::jsi::JSINativeException("Invalid offset.");
   }
-  m_offset = offset;
 
 #if (defined(WINRT))
   m_fileMapping.reset(CreateFileMappingFromApp(
       fileHandle.get(),
       nullptr /* SecurityAttributes */,
       PAGE_READONLY,
-      m_size,
+      m_fileSize,
       nullptr /* Name */));
 #else
   m_fileMapping.reset(CreateFileMapping(
@@ -97,12 +97,11 @@ MemoryMappedBuffer::MemoryMappedBuffer(
       nullptr /* lpAttributes */,
       PAGE_READONLY,
       0 /* dwMaximumSizeHigh */,
-      m_size,
+      m_fileSize,
       nullptr /* lpName */));
 #endif
 
   if (!m_fileMapping) {
-    m_size = m_offset = 0;
     throw facebook::jsi::JSINativeException(
         "CreateFileMapping/CreateFileMappingFromApp failed with last error " +
         std::to_string(GetLastError()));
@@ -124,17 +123,16 @@ MemoryMappedBuffer::MemoryMappedBuffer(
 #endif
 
   if (!m_fileData) {
-    m_size = m_offset = 0;
     throw facebook::jsi::JSINativeException(
         "MapViewOfFile/MapViewOfFileFromApp failed with last error " +
         std::to_string(GetLastError()));
   }
 
-  WerRegisterMemoryBlock(m_fileData.get(), m_size);
+  WerRegisterMemoryBlock(m_fileData.get(), m_fileSize);
 }
 
 size_t MemoryMappedBuffer::size() const {
-  return m_size - m_offset;
+  return m_fileSize - m_offset;
 }
 
 const uint8_t *MemoryMappedBuffer::data() const {
@@ -145,7 +143,7 @@ const uint8_t *MemoryMappedBuffer::data() const {
 
 namespace Microsoft::JSI {
 
-std::shared_ptr<facebook::jsi::Buffer> makeMemoryMappedBuffer(
+std::shared_ptr<facebook::jsi::Buffer> MakeMemoryMappedBuffer(
     const wchar_t *const filename,
     uint32_t offset) {
   return std::make_shared<MemoryMappedBuffer>(filename, offset);
