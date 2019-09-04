@@ -68,8 +68,7 @@ MemoryMappedBuffer::MemoryMappedBuffer(
   }
 
   if (size.LowPart == 0) {
-    throw facebook::jsi::JSINativeException(
-        "Cannot memory map an empty file.");
+    throw facebook::jsi::JSINativeException("Cannot memory map an empty file.");
   }
 
   if (size.HighPart != 0) {
