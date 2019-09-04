@@ -2103,14 +2103,14 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.3.17"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.3.17.tgz#9f344d2f2b0691397df428c8207e9501bc134d9a"
-  integrity sha512-/QslG5P5DtMubFZSqPNv6fCwkBiXKgQol25EAhXEQ/TEGYwHfOUjH3bztrYfa+oJKf/8vlZ/R4wYYgxWszdToQ==
+  version "7.3.18"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.3.18.tgz#69ec66a2b96a82c106138e1f515f52a48af764a4"
+  integrity sha512-/zV2gMFqgBF0Snr0kd40ZeF7XRDOGpsEdCTAVi8pq5Qvf5ReHygUbSwv40FIB+I9YikHkLbglV5bMt02bumgQQ==
   dependencies:
-    "@microsoft/api-extractor-model" "7.3.2"
+    "@microsoft/api-extractor-model" "7.3.3"
     "@microsoft/node-core-library" "3.14.0"
     "@microsoft/ts-command-line" "4.2.7"
-    "@microsoft/tsdoc" "0.12.12"
+    "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
     js-yaml "~3.13.1"
 
@@ -2121,6 +2121,15 @@
   dependencies:
     "@microsoft/node-core-library" "3.14.0"
     "@microsoft/tsdoc" "0.12.12"
+    "@types/node" "8.5.8"
+
+"@microsoft/api-extractor-model@7.3.3":
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.3.3.tgz#ed8de957af3435d25086eb8d454445fab0963187"
+  integrity sha512-GwU7Qok6M8cUoKj772xYQon6a/gmavBZJ9fhlCvlBCJVbjDwyAGYDZc5CNKTUQJT4NKvP5Bne7+LzBwJbN2Viw==
+  dependencies:
+    "@microsoft/node-core-library" "3.14.0"
+    "@microsoft/tsdoc" "0.12.14"
     "@types/node" "8.5.8"
 
 "@microsoft/api-extractor@^7.3.8":
@@ -2171,6 +2180,11 @@
   version "0.12.12"
   resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.12.12.tgz#6692f1cbca664f68abbc62f9a26459fba8b9ff28"
   integrity sha512-5EzH1gHIonvvgA/xWRmVAJmRkTQj/yayUXyr66hFwNZiFE4j7lP8is9YQeXhwxGZEjO1PVMblAmFF0CyjNtPGw==
+
+"@microsoft/tsdoc@0.12.14":
+  version "0.12.14"
+  resolved "https://registry.yarnpkg.com/@microsoft/tsdoc/-/tsdoc-0.12.14.tgz#0e0810a0a174e50e22dfe8edb30599840712f22d"
+  integrity sha512-518yewjSga1jLdiLrcmpMFlaba5P+50b0TWNFUpC+SL9Yzf0kMi57qw+bMl+rQ08cGqH1vLx4eg9YFUbZXgZ0Q==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -10393,10 +10407,10 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz":
-  version "0.59.0-microsoft.71"
-  uid a6db762880ce9d859fa35d6b0a44b7fbaf714e0a
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz#a6db762880ce9d859fa35d6b0a44b7fbaf714e0a"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz":
+  version "0.59.0-microsoft.73"
+  uid a16940dc996787a7aca7169214e55e46f71f7cfc
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz#a16940dc996787a7aca7169214e55e46f71f7cfc"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
