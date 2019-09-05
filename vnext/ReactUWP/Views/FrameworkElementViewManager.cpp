@@ -41,11 +41,7 @@ void FrameworkElementViewManager::TransferProperty(
     XamlView oldView,
     XamlView newView,
     winrt::DependencyProperty dp) {
-  auto oldValue = oldView.ReadLocalValue(dp);
-  if (oldValue != nullptr) {
-    oldView.ClearValue(dp);
-    newView.SetValue(dp, oldValue);
-  }
+  TransferProperty(oldView, newView, dp, dp);
 }
 
 void FrameworkElementViewManager::TransferProperty(

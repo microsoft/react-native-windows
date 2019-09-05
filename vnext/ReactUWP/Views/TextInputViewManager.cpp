@@ -69,7 +69,8 @@ class TextInputShadowNode : public ShadowNodeBase {
   }
 
  private:
-  void RegisterEvents();
+  void dispatchTextInputChangeEvent(winrt::hstring newText);
+  void registerEvents();
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
   bool m_isTextBox = true;
@@ -101,10 +102,21 @@ class TextInputShadowNode : public ShadowNodeBase {
 
 void TextInputShadowNode::createView() {
   Super::createView();
-  RegisterEvents();
+  registerEvents();
 }
 
-void TextInputShadowNode::RegisterEvents() {
+void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
+  auto wkinstance = GetViewManager()->GetReactInstance();
+
+  if (auto instance = wkinstance.lock()) {
+    m_nativeEventCount++;
+    folly::dynamic eventData = folly::dynamic::object("target", m_tag)(
+        "text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
+    instance->DispatchEvent(m_tag, "topTextInputChange", std::move(eventData));
+  }
+}
+
+void TextInputShadowNode::registerEvents() {
   auto control = GetView().as<winrt::Control>();
   auto wkinstance = GetViewManager()->GetReactInstance();
   auto tag = m_tag;
@@ -122,9 +134,11 @@ void TextInputShadowNode::RegisterEvents() {
   // TextChanging is used to drop the Javascript response of 'A' and expect
   // another TextChanged event with correct event count.
   if (m_isTextBox) {
+    m_passwordBoxPasswordChangingRevoker = {};
     m_textBoxTextChangingRevoker = control.as<winrt::TextBox>().TextChanging(
         winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
   } else {
+    m_textBoxTextChangingRevoker = {};
     if (control.try_as<winrt::IPasswordBox4>()) {
       m_passwordBoxPasswordChangingRevoker =
           control.as<winrt::IPasswordBox4>().PasswordChanging(
@@ -134,30 +148,18 @@ void TextInputShadowNode::RegisterEvents() {
   }
 
   if (m_isTextBox) {
+    m_passwordBoxPasswordChangedRevoker = {};
     auto textBox = control.as<winrt::TextBox>();
     m_textBoxTextChangedRevoker =
         textBox.TextChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-          if (auto instance = wkinstance.lock()) {
-            m_nativeEventCount++;
-            folly::dynamic eventData = folly::dynamic::object("target", tag)(
-                "text", HstringToDynamic(textBox.Text()))(
-                "eventCount", m_nativeEventCount);
-            instance->DispatchEvent(
-                tag, "topTextInputChange", std::move(eventData));
-          }
+          dispatchTextInputChangeEvent(textBox.Text());
         });
   } else {
+    m_textBoxTextChangedRevoker = {};
     auto passwordBox = control.as<winrt::PasswordBox>();
     m_passwordBoxPasswordChangedRevoker =
         passwordBox.PasswordChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-          if (auto instance = wkinstance.lock()) {
-            m_nativeEventCount++;
-            folly::dynamic eventData = folly::dynamic::object("target", tag)(
-                "text", HstringToDynamic(passwordBox.Password()))(
-                "eventCount", m_nativeEventCount);
-            instance->DispatchEvent(
-                tag, "topTextInputChange", std::move(eventData));
-          }
+          dispatchTextInputChangeEvent(passwordBox.Password());
         });
   }
 
@@ -291,15 +293,18 @@ void TextInputShadowNode::RegisterEvents() {
         });
   }
 }
+
 void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
   auto control = GetView().as<winrt::Control>();
+  auto textBox = control.try_as<winrt::TextBox>();
+  auto passwordBox = control.try_as<winrt::PasswordBox>();
 
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
 
-    // Applicable properties for both PasswordBoxTextBox and PasswordBox
+    // Applicable properties for both TextBox and PasswordBox
     if (TryUpdateFontProperties(control, propertyName, propertyValue)) {
       continue;
     } else if (TryUpdateCharacterSpacing(
@@ -324,25 +329,59 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isBool()) {
         if (propertyValue.asBool()) {
           if (m_isTextBox) {
-            winrt::PasswordBox pwBox;
-            ReparentView(pwBox);
+            winrt::PasswordBox newPasswordBox;
+            ReparentView(newPasswordBox);
             m_isTextBox = false;
-            RegisterEvents();
-            control = pwBox.as<winrt::Control>();
+            registerEvents();
+            control = newPasswordBox.as<winrt::Control>();
+            passwordBox = newPasswordBox;
           }
         } else {
           if (!m_isTextBox) {
-            winrt::TextBox textBox;
-            ReparentView(textBox);
+            winrt::TextBox newTextBox;
+            ReparentView(newTextBox);
             m_isTextBox = true;
-            RegisterEvents();
-            control = textBox.as<winrt::Control>();
+            registerEvents();
+            control = newTextBox.as<winrt::Control>();
+            textBox = newTextBox;
           }
         }
       }
-    } else {
+    } else if (propertyName == "maxLength") {
+      if (propertyValue.isNumber()) {
+        control.SetValue(
+            m_isTextBox ? winrt::TextBox::MaxLengthProperty() : winrt::PasswordBox::MaxLengthProperty(),
+            winrt::PropertyValue::CreateInt32(static_cast<int32_t>(propertyValue.asDouble())));
+      } else if (propertyValue.isNull()) {
+        control.ClearValue(
+            m_isTextBox ? winrt::TextBox::MaxLengthProperty()
+                        : winrt::PasswordBox::MaxLengthProperty());
+      }
+    } else if (propertyName == "placeholder") {
+      if (propertyValue.isString()) {
+        control.SetValue(
+            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty()
+                : winrt::PasswordBox::PlaceholderTextProperty(),
+            winrt::PropertyValue::CreateString(asHstring(propertyValue)));
+      } else if (propertyValue.isNull()) {
+        control.ClearValue(
+            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty()
+                        : winrt::PasswordBox::PlaceholderTextProperty());
+      }
+    } else if (propertyName == "selectionColor") {
+      if (IsValidColorValue(propertyValue)) {
+        control.SetValue(
+            m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
+                        : winrt::PasswordBox::SelectionHighlightColorProperty(),
+            SolidColorBrushFrom(propertyValue));
+      }
+      else if (propertyValue.isNull())
+        control.ClearValue(
+            m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
+                : winrt::PasswordBox::SelectionHighlightColorProperty());
+    }
+    else {
       if (m_isTextBox) { // Applicable properties for TextBox
-        auto textBox = control.as<winrt::TextBox>();
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
         } else if (propertyName == "multiline") {
@@ -357,16 +396,6 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             textBox.IsReadOnly(!propertyValue.asBool());
           else if (propertyValue.isNull())
             textBox.ClearValue(winrt::TextBox::IsReadOnlyProperty());
-        } else if (propertyName == "maxLength") {
-          if (propertyValue.isNumber())
-            textBox.MaxLength(static_cast<int32_t>(propertyValue.asDouble()));
-          else if (propertyValue.isNull())
-            textBox.ClearValue(winrt::TextBox::MaxLengthProperty());
-        } else if (propertyName == "placeholder") {
-          if (propertyValue.isString())
-            textBox.PlaceholderText(asHstring(propertyValue));
-          else if (propertyValue.isNull())
-            textBox.ClearValue(winrt::TextBox::PlaceholderTextProperty());
         } else if (propertyName == "placeholderTextColor") {
           if (textBox.try_as<winrt::ITextBox6>()) {
             if (IsValidColorValue(propertyValue))
@@ -392,12 +421,6 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             if (selection.isValid())
               textBox.Select(selection.start, selection.end - selection.start);
           }
-        } else if (propertyName == "selectionColor") {
-          if (IsValidColorValue(propertyValue))
-            textBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
-          else if (propertyValue.isNull())
-            textBox.ClearValue(
-                winrt::TextBox::SelectionHighlightColorProperty());
         } else if (propertyName == "spellCheck") {
           if (propertyValue.isBool())
             textBox.IsSpellCheckEnabled(propertyValue.asBool());
@@ -416,33 +439,16 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
           }
         }
       } else { // Applicable properties for PasswordBox
-        auto pwBox = control.as<winrt::PasswordBox>();
-        if (propertyName == "maxLength") {
-          if (propertyValue.isNumber())
-            pwBox.MaxLength(static_cast<int32_t>(propertyValue.asDouble()));
-          else if (propertyValue.isNull())
-            pwBox.ClearValue(winrt::PasswordBox::MaxLengthProperty());
-        } else if (propertyName == "placeholder") {
-          if (propertyValue.isString())
-            pwBox.PlaceholderText(asHstring(propertyValue));
-          else if (propertyValue.isNull())
-            pwBox.ClearValue(winrt::PasswordBox::PlaceholderTextProperty());
-        } else if (propertyName == "selectionColor") {
-          if (IsValidColorValue(propertyValue))
-            pwBox.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
-          else if (propertyValue.isNull())
-            pwBox.ClearValue(
-                winrt::PasswordBox::SelectionHighlightColorProperty());
-        } else if (propertyName == "text") {
+        if (propertyName == "text") {
           if (m_mostRecentEventCount == m_nativeEventCount) {
             if (propertyValue.isString()) {
-              auto oldValue = pwBox.Password();
+              auto oldValue = passwordBox.Password();
               auto newValue = asHstring(propertyValue);
               if (oldValue != newValue) {
-                pwBox.Password(newValue);
+                passwordBox.Password(newValue);
               }
             } else if (propertyValue.isNull())
-              pwBox.ClearValue(winrt::PasswordBox::PasswordProperty());
+              passwordBox.ClearValue(winrt::PasswordBox::PasswordProperty());
           }
         }
       }
@@ -515,70 +521,58 @@ YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
 void TextInputViewManager::TransferProperties(
     XamlView oldView,
     XamlView newView) {
-  __super::TransferProperties(oldView, newView);
+  if ((oldView.try_as<winrt::TextBox>() != nullptr &&
+       newView.try_as<winrt::PasswordBox>() != nullptr) ||
+      (oldView.try_as<winrt::PasswordBox>() != nullptr &&
+       newView.try_as<winrt::TextBox>() != nullptr)) {
+    bool copyToPasswordBox = oldView.try_as<winrt::TextBox>() != nullptr;
 
-  bool copyToPasswordBox = oldView.try_as<winrt::TextBox>() != nullptr;
+    // sync common properties between TextBox and PasswordBox
+    if (copyToPasswordBox) {
+      TransferProperty(
+          oldView,
+          newView,
+          winrt::TextBox::MaxLengthProperty(),
+          winrt::PasswordBox::MaxLengthProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          winrt::TextBox::PlaceholderTextProperty(),
+          winrt::PasswordBox::PlaceholderTextProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          winrt::TextBox::SelectionHighlightColorProperty(),
+          winrt::PasswordBox::SelectionHighlightColorProperty());
+      newView.as<winrt::PasswordBox>().Password(
+          oldView.as<winrt::TextBox>().Text());
+    } else {
+      TransferProperty(
+          oldView,
+          newView,
+          winrt::PasswordBox::MaxLengthProperty(),
+          winrt::TextBox::MaxLengthProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          winrt::PasswordBox::PlaceholderTextProperty(),
+          winrt::TextBox::PlaceholderTextProperty());
+      TransferProperty(
+          oldView,
+          newView,
+          winrt::PasswordBox::SelectionHighlightColorProperty(),
+          winrt::TextBox::SelectionHighlightColorProperty());
+      newView.as<winrt::TextBox>().Text(
+          oldView.as<winrt::PasswordBox>().Password());
+    }
 
-  // sync common control properties
-  TransferProperty(oldView, newView, winrt::Control::FontSizeProperty());
-  TransferProperty(oldView, newView, winrt::Control::FontFamilyProperty());
-  TransferProperty(oldView, newView, winrt::Control::FontWeightProperty());
-  TransferProperty(oldView, newView, winrt::Control::FontStyleProperty());
-  TransferProperty(
-      oldView, newView, winrt::Control::CharacterSpacingProperty());
-  TransferProperty(
-      oldView, newView, winrt::Control::IsTextScaleFactorEnabledProperty());
-  TransferProperty(oldView, newView, winrt::Control::BackgroundProperty());
-  TransferProperty(oldView, newView, winrt::Control::BorderBrushProperty());
-  TransferProperty(oldView, newView, winrt::Control::BorderThicknessProperty());
-  TransferProperty(oldView, newView, winrt::Control::PaddingProperty());
-  TransferProperty(oldView, newView, winrt::Control::ForegroundProperty());
-  TransferProperty(oldView, newView, winrt::Control::TabIndexProperty());
-
-  // sync common properties between TextBox and PasswordBox
-  if (copyToPasswordBox) {
-    TransferProperty(
-        oldView,
-        newView,
-        winrt::TextBox::MaxLengthProperty(),
-        winrt::PasswordBox::MaxLengthProperty());
-    TransferProperty(
-        oldView,
-        newView,
-        winrt::TextBox::PlaceholderTextProperty(),
-        winrt::PasswordBox::PlaceholderTextProperty());
-    TransferProperty(
-        oldView,
-        newView,
-        winrt::TextBox::SelectionHighlightColorProperty(),
-        winrt::PasswordBox::SelectionHighlightColorProperty());
-    newView.as<winrt::PasswordBox>().Password(
-        oldView.as<winrt::TextBox>().Text());
-  } else {
-    TransferProperty(
-        oldView,
-        newView,
-        winrt::PasswordBox::MaxLengthProperty(),
-        winrt::TextBox::MaxLengthProperty());
-    TransferProperty(
-        oldView,
-        newView,
-        winrt::PasswordBox::PlaceholderTextProperty(),
-        winrt::TextBox::PlaceholderTextProperty());
-    TransferProperty(
-        oldView,
-        newView,
-        winrt::PasswordBox::SelectionHighlightColorProperty(),
-        winrt::TextBox::SelectionHighlightColorProperty());
-    newView.as<winrt::TextBox>().Text(
-        oldView.as<winrt::PasswordBox>().Password());
+    // Set focus if current control has focus
+    auto focusState = oldView.as<winrt::Control>().FocusState();
+    if (focusState != winrt::FocusState::Unfocused) {
+      newView.as<winrt::Control>().Focus(focusState);
+    }
   }
-
-  // Set focus if current control has focus
-  auto focusState = oldView.as<winrt::Control>().FocusState();
-  if (focusState != winrt::FocusState::Unfocused) {
-    newView.as<winrt::Control>().Focus(focusState);
-  }
+  Super::TransferProperties(oldView, newView);
 }
 } // namespace uwp
 } // namespace react
