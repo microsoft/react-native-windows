@@ -4,7 +4,6 @@
 
 #include <CppUnitTest.h>
 
-#include <CreateModules.h>
 #include <Modules/AppStateModule.h>
 #include <Modules/DevSupportManagerUwp.h>
 #include <Modules/DeviceInfoModule.h>
@@ -19,6 +18,8 @@
 #include <ViewManager.h>
 #include <cxxreact/MessageQueueThread.h>
 
+#include <CreateModules.h>
+
 using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace react::uwp;
@@ -32,7 +33,6 @@ Assert::IsFalse(appStateModule == nullptr);
 
 TEST_METHOD(CreateModules_DevSupportManager) {
   auto devSupportManager = std::make_shared<DevSupportManager>();
-
   Assert::IsFalse(devSupportManager == nullptr);
 }
 

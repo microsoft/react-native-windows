@@ -2,6 +2,197 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Sep 2019 17:37:33 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.171",
+      "version": "0.59.0-vnext.171",
+      "comments": {
+        "none": [
+          {
+            "comment": "Changed deploy output to use StdOut",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "605b956702639c1bc26998549a708a43334fe139"
+          },
+          {
+            "comment": "Change `_this` to `that` to match ESList consistent-this rules.",
+            "author": "hpratt@microsoft.com",
+            "commit": "baef6558878a0f71a0d764373b412cb6e4bbbdeb"
+          },
+          {
+            "comment": "Update CreateStringResponseBody symbol in test DLL.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8f3abfb5959005c841eef1420043f79e8bcc9d62"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "ReactUWP def cleanup and unit test fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "14866ed13e3d4d0e390d3012fac7bdda1da9ab74"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Sep 2019 21:49:49 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.170",
+      "version": "0.59.0-vnext.170",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.73",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "6f5d7a37381b7006602c7accb3bc384886be1689"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Sep 2019 20:24:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.169",
+      "version": "0.59.0-vnext.169",
+      "comments": {
+        "none": [
+          {
+            "comment": "Ported HttpServer.",
+            "author": "julio@rochsquadron.net",
+            "commit": "e076e2024975cdd9fe14d8cd0d168a415e1addf1"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.72",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "ecff6489449ca142e78dd9a03b587109d088c029"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 23:08:02 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.168",
+      "version": "0.59.0-vnext.168",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "set IsTabStop = false for SnapPointManagingContentControl",
+            "author": "stecrain@microsoft.com",
+            "commit": "5f41be48b33e46a650877325618f77fb634ac620"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 20:30:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.167",
+      "version": "0.59.0-vnext.167",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix double-apply TransformMatrix bug",
+            "author": "email not defined",
+            "commit": "4f1cfdd19e87b767192562028ef2de406952dc6e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 20:17:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.166",
+      "version": "0.59.0-vnext.166",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "changed alert export",
+            "author": "email not defined",
+            "commit": "822bf1b6f925f940199d0625c8d17208f2cd8e96"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 19:46:18 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.165",
+      "version": "0.59.0-vnext.165",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed sampleapps build and updated CI",
+            "author": "jthysell@microsoft.com",
+            "commit": "6c3463e5f85c02866f22195d4b65437228153158"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Introducing an ETW provider and routing react-native Systrace event to it",
+            "author": "anandrag@microsoft.com",
+            "commit": "508a8473eb379ab78b904b2c3e8477ac9018fbda"
+          },
+          {
+            "comment": "updating status doc",
+            "author": "yulikl@microsoft.com",
+            "commit": "965fc40267837813138f73543ad20a03ebe11268"
+          },
+          {
+            "comment": "fix double onpress issue",
+            "author": "ngbu@microsoft.com",
+            "commit": "af7dcea1b513568858c546682870fdce3ac0c67b"
+          },
+          {
+            "comment": "Fix double onPress issue in touchableOpacity (#3042)",
+            "author": "ngbu@microsoft.com",
+            "commit": "ba368131fb6bccfe02092cbe4cc90f9abf99d214"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 22:14:06 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.164",
+      "version": "0.59.0-vnext.164",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "changed alert export",
+            "author": "email not defined",
+            "commit": "822bf1b6f925f940199d0625c8d17208f2cd8e96"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 20:21:10 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.163",
+      "version": "0.59.0-vnext.163",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.71",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "355971b39494c1a614b0db3f2de7c30b28788b4a"
+          },
+          {
+            "comment": "change file",
+            "author": "randyfl@microsoft.com",
+            "commit": "c8d5ae604e177fc6c119d2b1abd0448c09edfee7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 19:38:17 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.162",
+      "version": "0.59.0-vnext.162",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow windowsbrush: color syntax to use non-SolidColor brushes",
+            "author": "thshea@microsoft.com",
+            "commit": "1f35ddd032b48531ee572ca9d56850d46ce6025f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Aug 2019 01:41:01 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.161",
       "version": "0.59.0-vnext.161",

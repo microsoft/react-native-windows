@@ -2103,9 +2103,9 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.3.16"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.3.16.tgz#f3e88bfb71e12ee023fb2f939d010a0d28849432"
-  integrity sha512-9Xa3HFfLc6A2zpj6zXM6/Kq4vUXn2xTtnac0l5EPwUnhCKpGb3u5KOnfa9R5fXQ0lH4IthYzh303P4e0NUeSgg==
+  version "7.3.17"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.3.17.tgz#9f344d2f2b0691397df428c8207e9501bc134d9a"
+  integrity sha512-/QslG5P5DtMubFZSqPNv6fCwkBiXKgQol25EAhXEQ/TEGYwHfOUjH3bztrYfa+oJKf/8vlZ/R4wYYgxWszdToQ==
   dependencies:
     "@microsoft/api-extractor-model" "7.3.2"
     "@microsoft/node-core-library" "3.14.0"
@@ -2124,9 +2124,9 @@
     "@types/node" "8.5.8"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.3.8"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.3.8.tgz#6f417ccb935e61e01e2fe3ceb941093aa24208be"
-  integrity sha512-zw3HWmPW9vWWIoI3SPb2tuJ2suXVoF9ty37Mww+00I4gKLPPDooVad1kBiNtdjHXBj0QwYAOsGcfoBN9Qgt2bw==
+  version "7.3.9"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.3.9.tgz#c035748e9e8745eb9df43351f76ace1f529d17dc"
+  integrity sha512-8qj+N/3CgJaHFZj/YlXqtyPAK8vQ2e4oFzKrzbQNw5mtlVnyLlayTkNfVIq93Q0xRMwAhPJjlmxmAuu1ZI88oQ==
   dependencies:
     "@microsoft/api-extractor-model" "7.3.2"
     "@microsoft/node-core-library" "3.14.0"
@@ -2379,9 +2379,9 @@
   integrity sha512-8KmlRxwbKZfjUHFIt3q8TF5S2B+/E5BaAoo/3mgc5h6FJzqxXkCK/VMetO+IRDtwtU6HUvovHMBn+XRj7SV9Qg==
 
 "@types/node@^10.12.18", "@types/node@^10.14.8":
-  version "10.14.16"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.16.tgz#4d690c96cbb7b2728afea0e260d680501b3da5cf"
-  integrity sha512-/opXIbfn0P+VLt+N8DE4l8Mn8rbhiJgabU96ZJ0p9mxOkIks5gh6RUnpHak7Yh0SFkyjO/ODbxsQQPV2bpMmyA==
+  version "10.14.17"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.17.tgz#b96d4dd3e427382482848948041d3754d40fd5ce"
+  integrity sha512-p/sGgiPaathCfOtqu2fx5Mu1bcjuP8ALFg4xpGgNkcin7LwRyzUKniEHBKdcE1RPsenq5JVPIpMTJSygLboygQ==
 
 "@types/ora@^3.2.0":
   version "3.2.0"
@@ -10393,10 +10393,10 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.69.tar.gz":
-  version "0.59.0-microsoft.69"
-  uid "195f1a5dd884275ce960b0778dda5792383f42d6"
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.69.tar.gz#195f1a5dd884275ce960b0778dda5792383f42d6"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz":
+  version "0.59.0-microsoft.71"
+  uid a6db762880ce9d859fa35d6b0a44b7fbaf714e0a
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.71.tar.gz#a6db762880ce9d859fa35d6b0a44b7fbaf714e0a"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"

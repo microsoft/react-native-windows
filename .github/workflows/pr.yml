@@ -8,6 +8,7 @@ jobs:
   # we are using with facebook/react-native instead of microsoft/react-native
   UWPPublicRN:
     name: vnext with facebook/react-native
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 45
     steps:
@@ -38,25 +39,37 @@ jobs:
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: NuGet restore
+      - name: NuGet restore ReactWindows-UWP.sln
         run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
         run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
 
-      - name: NuGet restore
+      - name: NuGet restore Playground.sln
         run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
 
-      - name: Build ReactWindows-UWP.sln
+      - name: Build Playground.sln
         run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
 
       # todo work out how to specify working-directory for run command
       - name: Create Playground bundle
         run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
 
+      # todo Switch to VS2019 so we can build this
+      # - name: NuGet restore SampleApps.sln
+      #  run: nuget.exe restore packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln -Verbosity Detailed -NonInteractive
+
+      #- name: Build SampleApps.sln
+      #  run: msbuild packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
+
+      # todo work out how to specify working-directory for run command
+      - name: Create SampleApp bundle
+        run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+
   # This job verifies the basic UWP projects
   UWPPR:
     name: vnext ReactWindows-UWP.sln
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 45
     # Can't appear to enable matrix right now:
@@ -86,7 +99,7 @@ jobs:
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: NuGet restore
+      - name: NuGet restore ReactWindows-UWP.sln
         run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
@@ -95,10 +108,10 @@ jobs:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
           BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
 
-      - name: NuGet restore
+      - name: NuGet restore Playground.sln
         run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
 
-      - name: Build ReactWindows-UWP.sln
+      - name: Build Playground.sln
         run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
         env:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
@@ -108,6 +121,20 @@ jobs:
       - name: Create Playground bundle
         run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
 
+      # todo Switch to VS2019 so we can build this
+      #- name: NuGet restore SampleApps.sln
+      #  run: nuget.exe restore packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln -Verbosity Detailed -NonInteractive
+
+      #- name: Build SampleApps.sln
+      #  run: msbuild packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+      #  env:
+      #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+      #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+
+      # todo work out how to specify working-directory for run command
+      - name: Create SampleApp bundle
+        run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+
       # todo work out how to specify working-directory for run command
       - name: Create RNTester bundle
         #  if: ${{ matrix.UseRNFork }} == 'true'
@@ -116,6 +143,7 @@ jobs:
   # This job verifies creating a new react-native app, installing react-native-windows, applying the vnext template, and building it
   CliInit:
     name: Verify react-native init
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 30
     steps:
@@ -156,20 +184,21 @@ jobs:
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: NuGet restore
+      - name: NuGet restore testcli.sln
         run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
-      - name: Build ReactWindows-UWP.sln
+      - name: Build testcli.sln
         run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x86 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
         env:
           BUILDPLATFORM: x64
           BUILDCONFIGURATION: Debug
 
-      - name: Create bundle
+      - name: Create bundle testcli.sln
         run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
 
   RNWFormatting:
     name: Verify change files + formatting
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 10
     steps:
@@ -186,6 +215,7 @@ jobs:
 
   CurrentPR:
     name: Current (C#) PR
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 10
     strategy:
@@ -209,7 +239,7 @@ jobs:
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
 
-      - name: NuGet restore
+      - name: NuGet restore ReactNative.sln
         run: nuget.exe restore current/ReactWindows/ReactNative.sln -Verbosity Detailed -NonInteractive
 
       - name: Install react-native-cli
@@ -227,7 +257,7 @@ jobs:
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: Build ReactWindows-UWP.sln
+      - name: Build ReactNative.sln
         run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
         env:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
@@ -257,6 +287,7 @@ jobs:
 
   RnwNativePRBuild:
     name: vnext Windows.sln
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 45
     strategy:
@@ -279,7 +310,7 @@ jobs:
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
 
-      - name: NuGet restore
+      - name: NuGet restore ReactWindows.sln
         run: nuget.exe restore vnext\ReactWindows.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Setup MSBuild.exe
@@ -330,6 +361,7 @@ jobs:
 
   RNWNugetPR:
     name: React-Native-Windows Build and Pack Nuget
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     needs: RnwNativePRBuild
     timeout-minutes: 15
