@@ -36,9 +36,7 @@ AnimationDriver::~AnimationDriver() {
 void AnimationDriver::StartAnimation() {
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
 
-  const auto animatedValue = GetAnimatedValue();
-
-  if (animatedValue) {
+  if (auto const animatedValue = GetAnimatedValue()) {
     auto const previousValue = animatedValue->Value();
     auto const rawValue = animatedValue->RawValue();
     auto const offsetValue = animatedValue->Offset();
@@ -50,14 +48,14 @@ void AnimationDriver::StartAnimation() {
   scopedBatch.End();
 
   m_scopedBatchCompletedToken = scopedBatch.Completed(
-      [endCallback = m_endCallback, animatedValue, id = m_id](
+      [this](
           auto sender, auto) {
-        if (endCallback) {
-          endCallback(std::vector<folly::dynamic>{
+        if (m_endCallback) {
+          m_endCallback(std::vector<folly::dynamic>{
               folly::dynamic::object("finished", true)});
         }
-        if (animatedValue) {
-          animatedValue->RemoveActiveAnimation(id);
+        if (auto const animatedValue = GetAnimatedValue()) {
+          animatedValue->RemoveActiveAnimation(m_id);
         }
       });
 
