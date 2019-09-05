@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Changed deploy output to use StdOut",
-  "packageName": "react-native-windows",
-  "email": "brkeyonz@microsoft.com",
-  "commit": "605b956702639c1bc26998549a708a43334fe139",
-  "date": "2019-08-31T05:07:10.315Z"
-}
