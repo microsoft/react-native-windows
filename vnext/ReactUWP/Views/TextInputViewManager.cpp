@@ -350,8 +350,10 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "maxLength") {
       if (propertyValue.isNumber()) {
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::MaxLengthProperty() : winrt::PasswordBox::MaxLengthProperty(),
-            winrt::PropertyValue::CreateInt32(static_cast<int32_t>(propertyValue.asDouble())));
+            m_isTextBox ? winrt::TextBox::MaxLengthProperty()
+                        : winrt::PasswordBox::MaxLengthProperty(),
+            winrt::PropertyValue::CreateInt32(
+                static_cast<int32_t>(propertyValue.asDouble())));
       } else if (propertyValue.isNull()) {
         control.ClearValue(
             m_isTextBox ? winrt::TextBox::MaxLengthProperty()
@@ -361,7 +363,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isString()) {
         control.SetValue(
             m_isTextBox ? winrt::TextBox::PlaceholderTextProperty()
-                : winrt::PasswordBox::PlaceholderTextProperty(),
+                        : winrt::PasswordBox::PlaceholderTextProperty(),
             winrt::PropertyValue::CreateString(asHstring(propertyValue)));
       } else if (propertyValue.isNull()) {
         control.ClearValue(
@@ -374,13 +376,12 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
                         : winrt::PasswordBox::SelectionHighlightColorProperty(),
             SolidColorBrushFrom(propertyValue));
-      }
-      else if (propertyValue.isNull())
+      } else if (propertyValue.isNull())
         control.ClearValue(
-            m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
+            m_isTextBox
+                ? winrt::TextBox::SelectionHighlightColorProperty()
                 : winrt::PasswordBox::SelectionHighlightColorProperty());
-    }
-    else {
+    } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
