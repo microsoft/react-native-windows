@@ -99,7 +99,9 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
   const auto toValue = [this, time, startValue]() {
     const auto frameFromTime = static_cast<int>(time * 60.0);
     if (frameFromTime < static_cast<int>(m_dynamicToValues.size())) {
-      return startValue + (m_dynamicToValues[frameFromTime].asDouble() * (m_endValue - startValue)); 
+      return startValue +
+          (m_dynamicToValues[frameFromTime].asDouble() *
+           (m_endValue - startValue));
     }
     return m_endValue;
   }();
@@ -130,8 +132,7 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
   } else {
     const auto envelope = std::exp(-omega0 * time);
     const auto value = static_cast<float>(
-        toValue *
-        (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0)));
+        toValue * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0)));
     const auto velocity =
         envelope * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0));
     return std::make_tuple(value, velocity);

@@ -12,8 +12,8 @@
 #include "EventAnimationDriver.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
-#include "TransformAnimatedNode.h"
 #include "TrackingAnimatedNode.h"
+#include "TransformAnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
 namespace react {

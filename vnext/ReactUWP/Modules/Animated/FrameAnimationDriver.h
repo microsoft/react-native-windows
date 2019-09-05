@@ -26,7 +26,7 @@ class FrameAnimationDriver : public AnimationDriver {
     return m_frames;
   }
 
-  private:
+ private:
   std::vector<double> m_frames{};
   double m_toValue{0};
 };

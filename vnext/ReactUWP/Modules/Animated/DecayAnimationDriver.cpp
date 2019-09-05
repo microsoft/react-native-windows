@@ -68,7 +68,8 @@ double DecayAnimationDriver::ToValue() {
   }();
 
   auto const duration = m_velocity / -m_deceleration;
-  return startValue + m_velocity * duration + (0.5 * -m_deceleration * duration * duration);
+  return startValue + m_velocity * duration +
+      (0.5 * -m_deceleration * duration * duration);
 }
 
 } // namespace uwp

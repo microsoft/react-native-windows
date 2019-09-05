@@ -47,9 +47,8 @@ void AnimationDriver::StartAnimation() {
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed(
-      [this](
-          auto sender, auto) {
+  m_scopedBatchCompletedToken =
+      scopedBatch.Completed([this](auto sender, auto) {
         if (m_endCallback) {
           m_endCallback(std::vector<folly::dynamic>{
               folly::dynamic::object("finished", true)});
