@@ -37,7 +37,6 @@ void TrackingAnimatedNode::StartAnimation() {
       m_animationConfig.insert(
           static_cast<folly::StringPiece>(s_toValueIdName),
           toValueNode->Value());
-      // m_animationConfig.at("frames").insert()
       strongManager->StartTrackingAnimatedNode(
           m_animationId,
           m_valueId,

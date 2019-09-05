@@ -180,26 +180,24 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager,
     bool track) {
   auto updatedAnimationConfig = animationConfig;
-  for (auto iterator = m_activeAnimations.begin();
-       iterator != m_activeAnimations.end();
-       iterator++) {
-    if (iterator->second->AnimatedValueTag() == animatedToValueTag) {
+  for (auto &item : m_activeAnimations) {
+    if (item.second->AnimatedValueTag() == animatedToValueTag) {
       updatedAnimationConfig.insert(
           static_cast<folly::StringPiece>(s_toValueIdName),
-          iterator->second->ToValue());
+          item.second->ToValue());
 
       switch (AnimationTypeFromString(
           animationConfig.find("type").dereference().second.getString())) {
         case AnimationType::Frames:
           updatedAnimationConfig.insert(
               static_cast<folly::StringPiece>(s_framesName),
-              [animationConfig, iterator]() {
+              [animationConfig, activeFrames = item.second->Frames()]() {
                 auto frames = folly::dynamic::array();
                 for (auto const &frame :
                      animationConfig.find("frames").dereference().second) {
                   frames.push_back(0.0);
                 }
-                for (auto const &frame : iterator->second->Frames()) {
+                for (auto const &frame : activeFrames) {
                   frames.push_back(frame);
                 }
                 return frames;
@@ -208,9 +206,9 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
         case AnimationType::Spring:
           updatedAnimationConfig.insert(
               static_cast<folly::StringPiece>(s_dynamicToValuesName),
-              [iterator]() {
+              [activeFrames = item.second->Frames()]() {
                 auto dynamicToValues = folly::dynamic::array();
-                for (auto const &frame : iterator->second->Frames()) {
+                for (auto const &frame : activeFrames) {
                   dynamicToValues.push_back(frame);
                 }
                 return dynamicToValues;
