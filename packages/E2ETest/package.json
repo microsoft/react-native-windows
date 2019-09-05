@@ -13,7 +13,7 @@
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
     "test": "rimraf reports/* && npm run prettier && wdio",
     "dev": "npm run prettier && wdio --spec",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/ReactAssets/index.windows.bundle --assets-dest windows/ReactUWPTestApp/ReactAssets"
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle"
   },
   "dependencies": {
     "react": "16.8.3",

@@ -33,7 +33,7 @@ task('ts', () => {
 });
 
 task('prepareBundle', () => {
-  const file = 'windows/ReactUWPTestApp/ReactAssets';
+  const file = 'windows/ReactUWPTestApp/Bundle';
   if (!fs.existsSync(file)) {
     fs.mkdirSync(file);
   }

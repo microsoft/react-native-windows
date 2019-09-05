@@ -13,7 +13,7 @@ namespace ReactUWPTestApp
   public sealed partial class ReactTestPage : Page
   {
 #if BUNDLE
-    private static readonly string JSFileName = "ms-appx:///ReactAssets/index.windows.bundle";
+    private static readonly string JSFileName = "index.windows";
 #else   
     private static readonly string JSFileName = "app/index";
 #endif
