@@ -40,6 +40,8 @@ uint32_t GetPageSize() noexcept {
 
 } // anonymous namespace
 
+namespace Microsoft::JSI::Test {
+
 TEST_CLASS(MemoryMappedBufferUnitTests) {
  private:
   std::wstring m_testFileName;
@@ -167,3 +169,5 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
     });
   }
 };
+
+} // namespace Microsoft::JSI::Test
