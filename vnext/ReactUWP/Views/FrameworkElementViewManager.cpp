@@ -335,7 +335,7 @@ void FrameworkElementViewManager::UpdateProperties(
         AnnounceLiveRegionChangedIfNeeded(element);
       } else if (propertyName == "accessibilityPosInSet") {
         if (propertyValue.isNumber()) {
-          auto value = static_cast<int>(propertyValue.getInt());
+          auto value = static_cast<int>(propertyValue.asDouble());
           auto boxedValue =
               winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
 
@@ -347,7 +347,7 @@ void FrameworkElementViewManager::UpdateProperties(
         }
       } else if (propertyName == "accessibilitySetSize") {
         if (propertyValue.isNumber()) {
-          auto value = static_cast<int>(propertyValue.getInt());
+          auto value = static_cast<int>(propertyValue.asDouble());
           auto boxedValue =
               winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
 
