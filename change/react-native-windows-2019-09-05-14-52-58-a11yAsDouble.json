@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix issue with using getInt instead of asDouble for JSI",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "dccdb9de931860f8152e4480ceff6dddc82f91c5",
+  "date": "2019-09-05T21:52:58.772Z"
+}
