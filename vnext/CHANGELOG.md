@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Sep 2019 17:37:33 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Sep 2019 18:03:18 GMT and should not be manually modified.
 
+## 0.59.0-vnext.172
+Fri, 06 Sep 2019 18:03:18 GMT
+
+### Changes
+
+- Fix issue with using getInt instead of asDouble for JSI (jthysell@microsoft.com)
 ## 0.59.0-vnext.171
 Thu, 05 Sep 2019 17:37:33 GMT
 

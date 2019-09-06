@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 06 Sep 2019 18:03:18 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.172",
+      "version": "0.59.0-vnext.172",
+      "comments": {
+        "none": [
+          {
+            "comment": "CLI and bundle change to support test",
+            "author": "canli@microsoft.com",
+            "commit": "75a6e7f24abb466ae7ff1871bfc59312349c20c8"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Fix issue with using getInt instead of asDouble for JSI",
+            "author": "jthysell@microsoft.com",
+            "commit": "dccdb9de931860f8152e4480ceff6dddc82f91c5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Sep 2019 17:37:33 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.171",
       "version": "0.59.0-vnext.171",
