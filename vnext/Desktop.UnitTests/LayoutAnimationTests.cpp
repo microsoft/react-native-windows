@@ -259,6 +259,6 @@ TEST_CLASS(LayoutAnimationTests) {
 #pragma endregion
 };
 
-} // namespace Microsoft::React::Test
-
 // clang-format on
+
+} // namespace Microsoft::React::Test
