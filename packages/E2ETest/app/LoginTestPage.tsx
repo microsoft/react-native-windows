@@ -35,7 +35,7 @@ export function LoginTestPage() {
   const [password, setPassword] = useState('');
   const [passwordHidden, setPasswordHidden] = useState(true);
 
-   onPressShowPassword = () => {
+  const onPressShowPassword = () => {
       var previousState = passwordHidden;
       setPasswordHidden(!previousState);
    }
@@ -63,7 +63,7 @@ export function LoginTestPage() {
         onChange={(text) => { setPassword(text.nativeEvent.text) }} />
 
       <Button title= {passwordHidden?"Show Password":"Hide Password"} 
-        onPress={this.onPressShowPassword} 
+        onPress={onPressShowPassword} 
         testID={SHOWPASSWORD_ON_LOGIN}/>
 
       <TouchableOpacity style={styles.buttonContainer}
