@@ -31,6 +31,11 @@ MemoryMappedBuffer::MemoryMappedBuffer(
     : m_fileMapping{nullptr, &CloseHandle},
       m_fileData{nullptr, &FileDataDeleter},
       m_offset{offset} {
+  if (!filename) {
+    throw facebook::jsi::JSINativeException(
+        "MemoryMappedBuffer constructor is called with nullptr filename.");
+  }
+
   // Because we still need to support Windows 7, and APIs such as CreateFile2
   // and CreateFileMappingFromApp are only available on Windows 8+, we currently
   // use APIs such as CreateFileW and CreateFileMapping for Win32.

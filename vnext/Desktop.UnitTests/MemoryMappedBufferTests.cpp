@@ -143,6 +143,11 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
             content.c_str() + fileOffset) == 0);
   }
 
+  TEST_METHOD(ErrorTest_NullptrFileName) {
+    Assert::ExpectException<JSINativeException>([] {
+      std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(nullptr);
+    });
+  }
   TEST_METHOD(ErrorTest_EmptyFile) {
     WriteTestFile("", 0);
 
