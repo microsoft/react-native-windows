@@ -121,7 +121,7 @@
     <ClInclude Include="JSBigAbiString.h" />
     <ClInclude Include="LayoutAnimation.h" />
     <ClInclude Include="Logging.h" />
-    <ClInclude Include="MemoryMappedBuffer.h" />
+    <ClInclude Include="MemoryMappedBuffer.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="MemoryTracker.h" />
     <ClInclude Include="Modules\AppStateModule.h" />
     <ClInclude Include="Modules\AppThemeModule.h" />
