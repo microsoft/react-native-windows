@@ -38,6 +38,7 @@ EXPORTS
 ?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
 ?utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?MakeMemoryMappedBuffer@JSI@Microsoft@@YA?AV?$shared_ptr@VBuffer@jsi@facebook@@@std@@QB_WI@Z
 dallocxWeak
 mallctlWeak
 mallctlbymibWeak
