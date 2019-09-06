@@ -74,9 +74,9 @@ exports.config = {
             // http://appium.io/docs/en/writing-running-appium/caps/
             // This is `appium:` for all Appium Capabilities which can be found here
             'appium:deviceName': 'WindowsPC',
-            'appium:app': 'ReactUWPTestApp_2wtq0zq3ec38a!App',
+            'appium:app': 'ReactUWPTestApp_kc2bncckyf4ap!App',
             'deviceName': 'WindowsPC',
-            'app': 'ReactUWPTestApp_2wtq0zq3ec38a!App',
+            'app': 'ReactUWPTestApp_kc2bncckyf4ap!App',
             'winAppDriver:experimental-w3c': true,
         },
         // {

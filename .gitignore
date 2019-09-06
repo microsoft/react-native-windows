@@ -155,3 +155,5 @@ bld/
 *_coverage.xml
 
 tsdoc-metadata.json
+
+packages/E2ETest/reports/

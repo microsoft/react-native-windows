@@ -2,6 +2,37 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Sep 2019 17:37:33 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.171",
+      "version": "0.59.0-vnext.171",
+      "comments": {
+        "none": [
+          {
+            "comment": "Changed deploy output to use StdOut",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "605b956702639c1bc26998549a708a43334fe139"
+          },
+          {
+            "comment": "Change `_this` to `that` to match ESList consistent-this rules.",
+            "author": "hpratt@microsoft.com",
+            "commit": "baef6558878a0f71a0d764373b412cb6e4bbbdeb"
+          },
+          {
+            "comment": "Update CreateStringResponseBody symbol in test DLL.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8f3abfb5959005c841eef1420043f79e8bcc9d62"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "ReactUWP def cleanup and unit test fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "14866ed13e3d4d0e390d3012fac7bdda1da9ab74"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 03 Sep 2019 21:49:49 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.170",
       "version": "0.59.0-vnext.170",
