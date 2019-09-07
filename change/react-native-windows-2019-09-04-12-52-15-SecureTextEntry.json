@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Support dynamic swapping TextBox/PasswordBox view for SecureTextEntry property",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "d432cbe4b3ab20ab69b5723f5356f53ed1c7d832",
+  "date": "2019-09-04T19:52:15.669Z"
+}
