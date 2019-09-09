@@ -1,7 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Sep 2019 18:03:18 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Sep 2019 21:39:46 GMT and should not be manually modified.
 
+## 0.59.0-vnext.175
+Mon, 09 Sep 2019 21:39:46 GMT
+
+### Changes
+
+- Alphabetize def files. (yicyao@microsoft.com)
+## 0.59.0-vnext.174
+Mon, 09 Sep 2019 19:22:09 GMT
+
+### Changes
+
+- Put desktop unit tests into namespaces. (yicyao@microsoft.com)
+## 0.59.0-vnext.173
+Sat, 07 Sep 2019 20:17:19 GMT
+
+### Changes
+
+- Support dynamic swapping TextBox/PasswordBox view for SecureTextEntry property (dida@ntdev.microsoft.com)
 ## 0.59.0-vnext.172
 Fri, 06 Sep 2019 18:03:18 GMT
 

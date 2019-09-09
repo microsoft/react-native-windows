@@ -22,6 +22,7 @@ EXPORTS
 ?InitializeLogging@react@facebook@@YAX$$QAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPAUINativeTraceHandler@12@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
+?MakeMemoryMappedBuffer@JSI@Microsoft@@YA?AV?$shared_ptr@VBuffer@jsi@facebook@@@std@@QB_WI@Z
 ?at@dynamic@folly@@QGBAABU12@V?$Range@PBD@2@@Z
 ?atImpl@dynamic@folly@@AGBAABU12@ABU12@@Z
 ?callJSFunction@Instance@react@facebook@@UAAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z

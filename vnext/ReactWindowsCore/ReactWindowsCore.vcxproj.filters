@@ -93,9 +93,6 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="tracing\tracing.cpp">
       <Filter>tracing</Filter>
     </ClCompile>
@@ -223,15 +220,15 @@
     </ClInclude>
     <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
-    </ClInclude>   
-    <ClInclude Include="V8JSIRuntimeHolder.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="etw\react_native_windows.h">
       <Filter>etw</Filter>
     </ClInclude>
     <ClInclude Include="tracing\fbsystrace.h">
       <Filter>tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryMappedBuffer.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
