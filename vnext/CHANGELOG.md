@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 09 Sep 2019 19:22:09 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Sep 2019 21:39:46 GMT and should not be manually modified.
 
+## 0.59.0-vnext.175
+Mon, 09 Sep 2019 21:39:46 GMT
+
+### Changes
+
+- Alphabetize def files. (yicyao@microsoft.com)
 ## 0.59.0-vnext.174
 Mon, 09 Sep 2019 19:22:09 GMT
 
