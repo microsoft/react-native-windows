@@ -240,7 +240,7 @@ jobs:
       - task: CmdLine@2
         displayName: Create bundle testcli
         inputs:
-          script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
+          script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - job: RnwNativePRBuild
