@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 09 Sep 2019 19:22:09 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.174",
+      "version": "0.59.0-vnext.174",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Put desktop unit tests into namespaces.",
+            "author": "yicyao@microsoft.com",
+            "commit": "376450bff685ade93b719d1ba5cd0d8d290eefb2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Sep 2019 20:17:19 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.173",
       "version": "0.59.0-vnext.173",

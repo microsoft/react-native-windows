@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Put desktop unit tests into namespaces.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "376450bff685ade93b719d1ba5cd0d8d290eefb2",
-  "date": "2019-09-06T23:42:33.841Z"
-}
