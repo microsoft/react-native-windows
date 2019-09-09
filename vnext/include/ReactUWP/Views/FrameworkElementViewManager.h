@@ -27,12 +27,19 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       winrt::UIElement uielement,
       winrt::Windows::UI::Composition::CompositionPropertySet transformPS);
 
- protected:
   virtual void TransferProperties(XamlView oldView, XamlView newView) override;
+
+ protected:
   void TransferProperty(
       XamlView oldView,
       XamlView newView,
       winrt::Windows::UI::Xaml::DependencyProperty dp);
+
+  void TransferProperty(
+      XamlView oldView,
+      XamlView newView,
+      winrt::DependencyProperty oldViewDP,
+      winrt::DependencyProperty newViewDP);
 
  private:
   void ApplyTransformMatrix(

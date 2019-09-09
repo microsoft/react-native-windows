@@ -40,6 +40,7 @@
     <file src="inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
     <file src="inc\ReactWindowsCore\LayoutAnimation.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Logging.h" target="inc"/>
+    <file src="inc\ReactWindowsCore\MemoryMappedBuffer.h" target="inc"/>
     <file src="inc\ReactWindowsCore\MemoryTracker.h" target="inc"/>
     <file src="inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
     <file src="inc\ReactWindowsCore\NativeModuleProvider.h" target="inc"/>

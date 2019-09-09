@@ -87,12 +87,12 @@ function copyProjectTemplateAndReplace(
   };
 
   [
-    { from: path.join(srcPath, 'App.windows.js'), to: 'App.windows.js' },
+    { from: path.join(srcPath, 'index.windows.js'), to: 'index.windows.js' },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
     { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
     { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
-    { from: path.join(srcPath, 'app.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'app.windows.bundle') },
+    { from: path.join(srcPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars));
 
   copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars);

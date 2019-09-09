@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 09 Sep 2019 21:39:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.175",
+      "version": "0.59.0-vnext.175",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Alphabetize def files.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5c988739053f19a1c1ecf15c80ea8569cacd67dd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Sep 2019 19:22:09 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.174",
+      "version": "0.59.0-vnext.174",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Put desktop unit tests into namespaces.",
+            "author": "yicyao@microsoft.com",
+            "commit": "376450bff685ade93b719d1ba5cd0d8d290eefb2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Sep 2019 20:17:19 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.173",
+      "version": "0.59.0-vnext.173",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add MemoryMappedBuffer.",
+            "author": "yicyao@microsoft.com",
+            "commit": "f0a4515025926438c1f86cb232196aac4f483d08"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support dynamic swapping TextBox/PasswordBox view for SecureTextEntry property",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "d432cbe4b3ab20ab69b5723f5356f53ed1c7d832"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2019 18:03:18 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.172",
+      "version": "0.59.0-vnext.172",
+      "comments": {
+        "none": [
+          {
+            "comment": "CLI and bundle change to support test",
+            "author": "canli@microsoft.com",
+            "commit": "75a6e7f24abb466ae7ff1871bfc59312349c20c8"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Fix issue with using getInt instead of asDouble for JSI",
+            "author": "jthysell@microsoft.com",
+            "commit": "dccdb9de931860f8152e4480ceff6dddc82f91c5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Sep 2019 17:37:33 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.171",
       "version": "0.59.0-vnext.171",
