@@ -11,6 +11,8 @@ using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS(StringConversionTest_Desktop) {
  private:
   JsRuntimeHandle runtime;
@@ -45,3 +47,5 @@ TEST_CLASS(StringConversionTest_Desktop) {
     }
   }
 };
+
+} // namespace Microsoft::React::Test
