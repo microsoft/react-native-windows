@@ -17,9 +17,9 @@
     "esModuleInterop": true,
     "types": [
       "@wdio/sync",
-      "@wdio/mocha-framework",
-      "node",
-      "chai"
+      "@wdio/jasmine-framework",
+      "@types/jasmine",
+      "node"
     ]
   },
   "include": [
