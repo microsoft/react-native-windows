@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Sep 2019 00:44:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.176",
+      "version": "0.59.0-vnext.176",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.74",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fc361686e49b24b7d75c0155fa3e8b0c912ee357"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Change the CLI bundle name index.bundle (vnext)",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "f8a82c11e642baaf36a9c3889810b3e98ee61fa4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Sep 2019 21:39:46 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.175",
       "version": "0.59.0-vnext.175",
