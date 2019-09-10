@@ -37,6 +37,7 @@ void ControlViewManager::TransferProperties(
   TransferProperty(oldView, newView, winrt::Control::PaddingProperty());
   TransferProperty(oldView, newView, winrt::Control::ForegroundProperty());
   TransferProperty(oldView, newView, winrt::Control::TabIndexProperty());
+  Super::TransferProperties(oldView, newView);
 }
 
 void ControlViewManager::UpdateProperties(

@@ -41,7 +41,7 @@ describe('LoginTest', () => {
   it('Login Success with secureTextEntry off then on', () => {
     LoginPage.setLoginInfo('username', 'pass');
     LoginPage.toggleShowPassword();
-    LoginPage.apendPassword('word');
+    LoginPage.appendPassword('word');
     LoginPage.submitForm();
     assert.equal(LoginPage.getLoginResult(), 'Success');
   });
@@ -49,7 +49,7 @@ describe('LoginTest', () => {
   it('Login Success with secureTextEntry on then off', () => {
     LoginPage.setLoginInfo('username', 'pass');
     LoginPage.toggleShowPassword();
-    LoginPage.apendPassword('word');
+    LoginPage.appendPassword('word');
     LoginPage.submitForm();
     assert.equal(LoginPage.getLoginResult(), 'Success');
   });
