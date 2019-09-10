@@ -22,4 +22,14 @@ describe('First', () => {
     TextInputTestPage.clearAndTypeOnTextInput('def');
     assert.equal(TextInputTestPage.getTextInputText(), 'def');
   });
+
+  it('Type abc on multiline TextInput', () => {
+    TextInputTestPage.clearAndTypeOnMLTextInput('abc');
+    assert.equal(TextInputTestPage.getMLTextInputText(), 'abc');
+  });
+
+  it('Enter key then type def on multiline TextInput', () => {
+    TextInputTestPage.appendNewLineOnMLText('def');
+    assert.equal(TextInputTestPage.getMLTextInputText(), 'abc\rdef');
+  });
 });

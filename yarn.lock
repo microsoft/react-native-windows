@@ -10393,10 +10393,10 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz":
-  version "0.59.0-microsoft.73"
-  uid a16940dc996787a7aca7169214e55e46f71f7cfc
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz#a16940dc996787a7aca7169214e55e46f71f7cfc"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.74.tar.gz":
+  version "0.59.0-microsoft.74"
+  uid "1683fcf040ed9236d0b3ecca8073c4858ae359fa"
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.74.tar.gz#1683fcf040ed9236d0b3ecca8073c4858ae359fa"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
