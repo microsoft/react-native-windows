@@ -214,9 +214,12 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
                 return dynamicToValues;
               }());
           break;
+          // Animated.Decay does not have a to value,
+          // so they cannot track other nodes. So we'll never
+          // have a decay tracking node.
         case AnimationType::Decay:
-          break;
         default:
+          assert(false);
           break;
       }
 
