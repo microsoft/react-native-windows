@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Support live reload for developer menu",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "0321a9ba4cc3ad28797c8453f78c7d8575e9f6bc",
+  "date": "2019-09-10T19:39:52.357Z"
+}
