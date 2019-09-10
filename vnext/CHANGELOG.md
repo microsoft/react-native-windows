@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Sep 2019 00:44:04 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Sep 2019 19:16:08 GMT and should not be manually modified.
 
+## 0.59.0-vnext.177
+Tue, 10 Sep 2019 19:16:08 GMT
+
+### Changes
+
+- Fix Login E2E test failure (dida@ntdev.microsoft.com)
 ## 0.59.0-vnext.176
 Tue, 10 Sep 2019 00:44:04 GMT
 
