@@ -22,7 +22,7 @@ class LoginPage extends BasePage {
     this._password.setValue(password);
   }
 
-  apendPassword(password: string) {
+  appendPassword(password: string) {
     this._password.addValue('End');
     this._password.addValue(password);
   }
