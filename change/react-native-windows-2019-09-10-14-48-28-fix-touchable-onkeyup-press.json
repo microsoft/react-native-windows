@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix onPress not firing for Touchable* keyboard events",
-  "packageName": "react-native-windows",
-  "email": "thshea@microsoft.com",
-  "commit": "c434599726f09784d09dc10eed239a806de0a627",
-  "date": "2019-09-10T21:48:28.230Z"
-}

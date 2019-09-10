@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Sep 2019 19:16:08 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Sep 2019 23:25:37 GMT and should not be manually modified.
 
+## 0.59.0-vnext.178
+Tue, 10 Sep 2019 23:25:37 GMT
+
+### Changes
+
+- Fix onPress not firing for Touchable* keyboard events (thshea@microsoft.com)
 ## 0.59.0-vnext.177
 Tue, 10 Sep 2019 19:16:08 GMT
 
