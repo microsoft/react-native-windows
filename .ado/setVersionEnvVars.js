@@ -44,12 +44,16 @@ fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'),
 `
 console.log("::[set-env name=RNW_PKG_VERSION_STR;]${versionEnvVars.RNW_PKG_VERSION_STR}");
 console.log("##[set-env name=RNW_PKG_VERSION_STR;]${versionEnvVars.RNW_PKG_VERSION_STR}");
+console.log(##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}");
 console.log("::[set-env name=RNW_PKG_VERSION;]${versionEnvVars.RNW_PKG_VERSION}");
 console.log("##[set-env name=RNW_PKG_VERSION;]${versionEnvVars.RNW_PKG_VERSION}");
+console.log(##vso[task.setvariable variable=RNW_PKG_VERSION]${versionEnvVars.RNW_PKG_VERSION}");
 console.log("::[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
 console.log("##[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
+console.log(##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}");
 console.log("::[set-env name=publishCommitId;]${versionEnvVars.publishCommitId}");
 console.log("##[set-env name=publishCommitId;]${versionEnvVars.publishCommitId}");
+console.log(##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}");
 `);
 fs.writeFileSync(scriptPath, JSON.stringify(versionEnvVars));
 console.log(`Wrote script to: ${scriptPath}`);
