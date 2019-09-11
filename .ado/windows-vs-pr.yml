@@ -6,6 +6,9 @@ trigger: none # will disable CI builds entirely
 pr:
   - master
 
+variables:
+  - group: React Native Windows Build Parameters
+
 jobs:
   - job: UWPPR
     displayName: UWP PR
