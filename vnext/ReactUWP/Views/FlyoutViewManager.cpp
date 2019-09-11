@@ -112,7 +112,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
   static thread_local std::int32_t s_cOpenFlyouts;
-  std::int32_t m_elevation = 0;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
@@ -217,10 +216,10 @@ void FlyoutShadowNode::createView() {
         m_flyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
           auto instance = wkinstance.lock();
 
-          if (!m_updating && instance != nullptr && m_elevation > 0) {
+          if (!m_updating && instance != nullptr) {
             if (auto flyoutPresenter = GetFlyoutPresenter()) {
               winrt::Numerics::float3 translation{
-                  0, 0, (float)32 * m_elevation};
+                  0, 0, (float)16 * s_cOpenFlyouts};
               flyoutPresenter.Translation(translation);
             }
           }
@@ -249,9 +248,11 @@ void FlyoutShadowNode::createView() {
 }
 
 void FlyoutShadowNode::onDropViewInstance() {
-  m_isOpen = false;
-  m_flyout.Hide();
-  s_cOpenFlyouts -= 1;
+  if (m_isOpen) {
+    m_isOpen = false;
+    m_flyout.Hide();
+    s_cOpenFlyouts -= 1;
+  }
 }
 
 void FlyoutShadowNode::removeAllChildren() {
@@ -290,8 +291,11 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
       }
     } else if (propertyName == "isOpen") {
       if (propertyValue.isBool()) {
+        bool isOpen = m_isOpen;
         m_isOpen = propertyValue.asBool();
-        updateIsOpen = true;
+        if (isOpen != m_isOpen) {
+          updateIsOpen = true;
+        }
       }
     } else if (propertyName == "placement") {
       auto placement = json_type_traits<winrt::FlyoutPlacementMode>::parseJson(
@@ -333,7 +337,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
   if (updateIsOpen) {
     if (m_isOpen) {
       s_cOpenFlyouts += 1;
-      m_elevation = s_cOpenFlyouts - 1;
       AdjustDefaultFlyoutStyle(50000, 50000);
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
