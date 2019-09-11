@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Sep 2019 18:44:17 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.179",
+      "version": "0.59.0-vnext.179",
+      "comments": {
+        "none": [
+          {
+            "comment": "Prepare yml and CLI for pipeline",
+            "author": "canli@microsoft.com",
+            "commit": "3c67f95626beabdf4fcc0ba6d85b8ff223751194"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.77",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fc6c0e7e4155b2602ec7bc07baf9ba3dc1cb41cd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Sep 2019 23:25:37 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.178",
       "version": "0.59.0-vnext.178",
