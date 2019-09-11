@@ -51,15 +51,19 @@ async function runWindows(config, args, options) {
 
   await deploy.startServerInNewWindow(options, verbose);
 
-  try {
-    if (options.device || options.emulator || options.target) {
-      await deploy.deployToDevice(options, verbose);
-    } else {
-      await deploy.deployToDesktop(options, verbose);
+  if (options.deploy) {
+    try {
+      if (options.device || options.emulator || options.target) {
+        await deploy.deployToDevice(options, verbose);
+      } else {
+        await deploy.deployToDesktop(options, verbose);
+      }
+    } catch (e) {
+      newError(`Failed to deploy: ${e.message}`);
+      return;
     }
-  } catch (e) {
-    newError(`Failed to deploy: ${e.message}`);
-    return;
+  } else {
+    newInfo('Deploy step is skipped');
   }
 }
 
@@ -88,6 +92,7 @@ runWindows({
  *    bundle: Boolean - Enable Bundle configuration.
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
+ *    no-deploy: Boolean - Do not deploy the app
  *    force: Boolean - same as Add-AppDevPackage.ps1 Force flag
  */
 module.exports = {
@@ -154,6 +159,11 @@ module.exports = {
     {
       command: '--no-build',
       description: 'Do not build the solution',
+      default: false,
+    },
+    {
+      command: '--no-deploy',
+      description: 'Do not deploy the app',
       default: false,
     },
   ],
