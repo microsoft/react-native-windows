@@ -16,6 +16,8 @@ variables:
     value: x64
   - name: VsTestVersion
     value: 16.0
+  - name: Desktop.IntegrationTests.Filter
+    value: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
 
 jobs:
   - job: UWPPR
