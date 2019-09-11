@@ -116,9 +116,10 @@ function CheckIfNeedInstallCertificate
 function Install-App {
     param(
         [Parameter(Mandatory=$true, Position=0, ValueFromPipelineByPropertyName=$true)]
-        [string] $Path <# Full path to Add-AppDevPackage.ps1 #>
+        [string] $Path, <# Full path to Add-AppDevPackage.ps1 #>
+        [switch] $Force = $false
     )
-    if ((CheckIfNeedDeveloperLicense) -or (CheckIfNeedInstallCertificate (Join-Path $Path "..")))
+    if (!$Force -and ((CheckIfNeedDeveloperLicense) -or (CheckIfNeedInstallCertificate (Join-Path $Path ".."))))
     {
         # we can't run the script with -force param if license/certificate installation step is required
         Invoke-Expression ("& `"$Path`"")
