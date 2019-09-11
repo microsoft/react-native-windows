@@ -11,7 +11,7 @@ variables:
 
 jobs:
   - job: UWPPR
-    displayName: UWP PR
+    displayName: Windows Universal PR
     strategy:
       matrix:
         X64Debug:
@@ -246,8 +246,8 @@ jobs:
           script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - job: RnwNativePRBuild
-    displayName: Windows Visual Studio with Win32 PR
+  - job: RNWDesktopPR
+    displayName: Windows Desktop PR
     strategy:
       matrix:
         X64Debug:
@@ -346,7 +346,7 @@ jobs:
       - template: templates/publish-build-artifacts-for-nuget.yml
 
   - job: RNWNugetPR
-    dependsOn: RnwNativePRBuild
+    dependsOn: RNWDesktopPR
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
       vmImage: $(VmImage)
