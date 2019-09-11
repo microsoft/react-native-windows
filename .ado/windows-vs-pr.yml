@@ -11,7 +11,7 @@ variables:
 
 jobs:
   - job: UWPPR
-    displayName: Windows Universal PR
+    displayName: Universal PR
     strategy:
       matrix:
         X64Debug:
@@ -247,7 +247,7 @@ jobs:
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - job: RNWDesktopPR
-    displayName: Windows Desktop PR
+    displayName: Desktop PR
     strategy:
       matrix:
         X64Debug:
