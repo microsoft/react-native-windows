@@ -55,12 +55,12 @@ jobs:
         inputs:
           script: node ./.ado/setVersionEnvVars.js
         env:
-          RUNNER_TEMP: $(Build.StagingDirectory)/VersionEnvVars
+          RUNNER_TEMP: $(Build.StagingDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: Publish VersionEnvVars
         inputs:
-          PathtoPublish: $(Build.StagingDirectory)/VersionEnvVars
+          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
 
   - job: RnwNativeBuild
