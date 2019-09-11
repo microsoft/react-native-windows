@@ -8,6 +8,14 @@ pr:
 
 variables:
   - group: React Native Windows Build Parameters
+  - name: VmImage
+    value: vs2017-win2016
+  - name: MSBuildVersion
+    value: 16.0
+  - name: MSBuildArchitecture
+    value: x64
+  - name: VsTestVersion
+    value: 16.0
 
 jobs:
   - job: UWPPR
