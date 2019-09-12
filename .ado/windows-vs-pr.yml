@@ -13,12 +13,12 @@ variables:
     value: 16.0
   - name: MSBuildArchitecture
     value: x64
+  - name: VsTestVersion
+    value: 16.0
   - name: VsTestPlatformVersion
     value: 16.2.0
-  - name: VsTestVersion
-    value: toolsInstaller
   - name: Desktop.IntegrationTests.Filter
-    value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTests)
+    value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTests)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)
   - name: GoogleTestAdapterPath
     value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
@@ -330,7 +330,7 @@ jobs:
             JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: $(VsTestVersion)
+          vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -353,7 +353,7 @@ jobs:
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          vsTestVersion: $(VsTestVersion)
+          vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
