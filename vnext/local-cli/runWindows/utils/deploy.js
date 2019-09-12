@@ -14,6 +14,7 @@ const glob = require('glob');
 const parse = require('xml-parser');
 const WinAppDeployTool = require('./winappdeploytool');
 const {
+  newInfo,
   newSuccess,
   newError,
   newWarn,
@@ -147,6 +148,7 @@ async function deployToDesktop(options, verbose) {
   const script = glob.sync(
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
+
   const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
 
   const popd = pushd(options.root);
@@ -163,13 +165,14 @@ async function deployToDesktop(options, verbose) {
   );
 
   const installingText = 'Installing new version of the app';
+  const installApp = `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`;
+  const installAppCmd = options.force ? installApp + ' -Force' : installApp;
+
   await commandWithProgress(
     newSpinner(installingText),
     installingText,
     'powershell',
-    `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`.split(
-      ' ',
-    ),
+    installAppCmd.split(' '),
     verbose,
   );
 
@@ -200,7 +203,7 @@ async function deployToDesktop(options, verbose) {
       verbose,
     );
   } else {
-    newSuccess('Skip the step to start the app');
+    newInfo('Skip the step to start the app');
   }
 
   popd();

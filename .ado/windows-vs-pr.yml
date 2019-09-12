@@ -6,9 +6,23 @@ trigger: none # will disable CI builds entirely
 pr:
   - master
 
+variables:
+  - name: VmImage
+    value: vs2017-win2016
+  - name: MSBuildVersion
+    value: 16.0
+  - name: MSBuildArchitecture
+    value: x64
+  - name: VsTestVersion
+    value: 16.0
+  - name: Desktop.IntegrationTests.Filter
+    value: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
+  - name: GoogleTestAdapterPath
+    value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+
 jobs:
   - job: UWPPR
-    displayName: UWP PR
+    displayName: Universal PR
     strategy:
       matrix:
         X64Debug:
@@ -40,7 +54,7 @@ jobs:
           BuildPlatform: x86
           UseRNFork: false
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -96,8 +110,8 @@ jobs:
         displayName: MSBuild - ReactWindows-UWP
         inputs:
           solution: vnext/ReactWindows-UWP.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
@@ -114,8 +128,8 @@ jobs:
         displayName: MSBuild - Playground
         inputs:
           solution: packages/playground/windows/Playground.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
@@ -139,8 +153,8 @@ jobs:
         displayName: MSBuild - SampleApps
         inputs:
           solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
@@ -163,7 +177,7 @@ jobs:
   - job: CliInit
     displayName: Verify react-native init
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -229,8 +243,8 @@ jobs:
         displayName: MSBuild - testcli
         inputs:
           solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x86' # Optional. Options: x86, x64
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: x86 # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
           restoreNugetPackages: true
@@ -243,8 +257,8 @@ jobs:
           script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
           workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - job: RnwNativePRBuild
-    displayName: Windows Visual Studio with Win32 PR
+  - job: RNWDesktopPR
+    displayName: Desktop PR
     strategy:
       matrix:
         X64Debug:
@@ -266,7 +280,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 50 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -306,9 +320,9 @@ jobs:
           testAssemblyVer2: | # Required when testSelector == TestAssemblies
             React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
             JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
-          pathtoCustomTestAdapters: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: '16.0'
+          vsTestVersion: $(VsTestVersion)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -330,8 +344,8 @@ jobs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
-          vsTestVersion: '16.0'
+          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+          vsTestVersion: $(VsTestVersion)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -343,10 +357,10 @@ jobs:
       - template: templates/publish-build-artifacts-for-nuget.yml
 
   - job: RNWNugetPR
-    dependsOn: RnwNativePRBuild
+    dependsOn: RNWDesktopPR
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -362,7 +376,7 @@ jobs:
   - job: RNWFormatting
     displayName: Verify change files + formatting
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 10 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -421,7 +435,7 @@ jobs:
         #  BuildPlatform: x86
         #  UTTestOutputConfigDir: Release
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -480,8 +494,8 @@ jobs:
         inputs:
           solution: current/ReactWindows/ReactNative.sln
           #msbuildLocationMethod: 'version' # Optional. Options: version, location
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          #msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          #msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           #msbuildLocation: # Optional
           platform: $(BuildPlatform) # Optional
           configuration:  $(BuildConfiguration)  # Optional
@@ -508,7 +522,7 @@ jobs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          vsTestVersion: '16.0'
+          vsTestVersion: $(VsTestVersion)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)

@@ -19,28 +19,34 @@ async function runWindows(config, args, options) {
   // Fix up options
   options.root = options.root || process.cwd();
 
-  const slnFile = build.getSolutionFile(options);
-  if (!slnFile) {
-    newError(
-      'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
-    );
-    return;
-  }
+  if (options.build) {
+    const slnFile = build.getSolutionFile(options);
+    if (!slnFile) {
+      newError(
+        'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
+      );
+      return;
+    }
 
-  try {
-    await build.restoreNuGetPackages(options, slnFile, verbose);
-  } catch (e) {
-    newError('Failed to restore the NuGet packages: ' + e.toString());
-    return;
-  }
+    try {
+      await build.restoreNuGetPackages(options, slnFile, verbose);
+    } catch (e) {
+      newError('Failed to restore the NuGet packages: ' + e.toString());
+      return;
+    }
 
-  // Get build/deploy options
-  const buildType = deploy.getBuildConfiguration(options);
-  try {
-    await build.buildSolution(slnFile, buildType, options.arch, verbose);
-  } catch (e) {
-    newError(`Build failed with message ${e}. Check your build configuration.`);
-    return;
+    // Get build/deploy options
+    const buildType = deploy.getBuildConfiguration(options);
+    try {
+      await build.buildSolution(slnFile, buildType, options.arch, verbose);
+    } catch (e) {
+      newError(
+        `Build failed with message ${e}. Check your build configuration.`,
+      );
+      return;
+    }
+  } else {
+    newInfo('Build step is skipped');
   }
 
   await deploy.startServerInNewWindow(options, verbose);
@@ -81,6 +87,8 @@ runWindows({
  *    no-packager: Boolean - Do not launch packager while building
  *    bundle: Boolean - Enable Bundle configuration.
  *    no-launch: Boolean - Do not launch the app after deployment
+ *    no-build: Boolean - Do not build the solution
+ *    force: Boolean - same as Add-AppDevPackage.ps1 Force flag
  */
 module.exports = {
   name: 'run-windows',
@@ -134,8 +142,18 @@ module.exports = {
       default: false,
     },
     {
+      command: '--force',
+      description: 'same as Add-AppDevPackage.ps1 Force flag',
+      default: false,
+    },
+    {
       command: '--no-launch',
       description: 'Do not launch the app after deployment',
+      default: false,
+    },
+    {
+      command: '--no-build',
+      description: 'Do not build the solution',
       default: false,
     },
   ],

@@ -291,6 +291,7 @@ const TouchableOpacity = ((createReactClass({
       !this.props.disabled
     ) {
       this.touchableHandleActivePressOut(ev);
+      this.touchableHandlePress(ev);
     }
   },
 
