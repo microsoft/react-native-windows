@@ -244,7 +244,7 @@ jobs:
         inputs:
           solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
           msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+          msbuildArchitecture: x86 # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
           restoreNugetPackages: true
