@@ -57,13 +57,13 @@
     "eslint": "5.1.0",
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.79.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.80.tar.gz",
     "react": "16.8.3",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.79 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.79.tar.gz"
+    "react-native": "^0.59.0 || 0.59.0-microsoft.80 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.80.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [
