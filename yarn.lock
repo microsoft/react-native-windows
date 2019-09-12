@@ -3872,9 +3872,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.12.2:
-  version "1.12.2"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.12.2.tgz#8c7cd2bccdc0e21add4a9cc410eef03c957ce474"
-  integrity sha512-BPR/32hsl0CIcLXZWuQYpbdJG/sHbRjkoBJRJ3PJR/mesTWfJKrMzihaf72i/YxR3nU/yTOfuPhOhIvDZu7Q/g==
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.13.1.tgz#c50eef62cdf9f69d09e4ecec7452340a28424a9f"
+  integrity sha512-WIQ1gJs8PtPAO8JHCdyRGEXx8TUXfRzvzm3KbvzN4oI9mT+/X9eMbuT8C9jJXHj7qUOki7asqp8iD+FU0bzCxQ==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
@@ -10432,10 +10432,10 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.74.tar.gz":
-  version "0.59.0-microsoft.74"
-  uid "1683fcf040ed9236d0b3ecca8073c4858ae359fa"
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.74.tar.gz#1683fcf040ed9236d0b3ecca8073c4858ae359fa"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.77.tar.gz":
+  version "0.59.0-microsoft.77"
+  uid "2124314cc3208ef83a12511e6625e544a784ef74"
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.77.tar.gz#2124314cc3208ef83a12511e6625e544a784ef74"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
