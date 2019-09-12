@@ -54,12 +54,18 @@ jobs:
         name: setVersionEnvVars
         inputs:
           script: node ./.ado/setVersionEnvVars.js
+        env:
+          RUNNER_TEMP: $(Build.StagingDirectory)
+
+      - task: PublishBuildArtifacts@1
+        displayName: Publish VersionEnvVars
+        inputs:
+          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
+          ArtifactName: VersionEnvVars
 
   - job: RnwNativeBuild
     displayName: React-Native-Windows Native Build
     dependsOn: RnwNpmPublish
-    variables:
-      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
     strategy:
       matrix:
         X64Debug:
@@ -84,10 +90,15 @@ jobs:
       vmImage: vs2017-win2016
 
     steps:
-      # Sync to point where the version numbers have been updated
+      - task: DownloadBuildArtifacts@0
+        displayName: Download VersionEnvVars
+        inputs:
+          artifactName: VersionEnvVars
+          downloadPath: $(Build.StagingDirectory)
+
       - task: CmdLine@2
         inputs:
-          script: git checkout $(publishCommitId)
+          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - task: CmdLine@2
         displayName: yarn install
@@ -99,12 +110,6 @@ jobs:
         inputs:
           script: yarn build
 
-      - task: CmdLine@2
-        displayName: Set Version Env Vars
-        name: setVersionEnvVars
-        inputs:
-          script: node ./.ado/setVersionEnvVars.js
-
       - template: templates/install-SDK.yml
 
       - template: templates/vs-build.yml
@@ -115,7 +120,6 @@ jobs:
           RNW_PKG_VERSION: $(RNW_PKG_VERSION)
 
       - template: templates/publish-build-artifacts-for-nuget.yml
-
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -130,12 +134,19 @@ jobs:
     displayName: React-Native-Windows Build and Publish Nuget
     pool:
       vmImage: vs2017-win2016
-    variables:
-      npmVersion: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.npmVersion'] ]
-      publishCommitId: $[ dependencies.RnwNpmPublish.outputs['setVersionEnvVars.publishCommitId'] ]
 
     steps:
       - checkout: none #skip checking out the default repository resource
+
+      - task: DownloadBuildArtifacts@0
+        displayName: Download VersionEnvVars
+        inputs:
+          artifactName: VersionEnvVars
+          downloadPath: $(Build.StagingDirectory)
+
+      - task: CmdLine@2
+        inputs:
+          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
