@@ -13,8 +13,10 @@ variables:
     value: 16.0
   - name: MSBuildArchitecture
     value: x64
+  - name: VsTestPlatformVersion
+    value: 16.2.0
   - name: VsTestVersion
-    value: 16.0
+    value: toolsInstaller
   - name: Desktop.IntegrationTests.Filter
     value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTests)
   - name: GoogleTestAdapterPath
@@ -310,6 +312,12 @@ jobs:
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildPlatform: $(BuildPlatform)
+
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          packageFeedSelector: nugetOrg
+          versionSelector: specificVersion
+          testPlatformVersion: $(VsTestPlatformVersion)
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
