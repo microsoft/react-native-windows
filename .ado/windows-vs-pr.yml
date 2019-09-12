@@ -16,7 +16,7 @@ variables:
   - name: VsTestVersion
     value: 16.0
   - name: Desktop.IntegrationTests.Filter
-    value: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
+    value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTests)
   - name: GoogleTestAdapterPath
     value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
