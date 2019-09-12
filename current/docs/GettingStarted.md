@@ -97,6 +97,9 @@ react-native run-windows
 
 A new Command Prompt window will open with the React packager as well as a React Native Windows app. You can now start developing! :tada:
 
+## E2E Test
+Please refer to [Author and Run E2E Test for React Native Windows](E2ETest.md)
+
 ## Additional Resources
 
 - For more information about how to deploy to Windows simulators/devices, and how to create a bundle for Release, view [RunningOnDeviceWindows](RunningOnDeviceWindows.md)
