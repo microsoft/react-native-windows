@@ -15,8 +15,10 @@ variables:
     value: x64
   - name: VsTestVersion
     value: 16.0
+  - name: VsTestPlatformVersion
+    value: 16.2.0
   - name: Desktop.IntegrationTests.Filter
-    value: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
+    value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
   - name: GoogleTestAdapterPath
     value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
@@ -311,6 +313,12 @@ jobs:
           BuildConfiguration: $(BuildConfiguration)
           BuildPlatform: $(BuildPlatform)
 
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          packageFeedSelector: nugetOrg
+          versionSelector: specificVersion
+          testPlatformVersion: $(VsTestPlatformVersion)
+
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
@@ -322,7 +330,7 @@ jobs:
             JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: $(VsTestVersion)
+          vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -345,7 +353,7 @@ jobs:
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          vsTestVersion: $(VsTestVersion)
+          vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
