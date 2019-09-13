@@ -86,9 +86,6 @@ struct IWebSocket {
   /// </param>
   static std::unique_ptr<IWebSocket> Make(const std::string &url);
 
-  // Only use if a legacy implementation is required as fallback.
-  static std::unique_ptr<IWebSocket> MakeLegacy(const std::string &url);
-
   virtual ~IWebSocket() {}
 
   /// <summary>
