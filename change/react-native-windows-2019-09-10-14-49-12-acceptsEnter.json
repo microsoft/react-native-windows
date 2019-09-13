@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "MultiLine TextInput should accepts Enter key",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "b887c98125ffd25a73889c1bab466cff7aaf1a6a",
+  "date": "2019-09-10T21:49:12.509Z"
+}
