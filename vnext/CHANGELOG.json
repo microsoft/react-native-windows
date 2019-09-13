@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Sep 2019 15:59:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.183",
+      "version": "0.59.0-vnext.183",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "MultiLine TextInput should accepts Enter key",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b887c98125ffd25a73889c1bab466cff7aaf1a6a"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Enable all non-Chrome integration tests",
+            "author": "julio@rochsquadron.net",
+            "commit": "e34895c8d6bf637304a8950388527540522f81ee"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Sep 2019 23:51:35 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.182",
       "version": "0.59.0-vnext.182",
