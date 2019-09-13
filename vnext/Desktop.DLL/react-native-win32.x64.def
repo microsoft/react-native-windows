@@ -26,7 +26,6 @@ EXPORTS
 ?InitializeTracing@react@facebook@@YAXPEAUINativeTraceHandler@12@@Z
 ?Make@IWebSocket@React@Microsoft@@SA?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
-?MakeLegacy@IWebSocket@React@Microsoft@@SA?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?MakeMemoryMappedBuffer@JSI@Microsoft@@YA?AV?$shared_ptr@VBuffer@jsi@facebook@@@std@@QEB_WI@Z
 ?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
