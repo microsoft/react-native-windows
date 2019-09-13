@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Login E2E test failure",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "a2e2a331820e7b5e61dba3d82807c5f36cbd6b3e",
-  "date": "2019-09-10T17:21:46.908Z"
-}

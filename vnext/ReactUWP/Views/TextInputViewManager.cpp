@@ -386,11 +386,13 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
         } else if (propertyName == "multiline") {
-          if (propertyValue.isBool())
+          if (propertyValue.isBool()) {
+            const bool isMultiline = propertyValue.asBool();
             textBox.TextWrapping(
-                propertyValue.asBool() ? winrt::TextWrapping::Wrap
-                                       : winrt::TextWrapping::NoWrap);
-          else if (propertyValue.isNull())
+                isMultiline ? winrt::TextWrapping::Wrap
+                            : winrt::TextWrapping::NoWrap);
+            textBox.AcceptsReturn(isMultiline);
+          } else if (propertyValue.isNull())
             textBox.ClearValue(winrt::TextBox::TextWrappingProperty());
         } else if (propertyName == "editable") {
           if (propertyValue.isBool())

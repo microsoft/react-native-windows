@@ -2,6 +2,95 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Sep 2019 15:59:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.183",
+      "version": "0.59.0-vnext.183",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "MultiLine TextInput should accepts Enter key",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b887c98125ffd25a73889c1bab466cff7aaf1a6a"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Enable all non-Chrome integration tests",
+            "author": "julio@rochsquadron.net",
+            "commit": "e34895c8d6bf637304a8950388527540522f81ee"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Sep 2019 23:51:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.182",
+      "version": "0.59.0-vnext.182",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.79",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7bb96f44ef561a437af7229ebd0a6d3d3d22d38f"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.80",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "2771632d1c5cbc9920a0b886f99e5bd895d8e832"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Sep 2019 18:44:17 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.179",
+      "version": "0.59.0-vnext.179",
+      "comments": {
+        "none": [
+          {
+            "comment": "Prepare yml and CLI for pipeline",
+            "author": "canli@microsoft.com",
+            "commit": "3c67f95626beabdf4fcc0ba6d85b8ff223751194"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.77",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fc6c0e7e4155b2602ec7bc07baf9ba3dc1cb41cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 23:25:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.178",
+      "version": "0.59.0-vnext.178",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix onPress not firing for Touchable* keyboard events",
+            "author": "thshea@microsoft.com",
+            "commit": "c434599726f09784d09dc10eed239a806de0a627"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 19:16:08 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.177",
+      "version": "0.59.0-vnext.177",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Login E2E test failure",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "a2e2a331820e7b5e61dba3d82807c5f36cbd6b3e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Sep 2019 00:44:04 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.176",
       "version": "0.59.0-vnext.176",
