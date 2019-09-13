@@ -170,6 +170,12 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
       pane->persistUseWebDebugger(useWebDebugger);
   }
 
+  void persistUseLiveReload(bool useLiveReload) {
+    HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
+    if (pane)
+      pane->persistUseLiveReload(useLiveReload);
+  }
+
  private:
   Platform::WeakReference m_wrPane;
 };
@@ -245,6 +251,10 @@ void HostingPane::markAsNeedsReload() {
 
 void HostingPane::persistUseWebDebugger(bool useWebDebugger) {
   x_UseWebDebuggerCheckBox->IsChecked = useWebDebugger;
+}
+
+void HostingPane::persistUseLiveReload(bool useLiveReload) {
+  x_UseLiveReloadCheckBox->IsChecked = useLiveReload;
 }
 
 void HostingPane::LoadReactNative() {
