@@ -17,7 +17,10 @@ param (
 	[System.IO.FileInfo[]] $Assemblies =
 	(
 		"$PSScriptRoot\..\target\$Platform\$Configuration\" +
-		"React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll"
+		"React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll",
+
+		"$PSScriptRoot\..\target\$Platform\$Configuration\" +
+		"JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe"
 	),
 
 	[System.IO.FileInfo] $VsTest = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe"
