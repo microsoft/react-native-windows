@@ -8540,6 +8540,8 @@ KVPair NewLinesAndBackSlashes = {
 using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS(AsyncStorageTest) {
  public:
   const WCHAR *m_storageFileName = L"testdomain";
@@ -8825,3 +8827,5 @@ TEST_CLASS(AsyncStorageTest) {
     kvStorage->clear();
   }
 };
+
+} // namespace Microsoft::React::Test

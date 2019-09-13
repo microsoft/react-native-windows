@@ -210,7 +210,7 @@ const TouchableOpacity = ((createReactClass({
    * defined on your component.
    */
   touchableHandleActivePressIn: function(e: PressEvent) {
-    if (e.dispatchConfig.registrationName === 'onResponderGrant') {
+    if (e && e.dispatchConfig.registrationName === 'onResponderGrant') {
       this._opacityActive(0);
     } else {
       this._opacityActive(150);
@@ -290,7 +290,8 @@ const TouchableOpacity = ((createReactClass({
         ev.nativeEvent.code === 'GamepadA') &&
       !this.props.disabled
     ) {
-      this.touchableHandlePress();
+      this.touchableHandleActivePressOut(ev);
+      this.touchableHandlePress(ev);
     }
   },
 
@@ -301,7 +302,7 @@ const TouchableOpacity = ((createReactClass({
         ev.nativeEvent.code === 'GamepadA') &&
       !this.props.disabled
     ) {
-      this.touchableHandleActivePressIn();
+      this.touchableHandleActivePressIn(ev);
     }
   },
 

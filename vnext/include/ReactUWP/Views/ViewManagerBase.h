@@ -87,9 +87,10 @@ class REACTWINDOWS_EXPORT ViewManagerBase
     return m_wkReactInstance;
   }
 
+  virtual void TransferProperties(XamlView oldView, XamlView newView);
+
  protected:
   virtual XamlView CreateViewCore(int64_t tag) = 0;
-  virtual void TransferProperties(XamlView oldView, XamlView newView);
 
  protected:
   std::weak_ptr<IReactInstance> m_wkReactInstance;

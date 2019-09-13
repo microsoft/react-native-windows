@@ -37,9 +37,10 @@ struct JSExceptionInfo {
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
   Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
-  Hermes = 2, // Use the JSIExecutorFactory with Hermes
-  V8 = 3, // Use the JSIExecutorFactory with V8
-  V8Lite = 4, // Use the JSIExecutorFactory with V8Lite
+  ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
+  Hermes = 3, // Use the JSIExecutorFactory with Hermes
+  V8 = 4, // Use the JSIExecutorFactory with V8
+  V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
 
   Last = V8Lite
 };

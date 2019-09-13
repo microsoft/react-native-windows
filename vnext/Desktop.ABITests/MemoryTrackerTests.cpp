@@ -13,82 +13,87 @@ using namespace winrt::facebook::react;
 
 namespace ABITests {
 
-TEST_CLASS(MemoryTrackerTests){
+// We turn clang format off here because it does not work with some of the
+// test macros.
+// clang-format off
 
-    TEST_METHOD(Handler_AddedAndRemoved){
-        init_apartment(winrt::apartment_type::single_threaded);
-IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
-MemoryTracker tracker{callbackMessageQueue};
+TEST_CLASS(MemoryTrackerTests) {
 
-uint32_t registrationToken = tracker.AddThresholdHandler(
-    /* threshold */ 100,
-    /* minCallbackIntervalInMilliseconds */ 100,
-    [](uint64_t currentUsage) {});
-Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
-} // namespace ABITests
+  TEST_METHOD(Handler_AddedAndRemoved){
+    init_apartment(winrt::apartment_type::single_threaded);
+    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    MemoryTracker tracker{callbackMessageQueue};
 
-TEST_METHOD(CurrentMemoryUsage_ReturnsInitialValue) {
-  init_apartment(winrt::apartment_type::single_threaded);
-  IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
-  MemoryTracker tracker{callbackMessageQueue};
+    uint32_t registrationToken = tracker.AddThresholdHandler(
+        /* threshold */ 100,
+        /* minCallbackIntervalInMilliseconds */ 100,
+        [](uint64_t currentUsage) {});
+    Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
+  }
 
-  tracker.Initialize(1000);
-  Assert::AreEqual(
-      1000ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
-}
+  TEST_METHOD(CurrentMemoryUsage_ReturnsInitialValue) {
+    init_apartment(winrt::apartment_type::single_threaded);
+    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    MemoryTracker tracker{callbackMessageQueue};
 
-TEST_METHOD(PeakMemoryUsage_ReturnsInitialValue) {
-  init_apartment(winrt::apartment_type::single_threaded);
-  IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
-  MemoryTracker tracker{callbackMessageQueue};
+    tracker.Initialize(1000);
+    Assert::AreEqual(
+        1000ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
+  }
 
-  tracker.Initialize(1000);
-  Assert::AreEqual(1000ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
-}
+  TEST_METHOD(PeakMemoryUsage_ReturnsInitialValue) {
+    init_apartment(winrt::apartment_type::single_threaded);
+    IMessageQueue callbackMessageQueue = ::winrt::make<MessageQueueShim>();
+    MemoryTracker tracker{callbackMessageQueue};
 
-TEST_METHOD(ThresholdHandler_Called) {
-  init_apartment(winrt::apartment_type::single_threaded);
+    tracker.Initialize(1000);
+    Assert::AreEqual(1000ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
+  }
 
-  DWORD testThreadId = GetCurrentThreadId();
+  TEST_METHOD(ThresholdHandler_Called) {
+    init_apartment(winrt::apartment_type::single_threaded);
 
-  auto manualMessageQueue = std::make_shared<ControllableMessageQueueThread>(
-      ControllableMessageQueueThread::Mode::ManualDispatch);
+    DWORD testThreadId = GetCurrentThreadId();
 
-  IMessageQueue callbackMessageQueue =
-      ::winrt::make<MessageQueueShim>(manualMessageQueue);
-  MemoryTracker tracker{callbackMessageQueue};
+    auto manualMessageQueue = std::make_shared<ControllableMessageQueueThread>(
+        ControllableMessageQueueThread::Mode::ManualDispatch);
 
-  tracker.Initialize(500);
+    IMessageQueue callbackMessageQueue =
+        ::winrt::make<MessageQueueShim>(manualMessageQueue);
+    MemoryTracker tracker{callbackMessageQueue};
 
-  std::vector<uint64_t> actualCallbacks;
-  DWORD callbackThreadId;
-  uint32_t registrationToken = tracker.AddThresholdHandler(
-      /* threshold */ 1000,
-      /* minCallbackIntervalInMilliseconds */ 100,
-      [&actualCallbacks, &callbackThreadId](uint64_t currentUsage) {
-        actualCallbacks.push_back(currentUsage);
-        callbackThreadId = GetCurrentThreadId();
-      });
+    tracker.Initialize(500);
 
-  tracker.OnAllocation(1000);
+    std::vector<uint64_t> actualCallbacks;
+    DWORD callbackThreadId;
+    uint32_t registrationToken = tracker.AddThresholdHandler(
+        /* threshold */ 1000,
+        /* minCallbackIntervalInMilliseconds */ 100,
+        [&actualCallbacks, &callbackThreadId](uint64_t currentUsage) {
+          actualCallbacks.push_back(currentUsage);
+          callbackThreadId = GetCurrentThreadId();
+        });
 
-  // allow the callback to get dispatched
-  Assert::IsTrue(
-      manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
-  Assert::IsTrue(manualMessageQueue->IsEmpty());
+    tracker.OnAllocation(1000);
 
-  Assert::AreEqual(
-      1500ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
-  Assert::AreEqual(1500ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
+    // allow the callback to get dispatched
+    Assert::IsTrue(
+        manualMessageQueue->DispatchOne(std::chrono::milliseconds(500)));
+    Assert::IsTrue(manualMessageQueue->IsEmpty());
 
-  Assert::AreEqual(static_cast<size_t>(1), actualCallbacks.size());
-  Assert::AreEqual(1500ull, actualCallbacks[0]);
+    Assert::AreEqual(
+        1500ull, tracker.CurrentMemoryUsage(), L"CurrentMemoryUsage");
+    Assert::AreEqual(1500ull, tracker.PeakMemoryUsage(), L"PeakMemoryUsage");
 
-  Assert::AreNotEqual(testThreadId, callbackThreadId);
+    Assert::AreEqual(static_cast<size_t>(1), actualCallbacks.size());
+    Assert::AreEqual(1500ull, actualCallbacks[0]);
 
-  Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
-}
-}
-;
+    Assert::AreNotEqual(testThreadId, callbackThreadId);
+
+    Assert::IsTrue(tracker.RemoveThresholdHandler(registrationToken));
+  }
+};
+
+// clange-format on
 
 } // namespace ABITests

@@ -16,7 +16,12 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <USE_HERMES>false</USE_HERMES>
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
+    <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
+    
+    <ENABLE_ETW_TRACING Condition="'$(ENABLE_TRACING)' == ''">false</ENABLE_ETW_TRACING>
+    <ENABLE_NATIVE_SYSTRACE Condition="'$(ENABLE_NATIVE_SYSTRACE)' == ''">false</ENABLE_NATIVE_SYSTRACE>
+    <ENABLE_JS_SYSTRACE Condition="'$(ENABLE_JS_SYSTRACE)' == ''">false</ENABLE_JS_SYSTRACE>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">
@@ -35,6 +40,9 @@
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         BOOST_ERROR_CODE_HEADER_ONLY  - Compile Boost error_code members inline. Requires BOOST_SYSTEM_SOURCE.
       -->
+      <!--V8 binaries are built with _ITERATOR_DEBUG_LEVEL set to 0. Changing to the default value of '2' result in static asserts in V8 snapshot generation code. 
+      The macro affects the class layout of stl objects hence it needs to be set uniformly throughout the project.  It affects only debug builds. -->
+      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true' AND '$(Configuration)' == 'Debug'">_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;BOOST_SYSTEM_SOURCE;BOOST_ERROR_CODE_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

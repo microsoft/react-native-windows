@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Ensure folly is downloaded before react-native-windows-extended builds",
-  "packageName": "react-native-windows-extended",
-  "email": "acoates@microsoft.com",
-  "commit": "95216a199075a15cf10e92522a05e1a8091b4e52",
-  "date": "2019-08-17T01:25:17.595Z"
-}

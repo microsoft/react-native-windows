@@ -13,17 +13,48 @@ function npmVersionToRcVersion(npmVersion) {
 
 let pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 
-// Set env variable to allow VS to build dll with correct version information
-console.log(
-  `##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${pkgJson.version}`
-);
-// Set env variable to allow VS to build dll with correct version information
-console.log(
-  `##vso[task.setvariable variable=RNW_PKG_VERSION]${npmVersionToRcVersion(pkgJson.version)}`
-);
+// Record commit number, so that additional build tasks can record that commit in the nuget
+const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString().trim();
 
-console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${pkgJson.version}`);
+let versionEnvVars = {
+  RNW_PKG_VERSION_STR: pkgJson.version,
+  RNW_PKG_VERSION: npmVersionToRcVersion(pkgJson.version),
+  npmVersion: pkgJson.version,
+  publishCommitId: commitId
+}
 
-// Record commit number, so that additional build tasks can sync to changes
-const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString();
-console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${commitId}`);
+// Set the vars using the vso format for now too - while migrating from the vso publish task to the github actions one.
+
+// Set env variable to allow VS to build dll with correct version information
+console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}`);
+// Set env variable to allow VS to build dll with correct version information
+console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION]${versionEnvVars.RNW_PKG_VERSION}`);
+console.log(`##vso[task.setvariable variable=npmVersion;isOutput=true]${versionEnvVars.npmVersion}`);
+console.log(`##vso[task.setvariable variable=publishCommitId;isOutput=true]${versionEnvVars.publishCommitId}`);
+
+
+const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
+const scriptPath = path.resolve(dirPath, 'versionEnvVars.json');
+if (!fs.existsSync(dirPath)) {
+fs.mkdirSync(dirPath);
+}
+
+// I set the env var using both :: and ##, since github is in the process of changing the format
+fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'), 
+`
+console.log("::[set-env name=RNW_PKG_VERSION_STR;]${versionEnvVars.RNW_PKG_VERSION_STR}");
+console.log("##[set-env name=RNW_PKG_VERSION_STR;]${versionEnvVars.RNW_PKG_VERSION_STR}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}");
+console.log("::[set-env name=RNW_PKG_VERSION;]${versionEnvVars.RNW_PKG_VERSION}");
+console.log("##[set-env name=RNW_PKG_VERSION;]${versionEnvVars.RNW_PKG_VERSION}");
+console.log("##vso[task.setvariable variable=RNW_PKG_VERSION]${versionEnvVars.RNW_PKG_VERSION}");
+console.log("::[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
+console.log("##[set-env name=npmVersion;]${versionEnvVars.npmVersion}");
+console.log("##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVersion}");
+console.log("::[set-env name=publishCommitId;]${versionEnvVars.publishCommitId}");
+console.log("##[set-env name=publishCommitId;]${versionEnvVars.publishCommitId}");
+console.log("##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}");
+`);
+fs.writeFileSync(scriptPath, JSON.stringify(versionEnvVars));
+console.log(`Wrote script to: ${scriptPath}`);
+

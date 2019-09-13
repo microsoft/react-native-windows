@@ -54,7 +54,7 @@
   <PropertyGroup>
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
     <ClCompile>
       <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -65,11 +65,19 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4715;4146;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -116,9 +124,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
@@ -142,11 +147,11 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp"  Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp"  Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp"  Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp"  Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp"  Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

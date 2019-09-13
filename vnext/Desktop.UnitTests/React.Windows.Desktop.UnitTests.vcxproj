@@ -53,7 +53,7 @@
       <AdditionalDependencies>Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ClCompile Include="AsyncStorageManagerTest.cpp" />
     <ClCompile Include="AsyncStorageTest.cpp" />
@@ -61,6 +61,7 @@
     <ClCompile Include="BytecodeUnitTests.cpp" />
     <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
+    <ClCompile Include="MemoryMappedBufferTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
     <ClCompile Include="StringConversionTest_Desktop.cpp" />

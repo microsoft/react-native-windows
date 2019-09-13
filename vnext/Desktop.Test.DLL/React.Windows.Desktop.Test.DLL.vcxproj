@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.190506.1\build\native\Microsoft.Windows.CppWinRT.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}</ProjectGuid>
+    <TargetName>React.Windows.Desktop.Test</TargetName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LinkIncremental>true</LinkIncremental>
+    <!--
+    Prevents Microsoft.Windows.CppWinRT.props from adding WindowsApp.lib reference, see
+    WindowsApp_downleve.lib reference below.
+    -->
+    <CppWinRTLibs>false</CppWinRTLibs>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ModuleDefinitionFile Condition="'$(Platform)'=='Win32'">React.Windows.Desktop.Test.x86.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile Condition="'$(Platform)'!='Win32'">React.Windows.Desktop.Test.$(Platform).def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="React.Windows.Desktop.Test.x64.def" />
+    <None Include="React.Windows.Desktop.Test.x86.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Test\React.Windows.Test.vcxproj">
+      <Project>{cd0415c6-d908-4212-9481-49be41f58d27}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
+    <Import Project="..\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('..\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
+    <Error Condition="!Exists('..\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
+  </Target>
+  <Target Name="GetTargetFileName" Returns="$(OutDir)$(TargetName).dll" />
+</Project>
