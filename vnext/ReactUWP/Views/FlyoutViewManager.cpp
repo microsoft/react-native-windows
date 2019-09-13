@@ -252,6 +252,7 @@ void FlyoutShadowNode::onDropViewInstance() {
     m_isOpen = false;
     m_flyout.Hide();
     s_cOpenFlyouts -= 1;
+    assert(s_cOpenFlyouts >= 0);
   }
 }
 
@@ -350,6 +351,7 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
     } else {
       m_flyout.Hide();
       s_cOpenFlyouts -= 1;
+      assert(s_cOpenFlyouts >= 0);
     }
   }
 
