@@ -6,7 +6,6 @@ set(SOURCES
 	HttpResource.cpp
 	JSBigStringResourceDll.cpp
 	LazyDevSupportManager.cpp
- 	LegacyWebSocket.cpp
 	Modules/NetworkingModule.cpp
 	Modules/TimingModule.cpp
 	Modules/WebSocketModule.cpp

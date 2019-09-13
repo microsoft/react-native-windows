@@ -65,7 +65,7 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <Midl Include="ABI\MemoryTracker.idl" />
     <Midl Include="ABI\MessageQueue.idl" />
@@ -94,7 +94,6 @@
     <ClCompile Include="Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="LazyDevSupportManager.cpp" />
-    <ClCompile Include="LegacyWebSocket.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
@@ -126,7 +125,6 @@
     <ClInclude Include="DevSupportManager.h" />
     <ClInclude Include="Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="LazyDevSupportManager.h" />
-    <ClInclude Include="LegacyWebSocket.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
