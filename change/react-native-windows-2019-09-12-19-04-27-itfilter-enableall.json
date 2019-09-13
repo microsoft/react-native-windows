@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Enable all non-Chrome integration tests",
+  "packageName": "react-native-windows",
+  "email": "julio@rochsquadron.net",
+  "commit": "e34895c8d6bf637304a8950388527540522f81ee",
+  "date": "2019-09-13T02:04:26.939Z"
+}
