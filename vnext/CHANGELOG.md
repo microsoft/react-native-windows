@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 13 Sep 2019 15:59:25 GMT and should not be manually modified.
+This log was last generated on Fri, 13 Sep 2019 21:56:22 GMT and should not be manually modified.
 
+## 0.59.0-vnext.184
+Fri, 13 Sep 2019 21:56:22 GMT
+
+### Changes
+
+- Support live reload for developer menu (dida@ntdev.microsoft.com)
 ## 0.59.0-vnext.183
 Fri, 13 Sep 2019 15:59:25 GMT
 

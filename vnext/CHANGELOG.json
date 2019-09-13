@@ -2,6 +2,32 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 Sep 2019 21:56:22 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.184",
+      "version": "0.59.0-vnext.184",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support live reload for developer menu",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "0321a9ba4cc3ad28797c8453f78c7d8575e9f6bc"
+          }
+        ],
+        "none": [
+          {
+            "comment": "add more scripts to package.json in e2e",
+            "author": "canli@microsoft.com",
+            "commit": "53149fddb5c13244606e5e6dec6d72607f30aa35"
+          },
+          {
+            "comment": "Remove LegacyWebSocket.",
+            "author": "julio@rochsquadron.net",
+            "commit": "b07546abd175f6b9aca8c279f7b33d84ba536496"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Sep 2019 15:59:25 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.183",
       "version": "0.59.0-vnext.183",
