@@ -14,14 +14,18 @@
     "e2e": "react-native run-windows --no-launch && npm run test",
     "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle && npm run test",
     "test": "rimraf reports/* && npm run prettier && wdio",
-    "dev": "npm run prettier && wdio --spec",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle"
+    "testspec": "npm run prettier && wdio --spec",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle",
+    "buildapp": "react-native run-windows --no-launch --no-packager --no-deploy",
+    "deployapp": "react-native run-windows --no-launch --no-packager --no-build",
+    "buildbundleapp": "npm run bundle && react-native run-windows --no-launch --no-packager --no-deploy --bundle",
+    "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
   },
   "dependencies": {
     "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.73.tar.gz",
-    "react-native-windows": "0.59.0-vnext.175",
-    "react-native-windows-extended": "0.15.2",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.80.tar.gz",
+    "react-native-windows": "0.59.0-vnext.183",
+    "react-native-windows-extended": "0.15.7",
     "rnpm-plugin-windows": "^0.2.11"
   },
   "devDependencies": {

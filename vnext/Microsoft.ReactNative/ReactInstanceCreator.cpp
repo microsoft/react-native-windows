@@ -70,7 +70,7 @@ ReactInstanceCreator::getInstance() {
     if (!m_jsMainModuleName.empty()) {
       m_jsBundleFile = m_jsMainModuleName;
     } else {
-      m_jsBundleFile = "App.windows";
+      m_jsBundleFile = "index.windows";
     }
   }
 

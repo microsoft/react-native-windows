@@ -194,7 +194,7 @@ jobs:
           BUILDCONFIGURATION: Debug
 
       - name: Create bundle testcli.sln
-        run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
+        run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
 
   RNWFormatting:
     name: Verify change files + formatting

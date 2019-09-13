@@ -12,6 +12,7 @@ export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
 export const TEXTINPUT_TESTPAGE = 'TextInputTestPage';
 
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
+export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
 
 // LoginTestPage
 export const LOGIN_TESTPAGE = 'LoginTestPage';
