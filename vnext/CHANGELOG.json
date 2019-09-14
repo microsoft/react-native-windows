@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 14 Sep 2019 14:09:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.185",
+      "version": "0.59.0-vnext.185",
+      "comments": {
+        "none": [
+          {
+            "comment": "add e2e test doc",
+            "author": "canli@microsoft.com",
+            "commit": "ce081d0718660f4cfbf3a9db9e6d4d3c67c70bab"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e2729f1ed7e384e3c446aaa3a90da650fef1e5d9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Sep 2019 21:56:22 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.184",
       "version": "0.59.0-vnext.184",
