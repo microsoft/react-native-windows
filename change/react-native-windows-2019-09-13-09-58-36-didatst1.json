@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "e2729f1ed7e384e3c446aaa3a90da650fef1e5d9",
+  "date": "2019-09-13T16:58:36.097Z"
+}
