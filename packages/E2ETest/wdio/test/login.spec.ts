@@ -7,7 +7,7 @@ import LoginPage from '../pages/LoginPage';
 import HomePage from '../pages/HomePage';
 import assert from 'assert';
 
-before(() => {
+beforeAll(() => {
   HomePage.backToHomePage();
   HomePage.clickAndGotoLoginPage();
 });

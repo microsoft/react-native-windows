@@ -7,7 +7,7 @@ import TextInputTestPage from '../pages/TextInputTestPage';
 import HomePage from '../pages/HomePage';
 import assert from 'assert';
 
-before(() => {
+beforeAll(() => {
   HomePage.backToHomePage();
   HomePage.clickAndGoToTextInputPage();
 });
