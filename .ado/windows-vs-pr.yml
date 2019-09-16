@@ -23,14 +23,15 @@ variables:
     value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
 jobs:
-- job: Setup
-  steps:
-    - task: powershell@2
-      name: checkPayload
-      displayName: 'Check if build is required for this PR'
-      inputs:
-        targetType: filePath
-        filePath: .ado\ShouldSkipPRBuild.ps1
+  - job: Setup
+    steps:
+      - task: powershell@2
+        name: checkPayload
+        displayName: "Check if build is required for this PR"
+        inputs:
+          targetType: filePath
+          filePath: .ado\shouldSkipPRBuild.ps1
+
   - job: UWPPR
     displayName: Universal PR
     dependsOn: Setup
@@ -126,7 +127,7 @@ jobs:
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
           clean: true # Optional
 
       - task: NuGetCommand@2
@@ -144,7 +145,7 @@ jobs:
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -169,7 +170,7 @@ jobs:
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
@@ -262,7 +263,7 @@ jobs:
           platform: x64 # Optional
           configuration: Debug # Optional
           restoreNugetPackages: true
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+          msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
           clean: true # Optional
 
       - task: CmdLine@2
@@ -338,7 +339,7 @@ jobs:
         timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
-          testSelector: 'testAssemblies'
+          testSelector: "testAssemblies"
           testAssemblyVer2: | # Required when testSelector == TestAssemblies
             React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
             JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
@@ -349,7 +350,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
+          collectDumpOn: "onAbortOnly"
 
       - task: PowerShell@2
         displayName: Set up test servers
@@ -363,7 +364,7 @@ jobs:
         displayName: Run Desktop Integration Tests
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
-          testSelector: 'testAssemblies'
+          testSelector: "testAssemblies"
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: $(Desktop.IntegrationTests.Filter)
@@ -372,16 +373,16 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
+          collectDumpOn: "onAbortOnly"
 
       - template: templates/stop-packagers.yml
 
       - template: templates/publish-build-artifacts-for-nuget.yml
 
   - job: RNWNugetPR
-    dependsOn: 
-    - RNWDesktopPR
-    - Setup
+    dependsOn:
+      - RNWDesktopPR
+      - Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
@@ -394,7 +395,7 @@ jobs:
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
         inputs:
-          versionSpec: '>=4.6.0'
+          versionSpec: ">=4.6.0"
 
       - template: templates/prep-and-pack-nuget.yml
 
@@ -527,7 +528,7 @@ jobs:
           #msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           #msbuildLocation: # Optional
           platform: $(BuildPlatform) # Optional
-          configuration:  $(BuildConfiguration)  # Optional
+          configuration: $(BuildConfiguration) # Optional
           #msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           #clean: true # Optional
           #maximumCpuCount: false # Optional
@@ -548,17 +549,16 @@ jobs:
         displayName: Run Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
         inputs:
-          testSelector: 'testAssemblies'
-          testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
+          testSelector: "testAssemblies"
+          testAssemblyVer2: "ReactNative.Net46.Tests.dll" # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
           vsTestVersion: $(VsTestVersion)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
+          collectDumpOn: "onAbortOnly"
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
       # It currently fails, so commenting this out for now
       #- task: CmdLine@2
