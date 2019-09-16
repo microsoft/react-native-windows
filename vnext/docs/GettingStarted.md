@@ -28,6 +28,8 @@ There are two ways to install and work with React Native for Windows (vnext):
 1. [Consuming react-native-windows](./ConsumingRNW.md) : Using react-native-windows in your package
 1. [Building react-native-windows repo](./BuildingRNW.md) : Manually by cloning the repo and get things running.
 
+## E2E Test
+Please refer to [Author and Run E2E Test for React Native Windows](E2ETest.md)
 
 # Troubleshooting
 * If after running the app the packager does not update (or) app does not show React Native content - close the packager command prompt window and the app, run `yarn start` and run the app again.  Issue [#2311](https://github.com/microsoft/react-native-windows/issues/2311) is tracking a known issue on this.

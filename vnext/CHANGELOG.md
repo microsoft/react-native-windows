@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 13 Sep 2019 21:56:22 GMT and should not be manually modified.
+This log was last generated on Sat, 14 Sep 2019 14:09:03 GMT and should not be manually modified.
 
+## 0.59.0-vnext.185
+Sat, 14 Sep 2019 14:09:03 GMT
+
+### Changes
+
+- Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue (dida@ntdev.microsoft.com)
 ## 0.59.0-vnext.184
 Fri, 13 Sep 2019 21:56:22 GMT
 
