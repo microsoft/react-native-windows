@@ -209,19 +209,10 @@ class OJSIExecutorFactory : public JSExecutorFactory {
       std::shared_ptr<ExecutorDelegate> delegate,
       std::shared_ptr<MessageQueueThread> jsQueue) override {
     // TODO :: Ensure the logLevels are mapped properly.
-    JSIExecutor::Logger logger;
-
-    if (loggingHook_) {
-      logger = [loggingHook = std::move(loggingHook_)](
-                   const std::string &message, unsigned int logLevel) {
-        loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
-      };
-    }
 
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(),
         std::move(delegate),
-        logger,
         JSIExecutor::defaultTimeoutInvoker,
         runtimeInstaller);
   }

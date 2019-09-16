@@ -18,8 +18,8 @@
     "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle"
   },
   "dependencies": {
-    "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft-fb60merge.80.tar.gz",
+    "react": "16.8.6",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.2.tar.gz",
     "react-native-windows": "0.59.0-vnext.181",
     "react-native-windows-extended": "0.15.6",
     "rnpm-plugin-windows": "^0.2.11"
@@ -28,7 +28,7 @@
     "@babel/core": "7.5.5",
     "@babel/runtime": "7.5.5",
     "@types/react": "16.8.15",
-    "@types/react-native": "~0.57.51",
+    "@types/react-native": "~0.60.5",
     "@wdio/appium-service": "^5.12.1",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
@@ -49,6 +49,6 @@
     "appium": "1.14.1",
     "rimraf": "3.0.0",
     "metro-react-native-babel-preset": "0.55.0",
-    "react-test-renderer": "16.8.3"
+    "react-test-renderer": "16.8.6"
   }
 }

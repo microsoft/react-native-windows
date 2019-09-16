@@ -9,7 +9,7 @@ const path = require('path');
 const blacklist = require('metro-config/src/defaults/blacklist');
 
 const rnPath = fs.realpathSync(
-  path.resolve(require.resolve('react-native/package.json'), '..'),
+  path.resolve(require.resolve('react-native/package.json'), '..')
 );
 const rnwPath = path.resolve(__dirname, '../../vnext');
 const rnwePath = path.resolve(__dirname, '../react-native-windows-extended');
@@ -43,18 +43,25 @@ module.exports = {
       new RegExp(
         `${path
           .resolve(rnwPath, 'node_modules/react-native')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\\\]/g, '[/\\\\]')}.*`
       ),
       new RegExp(
         `${path
           .resolve(rnwePath, 'node_modules/react-native')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .replace(/[/\\\\]/g, '[/\\\\]')}.*`
       ),
-      // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path
-          .resolve(__dirname, 'windows')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+          .resolve(
+            require.resolve('@react-native-community/cli/package.json'),
+            '../node_modules/react-native'
+          )
+          .replace(/[/\\\\]/g, '[/\\\\]')}.*`
+      ),
+
+      // This stops "react-native run-windows" from causing the metro server to crash if its already running
+      new RegExp(
+        `${path.resolve(__dirname, 'windows').replace(/[/\\\\]/g, '[/\\\\]')}.*`
       ),
     ]),
     hasteImplModulePath: path.resolve(__dirname, 'hasteImpl.js'),
