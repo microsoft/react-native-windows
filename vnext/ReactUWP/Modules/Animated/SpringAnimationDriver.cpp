@@ -101,7 +101,7 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
     if (frameFromTime < static_cast<int>(m_dynamicToValues.size())) {
       return startValue +
           (m_dynamicToValues[frameFromTime].asDouble() *
-           (m_endValue - startValue));
+          (m_endValue - startValue));
     }
     return m_endValue;
   }();
