@@ -48,8 +48,6 @@ EXPORTS
 ?updateProperties@ShadowNode@react@facebook@@UAEX$$QBUdynamic@folly@@@Z
 ?utf16ToUtf8@unicode@react@facebook@@YG?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 
-YGLog
-YGLogWithConfig
 _YGAlignToString@4
 _YGAssert@8
 _YGAssertWithConfig@12
@@ -83,16 +81,12 @@ _YGNodeCanUseCachedMeasurement@52
 _YGNodeCopyStyle@8
 _YGNodeFree@4
 _YGNodeFreeRecursive@4
-_YGNodeGetBaselineFunc@4
 _YGNodeGetChild@8
 _YGNodeGetChildCount@4
 _YGNodeGetContext@4
 _YGNodeGetHasNewLayout@4
-_YGNodeGetInstanceCount@0
-_YGNodeGetMeasureFunc@4
 _YGNodeGetNodeType@4
 _YGNodeGetParent@4
-_YGNodeGetPrintFunc@4
 _YGNodeInsertChild@12
 _YGNodeIsDirty@4
 _YGNodeLayoutGetBorder@8

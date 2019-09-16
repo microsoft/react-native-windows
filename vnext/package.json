@@ -63,7 +63,7 @@
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft-fb60merge.2 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.2.tar.gz"
+    "react-native": "^0.60.0 || 0.60.0-microsoft-fb60merge.3 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.3.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [

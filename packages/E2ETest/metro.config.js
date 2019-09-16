@@ -30,7 +30,7 @@ module.exports = {
   resolver: {
     extraNodeModules: {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
-      'react-native': rnPath,
+      'react-native': rnwPath,
       'react-native-windows': rnwPath,
       'react-native-windows-extended': rnwePath,
     },
@@ -40,6 +40,7 @@ module.exports = {
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
+      new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '[/\\\\]')}.*`),
       new RegExp(
         `${path
           .resolve(rnwPath, 'node_modules/react-native')

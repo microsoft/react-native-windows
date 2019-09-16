@@ -8,6 +8,7 @@
 import {NativeEventEmitter, NativeModules} from 'react-native';
 import {
   AppThemeTypes,
+  IAppThemeChangedEvent,
   IHighContrastColors,
   IHighContrastChangedEvent,
 } from './AppThemeTypes';
@@ -82,7 +83,12 @@ class MissingNativeAppThemeShim {
   }
 
   // EventEmitter
-  addListener(_eventType: string, _listener: () => void): any {
+  addListener(
+    _eventType: string,
+    _listener: (
+      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
+    ) => void,
+  ): any {
     throwMissingNativeModule();
   }
 
@@ -90,7 +96,12 @@ class MissingNativeAppThemeShim {
     throwMissingNativeModule();
   }
 
-  removeListener(_eventType: string, _listener: () => void) {
+  removeListener(
+    _eventType: string,
+    _listener: (
+      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
+    ) => void,
+  ) {
     throwMissingNativeModule();
   }
 
