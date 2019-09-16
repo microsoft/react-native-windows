@@ -23,8 +23,18 @@ variables:
     value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
 jobs:
+- job: Setup
+  steps:
+    - task: powershell@2
+      name: checkPayload
+      displayName: 'Check if build is required for this PR'
+      inputs:
+        targetType: filePath
+        filePath: .ado\ShouldSkipPRBuild.ps1
   - job: UWPPR
     displayName: Universal PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         X64Debug:
@@ -178,6 +188,8 @@ jobs:
 
   - job: CliInit
     displayName: Verify react-native init
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
@@ -261,6 +273,8 @@ jobs:
 
   - job: RNWDesktopPR
     displayName: Desktop PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         X64Debug:
@@ -365,7 +379,10 @@ jobs:
       - template: templates/publish-build-artifacts-for-nuget.yml
 
   - job: RNWNugetPR
-    dependsOn: RNWDesktopPR
+    dependsOn: 
+    - RNWDesktopPR
+    - Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
       vmImage: $(VmImage)
@@ -383,6 +400,8 @@ jobs:
 
   - job: RNWFormatting
     displayName: Verify change files + formatting
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 10 # how long to run the job before automatically cancelling
@@ -412,6 +431,8 @@ jobs:
 
   - job: CurrentPR
     displayName: Current (C#) PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         #X64Debug:
