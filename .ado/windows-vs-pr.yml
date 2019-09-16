@@ -30,7 +30,7 @@ jobs:
         displayName: "Check if build is required for this PR"
         inputs:
           targetType: filePath
-          filePath: .ado\shouldSkipPRBuild.ps1
+          filePath: .ado/shouldSkipPRBuild.ps1
 
   - job: UWPPR
     displayName: Universal PR
