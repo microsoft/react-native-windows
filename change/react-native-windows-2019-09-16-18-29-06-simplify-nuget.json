@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Simplify NuGet packing YAML.",
+  "packageName": "react-native-windows",
+  "email": "julio@rochsquadron.net",
+  "commit": "8eb363fac03a49080cb9fcd5004f4da287d4ef34",
+  "date": "2019-09-17T01:29:06.321Z"
+}
