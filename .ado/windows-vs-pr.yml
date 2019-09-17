@@ -44,7 +44,6 @@ stages:
     jobs:
       - job: UWPPR
         displayName: Universal PR
-        dependsOn: Setup
         strategy:
           matrix:
             X64Debug:
