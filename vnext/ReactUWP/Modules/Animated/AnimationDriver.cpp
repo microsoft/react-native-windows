@@ -47,17 +47,14 @@ void AnimationDriver::StartAnimation() {
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed(
-      [EndCallback = m_endCallback, Manager = m_manager, valueTag = m_animatedValueTag, id = m_id](auto sender, auto) {
-        if (EndCallback) {
-          EndCallback(std::vector<folly::dynamic>{
+  m_scopedBatchCompletedToken =
+      scopedBatch.Completed([this](auto sender, auto) {
+        if (m_endCallback) {
+          m_endCallback(std::vector<folly::dynamic>{
               folly::dynamic::object("finished", true)});
         }
-        if (auto man = Manager.lock()) {
-          if (auto const animatedValue =
-                  man->GetValueAnimatedNode(valueTag)) {
-            animatedValue->RemoveActiveAnimation(id);
-          }
+        if (auto const animatedValue = GetAnimatedValue()) {
+          animatedValue->RemoveActiveAnimation(m_id);
         }
       });
 
@@ -86,7 +83,7 @@ ValueAnimatedNode *AnimationDriver::GetAnimatedValue() {
   if (auto manager = m_manager.lock()) {
     return manager->GetValueAnimatedNode(m_animatedValueTag);
   }
-  return nullptr;
+  return static_cast<ValueAnimatedNode *>(nullptr);
 }
 } // namespace uwp
 } // namespace react
