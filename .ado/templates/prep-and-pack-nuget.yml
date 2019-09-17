@@ -1,7 +1,8 @@
 parameters:
   publishCommitId: '0'
   npmVersion: '0.0.1-pr'
-  id: 'OfficeReact.Win32'
+  desktopId: 'OfficeReact.Win32'
+  universalId: 'OfficeReact.UWP'
 
 steps:
   - task: DownloadBuildArtifacts@0
@@ -11,9 +12,17 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
 
   - task: NuGetCommand@2
-    displayName: 'NuGet pack'
+    displayName: 'NuGet pack Desktop'
     inputs:
       command: pack
-      packagesToPack: '$(System.DefaultWorkingDirectory)/ReactWindows/ReactWindows.nuspec'
+      packagesToPack: '$(System.DefaultWorkingDirectory)/ReactWindows/ReactWin32.nuspec'
       packDestination: '$(System.DefaultWorkingDirectory)/NugetRootFinal/'
-      buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.id}}
+      buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.desktopId}}
+
+  - task: NuGetCommand@2
+    displayName: 'NuGet pack Universal'
+    inputs:
+      command: pack
+      packagesToPack: '$(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec'
+      packDestination: '$(System.DefaultWorkingDirectory)/NugetRootFinal/'
+      buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.universalId}}

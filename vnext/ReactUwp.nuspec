@@ -1,51 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
-    <id>OfficeReact.Uwp</id>
-    <version>$npmVersion$</version>
+    <id>$id$</id>
+    <version>$version$</version>
     <description>Contains Windows Implementation of React-Native</description>
     <authors>Microsoft</authors>
-    <projectUrl>https://office.visualstudio.com/ISS/_git/sdx-platform</projectUrl>
+    <projectUrl>https://github.com/microsoft/react-native-windows</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <repository type="git"
       url="https://github.com/microsoft/react-native-windows.git"
       commit="$CommitId$" />
   </metadata>
   <files>
-    <file src="inc\cxxreact\*" target="inc\cxxreact"/>
-    <file src="inc\jsi\**\*.*" target="inc\jsi"/>
-    <file src="inc\Yoga\*.*" target="inc\Yoga"/>
-    <file src="inc\folly\**\*.*" target="inc" />
-    <file src="inc\stubs\**\*.*" target="inc" />
+    <file src="$nugetroot$\inc\cxxreact\*" target="inc\cxxreact"/>
+    <file src="$nugetroot$\inc\jsi\**\*.*" target="inc\jsi"/>
+    <file src="$nugetroot$\inc\Yoga\*.*" target="inc\Yoga"/>
+    <file src="$nugetroot$\inc\folly\**\*.*" target="inc" />
+    <file src="$nugetroot$\inc\stubs\**\*.*" target="inc" />
 
-    <file src="inc\ReactWin32\msoFolly.h" target="inc\msoFolly"/>
-    <file src="inc\ReactWindowsCore\AbiSafe.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\DevSettings.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\IUIManager.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\IWebSocket.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\LayoutAnimation.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\Logging.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\MemoryMappedBuffer.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\MemoryTracker.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\NativeModuleProvider.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\Sandbox\SandboxEndpoint.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
-    <file src="inc\ReactWindowsCore\Tracing.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWin32\msoFolly.h" target="inc\msoFolly"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\AbiSafe.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\DevSettings.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\InstanceManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IReactRootView.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IUIManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\IWebSocket.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\JSBigAbiString.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\LayoutAnimation.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Logging.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\MemoryMappedBuffer.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\MemoryTracker.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Modules\I18nModule.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\NativeModuleProvider.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Sandbox\SandboxEndpoint.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\ShadowNode.h" target="inc"/>
+    <file src="$nugetroot$\inc\ReactWindowsCore\Tracing.h" target="inc"/>
 
-    <file src="inc\include\**\*.*" target="inc\include" />
+    <file src="$nugetroot$\inc\include\**\*.*" target="inc\include" />
 
     <!-- Windows Universal artifacts -->
-    <file src="target\x86\Debug\ReactUWP\React.UWP.*"      target="lib\debug\x86"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\x86\Ship\ReactUWP\React.UWP.*"       target="lib\ship\x86"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\x64\Debug\ReactUWP\React.UWP.*"      target="lib\debug\x64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\x64\Ship\ReactUWP\React.UWP.*"       target="lib\ship\x64"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\ARM\Debug\ReactUWP\React.UWP.*"      target="lib\debug\arm"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="target\ARM\Ship\ReactUWP\React.UWP.*"       target="lib\ship\arm"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x86\Debug\ReactUWP\React.UWP.*"   target="lib\debug\x86" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x86\Release\ReactUWP\React.UWP.*" target="lib\ship\x86"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Debug\ReactUWP\React.UWP.*"   target="lib\debug\x64" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Release\ReactUWP\React.UWP.*" target="lib\ship\x64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\ARM\Debug\ReactUWP\React.UWP.*"   target="lib\debug\arm" exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\ARM\Release\ReactUWP\React.UWP.*" target="lib\ship\arm"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
   </files>
 </package>
