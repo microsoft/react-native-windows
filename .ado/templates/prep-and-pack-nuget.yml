@@ -1,62 +1,19 @@
 parameters:
   publishCommitId: '0'
   npmVersion: '0.0.1-pr'
+  id: 'OfficeReact.Win32'
 
 steps:
   - task: DownloadBuildArtifacts@0
-    displayName: 'Download debug arm Artifact'
+    displayName: 'Download ReactWindows Artifact'
     inputs:
-      artifactName: ReactWindows-debug-arm
+      artifactName: ReactWindows
       downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download ship arm Artifact'
-    inputs:
-      artifactName: ReactWindows-ship-arm
-      downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download debug x86 Artifact'
-    inputs:
-      artifactName: ReactWindows-debug-x86
-      downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download ship x86 Artifact'
-    inputs:
-      artifactName: ReactWindows-ship-x86
-      downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download debug x64 Artifact'
-    inputs:
-      artifactName: ReactWindows-debug-x64
-      downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download ship x64 Artifact'
-    inputs:
-      artifactName: ReactWindows-ship-x64
-      downloadPath: $(System.DefaultWorkingDirectory)
-  - task: DownloadBuildArtifacts@0
-    displayName: 'Download source Artifact'
-    inputs:
-      artifactName: ReactWindows-source
-      downloadPath: $(System.DefaultWorkingDirectory)
-
-  - task: PowerShell@2
-    displayName: Copy files from build artifacts to nuget root
-    inputs:
-      ignoreLASTEXITCODE: true
-      targetType: inline # filePath | inline
-      script: |
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-source $(System.DefaultWorkingDirectory)\NugetRoot /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-x64 $(System.DefaultWorkingDirectory)\NugetRoot\target\x64\Debug /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-x86 $(System.DefaultWorkingDirectory)\NugetRoot\target\x86\Debug /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-x64 $(System.DefaultWorkingDirectory)\NugetRoot\target\x64\ship /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-x86 $(System.DefaultWorkingDirectory)\NugetRoot\target\x86\ship /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-debug-arm $(System.DefaultWorkingDirectory)\NugetRoot\target\arm\debug /E /MOVE /NP
-        robocopy $(System.DefaultWorkingDirectory)\ReactWindows-ship-arm $(System.DefaultWorkingDirectory)\NugetRoot\target\arm\ship /E /MOVE /NP
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack'
     inputs:
       command: pack
-      packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/React*.nuspec'
+      packagesToPack: '$(System.DefaultWorkingDirectory)/ReactWindows/ReactWindows.nuspec'
       packDestination: '$(System.DefaultWorkingDirectory)/NugetRootFinal/'
-      buildProperties: CommitId=${{parameters.publishCommitId}};npmVersion=${{parameters.npmVersion}}
+      buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.id}}
