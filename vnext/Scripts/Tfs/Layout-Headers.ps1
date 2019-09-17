@@ -8,7 +8,7 @@ param(
 	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
 	[string] $FollyVersion = '2019.08.12.00',
 	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
-	[string[]] $Extensions = ('h', 'hpp')
+	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
 Write-Host "Source root: [$SourceRoot]"
@@ -55,6 +55,20 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop -Name -Recurse -Include $patterns 
 Get-ChildItem -Path $ReactWindowsRoot\ReactUWP -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $ReactWindowsRoot\ReactUWP\$_ `
 	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ReactUWP\$(Split-Path $_) -Force) `
+	-Force
+}
+
+# React.Windows.Test headers
+Get-ChildItem -Path $ReactWindowsRoot\Test -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactWindowsRoot\Test\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Test\$(Split-Path $_) -Force) `
+	-Force
+}
+
+# React.Windows.Test DLL DEF files
+Get-ChildItem -Path $ReactWindowsRoot\Desktop.Test.DLL -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactWindowsRoot\Desktop.Test.DLL\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\$(Split-Path $_) -Force) `
 	-Force
 }
 
