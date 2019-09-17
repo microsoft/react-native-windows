@@ -2684,7 +2684,7 @@
     fibers "^4.0.1"
     fibers_node_v8 "^3.1.2"
 
-"@wdio/utils@^5.12.1", "@wdio/utils@^5.13.0":
+"@wdio/utils@^5.13.0":
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.13.0.tgz#29d90e2c5616d80eb9ab333c89504c8d05fa76cb"
   integrity sha512-SUzI694Vu8a8IMRgVpglyOlJ2JzSSrZT+YnbSgk+A1QpT/Azv1xnGJ6t48bpK3XrxpYBGOajADdOWoOydO86pg==
@@ -3917,9 +3917,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.12.2:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.13.1.tgz#c50eef62cdf9f69d09e4ecec7452340a28424a9f"
-  integrity sha512-WIQ1gJs8PtPAO8JHCdyRGEXx8TUXfRzvzm3KbvzN4oI9mT+/X9eMbuT8C9jJXHj7qUOki7asqp8iD+FU0bzCxQ==
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.13.2.tgz#a43b94272727feee35fd3c1911bb7582da9bef86"
+  integrity sha512-Exl1X1diqXoj/rAO4xzb7XTtnsrU1nV/ytobY9F48yy5d1B1BV+hfD/1w0+LvWa/pJ+ohb6mKGl0ohQezXjaVg==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
@@ -10375,10 +10375,10 @@ react-native-local-cli@^1.0.0-alpha.5:
     xcode "^1.0.0"
     xmldoc "^0.4.0"
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.80.tar.gz":
-  version "0.59.0-microsoft.80"
-  uid "12724492daca024b1478fa553464fd4856265d4f"
-  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.80.tar.gz#12724492daca024b1478fa553464fd4856265d4f"
+"react-native@https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz":
+  version "0.59.0-microsoft.82"
+  uid "44162ac437b4abf2a98209e49706cb19c759df61"
+  resolved "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz#44162ac437b4abf2a98209e49706cb19c759df61"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
