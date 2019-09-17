@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Sep 2019 17:42:42 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.188",
+      "version": "0.59.0-vnext.188",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refined logic for handling Flyout shadows",
+            "author": "kenander@microsoft.com",
+            "commit": "2cfeb8701abbf97377a585932e1859a4af4b276c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Sep 2019 11:32:39 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.187",
       "version": "0.59.0-vnext.187",
