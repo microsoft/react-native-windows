@@ -166,7 +166,7 @@ void NativeAnimatedNodeManager::RestartTrackingAnimatedNode(
           animationConfig,
           endCallback,
           manager,
-          false);
+          /*track*/ false);
     }
   }
 }
@@ -226,9 +226,10 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
       break;
     }
   }
-  if (track)
+  if (track) {
     m_trackingAndLeadNodeTags.push_back(
         std::make_tuple(animationId, animatedToValueTag));
+  }
   StartAnimatingNode(
       animationId,
       animatedNodeTag,
@@ -461,7 +462,7 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(
   if (m_trackingNodes.count(tag)) {
     return m_trackingNodes.at(tag).get();
   }
-  return static_cast<TrackingAnimatedNode *>(nullptr);
+  return nullptr;
 }
 } // namespace uwp
 } // namespace react
