@@ -3793,9 +3793,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.12.2:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.13.1.tgz#c50eef62cdf9f69d09e4ecec7452340a28424a9f"
-  integrity sha512-WIQ1gJs8PtPAO8JHCdyRGEXx8TUXfRzvzm3KbvzN4oI9mT+/X9eMbuT8C9jJXHj7qUOki7asqp8iD+FU0bzCxQ==
+  version "1.13.2"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.13.2.tgz#a43b94272727feee35fd3c1911bb7582da9bef86"
+  integrity sha512-Exl1X1diqXoj/rAO4xzb7XTtnsrU1nV/ytobY9F48yy5d1B1BV+hfD/1w0+LvWa/pJ+ohb6mKGl0ohQezXjaVg==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
@@ -9890,7 +9890,7 @@ react-devtools-core@^3.6.0:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
-react-is@^16.8.1, react-is@^16.8.3, react-is@^16.8.4:
+react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
@@ -10562,7 +10562,7 @@ scheduler@0.14.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-scheduler@^0.13.3, scheduler@^0.13.6:
+scheduler@^0.13.6:
   version "0.13.6"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.13.6.tgz#466a4ec332467b31a91b9bf74e5347072e4cd889"
   integrity sha512-IWnObHt413ucAYKsD9J1QShUKkbKLQQHdxRyw73sw4FN26iWr3DY/H34xGPe4nmL1DwXyWmSWmMrA9TfQbE/XQ==

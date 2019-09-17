@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Sep 2019 11:32:39 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Sep 2019 17:42:42 GMT and should not be manually modified.
 
+## 0.59.0-vnext.188
+Tue, 17 Sep 2019 17:42:42 GMT
+
+### Changes
+
+- Refined logic for handling Flyout shadows (kenander@microsoft.com)
 ## 0.59.0-vnext.187
 Tue, 17 Sep 2019 11:32:39 GMT
 
