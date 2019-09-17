@@ -19,8 +19,6 @@ module.exports = {
   watchFolders: [
     // Include hoisted modules
     path.resolve(__dirname, '../..', 'node_modules'),
-    // Include react-native
-    rnPath,
     // Include react-native-windows
     rnwPath,
     // Include react-native-windows-extended

@@ -19,8 +19,6 @@ module.exports = {
   watchFolders: [
     // Include hoisted modules
     path.resolve(__dirname, '../..', 'node_modules'),
-    // Include react-native
-    rnPath,
     // Include react-native-windows
     rnwPath,
     // Include react-native-windows-extended
@@ -30,7 +28,7 @@ module.exports = {
   resolver: {
     extraNodeModules: {
       // Redirect metro to rnwPath instead of node_modules/react-native-windows, since metro doesn't like symlinks
-      'react-native': rnPath,
+      'react-native': rnwPath,
       'react-native-windows': rnwPath,
       'react-native-windows-extended': rnwePath,
     },
