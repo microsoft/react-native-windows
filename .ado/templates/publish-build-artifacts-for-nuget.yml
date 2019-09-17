@@ -11,7 +11,10 @@ steps:
     inputs:
       SourceFolder: vnext\target\$(BuildPlatform)\$(BuildConfiguration)
       TargetFolder: $(Build.ArtifactStagingDirectory)\$(BuildPlatform)\$(BuildConfiguration)
-      Contents: '**'
+      Contents: |
+        React.Windows.Desktop.DLL\**
+        React.Windows.Desktop.Test.DLL\**
+        ReactUWP\**
 
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: ReactWindows"
