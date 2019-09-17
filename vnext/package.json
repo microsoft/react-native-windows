@@ -18,17 +18,6 @@
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
-  "rnpm": {
-    "haste": {
-      "platforms": [
-        "windows"
-      ],
-      "providesModuleNodeModules": [
-        "react-native-windows"
-      ]
-    },
-    "plugin": "./local-cli/index.js"
-  },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
     "@react-native-community/cli": "^2.6.0",
