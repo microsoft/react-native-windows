@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Sep 2019 05:17:28 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Sep 2019 11:32:39 GMT and should not be manually modified.
 
+## 0.59.0-vnext.187
+Tue, 17 Sep 2019 11:32:39 GMT
+
+### Changes
+
+- Simplify NuGet packing YAML. (julio@rochsquadron.net)
 ## 0.59.0-vnext.186
 Tue, 17 Sep 2019 05:17:28 GMT
 

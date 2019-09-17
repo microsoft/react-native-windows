@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Sep 2019 11:32:39 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.187",
+      "version": "0.59.0-vnext.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplify NuGet packing YAML.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8eb363fac03a49080cb9fcd5004f4da287d4ef34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Sep 2019 05:17:28 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.186",
       "version": "0.59.0-vnext.186",
