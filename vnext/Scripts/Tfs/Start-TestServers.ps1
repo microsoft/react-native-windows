@@ -33,7 +33,7 @@ Write-Host 'Started WebSocket server'
 if ($Preload) {
 	Write-Host 'Preloading bundles'
 
-	Start-Sleep -Seconds 12
+	Start-Sleep -Seconds 30
 
 	# Preload the RNTesterApp integration bundle for better performance in integration tests.
 	Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true" | Out-Null
