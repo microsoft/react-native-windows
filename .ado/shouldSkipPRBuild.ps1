@@ -18,6 +18,7 @@ function AllChangedFilesAreSkippable
         if(!$fileIsSkippable)
         {
             $allFilesAreSkippable = $false
+            break;
         }
     }
 
