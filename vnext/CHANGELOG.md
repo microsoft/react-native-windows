@@ -1,7 +1,31 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 13 Sep 2019 21:56:22 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Sep 2019 17:42:42 GMT and should not be manually modified.
 
+## 0.59.0-vnext.188
+Tue, 17 Sep 2019 17:42:42 GMT
+
+### Changes
+
+- Refined logic for handling Flyout shadows (kenander@microsoft.com)
+## 0.59.0-vnext.187
+Tue, 17 Sep 2019 11:32:39 GMT
+
+### Changes
+
+- Simplify NuGet packing YAML. (julio@rochsquadron.net)
+## 0.59.0-vnext.186
+Tue, 17 Sep 2019 05:17:28 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.82 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.185
+Sat, 14 Sep 2019 14:09:03 GMT
+
+### Changes
+
+- Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue (dida@ntdev.microsoft.com)
 ## 0.59.0-vnext.184
 Fri, 13 Sep 2019 21:56:22 GMT
 

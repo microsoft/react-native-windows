@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Sep 2019 17:42:42 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.188",
+      "version": "0.59.0-vnext.188",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refined logic for handling Flyout shadows",
+            "author": "kenander@microsoft.com",
+            "commit": "2cfeb8701abbf97377a585932e1859a4af4b276c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 11:32:39 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.187",
+      "version": "0.59.0-vnext.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplify NuGet packing YAML.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8eb363fac03a49080cb9fcd5004f4da287d4ef34"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 05:17:28 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.186",
+      "version": "0.59.0-vnext.186",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.82",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7dbbfd3638a577c19c096b9baf2b1ff83bbba82c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Sep 2019 14:09:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.185",
+      "version": "0.59.0-vnext.185",
+      "comments": {
+        "none": [
+          {
+            "comment": "add e2e test doc",
+            "author": "canli@microsoft.com",
+            "commit": "ce081d0718660f4cfbf3a9db9e6d4d3c67c70bab"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e2729f1ed7e384e3c446aaa3a90da650fef1e5d9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 Sep 2019 21:56:22 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.184",
       "version": "0.59.0-vnext.184",
