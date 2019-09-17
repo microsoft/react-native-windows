@@ -2553,18 +2553,17 @@
     param-case "^2.1.1"
 
 "@wdio/cli@^5.10.1":
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.12.5.tgz#f4121b0d7682f67431521b83aa213c23128341a2"
-  integrity sha512-PvHKhiJ+D5Z+sdKRtjl5/H5kIJaKy4XJ/hq6DVX0JtwuPwj5elvkoBmeBgxaVskk6j8GZ5rJ5eyG9ja62bzwsA==
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.13.0.tgz#bea611bc65e40b77234312dd50ad384155ac3455"
+  integrity sha512-912z57ZG6vvojgEPWhCWkEPeEK6nAzBHFb/Y7l8/LCl0a9hi7Mdcl3KWN3pLe7FanX4p7qrc6pl/S1DZDaASlg==
   dependencies:
-    "@wdio/config" "^5.12.1"
+    "@wdio/config" "^5.13.0-alpha.0"
     "@wdio/logger" "^5.12.1"
-    "@wdio/utils" "^5.12.1"
+    "@wdio/utils" "^5.13.0"
     async-exit-hook "^2.0.1"
     chalk "^2.3.2"
     chokidar "^3.0.0"
     cli-spinners "^2.1.0"
-    deepmerge "^4.0.0"
     ejs "^2.5.7"
     fs-extra "^8.0.1"
     inquirer "^7.0.0"
@@ -2572,7 +2571,7 @@
     lodash.pickby "^4.6.0"
     lodash.union "^4.6.0"
     log-update "^3.2.0"
-    webdriverio "^5.12.5"
+    webdriverio "^5.13.0"
     yargs "^14.0.0"
     yarn-install "^1.0.0"
 
@@ -2647,13 +2646,6 @@
   resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-5.13.0-alpha.0.tgz#43d531f77c67970115d9bd057faa6b03ea4ed600"
   integrity sha512-1/7PhkRv3dCB8P+/yVVMXubus3xVcLh30wPcxSJS//rvcu9EU6hU4XEzJro3Ja0ixCFP4WIqnKda7Vre5EaOoQ==
 
-"@wdio/repl@^5.12.1":
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.12.1.tgz#af5b556ac26de397ec6f83cfd649d9f973f369b9"
-  integrity sha512-/f8bWdqoSOYiZ3MJyiAmXrf9ezi6KTA3wHrpltRYJHFsni+LWEKprAoEhPROkj7OijRuSQqWHLLLYg/BOjOClg==
-  dependencies:
-    "@wdio/config" "^5.12.1"
-
 "@wdio/repl@^5.13.0-alpha.0":
   version "5.13.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.13.0-alpha.0.tgz#2e8e3b1498bfae793ed0acab714f54c8f98d68bd"
@@ -2692,15 +2684,7 @@
     fibers "^4.0.1"
     fibers_node_v8 "^3.1.2"
 
-"@wdio/utils@^5.12.1":
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.12.1.tgz#077602989a0060198ea7ec0a13c3b69c76221115"
-  integrity sha512-LrUPEdINyWHrPYY3mXfsrEzEtgB+xXvIKPj6y9P3sVk90cw6FUHHbkZOiMiBkcPaCmIyf8bFwQCiLHxIQzhHiQ==
-  dependencies:
-    "@wdio/logger" "^5.12.1"
-    deepmerge "^4.0.0"
-
-"@wdio/utils@^5.13.0":
+"@wdio/utils@^5.12.1", "@wdio/utils@^5.13.0":
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.13.0.tgz#29d90e2c5616d80eb9ab333c89504c8d05fa76cb"
   integrity sha512-SUzI694Vu8a8IMRgVpglyOlJ2JzSSrZT+YnbSgk+A1QpT/Azv1xnGJ6t48bpK3XrxpYBGOajADdOWoOydO86pg==
@@ -12486,16 +12470,6 @@ wcwidth@^1.0.0, wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webdriver@^5.12.1, "webdriver@git+https://github.com/react-native-windows/webdriver.git":
-  version "5.12.1"
-  resolved "git+https://github.com/react-native-windows/webdriver.git#43e84dbd1a6effdf305942304daa7e6bddea4fc4"
-  dependencies:
-    "@wdio/config" "^5.12.1"
-    "@wdio/logger" "^5.12.1"
-    deepmerge "^4.0.0"
-    lodash.merge "^4.6.1"
-    request "^2.83.0"
-
 webdriver@^5.13.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.13.0.tgz#bf11f0c827f9af7c73a952c03508ed4c0a8e27bb"
@@ -12508,27 +12482,17 @@ webdriver@^5.13.0:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
-webdriverio@^5.10.1, webdriverio@^5.10.9, webdriverio@^5.12.5:
-  version "5.12.5"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.12.5.tgz#9fb4eb5b33497105b3a24e15d2b583f603ec19d9"
-  integrity sha512-KTbhnN/GS7jVeIIeatC3O4aerFc+H1CQIY6DxELUsa7H5nOXj8Sejw0j0z3frxBGtdqYpAHPEZEPmJRtizVEsA==
+"webdriver@git+https://github.com/react-native-windows/webdriver.git":
+  version "5.12.1"
+  resolved "git+https://github.com/react-native-windows/webdriver.git#43e84dbd1a6effdf305942304daa7e6bddea4fc4"
   dependencies:
     "@wdio/config" "^5.12.1"
     "@wdio/logger" "^5.12.1"
-    "@wdio/repl" "^5.12.1"
-    archiver "^3.0.0"
-    css-value "^0.0.1"
-    grapheme-splitter "^1.0.2"
-    lodash.clonedeep "^4.5.0"
-    lodash.isobject "^3.0.2"
-    lodash.isplainobject "^4.0.6"
-    lodash.zip "^4.2.0"
-    resq "^1.6.0"
-    rgb2hex "^0.1.0"
-    serialize-error "^4.1.0"
-    webdriver "^5.12.1"
+    deepmerge "^4.0.0"
+    lodash.merge "^4.6.1"
+    request "^2.83.0"
 
-webdriverio@^5.13.0:
+webdriverio@^5.10.1, webdriverio@^5.10.9, webdriverio@^5.13.0:
   version "5.13.0"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.13.0.tgz#41da85abd5ef0832e6219e3c19ab138bc085666a"
   integrity sha512-CM/+K+F/3YRfTs4YXwPLbluqP2CEe/UdvELJLyB1zouZ7pVvGr9u2N74qSWZGl/XyqcLXyVEVfk1jXndwpm3vw==
