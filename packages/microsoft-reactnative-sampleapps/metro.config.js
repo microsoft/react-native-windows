@@ -40,6 +40,7 @@ module.exports = {
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
+      new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '[/\\\\]')}.*`),
       new RegExp(
         `${path
           .resolve(rnwPath, 'node_modules/react-native')
