@@ -2673,13 +2673,13 @@
     webdriverio "^5.13.0"
 
 "@wdio/sync@^5.10.1":
-  version "5.12.3"
-  resolved "https://registry.yarnpkg.com/@wdio/sync/-/sync-5.12.3.tgz#a37dd82a3bfbd9e7b71929987f49916a4fbefdf6"
-  integrity sha512-2EZX2W+5mk3O6vCGac/zlks9/ODj6Jtq0yWHqytxjy5lySs3lQxKxB2txBnlLX0HJuRN8wKj6GFyD1fX0M7y9g==
+  version "5.13.0"
+  resolved "https://registry.yarnpkg.com/@wdio/sync/-/sync-5.13.0.tgz#cce7db69358dc955728c1bd23ddafd432a2a0556"
+  integrity sha512-3ftGX12+cq0d1wdRfj6HDfsPJkHy2DBmfsteSseodwt/oQufESEAdGl+vwZWeDpwdeWyQCja68V9dgL5pI5uFQ==
   dependencies:
-    "@wdio/config" "^5.12.1"
+    "@wdio/config" "^5.13.0-alpha.0"
     "@wdio/logger" "^5.12.1"
-    "@wdio/utils" "^5.12.1"
+    "@wdio/utils" "^5.13.0"
   optionalDependencies:
     fibers "^4.0.1"
     fibers_node_v8 "^3.1.2"
