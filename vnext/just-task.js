@@ -70,7 +70,6 @@ task(
     'eslint',
     'initRNLibraries',
     'copyFlowFiles',
-    'copyRNTester_temp_until_msrn_fork_rdy',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),
     'apiExtractorUpdate',

@@ -47,6 +47,10 @@ function copyJSFolderRecursiveSync(source, target) {
 exports.copyRNLibraries = () => {
   const rnPath = path.dirname(require.resolve('react-native/package.json'));
 
+  const integrationTestsDest = path.resolve(__dirname, '../IntegrationTests');
+  if (fs.existsSync(integrationTestsDest)) {
+    rimraf.sync(integrationTestsDest + path.sep + '*.js');
+  }
   const librariesDest = path.resolve(__dirname, '../Libraries');
   if (fs.existsSync(librariesDest)) {
     rimraf.sync(librariesDest);
@@ -56,6 +60,7 @@ exports.copyRNLibraries = () => {
     rimraf.sync(rnTesterDest);
   }
   const baseDir = path.resolve(__dirname, '..');
+  copyJSFolderRecursiveSync(path.resolve(rnPath, 'IntegrationTests'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'Libraries'), baseDir);
 
   fs.writeFileSync(
@@ -63,12 +68,7 @@ exports.copyRNLibraries = () => {
     fs.readFileSync(path.resolve(rnPath, 'rn-get-polyfills.js')),
   );
 
-  if (fs.existsSync(path.resolve(rnPath, 'RNTester'))) {
-    console.warn(
-      'Now that we are back to using the fork, we can delete the RNTester_temp_until_msrn_fork_rdy folder!',
-    );
-    copyJSFolderRecursiveSync(path.resolve(rnPath, 'RNTester'), baseDir);
-  }
+  copyJSFolderRecursiveSync(path.resolve(rnPath, 'RNTester'), baseDir);
 
   /*
   if (!fs.existsSync(path.resolve(__dirname, '../lib/local-cli'))) {
