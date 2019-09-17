@@ -53,6 +53,38 @@ struct json_type_traits<react::uwp::Selection> {
   }
 };
 
+static const std::unordered_map<std::string, winrt::InputScopeNameValue>
+    textBoxKeyboardTypeMap = {
+        {"default", winrt::InputScopeNameValue::Default},
+        {"number-pad", winrt::InputScopeNameValue::TelephoneNumber},
+        {"decimal-pad", winrt::InputScopeNameValue::Number},
+        {"email-address", winrt::InputScopeNameValue::EmailNameOrAddress},
+        {"phone-pad", winrt::InputScopeNameValue::TelephoneNumber},
+        {"numeric", winrt::InputScopeNameValue::Number},
+        {"url", winrt::InputScopeNameValue::Url},
+        {"web-search", winrt::InputScopeNameValue::Search}};
+
+static const std::unordered_map<std::string, winrt::InputScopeNameValue>
+    passwordBoxKeyboardTypeMap = {
+        {"default", winrt::InputScopeNameValue::Password},
+        {"numeric", winrt::InputScopeNameValue::NumericPin}};
+
+static winrt::InputScopeNameValue parseKeyboardType(
+    const folly::dynamic &val,
+    const bool isTextBox) {
+  auto keyboardTypeMap =
+      isTextBox ? textBoxKeyboardTypeMap : passwordBoxKeyboardTypeMap;
+
+  auto iter = keyboardTypeMap.find(val.asString());
+
+  if (iter != keyboardTypeMap.end()) {
+    return iter->second;
+  }
+
+  return isTextBox ? winrt::InputScopeNameValue::Default
+                   : winrt::InputScopeNameValue::Password;
+}
+
 namespace react {
 namespace uwp {
 
@@ -381,6 +413,21 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             m_isTextBox
                 ? winrt::TextBox::SelectionHighlightColorProperty()
                 : winrt::PasswordBox::SelectionHighlightColorProperty());
+    } else if (propertyName == "keyboardType") {
+      if (propertyValue.isString()) {
+        auto inputScopeNameVaue = parseKeyboardType(propertyValue, m_isTextBox);
+        auto scope = winrt::InputScope();
+        auto scopeName = winrt::InputScopeName(inputScopeNameVaue);
+        auto names = scope.Names();
+        names.Append(scopeName);
+        control.SetValue(
+            m_isTextBox ? winrt::TextBox::InputScopeProperty()
+                        : winrt::PasswordBox::InputScopeProperty(),
+            scope);
+      } else if (propertyValue.isNull())
+        control.ClearValue(
+            m_isTextBox ? winrt::TextBox::InputScopeProperty()
+                        : winrt::PasswordBox::InputScopeProperty());
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -480,7 +527,7 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selection", "Map")("selectionColor", "Color")(
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
-      "secureTextEntry", "boolean"));
+      "secureTextEntry", "boolean")("keyboardType", "string"));
 
   return props;
 }
