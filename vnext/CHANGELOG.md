@@ -1,7 +1,44 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 11 Sep 2019 18:44:17 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Sep 2019 11:32:39 GMT and should not be manually modified.
 
+## 0.59.0-vnext.187
+Tue, 17 Sep 2019 11:32:39 GMT
+
+### Changes
+
+- Simplify NuGet packing YAML. (julio@rochsquadron.net)
+## 0.59.0-vnext.186
+Tue, 17 Sep 2019 05:17:28 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.82 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.185
+Sat, 14 Sep 2019 14:09:03 GMT
+
+### Changes
+
+- Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.184
+Fri, 13 Sep 2019 21:56:22 GMT
+
+### Changes
+
+- Support live reload for developer menu (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.183
+Fri, 13 Sep 2019 15:59:25 GMT
+
+### Changes
+
+- MultiLine TextInput should accepts Enter key (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.182
+Thu, 12 Sep 2019 23:51:35 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.79 (53619745+rnbot@users.noreply.github.com)
+- Updating react-native to version: 0.59.0-microsoft.80 (53619745+rnbot@users.noreply.github.com)
 ## 0.59.0-vnext.179
 Wed, 11 Sep 2019 18:44:17 GMT
 

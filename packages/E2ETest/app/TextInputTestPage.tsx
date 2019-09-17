@@ -6,7 +6,7 @@
 
 import React from 'react';
 import {Text, TextInput, View} from 'react-native';
-import {TEXTINPUT_ON_TEXTINPUT} from './Consts';
+import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT} from './Consts';
 
 interface ITextInputTestPageState {
   curText: string;
@@ -66,6 +66,12 @@ export class TextInputTestPage extends React.Component<
           onKeyPress={event => {
             this.updateText('onKeyPress key: ' + event.nativeEvent.key);
           }}
+        />
+        <TextInput
+          testID={ML_TEXTINPUT_ON_TEXTINPUT}
+          style={{height: 80}}
+          placeholder="MultiLine"
+          multiline={true}
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text testID="CurText">curText: {this.state.curText}</Text>

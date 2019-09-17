@@ -1,56 +1,23 @@
 steps:
   - task: BatchScript@1
-    displayName: "Copy Nuget source files"
+    displayName: Copy NuGet source files
     inputs:
-      filename: 'vnext\layoutFilesForNuget.bat'
-      arguments: "$(build.artifactstagingdirectory)"
+      filename: vnext\layoutFilesForNuget.bat
+      arguments: $(Build.ArtifactStagingDirectory)
     condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
 
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: debug arm"
+  - task: CopyFiles@2
+    displayName: Copy NuGet artifacts
     inputs:
-      PathtoPublish: 'vnext\target\ARM\Debug'
-      ArtifactName: "ReactWindows-debug-arm"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'arm'))
+      SourceFolder: vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+      TargetFolder: $(Build.ArtifactStagingDirectory)\$(BuildPlatform)\$(BuildConfiguration)
+      Contents: |
+        React.Windows.Desktop.DLL\**
+        React.Windows.Desktop.Test.DLL\**
+        ReactUWP\**
 
   - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: ship arm"
+    displayName: "Publish Artifact: ReactWindows"
     inputs:
-      PathtoPublish: 'vnext\target\ARM\Release'
-      ArtifactName: "ReactWindows-ship-arm"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'arm'))
-
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifacts debug x86"
-    inputs:
-      PathtoPublish: 'vnext\target\x86\Debug'
-      ArtifactName: "ReactWindows-debug-x86"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
-
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifacts ship x86"
-    inputs:
-      PathtoPublish: 'vnext\target\x86\Release'
-      ArtifactName: "ReactWindows-ship-x86"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x86'))
-
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifacts debug x64"
-    inputs:
-      PathtoPublish: 'vnext\target\x64\debug'
-      ArtifactName: "ReactWindows-debug-x64"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
-
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifacts ship x64"
-    inputs:
-      PathtoPublish: 'vnext\target\x64\Release'
-      ArtifactName: "ReactWindows-ship-x64"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Release'), eq(variables['BuildPlatform'], 'x64'))
-
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifacts - Nuget Source files"
-    inputs:
-      PathtoPublish: "$(build.artifactstagingdirectory)"
-      ArtifactName: "ReactWindows-source"
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
+      PathtoPublish: $(Build.ArtifactStagingDirectory)
+      ArtifactName: "ReactWindows"

@@ -22,6 +22,7 @@
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <PackageCertificateKeyFile><%=name%>_TemporaryKey.pfx</PackageCertificateKeyFile>
     <%=certificateThumbprint%>
+    <PackageCertificatePassword>password</PackageCertificatePassword>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>

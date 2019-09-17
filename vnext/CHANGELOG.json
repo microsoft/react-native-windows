@@ -2,6 +2,121 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Sep 2019 11:32:39 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.187",
+      "version": "0.59.0-vnext.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplify NuGet packing YAML.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8eb363fac03a49080cb9fcd5004f4da287d4ef34"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 05:17:28 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.186",
+      "version": "0.59.0-vnext.186",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.82",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7dbbfd3638a577c19c096b9baf2b1ff83bbba82c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Sep 2019 14:09:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.185",
+      "version": "0.59.0-vnext.185",
+      "comments": {
+        "none": [
+          {
+            "comment": "add e2e test doc",
+            "author": "canli@microsoft.com",
+            "commit": "ce081d0718660f4cfbf3a9db9e6d4d3c67c70bab"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e2729f1ed7e384e3c446aaa3a90da650fef1e5d9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Sep 2019 21:56:22 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.184",
+      "version": "0.59.0-vnext.184",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support live reload for developer menu",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "0321a9ba4cc3ad28797c8453f78c7d8575e9f6bc"
+          }
+        ],
+        "none": [
+          {
+            "comment": "add more scripts to package.json in e2e",
+            "author": "canli@microsoft.com",
+            "commit": "53149fddb5c13244606e5e6dec6d72607f30aa35"
+          },
+          {
+            "comment": "Remove LegacyWebSocket.",
+            "author": "julio@rochsquadron.net",
+            "commit": "b07546abd175f6b9aca8c279f7b33d84ba536496"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Sep 2019 15:59:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.183",
+      "version": "0.59.0-vnext.183",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "MultiLine TextInput should accepts Enter key",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b887c98125ffd25a73889c1bab466cff7aaf1a6a"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Enable all non-Chrome integration tests",
+            "author": "julio@rochsquadron.net",
+            "commit": "e34895c8d6bf637304a8950388527540522f81ee"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Sep 2019 23:51:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.182",
+      "version": "0.59.0-vnext.182",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.79",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7bb96f44ef561a437af7229ebd0a6d3d3d22d38f"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.80",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "2771632d1c5cbc9920a0b886f99e5bd895d8e832"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Sep 2019 18:44:17 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.179",
       "version": "0.59.0-vnext.179",
