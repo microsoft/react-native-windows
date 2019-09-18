@@ -42,7 +42,7 @@ stages:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:
-      - job: UWPPR
+      - job: RNWUniversalPR
         displayName: Universal PR
         strategy:
           matrix:
@@ -393,8 +393,10 @@ stages:
                 React.Windows.Desktop.Test.DLL\**
 
       - job: RNWNugetPR
-        dependsOn: RNWDesktopPR
-        displayName: React-Native-Windows Build and Pack Nuget
+        dependsOn: |
+          RNWDesktopPR
+          RNWUniversalPR
+        displayName: Build and Pack Nuget
         pool:
           vmImage: $(VmImage)
         timeoutInMinutes: 30 # how long to run the job before automatically cancelling
