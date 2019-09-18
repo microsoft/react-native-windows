@@ -572,8 +572,9 @@ void TextInputViewManager::TransferInputScope(
     XamlView oldView,
     XamlView newView,
     const bool copyToPasswordBox) {
-  // transfer input scope, only common keyboardType between secureTextEntry on/off is numeric,
-  // so only need to transfer input scope "Number" <=> "NumericPin", everything else leave it as default.
+  // transfer input scope, only common keyboardType between secureTextEntry
+  // on/off is numeric, so only need to transfer input scope "Number" <=>
+  // "NumericPin", everything else leave it as default.
   winrt::InputScope inputScope;
   if (copyToPasswordBox) {
     inputScope = oldView.try_as<winrt::TextBox>().InputScope();
@@ -584,8 +585,10 @@ void TextInputViewManager::TransferInputScope(
   if (inputScope != nullptr) {
     auto nameValue = inputScope.Names().GetAt(0).NameValue();
 
-    if ((nameValue == winrt::InputScopeNameValue::Number && copyToPasswordBox) ||
-        (nameValue == winrt::InputScopeNameValue::NumericPin && !copyToPasswordBox)) {
+    if ((nameValue == winrt::InputScopeNameValue::Number &&
+         copyToPasswordBox) ||
+        (nameValue == winrt::InputScopeNameValue::NumericPin &&
+         !copyToPasswordBox)) {
       auto newScope = winrt::InputScope();
       auto scopeName = winrt::InputScopeName(
           copyToPasswordBox ? winrt::InputScopeNameValue::NumericPin
@@ -646,7 +649,7 @@ void TextInputViewManager::TransferProperties(
           winrt::TextBox::SelectionHighlightColorProperty());
       newView.as<winrt::TextBox>().Text(
           oldView.as<winrt::PasswordBox>().Password());
-      }
+    }
 
     TransferInputScope(oldView, newView, copyToPasswordBox);
     // Set focus if current control has focus
