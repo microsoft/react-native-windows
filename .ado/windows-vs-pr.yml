@@ -392,25 +392,6 @@ stages:
                 React.Windows.Desktop.DLL\**
                 React.Windows.Desktop.Test.DLL\**
 
-      - job: RNWNugetPR
-        dependsOn: |
-          RNWDesktopPR
-          RNWUniversalPR
-        displayName: Build and Pack Nuget
-        pool:
-          vmImage: $(VmImage)
-        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        steps:
-          - checkout: none #skip checking out the default repository resource
-
-          # The commit tag in the nuspec requires that we use at least nuget 4.6
-          - task: NuGetToolInstaller@0
-            inputs:
-              versionSpec: ">=4.6.0"
-
-          - template: templates/prep-and-pack-nuget.yml
-
       - job: RNWFormatting
         displayName: Verify change files + formatting
         pool:
@@ -575,3 +556,25 @@ stages:
           #    script: npm test
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
+
+  - stage:
+    displayName: Pack
+    dependsOn: Verify
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+
+    jobs:
+      - job: RNWNugetPR
+        displayName: Build and Pack Nuget
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: none #skip checking out the default repository resource
+
+          # The commit tag in the nuspec requires that we use at least nuget 4.6
+          - task: NuGetToolInstaller@0
+            inputs:
+              versionSpec: ">=4.6.0"
+
+          - template: templates/prep-and-pack-nuget.yml
