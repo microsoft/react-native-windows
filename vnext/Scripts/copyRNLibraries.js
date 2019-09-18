@@ -36,7 +36,11 @@ function copyJSFolderRecursiveSync(source, target) {
       if (fs.lstatSync(curSource).isDirectory()) {
         copyJSFolderRecursiveSync(curSource, targetFolder);
       } else {
-        if (curSource.endsWith('.js') || curSource.endsWith('.png')) {
+        if (
+          curSource.endsWith('.js') ||
+          curSource.endsWith('.png') ||
+          curSource.endsWith('.gif')
+        ) {
           copyFileSync(curSource, targetFolder);
         }
       }
