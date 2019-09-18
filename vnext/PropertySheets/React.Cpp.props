@@ -19,7 +19,7 @@
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
     <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
     
-    <ENABLE_TRACING Condition="'$(ENABLE_TRACING)' == ''">true</ENABLE_TRACING>
+    <ENABLE_TRACING Condition="'$(ENABLE_TRACING)' == ''">false</ENABLE_TRACING>
     <ENABLE_NATIVE_SYSTRACE Condition="'$(ENABLE_NATIVE_SYSTRACE)' == ''">false</ENABLE_NATIVE_SYSTRACE>
     <ENABLE_JS_SYSTRACE Condition="'$(ENABLE_JS_SYSTRACE)' == ''">false</ENABLE_JS_SYSTRACE>
   </PropertyGroup>
