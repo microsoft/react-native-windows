@@ -9,7 +9,7 @@ param (
 
 	[switch] $Preload,
 
-	[int] $SleepSeconds = 30
+	[int] $SleepSeconds = 10
 )
 
 Write-Host "Starting packager"

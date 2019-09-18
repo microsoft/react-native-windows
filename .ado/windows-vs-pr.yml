@@ -362,7 +362,7 @@ stages:
             inputs:
               targetType: filePath # filePath | inline
               filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload
+              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload -SleepSeconds 30
 
           - task: VSTest@2
             displayName: Run Desktop Integration Tests
