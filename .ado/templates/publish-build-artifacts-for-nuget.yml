@@ -1,9 +1,9 @@
 steps:
-  - task: BatchScript@1
-    displayName: Copy NuGet source files
+  - task: PowerShell@2
+    displayName: Copy NuGet header files
     inputs:
-      filename: vnext\layoutFilesForNuget.bat
-      arguments: $(Build.ArtifactStagingDirectory)
+      filePath: vnext\Scripts\Tfs\Layout-Headers.ps1
+      arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
     condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
 
   - task: CopyFiles@2
