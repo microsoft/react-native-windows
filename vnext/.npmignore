@@ -18,8 +18,6 @@ NuGet.Config
 package-deps.json
 packages
 react-native-windows.build.log
-ReactUwp.nuspec
-ReactWin32.nuspec
 ReactWin32SandboxSample
 ReactWindows-Universal.sln
 ReactWindows-Desktop.sln
