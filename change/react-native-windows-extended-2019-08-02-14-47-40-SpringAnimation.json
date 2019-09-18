@@ -1,0 +1,8 @@
+{
+  "comment": "Add the SpringAnimationDriver",
+  "type": "minor",
+  "packageName": "react-native-windows-extended",
+  "email": "stpete@microsoft.com",
+  "commit": "53a7154608ace55e9ad8802ba964bb604914711b",
+  "date": "2019-08-02T21:47:16.075Z"
+}
