@@ -21,12 +21,10 @@ react-native-windows.build.log
 ReactUwp.nuspec
 ReactWin32.nuspec
 ReactWin32SandboxSample
-ReactWindows-TestNuspec.bat
-ReactWindows-UWP.sln
-ReactWindows.sln
+ReactWindows-Universal.sln
+ReactWindows-Desktop.sln
 RNTester.*
 RNTester/
-Scripts/layoutFilesForNuget.bat.bat
 src/
 target
 temp

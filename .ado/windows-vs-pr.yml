@@ -118,19 +118,19 @@ stages:
           - template: templates/install-SDK.yml
 
           - task: NuGetCommand@2
-            displayName: NuGet restore - ReactWindows-UWP
+            displayName: NuGet restore - ReactWindows-Universal
             inputs:
               command: restore
-              restoreSolution: vnext/ReactWindows-UWP.sln
+              restoreSolution: vnext/ReactWindows-Universal.sln
               feedsToUse: config
               nugetConfigPath: vnext/NuGet.config
               restoreDirectory: packages/
               verbosityRestore: Detailed # Options: quiet, normal, detailed
 
           - task: MSBuild@1
-            displayName: MSBuild - ReactWindows-UWP
+            displayName: MSBuild - ReactWindows-Universal
             inputs:
-              solution: vnext/ReactWindows-UWP.sln
+              solution: vnext/ReactWindows-Universal.sln
               msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
