@@ -22,535 +22,553 @@ variables:
   - name: GoogleTestAdapterPath
     value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
-jobs:
-  - job: UWPPR
-    displayName: Universal PR
-    strategy:
-      matrix:
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
-          UseRNFork: true
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: true
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
-          UseRNFork: true
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-          UseRNFork: true
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
-          UseRNFork: true
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
-          UseRNFork: true
-        PublicRNX86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: false
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+stages:
+  - stage: SetupStage
+    displayName: Setup
 
-      - task: CmdLine@2
-        displayName: Modify package.json to use unforked RN
-        inputs:
-          script: node scripts/useUnForkedRN.js
-          workingDirectory: vnext
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
+    jobs:
+      - job: Setup
+        steps:
+          - task: powershell@2
+            name: checkPayload
+            displayName: "Check if build is required for this PR"
+            inputs:
+              targetType: filePath
+              filePath: .ado/shouldSkipPRBuild.ps1
 
-      - task: CmdLine@2
-        displayName: yarn install (Using microsoft/react-native)
-        inputs:
-          script: yarn install --frozen-lockfile
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+  - stage:
+    displayName: Verify
+    dependsOn: SetupStage
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
-        # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-        # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
-        # using the non fork version.
-      - task: CmdLine@2
-        displayName: yarn install (Using facebook/react-native)
-        inputs:
-          script: yarn install
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
+    jobs:
+      - job: UWPPR
+        displayName: Universal PR
+        strategy:
+          matrix:
+            X64Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+              UseRNFork: true
+            X86Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+              UseRNFork: true
+            ArmDebug:
+              BuildConfiguration: Debug
+              BuildPlatform: arm
+              UseRNFork: true
+            X64Release:
+              BuildConfiguration: Release
+              BuildPlatform: x64
+              UseRNFork: true
+            X86Release:
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseRNFork: true
+            ArmRelease:
+              BuildConfiguration: Release
+              BuildPlatform: arm
+              UseRNFork: true
+            PublicRNX86Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+              UseRNFork: false
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            # fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/stop-packagers.yml
+          - task: CmdLine@2
+            displayName: Modify package.json to use unforked RN
+            inputs:
+              script: node scripts/useUnForkedRN.js
+              workingDirectory: vnext
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
-      - task: CmdLine@2
-        displayName: yarn buildci
-        inputs:
-          script: yarn buildci
+          - task: CmdLine@2
+            displayName: yarn install (Using microsoft/react-native)
+            inputs:
+              script: yarn install --frozen-lockfile
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
-      - template: templates/install-SDK.yml
+            # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
+            # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
+            # using the non fork version.
+          - task: CmdLine@2
+            displayName: yarn install (Using facebook/react-native)
+            inputs:
+              script: yarn install
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - ReactWindows-UWP
-        inputs:
-          command: restore
-          restoreSolution: vnext/ReactWindows-UWP.sln
-          feedsToUse: config
-          nugetConfigPath: vnext/NuGet.config
-          restoreDirectory: packages/
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
+          - template: templates/stop-packagers.yml
 
-      - task: MSBuild@1
-        displayName: MSBuild - ReactWindows-UWP
-        inputs:
-          solution: vnext/ReactWindows-UWP.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
+          - task: CmdLine@2
+            displayName: yarn buildci
+            inputs:
+              script: yarn buildci
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - Playground
-        inputs:
-          command: restore
-          restoreSolution: packages/playground/windows/Playground.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
+          - template: templates/install-SDK.yml
 
-      - task: MSBuild@1
-        displayName: MSBuild - Playground
-        inputs:
-          solution: packages/playground/windows/Playground.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+          - task: NuGetCommand@2
+            displayName: NuGet restore - ReactWindows-UWP
+            inputs:
+              command: restore
+              restoreSolution: vnext/ReactWindows-UWP.sln
+              feedsToUse: config
+              nugetConfigPath: vnext/NuGet.config
+              restoreDirectory: packages/
+              verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: CmdLine@2
-        displayName: Create Playground bundle
-        inputs:
-          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
-          workingDirectory: packages\playground
+          - task: MSBuild@1
+            displayName: MSBuild - ReactWindows-UWP
+            inputs:
+              solution: vnext/ReactWindows-UWP.sln
+              msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+              msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+              platform: $(BuildPlatform) # Optional
+              configuration: $(BuildConfiguration) # Optional
+              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              clean: true # Optional
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore - SampleApps
-        inputs:
-          command: restore
-          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
+          - task: NuGetCommand@2
+            displayName: NuGet restore - Playground
+            inputs:
+              command: restore
+              restoreSolution: packages/playground/windows/Playground.sln
+              verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: MSBuild@1
-        displayName: MSBuild - SampleApps
-        inputs:
-          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
+          - task: MSBuild@1
+            displayName: MSBuild - Playground
+            inputs:
+              solution: packages/playground/windows/Playground.sln
+              msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+              msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+              platform: $(BuildPlatform) # Optional
+              configuration: $(BuildConfiguration) # Optional
+              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              clean: true # Optional
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
-      - task: CmdLine@2
-        displayName: Create SampleApp bundle
-        inputs:
-          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
-          workingDirectory: packages\microsoft-reactnative-sampleapps
+          - task: CmdLine@2
+            displayName: Create Playground bundle
+            inputs:
+              script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+              workingDirectory: packages\playground
 
-      - task: CmdLine@2
-        displayName: Create RNTester bundle
-        inputs:
-          script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
-          workingDirectory: vnext
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+          - task: NuGetCommand@2
+            displayName: NuGet restore - SampleApps
+            inputs:
+              command: restore
+              restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+              verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-  - job: CliInit
-    displayName: Verify react-native init
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+          - task: MSBuild@1
+            displayName: MSBuild - SampleApps
+            inputs:
+              solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+              msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+              msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+              platform: $(BuildPlatform) # Optional
+              configuration: $(BuildConfiguration) # Optional
+              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              clean: true # Optional
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
-      # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
-      - task: CmdLine@2
-        displayName: yarn install (local react-native-windows)
-        inputs:
-          script: yarn install --frozen-lockfile
+          - task: CmdLine@2
+            displayName: Create SampleApp bundle
+            inputs:
+              script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+              workingDirectory: packages\microsoft-reactnative-sampleapps
 
-      - task: CmdLine@2
-        displayName: yarn build (local react-native-windows)
-        inputs:
-          script: yarn build
-          workingDirectory: vnext
+          - task: CmdLine@2
+            displayName: Create RNTester bundle
+            inputs:
+              script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+              workingDirectory: vnext
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
-      # yarn ends up copying the whole node_modules folder when doing an install of a file package
-      # Delete node_modules, so that resolution is more like when installing from a published npm package
-      - task: CmdLine@2
-        displayName: Remove node_modules
-        inputs:
-          script: rd /S /Q node_modules
-          workingDirectory: vnext
+      - job: CliInit
+        displayName: Verify react-native init
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            # fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - task: CmdLine@2
-        displayName: Install react-native cli
-        inputs:
-          script: npm install -g react-native-cli
+          # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
+          - task: CmdLine@2
+            displayName: yarn install (local react-native-windows)
+            inputs:
+              script: yarn install --frozen-lockfile
 
-      - task: CmdLine@2
-        displayName: Init new project
-        inputs:
-          script: react-native init testcli --version 0.59.10
-          workingDirectory: $(Agent.BuildDirectory)
+          - task: CmdLine@2
+            displayName: yarn build (local react-native-windows)
+            inputs:
+              script: yarn build
+              workingDirectory: vnext
 
-      - task: CmdLine@2
-        displayName: Install rnpm-plugin-windows
-        inputs:
-          script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
-          workingDirectory: $(Agent.BuildDirectory)\testcli
+          # yarn ends up copying the whole node_modules folder when doing an install of a file package
+          # Delete node_modules, so that resolution is more like when installing from a published npm package
+          - task: CmdLine@2
+            displayName: Remove node_modules
+            inputs:
+              script: rd /S /Q node_modules
+              workingDirectory: vnext
 
-      - task: CmdLine@2
-        displayName: Apply windows template
-        inputs:
-          script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
-          workingDirectory: $(Agent.BuildDirectory)\testcli
+          - task: CmdLine@2
+            displayName: Install react-native cli
+            inputs:
+              script: npm install -g react-native-cli
 
-      - template: templates/install-SDK.yml
+          - task: CmdLine@2
+            displayName: Init new project
+            inputs:
+              script: react-native init testcli --version 0.59.10
+              workingDirectory: $(Agent.BuildDirectory)
 
-      - task: NuGetCommand@2
-        displayName: NuGet restore testcli
-        inputs:
-          command: restore
-          restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+          - task: CmdLine@2
+            displayName: Install rnpm-plugin-windows
+            inputs:
+              script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
+              workingDirectory: $(Agent.BuildDirectory)\testcli
 
-      - task: MSBuild@1
-        displayName: MSBuild - testcli
-        inputs:
-          solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: x86 # Optional. Options: x86, x64
-          platform: x64 # Optional
-          configuration: Debug # Optional
-          restoreNugetPackages: true
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
+          - task: CmdLine@2
+            displayName: Apply windows template
+            inputs:
+              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+              workingDirectory: $(Agent.BuildDirectory)\testcli
 
-      - task: CmdLine@2
-        displayName: Create bundle testcli
-        inputs:
-          script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
-          workingDirectory: $(Agent.BuildDirectory)\testcli
+          - template: templates/install-SDK.yml
 
-  - job: RNWDesktopPR
-    displayName: Desktop PR
-    strategy:
-      matrix:
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-        X86Release:
-          BuildConfiguration: Release
-          BuildPlatform: x86
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+          - task: NuGetCommand@2
+            displayName: NuGet restore testcli
+            inputs:
+              command: restore
+              restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
+          - task: MSBuild@1
+            displayName: MSBuild - testcli
+            inputs:
+              solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+              msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+              msbuildArchitecture: x86 # Optional. Options: x86, x64
+              platform: x64 # Optional
+              configuration: Debug # Optional
+              restoreNugetPackages: true
+              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              clean: true # Optional
 
-      - template: templates/stop-packagers.yml
+          - task: CmdLine@2
+            displayName: Create bundle testcli
+            inputs:
+              script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+              workingDirectory: $(Agent.BuildDirectory)\testcli
 
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: yarn build
-          workingDirectory: vnext
+      - job: RNWDesktopPR
+        displayName: Desktop PR
+        strategy:
+          matrix:
+            X64Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+            X86Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+            ArmDebug:
+              BuildConfiguration: Debug
+              BuildPlatform: arm
+            X64Release:
+              BuildConfiguration: Release
+              BuildPlatform: x64
+            X86Release:
+              BuildConfiguration: Release
+              BuildPlatform: x86
+            ArmRelease:
+              BuildConfiguration: Release
+              BuildPlatform: arm
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            # fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/install-SDK.yml
+          - task: CmdLine@2
+            displayName: yarn install
+            inputs:
+              script: yarn install --frozen-lockfile
 
-      - template: templates/vs-build.yml
+          - template: templates/stop-packagers.yml
+
+          - task: CmdLine@2
+            displayName: yarn build
+            inputs:
+              script: yarn build
+              workingDirectory: vnext
+
+          - template: templates/install-SDK.yml
+
+          - template: templates/vs-build.yml
+            parameters:
+              BuildConfiguration: $(BuildConfiguration)
+              BuildPlatform: $(BuildPlatform)
+
+          - task: VisualStudioTestPlatformInstaller@1
+            inputs:
+              packageFeedSelector: nugetOrg
+              versionSelector: specificVersion
+              testPlatformVersion: $(VsTestPlatformVersion)
+
+          - task: VSTest@2
+            displayName: Run Desktop Unit Tests
+            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+            inputs:
+              testSelector: "testAssemblies"
+              testAssemblyVer2: | # Required when testSelector == TestAssemblies
+                React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
+                JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
+              pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+              vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: "onAbortOnly"
+
+          - task: PowerShell@2
+            displayName: Set up test servers
+            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+            inputs:
+              targetType: filePath # filePath | inline
+              filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload
+
+          - task: VSTest@2
+            displayName: Run Desktop Integration Tests
+            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+            inputs:
+              testSelector: "testAssemblies"
+              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
+              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+              testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+              vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: "onAbortOnly"
+
+          - template: templates/stop-packagers.yml
+
+          - template: templates/publish-build-artifacts-for-nuget.yml
+
+      - job: RNWNugetPR
+        dependsOn: RNWDesktopPR
+        displayName: React-Native-Windows Build and Pack Nuget
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: none #skip checking out the default repository resource
+
+          # The commit tag in the nuspec requires that we use at least nuget 4.6
+          - task: NuGetToolInstaller@0
+            inputs:
+              versionSpec: ">=4.6.0"
+
+          - template: templates/prep-and-pack-nuget.yml
+
+      - job: RNWFormatting
+        displayName: Verify change files + formatting
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 10 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+          - task: CmdLine@2
+            displayName: yarn install
+            inputs:
+              script: yarn install --frozen-lockfile
+
+          - task: CmdLine@2
+            displayName: Check for change files
+            inputs:
+              script: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
+
+          - task: CmdLine@2
+            displayName: yarn format:verify
+            inputs:
+              script: yarn format:verify
+
+      - job: CurrentPR
+        displayName: Current (C#) PR
+        strategy:
+          matrix:
+            #X64Debug:
+            #  BuildConfiguration: Debug
+            #  BuildPlatform: x64
+            #  UTTestOutputConfigDir: Debug
+            #X64Release:
+            #  BuildConfiguration: Release
+            #  BuildPlatform: x64
+            #  UTTestOutputConfigDir: Release
+            X64DebugBundle:
+              BuildConfiguration: DebugBundle
+              BuildPlatform: x64
+              UTTestOutputConfigDir: Debug
+            ArmDebug:
+              BuildConfiguration: Debug
+              BuildPlatform: ARM
+              UTTestOutputConfigDir: Debug
+            X86Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+              UTTestOutputConfigDir: Debug
+            #X86Release:
+            #  BuildConfiguration: Release
+            #  BuildPlatform: x86
+            #  UTTestOutputConfigDir: Release
+            #X86ReleaseBundle:
+            #  BuildConfiguration: ReleaseBundle
+            #  BuildPlatform: x86
+            #  UTTestOutputConfigDir: Release
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 15 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            # fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+          - task: PowerShell@2
+            displayName: Download Winium
+            inputs:
+              targetType: inline # filePath | inline
+              script: |
+                curl -o $(System.DefaultWorkingDirectory)\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
+
+          - task: ExtractFiles@1
+            displayName: Extract Winium
+            inputs:
+              archiveFilePatterns: $(System.DefaultWorkingDirectory)\winium.zip
+              destinationFolder: $(System.DefaultWorkingDirectory)\winium
+
+          - task: NuGetCommand@2
+            displayName: NuGet restore
+            inputs:
+              command: restore
+              restoreSolution: current/ReactWindows/ReactNative.sln
+              verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+          - task: CmdLine@2
+            displayName: Install react-native-cli
+            inputs:
+              script: npm install -g react-native-cli
+
+          - task: CmdLine@2
+            displayName: npm install
+            inputs:
+              script: npm install
+              workingDirectory: current
+
+          - task: CmdLine@2
+            displayName: Make Bundle Dir
+            inputs:
+              script: mkdir current\ReactWindows\Playground.Net46\ReactAssets
+
+          - task: CmdLine@2
+            displayName: Make Bundle
+            inputs:
+              script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
+              workingDirectory: current
+
+          - task: MSBuild@1
+            displayName: MSBuild
+            inputs:
+              solution: current/ReactWindows/ReactNative.sln
+              #msbuildLocationMethod: 'version' # Optional. Options: version, location
+              msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+              #msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+              #msbuildLocation: # Optional
+              platform: $(BuildPlatform) # Optional
+              configuration: $(BuildConfiguration) # Optional
+              #msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+              #clean: true # Optional
+              #maximumCpuCount: false # Optional
+              #restoreNugetPackages: false # Optional
+              #logProjectEvents: false # Optional
+              #createLogFile: false # Optional
+              #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
+
+          - task: PowerShell@2
+            displayName: Start Winium
+            inputs:
+              targetType: inline # filePath | inline
+              script: |
+                $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
+                Start-Sleep -s 5
+
+          - task: VSTest@2
+            displayName: Run Unit Tests
+            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+            inputs:
+              testSelector: "testAssemblies"
+              testAssemblyVer2: "ReactNative.Net46.Tests.dll" # Required when testSelector == TestAssemblies
+              searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
+              vsTestVersion: $(VsTestVersion)
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: "onAbortOnly"
+            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
+          # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
+          # It currently fails, so commenting this out for now
+          #- task: CmdLine@2
+          #  displayName: npm test
+          #  inputs:
+          #    script: npm test
+          #    workingDirectory: current
+          #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
+
+      - template: templates/e2e-test-job.yml  # Template reference
         parameters:
-          BuildConfiguration: $(BuildConfiguration)
-          BuildPlatform: $(BuildPlatform)
-
-      - task: VisualStudioTestPlatformInstaller@1
-        inputs:
-          packageFeedSelector: nugetOrg
-          versionSelector: specificVersion
-          testPlatformVersion: $(VsTestPlatformVersion)
-
-      - task: VSTest@2
-        displayName: Run Desktop Unit Tests
-        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-        inputs:
-          testSelector: 'testAssemblies'
-          testAssemblyVer2: | # Required when testSelector == TestAssemblies
-            React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
-            JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
-          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
-
-      - task: PowerShell@2
-        displayName: Set up test servers
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-        inputs:
-          targetType: filePath # filePath | inline
-          filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload
-
-      - task: VSTest@2
-        displayName: Run Desktop Integration Tests
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-        inputs:
-          testSelector: 'testAssemblies'
-          testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
-          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-          vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
-
-      - template: templates/stop-packagers.yml
-
-      - template: templates/publish-build-artifacts-for-nuget.yml
-
-  - job: RNWNugetPR
-    dependsOn: RNWDesktopPR
-    displayName: React-Native-Windows Build and Pack Nuget
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    steps:
-      - checkout: none #skip checking out the default repository resource
-
-      # The commit tag in the nuspec requires that we use at least nuget 4.6
-      - task: NuGetToolInstaller@0
-        inputs:
-          versionSpec: '>=4.6.0'
-
-      - template: templates/prep-and-pack-nuget.yml
-
-  - job: RNWFormatting
-    displayName: Verify change files + formatting
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
-
-      - task: CmdLine@2
-        displayName: Check for change files
-        inputs:
-          script: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
-
-      - task: CmdLine@2
-        displayName: yarn format:verify
-        inputs:
-          script: yarn format:verify
-
-  - job: CurrentPR
-    displayName: Current (C#) PR
-    strategy:
-      matrix:
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Debug
-        #X64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Release
-        X64DebugBundle:
-          BuildConfiguration: DebugBundle
+          name: E2ETest
+          pool:
+            vmImage: 'windows-2019'
           BuildPlatform: x64
-          UTTestOutputConfigDir: Debug
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-          UTTestOutputConfigDir: Debug
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          UTTestOutputConfigDir: Debug
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
-        #X86ReleaseBundle:
-        #  BuildConfiguration: ReleaseBundle
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-      - task: PowerShell@2
-        displayName: Download Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            curl -o $(System.DefaultWorkingDirectory)\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
-
-      - task: ExtractFiles@1
-        displayName: Extract Winium
-        inputs:
-          archiveFilePatterns: $(System.DefaultWorkingDirectory)\winium.zip
-          destinationFolder: $(System.DefaultWorkingDirectory)\winium
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore
-        inputs:
-          command: restore
-          restoreSolution: current/ReactWindows/ReactNative.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
-
-      - task: CmdLine@2
-        displayName: npm install
-        inputs:
-          script: npm install
-          workingDirectory: current
-
-      - task: CmdLine@2
-        displayName: Make Bundle Dir
-        inputs:
-          script: mkdir current\ReactWindows\Playground.Net46\ReactAssets
-
-      - task: CmdLine@2
-        displayName: Make Bundle
-        inputs:
-          script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
-          workingDirectory: current
-
-      - task: MSBuild@1
-        displayName: MSBuild
-        inputs:
-          solution: current/ReactWindows/ReactNative.sln
-          #msbuildLocationMethod: 'version' # Optional. Options: version, location
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          #msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          #msbuildLocation: # Optional
-          platform: $(BuildPlatform) # Optional
-          configuration:  $(BuildConfiguration)  # Optional
-          #msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          #clean: true # Optional
-          #maximumCpuCount: false # Optional
-          #restoreNugetPackages: false # Optional
-          #logProjectEvents: false # Optional
-          #createLogFile: false # Optional
-          #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
-
-      - task: PowerShell@2
-        displayName: Start Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
-            Start-Sleep -s 5
-
-      - task: VSTest@2
-        displayName: Run Unit Tests
-        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-        inputs:
-          testSelector: 'testAssemblies'
-          testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
-          searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          vsTestVersion: $(VsTestVersion)
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: 'onAbortOnly'
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-
-      # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
-      # It currently fails, so commenting this out for now
-      #- task: CmdLine@2
-      #  displayName: npm test
-      #  inputs:
-      #    script: npm test
-      #    workingDirectory: current
-      #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
-
-  - template: templates/e2e-test-job.yml  # Template reference
-    parameters:
-      name: E2ETest
-      pool:
-        vmImage: 'windows-2019'
-      BuildPlatform: x64
-      UseRNFork: true
+          UseRNFork: true
