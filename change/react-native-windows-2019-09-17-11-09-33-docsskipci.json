@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Increase sleep for setting up test servers in hope of reducing itermittency",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "8f961c1b9a6fd4708bd9fb83edc5418a60ceb52d",
-  "date": "2019-09-17T18:09:33.869Z"
-}

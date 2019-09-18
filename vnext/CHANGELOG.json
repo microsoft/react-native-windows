@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Sep 2019 18:18:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.189",
+      "version": "0.59.0-vnext.189",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase sleep for setting up test servers in hope of reducing itermittency",
+            "author": "acoates@microsoft.com",
+            "commit": "8f961c1b9a6fd4708bd9fb83edc5418a60ceb52d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Sep 2019 17:42:42 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.188",
       "version": "0.59.0-vnext.188",
