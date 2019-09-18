@@ -12470,10 +12470,10 @@ wcwidth@^1.0.0, wcwidth@^1.0.1:
   dependencies:
     defaults "^1.0.3"
 
-webdriver@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.13.0.tgz#bf11f0c827f9af7c73a952c03508ed4c0a8e27bb"
-  integrity sha512-izg+LjNDW2xls5t+5rZVIh86MU8gnqEvhWct5XwORDkcbsF/L6SCNm+K2Jj2l/OzzOCfENM+q1/C8mekqa0gWw==
+webdriver@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.13.1.tgz#24f2839a9af8bd932057487749aab67efc21e59d"
+  integrity sha512-Gvsf2o8jrfZMgLWIC9C9bcT5T0OZvNHq7WO5PhNSB2pbg3ypSj4kk4zJZSyP331FTgib+qxneRtg7r/3Ea7mLw==
   dependencies:
     "@wdio/config" "^5.13.0-alpha.0"
     "@wdio/logger" "^5.12.1"
@@ -12493,9 +12493,9 @@ webdriver@^5.13.0:
     request "^2.83.0"
 
 webdriverio@^5.10.1, webdriverio@^5.10.9, webdriverio@^5.13.0:
-  version "5.13.0"
-  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.13.0.tgz#41da85abd5ef0832e6219e3c19ab138bc085666a"
-  integrity sha512-CM/+K+F/3YRfTs4YXwPLbluqP2CEe/UdvELJLyB1zouZ7pVvGr9u2N74qSWZGl/XyqcLXyVEVfk1jXndwpm3vw==
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.13.1.tgz#39fe5ca96bd41b46586dc0c14c24d14a1aab39bf"
+  integrity sha512-Orx521tRUPqGGJH5fPbZLZ7ipm6RRpCg9s/puaFkl79cIQoNaO7wcbDCktr6jGNGbihNxwj8f6qaSmDYNE6Ang==
   dependencies:
     "@wdio/config" "^5.13.0-alpha.0"
     "@wdio/logger" "^5.12.1"
@@ -12511,7 +12511,7 @@ webdriverio@^5.10.1, webdriverio@^5.10.9, webdriverio@^5.13.0:
     resq "^1.6.0"
     rgb2hex "^0.1.0"
     serialize-error "^4.1.0"
-    webdriver "^5.13.0"
+    webdriver "^5.13.1"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
