@@ -64,7 +64,12 @@ exports.copyRNLibraries = () => {
     rimraf.sync(rnTesterDest);
   }
   const baseDir = path.resolve(__dirname, '..');
-  copyJSFolderRecursiveSync(path.resolve(rnPath, 'IntegrationTests'), baseDir);
+  if (fs.existsSync(path.resolve(rnPath, 'IntegrationTests'))) {
+    copyJSFolderRecursiveSync(
+      path.resolve(rnPath, 'IntegrationTests'),
+      baseDir,
+    );
+  }
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'Libraries'), baseDir);
 
   fs.writeFileSync(
