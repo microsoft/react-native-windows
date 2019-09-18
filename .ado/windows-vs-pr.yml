@@ -138,6 +138,10 @@ stages:
               msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
               clean: true # Optional
 
+          - template: templates/publish-build-artifacts-for-nuget.yml
+            parameters:
+              Contents: ReactUWP\**
+
           - task: NuGetCommand@2
             displayName: NuGet restore - Playground
             inputs:
@@ -382,6 +386,11 @@ stages:
           - template: templates/stop-packagers.yml
 
           - template: templates/publish-build-artifacts-for-nuget.yml
+            parameters:
+              LayoutHeaders: true
+              Contents: |
+                React.Windows.Desktop.DLL\**
+                React.Windows.Desktop.Test.DLL\**
 
       - job: RNWNugetPR
         dependsOn: RNWDesktopPR
