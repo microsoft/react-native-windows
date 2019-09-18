@@ -47,7 +47,7 @@ Get-ChildItem -Path $ReactWindowsRoot\ReactWindowsCore -Name -Recurse -Include $
 # React.Windows.Desktop headers
 Get-ChildItem -Path $ReactWindowsRoot\Desktop -Name -Recurse -Include '*.h','*.hpp' | ForEach-Object { Copy-Item `
 	-Path        $ReactWindowsRoot\Desktop\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Desktop\$(Split-Path $_) -Force) `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ReactWin32\$(Split-Path $_) -Force) `
 	-Force
 }
 # React.Windows.Desktop DEFs
