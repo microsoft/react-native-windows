@@ -77,7 +77,9 @@ exports.copyRNLibraries = () => {
     fs.readFileSync(path.resolve(rnPath, 'rn-get-polyfills.js')),
   );
 
-  copyJSFolderRecursiveSync(path.resolve(rnPath, 'RNTester'), baseDir);
+  if (fs.existsSync(path.resolve(rnPath, 'RNTester'))) {
+    copyJSFolderRecursiveSync(path.resolve(rnPath, 'RNTester'), baseDir);
+  }
 
   /*
   if (!fs.existsSync(path.resolve(__dirname, '../lib/local-cli'))) {
