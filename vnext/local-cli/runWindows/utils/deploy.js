@@ -183,9 +183,11 @@ async function deployToDesktop(options, verbose) {
     .trim();
 
   if (!appFamilyName) {
-    throw new Error('Fail to check the installed app, maybe developer mode is off on Windows');
+    throw new Error(
+      'Fail to check the installed app, maybe developer mode is off on Windows',
+    );
   }
- 
+
   const loopbackText = 'Verifying loopbackExempt';
   const loopbackSpinner = newSpinner(loopbackText);
 
