@@ -36,7 +36,7 @@ stages:
               targetType: filePath
               filePath: .ado/shouldSkipPRBuild.ps1
 
-  - stage:
+  - stage: BuildStage
     displayName: Verify
     dependsOn: SetupStage
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
@@ -559,7 +559,7 @@ stages:
 
   - stage:
     displayName: Pack
-    dependsOn: Verify
+    dependsOn: BuildStage
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:
