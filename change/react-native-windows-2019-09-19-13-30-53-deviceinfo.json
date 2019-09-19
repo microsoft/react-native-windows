@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Hook up deviceInfo dimensions with root element",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "881b7b4a72282ce5f705f1130188e33fcba2737b",
+  "date": "2019-09-19T20:30:53.714Z"
+}
