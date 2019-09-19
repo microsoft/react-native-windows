@@ -557,6 +557,14 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
+      - template: templates/e2e-test-job.yml  # Template reference
+        parameters:
+          name: E2ETest
+          pool:
+            vmImage: 'windows-2019'
+          BuildPlatform: x64
+          UseRNFork: true
+
   - stage:
     displayName: Pack
     dependsOn: BuildStage
