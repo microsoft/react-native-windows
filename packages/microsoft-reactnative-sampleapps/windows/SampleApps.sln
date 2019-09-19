@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.779
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAppCS", "SampleAppCS\SampleAppCS.csproj", "{09F4E6C1-2D12-4059-AA96-0B190861FD6A}"
 EndProject
@@ -38,6 +38,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "..\..\..\vnext\Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj", "{F7D32BD0-2749-483E-9A0D-1635EF7E3136}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed", "..\..\..\vnext\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj", "{0CEA72C6-3F89-47D2-B9D1-05289F989277}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleLibraryCS", "SampleLibraryCS\SampleLibraryCS.csproj", "{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -150,6 +154,30 @@ Global
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x64.Build.0 = Release|x64
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.ActiveCfg = Release|Win32
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.Build.0 = Release|Win32
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|ARM.Build.0 = Debug|ARM
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x64.ActiveCfg = Debug|x64
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x64.Build.0 = Debug|x64
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x86.ActiveCfg = Debug|x86
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x86.Build.0 = Debug|x86
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|ARM.ActiveCfg = Release|ARM
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|ARM.Build.0 = Release|ARM
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x64.ActiveCfg = Release|x64
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x64.Build.0 = Release|x64
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x86.ActiveCfg = Release|x86
+		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x86.Build.0 = Release|x86
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Debug|ARM.Build.0 = Debug|ARM
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Debug|x64.ActiveCfg = Debug|x64
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Debug|x64.Build.0 = Debug|x64
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Debug|x86.ActiveCfg = Debug|x86
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Debug|x86.Build.0 = Debug|x86
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|ARM.ActiveCfg = Release|ARM
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|ARM.Build.0 = Release|ARM
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x64.ActiveCfg = Release|x64
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x64.Build.0 = Release|x64
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x86.ActiveCfg = Release|x86
+		{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

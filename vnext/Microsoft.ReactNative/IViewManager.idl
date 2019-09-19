@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative.Bridge
+{
+	[attributeusage(target_method)]
+	[webhosthidden]
+	attribute ViewManagerPropertySetterAttribute
+	{
+		String Name;
+	};
+
+	[webhosthidden]
+	interface IViewManager
+	{
+		String GetName();
+		
+		Windows.UI.Xaml.DependencyObject CreateView(Int64 tag);
+
+		void UpdateProperties(Windows.UI.Xaml.DependencyObject view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
+	};
+}
