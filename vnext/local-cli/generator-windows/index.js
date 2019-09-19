@@ -87,7 +87,8 @@ function copyProjectTemplateAndReplace(
   };
 
   [
-    { from: path.join(srcPath, 'index.windows.js'), to: 'index.windows.js' },
+    { from: path.join(srcPath, 'react-native.config.js'), to: 'react-native.config.js' },
+    { from: path.join(srcPath, 'metro.config.js'), to: 'metro.config.js' },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
     { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
     { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },

@@ -237,7 +237,7 @@ stages:
           - task: CmdLine@2
             displayName: Init new project
             inputs:
-              script: react-native init testcli --version 0.60.5
+              script: react-native init testcli --version 0.60.6
               workingDirectory: $(Agent.BuildDirectory)
 
           - task: CmdLine@2

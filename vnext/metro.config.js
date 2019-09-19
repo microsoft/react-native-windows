@@ -40,13 +40,6 @@ module.exports = {
           )
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),
-
-      // This stops "react-native run-windows" from causing the metro server to crash if its already running
-      new RegExp(
-        `${path
-          .resolve(__dirname, 'windows')
-          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
-      ),
     ]),
     hasteImplModulePath: path.resolve(__dirname, 'jest/hasteImpl.js'),
   },
