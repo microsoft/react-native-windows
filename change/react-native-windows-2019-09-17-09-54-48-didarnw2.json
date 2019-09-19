@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support keyboardType for TextInput",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "50a6c2367b4dd144376360362f625a19784be123",
-  "date": "2019-09-17T16:54:48.457Z"
-}

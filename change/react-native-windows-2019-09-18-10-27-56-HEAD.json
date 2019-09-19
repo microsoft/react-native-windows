@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Refreshing the V8 binary to include bug fixes and perf optimizations. V8 consumption is under a conditional compilation flag. ",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "commit": "921ffde513c85848017f8f55be4fd712b5eb5f0a",
-  "date": "2019-09-18T17:27:56.046Z"
-}
