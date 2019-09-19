@@ -8,10 +8,10 @@ namespace SampleApp
 {
   sealed class SamplePackage : IReactPackage
   {
-    public IReadOnlyList<NativeModuleBase> CreateNativeModules(
+    public IReadOnlyList<INativeModule> CreateNativeModules(
       ReactContext reactContext)
     {
-      return new List<NativeModuleBase>() { new SampleModule() };
+      return new List<INativeModule>() { new SampleModule() };
     }
   }
 }

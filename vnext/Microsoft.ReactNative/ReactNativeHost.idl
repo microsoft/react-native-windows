@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import "IReactPackage.idl";
-import "NativeModuleBase.idl";
+import "INativeModule.idl";
 import "ReactInstanceManager.idl";
 import "ReactInstanceSettings.idl";
 import "ReactRootView.idl";

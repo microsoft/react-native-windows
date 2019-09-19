@@ -14,7 +14,7 @@ namespace winrt::SampleApp::implementation {
 struct SamplePackage : SamplePackageT<SamplePackage> {
   SamplePackage() = default;
 
-  IVectorView<NativeModuleBase> CreateNativeModules(
+  IVectorView<INativeModule> CreateNativeModules(
       ReactContext const &reactContext);
 };
 } // namespace winrt::SampleApp::implementation

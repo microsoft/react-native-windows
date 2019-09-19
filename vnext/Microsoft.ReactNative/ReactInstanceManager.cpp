@@ -154,7 +154,7 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
   }
   */
 
-  auto moduleRegistryList = single_threaded_vector<NativeModuleBase>();
+  auto moduleRegistryList = single_threaded_vector<INativeModule>();
   if (m_modulesProvider == nullptr) {
     m_modulesProvider = std::make_shared<NativeModulesProvider>();
 

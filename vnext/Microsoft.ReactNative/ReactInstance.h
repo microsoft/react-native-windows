@@ -4,7 +4,6 @@
 
 #include "Bridge.ReactInstance.g.h"
 
-#include "NativeModuleBase.h"
 #include "NativeModuleRegistry.h"
 
 #include <ReactUWP/IReactInstance.h>
@@ -20,7 +19,7 @@ struct ReactInstance : ReactInstanceT<ReactInstance> {
   ReactInstance() = default;
   ReactInstance(
       std::shared_ptr<react::uwp::IReactInstance> instance,
-      IVectorView<Bridge::NativeModuleBase> const &modules)
+      IVectorView<Bridge::INativeModule> const &modules)
       : m_instance(instance) {
     if (instance == nullptr) {
       throw hresult_null_argument(L"instance");
@@ -32,7 +31,7 @@ struct ReactInstance : ReactInstanceT<ReactInstance> {
     m_moduleRegistry = Bridge::NativeModuleRegistry(modules);
   }
 
-  IVectorView<Bridge::NativeModuleBase> NativeModules() {
+  IVectorView<Bridge::INativeModule> NativeModules() {
     // TODO: Retrieve the native modules.  The m_instance->GetInnerInstance() is
     // a facebook::react::Instance that already has a module registry.  Could we
     // use that? It doesn't provide a list of registered modules and even if it

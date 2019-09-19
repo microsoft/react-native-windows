@@ -1,24 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
+using Microsoft.ReactNative.Bridge;
+
 namespace SampleApp
 {
-  public class SampleModule : NativeModuleBase
+  public class SampleModule : INativeModule
   {
-    protected override string Name => nameof(SampleModule);
+    public string Name => nameof(SampleModule);
 
-    protected override IReadOnlyDictionary<string, object> Constants { get; }
+    public IReadOnlyDictionary<string, object> Constants { get; }
       = new Dictionary<string, object>()
     {
       { "a", "\"b\"" },
     };
 
-    protected override IReadOnlyList<MethodInfo> Methods { get; }
+    public IReadOnlyList<MethodInfo> Methods { get; }
       = new List<MethodInfo>()
       {
         // Fire and forget Actions
@@ -85,7 +86,7 @@ namespace SampleApp
       callback(new[] { json });
     }
 
-    protected override void Initialize()
+    public void Initialize()
     {
       Debug.WriteLine("Initialized");
     }

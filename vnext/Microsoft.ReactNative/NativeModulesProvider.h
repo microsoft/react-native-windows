@@ -5,7 +5,6 @@
 #include <NativeModuleProvider.h>
 #include <winrt/Microsoft.ReactNative.Bridge.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include "NativeModuleBase.h"
 #include "ReactSupport.h"
 
 using namespace winrt;
@@ -20,10 +19,10 @@ class NativeModulesProvider final
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
       const std::shared_ptr<facebook::react::MessageQueueThread>
           &defaultQueueThread) override;
-  void RegisterModule(NativeModuleBase const &module);
+  void RegisterModule(INativeModule const &module);
 
  private:
-  std::vector<NativeModuleBase> m_modules;
+  std::vector<INativeModule> m_modules;
   std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{
       nullptr};
 };

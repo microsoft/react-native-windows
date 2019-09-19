@@ -116,10 +116,6 @@
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="NativeModuleBase.h">
-      <DependentUpon>NativeModuleBase.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="NativeModuleRegistry.h">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -170,10 +166,6 @@
     </ClCompile>
     <ClCompile Include="MethodInfo.cpp">
       <DependentUpon>MethodInfo.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="NativeModuleBase.cpp">
-      <DependentUpon>NativeModuleBase.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="NativeModuleRegistry.cpp">
@@ -231,9 +223,6 @@
     <Midl Include="IReactPackage.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="MethodInfo.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="NativeModuleBase.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="NativeModuleRegistry.idl">
