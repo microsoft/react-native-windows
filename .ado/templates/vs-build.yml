@@ -14,6 +14,12 @@ steps:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
 
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: vslogs"
+    inputs:
+      PathtoPublish: $(Build.ArtifactStagingDirectory)\vslogs
+      ArtifactName: "vslogs"
+
   - task: NuGetCommand@2
     displayName: NuGet restore - ReactWindows
     inputs:
