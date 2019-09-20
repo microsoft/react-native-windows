@@ -24,7 +24,7 @@ npm install -g react-native-cli
 ```
 
 ```
-yarn add -g react-native-cli
+yarn add global react-native-cli
 ```
 
 #### Initialize your project
