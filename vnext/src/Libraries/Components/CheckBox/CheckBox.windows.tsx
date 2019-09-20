@@ -29,7 +29,7 @@ const RCTCheckBox = requireNativeComponent('RCTCheckBox');
  * @keyword checkbox
  * @keyword toggle
  */
-export class CheckBox extends React.Component<ICheckBoxProps> {
+class CheckBox extends React.Component<ICheckBoxProps> {
   // tslint:disable-next-line:no-any
   private _rctCheckBox: any;
 
@@ -66,4 +66,4 @@ export class CheckBox extends React.Component<ICheckBoxProps> {
   };
 }
 
-export default CheckBox;
+module.exports = CheckBox;

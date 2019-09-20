@@ -490,7 +490,7 @@ class AccessibilityListExamples extends React.Component {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = 'Accessibility';
+export const title = 'Accessibility Windows';
 export const description = 'Usage of accessibility properties.';
 export const examples = [
   {
