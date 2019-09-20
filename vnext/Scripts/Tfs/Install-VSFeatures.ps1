@@ -7,7 +7,7 @@ Get-ChildItem ${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe
 Write-Host "Current VC versions:"
 Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
 
-$returnCode = Start-Process `
+Start-Process `
 	-FilePath "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe" `
 	-ArgumentList `
 		"--installPath", 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise' , `
@@ -16,7 +16,8 @@ $returnCode = Start-Process `
 		'--norestart', `
 		'--add', 'Microsoft.VisualStudio.Component.VC.v141.x86.x64' `
 	-Wait `
-	-PassThru
+	-PassThru `
+	-OutVariable returnCode
 
 Write-Host "return code: [$returnCode]"
 
