@@ -7,20 +7,13 @@ pr:
   - master
 
 variables:
-  - name: VmImage
-    value: vs2017-win2016
-  - name: MSBuildVersion
-    value: 16.0
-  - name: MSBuildArchitecture
-    value: x64
-  - name: VsTestVersion
-    value: 16.0
-  - name: VsTestPlatformVersion
-    value: 16.2.0
-  - name: Desktop.IntegrationTests.Filter
-    value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-  - name: GoogleTestAdapterPath
-    value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+  VmImage: windows-2019
+  MSBuildVersion: 16.0
+  MSBuildArchitecture: x64
+  VsTestVersion: 16.0
+  VsTestPlatformVersion: 16.2.0
+  Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
+  GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
 stages:
   - stage: SetupStage
