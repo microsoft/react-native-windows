@@ -19,11 +19,11 @@ steps:
         -InstallerUri ${{ parameters.VsInstallerUri }}
         -Features ${{ parameters.VsFeatures }}
 
-  # - task: PublishBuildArtifacts@1
-  #   displayName: "Publish Artifact: vslogs"
-  #   inputs:
-  #     PathtoPublish: $(Build.ArtifactStagingDirectory)\vslogs
-  #     ArtifactName: "vslogs"
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: vslogs"
+    inputs:
+      PathtoPublish: $(System.DefaultWorkingDirectory)\vslogs
+      ArtifactName: "vslogs"
 
   - task: NuGetCommand@2
     displayName: NuGet restore - ReactWindows
