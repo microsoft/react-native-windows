@@ -12,8 +12,9 @@ Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC
 Start-Process `
 	-FilePath "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe" `
 	-ArgumentList `
-		"--installPath", 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise' , `
-		"--wait", `
+		'update', `
+		'--installPath', 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise' , `
+		'--wait', `
 		'--quiet', `
 		'--norestart', `
 		'--add', 'Microsoft.VisualStudio.Component.VC.v141.x86.x64' `
