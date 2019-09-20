@@ -36,13 +36,13 @@ stages:
               targetType: filePath
               filePath: .ado/shouldSkipPRBuild.ps1
 
-  - stage:
+  - stage: BuildStage
     displayName: Verify
     dependsOn: SetupStage
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:
-      - job: UWPPR
+      - job: RNWUniversalPR
         displayName: Universal PR
         strategy:
           matrix:
@@ -118,25 +118,29 @@ stages:
           - template: templates/install-SDK.yml
 
           - task: NuGetCommand@2
-            displayName: NuGet restore - ReactWindows-UWP
+            displayName: NuGet restore - ReactWindows-Universal
             inputs:
               command: restore
-              restoreSolution: vnext/ReactWindows-UWP.sln
+              restoreSolution: vnext/ReactWindows-Universal.sln
               feedsToUse: config
               nugetConfigPath: vnext/NuGet.config
               restoreDirectory: packages/
               verbosityRestore: Detailed # Options: quiet, normal, detailed
 
           - task: MSBuild@1
-            displayName: MSBuild - ReactWindows-UWP
+            displayName: MSBuild - ReactWindows-Universal
             inputs:
-              solution: vnext/ReactWindows-UWP.sln
+              solution: vnext/ReactWindows-Universal.sln
               msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
               msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
               clean: true # Optional
+
+          - template: templates/publish-build-artifacts-for-nuget.yml
+            parameters:
+              Contents: ReactUWP\**
 
           - task: NuGetCommand@2
             displayName: NuGet restore - Playground
@@ -362,7 +366,7 @@ stages:
             inputs:
               targetType: filePath # filePath | inline
               filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload
+              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload -SleepSeconds 30
 
           - task: VSTest@2
             displayName: Run Desktop Integration Tests
@@ -382,23 +386,11 @@ stages:
           - template: templates/stop-packagers.yml
 
           - template: templates/publish-build-artifacts-for-nuget.yml
-
-      - job: RNWNugetPR
-        dependsOn: RNWDesktopPR
-        displayName: React-Native-Windows Build and Pack Nuget
-        pool:
-          vmImage: $(VmImage)
-        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        steps:
-          - checkout: none #skip checking out the default repository resource
-
-          # The commit tag in the nuspec requires that we use at least nuget 4.6
-          - task: NuGetToolInstaller@0
-            inputs:
-              versionSpec: ">=4.6.0"
-
-          - template: templates/prep-and-pack-nuget.yml
+            parameters:
+              LayoutHeaders: true
+              Contents: |
+                React.Windows.Desktop.DLL\**
+                React.Windows.Desktop.Test.DLL\**
 
       - job: RNWFormatting
         displayName: Verify change files + formatting
@@ -572,3 +564,25 @@ stages:
             vmImage: 'windows-2019'
           BuildPlatform: x64
           UseRNFork: true
+
+  - stage:
+    displayName: Pack
+    dependsOn: BuildStage
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+
+    jobs:
+      - job: RNWNugetPR
+        displayName: Build and Pack Nuget
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: none #skip checking out the default repository resource
+
+          # The commit tag in the nuspec requires that we use at least nuget 4.6
+          - task: NuGetToolInstaller@0
+            inputs:
+              versionSpec: ">=4.6.0"
+
+          - template: templates/prep-and-pack-nuget.yml
