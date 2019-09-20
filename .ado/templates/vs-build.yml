@@ -17,7 +17,7 @@ steps:
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
       arguments: |
         -InstallerUri ${{ parameters.VsInstallerUri }}
-        -Features ${{ parameters.VsFeatures }}
+        -Features ${{ each feature in parameters.VsFeatures }}
 
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: vslogs"
