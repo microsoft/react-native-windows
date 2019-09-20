@@ -7,7 +7,6 @@ EXPORTS
 ??$str_to_integral@_J@detail@folly@@YG?AV?$Expected@_JW4ConversionCode@folly@@@1@PAV?$Range@PBD@1@@Z
 ??0AppState@react@facebook@@QAE@XZ
 ??0DeviceInfoModule@uwp@react@@QAE@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
-??0DeviceInfo@uwp@react@@QAE@ABV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0LocationObserverModule@uwp@react@@QAE@ABV?$shared_ptr@UIReactContext@oReactNative@@@std@@@Z
 ??0ModuleProvider@windows@react@@QAE@$$QAU012@@Z
 ??0ModuleProvider@windows@react@@QAE@PBD$$QAV?$function@$$A6A?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z

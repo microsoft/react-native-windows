@@ -13,7 +13,7 @@ namespace uwp {
 //
 // DeviceInfo
 //
-
+DeviceInfo::DeviceInfo() : DeviceInfo(nullptr) {}
 DeviceInfo::DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance) {
   update();

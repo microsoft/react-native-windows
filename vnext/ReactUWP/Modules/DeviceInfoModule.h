@@ -16,6 +16,7 @@ namespace uwp {
 // TODO: Emit event to react when dimensions change.
 class DeviceInfo {
  public:
+  DeviceInfo();
   DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance);
 
   folly::dynamic GetDimensionsConstants() {
