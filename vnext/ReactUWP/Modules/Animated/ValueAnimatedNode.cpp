@@ -40,7 +40,10 @@ double ValueAnimatedNode::RawValue() {
 }
 
 void ValueAnimatedNode::RawValue(double value) {
-  m_propertySet.InsertScalar(s_valueName, static_cast<float>(value));
+  if (RawValue() != value) {
+    m_propertySet.InsertScalar(s_valueName, static_cast<float>(value));
+    UpdateTrackingNodes();
+  }
 }
 
 double ValueAnimatedNode::Offset() {
@@ -50,7 +53,10 @@ double ValueAnimatedNode::Offset() {
 }
 
 void ValueAnimatedNode::Offset(double offset) {
-  m_propertySet.InsertScalar(s_offsetName, static_cast<float>(offset));
+  if (Offset() != offset) {
+    m_propertySet.InsertScalar(s_offsetName, static_cast<float>(offset));
+    UpdateTrackingNodes();
+  }
 }
 
 double ValueAnimatedNode::Value() {
@@ -94,5 +100,25 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
     }
   }
 }
+
+void ValueAnimatedNode::AddActiveTrackingNode(int64_t trackingNodeTag) {
+  m_activeTrackingNodes.insert(trackingNodeTag);
+}
+
+void ValueAnimatedNode::RemoveActiveTrackingNode(int64_t trackingNodeTag) {
+  m_activeTrackingNodes.erase(trackingNodeTag);
+}
+
+void ValueAnimatedNode::UpdateTrackingNodes() {
+  if (auto const manager = m_manager.lock()) {
+    for (auto trackingNodeTag : m_activeTrackingNodes) {
+      if (auto trackingNode =
+              manager->GetTrackingAnimatedNode(trackingNodeTag)) {
+        trackingNode->Update();
+      }
+    }
+  }
+}
+
 } // namespace uwp
 } // namespace react

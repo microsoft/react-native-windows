@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Sep 2019 17:02:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.190",
+      "version": "0.59.0-vnext.190",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support keyboardType for TextInput",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "50a6c2367b4dd144376360362f625a19784be123"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.39",
+            "author": "julio@rochsquadron.net",
+            "commit": "49a6ca938956298ee3cb92b998a1a093a633e8f5"
+          },
+          {
+            "comment": "Refreshing the V8 binary to include bug fixes and perf optimizations. V8 consumption is under a conditional compilation flag. ",
+            "author": "anandrag@microsoft.com",
+            "commit": "921ffde513c85848017f8f55be4fd712b5eb5f0a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Sep 2019 18:18:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.189",
+      "version": "0.59.0-vnext.189",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase sleep for setting up test servers in hope of reducing itermittency",
+            "author": "acoates@microsoft.com",
+            "commit": "8f961c1b9a6fd4708bd9fb83edc5418a60ceb52d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Sep 2019 17:42:42 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.188",
       "version": "0.59.0-vnext.188",

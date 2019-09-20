@@ -53,6 +53,38 @@ struct json_type_traits<react::uwp::Selection> {
   }
 };
 
+static const std::unordered_map<std::string, winrt::InputScopeNameValue>
+    textBoxKeyboardTypeMap = {
+        {"default", winrt::InputScopeNameValue::Default},
+        {"number-pad", winrt::InputScopeNameValue::TelephoneNumber},
+        {"decimal-pad", winrt::InputScopeNameValue::Digits},
+        {"email-address", winrt::InputScopeNameValue::EmailNameOrAddress},
+        {"phone-pad", winrt::InputScopeNameValue::TelephoneNumber},
+        {"numeric", winrt::InputScopeNameValue::Number},
+        {"url", winrt::InputScopeNameValue::Url},
+        {"web-search", winrt::InputScopeNameValue::Search}};
+
+static const std::unordered_map<std::string, winrt::InputScopeNameValue>
+    passwordBoxKeyboardTypeMap = {
+        {"default", winrt::InputScopeNameValue::Password},
+        {"numeric", winrt::InputScopeNameValue::NumericPin}};
+
+static winrt::InputScopeNameValue parseKeyboardType(
+    const folly::dynamic &val,
+    const bool isTextBox) {
+  auto keyboardTypeMap =
+      isTextBox ? textBoxKeyboardTypeMap : passwordBoxKeyboardTypeMap;
+
+  auto iter = keyboardTypeMap.find(val.asString());
+
+  if (iter != keyboardTypeMap.end()) {
+    return iter->second;
+  }
+
+  return isTextBox ? winrt::InputScopeNameValue::Default
+                   : winrt::InputScopeNameValue::Password;
+}
+
 namespace react {
 namespace uwp {
 
@@ -381,6 +413,21 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             m_isTextBox
                 ? winrt::TextBox::SelectionHighlightColorProperty()
                 : winrt::PasswordBox::SelectionHighlightColorProperty());
+    } else if (propertyName == "keyboardType") {
+      if (propertyValue.isString()) {
+        auto inputScopeNameVaue = parseKeyboardType(propertyValue, m_isTextBox);
+        auto scope = winrt::InputScope();
+        auto scopeName = winrt::InputScopeName(inputScopeNameVaue);
+        auto names = scope.Names();
+        names.Append(scopeName);
+        control.SetValue(
+            m_isTextBox ? winrt::TextBox::InputScopeProperty()
+                        : winrt::PasswordBox::InputScopeProperty(),
+            scope);
+      } else if (propertyValue.isNull())
+        control.ClearValue(
+            m_isTextBox ? winrt::TextBox::InputScopeProperty()
+                        : winrt::PasswordBox::InputScopeProperty());
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -480,7 +527,7 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selection", "Map")("selectionColor", "Color")(
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
-      "secureTextEntry", "boolean"));
+      "secureTextEntry", "boolean")("keyboardType", "string"));
 
   return props;
 }
@@ -519,6 +566,41 @@ XamlView TextInputViewManager::CreateViewCore(int64_t tag) {
 
 YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
+}
+
+void TextInputViewManager::TransferInputScope(
+    XamlView oldView,
+    XamlView newView,
+    const bool copyToPasswordBox) {
+  // transfer input scope, only common keyboardType between secureTextEntry
+  // on/off is numeric, so only need to transfer input scope "Number" <=>
+  // "NumericPin", everything else leave it as default.
+  winrt::InputScope inputScope;
+  if (copyToPasswordBox) {
+    inputScope = oldView.try_as<winrt::TextBox>().InputScope();
+  } else {
+    inputScope = oldView.try_as<winrt::PasswordBox>().InputScope();
+  }
+
+  if (inputScope != nullptr) {
+    auto nameValue = inputScope.Names().GetAt(0).NameValue();
+
+    if ((nameValue == winrt::InputScopeNameValue::Number &&
+         copyToPasswordBox) ||
+        (nameValue == winrt::InputScopeNameValue::NumericPin &&
+         !copyToPasswordBox)) {
+      auto newScope = winrt::InputScope();
+      auto scopeName = winrt::InputScopeName(
+          copyToPasswordBox ? winrt::InputScopeNameValue::NumericPin
+                            : winrt::InputScopeNameValue::Number);
+      auto names = newScope.Names();
+      names.Append(scopeName);
+      newView.SetValue(
+          copyToPasswordBox ? winrt::PasswordBox::InputScopeProperty()
+                            : winrt::TextBox::InputScopeProperty(),
+          newScope);
+    }
+  }
 }
 
 void TextInputViewManager::TransferProperties(
@@ -569,6 +651,7 @@ void TextInputViewManager::TransferProperties(
           oldView.as<winrt::PasswordBox>().Password());
     }
 
+    TransferInputScope(oldView, newView, copyToPasswordBox);
     // Set focus if current control has focus
     auto focusState = oldView.as<winrt::Control>().FocusState();
     if (focusState != winrt::FocusState::Unfocused) {

@@ -43,6 +43,11 @@ export default class Bootstrap extends React.Component<{}, any> {
         />
         <TextInput
           style={styles.input}
+          keyboardType="number-pad"
+          placeholder={'number-pad keyboardType'}
+        />
+        <TextInput
+          style={styles.input}
           placeholder={this.state.passwordHidden ? 'Password' : 'Text'}
           autoCapitalize="none"
           secureTextEntry={this.state.passwordHidden}
@@ -52,6 +57,7 @@ export default class Bootstrap extends React.Component<{}, any> {
           value={this.state.text}
           selectionColor="red"
           maxLength={10}
+          keyboardType="numeric"
         />
         <Button
           title={

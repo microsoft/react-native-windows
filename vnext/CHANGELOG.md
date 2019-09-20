@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 17 Sep 2019 17:42:42 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Sep 2019 17:02:46 GMT and should not be manually modified.
 
+## 0.59.0-vnext.190
+Thu, 19 Sep 2019 17:02:46 GMT
+
+### Changes
+
+- Support keyboardType for TextInput (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.189
+Wed, 18 Sep 2019 18:18:37 GMT
+
+### Changes
+
+- Add the SpringAnimationDriver (stpete@microsoft.com)
 ## 0.59.0-vnext.188
 Tue, 17 Sep 2019 17:42:42 GMT
 

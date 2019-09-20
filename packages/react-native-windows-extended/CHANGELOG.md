@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 17 Sep 2019 05:17:28 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Sep 2019 18:18:37 GMT and should not be manually modified.
 
+## 0.60.0
+Wed, 18 Sep 2019 18:18:37 GMT
+
+### Minor changes
+
+- Add the SpringAnimationDriver (stpete@microsoft.com)
 ## 0.59.1
 Tue, 17 Sep 2019 05:17:28 GMT
 

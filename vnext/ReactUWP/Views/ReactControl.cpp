@@ -75,7 +75,7 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
     if (m_errorTextBlock == nullptr) {
       m_errorTextBlock = winrt::TextBlock();
       m_redBoxGrid = winrt::Grid();
-      m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::Colors::Crimson()));
+      m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
       m_redBoxGrid.Children().Append(m_errorTextBlock);
     }
 
@@ -337,10 +337,21 @@ void ReactControl::ShowDeveloperMenu() {
   assert(m_developerMenuRoot == nullptr);
 
   winrt::hstring xamlString =
-      L"<Grid Background='{ThemeResource SystemControlBackgroundChromeMediumBrush}'"
+      L"<Grid Background='{ThemeResource ContentDialogDimmingThemeBrush}'"
       L"  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
       L"  xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
-      L"  <StackPanel HorizontalAlignment='Center'>"
+      L"  <Grid.Transitions>"
+      L"    <TransitionCollection>"
+      L"      <EntranceThemeTransition />"
+      L"    </TransitionCollection>"
+      L"  </Grid.Transitions>"
+      L"  <StackPanel HorizontalAlignment='Center'"
+      L"    VerticalAlignment='Center'"
+      L"    Background='{ThemeResource ContentDialogBackground}'"
+      L"    BorderBrush='{ThemeResource ContentDialogBorderBrush}'"
+      L"    BorderThickness='{ThemeResource ContentDialogBorderWidth}'"
+      L"    Padding='{ThemeResource ContentDialogPadding}'"
+      L"    Spacing='4' >"
       L"    <TextBlock Margin='0,0,0,10' FontSize='40'>Developer Menu</TextBlock>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
