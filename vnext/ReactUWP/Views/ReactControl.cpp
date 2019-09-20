@@ -75,7 +75,8 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
     if (m_errorTextBlock == nullptr) {
       m_errorTextBlock = winrt::TextBlock();
       m_redBoxGrid = winrt::Grid();
-      m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
+      m_redBoxGrid.Background(winrt::SolidColorBrush(
+          winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
       m_redBoxGrid.Children().Append(m_errorTextBlock);
     }
 
