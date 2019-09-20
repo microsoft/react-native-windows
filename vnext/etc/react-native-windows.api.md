@@ -29,7 +29,7 @@ export class DatePicker extends React.Component<IDatePickerProps> {
 }
 
 // @public (undocumented)
-export enum DayOfWeek {
+export const enum DayOfWeek {
     // (undocumented)
     Friday = 5,
     // (undocumented)
