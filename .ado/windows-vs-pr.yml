@@ -14,6 +14,8 @@ variables:
   VsTestPlatformVersion: 16.2.0
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+  VsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
+  VsFeatures: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 stages:
   - stage: SetupStage
@@ -125,6 +127,9 @@ stages:
             inputs:
               targetType: filePath
               filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
+              arguments: |
+                -InstallerUri $(VsInstallerUri)
+                -Features $(VsFeatures)
 
           - task: MSBuild@1
             displayName: MSBuild - ReactWindows-Universal
@@ -268,6 +273,9 @@ stages:
             inputs:
               targetType: filePath
               filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
+              arguments: |
+                -InstallerUri $(VsInstallerUri)
+                -Features $(VsFeatures)
 
           - task: MSBuild@1
             displayName: MSBuild - testcli
@@ -340,6 +348,7 @@ stages:
             parameters:
               BuildConfiguration: $(BuildConfiguration)
               BuildPlatform: $(BuildPlatform)
+              VsInstallerUri: $(VsInstallerUri)
 
           - task: VisualStudioTestPlatformInstaller@1
             inputs:

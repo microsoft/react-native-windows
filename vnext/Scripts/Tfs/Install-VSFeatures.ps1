@@ -2,7 +2,8 @@ param (
 	[Parameter(Mandatory=$true)]
 	[string[]] $Features,
 
-	[uri] $VsInstallerUri = 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe',
+	[Parameter(Mandatory=$true)]
+	[uri] $InstallerUri,
 
 	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
 
@@ -10,7 +11,7 @@ param (
 )
 
 Invoke-WebRequest -Method Get `
-	-Uri $VsInstallerUri `
+	-Uri $InstallerUri `
 	-OutFile $VsInstaller
 
 # Invoke-WebRequest -Method Get `
@@ -23,15 +24,20 @@ Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC
 #$installerExe = "$VsInstaller"
 #$installerExe = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
 
+$featureArgs = @()
+$Features | ForEach-Object {
+	$featureArgs += '--add', $_
+}
+
 Start-Process `
 	-FilePath "'$VsInstaller'" `
 	-ArgumentList `
-		'modify', `
-		'--installPath', $VsInstallPath , `
-		'--wait', `
-		'--quiet', `
-		'--norestart', `
-		'--add', 'Microsoft.VisualStudio.Component.VC.v141.x86.x64' `
+		'modify',
+		'--installPath', $VsInstallPath ,
+		'--wait',
+		'--quiet',
+		'--norestart',
+		$featureArgs `
 	-Wait `
 	-PassThru `
 	-OutVariable returnCode
