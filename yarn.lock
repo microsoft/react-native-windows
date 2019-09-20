@@ -12482,6 +12482,18 @@ webdriver@^5.13.1:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
+webdriver@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.13.1.tgz#24f2839a9af8bd932057487749aab67efc21e59d"
+  integrity sha512-Gvsf2o8jrfZMgLWIC9C9bcT5T0OZvNHq7WO5PhNSB2pbg3ypSj4kk4zJZSyP331FTgib+qxneRtg7r/3Ea7mLw==
+  dependencies:
+    "@wdio/config" "^5.13.0-alpha.0"
+    "@wdio/logger" "^5.12.1"
+    "@wdio/protocols" "^5.13.0-alpha.0"
+    "@wdio/utils" "^5.13.0"
+    lodash.merge "^4.6.1"
+    request "^2.83.0"
+
 "webdriver@git+https://github.com/react-native-windows/webdriver.git":
   version "5.12.1"
   resolved "git+https://github.com/react-native-windows/webdriver.git#43e84dbd1a6effdf305942304daa7e6bddea4fc4"
@@ -12492,7 +12504,28 @@ webdriver@^5.13.1:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
-webdriverio@^5.10.1, webdriverio@^5.10.9, webdriverio@^5.13.1:
+webdriverio@^5.10.1, webdriverio@^5.10.9, webdriverio@^5.13.0, webdriverio@^5.13.1:
+  version "5.13.1"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.13.1.tgz#39fe5ca96bd41b46586dc0c14c24d14a1aab39bf"
+  integrity sha512-Orx521tRUPqGGJH5fPbZLZ7ipm6RRpCg9s/puaFkl79cIQoNaO7wcbDCktr6jGNGbihNxwj8f6qaSmDYNE6Ang==
+  dependencies:
+    "@wdio/config" "^5.13.0-alpha.0"
+    "@wdio/logger" "^5.12.1"
+    "@wdio/repl" "^5.13.0-alpha.0"
+    "@wdio/utils" "^5.13.0"
+    archiver "^3.0.0"
+    css-value "^0.0.1"
+    grapheme-splitter "^1.0.2"
+    lodash.clonedeep "^4.5.0"
+    lodash.isobject "^3.0.2"
+    lodash.isplainobject "^4.0.6"
+    lodash.zip "^4.2.0"
+    resq "^1.6.0"
+    rgb2hex "^0.1.0"
+    serialize-error "^4.1.0"
+    webdriver "^5.13.1"
+
+webdriverio@^5.13.1:
   version "5.13.1"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.13.1.tgz#39fe5ca96bd41b46586dc0c14c24d14a1aab39bf"
   integrity sha512-Orx521tRUPqGGJH5fPbZLZ7ipm6RRpCg9s/puaFkl79cIQoNaO7wcbDCktr6jGNGbihNxwj8f6qaSmDYNE6Ang==
