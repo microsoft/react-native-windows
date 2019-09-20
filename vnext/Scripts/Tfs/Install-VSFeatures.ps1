@@ -1,6 +1,17 @@
- Invoke-WebRequest -Method Get `
-	-Uri 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe' `
-	-OutFile ${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe
+param (
+	[Parameter(Mandatory=$true)]
+	[string[]] $Features,
+
+	[uri] $VsInstallerUri = 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe',
+
+	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
+
+	[System.IO.FileInfo] $VsInstallPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise"
+)
+
+Invoke-WebRequest -Method Get `
+	-Uri $VsInstallerUri `
+	-OutFile $VsInstaller
 
 # Invoke-WebRequest -Method Get `
 # 	-Uri 'https://download.microsoft.com/download/8/3/4/834E83F6-C377-4DCE-A757-69A418B6C6DF/Collect.exe' `
@@ -9,14 +20,14 @@
 Write-Host "Current VC versions:"
 Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
 
-#$installerExe = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe"
+#$installerExe = "$VsInstaller"
 #$installerExe = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
 
 Start-Process `
-	-FilePath "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe" `
+	-FilePath "'$VsInstaller'" `
 	-ArgumentList `
 		'modify', `
-		'--installPath', '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"' , `
+		'--installPath', $VsInstallPath , `
 		'--wait', `
 		'--quiet', `
 		'--norestart', `
@@ -31,8 +42,8 @@ Start-Process `
 # 	-Wait `
 # 	-PassThru
 
-# mkdir -Force ${env:Build_ArtifactStagingDirectory}\vslogs
-# Copy-Item ${env:TEMP}\vslogs.zip ${env:Build_ArtifactStagingDirectory}\vslogs\
+# mkdir -Force ${env:System_DefaultWorkingDirectory}\vslogs
+# Copy-Item ${env:TEMP}\vslogs.zip ${env:System_DefaultWorkingDirectory}\vslogs\
 
 Write-Host "VC versions after installation:"
 Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
