@@ -4,11 +4,6 @@ VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactUWP", "ReactUWP\ReactUWP.vcxproj", "{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "ReactCommon\ReactCommon.vcxproj", "{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
@@ -37,12 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		NuGet.Config = NuGet.Config
-		ReactUwp.nuspec = ReactUwp.nuspec
-		ReactWin32.nuspec = ReactWin32.nuspec
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Universal.UnitTests", "Universal.UnitTests\React.Windows.Universal.UnitTests.vcxproj", "{6F713CA6-6BFE-4DF8-932D-4E49745C967E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FollyWin32", "FollyWin32\FollyWin32.vcxproj", "{74085F13-2DDE-45E5-A0CA-927AC9D0B953}"
 EndProject
@@ -96,8 +87,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.Integ
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "IntegrationTests", "IntegrationTestScripts\IntegrationTests.njsproj", "{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Universal.IntegrationTests", "Universal.IntegrationTests\React.Windows.Universal.IntegrationTests.vcxproj", "{069986C5-80F3-4A56-AF79-F24EBB05941F}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.IntegrationTests", "IntegrationTests\React.Windows.IntegrationTests.vcxproj", "{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
@@ -121,8 +110,6 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
-		Chakra\Chakra.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
-		Shared\Shared.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
@@ -151,18 +138,6 @@ Global
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x64.Build.0 = Release|x64
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x86.ActiveCfg = Release|Win32
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x86.Build.0 = Release|Win32
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Debug|ARM.ActiveCfg = Debug|ARM
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Debug|ARM.Build.0 = Debug|ARM
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Debug|x64.ActiveCfg = Debug|x64
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Debug|x64.Build.0 = Debug|x64
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Debug|x86.ActiveCfg = Debug|Win32
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Debug|x86.Build.0 = Debug|Win32
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|ARM.ActiveCfg = Release|ARM
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|ARM.Build.0 = Release|ARM
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x64.ActiveCfg = Release|x64
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x64.Build.0 = Release|x64
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x86.ActiveCfg = Release|Win32
-		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x86.Build.0 = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM.Build.0 = Debug|ARM
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x64.ActiveCfg = Debug|x64
@@ -207,20 +182,6 @@ Global
 		{96CD24DC-91C2-480A-BC26-EE2250DA80D7}.Release|x64.Build.0 = Release|x64
 		{96CD24DC-91C2-480A-BC26-EE2250DA80D7}.Release|x86.ActiveCfg = Release|Win32
 		{96CD24DC-91C2-480A-BC26-EE2250DA80D7}.Release|x86.Build.0 = Release|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|ARM.ActiveCfg = Debug|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|x64.ActiveCfg = Debug|x64
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|x64.Build.0 = Debug|x64
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|x64.Deploy.0 = Debug|x64
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|x86.ActiveCfg = Debug|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|x86.Build.0 = Debug|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Debug|x86.Deploy.0 = Debug|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|ARM.ActiveCfg = Release|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|x64.ActiveCfg = Release|x64
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|x64.Build.0 = Release|x64
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|x64.Deploy.0 = Release|x64
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|x86.ActiveCfg = Release|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|x86.Build.0 = Release|Win32
-		{6F713CA6-6BFE-4DF8-932D-4E49745C967E}.Release|x86.Deploy.0 = Release|Win32
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953}.Debug|ARM.ActiveCfg = Debug|Win32
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953}.Debug|x64.ActiveCfg = Debug|x64
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953}.Debug|x64.Build.0 = Debug|x64
@@ -257,20 +218,6 @@ Global
 		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Release|ARM.ActiveCfg = Release|Any CPU
 		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Release|x64.ActiveCfg = Release|Any CPU
 		{956D7AE7-0C64-44A1-B5BC-0936B23A3A32}.Release|x86.ActiveCfg = Release|Any CPU
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|ARM.ActiveCfg = Debug|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|x64.ActiveCfg = Debug|x64
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|x64.Build.0 = Debug|x64
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|x64.Deploy.0 = Debug|x64
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|x86.ActiveCfg = Debug|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|x86.Build.0 = Debug|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Debug|x86.Deploy.0 = Debug|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|ARM.ActiveCfg = Release|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|x64.ActiveCfg = Release|x64
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|x64.Build.0 = Release|x64
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|x64.Deploy.0 = Release|x64
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|x86.ActiveCfg = Release|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|x86.Build.0 = Release|Win32
-		{069986C5-80F3-4A56-AF79-F24EBB05941F}.Release|x86.Deploy.0 = Release|Win32
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Debug|ARM.ActiveCfg = Debug|ARM
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Debug|ARM.Build.0 = Debug|ARM
 		{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}.Debug|x64.ActiveCfg = Debug|x64
