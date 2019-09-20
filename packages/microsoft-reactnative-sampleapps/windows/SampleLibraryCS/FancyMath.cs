@@ -27,7 +27,7 @@ namespace SampleLibraryCS
         public double PI => Math.PI;
 
         [NativeModuleMethod(Name = "add")]
-        public static int Add(int a, int b)
+        public static double Add(double a, double b)
         {
             return a + b;
         }
@@ -52,16 +52,20 @@ namespace SampleLibraryCS
 
         public IReadOnlyList<MethodInfo> Methods => _methods ?? (_methods = new List<MethodInfo>(1)
         {
-            new MethodInfo("add", ReturnType.Promise, (args, resolve, reject) =>
+            new MethodInfo("add", ReturnType.Callback, (args, callback, ___) =>
             {
-                try
-                {
-                    resolve(new object[] { (int)args[0] + (int)args[1] });
-                }
-                catch (Exception ex)
-                {
-                    reject(new object[] {"0x80000000", ex.Message, ex.StackTrace, ex});
-                }
+                // TODO: args are being sent as a json string, but should already be an object array, ie.
+                // double a = (double)args[0];
+                // double b = (double)args[1];
+
+                string[] split = args[0].ToString().Trim('[',']').Split(',');
+
+                double a = double.Parse(split[0]);
+                double b = double.Parse(split[1]);
+
+                double result = a + b;
+
+                callback(new object[] { result });
             }),
         });
         private IReadOnlyList<MethodInfo> _methods;

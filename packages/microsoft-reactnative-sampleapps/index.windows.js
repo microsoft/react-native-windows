@@ -6,6 +6,7 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Alert,
   Button,
   StyleSheet,
   Text,
@@ -37,6 +38,23 @@ class SampleApp extends Component {
                console.log(`called back: ${json.result}`);
            });
 
+        // FancyMath Callback
+        NativeModules.FancyMath.add(
+          /* args */ NativeModules.FancyMath.Pi, NativeModules.FancyMath.E,
+          /* callback */ function(result) {
+            Alert.alert(
+              'FancyMath',
+              `FancyMath says ${NativeModules.FancyMath.Pi} + ${NativeModules.FancyMath.E} = ${result}`,
+              [
+                {
+                  text: 'OK',
+                },
+              ],
+              {cancelable: false},
+            );
+          }
+        );
+
         // An async method that returns a Promise
         var promise = NativeModules.SampleModule.method4(84);
 
@@ -54,6 +72,12 @@ class SampleApp extends Component {
           To get started, edit index.windows.js
         </Text>
         <Button onPress={this._onPressHandler} title="Click me!"/>
+        <Text style={styles.instructions}>
+          FancyMath says PI = {NativeModules.FancyMath.Pi}
+        </Text>
+        <Text style={styles.instructions}>
+          FancyMath says E = {NativeModules.FancyMath.E}
+        </Text>
       </View>
     );
   }

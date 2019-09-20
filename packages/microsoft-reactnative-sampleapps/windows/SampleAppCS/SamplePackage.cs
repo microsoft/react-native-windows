@@ -3,6 +3,11 @@
 
 using Microsoft.ReactNative.Bridge;
 using System.Collections.Generic;
+using Windows.Networking.Sockets;
+
+using SampleLibraryCS;
+using Microsoft.ReactNative.Managed;
+using Windows.Web.UI;
 
 namespace SampleApp
 {
@@ -11,7 +16,11 @@ namespace SampleApp
     public IReadOnlyList<INativeModule> CreateNativeModules(
       ReactContext reactContext)
     {
-      return new List<INativeModule>() { new SampleModule() };
+      return new List<INativeModule>() {
+        new SampleModule(),
+        new FancyMathABI(),
+        new ManagedNativeModule(new FancyMath()),
+      };
     }
   }
 }
