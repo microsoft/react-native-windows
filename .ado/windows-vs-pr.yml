@@ -108,7 +108,7 @@ stages:
             inputs:
               script: yarn buildci
 
-          - template: templates/install-SDK.yml
+          # - template: templates/install-SDK.yml
 
           - task: NuGetCommand@2
             displayName: NuGet restore - ReactWindows-Universal
@@ -322,7 +322,7 @@ stages:
               script: yarn build
               workingDirectory: vnext
 
-          - template: templates/install-SDK.yml
+          # - template: templates/install-SDK.yml
 
           - template: templates/vs-build.yml
             parameters:
