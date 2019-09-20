@@ -176,13 +176,21 @@ async function deployToDesktop(options, verbose) {
     verbose,
   );
 
-  const loopbackText = 'Verifying loopbackExempt';
-  const loopbackSpinner = newSpinner(loopbackText);
   const appFamilyName = execSync(
     `powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();
+
+  if (!appFamilyName) {
+    throw new Error(
+      'Fail to check the installed app, maybe developer mode is off on Windows',
+    );
+  }
+
+  const loopbackText = 'Verifying loopbackExempt';
+  const loopbackSpinner = newSpinner(loopbackText);
+
   await commandWithProgress(
     loopbackSpinner,
     loopbackText,
