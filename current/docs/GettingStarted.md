@@ -23,6 +23,10 @@ Next, we need the React Native command line interface. Install using NPM:
 npm install -g react-native-cli
 ```
 
+```
+yarn add -g react-native-cli
+```
+
 #### Initialize your project
 
 Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
