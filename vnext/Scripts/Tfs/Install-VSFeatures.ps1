@@ -4,4 +4,21 @@ Invoke-WebRequest -Method Get `
 
 Get-ChildItem ${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe
 
-& "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe" modify --installPath 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise' --wait --quiet --add Microsoft.VisualStudio.Component.VC.v141.x86.x64
+Write-Host "Current VC versions:"
+Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
+
+$returnCode = Start-Process `
+	-FilePath "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe" `
+	-ArgumentList `
+		"--installPath", 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise' , `
+		"--wait", `
+		'--quiet', `
+		'--norestart', `
+		'--add', 'Microsoft.VisualStudio.Component.VC.v141.x86.x64' `
+	-Wait `
+	-PassThru
+
+Write-Host "return code: [$returnCode]"
+
+Write-Host "VC versions after installation:"
+Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
