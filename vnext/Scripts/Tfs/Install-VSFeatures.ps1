@@ -13,7 +13,7 @@ Start-Process `
 	-FilePath "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe" `
 	-ArgumentList `
 		'modify', `
-		'--installPath', 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise' , `
+		'--installPath', '"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"' , `
 		'--wait', `
 		'--quiet', `
 		'--norestart', `
