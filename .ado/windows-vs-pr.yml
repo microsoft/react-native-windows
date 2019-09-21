@@ -11,7 +11,7 @@ variables:
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   PlatformToolset: v141
-  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v160'
+  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
   VsTestVersion: 16.0
   VsTestPlatformVersion: 16.2.0
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
