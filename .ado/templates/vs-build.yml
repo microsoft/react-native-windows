@@ -30,7 +30,8 @@ steps:
     displayName: NuGet restore - ReactWindows
     inputs:
       command: restore
-      restoreSolution: ${{ parameters.MSBuildsolution }}
+      restoreSolution: vnext/ReactWindows-Desktop.sln
+      #${{ parameters.MSBuildsolution }}
       feedsToUse: config
       #vstsFeed: # Required when feedsToUse == Select
       #includeNuGetOrg: true # Required when feedsToUse == Select
