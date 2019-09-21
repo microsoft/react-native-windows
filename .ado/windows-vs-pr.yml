@@ -10,7 +10,6 @@ variables:
   VmImage: windows-2019
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
-  PlatformToolset: v141
   VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
   VsTestVersion: 16.0
   VsTestPlatformVersion: 16.2.0
@@ -306,18 +305,13 @@ stages:
             X86Debug:
               BuildConfiguration: Debug
               BuildPlatform: x86
-            ArmDebug:
-              BuildConfiguration: Debug
-              BuildPlatform: arm
             X64Release:
               BuildConfiguration: Release
               BuildPlatform: x64
             X86Release:
               BuildConfiguration: Release
               BuildPlatform: x86
-            ArmRelease:
-              BuildConfiguration: Release
-              BuildPlatform: arm
+
         pool:
           vmImage: $(VmImage)
         timeoutInMinutes: 50 # how long to run the job before automatically cancelling
@@ -354,8 +348,8 @@ stages:
               MSBuildVersion: $(MSBuildVersion)
               MSBuildArchitecture: $(MSBuildArchitecture)
               MSBuildnugetConfigPath: vnext/NuGet.config
-              MSBuildsolution: vnext/ReactWindows-Desktop.sln
-              MSBuildmsbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)" /p:PlatformToolset=$(PlatformToolset)
+              MSBuild.solution: vnext/ReactWindows-Desktop.sln
+              MSBuildmsbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)"
 
           - task: VisualStudioTestPlatformInstaller@1
             inputs:

@@ -5,7 +5,7 @@ parameters:
   VsFeatures:
   MSBuildVersion:
   MSBuildArchitecture:
-  MSBuildsolution:
+  MSBuild.solution:
   MSBuildnugetConfigPath: ''
   MSBuildmsbuildArguments: ''
 
@@ -30,8 +30,8 @@ steps:
     displayName: NuGet restore - ReactWindows
     inputs:
       command: restore
-      restoreSolution: vnext/ReactWindows-Desktop.sln
-      #${{ parameters.MSBuildsolution }}
+      # restoreSolution: vnext/ReactWindows-Desktop.sln
+      restoreSolution: ${{ parameters.MSBuild.solution }}
       feedsToUse: config
       #vstsFeed: # Required when feedsToUse == Select
       #includeNuGetOrg: true # Required when feedsToUse == Select
@@ -68,7 +68,7 @@ steps:
   - task: MSBuild@1
     displayName: MSBuild - ReactWindows
     inputs:
-      solution: ${{ parameters.MSBuildsolution }}
+      solution: ${{ parameters.MSBuild.solution }}
       #msbuildLocationMethod: 'version' # Optional. Options: version, location
       msbuildVersion: ${{ parameters.MSBuildVersion }} # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
       msbuildArchitecture: ${{ parameters.MSBuildArchitecture }} # Optional. Options: x86, x64
