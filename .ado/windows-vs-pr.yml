@@ -21,7 +21,6 @@ variables:
 stages:
   - stage: SetupStage
     displayName: Setup
-    condition: false
 
     jobs:
       - job: Setup
@@ -35,13 +34,12 @@ stages:
 
   - stage: BuildStage
     displayName: Verify
-    # dependsOn: SetupStage
+    dependsOn: SetupStage
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:
       - job: RNWUniversalPR
         displayName: Universal PR
-        condition: false
         strategy:
           matrix:
             X64Debug:
@@ -112,8 +110,6 @@ stages:
             displayName: yarn buildci
             inputs:
               script: yarn buildci
-
-          # - template: templates/install-SDK.yml
 
           - task: NuGetCommand@2
             displayName: NuGet restore - ReactWindows-Universal
@@ -337,8 +333,6 @@ stages:
               script: yarn build
               workingDirectory: vnext
 
-          # - template: templates/install-SDK.yml
-
           - template: templates/vs-build.yml
             parameters:
               BuildConfiguration: $(BuildConfiguration)
@@ -347,37 +341,29 @@ stages:
               VsFeatures: $(VsFeatures)
               MSBuildVersion: $(MSBuildVersion)
               MSBuildArchitecture: $(MSBuildArchitecture)
-              MSBuildnugetConfigPath: vnext/NuGet.config
-              MSBuildsolution: "$(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln"
-              MSBuildmsbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)"
-
-          - task: VisualStudioTestPlatformInstaller@1
-            inputs:
-              packageFeedSelector: nugetOrg
-              versionSelector: specificVersion
-              testPlatformVersion: $(VsTestPlatformVersion)
+              NugetConfigPath: vnext/NuGet.config
+              Solution: "$(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln"
+              MSBuilddArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)"
 
           - task: VSTest@2
             displayName: Run Desktop Unit Tests
             timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
             inputs:
-              testSelector: "testAssemblies"
+              testSelector: testAssemblies
               testAssemblyVer2: | # Required when testSelector == TestAssemblies
                 React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
                 JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
               pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
               searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-              vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
               runTestsInIsolation: true
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
-              collectDumpOn: "onAbortOnly"
+              collectDumpOn: onAbortOnly
 
           - task: PowerShell@2
             displayName: Set up test servers
-            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
             inputs:
               targetType: filePath # filePath | inline
               filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
@@ -385,18 +371,17 @@ stages:
 
           - task: VSTest@2
             displayName: Run Desktop Integration Tests
-            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
             inputs:
-              testSelector: "testAssemblies"
-              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
+              testSelector: testAssemblies
+              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll'
               searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
               testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-              vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
               runTestsInIsolation: true
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
-              collectDumpOn: "onAbortOnly"
+              collectDumpOn: onAbortOnly
 
           - template: templates/stop-packagers.yml
 
@@ -574,13 +559,13 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      # - template: templates/e2e-test-job.yml  # Template reference
-      #   parameters:
-      #     name: E2ETest
-      #     pool:
-      #       vmImage: 'windows-2019'
-      #     BuildPlatform: x64
-      #     UseRNFork: true
+      - template: templates/e2e-test-job.yml  # Template reference
+        parameters:
+          name: E2ETest
+          pool:
+            vmImage: 'windows-2019'
+          BuildPlatform: x64
+          UseRNFork: true
 
   - stage:
     displayName: Pack
