@@ -352,9 +352,9 @@ stages:
               VsFeatures: $(VsFeatures)
               MSBuildVersion: $(MSBuildVersion)
               MSBuildArchitecture: $(MSBuildArchitecture)
-              MSBuild.nugetConfigPath: vnext/NuGet.config
-              MSBuild.solution: vnext/ReactWindows-Desktop.sln
-              MSBuild.msbuildArguments: |
+              MSBuildnugetConfigPath: vnext/NuGet.config
+              MSBuildsolution: vnext/ReactWindows-Desktop.sln
+              MSBuildmsbuildArguments: |
                 /p:RNW_PKG_VERSION_STR='Private Build'
                 /p:RNW_PKG_VERSION='1000,0,0,0'
                 /p:PlatformToolset=$(PlatformToolset)

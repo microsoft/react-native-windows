@@ -5,9 +5,9 @@ parameters:
   VsFeatures:
   MSBuildVersion:
   MSBuildArchitecture:
-  MSBuild.solution:
-  MSBuild.nugetConfigPath: ''
-  MSBuild.msbuildArguments: ''
+  MSBuildsolution:
+  MSBuildnugetConfigPath: ''
+  MSBuildmsbuildArguments: ''
 
 steps:
 
@@ -30,11 +30,11 @@ steps:
     displayName: NuGet restore - ReactWindows
     inputs:
       command: restore
-      restoreSolution: ${{ parameters.MSBuild.solution }}
+      restoreSolution: ${{ parameters.MSBuildsolution }}
       feedsToUse: config
       #vstsFeed: # Required when feedsToUse == Select
       #includeNuGetOrg: true # Required when feedsToUse == Select
-      nugetConfigPath: ${{ parameters.MSBuild.nugetConfigPath }}
+      nugetConfigPath: ${{ parameters.MSBuildnugetConfigPath }}
       #externalFeedCredentials: # Optional
       #noCache: false
       #disableParallelProcessing: false
@@ -67,7 +67,7 @@ steps:
   - task: MSBuild@1
     displayName: MSBuild - ReactWindows
     inputs:
-      solution: ${{ parameters.MSBuild.solution }}
+      solution: ${{ parameters.MSBuildsolution }}
       #msbuildLocationMethod: 'version' # Optional. Options: version, location
       msbuildVersion: ${{ parameters.MSBuildVersion }} # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
       msbuildArchitecture: ${{ parameters.MSBuildArchitecture }} # Optional. Options: x86, x64
@@ -76,7 +76,7 @@ steps:
       configuration:  ${{ parameters.BuildConfiguration }}  # Optional
       msbuildArguments: |
         /p:PreferredToolArchitecture=x64
-        ${{ parameters.MSBuild.msbuildArguments }}
+        ${{ parameters.MSBuildmsbuildArguments }}
       clean: true # Optional
       #maximumCpuCount: false # Optional
       #restoreNugetPackages: false # Optional
