@@ -21,20 +21,20 @@ Invoke-WebRequest -Method Get `
 Write-Host "Current VC versions:"
 Get-ChildItem "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Tools\MSVC\"
 
-$featureArgs = @()
+$argumentList = `
+	'modify',
+	'--installPath', $VsInstallPath ,
+	'--wait',
+	'--quiet',
+	'--norestart'
+
 $Features | ForEach-Object {
-	$featureArgs += '--add', $_
+	$argumentList += '--add', $_
 }
 
 Start-Process `
 	-FilePath "'$VsInstaller'" `
-	-ArgumentList `
-		'modify',
-		'--installPath', $VsInstallPath ,
-		'--wait',
-		'--quiet',
-		'--norestart' + `
-		$featureArgs `
+	-ArgumentList $argumentList `
 	-Wait `
 	-PassThru `
 	-OutVariable returnCode
