@@ -11,6 +11,7 @@ variables:
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   PlatformToolset: v141
+  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160'
   VsTestVersion: 16.0
   VsTestPlatformVersion: 16.2.0
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
@@ -354,7 +355,7 @@ stages:
               MSBuildArchitecture: $(MSBuildArchitecture)
               MSBuildnugetConfigPath: vnext/NuGet.config
               MSBuildsolution: vnext/ReactWindows-Desktop.sln
-              MSBuildmsbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:PlatformToolset=$(PlatformToolset)
+              MSBuildmsbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath=$(VCTargetsPath) /p:PlatformToolset=$(PlatformToolset)
 
           - task: VisualStudioTestPlatformInstaller@1
             inputs:
