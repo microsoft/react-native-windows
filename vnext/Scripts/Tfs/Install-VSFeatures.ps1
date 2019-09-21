@@ -31,9 +31,9 @@ $argumentList = `
 $Features | ForEach-Object {
 	$argumentList += '--add', $_
 }
-
+echo $VsInstaller
 Start-Process `
-	-FilePath "'$VsInstaller'" `
+	-FilePath "$VsInstaller" `
 	-ArgumentList $argumentList `
 	-Wait `
 	-PassThru `
