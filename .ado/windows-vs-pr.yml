@@ -331,11 +331,11 @@ stages:
 
           - template: templates/stop-packagers.yml
 
-          # - task: CmdLine@2
-          #   displayName: yarn build
-          #   inputs:
-          #     script: yarn build
-          #     workingDirectory: vnext
+          - task: CmdLine@2
+            displayName: yarn build
+            inputs:
+              script: yarn build
+              workingDirectory: vnext
 
           # - template: templates/install-SDK.yml
 
