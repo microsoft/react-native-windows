@@ -354,10 +354,7 @@ stages:
               MSBuildArchitecture: $(MSBuildArchitecture)
               MSBuildnugetConfigPath: vnext/NuGet.config
               MSBuildsolution: vnext/ReactWindows-Desktop.sln
-              MSBuildmsbuildArguments: |
-                /p:RNW_PKG_VERSION_STR='Private Build'
-                /p:RNW_PKG_VERSION='1000,0,0,0'
-                /p:PlatformToolset=$(PlatformToolset)
+              MSBuildmsbuildArguments: /p:RNW_PKG_VERSION_STR='Private Build' /p:RNW_PKG_VERSION='1000,0,0,0' /p:PlatformToolset=$(PlatformToolset)
 
           - task: VisualStudioTestPlatformInstaller@1
             inputs:

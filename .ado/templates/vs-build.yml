@@ -75,9 +75,7 @@ steps:
       #msbuildLocation: # Optional
       platform: ${{ parameters.BuildPlatform }} # Optional
       configuration:  ${{ parameters.BuildConfiguration }}  # Optional
-      msbuildArguments: |
-        /p:PreferredToolArchitecture=x64
-        ${{ parameters.MSBuildmsbuildArguments }}
+      msbuildArguments: /p:PreferredToolArchitecture=x64 ${{ parameters.MSBuildmsbuildArguments }}
       clean: true # Optional
       #maximumCpuCount: false # Optional
       #restoreNugetPackages: false # Optional
