@@ -20,6 +20,7 @@ variables:
 stages:
   - stage: SetupStage
     displayName: Setup
+    condition: false
 
     jobs:
       - job: Setup
@@ -33,7 +34,7 @@ stages:
 
   - stage: BuildStage
     displayName: Verify
-    dependsOn: SetupStage
+    # dependsOn: SetupStage
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:

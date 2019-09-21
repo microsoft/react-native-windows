@@ -33,7 +33,7 @@ Start-Process `
 		'--installPath', $VsInstallPath ,
 		'--wait',
 		'--quiet',
-		'--norestart',
+		'--norestart' + `
 		$featureArgs `
 	-Wait `
 	-PassThru `
