@@ -127,9 +127,7 @@ stages:
             inputs:
               targetType: filePath
               filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
-              arguments: |
-                -InstallerUri $(VsInstallerUri)
-                -Features $(VsFeatures)
+              arguments: -InstallerUri $(VsInstallerUri) -Features $(VsFeatures)
 
           - task: MSBuild@1
             displayName: MSBuild - ReactWindows-Universal
@@ -260,7 +258,7 @@ stages:
               script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
-          - template: templates/install-SDK.yml
+          # - template: templates/install-SDK.yml
 
           - task: NuGetCommand@2
             displayName: NuGet restore testcli
@@ -273,9 +271,7 @@ stages:
             inputs:
               targetType: filePath
               filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
-              arguments: |
-                -InstallerUri $(VsInstallerUri)
-                -Features $(VsFeatures)
+              arguments: -InstallerUri $(VsInstallerUri) -Features $(VsFeatures)
 
           - task: MSBuild@1
             displayName: MSBuild - testcli
@@ -342,7 +338,7 @@ stages:
               script: yarn build
               workingDirectory: vnext
 
-          - template: templates/install-SDK.yml
+          # - template: templates/install-SDK.yml
 
           - template: templates/vs-build.yml
             parameters:
