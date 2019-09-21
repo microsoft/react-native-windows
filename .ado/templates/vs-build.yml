@@ -1,10 +1,13 @@
 parameters:
-  BuildConfiguration: ''
-  BuildPlatform: ''
-  RNW_PKG_VERSION_STR: 'Private Build'
-  RNW_PKG_VERSION: '1000,0,0,0'
+  BuildConfiguration:
+  BuildPlatform:
   VsInstallerUri:
   VsFeatures:
+  MSBuildVersion:
+  MSBuildArchitecture:
+  MSBuild.solution:
+  MSBuild.nugetConfigPath: ''
+  MSBuild.msbuildArguments: ''
 
 steps:
 
@@ -27,11 +30,11 @@ steps:
     displayName: NuGet restore - ReactWindows
     inputs:
       command: restore
-      restoreSolution: vnext/ReactWindows-Desktop.sln
+      restoreSolution: ${{ parameters.MSBuild.solution }}
       feedsToUse: config
       #vstsFeed: # Required when feedsToUse == Select
       #includeNuGetOrg: true # Required when feedsToUse == Select
-      nugetConfigPath: vnext/NuGet.config
+      nugetConfigPath: ${{ parameters.MSBuild.nugetConfigPath }}
       #externalFeedCredentials: # Optional
       #noCache: false
       #disableParallelProcessing: false
@@ -64,20 +67,19 @@ steps:
   - task: MSBuild@1
     displayName: MSBuild - ReactWindows
     inputs:
-      solution: vnext/ReactWindows-Desktop.sln
+      solution: ${{ parameters.MSBuild.solution }}
       #msbuildLocationMethod: 'version' # Optional. Options: version, location
-      msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-      msbuildArchitecture: 'x64' # Optional. Options: x86, x64
+      msbuildVersion: ${{ parameters.MSBuildVersion }} # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+      msbuildArchitecture: ${{ parameters.MSBuildArchitecture }} # Optional. Options: x86, x64
       #msbuildLocation: # Optional
       platform: ${{ parameters.BuildPlatform }} # Optional
       configuration:  ${{ parameters.BuildConfiguration }}  # Optional
-      msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+      msbuildArguments: |
+        /p:PreferredToolArchitecture=x64
+        ${{ parameters.MSBuild.msbuildArguments }}
       clean: true # Optional
       #maximumCpuCount: false # Optional
       #restoreNugetPackages: false # Optional
       #logProjectEvents: false # Optional
       #createLogFile: false # Optional
       #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
-    env:
-      RNW_PKG_VERSION_STR: ${{ parameters.RNW_PKG_VERSION_STR }}
-      RNW_PKG_VERSION: ${{ parameters.RNW_PKG_VERSION }}
