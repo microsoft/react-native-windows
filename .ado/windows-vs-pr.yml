@@ -328,12 +328,12 @@ stages:
             submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
             persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-          # - task: CmdLine@2
-          #   displayName: yarn install
-          #   inputs:
-          #     script: yarn install --frozen-lockfile
+          - task: CmdLine@2
+            displayName: yarn install
+            inputs:
+              script: yarn install --frozen-lockfile
 
-          # - template: templates/stop-packagers.yml
+          - template: templates/stop-packagers.yml
 
           # - task: CmdLine@2
           #   displayName: yarn build
