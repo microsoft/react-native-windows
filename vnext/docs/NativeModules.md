@@ -23,7 +23,7 @@ Native Modules contain (or wrap) native code which can then be exposed to JS. To
 Here is a sample native module written in C# called `FancyMath`. It is a simple class which provides its name, an initialization method, two numerical constants and a method.
 
 *FancyMath.cs*
-```
+```csharp
 using System;
 
 using Microsoft.ReactNative;
@@ -69,7 +69,7 @@ It's just as easy to add custom methods, by attributing a method with `[NativeMo
 Now, we want to register our new `FancyMath` module with React Native so we can actually use it. To do this, first we're going to create a `FancyMathPackage` which implements `Microsoft.ReactNative.IReactPackage`.
 
 *FancyMathPackage.cs*
-```
+```csharp
 using System;
 using System.Collections.Generic;
 
@@ -90,12 +90,14 @@ namespace NativeModuleSample
 }
 ```
 
-Here we've implemented the `CreateNativeModules` method, which returns a read-only collection of `INativeModule` instances. We're only going have one Native Module in this package, and as previously mentioned, we're using `ManagedNativeModule` effectively as a wrapper around a `FancyMath` instance.
+Here we've implemented the `CreateNativeModules` method, which returns a read-only collection of `INativeModule` instances. We're only going have one Native Module in this package, and as previously mentioned, we're going to use the `ManagedNativeModule` adapter class provided by `Microsoft.ReactNative.Managed`.
+
+`ManagedNativeModule` implements `INativeModule` by reflecting over an `IManagedNativeModule` which uses the `[NativeModuleConstant]` and `[NativeModuleMethod]` attributes. So in our package, we simply pass an instance of `FancyMath` into `ManagedNativeModule`.
 
 Now that we have a `FancyMathPackage`, it's time to actually register it within our React Native host application's native code. To do that, we're going to look for the class which inherits from `Microsoft.ReactNative.ReactNativeHost`, the default of which (if you created your app using the RNW CLI) is called `MainReactNativeHost`.
 
 *MainReactNativeHost.cs*
-```
+```csharp
 using System.Collections.Generic;
 
 using Microsoft.ReactNative;
@@ -117,12 +119,12 @@ namespace NativeModuleSample
 }
 ```
 
-### 3. Using your Native Module in JS
+#### 3. Using your Native Module in JS
 
 Now we have a Native Module which is registered with React Native Windows. How do we access it in JS? Here's a simple RN app:
 
 *NativeModuleSample.js*
-```
+```js
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -175,18 +177,18 @@ As you can see, to access your Native Modules, you need to import `NativeModules
 
 To access our `FancyMath` constants, we can simply call `NativeModules.FancyMath.E` and `NativeModules.FancyMath.Pi`.
 
-Calls to methods are a little different due to the asynchronous natire of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case `FancyMath.add()` returns a value, so in addtion to the two necessary parameters we also include a callback function which will be called with the result of `FancyMath.add()`. In the example above, we can see that the callback raises an Alert dialog with the result value.
+Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case `FancyMath.add()` returns a value, so in addtion to the two necessary parameters we also include a callback function which will be called with the result of `FancyMath.add()`. In the example above, we can see that the callback raises an Alert dialog with the result value.
 
 ### Sample Native Module using just Microsoft.ReactNative (not recommended)
 
-While writing directly against `INativeModule` is supported, it is not recommended unless you know what you're doing.
+Now for reference, it is possible and supported to write directly against `INativeModule` however it is not recommended unless you know what you're doing.
 
 #### 1. Authoring your Native Module
 
 Here is the same `FancyMath` native module we created above, but here we write it directly against `INativeModule` without the benefit of `Microsoft.ReactNative.Managed`.
 
 *FancyMath.cs*
-```
+```csharp
 using System;
 using System.Collections.Generic;
 
@@ -229,7 +231,7 @@ namespace NativeModuleSample
 Here's our `FancyMathPackage` again, and again this time we're not depending on the `Microsoft.ReactNative.Managed` library.
 
 *FancyMathPackage.cs*
-```
+```csharp
 using System;
 using System.Collections.Generic;
 
@@ -251,7 +253,7 @@ namespace NativeModuleSample
 
 And as for the rest, once we have the `IReactPackage`, registering that package in *MainReactNativeHost.cs* is the same as above.
 
-### 3. Using your Native Module in JS
+#### 3. Using your Native Module in JS
 
 Consumption of your Native Module in JS is the same as in *NativeModuleSample.js* above.
 
