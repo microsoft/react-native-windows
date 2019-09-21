@@ -39,6 +39,7 @@ stages:
     jobs:
       - job: RNWUniversalPR
         displayName: Universal PR
+        condition: false
         strategy:
           matrix:
             X64Debug:
@@ -207,6 +208,7 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 30 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        condition: false
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
             clean: true # whether to fetch clean each time
@@ -325,18 +327,18 @@ stages:
             submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
             persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-          - task: CmdLine@2
-            displayName: yarn install
-            inputs:
-              script: yarn install --frozen-lockfile
+          # - task: CmdLine@2
+          #   displayName: yarn install
+          #   inputs:
+          #     script: yarn install --frozen-lockfile
 
-          - template: templates/stop-packagers.yml
+          # - template: templates/stop-packagers.yml
 
-          - task: CmdLine@2
-            displayName: yarn build
-            inputs:
-              script: yarn build
-              workingDirectory: vnext
+          # - task: CmdLine@2
+          #   displayName: yarn build
+          #   inputs:
+          #     script: yarn build
+          #     workingDirectory: vnext
 
           # - template: templates/install-SDK.yml
 
@@ -409,6 +411,7 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 10 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        condition: false
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
             clean: true # whether to fetch clean each time
@@ -468,6 +471,7 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 15 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        condition: false
 
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -568,18 +572,19 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      - template: templates/e2e-test-job.yml  # Template reference
-        parameters:
-          name: E2ETest
-          pool:
-            vmImage: 'windows-2019'
-          BuildPlatform: x64
-          UseRNFork: true
+      # - template: templates/e2e-test-job.yml  # Template reference
+      #   parameters:
+      #     name: E2ETest
+      #     pool:
+      #       vmImage: 'windows-2019'
+      #     BuildPlatform: x64
+      #     UseRNFork: true
 
   - stage:
     displayName: Pack
     dependsOn: BuildStage
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    # condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    condition: false
 
     jobs:
       - job: RNWNugetPR
