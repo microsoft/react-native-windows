@@ -408,6 +408,8 @@ namespace ViewManagerSample
 
 #### 3. Using your View Manager in JSX
 
+*TODO:* Example should be able to use `<Circle>` component syntax, but need to figure out how to import the component type.
+
 ### Sample View Manager using just Microsoft.ReactNative (not recommended)
 
 Now for reference, it is possible and supported to write directly against `IViewManager` however it is not recommended unless you know what you're doing.
