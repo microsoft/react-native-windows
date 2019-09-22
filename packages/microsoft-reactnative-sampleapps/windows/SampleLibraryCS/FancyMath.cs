@@ -43,7 +43,7 @@ namespace SampleLibraryCS
             Debug.WriteLine("FancyMathABI initialized");
         }
 
-        public IReadOnlyDictionary<string, object> Constants => _constants ?? (_constants = new Dictionary<string, object>(1)
+        public IReadOnlyDictionary<string, object> Constants => _constants ?? (_constants = new Dictionary<string, object>(2)
         {
             { "E", Math.E },
             { "Pi", Math.PI },

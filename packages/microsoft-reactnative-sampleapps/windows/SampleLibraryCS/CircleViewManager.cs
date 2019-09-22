@@ -41,6 +41,12 @@ namespace SampleLibraryCS
 
         public FrameworkElement CreateView() => new Ellipse();
 
+        public IReadOnlyDictionary<string, string> NativeProps => _nativeProps ?? (_nativeProps = new Dictionary<string, string>(1)
+        {
+            { "radius", "double" },
+        });
+        private IReadOnlyDictionary<string, string> _nativeProps;
+
         public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
         {
             if (view is Ellipse circle)

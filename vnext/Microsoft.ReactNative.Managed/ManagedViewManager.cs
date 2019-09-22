@@ -33,6 +33,7 @@ namespace Microsoft.ReactNative.Managed
 
           foreach (var methodInfo in TypeInfo.DeclaredMethods)
           {
+            // TODO: fix reading of attributes
             var setterAttribute = methodInfo.GetCustomAttribute<ViewManagerPropertySetterAttribute>();
             if (null != setterAttribute)
             {
@@ -57,6 +58,20 @@ namespace Microsoft.ReactNative.Managed
     public string Name => ViewManager.Name;
 
     public FrameworkElement CreateView() => ViewManager.CreateView();
+
+    public IReadOnlyDictionary<string, string> NativeProps
+    {
+      get
+      {
+        if (null == _nativeProps)
+        {
+          _nativeProps = new Dictionary<string, string>();
+          // TODO: populate from property setter metadata
+        }
+        return _nativeProps;
+      }
+    }
+    private IReadOnlyDictionary<string, string> _nativeProps;
 
     public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
     {

@@ -284,7 +284,6 @@ View Managers are a form of specialized native modules which expose native UI co
 *Open Questions:*
 
 * Do we need to expose (custom) shadow nodes?
-* What should GetNativeProps look like?
 * Do we need to create JS wrappers so the Component can be referenced (at all, or more naturally) in JSX?
 * Do we ever want to support non-FrameworkElement views?
 * How do XAML controls fire events into RN?
@@ -432,6 +431,12 @@ namespace ViewManagerSample
         public string Name => "CircleABI";
 
         public FrameworkElement CreateView() => new Ellipse();
+
+        public IReadOnlyDictionary<string, string> NativeProps => _nativeProps ?? (_nativeProps = new Dictionary<string, string>(1)
+        {
+            { "radius", "double" },
+        });
+        private IReadOnlyDictionary<string, string> _nativeProps;
 
         public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
         {

@@ -17,6 +17,8 @@ namespace Microsoft.ReactNative.Bridge
 		
 		Windows.UI.Xaml.FrameworkElement CreateView();
 
+    Windows.Foundation.Collections.IMapView<String, String> NativeProps { get; };
+
 		void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
 	};
 }
