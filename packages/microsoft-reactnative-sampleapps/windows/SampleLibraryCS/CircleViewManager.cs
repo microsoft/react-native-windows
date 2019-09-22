@@ -34,53 +34,14 @@ namespace SampleLibraryCS
         }
     }
 
-    // Example using FrameworkElementViewManager directly (not recommended)
-    public sealed class CircleViewManagerFEVM : FrameworkElementViewManager
-    {
-        protected override string GetNameCore() => "Circle";
-
-        protected override FrameworkElement CreateViewCore() => new Ellipse();
-
-        protected override void UpdatePropertiesCore(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
-        {
-            if (view is Ellipse circle)
-            {
-                foreach (var property in propertyMap)
-                {
-                    switch (property.Key)
-                    {
-                        case "radius":
-                            if (property.Value is double propertyValue)
-                            {
-                                circle.Width = propertyValue * 2.0;
-                                circle.Height = propertyValue * 2.0;
-                            }
-                            else if (null == property.Value)
-                            {
-                                circle.ClearValue(FrameworkElement.WidthProperty);
-                                circle.ClearValue(FrameworkElement.HeightProperty);
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
     // Example using IViewManager directly (ABI-safe but not recommended)
     public sealed class CircleViewManagerABI : IViewManager
     {
-        public string GetName() => "CircleABI";
+        public string Name => "CircleABI";
 
-        public DependencyObject CreateView(long tag)
-        {
-            var view = new Ellipse();
-            // Developer must remember to set tag
-            view.Tag = tag;
-            return view;
-        }
+        public FrameworkElement CreateView() => new Ellipse();
 
-        public void UpdateProperties(DependencyObject view, IReadOnlyDictionary<string, object> propertyMap)
+        public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
         {
             if (view is Ellipse circle)
             {
@@ -100,7 +61,6 @@ namespace SampleLibraryCS
                                 circle.ClearValue(FrameworkElement.HeightProperty);
                             }
                             break;
-                            // Developer must handle setting ALL other properties
                     }
                 }
             }

@@ -21,4 +21,12 @@ IVectorView<Bridge::INativeModule> SamplePackage::CreateNativeModules(
 
   return modules.GetView();
 }
+
+IVectorView<Bridge::IViewManager> SamplePackage::CreateViewManagers(
+    ReactContext const &reactContext) {
+  auto viewManagers =
+      single_threaded_vector<Bridge::IViewManager>();
+
+  return viewManagers.GetView();
+}
 } // namespace winrt::SampleApp::implementation

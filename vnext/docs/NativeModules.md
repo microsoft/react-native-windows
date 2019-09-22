@@ -16,6 +16,10 @@ Native modules contain (or wrap) native code which can then be exposed to JS. To
 2. Register your new `INativeModule` within the native code of your React Native host application.
 3. Invoke your NativeModule from within your Raact Native JS code.
 
+*Open Questions:*
+
+* How do native modules fire events into RN?
+
 ### Sample Native Module using Microsoft.ReactNative.Managed (recommended)
 
 #### 1. Authoring your Native Module
@@ -118,7 +122,7 @@ namespace NativeModuleSample
         {
             get
             {
-                return new[] { new FancyMathPackage() };
+                return new IReactPackage[] { new FancyMathPackage() };
             }
         }
     }
@@ -263,11 +267,11 @@ namespace NativeModuleSample
 }
 ```
 
-And as for the rest, once we have the `IReactPackage`, registering that package in *MainReactNativeHost.cs* is the same as above.
+And as for the rest, once we have the `IReactPackage`, registering that package is the same as in the example above.
 
 #### 3. Using your Native Module in JS
 
-Consumption of your Native Module in JS is the same as in *NativeModuleSample.js* above.
+Consumption of your Native Module in JS is the same as in the example above.
 
 ## View Managers
 
@@ -275,7 +279,15 @@ View Managers are a form of specialized native modules which expose native UI co
 
 1. Author a Windows Runtime Class which implements `Microsoft.ReactNative.IViewManager` and understands how to interact with the native UI.
 2. Register your new `IViewManager` within the native code of your React Native host application.
-3. Reference the new Component within your React Native JS code.
+3. Reference the new Component within your React Native JSX code.
+
+*Open Questions:*
+
+* Do we need to expose (custom) shadow nodes?
+* What should GetNativeProps look like?
+* Do we need to create JS wrappers so the Component can be referenced (at all, or more naturally) in JSX?
+* Do we ever want to support non-FrameworkElement views?
+* How do XAML controls fire events into RN?
 
 ### Sample View Manager using Microsoft.ReactNative.Managed (recommended)
 
@@ -335,12 +347,151 @@ All property setter methods should take two parameters - an instance of the nati
 
 #### 2. Registering your View Manager
 
+As with native modules, we want to register our new `CircleViewManager` module with React Native so we can actually use it. To do this, first we're going to create a `CircleViewManagerPackage` which implements `Microsoft.ReactNative.IReactPackage`.
+
+*CircleViewManagerPackage.cs*
+```csharp
+using System;
+using System.Collections.Generic;
+
+using Microsoft.ReactNative;
+using Microsoft.ReactNative.Managed;
+
+namespace ViewManagerSample
+{
+    public sealed class CircleViewManagerPackage : IReactPackage
+    {
+        /*
+            Other Code
+        */
+
+        public IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext)
+        {
+            return new List<IViewManager>() {
+                new ManagedViewManager(new CircleViewManager()),
+            };
+        }
+    }
+}
+```
+
+Here we've implemented the `CreateViewManagers` method, which returns a read-only collection of `IViewManager` instances. We're only going have oneview manager in this package, and as previously mentioned, we're going to use the `ManagedViewManager` adapter class provided by `Microsoft.ReactNative.Managed`.
+
+`ManagedViewManager` implements `IViewManager` by reflecting over an `IManagedViewManager` which uses the `[ViewManagerPropertySetter]` attributes. So in our package, we simply pass an instance of `CircleViewManager` into `ManagedViewManager`.
+
+Now that we have a `CircleViewManagerPackage`, it's time to actually register it within our React Native host application's native code. To do that, we're going to look for the class which inherits from `Microsoft.ReactNative.ReactNativeHost`, the default of which (if you created your app using the RNW CLI) is called `MainReactNativeHost`.
+
+*MainReactNativeHost.cs*
+```csharp
+using System.Collections.Generic;
+
+using Microsoft.ReactNative;
+
+namespace ViewManagerSample
+{
+    sealed class MainReactNativeHost : ReactNativeHost
+    {
+        /*
+            Other Code
+        */
+
+        protected override IReadOnlyList<IReactPackage> Packages
+        {
+            get
+            {
+                return new IReactPackage[] { new CircleViewManagerPackage() };
+            }
+        }
+    }
+}
+```
+
 #### 3. Using your View Manager in JSX
 
 ### Sample View Manager using just Microsoft.ReactNative (not recommended)
 
+Now for reference, it is possible and supported to write directly against `IViewManager` however it is not recommended unless you know what you're doing.
+
 #### 1. Authoring your View Manager
+
+Here is the same `CircleViewManager` we created above, but here we write it directly against `IViewManager` without the benefit of `Microsoft.ReactNative.Managed`.
+
+*CircleViewManager.cs*
+```csharp
+using System;
+using System.Collections.Generic;
+
+using Microsoft.ReactNative;
+
+namespace ViewManagerSample
+{
+    public sealed class CircleViewManagerABI : IViewManager
+    {
+        public string Name => "CircleABI";
+
+        public FrameworkElement CreateView() => new Ellipse();
+
+        public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
+        {
+            if (view is Ellipse circle)
+            {
+                foreach (var property in propertyMap)
+                {
+                    switch (property.Key)
+                    {
+                        case "radius":
+                            if (property.Value is double propertyValue)
+                            {
+                                circle.Width = propertyValue * 2.0;
+                                circle.Height = propertyValue * 2.0;
+                            }
+                            else if (null == property.Value)
+                            {
+                                circle.ClearValue(FrameworkElement.WidthProperty);
+                                circle.ClearValue(FrameworkElement.HeightProperty);
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+As you can see, it's a little more complicated, and more "glue" code that you're responsible for.
 
 #### 2. Registering your View Manager
 
+Here's our `CircleViewManager` again, and again this time we're not depending on the `Microsoft.ReactNative.Managed` library.
+
+*FancyMathPackage.cs*
+```csharp
+using System;
+using System.Collections.Generic;
+
+using Microsoft.ReactNative;
+
+namespace ViewManagerSample
+{
+    public sealed class CircleViewManagerPackage : IReactPackage
+    {
+        /*
+            Other Code
+        */
+
+        public IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext)
+        {
+            return new List<IViewManager>() {
+                new CircleViewManager(),
+            };
+        }
+    }
+}
+```
+
+And as for the rest, once we have the `IReactPackage`, registering that package is the same as in the example above.
+
 #### 3. Using your View Manager in JSX
+
+Consumption of your new View in JS is the same as in the example above.

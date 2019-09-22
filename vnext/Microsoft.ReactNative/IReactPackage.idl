@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "INativeModule.idl";
+import "IViewManager.idl";
 import "ReactContext.idl";
 
 namespace Microsoft.ReactNative.Bridge {
@@ -10,8 +11,8 @@ namespace Microsoft.ReactNative.Bridge {
     IVectorView<Microsoft.ReactNative.Bridge.INativeModule> CreateNativeModules(
         Microsoft.ReactNative.Bridge.ReactContext reactContext);
 
-    // TODO support view managers
-    //IVectorView<Microsoft.ReactNative.Bridge.IViewManager> CreateViewManagers(Microsoft.ReactNative.Bridge.ReactContext reactContext);
+    IVectorView<Microsoft.ReactNative.Bridge.IViewManager> CreateViewManagers(
+        Microsoft.ReactNative.Bridge.ReactContext reactContext);
 
     // TODO support Turbo modules.  The API needed for TurboModules (mimicking what Android does)...
     // Given a module name, it returns an instance of INativeModule for the name.

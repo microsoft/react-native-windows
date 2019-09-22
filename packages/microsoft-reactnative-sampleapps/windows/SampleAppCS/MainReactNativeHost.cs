@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
+
 using Microsoft.ReactNative;
 using Microsoft.ReactNative.Bridge;
-using System.Collections.Generic;
+
+using SampleLibraryCS;
 
 namespace SampleApp
 {
@@ -22,7 +25,7 @@ namespace SampleApp
     {
       get
       {
-        return new[] { new SamplePackage() };
+        return new IReactPackage[] { new SamplePackage(), new SampleLibraryPackage() };
       }
     }
   }

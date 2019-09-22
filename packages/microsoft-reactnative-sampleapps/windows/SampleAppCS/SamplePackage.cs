@@ -5,8 +5,6 @@ using Microsoft.ReactNative.Bridge;
 using System.Collections.Generic;
 using Windows.Networking.Sockets;
 
-using SampleLibraryCS;
-using Microsoft.ReactNative.Managed;
 using Windows.Web.UI;
 
 namespace SampleApp
@@ -18,9 +16,12 @@ namespace SampleApp
     {
       return new List<INativeModule>() {
         new SampleModule(),
-        new FancyMathABI(),
-        new ManagedNativeModule(new FancyMath()),
       };
+    }
+
+    public IReadOnlyList<IViewManager> CreateViewManagers(ReactContext reactContext)
+    {
+      return new List<IViewManager>();
     }
   }
 }

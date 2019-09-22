@@ -13,10 +13,10 @@ namespace Microsoft.ReactNative.Bridge
 	[webhosthidden]
 	interface IViewManager
 	{
-		String GetName();
+    String Name { get; };
 		
-		Windows.UI.Xaml.DependencyObject CreateView(Int64 tag);
+		Windows.UI.Xaml.FrameworkElement CreateView();
 
-		void UpdateProperties(Windows.UI.Xaml.DependencyObject view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
+		void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
 	};
 }

@@ -106,10 +106,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ABIModule.h" />
-    <ClInclude Include="FrameworkElementViewManager.h">
-      <DependentUpon>FrameworkElementViewManager.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="MethodInfo.h">
@@ -160,10 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABIModule.cpp" />
-    <ClCompile Include="FrameworkElementViewManager.cpp">
-      <DependentUpon>FrameworkElementViewManager.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="MethodInfo.cpp">
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -214,9 +206,6 @@
     <ClCompile Include="ViewManagersProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="FrameworkElementViewManager.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="IBackgroundEventListener.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="INativeModule.idl" />

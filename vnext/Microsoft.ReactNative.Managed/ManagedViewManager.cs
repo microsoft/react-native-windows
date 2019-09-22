@@ -17,7 +17,7 @@ namespace Microsoft.ReactNative.Managed
     FrameworkElement CreateView();
   }
 
-  public sealed class ManagedViewManager : FrameworkElementViewManager
+  public sealed class ManagedViewManager : IViewManager
   {
     public IManagedViewManager ViewManager { get; private set; }
 
@@ -54,11 +54,11 @@ namespace Microsoft.ReactNative.Managed
 
     // IView Manager
 
-    protected override string GetNameCore() => ViewManager.Name;
+    public string Name => ViewManager.Name;
 
-    protected override FrameworkElement CreateViewCore() => ViewManager.CreateView();
+    public FrameworkElement CreateView() => ViewManager.CreateView();
 
-    protected override void UpdatePropertiesCore(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
+    public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
     {
       foreach (var property in propertyMap)
       {

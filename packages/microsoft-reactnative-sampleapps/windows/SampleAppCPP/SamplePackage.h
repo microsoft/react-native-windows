@@ -16,6 +16,9 @@ struct SamplePackage : SamplePackageT<SamplePackage> {
 
   IVectorView<INativeModule> CreateNativeModules(
       ReactContext const &reactContext);
+
+  IVectorView<IViewManager> CreateViewManagers(
+      ReactContext const &reactContext);
 };
 } // namespace winrt::SampleApp::implementation
 
