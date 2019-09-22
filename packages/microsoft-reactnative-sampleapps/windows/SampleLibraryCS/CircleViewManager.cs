@@ -43,7 +43,7 @@ namespace SampleLibraryCS
 
         public IReadOnlyDictionary<string, string> NativeProps => _nativeProps ?? (_nativeProps = new Dictionary<string, string>(1)
         {
-            { "radius", "double" },
+            { "radius", "number" },
         });
         private IReadOnlyDictionary<string, string> _nativeProps;
 
