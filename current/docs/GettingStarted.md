@@ -22,7 +22,7 @@ Next, we need the React Native command line interface. Install using NPM:
 ```
 npm install -g react-native-cli
 ```
-
+If you are using Yarn, run
 ```
 yarn add global react-native-cli
 ```
