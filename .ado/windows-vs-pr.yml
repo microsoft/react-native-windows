@@ -206,7 +206,6 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 30 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        condition: false
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
             clean: true # whether to fetch clean each time
@@ -398,7 +397,6 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 10 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        condition: false
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
             clean: true # whether to fetch clean each time
@@ -458,7 +456,6 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 15 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        condition: false
 
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -570,8 +567,7 @@ stages:
   - stage:
     displayName: Pack
     dependsOn: BuildStage
-    # condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    condition: false
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:
       - job: RNWNugetPR
