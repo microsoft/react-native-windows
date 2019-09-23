@@ -89,3 +89,4 @@ jobs:
         inputs:
           testResultsFormat: 'JUnit'
           testResultsFiles: 'packages/E2ETest/reports/*.log'
+        condition: succeededOrFailed()
