@@ -8,7 +8,7 @@ using namespace react::uwp;
 
 namespace winrt::templatecpp::implementation
 {
-	const wchar_t* JSFILENAME = L"App.windows";
+	const wchar_t* JSFILENAME = L"index.windows";
 	const wchar_t* JSCOMPONENTNAME = L"templatecpp";
 
     MainPage::MainPage()
