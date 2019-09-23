@@ -75,9 +75,12 @@ jobs:
           workingDirectory: packages/E2ETest
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
-      - task: Delay@1
+      - task: PowerShell@2
+        displayName: Wait for app to launch
         inputs:
-          delayForMinutes: '1'
+          targetType: inline # filePath | inline
+          script: |
+            Start-Sleep -Seconds 30
 
       - task: CmdLine@2
         displayName: run test
