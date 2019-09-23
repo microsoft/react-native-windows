@@ -23,7 +23,7 @@ namespace <%=ns%>
   /// </summary>
   public sealed partial class MainPage : Page
   {
-    const string JSFILENAME = "App.windows";
+    const string JSFILENAME = "index.windows";
     const string JSCOMPONENTNAME = "<%=name%>";
 
     public MainPage()

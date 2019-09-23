@@ -104,9 +104,6 @@
     <ClCompile Include="LazyDevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LegacyWebSocket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WebSocket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -159,9 +156,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LazyDevSupportManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LegacyWebSocket.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="NativeModuleFactories.h">

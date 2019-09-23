@@ -10,6 +10,8 @@ using facebook::react::unicode::utf16ToUtf8;
 using facebook::react::unicode::utf8ToUtf16;
 using Microsoft::VisualStudio::CppUnitTestFramework::Assert;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS(UnicodeConversionTest) {
  public:
   TEST_METHOD(PrerequisiteTest) {
@@ -117,3 +119,5 @@ TEST_CLASS(UnicodeConversionTest) {
   constexpr static const wchar_t *SimpleTestStringBomUtf16 =
       L"\xfeff\x0061\x0062\x0063"; //<UTF-16BE BOM>abc
 };
+
+} // namespace Microsoft::React::Test

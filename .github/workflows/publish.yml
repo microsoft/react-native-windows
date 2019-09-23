@@ -2,7 +2,7 @@ name: Publish
 on:
   push:
     branches:
-      - master
+      - none
 jobs:
   RnwNpmPublish:
     name: React-Native-Windows Npm Build Rev Publish

@@ -41,10 +41,18 @@ void FrameworkElementViewManager::TransferProperty(
     XamlView oldView,
     XamlView newView,
     winrt::DependencyProperty dp) {
-  auto oldValue = oldView.ReadLocalValue(dp);
+  TransferProperty(oldView, newView, dp, dp);
+}
+
+void FrameworkElementViewManager::TransferProperty(
+    XamlView oldView,
+    XamlView newView,
+    winrt::DependencyProperty oldViewDP,
+    winrt::DependencyProperty newViewDP) {
+  auto oldValue = oldView.ReadLocalValue(oldViewDP);
   if (oldValue != nullptr) {
-    oldView.ClearValue(dp);
-    newView.SetValue(dp, oldValue);
+    oldView.ClearValue(oldViewDP);
+    newView.SetValue(newViewDP, oldValue);
   }
 }
 
@@ -335,7 +343,7 @@ void FrameworkElementViewManager::UpdateProperties(
         AnnounceLiveRegionChangedIfNeeded(element);
       } else if (propertyName == "accessibilityPosInSet") {
         if (propertyValue.isNumber()) {
-          auto value = static_cast<int>(propertyValue.getInt());
+          auto value = static_cast<int>(propertyValue.asDouble());
           auto boxedValue =
               winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
 
@@ -347,7 +355,7 @@ void FrameworkElementViewManager::UpdateProperties(
         }
       } else if (propertyName == "accessibilitySetSize") {
         if (propertyValue.isNumber()) {
-          auto value = static_cast<int>(propertyValue.getInt());
+          auto value = static_cast<int>(propertyValue.asDouble());
           auto boxedValue =
               winrt::Windows::Foundation::PropertyValue::CreateInt32(value);
 

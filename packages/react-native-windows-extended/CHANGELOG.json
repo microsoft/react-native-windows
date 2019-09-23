@@ -2,6 +2,88 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Wed, 18 Sep 2019 18:18:37 GMT",
+      "tag": "react-native-windows-extended_v0.60.0",
+      "version": "0.60.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 05:17:28 GMT",
+      "tag": "react-native-windows-extended_v0.59.1",
+      "version": "0.59.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Lock version of react-native-windows-extended",
+            "author": "acoates@microsoft.com",
+            "commit": "afc4a309bc6ccc0206e1928164d070d24e9e2e22"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.82",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "0a76abdeaaa289544d756cfaee1075892607b81a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Sep 2019 23:51:35 GMT",
+      "tag": "react-native-windows-extended_v0.15.7",
+      "version": "0.15.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.79",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "af7671c8ca2d6db465fb9e345990e18b62abc981"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.80",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "97c2a7e19eac9c938f4cd4a09feb0adf6de72665"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Sep 2019 18:44:17 GMT",
+      "tag": "react-native-windows-extended_v0.15.4",
+      "version": "0.15.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.77",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "3901b66e638bddcc31a0010b177bd1fa025cc6eb"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 00:44:04 GMT",
+      "tag": "react-native-windows-extended_v0.15.3",
+      "version": "0.15.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.74",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "e8ce4cd90f5bb2963ebcd31a7d4344b2e989caf5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Sep 2019 17:37:33 GMT",
       "tag": "react-native-windows-extended_v0.15.2",
       "version": "0.15.2",

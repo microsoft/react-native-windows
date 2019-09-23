@@ -20,10 +20,17 @@ class TextInputViewManager : public ControlViewManager {
   facebook::react::ShadowNode *createShadow() const override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
+  virtual void TransferProperties(XamlView oldView, XamlView newView) override;
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
   friend class TextInputShadowNode;
+
+ private:
+  void TransferInputScope(
+      XamlView oldView,
+      XamlView newView,
+      const bool copyToPasswordBox);
 };
 
 } // namespace uwp

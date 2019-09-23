@@ -344,7 +344,7 @@ void ReactControl::ShowDeveloperMenu() {
       L"    <TextBlock Margin='0,0,0,10' FontSize='40'>Developer Menu</TextBlock>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Reload'>Reload Javascript</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='RemoteDebug'></Button>"
-      L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'>Enable Live Reload (TBD) </Button>"
+      L"    <Button HorizontalAlignment='Stretch' x:Name='LiveReload'></Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Inspector'>Toggle Inspector</Button>"
       L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
       L"  </StackPanel>"
@@ -359,6 +359,9 @@ void ReactControl::ShowDeveloperMenu() {
       m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
   auto toggleInspector =
       m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
+  auto liveReloadButton =
+      m_developerMenuRoot.FindName(L"LiveReload").as<winrt::Button>();
+
   bool useWebDebugger =
       m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
   remoteDebugJSButton.Content(winrt::box_value(
@@ -387,6 +390,20 @@ void ReactControl::ShowDeveloperMenu() {
       winrt::auto_revoke,
       [this](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
+        Reload(true);
+      });
+
+  bool supportLiveReload =
+      m_reactInstance->GetReactInstanceSettings().UseLiveReload;
+
+  liveReloadButton.Content(winrt::box_value(
+      supportLiveReload ? L"Disable Live Reload" : L"Enable Live Reload"));
+  m_liveReloadRevoker = liveReloadButton.Click(
+      winrt::auto_revoke,
+      [this, supportLiveReload](
+          const auto &sender, const winrt::RoutedEventArgs &args) {
+        DismissDeveloperMenu();
+        m_instanceCreator->persistUseLiveReload(!supportLiveReload);
         Reload(true);
       });
 
