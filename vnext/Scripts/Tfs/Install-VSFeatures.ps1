@@ -36,7 +36,7 @@ Start-Process `
 
 if ($Collect) {
 	Invoke-WebRequest -Method Get `
-		-Uri 'https://download.microsoft.com/download/8/3/4/834E83F6-C377-4DCE-A757-69A418B6C6DF/Collect.exe' `		-Uri 'https://download.microsoft.com/download/8/3/4/834E83F6-C377-4DCE-A757-69A418B6C6DF/Collect.exe' `
+		-Uri 'https://download.microsoft.com/download/8/3/4/834E83F6-C377-4DCE-A757-69A418B6C6DF/Collect.exe' `
 		-OutFile ${env:System_DefaultWorkingDirectory}\Collect.exe
 
 	# Should generate ${env:Temp}\vslogs.zip
