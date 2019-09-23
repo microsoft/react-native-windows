@@ -40,7 +40,7 @@ if ($Collect) {
 		-OutFile ${env:System_DefaultWorkingDirectory}\Collect.exe
 
 	# Should generate ${env:Temp}\vslogs.zip
-	Start-Process `	Start-Process `
+	Start-Process `
 		-FilePath "${env:System_DefaultWorkingDirectory}\Collect.exe" `
 		-Wait `
 		-PassThru
