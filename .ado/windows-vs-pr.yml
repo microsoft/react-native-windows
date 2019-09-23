@@ -200,6 +200,110 @@ stages:
               workingDirectory: vnext
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
+      - job: RNWDesktopPR
+        displayName: Desktop PR
+        strategy:
+          matrix:
+            X64Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+            X86Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+            X64Release:
+              BuildConfiguration: Release
+              BuildPlatform: x64
+            X86Release:
+              BuildConfiguration: Release
+              BuildPlatform: x86
+
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            # fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+          - task: CmdLine@2
+            displayName: yarn install
+            inputs:
+              script: yarn install --frozen-lockfile
+
+          - template: templates/stop-packagers.yml
+
+          - task: CmdLine@2
+            displayName: yarn build
+            inputs:
+              script: yarn build
+              workingDirectory: vnext
+
+          - template: templates/vs-build.yml
+            parameters:
+              BuildConfiguration: $(BuildConfiguration)
+              BuildPlatform: $(BuildPlatform)
+              VsInstallerUri: $(VsInstallerUri)
+              VsFeatures: $(VsFeatures)
+              MSBuildVersion: $(MSBuildVersion)
+              MSBuildArchitecture: $(MSBuildArchitecture)
+              NugetConfigPath: vnext/NuGet.config
+              Solution: "$(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln"
+              MSBuilddArguments: |
+                /p:RNW_PKG_VERSION_STR="Private Build"
+                /p:RNW_PKG_VERSION="1000,0,0,0"
+                /p:VCTargetsPath="$(VCTargetsPath)"
+
+          - task: VSTest@2
+            displayName: Run Desktop Unit Tests
+            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+            inputs:
+              testSelector: testAssemblies
+              testAssemblyVer2: | # Required when testSelector == TestAssemblies
+                React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
+                JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
+              pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: onAbortOnly
+
+          - task: PowerShell@2
+            displayName: Set up test servers
+            inputs:
+              targetType: filePath # filePath | inline
+              filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload -SleepSeconds 30
+
+          - task: VSTest@2
+            displayName: Run Desktop Integration Tests
+            inputs:
+              testSelector: testAssemblies
+              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll'
+              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+              testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: onAbortOnly
+
+          - template: templates/stop-packagers.yml
+
+          - template: templates/publish-build-artifacts-for-nuget.yml
+            parameters:
+              LayoutHeaders: true
+              Contents: |
+                React.Windows.Desktop.DLL\**
+                React.Windows.Desktop.Test.DLL\**
+
       - job: CliInit
         displayName: Verify react-native init
         pool:
@@ -289,107 +393,6 @@ stages:
             inputs:
               script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
               workingDirectory: $(Agent.BuildDirectory)\testcli
-
-      - job: RNWDesktopPR
-        displayName: Desktop PR
-        strategy:
-          matrix:
-            X64Debug:
-              BuildConfiguration: Debug
-              BuildPlatform: x64
-            X86Debug:
-              BuildConfiguration: Debug
-              BuildPlatform: x86
-            X64Release:
-              BuildConfiguration: Release
-              BuildPlatform: x64
-            X86Release:
-              BuildConfiguration: Release
-              BuildPlatform: x86
-
-        pool:
-          vmImage: $(VmImage)
-        timeoutInMinutes: 50 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        steps:
-          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-            clean: true # whether to fetch clean each time
-            # fetchDepth: 2 # the depth of commits to ask Git to fetch
-            lfs: false # whether to download Git-LFS files
-            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-          - task: CmdLine@2
-            displayName: yarn install
-            inputs:
-              script: yarn install --frozen-lockfile
-
-          - template: templates/stop-packagers.yml
-
-          - task: CmdLine@2
-            displayName: yarn build
-            inputs:
-              script: yarn build
-              workingDirectory: vnext
-
-          - template: templates/vs-build.yml
-            parameters:
-              BuildConfiguration: $(BuildConfiguration)
-              BuildPlatform: $(BuildPlatform)
-              VsInstallerUri: $(VsInstallerUri)
-              VsFeatures: $(VsFeatures)
-              MSBuildVersion: $(MSBuildVersion)
-              MSBuildArchitecture: $(MSBuildArchitecture)
-              NugetConfigPath: vnext/NuGet.config
-              Solution: "$(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln"
-              MSBuilddArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)"
-
-          - task: VSTest@2
-            displayName: Run Desktop Unit Tests
-            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-            inputs:
-              testSelector: testAssemblies
-              testAssemblyVer2: | # Required when testSelector == TestAssemblies
-                React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
-                JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
-              pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
-              runTestsInIsolation: true
-              platform: $(BuildPlatform)
-              configuration: $(BuildConfiguration)
-              publishRunAttachments: true
-              collectDumpOn: onAbortOnly
-
-          - task: PowerShell@2
-            displayName: Set up test servers
-            inputs:
-              targetType: filePath # filePath | inline
-              filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload -SleepSeconds 30
-
-          - task: VSTest@2
-            displayName: Run Desktop Integration Tests
-            inputs:
-              testSelector: testAssemblies
-              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll'
-              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-              testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
-              runTestsInIsolation: true
-              platform: $(BuildPlatform)
-              configuration: $(BuildConfiguration)
-              publishRunAttachments: true
-              collectDumpOn: onAbortOnly
-
-          - template: templates/stop-packagers.yml
-
-          - template: templates/publish-build-artifacts-for-nuget.yml
-            parameters:
-              LayoutHeaders: true
-              Contents: |
-                React.Windows.Desktop.DLL\**
-                React.Windows.Desktop.Test.DLL\**
 
       - job: RNWFormatting
         displayName: Verify change files + formatting
