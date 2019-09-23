@@ -45,9 +45,9 @@ if ($Collect) {
 		-Wait `
 		-PassThru
 
-
 	New-Item -ItemType Directory -Force ${env:System_DefaultWorkingDirectory}\vslogs
+	Expand-Archive -Path ${env:TEMP}\vslogs.zip -DestinationPath ${env:System_DefaultWorkingDirectory}\vslogs\
 
 	Write-Host "VC versions after installation:"
-	Get-ChildItem "$VsInstallPath\VC\Tools\MSVC\"
+	Get-ChildItem -Name "$VsInstallPath\VC\Tools\MSVC\"
 }
