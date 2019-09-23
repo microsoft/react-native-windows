@@ -250,12 +250,13 @@ stages:
               VsFeatures: $(VsFeatures)
               MSBuildVersion: $(MSBuildVersion)
               MSBuildArchitecture: $(MSBuildArchitecture)
-              NugetConfigPath: vnext/NuGet.config
-              Solution: "$(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln"
-              MSBuilddArguments: |
+              NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+              Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
+              MSBuildArguments: |
                 /p:RNW_PKG_VERSION_STR="Private Build"
                 /p:RNW_PKG_VERSION="1000,0,0,0"
                 /p:VCTargetsPath="$(VCTargetsPath)"
+              Collect: true
 
           - task: VSTest@2
             displayName: Run Desktop Unit Tests

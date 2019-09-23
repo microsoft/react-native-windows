@@ -8,6 +8,7 @@ parameters:
   Solution:
   NugetConfigPath: ''
   MSBuildArguments: ''
+  Collect: false
 
 steps:
 
@@ -16,7 +17,13 @@ steps:
     inputs:
       targetType: filePath
       filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
-      arguments: -InstallerUri ${{ parameters.VsInstallerUri }} -Features ${{ parameters.VsFeatures }}
+      arguments: -InstallerUri ${{ parameters.VsInstallerUri }} -Features ${{ parameters.VsFeatures }} -Collect:\$${{ parameters.Collect }}
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: vslogs"
+    inputs:
+      PathtoPublish: $(System.DefaultWorkingDirectory)\vslogs
+      ArtifactName: "vslogs"
 
   - task: NuGetCommand@2
     displayName: NuGet restore - ReactWindows

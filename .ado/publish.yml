@@ -128,7 +128,7 @@ jobs:
           MSBuildArchitecture: $(MSBuildArchitecture)
           NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
           Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
-          MSBuilddArguments: |
+          MSBuildArguments: |
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
             /p:VCTargetsPath="$(VCTargetsPath)"
