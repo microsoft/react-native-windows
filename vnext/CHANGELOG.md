@@ -1,7 +1,152 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 29 Aug 2019 22:14:06 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Sep 2019 17:02:46 GMT and should not be manually modified.
 
+## 0.59.0-vnext.190
+Thu, 19 Sep 2019 17:02:46 GMT
+
+### Changes
+
+- Support keyboardType for TextInput (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.189
+Wed, 18 Sep 2019 18:18:37 GMT
+
+### Changes
+
+- Add the SpringAnimationDriver (stpete@microsoft.com)
+## 0.59.0-vnext.188
+Tue, 17 Sep 2019 17:42:42 GMT
+
+### Changes
+
+- Refined logic for handling Flyout shadows (kenander@microsoft.com)
+## 0.59.0-vnext.187
+Tue, 17 Sep 2019 11:32:39 GMT
+
+### Changes
+
+- Simplify NuGet packing YAML. (julio@rochsquadron.net)
+## 0.59.0-vnext.186
+Tue, 17 Sep 2019 05:17:28 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.82 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.185
+Sat, 14 Sep 2019 14:09:03 GMT
+
+### Changes
+
+- Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.184
+Fri, 13 Sep 2019 21:56:22 GMT
+
+### Changes
+
+- Support live reload for developer menu (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.183
+Fri, 13 Sep 2019 15:59:25 GMT
+
+### Changes
+
+- MultiLine TextInput should accepts Enter key (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.182
+Thu, 12 Sep 2019 23:51:35 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.79 (53619745+rnbot@users.noreply.github.com)
+- Updating react-native to version: 0.59.0-microsoft.80 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.179
+Wed, 11 Sep 2019 18:44:17 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.77 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.178
+Tue, 10 Sep 2019 23:25:37 GMT
+
+### Changes
+
+- Fix onPress not firing for Touchable* keyboard events (thshea@microsoft.com)
+## 0.59.0-vnext.177
+Tue, 10 Sep 2019 19:16:08 GMT
+
+### Changes
+
+- Fix Login E2E test failure (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.176
+Tue, 10 Sep 2019 00:44:04 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.74 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.175
+Mon, 09 Sep 2019 21:39:46 GMT
+
+### Changes
+
+- Alphabetize def files. (yicyao@microsoft.com)
+## 0.59.0-vnext.174
+Mon, 09 Sep 2019 19:22:09 GMT
+
+### Changes
+
+- Put desktop unit tests into namespaces. (yicyao@microsoft.com)
+## 0.59.0-vnext.173
+Sat, 07 Sep 2019 20:17:19 GMT
+
+### Changes
+
+- Support dynamic swapping TextBox/PasswordBox view for SecureTextEntry property (dida@ntdev.microsoft.com)
+## 0.59.0-vnext.172
+Fri, 06 Sep 2019 18:03:18 GMT
+
+### Changes
+
+- Fix issue with using getInt instead of asDouble for JSI (jthysell@microsoft.com)
+## 0.59.0-vnext.171
+Thu, 05 Sep 2019 17:37:33 GMT
+
+### Changes
+
+- ReactUWP def cleanup and unit test fixes (jthysell@microsoft.com)
+## 0.59.0-vnext.170
+Tue, 03 Sep 2019 21:49:49 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.73 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.169
+Tue, 03 Sep 2019 20:24:37 GMT
+
+### Changes
+
+- Updating react-native to version: 0.59.0-microsoft.72 (53619745+rnbot@users.noreply.github.com)
+## 0.59.0-vnext.168
+Fri, 30 Aug 2019 23:08:02 GMT
+
+### Changes
+
+- set IsTabStop = false for SnapPointManagingContentControl (stecrain@microsoft.com)
+## 0.59.0-vnext.167
+Fri, 30 Aug 2019 20:30:25 GMT
+
+### Changes
+
+- fix double-apply TransformMatrix bug (email not defined)
+## 0.59.0-vnext.166
+Fri, 30 Aug 2019 20:17:20 GMT
+
+### Changes
+
+- changed alert export (email not defined)
+## 0.59.0-vnext.165
+Fri, 30 Aug 2019 19:46:18 GMT
+
+### Changes
+
+- Fixed sampleapps build and updated CI (jthysell@microsoft.com)
 ## 0.59.0-vnext.164
 Thu, 29 Aug 2019 22:14:06 GMT
 

@@ -14,14 +14,15 @@ param (
 	[ValidateSet('Debug', 'Release')]
 	[string] $Configuration = 'Debug',
 
-	[string[]] $Tests,
+	[string[]] $Include,
+
+	[string[]] $Exclude,
 
 	[switch] $Preload,
 
 	[UInt32] $Delay = 10,
 
-	[ValidateScript({Test-Path $_})]
-	[string[]] $Assemblies =
+	[System.IO.FileInfo[]] $Assemblies =
 	(
 		"$PSScriptRoot\..\target\$Platform\$Configuration\" +
 		"React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
@@ -31,18 +32,14 @@ param (
 
 	[switch] $List,
 
-	[ValidateScript({Test-Path $_})]
-	[string] $VsTest =	"${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\" +
+	[System.IO.FileInfo] $VsTest =	"${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise\" +
 						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
-	[ValidateScript({Test-Path $_})]
-	[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
+	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
 
-	[ValidateScript({Test-Path $_})]
-	[string] $NodePath = (Get-Command node.exe).Definition,
+	[System.IO.FileInfo] $NodePath = (Get-Command node.exe).Definition,
 
-	[ValidateScript({Test-Path $_})]
-	[string] $NpmPath = (Get-Command npm.cmd).Definition
+	[System.IO.FileInfo] $NpmPath = (Get-Command npm.cmd).Definition
 )
 
 # Import test server functions.
@@ -91,5 +88,13 @@ if ($NoRun) {
 	Exit
 }
 
+if ($Include.Count) {
+	$filter = "(FullyQualifiedName~" + ($Include -join ')&(FullyQualifiedName~') + ")"
+}
+
+if ($Exclude.Count) {
+	$filter += ('', '&')[$filter.Length -gt 0] + "(FullyQualifiedName!~" + ($Exclude -join ')&(FullyQualifiedName!~') + ")"
+}
+
 # Run Integration Test assemblies.
-& $VsTest $Assemblies --InIsolation --Platform:$Platform ('', "--Tests:$($Tests -join ',')")[$Tests.Count -gt 0]
+& $VsTest $Assemblies --InIsolation --Platform:$Platform ('', "--TestCaseFilter:$filter")[$filter.Length -gt 0]

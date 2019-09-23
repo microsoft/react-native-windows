@@ -16,19 +16,20 @@ class SpringAnimationDriver : public AnimationDriver {
       int64_t animatedValueTag,
       const Callback &endCallback,
       const folly::dynamic &config,
-      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager,
+      const folly::dynamic &dynamicToValues = folly::dynamic::array());
 
   std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
   MakeAnimation(const folly::dynamic &config) override;
+
+  double ToValue() override;
 
  private:
   std::tuple<float, double> GetValueAndVelocityForTime(
       double time,
       double startValue);
-  bool IsAtRest(
-      double currentVelocity,
-      double currentPosition,
-      double startPosition);
+  bool
+  IsAtRest(double currentVelocity, double currentPosition, double endValue);
   bool IsOvershooting(double currentValue, double startValue);
 
   double m_springStiffness{0};
@@ -40,6 +41,7 @@ class SpringAnimationDriver : public AnimationDriver {
   double m_displacementFromRestThreshold{0};
   bool m_overshootClampingEnabled{0};
   int m_iterations{0};
+  folly::dynamic m_dynamicToValues{};
 
   static constexpr std::string_view s_springStiffnessParameterName{"stiffness"};
   static constexpr std::string_view s_springDampingParameterName{"damping"};
@@ -54,6 +56,6 @@ class SpringAnimationDriver : public AnimationDriver {
   static constexpr std::string_view s_overshootClampingEnabledParameterName{
       "overshootClamping"};
   static constexpr std::string_view s_iterationsParameterName{"iterations"};
-};
+}; // namespace uwp
 } // namespace uwp
 } // namespace react

@@ -13,7 +13,7 @@ class AlertExample extends React.Component {
   };
 
   _threeButtons = () => {
-    var _this = this;
+    var that = this;
 
     Alert.alert(
       'Alert Title',
@@ -21,16 +21,16 @@ class AlertExample extends React.Component {
       [
         {
           text: 'Ask me later',
-          onPress: () => _this.setState({buttonPressed: 'Ask me later'}),
+          onPress: () => that.setState({buttonPressed: 'Ask me later'}),
         },
         {
           text: 'Cancel',
-          onPress: () => _this.setState({buttonPressed: 'Cancel'}),
+          onPress: () => that.setState({buttonPressed: 'Cancel'}),
           style: 'cancel',
         },
         {
           text: 'OK',
-          onPress: () => _this.setState({buttonPressed: 'OK'}),
+          onPress: () => that.setState({buttonPressed: 'OK'}),
         },
       ],
       {cancelable: false},
@@ -38,7 +38,7 @@ class AlertExample extends React.Component {
   };
 
   _twoButtons = () => {
-    var _this = this;
+    var that = this;
 
     Alert.alert(
       'Alert Title',
@@ -46,12 +46,12 @@ class AlertExample extends React.Component {
       [
         {
           text: 'Cancel',
-          onPress: () => _this.setState({buttonPressed: 'Cancel'}),
+          onPress: () => that.setState({buttonPressed: 'Cancel'}),
           style: 'cancel',
         },
         {
           text: 'OK',
-          onPress: () => _this.setState({buttonPressed: 'OK'}),
+          onPress: () => that.setState({buttonPressed: 'OK'}),
         },
       ],
       {cancelable: false},
@@ -59,7 +59,7 @@ class AlertExample extends React.Component {
   };
 
   _oneButton = () => {
-    var _this = this;
+    var that = this;
 
     Alert.alert(
       'Alert Title',
@@ -67,7 +67,7 @@ class AlertExample extends React.Component {
       [
         {
           text: 'OK',
-          onPress: () => _this.setState({buttonPressed: 'OK'}),
+          onPress: () => that.setState({buttonPressed: 'OK'}),
         },
       ],
       {cancelable: false},

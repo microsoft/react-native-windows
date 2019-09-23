@@ -20,7 +20,7 @@ class <%=name%> extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit app.windows.js
+          To get started, edit index.windows.js
         </Text>
         <Text style={styles.instructions}>
           To show the Developer Menu, enter Ctrl+Shift+D

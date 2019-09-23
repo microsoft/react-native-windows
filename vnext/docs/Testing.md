@@ -23,3 +23,7 @@ These tests can run on the local development host.
 # Starts test services and runs tests.
 & Scripts\IntegrationTests.ps1
 ```
+
+### E2E Tests
+*Implemented in packages/E2ETest*
+<BR/>Please follow [Author and Run E2E Test for React Native Windows](E2ETest.md) for E2E Tests

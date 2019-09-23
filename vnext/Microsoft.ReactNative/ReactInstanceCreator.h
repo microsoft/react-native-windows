@@ -39,6 +39,8 @@ struct ReactInstanceCreator : react::uwp::IReactInstanceCreator {
   // that should be used instead as it automatically "persists" by virtue
   // of being attached to the ReactNativeHost.
   void persistUseWebDebugger(bool /*useWebDebugger*/){};
+  // TODO: Remove too
+  void persistUseLiveReload(bool /*useliveReload*/){};
 
  private:
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{};

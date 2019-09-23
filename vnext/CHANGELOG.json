@@ -2,6 +2,466 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Sep 2019 17:02:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.190",
+      "version": "0.59.0-vnext.190",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support keyboardType for TextInput",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "50a6c2367b4dd144376360362f625a19784be123"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.39",
+            "author": "julio@rochsquadron.net",
+            "commit": "49a6ca938956298ee3cb92b998a1a093a633e8f5"
+          },
+          {
+            "comment": "Refreshing the V8 binary to include bug fixes and perf optimizations. V8 consumption is under a conditional compilation flag. ",
+            "author": "anandrag@microsoft.com",
+            "commit": "921ffde513c85848017f8f55be4fd712b5eb5f0a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Sep 2019 18:18:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.189",
+      "version": "0.59.0-vnext.189",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Increase sleep for setting up test servers in hope of reducing itermittency",
+            "author": "acoates@microsoft.com",
+            "commit": "8f961c1b9a6fd4708bd9fb83edc5418a60ceb52d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 17:42:42 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.188",
+      "version": "0.59.0-vnext.188",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Refined logic for handling Flyout shadows",
+            "author": "kenander@microsoft.com",
+            "commit": "2cfeb8701abbf97377a585932e1859a4af4b276c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 11:32:39 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.187",
+      "version": "0.59.0-vnext.187",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simplify NuGet packing YAML.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8eb363fac03a49080cb9fcd5004f4da287d4ef34"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 05:17:28 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.186",
+      "version": "0.59.0-vnext.186",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.82",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7dbbfd3638a577c19c096b9baf2b1ff83bbba82c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Sep 2019 14:09:03 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.185",
+      "version": "0.59.0-vnext.185",
+      "comments": {
+        "none": [
+          {
+            "comment": "add e2e test doc",
+            "author": "canli@microsoft.com",
+            "commit": "ce081d0718660f4cfbf3a9db9e6d4d3c67c70bab"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Add PackageCertificatePassword attribute to MyApp.csproj to solve the build issue in VS2019 due to temp pfx certificate issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e2729f1ed7e384e3c446aaa3a90da650fef1e5d9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Sep 2019 21:56:22 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.184",
+      "version": "0.59.0-vnext.184",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support live reload for developer menu",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "0321a9ba4cc3ad28797c8453f78c7d8575e9f6bc"
+          }
+        ],
+        "none": [
+          {
+            "comment": "add more scripts to package.json in e2e",
+            "author": "canli@microsoft.com",
+            "commit": "53149fddb5c13244606e5e6dec6d72607f30aa35"
+          },
+          {
+            "comment": "Remove LegacyWebSocket.",
+            "author": "julio@rochsquadron.net",
+            "commit": "b07546abd175f6b9aca8c279f7b33d84ba536496"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Sep 2019 15:59:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.183",
+      "version": "0.59.0-vnext.183",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "MultiLine TextInput should accepts Enter key",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b887c98125ffd25a73889c1bab466cff7aaf1a6a"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Enable all non-Chrome integration tests",
+            "author": "julio@rochsquadron.net",
+            "commit": "e34895c8d6bf637304a8950388527540522f81ee"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Sep 2019 23:51:35 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.182",
+      "version": "0.59.0-vnext.182",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.79",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "7bb96f44ef561a437af7229ebd0a6d3d3d22d38f"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.80",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "2771632d1c5cbc9920a0b886f99e5bd895d8e832"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Sep 2019 18:44:17 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.179",
+      "version": "0.59.0-vnext.179",
+      "comments": {
+        "none": [
+          {
+            "comment": "Prepare yml and CLI for pipeline",
+            "author": "canli@microsoft.com",
+            "commit": "3c67f95626beabdf4fcc0ba6d85b8ff223751194"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.77",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fc6c0e7e4155b2602ec7bc07baf9ba3dc1cb41cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 23:25:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.178",
+      "version": "0.59.0-vnext.178",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix onPress not firing for Touchable* keyboard events",
+            "author": "thshea@microsoft.com",
+            "commit": "c434599726f09784d09dc10eed239a806de0a627"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 19:16:08 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.177",
+      "version": "0.59.0-vnext.177",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Login E2E test failure",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "a2e2a331820e7b5e61dba3d82807c5f36cbd6b3e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 00:44:04 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.176",
+      "version": "0.59.0-vnext.176",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.74",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fc361686e49b24b7d75c0155fa3e8b0c912ee357"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Change the CLI bundle name index.bundle (vnext)",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "f8a82c11e642baaf36a9c3889810b3e98ee61fa4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Sep 2019 21:39:46 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.175",
+      "version": "0.59.0-vnext.175",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Alphabetize def files.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5c988739053f19a1c1ecf15c80ea8569cacd67dd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 09 Sep 2019 19:22:09 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.174",
+      "version": "0.59.0-vnext.174",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Put desktop unit tests into namespaces.",
+            "author": "yicyao@microsoft.com",
+            "commit": "376450bff685ade93b719d1ba5cd0d8d290eefb2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Sep 2019 20:17:19 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.173",
+      "version": "0.59.0-vnext.173",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add MemoryMappedBuffer.",
+            "author": "yicyao@microsoft.com",
+            "commit": "f0a4515025926438c1f86cb232196aac4f483d08"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support dynamic swapping TextBox/PasswordBox view for SecureTextEntry property",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "d432cbe4b3ab20ab69b5723f5356f53ed1c7d832"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2019 18:03:18 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.172",
+      "version": "0.59.0-vnext.172",
+      "comments": {
+        "none": [
+          {
+            "comment": "CLI and bundle change to support test",
+            "author": "canli@microsoft.com",
+            "commit": "75a6e7f24abb466ae7ff1871bfc59312349c20c8"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Fix issue with using getInt instead of asDouble for JSI",
+            "author": "jthysell@microsoft.com",
+            "commit": "dccdb9de931860f8152e4480ceff6dddc82f91c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Sep 2019 17:37:33 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.171",
+      "version": "0.59.0-vnext.171",
+      "comments": {
+        "none": [
+          {
+            "comment": "Changed deploy output to use StdOut",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "605b956702639c1bc26998549a708a43334fe139"
+          },
+          {
+            "comment": "Change `_this` to `that` to match ESList consistent-this rules.",
+            "author": "hpratt@microsoft.com",
+            "commit": "baef6558878a0f71a0d764373b412cb6e4bbbdeb"
+          },
+          {
+            "comment": "Update CreateStringResponseBody symbol in test DLL.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8f3abfb5959005c841eef1420043f79e8bcc9d62"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "ReactUWP def cleanup and unit test fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "14866ed13e3d4d0e390d3012fac7bdda1da9ab74"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Sep 2019 21:49:49 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.170",
+      "version": "0.59.0-vnext.170",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.73",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "6f5d7a37381b7006602c7accb3bc384886be1689"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Sep 2019 20:24:37 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.169",
+      "version": "0.59.0-vnext.169",
+      "comments": {
+        "none": [
+          {
+            "comment": "Ported HttpServer.",
+            "author": "julio@rochsquadron.net",
+            "commit": "e076e2024975cdd9fe14d8cd0d168a415e1addf1"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.72",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "ecff6489449ca142e78dd9a03b587109d088c029"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 23:08:02 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.168",
+      "version": "0.59.0-vnext.168",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "set IsTabStop = false for SnapPointManagingContentControl",
+            "author": "stecrain@microsoft.com",
+            "commit": "5f41be48b33e46a650877325618f77fb634ac620"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 20:30:25 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.167",
+      "version": "0.59.0-vnext.167",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix double-apply TransformMatrix bug",
+            "author": "email not defined",
+            "commit": "4f1cfdd19e87b767192562028ef2de406952dc6e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 20:17:20 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.166",
+      "version": "0.59.0-vnext.166",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "changed alert export",
+            "author": "email not defined",
+            "commit": "822bf1b6f925f940199d0625c8d17208f2cd8e96"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2019 19:46:18 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.165",
+      "version": "0.59.0-vnext.165",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed sampleapps build and updated CI",
+            "author": "jthysell@microsoft.com",
+            "commit": "6c3463e5f85c02866f22195d4b65437228153158"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Introducing an ETW provider and routing react-native Systrace event to it",
+            "author": "anandrag@microsoft.com",
+            "commit": "508a8473eb379ab78b904b2c3e8477ac9018fbda"
+          },
+          {
+            "comment": "updating status doc",
+            "author": "yulikl@microsoft.com",
+            "commit": "965fc40267837813138f73543ad20a03ebe11268"
+          },
+          {
+            "comment": "fix double onpress issue",
+            "author": "ngbu@microsoft.com",
+            "commit": "af7dcea1b513568858c546682870fdce3ac0c67b"
+          },
+          {
+            "comment": "Fix double onPress issue in touchableOpacity (#3042)",
+            "author": "ngbu@microsoft.com",
+            "commit": "ba368131fb6bccfe02092cbe4cc90f9abf99d214"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Aug 2019 22:14:06 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.164",
       "version": "0.59.0-vnext.164",

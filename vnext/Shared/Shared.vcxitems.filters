@@ -7,6 +7,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp">
       <Filter>AsyncStorage</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AsyncStorage">

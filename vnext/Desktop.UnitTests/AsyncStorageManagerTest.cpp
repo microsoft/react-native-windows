@@ -14,6 +14,8 @@
 using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+namespace {
+
 std::vector<folly::dynamic> returnedValues;
 std::condition_variable_any cv;
 std::recursive_mutex m;
@@ -54,6 +56,10 @@ void throwLastErrorMessage() {
       nullptr);
   throw std::exception(errorMessageBuffer);
 }
+
+} // namespace
+
+namespace Microsoft::React::Test {
 
 TEST_CLASS(AsyncStorageManagerTest) {
   const WCHAR *m_storageFileName = L"testdomain";
@@ -266,3 +272,5 @@ TEST_CLASS(AsyncStorageManagerTest) {
     lock.unlock();
   }
 };
+
+} // namespace Microsoft::React::Test
