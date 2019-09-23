@@ -22,6 +22,12 @@
     <Filter Include="Source Files\AsyncStorage">
       <UniqueIdentifier>{efe7ad3d-598a-4633-a2b7-2de458833b88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="etw">
+      <UniqueIdentifier>{06a27269-2c1f-418a-9e70-82d17deb7de2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tracing">
+      <UniqueIdentifier>{4cc2fae5-bc38-4aff-aa49-33225485e2de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseScriptStoreImpl.cpp">
@@ -86,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
+    </ClCompile>
+    <ClCompile Include="tracing\tracing.cpp">
+      <Filter>tracing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,8 +221,20 @@
     <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="etw\react_native_windows.h">
+      <Filter>etw</Filter>
+    </ClInclude>
+    <ClInclude Include="tracing\fbsystrace.h">
+      <Filter>tracing</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryMappedBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="etw\react_native_windows.man">
+      <Filter>etw</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -33,6 +33,11 @@ function newSpinner(text) {
   if (process.env.WT_SESSION) {
     options.spinner = spinners.dots;
   }
+
+  // By default, ora process.stderr as the output stream, however,the VS Code debugger
+  // Uses stdout to match success patterns
+  options.stream = process.stdout;
+
   return ora(options).start();
 }
 

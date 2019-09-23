@@ -36,6 +36,8 @@ std::vector<char> ReadFile(const char *filename) {
 
 } // namespace
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS(BytecodeUnitTests) {
  private:
   MinimalChakraRuntime m_chakraRuntime;
@@ -369,3 +371,5 @@ TEST_CLASS(BytecodeUnitTests) {
         });
   }
 };
+
+} // namespace Microsoft::React::Test

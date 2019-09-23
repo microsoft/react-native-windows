@@ -10,6 +10,8 @@ using namespace facebook::react;
 using namespace Microsoft::React::Test;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS(UIManagerModuleTests) {
  protected:
   std::unique_ptr<EmptyUIManager> m_emptyUIManager;
@@ -98,3 +100,5 @@ TEST_CLASS(UIManagerModuleTests) {
     // EXPECT_STREQ("Some Text", it->second.c_str());
   }
 };
+
+} // namespace Microsoft::React::Test

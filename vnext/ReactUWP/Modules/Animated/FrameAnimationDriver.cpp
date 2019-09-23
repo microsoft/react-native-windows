@@ -52,5 +52,9 @@ FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
   return std::make_tuple(animation, scopedBatch);
 }
 
+double FrameAnimationDriver::ToValue() {
+  return m_toValue;
+}
+
 } // namespace uwp
 } // namespace react

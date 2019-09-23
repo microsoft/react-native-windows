@@ -30,7 +30,7 @@ Also tracked are NativeModules, as they are essential, even if not part of the c
 |:-|:-|:-|:-|
 |Accessibility|**Completed**|-|Partial|
 |LayoutProps|**Completed**|-|Partial|
-|Alert|Not Started|[2071](https://github.com/microsoft/react-native-windows/issues/2071)|**Complete**|
+|Alert|**Completed**|-|**Complete**|
 |AppState|Not Started|[2144](https://github.com/microsoft/react-native-windows/issues/2144)|**Complete**|
 |Keyboard|Not Started|No Issues Logged|Not Implemented|
 |LayoutAnimation|Not Started|[2494](https://github.com/microsoft/react-native-windows/issues/2494)|Partial|

@@ -14,6 +14,7 @@ const glob = require('glob');
 const parse = require('xml-parser');
 const WinAppDeployTool = require('./winappdeploytool');
 const {
+  newInfo,
   newSuccess,
   newError,
   newWarn,
@@ -27,8 +28,18 @@ function pushd(pathArg) {
   return () => process.chdir(cwd);
 }
 
+function getBuildConfiguration(options) {
+  return (
+    (options.release ? 'Release' : 'Debug') + (options.bundle ? 'Bundle' : '')
+  );
+}
+
+function shouldLaunchApp(options) {
+  return options.launch;
+}
+
 function getAppPackage(options) {
-  const configuration = options.release ? 'Release' : 'Debug';
+  const configuration = getBuildConfiguration(options);
   const packageFolder =
     options.arch === 'x86'
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
@@ -53,7 +64,7 @@ function getWindowsStoreAppUtils(options) {
 }
 
 function getAppxManifest(options) {
-  const configuration = options.release ? 'Release' : 'Debug';
+  const configuration = getBuildConfiguration(options);
   const appxManifestGlob = `windows/{*/bin/${
     options.arch
   }/${configuration},${configuration}/*}/AppxManifest.xml`;
@@ -88,6 +99,7 @@ async function deployToDevice(options, verbose) {
       : 'device';
   const deployTool = new WinAppDeployTool();
   const appxManifest = getAppxManifest(options);
+  const shouldLaunch = shouldLaunchApp(options);
   const identity = appxManifest.root.children.filter(function(x) {
     return x.name === 'mp:PhoneIdentity';
   })[0];
@@ -103,10 +115,22 @@ async function deployToDevice(options, verbose) {
 
   const appxFile = glob.sync(path.join(appPackageFolder, '*.appx'))[0];
   try {
-    await deployTool.installAppPackage(appxFile, device, true, false, verbose);
+    await deployTool.installAppPackage(
+      appxFile,
+      device,
+      shouldLaunch,
+      false,
+      verbose,
+    );
   } catch (e) {
     if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
-      await deployTool.installAppPackage(appxFile, device, true, true, verbose);
+      await deployTool.installAppPackage(
+        appxFile,
+        device,
+        shouldLaunch,
+        true,
+        verbose,
+      );
     } else {
       handleResponseError(e);
     }
@@ -124,6 +148,7 @@ async function deployToDesktop(options, verbose) {
   const script = glob.sync(
     path.join(appPackageFolder, 'Add-AppDevPackage.ps1'),
   )[0];
+
   const args = ['remoteDebugging', options.proxy ? 'true' : 'false'];
 
   const popd = pushd(options.root);
@@ -140,23 +165,32 @@ async function deployToDesktop(options, verbose) {
   );
 
   const installingText = 'Installing new version of the app';
+  const installApp = `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`;
+  const installAppCmd = options.force ? installApp + ' -Force' : installApp;
+
   await commandWithProgress(
     newSpinner(installingText),
     installingText,
     'powershell',
-    `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`.split(
-      ' ',
-    ),
+    installAppCmd.split(' '),
     verbose,
   );
 
-  const loopbackText = 'Verifying loopbackExempt';
-  const loopbackSpinner = newSpinner(loopbackText);
   const appFamilyName = execSync(
     `powershell -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();
+
+  if (!appFamilyName) {
+    throw new Error(
+      'Fail to check the installed app, maybe developer mode is off on Windows',
+    );
+  }
+
+  const loopbackText = 'Verifying loopbackExempt';
+  const loopbackSpinner = newSpinner(loopbackText);
+
   await commandWithProgress(
     loopbackSpinner,
     loopbackText,
@@ -165,16 +199,20 @@ async function deployToDesktop(options, verbose) {
     verbose,
   );
 
-  const startingText = 'Starting the app';
-  await commandWithProgress(
-    newSpinner(startingText),
-    startingText,
-    'powershell',
-    `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`.split(
-      ' ',
-    ),
-    verbose,
-  );
+  if (shouldLaunchApp(options)) {
+    const startingText = 'Starting the app';
+    await commandWithProgress(
+      newSpinner(startingText),
+      startingText,
+      'powershell',
+      `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Start-Locally ${appName} ${args}`.split(
+        ' ',
+      ),
+      verbose,
+    );
+  } else {
+    newInfo('Skip the step to start the app');
+  }
 
   popd();
 }
@@ -215,6 +253,7 @@ function launchServer(options, verbose) {
 }
 
 module.exports = {
+  getBuildConfiguration,
   deployToDesktop,
   deployToDevice,
   startServerInNewWindow,

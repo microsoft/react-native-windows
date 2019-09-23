@@ -21,6 +21,7 @@ class REACTWINDOWS_EXPORT ControlViewManager
   void UpdateProperties(
       ShadowNodeBase *nodeToUpdate,
       const folly::dynamic &reactDiffMap) override;
+  void TransferProperties(XamlView oldView, XamlView newView) override;
 };
 
 } // namespace uwp

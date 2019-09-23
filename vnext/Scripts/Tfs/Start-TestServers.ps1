@@ -5,8 +5,11 @@
 # Start-TestServers.ps1
 #
 param (
-	$SourcesDirectory = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
-	[switch] $Preload
+	[System.IO.DirectoryInfo] $SourcesDirectory = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
+
+	[switch] $Preload,
+
+	[int] $SleepSeconds = 10
 )
 
 Write-Host "Starting packager"
@@ -33,7 +36,7 @@ Write-Host 'Started WebSocket server'
 if ($Preload) {
 	Write-Host 'Preloading bundles'
 
-	Start-Sleep -Seconds 12
+	Start-Sleep -Seconds $SleepSeconds
 
 	# Preload the RNTesterApp integration bundle for better performance in integration tests.
 	Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true" | Out-Null

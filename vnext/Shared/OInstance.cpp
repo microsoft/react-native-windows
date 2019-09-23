@@ -58,7 +58,19 @@
 #endif
 #include "ChakraJSIRuntimeHolder.h"
 
+// foreward declaration.
+namespace facebook {
+namespace react {
+namespace tracing {
+void initializeETW();
+void initializeJSHooks(facebook::jsi::Runtime &runtime);
+} // namespace tracing
+} // namespace react
+} // namespace facebook
+
 #endif
+
+#include <fstream>
 
 namespace {
 
@@ -177,11 +189,20 @@ bool GetLastWriteTime(const std::string &fileName, uint64_t &result) noexcept {
 
 } // namespace
 
+using namespace facebook;
+
 namespace facebook {
 namespace react {
 
 #if !defined(OSS_RN)
 namespace {
+
+void runtimeInstaller(jsi::Runtime &runtime) {
+#ifdef ENABLE_JS_SYSTRACE
+  facebook::react::tracing::initializeJSHooks(runtime);
+#endif
+}
+
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
@@ -202,7 +223,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         std::move(delegate),
         logger,
         JSIExecutor::defaultTimeoutInvoker,
-        nullptr);
+        runtimeInstaller);
   }
 
   OJSIExecutorFactory(
@@ -398,6 +419,11 @@ InstanceImpl::InstanceImpl(
   // Temp set the logmarker here
 #if !defined(OSS_RN)
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
+#endif
+
+#ifdef ENABLE_TRACING
+  // TODO :: Find a better place to initialize ETW once per process.
+  facebook::react::tracing::initializeETW();
 #endif
 
   // Default (common) NativeModules

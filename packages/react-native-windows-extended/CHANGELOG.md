@@ -1,7 +1,50 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 29 Aug 2019 20:21:10 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Sep 2019 18:18:37 GMT and should not be manually modified.
 
+## 0.60.0
+Wed, 18 Sep 2019 18:18:37 GMT
+
+### Minor changes
+
+- Add the SpringAnimationDriver (stpete@microsoft.com)
+## 0.59.1
+Tue, 17 Sep 2019 05:17:28 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.82 (53619745+rnbot@users.noreply.github.com)
+## 0.15.7
+Thu, 12 Sep 2019 23:51:35 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.79 (53619745+rnbot@users.noreply.github.com)
+- Updating react-native to version: 0.59.0-microsoft.80 (53619745+rnbot@users.noreply.github.com)
+## 0.15.4
+Wed, 11 Sep 2019 18:44:17 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.77 (53619745+rnbot@users.noreply.github.com)
+## 0.15.3
+Tue, 10 Sep 2019 00:44:04 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.74 (53619745+rnbot@users.noreply.github.com)
+## 0.15.2
+Tue, 03 Sep 2019 21:49:49 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.73 (53619745+rnbot@users.noreply.github.com)
+## 0.15.1
+Tue, 03 Sep 2019 20:24:37 GMT
+
+### Patches
+
+- Updating react-native to version: 0.59.0-microsoft.72 (53619745+rnbot@users.noreply.github.com)
 ## 0.15.0
 Thu, 29 Aug 2019 20:21:10 GMT
 

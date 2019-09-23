@@ -9,6 +9,7 @@ import {
   PASSWORD_ON_LOGIN,
   SUBMIT_ON_LOGIN,
   LOGINRESULT_ON_LOGIN,
+  SHOWPASSWORD_ON_LOGIN,
 } from '../../app/Consts';
 
 class LoginPage extends BasePage {
@@ -19,6 +20,15 @@ class LoginPage extends BasePage {
   setLoginInfo(userName: string, password: string) {
     this._userName.setValue(userName);
     this._password.setValue(password);
+  }
+
+  appendPassword(password: string) {
+    this._password.addValue('End');
+    this._password.addValue(password);
+  }
+
+  toggleShowPassword() {
+    this._showPassword.click();
   }
 
   submitForm() {
@@ -39,6 +49,10 @@ class LoginPage extends BasePage {
 
   private get _submit() {
     return By(SUBMIT_ON_LOGIN);
+  }
+
+  private get _showPassword() {
+    return By(SHOWPASSWORD_ON_LOGIN);
   }
 
   private get _loginResult() {

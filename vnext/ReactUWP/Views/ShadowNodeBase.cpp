@@ -5,6 +5,7 @@
 
 #include <IReactInstance.h>
 
+#include <ReactUWP\Modules\NativeUIManager.h>
 #include <ViewManager.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
@@ -73,6 +74,23 @@ void ShadowNodeBase::ReplaceChild(
     XamlView oldChildView,
     XamlView newChildView) {
   GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
+}
+
+void ShadowNodeBase::ReparentView(XamlView view) {
+  GetViewManager()->TransferProperties(m_view, view);
+  if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
+    if (const auto nativeUIManager =
+            static_cast<NativeUIManager *>(instance->NativeUIManager())) {
+      int64_t parentTag = GetParent();
+      auto host = nativeUIManager->getHost();
+      auto pParentNode =
+          static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
+      if (pParentNode != nullptr) {
+        pParentNode->ReplaceChild(m_view, view);
+      }
+    }
+  }
+  ReplaceView(view);
 }
 
 winrt::Windows::UI::Composition::CompositionPropertySet

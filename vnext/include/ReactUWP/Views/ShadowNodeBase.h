@@ -96,6 +96,8 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
 
   void ReplaceView(XamlView view);
 
+  void ReparentView(XamlView view);
+
   // Extra layout handling
   virtual bool IsExternalLayoutDirty() const {
     return false;

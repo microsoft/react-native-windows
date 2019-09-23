@@ -12,6 +12,7 @@ export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
 export const TEXTINPUT_TESTPAGE = 'TextInputTestPage';
 
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
+export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
 
 // LoginTestPage
 export const LOGIN_TESTPAGE = 'LoginTestPage';
@@ -19,3 +20,4 @@ export const USERNAME_ON_LOGIN = 'UserName';
 export const PASSWORD_ON_LOGIN = 'Password';
 export const SUBMIT_ON_LOGIN = 'Submit';
 export const LOGINRESULT_ON_LOGIN = 'Result';
+export const SHOWPASSWORD_ON_LOGIN = 'ShowPassword';
