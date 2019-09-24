@@ -5,20 +5,20 @@ param (
 	[Parameter(Mandatory=$true)]
 	[uri] $InstallerUri,
 
-	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
+	[string] $VsInstaller = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe",
 
 	[System.IO.FileInfo] $VsInstallPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise",
 
 	[switch] $Collect
 )
 
-Invoke-WebRequest -Method Get `
-	-Uri $InstallerUri `
-	-OutFile $VsInstaller
+# Invoke-WebRequest -Method Get `
+# 	-Uri $InstallerUri `
+# 	-OutFile $VsInstaller
 
 $argumentList = `
 	'modify',
-	'--installPath', "`"$VsInstallPath`"" ,
+	'--installPath', "`"$VsInstallPath`"",
 	'--wait',
 	'--quiet',
 	'--norestart'
