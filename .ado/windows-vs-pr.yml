@@ -545,6 +545,7 @@ stages:
         parameters:
           name: E2ETest
           pool:
+            vmImage: $(VmImage)
           BuildPlatform: x64
           UseRNFork: true
 
