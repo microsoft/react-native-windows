@@ -5,20 +5,36 @@ param (
 	[Parameter(Mandatory=$true)]
 	[uri] $InstallerUri,
 
-	[string] $VsInstaller = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe",
+	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
 
 	[System.IO.FileInfo] $VsInstallPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\Enterprise",
 
 	[switch] $Collect
 )
 
-# Invoke-WebRequest -Method Get `
-# 	-Uri $InstallerUri `
-# 	-OutFile $VsInstaller
+Invoke-WebRequest -Method Get `
+	-Uri $InstallerUri `
+	-OutFile $VsInstaller
+
+$argumentList = `
+	'--layout', "${env:System_DefaultWorkingDirectory}\vs",
+	'--wait',
+	'--norestart',
+	'--quiet'
+
+$Features | ForEach-Object {
+	$argumentList += '--add', $_
+}
+
+Start-Process `
+	-FilePath "$VsInstaller" `
+	-ArgumentList $argumentList `
+	-Wait `
+	-PassThru
 
 $argumentList = `
 	'modify',
-	'--installPath', "`"$VsInstallPath`"",
+	'--installPath', "`"$VsInstallPath`"" ,
 	'--wait',
 	'--quiet',
 	'--norestart'
@@ -28,7 +44,7 @@ $Features | ForEach-Object {
 }
 
 Start-Process `
-	-FilePath "$VsInstaller" `
+	-FilePath "${env:System_DefaultWorkingDirectory}\vs\vs_Enterprise.exe" `
 	-ArgumentList $argumentList `
 	-Wait `
 	-PassThru `
