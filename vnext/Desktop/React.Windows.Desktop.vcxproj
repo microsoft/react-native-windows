@@ -60,6 +60,7 @@
       <PreprocessorDefinitions Condition="'$(ENABLE_TRACING)'=='true'">ENABLE_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_TRACE_POSTPROCESSING)'=='true'">ENABLE_TRACE_POSTPROCESSING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
