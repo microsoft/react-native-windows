@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update to react-native 0.60",
-  "packageName": "react-native-windows-extended",
-  "email": "acoates@microsoft.com",
-  "commit": "def1019f7463ed407d4fc9e4c0c59d7c43703176",
-  "date": "2019-09-17T17:44:15.771Z"
-}

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Support latest react-native-cli",
-  "packageName": "rnpm-plugin-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "704b5b46704d5638293c3f6ff0f3bd09e6bfa809",
-  "date": "2019-09-17T22:34:43.677Z"
-}
