@@ -128,6 +128,12 @@ stages:
               filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
               arguments: -InstallerUri $(VsInstallerUri) -Components $(VsFeatures)
 
+
+          - task: CmdLine@2
+            displayName: Remove VS Cache
+            inputs:
+              script: rmdir /S /Q %System_DefaultWorkingDirectory%\vs
+
           - task: MSBuild@1
             displayName: MSBuild - ReactWindows-Universal
             inputs:
