@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Allow focus transfer to Flyout on Open",
+  "packageName": "react-native-windows",
+  "email": "kenander@microsoft.com",
+  "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908",
+  "date": "2019-09-24T21:50:43.866Z"
+}
