@@ -1,6 +1,6 @@
 param (
 	[Parameter(Mandatory=$true)]
-	[string[]] $Features,
+	[string[]] $Components,
 
 	[Parameter(Mandatory=$true)]
 	[uri] $InstallerUri,
@@ -16,36 +16,32 @@ Invoke-WebRequest -Method Get `
 	-Uri $InstallerUri `
 	-OutFile $VsInstaller
 
-$argumentList = `
-	'--layout', "${env:System_DefaultWorkingDirectory}\vs",
-	'--wait',
-	'--norestart',
-	'--quiet'
-
-$Features | ForEach-Object {
-	$argumentList += '--add', $_
+$Components | ForEach-Object {
+	$componentList += '--add', $_
 }
 
 Start-Process `
 	-FilePath "$VsInstaller" `
-	-ArgumentList $argumentList `
+	-ArgumentList ( `
+		'--layout', "${env:System_DefaultWorkingDirectory}\vs",
+		'--wait',
+		'--norestart',
+		'--quiet' + `
+		$componentList
+	) `
 	-Wait `
 	-PassThru
 
-$argumentList = `
-	'modify',
-	'--installPath', "`"$VsInstallPath`"" ,
-	'--wait',
-	'--quiet',
-	'--norestart'
-
-$Features | ForEach-Object {
-	$argumentList += '--add', $_
-}
-
 Start-Process `
 	-FilePath "${env:System_DefaultWorkingDirectory}\vs\vs_Enterprise.exe" `
-	-ArgumentList $argumentList `
+	-ArgumentList (
+		'modify',
+		'--installPath', "`"$VsInstallPath`"" ,
+		'--wait',
+		'--quiet',
+		'--norestart' + `
+		$componentList
+	) `
 	-Wait `
 	-PassThru `
 	-OutVariable returnCode
