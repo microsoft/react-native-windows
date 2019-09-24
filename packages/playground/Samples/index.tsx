@@ -8,6 +8,7 @@ import * as React from 'react';
 import {
   AppRegistry,
   Button,
+  CheckBox,
   StyleSheet,
   ScrollView,
   Switch,
@@ -25,7 +26,7 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {CheckBox, DatePicker, Popup, Picker} from 'react-native-windows';
+import {DatePicker, Popup, Picker} from 'react-native-windows';
 
 class TicTacButton extends React.Component<{}, {text: string}> {
   constructor(props: {}) {
@@ -80,7 +81,7 @@ class PopupButton extends React.Component<
       <View style={{flexDirection: 'row', padding: 20}}>
         <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
         <CheckBox
-          checked={this.state.isLightDismissEnabled}
+          value={this.state.isLightDismissEnabled}
           onValueChange={value => this.setState({isLightDismissEnabled: value})}
         />
         <Button
@@ -100,7 +101,7 @@ class PopupButton extends React.Component<
             </Text>
             <CheckBox
               style={{justifyContent: 'center', padding: 20}}
-              checked={this.state.popupCheckBoxState}
+              value={this.state.popupCheckBoxState}
               onValueChange={value =>
                 this.setState({popupCheckBoxState: value})
               }
@@ -680,7 +681,7 @@ export default class Bootstrap extends React.Component<
             }}>
             <CheckBox
               onValueChange={value => this.setState({checkBoxIsOn: value})}
-              checked={this.state.checkBoxIsOn}
+              value={this.state.checkBoxIsOn}
             />
             <Text>Checkbox {this.state.checkBoxIsOn ? 'ON' : 'OFF'}</Text>
           </View>

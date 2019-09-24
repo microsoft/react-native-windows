@@ -26,7 +26,7 @@ function generateWindows (projectDir, name, ns, options) {
     path.join(__dirname, 'generator-windows', 'templates', options.language),
     projectDir,
     name,
-    { ns }
+    { ns, overwrite: options.overwrite }
   );
 }
 

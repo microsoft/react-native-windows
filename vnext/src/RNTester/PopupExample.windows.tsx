@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Button, Text, TextInput, View} from 'react-native';
-import {Popup} from '../index.windows';
+import {Popup} from 'react-native-windows';
 
 interface IPopupExampleState {
   isFlyoutVisible: boolean;

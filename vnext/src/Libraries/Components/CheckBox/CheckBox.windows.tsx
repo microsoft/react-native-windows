@@ -22,14 +22,14 @@ const RCTCheckBox = requireNativeComponent('RCTCheckBox');
  * Renders a boolean input.
  *
  * This is a controlled component that requires an `onValueChange` callback that
- * updates the `checked` prop in order for the component to reflect user actions.
- * If the `checked` prop is not updated, the component will continue to render
- * the supplied `checked` prop instead of the expected result of any user actions.
+ * updates the `value` prop in order for the component to reflect user actions.
+ * If the `value` prop is not updated, the component will continue to render
+ * the supplied `value` prop instead of the expected result of any user actions.
  *
  * @keyword checkbox
  * @keyword toggle
  */
-export class CheckBox extends React.Component<ICheckBoxProps> {
+class CheckBox extends React.Component<ICheckBoxProps> {
   // tslint:disable-next-line:no-any
   private _rctCheckBox: any;
 
@@ -55,7 +55,7 @@ export class CheckBox extends React.Component<ICheckBoxProps> {
 
   private _onChange = (event: ICheckBoxChangeEvent) => {
     if (this._rctCheckBox) {
-      this._rctCheckBox.setNativeProps({checked: this.props.checked});
+      this._rctCheckBox.setNativeProps({value: this.props.value});
     }
 
     // Change the props after the native props are set in case the props
@@ -66,4 +66,4 @@ export class CheckBox extends React.Component<ICheckBoxProps> {
   };
 }
 
-export default CheckBox;
+module.exports = CheckBox;

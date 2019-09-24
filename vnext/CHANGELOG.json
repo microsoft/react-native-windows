@@ -2,6 +2,32 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Sep 2019 19:11:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.2",
+      "version": "0.60.0-vnext.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native 0.60",
+            "author": "acoates@microsoft.com",
+            "commit": "def1019f7463ed407d4fc9e4c0c59d7c43703176"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove Universal projects from Desktop solution.",
+            "author": "julio@rochsquadron.net",
+            "commit": "c2d6941c53444b98f2ec078b7d8f7b19f83fe5fe"
+          },
+          {
+            "comment": "CLI has error exit code",
+            "author": "licanhua@live.com",
+            "commit": "6fa8a6916c6074df421bd085f298e736b50af540"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Sep 2019 17:02:46 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.190",
       "version": "0.59.0-vnext.190",

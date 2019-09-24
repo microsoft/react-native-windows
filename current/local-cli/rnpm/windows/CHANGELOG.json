@@ -1,0 +1,19 @@
+{
+  "name": "rnpm-plugin-windows",
+  "entries": [
+    {
+      "date": "Tue, 24 Sep 2019 19:11:20 GMT",
+      "tag": "rnpm-plugin-windows_v0.2.13",
+      "version": "0.2.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Support latest react-native-cli",
+            "author": "acoates@microsoft.com",
+            "commit": "704b5b46704d5638293c3f6ff0f3bd09e6bfa809"
+          }
+        ]
+      }
+    }
+  ]
+}

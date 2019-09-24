@@ -8,10 +8,10 @@
 
 'use strict';
 
-const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
 const NativeEventEmitter = require('NativeEventEmitter');
 const RCTNetworkingNative = require('NativeModules').Networking;
 const convertRequestBody = require('convertRequestBody');
+const invariant = require('invariant');
 
 import type {RequestBody} from 'convertRequestBody';
 
@@ -62,9 +62,42 @@ class RCTNetworking extends NativeEventEmitter {
 }
 
 if (__DEV__ && !RCTNetworkingNative) {
-  class MissingNativeRCTNetworkingShim extends MissingNativeEventEmitterShim {
-    constructor() {
-      super('RCTNetworking', 'Networking');
+  // This module depends on the native `RCTAppTheme` module. If you don't include it,
+  // `AppTheme.isAvailable` will return `false`, and any method calls will throw.
+  class MissingNativeRCTNetworkingShim {
+    isAvailable = false;
+
+    throwMissingNativeModule() {
+      invariant(
+        false,
+        'Cannot use Networking module when native RCTNetworking is not included in the build.\n' +
+          'Either include it, or check Networking.isAvailable before calling any methods.',
+      );
+    }
+
+    addEventListener() {
+      this.throwMissingNativeModule();
+    }
+
+    removeEventListener() {
+      this.throwMissingNativeModule();
+    }
+
+    // EventEmitter
+    addListener(_eventType, _listener) {
+      this.throwMissingNativeModule();
+    }
+
+    removeAllListeners() {
+      this.throwMissingNativeModule();
+    }
+
+    removeListener(_eventType, _listener) {
+      this.throwMissingNativeModule();
+    }
+
+    removeSubscription() {
+      this.throwMissingNativeModule();
     }
 
     sendRequest(...args: Array<any>) {
