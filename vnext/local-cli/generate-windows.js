@@ -23,7 +23,7 @@ function generateWindows (projectDir, name, ns, options) {
   installDependencies(options);
 
   copyProjectTemplateAndReplace(
-    path.join(__dirname, 'generator-windows', 'templates'),
+    path.join(__dirname, 'generator-windows', 'templates', options.language),
     projectDir,
     name,
     { ns }
