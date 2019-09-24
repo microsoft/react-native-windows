@@ -58,6 +58,7 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
+#include <Modules/StatusBarModule.h>
 #include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
@@ -238,6 +239,11 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       ClipboardModule::name,
       []() { return std::make_unique<ClipboardModule>(); },
+      messageQueue);
+
+  modules.emplace_back(
+      StatusBarModule::name,
+      []() { return std::make_unique<StatusBarModule>(); },
       messageQueue);
 
   modules.emplace_back(

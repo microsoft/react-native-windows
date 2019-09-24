@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Create stub StatusBarManager to avoid crash when using <StatusBar>",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "8f10f575517dcc7a3b5de86bc58748b47513dd35",
+  "date": "2019-09-24T21:05:30.338Z"
+}
