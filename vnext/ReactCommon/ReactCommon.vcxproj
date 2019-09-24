@@ -155,6 +155,10 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp" Condition="'$(Platform)' != 'arm' AND '$(USE_V8)' == 'true'" />
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />

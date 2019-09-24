@@ -12,9 +12,9 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz",
-    "react-native-windows": "0.59.0-vnext.190",
+    "react": "16.8.6",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
+    "react-native-windows": "0.60.0-vnext.1",
     "react-native-windows-extended": "0.60.0",
     "rnpm-plugin-windows": "^0.2.11"
   },
@@ -22,8 +22,8 @@
     "@babel/core": "7.5.5",
     "@babel/runtime": "7.5.5",
     "@types/react": "16.8.15",
-    "@types/react-native": "~0.57.51",
+    "@types/react-native": "~0.60.5",
     "metro-react-native-babel-preset": "0.55.0",
-    "react-test-renderer": "16.8.3"
+    "react-test-renderer": "16.8.6"
   }
 }

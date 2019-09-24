@@ -11,13 +11,10 @@
 const path = require('path');
 const fs = require('fs');
 
-const rnPath = fs.realpathSync(
-  path.resolve(require.resolve('react-native/package.json'), '..'),
-);
 const rnwPath = fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
 );
-const ROOTS = [rnwPath + path.sep, rnPath + path.sep];
+const ROOTS = [rnwPath + path.sep];
 
 const BLACKLISTED_PATTERNS /*: Array<RegExp> */ = [
   /.*[\\\/]__(mocks|tests)__[\\\/].*/,

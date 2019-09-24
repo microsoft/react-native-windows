@@ -4,10 +4,10 @@ module.exports = [{
   name: 'windows [name]',
   options: [{
     command: '--windowsVersion [version]',
-    description: 'The version of react-native-windows to use.'
+    description: 'The version of react-native-windows to use.',
   }, {
     command: '--namespace [namespace]',
-    description: 'The native project namespace.'
+    description: 'The native project namespace.',
   }, {
     command: '--verbose',
     description: 'Enables logging.',
@@ -15,21 +15,25 @@ module.exports = [{
   }, {
     command: '--template [template]',
     description: 'Template to install. E.g., `vnext`.',
-  }]
+  }, {
+    command: '--overwrite',
+    description: 'Overwrite any existing files without prompting',
+    default: false,
+  }],
 },{
   func: require('./src/wpf'),
   description: 'Generate React Native Windows template project on WPF',
   name: 'wpf [name]',
   options: [{
     command: '--windowsVersion [version]',
-    description: 'The version of react-native-wpf to use.'
+    description: 'The version of react-native-wpf to use.',
   }, {
     command: '--namespace [namespace]',
-    description: 'The native project namespace.'
+    description: 'The native project namespace.',
   }, {
     command: '--verbose',
     description: 'Enables logging',
     default: false,
-  }]
-}
+  }],
+},
 ];

@@ -6,7 +6,7 @@
 
 import React = require('react');
 import {Button, Text, View} from 'react-native';
-import {Picker} from '../index.windows';
+import {Picker} from 'react-native-windows';
 
 interface MakesModels {
   name: string;
@@ -267,7 +267,7 @@ class PickerEditableExample extends React.Component<{}, any> {
 }
 
 export const displayName = (_undefined?: string) => {};
-export const title = '<Picker> UWP';
+export const title = '<PickerWindows>';
 export const description =
   'Render lists of selectable options with uwp ComboBox.';
 export const examples = [
