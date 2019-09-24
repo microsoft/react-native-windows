@@ -19,12 +19,16 @@ const REACT_NATIVE_WPF_GENERATE_PATH = function() {
   );
 };
 
-module.exports = function windows(config, args, options) {
+module.exports = function (config, args, options) {
   const name = args[0] ? args[0] : Common.getReactNativeAppName();
   const ns = options.namespace ? options.namespace : name;
   const version = options.windowsVersion ? options.windowsVersion : Common.getReactNativeVersion();
 
-  return Common.getInstallPackage(version)
+  // If the template is not set, look for a stable or 'rc' version
+  const template = options.template ? options.template : 'rc';
+  const ignoreStable = !!options.template;
+
+  return Common.getInstallPackage(version, template, ignoreStable)
     .then(rnwPackage => {
       console.log(`Installing ${rnwPackage}...`);
       const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
@@ -34,6 +38,6 @@ module.exports = function windows(config, args, options) {
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWPF = require(REACT_NATIVE_WPF_GENERATE_PATH());
-      generateWPF(process.cwd(), name, ns);
+      generateWPF(process.cwd(), name, ns, options);
     }).catch(error => console.error(chalk.red(error.message)));
 };
