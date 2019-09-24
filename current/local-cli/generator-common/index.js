@@ -11,11 +11,16 @@ function createDir(destPath) {
   }
 }
 
-function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements) {
+function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements, alwaysOverwrite) {
   if (!replacements) {
     replacements = {};
   }
-  const contentChangedCallback = (_, contentChanged) =>
+  const contentChangedCallback = alwaysOverwrite ? (_, contentChanged) =>
+  alwaysOverwriteContentChangedCallback(
+    srcPath,
+    relativeDestPath,
+    contentChanged
+  ) : (_, contentChanged) =>
     upgradeFileContentChangedCallback(
       srcPath,
       relativeDestPath,
@@ -30,12 +35,32 @@ function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, 
   );
 }
 
-function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements) {
+function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements, alwaysOverwrite) {
   walk(srcPath).forEach(absoluteSrcFilePath => {
     const filename = path.relative(srcPath, absoluteSrcFilePath);
     const relativeDestPath = path.join(relativeDestDir, filename);
-    copyAndReplaceWithChangedCallback(absoluteSrcFilePath, destPath, relativeDestPath, replacements);
+    copyAndReplaceWithChangedCallback(absoluteSrcFilePath, destPath, relativeDestPath, replacements, alwaysOverwrite);
   });
+}
+
+function alwaysOverwriteContentChangedCallback(  absoluteSrcFilePath,
+  relativeDestPath,
+  contentChanged
+) {
+  if (contentChanged === 'new') {
+    console.log(`${chalk.bold('new')} ${relativeDestPath}`);
+    return 'overwrite';
+  }
+  if (contentChanged === 'changed') {
+    console.log(`${chalk.bold('changed')} ${relativeDestPath} ${chalk.yellow('[overwriting]')}`);
+    return 'overwrite';
+  }
+  if (contentChanged === 'identical') {
+    return 'keep';
+  }
+  throw new Error(
+    `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`
+  );
 }
 
 function upgradeFileContentChangedCallback(
@@ -51,11 +76,11 @@ function upgradeFileContentChangedCallback(
     console.log(
       `${chalk.bold(relativeDestPath)} ` +
       `has changed in the new version.\nDo you want to keep your ${relativeDestPath} or replace it with the ` +
-      `latest version?\nIf you ever made any changes ` +
-      `to this file, you'll probably want to keep it.\n` +
+      'latest version?\nIf you ever made any changes ' +
+      'to this file, you\'ll probably want to keep it.\n' +
       `You can see the new version here: ${absoluteSrcFilePath}\n` +
       `Do you want to replace ${relativeDestPath}? ` +
-      `Answer y to replace, n to keep your version: `
+      'Answer y to replace, n to keep your version: '
     );
     const answer = prompt();
     if (answer === 'y') {
@@ -74,5 +99,5 @@ function upgradeFileContentChangedCallback(
 }
 
 module.exports = {
-  createDir, copyAndReplaceWithChangedCallback, copyAndReplaceAll
+  createDir, copyAndReplaceWithChangedCallback, copyAndReplaceAll,
 };

@@ -21,5 +21,3 @@ export class Picker extends React.Component<IPickerProps> {
     return null;
   }
 }
-
-export default Picker;

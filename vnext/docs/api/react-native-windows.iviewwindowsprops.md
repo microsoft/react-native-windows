@@ -21,7 +21,7 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps
 
 ## Remarks
 
-Props type for [ViewWindows](./react-native-windows.viewwindows.md)
+Props type for ViewWindows component
 
 Extends: [IKeyboardProps](./react-native-windows.ikeyboardprops.md) and [react-native's ViewProps](https://facebook.github.io/react-native/docs/view)
 

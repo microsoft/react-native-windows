@@ -14,7 +14,10 @@
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "strict": true,
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "react-native-windows": ["src/Libraries/react-native/typings-index"] // This mapping is relative to "baseUrl"
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "lib"]

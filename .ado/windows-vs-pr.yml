@@ -15,7 +15,7 @@ variables:
   VsTestPlatformVersion: 16.2.0
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-  VsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
+  VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
   VsFeatures: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.Component.VC.v141.ARM
 
 stages:
@@ -127,7 +127,6 @@ stages:
               targetType: filePath
               filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
               arguments: -InstallerUri $(VsInstallerUri) -Components $(VsFeatures)
-
 
           - task: CmdLine@2
             displayName: Remove VS Cache
@@ -283,7 +282,7 @@ stages:
             inputs:
               targetType: filePath # filePath | inline
               filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload -SleepSeconds 30
+              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 30
 
           - task: VSTest@2
             displayName: Run Desktop Integration Tests
@@ -350,7 +349,7 @@ stages:
           - task: CmdLine@2
             displayName: Init new project
             inputs:
-              script: react-native init testcli --version 0.59.10
+              script: react-native init testcli --version 0.60.6
               workingDirectory: $(Agent.BuildDirectory)
 
           - task: CmdLine@2
@@ -362,7 +361,7 @@ stages:
           - task: CmdLine@2
             displayName: Apply windows template
             inputs:
-              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext --overwrite
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
           - task: NuGetCommand@2
@@ -370,13 +369,6 @@ stages:
             inputs:
               command: restore
               restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-
-          - task: PowerShell@2
-            displayName: Install Visual C++ Toolset 14.16
-            inputs:
-              targetType: filePath
-              filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
-              arguments: -InstallerUri $(VsInstallerUri) -Components $(VsFeatures)
 
           - task: MSBuild@1
             displayName: MSBuild - testcli
@@ -393,7 +385,7 @@ stages:
           - task: CmdLine@2
             displayName: Create bundle testcli
             inputs:
-              script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+              script: react-native bundle --entry-file index.js platform windows --bundle-output test.bundle
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
       - job: RNWFormatting
@@ -561,11 +553,10 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      - template: templates/e2e-test-job.yml  # Template reference
+      - template: templates/e2e-test-job.yml # Template reference
         parameters:
           name: E2ETest
           pool:
-            vmImage: 'windows-2019'
           BuildPlatform: x64
           UseRNFork: true
 
