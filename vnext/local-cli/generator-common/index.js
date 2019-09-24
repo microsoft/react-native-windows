@@ -11,11 +11,16 @@ function createDir(destPath) {
   }
 }
 
-function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements) {
+function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, replacements, alwaysOverwrite) {
   if (!replacements) {
     replacements = {};
   }
-  const contentChangedCallback = (_, contentChanged) =>
+  const contentChangedCallback = alwaysOverwrite ? (_, contentChanged) =>
+  alwaysOverwriteContentChangedCallback(
+    srcPath,
+    relativeDestPath,
+    contentChanged
+  ) : (_, contentChanged) =>
     upgradeFileContentChangedCallback(
       srcPath,
       relativeDestPath,
@@ -30,12 +35,32 @@ function copyAndReplaceWithChangedCallback(srcPath, destRoot, relativeDestPath, 
   );
 }
 
-function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements) {
+function copyAndReplaceAll(srcPath, destPath, relativeDestDir, replacements, alwaysOverwrite) {
   walk(srcPath).forEach(absoluteSrcFilePath => {
     const filename = path.relative(srcPath, absoluteSrcFilePath);
     const relativeDestPath = path.join(relativeDestDir, filename);
-    copyAndReplaceWithChangedCallback(absoluteSrcFilePath, destPath, relativeDestPath, replacements);
+    copyAndReplaceWithChangedCallback(absoluteSrcFilePath, destPath, relativeDestPath, replacements, alwaysOverwrite);
   });
+}
+
+function alwaysOverwriteContentChangedCallback(  absoluteSrcFilePath,
+  relativeDestPath,
+  contentChanged
+) {
+  if (contentChanged === 'new') {
+    console.log(`${chalk.bold('new')} ${relativeDestPath}`);
+    return 'overwrite';
+  }
+  if (contentChanged === 'changed') {
+    console.log(`${chalk.bold('changed')} ${relativeDestPath} ${chalk.yellow('[overwriting]')}`);
+    return 'overwrite';
+  }
+  if (contentChanged === 'identical') {
+    return 'keep';
+  }
+  throw new Error(
+    `Unknown file changed state: ${relativeDestPath}, ${contentChanged}`
+  );
 }
 
 function upgradeFileContentChangedCallback(

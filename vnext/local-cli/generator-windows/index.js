@@ -94,10 +94,10 @@ function copyProjectTemplateAndReplace(
     { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
     { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
     { from: path.join(srcPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
-  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars));
+  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
-  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars);
-  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars);
+  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars, options.overwrite);
+  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars, options.overwrite);
 
   console.log(chalk.white.bold('To run your app on UWP:'));
   console.log(chalk.white('   react-native run-windows'));

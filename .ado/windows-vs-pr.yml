@@ -253,7 +253,7 @@ stages:
           - task: CmdLine@2
             displayName: Apply windows template
             inputs:
-              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext --overwrite
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
           - template: templates/install-SDK.yml
