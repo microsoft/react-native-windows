@@ -70,8 +70,6 @@ void initializeJSHooks(facebook::jsi::Runtime &runtime);
 
 #endif
 
-#include <fstream>
-
 namespace {
 
 #if (defined(_MSC_VER) && !defined(WINRT))
