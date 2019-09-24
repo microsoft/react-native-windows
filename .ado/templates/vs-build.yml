@@ -15,7 +15,7 @@ steps:
     displayName: Install Visual C++ Toolset 14.16
     inputs:
       targetType: filePath
-      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsComponents.ps1
+      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
       arguments: -InstallerUri ${{ parameters.VsInstallerUri }} -Components ${{ parameters.VsComponents }} -Collect:$${{ parameters.Collect }}
 
   - task: PublishBuildArtifacts@1

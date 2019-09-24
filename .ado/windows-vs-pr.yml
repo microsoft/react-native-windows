@@ -7,12 +7,14 @@ pr:
   - master
 
 variables:
+  # General / Default
   VmImage: windows-2019
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
-  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
-  VsTestVersion: 16.0
-  VsTestPlatformVersion: 16.2.0
+  MSBuildPreferredToolArchitecture: x64
+  MSBuildPlatformToolset: v142
+
+  # Desktop
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
   VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
@@ -129,7 +131,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=x64 /p:PlatformToolset=v142 # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset) # Optional
               clean: true # Optional
 
           - template: templates/publish-build-artifacts-for-nuget.yml
@@ -151,7 +153,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=x64 # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) # Optional
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -176,7 +178,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=x64 # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) # Optional
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
@@ -214,6 +216,10 @@ stages:
           vmImage: $(VmImage)
         timeoutInMinutes: 50 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+        variables:
+          VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
             clean: true # whether to fetch clean each time
@@ -277,7 +283,7 @@ stages:
             inputs:
               testSelector: testAssemblies
               testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+              searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
               testFiltercriteria: $(Desktop.IntegrationTests.Filter)
               # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
               runTestsInIsolation: true
@@ -367,7 +373,7 @@ stages:
               platform: x64 # Optional
               configuration: Debug # Optional
               restoreNugetPackages: true
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) # Optional
               clean: true # Optional
 
           - task: CmdLine@2
@@ -502,7 +508,7 @@ stages:
               #msbuildLocation: # Optional
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              #msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+              #msbuildArguments: '/p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)' # Optional
               #clean: true # Optional
               #maximumCpuCount: false # Optional
               #restoreNugetPackages: false # Optional
@@ -522,15 +528,15 @@ stages:
             displayName: Run Unit Tests
             timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
             inputs:
-              testSelector: "testAssemblies"
-              testAssemblyVer2: "ReactNative.Net46.Tests.dll" # Required when testSelector == TestAssemblies
+              testSelector: testAssemblies
+              testAssemblyVer2: ReactNative.Net46.Tests.dll # Required when testSelector == TestAssemblies
               searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-              vsTestVersion: $(VsTestVersion)
+              # vsTestVersion: $(VsTestVersion)
               runTestsInIsolation: true
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
-              collectDumpOn: "onAbortOnly"
+              collectDumpOn: onAbortOnly
             condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
           # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
           # It currently fails, so commenting this out for now
