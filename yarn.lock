@@ -2025,13 +2025,13 @@
     "@microsoft/tsdoc" "0.12.14"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.4.3"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.4.3.tgz#2976f969c6290a3d685390ee81a27c20e8d655fb"
-  integrity sha512-bZ3lh9UXkAt7m3/LSiay34x/06YYx8nIRlDFRO+Dxnd0c/IA/JCs9fEBawhTAUcY4Yv5PXnW6/n++UXxRsmaHg==
+  version "7.4.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.4.4.tgz#f7810c2b1bf171fcdc5c821172be7779f33e75b4"
+  integrity sha512-qemjsGUzVHfIuRyergBEQpogj73Jnrc12F8XsjuXak+oRHIl3n1nrcy7MyjxDNSoNQ5ARay2eP1zzeIKVxN7Rw==
   dependencies:
     "@microsoft/api-extractor-model" "7.4.2"
     "@microsoft/node-core-library" "3.15.0"
-    "@microsoft/ts-command-line" "4.3.0"
+    "@microsoft/ts-command-line" "4.3.1"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
     lodash "~4.17.15"
@@ -2060,6 +2060,15 @@
   resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.0.tgz#6346c78131eacf8065174aa597018c9e6f25971a"
   integrity sha512-A+gOHMTnUqT5FZhwIqEQCvH3xO8FEeaSk1oinhLsVmiy6UU8977eT0irbwA3kJPviBmn5sqZ6d+1v+t2Koqlxw==
   dependencies:
+    argparse "~1.0.9"
+    colors "~1.2.1"
+
+"@microsoft/ts-command-line@4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.1.tgz#9a73337a85d0789a1d31528f6a241e9e59dd5c8c"
+  integrity sha512-xkr13d0Ef55U/r1BKmiIVGE0StFE2tOv9430VUxIb3mpWEIfKMaTrXQhCftty7uClbHV/syllUQkerCCv/bj2A==
+  dependencies:
+    "@types/argparse" "1.0.33"
     argparse "~1.0.9"
     colors "~1.2.1"
 
@@ -2223,6 +2232,11 @@
     eslint-plugin-react-hooks "^1.5.1"
     eslint-plugin-react-native "3.6.0"
     prettier "1.16.4"
+
+"@types/argparse@1.0.33":
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/@types/argparse/-/argparse-1.0.33.tgz#2728669427cdd74a99e53c9f457ca2866a37c52d"
+  integrity sha512-VQgHxyPMTj3hIlq9SY1mctqx+Jj8kpQfoLvDlVSDNOyuYs8JYfkuY3OW/4+dO657yPmNhHpePRx0/Tje5ImNVQ==
 
 "@types/es6-collections@^0.5.29":
   version "0.5.31"

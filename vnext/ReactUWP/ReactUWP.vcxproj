@@ -214,6 +214,7 @@
     <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
+    <ClInclude Include="Modules\StatusBarModule.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="Pch\pch.h" />
@@ -318,6 +319,7 @@
     <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="Modules\StatusBarModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="Pch\pch.cpp">
