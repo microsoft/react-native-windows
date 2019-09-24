@@ -16,7 +16,7 @@ variables:
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
   VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
-  VsFeatures: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.Component.VC.v141.ARM
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.Component.VC.v141.ARM
 
 stages:
   - stage: SetupStage
@@ -121,18 +121,6 @@ stages:
               restoreDirectory: packages/
               verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-          - task: PowerShell@2
-            displayName: Install Visual C++ Toolset 14.16
-            inputs:
-              targetType: filePath
-              filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VSFeatures.ps1
-              arguments: -InstallerUri $(VsInstallerUri) -Components $(VsFeatures)
-
-          - task: CmdLine@2
-            displayName: Remove VS Cache
-            inputs:
-              script: rmdir /S /Q %System_DefaultWorkingDirectory%\vs
-
           - task: MSBuild@1
             displayName: MSBuild - ReactWindows-Universal
             inputs:
@@ -141,7 +129,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=x64 /p:PlatformToolset=v142 # Optional
               clean: true # Optional
 
           - template: templates/publish-build-artifacts-for-nuget.yml
@@ -163,7 +151,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=x64 # Optional
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -188,7 +176,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=x64 # Optional
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
@@ -252,13 +240,13 @@ stages:
               BuildConfiguration: $(BuildConfiguration)
               BuildPlatform: $(BuildPlatform)
               VsInstallerUri: $(VsInstallerUri)
-              VsFeatures: $(VsFeatures)
+              VsComponents: $(VsComponents)
               MSBuildVersion: $(MSBuildVersion)
               MSBuildArchitecture: $(MSBuildArchitecture)
               NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
               Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
               MSBuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)"
-              Collect: true
+              Collect: false
 
           - task: VSTest@2
             displayName: Run Desktop Unit Tests
@@ -269,7 +257,7 @@ stages:
                 React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
                 JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
               pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+              searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
               # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
               runTestsInIsolation: true
               platform: $(BuildPlatform)
@@ -288,7 +276,7 @@ stages:
             displayName: Run Desktop Integration Tests
             inputs:
               testSelector: testAssemblies
-              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll'
+              testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
               searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
               testFiltercriteria: $(Desktop.IntegrationTests.Filter)
               # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
