@@ -119,10 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SamplePackage.cs" />
     <Compile Include="MainReactNativeHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

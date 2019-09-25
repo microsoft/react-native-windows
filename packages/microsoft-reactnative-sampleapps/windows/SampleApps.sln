@@ -52,12 +52,12 @@ Global
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
+		Debug|ARM = Debug|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Release|ARM = Release|ARM
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{09F4E6C1-2D12-4059-AA96-0B190861FD6A}.Debug|ARM.ActiveCfg = Debug|ARM
