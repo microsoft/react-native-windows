@@ -71,8 +71,16 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script:  react-native run-windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script:  react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
           workingDirectory: packages/E2ETest
+
+      # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
+      - task: PowerShell@2
+        displayName: Wait for app to launch
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Start-Sleep -Seconds 30
 
       - task: CmdLine@2
         displayName: run test
@@ -84,3 +92,4 @@ jobs:
         inputs:
           testResultsFormat: 'JUnit'
           testResultsFiles: 'packages/E2ETest/reports/*.log'
+        condition: succeededOrFailed()
