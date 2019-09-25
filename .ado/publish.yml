@@ -162,8 +162,6 @@ jobs:
       vmImage: $(VmImage)
 
 
-    variables:
-
     steps:
       - task: DownloadBuildArtifacts@0
         displayName: Download VersionEnvVars
