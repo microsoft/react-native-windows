@@ -13,6 +13,7 @@ variables:
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
   MSBuildPlatformToolset: v142
+  TargetPlatformVersion: 10.0.18362.0
 
   # Desktop
   Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
@@ -131,7 +132,7 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset) # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
 
           - template: templates/publish-build-artifacts-for-nuget.yml
@@ -508,7 +509,7 @@ stages:
               #msbuildLocation: # Optional
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              #msbuildArguments: '/p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)' # Optional
+              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset) /p:TargetPlatformVersion=$(TargetPlatformVersion) /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
               #clean: true # Optional
               #maximumCpuCount: false # Optional
               #restoreNugetPackages: false # Optional

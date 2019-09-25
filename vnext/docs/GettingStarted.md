@@ -7,13 +7,14 @@ This is a summary of setup steps needed to install and work with React Native fo
 * [Visual Studio 2019](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
-      * Enable the optional `C++ (v141) Universal Windows Platform tools`
+      * Enable the optional `C++ (v142) Universal Windows Platform tools`
     * Desktop development with C++
   * Individual Components
+    * Compilers, build tools and runtimes
+      * MSVC v141 - VS 2017 C++ x64/x86 build tools (v14.16)
+      * MSVC v141 - VS 2017 C++ ARM build tools (v14.16)
     * Development activities
       * Node.js development support (optional)
-    * SDKs, libraries, and frameworks per your versioning needs
-      * Windows 10 SDK (10.0.18362.0)
 
 ## Dependencies
 * Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of [Node.js](https://nodejs.org) is installed. [Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. But you can also install Node directly from [NodeJs](https://nodejs.org/en/download/).  To use chocolately, from an elevated Command Prompt, run:
