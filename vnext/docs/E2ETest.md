@@ -47,7 +47,7 @@ npm install -g react-native-cli
 
 Open Chrome and navigate to `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools.
 
-6. Open a new CLI, build native app, deploy and launch e2e testing
+6. Open a new command prompt, build native app, deploy and launch e2e testing
 
 - C:\repo\react-native-windows>`cd packages\E2ETest`
 - C:\repo\react-native-windows\packages\E2ETest>`yarn run e2e`
