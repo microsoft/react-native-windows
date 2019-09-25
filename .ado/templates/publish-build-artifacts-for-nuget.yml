@@ -19,7 +19,7 @@ steps:
       Contents: ${{ parameters.Contents }}
 
   - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: ReactWindows"
+    displayName: 'Publish Artifact: ReactWindows'
     inputs:
       PathtoPublish: $(Build.ArtifactStagingDirectory)
-      ArtifactName: "ReactWindows"
+      ArtifactName: ReactWindows

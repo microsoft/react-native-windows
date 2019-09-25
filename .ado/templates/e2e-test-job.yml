@@ -1,7 +1,7 @@
 #
 parameters:
   name: ''
-  pool: ''
+  pool:
   BuildPlatform: 'x86' # ARM, x86, x64
   UseRNFork: true
 
@@ -79,7 +79,7 @@ jobs:
         inputs:
           script: yarn run test
           workingDirectory: packages/E2ETest
-          
+
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'JUnit'
