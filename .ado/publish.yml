@@ -5,8 +5,9 @@ variables:
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
+  MSBuildPlatformToolset: v142
   VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.Component.VC.v141.ARM
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 trigger:
   batch: true
@@ -146,10 +147,10 @@ jobs:
           solution: vnext/ReactWindows-Universal.sln
           msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
-          clean: true # Optional
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
+          clean: true
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
