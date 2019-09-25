@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enabling Systrace/ETW plumbing by default. The tracing will be controlled by whether the provider is enabled or not",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "commit": "3af742122b2ba22052f1ad0bef55662ae2af223a",
-  "date": "2019-09-24T19:03:17.393Z"
-}
