@@ -34,7 +34,7 @@ module.exports = function (config, args, options) {
       const pkgmgr = Common.isGlobalCliUsingYarn(process.cwd()) ? 'yarn add' : 'npm install --save';
 
       const execOptions = options.verbose ? { stdio: 'inherit' } : {};
-//      execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
+      execSync(`${pkgmgr} ${rnwPackage}`, execOptions);
       console.log(chalk.green(`${rnwPackage} successfully installed.`));
 
       const generateWindows = require(REACT_NATIVE_WINDOWS_GENERATE_PATH());
