@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Sep 2019 23:29:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.3",
+      "version": "0.60.0-vnext.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create stub StatusBarManager to avoid crash when using <StatusBar>",
+            "author": "acoates@microsoft.com",
+            "commit": "8f10f575517dcc7a3b5de86bc58748b47513dd35"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Sep 2019 19:11:20 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.2",
       "version": "0.60.0-vnext.2",

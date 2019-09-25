@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 24 Sep 2019 19:11:20 GMT and should not be manually modified.
+This log was last generated on Tue, 24 Sep 2019 23:29:18 GMT and should not be manually modified.
 
+## 0.60.0-vnext.3
+Tue, 24 Sep 2019 23:29:18 GMT
+
+### Changes
+
+- Create stub StatusBarManager to avoid crash when using <StatusBar> (acoates@microsoft.com)
 ## 0.60.0-vnext.2
 Tue, 24 Sep 2019 19:11:20 GMT
 
