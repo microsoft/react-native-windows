@@ -72,8 +72,8 @@ jobs:
           PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
 
-  - job: RnwNativeBuild
-    displayName: React-Native-Windows Native Build
+  - job: RnwNativeBuildDesktop
+    displayName: Build Desktop
     dependsOn: RnwNpmPublish
     strategy:
       matrix:
@@ -83,18 +83,12 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
     pool:
       vmImage: $(VmImage)
 
@@ -134,6 +128,61 @@ jobs:
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
             /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
 
+      - template: templates/publish-build-artifacts-for-nuget.yml
+        parameters:
+          LayoutHeaders: false
+          Contents: |
+            React.Windows.Desktop.DLL\**
+            React.Windows.Desktop.Test.DLL\**
+
+  - job: RnwNativeBuildUniversal
+    displayName: Build Universal
+    dependsOn: RnwNpmPublish
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      vmImage: $(VmImage)
+
+
+    steps:
+      - task: DownloadBuildArtifacts@0
+        displayName: Download VersionEnvVars
+        inputs:
+          artifactName: VersionEnvVars
+          downloadPath: $(Build.StagingDirectory)
+
+      - task: CmdLine@2
+        inputs:
+          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
+
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-Universal
         inputs:
@@ -162,8 +211,6 @@ jobs:
           LayoutHeaders: true
           Contents: |
             ReactUWP\**
-            React.Windows.Desktop.DLL\**
-            React.Windows.Desktop.Test.DLL\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -174,8 +221,9 @@ jobs:
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
-      - RnwNativeBuild
-    displayName: React-Native-Windows Build and Publish Nuget
+      - RnwNativeBuildDesktop
+      - RnwNativeBuildUniversal
+    displayName: Publish Nuget
     pool:
       vmImage: $(VmImage)
 
