@@ -4,7 +4,7 @@ variables:
   VmImage: windows-2019
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
-  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+  MSBuildPreferredToolArchitecture: x64
   VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
   VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.Component.VC.v141.ARM
 
@@ -128,10 +128,7 @@ jobs:
           MSBuildArchitecture: $(MSBuildArchitecture)
           NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
           Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
-          MSBuildArguments: |
-            /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
-            /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
-            /p:VCTargetsPath="$(VCTargetsPath)"
+          MSBuildArguments: /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)" /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)" /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-Universal

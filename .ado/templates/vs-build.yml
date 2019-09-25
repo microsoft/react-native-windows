@@ -23,7 +23,7 @@ steps:
     condition: ${{ parameters.Collect }}
     inputs:
       PathtoPublish: $(System.DefaultWorkingDirectory)\vslogs
-      ArtifactName: "vslogs"
+      ArtifactName: vslogs
 
   - task: NuGetCommand@2
     displayName: NuGet restore - ReactWindows
