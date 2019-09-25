@@ -3,10 +3,10 @@
 // Licensed under the MIT License.
 
 #include "MainReactNativeHost.g.h"
-#include "SamplePackage.h"
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
+using namespace Microsoft::ReactNative::Bridge;
 using namespace Windows::Foundation::Collections;
 
 namespace winrt::SampleApp::implementation {
@@ -30,8 +30,7 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
     return TRUE;
   };
   IVectorView<IReactPackage> Packages() {
-    auto packages =
-        single_threaded_vector<IReactPackage>({winrt::make<SamplePackage>()});
+    auto packages = single_threaded_vector<IReactPackage>();
     return packages.GetView();
   };
 };

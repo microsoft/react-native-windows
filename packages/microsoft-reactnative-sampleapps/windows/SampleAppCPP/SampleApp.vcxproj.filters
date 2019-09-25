@@ -6,8 +6,6 @@
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainReactNativeHost.idl" />
-    <Midl Include="SampleModule.idl" />
-    <Midl Include="SamplePackage.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
