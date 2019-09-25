@@ -11,7 +11,7 @@ import {
   IHandledKeyboardEvent,
   IKeyboardEvent,
   HandledEventPhase,
-} from '../index.windows';
+} from 'react-native-windows';
 
 const ViewWindows = supportKeyboard(View);
 

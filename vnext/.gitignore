@@ -43,6 +43,8 @@ node_modules
 /bots/node_modules/
 
 /dist
+/IntegrationTests/*.js
+/IntegrationTests/*.png
 /lib
 /Libraries
 /RNTester

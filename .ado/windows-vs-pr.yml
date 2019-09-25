@@ -7,20 +7,19 @@ pr:
   - master
 
 variables:
-  - name: VmImage
-    value: vs2017-win2016
-  - name: MSBuildVersion
-    value: 16.0
-  - name: MSBuildArchitecture
-    value: x64
-  - name: VsTestVersion
-    value: 16.0
-  - name: VsTestPlatformVersion
-    value: 16.2.0
-  - name: Desktop.IntegrationTests.Filter
-    value: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-  - name: GoogleTestAdapterPath
-    value: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+  # General / Default
+  VmImage: windows-2019
+  MSBuildVersion: 16.0
+  MSBuildArchitecture: x64
+  MSBuildPreferredToolArchitecture: x64
+  MSBuildPlatformToolset: v142
+  TargetPlatformVersion: 10.0.18362.0
+
+  # Desktop
+  Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
+  GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
+  VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 stages:
   - stage: SetupStage
@@ -115,8 +114,6 @@ stages:
             inputs:
               script: yarn buildci
 
-          - template: templates/install-SDK.yml
-
           - task: NuGetCommand@2
             displayName: NuGet restore - ReactWindows-Universal
             inputs:
@@ -135,7 +132,9 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
 
           - template: templates/publish-build-artifacts-for-nuget.yml
@@ -157,7 +156,9 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -182,7 +183,9 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
@@ -198,6 +201,115 @@ stages:
               script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
               workingDirectory: vnext
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+
+      - job: RNWDesktopPR
+        displayName: Desktop PR
+        strategy:
+          matrix:
+            X64Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+            X86Debug:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+            X64Release:
+              BuildConfiguration: Release
+              BuildPlatform: x64
+            X86Release:
+              BuildConfiguration: Release
+              BuildPlatform: x86
+
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
+        variables:
+          VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+
+        steps:
+          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+            clean: true # whether to fetch clean each time
+            # fetchDepth: 2 # the depth of commits to ask Git to fetch
+            lfs: false # whether to download Git-LFS files
+            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+          - task: CmdLine@2
+            displayName: yarn install
+            inputs:
+              script: yarn install --frozen-lockfile
+
+          - template: templates/stop-packagers.yml
+
+          - task: CmdLine@2
+            displayName: yarn build
+            inputs:
+              script: yarn build
+              workingDirectory: vnext
+
+          - template: templates/vs-build.yml
+            parameters:
+              BuildConfiguration: $(BuildConfiguration)
+              BuildPlatform: $(BuildPlatform)
+              VsInstallerUri: $(VsInstallerUri)
+              VsComponents: $(VsComponents)
+              MSBuildVersion: $(MSBuildVersion)
+              MSBuildArchitecture: $(MSBuildArchitecture)
+              NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+              Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
+              MSBuildArguments:
+                /p:RNW_PKG_VERSION_STR="Private Build"
+                /p:RNW_PKG_VERSION="1000,0,0,0"
+                /p:VCTargetsPath="$(VCTargetsPath)"
+              Collect: false
+
+          - task: VSTest@2
+            displayName: Run Desktop Unit Tests
+            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+            inputs:
+              testSelector: testAssemblies
+              testAssemblyVer2: | # Required when testSelector == TestAssemblies
+                React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
+                JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
+              pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+              searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: onAbortOnly
+
+          - task: PowerShell@2
+            displayName: Set up test servers
+            inputs:
+              targetType: filePath # filePath | inline
+              filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 30
+
+          - task: VSTest@2
+            displayName: Run Desktop Integration Tests
+            inputs:
+              testSelector: testAssemblies
+              testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+              searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+              testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              runTestsInIsolation: true
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              publishRunAttachments: true
+              collectDumpOn: onAbortOnly
+
+          - template: templates/stop-packagers.yml
+
+          - template: templates/publish-build-artifacts-for-nuget.yml
+            parameters:
+              LayoutHeaders: true
+              Contents: |
+                React.Windows.Desktop.DLL\**
+                React.Windows.Desktop.Test.DLL\**
 
       - job: CliInit
         displayName: Verify react-native init
@@ -241,7 +353,7 @@ stages:
           - task: CmdLine@2
             displayName: Init new project
             inputs:
-              script: react-native init testcli --version 0.59.10
+              script: react-native init testcli --version 0.60.6
               workingDirectory: $(Agent.BuildDirectory)
 
           - task: CmdLine@2
@@ -253,10 +365,8 @@ stages:
           - task: CmdLine@2
             displayName: Apply windows template
             inputs:
-              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
+              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext --overwrite
               workingDirectory: $(Agent.BuildDirectory)\testcli
-
-          - template: templates/install-SDK.yml
 
           - task: NuGetCommand@2
             displayName: NuGet restore testcli
@@ -273,124 +383,16 @@ stages:
               platform: x64 # Optional
               configuration: Debug # Optional
               restoreNugetPackages: true
-              msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
 
           - task: CmdLine@2
             displayName: Create bundle testcli
             inputs:
-              script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+              script: react-native bundle --entry-file index.js platform windows --bundle-output test.bundle
               workingDirectory: $(Agent.BuildDirectory)\testcli
-
-      - job: RNWDesktopPR
-        displayName: Desktop PR
-        strategy:
-          matrix:
-            X64Debug:
-              BuildConfiguration: Debug
-              BuildPlatform: x64
-            X86Debug:
-              BuildConfiguration: Debug
-              BuildPlatform: x86
-            ArmDebug:
-              BuildConfiguration: Debug
-              BuildPlatform: arm
-            X64Release:
-              BuildConfiguration: Release
-              BuildPlatform: x64
-            X86Release:
-              BuildConfiguration: Release
-              BuildPlatform: x86
-            ArmRelease:
-              BuildConfiguration: Release
-              BuildPlatform: arm
-        pool:
-          vmImage: $(VmImage)
-        timeoutInMinutes: 50 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-        steps:
-          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-            clean: true # whether to fetch clean each time
-            # fetchDepth: 2 # the depth of commits to ask Git to fetch
-            lfs: false # whether to download Git-LFS files
-            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-          - task: CmdLine@2
-            displayName: yarn install
-            inputs:
-              script: yarn install --frozen-lockfile
-
-          - template: templates/stop-packagers.yml
-
-          - task: CmdLine@2
-            displayName: yarn build
-            inputs:
-              script: yarn build
-              workingDirectory: vnext
-
-          - template: templates/install-SDK.yml
-
-          - template: templates/vs-build.yml
-            parameters:
-              BuildConfiguration: $(BuildConfiguration)
-              BuildPlatform: $(BuildPlatform)
-
-          - task: VisualStudioTestPlatformInstaller@1
-            inputs:
-              packageFeedSelector: nugetOrg
-              versionSelector: specificVersion
-              testPlatformVersion: $(VsTestPlatformVersion)
-
-          - task: VSTest@2
-            displayName: Run Desktop Unit Tests
-            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-            inputs:
-              testSelector: "testAssemblies"
-              testAssemblyVer2: | # Required when testSelector == TestAssemblies
-                React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
-                JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
-              pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-              vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
-              runTestsInIsolation: true
-              platform: $(BuildPlatform)
-              configuration: $(BuildConfiguration)
-              publishRunAttachments: true
-              collectDumpOn: "onAbortOnly"
-
-          - task: PowerShell@2
-            displayName: Set up test servers
-            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-            inputs:
-              targetType: filePath # filePath | inline
-              filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-              arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext\node_modules\react-native -Preload -SleepSeconds 30
-
-          - task: VSTest@2
-            displayName: Run Desktop Integration Tests
-            condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-            inputs:
-              testSelector: "testAssemblies"
-              testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
-              searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-              testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-              vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
-              runTestsInIsolation: true
-              platform: $(BuildPlatform)
-              configuration: $(BuildConfiguration)
-              publishRunAttachments: true
-              collectDumpOn: "onAbortOnly"
-
-          - template: templates/stop-packagers.yml
-
-          - template: templates/publish-build-artifacts-for-nuget.yml
-            parameters:
-              LayoutHeaders: true
-              Contents: |
-                React.Windows.Desktop.DLL\**
-                React.Windows.Desktop.Test.DLL\**
 
       - job: RNWFormatting
         displayName: Verify change files + formatting
@@ -518,7 +520,11 @@ stages:
               #msbuildLocation: # Optional
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              #msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
+                /p:TargetPlatformVersion=$(TargetPlatformVersion)
+                /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
               #clean: true # Optional
               #maximumCpuCount: false # Optional
               #restoreNugetPackages: false # Optional
@@ -538,15 +544,15 @@ stages:
             displayName: Run Unit Tests
             timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
             inputs:
-              testSelector: "testAssemblies"
-              testAssemblyVer2: "ReactNative.Net46.Tests.dll" # Required when testSelector == TestAssemblies
+              testSelector: testAssemblies
+              testAssemblyVer2: ReactNative.Net46.Tests.dll # Required when testSelector == TestAssemblies
               searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-              vsTestVersion: $(VsTestVersion)
+              # vsTestVersion: $(VsTestVersion)
               runTestsInIsolation: true
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
-              collectDumpOn: "onAbortOnly"
+              collectDumpOn: onAbortOnly
             condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
           # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
           # It currently fails, so commenting this out for now
@@ -557,11 +563,11 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      - template: templates/e2e-test-job.yml  # Template reference
+      - template: templates/e2e-test-job.yml # Template reference
         parameters:
           name: E2ETest
           pool:
-            vmImage: 'windows-2019'
+            vmImage: $(VmImage)
           BuildPlatform: x64
           UseRNFork: true
 

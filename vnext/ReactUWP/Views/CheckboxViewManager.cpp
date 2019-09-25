@@ -81,7 +81,7 @@ folly::dynamic CheckBoxViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
   props.update(
-      folly::dynamic::object("checked", "boolean")("disabled", "boolean"));
+      folly::dynamic::object("value", "boolean")("disabled", "boolean"));
 
   return props;
 }
@@ -111,7 +111,7 @@ void CheckBoxViewManager::UpdateProperties(
         checkbox.IsEnabled(!propertyValue.asBool());
       else if (pair.second.isNull())
         checkbox.ClearValue(winrt::Control::IsEnabledProperty());
-    } else if (propertyName == "checked") {
+    } else if (propertyName == "value") {
       if (propertyValue.isBool())
         checkbox.IsChecked(propertyValue.asBool());
       else if (pair.second.isNull())

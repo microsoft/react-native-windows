@@ -13,5 +13,3 @@ export class Popup extends React.Component<IPopupProps> {
     return null;
   }
 }
-
-export default Popup;

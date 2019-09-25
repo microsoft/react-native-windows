@@ -1,7 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 19 Sep 2019 17:02:46 GMT and should not be manually modified.
+This log was last generated on Wed, 25 Sep 2019 18:32:05 GMT and should not be manually modified.
 
+## 0.60.0-vnext.4
+Wed, 25 Sep 2019 18:32:05 GMT
+
+### Changes
+
+- Enabling Systrace/ETW plumbing by default. The tracing will be controlled by whether the provider is enabled or not (anandrag@microsoft.com)
+## 0.60.0-vnext.3
+Tue, 24 Sep 2019 23:29:18 GMT
+
+### Changes
+
+- Create stub StatusBarManager to avoid crash when using <StatusBar> (acoates@microsoft.com)
+## 0.60.0-vnext.2
+Tue, 24 Sep 2019 19:11:20 GMT
+
+### Changes
+
+- Update to react-native 0.60 (acoates@microsoft.com)
 ## 0.59.0-vnext.190
 Thu, 19 Sep 2019 17:02:46 GMT
 

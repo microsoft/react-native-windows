@@ -2,21 +2,15 @@
 
 [Home](./index.md) &gt; [react-native-windows](./react-native-windows.md) &gt; [ViewWindows](./react-native-windows.viewwindows.md)
 
-## ViewWindows class
+## ViewWindows variable
 
 Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra windows specific functionality
 
 <b>Signature:</b>
 
 ```typescript
-export declare class ViewWindows extends React.Component<IViewWindowsProps> 
+ViewWindows: ViewWindowsType
 ```
-
-## Methods
-
-|  Method | Modifiers | Description |
-|  --- | --- | --- |
-|  [render()](./react-native-windows.viewwindows.render.md) |  |  |
 
 ## Remarks
 

@@ -1,7 +1,6 @@
 {
-  "$schema":
-    "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-  "mainEntryPointFilePath": "./index.d.ts",
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+  "mainEntryPointFilePath": "./Libraries/react-native/typings-index.d.ts",
   "docModel": {
     "enabled": true
   },
