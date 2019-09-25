@@ -73,7 +73,7 @@ jobs:
           ArtifactName: VersionEnvVars
 
   - job: RnwNativeBuildDesktop
-    displayName: Build React Native - Windows Desktop
+    displayName: Build Desktop
     dependsOn: RnwNpmPublish
     strategy:
       matrix:
@@ -136,7 +136,7 @@ jobs:
             React.Windows.Desktop.Test.DLL\**
 
   - job: RnwNativeBuildUniversal
-    displayName: Build React Native - Windows Universal
+    displayName: Build Universal
     dependsOn: RnwNpmPublish
     strategy:
       matrix:
@@ -223,7 +223,7 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-    displayName: React-Native-Windows Build and Publish Nuget
+    displayName: Publish Nuget
     pool:
       vmImage: $(VmImage)
 
