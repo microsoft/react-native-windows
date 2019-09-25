@@ -25,7 +25,7 @@ namespace SampleApp
     {
       get
       {
-        return new IReactPackage[] { new SamplePackage(), new SampleLibraryPackage() };
+        return new IReactPackage[] { new SampleLibraryPackage() };
       }
     }
   }

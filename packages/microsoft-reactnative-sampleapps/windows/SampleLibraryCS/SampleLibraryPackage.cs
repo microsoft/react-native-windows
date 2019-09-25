@@ -16,6 +16,8 @@ namespace SampleLibraryCS
             return _nativeModules ?? (_nativeModules = new List<INativeModule>() {
                 new ManagedNativeModule(new FancyMath()),
                 new FancyMathABI(),
+                new ManagedNativeModule(new SampleModule()),
+                new SampleModuleABI(),
             });
         }
         private IReadOnlyList<INativeModule> _nativeModules;

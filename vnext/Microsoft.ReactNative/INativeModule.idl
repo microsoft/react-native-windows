@@ -17,6 +17,7 @@ namespace Microsoft.ReactNative.Bridge
 	attribute NativeModuleMethodAttribute
 	{
 		String Name;
+    ReturnType ReturnType;
 	};
 
 	[webhosthidden]

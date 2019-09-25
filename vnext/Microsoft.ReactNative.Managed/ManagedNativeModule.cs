@@ -46,19 +46,19 @@ namespace Microsoft.ReactNative.Managed
 
           foreach (var fieldInfo in TypeInfo.DeclaredFields)
           {
-            var constantAttribute = GetCustomAttributeData<NativeModuleConstantAttribute>(fieldInfo);
+            var constantAttribute = ReflectionHelpers.GetCustomAttributeData<NativeModuleConstantAttribute>(fieldInfo);
             if (null != constantAttribute)
             {
-              constants.Add(GetStringAttributeValueByName(constantAttribute, "Name") ?? fieldInfo.Name, fieldInfo.GetValue(NativeModule));
+              constants.Add(ReflectionHelpers.GetStringAttributeValueByName(constantAttribute, "Name") ?? fieldInfo.Name, fieldInfo.GetValue(NativeModule));
             }
           }
 
           foreach (var propertyInfo in TypeInfo.DeclaredProperties)
           {
-            var constantAttribute = GetCustomAttributeData<NativeModuleConstantAttribute>(propertyInfo);
+            var constantAttribute = ReflectionHelpers.GetCustomAttributeData<NativeModuleConstantAttribute>(propertyInfo);
             if (null != constantAttribute)
             {
-              constants.Add(GetStringAttributeValueByName(constantAttribute, "Name") ?? propertyInfo.Name, propertyInfo.GetMethod.Invoke(NativeModule, null));
+              constants.Add(ReflectionHelpers.GetStringAttributeValueByName(constantAttribute, "Name") ?? propertyInfo.Name, propertyInfo.GetMethod.Invoke(NativeModule, null));
             }
           }
 
@@ -79,28 +79,71 @@ namespace Microsoft.ReactNative.Managed
 
           foreach (var methodInfo in TypeInfo.DeclaredMethods)
           {
-            var methodAttribute = GetCustomAttributeData<NativeModuleMethodAttribute>(methodInfo);
+            var methodAttribute = ReflectionHelpers.GetCustomAttributeData<NativeModuleMethodAttribute>(methodInfo);
+
             if (null != methodAttribute)
             {
-              string methodName = GetStringAttributeValueByName(methodAttribute, "Name") ?? methodInfo.Name;
+              string methodName = GetName(methodAttribute) ?? methodInfo.Name;
 
-              if (methodInfo.ReturnType == typeof(void))
+              var returnType = GetReturnType(methodAttribute);
+
+              Method method = null;
+
+              if (!returnType.HasValue) // Determine the ReturnType using reflection
               {
-                methods.Add(new Bridge.MethodInfo(methodName, ReturnType.Void, (args, __, ___) =>
+                if (methodInfo.ReturnType == typeof(void))
+                {
+                  // Assume void
+                  returnType = ReturnType.Void;
+                  method = (args, callback, ___) =>
+                  {
+                    var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                    methodInfo.Invoke(NativeModule, nativeArguments);
+                  };
+                }
+                else
+                {
+                  // Assume callback
+                  returnType = ReturnType.Callback;
+                  method = (args, callback, ___) =>
+                  {
+                    var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                    var result = methodInfo.Invoke(NativeModule, nativeArguments);
+                    callback(new object[] { result });
+                  };
+                }
+              }
+              else if (returnType.Value == ReturnType.Void) // ReturnType is Void
+              {
+                method = (args, __, ___) =>
                 {
                   var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
                   methodInfo.Invoke(NativeModule, nativeArguments);
-                }));
+                };
               }
-              else
+              else if (returnType.Value == ReturnType.Callback) // ReturnType is Callback
               {
-                methods.Add(new Bridge.MethodInfo(methodName, ReturnType.Callback, (args, callback, ___) =>
+                // Callback
+                method = (args, callback, ___) =>
                 {
                   var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
-                  var result = methodInfo.Invoke(NativeModule, nativeArguments);
-                  callback(new object[] { result });
-                }));
+                  nativeArguments[nativeArguments.Length - 1] = callback;
+                  methodInfo.Invoke(NativeModule, nativeArguments);
+                };
               }
+              else if (returnType.Value == ReturnType.Promise) // ReturnType is Promise
+              {
+                // Promise
+                method = (args, resolve, reject) =>
+                {
+                  var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                  nativeArguments[nativeArguments.Length - 2] = resolve;
+                  nativeArguments[nativeArguments.Length - 1] = reject;
+                  methodInfo.Invoke(NativeModule, nativeArguments);
+                };
+              }
+
+              methods.Add(new Bridge.MethodInfo(methodName, returnType.Value, method));
             }
           }
 
@@ -111,28 +154,14 @@ namespace Microsoft.ReactNative.Managed
     }
     private IReadOnlyList<Bridge.MethodInfo> _methods;
 
-    private static CustomAttributeData GetCustomAttributeData<T>(MemberInfo memberInfo) where T : Attribute
+    private static string GetName(CustomAttributeData customAttributeData)
     {
-      foreach (var customAttributeData in memberInfo.CustomAttributes)
-      {
-        if (customAttributeData.AttributeType == typeof(T))
-        {
-          return customAttributeData;
-        }
-      }
-      return null;
+      return ReflectionHelpers.GetStringAttributeValueByName(customAttributeData, "Name");
     }
 
-    private string GetStringAttributeValueByName(CustomAttributeData customAttributeData, string attributeName)
+    private static ReturnType? GetReturnType(CustomAttributeData customAttributeData)
     {
-      foreach (var args in customAttributeData.NamedArguments)
-      {
-        if (args.MemberName == attributeName && args.TypedValue.ArgumentType == typeof(string))
-        {
-          return args.TypedValue.Value as string;
-        }
-      }
-      return null;
+      return ReflectionHelpers.GetAttributeValueByName<ReturnType>(customAttributeData, "ReturnType");
     }
 
     // TODO: args are being sent as a json string, but should already be an object array, so this logic should be moved into ABIModule

@@ -85,6 +85,7 @@
     <Compile Include="ManagedNativeModule.cs" />
     <Compile Include="ManagedViewManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
