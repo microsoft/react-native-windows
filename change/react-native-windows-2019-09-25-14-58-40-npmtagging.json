@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Only publish react-native-windows using vnext tag",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "a5f8ac0327970f73404ddc2599655497f6a404e2",
+  "date": "2019-09-25T21:58:40.763Z"
+}
