@@ -129,7 +129,10 @@ jobs:
           MSBuildArchitecture: $(MSBuildArchitecture)
           NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
           Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
-          MSBuildArguments: /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)" /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)" /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
+          MSBuildArguments:
+            /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
+            /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
+            /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-Universal
@@ -149,7 +152,9 @@ jobs:
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
-          msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
           clean: true
 
       - template: templates/publish-build-artifacts-for-nuget.yml

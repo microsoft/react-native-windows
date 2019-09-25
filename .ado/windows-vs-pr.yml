@@ -132,7 +132,9 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
 
           - template: templates/publish-build-artifacts-for-nuget.yml
@@ -154,7 +156,9 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -179,7 +183,9 @@ stages:
               msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
@@ -252,7 +258,10 @@ stages:
               MSBuildArchitecture: $(MSBuildArchitecture)
               NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
               Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
-              MSBuildArguments: /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0" /p:VCTargetsPath="$(VCTargetsPath)"
+              MSBuildArguments:
+                /p:RNW_PKG_VERSION_STR="Private Build"
+                /p:RNW_PKG_VERSION="1000,0,0,0"
+                /p:VCTargetsPath="$(VCTargetsPath)"
               Collect: false
 
           - task: VSTest@2
@@ -374,7 +383,9 @@ stages:
               platform: x64 # Optional
               configuration: Debug # Optional
               restoreNugetPackages: true
-              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset)
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
 
           - task: CmdLine@2
@@ -509,7 +520,11 @@ stages:
               #msbuildLocation: # Optional
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
-              msbuildArguments: /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture) /p:PlatformToolset=$(MSBuildPlatformToolset) /p:TargetPlatformVersion=$(TargetPlatformVersion) /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
+              msbuildArguments:
+                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PlatformToolset=$(MSBuildPlatformToolset)
+                /p:TargetPlatformVersion=$(TargetPlatformVersion)
+                /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
               #clean: true # Optional
               #maximumCpuCount: false # Optional
               #restoreNugetPackages: false # Optional
