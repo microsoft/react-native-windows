@@ -351,6 +351,19 @@ stages:
             inputs:
               script: yarn format:verify
 
+          # Prepare headers for NuGet deployment
+          - task: PowerShell@2
+            displayName: Copy NuGet header files
+            inputs:
+              filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
+              arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
+
+          - task: PublishBuildArtifacts@1
+            displayName: Publish VersionEnvVars
+            inputs:
+              artifactName: ReactWindows
+              pathtoPublish: $(Build.ArtifactStagingDirectory)
+
       - job: CurrentPR
         displayName: Current (C#) PR
         strategy:
@@ -519,11 +532,5 @@ stages:
           - task: NuGetToolInstaller@0
             inputs:
               versionSpec: ">=4.6.0"
-
-          - task: PowerShell@2
-            displayName: Copy NuGet header files
-            inputs:
-              filePath: vnext\Scripts\Tfs\Layout-Headers.ps1
-              arguments: -TargetRoot $(System.DefaultWorkingDirectory)/ReactWindows
 
           - template: templates/prep-and-pack-nuget.yml

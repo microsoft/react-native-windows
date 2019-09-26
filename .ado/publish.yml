@@ -72,6 +72,19 @@ jobs:
           PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
 
+      # Prepare headers for NuGet deployment
+      - task: PowerShell@2
+        displayName: Copy NuGet header files
+        inputs:
+          filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
+          arguments: -TargetRoot $(Build.ArtifactStagingDirectory)/ReactWindows
+
+      - task: PublishBuildArtifacts@1
+        displayName: Publish VersionEnvVars
+        inputs:
+          artifactName: ReactWindows
+          pathtoPublish: $(Build.ArtifactStagingDirectory)/ReactWindows
+
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
     dependsOn: RnwNpmPublish
@@ -130,7 +143,6 @@ jobs:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
-          LayoutHeaders: false
           Contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
