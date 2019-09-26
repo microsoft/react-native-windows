@@ -18,13 +18,13 @@ steps:
     inputs:
       script: node scripts/useUnForkedRN.js
       workingDirectory: $(Build.SourcesDirectory)/vnext
-    condition: and(succeeded(), not(${{parameters.useRnFork}}))
+    condition: and(succeeded(), not($[parameters.useRnFork]))
 
   - task: CmdLine@2
     displayName: yarn install (Using microsoft/react-native)
     inputs:
       script: yarn install --frozen-lockfile
-    condition: and(succeeded(), ${{parameters.useRnFork}})
+    condition: and(succeeded(), $[parameters.useRnFork])
 
     # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
     # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
@@ -33,7 +33,7 @@ steps:
     displayName: yarn install (Using facebook/react-native)
     inputs:
       script: yarn install
-    condition: and(succeeded(), not(${{parameters.useRnFork}}))
+    condition: and(succeeded(), not($[parameters.useRnFork]))
 
   - task: CmdLine@2
     displayName: yarn buildci
