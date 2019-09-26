@@ -32,7 +32,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertyS
 		PropertySheets\x86.props = PropertySheets\x86.props
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "templatecpp", "templatecpp\templatecpp.vcxproj", "{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "<%=name%>", "<%=name%>\<%=name%>.vcxproj", "{<%=projectGuid%>}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -106,26 +106,26 @@ Global
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x64.Build.0 = Release|x64
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.ActiveCfg = Release|Win32
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.Build.0 = Release|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|ARM.ActiveCfg = Debug|ARM
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|ARM.Build.0 = Debug|ARM
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|ARM.Deploy.0 = Debug|ARM
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|ARM64.ActiveCfg = Debug|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|x64.ActiveCfg = Debug|x64
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|x64.Build.0 = Debug|x64
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|x64.Deploy.0 = Debug|x64
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|x86.ActiveCfg = Debug|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|x86.Build.0 = Debug|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Debug|x86.Deploy.0 = Debug|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|ARM.ActiveCfg = Release|ARM
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|ARM.Build.0 = Release|ARM
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|ARM.Deploy.0 = Release|ARM
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|ARM64.ActiveCfg = Release|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|x64.ActiveCfg = Release|x64
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|x64.Build.0 = Release|x64
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|x64.Deploy.0 = Release|x64
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|x86.ActiveCfg = Release|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|x86.Build.0 = Release|Win32
-		{ED65EF81-2A9D-472B-81E0-AD541AC3EE7D}.Release|x86.Deploy.0 = Release|Win32
+		{<%=projectGuid%>}.Debug|ARM.ActiveCfg = Debug|ARM
+		{<%=projectGuid%>}.Debug|ARM.Build.0 = Debug|ARM
+		{<%=projectGuid%>}.Debug|ARM.Deploy.0 = Debug|ARM
+		{<%=projectGuid%>}.Debug|ARM64.ActiveCfg = Debug|Win32
+		{<%=projectGuid%>}.Debug|x64.ActiveCfg = Debug|x64
+		{<%=projectGuid%>}.Debug|x64.Build.0 = Debug|x64
+		{<%=projectGuid%>}.Debug|x64.Deploy.0 = Debug|x64
+		{<%=projectGuid%>}.Debug|x86.ActiveCfg = Debug|Win32
+		{<%=projectGuid%>}.Debug|x86.Build.0 = Debug|Win32
+		{<%=projectGuid%>}.Debug|x86.Deploy.0 = Debug|Win32
+		{<%=projectGuid%>}.Release|ARM.ActiveCfg = Release|ARM
+		{<%=projectGuid%>}.Release|ARM.Build.0 = Release|ARM
+		{<%=projectGuid%>}.Release|ARM.Deploy.0 = Release|ARM
+		{<%=projectGuid%>}.Release|ARM64.ActiveCfg = Release|Win32
+		{<%=projectGuid%>}.Release|x64.ActiveCfg = Release|x64
+		{<%=projectGuid%>}.Release|x64.Build.0 = Release|x64
+		{<%=projectGuid%>}.Release|x64.Deploy.0 = Release|x64
+		{<%=projectGuid%>}.Release|x86.ActiveCfg = Release|Win32
+		{<%=projectGuid%>}.Release|x86.Build.0 = Release|Win32
+		{<%=projectGuid%>}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

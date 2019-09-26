@@ -2,7 +2,7 @@
 
 #include "MainPage.g.h"
 
-namespace winrt::templatecpp::implementation
+namespace winrt::<%=ns%>::implementation
 {
     struct MainPage : MainPageT<MainPage>
     {
@@ -13,7 +13,7 @@ namespace winrt::templatecpp::implementation
     };
 }
 
-namespace winrt::templatecpp::factory_implementation
+namespace winrt::<%=ns%>::factory_implementation
 {
     struct MainPage : MainPageT<MainPage, implementation::MainPage>
     {

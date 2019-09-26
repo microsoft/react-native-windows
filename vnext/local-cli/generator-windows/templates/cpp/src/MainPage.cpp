@@ -6,7 +6,7 @@ using namespace winrt;
 using namespace Windows::UI::Xaml;
 using namespace react::uwp;
 
-namespace winrt::templatecpp::implementation
+namespace winrt::<%=ns%>::implementation
 {
 	const wchar_t* JSFILENAME = L"index";
 	const wchar_t* JSCOMPONENTNAME = L"<%=name%>";
