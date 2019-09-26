@@ -205,7 +205,7 @@ jobs:
       - task: DownloadBuildArtifacts@0
         displayName: 'Download ReactWindows Artifact'
         inputs:
-          buildType: current
+          buildType: specific
           project: react-native-windows
           pipeline: Publish
           buildVersionToDownload: specific
