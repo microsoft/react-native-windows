@@ -32,6 +32,11 @@ class RawTextViewManager : public ViewManagerBase {
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
+
+private:
+  void NotifyAncestorsTextChanged(
+      IReactInstance *instance,
+      ShadowNodeBase *nodeToUpdate);
 };
 
 } // namespace uwp

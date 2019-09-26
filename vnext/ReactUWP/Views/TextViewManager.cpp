@@ -5,6 +5,9 @@
 
 #include "TextViewManager.h"
 
+#include <winrt/Windows.UI.Xaml.Automation.Peers.h>
+#include <winrt/Windows.UI.Xaml.Automation.h>
+
 #include <Views/ShadowNodeBase.h>
 
 #include <Utils/PropertyUtils.h>
@@ -14,6 +17,8 @@
 
 namespace winrt {
 using namespace Windows::UI::Xaml::Documents;
+using namespace Windows::UI::Xaml::Automation;
+using namespace Windows::UI::Xaml::Automation::Peers;
 } // namespace winrt
 
 namespace react {
@@ -177,6 +182,23 @@ void TextViewManager::RemoveChildAt(XamlView parent, int64_t index) {
 
 YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
+}
+
+void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
+  if (auto element = node->GetView().try_as<winrt::TextBlock>()) {
+    // If name is set, it's controlled by accessibilityLabel, and it's already handled in FrameworkElementViewManager.
+    // Here it only handles when name is not set.
+    if (winrt::AutomationProperties::GetLiveSetting(element) !=
+            winrt::AutomationLiveSetting::Off &&
+        winrt::AutomationProperties::GetName(element).empty() &&
+        winrt::AutomationProperties::GetAccessibilityView(element) !=
+            winrt::Peers::AccessibilityView::Raw
+      ) {
+     if (auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element)) {
+        peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
+      }
+    }
+  }
 }
 
 } // namespace uwp
