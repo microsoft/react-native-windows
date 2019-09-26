@@ -33,7 +33,7 @@ class RawTextViewManager : public ViewManagerBase {
  protected:
   XamlView CreateViewCore(int64_t tag) override;
 
-private:
+ private:
   void NotifyAncestorsTextChanged(
       IReactInstance *instance,
       ShadowNodeBase *nodeToUpdate);

@@ -186,15 +186,16 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
 
 void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
   if (auto element = node->GetView().try_as<winrt::TextBlock>()) {
-    // If name is set, it's controlled by accessibilityLabel, and it's already handled in FrameworkElementViewManager.
-    // Here it only handles when name is not set.
+    // If name is set, it's controlled by accessibilityLabel, and it's already
+    // handled in FrameworkElementViewManager. Here it only handles when name is
+    // not set.
     if (winrt::AutomationProperties::GetLiveSetting(element) !=
             winrt::AutomationLiveSetting::Off &&
         winrt::AutomationProperties::GetName(element).empty() &&
         winrt::AutomationProperties::GetAccessibilityView(element) !=
-            winrt::Peers::AccessibilityView::Raw
-      ) {
-     if (auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element)) {
+            winrt::Peers::AccessibilityView::Raw) {
+      if (auto peer =
+              winrt::FrameworkElementAutomationPeer::FromElement(element)) {
         peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
       }
     }
