@@ -21,8 +21,8 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
 
   - powershell: |
-      ls [${env:System_DefaultWorkingDirectory}
-      ls [${env:System_DefaultWorkingDirectory}/ReactWindows
+      ls ${env:System_DefaultWorkingDirectory}
+      ls ${env:System_DefaultWorkingDirectory}/ReactWindows
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack Desktop'
