@@ -84,6 +84,7 @@ stages:
 
           - template: templates/build-rnw.yml
             parameters:
+              useRnFork: $(UseRNFork)
               projects: [ vnext/ReactWindows-Universal.sln ]
 
           - template: templates/publish-build-artifacts-for-nuget.yml
