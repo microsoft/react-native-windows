@@ -21,12 +21,12 @@ steps:
     displayName: Copy NuGet header files
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.ArtifactStagingDirectory)/ReactWindows
+      arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
     condition: ${{ parameters.layoutHeaders }}
 
   - task: PublishBuildArtifacts@1
     displayName: Publish VersionEnvVars
     inputs:
       artifactName: ReactWindows
-      pathtoPublish: $(Build.ArtifactStagingDirectory)/ReactWindows
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
     condition: ${{ parameters.layoutHeaders }}
