@@ -13,10 +13,6 @@ parameters:
   msbuildArguments: ''
 
 steps:
-  - checkout: self
-    clean: false
-    submodules: false
-
   - task: CmdLine@2
     displayName: Modify package.json to use unforked RN
     inputs:
