@@ -21,7 +21,9 @@ steps:
       downloadPath: $(System.DefaultWorkingDirectory)
 
   - powershell: |
+      echo "lsing ${env:System_DefaultWorkingDirectory}"
       ls ${env:System_DefaultWorkingDirectory}
+      echo "lsing ${env:System_DefaultWorkingDirectory}/ReactWindows"
       ls ${env:System_DefaultWorkingDirectory}/ReactWindows
 
   - task: NuGetCommand@2
