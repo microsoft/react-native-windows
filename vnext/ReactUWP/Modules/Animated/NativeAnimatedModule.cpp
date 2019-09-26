@@ -39,6 +39,10 @@ const char *NativeAnimatedModule::s_addAnimatedEventToViewName{
     "addAnimatedEventToView"};
 const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{
     "removeAnimatedEventFromView"};
+const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValue{
+    "startListeningToAnimatedNodeValue"};
+const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValue{
+    "stopListeningToAnimatedNodeValue"};
 
 NativeAnimatedModule::NativeAnimatedModule(
     const std::weak_ptr<IReactInstance> &reactInstance)
@@ -151,6 +155,20 @@ NativeAnimatedModule::getMethods() {
             NativeAnimatedModule::RemoveAnimatedEventFromView(
                 viewTag, eventName, animatedValueTag);
           }),
+      Method(
+          s_startListeningToAnimatedNodeValue,
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StartListeningToAnimatedNodeValue(
+                viewTag);
+          }),
+      Method(
+          s_stopListeningToAnimatedNodeValue,
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StopListeningToAnimatedNodeValue(
+                viewTag);
+          }),
   };
 }
 
@@ -238,7 +256,7 @@ void NativeAnimatedModule::RemoveAnimatedEventFromView(
 }
 
 void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t tag) {
-  // NotImplemented
+  m_nodesManager->StartListeningToAnimatedNodeValue(tag);
 }
 
 void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t tag) {

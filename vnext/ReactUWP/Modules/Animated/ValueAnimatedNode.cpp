@@ -87,6 +87,15 @@ void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag) {
 
 void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag) {
   m_activeAnimations.insert(animationTag);
+  if (m_activeAnimations.size() == 1) {
+    if (const auto manager = m_manager.lock()) {
+      for (const auto &props : m_dependentPropsNodes) {
+        if (const auto propsNode = manager->GetPropsAnimatedNode(props)) {
+          //propsNode->UpdateView();
+        }
+      }
+    }
+  }
 }
 
 void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
@@ -94,8 +103,9 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
       for (const auto &props : m_dependentPropsNodes) {
-        if (const auto propsNode = manager->GetPropsAnimatedNode(props))
+        if (const auto propsNode = manager->GetPropsAnimatedNode(props)) {
           propsNode->DisposeCompletedAnimation(Tag());
+        }
       }
     }
   }
@@ -118,6 +128,10 @@ void ValueAnimatedNode::UpdateTrackingNodes() {
       }
     }
   }
+}
+
+void ValueAnimatedNode::SetValueListener(std::function<double()> listener) {
+  m_listener = listener;
 }
 
 } // namespace uwp

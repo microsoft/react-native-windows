@@ -383,6 +383,15 @@ void NativeAnimatedNodeManager::RemoveAnimatedEventFromView(
   }
 }
 
+void NativeAnimatedNodeManager::StartListeningToAnimatedNodeValue(
+    int64_t viewTag) {
+}
+
+void NativeAnimatedNodeManager::StopListeningToAnimatedNodeValue(
+    int64_t viewTag) {
+
+}
+
 void NativeAnimatedNodeManager::ProcessDelayedPropsNodes() {
   // If StartAnimations fails we'll put the props nodes back into this queue to
   // try again when the next batch completes. Because of this we need to copy

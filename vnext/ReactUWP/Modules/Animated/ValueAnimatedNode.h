@@ -37,6 +37,7 @@ class ValueAnimatedNode : public AnimatedNode {
   void RemoveActiveAnimation(int64_t animationTag);
   void AddActiveTrackingNode(int64_t trackingNodeTag);
   void RemoveActiveTrackingNode(int64_t trackingNodeTag);
+  void SetValueListener(std::function<double()> listener);
 
   static constexpr std::wstring_view s_valueName{L"v"};
   static constexpr std::wstring_view s_offsetName{L"o"};
@@ -54,6 +55,7 @@ class ValueAnimatedNode : public AnimatedNode {
   std::unordered_set<int64_t> m_dependentPropsNodes{};
   std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
+  std::function<double()> m_listener{};
 };
 } // namespace uwp
 } // namespace react

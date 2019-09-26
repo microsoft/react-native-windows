@@ -59,6 +59,7 @@ void AnimationDriver::StartAnimation() {
         if (auto man = Manager.lock()) {
           if (auto const animatedValue = man->GetValueAnimatedNode(valueTag)) {
             animatedValue->RemoveActiveAnimation(id);
+            animatedValue->FlattenOffset();
           }
         }
       });

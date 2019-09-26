@@ -82,6 +82,8 @@ class NativeAnimatedNodeManager {
       int64_t viewTag,
       const std::string &eventName,
       int64_t animatedValueTag);
+  void StartListeningToAnimatedNodeValue(int64_t viewTag);
+  void StopListeningToAnimatedNodeValue(int64_t viewTag);
   void ProcessDelayedPropsNodes();
   void AddDelayedPropsNode(
       int64_t propsNodeTag,
