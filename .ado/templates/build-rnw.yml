@@ -48,7 +48,7 @@ steps:
     displayName: NuGet restore
     inputs:
       command: restore
-      restoreSolution: $[join(${{parameters.projects }}, ' ')]
+      restoreSolution: $[join(' ', ${{parameters.projects }})]
       feedsToUse: config
       nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
       restoreDirectory: packages/
@@ -57,7 +57,7 @@ steps:
   - task: MSBuild@1
     displayName: MSBuild
     inputs:
-      solution: join(${{parameters.projects }}, ' ')
+      solution: $[join(' ', ${{parameters.projects }})]
       msbuildVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: $(BuildPlatform)
