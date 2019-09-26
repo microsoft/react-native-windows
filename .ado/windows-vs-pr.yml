@@ -509,10 +509,11 @@ stages:
         displayName: Build and Pack Nuget
         pool:
           vmImage: $(VmImage)
-        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        timeoutInMinutes: 30
+        cancelTimeoutInMinutes: 5
         steps:
-          - checkout: none #skip checking out the default repository resource
+          - checkout: self
+            fetchDepth: 1
 
           # The commit tag in the nuspec requires that we use at least nuget 4.6
           - task: NuGetToolInstaller@0
