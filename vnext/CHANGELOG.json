@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 Sep 2019 18:32:05 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.4",
+      "version": "0.60.0-vnext.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Install v141 on demand.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "7cdd36bf66c8e6bd06a19e25a4ff4b9da921e087"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enabling Systrace/ETW plumbing by default. The tracing will be controlled by whether the provider is enabled or not",
+            "author": "anandrag@microsoft.com",
+            "commit": "3af742122b2ba22052f1ad0bef55662ae2af223a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Sep 2019 23:29:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.3",
+      "version": "0.60.0-vnext.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create stub StatusBarManager to avoid crash when using <StatusBar>",
+            "author": "acoates@microsoft.com",
+            "commit": "8f10f575517dcc7a3b5de86bc58748b47513dd35"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Sep 2019 19:11:20 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.2",
       "version": "0.60.0-vnext.2",

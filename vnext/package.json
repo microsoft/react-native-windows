@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.60.0-vnext.2",
+  "version": "0.60.0-vnext.4",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -55,6 +55,7 @@
     "react-native": "^0.60.0 || 0.60.0-microsoft-fb60merge.13 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz"
   },
   "beachball": {
+    "defaultNpmTag": "vnext",
     "disallowedChangeTypes": [
       "major",
       "minor",
