@@ -205,7 +205,7 @@ jobs:
       - task: DownloadBuildArtifacts@0
         displayName: 'Download ReactWindows Artifact'
         inputs:
-          buildType: specific
+          buildVersionToDownload: specific
           buildId: 36860
           artifactName: ReactWindows
           downloadPath: $(System.DefaultWorkingDirectory)
