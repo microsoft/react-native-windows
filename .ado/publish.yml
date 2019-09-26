@@ -202,6 +202,14 @@ jobs:
         inputs:
           versionSpec: ">=4.6.0"
 
+      - task: DownloadBuildArtifacts@0
+        displayName: 'Download ReactWindows Artifact'
+        inputs:
+          buildType: specific
+          buildId: 36860
+          artifactName: ReactWindows
+          downloadPath: $(System.DefaultWorkingDirectory)
+
       - template: templates/prep-and-pack-nuget.yml
         parameters:
           publishCommitId: $(publishCommitId)

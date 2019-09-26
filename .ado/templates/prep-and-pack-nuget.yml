@@ -12,14 +12,6 @@ steps:
   #     artifactName: ReactWindows
   #     downloadPath: $(System.DefaultWorkingDirectory)
 
-  - task: DownloadBuildArtifacts@0
-    inputs:
-      buildVersionToDownload: specific
-      buildId: 36860
-      downloadType: specific
-      artifactName: ReactWindows
-      downloadPath: $(System.DefaultWorkingDirectory)
-
   - powershell: |
       echo "lsing ${env:System_DefaultWorkingDirectory}"
       ls ${env:System_DefaultWorkingDirectory}
