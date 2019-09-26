@@ -86,7 +86,7 @@ stages:
           - template: templates/publish-build-artifacts-for-nuget.yml
             parameters:
               artifactName: ReactWindows
-              layoutHeaders: eq(true, variables['LayoutHeaders'])
+              layoutHeaders: eq('true', variables['LayoutHeaders'])
               contents: |
                 ReactUWP\**
 
