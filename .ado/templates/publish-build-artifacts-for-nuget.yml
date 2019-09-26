@@ -3,13 +3,6 @@ parameters:
   contents:
 
 steps:
-  # - task: PowerShell@2
-  #   displayName: Copy NuGet header files
-  #   inputs:
-  #     filePath: vnext\Scripts\Tfs\Layout-Headers.ps1
-  #     arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
-  #   condition: and(variables['Condition'], variables['LayoutHeaders'])
-
   - task: CopyFiles@2
     displayName: Copy NuGet artifacts
     inputs:

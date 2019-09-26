@@ -66,17 +66,3 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         ${{parameters.msbuildArguments}}
-
-  - task: CopyFiles@2
-    displayName: Copy NuGet artifacts
-    inputs:
-      sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
-      targetFolder: $(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
-      contents: ${{parameters.nugetContents}}
-    condition: ne(${{parameters.nugetContents}}, '')
-
-  - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: ${{parameters.artifactName}}"
-    inputs:
-      artifactName: ${{parameters.artifactName}}
-    condition: ne(${{parameters.nugetContents}}, '')
