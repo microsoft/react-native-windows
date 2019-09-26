@@ -202,7 +202,6 @@ stages:
               workingDirectory: vnext
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
-<<<<<<< HEAD
       - job: CliInit
         displayName: Verify react-native init (cpp)
         pool:
@@ -369,8 +368,6 @@ stages:
               script: react-native bundle --entry-file index.js platform windows --bundle-output test.bundle
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
-=======
->>>>>>> upstream/master
       - job: RNWDesktopPR
         displayName: Desktop PR
         strategy:
