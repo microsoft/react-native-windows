@@ -1,0 +1,82 @@
+# Steps template for building any React Native Windows variant.
+
+parameters:
+  useRnFork: # boolean
+
+  # NuGet & MSBuild
+  projects: []
+  msbuildVersion: 16.0
+  msBuildArchitecture: x64
+  preferredToolArchitecture: x64
+  platformToolset: v142
+  targetPlatformVersion: 10.0.18362.0
+  msbuildArguments: ''
+
+steps:
+  - checkout: self
+    clean: false
+    submodules: false
+
+  - task: CmdLine@2
+    displayName: Modify package.json to use unforked RN
+    inputs:
+      script: node scripts/useUnForkedRN.js
+      workingDirectory: $(Build.SourcesDirectory)/vnext
+    condition: and(succeeded(), not(${{parameters.useRnFork}}))
+
+  - task: CmdLine@2
+    displayName: yarn install (Using microsoft/react-native)
+    inputs:
+      script: yarn install --frozen-lockfile
+    condition: and(succeeded(), ${{parameters.useRnFork}})
+
+    # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
+    # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
+    # using the non fork version.
+  - task: CmdLine@2
+    displayName: yarn install (Using facebook/react-native)
+    inputs:
+      script: yarn install
+    condition: and(succeeded(), not(${{parameters.useRnFork}}))
+
+  - task: CmdLine@2
+    displayName: yarn buildci
+    inputs:
+      script: yarn buildci
+
+  - task: NuGetCommand@2
+    displayName: NuGet restore
+    inputs:
+      command: restore
+      restoreSolution: ${{ each project in parameters.projects }}
+      feedsToUse: config
+      nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+      restoreDirectory: packages/
+      verbosityRestore: Detailed # Options: quiet, normal, detailed
+
+  - task: MSBuild@1
+    displayName: MSBuild
+    inputs:
+      solution: ${{ each projects in parameters.projects }}
+      msbuildVersion: ${{parameters.msbuildVersion}}
+      msbuildArchitecture: ${{parameters.msBuildArchitecture}}
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      msbuildArguments:
+        /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
+        /p:PlatformToolset=${{parameters.platformToolset}}
+        ${{parameters.msbuildArguments}}
+
+  - task: CopyFiles@2
+    displayName: Copy NuGet artifacts
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+      targetFolder: $(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
+      contents: ${{parameters.nugetContents}}
+    condition: ne(${{parameters.nugetContents}}, '')
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact: ${{parameters.artifactName}}"
+    inputs:
+      artifactName: ${{parameters.artifactName}}
+    condition: ne(${{parameters.nugetContents}}, '')
