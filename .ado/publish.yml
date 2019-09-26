@@ -10,6 +10,7 @@ trigger:
       - master
       - 0.58-vnext-stable
       - fabric
+      - azure/pipes/buildtemplate #TODO: REMOVE!
 
 pr: none
 
@@ -186,15 +187,15 @@ jobs:
     steps:
       - checkout: none #skip checking out the default repository resource
 
-      - task: DownloadBuildArtifacts@0
-        displayName: Download VersionEnvVars
-        inputs:
-          artifactName: VersionEnvVars
-          downloadPath: $(Build.ArtifactStagingDirectory)
+      # - task: DownloadBuildArtifacts@0
+      #   displayName: Download VersionEnvVars
+      #   inputs:
+      #     artifactName: VersionEnvVars
+      #     downloadPath: $(Build.ArtifactStagingDirectory)
 
-      - task: CmdLine@2
-        inputs:
-          script: node $(Build.ArtifactStagingDirectory)/VersionEnvVars/versionEnvVars.js
+      # - task: CmdLine@2
+      #   inputs:
+      #     script: node $(Build.ArtifactStagingDirectory)/VersionEnvVars/versionEnvVars.js
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
