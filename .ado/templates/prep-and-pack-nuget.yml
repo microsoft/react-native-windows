@@ -16,7 +16,7 @@ steps:
     inputs:
       buildVersionToDownload: specific
       buildId: 36860
-      downloadType: single
+      downloadType: specific
       artifactName: ReactWindows
       downloadPath: $(System.DefaultWorkingDirectory)
 
