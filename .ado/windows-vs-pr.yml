@@ -85,7 +85,7 @@ stages:
           - template: templates/build-rnw.yml
             parameters:
               useRnFork: $(UseRNFork)
-              projects: [ vnext/ReactWindows-Universal.sln ]
+              project: vnext/ReactWindows-Universal.sln
 
           - template: templates/publish-build-artifacts-for-nuget.yml
             parameters:
@@ -187,7 +187,7 @@ stages:
           - template: templates/build-rnw.yml
             parameters:
               useRnFork: true
-              projects: [ vnext/ReactWindows-Desktop.sln ]
+              project: vnext/ReactWindows-Desktop.sln
               platformToolset: v141
               msbuildArguments:
                 /p:RNW_PKG_VERSION_STR="Private Build"

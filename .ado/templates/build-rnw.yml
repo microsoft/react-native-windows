@@ -4,7 +4,7 @@ parameters:
   useRnFork: # boolean
 
   # NuGet & MSBuild
-  projects: []
+  project:
   msbuildVersion: 16.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
@@ -48,7 +48,7 @@ steps:
     displayName: NuGet restore
     inputs:
       command: restore
-      restoreSolution: $[join(' ', ${{parameters.projects }})]
+      restoreSolution: ${{parameters.project }}
       feedsToUse: config
       nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
       restoreDirectory: packages/
@@ -57,7 +57,7 @@ steps:
   - task: MSBuild@1
     displayName: MSBuild
     inputs:
-      solution: $[join(' ', ${{parameters.projects }})]
+      solution: ${{parameters.project }}
       msbuildVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: $(BuildPlatform)
