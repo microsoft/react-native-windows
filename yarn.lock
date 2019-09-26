@@ -2449,11 +2449,11 @@
     glob "^7.1.2"
 
 "@wdio/dot-reporter@^5.11.7":
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/@wdio/dot-reporter/-/dot-reporter-5.12.1.tgz#cc434cba9b841075aa67fbd93ef041fb8a52ede8"
-  integrity sha512-azz0zvZ4kL5wxf7UmRPVrYOktaOHwpW9k1ekmxFxkel9ng7McGR9hDgtbKrmOSTai7aeyhOXG0swrIjDxzzjQw==
+  version "5.13.2"
+  resolved "https://registry.yarnpkg.com/@wdio/dot-reporter/-/dot-reporter-5.13.2.tgz#b0ea10d8e15d3a4c02cc77568ee6ff9c5b208a8f"
+  integrity sha512-BeyWBigwsn02xzMtEZkPFKb9skBZcfazPWW42PuMIp6N6yde8HAMeyihJ//ms+ouz5lzJ3vZ4/RmSR2LMXr0Qw==
   dependencies:
-    "@wdio/reporter" "^5.12.1"
+    "@wdio/reporter" "5.13.2"
     chalk "^2.3.0"
 
 "@wdio/jasmine-framework@^5.12.1":
