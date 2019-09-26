@@ -43,6 +43,7 @@ stages:
               BuildConfiguration: Debug
               BuildPlatform: x64
               UseRNFork: true
+              LayoutHeaders: true
             X86Debug:
               BuildConfiguration: Debug
               BuildPlatform: x86
@@ -84,6 +85,7 @@ stages:
           - template: templates/publish-build-artifacts-for-nuget.yml
             parameters:
               artifactName: ReactWindows
+              layoutHeaders: $[eq(variables['LayoutHeaders'], 'true')]
               contents: |
                 ReactUWP\**
 
@@ -350,19 +352,6 @@ stages:
             displayName: yarn format:verify
             inputs:
               script: yarn format:verify
-
-          # Prepare headers for NuGet deployment
-          - task: PowerShell@2
-            displayName: Copy NuGet header files
-            inputs:
-              filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-              arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
-
-          - task: PublishBuildArtifacts@1
-            displayName: Publish VersionEnvVars
-            inputs:
-              artifactName: ReactWindows
-              pathtoPublish: $(Build.ArtifactStagingDirectory)
 
       - job: CurrentPR
         displayName: Current (C#) PR

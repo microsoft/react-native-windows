@@ -6,7 +6,6 @@ variables:
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
   MSBuildPlatformToolset: v142
-  VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
   VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 trigger:
@@ -64,26 +63,13 @@ jobs:
         inputs:
           script: node ./.ado/setVersionEnvVars.js
         env:
-          RUNNER_TEMP: $(Build.StagingDirectory)
+          RUNNER_TEMP: $(Build.ArtifactStagingDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: Publish VersionEnvVars
         inputs:
-          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
+          PathtoPublish: $(Build.ArtifactStagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
-
-      # Prepare headers for NuGet deployment
-      - task: PowerShell@2
-        displayName: Copy NuGet header files
-        inputs:
-          filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-          arguments: -TargetRoot $(Build.ArtifactStagingDirectory)/ReactWindows
-
-      - task: PublishBuildArtifacts@1
-        displayName: Publish VersionEnvVars
-        inputs:
-          artifactName: ReactWindows
-          pathtoPublish: $(Build.ArtifactStagingDirectory)/ReactWindows
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop
@@ -110,11 +96,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          downloadPath: $(Build.ArtifactStagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+          script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - task: CmdLine@2
         displayName: yarn install
@@ -143,7 +129,8 @@ jobs:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
-          Contents: |
+          artifactName: ReactWindows
+          contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
@@ -155,6 +142,7 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
+          LayoutHeaders: true
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
@@ -179,11 +167,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          downloadPath: $(Build.ArtifactStagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+          script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - task: CmdLine@2
         displayName: yarn install
@@ -220,8 +208,9 @@ jobs:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
-          LayoutHeaders: true
-          Contents: |
+          artifactName: ReactWindows
+          layoutHeaders: $[eq(variables['LayoutHeaders'], 'true')]
+          contents: |
             ReactUWP\**
 
     # Disable for now, not sure this works on github projects anyway.
@@ -246,11 +235,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          downloadPath: $(Build.ArtifactStagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
+          script: node $(Build.ArtifactStagingDirectory)/VersionEnvVars/versionEnvVars.js
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0

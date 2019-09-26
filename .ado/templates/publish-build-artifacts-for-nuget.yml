@@ -1,6 +1,7 @@
 parameters:
   artifactName:
   contents:
+  layoutHeaders: false
 
 steps:
   - task: CopyFiles@2
@@ -14,3 +15,18 @@ steps:
     displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
       artifactName: ${{parameters.artifactName}}
+
+  # Prepare headers for NuGet deployment
+  - task: PowerShell@2
+    displayName: Copy NuGet header files
+    inputs:
+      filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
+      arguments: -TargetRoot $(Build.ArtifactStagingDirectory)/ReactWindows
+    condition: ${{ parameters.layoutHeaders }}
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish VersionEnvVars
+    inputs:
+      artifactName: ReactWindows
+      pathtoPublish: $(Build.ArtifactStagingDirectory)/ReactWindows
+    condition: ${{ parameters.layoutHeaders }}
