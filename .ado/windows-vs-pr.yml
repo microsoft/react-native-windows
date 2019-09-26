@@ -80,6 +80,7 @@ stages:
           - template: templates/build-rnw.yml
             parameters:
               useRnFork: $(UseRNFork)
+              yarnBuildCmd: buildci
               project: vnext/ReactWindows-Universal.sln
 
           - template: templates/publish-build-artifacts-for-nuget.yml
@@ -185,7 +186,7 @@ stages:
 
           - template: templates/build-rnw.yml
             parameters:
-              useRnFork: true
+              yarnBuildCmd: buildci
               project: vnext/ReactWindows-Desktop.sln
               platformToolset: v141
               vsComponents: $(VsComponents)

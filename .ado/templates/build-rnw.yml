@@ -1,7 +1,7 @@
 # Steps template for building any React Native Windows variant.
 
 parameters:
-  useRnFork: # boolean
+  useRnFork: true
   debug: false
 
   # NuGet & MSBuild
@@ -12,6 +12,7 @@ parameters:
   platformToolset: v142
   targetPlatformVersion: 10.0.18362.0
   msbuildArguments: ''
+  yarnBuildCmd: build
 
   # Visual Studio Installer
   vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
@@ -41,9 +42,9 @@ steps:
     condition: and(succeeded(), not('${{parameters.useRnFork}}'))
 
   - task: CmdLine@2
-    displayName: yarn buildci
+    displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
-      script: yarn buildci
+      script: yarn ${{ parameters.yarnBuildCmd }}
 
   - task: NuGetCommand@2
     displayName: NuGet restore

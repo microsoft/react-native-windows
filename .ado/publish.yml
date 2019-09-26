@@ -2,11 +2,6 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   VmImage: windows-2019
-  MSBuildVersion: 16.0
-  MSBuildArchitecture: x64
-  MSBuildPreferredToolArchitecture: x64
-  MSBuildPlatformToolset: v142
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 trigger:
   batch: true
@@ -91,6 +86,10 @@ jobs:
     pool:
       vmImage: $(VmImage)
 
+    variables:
+      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
+      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+
     steps:
       - task: DownloadBuildArtifacts@0
         displayName: Download VersionEnvVars
@@ -102,30 +101,15 @@ jobs:
         inputs:
           script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: yarn build
-
-      - template: templates/vs-build.yml
+      - template: templates/build-rnw.yml
         parameters:
-          BuildConfiguration: $(BuildConfiguration)
-          BuildPlatform: $(BuildPlatform)
-          VsInstallerUri: $(VsInstallerUri)
-          VsComponents: $(VsComponents)
-          MSBuildVersion: $(MSBuildVersion)
-          MSBuildArchitecture: $(MSBuildArchitecture)
-          NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-          Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
-          MSBuildArguments:
+          project: vnext/ReactWindows-Desktop.sln
+          platformToolset: v141
+          vsComponents: $(VsComponents)
+          msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
-            /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
+            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -173,38 +157,9 @@ jobs:
         inputs:
           script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
 
-      - task: CmdLine@2
-        displayName: yarn install
-        inputs:
-          script: yarn install --frozen-lockfile
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: yarn build
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore - ReactWindows-Universal
-        inputs:
-          command: restore
-          restoreSolution: vnext/ReactWindows-Universal.sln
-          feedsToUse: config
-          nugetConfigPath: vnext/NuGet.config
-          restoreDirectory: packages/
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: MSBuild@1
-        displayName: MSBuild - ReactWindows-Universal
-        inputs:
-          solution: vnext/ReactWindows-Universal.sln
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          msbuildArguments:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
-          clean: true
+      - template: templates/build-rnw.yml
+        parameters:
+          project: vnext/ReactWindows-Universal.sln
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
