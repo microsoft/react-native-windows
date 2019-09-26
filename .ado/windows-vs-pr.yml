@@ -15,12 +15,6 @@ variables:
   MSBuildPlatformToolset: v142
   TargetPlatformVersion: 10.0.18362.0
 
-  # Desktop
-  Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-  GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-  VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-
 stages:
   - stage: SetupStage
     displayName: Setup
@@ -177,6 +171,9 @@ stages:
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
         variables:
+          Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
+          GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
+          VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
           VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
 
         steps:
@@ -189,6 +186,7 @@ stages:
               useRnFork: true
               project: vnext/ReactWindows-Desktop.sln
               platformToolset: v141
+              vsComponents: $(VsComponents)
               msbuildArguments:
                 /p:RNW_PKG_VERSION_STR="Private Build"
                 /p:RNW_PKG_VERSION="1000,0,0,0"

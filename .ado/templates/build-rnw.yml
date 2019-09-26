@@ -2,6 +2,7 @@
 
 parameters:
   useRnFork: # boolean
+  debug: false
 
   # NuGet & MSBuild
   project:
@@ -11,6 +12,10 @@ parameters:
   platformToolset: v142
   targetPlatformVersion: 10.0.18362.0
   msbuildArguments: ''
+
+  # Visual Studio Installer
+  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
+  vsComponents: ''
 
 steps:
   - task: CmdLine@2
@@ -50,8 +55,19 @@ steps:
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
+  - task: PowerShell@2
+    displayName: Install Visual Studio dependencies
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+      arguments:
+        -InstallerUri ${{ parameters.vsInstallerUri }}
+        -Components ${{ parameters.vsComponents }}
+        -Collect:$${{ parameters.debug }}
+    condition: ne('${{parameters.vsComponents}}', '')
+
   - task: MSBuild@1
-    displayName: MSBuild
+    displayName: MSBuild ${{parameters.project}}
     inputs:
       solution: ${{parameters.project }}
       msbuildVersion: ${{parameters.msbuildVersion}}
