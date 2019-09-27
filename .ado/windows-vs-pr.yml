@@ -284,7 +284,7 @@ stages:
           - task: CmdLine@2
             displayName: Init new project
             inputs:
-              script: react-native init testcli --version 0.60.6
+              script: react-native init testcli --version 0.59.10
               workingDirectory: $(Agent.BuildDirectory)
 
           - task: CmdLine@2
@@ -296,7 +296,7 @@ stages:
           - task: CmdLine@2
             displayName: Apply windows template
             inputs:
-              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext --overwrite
+              script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
           - task: NuGetCommand@2
@@ -322,7 +322,7 @@ stages:
           - task: CmdLine@2
             displayName: Create bundle testcli
             inputs:
-              script: react-native bundle --entry-file index.js platform windows --bundle-output test.bundle
+              script: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
               workingDirectory: $(Agent.BuildDirectory)\testcli
 
       - job: RNWFormatting
@@ -494,7 +494,7 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      - template: templates/e2e-test-job.yml # Template reference
+      - template: templates/e2e-test-job.yml  # Template reference
         parameters:
           name: E2ETest
           pool:
