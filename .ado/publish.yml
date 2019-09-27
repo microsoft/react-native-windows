@@ -9,6 +9,7 @@ trigger:
     include:
       - master
       - 0.58-vnext-stable
+      - 0.59-vnext-stable
       - fabric
 
 pr: none
@@ -41,7 +42,7 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
+          script: node ./node_modules/beachball/bin/beachball.js publish -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
@@ -104,8 +105,7 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           platformToolset: v141
           vsComponents: $(VsComponents)
-          msbuildArguments:
-            /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
+          msbuildArguments: /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
             /p:VCTargetsPath="$(VCTargetsPath)"
 
@@ -164,8 +164,6 @@ jobs:
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             ReactUWP\**
-            React.Windows.Desktop.DLL\**
-            React.Windows.Desktop.Test.DLL\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -176,8 +174,9 @@ jobs:
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
-      - RnwNativeBuild
-    displayName: React-Native-Windows Build and Publish Nuget
+      - RnwNativeBuildDesktop
+      - RnwNativeBuildUniversal
+    displayName: Publish Nuget
     pool:
       vmImage: $(VmImage)
 
