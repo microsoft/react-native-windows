@@ -13,8 +13,7 @@ using namespace Windows::Foundation::Collections;
 
 using namespace Microsoft::ReactNative;
 
-namespace winrt::SampleLibraryCPP::implementation
-{
+namespace winrt::SampleLibraryCPP::implementation {
 IVectorView<Bridge::INativeModule> SampleLibraryPackage::CreateNativeModules(
     ReactContext const &reactContext) {
   auto modules =
@@ -27,4 +26,4 @@ IVectorView<Bridge::IViewManager> SampleLibraryPackage::CreateViewManagers(
   auto viewManagers = single_threaded_vector<Bridge::IViewManager>();
   return viewManagers.GetView();
 }
-}
+} // namespace winrt::SampleLibraryCPP::implementation
