@@ -159,9 +159,7 @@ inline void ClearCornerRadiusValueOnNode(
 }
 
 template <class T>
-void UpdateCornerRadiusOnElement(
-    ShadowNodeBase *node,
-    const T &element) {
+void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
   winrt::CornerRadius cornerRadius = GetCornerRadius(
       node->m_cornerRadius,
       element.FlowDirection() == winrt::FlowDirection::RightToLeft);
@@ -324,7 +322,7 @@ bool TryUpdateCornerRadiusOnNode(
           node, ShadowCorners::BottomLeft, propertyValue.asDouble());
     else
       ClearCornerRadiusValueOnNode(node, ShadowCorners::BottomLeft);
-} else if (propertyName == "borderBottomStartRadius") {
+  } else if (propertyName == "borderBottomStartRadius") {
     if (propertyValue.isNumber())
       SetCornerRadiusValueOnNode(
           node, ShadowCorners::BottomStart, propertyValue.asDouble());
