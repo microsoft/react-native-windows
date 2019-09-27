@@ -15,12 +15,6 @@ variables:
   MSBuildPlatformToolset: v142
   TargetPlatformVersion: 10.0.18362.0
 
-  # Desktop
-  Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-  GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-  VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-
 stages:
   - stage: SetupStage
     displayName: Setup
@@ -49,6 +43,7 @@ stages:
               BuildConfiguration: Debug
               BuildPlatform: x64
               UseRNFork: true
+              LayoutHeaders: true
             X86Debug:
               BuildConfiguration: Debug
               BuildPlatform: x86
@@ -75,71 +70,25 @@ stages:
               UseRNFork: false
         pool:
           vmImage: $(VmImage)
-        timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        timeoutInMinutes: 60
+        cancelTimeoutInMinutes: 5
         steps:
-          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-            clean: true # whether to fetch clean each time
-            # fetchDepth: 2 # the depth of commits to ask Git to fetch
-            lfs: false # whether to download Git-LFS files
-            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+          - checkout: self
+            clean: false
+            submodules: false
 
-          - task: CmdLine@2
-            displayName: Modify package.json to use unforked RN
-            inputs:
-              script: node scripts/useUnForkedRN.js
-              workingDirectory: vnext
-            condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
-
-          - task: CmdLine@2
-            displayName: yarn install (Using microsoft/react-native)
-            inputs:
-              script: yarn install --frozen-lockfile
-            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
-
-            # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-            # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
-            # using the non fork version.
-          - task: CmdLine@2
-            displayName: yarn install (Using facebook/react-native)
-            inputs:
-              script: yarn install
-            condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
-
-          - template: templates/stop-packagers.yml
-
-          - task: CmdLine@2
-            displayName: yarn buildci
-            inputs:
-              script: yarn buildci
-
-          - task: NuGetCommand@2
-            displayName: NuGet restore - ReactWindows-Universal
-            inputs:
-              command: restore
-              restoreSolution: vnext/ReactWindows-Universal.sln
-              feedsToUse: config
-              nugetConfigPath: vnext/NuGet.config
-              restoreDirectory: packages/
-              verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-          - task: MSBuild@1
-            displayName: MSBuild - ReactWindows-Universal
-            inputs:
-              solution: vnext/ReactWindows-Universal.sln
-              msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-              msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-              platform: $(BuildPlatform) # Optional
-              configuration: $(BuildConfiguration) # Optional
-              msbuildArguments:
-                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-                /p:PlatformToolset=$(MSBuildPlatformToolset)
-              clean: true # Optional
+          - template: templates/build-rnw.yml
+            parameters:
+              useRnFork: $(UseRNFork)
+              yarnBuildCmd: buildci
+              project: vnext/ReactWindows-Universal.sln
 
           - template: templates/publish-build-artifacts-for-nuget.yml
             parameters:
-              Contents: ReactUWP\**
+              artifactName: ReactWindows
+              layoutHeaders: eq('true', variables['LayoutHeaders'])
+              contents: |
+                ReactUWP\**
 
           - task: NuGetCommand@2
             displayName: NuGet restore - Playground
@@ -225,61 +174,44 @@ stages:
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
         variables:
+          Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
+          GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
+          VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
           VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
 
         steps:
-          - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-            clean: true # whether to fetch clean each time
-            # fetchDepth: 2 # the depth of commits to ask Git to fetch
-            lfs: false # whether to download Git-LFS files
-            submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-            persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+          - checkout: self
+            clean: false
+            submodules: false
 
-          - task: CmdLine@2
-            displayName: yarn install
-            inputs:
-              script: yarn install --frozen-lockfile
-
-          - template: templates/stop-packagers.yml
-
-          - task: CmdLine@2
-            displayName: yarn build
-            inputs:
-              script: yarn build
-              workingDirectory: vnext
-
-          - template: templates/vs-build.yml
+          - template: templates/build-rnw.yml
             parameters:
-              BuildConfiguration: $(BuildConfiguration)
-              BuildPlatform: $(BuildPlatform)
-              VsInstallerUri: $(VsInstallerUri)
-              VsComponents: $(VsComponents)
-              MSBuildVersion: $(MSBuildVersion)
-              MSBuildArchitecture: $(MSBuildArchitecture)
-              NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-              Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
-              MSBuildArguments:
+              yarnBuildCmd: buildci
+              project: vnext/ReactWindows-Desktop.sln
+              platformToolset: v141
+              vsComponents: $(VsComponents)
+              msbuildArguments:
                 /p:RNW_PKG_VERSION_STR="Private Build"
                 /p:RNW_PKG_VERSION="1000,0,0,0"
                 /p:VCTargetsPath="$(VCTargetsPath)"
-              Collect: false
 
           - task: VSTest@2
             displayName: Run Desktop Unit Tests
-            timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+            timeoutInMinutes: 5 # Set smaller timeout , due to hangs
             inputs:
               testSelector: testAssemblies
-              testAssemblyVer2: | # Required when testSelector == TestAssemblies
-                React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
-                JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
+              testAssemblyVer2: |
+                React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+                JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
               pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-              searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
+              searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
               runTestsInIsolation: true
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
               collectDumpOn: onAbortOnly
+
+          - template: templates/stop-packagers.yml
 
           - task: PowerShell@2
             displayName: Set up test servers
@@ -295,7 +227,6 @@ stages:
               testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
               searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
               testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-              # vsTestVersion: toolsInstaller # Use installed VSTest that implements the !~ operator.
               runTestsInIsolation: true
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
@@ -306,8 +237,8 @@ stages:
 
           - template: templates/publish-build-artifacts-for-nuget.yml
             parameters:
-              LayoutHeaders: true
-              Contents: |
+              artifactName: ReactWindows
+              contents: |
                 React.Windows.Desktop.DLL\**
                 React.Windows.Desktop.Test.DLL\**
 
@@ -581,10 +512,11 @@ stages:
         displayName: Build and Pack Nuget
         pool:
           vmImage: $(VmImage)
-        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        timeoutInMinutes: 30
+        cancelTimeoutInMinutes: 5
         steps:
-          - checkout: none #skip checking out the default repository resource
+          - checkout: self
+            fetchDepth: 1
 
           # The commit tag in the nuspec requires that we use at least nuget 4.6
           - task: NuGetToolInstaller@0
