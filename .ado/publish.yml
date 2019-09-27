@@ -9,6 +9,7 @@ trigger:
     include:
       - master
       - 0.58-vnext-stable
+      - 0.59-vnext-stable
       - fabric
 
 pr: none
@@ -104,8 +105,7 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           platformToolset: v141
           vsComponents: $(VsComponents)
-          msbuildArguments:
-            /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
+          msbuildArguments: /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
             /p:VCTargetsPath="$(VCTargetsPath)"
 
