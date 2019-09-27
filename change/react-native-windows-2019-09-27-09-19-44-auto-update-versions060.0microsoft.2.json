@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Updating react-native to version: 0.60.0-microsoft.2",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "16ac702c7ef65f7be44883322dca43638b9eb649",
+  "date": "2019-09-27T16:19:44.076Z"
+}
