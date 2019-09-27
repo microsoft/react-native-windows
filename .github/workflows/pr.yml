@@ -166,7 +166,7 @@ jobs:
         run: npm install -g react-native-cli
 
       - name: Init new project
-        run: cd ${{ runner.temp }} && react-native init testcli --version 0.59.10
+        run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
 
       - name: Install rnpm-plugin-windows
         run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows

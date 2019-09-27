@@ -6,6 +6,7 @@
 
 import * as React from 'react';
 import {
+  CheckBox,
   View,
   StyleSheet,
   Text,
@@ -17,10 +18,9 @@ import {
 import {
   supportKeyboard,
   IKeyboardEvent,
-  CheckBox,
   ViewWindows,
   Picker,
-} from '../index.windows';
+} from 'react-native-windows';
 
 // TextInput2 is used to verify supportKeyboard + focus
 const TextInput2 = supportKeyboard(TextInput);
@@ -58,17 +58,16 @@ interface IKeyboardFocusComponentState {
   focusMessageWithoutFeedback: string;
 }
 
-// tslint:disable-next-line
-const pickerRef = React.createRef<any>();
-const viewWindowsRef = React.createRef<View>();
+const pickerRef = React.createRef<Picker>();
+const viewWindowsRef = React.createRef<ViewWindows>();
 const textInputRef = React.createRef<TextInput>();
-const textInputRef2 = React.createRef<TextInput>();
+// tslint:disable-next-line
+const textInputRef2 = React.createRef<any>();
 const touchableHighlightRef = React.createRef<TouchableHighlight>();
 const touchableOpacityRef = React.createRef<TouchableOpacity>();
 const touchableWithoutFeedbackRef = React.createRef<TouchableWithoutFeedback>();
 
-// tslint:disable-next-line
-const checkBoxRef = React.createRef<any>();
+const checkBoxRef = React.createRef<CheckBox>();
 
 class KeyboardFocusExample extends React.Component<
   {},
@@ -195,7 +194,7 @@ class KeyboardFocusExample extends React.Component<
         viewWindowsRef.current && viewWindowsRef.current.focus();
         break;
       case 'Picker':
-        pickerRef.current && pickerRef.current.focus();
+        // pickerRef.current && pickerRef.current.focus();
         break;
       case 'TextInput':
         textInputRef.current && textInputRef.current.focus();
@@ -215,7 +214,7 @@ class KeyboardFocusExample extends React.Component<
         }
         break;
       case 'CheckBox':
-        checkBoxRef.current && checkBoxRef.current.focus();
+        // checkBoxRef.current && checkBoxRef.current.focus();
         break;
       case 'TouchableHighlight':
         touchableHighlightRef.current && touchableHighlightRef.current.focus();

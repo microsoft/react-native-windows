@@ -85,5 +85,3 @@ export class DatePicker extends React.Component<IDatePickerProps> {
       this.props.onDateChange(new Date(+nativeTimeStamp)); // Added the '+' operator to convert string to number
   };
 }
-
-export default DatePicker;

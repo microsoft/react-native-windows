@@ -13,5 +13,3 @@ export class Glyph extends React.PureComponent<GlyphProps> {
     return null;
   }
 }
-
-export default Glyph;

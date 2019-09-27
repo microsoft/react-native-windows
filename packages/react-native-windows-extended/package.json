@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-extended",
-  "version": "0.60.0",
+  "version": "0.61.0",
   "description": "Additional react-native-windows components that are not part of RN lean-core.",
   "main": "lib/index.js",
   "repository": {
@@ -18,28 +18,28 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "react-native-windows": "0.59.0-vnext.190"
+    "react-native-windows": "0.60.0-vnext.6"
   },
   "devDependencies": {
     "@react-native-community/eslint-config": "^0.0.5",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/react": "16.8.15",
-    "@types/react-native": "~0.57.51",
+    "@types/react-native": "~0.60.5",
     "@typescript-eslint/eslint-plugin": "^1.5.0",
     "@typescript-eslint/parser": "^1.5.0",
     "clang-format": "1.2.4",
     "eslint": "5.1.0",
-    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-prettier": "2.6.2",
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
-    "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz",
+    "react": "16.8.6",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
-    "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.82 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz"
+    "react": "16.8.6",
+    "react-native": "^0.60.0 || 0.60.0-microsoft-fb60merge.13 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [

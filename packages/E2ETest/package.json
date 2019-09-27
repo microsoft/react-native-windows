@@ -22,17 +22,17 @@
     "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
   },
   "dependencies": {
-    "react": "16.8.3",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz",
-    "react-native-windows": "0.59.0-vnext.190",
-    "react-native-windows-extended": "0.60.0",
-    "rnpm-plugin-windows": "^0.2.11"
+    "react": "16.8.6",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
+    "react-native-windows": "0.60.0-vnext.6",
+    "react-native-windows-extended": "0.61.0",
+    "rnpm-plugin-windows": "^0.2.13"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
-    "@types/react": "^16.8.15",
-    "@types/react-native": "~0.57.51",
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@types/react": "16.8.15",
+    "@types/react-native": "~0.60.5",
     "@wdio/appium-service": "^5.12.1",
     "@types/jasmine": "^2.8.7",
     "@types/node": "^10.14.8",
@@ -50,7 +50,7 @@
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "appium": "^1.14.1",
     "rimraf": "^3.0.0",
-    "metro-react-native-babel-preset": "^0.55.0",
-    "react-test-renderer": "^16.8.3"
+    "metro-react-native-babel-preset": "0.55.0",
+    "react-test-renderer": "16.8.6"
   }
 }
