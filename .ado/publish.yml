@@ -184,6 +184,10 @@ jobs:
     pool:
       vmImage: $(VmImage)
 
+    variables: #TODO: REMOVE!
+      npmVersion: 0.0.1-pr
+      publishCommitId: d9439d8fea6852091f7603a7e6626783d33c9e02
+
     steps:
       - checkout: none #skip checking out the default repository resource
 
