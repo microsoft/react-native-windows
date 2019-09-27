@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 Sep 2019 17:40:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.7",
+      "version": "0.60.0-vnext.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Sep 2019 17:34:59 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.6",
       "version": "0.60.0-vnext.6",

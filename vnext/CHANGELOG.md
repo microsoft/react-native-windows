@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 27 Sep 2019 17:34:59 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Sep 2019 17:40:33 GMT and should not be manually modified.
 
+## 0.60.0-vnext.7
+Fri, 27 Sep 2019 17:40:33 GMT
+
+### Changes
+
+- Allow focus transfer to Flyout on Open (kenander@microsoft.com)
 ## 0.60.0-vnext.6
 Fri, 27 Sep 2019 17:34:59 GMT
 
