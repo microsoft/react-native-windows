@@ -1,6 +1,9 @@
 #
 parameters:
   language:
+  version:
+  platform:
+  configuration:
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -38,7 +41,7 @@ steps:
   - task: CmdLine@2
     displayName: Init new project
     inputs:
-      script: react-native init testcli --version 0.60.6
+      script: react-native init testcli --version ${{ parameters.version }}
       workingDirectory: $(Agent.BuildDirectory)
 
   - task: CmdLine@2
@@ -65,8 +68,8 @@ steps:
       solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
       msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
       msbuildArchitecture: x86 # Optional. Options: x86, x64
-      platform: x64 # Optional
-      configuration: Debug # Optional
+      platform: ${{ parameters.platform }} # Optional
+      configuration: ${{ parameters.configuration }} # Optional
       restoreNugetPackages: true
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)

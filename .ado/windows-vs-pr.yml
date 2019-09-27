@@ -321,6 +321,9 @@ stages:
           - template: templates/react-native-init.yml
             parameters:
               language: cpp
+              version: 0.60.6
+              platform: x64
+              configuration: Debug
 
       - job: CliInitCs
         displayName: Verify react-native init (cs)
@@ -332,6 +335,9 @@ stages:
           - template: templates/react-native-init.yml
             parameters:
               language: cs
+              version: 0.60.6
+              platform: x64
+              configuration: Debug
 
       - job: RNWFormatting
         displayName: Verify change files + formatting
