@@ -25,8 +25,8 @@ struct ReactInstance : ReactInstanceT<ReactInstance> {
       throw hresult_null_argument(L"instance");
     }
 
-    if (modules == nullptr || modules.Size() == 0)
-      throw hresult_invalid_argument(L"The list of modules is empty.");
+    if (modules == nullptr)
+      throw hresult_null_argument(L"modules");
 
     m_moduleRegistry = Bridge::NativeModuleRegistry(modules);
   }
