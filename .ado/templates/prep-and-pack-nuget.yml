@@ -58,5 +58,5 @@ steps:
     inputs:
       command: pack
       packagesToPack: '$(System.DefaultWorkingDirectory)/NugetRoot/React*.nuspec'
-      packDestination: '$(System.DefaultWorkingDirectory)/NugetRootFinal/'
+      packDestination: '$(System.DefaultWorkingDirectory)/NugetRoot/'
       buildProperties: CommitId=${{parameters.publishCommitId}};npmVersion=${{parameters.npmVersion}}

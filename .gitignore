@@ -153,5 +153,3 @@ bld/
 
 # OpenCover
 *_coverage.xml
-
-tsdoc-metadata.json

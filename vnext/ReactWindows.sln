@@ -2,6 +2,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Universal.SampleApp", "Universal.SampleApp\React.Windows.Universal.SampleApp.vcxproj", "{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}
+		{11C084A3-A57C-4296-A679-CAC17B603144} = {11C084A3-A57C-4296-A679-CAC17B603144}
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B} = {2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactUWP", "ReactUWP\ReactUWP.vcxproj", "{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}"
@@ -18,6 +26,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore", "ReactWi
 	ProjectSection(ProjectDependencies) = postProject
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{41B38B66-3EFF-4661-AEE3-CD5E40F56BCD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.DLL", "Desktop.DLL\React.Windows.Desktop.DLL.vcxproj", "{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -112,12 +122,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.ABITe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Desktop.UnitTests", "JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.vcxproj", "{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Test", "Test\React.Windows.Test.vcxproj", "{CD0415C6-D908-4212-9481-49BE41F58D27}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.Test.DLL", "Desktop.Test.DLL\React.Windows.Desktop.Test.DLL.vcxproj", "{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
-EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
@@ -128,7 +132,6 @@ Global
 		Chakra\Chakra.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{95048601-c3dc-475f-adf8-7c0c764c10d5}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
-		include\Include.vcxitems*{ef074ba1-2d54-4d49-a28e-5e040b47cd2e}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -139,6 +142,24 @@ Global
 		Release|ARM = Release|ARM
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.ActiveCfg = Debug|ARM
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.Build.0 = Debug|ARM
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|ARM.Deploy.0 = Debug|ARM
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x64.ActiveCfg = Debug|x64
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x64.Build.0 = Debug|x64
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x64.Deploy.0 = Debug|x64
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x86.ActiveCfg = Debug|Win32
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x86.Build.0 = Debug|Win32
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Debug|x86.Deploy.0 = Debug|Win32
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|ARM.ActiveCfg = Release|ARM
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|ARM.Build.0 = Release|ARM
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|ARM.Deploy.0 = Release|ARM
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x64.ActiveCfg = Release|x64
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x64.Build.0 = Release|x64
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x64.Deploy.0 = Release|x64
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x86.ActiveCfg = Release|Win32
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x86.Build.0 = Release|Win32
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}.Release|x86.Deploy.0 = Release|Win32
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.Build.0 = Debug|ARM
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x64.ActiveCfg = Debug|x64
@@ -293,31 +314,12 @@ Global
 		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x64.ActiveCfg = Release|x64
 		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x64.Build.0 = Release|x64
 		{6F354505-FE3A-4BD2-A9A6-D12BBF37A85C}.Release|x86.ActiveCfg = Release|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Debug|ARM.ActiveCfg = Debug|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Debug|x64.ActiveCfg = Debug|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Debug|x64.Build.0 = Debug|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Debug|x86.ActiveCfg = Debug|Win32
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Debug|x86.Build.0 = Debug|Win32
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Release|ARM.ActiveCfg = Release|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Release|x64.ActiveCfg = Release|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Release|x64.Build.0 = Release|x64
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Release|x86.ActiveCfg = Release|Win32
-		{CD0415C6-D908-4212-9481-49BE41F58D27}.Release|x86.Build.0 = Release|Win32
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Debug|ARM.ActiveCfg = Debug|Win32
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Debug|x64.ActiveCfg = Debug|x64
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Debug|x64.Build.0 = Debug|x64
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Debug|x86.ActiveCfg = Debug|Win32
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Debug|x86.Build.0 = Debug|Win32
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|ARM.ActiveCfg = Release|Win32
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x64.ActiveCfg = Release|x64
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x64.Build.0 = Release|x64
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x86.ActiveCfg = Release|Win32
-		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189} = {41B38B66-3EFF-4661-AEE3-CD5E40F56BCD}
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {41F31595-2F20-4D6B-A6CF-60444415012A}
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {F90FDFD1-2C76-4DCD-B248-F6FB2BB15BDF}
 		{74085F13-2DDE-45E5-A0CA-927AC9D0B953} = {41F31595-2F20-4D6B-A6CF-60444415012A}

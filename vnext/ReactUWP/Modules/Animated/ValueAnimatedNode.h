@@ -35,9 +35,6 @@ class ValueAnimatedNode : public AnimatedNode {
   void RemoveDependentPropsNode(int64_t propsNodeTag);
   void AddActiveAnimation(int64_t animationTag);
   void RemoveActiveAnimation(int64_t animationTag);
-  void AddActiveTrackingNode(int64_t trackingNodeTag);
-  void RemoveActiveTrackingNode(int64_t trackingNodeTag);
-  void SetValueListener(std::function<double()> listener);
 
   static constexpr std::wstring_view s_valueName{L"v"};
   static constexpr std::wstring_view s_offsetName{L"o"};
@@ -51,11 +48,8 @@ class ValueAnimatedNode : public AnimatedNode {
   static constexpr std::string_view s_jsOffsetName{"offset"};
 
  private:
-  void UpdateTrackingNodes();
   std::unordered_set<int64_t> m_dependentPropsNodes{};
   std::unordered_set<int64_t> m_activeAnimations{};
-  std::unordered_set<int64_t> m_activeTrackingNodes{};
-  std::function<double()> m_listener{};
 };
 } // namespace uwp
 } // namespace react

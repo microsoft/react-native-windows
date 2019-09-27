@@ -25,9 +25,6 @@
     <Filter Include="privatedata">
       <UniqueIdentifier>{20b1bda7-06e8-4ce8-8733-fc404e0afc13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="jsi\jsi">
-      <UniqueIdentifier>{9c8e7a7a-c77d-479d-8611-1ece3cdacad7}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp">
@@ -63,6 +60,12 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp">
       <Filter>cxxreact</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.cpp">
+      <Filter>jsi</Filter>
+    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp">
       <Filter>jsiexecutor\jsireact</Filter>
     </ClCompile>
@@ -90,26 +93,14 @@
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.cpp">
       <Filter>jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
-      <Filter>jsi\jsi</Filter>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_shared.cpp">
+      <Filter>jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp">
-      <Filter>jsi\jsi</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp">
-      <Filter>jsi\jsi</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
-      <Filter>privatedata</Filter>
-    </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp">
-      <Filter>yoga</Filter>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_win.cpp">
+      <Filter>jsi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +179,18 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\instrumentation.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi-inl.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSIDynamic.h">
+      <Filter>jsi</Filter>
+    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h">
       <Filter>jsiexecutor\jsireact</Filter>
     </ClInclude>
@@ -206,38 +209,14 @@
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
       <Filter>yoga</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Platform.h">
       <Filter>jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h">
-      <Filter>jsi\jsi</Filter>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime.h">
+      <Filter>jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\RuntimeHolder.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\threadsafe.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
-      <Filter>privatedata</Filter>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\V8Runtime_impl.h">
+      <Filter>jsi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

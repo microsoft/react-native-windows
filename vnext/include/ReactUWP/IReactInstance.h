@@ -110,8 +110,6 @@ struct IReactInstance {
   virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
 
   virtual ExpressionAnimationStore &GetExpressionAnimationStore() = 0;
-
-  virtual const ReactInstanceSettings &GetReactInstanceSettings() const = 0;
 };
 
 } // namespace uwp

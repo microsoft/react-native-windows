@@ -13,6 +13,9 @@
     <ClCompile Include="Base\InstanceFactory.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Base\ChakraJSIRuntimeHolder.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -220,9 +223,6 @@
     <ClCompile Include="Modules\AppThemeModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\AlertModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Views\ControlViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -286,25 +286,25 @@
     <ClCompile Include="Modules\Animated\AnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp">
-      <Filter>Modules\Animated</Filter>
-    </ClCompile>
-    <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h">
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Modules\DevSupportManagerUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\IXamlRootView.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\IReactInstance.h">
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Utils\LocalBundleReader.h">
       <Filter>Utils</Filter>
@@ -330,6 +330,9 @@
     <ClInclude Include="Utils\PropertyUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\ReactUwp.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -338,6 +341,12 @@
     </ClInclude>
     <ClInclude Include="Base\UwpReactInstance.h">
       <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\ChakraJSIRuntimeHolder.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\XamlView.h">
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Threading\WorkerMessageQueueThread.h">
       <Filter>Threading</Filter>
@@ -489,9 +498,6 @@
     <ClInclude Include="Modules\AppThemeModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\AlertModuleUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Views\DatePickerViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -618,18 +624,6 @@
     <ClInclude Include="Modules\Animated\ExtrapolationType.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\Animated\SpringAnimationDriver.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h">
-      <Filter>Modules\Animated</Filter>
-    </ClInclude>
-    <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -700,6 +694,9 @@
     </Filter>
     <Filter Include="Modules\Animated">
       <UniqueIdentifier>{A4613589-965A-4B1F-85DB-CEEC21D101DA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{f74fe3a1-618b-482c-ba94-adc3e6e90ab8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sandbox">
       <UniqueIdentifier>{b4b85434-3409-4179-bff4-b56db8c27ba3}</UniqueIdentifier>

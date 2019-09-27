@@ -101,8 +101,8 @@ void ChakraJsiRuntime::setupMemoryTracker() noexcept {
   }
 }
 
-jsi::Value ChakraJsiRuntime::evaluateJavaScript(
-    const std::shared_ptr<const jsi::Buffer> &buffer,
+void ChakraJsiRuntime::evaluateJavaScript(
+    std::unique_ptr<const jsi::Buffer> buffer,
     const std::string &sourceURL) {
   // Simple evaluate if scriptStore not available as it's risky to utilize the
   // byte codes without checking the script version.
@@ -110,11 +110,11 @@ jsi::Value ChakraJsiRuntime::evaluateJavaScript(
     if (!buffer)
       throw JSINativeException("Script buffer is empty!");
     evaluateJavaScriptSimple(*buffer, sourceURL);
-    return jsi::Value::undefined();
+    return;
   }
 
   uint64_t scriptVersion = 0;
-  std::shared_ptr<const jsi::Buffer> scriptBuffer;
+  std::unique_ptr<const jsi::Buffer> scriptBuffer;
 
   if (buffer) {
     scriptBuffer = std::move(buffer);
@@ -133,7 +133,7 @@ jsi::Value ChakraJsiRuntime::evaluateJavaScript(
   // Simple evaluate if script version can't be computed.
   if (scriptVersion == 0) {
     evaluateJavaScriptSimple(*scriptBuffer, sourceURL);
-    return jsi::Value::undefined();
+    return;
   }
 
   auto sharedScriptBuffer =
@@ -174,23 +174,11 @@ jsi::Value ChakraJsiRuntime::evaluateJavaScript(
 
   if (evaluateSerializedScript(
           *sharedScriptBuffer, *sharedPreparedScript, sourceURL)) {
-    return jsi::Value::undefined();
+    return;
   }
 
   // If we reach here, fall back to simple evaluation.
-  return evaluateJavaScriptSimple(*sharedScriptBuffer, sourceURL);
-}
-
-std::shared_ptr<const facebook::jsi::PreparedJavaScript>
-ChakraJsiRuntime::prepareJavaScript(
-    const std::shared_ptr<const facebook::jsi::Buffer> &,
-    std::string) {
-  throw JSINativeException("Not implemented!");
-}
-
-facebook::jsi::Value ChakraJsiRuntime::evaluatePreparedJavaScript(
-    const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &) {
-  throw JSINativeException("Not implemented!");
+  evaluateJavaScriptSimple(*sharedScriptBuffer, sourceURL);
 }
 
 jsi::Object ChakraJsiRuntime::global() {
@@ -291,15 +279,6 @@ jsi::Runtime::PointerValue *ChakraJsiRuntime::clonePropNameID(
   const ChakraPropertyIdValue *propId =
       static_cast<const ChakraPropertyIdValue *>(pv);
   return makePropertyIdValue(propId->m_propId);
-}
-
-facebook::jsi::Runtime::PointerValue *ChakraJsiRuntime::cloneSymbol(
-    const facebook::jsi::Runtime::PointerValue *) {
-  throw JSINativeException("Not implemented!");
-}
-
-std::string ChakraJsiRuntime::symbolToString(const facebook::jsi::Symbol &) {
-  throw JSINativeException("Not implemented!");
 }
 
 jsi::PropNameID ChakraJsiRuntime::createPropNameIDFromAscii(
@@ -727,12 +706,6 @@ bool ChakraJsiRuntime::strictEquals(const jsi::Object &a, const jsi::Object &b)
   bool result;
   JsStrictEquals(objectRef(a), objectRef(b), &result);
   return result;
-}
-
-bool ChakraJsiRuntime::strictEquals(
-    const facebook::jsi::Symbol &,
-    const facebook::jsi::Symbol &) const {
-  throw JSINativeException("Not implemented!");
 }
 
 bool ChakraJsiRuntime::instanceOf(

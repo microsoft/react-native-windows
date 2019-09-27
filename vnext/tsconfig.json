@@ -6,7 +6,6 @@
     "jsx": "react",
     "outDir": ".",
     "declaration": true,
-    "declarationMap": true,
     "sourceMap": true,
     "experimentalDecorators": true,
     "noEmitOnError": true,

@@ -12,7 +12,7 @@ namespace uwp {
 class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
  public:
   UwpPreparedScriptStore(winrt::hstring uri);
-  std::shared_ptr<const facebook::jsi::Buffer> tryGetPreparedScript(
+  std::unique_ptr<const facebook::jsi::Buffer> tryGetPreparedScript(
       const facebook::jsi::ScriptSignature &scriptSignature,
       const facebook::jsi::JSRuntimeSignature &runtimeSignature,
       const char

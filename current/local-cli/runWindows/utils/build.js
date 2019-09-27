@@ -1,8 +1,6 @@
 'use strict';
 
 const execSync = require('child_process').execSync;
-const fs = require('fs');
-const os = require('os');
 const path = require('path');
 const chalk = require('chalk');
 const glob = require('glob');
@@ -22,11 +20,7 @@ function buildSolution(slnFile, buildType, buildArch, verbose) {
 }
 
 function restoreNuGetPackages(options, slnFile, verbose) {
-  const nugetPath = options.nugetPath || path.join(os.tmpdir(), 'nuget.4.9.2.exe');
-
-  if (!fs.existsSync(nugetPath)) {
-    execSync(`powershell Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/v4.9.2/nuget.exe -outfile ${nugetPath}`);
-  }
+  let nugetPath = options.nugetPath || path.join(options.root, 'node_modules/react-native-windows/local-cli/runWindows/.nuget/nuget.exe');
 
   console.log(chalk.green('Restoring NuGet packages'));
   const verboseOption = verbose ? 'normal' : 'quiet';

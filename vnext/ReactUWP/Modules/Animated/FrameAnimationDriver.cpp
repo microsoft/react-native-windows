@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <jsi/jsi.h>
 #include "FrameAnimationDriver.h"
 
 namespace react {
@@ -50,10 +51,6 @@ FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
   animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
 
   return std::make_tuple(animation, scopedBatch);
-}
-
-double FrameAnimationDriver::ToValue() {
-  return m_toValue;
 }
 
 } // namespace uwp

@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>5b815f7a-ef55-44f0-b130-6130d322f06f</UniqueIdentifier>
+      <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Filter Include="Bundle">
+      <UniqueIdentifier>{12826aab-59b4-402d-b306-4d11c4e14e62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utilities">
+      <UniqueIdentifier>{3b677e86-ff39-4eac-a41d-f9970085d111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Bundle\Universal.SampleApp">
+      <UniqueIdentifier>{aaa65596-f836-44db-88c4-1c45048565e4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp" />
+    <ClCompile Include="MainPage.xaml.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ViewLifetimeControl.cpp" />
+    <ClCompile Include="Utilities\RelayCommand.cpp">
+      <Filter>Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="HostingPane.xaml.cpp" />
+    <ClCompile Include="CustomViewManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="App.xaml.h" />
+    <ClInclude Include="MainPage.xaml.h" />
+    <ClInclude Include="ViewLifetimeControl.h" />
+    <ClInclude Include="Utilities\RelayCommand.h">
+      <Filter>Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="HostingPane.xaml.h" />
+    <ClInclude Include="CustomViewManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bundle.js" />
+    <None Include="bundle.meta" />
+    <None Include="text.uwp.js" />
+    <None Include="index.uwp.js" />
+    <None Include="packages.config" />
+    <None Include="accessible.uwp.js" />
+    <None Include="simple.uwp.js" />
+    <None Include="React.Windows.Universal.SampleApp_TemporaryKey.pfx" />
+    <None Include="Bundle\Universal.SampleApp\index.uwp.bundle">
+      <Filter>Bundle\Universal.SampleApp</Filter>
+    </None>
+    <None Include="image.uwp.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainPage.xaml" />
+    <Page Include="HostingPane.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\seguiemj.ttf">
+      <Filter>Assets</Filter>
+    </Font>
+  </ItemGroup>
+</Project>

@@ -4,13 +4,12 @@
  * @format
  */
 
-import * as React from 'react';
 import {View, Text} from 'react-native';
 
 export function SampleComponent() {
   return (
     <View>
-      <Text>This is a sample component from react-native-extended</Text>
+      <Text>This is a sample component</Text>
     </View>
   );
 }

@@ -20,8 +20,6 @@ class DecayAnimationDriver : public AnimationDriver {
   std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
   MakeAnimation(const folly::dynamic &config) override;
 
-  double ToValue() override;
-
  private:
   double m_velocity{0};
   double m_deceleration{0};

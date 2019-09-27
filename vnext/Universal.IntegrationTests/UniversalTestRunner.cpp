@@ -98,7 +98,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   settings.UseLiveReload = true;
 
   // TODO: Pass this setting to the instance.
-  devSettings->platformName = "windows";
+  devSettings->platformName = "uwp";
   // TODO: Fix unresolved externals.
   //::react::uwp::UpdateDevSettings(devSettings->useWebDebugger,
   ///*useLiveReload*/ false, /*reuseReactInstances*/ false);

@@ -40,7 +40,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -58,7 +58,11 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>OSS_RN;FOLLY_MOBILE=1;ENUM_BITFIELDS_NOT_SUPPORTED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ChakraJSIRuntimeHolder.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
@@ -69,6 +73,7 @@
     <ClCompile Include="WebSocketJSExecutorIntegrationTest.cpp" />
     <ClCompile Include="WebSocketModuleIntegrationTest.cpp" />
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
+    <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -92,13 +97,11 @@
     <ProjectReference Include="..\Desktop\React.Windows.Desktop.vcxproj">
       <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Test\React.Windows.Test.vcxproj">
-      <Project>{cd0415c6-d908-4212-9481-49be41f58d27}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChakraJSIRuntimeHolder.h" />
     <ClInclude Include="DesktopTestInstance.h" />
+    <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

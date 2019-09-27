@@ -16,15 +16,12 @@
 
 #include <Views/Image/ReactImage.h>
 
-#include "unicode.h"
-
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize("", off)
 #endif
 
 namespace winrt {
-using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
 using namespace Windows::UI::Xaml::Media::Imaging;
 } // namespace winrt
@@ -63,26 +60,17 @@ class ImageViewManagerModule::ImageViewManagerModuleImpl {
 };
 
 winrt::fire_and_forget GetImageSizeAsync(
-    std::string uriString,
+    std::string uri,
     facebook::xplat::module::CxxModule::Callback successCallback,
     facebook::xplat::module::CxxModule::Callback errorCallback) {
   bool succeeded{false};
 
   try {
     ImageSource source;
-    source.uri = uriString;
+    source.uri = uri;
 
-    winrt::Uri uri{facebook::react::unicode::utf8ToUtf16(uriString)};
-    winrt::hstring scheme{uri.SchemeName()};
-    bool needsDownload = (scheme == L"http") || (scheme == L"https");
-    bool inlineData = scheme == L"data";
-
-    winrt::InMemoryRandomAccessStream memoryStream;
-    if (needsDownload) {
-      memoryStream = co_await GetImageStreamAsync(source);
-    } else if (inlineData) {
-      memoryStream = co_await GetImageInlineDataAsync(source);
-    }
+    winrt::InMemoryRandomAccessStream memoryStream{
+        co_await react::uwp::GetImageStreamAsync(source)};
 
     winrt::BitmapImage bitmap;
     if (memoryStream) {

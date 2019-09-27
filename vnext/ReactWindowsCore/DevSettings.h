@@ -34,17 +34,6 @@ struct JSExceptionInfo {
   std::vector<std::string> callstack;
 };
 
-enum class JSIEngineOverride : int32_t {
-  Default = 0, // No JSI, will use the legacy ExecutorFactory
-  Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
-  ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
-  Hermes = 3, // Use the JSIExecutorFactory with Hermes
-  V8 = 4, // Use the JSIExecutorFactory with V8
-  V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
-
-  Last = V8Lite
-};
-
 struct DevSettings {
   bool useSandbox{false};
   bool useJITCompilation{true};
@@ -96,10 +85,6 @@ struct DevSettings {
   /// thread, unless the specific runtime implementation explicitly guarantees
   /// reentrancy.
   std::shared_ptr<jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
-
-  // Until the ABI story is addressed we'll use this instead of the above for
-  // the purposes of selecting a JSI Runtime to use.
-  JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
 };
 
 } // namespace react

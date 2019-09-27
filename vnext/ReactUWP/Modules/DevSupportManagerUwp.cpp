@@ -15,7 +15,6 @@
 #include "unicode.h"
 #include "utilities.h"
 
-#include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -142,12 +141,6 @@ bool is_cancelled(const std::wstring &msg) {
   return false;
 }
 
-bool IsIgnorablePollHResult(HRESULT hr) {
-  // Ignored HRESULTS:
-  // WININET_E_INVALID_SERVER_RESPONSE - Haul packager returns on timeouts
-  return hr == WININET_E_INVALID_SERVER_RESPONSE;
-}
-
 std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
     const std::string &url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
@@ -156,27 +149,9 @@ std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
   httpClient.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
 
   winrt::Windows::Web::Http::HttpResponseMessage responseMessage;
-  auto async = httpClient.GetAsync(
+  responseMessage = co_await httpClient.GetAsync(
       uri,
       winrt::Windows::Web::Http::HttpCompletionOption::ResponseHeadersRead);
-
-#ifdef DEFAULT_CPPWINRT_EXCEPTIONS
-  responseMessage = co_await async;
-#else
-  // Avoid CppWinrt exception when the Polling, we'll
-  // specifically check some HRESULTs to not throw on
-  co_await lessthrow_await_adapter<
-      winrt::Windows::Foundation::IAsyncOperationWithProgress<
-          winrt::Windows::Web::Http::HttpResponseMessage,
-          winrt::Windows::Web::Http::HttpProgress>>{async};
-
-  HRESULT hr = async.ErrorCode();
-  if (IsIgnorablePollHResult(hr))
-    co_return winrt::Windows::Web::Http::HttpStatusCode::Ok;
-  winrt::check_hresult(hr);
-
-  responseMessage = async.GetResults();
-#endif
 
   co_return responseMessage.StatusCode();
 }
@@ -201,7 +176,7 @@ void DevSupportManager::StartPollingLiveReload(
       } catch (winrt::hresult_error const &e) {
         // Continue to poll on known error conditions
         HRESULT hr = e.code();
-        if (IsIgnorablePollHResult(hr))
+        if (hr == WININET_E_INVALID_SERVER_RESPONSE)
           continue;
 
         // Just let the live reload stop working when the connection fails,

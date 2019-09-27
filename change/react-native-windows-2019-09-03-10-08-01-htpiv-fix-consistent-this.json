@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Change `_this` to `that` to match ESList consistent-this rules.",
-  "packageName": "react-native-windows",
-  "email": "hpratt@microsoft.com",
-  "commit": "baef6558878a0f71a0d764373b412cb6e4bbbdeb",
-  "date": "2019-09-03T17:08:01.403Z"
-}

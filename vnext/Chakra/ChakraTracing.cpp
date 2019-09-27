@@ -17,7 +17,7 @@ namespace {
 
 INativeTraceHandler *g_nativeTracingHook = nullptr;
 
-#ifdef ENABLE_JS_SYSTRACE
+static const int TRACE_TAG_REACT_APPS = 1 << 17;
 
 static JsValueRef __stdcall nativeTraceBeginSectionJNF(
     JsValueRef /*function*/,
@@ -288,8 +288,6 @@ static JsValueRef __stdcall nativeTraceCounterJNF(
   return returnValue;
 }
 
-#endif
-
 } // end anonymous namespace
 
 void SystraceBeginSection(const char *name, const char *args) noexcept {
@@ -307,8 +305,6 @@ void SystraceEndSection(
   }
 }
 
-#ifdef ENABLE_JS_SYSTRACE
-
 void addNativeTracingHooks() {
   installGlobalFunction("nativeTraceBeginSection", nativeTraceBeginSectionJNF);
   installGlobalFunction("nativeTraceEndSection", nativeTraceEndSectionJNF);
@@ -318,8 +314,6 @@ void addNativeTracingHooks() {
       "nativeTraceEndAsyncSection", nativeTraceEndAsyncSectionJNF);
   installGlobalFunction("nativeTraceCounter", nativeTraceCounterJNF);
 }
-
-#endif
 
 void InitializeTracing(INativeTraceHandler *handler) {
   g_nativeTracingHook = handler;

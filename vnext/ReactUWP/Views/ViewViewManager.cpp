@@ -51,6 +51,10 @@ class ViewShadowNode : public ShadowNodeBase {
         });
   }
 
+  bool ShouldUpdateView(bool isControl, bool hasOuterBorder) {
+    return (IsControl() != isControl) || (HasOuterBorder() != hasOuterBorder);
+  }
+
   bool IsControl() {
     return m_isControl;
   }
@@ -108,8 +112,6 @@ class ViewShadowNode : public ShadowNodeBase {
 
     XamlView current = m_view;
 
-    // TODO NOW: Why do we do this? Removal of children doesn't seem to imply we
-    // tear down the infrastr
     if (IsControl()) {
       auto control = m_view.as<winrt::ContentControl>();
       current = control.Content().as<XamlView>();
@@ -173,22 +175,29 @@ class ViewShadowNode : public ShadowNodeBase {
         winrt::make<winrt::react::uwp::implementation::ViewControl>();
 
     m_contentControlGotFocusRevoker =
-        contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-          if (args.OriginalSource().try_as<winrt::UIElement>() ==
-              contentControl.as<winrt::UIElement>()) {
-            auto tag = m_tag;
-            DispatchEvent(
-                "topFocus", std::move(folly::dynamic::object("target", tag)));
-          }
+        contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+          DispatchEvent(
+              "topFocus", std::move(folly::dynamic::object("target", m_tag)));
         });
 
     m_contentControlLostFocusRevoker =
-        contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-          if (args.OriginalSource().try_as<winrt::UIElement>() ==
-              contentControl.as<winrt::UIElement>()) {
-            auto tag = m_tag;
-            DispatchEvent(
-                "topBlur", std::move(folly::dynamic::object("target", tag)));
+        contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+          DispatchEvent(
+              "topBlur", std::move(folly::dynamic::object("target", m_tag)));
+        });
+
+    // FUTURE: The space/enter handler can be removed in August 2019, still here
+    // to enable transitioning to new events if native code is updated before JS
+    m_contentControlKeyDownRevoker = contentControl.KeyDown(
+        winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &e) {
+          if (e.Key() == winrt::VirtualKey::Enter ||
+              e.Key() == winrt::VirtualKey::Space) {
+            if (OnClick()) {
+              DispatchEvent(
+                  "topClick",
+                  std::move(folly::dynamic::object("target", m_tag)));
+              e.Handled(true);
+            }
           }
         });
 
@@ -211,6 +220,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   winrt::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
   winrt::ContentControl::LostFocus_revoker m_contentControlLostFocusRevoker{};
+  winrt::ContentControl::KeyDown_revoker m_contentControlKeyDownRevoker{};
 };
 
 // ViewPanel uses a ViewBackground property, not Background, so need to
@@ -226,7 +236,7 @@ bool TryUpdateBackgroundBrush(
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue))
+    if (propertyValue.isNumber())
       element.ViewBackground(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::ViewBackgroundProperty());
@@ -253,7 +263,7 @@ bool TryUpdateBorderProperties(
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (IsValidColorValue(propertyValue))
+    if (propertyValue.isNumber())
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::BorderBrushProperty());
@@ -285,8 +295,6 @@ bool TryUpdateBorderProperties(
     if (propertyValue.isNumber())
       SetBorderThickness(
           node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
-    else if (propertyValue.isNull())
-      element.ClearValue(ViewPanel::BorderThicknessProperty());
   } else {
     isBorderProperty = false;
   }
@@ -321,8 +329,7 @@ facebook::react::ShadowNode *ViewViewManager::createShadow() const {
 
 XamlView ViewViewManager::CreateViewCore(int64_t tag) {
   auto panel = winrt::make<winrt::react::uwp::implementation::ViewPanel>();
-  panel.VerticalAlignment(winrt::VerticalAlignment::Stretch);
-  panel.HorizontalAlignment(winrt::HorizontalAlignment::Stretch);
+  panel.VerticalAlignment(winrt::VerticalAlignment::Top);
 
   return panel.as<XamlView>();
 }
@@ -391,9 +398,8 @@ void ViewViewManager::UpdateProperties(
           if (tabIndex == static_cast<int32_t>(tabIndex)) {
             pViewShadowNode->TabIndex(static_cast<int32_t>(tabIndex));
           }
-        } else if (propertyValue.isNull()) {
+        } else if (propertyValue.isNull())
           pViewShadowNode->TabIndex(-1);
-        }
       }
     }
   }
@@ -415,12 +421,14 @@ void ViewViewManager::TryUpdateView(
     ViewShadowNode *pViewShadowNode,
     winrt::react::uwp::ViewPanel &pPanel,
     bool useControl) {
-  bool isControl = pViewShadowNode->IsControl();
-  bool hadOuterBorder = pViewShadowNode->HasOuterBorder();
+  auto instance = m_wkReactInstance.lock();
+  if (instance == nullptr)
+    return;
+
   bool hasOuterBorder = pPanel.GetOuterBorder() != nullptr;
 
   // This short-circuits all of the update code when we have the same hierarchy
-  if (isControl == useControl && hadOuterBorder == hasOuterBorder)
+  if (!pViewShadowNode->ShouldUpdateView(useControl, hasOuterBorder))
     return;
 
   //
@@ -436,40 +444,34 @@ void ViewViewManager::TryUpdateView(
   XamlView oldXamlView(pViewShadowNode->GetView());
   XamlView newXamlView(nullptr);
 
-  //
-  // 1. Determine new view & clean up any parent-child relationships
-  //
-
-  // If we need a Control then get existing reference or create it
+  // 1. Either create the new Control if needed or cleanup the old one if no
+  // longer needed
   if (useControl) {
     newXamlView = pViewShadowNode->GetControl().try_as<XamlView>();
-    if (newXamlView == nullptr) {
+    if (newXamlView == nullptr)
       newXamlView = pViewShadowNode->CreateViewControl();
-    }
-  }
-
-  // Clean up child of Control if needed
-  if (isControl && (!useControl || (hasOuterBorder != hadOuterBorder))) {
+  } else if (pViewShadowNode->IsControl()) {
     pViewShadowNode->GetControl().Content(nullptr);
   }
 
-  // If don't need a control, then set Outer Border or the Panel as the view
-  // root
-  if (!useControl) {
-    newXamlView = hasOuterBorder ? pPanel.GetOuterBorder().try_as<XamlView>()
-                                 : pPanel.try_as<XamlView>();
+  // 2. If need outer border decide if it's our new root, else clean up old
+  // outer border
+  if (hasOuterBorder) {
+    if (!useControl)
+      newXamlView = pPanel.GetOuterBorder().try_as<XamlView>();
+  } else if (pViewShadowNode->HasOuterBorder()) {
+    winrt::Border outerBorder = pPanel.GetOuterBorder();
+    if (outerBorder.Child() != nullptr)
+      outerBorder.Child(pPanel.try_as<winrt::UIElement>());
   }
 
-  // Clean up child of Border if needed
-  if (hasOuterBorder && !hadOuterBorder)
-    pPanel.GetOuterBorder().Child(nullptr);
+  // 3. Determine if the ViewPanel itself should be our root
+  if (!useControl && !hasOuterBorder)
+    newXamlView = pPanel.try_as<XamlView>();
 
-  // ASSERT: One of the scenarios should be true, so we should have a root view
+  // ASSERT: One of the three scenarios should be true and we should have a root
+  // to use
   assert(newXamlView != nullptr);
-
-  //
-  // 2. Transfer needed properties from old to new view
-  //
 
   // Transfer properties from old XamlView to the new one
   TransferProperties(oldXamlView, newXamlView);
@@ -482,23 +484,14 @@ void ViewViewManager::TryUpdateView(
   pViewShadowNode->IsControl(useControl);
   pViewShadowNode->HasOuterBorder(hasOuterBorder);
 
-  //
-  // 3. Setup any new parent-child relationships
-  //
-
   // If we need to change the root of our view, do it now
   if (oldXamlView != newXamlView) {
-    auto instance = m_wkReactInstance.lock();
-    if (instance == nullptr)
-      return;
-
-    auto pNativeUiManager =
-        static_cast<NativeUIManager *>(instance->NativeUIManager());
-
     // Inform the parent ShadowNode of this change so the hierarchy can be
     // updated
     int64_t parentTag = pViewShadowNode->GetParent();
-    auto host = pNativeUiManager->getHost();
+    auto host = static_cast<facebook::react::INativeUIManager *>(
+                    instance->NativeUIManager())
+                    ->getHost();
     auto *pParentNode =
         static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
     if (pParentNode != nullptr)
@@ -510,7 +503,9 @@ void ViewViewManager::TryUpdateView(
 
     // Inform the NativeUIManager of this change so the yoga layout can be
     // updated
-    pNativeUiManager->ReplaceView(*pViewShadowNode);
+    static_cast<facebook::react::INativeUIManager *>(
+        instance->NativeUIManager())
+        ->ReplaceView(*pViewShadowNode);
   }
 
   // Ensure parenting is setup properly

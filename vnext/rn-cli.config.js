@@ -27,7 +27,7 @@ let config = {
   ],
   getPolyfills: require('react-native/rn-get-polyfills'),
   resolver: {
-    platforms: ['ios', 'android', 'windesktop', 'windows', 'web', 'macos'],
+    platforms: ['ios', 'android', 'windesktop', 'uwp', 'web', 'macos'],
     providesModuleNodeModules: ['react-native', 'react-native-windows'],
     hasteImplModulePath: path.resolve(__dirname, 'jest/hasteImpl.js'),
   },
@@ -39,7 +39,7 @@ if (
   !fs.existsSync(
     path.resolve(
       __dirname,
-      'Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js',
+      'Libraries/Components/AccessibilityInfo/AccessibilityInfo.uwp.js',
     ),
   )
 ) {

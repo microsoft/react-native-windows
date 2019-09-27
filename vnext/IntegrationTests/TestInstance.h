@@ -84,11 +84,6 @@ class TestNativeUIManager : public facebook::react::INativeUIManager {
       facebook::react::ShadowNode &shadowNode,
       facebook::react::ShadowNode &shadowRoot,
       facebook::xplat::module::CxxModule::Callback callback) override;
-  void findSubviewIn(
-      facebook::react::ShadowNode &shadowNode,
-      float x,
-      float y,
-      facebook::xplat::module::CxxModule::Callback callback) override;
   void focus(int64_t reactTag) override;
   void blur(int64_t reactTag) override;
 };

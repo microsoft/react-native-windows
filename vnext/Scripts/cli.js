@@ -5,13 +5,7 @@
  */
 
 const {execSync} = require('child_process');
-const path = require('path');
 const args = process.argv.slice(2).join(' ');
-
-const rncliLocation = path.resolve(
-  require.resolve('react-native/package.json'),
-  '../local-cli/cli.js',
-);
 
 console.warn('You should be able to use the react-native cli directly now...');
 console.warn(
@@ -19,6 +13,6 @@ console.warn(
 );
 console.warn(new Error().stack);
 
-execSync(`node ${rncliLocation} ${args}`, {
+execSync(`node node_modules/react-native/local-cli/cli.js ${args}`, {
   stdio: 'inherit',
 });

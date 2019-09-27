@@ -11,7 +11,6 @@ export interface ICheckBoxProps extends ViewProps {
   disabled?: boolean;
   onChange?: (event: ICheckBoxChangeEvent) => void;
   onValueChange?: (value: boolean) => void;
-  defaultChecked?: boolean;
 }
 
 export interface ICheckBoxChangeEvent {

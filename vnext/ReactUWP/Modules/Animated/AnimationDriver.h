@@ -21,7 +21,7 @@ class AnimationDriver {
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   virtual ~AnimationDriver();
   void StartAnimation();
-  void StopAnimation(bool ignoreCompletedHandlers = false);
+  void StopAnimation();
 
   virtual std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
   MakeAnimation(const folly::dynamic &config) {
@@ -31,26 +31,6 @@ class AnimationDriver {
   inline constexpr int64_t Id() {
     return m_id;
   };
-
-  inline constexpr int64_t AnimatedValueTag() {
-    return m_animatedValueTag;
-  }
-
-  inline Callback EndCallback() {
-    return m_endCallback;
-  }
-
-  inline folly::dynamic AnimationConfig() {
-    return m_config;
-  }
-
-  virtual double ToValue() {
-    return 0;
-  };
-
-  virtual std::vector<double> Frames() {
-    return std::vector<double>();
-  }
 
  protected:
   ValueAnimatedNode *GetAnimatedValue();

@@ -20,7 +20,6 @@ class ImageViewManager : public FrameworkElementViewManager {
 
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   folly::dynamic GetNativeProps() const override;
-  facebook::react::ShadowNode *createShadow() const override;
   void EmitImageEvent(
       winrt::Windows::UI::Xaml::Controls::Canvas canvas,
       const char *eventName,

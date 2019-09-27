@@ -391,7 +391,7 @@ void ChakraExecutor::initOnJSVMThread() {
   }
 
 // JS Tracing enabled only in verbose mode.
-#ifdef ENABLE_JS_SYSTRACE
+#if WITH_OFFICE_TRACING == 1
   addNativeTracingHooks();
   setGlobalVariable(
       "__RCTProfileIsProfiling", std::make_unique<JSBigStdString>("true"));

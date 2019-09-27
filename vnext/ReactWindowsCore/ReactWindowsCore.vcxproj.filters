@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{d58d8a95-1e57-49ea-a4f3-c0859b7f649d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{32892a40-82db-4c1b-9390-5893f9ddbb0b}</UniqueIdentifier>
     </Filter>
@@ -22,17 +25,8 @@
     <Filter Include="Source Files\AsyncStorage">
       <UniqueIdentifier>{efe7ad3d-598a-4633-a2b7-2de458833b88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="etw">
-      <UniqueIdentifier>{06a27269-2c1f-418a-9e70-82d17deb7de2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="tracing">
-      <UniqueIdentifier>{4cc2fae5-bc38-4aff-aa49-33225485e2de}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseScriptStoreImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CxxMessageQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -60,13 +54,13 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\AppThemeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\AsyncStorageModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\BatchingUIManagerModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Modules\ExceptionsManagerModule.cpp">
@@ -93,19 +87,34 @@
     <ClCompile Include="AsyncStorage\KeyValueStorage.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
     </ClCompile>
-    <ClCompile Include="V8JSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tracing\tracing.cpp">
-      <Filter>tracing</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ReactWindowsCore\ModuleProvider.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\INativeUIManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\IViewManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\IUIManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\UIManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\SourceCodeModule.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactWindowsCore\DevSettings.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\I18nModule.h">
       <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ReactUWP\CreateUwpModules.h">
+      <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="Sandbox\SandboxEndpoint.h">
       <Filter>Header Files\Sandbox</Filter>
@@ -114,6 +123,9 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\ExceptionsManagerModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\BatchingUIManagerModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Modules\AppThemeModule.h">
@@ -135,9 +147,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AsyncStorageModule.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseScriptStoreImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CxxMessageQueue.h">
@@ -218,26 +227,8 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraJSIRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BatchingMessageQueueThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>   
-    <ClInclude Include="V8JSIRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="etw\react_native_windows.h">
-      <Filter>etw</Filter>
-    </ClInclude>
-    <ClInclude Include="tracing\fbsystrace.h">
-      <Filter>tracing</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="etw\react_native_windows.man">
-      <Filter>etw</Filter>
-    </None>
   </ItemGroup>
 </Project>

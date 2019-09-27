@@ -96,7 +96,7 @@ class NetworkingModule::NetworkingHelper
 
 std::int64_t NetworkingModule::NetworkingHelper::s_lastRequestId = 0;
 
-winrt::fire_and_forget SendRequestAsync(
+std::future<void> SendRequestAsync(
     std::shared_ptr<NetworkingModule::NetworkingHelper> networking,
     winrt::Windows::Web::Http::HttpClient httpClient,
     winrt::Windows::Web::Http::HttpRequestMessage request,
@@ -104,59 +104,53 @@ winrt::fire_and_forget SendRequestAsync(
     int64_t requestId) {
   // NotYetImplemented: set timeout
 
-  try {
-    auto completion = httpClient.SendRequestAsync(request);
-    networking->AddRequest(requestId, completion);
+  auto completion = httpClient.SendRequestAsync(request);
+  networking->AddRequest(requestId, completion);
 
-    winrt::Windows::Web::Http::HttpResponseMessage response =
-        co_await completion;
-    if (response != nullptr)
-      networking->OnResponseReceived(requestId, response);
+  winrt::Windows::Web::Http::HttpResponseMessage response = co_await completion;
+  if (response != nullptr)
+    networking->OnResponseReceived(requestId, response);
 
-    // NotYetImplemented: useIncrementalUpdates
+  // NotYetImplemented: useIncrementalUpdates
 
-    if (response != nullptr && response.Content() != nullptr) {
-      winrt::Windows::Storage::Streams::IInputStream inputStream =
-          co_await response.Content().ReadAsInputStreamAsync();
-      auto reader = winrt::Windows::Storage::Streams::DataReader(inputStream);
+  if (response != nullptr && response.Content() != nullptr) {
+    winrt::Windows::Storage::Streams::IInputStream inputStream =
+        co_await response.Content().ReadAsInputStreamAsync();
+    auto reader = winrt::Windows::Storage::Streams::DataReader(inputStream);
 
-      if (textResponse)
-        reader.UnicodeEncoding(
-            winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+    if (textResponse)
+      reader.UnicodeEncoding(
+          winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
 
-      // Only support up to 10MB response sizes
-      co_await reader.LoadAsync(10000000);
-      uint32_t len = reader.UnconsumedBufferLength();
+    // Only support up to 10MB response sizes
+    co_await reader.LoadAsync(10000000);
+    uint32_t len = reader.UnconsumedBufferLength();
 
-      if (textResponse) {
-        std::vector<uint8_t> data(len);
-        reader.ReadBytes(data);
-        std::string responseData = std::string(
-            facebook::react::utilities::checkedReinterpretCast<char *>(
-                data.data()),
-            data.size());
+    if (textResponse) {
+      std::vector<uint8_t> data(len);
+      reader.ReadBytes(data);
+      std::string responseData = std::string(
+          facebook::react::utilities::checkedReinterpretCast<char *>(
+              data.data()),
+          data.size());
 
-        networking->OnDataReceived(requestId, std::move(responseData));
-      } else {
-        auto buffer = reader.ReadBuffer(len);
-        winrt::hstring data = winrt::Windows::Security::Cryptography::
-            CryptographicBuffer::EncodeToBase64String(buffer);
-        std::string responseData =
-            facebook::react::unicode::utf16ToUtf8(std::wstring_view(data));
-
-        networking->OnDataReceived(requestId, std::move(responseData));
-      }
-
-      networking->OnRequestSuccess(requestId);
+      networking->OnDataReceived(requestId, std::move(responseData));
     } else {
-      networking->OnRequestError(
-          requestId,
-          response == nullptr ? "request failed" : "No response content",
-          false /*isTimeout*/);
+      auto buffer = reader.ReadBuffer(len);
+      winrt::hstring data = winrt::Windows::Security::Cryptography::
+          CryptographicBuffer::EncodeToBase64String(buffer);
+      std::string responseData =
+          facebook::react::unicode::utf16ToUtf8(std::wstring_view(data));
+
+      networking->OnDataReceived(requestId, std::move(responseData));
     }
-  } catch (...) {
+
+    networking->OnRequestSuccess(requestId);
+  } else {
     networking->OnRequestError(
-        requestId, "Unhandled exception during request", false /*isTimeout*/);
+        requestId,
+        response == nullptr ? "request failed" : "No response content",
+        false /*isTimeout*/);
   }
 
   networking->RemoveRequest(requestId);

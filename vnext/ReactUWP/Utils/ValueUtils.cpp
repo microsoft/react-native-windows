@@ -50,59 +50,6 @@ struct ColorComp {
   }
 };
 
-winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(
-    const folly::dynamic &d) {
-  winrt::hstring resourceName{
-      winrt::to_hstring(d.find("windowsbrush")->second.asString())};
-
-  thread_local static std::
-      map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>>
-          accentColorMap = {{L"SystemAccentColor", {nullptr}},
-                            {L"SystemAccentColorLight1", {nullptr}},
-                            {L"SystemAccentColorLight2", {nullptr}},
-                            {L"SystemAccentColorLight3", {nullptr}},
-                            {L"SystemAccentColorDark1", {nullptr}},
-                            {L"SystemAccentColorDark2", {nullptr}},
-                            {L"SystemAccentColorDark3", {nullptr}},
-                            {L"SystemListAccentLowColor", {nullptr}},
-                            {L"SystemListAccentMediumColor", {nullptr}},
-                            {L"SystemListAccentHighColor", {nullptr}}};
-
-  if (accentColorMap.find(resourceName) != accentColorMap.end()) {
-    if (auto brush = accentColorMap.at(resourceName).get()) {
-      return brush;
-    }
-
-    winrt::hstring xamlString =
-        L"<ResourceDictionary"
-        L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
-        L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
-        L"  <SolidColorBrush"
-        L"      x:Key='" +
-        resourceName +
-        L"'"
-        L"      Color='{ThemeResource " +
-        resourceName +
-        "}' />"
-        L"</ResourceDictionary>";
-
-    auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
-        winrt::Markup::XamlReader::Load(xamlString))};
-
-    auto brush{winrt::unbox_value<winrt::SolidColorBrush>(
-        dictionary.Lookup(winrt::box_value(resourceName)))};
-
-    accentColorMap[resourceName] = winrt::make_weak(brush);
-
-    return brush;
-  }
-
-  winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(
-      winrt::box_value(resourceName))};
-
-  return winrt::unbox_value<winrt::Brush>(resource);
-}
-
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
   UINT argb = static_cast<UINT>(d.asInt());
   return winrt::ColorHelper::FromArgb(
@@ -115,7 +62,58 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
 REACTWINDOWS_API_(winrt::SolidColorBrush)
 SolidColorBrushFrom(const folly::dynamic &d) {
   if (d.isObject()) {
-    return BrushFromColorObject(d).as<winrt::SolidColorBrush>();
+    winrt::hstring resourceName{
+        winrt::to_hstring(d.find("windowsbrush")->second.asString())};
+
+    thread_local static std::
+        map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>>
+            accentColorMap = {{L"SystemAccentColor", {nullptr}},
+                              {L"SystemAccentColorLight1", {nullptr}},
+                              {L"SystemAccentColorLight2", {nullptr}},
+                              {L"SystemAccentColorLight3", {nullptr}},
+                              {L"SystemAccentColorDark1", {nullptr}},
+                              {L"SystemAccentColorDark2", {nullptr}},
+                              {L"SystemAccentColorDark3", {nullptr}},
+                              {L"SystemListAccentLowColor", {nullptr}},
+                              {L"SystemListAccentMediumColor", {nullptr}},
+                              {L"SystemListAccentHighColor", {nullptr}}};
+
+    if (accentColorMap.find(resourceName) != accentColorMap.end()) {
+      if (auto brush = accentColorMap.at(resourceName).get()) {
+        return brush;
+      }
+
+      winrt::hstring xamlString =
+          L"<ResourceDictionary"
+          L"    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'"
+          L"    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'>"
+          L"  <SolidColorBrush"
+          L"      x:Key='" +
+          resourceName +
+          L"'"
+          L"      Color='{ThemeResource " +
+          resourceName +
+          "}' />"
+          L"</ResourceDictionary>";
+
+      auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
+          winrt::Markup::XamlReader::Load(xamlString))};
+
+      auto brush{winrt::unbox_value<winrt::SolidColorBrush>(
+          dictionary.Lookup(winrt::box_value(resourceName)))};
+
+      accentColorMap[resourceName] = winrt::make_weak(brush);
+
+      return brush;
+    }
+
+    winrt::IInspectable resource{
+        winrt::Application::Current().Resources().Lookup(
+            winrt::box_value(resourceName))};
+
+    if (resource) {
+      winrt::unbox_value<winrt::SolidColorBrush>(resource);
+    }
   }
 
   thread_local static std::
@@ -135,10 +133,6 @@ SolidColorBrushFrom(const folly::dynamic &d) {
 }
 
 REACTWINDOWS_API_(winrt::Brush) BrushFrom(const folly::dynamic &d) {
-  if (d.isObject()) {
-    return BrushFromColorObject(d);
-  }
-
   return SolidColorBrushFrom(d);
 }
 

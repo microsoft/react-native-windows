@@ -3,7 +3,6 @@
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "Utils/UwpPreparedScriptStore.h"
-#include "Utils/UwpScriptStore.h"
 #include "jsi/jsi.h"
 #include "unicode.h"
 
@@ -26,7 +25,7 @@ UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
   }
 }
 
-std::shared_ptr<const facebook::jsi::Buffer>
+std::unique_ptr<const facebook::jsi::Buffer>
 UwpPreparedScriptStore::tryGetPreparedScript(
     const facebook::jsi::ScriptSignature &scriptSignature,
     const facebook::jsi::JSRuntimeSignature &runtimeSignature,
@@ -43,7 +42,7 @@ UwpPreparedScriptStore::tryGetPreparedScript(
     }
 
     auto buffer = winrt::FileIO::ReadBufferAsync(byteCodeFile).get();
-    auto bytecodeBuffer(std::make_shared<ByteCodeBuffer>(buffer.Length()));
+    auto bytecodeBuffer(std::make_unique<ByteCodeBuffer>(buffer.Length()));
     auto dataReader{winrt::Streams::DataReader::FromBuffer(buffer)};
     dataReader.ReadBytes(winrt::array_view<uint8_t>{
         &bytecodeBuffer->data()[0],
@@ -94,9 +93,9 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
   try {
     if (m_byteCodeFileAsync != nullptr) {
       auto file = m_byteCodeFileAsync.get();
-      auto byteCodeVersion =
-          UwpScriptStore::GetFileVersion(file.Path().c_str());
-
+      auto fileprops = file.GetBasicPropertiesAsync().get();
+      facebook::jsi::ScriptVersion_t byteCodeVersion =
+          fileprops.DateModified().time_since_epoch().count();
       if (byteCodeVersion >= scriptSignature.version) {
         return file;
       }
@@ -114,8 +113,9 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
                   .LocalCacheFolder()
                   .GetFileAsync(fileName)
                   .get();
-
-  auto byteCodeVersion = UwpScriptStore::GetFileVersion(file.Path().c_str());
+  auto fileprops = file.GetBasicPropertiesAsync().get();
+  facebook::jsi::ScriptVersion_t byteCodeVersion =
+      fileprops.DateModified().time_since_epoch().count();
 
   return byteCodeVersion > scriptSignature.version ? file : nullptr;
 }

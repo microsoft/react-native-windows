@@ -29,9 +29,6 @@ To stage files using the command line, you need to run `git add MyFileOne.tsx` f
 
 You can commit multiple times until you are ready to make a pull request. You should keep the message short since it will not be used in the bug notes and is just for keeping track of the multiple commits in one pull request. 
  
-### Provide changelog information
-Run `yarn change` in the root of the repo.
-
 ### Creating a Pull Request
 
 **SourceTree:**

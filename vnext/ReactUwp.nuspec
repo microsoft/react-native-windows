@@ -13,7 +13,7 @@
   </metadata>
   <files>
     <file src="inc\cxxreact\*" target="inc\cxxreact"/>
-    <file src="inc\jsi\**\*.*" target="inc\jsi"/>
+    <file src="inc\jsi\*" target="inc\jsi"/>
     <file src="inc\Yoga\*.*" target="inc\Yoga"/>
     <file src="inc\folly\**\*.*" target="inc" />
     <file src="inc\stubs\**\*.*" target="inc" />

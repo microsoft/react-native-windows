@@ -1,23 +1,11 @@
-/**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- * @format
- */
-// @ts-check
 'use strict';
 
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 const execSync = require('child_process').execSync;
-const {
-  newSpinner,
-  commandWithProgress,
-  newWarn,
-} = require('./commandWithProgress');
 
-function sortDevices(l, r) {
-  return l.toString().length > r.toString().length;
-}
+function sortDevices (l, r) { return l.toString().length > r.toString().length; }
 
 class DeviceInfo {
   constructor(deviceIndex, deviceName, deviceType) {
@@ -33,16 +21,8 @@ class DeviceInfo {
 
 class WinAppDeployTool {
   constructor() {
-    const programFilesPath =
-      process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
-    this.path = path.join(
-      programFilesPath,
-      'Windows Kits',
-      '10',
-      'bin',
-      'x86',
-      'WinAppDeployCmd.exe',
-    );
+    const programFilesPath = process.env['ProgramFiles(x86)'] || process.env.ProgramFiles;
+    this.path = path.join(programFilesPath, 'Windows Kits', '10', 'bin', 'x86', 'WinAppDeployCmd.exe');
     this.targetOSVersion = '10.0';
   }
 
@@ -108,45 +88,30 @@ class WinAppDeployTool {
     return devices;
   }
 
-  async installAppPackage(
-    pathToAppxPackage,
-    targetDevice,
-    shouldLaunch,
-    shouldUpdate,
-    pin,
-    verbose,
-  ) {
-    const text = `Installing app to ${targetDevice.name}`;
+  installAppPackage(pathToAppxPackage, targetDevice, shouldLaunch, shouldUpdate, pin, verbose) {
+    console.log(chalk.green(`Installing app to ${targetDevice.name}`));
 
     if (shouldLaunch) {
-      newWarn(
-        'Cannot launch app with current version of Windows 10 SDK tools.  You will have to launch the app after installation is completed.',
-      );
+      console.log(chalk.yellow('Cannot launch app with current version of Windows 10 SDK tools.  You will have to launch the app after installation is completed.'));
     }
 
     const args = [
+      `"${this.path}"`,
       shouldUpdate ? 'update' : 'install',
       '-file',
-      pathToAppxPackage,
-      '-ip',
+      pathToAppxPackage, '-ip',
       targetDevice.__ip,
     ];
 
     if (pin) {
       args.push('-pin', pin);
     }
-    await commandWithProgress(newSpinner(text), text, this.path, args, verbose);
+    return execSync(args.join(' ')).toString();
   }
 
-  async uninstallAppPackage(packageInfo, targetDevice, verbose) {
-    const text = `Uninstalling app from ${targetDevice.name}`;
-    await commandWithProgress(
-      newSpinner(text),
-      text,
-      this.path,
-      `uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`.split(' '),
-      verbose,
-    );
+  uninstallAppPackage(packageInfo, targetDevice, verbose) {
+    console.log(chalk.green(`Uninstalling app from ${targetDevice.name}`));
+    return execSync(`"${this.path}" uninstall -package ${packageInfo} -ip {$targetDevice.__ip}`).toString();
   }
 }
 

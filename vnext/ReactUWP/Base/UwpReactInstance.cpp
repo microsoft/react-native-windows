@@ -7,7 +7,6 @@
 
 // ReactUWP
 #include <ReactUWP/IXamlRootView.h>
-#include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
@@ -47,10 +46,10 @@
 
 // Modules
 #include <AsyncStorageModule.h>
-#include <Modules/AlertModuleUwp.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
+#include <Modules/BatchingUIManagerModule.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
@@ -58,7 +57,6 @@
 #include <Modules/LocationObserverModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
-#include <Modules/UIManagerModule.h>
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/IUIManager.h>
@@ -75,20 +73,7 @@
 #endif
 
 #if !defined(OSS_RN)
-#if defined(USE_HERMES)
-#include "HermesRuntimeHolder.h"
-#endif // USE_HERMES
-#if defined(USE_V8)
-#include "BaseScriptStoreImpl.h"
-#include "V8JSIRuntimeHolder.h"
-
-#include <winrt/Windows.Storage.h>
-
-#include <codecvt>
-#include <locale>
-#else
 #include "ChakraJSIRuntimeHolder.h"
-#endif
 #endif
 
 #include <tuple>
@@ -143,7 +128,8 @@ CreateUIManager(
       std::make_unique<polyester::IconViewManager>(instance));
 
   // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager());
+  return createBatchingUIManager(
+      std::move(viewManagers), new NativeUIManager());
 }
 
 UwpReactInstance::UwpReactInstance(
@@ -168,7 +154,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       "UIManager",
       [uiManager = std::move(uiManager)]() {
-        return facebook::react::createUIManagerModule(uiManager);
+        return facebook::react::createBatchingUIManagerModule(uiManager);
       },
       messageQueue);
 
@@ -231,11 +217,6 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       messageQueue);
 
   modules.emplace_back(
-      AlertModule::name,
-      []() { return std::make_unique<AlertModule>(); },
-      messageQueue);
-
-  modules.emplace_back(
       ClipboardModule::name,
       []() { return std::make_unique<ClipboardModule>(); },
       messageQueue);
@@ -272,20 +253,15 @@ void UwpReactInstance::Start(
   if (m_started)
     return;
 
-  m_reactInstanceSettings = settings;
-
   assert(
       m_uiDispatcher == nullptr && m_defaultNativeThread == nullptr &&
-      m_batchingNativeThread == nullptr && m_jsThread == nullptr &&
-      m_initThread == nullptr && m_instanceWrapper == nullptr);
+      m_jsThread == nullptr && m_initThread == nullptr &&
+      m_instanceWrapper == nullptr);
 
   m_started = true;
   m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread =
       std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
-  m_batchingNativeThread =
-      std::make_shared<react::uwp::BatchingUIMessageQueueThread>(
-          m_uiDispatcher);
 
   // Objects that must be created on the UI thread
   std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
@@ -361,7 +337,7 @@ void UwpReactInstance::Start(
     std::vector<facebook::react::NativeModuleDescription> cxxModules =
         GetModules(
             m_uiManager,
-            m_batchingNativeThread,
+            m_defaultNativeThread,
             deviceInfo,
             devSettings,
             std::move(i18nInfo),
@@ -371,7 +347,7 @@ void UwpReactInstance::Start(
 
     if (m_moduleProvider != nullptr) {
       std::vector<facebook::react::NativeModuleDescription> customCxxModules =
-          m_moduleProvider->GetModules(m_batchingNativeThread);
+          m_moduleProvider->GetModules(m_defaultNativeThread);
       cxxModules.insert(
           std::end(cxxModules),
           std::begin(customCxxModules),
@@ -387,34 +363,17 @@ void UwpReactInstance::Start(
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore =
           nullptr;
 
-#if defined(USE_HERMES)
-      devSettings->jsiRuntimeHolder =
-          std::make_shared<facebook::react::HermesRuntimeHolder>();
-#elif defined(USE_V8)
-      preparedScriptStore =
-          std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(
-              getApplicationLocalFolder());
-
-      devSettings->jsiRuntimeHolder =
-          std::make_shared<facebook::react::V8JSIRuntimeHolder>(
-              devSettings,
-              jsQueue,
-              std::move(scriptStore),
-              std::move(preparedScriptStore));
-#else
       if (settings.EnableByteCodeCacheing ||
           !settings.ByteCodeFileUri.empty()) {
         scriptStore = std::make_unique<UwpScriptStore>();
         preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(
             winrt::to_hstring(settings.ByteCodeFileUri));
       }
-      devSettings->jsiRuntimeHolder =
-          std::make_shared<facebook::react::ChakraJSIRuntimeHolder>(
-              devSettings,
-              jsQueue,
-              std::move(scriptStore),
-              std::move(preparedScriptStore));
-#endif
+      devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(
+          devSettings,
+          jsQueue,
+          std::move(scriptStore),
+          std::move(preparedScriptStore));
     }
 #endif
 
@@ -425,7 +384,7 @@ void UwpReactInstance::Start(
           std::move(cxxModules),
           m_uiManager,
           jsQueue,
-          m_batchingNativeThread,
+          m_defaultNativeThread,
           std::move(devSettings));
     } catch (std::exception &e) {
       OnHitError(e.what());
@@ -595,17 +554,6 @@ void UwpReactInstance::CallXamlViewCreatedTestHook(react::uwp::XamlView view) {
     m_xamlViewCreatedTestHook(view);
   }
 }
-
-#if defined(USE_V8)
-std::string UwpReactInstance::getApplicationLocalFolder() {
-  auto local =
-      winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
-
-  return std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(
-             std::wstring(local.c_str(), local.size())) +
-      "\\";
-}
-#endif
 
 } // namespace uwp
 } // namespace react

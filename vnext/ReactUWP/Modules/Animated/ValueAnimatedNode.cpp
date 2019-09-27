@@ -40,10 +40,7 @@ double ValueAnimatedNode::RawValue() {
 }
 
 void ValueAnimatedNode::RawValue(double value) {
-  if (RawValue() != value) {
-    m_propertySet.InsertScalar(s_valueName, static_cast<float>(value));
-    UpdateTrackingNodes();
-  }
+  m_propertySet.InsertScalar(s_valueName, static_cast<float>(value));
 }
 
 double ValueAnimatedNode::Offset() {
@@ -53,10 +50,7 @@ double ValueAnimatedNode::Offset() {
 }
 
 void ValueAnimatedNode::Offset(double offset) {
-  if (Offset() != offset) {
-    m_propertySet.InsertScalar(s_offsetName, static_cast<float>(offset));
-    UpdateTrackingNodes();
-  }
+  m_propertySet.InsertScalar(s_offsetName, static_cast<float>(offset));
 }
 
 double ValueAnimatedNode::Value() {
@@ -87,15 +81,6 @@ void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag) {
 
 void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag) {
   m_activeAnimations.insert(animationTag);
-  if (m_activeAnimations.size() == 1) {
-    if (const auto manager = m_manager.lock()) {
-      for (const auto &props : m_dependentPropsNodes) {
-        if (const auto propsNode = manager->GetPropsAnimatedNode(props)) {
-          //propsNode->UpdateView();
-        }
-      }
-    }
-  }
 }
 
 void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
@@ -103,36 +88,11 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
       for (const auto &props : m_dependentPropsNodes) {
-        if (const auto propsNode = manager->GetPropsAnimatedNode(props)) {
+        if (const auto propsNode = manager->GetPropsAnimatedNode(props))
           propsNode->DisposeCompletedAnimation(Tag());
-        }
       }
     }
   }
 }
-
-void ValueAnimatedNode::AddActiveTrackingNode(int64_t trackingNodeTag) {
-  m_activeTrackingNodes.insert(trackingNodeTag);
-}
-
-void ValueAnimatedNode::RemoveActiveTrackingNode(int64_t trackingNodeTag) {
-  m_activeTrackingNodes.erase(trackingNodeTag);
-}
-
-void ValueAnimatedNode::UpdateTrackingNodes() {
-  if (auto const manager = m_manager.lock()) {
-    for (auto trackingNodeTag : m_activeTrackingNodes) {
-      if (auto trackingNode =
-              manager->GetTrackingAnimatedNode(trackingNodeTag)) {
-        trackingNode->Update();
-      }
-    }
-  }
-}
-
-void ValueAnimatedNode::SetValueListener(std::function<double()> listener) {
-  m_listener = listener;
-}
-
 } // namespace uwp
 } // namespace react

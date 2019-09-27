@@ -261,11 +261,11 @@ void ViewPanel::FinalizeProperties() {
   //      >> Border* properties and Background applied to Border
 
   const auto unsetValue = winrt::DependencyProperty::UnsetValue();
-  const Thickness emptyThickness = ThicknessHelper::FromUniformLength(0.0);
 
   bool hasBackground = ReadLocalValue(ViewBackgroundProperty()) != unsetValue;
   bool hasBorderBrush = ReadLocalValue(BorderBrushProperty()) != unsetValue;
-  bool hasBorderThickness = BorderThickness() != emptyThickness;
+  bool hasBorderThickness =
+      ReadLocalValue(BorderThicknessProperty()) != unsetValue;
   bool hasCornerRadius = ReadLocalValue(CornerRadiusProperty()) != unsetValue;
   bool displayBorder = hasBorderBrush && hasBorderThickness;
 
@@ -283,11 +283,6 @@ void ViewPanel::FinalizeProperties() {
   } else {
     scenario = Scenario::InnerBorder;
     m_hasOuterBorder = false;
-  }
-
-  // Detach this Panel from the outer Border if needed
-  if (scenario != Scenario::OuterBorder && m_border != nullptr) {
-    m_border.Child(nullptr);
   }
 
   // Border element
@@ -317,8 +312,7 @@ void ViewPanel::FinalizeProperties() {
     else
       m_border.ClearValue(winrt::Border::CornerRadiusProperty());
   } else if (m_border != nullptr) {
-    // Clean up and remove the Border element
-    m_border.Child(nullptr);
+    // Remove the Border element
     Remove(m_border);
     m_border = nullptr;
   }
@@ -330,9 +324,6 @@ void ViewPanel::FinalizeProperties() {
       m_border.ClearValue(winrt::Border::BackgroundProperty());
 
     ClearValue(winrt::Panel::BackgroundProperty());
-
-    // Ensure the Border is not parented to this Panel
-    Remove(m_border);
   } else {
     // Set any background on this Panel
     if (hasBackground)

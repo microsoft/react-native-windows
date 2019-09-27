@@ -27,7 +27,7 @@ npm install -g react-native-cli
 
 Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
 ```
-react-native init <project name> --version 0.59.10
+react-native init <project name>
 ```
 Navigate into this newly created directory:
 ```

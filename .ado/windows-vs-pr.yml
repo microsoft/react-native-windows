@@ -3,8 +3,7 @@ name: $(Date:yyyyMMdd).$(Rev:.r)
 
 trigger: none # will disable CI builds entirely
 
-pr:
-  - master
+pr: none # disable on PRs until stable
 
 jobs:
   - job: UWPPR
@@ -41,7 +40,7 @@ jobs:
           UseRNFork: false
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -54,7 +53,7 @@ jobs:
       - task: CmdLine@2
         displayName: Modify package.json to use unforked RN
         inputs:
-          script: node scripts/useUnForkedRN.js
+          script: node scripts/modifyDevDepToUseUnforkedRN.js
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'false'))
 
@@ -76,12 +75,13 @@ jobs:
       - template: templates/stop-packagers.yml
 
       - task: CmdLine@2
-        displayName: yarn buildci
+        displayName: yarn build
         inputs:
-          script: yarn buildci
+          script: yarn build
+          workingDirectory: vnext
 
       - template: templates/install-SDK.yml
-
+      
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-UWP
         inputs:
@@ -96,7 +96,7 @@ jobs:
         displayName: MSBuild - ReactWindows-UWP
         inputs:
           solution: vnext/ReactWindows-UWP.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
@@ -107,56 +107,33 @@ jobs:
         displayName: NuGet restore - Playground
         inputs:
           command: restore
-          restoreSolution: packages/playground/windows/Playground.sln
+          restoreSolution: vnext/Playground/Playground.sln
+          feedsToUse: config
+          nugetConfigPath: vnext/NuGet.config
+          restoreDirectory: packages/
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
       - task: MSBuild@1
         displayName: MSBuild - Playground
         inputs:
-          solution: packages/playground/windows/Playground.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          solution: vnext/Playground/Playground.sln
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x64' # Optional. Options: x86, x64
           platform: $(BuildPlatform) # Optional
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
-
-      - task: CmdLine@2
-        displayName: Create Playground bundle
-        inputs:
-          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
-          workingDirectory: packages\playground
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore - SampleApps
-        inputs:
-          command: restore
-          restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: MSBuild@1
-        displayName: MSBuild - SampleApps
-        inputs:
-          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          msbuildArchitecture: 'x64' # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: '/p:PreferredToolArchitecture=x64' # Optional
-          clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
-          script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
-          workingDirectory: packages\microsoft-reactnative-sampleapps
+          script: node Scripts\cli.js bundle --entry-file .\Universal.SampleApp\index.uwp.js --bundle-output SampleApp.uwp.bundle --platform uwp
+          workingDirectory: vnext
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
         inputs:
-          script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+          script: node Scripts\cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.uwp.bundle --platform uwp
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -164,7 +141,7 @@ jobs:
     displayName: Verify react-native init
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -210,7 +187,7 @@ jobs:
         inputs:
           script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
           workingDirectory: $(Agent.BuildDirectory)\testcli
-
+        
       - task: CmdLine@2
         displayName: Apply windows template
         inputs:
@@ -220,16 +197,16 @@ jobs:
       - template: templates/install-SDK.yml
 
       - task: NuGetCommand@2
-        displayName: NuGet restore testcli
+        displayName: NuGet restore
         inputs:
           command: restore
           restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
       - task: MSBuild@1
-        displayName: MSBuild - testcli
+        displayName: MSBuild - Build the project
         inputs:
           solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
-          msbuildVersion: '16.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildVersion: '15.0' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: 'x86' # Optional. Options: x86, x64
           platform: x64 # Optional
           configuration: Debug # Optional
@@ -238,7 +215,7 @@ jobs:
           clean: true # Optional
 
       - task: CmdLine@2
-        displayName: Create bundle testcli
+        displayName: Create bundle
         inputs:
           script: react-native bundle --entry-file App.windows.js platform uwp --bundle-output test.bundle
           workingDirectory: $(Agent.BuildDirectory)\testcli
@@ -267,7 +244,7 @@ jobs:
           BuildPlatform: arm
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -303,12 +280,25 @@ jobs:
         condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
         inputs:
           testSelector: 'testAssemblies'
-          testAssemblyVer2: | # Required when testSelector == TestAssemblies
-            React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll
-            JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe
-          pathtoCustomTestAdapters: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+          testAssemblyVer2: 'React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
-          vsTestVersion: '16.0'
+          vsTestVersion: '15.0'
+          runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: 'onAbortOnly'
+
+      - task: VSTest@2
+        displayName: Run Desktop Unit Tests (Google Test)
+        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
+        inputs:
+          testSelector: 'testAssemblies'
+          testAssemblyVer2: 'JSI.Desktop.UnitTests\JSI.Desktop.UnitTests.exe'  # Required when testSelector == TestAssemblies
+          searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
+          vsTestVersion: '15.0'
+          pathtoCustomTestAdapters: '$(Build.SourcesDirectory)\vnext\packages\GoogleTestAdapter.0.16.1\build\_common'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -331,7 +321,7 @@ jobs:
           testAssemblyVer2: 'React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)'
           testFiltercriteria: (FullyQualifiedName~RNTesterIntegrationTests)&(Owner!=Unstable)
-          vsTestVersion: '16.0'
+          vsTestVersion: '15.0'
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
@@ -342,20 +332,19 @@ jobs:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
 
+
   - job: RNWNugetPR
     dependsOn: RnwNativePRBuild
     displayName: React-Native-Windows Build and Pack Nuget
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: none #skip checking out the default repository resource
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0
         inputs:
-          versionSpec: '>=4.6.0'
+          versionSpec: '>=4.6.0' 
 
       - template: templates/prep-and-pack-nuget.yml
 
@@ -363,8 +352,6 @@ jobs:
     displayName: Verify change files + formatting
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 10 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
         clean: true # whether to fetch clean each time
@@ -381,12 +368,13 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: yarn checkchange
 
       - task: CmdLine@2
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
+          workingDirectory: vnext
 
   - job: CurrentPR
     displayName: Current (C#) PR
@@ -422,7 +410,7 @@ jobs:
         #  UTTestOutputConfigDir: Release
     pool:
       vmImage: vs2017-win2016
-    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:
@@ -508,7 +496,8 @@ jobs:
           testSelector: 'testAssemblies'
           testAssemblyVer2: 'ReactNative.Net46.Tests.dll' # Required when testSelector == TestAssemblies
           searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          vsTestVersion: '16.0'
+          vsTestVersion: '15.0'
+          #runSettingsFile: $(Build.SourcesDirectory)\vnext\Desktop.UnitTests\tests.runsettings
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)

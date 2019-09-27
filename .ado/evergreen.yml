@@ -8,7 +8,8 @@ jobs:
   - job: RNWUpdateRNVersion
     displayName: React-Native-Windows Update React-Native
     pool:
-      vmImage: windows-2019
+      name: OE Standard Pool
+      demands: ['VisualStudio_15.0', 'OnPrem -equals False']
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
@@ -19,12 +20,11 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: true # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: templates/configure-git.yml
-
-      - task: CmdLine@2
-        displayName: yarn install
+      - task: CmdLine@1
+        displayName: 'Install update script requirements'
         inputs:
-          script: yarn install --frozen-lockfile
+          filename: npm
+          arguments: 'install request --no-save'
 
       - task: CmdLine@2
         displayName: Do Update

@@ -55,7 +55,6 @@
       </PrecompiledHeader>
       <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC=1;FOLLY_NO_CONFIG;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(FollyDir)</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4293;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

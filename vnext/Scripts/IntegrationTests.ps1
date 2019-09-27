@@ -36,7 +36,7 @@ param (
 						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
 	[ValidateScript({Test-Path $_})]
-	[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path | Split-Path)\node_modules\react-native",
+	[string] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)\node_modules\react-native",
 
 	[ValidateScript({Test-Path $_})]
 	[string] $NodePath = (Get-Command node.exe).Definition,

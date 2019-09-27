@@ -42,7 +42,6 @@ node_modules
 .nvm
 /bots/node_modules/
 
-/dist
 /lib
 /Libraries
 /RNTester
@@ -74,8 +73,6 @@ ReactUWP/Folly/Generated Files/
 *.suo
 *.nupkg
 *.swp
-
-temp
 
 /coverage
 /third-party

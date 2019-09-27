@@ -239,8 +239,6 @@ static float NumberOrDefault(const folly::dynamic &value, float defaultValue) {
     result = static_cast<float>(value.asDouble());
   else if (value.isNull())
     result = defaultValue;
-  else if (value.isString())
-    result = std::stof(value.getString());
   else
     assert(false);
 
@@ -901,11 +899,6 @@ void NativeUIManager::CreateView(
   auto *pViewManager = node.GetViewManager();
 
   if (pViewManager->RequiresYogaNode()) {
-    // Generate list of RN controls that need to have layout rerun on them.
-    if (node.NeedsForceLayout()) {
-      m_extraLayoutNodes.push_back(node.m_tag);
-    }
-
     auto result = m_tagsToYogaNodes.emplace(node.m_tag, make_yoga_node());
     if (result.second == true) {
       YGNodeRef yogaNode = result.first->second.get();
@@ -1022,22 +1015,11 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
       shadowNode->DoExtraLayoutPrep(yogaNode);
   }
 
-  for (int64_t child : shadowNode->m_children) {
+  for (int64_t child : shadowNode->m_children)
     UpdateExtraLayout(child);
-  }
 }
 
 void NativeUIManager::DoLayout() {
-  // Process vector of RN controls needing extra layout here.
-  const auto extraLayoutNodes = m_extraLayoutNodes;
-  for (const int64_t tag : extraLayoutNodes) {
-    ShadowNodeBase &node =
-        static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto element = node.GetView().as<winrt::FrameworkElement>();
-    element.UpdateLayout();
-  }
-  // Values need to be cleared from the vector before next call to DoLayout.
-  m_extraLayoutNodes.clear();
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
     UpdateExtraLayout(rootTag);
@@ -1160,62 +1142,6 @@ void NativeUIManager::measure(
   // Global Position
   args.push_back(rectInParentCoords.X);
   args.push_back(rectInParentCoords.Y);
-
-  callback(args);
-}
-
-void NativeUIManager::findSubviewIn(
-    facebook::react::ShadowNode &shadowNode,
-    float x,
-    float y,
-    facebook::xplat::module::CxxModule::Callback callback) {
-  ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
-  auto view = node.GetView();
-
-  auto rootUIView = view.as<winrt::UIElement>();
-  if (rootUIView == nullptr) {
-    callback({});
-    return;
-  }
-
-  winrt::Point point{x, y};
-
-  // Transform the point to app window coordinates because
-  // FindElementsInHostCoordinate() work in that metric
-  auto appWindowTransform = rootUIView.TransformToVisual(nullptr);
-  auto pointInAppWindow = appWindowTransform.TransformPoint(point);
-
-  // Perform hit test to find the top most z-index element that intersects with
-  // the queried point
-  auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(
-      pointInAppWindow, rootUIView);
-
-  int64_t foundTag{};
-  winrt::FrameworkElement foundElement = nullptr;
-
-  for (const auto &elem : hitTestElements) {
-    if (foundElement = elem.try_as<winrt::FrameworkElement>()) {
-      auto tag = foundElement.Tag();
-      if (tag != nullptr) {
-        foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
-        break;
-      }
-    }
-  }
-
-  if (foundElement == nullptr) {
-    callback({});
-    return;
-  }
-
-  auto box = GetRectOfElementInParentCoords(foundElement, rootUIView);
-
-  std::vector<folly::dynamic> args;
-  args.push_back(foundTag);
-  args.push_back(box.X);
-  args.push_back(box.Y);
-  args.push_back(box.Width);
-  args.push_back(box.Height);
 
   callback(args);
 }

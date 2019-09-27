@@ -43,8 +43,8 @@ void FrameworkElementViewManager::TransferProperty(
     winrt::DependencyProperty dp) {
   auto oldValue = oldView.ReadLocalValue(dp);
   if (oldValue != nullptr) {
-    oldView.ClearValue(dp);
     newView.SetValue(dp, oldValue);
+    oldView.ClearValue(dp);
   }
 }
 
@@ -68,8 +68,6 @@ void FrameworkElementViewManager::TransferProperties(
   TransferProperty(
       oldView, newView, winrt::FrameworkElement::FlowDirectionProperty());
   TransferProperty(oldView, newView, winrt::Canvas::ZIndexProperty());
-  TransferProperty(oldView, newView, ViewPanel::LeftProperty());
-  TransferProperty(oldView, newView, ViewPanel::TopProperty());
 
   // Accessibility Properties
   TransferProperty(
@@ -129,15 +127,6 @@ void FrameworkElementViewManager::TransferProperties(
   auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
   oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
   winrt::ToolTipService::SetToolTip(newView, tooltip);
-
-  // Clear the TransformMatrix from the old View.  The TransformMatrix will be
-  // set on the new View a bit later in RefreshProperties() (as we need data
-  // from the ShadowNode not available here).
-  auto oldElement = oldView.try_as<winrt::UIElement>();
-  if (oldElement && oldElement.try_as<winrt::IUIElement10>()) {
-    oldElement.TransformMatrix(
-        winrt::Windows::Foundation::Numerics::float4x4::identity());
-  }
 }
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {

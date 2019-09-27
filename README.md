@@ -8,11 +8,11 @@
   <a href="https://github.com/microsoft/react-native-windows/blob/master/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="React Native for Windows is released under the MIT license." />
   </a>
-  <a href="https://www.npmjs.org/package/react-native-windows">
-    <img src="https://img.shields.io/npm/v/react-native-windows?color=e80441&label=react-native-windows" alt="Current npm package version." />
+  <a href="https://ci.appveyor.com/project/rozele/react-native-windows/branch/master">
+    <img src="https://ci.appveyor.com/api/projects/status/l9p3u301j6cbvqae/branch/master?svg=true" alt="Current Appveyor build status." />
   </a>
   <a href="https://www.npmjs.org/package/react-native-windows">
-    <img src="https://img.shields.io/npm/v/react-native-windows/vnext?color=0052cc&label=react-native-windows%40vnext" alt="vnext npm package version." />
+    <img src="https://badge.fury.io/js/react-native-windows.svg" alt="Current npm package version." />
   </a>
   <a href="https://github.com/microsoft/react-native-windows#contributing">
     <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome!" />

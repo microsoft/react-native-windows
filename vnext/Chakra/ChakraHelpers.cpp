@@ -20,8 +20,6 @@
 #include <cxxreact/Platform.h>
 #endif
 
-#include <cxxreact/ReactMarker.h>
-
 #include <windows.h>
 #include <algorithm>
 #include <cstdio>

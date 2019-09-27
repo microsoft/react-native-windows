@@ -67,12 +67,12 @@ void PropsAnimatedNode::UpdateView() {
     return;
   }
 
-  if (m_expressionAnimations.size() != 0) {
-    auto expressionAnimations = m_expressionAnimations;
-    for (const auto animation : expressionAnimations) {
-      DisposeCompletedAnimation(animation.first);
-    }
-  }
+  //if (m_expressionAnimations.size() != 0) {
+  //  auto expressionAnimations = m_expressionAnimations;
+  //  for (const auto animation : expressionAnimations) {
+  //    DisposeCompletedAnimation(animation.first);
+  //  }
+  //}
 
   if (const auto manager =
           std::shared_ptr<NativeAnimatedNodeManager>(m_manager)) {
@@ -122,12 +122,12 @@ void PropsAnimatedNode::StartAnimations() {
 }
 
 void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
-  /*if (m_expressionAnimations.count(valueTag)) {
-    if (const auto target = GetUIElement()) {
-      target.StopAnimation(m_expressionAnimations.at(valueTag));
-    }
-    m_expressionAnimations.erase(valueTag);
-  }*/
+  //if (m_expressionAnimations.count(valueTag)) {
+  //  if (const auto target = GetUIElement()) {
+  //    target.StopAnimation(m_expressionAnimations.at(valueTag));
+  //  }
+  //  m_expressionAnimations.erase(valueTag);
+  //}
 }
 
 void PropsAnimatedNode::MakeAnimation(

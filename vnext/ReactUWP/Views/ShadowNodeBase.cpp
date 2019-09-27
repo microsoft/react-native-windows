@@ -31,10 +31,6 @@ void ShadowNodeBase::createView() {
   m_view = GetViewManager()->CreateView(this->m_tag);
 }
 
-bool ShadowNodeBase::NeedsForceLayout() {
-  return false;
-}
-
 void ShadowNodeBase::dispatchCommand(
     int64_t commandId,
     const folly::dynamic &commandArgs) {

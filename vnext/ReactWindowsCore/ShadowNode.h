@@ -5,7 +5,6 @@
 
 #include <folly/dynamic.h>
 #include <string>
-#include <vector>
 
 namespace facebook {
 namespace react {

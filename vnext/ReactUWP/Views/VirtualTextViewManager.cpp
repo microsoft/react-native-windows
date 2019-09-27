@@ -56,9 +56,6 @@ void VirtualTextViewManager::UpdateProperties(
     } else if (TryUpdateCharacterSpacing<winrt::TextElement>(
                    span, propertyName, propertyValue)) {
       continue;
-    } else if (TryUpdateTextDecorationLine<winrt::TextElement>(
-                   span, propertyName, propertyValue)) {
-      continue;
     }
   }
 

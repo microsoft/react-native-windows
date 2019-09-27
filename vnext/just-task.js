@@ -15,8 +15,6 @@ const {
   argv,
   tscTask,
   eslintTask,
-  apiExtractorVerifyTask,
-  apiExtractorUpdateTask,
   cleanTask,
 } = require('just-scripts');
 const libPath = path.resolve(process.cwd(), 'lib');
@@ -24,17 +22,6 @@ const srcPath = path.resolve(process.cwd(), 'src');
 
 option('production');
 option('clean');
-option('ci');
-
-task('apiExtractorVerify', apiExtractorVerifyTask());
-task('apiExtractorUpdate', apiExtractorUpdateTask());
-
-task('apiDocumenter', () => {
-  require('child_process').execSync(
-    'npx @microsoft/api-documenter markdown -i temp -o docs/api',
-    {stdio: 'inherit'},
-  );
-});
 
 task('eslint', () => {
   return eslintTask();
@@ -66,8 +53,5 @@ task(
     'eslint',
     'copyFlowFiles',
     'ts',
-    condition('apiExtractorVerify', () => argv().ci),
-    'apiExtractorUpdate',
-    'apiDocumenter',
   ),
 );
