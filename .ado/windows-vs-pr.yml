@@ -311,18 +311,18 @@ stages:
                 React.Windows.Desktop.DLL\**
                 React.Windows.Desktop.Test.DLL\**
 
-      - job: CliInitCpp
-        displayName: Verify react-native init (cpp)
-        - template: templates/react-native-init.yml
-          parameters:
-            language: cpp
-
-      - job: CliInitCs
-        displayName: Verify react-native init (cs)
-        - template: templates/react-native-init.yml
-          parameters:
-            language: cs
-
+#      - job: CliInitCpp
+#        displayName: Verify react-native init (cpp)
+#        - template: templates/react-native-init.yml
+#          parameters:
+#            language: cpp
+#
+#      - job: CliInitCs
+#        displayName: Verify react-native init (cs)
+#        - template: templates/react-native-init.yml
+#          parameters:
+#            language: cs
+#
       - job: RNWFormatting
         displayName: Verify change files + formatting
         pool:
