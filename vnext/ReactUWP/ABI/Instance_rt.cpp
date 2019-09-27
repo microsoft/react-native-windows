@@ -35,6 +35,20 @@ struct InstanceReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     reinterpret_cast<Instance *>(spInstance.Get())->markAsNeedsReload();
   }
 
+  void persistUseWebDebugger(bool useWebDebugger) {
+    Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
+    m_wrInstance.As(&spInstance);
+    reinterpret_cast<Instance *>(spInstance.Get())
+        ->persistUseWebDebugger(useWebDebugger);
+  }
+
+  void persistUseLiveReload(bool useLiveReload) {
+    Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> spInstance;
+    m_wrInstance.As(&spInstance);
+    reinterpret_cast<Instance *>(spInstance.Get())
+        ->persistUseLiveReload(useLiveReload);
+  }
+
  private:
   Microsoft::WRL::WeakRef m_wrInstance;
   Microsoft::WRL::ComPtr<ABI::react::uwp::IInstance> m_instance;
@@ -74,6 +88,14 @@ void Instance::markAsNeedsReload() {
 
   m_instance->SetAsNeedsReload();
   m_instance = nullptr;
+}
+
+void Instance::persistUseWebDebugger(bool useWebDebugger) {
+  m_settings.UseWebDebugger = useWebDebugger;
+}
+
+void Instance::persistUseLiveReload(bool useLiveReload) {
+  m_settings.UseLiveReload = useLiveReload;
 }
 
 HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings) {

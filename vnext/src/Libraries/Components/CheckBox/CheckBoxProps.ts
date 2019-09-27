@@ -7,7 +7,7 @@
 import {ViewProps} from 'react-native';
 
 export interface ICheckBoxProps extends ViewProps {
-  checked?: boolean;
+  value?: boolean;
   disabled?: boolean;
   onChange?: (event: ICheckBoxChangeEvent) => void;
   onValueChange?: (value: boolean) => void;

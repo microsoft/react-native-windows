@@ -8,13 +8,14 @@
 import React, {Component} from 'react';
 import {
   AppRegistry,
+  CheckBox,
   ScrollView,
   Switch,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import {CheckBox, DatePicker, Picker} from 'react-native-windows';
+import {DatePicker, Picker} from 'react-native-windows';
 
 export default class Bootstrap extends Component {
   constructor(props) {

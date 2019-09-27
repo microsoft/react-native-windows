@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build": "lerna run build --stream",
+    "buildci": "lerna run build --stream -- --ci",
     "change": "node ./node_modules/beachball/bin/beachball.js change",
-    "checkchange": "node ./node_modules/beachball/bin/beachball.js check",
-    "clean": "lerna run clean"
+    "clean": "lerna run clean --stream",
+    "format": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
+    "format:verify": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify"
   },
   "repository": {
     "type": "git",
@@ -16,14 +19,13 @@
     "packages": [
       "packages/*",
       "vnext"
-    ],
-    "nohoist": [
-      "**/react-native",
-      "**/react-native/**"
     ]
   },
   "devDependencies": {
-    "beachball": "^1.10.1",
-    "lerna": "^3.15.0"
+    "beachball": "^1.13.4",
+    "lerna": "^3.16.1"
+  },
+  "resolutions": {
+    "**/eslint-plugin-react": "^7.14.1"
   }
 }

@@ -41,7 +41,7 @@
     "eslint-config-fb-strict": "22.1.0",
     "eslint-config-fbjs": "2.0.1",
     "eslint-plugin-flowtype": "2.43.0",
-    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-prettier": "2.6.2",
     "eslint-plugin-react": "7.8.2",
     "flow-bin": "^0.92.0",
     "https-proxy-agent": "^2.2.1",

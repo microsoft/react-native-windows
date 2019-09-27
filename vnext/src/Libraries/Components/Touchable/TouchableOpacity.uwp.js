@@ -210,7 +210,7 @@ const TouchableOpacity = ((createReactClass({
    * defined on your component.
    */
   touchableHandleActivePressIn: function(e: PressEvent) {
-    if (e.dispatchConfig.registrationName === 'onResponderGrant') {
+    if (e && e.dispatchConfig.registrationName === 'onResponderGrant') {
       this._opacityActive(0);
     } else {
       this._opacityActive(150);
@@ -290,7 +290,8 @@ const TouchableOpacity = ((createReactClass({
         ev.nativeEvent.code === 'GamepadA') &&
       !this.props.disabled
     ) {
-      this.touchableHandlePress();
+      this.touchableHandleActivePressOut(ev);
+      this.touchableHandlePress(ev);
     }
   },
 
@@ -301,7 +302,7 @@ const TouchableOpacity = ((createReactClass({
         ev.nativeEvent.code === 'GamepadA') &&
       !this.props.disabled
     ) {
-      this.touchableHandleActivePressIn();
+      this.touchableHandleActivePressIn(ev);
     }
   },
 
@@ -310,11 +311,15 @@ const TouchableOpacity = ((createReactClass({
       <Animated.View
         onKeyUp={this._onKeyUp}
         onKeyDown={this._onKeyDown}
+        onFocus={this.touchableHandleFocus}
+        onBlur={this.touchableHandleBlur}
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityHint={this.props.accessibilityHint} // TODO(OSS Candidate ISS#2710739)
         accessibilityRole={this.props.accessibilityRole}
         accessibilityStates={this.props.accessibilityStates}
+        accessibilityPosInSet={this.props.accessibilityPosInSet} // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
+        accessibilitySetSize={this.props.accessibilitySetSize} // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
         onAccessibilityTap={this.props.onAccessibilityTap} // TODO(OSS Candidate ISS#2710739)
         acceptsKeyboardFocus={
           (this.props.acceptsKeyboardFocus === undefined ||

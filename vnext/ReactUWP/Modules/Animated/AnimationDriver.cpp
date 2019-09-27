@@ -36,25 +36,31 @@ AnimationDriver::~AnimationDriver() {
 void AnimationDriver::StartAnimation() {
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
 
-  const auto animatedValue = GetAnimatedValue();
+  if (auto const animatedValue = GetAnimatedValue()) {
+    auto const previousValue = animatedValue->Value();
+    auto const rawValue = animatedValue->RawValue();
+    auto const offsetValue = animatedValue->Offset();
 
-  if (animatedValue) {
     animatedValue->PropertySet().StartAnimation(
         ValueAnimatedNode::s_offsetName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed(
-      [endCallback = m_endCallback, animatedValue, id = m_id](
-          auto sender, auto) {
-        if (endCallback) {
-          endCallback(std::vector<folly::dynamic>{
+  m_scopedBatchCompletedToken =
+      scopedBatch.Completed([EndCallback = m_endCallback,
+                             Manager = m_manager,
+                             valueTag = m_animatedValueTag,
+                             id = m_id](auto sender, auto) {
+        if (EndCallback) {
+          EndCallback(std::vector<folly::dynamic>{
               folly::dynamic::object("finished", true)});
         }
-        if (animatedValue) {
-          animatedValue->RemoveActiveAnimation(id);
-          animatedValue->FlattenOffset();
+        if (auto man = Manager.lock()) {
+          if (auto const animatedValue = man->GetValueAnimatedNode(valueTag)) {
+            animatedValue->RemoveActiveAnimation(id);
+			animatedValue->FlattenOffset();
+          }
         }
       });
 
@@ -62,17 +68,19 @@ void AnimationDriver::StartAnimation() {
   m_scopedBatch = scopedBatch;
 }
 
-void AnimationDriver::StopAnimation() {
+void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
   if (const auto animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
-    animatedValue->RemoveActiveAnimation(m_id);
+    if (!ignoreCompletedHandlers) {
+      animatedValue->RemoveActiveAnimation(m_id);
 
-    if (m_scopedBatch) {
-      if (m_endCallback)
-        m_endCallback(std::vector<folly::dynamic>{
-            folly::dynamic::object("finished", false)});
-      m_scopedBatch.Completed(m_scopedBatchCompletedToken);
-      m_scopedBatch = nullptr;
+      if (m_scopedBatch) {
+        if (m_endCallback)
+          m_endCallback(std::vector<folly::dynamic>{
+              folly::dynamic::object("finished", false)});
+        m_scopedBatch.Completed(m_scopedBatchCompletedToken);
+        m_scopedBatch = nullptr;
+      }
     }
   }
 }
@@ -81,7 +89,7 @@ ValueAnimatedNode *AnimationDriver::GetAnimatedValue() {
   if (auto manager = m_manager.lock()) {
     return manager->GetValueAnimatedNode(m_animatedValueTag);
   }
-  return static_cast<ValueAnimatedNode *>(nullptr);
+  return nullptr;
 }
 } // namespace uwp
 } // namespace react

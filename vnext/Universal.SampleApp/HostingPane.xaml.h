@@ -14,7 +14,7 @@
 #include <memory>
 #include <string>
 
-namespace WindowsSampleApp {
+namespace Playground {
 
 [Windows::Foundation::Metadata::WebHostHidden] public ref class HostingPane
     sealed {
@@ -56,6 +56,8 @@ namespace WindowsSampleApp {
 
   internal : std::shared_ptr<react::uwp::IReactInstance> getInstance();
   void markAsNeedsReload();
+  void persistUseWebDebugger(bool useWebDebugger);
+  void persistUseLiveReload(bool useLiveReload);
 
   void InitComboBoxes();
   void LoadKnownApps();
@@ -73,4 +75,4 @@ namespace WindowsSampleApp {
   Platform::Collections::Vector<Platform::String ^> ^ m_ReactAppNames;
 };
 
-} // namespace WindowsSampleApp
+} // namespace Playground

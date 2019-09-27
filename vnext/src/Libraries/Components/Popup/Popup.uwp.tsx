@@ -66,5 +66,3 @@ export class Popup extends React.Component<IPopupProps, IPopupTargetState> {
     return <RCTPopup {...props} target={this.state.target} />;
   }
 }
-
-export default Popup;

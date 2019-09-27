@@ -5,8 +5,8 @@
  */
 
 import React = require('react');
-import {Button, Text, TextInput, View} from 'react-native';
-import {CheckBox, Flyout, Picker} from '../index.uwp';
+import {Button, CheckBox, Text, TextInput, View} from 'react-native';
+import {Flyout, Picker} from 'react-native-windows';
 import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
@@ -14,6 +14,7 @@ interface IFlyoutExampleState {
   isFlyoutTwoVisible: boolean;
   buttonTitle: string;
   isLightDismissEnabled: boolean;
+  isOverlayEnabled: boolean;
   popupCheckBoxState: boolean;
   placementOptions: Placement;
 }
@@ -44,6 +45,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     isFlyoutTwoVisible: false,
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
+    isOverlayEnabled: false,
     popupCheckBoxState: true,
     placementOptions: 'top',
   };
@@ -84,6 +86,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           <Flyout
             isOpen={this.state.isFlyoutVisible}
             isLightDismissEnabled={this.state.isLightDismissEnabled}
+            isOverlayEnabled={this.state.isOverlayEnabled}
             onDismiss={this._onFlyoutDismissed}
             target={this._anchor}
             placement={this.state.placementOptions}>
@@ -102,11 +105,23 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 <Text style={{padding: 10}}>isLightDismissEnabled: </Text>
                 <CheckBox
                   style={{justifyContent: 'center', padding: 20}}
-                  checked={this.state.popupCheckBoxState}
+                  value={this.state.popupCheckBoxState}
                   onValueChange={value =>
                     this.setState({
                       popupCheckBoxState: value,
                       isLightDismissEnabled: value,
+                    })
+                  }
+                />
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{padding: 10}}>isOverlayEnabled: </Text>
+                <CheckBox
+                  style={{justifyContent: 'center', padding: 20}}
+                  value={this.state.isOverlayEnabled}
+                  onValueChange={value =>
+                    this.setState({
+                      isOverlayEnabled: value,
                     })
                   }
                 />

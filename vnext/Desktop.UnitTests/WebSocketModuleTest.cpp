@@ -8,6 +8,8 @@ using namespace facebook::react;
 using namespace facebook::xplat::module;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS(WebSocketModuleTest) {
   enum class MethodId : size_t {
     Connect = 0,
@@ -36,3 +38,5 @@ TEST_CLASS(WebSocketModuleTest) {
     Assert::AreEqual(static_cast<size_t>(0), module->getConstants().size());
   }
 };
+
+} // namespace Microsoft::React::Test

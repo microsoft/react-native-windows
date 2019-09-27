@@ -2,13 +2,13 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License.
  * @format
- * @flow
  */
 
-import React, {Component} from 'react';
+import * as React from 'react';
 import {
   AppRegistry,
   Button,
+  CheckBox,
   StyleSheet,
   ScrollView,
   Switch,
@@ -17,14 +17,19 @@ import {
   WebView,
   Image,
   Linking,
+  NativeSyntheticEvent,
+  TextInputSelectionChangeEventData,
+  TextInputEndEditingEventData,
+  TextInputContentSizeChangeEventData,
+  NativeTouchEvent,
   TextInput,
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {CheckBox, DatePicker, Popup, Picker} from 'react-native-windows';
+import {DatePicker, Popup, Picker} from 'react-native-windows';
 
-class TicTacButton extends Component {
-  constructor(props) {
+class TicTacButton extends React.Component<{}, {text: string}> {
+  constructor(props: {}) {
     super(props);
     this._onPress = this._onPress.bind(this);
     this.state = {text: '?'};
@@ -40,7 +45,7 @@ class TicTacButton extends Component {
     );
   }
 
-  _onPress(e) {
+  _onPress(_event: NativeSyntheticEvent<NativeTouchEvent>) {
     if (this.state.text === 'X') {
       this.setState({text: 'o'});
     } else {
@@ -49,8 +54,16 @@ class TicTacButton extends Component {
   }
 }
 
-class PopupButton extends Component {
-  constructor(props) {
+class PopupButton extends React.Component<
+  {},
+  {
+    buttonTitle: string;
+    isFlyoutVisible: boolean;
+    popupCheckBoxState: boolean;
+    isLightDismissEnabled: boolean;
+  }
+> {
+  constructor(props: {}) {
     super(props);
     this._onPress = this._onPress.bind(this);
     this._onPopupButtonPressed = this._onPopupButtonPressed.bind(this);
@@ -68,7 +81,7 @@ class PopupButton extends Component {
       <View style={{flexDirection: 'row', padding: 20}}>
         <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
         <CheckBox
-          checked={this.state.isLightDismissEnabled}
+          value={this.state.isLightDismissEnabled}
           onValueChange={value => this.setState({isLightDismissEnabled: value})}
         />
         <Button
@@ -88,7 +101,7 @@ class PopupButton extends Component {
             </Text>
             <CheckBox
               style={{justifyContent: 'center', padding: 20}}
-              checked={this.state.popupCheckBoxState}
+              value={this.state.popupCheckBoxState}
               onValueChange={value =>
                 this.setState({popupCheckBoxState: value})
               }
@@ -108,7 +121,7 @@ class PopupButton extends Component {
     this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
   }
 
-  _onPress(e) {
+  _onPress(_event: NativeSyntheticEvent<NativeTouchEvent>) {
     if (this.state.isFlyoutVisible) {
       this.closePopup();
     } else {
@@ -116,23 +129,42 @@ class PopupButton extends Component {
     }
   }
 
-  _onPopupButtonPressed(e) {
+  _onPopupButtonPressed(_event: NativeSyntheticEvent<NativeTouchEvent>) {
     this.closePopup();
   }
 
-  _onPopupDismissed(event) {
+  _onPopupDismissed(_isOpen: boolean) {
     this.closePopup();
   }
 }
 
-export default class Bootstrap extends Component {
-  state = {
-    checkBoxIsOn: true,
-    switchIsOn: true,
-    pickerSelectedValue: 'key1',
-    pickerSelectedIndex: 0,
-    datePickerSelectedValue: new Date(),
-  };
+export default class Bootstrap extends React.Component<
+  {},
+  {
+    checkBoxIsOn: boolean;
+    switchIsOn: boolean;
+    pickerSelectedValue?: string;
+    pickerSelectedIndex: number;
+    datePickerSelectedValue: Date;
+    highlightPressed: boolean;
+    mouseEntered: boolean;
+  }
+> {
+  constructor(props: {}) {
+    super(props);
+    this.inputRef = React.createRef();
+    this.state = {
+      checkBoxIsOn: true,
+      mouseEntered: false,
+      switchIsOn: true,
+      pickerSelectedValue: 'key1',
+      pickerSelectedIndex: 0,
+      datePickerSelectedValue: new Date(),
+      highlightPressed: false,
+    };
+  }
+
+  inputRef: React.RefObject<TextInput>;
 
   render() {
     return (
@@ -140,7 +172,7 @@ export default class Bootstrap extends Component {
         <View style={styles.container}>
           <Text style={styles.welcome}>Welcome to React Native</Text>
           <Text style={styles.instructions}>
-            To get started, edit index.uwp.js
+            To get started, edit index.windows.js
           </Text>
           <Text>
             Nested text
@@ -184,7 +216,6 @@ export default class Bootstrap extends Component {
               <Text>accessible</Text>
               <View
                 accessible={true}
-                acceptsKeyboardFocus={true}
                 accessibilityLabel="Empty Rectangle"
                 style={{
                   backgroundColor: 'yellow',
@@ -193,6 +224,10 @@ export default class Bootstrap extends Component {
                   width: 60,
                   height: 60,
                   margin: 10,
+                }}
+                {...{
+                  // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+                  acceptsKeyboardFocus: true,
                 }}
               />
             </View>
@@ -413,7 +448,10 @@ export default class Bootstrap extends Component {
                   height: 60,
                   margin: 10,
                 }}
-                acceptsKeyboardFocus={true}>
+                {...{
+                  // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+                  acceptsKeyboardFocus: true,
+                }}>
                 <View
                   style={{backgroundColor: 'magenta', width: 60, height: 60}}
                 />
@@ -636,19 +674,25 @@ export default class Bootstrap extends Component {
             />
           </View>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 15,
+            }}>
             <CheckBox
               onValueChange={value => this.setState({checkBoxIsOn: value})}
-              defaultChecked={true}
-              checked={this.state.checkBoxIsOn}
+              value={this.state.checkBoxIsOn}
             />
             <Text>Checkbox {this.state.checkBoxIsOn ? 'ON' : 'OFF'}</Text>
           </View>
           <View
-            style={{flexDirection: 'row', alignItems: 'center', marginTop: 15}}>
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 15,
+            }}>
             <Switch
               onValueChange={value => this.setState({switchIsOn: value})}
-              defaultChecked={true}
               value={this.state.switchIsOn}
             />
             <Text>Switch {this.state.switchIsOn ? 'ON' : 'OFF'}</Text>
@@ -688,7 +732,7 @@ export default class Bootstrap extends Component {
               </TouchableHighlight>
             </View>
             <TextInput
-              ref={c => (this._input = c)}
+              ref={this.inputRef}
               defaultValue={'Test'}
               placeholderTextColor={'hotpink'}
               onChangeText={this.changeTextHandler}
@@ -700,19 +744,6 @@ export default class Bootstrap extends Component {
               selectionColor={'red'}
               clearTextOnFocus={false}
               selectTextOnFocus={true}
-              style={{height: 30}}
-            />
-            <TextInput
-              ref={c => (this._input = c)}
-              defaultValue={'Test'}
-              placeholderTextColor={'hotpink'}
-              onChangeText={this.changeTextHandler}
-              onFocus={this.focusTextInputHandler}
-              onBlur={this.blurTextInputHandler}
-              onSelectionChange={this.selectionChangeTextInputHandler}
-              onEndEditing={this.endEditingTextInputHandler}
-              onContentSizeChange={this.contentSizeChangeTextInputHandler}
-              selectionColor={'red'}
               style={{height: 30}}
             />
           </View>
@@ -739,7 +770,7 @@ export default class Bootstrap extends Component {
   }
 
   throwException = () => {
-    throw 'This is a test exception';
+    throw new Error('This is a test exception');
   };
 
   mouseEnter = () => {
@@ -750,7 +781,7 @@ export default class Bootstrap extends Component {
     this.setState({mouseEntered: false});
   };
 
-  pickerValueChange = (value, index) => {
+  pickerValueChange = (value: any, index: number) => {
     this.setState({pickerSelectedValue: value, pickerSelectedIndex: index});
   };
   pickerClearSelection = () => {
@@ -772,18 +803,18 @@ export default class Bootstrap extends Component {
   };
 
   focusTextInputPressed = () => {
-    this._input.focus();
+    this.inputRef!.current!.focus();
   };
 
   blurTextInputPressed = () => {
-    this._input.blur();
+    this.inputRef!.current!.blur();
   };
 
   clearTextInputPressed = () => {
-    this._input.clear();
+    this.inputRef!.current!.clear();
   };
 
-  changeTextHandler = text => {
+  changeTextHandler = (text: string) => {
     console.log(text);
   };
 
@@ -795,7 +826,9 @@ export default class Bootstrap extends Component {
     console.log('textbox blurred');
   };
 
-  selectionChangeTextInputHandler = event => {
+  selectionChangeTextInputHandler = (
+    event: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
+  ) => {
     console.log(
       'selection start: ' +
         event.nativeEvent.selection.start +
@@ -804,11 +837,15 @@ export default class Bootstrap extends Component {
     );
   };
 
-  endEditingTextInputHandler = event => {
+  endEditingTextInputHandler = (
+    event: NativeSyntheticEvent<TextInputEndEditingEventData>,
+  ) => {
     console.log(event.nativeEvent.text);
   };
 
-  contentSizeChangeTextInputHandler = event => {
+  contentSizeChangeTextInputHandler = (
+    event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
+  ) => {
     console.log(
       'new size width: ' +
         event.nativeEvent.contentSize.width +
@@ -817,7 +854,7 @@ export default class Bootstrap extends Component {
     );
   };
 
-  datePickerValueChange = date => {
+  datePickerValueChange = (date: Date) => {
     this.setState({datePickerSelectedValue: date});
   };
 }
@@ -839,6 +876,7 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  selected: {backgroundColor: 'green'},
 });
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

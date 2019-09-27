@@ -34,6 +34,7 @@
 #include <Utils/LocalBundleReader.h>
 #endif
 
+#include <BatchingMessageQueueThread.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
 #include <IDevSupportManager.h>
@@ -48,6 +49,25 @@
 #include <jsi/RuntimeHolder.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
+#if defined(USE_HERMES)
+#include "HermesRuntimeHolder.h"
+#endif
+#if defined(USE_V8)
+#include "BaseScriptStoreImpl.h"
+#include "V8JSIRuntimeHolder.h"
+#endif
+#include "ChakraJSIRuntimeHolder.h"
+
+// foreward declaration.
+namespace facebook {
+namespace react {
+namespace tracing {
+void initializeETW();
+void initializeJSHooks(facebook::jsi::Runtime &runtime);
+} // namespace tracing
+} // namespace react
+} // namespace facebook
+
 #endif
 
 namespace {
@@ -64,6 +84,9 @@ std::string GetJSBundleDirectory(
       jsBundleDirectory += '\\';
 
     return jsBundleDirectory += jsBundleRelativePath;
+  } else if (!PathIsRelativeA(jsBundleRelativePath.c_str())) {
+    // If the given path is an absolute path, return it as-is
+    return jsBundleRelativePath;
   }
   // Otherwise use the path of the executable file to construct the absolute
   // path.
@@ -164,32 +187,43 @@ bool GetLastWriteTime(const std::string &fileName, uint64_t &result) noexcept {
 
 } // namespace
 
+using namespace facebook;
+
 namespace facebook {
 namespace react {
 
 #if !defined(OSS_RN)
 namespace {
+
+void runtimeInstaller(jsi::Runtime &runtime) {
+#ifdef ENABLE_JS_SYSTRACE
+  facebook::react::tracing::initializeJSHooks(runtime);
+#endif
+}
+
 class OJSIExecutorFactory : public JSExecutorFactory {
  public:
   std::unique_ptr<JSExecutor> createJSExecutor(
       std::shared_ptr<ExecutorDelegate> delegate,
       std::shared_ptr<MessageQueueThread> jsQueue) override {
-    // TODO :: Ensure the logLevels are mapped properly.
-    JSIExecutor::Logger logger;
-
+    Logger logger;
     if (loggingHook_) {
+      // TODO :: Ensure the logLevels are mapped properly.
       logger = [loggingHook = std::move(loggingHook_)](
                    const std::string &message, unsigned int logLevel) {
         loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
       };
+    } else {
+      logger = [loggingHook = std::move(loggingHook_)](
+                   const std::string &message, unsigned int logLevel) { ; };
     }
+    bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(),
         std::move(delegate),
-        logger,
         JSIExecutor::defaultTimeoutInvoker,
-        nullptr);
+        runtimeInstaller);
   }
 
   OJSIExecutorFactory(
@@ -229,6 +263,16 @@ struct BridgeUIBatchInstanceCallback : public InstanceCallback {
         if (uiManager != nullptr)
           uiManager->onBatchComplete();
       });
+#ifdef WINRT
+      // For UWP we use a batching message queue to optimize the usage
+      // of the CoreDispatcher.  Win32 already has an optimized queue.
+      facebook::react::BatchingMessageQueueThread *batchingUIThread =
+          static_cast<facebook::react::BatchingMessageQueueThread *>(
+              uithread.get());
+      if (batchingUIThread != nullptr) {
+        batchingUIThread->onBatchComplete();
+      }
+#endif
     }
   }
   void incrementPendingJSCalls() override {}
@@ -377,6 +421,11 @@ InstanceImpl::InstanceImpl(
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 #endif
 
+#ifdef ENABLE_TRACING
+  // TODO :: Find a better place to initialize ETW once per process.
+  facebook::react::tracing::initializeETW();
+#endif
+
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
 
@@ -421,6 +470,54 @@ InstanceImpl::InstanceImpl(
 #if !defined(OSS_RN)
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
+      assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
+      jsef = std::make_shared<OJSIExecutorFactory>(
+          m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
+    } else if (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default) {
+      switch (m_devSettings->jsiEngineOverride) {
+        case JSIEngineOverride::Hermes:
+#if defined(USE_HERMES)
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<HermesRuntimeHolder>();
+          break;
+#else
+          assert(false); // Hermes is not available in this build, fallthrough
+#endif
+        case JSIEngineOverride::V8: {
+#if defined(USE_V8)
+          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
+          std::unique_ptr<facebook::jsi::PreparedScriptStore>
+              preparedScriptStore = nullptr;
+          if (!m_devSettings->bytecodeFileName.empty()) {
+            // Take the root path of the bytecode location if provided
+            auto lastSepPosition =
+                m_devSettings->bytecodeFileName.find_last_of("/\\");
+            if (lastSepPosition != std::string::npos) {
+              preparedScriptStore = std::make_unique<
+                  facebook::react::BasePreparedScriptStoreImpl>(
+                  m_devSettings->bytecodeFileName.substr(
+                      0, lastSepPosition + 1));
+            }
+          }
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<facebook::react::V8JSIRuntimeHolder>(
+                  m_devSettings,
+                  jsQueue,
+                  std::move(scriptStore),
+                  std::move(preparedScriptStore));
+          break;
+#else
+          assert(false); // V8 is not available in this build, fallthrough
+#endif
+        }
+        case JSIEngineOverride::Chakra:
+        case JSIEngineOverride::ChakraCore:
+        default: // TODO: Add other engines once supported
+          m_devSettings->jsiRuntimeHolder =
+              std::make_shared<ChakraJSIRuntimeHolder>(
+                  m_devSettings, jsQueue, nullptr, nullptr);
+          break;
+      }
       jsef = std::make_shared<OJSIExecutorFactory>(
           m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback);
     } else
@@ -478,7 +575,8 @@ InstanceImpl::InstanceImpl(
   // All JSI runtimes do support host objects and hence the native modules
   // proxy.
   const bool isNativeModulesProxyAvailable =
-      m_devSettings->jsiRuntimeHolder != nullptr &&
+      ((m_devSettings->jsiRuntimeHolder != nullptr) ||
+       (m_devSettings->jsiEngineOverride != JSIEngineOverride::Default)) &&
       !m_devSettings->useWebDebugger;
   if (!isNativeModulesProxyAvailable) {
     folly::dynamic configArray = folly::dynamic::array;

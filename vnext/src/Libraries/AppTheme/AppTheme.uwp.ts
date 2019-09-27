@@ -6,15 +6,20 @@
 'use strict';
 
 import {NativeEventEmitter, NativeModules} from 'react-native';
-const MissingNativeEventEmitterShim = require('MissingNativeEventEmitterShim');
-import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
+import {
+  AppThemeTypes,
+  IAppThemeChangedEvent,
+  IHighContrastColors,
+  IHighContrastChangedEvent,
+} from './AppThemeTypes';
+const invariant = require('invariant');
 
 const NativeAppTheme = NativeModules.RTCAppTheme;
 
 class AppThemeModule extends NativeEventEmitter {
   public isAvailable: boolean;
   private _isHighContrast: boolean;
-  private _currentTheme: string;
+  private _currentTheme: AppThemeTypes;
   private _highContrastColors: IHighContrastColors;
 
   constructor() {
@@ -34,13 +39,13 @@ class AppThemeModule extends NativeEventEmitter {
     this._currentTheme = NativeAppTheme.initialAppTheme;
     this.addListener(
       'appThemeChanged',
-      ({currentTheme}: {currentTheme: string}) => {
+      ({currentTheme}: {currentTheme: AppThemeTypes}) => {
         this._currentTheme = currentTheme;
       },
     );
   }
 
-  get currentTheme(): string {
+  get currentTheme(): AppThemeTypes {
     return this._currentTheme;
   }
 
@@ -53,16 +58,58 @@ class AppThemeModule extends NativeEventEmitter {
   }
 }
 
+function throwMissingNativeModule() {
+  invariant(
+    false,
+    'Cannot use AppTheme module when native RTCAppTheme is not included in the build.\n' +
+      'Either include it, or check AppTheme.isAvailable before calling any methods.',
+  );
+}
+
 // This module depends on the native `RCTAppTheme` module. If you don't include it,
 // `AppTheme.isAvailable` will return `false`, and any method calls will throw.
-class MissingNativeAppThemeShim extends MissingNativeEventEmitterShim {
+class MissingNativeAppThemeShim {
   public isAvailable = false;
   public currentTheme = '';
   public isHighContrast = false;
   public currentHighContrastColors = {} as IHighContrastColors;
+
+  addEventListener() {
+    throwMissingNativeModule();
+  }
+
+  removeEventListener() {
+    throwMissingNativeModule();
+  }
+
+  // EventEmitter
+  addListener(
+    _eventType: string,
+    _listener: (
+      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
+    ) => void,
+  ): any {
+    throwMissingNativeModule();
+  }
+
+  removeAllListeners() {
+    throwMissingNativeModule();
+  }
+
+  removeListener(
+    _eventType: string,
+    _listener: (
+      nativeEvent: IAppThemeChangedEvent & IHighContrastChangedEvent,
+    ) => void,
+  ) {
+    throwMissingNativeModule();
+  }
+
+  removeSubscription() {
+    throwMissingNativeModule();
+  }
 }
 
 export const AppTheme = NativeAppTheme
   ? new AppThemeModule()
   : new MissingNativeAppThemeShim();
-export default AppTheme;

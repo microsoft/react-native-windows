@@ -2,6 +2,546 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Tue, 24 Sep 2019 19:11:20 GMT",
+      "tag": "react-native-windows-extended_v0.60.1",
+      "version": "0.60.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update to react-native 0.60",
+            "author": "acoates@microsoft.com",
+            "commit": "def1019f7463ed407d4fc9e4c0c59d7c43703176"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Sep 2019 18:18:37 GMT",
+      "tag": "react-native-windows-extended_v0.60.0",
+      "version": "0.60.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Sep 2019 05:17:28 GMT",
+      "tag": "react-native-windows-extended_v0.59.1",
+      "version": "0.59.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Lock version of react-native-windows-extended",
+            "author": "acoates@microsoft.com",
+            "commit": "afc4a309bc6ccc0206e1928164d070d24e9e2e22"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.82",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "0a76abdeaaa289544d756cfaee1075892607b81a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Sep 2019 23:51:35 GMT",
+      "tag": "react-native-windows-extended_v0.15.7",
+      "version": "0.15.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.79",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "af7671c8ca2d6db465fb9e345990e18b62abc981"
+          },
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.80",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "97c2a7e19eac9c938f4cd4a09feb0adf6de72665"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Sep 2019 18:44:17 GMT",
+      "tag": "react-native-windows-extended_v0.15.4",
+      "version": "0.15.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.77",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "3901b66e638bddcc31a0010b177bd1fa025cc6eb"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2019 00:44:04 GMT",
+      "tag": "react-native-windows-extended_v0.15.3",
+      "version": "0.15.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.74",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "e8ce4cd90f5bb2963ebcd31a7d4344b2e989caf5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Sep 2019 17:37:33 GMT",
+      "tag": "react-native-windows-extended_v0.15.2",
+      "version": "0.15.2",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update CreateStringResponseBody symbol in test DLL.",
+            "author": "julio@rochsquadron.net",
+            "commit": "8f3abfb5959005c841eef1420043f79e8bcc9d62"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Sep 2019 21:49:49 GMT",
+      "tag": "react-native-windows-extended_v0.15.2",
+      "version": "0.15.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.73",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "463ffc0e4a8622eaddbb7f34c5945c5ea7a826d6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Sep 2019 20:24:37 GMT",
+      "tag": "react-native-windows-extended_v0.15.1",
+      "version": "0.15.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.72",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "c6356265a5252f6e2622db871b805e9a3db57de0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 20:21:10 GMT",
+      "tag": "react-native-windows-extended_v0.15.0",
+      "version": "0.15.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "View updates",
+            "author": "randyfl@microsoft.com",
+            "commit": "4de0dc9d7d6eee837681be9b68c1922944215548"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.71",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fb5f11fbace4de99006b992469a494d620e821c8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 29 Aug 2019 01:33:54 GMT",
+      "tag": "react-native-windows-extended_v0.14.6",
+      "version": "0.14.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.70",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "5f6a82445caf6fa7ee49aed5db607c5aa48b73ee"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Aug 2019 18:34:51 GMT",
+      "tag": "react-native-windows-extended_v0.14.5",
+      "version": "0.14.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.69",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "521a0154c50c5a783cb139c0106ba0c51d6f3907"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 27 Aug 2019 04:41:01 GMT",
+      "tag": "react-native-windows-extended_v0.14.4",
+      "version": "0.14.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.68",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "b6c99621f95d0f1c5144a27aff16856e46e75340"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Aug 2019 15:32:08 GMT",
+      "tag": "react-native-windows-extended_v0.14.3",
+      "version": "0.14.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.67",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "4bf9e816a13ce63cc1c2635f71e419eb751faf0b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 23 Aug 2019 01:27:19 GMT",
+      "tag": "react-native-windows-extended_v0.14.2",
+      "version": "0.14.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "turn off RTTI",
+            "author": "email not defined",
+            "commit": "04c67ee201b29f72b321a978b25d961d8b7c7ca2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Aug 2019 21:17:45 GMT",
+      "tag": "react-native-windows-extended_v0.14.1",
+      "version": "0.14.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.49",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "c462866d62f7660734256ded6ad1e1a296f8c9c6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2019 21:34:46 GMT",
+      "tag": "react-native-windows-extended_v0.14.0",
+      "version": "0.14.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Barebone V8 integration",
+            "author": "anandrag@microsoft.com",
+            "commit": "fb4aece6002fac7ca0478ad6f94bc4093242a34f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2019 21:54:07 GMT",
+      "tag": "react-native-windows-extended_v0.13.3",
+      "version": "0.13.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Minor fixes made in RN60 update that can be brought right to master",
+            "author": "acoates@microsoft.com",
+            "commit": "a8071bd1692c9f1bc15eaeaa2043eab90cf6dfe0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 20:59:57 GMT",
+      "tag": "react-native-windows-extended_v0.13.2",
+      "version": "0.13.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "fix flyout full placement mode",
+            "author": "kmelmon@microsoft.com",
+            "commit": "6575b6459c5dbc4cc8dae39abbb0be8021613eaa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 19 Aug 2019 16:43:43 GMT",
+      "tag": "react-native-windows-extended_v0.13.1",
+      "version": "0.13.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Start API documentation",
+            "author": "acoates@microsoft.com",
+            "commit": "7f82c81c53a99f76887407104a382c334445e74d"
+          },
+          {
+            "comment": "Improved fix for overlapping XAML theme shadows on Flyouts",
+            "author": "kenander@microsoft.com",
+            "commit": "98aea907b03f8b75d57924352a0e015a24a97d79"
+          },
+          {
+            "comment": "Ensure folly is downloaded before react-native-windows-extended builds",
+            "author": "acoates@microsoft.com",
+            "commit": "95216a199075a15cf10e92522a05e1a8091b4e52"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Aug 2019 14:23:33 GMT",
+      "tag": "react-native-windows-extended_v0.13.0",
+      "version": "0.13.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Run clang-format across all packages in the repo",
+            "author": "acoates@microsoft.com",
+            "commit": "a3a5776a4a59571d72459846ae199f10fe173177"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Aug 2019 19:56:52 GMT",
+      "tag": "react-native-windows-extended_v0.13.0",
+      "version": "0.13.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.43",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "f5dfae49beb8cc69a0e0853155227a9ecaa2296c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Aug 2019 20:02:04 GMT",
+      "tag": "react-native-windows-extended_v0.12.0",
+      "version": "0.12.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.42",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "c25f5033cd967947742bc8f9f76a21a270b25568"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 11 Aug 2019 04:57:41 GMT",
+      "tag": "react-native-windows-extended_v0.11.0",
+      "version": "0.11.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.41",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "bbc886506efed9521835fd56721bac674d4dc12d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Aug 2019 06:07:04 GMT",
+      "tag": "react-native-windows-extended_v0.10.0",
+      "version": "0.10.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.40",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "8936ee1519492000f358ac29b12adf4efd3a7108"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2019 20:57:44 GMT",
+      "tag": "react-native-windows-extended_v0.9.1",
+      "version": "0.9.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Clear m_needsForceLayout between calls to DoLayout",
+            "author": "decrowle@microsoft.com",
+            "commit": "a783433937d1558283ba587db05b76ab0981a34c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Aug 2019 16:00:25 GMT",
+      "tag": "react-native-windows-extended_v0.9.0",
+      "version": "0.9.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.38",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "6ad6afe25ad265cc6799617f730d3d6b7cd47c45"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 21:09:10 GMT",
+      "tag": "react-native-windows-extended_v0.8.0",
+      "version": "0.8.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.37",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "b3d9dfb3fc1fcf1fba79f3789799c9cc0cc860e5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 18:30:23 GMT",
+      "tag": "react-native-windows-extended_v0.7.0",
+      "version": "0.7.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.36",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "75a6e31ab6e7b89dc83cce343be7de71e8776809"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 15:46:10 GMT",
+      "tag": "react-native-windows-extended_v0.6.1",
+      "version": "0.6.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add CustomFrameworkElement, backed by a custom view manager",
+            "author": "acoates@microsoft.com",
+            "commit": "aa937aaa1c78b0e8e910a52155b30cb288c914fc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2019 00:59:54 GMT",
+      "tag": "react-native-windows-extended_v0.6.0",
+      "version": "0.6.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.35",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "c71c0b35ea8bdc4610a397c159af1ba04222facc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Aug 2019 17:37:47 GMT",
+      "tag": "react-native-windows-extended_v0.5.0",
+      "version": "0.5.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.34",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "f3416579d1f50e7c66e96a662acd3bb8ebca6bfc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Aug 2019 16:01:04 GMT",
+      "tag": "react-native-windows-extended_v0.4.1",
+      "version": "0.4.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix single line text trimming issue",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "3dada0ce2e01c1455eb2f786b097429202c311b1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 05 Aug 2019 00:09:47 GMT",
+      "tag": "react-native-windows-extended_v0.4.0",
+      "version": "0.4.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Updating react-native to version: 0.59.0-microsoft.33",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "71ff4820fe1877aa98e8462acd901097d8ad04d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Aug 2019 04:30:38 GMT",
+      "tag": "react-native-windows-extended_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "none": [
+          {
+            "comment": "Delay-load dependencies absent on Win7",
+            "author": "acoates@microsoft.com",
+            "commit": "cf3f5017c2cd26c36067fde73da9606e851b9474"
+          }
+        ],
+        "minor": [
+          {
+            "comment": "Add the SpringAnimationDriver",
+            "author": "stpete@microsoft.com",
+            "commit": "53a7154608ace55e9ad8802ba964bb604914711b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Jul 2019 05:43:01 GMT",
+      "tag": "react-native-windows-extended_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Make react-native-windows-extended use react-native-windows",
+            "author": "acoates@microsoft.com",
+            "commit": "6172818eb183d94321f4b4175e0c62d38a0ba489"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jul 2019 23:18:37 GMT",
       "tag": "react-native-windows-extended_v0.0.2",
       "version": "0.0.2",

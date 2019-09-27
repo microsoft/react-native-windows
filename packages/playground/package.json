@@ -1,0 +1,29 @@
+{
+  "name": "playground",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "postinstall": "node postinstall.js",
+    "start": "react-native start",
+    "lint": "just-scripts eslint",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "react": "16.8.6",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
+    "react-native-windows": "0.60.0-vnext.5",
+    "react-native-windows-extended": "0.60.1",
+    "rnpm-plugin-windows": "^0.2.13"
+  },
+  "devDependencies": {
+    "@babel/core": "7.5.5",
+    "@babel/runtime": "7.5.5",
+    "@types/react": "16.8.15",
+    "@types/react-native": "~0.60.5",
+    "metro-react-native-babel-preset": "0.55.0",
+    "react-test-renderer": "16.8.6"
+  }
+}

@@ -10,6 +10,7 @@
 #include "HostingPane.xaml.h"
 
 #include <ReactUWP/ReactUwp.h>
+#include <ViewManager.h>
 
 #include <winrt/Windows.Storage.h>
 #include <winrt/Windows.UI.Xaml.h>
@@ -23,9 +24,9 @@
 #include <unicode.h>
 #include <codecvt>
 
-#include "CustomViewManager.h"
+#include <react-native-windows-extended.h>
 
-using namespace WindowsSampleApp;
+using namespace Playground;
 
 using namespace Microsoft::WRL;
 using namespace Platform;
@@ -139,7 +140,7 @@ class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
     std::vector<react::uwp::NativeViewManager> viewManagers;
 
     viewManagers.emplace_back(
-        std::make_unique<CustomFrameworkElementViewManager>(instance));
+        react_native_windows_extended::CreateCustomViewManager(instance));
 
     return viewManagers;
   }
@@ -161,6 +162,18 @@ struct HostingPaneReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
     if (pane)
       pane->markAsNeedsReload();
+  }
+
+  void persistUseWebDebugger(bool useWebDebugger) {
+    HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
+    if (pane)
+      pane->persistUseWebDebugger(useWebDebugger);
+  }
+
+  void persistUseLiveReload(bool useLiveReload) {
+    HostingPane ^ pane = m_wrPane.Resolve<HostingPane>();
+    if (pane)
+      pane->persistUseLiveReload(useLiveReload);
   }
 
  private:
@@ -234,6 +247,14 @@ void HostingPane::markAsNeedsReload() {
   if (m_instance != nullptr)
     m_instance->SetAsNeedsReload();
   m_instance = nullptr;
+}
+
+void HostingPane::persistUseWebDebugger(bool useWebDebugger) {
+  x_UseWebDebuggerCheckBox->IsChecked = useWebDebugger;
+}
+
+void HostingPane::persistUseLiveReload(bool useLiveReload) {
+  x_UseLiveReloadCheckBox->IsChecked = useLiveReload;
 }
 
 void HostingPane::LoadReactNative() {
@@ -335,9 +356,8 @@ void HostingPane::OnUnloadClicked(Platform::Object ^, Platform::Object ^) {
 static const wchar_t *c_containerName = L"js";
 static const wchar_t *c_filenameSetting = L"filename";
 static const wchar_t *c_appnameSetting = L"appname";
-static const wchar_t *c_filenameSettingDefault =
-    L"Universal.SampleApp\\index.uwp";
-static const wchar_t *c_appnameSettingDefault = L"Bootstrap";
+static const wchar_t *c_filenameSettingDefault = L"Samples\\rntester";
+static const wchar_t *c_appnameSettingDefault = L"RNTesterApp";
 
 static winrt::Windows::Storage::ApplicationDataContainer GetJsSettings() {
   auto localSettings =
@@ -416,24 +436,24 @@ void HostingPane::StoreFilenameSettings() {
 void HostingPane::InitComboBoxes() {
   m_jsFileNames = ref new Platform::Collections::Vector<String ^>();
 
-  m_jsFileNames->Append(L"Playground\\Playground\\index.uwp");
-  m_jsFileNames->Append(L"RNTester");
-  m_jsFileNames->Append(L"Universal.SampleApp\\accessible.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\click.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\control.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\flexbox.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\geosample");
-  m_jsFileNames->Append(L"Universal.SampleApp\\image.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\index.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\mouse.uwp");
-  m_jsFileNames->Append(
-      L"Universal.SampleApp\\ReadingPaneSamples\\CallbackTest.index.uwp");
-  m_jsFileNames->Append(
-      L"Universal.SampleApp\\ReadingPaneSamples\\TicTacToe.index.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\simple.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\test.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\text.uwp");
-  m_jsFileNames->Append(L"Universal.SampleApp\\view.uwp");
+  m_jsFileNames->Append(L"Samples\\rntester");
+  m_jsFileNames->Append(L"Samples\\accessible");
+  m_jsFileNames->Append(L"Samples\\callbackTest");
+  m_jsFileNames->Append(L"Samples\\calculator");
+  m_jsFileNames->Append(L"Samples\\click");
+  m_jsFileNames->Append(L"Samples\\customViewManager");
+  m_jsFileNames->Append(L"Samples\\control");
+  m_jsFileNames->Append(L"Samples\\flexbox");
+  m_jsFileNames->Append(L"Samples\\focusTest");
+  m_jsFileNames->Append(L"Samples\\geosample");
+  m_jsFileNames->Append(L"Samples\\image");
+  m_jsFileNames->Append(L"Samples\\index");
+  m_jsFileNames->Append(L"Samples\\mouse");
+  m_jsFileNames->Append(L"Samples\\simple");
+  m_jsFileNames->Append(L"Samples\\text");
+  m_jsFileNames->Append(L"Samples\\textinput");
+  m_jsFileNames->Append(L"Samples\\ticTacToe");
+  m_jsFileNames->Append(L"Samples\\view");
 
   x_JavaScriptFilename->ItemsSource = m_jsFileNames;
 
@@ -448,11 +468,9 @@ void HostingPane::LoadKnownApps() {
   std::wstring jsFileName =
       x_JavaScriptFilename->SelectedItem->ToString()->Data();
 
-  if (jsFileName == L"Playground\\Playground\\index.uwp") {
-    m_ReactAppNames->Append(L"Playground");
-  } else if (jsFileName == L"RNTester") {
+  if (jsFileName.rfind(L"Samples\\rntester", 0) == 0) {
     m_ReactAppNames->Append(L"RNTesterApp");
-  } else if (jsFileName.rfind(L"Universal.SampleApp\\", 0) == 0) {
+  } else if (jsFileName.rfind(L"Samples\\", 0) == 0) {
     m_ReactAppNames->Append(L"Bootstrap");
   }
 

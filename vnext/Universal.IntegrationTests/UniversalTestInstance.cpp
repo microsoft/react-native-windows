@@ -32,6 +32,9 @@ struct TestReactInstanceCreator : ::react::uwp::IReactInstanceCreator {
     // Test instance isn't reloaded
   }
 
+  void persistUseWebDebugger(bool useWebDebugger) {}
+  void persistUseLiveReload(bool useLiveReload) {}
+
  private:
   std::shared_ptr<::react::uwp::IReactInstance> m_instance;
 };

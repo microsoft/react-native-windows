@@ -18,6 +18,8 @@ struct IXamlRootView;
 struct IReactInstanceCreator {
   virtual std::shared_ptr<IReactInstance> getInstance() = 0;
   virtual void markAsNeedsReload() = 0;
+  virtual void persistUseWebDebugger(bool useWebDebugger) = 0;
+  virtual void persistUseLiveReload(bool useLiveReload) = 0;
 };
 
 using ReactInstanceCreator = std::shared_ptr<IReactInstanceCreator>;

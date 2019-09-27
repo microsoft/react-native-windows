@@ -56,5 +56,22 @@ DecayAnimationDriver::MakeAnimation(const folly::dynamic &config) {
 
   return std::make_tuple(animation, scopedBatch);
 }
+
+double DecayAnimationDriver::ToValue() {
+  auto const startValue = [this]() {
+    if (auto const manager = m_manager.lock()) {
+      if (auto const valueNode =
+              manager->GetValueAnimatedNode(m_animatedValueTag)) {
+        return valueNode->Value();
+      }
+    }
+    return 0.0;
+  }();
+
+  auto const duration = m_velocity / -m_deceleration;
+  return startValue + m_velocity * duration +
+      (0.5 * -m_deceleration * duration * duration);
+}
+
 } // namespace uwp
 } // namespace react
