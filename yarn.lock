@@ -2004,11 +2004,11 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.4.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.4.6.tgz#fbe535429a03966ff1d0a6b73f01562bd19dcfc0"
-  integrity sha512-X3HaPvPqjoBIgtICayaJSt2MlacuNsv4epx4bbw1ltMqg+wkW98NwDNaAWSCNlltkrFyTF8MdDJM3+n3GbDSVg==
+  version "7.4.7"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.4.7.tgz#dd7bf71258224746a82d53b6daebf357a9771c0a"
+  integrity sha512-iU0PQlFXjUSEbpqje/EDwMUHYf7RUJWP7IwcvgW904ZBZPX9gX+1J8FzCJ/IUOV2WY9P2T3DiWu7HpQxnW6kCw==
   dependencies:
-    "@microsoft/api-extractor-model" "7.4.2"
+    "@microsoft/api-extractor-model" "7.5.0"
     "@microsoft/node-core-library" "3.15.0"
     "@microsoft/ts-command-line" "4.3.1"
     "@microsoft/tsdoc" "0.12.14"
@@ -2020,6 +2020,14 @@
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.4.2.tgz#e7dea5aa6717fdbeb2745df57f3b118163a2e510"
   integrity sha512-VlboZFGViNCqwUKCxHwaJX1hq7X+1zpfpqSecY/lZowrUJZx8IQ+bT8vZGpy6Qmm9+ay3O3hwUqW47Z/Mr0yMA==
+  dependencies:
+    "@microsoft/node-core-library" "3.15.0"
+    "@microsoft/tsdoc" "0.12.14"
+
+"@microsoft/api-extractor-model@7.5.0":
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.0.tgz#34269510e06ae77554750d6983edf5ed9be3f6dc"
+  integrity sha512-L3fjAQLJIoBmv64ZXTjp96v2TnHHLICucEkrKnsi8mItCVY4vkw8B1irEk4zBsTcvO7bM+cS97UUzGqpqr5L1w==
   dependencies:
     "@microsoft/node-core-library" "3.15.0"
     "@microsoft/tsdoc" "0.12.14"
@@ -2506,7 +2514,7 @@
   dependencies:
     "@wdio/config" "^5.13.0-alpha.0"
 
-"@wdio/reporter@5.13.2", "@wdio/reporter@^5.12.1":
+"@wdio/reporter@5.13.2":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-5.13.2.tgz#df755d25ff49f86e0d7a6ddccc4b4dfa40483a73"
   integrity sha512-oHKlsNw1vcw6k7HZvww3hhmyuDpBrlSK7mneHkqv/hg/oOnsDDxbY3RZzyquni+ZVMUHnnlQ/8YxforVMCt1aA==
