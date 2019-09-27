@@ -14,11 +14,13 @@
  * limitations under the License.
  */
 
- /*
-  *  This is file contains the changes in https://github.com/facebook/folly/pull/1234 required to build using
-  *  the latest builds of Visual Studio.  Once that PR is merged, and published we should be able to update
-  *  the version of folly we reference and remove this file.
-  */
+/*
+ *  This is file contains the changes in
+ * https://github.com/facebook/folly/pull/1234 required to build using the
+ * latest builds of Visual Studio.  Once that PR is merged, and published we
+ * should be able to update the version of folly we reference and remove this
+ * file.
+ */
 
 #pragma once
 
@@ -31,19 +33,19 @@
 namespace folly {
 namespace portability {
 namespace detail {
-void call_flush_instruction_cache_self_pid(void* begin, size_t size);
+void call_flush_instruction_cache_self_pid(void *begin, size_t size);
 }
 } // namespace portability
 } // namespace folly
 
-FOLLY_ALWAYS_INLINE void __builtin___clear_cache(char* begin, char* end) {
+FOLLY_ALWAYS_INLINE void __builtin___clear_cache(char *begin, char *end) {
   if (folly::kIsArchAmd64) {
     // x86_64 doesn't require the instruction cache to be flushed after
     // modification.
   } else {
     // Default to flushing it for everything else, such as ARM.
     folly::portability::detail::call_flush_instruction_cache_self_pid(
-        static_cast<void*>(begin), static_cast<size_t>(end - begin));
+        static_cast<void *>(begin), static_cast<size_t>(end - begin));
   }
 }
 
@@ -146,7 +148,7 @@ FOLLY_ALWAYS_INLINE int __builtin_popcountll(unsigned long long x) {
 #endif
 #endif // !defined(_MSC_VER) || (_MSC_VER < 1923)
 
-FOLLY_ALWAYS_INLINE void* __builtin_return_address(unsigned int frame) {
+FOLLY_ALWAYS_INLINE void *__builtin_return_address(unsigned int frame) {
   // I really hope frame is zero...
   (void)frame;
   assert(frame == 0);
