@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace SampleLibraryCPP
+{
+    [default_interface]
+    [webhosthidden]
+    runtimeclass SampleModuleABI : Microsoft.ReactNative.Bridge.INativeModule
+    {
+        SampleModuleABI();
+    }
+}

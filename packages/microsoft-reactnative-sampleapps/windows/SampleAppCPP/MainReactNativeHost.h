@@ -5,9 +5,12 @@
 #include "MainReactNativeHost.g.h"
 
 using namespace winrt;
+using namespace Windows::Foundation::Collections;
+
 using namespace Microsoft::ReactNative;
 using namespace Microsoft::ReactNative::Bridge;
-using namespace Windows::Foundation::Collections;
+
+using namespace SampleLibraryCPP;
 
 namespace winrt::SampleApp::implementation {
 struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
@@ -30,7 +33,8 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
     return TRUE;
   };
   IVectorView<IReactPackage> Packages() {
-    auto packages = single_threaded_vector<IReactPackage>();
+    auto packages =
+        single_threaded_vector<IReactPackage>({SampleLibraryPackage()});
     return packages.GetView();
   };
 };

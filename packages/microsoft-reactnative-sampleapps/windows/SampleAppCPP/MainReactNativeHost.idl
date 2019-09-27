@@ -3,7 +3,7 @@
 
 namespace SampleApp
 {
-	[default_interface]
+  [default_interface]
   runtimeclass MainReactNativeHost : Microsoft.ReactNative.ReactNativeHost
   {
     MainReactNativeHost();

@@ -164,8 +164,8 @@
     <Natvis Include="$(ReactNativeWindowsDir)\Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
-      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+    <ProjectReference Include="..\SampleLibraryCPP\SampleLibraryCPP.vcxproj">
+      <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

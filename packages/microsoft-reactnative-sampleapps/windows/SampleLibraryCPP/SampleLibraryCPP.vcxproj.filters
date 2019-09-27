@@ -11,7 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Class.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -29,5 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="SampleLibraryPackage.idl" />
+    <Midl Include="SampleModuleABI.idl" />
   </ItemGroup>
 </Project>

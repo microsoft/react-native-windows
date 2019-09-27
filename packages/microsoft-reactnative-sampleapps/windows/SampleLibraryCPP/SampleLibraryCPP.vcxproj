@@ -108,6 +108,10 @@
       <DependentUpon>SampleLibraryPackage.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="SampleModuleABI.h">
+      <DependentUpon>SampleModuleABI.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -118,9 +122,16 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="SampleModuleABI.cpp">
+      <DependentUpon>SampleModuleABI.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="SampleLibraryPackage.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="SampleModuleABI.idl">
       <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>

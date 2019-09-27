@@ -8,22 +8,23 @@
 #endif
 
 using namespace winrt;
-using namespace Microsoft::ReactNative;
-using namespace Windows::UI::Xaml;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
+using namespace Microsoft::ReactNative;
+
 namespace winrt::SampleLibraryCPP::implementation
 {
-    IVectorView<Bridge::INativeModule> SampleLibraryPackage::CreateNativeModules(ReactContext const &reactContext)
-    {
-        auto modules = single_threaded_vector<Bridge::INativeModule>();
-        return modules.GetView();
-    }
+IVectorView<Bridge::INativeModule> SampleLibraryPackage::CreateNativeModules(
+    ReactContext const &reactContext) {
+  auto modules =
+      single_threaded_vector<Bridge::INativeModule>({SampleModuleABI()});
+  return modules.GetView();
+}
 
-    IVectorView<Bridge::IViewManager> SampleLibraryPackage::CreateViewManagers(ReactContext const &reactContext)
-    {
-        auto viewManagers = single_threaded_vector<Bridge::IViewManager>();
-        return viewManagers.GetView();
-    }
+IVectorView<Bridge::IViewManager> SampleLibraryPackage::CreateViewManagers(
+    ReactContext const &reactContext) {
+  auto viewManagers = single_threaded_vector<Bridge::IViewManager>();
+  return viewManagers.GetView();
+}
 }

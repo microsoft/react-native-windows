@@ -1,6 +1,7 @@
-#pragma once
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#pragma once
 
 #include <hstring.h>
 #include <restrictederrorinfo.h>
@@ -16,4 +17,7 @@
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 #include <winrt/Windows.UI.Xaml.h>
-#include <winrt/microsoft.reactnative.h>
+
+#include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Microsoft.ReactNative.Bridge.h>
+#include <winrt/SampleLibraryCPP.h>
