@@ -2,6 +2,8 @@
 
 #include "MainPage.g.h"
 
+// clang-format off
+
 namespace winrt::<%=ns%>::implementation
 {
     struct MainPage : MainPageT<MainPage>
@@ -19,3 +21,5 @@ namespace winrt::<%=ns%>::factory_implementation
     {
     };
 }
+
+// clang-format on

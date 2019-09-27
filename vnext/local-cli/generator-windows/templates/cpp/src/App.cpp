@@ -10,6 +10,8 @@ using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Navigation;
+
+// clang-format off
 using namespace <%=ns%>;
 using namespace <%=ns%>::implementation;
 
@@ -117,3 +119,5 @@ void App::OnNavigationFailed(IInspectable const&, NavigationFailedEventArgs cons
 {
     throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
 }
+
+// clang-format on

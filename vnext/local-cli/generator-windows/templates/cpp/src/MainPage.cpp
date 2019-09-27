@@ -6,6 +6,8 @@ using namespace winrt;
 using namespace Windows::UI::Xaml;
 using namespace react::uwp;
 
+// clang-format off
+
 namespace winrt::<%=ns%>::implementation
 {
 	const wchar_t* JSFILENAME = L"index";
@@ -40,3 +42,5 @@ namespace winrt::<%=ns%>::implementation
 		RootElement().StartRender();
 	}
 }
+
+// clang-format on
