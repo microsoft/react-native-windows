@@ -2,6 +2,37 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 Sep 2019 00:08:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.5",
+      "version": "0.60.0-vnext.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "update E2E doc",
+            "author": "licanhua@live.com",
+            "commit": "08a536aad65ec6a1440489218c31243ee210988b"
+          },
+          {
+            "comment": "Remove v8 related files from ReactCommon.vcxproj.",
+            "author": "yicyao@microsoft.com",
+            "commit": "0d0de897ea568ffa189941d3680e4f3d89e544cc"
+          },
+          {
+            "comment": "Only publish react-native-windows using vnext tag",
+            "author": "acoates@microsoft.com",
+            "commit": "a5f8ac0327970f73404ddc2599655497f6a404e2"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Sep 2019 18:32:05 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.4",
       "version": "0.60.0-vnext.4",
