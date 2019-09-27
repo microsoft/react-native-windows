@@ -273,6 +273,13 @@
     <!-- Using ContinueOnError due to https://github.com/Microsoft/msbuild/issues/3884, unzip seems to have completed dispite errors -->
     <Unzip Condition="!Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.08.12.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
+  <ItemGroup>
+    <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*"/>
+  </ItemGroup>
+  <Target Name="ApplyFollyTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFollyIfNotUseMicrosoftReactNative">
+    <Warning Text="Copying @(TemporaryFollyPatchFiles) to @(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
+  </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
