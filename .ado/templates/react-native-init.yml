@@ -1,0 +1,87 @@
+#
+parameters:
+  language:
+
+jobs:
+  - job: CliInit
+    displayName: Verify react-native init
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    steps:
+      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+        clean: true # whether to fetch clean each time
+        # fetchDepth: 2 # the depth of commits to ask Git to fetch
+        lfs: false # whether to download Git-LFS files
+        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
+      - task: CmdLine@2
+        displayName: yarn install (local react-native-windows)
+        inputs:
+          script: yarn install --frozen-lockfile
+
+      - task: CmdLine@2
+        displayName: yarn build (local react-native-windows)
+        inputs:
+          script: yarn build
+          workingDirectory: vnext
+
+      # yarn ends up copying the whole node_modules folder when doing an install of a file package
+      # Delete node_modules, so that resolution is more like when installing from a published npm package
+      - task: CmdLine@2
+        displayName: Remove node_modules
+        inputs:
+          script: rd /S /Q node_modules
+          workingDirectory: vnext
+
+      - task: CmdLine@2
+        displayName: Install react-native cli
+        inputs:
+          script: npm install -g react-native-cli
+
+      - task: CmdLine@2
+        displayName: Init new project
+        inputs:
+          script: react-native init testcli --version 0.60.6
+          workingDirectory: $(Agent.BuildDirectory)
+
+      - task: CmdLine@2
+        displayName: Install rnpm-plugin-windows
+        inputs:
+          script: yarn add rnpm-plugin-windows@file:$(Build.SourcesDirectory)\current\local-cli\rnpm\windows
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+
+      - task: CmdLine@2
+        displayName: Apply windows template
+        inputs:
+          script: react-native windows --template vnext --windowsVersion file:$(Build.SourcesDirectory)\vnext --overwrite --language ${{ parameters.language }}
+          workingDirectory: $(Agent.BuildDirectory)\testcli
+
+      - task: NuGetCommand@2
+        displayName: NuGet restore testcli
+        inputs:
+          command: restore
+          restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+
+      - task: MSBuild@1
+        displayName: MSBuild - testcli
+        inputs:
+          solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: x86 # Optional. Options: x86, x64
+          platform: x64 # Optional
+          configuration: Debug # Optional
+          restoreNugetPackages: true
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+          clean: true # Optional
+
+      - task: CmdLine@2
+        displayName: Create bundle testcli
+        inputs:
+          script: react-native bundle --entry-file index.js platform windows --bundle-output test.bundle
+          workingDirectory: $(Agent.BuildDirectory)\testcli
