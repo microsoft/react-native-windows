@@ -2506,7 +2506,7 @@
   dependencies:
     "@wdio/config" "^5.13.0-alpha.0"
 
-"@wdio/reporter@5.13.2", "@wdio/reporter@^5.12.1":
+"@wdio/reporter@5.13.2":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-5.13.2.tgz#df755d25ff49f86e0d7a6ddccc4b4dfa40483a73"
   integrity sha512-oHKlsNw1vcw6k7HZvww3hhmyuDpBrlSK7mneHkqv/hg/oOnsDDxbY3RZzyquni+ZVMUHnnlQ/8YxforVMCt1aA==
