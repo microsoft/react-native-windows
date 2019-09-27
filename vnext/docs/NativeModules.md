@@ -1,6 +1,6 @@
 # Native Modules and React Native Windows
 
-*This documentation is very much a work in progress*
+*This documentation is very much a work in progress, however you can see the current state of working code in the [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)*
 
 React Native can interop with your own custom native code from within your JavaScript app code. There are two main scenarios for developers: *Native Modules* and *View Managers*.
 
@@ -12,12 +12,11 @@ View Managers are for exposing new native XAML controls as React Native Componen
 
 Native modules contain (or wrap) native code which can then be exposed to JS. To accomplish this in RNW, at a high level you must:
 
-1. Author a Windows Runtime Class which implements `Microsoft.ReactNative.INativeModule` and calls your native code.
+1. Author a Windows Runtime Class which implements [Microsoft.ReactNative.INativeModule](../Microsoft.ReactNative/INativeModule.idl) and calls your native code.
 2. Register your new `INativeModule` within the native code of your React Native host application.
 3. Invoke your NativeModule from within your Raact Native JS code.
 
 *Open Questions:*
-
 * How do native modules fire events into RN?
 
 ### Sample Native Module using Microsoft.ReactNative.Managed (recommended)
@@ -56,7 +55,7 @@ namespace NativeModuleSample
 }
 ```
 
-First off, you'll see that we're making use of the `Microsoft.ReactNative.Managed` library, which provides the easiest (and recommended) experience for authoring native modules. Rather than implement the `INativeModule` interface directly with our class, we're implementing `IManagedNativeModule`, which will be passsed as a parameter to the `ManagedNativeModule` helper class.
+First off, you'll see that we're making use of the `Microsoft.ReactNative.Managed` library, which provides the easiest (and recommended) experience for authoring native modules. Rather than implement the `INativeModule` interface directly with our class, we're implementing [IManagedNativeModule](../Microsoft.ReactNative.Managed/ManagedNativeModule.cs), which will be passsed as a parameter to the `ManagedNativeModule` helper class.
 
 To fulfill `IManagedNativeModule`, we only have to implement two things: the `Name` property getter and the `Initialize()` method.
 
@@ -70,7 +69,7 @@ It's just as easy to add custom methods, by attributing a public method with `[N
 
 #### 2. Registering your Native Module
 
-Now, we want to register our new `FancyMath` module with React Native so we can actually use it. To do this, first we're going to create a `FancyMathPackage` which implements `Microsoft.ReactNative.IReactPackage`.
+Now, we want to register our new `FancyMath` module with React Native so we can actually use it. To do this, first we're going to create a `FancyMathPackage` which implements [Microsoft.ReactNative.IReactPackage](../Microsoft.ReactNative/IReactPackage.idl).
 
 *FancyMathPackage.cs*
 ```csharp
@@ -277,7 +276,7 @@ Consumption of your Native Module in JS is the same as in the example above.
 
 View Managers are a form of specialized native modules which expose native UI controls as React Native Components. In RNW, this means you have access to the world of rich XAML controls. Similarly to authoring native modules, at a high level you must:
 
-1. Author a Windows Runtime Class which implements `Microsoft.ReactNative.IViewManager` and understands how to interact with the native UI.
+1. Author a Windows Runtime Class which implements [Microsoft.ReactNative.IViewManager](../Microsoft.ReactNative/IViewManager.idl) and understands how to interact with the native UI.
 2. Register your new `IViewManager` within the native code of your React Native host application.
 3. Reference the new Component within your React Native JSX code.
 
@@ -330,7 +329,7 @@ namespace ViewManagerSample
 }
 ```
 
-As with native modules, we're making use of the `Microsoft.ReactNative.Managed` library, which provides the easiest (and recommended) experience for authoring view managers. Rather than implement the `IViewManager` interface directly with our class, we're implementing `IManagedViewManager`, which will be passsed as a parameter to the `ManagedViewManager` helper class.
+As with native modules, we're making use of the `Microsoft.ReactNative.Managed` library, which provides the easiest (and recommended) experience for authoring view managers. Rather than implement the `IViewManager` interface directly with our class, we're implementing [IManagedViewManager](../Microsoft.ReactNative.Managed/ManagedViewManager.cs), which will be passsed as a parameter to the `ManagedViewManager` helper class.
 
 To fulfill `IManagedViewManager`, we only have to implement two things: the `Name` property getter and the `CreateView()` method.
 
