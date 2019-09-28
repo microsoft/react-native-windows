@@ -9887,7 +9887,6 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
 
 "react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz":
   version "0.60.0-microsoft-fb60merge.13"
-  uid "2846ab59aa8bafc7d2f6d73d5223ad5e5f4589f0"
   resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz#2846ab59aa8bafc7d2f6d73d5223ad5e5f4589f0"
   dependencies:
     "@babel/core" "^7.4.0"
