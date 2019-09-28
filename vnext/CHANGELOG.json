@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 28 Sep 2019 01:21:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.9",
+      "version": "0.60.0-vnext.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add support for cpp template app",
+            "author": "email not defined",
+            "commit": "10233b95839d33eb57d32eaa6b67462f643884c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 28 Sep 2019 00:21:32 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.8",
       "version": "0.60.0-vnext.8",

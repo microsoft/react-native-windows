@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 28 Sep 2019 00:21:32 GMT and should not be manually modified.
+This log was last generated on Sat, 28 Sep 2019 01:21:33 GMT and should not be manually modified.
 
+## 0.60.0-vnext.9
+Sat, 28 Sep 2019 01:21:33 GMT
+
+### Changes
+
+- add support for cpp template app (email not defined)
 ## 0.60.0-vnext.8
 Sat, 28 Sep 2019 00:21:32 GMT
 

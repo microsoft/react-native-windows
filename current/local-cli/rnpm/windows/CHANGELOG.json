@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Sat, 28 Sep 2019 01:21:33 GMT",
+      "tag": "rnpm-plugin-windows_v0.3.0",
+      "version": "0.3.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "add support for cpp",
+            "author": "email not defined",
+            "commit": "10233b95839d33eb57d32eaa6b67462f643884c4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 Sep 2019 19:11:20 GMT",
       "tag": "rnpm-plugin-windows_v0.2.13",
       "version": "0.2.13",
