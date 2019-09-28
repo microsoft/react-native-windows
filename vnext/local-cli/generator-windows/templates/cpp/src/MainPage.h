@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "MainPage.g.h"
 
@@ -10,8 +10,8 @@ namespace winrt::<%=ns%>::implementation
     {
         MainPage();
 
-	private:
-		void LoadReact();
+    private:
+      void LoadReact();
     };
 }
 

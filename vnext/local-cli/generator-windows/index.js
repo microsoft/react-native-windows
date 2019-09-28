@@ -80,6 +80,8 @@ function copyProjectTemplateAndReplace(
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
   const templateVars = {
+    '// clang-format off': '',
+    '// clang-format on': '',
     '<%=ns%>': ns,
     '<%=name%>': newProjectName,
     '<%=projectGuid%>': projectGuid,

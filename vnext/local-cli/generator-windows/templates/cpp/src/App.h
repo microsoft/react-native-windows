@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "App.xaml.g.h"
 
 // clang-format off

@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="<%=ns%>.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+  <Grid>
     <react:ReactControl x:Name="RootElement" />
   </Grid>
 </Page>
