@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 28 Sep 2019 00:21:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.8",
+      "version": "0.60.0-vnext.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix build break when using latest Visual Studio compiler versions",
+            "author": "acoates@microsoft.com",
+            "commit": "1f1d803bd62b7f396c9e1978f05a43a915e38779"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Sep 2019 17:40:33 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.7",
       "version": "0.60.0-vnext.7",
