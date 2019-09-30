@@ -2,6 +2,37 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Sep 2019 18:51:30 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.193",
+      "version": "0.59.0-vnext.193",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove Universal projects from Desktop solution.",
+            "author": "julio@rochsquadron.net",
+            "commit": "c2d6941c53444b98f2ec078b7d8f7b19f83fe5fe"
+          },
+          {
+            "comment": "CLI has error exit code",
+            "author": "licanhua@live.com",
+            "commit": "6fa8a6916c6074df421bd085f298e736b50af540"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          },
+          {
+            "comment": "Bump up to latest published version. (#3275)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a72208e39a88f9d3b732d5679a5c77cbc7750560"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Sep 2019 17:02:46 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.190",
       "version": "0.59.0-vnext.190",
