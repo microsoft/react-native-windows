@@ -1,12 +1,13 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
-  - name: VmImage
-    value: vs2017-win2016
-  - name: MSBuildVersion
-    value: 16.0
-  - name: MSBuildArchitecture
-    value: x64
+  VmImage: windows-2019
+  MSBuildVersion: 16.0
+  MSBuildArchitecture: x64
+  MSBuildPreferredToolArchitecture: x64
+  MSBuildPlatformToolset: v142
+  VsInstallerUri: "https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe"
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 trigger:
   batch: true
@@ -48,7 +49,7 @@ jobs:
       - task: CmdLine@2
         displayName: Beachball Publish (for master)
         inputs:
-          script: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
+          script: node ./node_modules/beachball/bin/beachball.js publish -n $(npmAuthToken) --yes -m "applying package updates ***NO_CI***"
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
 
       - task: CmdLine@2
@@ -71,8 +72,8 @@ jobs:
           PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
 
-  - job: RnwNativeBuild
-    displayName: React-Native-Windows Native Build
+  - job: RnwNativeBuildDesktop
+    displayName: Build Desktop
     dependsOn: RnwNpmPublish
     strategy:
       matrix:
@@ -82,18 +83,12 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
     pool:
       vmImage: $(VmImage)
 
@@ -118,14 +113,74 @@ jobs:
         inputs:
           script: yarn build
 
-      - template: templates/install-SDK.yml
-
       - template: templates/vs-build.yml
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildPlatform: $(BuildPlatform)
-          RNW_PKG_VERSION_STR: $(RNW_PKG_VERSION_STR)
-          RNW_PKG_VERSION: $(RNW_PKG_VERSION)
+          VsInstallerUri: $(VsInstallerUri)
+          VsComponents: $(VsComponents)
+          MSBuildVersion: $(MSBuildVersion)
+          MSBuildArchitecture: $(MSBuildArchitecture)
+          NugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+          Solution: $(Build.SourcesDirectory)/vnext/ReactWindows-Desktop.sln
+          MSBuildArguments: /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
+            /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
+            /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
+
+      - template: templates/publish-build-artifacts-for-nuget.yml
+        parameters:
+          LayoutHeaders: false
+          Contents: |
+            React.Windows.Desktop.DLL\**
+            React.Windows.Desktop.Test.DLL\**
+
+  - job: RnwNativeBuildUniversal
+    displayName: Build Universal
+    dependsOn: RnwNpmPublish
+    strategy:
+      matrix:
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+    pool:
+      vmImage: $(VmImage)
+
+
+    steps:
+      - task: DownloadBuildArtifacts@0
+        displayName: Download VersionEnvVars
+        inputs:
+          artifactName: VersionEnvVars
+          downloadPath: $(Build.StagingDirectory)
+
+      - task: CmdLine@2
+        inputs:
+          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+
+      - task: CmdLine@2
+        displayName: yarn install
+        inputs:
+          script: yarn install --frozen-lockfile
+
+      - task: CmdLine@2
+        displayName: yarn build
+        inputs:
+          script: yarn build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactWindows-Universal
@@ -143,18 +198,18 @@ jobs:
           solution: vnext/ReactWindows-Universal.sln
           msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
           msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments: "/p:PreferredToolArchitecture=x64" # Optional
-          clean: true # Optional
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+          clean: true
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           LayoutHeaders: true
           Contents: |
             ReactUWP\**
-            React.Windows.Desktop.DLL\**
-            React.Windows.Desktop.Test.DLL\**
 
     # Disable for now, not sure this works on github projects anyway.
     # - task: PublishSymbols@2
@@ -165,8 +220,9 @@ jobs:
   - job: RNWNuget
     dependsOn:
       - RnwNpmPublish
-      - RnwNativeBuild
-    displayName: React-Native-Windows Build and Publish Nuget
+      - RnwNativeBuildDesktop
+      - RnwNativeBuildUniversal
+    displayName: Publish Nuget
     pool:
       vmImage: $(VmImage)
 
