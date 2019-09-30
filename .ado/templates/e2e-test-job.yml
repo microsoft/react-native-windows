@@ -80,8 +80,7 @@ jobs:
           SourceFolder: packages\E2ETest\windows\ReactUWPTestApp\AppPackages
           TargetFolder: $(Build.ArtifactStagingDirectory)\MyAppPackages
           Contents: |
-            *
-
+            ReactUWPTestApp_1.0.0.0_x64_ReleaseBundle_Test\**
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: ReactWindows"
         inputs:
