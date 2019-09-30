@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "DeviceInfo Update to support getting size from hosting root element",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "da7c4079c83fde547e4da18491fda4766163ada7",
+  "date": "2019-09-30T19:43:36.335Z"
+}
