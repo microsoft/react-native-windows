@@ -48,7 +48,7 @@ EXPORTS
 ?assume_check@detail@folly@@YAX_N@Z
 ?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
-?callJSFunction@Instance@react@facebook@@UEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
+?callJSFunction@Instance@react@facebook@@QEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 ?demangle@folly@@YA?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PEBD@Z
 ?destroy@dynamic@folly@@AEAAXXZ

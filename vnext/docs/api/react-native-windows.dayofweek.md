@@ -7,7 +7,7 @@
 <b>Signature:</b>
 
 ```typescript
-export declare enum DayOfWeek 
+export declare const enum DayOfWeek 
 ```
 
 ## Enumeration Members

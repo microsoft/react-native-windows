@@ -206,6 +206,10 @@ void counterJSHook(uint64_t tag, const std::string &profile_name, int value) {
 }
 
 void initializeJSHooks(jsi::Runtime &runtime) {
+  // Don't hook up unless the provider is enabled.
+  if (!EventEnabledJS_ASYNC_BEGIN_FLOW())
+    return;
+
   runtime.global().setProperty(runtime, "__RCTProfileIsProfiling", true);
 
   runtime.global().setProperty(
