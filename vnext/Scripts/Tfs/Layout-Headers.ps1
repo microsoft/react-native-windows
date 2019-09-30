@@ -6,7 +6,7 @@ param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
 	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
-	[string] $FollyVersion = '2019.08.12.00',
+	[string] $FollyVersion = '2019.09.30.00',
 	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
