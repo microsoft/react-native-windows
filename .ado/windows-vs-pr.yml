@@ -348,7 +348,7 @@ stages:
           - task: CmdLine@2
             displayName: Check for change files
             inputs:
-              script: node ./node_modules/beachball/bin/beachball.js check --changehint "Run `yarn change` from root of repo to generate a change file."
+              script: node ./node_modules/beachball/bin/beachball.js check --branch origin/0.59-vnext-stable --changehint "Run `yarn change` from root of repo to generate a change file."
 
           - task: CmdLine@2
             displayName: yarn format:verify
