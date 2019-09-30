@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Sep 2019 18:28:23 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.11",
+      "version": "0.60.0-vnext.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to folly 2019.09.30.00",
+            "author": "acoates@microsoft.com",
+            "commit": "412556d92d4b300745cfee502eea46bc4e26b853"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2019 16:21:08 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.10",
       "version": "0.60.0-vnext.10",
