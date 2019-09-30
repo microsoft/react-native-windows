@@ -125,7 +125,7 @@ void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
       // Fixing this will prevent memory bloat as the current solutions never
       // stops the expression animations that are built as a part of this
       // animation solution. Tracked by issue #3280.
-      //target.StopAnimation(m_expressionAnimations.at(valueTag));
+      // target.StopAnimation(m_expressionAnimations.at(valueTag));
       m_suspendedExpressionAnimationTags.push_back(valueTag);
     }
   }
@@ -139,8 +139,8 @@ void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
   if (iterator != m_suspendedExpressionAnimationTags.end()) {
     if (const auto target = GetUIElement()) {
       // See comment above, tracked by issue #3280
-      //target.StartAnimation(m_expressionAnimations.at(valueTag));
-      m_suspendedExpressionAnimationTags.erase(iterator); 
+      // target.StartAnimation(m_expressionAnimations.at(valueTag));
+      m_suspendedExpressionAnimationTags.erase(iterator);
     }
   }
 }

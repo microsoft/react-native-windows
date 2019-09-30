@@ -40,8 +40,7 @@ class PropsAnimatedNode : public AnimatedNode {
       int64_t,
       winrt::Windows::UI::Composition::CompositionAnimation>
       m_expressionAnimations{};
-  std::vector<int64_t>
-      m_suspendedExpressionAnimationTags{};
+  std::vector<int64_t> m_suspendedExpressionAnimationTags{};
   winrt::Windows::UI::Composition::ExpressionAnimation m_centerPointAnimation{
       nullptr};
   winrt::Numerics::float3 m_rotationAxis{0, 0, 1};
