@@ -1,7 +1,7 @@
 #
 parameters:
   name: ''
-  pool:
+  pool: ''
   BuildPlatform: 'x86' # ARM, x86, x64
   UseRNFork: true
 
@@ -71,25 +71,31 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script:  react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script:  react-native run-windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
           workingDirectory: packages/E2ETest
 
-      # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
-      - task: PowerShell@2
-        displayName: Wait for app to launch
+      - task: CopyFiles@2
+        displayName: Copy NuGet artifacts
         inputs:
-          targetType: inline # filePath | inline
-          script: |
-            Start-Sleep -Seconds 30
+          SourceFolder: packages\E2ETest\windows\ReactUWPTestApp\AppPackages
+          TargetFolder: $(Build.ArtifactStagingDirectory)\MyAppPackages
+          Contents: |
+            *
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: ReactWindows"
+        inputs:
+          PathtoPublish: $(Build.ArtifactStagingDirectory)
+          ArtifactName: "ReactWindows"
+
 
       - task: CmdLine@2
         displayName: run test
         inputs:
           script: yarn run test
           workingDirectory: packages/E2ETest
-
+          
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'JUnit'
           testResultsFiles: 'packages/E2ETest/reports/*.log'
-        condition: succeededOrFailed()
