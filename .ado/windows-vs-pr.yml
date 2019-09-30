@@ -5,6 +5,7 @@ trigger: none # will disable CI builds entirely
 
 pr:
   - master
+  - "*-stable"
 
 variables:
   # General / Default
@@ -190,8 +191,7 @@ stages:
               project: vnext/ReactWindows-Desktop.sln
               platformToolset: v141
               vsComponents: $(VsComponents)
-              msbuildArguments:
-                /p:RNW_PKG_VERSION_STR="Private Build"
+              msbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build"
                 /p:RNW_PKG_VERSION="1000,0,0,0"
                 /p:VCTargetsPath="$(VCTargetsPath)"
 
@@ -494,7 +494,7 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      - template: templates/e2e-test-job.yml  # Template reference
+      - template: templates/e2e-test-job.yml # Template reference
         parameters:
           name: E2ETest
           pool:
