@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Sep 2019 18:51:30 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Sep 2019 19:28:46 GMT and should not be manually modified.
 
+## 0.59.0-vnext.194
+Mon, 30 Sep 2019 19:28:46 GMT
+
+### Changes
+
+- Fix build break when using latest Visual Studio compiler versions (acoates@microsoft.com)
 ## 0.59.0-vnext.193
 Mon, 30 Sep 2019 18:51:30 GMT
 

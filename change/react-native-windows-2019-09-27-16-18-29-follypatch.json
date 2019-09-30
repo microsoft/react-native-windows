@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix build break when using latest Visual Studio compiler versions",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "1f1d803bd62b7f396c9e1978f05a43a915e38779",
-  "date": "2019-09-27T23:18:29.131Z"
-}
