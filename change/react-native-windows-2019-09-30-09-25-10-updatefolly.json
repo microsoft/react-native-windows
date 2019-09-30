@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update to folly 2019.09.30.00",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "412556d92d4b300745cfee502eea46bc4e26b853",
+  "date": "2019-09-30T16:25:10.602Z"
+}
