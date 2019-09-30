@@ -16,7 +16,7 @@ Below are a list of components and their status towards parity between the lean 
 |Image|Partial|[2111](https://github.com/microsoft/react-native-windows/issues/2111)|Partial|
 |ScrollView|Partial|[2113](https://github.com/microsoft/react-native-windows/issues/2113)|Partial|
 |Switch|Partial|[2140](https://github.com/microsoft/react-native-windows/issues/2140)|**Complete**|
-|Text|Partial|[2162](https://github.com/microsoft/react-native-windows/issues/2162), [2121](https://github.com/microsoft/react-native-windows/issues/2121)|Partial|
+|Text|Partial|[2162](https://github.com/microsoft/react-native-windows/issues/2162), [2121](https://github.com/microsoft/react-native-windows/issues/2121)|**Complete** *Partial - (Some properties not supported due to device platform differences*|
 |TextInput|Partial|[2136](https://github.com/microsoft/react-native-windows/issues/2136)|Partial|
 |View|Partial|[2796](https://github.com/microsoft/react-native-windows/issues/2796)|**Complete**|
 |VirtualizedList|Partial|No Issues Logged|**Complete**|
