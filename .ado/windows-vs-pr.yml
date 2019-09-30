@@ -5,6 +5,7 @@ trigger: none # will disable CI builds entirely
 
 pr:
   - master
+  - 0.59-vnext-stable
 
 variables:
   # General / Default
@@ -494,7 +495,7 @@ stages:
           #    workingDirectory: current
           #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-      - template: templates/e2e-test-job.yml  # Template reference
+      - template: templates/e2e-test-job.yml # Template reference
         parameters:
           name: E2ETest
           pool:
