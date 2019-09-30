@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump up to latest published version. (#3275)",
-  "packageName": "react-native-windows-extended",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "a72208e39a88f9d3b732d5679a5c77cbc7750560",
-  "date": "2019-09-27T23:38:27.668Z"
-}
