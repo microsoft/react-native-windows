@@ -24,6 +24,7 @@ class PropsAnimatedNode : public AnimatedNode {
   void UpdateView();
   void StartAnimations();
   void DisposeCompletedAnimation(int64_t valueTag);
+  void ResumeSuspendedAnimations(int64_t valueTag);
 
  private:
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
@@ -39,6 +40,8 @@ class PropsAnimatedNode : public AnimatedNode {
       int64_t,
       winrt::Windows::UI::Composition::CompositionAnimation>
       m_expressionAnimations{};
+  std::vector<int64_t>
+      m_suspendedExpressionAnimationTags{};
   winrt::Windows::UI::Composition::ExpressionAnimation m_centerPointAnimation{
       nullptr};
   winrt::Numerics::float3 m_rotationAxis{0, 0, 1};
