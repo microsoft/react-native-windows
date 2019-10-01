@@ -13,5 +13,3 @@ export class DatePicker extends React.Component<IDatePickerProps> {
     return null;
   }
 }
-
-export default DatePicker;

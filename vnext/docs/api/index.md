@@ -8,5 +8,5 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [react-native-windows](./react-native-windows.md) |  |
+|  [react-native-windows](./react-native-windows.md) | This package provides Windows specific components and provides JS implementations for some react-native primitives Cross platform React-native primitives should be imported from 'react-native' Windows specific components need to be imported from 'react-native-windows' |
 

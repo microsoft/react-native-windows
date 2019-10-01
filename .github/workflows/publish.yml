@@ -27,7 +27,7 @@ jobs:
 
       - name: Beachball Publish (for master)
         if: github.ref == 'refs/heads/master'
-        run: node ./node_modules/beachball/bin/beachball.js publish --tag vnext -n ${{ secrets.NPM_AUTH }} --yes -m "applying package updates ***NO_CI***"
+        run: node ./node_modules/beachball/bin/beachball.js publish -n ${{ secrets.NPM_AUTH }} --yes -m "applying package updates ***NO_CI***"
 
       # - name: Beachball Publish (for other branches)
       #   if: github.ref != 'refs/heads/master'

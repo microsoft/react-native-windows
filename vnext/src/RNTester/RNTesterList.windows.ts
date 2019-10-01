@@ -36,6 +36,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/ButtonExample'),
   },
   {
+    key: 'CheckBoxExample',
+    module: require('react-native/RNTester/js/CheckBoxExample'),
+  },
+  {
     key: 'CustomViewExample',
     module: require('./CustomViewExample.windows'),
   },
@@ -64,8 +68,16 @@ const ComponentExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/ImageExample'),
   },
   {
-    key: 'LayoutEventsExample',
-    module: require('react-native/RNTester/js/LayoutEventsExample'),
+    key: 'MultiColumnExample',
+    module: require('react-native/RNTester/js/MultiColumnExample'),
+  },
+  {
+    key: 'NewAppScreenExample',
+    module: require('react-native/RNTester/js/NewAppScreenExample'),
+  },
+  {
+    key: 'PickerExample',
+    module: require('react-native/RNTester/js/PickerExample'),
   },
   {
     key: 'PickerWindowsExample',
@@ -129,7 +141,15 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AccessibilityExample',
-    module: require('./AccessibilityExample'),
+    module: require('react-native/RNTester/js/AccessibilityExample'),
+  },
+  {
+    key: 'AccessibilityExampleWindows',
+    module: require('./AccessibilityExampleWindows'),
+  },
+  {
+    key: 'AlertExample',
+    module: require('react-native/RNTester/js/AlertExample').AlertExample,
   },
   {
     key: 'AnimatedExample',
@@ -138,14 +158,6 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'AppStateExample',
     module: require('react-native/RNTester/js/AppStateExample'),
-  },
-  {
-    key: 'AlertExample',
-    module: require('./AlertExample.windows'),
-  },
-  {
-    key: 'ThemingExample',
-    module: require('./ThemingExample'),
   },
   {
     key: 'BorderExample',
@@ -160,24 +172,32 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('react-native/RNTester/js/ClipboardExample'),
   },
   {
-    key: 'Dimensions',
-    module: require('react-native/RNTester/js/DimensionsExample'),
+    key: 'CrashExample',
+    module: require('react-native/RNTester/js/CrashExample'),
   },
   {
-    key: 'GeolocationExample',
-    module: require('react-native/RNTester/js/GeolocationExample'),
+    key: 'Dimensions',
+    module: require('react-native/RNTester/js/DimensionsExample'),
   },
   {
     key: 'KeyboardExample',
     module: require('./KeyboardExample'),
   },
   {
-    key: 'LayoutExample',
-    module: require('react-native/RNTester/js/LayoutExample'),
+    key: 'LayoutEventsExample',
+    module: require('react-native/RNTester/js/LayoutEventsExample'),
   },
   {
     key: 'LinkingExample',
     module: require('react-native/RNTester/js/LinkingExample'),
+  },
+  {
+    key: 'LayoutExample',
+    module: require('react-native/RNTester/js/LayoutExample'),
+  },
+  {
+    key: 'NativeAnimationsExample',
+    module: require('react-native/RNTester/js/NativeAnimationsExample'),
   },
   {
     key: 'PanResponderExample',
@@ -190,6 +210,10 @@ const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'RTLExample',
     module: require('react-native/RNTester/js/RTLExample'),
+  },
+  {
+    key: 'ThemingExample',
+    module: require('./ThemingExample'),
   },
   {
     key: 'TransformExample',

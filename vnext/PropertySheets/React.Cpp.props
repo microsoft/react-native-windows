@@ -19,9 +19,10 @@
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
     <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
     
-    <ENABLE_TRACING Condition="'$(ENABLE_TRACING)' == ''">false</ENABLE_TRACING>
-    <ENABLE_NATIVE_SYSTRACE Condition="'$(ENABLE_NATIVE_SYSTRACE)' == ''">false</ENABLE_NATIVE_SYSTRACE>
-    <ENABLE_JS_SYSTRACE Condition="'$(ENABLE_JS_SYSTRACE)' == ''">false</ENABLE_JS_SYSTRACE>
+    <ENABLE_TRACING Condition="'$(ENABLE_TRACING)' == ''">true</ENABLE_TRACING>
+    <ENABLE_NATIVE_SYSTRACE Condition="'$(ENABLE_NATIVE_SYSTRACE)' == ''">true</ENABLE_NATIVE_SYSTRACE>
+    <ENABLE_JS_SYSTRACE Condition="'$(ENABLE_JS_SYSTRACE)' == ''">true</ENABLE_JS_SYSTRACE>
+    <ENABLE_TRACE_POSTPROCESSING Condition="'$(ENABLE_TRACE_POSTPROCESSING)' == ''">false</ENABLE_TRACE_POSTPROCESSING>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">
@@ -43,6 +44,7 @@
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;BOOST_SYSTEM_SOURCE;BOOST_ERROR_CODE_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ControlFlowGuard Condition="'$(Configuration)' != 'Debug'">Guard</ControlFlowGuard>
     </ClCompile>
   </ItemDefinitionGroup>
 

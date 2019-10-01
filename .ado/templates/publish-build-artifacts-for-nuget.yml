@@ -1,23 +1,26 @@
+parameters:
+  artifactName:
+  contents:
+  layoutHeaders: false
+
 steps:
-  - task: BatchScript@1
-    displayName: Copy NuGet source files
+  # Prepare headers for NuGet deployment
+  - task: PowerShell@2
+    displayName: Copy NuGet header files
     inputs:
-      filename: vnext\layoutFilesForNuget.bat
-      arguments: $(Build.ArtifactStagingDirectory)
-    condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x86'))
+      filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
+      arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
+    condition: ${{ parameters.layoutHeaders }}
 
   - task: CopyFiles@2
     displayName: Copy NuGet artifacts
     inputs:
-      SourceFolder: vnext\target\$(BuildPlatform)\$(BuildConfiguration)
-      TargetFolder: $(Build.ArtifactStagingDirectory)\$(BuildPlatform)\$(BuildConfiguration)
-      Contents: |
-        React.Windows.Desktop.DLL\**
-        React.Windows.Desktop.Test.DLL\**
-        ReactUWP\**
+      sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+      targetFolder: $(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
+      contents: ${{parameters.contents}}
 
   - task: PublishBuildArtifacts@1
-    displayName: "Publish Artifact: ReactWindows"
+    displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
-      PathtoPublish: $(Build.ArtifactStagingDirectory)
-      ArtifactName: "ReactWindows"
+      artifactName: ${{parameters.artifactName}}
+      pathtoPublish: $(Build.ArtifactStagingDirectory)

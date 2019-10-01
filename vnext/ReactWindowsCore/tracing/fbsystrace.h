@@ -9,7 +9,7 @@
 #include <unordered_map>
 
 #define TRACE_TAG_REACT_CXX_BRIDGE 1 << 10
-#define TRACE_TAG_REACT_APPS 1 << 11
+#define TRACE_TAG_REACT_APPS 1 << 17
 
 // Assuming maximum 8 arguments.
 // TODO :: We assume this magic number "8" at a couple of other places without
@@ -96,6 +96,10 @@ class FbSystraceSection {
       std::string &&v,
       ConvertsToStringPiece &&... rest)
       : tag_(tag), profile_name_(std::move(v)) {
+// This post processing helps in analysing the trace when profiling, but it adds
+// some overhead even when the traces are not being captured (i.e. ETW provider
+// not enabled.) Hence, the post processing is disabled by default.
+#ifdef ENABLE_TRACE_POSTPROCESSING
     // Note : We don't want to add any fuzzy text search here as they are
     // usually a lot more expensive ..
     if (profile_name_.compare("JSIExecutor::loadApplicationScript") == 0) {
@@ -105,7 +109,7 @@ class FbSystraceSection {
     } else if (profile_name_.compare("JSIExecutor::callNativeModules") == 0) {
       task_ = facebook::react::tracing::TraceTask::CallNativeModules;
     }
-
+#endif
     init(std::forward<ConvertsToStringPiece>(rest)...);
   }
 

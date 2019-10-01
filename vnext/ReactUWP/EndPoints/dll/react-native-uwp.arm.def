@@ -25,7 +25,7 @@ EXPORTS
 ?MakeMemoryMappedBuffer@JSI@Microsoft@@YA?AV?$shared_ptr@VBuffer@jsi@facebook@@@std@@QB_WI@Z
 ?at@dynamic@folly@@QGBAABU12@V?$Range@PBD@2@@Z
 ?atImpl@dynamic@folly@@AGBAABU12@ABU12@@Z
-?callJSFunction@Instance@react@facebook@@UAAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
+?callJSFunction@Instance@react@facebook@@QAAX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?checkedMalloc@folly@@YAPAXI@Z
 ?demangle@folly@@YA?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PBD@Z
 ?destroy@dynamic@folly@@AAAXXZ

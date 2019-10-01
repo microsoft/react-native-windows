@@ -9,7 +9,7 @@ import {ViewProps} from 'react-native';
 
 /**
  * @remarks
- * Props type for {@link ViewWindows}
+ * Props type for ViewWindows component
  *
  * Extends: {@link IKeyboardProps} and {@link https://facebook.github.io/react-native/docs/view | react-native's ViewProps}
  */

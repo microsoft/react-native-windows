@@ -117,9 +117,31 @@ void PropsAnimatedNode::StartAnimations() {
 void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
   if (m_expressionAnimations.count(valueTag)) {
     if (const auto target = GetUIElement()) {
-      target.StopAnimation(m_expressionAnimations.at(valueTag));
+      // We should start and stop the expression animtaions if there are
+      // no active animations. Suspending the active expression animations
+      // while they are not in use causes subsequent key frame animations
+      // which target the providing property set to never fire their completed
+      // events. I can't explain this and for now and commenting out the code.
+      // Fixing this will prevent memory bloat as the current solutions never
+      // stops the expression animations that are built as a part of this
+      // animation solution. Tracked by issue #3280.
+      // target.StopAnimation(m_expressionAnimations.at(valueTag));
+      m_suspendedExpressionAnimationTags.push_back(valueTag);
     }
-    m_expressionAnimations.erase(valueTag);
+  }
+}
+
+void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
+  const auto iterator = std::find(
+      m_suspendedExpressionAnimationTags.begin(),
+      m_suspendedExpressionAnimationTags.end(),
+      valueTag);
+  if (iterator != m_suspendedExpressionAnimationTags.end()) {
+    if (const auto target = GetUIElement()) {
+      // See comment above, tracked by issue #3280
+      // target.StartAnimation(m_expressionAnimations.at(valueTag));
+      m_suspendedExpressionAnimationTags.erase(iterator);
+    }
   }
 }
 
