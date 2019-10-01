@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "The customer provided examples revealed a few of issues.  One, we were dubble counding the starting value of animatiosn in some cases. Two we were incorrectly relying on JS to tell us to flatten our animated values. Three we were detaching the expression animations that tied the property to the UIElement and in certain cases the JS thread does not inform us that we need to rebuild this cuppling.  There is an open issue with this final part #3280",
+  "packageName": "rnpm-plugin-windows",
+  "email": "stpete@microsoft.com",
+  "commit": "87e54197b92a06e15acc0d3da7c4016eb3c95448",
+  "date": "2019-09-30T18:47:47.894Z"
+}

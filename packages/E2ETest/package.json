@@ -24,9 +24,9 @@
   "dependencies": {
     "react": "16.8.6",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
-    "react-native-windows": "0.60.0-vnext.4",
-    "react-native-windows-extended": "0.60.1",
-    "rnpm-plugin-windows": "^0.2.13"
+    "react-native-windows": "0.60.0-vnext.11",
+    "react-native-windows-extended": "0.61.1",
+    "rnpm-plugin-windows": "^0.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

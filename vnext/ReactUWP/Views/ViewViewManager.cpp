@@ -345,6 +345,7 @@ void ViewViewManager::UpdateProperties(
     const folly::dynamic &reactDiffMap) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
   bool shouldBeControl = pViewShadowNode->IsControl();
+  bool finalizeBorderRadius{false};
 
   auto pPanel = pViewShadowNode->GetViewPanel();
 
@@ -358,8 +359,9 @@ void ViewViewManager::UpdateProperties(
       } else if (TryUpdateBorderProperties(
                      nodeToUpdate, pPanel, propertyName, propertyValue)) {
         continue;
-      } else if (TryUpdateCornerRadius(
+      } else if (TryUpdateCornerRadiusOnNode(
                      nodeToUpdate, pPanel, propertyName, propertyValue)) {
+        finalizeBorderRadius = true;
         continue;
       } else if (TryUpdateMouseEvents(
                      nodeToUpdate, propertyName, propertyValue)) {
@@ -405,6 +407,9 @@ void ViewViewManager::UpdateProperties(
     // DynamicAutomationPeer
     shouldBeControl = shouldBeControl || HasDynamicAutomationProperties(view);
   }
+
+  if (finalizeBorderRadius)
+    UpdateCornerRadiusOnElement(nodeToUpdate, pPanel);
 
   pPanel.FinalizeProperties();
 

@@ -2,6 +2,121 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Sep 2019 18:28:23 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.11",
+      "version": "0.60.0-vnext.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to folly 2019.09.30.00",
+            "author": "acoates@microsoft.com",
+            "commit": "412556d92d4b300745cfee502eea46bc4e26b853"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Sep 2019 16:21:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.10",
+      "version": "0.60.0-vnext.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump up to latest published version. (#3275)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a72208e39a88f9d3b732d5679a5c77cbc7750560"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Sep 2019 01:21:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.9",
+      "version": "0.60.0-vnext.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add support for cpp template app",
+            "author": "email not defined",
+            "commit": "10233b95839d33eb57d32eaa6b67462f643884c4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Sep 2019 00:21:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.8",
+      "version": "0.60.0-vnext.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix build break when using latest Visual Studio compiler versions",
+            "author": "acoates@microsoft.com",
+            "commit": "1f1d803bd62b7f396c9e1978f05a43a915e38779"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Sep 2019 17:40:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.7",
+      "version": "0.60.0-vnext.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Sep 2019 17:34:59 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.6",
+      "version": "0.60.0-vnext.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "change file",
+            "author": "randyfl@microsoft.com",
+            "commit": "c8d5ae604e177fc6c119d2b1abd0448c09edfee7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Sep 2019 00:08:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.5",
+      "version": "0.60.0-vnext.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "update E2E doc",
+            "author": "licanhua@live.com",
+            "commit": "08a536aad65ec6a1440489218c31243ee210988b"
+          },
+          {
+            "comment": "Remove v8 related files from ReactCommon.vcxproj.",
+            "author": "yicyao@microsoft.com",
+            "commit": "0d0de897ea568ffa189941d3680e4f3d89e544cc"
+          },
+          {
+            "comment": "Only publish react-native-windows using vnext tag",
+            "author": "acoates@microsoft.com",
+            "commit": "a5f8ac0327970f73404ddc2599655497f6a404e2"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Sep 2019 18:32:05 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.4",
       "version": "0.60.0-vnext.4",

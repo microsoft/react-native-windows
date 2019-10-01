@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove v8 related files from ReactCommon.vcxproj.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "0d0de897ea568ffa189941d3680e4f3d89e544cc",
-  "date": "2019-09-25T21:28:07.427Z"
-}
