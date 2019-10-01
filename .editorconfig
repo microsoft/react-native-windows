@@ -14,7 +14,7 @@ trim_trailing_whitespace = true
 charset = utf-8
 end_of_line = lf
 
-[*.js]
+[*.{js, yml}]
 indent_size = 2
 
 [*.cs]
@@ -37,5 +37,5 @@ indent_size = 2
 end_of_line = crlf
 
 # Shell scripts
-[*.{cmd, bat, ps1}]
+[*.{cmd,bat,ps1}]
 end_of_line = crlf

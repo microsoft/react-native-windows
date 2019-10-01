@@ -1,7 +1,56 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 25 Sep 2019 18:32:05 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Oct 2019 18:17:42 GMT and should not be manually modified.
 
+## 0.60.0-vnext.16
+Tue, 01 Oct 2019 18:17:42 GMT
+
+### Changes
+
+- Turn ControlFlowGuard on by default (acoates@microsoft.com)
+- The customer provided examples revealed a few of issues.  One, we were dubble counding the starting value of animatiosn in some cases. Two we were incorrectly relying on JS to tell us to flatten our animated values. Three we were detaching the expression animations that tied the property to the UIElement and in certain cases the JS thread does not inform us that we need to rebuild this cuppling.  There is an open issue with this final part #3280 (stpete@microsoft.com)
+## 0.60.0-vnext.11
+Mon, 30 Sep 2019 18:28:23 GMT
+
+### Changes
+
+- Update to folly 2019.09.30.00 (acoates@microsoft.com)
+## 0.60.0-vnext.10
+Mon, 30 Sep 2019 16:21:08 GMT
+
+### Changes
+
+- Bump up to latest published version. (#3275) (julio.rocha@microsoft.com)
+## 0.60.0-vnext.9
+Sat, 28 Sep 2019 01:21:33 GMT
+
+### Changes
+
+- add support for cpp template app (email not defined)
+## 0.60.0-vnext.8
+Sat, 28 Sep 2019 00:21:32 GMT
+
+### Changes
+
+- Fix build break when using latest Visual Studio compiler versions (acoates@microsoft.com)
+## 0.60.0-vnext.7
+Fri, 27 Sep 2019 17:40:33 GMT
+
+### Changes
+
+- Allow focus transfer to Flyout on Open (kenander@microsoft.com)
+## 0.60.0-vnext.6
+Fri, 27 Sep 2019 17:34:59 GMT
+
+### Changes
+
+- change file (randyfl@microsoft.com)
+## 0.60.0-vnext.5
+Fri, 27 Sep 2019 00:08:28 GMT
+
+### Changes
+
+- Allow focus transfer to Flyout on Open (kenander@microsoft.com)
 ## 0.60.0-vnext.4
 Wed, 25 Sep 2019 18:32:05 GMT
 

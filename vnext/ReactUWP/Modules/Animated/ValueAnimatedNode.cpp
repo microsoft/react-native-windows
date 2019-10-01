@@ -87,6 +87,14 @@ void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag) {
 
 void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag) {
   m_activeAnimations.insert(animationTag);
+  if (m_activeAnimations.size() == 1) {
+    if (const auto manager = m_manager.lock()) {
+      for (const auto &props : m_dependentPropsNodes) {
+        if (const auto propsNode = manager->GetPropsAnimatedNode(props))
+          propsNode->ResumeSuspendedAnimations(Tag());
+      }
+    }
+  }
 }
 
 void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {

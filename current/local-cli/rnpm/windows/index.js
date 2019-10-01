@@ -16,6 +16,10 @@ module.exports = [{
     command: '--template [template]',
     description: 'Template to install. E.g., `vnext`.',
   }, {
+    command: '--language [language]',
+    description: 'Which language the template app is written in.  Possible values are cs and cpp',
+    default: 'cpp',
+  }, {
     command: '--overwrite',
     description: 'Overwrite any existing files without prompting',
     default: false,
