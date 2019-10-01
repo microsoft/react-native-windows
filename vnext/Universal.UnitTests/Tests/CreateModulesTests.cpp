@@ -37,8 +37,10 @@ TEST_METHOD(CreateModules_DevSupportManager) {
 }
 
 TEST_METHOD(CreateModules_DeviceInfoModule) {
-  auto deviceInfoModule =
-      std::make_unique<DeviceInfoModule>(std::make_unique<DeviceInfo>());
+  auto reactInstance = react::uwp::CreateReactInstance(nullptr);
+  Assert::IsFalse(reactInstance == nullptr);
+  auto deviceInfoModule = std::make_unique<DeviceInfoModule>(
+      std::make_unique<DeviceInfo>(reactInstance));
 
   Assert::IsFalse(deviceInfoModule == nullptr);
 }
