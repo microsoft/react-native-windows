@@ -3,6 +3,7 @@
 
 import "IReactPackage.idl";
 import "INativeModule.idl";
+import "INativeModulePackage.idl";
 import "ReactInstanceManager.idl";
 import "ReactInstanceSettings.idl";
 import "ReactRootView.idl";
@@ -24,6 +25,7 @@ namespace Microsoft.ReactNative
     Boolean HasInstance{ get; };
 
     overridable IVectorView<Microsoft.ReactNative.Bridge.IReactPackage> Packages{ get; };
+    overridable IVectorView<Microsoft.ReactNative.Bridge.INativeModulePackage> ModulePackages{ get; };
 
     overridable String MainComponentName{ get; };
     overridable Boolean UseDeveloperSupport{ get; };

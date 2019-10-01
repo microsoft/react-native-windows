@@ -3,7 +3,9 @@
 
 #include "pch.h"
 #include "NativeModulesProvider.h"
+#include "ABICxxModule.h"
 #include "ABIModule.h"
+#include "NativeModuleBuilder.h"
 
 #include <ReactUWP/ReactUwp.h>
 #include <folly/json.h>
@@ -31,10 +33,26 @@ NativeModulesProvider::GetModules(
     m_modulesWorkerQueue = react::uwp::CreateWorkerMessageQueue();
   }
 
-  for (auto module : m_modules) {
+  for (auto &module : m_modules) {
     modules.emplace_back(
         winrt::to_string(module.Name()),
         [module]() { return std::make_unique<ABIModule>(module); },
+        m_modulesWorkerQueue);
+  }
+
+  for (auto &entry : m_moduleProviders) {
+    modules.emplace_back(
+        entry.first,
+        [moduleName = entry.first, moduleProvider = entry.second]() {
+          winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder
+              moduleBuilder = winrt::make<
+                  winrt::Microsoft::ReactNative::Bridge::NativeModuleBuilder>();
+          moduleBuilder.SetName(winrt::to_hstring(moduleName));
+          auto providedModule = moduleProvider(moduleBuilder);
+          return moduleBuilder
+              .as<winrt::Microsoft::ReactNative::Bridge::NativeModuleBuilder>()
+              ->MakeCxxModule(providedModule);
+        },
         m_modulesWorkerQueue);
   }
 
@@ -49,6 +67,16 @@ void NativeModulesProvider::RegisterModule(
   // registered is allowed to take precedence over one that was already
   // registered.
   m_modules.push_back(module);
+}
+
+void NativeModulesProvider::AddPackage(
+    Microsoft::ReactNative::Bridge::INativeModulePackage package) {
+  package.CreateModuleProviders([this](
+      hstring moduleName,
+      Microsoft::ReactNative::Bridge::NativeModuleProvider
+          moduleProvider) noexcept {
+    m_moduleProviders.emplace(to_string(moduleName), moduleProvider);
+  });
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

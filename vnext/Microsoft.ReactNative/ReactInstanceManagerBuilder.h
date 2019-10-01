@@ -40,10 +40,15 @@ class ReactInstanceManagerBuilder {
     m_packages = packages;
   }
 
+  void ModulePackages(IVectorView<INativeModulePackage> const &modulePackages) {
+    m_modulePackages = modulePackages;
+  }
+
   Microsoft::ReactNative::ReactInstanceManager Build();
 
  private:
   Windows::Foundation::Collections::IVectorView<IReactPackage> m_packages;
+  Windows::Foundation::Collections::IVectorView<INativeModulePackage> m_modulePackages;
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   std::wstring m_jsBundleFile{};
   std::wstring m_jsMainModuleName{};

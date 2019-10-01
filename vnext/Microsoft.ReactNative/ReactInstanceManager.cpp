@@ -24,14 +24,16 @@ ReactInstanceManager::ReactInstanceManager(
     std::string jsBundleFile,
     std::string jsMainModuleName,
     IVectorView<IReactPackage> &packages,
+    IVectorView<INativeModulePackage> &modulePackages,
     bool useDeveloperSupport,
     /*TODO*/ LifecycleState /*initialLifecycleState*/)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
       m_packages(packages),
+      m_modulePackages(modulePackages),
       m_useDeveloperSupport(useDeveloperSupport) {
-  if (packages == nullptr) {
+  if (packages == nullptr || modulePackages == nullptr) {
     throw hresult_invalid_argument(L"packages");
   }
 
@@ -162,14 +164,22 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
     // TODO: Wrap/re-implement our existing set of core modules and add
     // them to the CoreModulesPackage.
 
-    for (auto package : m_packages) {
-      auto modules = package.CreateNativeModules(reactContext);
-      for (auto module : modules) {
-        // TODO: Allow a module to override another if they conflict on name?
-        // Something that the registry would handle.  And should that inform
-        // which modules get iniitalized?
-        m_modulesProvider->RegisterModule(module);
-        moduleRegistryList.Append(module);
+    if (m_packages) {
+      for (auto package : m_packages) {
+        auto modules = package.CreateNativeModules(reactContext);
+        for (auto module : modules) {
+          // TODO: Allow a module to override another if they conflict on name?
+          // Something that the registry would handle.  And should that inform
+          // which modules get iniitalized?
+          m_modulesProvider->RegisterModule(module);
+          moduleRegistryList.Append(module);
+        }
+      }
+    }
+
+    if (m_modulePackages) {
+      for (auto& modulePackage : m_modulePackages) {
+        m_modulesProvider->AddPackage(modulePackage);
       }
     }
   }

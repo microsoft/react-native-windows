@@ -37,6 +37,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   virtual hstring JavaScriptBundleFile();
   virtual bool UseDeveloperSupport();
   virtual IVectorView<IReactPackage> Packages();
+  virtual IVectorView<INativeModulePackage> ModulePackages();
 
   bool HasInstance() {
     return m_reactInstanceManager != nullptr;
@@ -57,6 +58,10 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
   IVectorView<IReactPackage> get_Packages() {
     return overridable().Packages();
+  }
+
+  IVectorView<INativeModulePackage> get_ModulePackages() {
+    return overridable().ModulePackages();
   }
 
  private:

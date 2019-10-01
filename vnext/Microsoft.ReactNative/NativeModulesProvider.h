@@ -20,9 +20,12 @@ class NativeModulesProvider final
       const std::shared_ptr<facebook::react::MessageQueueThread>
           &defaultQueueThread) override;
   void RegisterModule(INativeModule const &module);
+  void AddPackage(Microsoft::ReactNative::Bridge::INativeModulePackage package);
 
  private:
   std::vector<INativeModule> m_modules;
+  std::map<std::string, Microsoft::ReactNative::Bridge::NativeModuleProvider>
+      m_moduleProviders;
   std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{
       nullptr};
 };

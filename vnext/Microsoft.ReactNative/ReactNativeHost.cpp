@@ -100,6 +100,11 @@ bool ReactNativeHost::UseDeveloperSupport() {
 auto ReactNativeHost::Packages() -> IVectorView<IReactPackage> {
   return single_threaded_vector<IReactPackage>().GetView();
 }
+
+auto ReactNativeHost::ModulePackages() -> IVectorView<INativeModulePackage> {
+  return single_threaded_vector<INativeModulePackage>().GetView();
+}
+
 auto ReactNativeHost::InstanceSettings()
     -> Microsoft::ReactNative::ReactInstanceSettings {
   // Return the default
@@ -128,6 +133,7 @@ ReactNativeHost::CreateReactInstanceManager() {
   builder.JavaScriptBundleFile(get_JavaScriptBundleFile());
   builder.JavaScriptMainModuleName(get_JavaScriptMainModuleName());
   builder.Packages(get_Packages());
+  builder.ModulePackages(get_ModulePackages());
 
   return builder.Build();
 }

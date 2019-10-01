@@ -108,15 +108,21 @@
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIModule.h" />
     <ClInclude Include="Crash.h" />
-    <ClInclude Include="DynamicReader.h" />
-    <ClInclude Include="DynamicWriter.h" />
+    <ClInclude Include="DynamicReader.h">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="DynamicWriter.h">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="MethodInfo.h">
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="NativeModuleBuilder.h" />
+    <ClInclude Include="NativeModuleBuilder.h">
+      <DependentUpon>INativeModuleBuilder.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="NativeModuleRegistry.h">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -162,13 +168,19 @@
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIModule.cpp" />
-    <ClCompile Include="DynamicReader.cpp" />
-    <ClCompile Include="DynamicWriter.cpp" />
+    <ClCompile Include="DynamicReader.cpp">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="DynamicWriter.cpp">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="MethodInfo.cpp">
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="NativeModuleBuilder.cpp" />
+    <ClCompile Include="NativeModuleBuilder.cpp">
+      <DependentUpon>INativeModuleBuilder.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="NativeModuleRegistry.cpp">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -221,6 +233,7 @@
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="INativeModule.idl" />
     <Midl Include="INativeModuleBuilder.idl" />
+    <Midl Include="INativeModulePackage.idl" />
     <Midl Include="IReactPackage.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="MethodInfo.idl">
