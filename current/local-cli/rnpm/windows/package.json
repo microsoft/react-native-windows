@@ -1,6 +1,6 @@
 {
   "name": "rnpm-plugin-windows",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "rnpm plugin that generates a Windows template project",
   "main": "index.js",
   "keywords": [
