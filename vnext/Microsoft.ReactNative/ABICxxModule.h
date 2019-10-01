@@ -1,7 +1,11 @@
+#pragma once
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+//
 // The ABICxxModule implements the CxxModule interface and wraps up the ABI-safe
 // NativeModule.
-
-#pragma once
+//
 
 #include "cxxreact/CxxModule.h"
 #include "DynamicReader.h"
