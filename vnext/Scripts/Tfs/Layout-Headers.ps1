@@ -6,7 +6,7 @@ param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
 	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
-	[string] $FollyVersion = '2019.08.12.00',
+	[string] $FollyVersion = '2019.09.30.00',
 	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
@@ -20,6 +20,13 @@ $patterns = $Extensions| ForEach-Object {"*.$_"}
 Get-ChildItem -Path $ReactNativeRoot\ReactCommon -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $ReactNativeRoot\ReactCommon\$_ `
 	-Destination (New-Item -ItemType Directory $TargetRoot\inc\$(Split-Path $_) -Force) `
+	-Force
+}
+
+# Yoga headers
+Get-ChildItem -Path $ReactNativeRoot\ReactCommon\yoga\yoga -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactNativeRoot\ReactCommon\yoga\yoga\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Yoga\$(Split-Path $_) -Force) `
 	-Force
 }
 

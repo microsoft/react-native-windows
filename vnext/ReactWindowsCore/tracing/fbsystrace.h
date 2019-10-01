@@ -9,7 +9,7 @@
 #include <unordered_map>
 
 #define TRACE_TAG_REACT_CXX_BRIDGE 1 << 10
-#define TRACE_TAG_REACT_APPS 1 << 11
+#define TRACE_TAG_REACT_APPS 1 << 17
 
 // Assuming maximum 8 arguments.
 // TODO :: We assume this magic number "8" at a couple of other places without

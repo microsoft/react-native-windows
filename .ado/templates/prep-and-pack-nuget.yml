@@ -1,6 +1,7 @@
 parameters:
   publishCommitId: '0'
   npmVersion: '0.0.1-pr'
+  # Note: Nuget pack expects platform-specific file spearators ('\' on Windows).
   nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
   desktopId: 'OfficeReact.Win32'
   universalId: 'OfficeReact.UWP'
@@ -16,14 +17,14 @@ steps:
     displayName: 'NuGet pack Desktop'
     inputs:
       command: pack
-      packagesToPack: '$(System.DefaultWorkingDirectory)/ReactWindows/ReactWin32.nuspec'
-      packDestination: '$(System.DefaultWorkingDirectory)/NugetRootFinal/'
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/ReactWin32.nuspec
+      packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.desktopId}};nugetroot=${{parameters.nugetroot}}
 
   - task: NuGetCommand@2
     displayName: 'NuGet pack Universal'
     inputs:
       command: pack
-      packagesToPack: '$(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec'
-      packDestination: '$(System.DefaultWorkingDirectory)/NugetRootFinal/'
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/ReactUWP.nuspec
+      packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: CommitId=${{parameters.publishCommitId}};version=${{parameters.npmVersion}};id=${{parameters.universalId}};nugetroot=${{parameters.nugetroot}}
