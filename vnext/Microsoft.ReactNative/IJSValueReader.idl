@@ -1,0 +1,23 @@
+namespace Microsoft.ReactNative.Bridge {
+  enum JSValueReaderState {
+    Error,
+    ObjectBegin,
+    ObjectEnd,
+    ArrayBegin,
+    ArrayEnd,
+    PropertyName,
+    NullValue,
+    BooleanValue,
+    Int64Value,
+    DoubleValue,
+    StringValue,
+  };
+
+  interface IJSValueReader {
+    JSValueReaderState ReadNext();
+    Boolean TryGetBoolen(out Boolean value);
+    Boolean TryGetInt64(out Int64 value);
+    Boolean TryGetDouble(out Double value);
+    Boolean TryGetString(out String value);
+  };
+} // namespace Microsoft.ReactNative.Bridge
