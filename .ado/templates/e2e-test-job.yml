@@ -87,6 +87,11 @@ jobs:
           PathtoPublish: $(Build.ArtifactStagingDirectory)
           ArtifactName: "ReactWindows"
 
+      - task: PowerShell@2
+        displayName: 'Patch WebDriverIO'
+        inputs:
+          targetType: 'inline'
+          script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
 
       - task: CmdLine@2
         displayName: run test
