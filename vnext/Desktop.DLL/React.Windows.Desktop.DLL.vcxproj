@@ -68,7 +68,7 @@
       we have a better solution for handling the absence of WinRT string and error DLLs on Win7.
       -->
       <AdditionalDependencies>WindowsApp_downlevel.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>api-ms-win-core-winrt-error-l1-1-0.dll;api-ms-win-core-winrt-error-l1-1-1.dll;api-ms-win-core-winrt-string-l1-1-0.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>api-ms-win-core-winrt-error-l1-1-0.dll;api-ms-win-core-winrt-error-l1-1-1.dll;api-ms-win-core-winrt-string-l1-1-0.dll;ChakraCore.Debugger.DLL</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">

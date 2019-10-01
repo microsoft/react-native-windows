@@ -23,6 +23,13 @@ Get-ChildItem -Path $ReactNativeRoot\ReactCommon -Name -Recurse -Include $patter
 	-Force
 }
 
+# Yoga headers
+Get-ChildItem -Path $ReactNativeRoot\ReactCommon\yoga\yoga -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactNativeRoot\ReactCommon\yoga\yoga\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Yoga\$(Split-Path $_) -Force) `
+	-Force
+}
+
 # Folly headers
 Get-ChildItem -Path $FollyRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $FollyRoot\$_ `

@@ -29,7 +29,6 @@
     <file src="$nugetroot$\inc\folly\**\*.*" target="inc" />
     <file src="$nugetroot$\inc\stubs\**\*.*" target="inc" />
 
-    <file src="$nugetroot$\inc\ReactWin32\msoFolly.h" target="inc\msoFolly"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\AbiSafe.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\DevSettings.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWindowsCore\INativeUIManager.h" target="inc"/>
