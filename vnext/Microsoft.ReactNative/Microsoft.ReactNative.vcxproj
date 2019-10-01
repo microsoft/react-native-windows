@@ -108,6 +108,7 @@
     <ClInclude Include="ABIModule.h" />
     <ClInclude Include="Crash.h" />
     <ClInclude Include="DynamicReader.h" />
+    <ClInclude Include="DynamicWriter.h" />
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="MethodInfo.h">
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="ABIModule.cpp" />
     <ClCompile Include="DynamicReader.cpp" />
+    <ClCompile Include="DynamicWriter.cpp" />
     <ClCompile Include="MethodInfo.cpp">
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
