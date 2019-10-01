@@ -1,7 +1,7 @@
 #
 parameters:
   name: ''
-  pool: ''
+  pool:
   BuildPlatform: 'x86' # ARM, x86, x64
   UseRNFork: true
 
@@ -18,6 +18,12 @@ jobs:
         lfs: false # whether to download Git-LFS files
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: PowerShell@2
+        displayName: 'Remove WebDriverIO Workaround'
+        inputs:
+          targetType: 'inline'
+          script: '((Get-Content -path packages/E2ETest/package.json -Raw) -replace ".*webdriver.git.*","") | Set-Content -Path packages/E2ETest/package.json'
 
       - task: CmdLine@2
         displayName: Install react-native-cli
@@ -46,6 +52,12 @@ jobs:
           script: yarn install
         condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'false'))
 
+      - task: PowerShell@2
+        displayName: 'Patch WebDriverIO'
+        inputs:
+          targetType: 'inline'
+          script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
+      
       - template: stop-packagers.yml
 
       - task: CmdLine@2
@@ -71,35 +83,46 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script:  react-native run-windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script:  react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
           workingDirectory: packages/E2ETest
 
-      - task: CopyFiles@2
-        displayName: Copy NuGet artifacts
-        inputs:
-          SourceFolder: packages\E2ETest\windows\ReactUWPTestApp\AppPackages
-          TargetFolder: $(Build.ArtifactStagingDirectory)\MyAppPackages
-          Contents: |
-            ReactUWPTestApp_1.0.0.0_x64_ReleaseBundle_Test\**
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: ReactWindows"
-        inputs:
-          PathtoPublish: $(Build.ArtifactStagingDirectory)
-          ArtifactName: "ReactWindows"
-
+      # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
-        displayName: 'Patch WebDriverIO'
+        displayName: Wait for app to launch
         inputs:
-          targetType: 'inline'
-          script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
+          targetType: inline # filePath | inline
+          script: |
+            Start-Sleep -Seconds 30
 
       - task: CmdLine@2
         displayName: run test
         inputs:
           script: yarn run test
           workingDirectory: packages/E2ETest
-          
+
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: 'JUnit'
           testResultsFiles: 'packages/E2ETest/reports/*.log'
+        condition: succeededOrFailed()
+
+      - task: PowerShell@2
+        displayName: 'Show package.json'
+        inputs:
+          targetType: 'inline'
+          script: 'Get-Content packages/E2ETest/package.json | foreach {Write-Output $_}'
+        condition: failed()
+
+      - task: PowerShell@2
+        displayName: 'Show node_modules/webdriver/build/utils.js'
+        inputs:
+          targetType: 'inline'
+          script: 'Get-Content node_modules/webdriver/build/utils.js | foreach {Write-Output $_}'
+        condition: failed()
+
+      - task: PowerShell@2
+        displayName: 'Show appium log'
+        inputs:
+          targetType: 'inline'
+          script: 'Get-Content packages/E2ETest/reports/appium.txt | foreach {Write-Output $_}'
+        condition: failed()
