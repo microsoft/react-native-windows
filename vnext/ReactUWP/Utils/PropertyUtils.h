@@ -149,11 +149,10 @@ inline void UpdateCornerRadiusValueOnNode(
     ShadowNodeBase *node,
     ShadowCorners corner,
     const folly::dynamic &propertyValue) {
-
-    if (propertyValue.isNumber())
-      node->m_cornerRadius[corner] = propertyValue.asDouble();
-    else
-      node->m_cornerRadius[corner] = c_UndefinedEdge;
+  if (propertyValue.isNumber())
+    node->m_cornerRadius[corner] = propertyValue.asDouble();
+  else
+    node->m_cornerRadius[corner] = c_UndefinedEdge;
 }
 
 template <class T>
@@ -292,15 +291,20 @@ bool TryUpdateCornerRadiusOnNode(
   } else if (propertyName == "borderTopEndRadius") {
     UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopEnd, propertyValue);
   } else if (propertyName == "borderBottomRightRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomRight, propertyValue);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomRight, propertyValue);
   } else if (propertyName == "borderBottomLeftRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomLeft, propertyValue);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomLeft, propertyValue);
   } else if (propertyName == "borderBottomStartRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomStart, propertyValue);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomStart, propertyValue);
   } else if (propertyName == "borderBottomEndRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomEnd, propertyValue);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomEnd, propertyValue);
   } else if (propertyName == "borderRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::AllCorners, propertyValue);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::AllCorners, propertyValue);
   } else {
     return false;
   }
