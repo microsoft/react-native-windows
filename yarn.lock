@@ -10421,17 +10421,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-<<<<<<< HEAD
-rnpm-plugin-windows@^0.2.13:
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.2.13.tgz#c4e31607ea7fe7ce4279050a65319f33d42f33db"
-  integrity sha512-j0yQVIxhp3hlfaEhh+FhvDpA86iNI1C+1rr4Vuj7B3ijKnfbYQo5uImI0NB9JN+Hi9iPdXRihFJ4m7n4A1Pqaw==
-=======
-rnpm-plugin-windows@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.3.tgz#9a958911fc496fddffc909655a37d7554266d6ac"
-  integrity sha512-55O5BxwH1UTCYlSEBNhPPvIvMV0Thd4UfZLnORe/hV0yih2TYd1unk4GkRXKRd4jZnP6fyPj1JXM6Tksq70bRw==
->>>>>>> master
+rnpm-plugin-windows@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.5.tgz#6c84bedda93445017ce7d6d4035b25a1e86cdaf2"
+  integrity sha512-dCqiEr6QS7/yODKdoBY0b0VzocFilZ8RZDsnIPHIXtQhpo8y1VhJYqxoQAxnE3kFLGDKYuLwgfD8bTo0P2zZcg==
   dependencies:
     chalk "^1.1.3"
     extract-zip "^1.6.7"
