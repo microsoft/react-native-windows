@@ -2,7 +2,7 @@
 
 #include "ChakraJSIRuntimeHolder.h"
 
-#include <Chakra/ChakraJsiRuntimeFactory.h>
+#include <JSI/Shared/ChakraJsiRuntimeFactory.h>
 
 using namespace facebook;
 using namespace facebook::react;

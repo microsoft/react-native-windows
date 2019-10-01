@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{0cc28589-39e4-4288-b162-97b959f8b843}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.cpp" Condition="'$(OSS_RN)' != 'true'"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.h" Condition="'$(OSS_RN)' != 'true'"/>
+  </ItemGroup>
+</Project>

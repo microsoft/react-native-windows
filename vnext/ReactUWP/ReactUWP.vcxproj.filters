@@ -295,6 +295,7 @@
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\StatusBarModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -630,6 +631,7 @@
     <ClInclude Include="Utils\CppWinrtLessExceptions.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\StatusBarModule.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">

@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "pch.h"
-
 #include "ChakraJsiRuntime.h"
 #include "unicode.h"
 
-#if defined(USE_EDGEMODE_JSRT)
+#if !defined(CHAKRACORE)
 #include <jsrt.h>
 
 namespace facebook {

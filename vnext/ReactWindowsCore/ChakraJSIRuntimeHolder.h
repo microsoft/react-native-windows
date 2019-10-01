@@ -5,7 +5,7 @@
 #include <jsi/RuntimeHolder.h>
 #include <jsi/ScriptStore.h>
 
-#include <Chakra/ChakraJsiRuntimeArgs.h>
+#include <JSI/Shared/ChakraJsiRuntimeArgs.h>
 
 #include <Logging.h>
 

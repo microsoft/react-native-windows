@@ -2055,14 +2055,6 @@
   resolved "https://registry.yarnpkg.com/@microsoft/package-deps-hash/-/package-deps-hash-2.2.170.tgz#32c6e9268c2e129e98b4452b530c6fc152044f4a"
   integrity sha512-dUkeTu0t4L4i9An96E5iPgvYhhqdtdx3dQP9qlpqb+suCFfvdoftDD4lC0euk3yCwoAQB6LVGdPkE4Y6vSQgkg==
 
-"@microsoft/ts-command-line@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.0.tgz#6346c78131eacf8065174aa597018c9e6f25971a"
-  integrity sha512-A+gOHMTnUqT5FZhwIqEQCvH3xO8FEeaSk1oinhLsVmiy6UU8977eT0irbwA3kJPviBmn5sqZ6d+1v+t2Koqlxw==
-  dependencies:
-    argparse "~1.0.9"
-    colors "~1.2.1"
-
 "@microsoft/ts-command-line@4.3.1":
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.1.tgz#9a73337a85d0789a1d31528f6a241e9e59dd5c8c"
@@ -9883,7 +9875,6 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
 
 "react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz":
   version "0.60.0-microsoft-fb60merge.13"
-  uid "2846ab59aa8bafc7d2f6d73d5223ad5e5f4589f0"
   resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz#2846ab59aa8bafc7d2f6d73d5223ad5e5f4589f0"
   dependencies:
     "@babel/core" "^7.4.0"
@@ -10418,10 +10409,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rnpm-plugin-windows@^0.2.11:
-  version "0.2.11"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.2.11.tgz#ca37c587c003c8c8d05615d4cb69812f50ea6ac4"
-  integrity sha512-Tr3+ATvovFciMNEfu6I3cFYbjI/yK7Zn/CiflebxmGk119aVmiIadAWZeONG8XlovBpfAayNkHXkXj7oOZWV3Q==
+rnpm-plugin-windows@^0.2.13:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.2.13.tgz#c4e31607ea7fe7ce4279050a65319f33d42f33db"
+  integrity sha512-j0yQVIxhp3hlfaEhh+FhvDpA86iNI1C+1rr4Vuj7B3ijKnfbYQo5uImI0NB9JN+Hi9iPdXRihFJ4m7n4A1Pqaw==
   dependencies:
     chalk "^1.1.3"
     extract-zip "^1.6.7"
