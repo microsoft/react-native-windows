@@ -2,6 +2,26 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Tue, 01 Oct 2019 03:44:42 GMT",
+      "tag": "react-native-windows-extended_v0.59.4",
+      "version": "0.59.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "fix webview",
+            "author": "ngbu@microsoft.com",
+            "commit": "4de39a3d187b27fd246c4007b23da39a5e5a9138"
+          }
+        ],
+        "patch": [
+          {
+            "author": "acoates@microsoft.com",
+            "commit": "a65843e4853b4f43eb5473acea8d982f18a29902"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2019 18:51:30 GMT",
       "tag": "react-native-windows-extended_v0.59.3",
       "version": "0.59.3",

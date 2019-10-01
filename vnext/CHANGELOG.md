@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Sep 2019 19:28:46 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Oct 2019 03:44:42 GMT and should not be manually modified.
 
+## 0.59.0-vnext.195
+Tue, 01 Oct 2019 03:44:42 GMT
+
+### Changes
+
+- Publish yoga headers (acoates@microsoft.com)
 ## 0.59.0-vnext.194
 Mon, 30 Sep 2019 19:28:46 GMT
 

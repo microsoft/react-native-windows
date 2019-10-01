@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Mon, 30 Sep 2019 18:51:30 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Oct 2019 03:44:42 GMT and should not be manually modified.
 
+## 0.59.4
+Tue, 01 Oct 2019 03:44:42 GMT
+
+### Patches
+
+- undefined (acoates@microsoft.com)
 ## 0.59.3
 Mon, 30 Sep 2019 18:51:30 GMT
 

@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Publish yoga headers",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "a65843e4853b4f43eb5473acea8d982f18a29902",
-  "date": "2019-10-01T00:01:19.261Z"
-}
