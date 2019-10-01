@@ -3,13 +3,12 @@
 #include "folly/dynamic.h"
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Bridge {
 
 struct DynamicReader
     : winrt::implements<
           DynamicReader,
           winrt::Microsoft::ReactNative::Bridge::IJSValueReader> {
-
   DynamicReader(const folly::dynamic &root) noexcept;
 
  public: // IJSValueReader
@@ -43,4 +42,4 @@ struct DynamicReader
   std::u16string m_u16str; // Used for strings converted to UTF16
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Bridge

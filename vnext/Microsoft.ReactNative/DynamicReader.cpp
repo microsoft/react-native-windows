@@ -2,9 +2,7 @@
 #include "DynamicReader.h"
 #include "Crash.h"
 
-namespace Microsoft::ReactNative {
-
-using namespace winrt::Microsoft::ReactNative::Bridge;
+namespace winrt::Microsoft::ReactNative::Bridge {
 
 //===========================================================================
 // DynamicReader implementation
@@ -176,4 +174,4 @@ _Success_(return ) bool DynamicReader::TryGetString(
   return false;
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Bridge

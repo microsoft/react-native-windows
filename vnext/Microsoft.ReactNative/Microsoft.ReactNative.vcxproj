@@ -105,6 +105,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIModule.h" />
     <ClInclude Include="Crash.h" />
     <ClInclude Include="DynamicReader.h" />
@@ -115,6 +116,7 @@
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="NativeModuleBuilder.h" />
     <ClInclude Include="NativeModuleRegistry.h">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -158,6 +160,7 @@
     <ClInclude Include="ViewManagersProvider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIModule.cpp" />
     <ClCompile Include="DynamicReader.cpp" />
     <ClCompile Include="DynamicWriter.cpp" />
@@ -165,6 +168,7 @@
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="NativeModuleBuilder.cpp" />
     <ClCompile Include="NativeModuleRegistry.cpp">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
       <SubType>Code</SubType>

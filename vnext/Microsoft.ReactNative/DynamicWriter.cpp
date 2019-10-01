@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "DynamicWriter.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Bridge {
 
 //===========================================================================
 // DynamicWriter implementation
@@ -137,4 +137,4 @@ bool DynamicWriter::WriteValue(folly::dynamic &&value) noexcept {
   return false;
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Bridge
