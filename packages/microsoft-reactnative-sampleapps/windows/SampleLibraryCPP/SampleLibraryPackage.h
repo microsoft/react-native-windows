@@ -21,6 +21,10 @@ struct SampleLibraryPackage : SampleLibraryPackageT<SampleLibraryPackage> {
 
   IVectorView<IViewManager> CreateViewManagers(
       ReactContext const &reactContext);
+
+ private:
+  IVectorView<INativeModule> m_nativeModules{nullptr};
+  IVectorView<IViewManager> m_viewManagers{nullptr};
 };
 } // namespace winrt::SampleLibraryCPP::implementation
 

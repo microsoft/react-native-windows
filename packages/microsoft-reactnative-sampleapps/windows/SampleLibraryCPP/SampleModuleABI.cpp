@@ -7,14 +7,24 @@
 #include "SampleModuleABI.g.cpp"
 #endif
 
+#define _USE_MATH_DEFINES
+
+#include <math.h>
+
 using namespace winrt;
 
 namespace winrt::SampleLibraryCPP::implementation {
-void SampleModuleABI::Initialize() {}
+void SampleModuleABI::Initialize() {
+  OutputDebugStringW(L"SampleModuleABI::Initialize()\n");
+}
 
 IMapView<hstring, IInspectable> SampleModuleABI::Constants() {
   if (nullptr == m_constants) {
     auto constants = single_threaded_map<hstring, IInspectable>();
+
+    constants.Insert(L"NumberConstant", box_value(M_PI));
+    constants.Insert(L"StringConstant", box_value(L"Hello World"));
+
     m_constants = constants.GetView();
   }
 

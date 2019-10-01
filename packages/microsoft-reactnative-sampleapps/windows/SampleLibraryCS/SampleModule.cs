@@ -8,7 +8,6 @@ using System.Diagnostics;
 using Microsoft.ReactNative.Bridge;
 using Microsoft.ReactNative.Managed;
 
-
 namespace SampleLibraryCS
 {
     // Example using IManagedNativeModule and attributes (recommended)

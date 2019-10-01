@@ -17,7 +17,7 @@ namespace SampleLibraryCS
 
         public void Initialize()
         {
-            Debug.WriteLine("FancyMathABI initialized");
+            Debug.WriteLine("FancyMath.Initialize()");
         }
 
         [NativeModuleConstant]
@@ -40,7 +40,7 @@ namespace SampleLibraryCS
 
         public void Initialize()
         {
-            Debug.WriteLine("FancyMathABI initialized");
+            Debug.WriteLine("FancyMathABI.Initialize()");
         }
 
         public IReadOnlyDictionary<string, object> Constants => _constants ?? (_constants = new Dictionary<string, object>(2)

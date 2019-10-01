@@ -138,11 +138,11 @@ class SampleApp extends Component {
           To get started, edit index.windows.js
         </Text>
 
-        <Button onPress={this._onPressHandlerSM} title="Call SampleModule!"/>
-        <Button onPress={this._onPressHandlerFM} title="Call FancyMath!"/>
+        <Button onPress={this._onPressHandlerSM} title="Call SampleModule!" disabled={NativeModules.SampleModule == null} />
+        <Button onPress={this._onPressHandlerFM} title="Call FancyMath!" disabled={NativeModules.FancyMath == null} />
 
-        <Button onPress={this._onPressHandlerSMA} title="Call SampleModuleABI!"/>
-        <Button onPress={this._onPressHandlerFMA} title="Call FancyMathABI!"/>
+        <Button onPress={this._onPressHandlerSMA} title="Call SampleModuleABI!" disabled={NativeModules.SampleModuleABI == null} />
+        <Button onPress={this._onPressHandlerFMA} title="Call FancyMathABI!" disabled={NativeModules.FancyMathABI == null} />
       </View>
     );
   }
