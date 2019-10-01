@@ -61,7 +61,7 @@ void DeviceInfo::attachRoot(
     winrt::Windows::UI::Xaml::FrameworkElement rootElement) {
   m_rootElement = rootElement;
   m_sizeChangedRevoker =
-      m_rootElement.SizeChanged(winrt::auto_revoke, [&](auto &&, auto &&) {
+      m_rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
         auto size = m_rootElement.ActualSize();
         updateRootElementSize(size.x, size.y);
       });
