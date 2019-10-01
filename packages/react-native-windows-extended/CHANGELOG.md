@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 01 Oct 2019 03:44:42 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Oct 2019 22:22:30 GMT and should not be manually modified.
 
+## 0.59.5
+Tue, 01 Oct 2019 22:22:30 GMT
+
+### Patches
+
+- Simplify functions for updating borderRadius properties. (randyfl@microsoft.com)
 ## 0.59.4
 Tue, 01 Oct 2019 03:44:42 GMT
 

@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Tue, 01 Oct 2019 22:22:30 GMT",
+      "tag": "react-native-windows-extended_v0.59.5",
+      "version": "0.59.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Simplify functions for updating borderRadius properties.",
+            "author": "randyfl@microsoft.com",
+            "commit": "8817a63105339135896fcaa47cb7da4d74988489"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Oct 2019 03:44:42 GMT",
       "tag": "react-native-windows-extended_v0.59.4",
       "version": "0.59.4",

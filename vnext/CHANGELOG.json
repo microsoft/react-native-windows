@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 01 Oct 2019 22:22:30 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.195",
+      "version": "0.59.0-vnext.195",
+      "comments": {
+        "none": [
+          {
+            "comment": "Simplify functions for updating borderRadius properties.",
+            "author": "randyfl@microsoft.com",
+            "commit": "8817a63105339135896fcaa47cb7da4d74988489"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Oct 2019 03:44:42 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.195",
       "version": "0.59.0-vnext.195",
