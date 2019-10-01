@@ -9,8 +9,7 @@
 
 using namespace winrt;
 
-namespace winrt::SampleLibraryCPP::implementation
-{
+namespace winrt::SampleLibraryCPP::implementation {
 void FancyMathABI::Initialize() {}
 
 IMapView<hstring, IInspectable> FancyMathABI::Constants() {
@@ -31,4 +30,4 @@ IVectorView<MethodInfo> FancyMathABI::Methods() {
   return m_methods;
 }
 
-}
+} // namespace winrt::SampleLibraryCPP::implementation

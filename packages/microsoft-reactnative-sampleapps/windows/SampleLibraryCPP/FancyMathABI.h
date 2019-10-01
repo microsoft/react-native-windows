@@ -12,33 +12,28 @@ using namespace Windows::Foundation::Collections;
 using namespace Microsoft::ReactNative;
 using namespace Microsoft::ReactNative::Bridge;
 
-namespace winrt::SampleLibraryCPP::implementation
-{
-    struct FancyMathABI : FancyMathABIT<FancyMathABI>
-    {
-        FancyMathABI() = default;
+namespace winrt::SampleLibraryCPP::implementation {
+struct FancyMathABI : FancyMathABIT<FancyMathABI> {
+  FancyMathABI() = default;
 
-        // INativeModule
+  // INativeModule
 
-        hstring Name() {
-          return L"FancyMathABI";
-        }
+  hstring Name() {
+    return L"FancyMathABI";
+  }
 
-        void Initialize();
+  void Initialize();
 
-        IMapView<hstring, IInspectable> Constants();
-        IVectorView<MethodInfo> Methods();
+  IMapView<hstring, IInspectable> Constants();
+  IVectorView<MethodInfo> Methods();
 
-       private:
-        IMapView<hstring, IInspectable> m_constants{nullptr};
-        IVectorView<MethodInfo> m_methods{nullptr};
-        
-    };
-}
+ private:
+  IMapView<hstring, IInspectable> m_constants{nullptr};
+  IVectorView<MethodInfo> m_methods{nullptr};
+};
+} // namespace winrt::SampleLibraryCPP::implementation
 
-namespace winrt::SampleLibraryCPP::factory_implementation
-{
-    struct FancyMathABI : FancyMathABIT<FancyMathABI, implementation::FancyMathABI>
-    {
-    };
-}
+namespace winrt::SampleLibraryCPP::factory_implementation {
+struct FancyMathABI
+    : FancyMathABIT<FancyMathABI, implementation::FancyMathABI> {};
+} // namespace winrt::SampleLibraryCPP::factory_implementation
