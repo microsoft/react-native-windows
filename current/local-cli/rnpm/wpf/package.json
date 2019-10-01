@@ -1,6 +1,6 @@
 {
   "name": "rnpm-plugin-wpf",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "rnpm plugin that generates a Windows template project with WPF",
   "main": "index.js",
   "keywords": [
@@ -21,6 +21,6 @@
     "react-native": ">=0.31.0"
   },
   "dependencies": {
-    "rnpm-plugin-windows": ">=0.3.0 <1.0.0"
+    "rnpm-plugin-windows": ">=0.3.1 <1.0.0"
   }
 }
