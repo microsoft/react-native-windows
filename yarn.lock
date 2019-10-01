@@ -10421,10 +10421,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rnpm-plugin-windows@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.2.tgz#940a36e3ae664ac4dc1c817ca5be74c9930a9c96"
-  integrity sha512-yKcGSaGg2JNOqEoLnyLra+g93Phw5N9wHZE0gfF/eWfVAY1hTo1QT2Dzayvwom5kZ4hvS0XfEigiiqEN0O2ecQ==
+rnpm-plugin-windows@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.5.tgz#6c84bedda93445017ce7d6d4035b25a1e86cdaf2"
+  integrity sha512-dCqiEr6QS7/yODKdoBY0b0VzocFilZ8RZDsnIPHIXtQhpo8y1VhJYqxoQAxnE3kFLGDKYuLwgfD8bTo0P2zZcg==
   dependencies:
     chalk "^1.1.3"
     extract-zip "^1.6.7"

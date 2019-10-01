@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Turn ControlFlowGuard on by default",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "9249e5aeddb86c8d7f5d3e21fea8979a9c2dd5a5",
-  "date": "2019-09-25T17:08:01.919Z"
-}
