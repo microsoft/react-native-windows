@@ -6,10 +6,11 @@
 #include "SampleLibraryPackage.g.h"
 
 using namespace winrt;
-using namespace Microsoft::ReactNative;
-using namespace Microsoft::ReactNative::Bridge;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+
+using namespace Microsoft::ReactNative;
+using namespace Microsoft::ReactNative::Bridge;
 
 namespace winrt::SampleLibraryCPP::implementation {
 struct SampleLibraryPackage : SampleLibraryPackageT<SampleLibraryPackage> {

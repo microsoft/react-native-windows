@@ -16,8 +16,8 @@ using namespace Microsoft::ReactNative;
 namespace winrt::SampleLibraryCPP::implementation {
 IVectorView<Bridge::INativeModule> SampleLibraryPackage::CreateNativeModules(
     ReactContext const &reactContext) {
-  auto modules =
-      single_threaded_vector<Bridge::INativeModule>({SampleModuleABI()});
+  auto modules = single_threaded_vector<Bridge::INativeModule>(
+      {FancyMathABI(), SampleModuleABI()});
   return modules.GetView();
 }
 

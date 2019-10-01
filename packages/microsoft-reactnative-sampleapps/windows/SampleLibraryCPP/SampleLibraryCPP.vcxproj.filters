@@ -29,5 +29,6 @@
   <ItemGroup>
     <Midl Include="SampleLibraryPackage.idl" />
     <Midl Include="SampleModuleABI.idl" />
+    <Midl Include="FancyMathABI.idl" />
   </ItemGroup>
 </Project>
