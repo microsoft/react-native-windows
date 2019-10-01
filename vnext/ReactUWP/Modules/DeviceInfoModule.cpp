@@ -43,7 +43,7 @@ void DeviceInfo::update() {
 void DeviceInfo::updateRootElementSize(float width, float height) {
   m_dimensions["windowPhysicalPixels"]["width"] = width;
   m_dimensions["windowPhysicalPixels"]["height"] = height;
-  //fireEvent();
+  fireEvent();
 }
 
 void DeviceInfo::fireEvent() {
@@ -62,8 +62,11 @@ void DeviceInfo::attachRoot(
   m_rootElement = rootElement;
   m_sizeChangedRevoker =
       m_rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
-        //auto size = m_rootElement.ActualSize();
-        //updateRootElementSize(size.x, size.y);
+        try {
+          auto size = m_rootElement.ActualSize();
+          updateRootElementSize(size.x, size.y);
+        } catch (winrt::hresult_error const &) {
+        }
       });
 }
 
