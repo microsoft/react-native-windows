@@ -82,7 +82,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" Condition="'$(OSS_RN)' != 'true'"/>
   </ItemGroup>
   <ItemGroup>
     <!-- Future ClIncludes -->
