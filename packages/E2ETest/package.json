@@ -25,7 +25,7 @@
     "react": "16.8.6",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
     "react-native-windows": "0.60.0-vnext.16",
-    "react-native-windows-extended": "0.61.1",
+    "react-native-windows-extended": "0.60.2",
     "rnpm-plugin-windows": "^0.3.5"
   },
   "devDependencies": {
