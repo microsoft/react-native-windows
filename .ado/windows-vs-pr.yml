@@ -129,11 +129,11 @@ stages:
             inputs:
               solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
               msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-              msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
+              msbuildArchitecture: x86 # Optional. Options: x86, x64
               platform: $(BuildPlatform) # Optional
               configuration: $(BuildConfiguration) # Optional
               msbuildArguments:
-                /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+                /p:PreferredToolArchitecture=x86
                 /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
             condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
