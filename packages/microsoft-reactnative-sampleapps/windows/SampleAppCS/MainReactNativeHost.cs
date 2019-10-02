@@ -5,28 +5,36 @@ using System.Collections.Generic;
 
 using Microsoft.ReactNative;
 using Microsoft.ReactNative.Bridge;
-
+using Microsoft.ReactNative.Managed;
 using SampleLibraryCS;
 
 namespace SampleApp
 {
-  sealed class MainReactNativeHost : ReactNativeHost
-  {
-    public MainReactNativeHost()
+    sealed class MainReactNativeHost : ReactNativeHost
     {
-      this.InstanceSettings.UseWebDebugger = false; // Disabled temporarily because of issue #2877
-      this.InstanceSettings.UseLiveReload = true; // true by default in debug builds already
-      this.InstanceSettings.UseJsi = true;
-    }
+        public MainReactNativeHost()
+        {
+            this.InstanceSettings.UseWebDebugger = false; // Disabled temporarily because of issue #2877
+            this.InstanceSettings.UseLiveReload = true; // true by default in debug builds already
+            this.InstanceSettings.UseJsi = true;
+        }
 
-    protected override string MainComponentName => "SampleApp";
-    protected override string JavaScriptMainModuleName => "index.windows";
-    protected override IReadOnlyList<IReactPackage> Packages
-    {
-      get
-      {
-        return new IReactPackage[] { new SampleLibraryPackage() };
-      }
+        protected override string MainComponentName => "SampleApp";
+        protected override string JavaScriptMainModuleName => "index.windows";
+        protected override IReadOnlyList<IReactPackage> Packages
+        {
+            get
+            {
+                return new IReactPackage[] { new SampleLibraryPackage() };
+            }
+        }
+
+        protected override IReadOnlyList<INativeModulePackage> ModulePackages
+        {
+            get
+            {
+                return new INativeModulePackage[] { new ReactModulePackage(), new SampleLibraryCPP.SampleLibraryCppPackage() };
+            }
+        }
     }
-  }
 }

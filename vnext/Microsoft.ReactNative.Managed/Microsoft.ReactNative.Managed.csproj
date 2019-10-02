@@ -82,24 +82,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="JSValueReader.cs" />
-    <Compile Include="JSValueWriter.cs" />
     <Compile Include="ManagedNativeModule.cs" />
     <Compile Include="ManagedViewManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReactAttributes.cs" />
-    <Compile Include="ReactCallback.cs" />
-    <Compile Include="ReactConstantInfo.cs" />
-    <Compile Include="ReactConstantProvider.cs" />
-    <Compile Include="ReactConstantProviderInfo.cs" />
-    <Compile Include="ReactEnumerableExtensions.cs" />
-    <Compile Include="ReactEvent.cs" />
-    <Compile Include="ReactEventInfo.cs" />
-    <Compile Include="ReactException.cs" />
-    <Compile Include="ReactMethodInfo.cs" />
-    <Compile Include="ReactModuleInfo.cs" />
-    <Compile Include="ReactModulePackage.cs" />
-    <Compile Include="ReactSyncMethodInfo.cs" />
     <Compile Include="ReflectionHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
