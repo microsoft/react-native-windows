@@ -54,7 +54,8 @@ IVectorView<MethodInfo> FancyMathABI::Methods() {
           size_t commaIndex = json.find_first_of(L",", 0);
 
           double a = std::stod(json.substr(1, commaIndex - 1));
-          double b = std::stod(json.substr(commaIndex + 1, json.size() - (commaIndex + 2)));
+          double b = std::stod(
+              json.substr(commaIndex + 1, json.size() - (commaIndex + 2)));
 
           double result = a + b;
           callback(single_threaded_vector<IInspectable>({box_value(result)})
