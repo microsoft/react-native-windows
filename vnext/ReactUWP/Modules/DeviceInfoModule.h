@@ -29,7 +29,7 @@ class DeviceInfo {
  private:
   void fireEvent();
   folly::dynamic m_dimensions;
-  winrt::Windows::UI::Xaml::FrameworkElement m_rootElement{nullptr};
+  winrt::weak_ref<winrt::Windows::UI::Xaml::FrameworkElement> m_rootElement{};
   winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker
       m_sizeChangedRevoker;
   std::weak_ptr<IReactInstance> m_wkReactInstance;

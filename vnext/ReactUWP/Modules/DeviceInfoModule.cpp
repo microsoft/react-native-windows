@@ -57,15 +57,13 @@ void DeviceInfo::fireEvent() {
   }
 }
 
-void DeviceInfo::attachRoot(
-    winrt::Windows::UI::Xaml::FrameworkElement rootElement) {
-  m_rootElement = rootElement;
+void DeviceInfo::attachRoot(winrt::FrameworkElement rootElement) {
+  m_rootElement = winrt::make_weak(rootElement);
   m_sizeChangedRevoker =
-      m_rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
-        try {
-          auto size = m_rootElement.ActualSize();
+      rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
+        if (const auto root = m_rootElement.get()) {
+          auto size = root.ActualSize();
           updateRootElementSize(size.x, size.y);
-        } catch (winrt::hresult_error const &) {
         }
       });
 }
