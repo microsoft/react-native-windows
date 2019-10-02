@@ -105,6 +105,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   void registerEvents();
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
+  bool m_contextMenuHidden = false;
   bool m_isTextBox = true;
 
   // Javascripts is running in a different thread. If the typing is very fast,
@@ -118,14 +119,18 @@ class TextInputShadowNode : public ShadowNodeBase {
   winrt::TextBox::TextChanging_revoker m_textBoxTextChangingRevoker{};
   winrt::TextBox::TextChanged_revoker m_textBoxTextChangedRevoker{};
   winrt::TextBox::SelectionChanged_revoker m_textBoxSelectionChangedRevoker{};
+  winrt::TextBox::ContextMenuOpening_revoker
+      m_textBoxContextMenuOpeningRevoker{};
 
   winrt::PasswordBox::PasswordChanging_revoker
       m_passwordBoxPasswordChangingRevoker{};
   winrt::PasswordBox::PasswordChanged_revoker
       m_passwordBoxPasswordChangedRevoker{};
+  winrt::PasswordBox::ContextMenuOpening_revoker
+      m_passwordBoxContextMenuOpeningRevoker{};
 
-  winrt::TextBox::GotFocus_revoker m_controlGotFocusRevoker{};
-  winrt::TextBox::LostFocus_revoker m_controlLostFocusRevoker{};
+  winrt::Control::GotFocus_revoker m_controlGotFocusRevoker{};
+  winrt::Control::LostFocus_revoker m_controlLostFocusRevoker{};
   winrt::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
   winrt::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
@@ -192,6 +197,26 @@ void TextInputShadowNode::registerEvents() {
     m_passwordBoxPasswordChangedRevoker =
         passwordBox.PasswordChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
           dispatchTextInputChangeEvent(passwordBox.Password());
+        });
+  }
+
+  if (m_isTextBox) {
+    m_passwordBoxContextMenuOpeningRevoker = {};
+    auto textBox = control.as<winrt::TextBox>();
+    m_textBoxContextMenuOpeningRevoker = textBox.ContextMenuOpening(
+        winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
+          if (m_contextMenuHidden) {
+            e.Handled(true);
+          }
+        });
+  } else {
+    m_textBoxContextMenuOpeningRevoker = {};
+    auto passwordBox = control.as<winrt::PasswordBox>();
+    m_passwordBoxContextMenuOpeningRevoker = passwordBox.ContextMenuOpening(
+        winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
+          if (m_contextMenuHidden) {
+            e.Handled(true);
+          }
         });
   }
 
@@ -357,6 +382,9 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isNumber()) {
         m_mostRecentEventCount = static_cast<uint32_t>(propertyValue.asInt());
       }
+    } else if (propertyName == "contextMenuHidden") {
+      if (propertyValue.isBool())
+        m_contextMenuHidden = propertyValue.asBool();
     } else if (propertyName == "secureTextEntry") {
       if (propertyValue.isBool()) {
         if (propertyValue.asBool()) {
@@ -527,7 +555,8 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selection", "Map")("selectionColor", "Color")(
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
-      "secureTextEntry", "boolean")("keyboardType", "string"));
+      "secureTextEntry", "boolean")("keyboardType", "string")(
+      "contextMenuHidden", "boolean"));
 
   return props;
 }
