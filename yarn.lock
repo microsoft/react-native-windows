@@ -2439,6 +2439,15 @@
     deepmerge "^4.0.0"
     glob "^7.1.2"
 
+"@wdio/config@5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@wdio/config/-/config-5.14.0.tgz#6fa3077c49b3661aea2a9f3f8c4e68ffe3b51cb3"
+  integrity sha512-JUvk4yNGlNmHMtqvmOGSVhr+4a/AOUwr/OFkBYss1nUApIp3871j1GoT+JsVNP6WN9vZRV3a6pNMsAuLbuRZfQ==
+  dependencies:
+    "@wdio/logger" "5.13.2"
+    deepmerge "^4.0.0"
+    glob "^7.1.2"
+
 "@wdio/dot-reporter@^5.11.7":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/dot-reporter/-/dot-reporter-5.13.2.tgz#b0ea10d8e15d3a4c02cc77568ee6ff9c5b208a8f"
@@ -2467,13 +2476,13 @@
     validator "^11.0.0"
 
 "@wdio/local-runner@^5.10.1":
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-5.13.2.tgz#e8aed67bf318d7dfd1605941f0a42ed9bcf1bf36"
-  integrity sha512-1w+hR1ZsaBWEDQqUeTHbKpYX3HxYPKkCnCBmcLjUPq9Na/TeCXkRuoRoIn0MV7RhcLbbrZdeaRZTW7Ttn4SUEw==
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-5.14.0.tgz#30a049845a818f1ec10a9c0ee44f4e90b80f762f"
+  integrity sha512-pACoJLKbOZ/0s3Yz7FnEQlQulqmIo+pwVoKL+x2AvYfAfC/2L8XVxs6wVAvW3HcKPhGhkjbHGw2dk0haG6aHwQ==
   dependencies:
     "@wdio/logger" "5.13.2"
-    "@wdio/repl" "5.13.2"
-    "@wdio/runner" "5.13.2"
+    "@wdio/repl" "5.14.0"
+    "@wdio/runner" "5.14.0"
     async-exit-hook "^2.0.1"
     stream-buffers "^3.0.2"
 
@@ -2492,12 +2501,24 @@
   resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-5.13.2.tgz#06718f8d8a173a8756e2147d7b7c6d8163f3b43a"
   integrity sha512-R6QJaa8gSew50LWrGcy/kO01xzDx4fpSoX25GYvLc/Q7gEYyDwdfiB7vIPWnKR7pHjBujNDt100ACSA3Aen/gw==
 
+"@wdio/protocols@5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-5.14.0.tgz#9007b67d14f4bcebd2b9097f611d4a558024c308"
+  integrity sha512-7jRxGkreibkqHKQV5jlQmAyqzIIU43lg9KSNGy0ThrUz8kLsOzClaTdL2qDlFUkLcplqMvRFcnmwFPjvCptmVg==
+
 "@wdio/repl@5.13.2":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.13.2.tgz#6a7a56ff231c4dd926c26c4bfc1cddc0e90b74ce"
   integrity sha512-mNGj+UcodJTQa4Ecb30iItdcRHrB7GhC+DT0+/J/cO2MQPIf3ZlcpsBGTXZL8ZHcpOUYm0nLt2vKchdRPGVRtw==
   dependencies:
     "@wdio/config" "5.13.2"
+
+"@wdio/repl@5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@wdio/repl/-/repl-5.14.0.tgz#6f8b6b3367a7d957a50861cc41be5f122c0a3d87"
+  integrity sha512-OqOxYMWmVOkWFP1L8cOFgRVomgFd4WyTxR/y2U4KNw8vXbsvD0ZV33Newj78FA3xA7szeuYi3gBhbORXwZ5EMw==
+  dependencies:
+    "@wdio/utils" "5.14.0"
 
 "@wdio/reporter@5.13.2":
   version "5.13.2"
@@ -2506,17 +2527,17 @@
   dependencies:
     fs-extra "^8.0.1"
 
-"@wdio/runner@5.13.2":
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-5.13.2.tgz#93aa0ecf86fe6d30833905a7963a21786be43491"
-  integrity sha512-9X7krISsMJI3nk7zJQ+3OVSJAl4DL3Z2bwQNNhAK8O+HsI361gPk1UGBRFlWoFZ0plQt5okVF8KJYblV90BMyg==
+"@wdio/runner@5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-5.14.0.tgz#e4d1f069b86fb3240da846b9bcb9e53476b4a543"
+  integrity sha512-vFRNvs1CG8inoxCsiGQ+giTBnmK8yMI4upVQZe385/Bz6UedQI3iOWTkMWm86r8DwcEWe90rkGClMtKWnhUMMQ==
   dependencies:
-    "@wdio/config" "5.13.2"
+    "@wdio/config" "5.14.0"
     "@wdio/logger" "5.13.2"
-    "@wdio/utils" "5.13.2"
+    "@wdio/utils" "5.14.0"
     deepmerge "^4.0.0"
     gaze "^1.1.2"
-    webdriverio "5.13.2"
+    webdriverio "5.14.0"
 
 "@wdio/sync@^5.10.1":
   version "5.13.0"
@@ -2534,6 +2555,14 @@
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.13.2.tgz#2e56b5488521e394bce02de9b4236f21d1d582eb"
   integrity sha512-DGwoZZKpGo6BkLOIXnBHu+9mg0RABq0Sh9cb1GLOAeBeIEW7efCDYqT9+rczEJSgHKnKJra1+T8I4IfoxyUX/w==
+  dependencies:
+    "@wdio/logger" "5.13.2"
+    deepmerge "^4.0.0"
+
+"@wdio/utils@5.14.0":
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.14.0.tgz#cc1d6d0d4cd406c13ba46169c216965ce7f50c65"
+  integrity sha512-Du6DeTHrElyPL+vQDUQhXiPy7DWAfiCaPikCmgL1Et45+3difUr3DNjctU3Bkgl22PU9nK6xUX27oUkx4vAsAg==
   dependencies:
     "@wdio/logger" "5.13.2"
     deepmerge "^4.0.0"
@@ -5379,19 +5408,19 @@ eslint-plugin-react-native@3.6.0:
     eslint-plugin-react-native-globals "^0.1.1"
 
 eslint-plugin-react@7.12.4, eslint-plugin-react@^7.14.1:
-  version "7.14.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.14.3.tgz#911030dd7e98ba49e1b2208599571846a66bdf13"
-  integrity sha512-EzdyyBWC4Uz2hPYBiEJrKCUi2Fn+BJ9B/pJQcjw5X+x/H2Nm59S4MJIvL4O5NEE0+WbnQwEBxWY03oUk+Bc3FA==
+  version "7.15.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.15.1.tgz#db5f8ed66c6ba46922518f08e1df9dac52ccaa49"
+  integrity sha512-YotSItgMPwLGlr3df44MGVyXnHkmKcpkHTzpte3QwJtocr3nFqCXCuoxFZeBtnT8RHdj038NlTvam3dcAFrMcA==
   dependencies:
     array-includes "^3.0.3"
     doctrine "^2.1.0"
     has "^1.0.3"
-    jsx-ast-utils "^2.1.0"
+    jsx-ast-utils "^2.2.1"
     object.entries "^1.1.0"
     object.fromentries "^2.0.0"
     object.values "^1.1.0"
     prop-types "^15.7.2"
-    resolve "^1.10.1"
+    resolve "^1.12.0"
 
 eslint-scope@3.7.1:
   version "3.7.1"
@@ -7392,7 +7421,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jsx-ast-utils@^2.1.0:
+jsx-ast-utils@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.2.1.tgz#4d4973ebf8b9d2837ee91a8208cc66f3a2776cfb"
   integrity sha512-v3FxCcAf20DayI+uxnCuw795+oOIkVu6EnJ1+kSzhqqTZHNkTZ7B66ZgLp4oLJ/gbA64cI0B7WRoHZMSRdyVRQ==
@@ -10343,7 +10372,7 @@ resolve@1.8.1:
   dependencies:
     path-parse "^1.0.5"
 
-resolve@^1.1.6, resolve@^1.10.0, resolve@^1.10.1, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.8.1:
+resolve@^1.1.6, resolve@^1.10.0, resolve@^1.12.0, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.8.1:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.12.0.tgz#3fc644a35c84a48554609ff26ec52b66fa577df6"
   integrity sha512-B/dOmuoAik5bKcD6s6nXDCjzUKnaDvdkRyAk6rsmsKLipWj4797iothd7jmmUhWTfinVMU+wc56rYKsit2Qy4w==
@@ -10421,10 +10450,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rnpm-plugin-windows@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.3.tgz#9a958911fc496fddffc909655a37d7554266d6ac"
-  integrity sha512-55O5BxwH1UTCYlSEBNhPPvIvMV0Thd4UfZLnORe/hV0yih2TYd1unk4GkRXKRd4jZnP6fyPj1JXM6Tksq70bRw==
+rnpm-plugin-windows@^0.3.5:
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.5.tgz#6c84bedda93445017ce7d6d4035b25a1e86cdaf2"
+  integrity sha512-dCqiEr6QS7/yODKdoBY0b0VzocFilZ8RZDsnIPHIXtQhpo8y1VhJYqxoQAxnE3kFLGDKYuLwgfD8bTo0P2zZcg==
   dependencies:
     chalk "^1.1.3"
     extract-zip "^1.6.7"
@@ -11930,6 +11959,18 @@ webdriver@5.13.2:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
+webdriver@5.14.0:
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.14.0.tgz#c384850445de4d8a5edf036781a35b8d71ce7f9e"
+  integrity sha512-imKjJ9v67l590BMMIx4i0AR/S8vRzXjA17mh5qRj811OAm2so1k0uVnx4bL+UzkheWzKh9tugHwnY9P5on+kfg==
+  dependencies:
+    "@wdio/config" "5.14.0"
+    "@wdio/logger" "5.13.2"
+    "@wdio/protocols" "5.14.0"
+    "@wdio/utils" "5.14.0"
+    lodash.merge "^4.6.1"
+    request "^2.83.0"
+
 "webdriver@git+https://github.com/react-native-windows/webdriver.git":
   version "5.12.1"
   resolved "git+https://github.com/react-native-windows/webdriver.git#43e84dbd1a6effdf305942304daa7e6bddea4fc4"
@@ -11960,6 +12001,27 @@ webdriverio@5.13.2, webdriverio@^5.10.1, webdriverio@^5.10.9:
     rgb2hex "^0.1.0"
     serialize-error "^5.0.0"
     webdriver "5.13.2"
+
+webdriverio@5.14.0:
+  version "5.14.0"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.14.0.tgz#5e44178b0a894cc7b2a27362ffdffe4ffc3f90d6"
+  integrity sha512-BwwYYvA5EKiCUjWl8NhrqGYYOwGuaH857ighaooaXQtdHsyP3U5i9dZ/DTqKoUzQ7qGAuARjGExarOYNCqM2Lg==
+  dependencies:
+    "@wdio/config" "5.14.0"
+    "@wdio/logger" "5.13.2"
+    "@wdio/repl" "5.14.0"
+    "@wdio/utils" "5.14.0"
+    archiver "^3.0.0"
+    css-value "^0.0.1"
+    grapheme-splitter "^1.0.2"
+    lodash.clonedeep "^4.5.0"
+    lodash.isobject "^3.0.2"
+    lodash.isplainobject "^4.0.6"
+    lodash.zip "^4.2.0"
+    resq "^1.6.0"
+    rgb2hex "^0.1.0"
+    serialize-error "^5.0.0"
+    webdriver "5.14.0"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
