@@ -72,9 +72,6 @@
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /Zc:twoPhase-</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
