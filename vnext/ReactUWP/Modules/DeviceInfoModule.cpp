@@ -62,9 +62,10 @@ void DeviceInfo::attachRoot(winrt::FrameworkElement rootElement) {
   m_sizeChangedRevoker =
     rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
       if (const auto root = m_rootElement.get()) {
-        auto size = root.ActualSize();
-        updateRootElementSize(size.x, size.y);
-      }
+        //auto size = root.ActualSize();
+        //updateRootElementSize(size.x, size.y);
+        updateRootElementSize(100, 100);
+        }
     });
 }
 
