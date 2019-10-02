@@ -142,6 +142,11 @@ _Success_(return ) bool DynamicReader::TryGetInt64(
     value = m_stack.back().Value->asInt();
     return true;
   }
+  else if (m_state == JSValueReaderState::DoubleValue) {
+    VerifyElseCrash(!m_stack.empty());
+    value = static_cast<int64_t>(m_stack.back().Value->asDouble());
+    return true;
+  }
 
   value = 0;
   return false;
@@ -154,6 +159,12 @@ _Success_(return ) bool DynamicReader::TryGetDouble(
     value = m_stack.back().Value->asDouble();
     return true;
   }
+  else if (m_state == JSValueReaderState::Int64Value) {
+    VerifyElseCrash(!m_stack.empty());
+    value = static_cast<double>(m_stack.back().Value->asInt());
+    return true;
+  }
+
 
   value = 0;
   return false;

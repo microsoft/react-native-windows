@@ -128,6 +128,20 @@ class SampleApp extends Component {
     );
   }
 
+  _onPressHandlerCppCalculator() {
+    var logCallback = function(result) {
+      console.log(result);
+      NativeModules.DebugConsole.Log(result + "\n");
+    };
+
+    logCallback("Hello from JS!");
+
+    NativeModules.Calculator.Add(5, 6, logCallback);
+    NativeModules.Calculator.Add(5, 12, logCallback);
+    NativeModules.Calculator.Subtract(5, 6).then(logCallback, logCallback);
+    NativeModules.Calculator.Subtract(6, 5).then(logCallback, logCallback);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -143,6 +157,8 @@ class SampleApp extends Component {
 
         <Button onPress={this._onPressHandlerSMA} title="Call SampleModuleABI!"/>
         <Button onPress={this._onPressHandlerFMA} title="Call FancyMathABI!"/>
+       
+        <Button onPress={this._onPressHandlerCppCalculator} title="Call SampleLibraryCPP Calculator"/>
       </View>
     );
   }

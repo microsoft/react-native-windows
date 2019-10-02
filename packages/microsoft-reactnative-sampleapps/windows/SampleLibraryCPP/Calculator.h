@@ -1,0 +1,27 @@
+#pragma once
+#include <functional>
+#include "NativeModules.h"
+
+namespace SampleLibraryCPP {
+
+struct Calculator {
+  RN_METHOD(Add);
+  int Add(int x, int y) noexcept {
+    return x + y;
+  }
+
+  RN_METHOD(Subtract);
+  void Subtract(
+      int x,
+      int y,
+      std::function<void(int)> &&result,
+      std::function<void(std::string)> &&onError) noexcept {
+    if (x > y) {
+      result(x - y);
+    } else {
+      onError("x must be greater than y");
+    }
+  }
+};
+
+} // namespace CppModule

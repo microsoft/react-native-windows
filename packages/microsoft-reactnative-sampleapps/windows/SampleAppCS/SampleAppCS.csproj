@@ -153,6 +153,10 @@
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
       <Name>Microsoft.ReactNative</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SampleLibraryCPP\SampleLibraryCPP.vcxproj">
+      <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
+      <Name>SampleLibraryCPP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SampleLibraryCS\SampleLibraryCS.csproj">
       <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
       <Name>SampleLibraryCS</Name>

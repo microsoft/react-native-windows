@@ -12,11 +12,15 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="MainReactNativeHost.cpp" />
+    <ClCompile Include="NativeModulePackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="MainReactNativeHost.h" />
+    <ClInclude Include="MyModule.h" />
+    <ClInclude Include="NativeModulePackage.h" />
+    <ClInclude Include="DebugConsole.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">

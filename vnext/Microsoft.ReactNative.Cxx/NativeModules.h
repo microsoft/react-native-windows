@@ -152,23 +152,25 @@ inline bool ReadValue(
 inline bool ReadValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader,
     int8_t &value) noexcept {
-  int32_t result{};
-  return reader.TryGetInt32(result) &&
+  int64_t result{};
+  return reader.TryGetInt64(result) &&
       (value = static_cast<int8_t>(result), true);
 }
 
 inline bool ReadValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader,
     int16_t &value) noexcept {
-  int32_t result{};
-  return reader.TryGetInt32(result) &&
+  int64_t result{};
+  return reader.TryGetInt64(result) &&
       (value = static_cast<int16_t>(result), true);
 }
 
 inline bool ReadValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader,
     int32_t &value) noexcept {
-  return reader.TryGetInt32(value);
+  int64_t result{};
+  return reader.TryGetInt64(result) &&
+      (value = static_cast<int32_t>(result), true);
 }
 
 inline bool ReadValue(
@@ -180,24 +182,24 @@ inline bool ReadValue(
 inline bool ReadValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader,
     uint8_t &value) noexcept {
-  int32_t result{};
-  return reader.TryGetInt32(result) &&
+  int64_t result{};
+  return reader.TryGetInt64(result) &&
       (value = static_cast<uint8_t>(result), true);
 }
 
 inline bool ReadValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader,
     uint16_t &value) noexcept {
-  int32_t result{};
-  return reader.TryGetInt32(result) &&
+  int64_t result{};
+  return reader.TryGetInt64(result) &&
       (value = static_cast<uint16_t>(result), true);
 }
 
 inline bool ReadValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader,
     uint32_t &value) noexcept {
-  int32_t result{};
-  return reader.TryGetInt32(result) &&
+  int64_t result{};
+  return reader.TryGetInt64(result) &&
       (value = static_cast<uint32_t>(result), true);
 }
 
@@ -298,19 +300,19 @@ inline bool WriteValue(
 inline bool WriteValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueWriter const &writer,
     int8_t value) noexcept {
-  return writer.WriteInt32(value);
+  return writer.WriteInt64(value);
 }
 
 inline bool WriteValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueWriter const &writer,
     int16_t value) noexcept {
-  return writer.WriteInt32(value);
+  return writer.WriteInt64(value);
 }
 
 inline bool WriteValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueWriter const &writer,
     int32_t value) noexcept {
-  return writer.WriteInt32(value);
+  return writer.WriteInt64(value);
 }
 
 inline bool WriteValue(
@@ -322,19 +324,19 @@ inline bool WriteValue(
 inline bool WriteValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueWriter const &writer,
     uint8_t value) noexcept {
-  return writer.WriteInt32(static_cast<int32_t>(value));
+  return writer.WriteInt64(static_cast<int64_t>(value));
 }
 
 inline bool WriteValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueWriter const &writer,
     uint16_t value) noexcept {
-  return writer.WriteInt32(static_cast<int32_t>(value));
+  return writer.WriteInt64(static_cast<int64_t>(value));
 }
 
 inline bool WriteValue(
     winrt::Microsoft::ReactNative::Bridge::IJSValueWriter const &writer,
     uint32_t value) noexcept {
-  return writer.WriteInt32(static_cast<int32_t>(value));
+  return writer.WriteInt64(static_cast<int64_t>(value));
 }
 
 inline bool WriteValue(

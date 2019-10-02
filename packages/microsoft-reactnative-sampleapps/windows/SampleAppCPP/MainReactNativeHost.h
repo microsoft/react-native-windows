@@ -3,6 +3,8 @@
 // Licensed under the MIT License.
 
 #include "MainReactNativeHost.g.h"
+#include "NativeModulePackage.h"
+#include "winrt/SampleLibraryCPP.h"
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
@@ -35,6 +37,13 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   IVectorView<IReactPackage> Packages() {
     auto packages =
         single_threaded_vector<IReactPackage>({SampleLibraryPackage()});
+    return packages.GetView();
+  };
+  IVectorView<INativeModulePackage> ModulePackages() {
+    OutputDebugStringW(L"My output string.");
+    auto packages = single_threaded_vector<INativeModulePackage>(
+        {make<NativeModulePackage>(),
+         winrt::SampleLibraryCPP::SampleLibraryCppPackage()});
     return packages.GetView();
   };
 };

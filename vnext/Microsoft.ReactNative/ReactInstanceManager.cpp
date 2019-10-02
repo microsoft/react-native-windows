@@ -31,7 +31,11 @@ ReactInstanceManager::ReactInstanceManager(
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
       m_packages(packages),
-      m_modulePackages(modulePackages),
+      m_modulePackages(
+          modulePackages ? std::vector<INativeModulePackage>(
+                               begin(modulePackages),
+                               end(modulePackages))
+                         : std::vector<INativeModulePackage>()),
       m_useDeveloperSupport(useDeveloperSupport) {
   if (packages == nullptr || modulePackages == nullptr) {
     throw hresult_invalid_argument(L"packages");
@@ -170,17 +174,15 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
         for (auto module : modules) {
           // TODO: Allow a module to override another if they conflict on name?
           // Something that the registry would handle.  And should that inform
-          // which modules get iniitalized?
+          // which modules get initialized?
           m_modulesProvider->RegisterModule(module);
           moduleRegistryList.Append(module);
         }
       }
     }
 
-    if (m_modulePackages) {
-      for (auto& modulePackage : m_modulePackages) {
-        m_modulesProvider->AddPackage(modulePackage);
-      }
+    for (auto modulePackage : m_modulePackages) {
+      m_modulesProvider->AddPackage(modulePackage);
     }
   }
 

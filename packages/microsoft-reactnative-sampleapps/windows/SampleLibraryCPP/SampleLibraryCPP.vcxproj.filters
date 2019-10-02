@@ -12,9 +12,12 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="SampleLibraryCppPackage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Calculator.h" />
+    <ClInclude Include="SampleLibraryCppPackage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SampleLibraryCPP.def" />
@@ -29,5 +32,6 @@
   <ItemGroup>
     <Midl Include="SampleLibraryPackage.idl" />
     <Midl Include="SampleModuleABI.idl" />
+    <Midl Include="SampleLibraryCppPackage.idl" />
   </ItemGroup>
 </Project>
