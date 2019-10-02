@@ -50,8 +50,13 @@ DecayAnimationDriver::MakeAnimation(const folly::dynamic &config) {
           s_decelerationParameterName + L" * " + s_durationName + L" * " +
           s_durationName + L")",
       compositor.CreateCubicBezierEasingFunction({0, 1}, {0, 1}));
-  animation.IterationCount(static_cast<int32_t>(m_iterations));
-  animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
+
+  if (m_iterations == -1) {
+    animation.IterationBehavior(winrt::AnimationIterationBehavior::Forever);
+  } else {
+    animation.IterationCount(static_cast<int32_t>(m_iterations));
+    animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
+  }
 
   return std::make_tuple(animation, scopedBatch);
 }
