@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Wed, 02 Oct 2019 00:14:42 GMT",
+      "tag": "react-native-windows-extended_v0.60.3",
+      "version": "0.60.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Align rnw-extended version number with rnw",
+            "author": "email not defined",
+            "commit": "b5b1638ed39829de47539477a239dcec8ee6469f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Oct 2019 18:17:42 GMT",
       "tag": "react-native-windows-extended_v0.61.1",
       "version": "0.61.1",
