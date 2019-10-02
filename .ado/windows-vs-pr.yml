@@ -136,7 +136,7 @@ stages:
                 /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
                 /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
-            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
           - task: CmdLine@2
             displayName: Create SampleApp bundle
