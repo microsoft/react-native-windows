@@ -464,5 +464,9 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(
   }
   return nullptr;
 }
+
+void NativeAnimatedNodeManager::RevmoveActiveAnimation(int64_t tag) {
+  m_activeAnimations.erase(tag);
+}
 } // namespace uwp
 } // namespace react

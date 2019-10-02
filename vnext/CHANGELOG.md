@@ -1,7 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Sep 2019 16:21:08 GMT and should not be manually modified.
+This log was last generated on Tue, 01 Oct 2019 18:17:42 GMT and should not be manually modified.
 
+## 0.60.0-vnext.16
+Tue, 01 Oct 2019 18:17:42 GMT
+
+### Changes
+
+- Turn ControlFlowGuard on by default (acoates@microsoft.com)
+- The customer provided examples revealed a few of issues.  One, we were dubble counding the starting value of animatiosn in some cases. Two we were incorrectly relying on JS to tell us to flatten our animated values. Three we were detaching the expression animations that tied the property to the UIElement and in certain cases the JS thread does not inform us that we need to rebuild this cuppling.  There is an open issue with this final part #3280 (stpete@microsoft.com)
+## 0.60.0-vnext.11
+Mon, 30 Sep 2019 18:28:23 GMT
+
+### Changes
+
+- Update to folly 2019.09.30.00 (acoates@microsoft.com)
 ## 0.60.0-vnext.10
 Mon, 30 Sep 2019 16:21:08 GMT
 

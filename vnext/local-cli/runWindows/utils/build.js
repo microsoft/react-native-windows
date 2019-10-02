@@ -17,11 +17,11 @@ const util = require('util');
 const existsAsync = util.promisify(fs.exists);
 
 async function buildSolution(slnFile, buildType, buildArch, verbose) {
-  const minVersion = new Version(10, 0, 10586, 0);
+  const minVersion = new Version(10, 0, 18362, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
   if (!allVersions.some(v => v.gte(minVersion))) {
     throw new Error(
-      'Must have a minimum Windows SDK version 10.0.10586.0 installed',
+      'Must have a minimum Windows SDK version 10.0.18362.0 installed',
     );
   }
 
