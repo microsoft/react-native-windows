@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Remove react-native as a haste root, as all the files should be in react-native-windows",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "4c4387cd6198eb3ec61d6cfed60b88f775148db8",
+  "date": "2019-10-02T22:52:56.796Z"
+}
