@@ -163,6 +163,29 @@
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)\Folly\Folly.natvis" />
   </ItemGroup>
+  <!-- We need to reference Microsoft.ReactNative to build, but we can't because SampleLibraryCPP already references it, and CppWinRT
+    freaks out with transtitive references: https://github.com/Microsoft/xlang/issues/318
+   -->
+  <ItemGroup Condition="'$(PlatformTarget)' == 'x86'">
+    <Reference Include="Microsoft.ReactNative">
+      <HintPath>..\$(Configuration)\SampleLibraryCPP\Microsoft.ReactNative.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <Reference Include="SampleLibraryCPP">
+      <HintPath>..\$(Configuration)\SampleLibraryCPP\SampleLibraryCPP.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(PlatformTarget)' != 'x86'">
+    <Reference Include="Microsoft.ReactNative">
+      <HintPath>..\$(PlatformTarget)\$(Configuration)\SampleLibraryCPP\Microsoft.ReactNative.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <Reference Include="SampleLibraryCPP">
+      <HintPath>..\$(PlatformTarget)\$(Configuration)\SampleLibraryCPP\SampleLibraryCPP.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SampleLibraryCPP\SampleLibraryCPP.vcxproj">
       <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
