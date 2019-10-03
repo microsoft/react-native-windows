@@ -205,7 +205,7 @@ namespace Microsoft.ReactNative.Managed
       rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WriteArrayBegin")));
       rejectStatements.Add(Expression.Call(null, JSValueWriter.GetWriteValueMethod(rejectParameterType), outputWriterParameter, rejectLambdaParameter));
       rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WriteArrayEnd")));
-      rejectStatements.Add(Expression.Invoke(resolveParameter, outputWriterParameter));
+      rejectStatements.Add(Expression.Invoke(rejectParameter, outputWriterParameter));
       var rejectLambda = Expression.Lambda(inputRejectParameter.ParameterType, Expression.Block(rejectStatements), rejectLambdaParameter);
 
       // Statements of the generated lambda
