@@ -3,10 +3,10 @@
 
 #pragma once
 
-#if defined(USE_EDGEMODE_JSRT)
-#include <jsrt.h>
-#else
+#if defined(CHAKRACORE)
 #include <ChakraCore.h>
+#else
+#include <jsrt.h>
 #endif
 
 #include "ChakraJsiRuntimeArgs.h"
@@ -17,11 +17,11 @@
 #include <mutex>
 #include <sstream>
 
-#if defined(USE_EDGEMODE_JSRT)
+#if !defined(CHAKRACORE)
 typedef JsValueRef JsWeakRef;
 #endif
 
-#if !defined(USE_EDGEMODE_JSRT)
+#if defined(CHAKRACORE)
 #include "ChakraCoreDebugger.h"
 #else
 class DebugProtocolHandler {};

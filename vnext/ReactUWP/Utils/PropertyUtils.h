@@ -145,17 +145,14 @@ bool TryUpdateBackgroundBrush(
   return false;
 }
 
-inline void SetCornerRadiusValueOnNode(
+inline void UpdateCornerRadiusValueOnNode(
     ShadowNodeBase *node,
     ShadowCorners corner,
-    double newValue) {
-  node->m_cornerRadius[corner] = newValue;
-}
-
-inline void ClearCornerRadiusValueOnNode(
-    ShadowNodeBase *node,
-    ShadowCorners corner) {
-  node->m_cornerRadius[corner] = c_UndefinedEdge;
+    const folly::dynamic &propertyValue) {
+  if (propertyValue.isNumber())
+    node->m_cornerRadius[corner] = propertyValue.asDouble();
+  else
+    node->m_cornerRadius[corner] = c_UndefinedEdge;
 }
 
 template <class T>
@@ -286,60 +283,28 @@ bool TryUpdateCornerRadiusOnNode(
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "borderTopLeftRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::TopLeft, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::TopLeft);
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopLeft, propertyValue);
   } else if (propertyName == "borderTopRightRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::TopRight, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::TopRight);
-  }
-  if (propertyName == "borderTopStartRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::TopStart, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::TopStart);
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopRight, propertyValue);
+  } else if (propertyName == "borderTopStartRadius") {
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopStart, propertyValue);
   } else if (propertyName == "borderTopEndRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::TopEnd, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::TopEnd);
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopEnd, propertyValue);
   } else if (propertyName == "borderBottomRightRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::BottomRight, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::BottomRight);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomRight, propertyValue);
   } else if (propertyName == "borderBottomLeftRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::BottomLeft, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::BottomLeft);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomLeft, propertyValue);
   } else if (propertyName == "borderBottomStartRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::BottomStart, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::BottomStart);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomStart, propertyValue);
   } else if (propertyName == "borderBottomEndRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::BottomEnd, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::BottomEnd);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomEnd, propertyValue);
   } else if (propertyName == "borderRadius") {
-    if (propertyValue.isNumber())
-      SetCornerRadiusValueOnNode(
-          node, ShadowCorners::AllCorners, propertyValue.asDouble());
-    else
-      ClearCornerRadiusValueOnNode(node, ShadowCorners::AllCorners);
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::AllCorners, propertyValue);
   } else {
     return false;
   }
