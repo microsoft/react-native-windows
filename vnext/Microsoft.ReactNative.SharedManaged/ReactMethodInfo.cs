@@ -203,7 +203,10 @@ namespace Microsoft.ReactNative.Managed
 
       List<Expression> rejectStatements = new List<Expression>();
       rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WriteArrayBegin")));
+      rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WriteObjectBegin")));
+      rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WritePropertyName"), Expression.Constant("message")));
       rejectStatements.Add(Expression.Call(null, JSValueWriter.GetWriteValueMethod(rejectParameterType), outputWriterParameter, rejectLambdaParameter));
+      rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WriteObjectEnd")));
       rejectStatements.Add(Expression.Call(outputWriterParameter, typeof(IJSValueWriter).GetMethod("WriteArrayEnd")));
       rejectStatements.Add(Expression.Invoke(rejectParameter, outputWriterParameter));
       var rejectLambda = Expression.Lambda(inputRejectParameter.ParameterType, Expression.Block(rejectStatements), rejectLambdaParameter);
