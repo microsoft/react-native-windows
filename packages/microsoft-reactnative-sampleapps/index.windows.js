@@ -129,22 +129,36 @@ class SampleApp extends Component {
   }
 
   _onPressHandlerCppCalculator() {
-    var logCallback = function(result) {
-      console.log(result);
-      NativeModules.DebugConsole.Log(result + "\n");
-    };
+    var getCallback = function(prefix) {
+      return function(result) {
+        console.log(prefix + result);
+        NativeModules.DebugConsole.Log(prefix + result + "\n");
+      };
+    }
 
-    logCallback("Hello from JS!");
+    getCallback("")("Hello from JS!");
 
-    NativeModules.Calculator.Add(5, 6, logCallback);
-    NativeModules.Calculator.Add(5, 12, logCallback);
-    NativeModules.Calculator.Subtract(5, 6).then(logCallback, logCallback);
-    NativeModules.Calculator.Subtract(6, 5).then(logCallback, logCallback);
+    NativeModules.Calculator.Add(5, 6,
+      getCallback("Calculator.Add(5, 6) => "));
+    NativeModules.Calculator.Add(5, 12,
+      getCallback("Calculator.Add(5, 12) => "));
+    NativeModules.Calculator.Subtract(6, 5)
+      .then(getCallback("Calculator.Subtract(6, 5) => then "))
+      .catch(getCallback("Calculator.Subtract(6, 5) => catch "));
+    NativeModules.Calculator.Subtract(5, 6)
+      .then(getCallback("Calculator.Subtract(5, 6) => then "))
+      .catch(getCallback("Calculator.Subtract(5, 6) => catch "));
 
-    NativeModules.CsStrings.Length("Hello!", logCallback);
-    NativeModules.CsStrings.Concat("Hello", "World!", logCallback);
-    NativeModules.CsStrings.Substr("Hello World!", 5).then(logCallback, logCallback);
-    NativeModules.CsStrings.Substr("Hello World!", 20).then(logCallback, logCallback);
+    NativeModules.CsStrings.Length("Hello!",
+      getCallback("CsStrings.Length(\"Hello!\") => "));
+    NativeModules.CsStrings.Concat("Hello", "World!",
+      getCallback("CsStrings.Concat(\"Hello\", \"World!\") => "));
+    NativeModules.CsStrings.Substr("Hello World!", 5)
+      .then(getCallback("CsStrings.Substr(\"Hello World!\", 5) => then "))
+      .catch(getCallback("CsStrings.Substr(\"Hello World!\", 5) => catch "));
+    NativeModules.CsStrings.Substr("Hello World!", 20)
+      .then(getCallback("CsStrings.Substr(\"Hello World!\", 20) => then "))
+      .catch(getCallback("CsStrings.Substr(\"Hello World!\", 20) => catch "));
   }
 
   render() {
