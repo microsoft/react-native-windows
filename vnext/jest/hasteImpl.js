@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const path = require('path'); 
+const path = require('path');
 
 function createHaste(roots) {
   const ROOTS = roots;
@@ -71,4 +71,4 @@ function createHaste(roots) {
   return haste;
 }
 
-module.exports = createHaste( [path.resolve(__dirname, '..') + path.sep] );
+module.exports = createHaste([path.resolve(__dirname, '..') + path.sep]);
