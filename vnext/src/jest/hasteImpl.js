@@ -5,15 +5,10 @@
  */
 'use strict';
 
-const {realpathSync} = require('fs');
 const path = require('path');
 
-const rnRoot = realpathSync(
-  path.resolve(require.resolve('react-native/package.json'), '..'),
-);
-
-function createHaste(pluginRoots, pluginNameReducers) {
-  const ROOTS = [rnRoot + path.sep, ...pluginRoots];
+function createHaste(roots) {
+  const ROOTS = roots;
 
   const IGNORE_PATTERNS /*: Array<RegExp> */ = [
     /.*[\\\/]__(mocks|tests)__[\\\/].*/,
@@ -36,8 +31,6 @@ function createHaste(pluginRoots, pluginNameReducers) {
     [/^(.*)\.js(\.flow)?$/, '$1'],
     // strip platform suffix
     [/^(.*)\.(android|ios|native|windesktop|windows|macos)$/, '$1'],
-    // strip plugin platform suffixes
-    ...pluginNameReducers,
   ];
 
   const haste = {
@@ -78,7 +71,4 @@ function createHaste(pluginRoots, pluginNameReducers) {
   return haste;
 }
 
-module.exports = createHaste(
-  [path.resolve(__dirname, '..') + path.sep],
-  [[/^(.*)\.(windows)$/, '$1'], [/^(.*)\.(windesktop)$/, '$1']],
-);
+module.exports = createHaste([path.resolve(__dirname, '..') + path.sep]);
