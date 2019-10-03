@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Delay load ChakraCore.Debugger.DLL",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "755a351e527e6a23b94d1d201b79e8085de93a35",
+  "date": "2019-10-03T23:35:26.602Z"
+}
