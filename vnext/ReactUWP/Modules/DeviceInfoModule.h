@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
-
-#include <IReactInstance.h>
+#include <cxxReact/Instance.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
+#include <winrt/Windows.Graphics.Display.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <memory>
 #include <vector>
@@ -17,7 +18,7 @@ namespace uwp {
 class DeviceInfo {
  public:
   DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance);
-
+  DeviceInfo();
   folly::dynamic GetDimensionsConstants() {
     return m_dimensions;
   }
@@ -28,6 +29,10 @@ class DeviceInfo {
 
  private:
   void fireEvent();
+  folly::dynamic getDimensions(
+      winrt::Windows::Graphics::Display::DisplayInformation displayInfo,
+      winrt::Windows::UI::Core::CoreWindow window);
+
   folly::dynamic m_dimensions;
   winrt::weak_ref<winrt::Windows::UI::Xaml::FrameworkElement> m_rootElement{};
   winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker
@@ -35,7 +40,8 @@ class DeviceInfo {
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 };
 
-class DeviceInfoModule : public facebook::xplat::module::CxxModule {
+class DeviceInfoModule : public facebook::xplat::module::CxxModule,
+                         std::enable_shared_from_this<DeviceInfoModule> {
  public:
   DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo);
 
@@ -47,6 +53,9 @@ class DeviceInfoModule : public facebook::xplat::module::CxxModule {
   static const char *name;
 
  private:
+  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker
+      m_leavingBackgroundRevoker;
+  void sendDimensionsChangedEvent();
   std::shared_ptr<DeviceInfo> m_deviceInfo;
 };
 

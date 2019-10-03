@@ -144,12 +144,17 @@ void Timing::createTimer(
 
   if (m_timerQueue.IsEmpty()) {
     m_rendering.revoke();
-    m_rendering = winrt::CompositionTarget::Rendering(
-        winrt::auto_revoke, {this, &Timing::OnRendering});
+    try {
+      m_rendering = winrt::CompositionTarget::Rendering(
+          winrt::auto_revoke, {this, &Timing::OnRendering});
+    } catch (winrt::hresult error) {
+      OutputDebugString(L"Caught exception subscribing to rendering");
+    }
   }
 
   // Convert double duration in ms to TimeSpan
-  // Make sure duration is always larger than 16ms to avoid unnecessary wakeups.
+  // Make sure duration is always larger than 16ms to avoid unnecessary
+  // wakeups.
   auto period = TimeSpanFromMs(std::max(duration, 16.0));
   const int64_t msFrom1601to1970 = 11644473600000;
   winrt::DateTime scheduledTime(

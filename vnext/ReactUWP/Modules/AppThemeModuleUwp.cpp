@@ -31,34 +31,16 @@ AppTheme::AppTheme(
     : react::windows::AppTheme(),
       m_wkReactInstance(reactInstance),
       m_queueThread(defaultQueueThread) {
-  m_currentTheme = winrt::Application::Current().RequestedTheme();
-  m_isHighContrast = m_accessibilitySettings.HighContrast();
-  m_highContrastColors = getHighContrastColors();
-
-  m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
-      winrt::auto_revoke, [this](const auto &, const auto &) {
-        folly::dynamic eventData = folly::dynamic::object(
-            "highContrastColors", getHighContrastColors())(
-            "isHighContrast", getIsHighContrast());
-
-        fireEvent("highContrastChanged", std::move(eventData));
-      });
-
-  m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(
-      winrt::auto_revoke, [this](const auto &, const auto &) {
-        m_queueThread->runOnQueue([this]() {
-          if (m_currentTheme !=
-                  winrt::Application::Current().RequestedTheme() &&
-              !m_accessibilitySettings.HighContrast()) {
-            m_currentTheme = winrt::Application::Current().RequestedTheme();
-
-            folly::dynamic eventData =
-                folly::dynamic::object("currentTheme", getCurrentTheme());
-
-            fireEvent("appThemeChanged", std::move(eventData));
-          }
-        });
-      });
+  m_leavingBackgroundRevoker =
+      winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
+          winrt::auto_revoke,
+          [weakThis = std::weak_ptr<AppTheme>(shared_from_this())](winrt::Windows::Foundation::IInspectable const& /*sender*/,
+            winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
+            & /*e*/) {
+            if (auto strongThis = weakThis.lock()) {
+              strongThis->uiDependentOperations();
+            }
+          });
 }
 
 AppTheme::~AppTheme() = default;
@@ -71,6 +53,44 @@ const std::string AppTheme::getCurrentTheme() {
 bool AppTheme::getIsHighContrast() {
   return m_accessibilitySettings.HighContrast();
   ;
+}
+
+void AppTheme::uiDependentOperations() {
+  m_currentTheme = winrt::Application::Current().RequestedTheme();
+  m_isHighContrast = m_accessibilitySettings.HighContrast();
+  m_highContrastColors = getHighContrastColors();
+
+  m_highContrastChangedRevoker = m_accessibilitySettings.HighContrastChanged(
+      winrt::auto_revoke,
+      [this](const auto &, const auto &) { fireHighContrastChanged(); });
+
+  m_colorValuesChangedRevoker = m_uiSettings.ColorValuesChanged(
+      winrt::auto_revoke, [this](const auto &, const auto &) {
+        m_queueThread->runOnQueue([this]() {
+          if (m_currentTheme !=
+                  winrt::Application::Current().RequestedTheme() &&
+              !m_accessibilitySettings.HighContrast()) {
+            m_currentTheme = winrt::Application::Current().RequestedTheme();
+
+            fireThemeChanged();
+          }
+        });
+      });
+}
+
+void AppTheme::fireHighContrastChanged() {
+  folly::dynamic eventData =
+      folly::dynamic::object("highContrastColors", getHighContrastColors())(
+          "isHighContrast", getIsHighContrast());
+
+  fireEvent("highContrastChanged", std::move(eventData));
+}
+
+void AppTheme::fireThemeChanged() {
+  folly::dynamic eventData =
+      folly::dynamic::object("currentTheme", getCurrentTheme());
+
+  fireEvent("appThemeChanged", std::move(eventData));
 }
 
 // Returns the RBG values for the 8 relevant High Contrast elements.

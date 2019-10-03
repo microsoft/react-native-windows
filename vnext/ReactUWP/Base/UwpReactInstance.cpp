@@ -8,6 +8,7 @@
 // ReactUWP
 #include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
+#include <ReactUWP/Threading/ProxyMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
@@ -156,11 +157,7 @@ UwpReactInstance::UwpReactInstance(
 std::vector<facebook::react::NativeModuleDescription> GetModules(
     std::shared_ptr<facebook::react::IUIManager> uiManager,
     const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
-    std::shared_ptr<DeviceInfo> deviceInfo,
     std::shared_ptr<facebook::react::DevSettings> devSettings,
-    const I18nModule::I18nInfo &&i18nInfo,
-    std::shared_ptr<facebook::react::AppState> appstate,
-    std::shared_ptr<react::windows::AppTheme> appTheme,
     std::weak_ptr<IReactInstance> uwpInstance) {
   // Modules
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -191,7 +188,10 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       DeviceInfoModule::name,
-      [deviceInfo]() { return std::make_unique<DeviceInfoModule>(deviceInfo); },
+      []() {
+        return std::make_unique<DeviceInfoModule>(
+            std::make_unique<DeviceInfo>());
+      },
       messageQueue);
 
   modules.emplace_back(
@@ -216,17 +216,18 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       facebook::react::AppStateModule::name,
-      [appstate = std::move(appstate)]() mutable {
+      [uwpInstance]() mutable {
         return std::make_unique<facebook::react::AppStateModule>(
-            std::move(appstate));
+            std::make_shared<react::uwp::AppState>(uwpInstance.lock()));
       },
       std::make_shared<WorkerMessageQueueThread>());
 
   modules.emplace_back(
       react::windows::AppThemeModule::name,
-      [appTheme = std::move(appTheme)]() mutable {
+      [uwpInstance, messageQueue]() mutable {
         return std::make_unique<react::windows::AppThemeModule>(
-            std::move(appTheme));
+            std::move(std::make_shared<react::uwp::AppTheme>(
+                uwpInstance.lock(), messageQueue)));
       },
       messageQueue);
 
@@ -254,9 +255,9 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
 
   modules.emplace_back(
       "I18nManager",
-      [i18nInfo = std::move(i18nInfo)]() mutable {
+      []() mutable {
         return createI18nModule(
-            std::make_unique<I18nModule>(std::move(i18nInfo)));
+            std::make_unique<I18nModule>());
       },
       messageQueue);
 
@@ -285,12 +286,12 @@ void UwpReactInstance::Start(
       m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
+  
+
   m_defaultNativeThread =
-      std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
+      std::make_shared<react::uwp::ProxyMessageQueueThread>();
   m_batchingNativeThread =
-      std::make_shared<react::uwp::BatchingUIMessageQueueThread>(
-          m_uiDispatcher);
+      std::make_shared<react::uwp::ProxyMessageQueueThread>();
 
   // Objects that must be created on the UI thread
   m_deviceInfo = std::make_shared<DeviceInfo>(spThis);
@@ -368,9 +369,6 @@ void UwpReactInstance::Start(
             m_batchingNativeThread,
             m_deviceInfo,
             devSettings,
-            std::move(i18nInfo),
-            std::move(appstate),
-            std::move(appTheme),
             std::weak_ptr<IReactInstance>(spThis));
 
     if (m_moduleProvider != nullptr) {
@@ -448,6 +446,17 @@ void UwpReactInstance::AttachMeasuredRootView(
     IXamlRootView *pRootView,
     folly::dynamic &&initProps) {
   if (!IsInError()) {
+    m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
+    static_pointer_cast<ProxyMessageQueueThread>(m_defaultNativeThread)
+        ->setUIMessageQueue(
+            false, /* isBatching */
+            std::make_unique<react::uwp::UIMessageQueueThread>(m_uiDispatcher));
+
+    static_pointer_cast<ProxyMessageQueueThread>(m_batchingNativeThread)
+        ->setUIMessageQueue(
+            true, /* isBatching */
+            std::make_unique<react::uwp::BatchingUIMessageQueueThread>(
+                m_uiDispatcher));
     m_instanceWrapper->AttachMeasuredRootView(pRootView, std::move(initProps));
     auto rootView = pRootView->GetXamlView().try_as<winrt::FrameworkElement>();
     if (rootView) {

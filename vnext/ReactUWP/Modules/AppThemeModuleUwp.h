@@ -11,7 +11,8 @@
 namespace react {
 namespace uwp {
 
-class AppTheme : public react::windows::AppTheme {
+class AppTheme : public react::windows::AppTheme,
+                 std::enable_shared_from_this<AppTheme> {
  public:
   AppTheme(
       const std::shared_ptr<IReactInstance> &reactInstance,
@@ -22,12 +23,17 @@ class AppTheme : public react::windows::AppTheme {
   const std::string getCurrentTheme() override;
   bool getIsHighContrast() override;
 
+  static void uiThreadAvailable();
+
  private:
   // High Contrast Color helper methods
   folly::dynamic getHighContrastColors();
   std::string formatRGB(winrt::Windows::UI::Color ElementColor);
 
+  void fireHighContrastChanged();
+  void fireThemeChanged();
   void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
+  void uiDependentOperations();
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
@@ -43,6 +49,9 @@ class AppTheme : public react::windows::AppTheme {
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
   winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker
       m_colorValuesChangedRevoker{};
+
+    winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker
+      m_leavingBackgroundRevoker;
 };
 
 } // namespace uwp
