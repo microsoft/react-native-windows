@@ -60,13 +60,13 @@ void DeviceInfo::fireEvent() {
 void DeviceInfo::attachRoot(winrt::FrameworkElement rootElement) {
   m_rootElement = winrt::make_weak(rootElement);
   m_sizeChangedRevoker =
-    rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
-      if (const auto root = m_rootElement.get()) {
-        updateRootElementSize(
-            static_cast<float>(root.ActualWidth()),
-            static_cast<float>(root.ActualHeight()));
+      rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
+        if (const auto root = m_rootElement.get()) {
+          updateRootElementSize(
+              static_cast<float>(root.ActualWidth()),
+              static_cast<float>(root.ActualHeight()));
         }
-    });
+      });
 }
 
 void DeviceInfo::detachRoot() {
