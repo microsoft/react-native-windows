@@ -49,17 +49,20 @@ void AnimationDriver::StartAnimation() {
 
   m_scopedBatchCompletedToken =
       scopedBatch.Completed([EndCallback = m_endCallback,
-                             Manager = m_manager,
+                             weakManager = m_manager,
                              valueTag = m_animatedValueTag,
                              id = m_id](auto sender, auto) {
         if (EndCallback) {
           EndCallback(std::vector<folly::dynamic>{
               folly::dynamic::object("finished", true)});
         }
-        if (auto man = Manager.lock()) {
-          if (auto const animatedValue = man->GetValueAnimatedNode(valueTag)) {
+        if (auto manager = weakManager.lock()) {
+          if (auto const animatedValue =
+                  manager->GetValueAnimatedNode(valueTag)) {
             animatedValue->RemoveActiveAnimation(id);
+            animatedValue->FlattenOffset();
           }
+          manager->RevmoveActiveAnimation(id);
         }
       });
 

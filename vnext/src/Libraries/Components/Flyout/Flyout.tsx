@@ -13,5 +13,3 @@ export class Flyout extends React.Component<IFlyoutProps> {
     return null;
   }
 }
-
-export default Flyout;

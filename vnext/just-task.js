@@ -42,6 +42,10 @@ task('eslint', () => {
 task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
 });
+task('initRNLibraries', () => {
+  require('./Scripts/copyRNLibraries').copyRNLibraries();
+});
+
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -64,6 +68,7 @@ task(
   series(
     condition('clean', () => true || argv().clean),
     'eslint',
+    'initRNLibraries',
     'copyFlowFiles',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),

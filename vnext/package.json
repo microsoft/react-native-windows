@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.59.0-vnext.190",
+  "version": "0.60.0-vnext.16",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -8,7 +8,8 @@
     "directory": "vnext"
   },
   "description": "ReactNative Windows implementation using react-native's c++ ReactCommon bridge",
-  "types": "index.d.ts",
+  "main": "Libraries/react-native/react-native-implementation.windows.js",
+  "typings": "Libraries/react-native/typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
@@ -17,31 +18,19 @@
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
-  "rnpm": {
-    "haste": {
-      "platforms": [
-        "windows"
-      ],
-      "providesModuleNodeModules": [
-        "react-native-windows"
-      ]
-    },
-    "plugin": "./local-cli/index.js"
-  },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
+    "@react-native-community/cli": "^2.6.0",
     "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
     "glob": "^7.1.1",
     "ora": "^3.4.0",
-    "prop-types": "^15.5.8",
-    "react-native-local-cli": "^1.0.0-alpha.5",
-    "react-timer-mixin": "^0.13.2",
+    "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.2",
     "shelljs": "^0.7.8",
-    "username": "^3.0.0",
-    "uuid": "^2.0.1",
+    "username": "^5.1.0",
+    "uuid": "^3.3.2",
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
@@ -51,21 +40,22 @@
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/ora": "^3.2.0",
-    "@types/react-native": "~0.57.51",
+    "@types/react-native": "~0.60.5",
     "@types/react": "16.8.15",
-    "eslint-plugin-prettier": "2.6.0",
+    "eslint-plugin-prettier": "2.6.2",
     "eslint": "5.1.0",
     "just-scripts": "^0.24.2",
-    "prettier": "1.13.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz",
-    "react": "16.8.3",
+    "prettier": "1.17.0",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz",
+    "react": "16.8.6",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
-    "react": "16.8.3",
-    "react-native": "^0.59.0 || 0.59.0-microsoft.82 || https://github.com/microsoft/react-native/archive/v0.59.0-microsoft.82.tar.gz"
+    "react": "16.8.6",
+    "react-native": "^0.60.0 || 0.60.0-microsoft-fb60merge.13 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz"
   },
   "beachball": {
+    "defaultNpmTag": "vnext",
     "disallowedChangeTypes": [
       "major",
       "minor",

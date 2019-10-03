@@ -11,7 +11,7 @@
 
   Next, [generate a React Native project](http://facebook.github.io/react-native/docs/getting-started.html#creating-a-new-application). In the directory you would like your React Native Windows project directory, run:
   ```
-  react-native init <project name> --version 0.59.10
+  react-native init <project name> --version 0.60.6
   ```
   Navigate into this newly created directory:
   ```
@@ -38,9 +38,11 @@
 
 ## Running a React Native Windows App
 
-*Note: Make sure Chrome is launched and running before running a React Native Windows app.*
+*Note: Make sure a browser is launched and running before running a React Native Windows app.*
 
 - Without Visual Studio
+
+:exclamation: **We are seeing issues with msbuild with the below command. This is being investigated in [Issue 3263](https://github.com/microsoft/react-native-windows/issues/3263). Until this is fixed, please use the With Visual Studio option below.**
 
   In your React Native Windows project directory, run:
   ```

@@ -145,13 +145,18 @@ bool TryUpdateBackgroundBrush(
   return false;
 }
 
-template <class T>
-void UpdateCornerRadius(
+inline void UpdateCornerRadiusValueOnNode(
     ShadowNodeBase *node,
-    const T &element,
     ShadowCorners corner,
-    double newValue) {
-  node->m_cornerRadius[corner] = newValue;
+    const folly::dynamic &propertyValue) {
+  if (propertyValue.isNumber())
+    node->m_cornerRadius[corner] = propertyValue.asDouble();
+  else
+    node->m_cornerRadius[corner] = c_UndefinedEdge;
+}
+
+template <class T>
+void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
   winrt::CornerRadius cornerRadius = GetCornerRadius(
       node->m_cornerRadius,
       element.FlowDirection() == winrt::FlowDirection::RightToLeft);
@@ -272,50 +277,34 @@ bool TryUpdatePadding(
 }
 
 template <class T>
-bool TryUpdateCornerRadius(
+bool TryUpdateCornerRadiusOnNode(
     ShadowNodeBase *node,
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
   if (propertyName == "borderTopLeftRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::TopLeft, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopLeft, propertyValue);
   } else if (propertyName == "borderTopRightRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::TopRight, propertyValue.asDouble());
-  }
-  if (propertyName == "borderTopStartRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::TopStart, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopRight, propertyValue);
+  } else if (propertyName == "borderTopStartRadius") {
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopStart, propertyValue);
   } else if (propertyName == "borderTopEndRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::TopEnd, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopEnd, propertyValue);
   } else if (propertyName == "borderBottomRightRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::BottomRight, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomRight, propertyValue);
   } else if (propertyName == "borderBottomLeftRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::BottomLeft, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomLeft, propertyValue);
   } else if (propertyName == "borderBottomStartRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::BottomStart, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomStart, propertyValue);
   } else if (propertyName == "borderBottomEndRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::BottomEnd, propertyValue.asDouble());
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::BottomEnd, propertyValue);
   } else if (propertyName == "borderRadius") {
-    if (propertyValue.isNumber())
-      UpdateCornerRadius(
-          node, element, ShadowCorners::AllCorners, propertyValue.asDouble());
-    else if (propertyValue.isNull())
-      element.ClearValue(ViewPanel::CornerRadiusProperty());
+    UpdateCornerRadiusValueOnNode(
+        node, ShadowCorners::AllCorners, propertyValue);
   } else {
     return false;
   }

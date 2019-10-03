@@ -75,9 +75,10 @@
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_TRACING)'=='true'">ENABLE_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_TRACING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_TRACE_POSTPROCESSING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACE_POSTPROCESSING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=windows;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -214,6 +215,7 @@
     <ClInclude Include="Modules\LocationObserverModule.h" />
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\NetworkingModule.h" />
+    <ClInclude Include="Modules\StatusBarModule.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="Pch\pch.h" />
@@ -318,6 +320,7 @@
     <ClCompile Include="Modules\LocationObserverModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="Modules\StatusBarModule.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="Pch\pch.cpp">
@@ -402,6 +405,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(OSS_RN)' != 'true'">
+      <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>

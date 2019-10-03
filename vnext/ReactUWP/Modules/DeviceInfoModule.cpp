@@ -13,6 +13,10 @@ namespace uwp {
 //
 // DeviceInfo
 //
+DeviceInfo::DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance)
+    : m_wkReactInstance(reactInstance) {
+  update();
+}
 
 void DeviceInfo::update() {
   auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::
@@ -21,7 +25,6 @@ void DeviceInfo::update() {
 
   auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
 
-  // TODO: get parent element (not window) size
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
       folly::dynamic::object("width", window.Bounds().Width)(
@@ -35,6 +38,40 @@ void DeviceInfo::update() {
           "scale", static_cast<int>(displayInfo.ResolutionScale()) / 100)(
           "fontScale", uiSettings.TextScaleFactor())(
           "densityDpi", displayInfo.LogicalDpi()));
+}
+
+void DeviceInfo::updateRootElementSize(float width, float height) {
+  m_dimensions["windowPhysicalPixels"]["width"] = width;
+  m_dimensions["windowPhysicalPixels"]["height"] = height;
+  fireEvent();
+}
+
+void DeviceInfo::fireEvent() {
+  auto instance = m_wkReactInstance.lock();
+  if (instance) {
+    instance->CallJsFunction(
+        "RCTDeviceEventEmitter",
+        "emit",
+        folly::dynamic::array(
+            "didUpdateDimensions", std::move(GetDimensionsConstants())));
+  }
+}
+
+void DeviceInfo::attachRoot(winrt::FrameworkElement rootElement) {
+  m_rootElement = winrt::make_weak(rootElement);
+  m_sizeChangedRevoker =
+      rootElement.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
+        if (const auto root = m_rootElement.get()) {
+          updateRootElementSize(
+              static_cast<float>(root.ActualWidth()),
+              static_cast<float>(root.ActualHeight()));
+        }
+      });
+}
+
+void DeviceInfo::detachRoot() {
+  m_sizeChangedRevoker = {};
+  m_rootElement = {};
 }
 
 //

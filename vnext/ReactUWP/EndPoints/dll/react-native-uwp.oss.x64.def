@@ -9,6 +9,7 @@ EXPORTS
 ??0AppStateModule@react@facebook@@QEAA@$$QEAV?$shared_ptr@VAppState@react@facebook@@@std@@@Z
 ??0ColdClass@cold_detail@folly@@QEAA@XZ
 ??0DeviceInfoModule@uwp@react@@QEAA@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
+??0DeviceInfo@uwp@react@@QEAA@AEBV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0ImageViewManager@uwp@react@@QEAA@AEBV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0LocationObserverModule@uwp@react@@QEAA@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
 ??0NativeUIManager@uwp@react@@QEAA@XZ

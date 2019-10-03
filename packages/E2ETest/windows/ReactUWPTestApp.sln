@@ -32,14 +32,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertyS
 		PropertySheets\x86.props = PropertySheets\x86.props
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "react-native-windows-extended", "..\..\react-native-windows-extended\windows\react-native-windows-extended.vcxproj", "{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactUWPTestApp", "ReactUWPTestApp\ReactUWPTestApp.csproj", "{ABBB0407-0E82-486F-94CE-710900FCAADC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Universal", "..\..\..\vnext\JSI\Universal\JSI.Universal.vcxproj", "{A62D504A-16B8-41D2-9F19-E2E86019E5E4}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
 		..\..\..\vnext\Shared\Shared.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
+		..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems*{a62d504a-16b8-41d2-9f19-e2e86019e5e4}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -152,30 +153,6 @@ Global
 		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x64.Build.0 = Release|x64
 		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x86.ActiveCfg = Release|Win32
 		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x86.Build.0 = Release|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Debug|ARM.ActiveCfg = Debug|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Debug|ARM.Build.0 = Debug|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Debug|x64.ActiveCfg = Debug|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Debug|x64.Build.0 = Debug|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Debug|x86.ActiveCfg = Debug|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Debug|x86.Build.0 = Debug|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.DebugBundle|ARM.ActiveCfg = Debug|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.DebugBundle|ARM.Build.0 = Debug|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.DebugBundle|x64.ActiveCfg = Debug|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.DebugBundle|x64.Build.0 = Debug|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.DebugBundle|x86.ActiveCfg = Debug|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.DebugBundle|x86.Build.0 = Debug|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Release|ARM.ActiveCfg = Release|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Release|ARM.Build.0 = Release|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Release|x64.ActiveCfg = Release|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Release|x64.Build.0 = Release|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Release|x86.ActiveCfg = Release|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.Release|x86.Build.0 = Release|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.ReleaseBundle|ARM.Build.0 = Release|ARM
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.ReleaseBundle|x64.ActiveCfg = Release|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.ReleaseBundle|x64.Build.0 = Release|x64
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.ReleaseBundle|x86.ActiveCfg = Release|Win32
-		{E9851BD0-9751-4DE7-9CCB-0D2E7493658C}.ReleaseBundle|x86.Build.0 = Release|Win32
 		{ABBB0407-0E82-486F-94CE-710900FCAADC}.Debug|ARM.ActiveCfg = Debug|ARM
 		{ABBB0407-0E82-486F-94CE-710900FCAADC}.Debug|ARM.Build.0 = Debug|ARM
 		{ABBB0407-0E82-486F-94CE-710900FCAADC}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -212,6 +189,30 @@ Global
 		{ABBB0407-0E82-486F-94CE-710900FCAADC}.ReleaseBundle|x86.ActiveCfg = ReleaseBundle|x86
 		{ABBB0407-0E82-486F-94CE-710900FCAADC}.ReleaseBundle|x86.Build.0 = ReleaseBundle|x86
 		{ABBB0407-0E82-486F-94CE-710900FCAADC}.ReleaseBundle|x86.Deploy.0 = ReleaseBundle|x86
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|ARM.ActiveCfg = Debug|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|ARM.Build.0 = Debug|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x64.ActiveCfg = Debug|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x64.Build.0 = Debug|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x86.ActiveCfg = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Debug|x86.Build.0 = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.DebugBundle|x64.Build.0 = Debug|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.DebugBundle|x86.Build.0 = Debug|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|ARM.ActiveCfg = Release|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|ARM.Build.0 = Release|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x64.ActiveCfg = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x64.Build.0 = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x86.ActiveCfg = Release|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.Release|x86.Build.0 = Release|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.ReleaseBundle|x64.Build.0 = Release|x64
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{A62D504A-16B8-41D2-9F19-E2E86019E5E4}.ReleaseBundle|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
