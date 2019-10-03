@@ -28,14 +28,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactWindowsCore", "..\..\.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertySheets", "{6F24927E-EE45-4DB2-91DA-DCC6E98B0C42}"
 	ProjectSection(SolutionItems) = preProject
-		PropertySheets\ARM.props = PropertySheets\ARM.props
-		PropertySheets\Debug.props = PropertySheets\Debug.props
-		PropertySheets\React.Cpp.props = PropertySheets\React.Cpp.props
-		PropertySheets\Release.props = PropertySheets\Release.props
-		PropertySheets\Warnings.props = PropertySheets\Warnings.props
-		PropertySheets\Win32.props = PropertySheets\Win32.props
-		PropertySheets\x64.props = PropertySheets\x64.props
-		PropertySheets\x86.props = PropertySheets\x86.props
+		..\..\..\vnext\PropertySheets\ARM.props = ..\..\..\vnext\PropertySheets\ARM.props
+		..\..\..\vnext\PropertySheets\Debug.props = ..\..\..\vnext\PropertySheets\Debug.props
+		..\..\..\vnext\PropertySheets\React.Cpp.props = ..\..\..\vnext\PropertySheets\React.Cpp.props
+		..\..\..\vnext\PropertySheets\Release.props = ..\..\..\vnext\PropertySheets\Release.props
+		..\..\..\vnext\PropertySheets\Warnings.props = ..\..\..\vnext\PropertySheets\Warnings.props
+		..\..\..\vnext\PropertySheets\Win32.props = ..\..\..\vnext\PropertySheets\Win32.props
+		..\..\..\vnext\PropertySheets\x64.props = ..\..\..\vnext\PropertySheets\x64.props
+		..\..\..\vnext\PropertySheets\x86.props = ..\..\..\vnext\PropertySheets\x86.props
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "..\..\..\vnext\Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
