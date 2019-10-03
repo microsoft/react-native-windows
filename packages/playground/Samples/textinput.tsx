@@ -43,6 +43,11 @@ export default class Bootstrap extends React.Component<{}, any> {
         />
         <TextInput
           style={styles.input}
+          placeholder={'contextMenuHidden'}
+          contextMenuHidden={true}
+        />
+        <TextInput
+          style={styles.input}
           keyboardType="number-pad"
           placeholder={'number-pad keyboardType'}
         />
