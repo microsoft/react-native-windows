@@ -5,6 +5,7 @@
 #include "MainReactNativeHost.g.h"
 #include "NativeModulePackage.h"
 #include "winrt/SampleLibraryCPP.h"
+#include "winrt/SampleLibraryCS.h"
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
@@ -43,7 +44,8 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
     OutputDebugStringW(L"My output string.");
     auto packages = single_threaded_vector<INativeModulePackage>(
         {make<NativeModulePackage>(),
-         winrt::SampleLibraryCPP::SampleLibraryCppPackage()});
+         winrt::SampleLibraryCPP::SampleLibraryCppPackage(),
+         winrt::SampleLibraryCS::CsStringsPackage()});
     return packages.GetView();
   };
 };

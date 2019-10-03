@@ -140,6 +140,11 @@ class SampleApp extends Component {
     NativeModules.Calculator.Add(5, 12, logCallback);
     NativeModules.Calculator.Subtract(5, 6).then(logCallback, logCallback);
     NativeModules.Calculator.Subtract(6, 5).then(logCallback, logCallback);
+
+    NativeModules.CsStrings.Length("Hello!", logCallback);
+    NativeModules.CsStrings.Concat("Hello", "World!", logCallback);
+    NativeModules.CsStrings.Substr("Hello World!", 5).then(logCallback, logCallback);
+    NativeModules.CsStrings.Substr("Hello World!", 20).then(logCallback, logCallback);
   }
 
   render() {

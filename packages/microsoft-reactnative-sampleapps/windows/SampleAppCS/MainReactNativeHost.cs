@@ -33,7 +33,11 @@ namespace SampleApp
         {
             get
             {
-                return new INativeModulePackage[] { new ReactModulePackage(), new SampleLibraryCPP.SampleLibraryCppPackage() };
+                return new INativeModulePackage[] {
+                    new ReactModulePackage(),
+                    new SampleLibraryCPP.SampleLibraryCppPackage(),
+                    new SampleLibraryCS.CsStringsPackage()
+                };
             }
         }
     }
