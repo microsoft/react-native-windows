@@ -123,6 +123,7 @@ stages:
               command: restore
               restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
               verbosityRestore: Detailed # Options: quiet, normal, detailed
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
           - task: MSBuild@1
             displayName: MSBuild - SampleApps
@@ -136,13 +137,14 @@ stages:
                 /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
                 /p:PlatformToolset=$(MSBuildPlatformToolset)
               clean: true # Optional
-            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
           - task: CmdLine@2
             displayName: Create SampleApp bundle
             inputs:
               script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
               workingDirectory: packages\microsoft-reactnative-sampleapps
+            condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
           - task: CmdLine@2
             displayName: Create RNTester bundle
