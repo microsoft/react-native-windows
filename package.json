@@ -5,7 +5,7 @@
   "scripts": {
     "build": "lerna run build --stream",
     "buildci": "lerna run build --stream -- --ci",
-    "change": "node ./node_modules/beachball/bin/beachball.js change",
+    "change": "node ./node_modules/beachball/bin/beachball.js change --branch 0.59-vnext-stable",
     "clean": "lerna run clean --stream",
     "format": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format",
     "format:verify": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify"
