@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Thu, 03 Oct 2019 22:17:13 GMT",
+      "tag": "react-native-windows-extended_v0.60.3",
+      "version": "0.60.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support contextMenuHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "18b68810d1f1687889909782e47750afe6f06b24"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Oct 2019 00:14:42 GMT",
       "tag": "react-native-windows-extended_v0.60.3",
       "version": "0.60.3",

@@ -1,7 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 01 Oct 2019 18:17:42 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Oct 2019 22:17:13 GMT and should not be manually modified.
 
+## 0.60.0-vnext.17
+Thu, 03 Oct 2019 22:17:13 GMT
+
+### Changes
+
+- change file (randyfl@microsoft.com)
+- Support contextMenuHidden (dida@ntdev.microsoft.com)
+- Remove react-native as a haste root, as all the files should be in react-native-windows (acoates@microsoft.com)
+- Connect DeviceInfo dimensions with root element (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.16
 Tue, 01 Oct 2019 18:17:42 GMT
 
