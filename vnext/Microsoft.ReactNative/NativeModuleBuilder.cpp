@@ -36,9 +36,9 @@ void NativeModuleBuilder::AddMethod(
           CxxModule::Callback reject) mutable noexcept {
         DynamicReader argReader{args};
         DynamicWriter resultWriter;
-        auto resolveCasllback = MakeMethodResultCallback(std::move(resolve));
-        auto rejectCasllback = MakeMethodResultCallback(std::move(reject));
-        method(argReader, resultWriter, resolveCasllback, rejectCasllback);
+        auto resolveCallback = MakeMethodResultCallback(std::move(resolve));
+        auto rejectCallback = MakeMethodResultCallback(std::move(reject));
+        method(argReader, resultWriter, resolveCallback, rejectCallback);
       });
 
   switch (returnType) {

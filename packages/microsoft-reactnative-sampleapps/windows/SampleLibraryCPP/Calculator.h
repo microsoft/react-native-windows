@@ -17,12 +17,12 @@ struct Calculator {
   void Subtract(
       int x,
       int y,
-      std::function<void(int)> &&result,
-      std::function<void(std::string)> &&onError) noexcept {
+      std::function<void(int)> &&resolve,
+      std::function<void(std::string)> &&reject) noexcept {
     if (x > y) {
-      result(x - y);
+      resolve(x - y);
     } else {
-      onError("x must be greater than y");
+      reject("x must be greater than y");
     }
   }
 };
