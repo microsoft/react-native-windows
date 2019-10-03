@@ -59,7 +59,9 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['Libraries', 'RNTester', 'lib'].map(p => path.join(process.cwd(), p)),
+    ['jest', 'Libraries', 'RNTester', 'lib'].map(p =>
+      path.join(process.cwd(), p),
+    ),
   );
 });
 
