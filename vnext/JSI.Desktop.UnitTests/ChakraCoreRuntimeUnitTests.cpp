@@ -1,7 +1,7 @@
 #include "JsiRuntimeUnitTests.h"
 
-#include "Chakra/ChakraJsiRuntimeArgs.h"
-#include "Chakra/ChakraJsiRuntimeFactory.h"
+#include "JSI/Shared/ChakraJsiRuntimeArgs.h"
+#include "JSI/Shared/ChakraJsiRuntimeFactory.h"
 #include "MemoryTracker.h"
 
 // TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
