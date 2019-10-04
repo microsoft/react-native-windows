@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update to react-native@0.60.0-microsoft.3",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "378ecaa3ff2eeb2a86263b2e1a3f4742002c3a77",
-  "date": "2019-10-04T00:04:51.308Z"
-}
