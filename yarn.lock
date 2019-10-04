@@ -9885,9 +9885,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz":
-  version "0.60.0-microsoft-fb60merge.13"
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft-fb60merge.13.tar.gz#2846ab59aa8bafc7d2f6d73d5223ad5e5f4589f0"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz":
+  version "0.60.0-microsoft.3"
+  uid a547be3bac4b2e499203c2536b706c6addeb2e9e
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz#a547be3bac4b2e499203c2536b706c6addeb2e9e"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
@@ -9930,6 +9931,7 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
     fbjs-scripts "^1.1.0"
     invariant "^2.2.4"
     jsc-android "245459.0.0"
+    metro "0.54.1"
     metro-babel-register "0.54.1"
     metro-react-native-babel-transformer "0.54.1"
     nullthrows "^1.1.0"
