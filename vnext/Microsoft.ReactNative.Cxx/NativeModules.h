@@ -536,6 +536,46 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
       }
     };
 
+    template <class T, class = void>
+    struct RejectCallbackCreator;
+
+    template <template <class...> class TCallback, class TArg>
+    struct RejectCallbackCreator<
+        TCallback<void(TArg)>,
+        std::enable_if_t<
+            std::is_assignable_v<std::string, TArg> ||
+            std::is_assignable_v<std::wstring, TArg>>> {
+      static TCallback<void(TArg)> Create(
+          const IJSValueWriter &argWriter,
+          const MethodResultCallback &callback) noexcept {
+        return TCallback(
+            [ callback = std::move(callback), argWriter ](TArg arg) noexcept {
+              argWriter.WriteArrayBegin();
+              argWriter.WriteObjectBegin();
+              argWriter.WritePropertyName(L"message");
+              WriteValue(argWriter, arg);
+              argWriter.WriteObjectEnd();
+              argWriter.WriteArrayEnd();
+              callback(argWriter);
+            });
+      }
+    };
+
+    template <template <class...> class TCallback>
+    struct RejectCallbackCreator<TCallback<void()>, void>
+        : CallbackCreator<TCallback<void()>> {};
+
+    template <template <class...> class TCallback, class TArg>
+    struct RejectCallbackCreator<TCallback<void(TArg)>,
+        std::enable_if_t<
+            !std::is_assignable_v<std::string, TArg> &&
+            !std::is_assignable_v<std::wstring, TArg>>>
+        : CallbackCreator<TCallback<void(TArg)>> {};
+
+    template <template <class...> class TCallback, class TArg0, class TArg1, class... TArgs>
+    struct RejectCallbackCreator<TCallback<void(TArg0, TArg1, TArgs...)>, void>
+        : CallbackCreator<TCallback<void(TArg0, TArg1, TArgs...)>> {};
+
     // Method with one callback
     static MethodDelegate GetFunc(
         ModuleType *module,
@@ -575,7 +615,7 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
             CallbackCreator<
                 std::tuple_element_t<sizeof...(TArgs) - 2, ArgTuple>>::
                 Create(argWriter, std::move(callback1)),
-            CallbackCreator<
+            RejectCallbackCreator<
                 std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>::
                 Create(argWriter, std::move(callback2)));
       };
