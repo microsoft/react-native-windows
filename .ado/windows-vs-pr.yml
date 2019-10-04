@@ -14,6 +14,7 @@ variables:
   MSBuildPreferredToolArchitecture: x64
   MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 jobs:
   - job: Setup
@@ -170,7 +171,6 @@ jobs:
     variables:
       Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
       GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
       VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
