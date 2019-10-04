@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update ChakraCore to 1.11.13",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "5b5dca4a2df3115caed8e38ea929f99fac6939a4",
+  "date": "2019-10-04T16:38:40.552Z"
+}
