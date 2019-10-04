@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 01 Oct 2019 03:44:42 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Oct 2019 16:33:00 GMT and should not be manually modified.
 
+## 0.59.0-vnext.196
+Fri, 04 Oct 2019 16:33:00 GMT
+
+### Changes
+
+- Delay load ChakraCore.Debugger.DLL (acoates@microsoft.com)
 ## 0.59.0-vnext.195
 Tue, 01 Oct 2019 03:44:42 GMT
 

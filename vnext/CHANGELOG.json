@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Oct 2019 16:33:00 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.196",
+      "version": "0.59.0-vnext.196",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Delay load ChakraCore.Debugger.DLL",
+            "author": "acoates@microsoft.com",
+            "commit": "755a351e527e6a23b94d1d201b79e8085de93a35"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Oct 2019 22:22:30 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.195",
       "version": "0.59.0-vnext.195",
