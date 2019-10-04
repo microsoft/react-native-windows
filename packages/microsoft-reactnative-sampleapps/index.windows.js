@@ -12,8 +12,10 @@ import {
   Text,
   View,
 } from 'react-native';
-
 import { NativeModules } from 'react-native';
+
+const BatchedBridge = require('BatchedBridge');
+const NativeEventEmitter = require('NativeEventEmitter');
 
 class SampleApp extends Component {
   _onPressHandlerSM() {
@@ -129,36 +131,49 @@ class SampleApp extends Component {
   }
 
   _onPressHandlerCppCalculator() {
+    var log = function(message) {
+      console.log(message);
+      NativeModules.DebugConsole.Log(message + "\n");
+    }
+
     var getCallback = function(prefix) {
       return function(result) {
-        console.log(prefix + result);
-        NativeModules.DebugConsole.Log(prefix + result + "\n");
+        log(prefix + result);
       };
     }
 
-    getCallback("")("Hello from JS!");
+    log("Hello from JS!");
 
-    NativeModules.Calculator.Add(5, 6,
-      getCallback("Calculator.Add(5, 6) => "));
-    NativeModules.Calculator.Add(5, 12,
-      getCallback("Calculator.Add(5, 12) => "));
-    NativeModules.Calculator.Subtract(6, 5)
-      .then(getCallback("Calculator.Subtract(6, 5) => then "))
-      .catch(getCallback("Calculator.Subtract(6, 5) => catch "));
-    NativeModules.Calculator.Subtract(5, 6)
-      .then(getCallback("Calculator.Subtract(5, 6) => then "))
-      .catch(getCallback("Calculator.Subtract(5, 6) => catch "));
+    log(`MyModule.m_fieldConst: ${NativeModules.MyModule.m_fieldConst}`);
+    log(`MyModule.fldConst: ${NativeModules.MyModule.fldConst}`);
+    log(`MyModule.simpleConst1: ${NativeModules.MyModule.simpleConst1}`);
+    log(`MyModule.simpleConst2: ${NativeModules.MyModule.simpleConst2}`);
 
-    NativeModules.CsStrings.Length("Hello!",
-      getCallback("CsStrings.Length(\"Hello!\") => "));
-    NativeModules.CsStrings.Concat("Hello", "World!",
-      getCallback("CsStrings.Concat(\"Hello\", \"World!\") => "));
-    NativeModules.CsStrings.Substr("Hello World!", 5)
-      .then(getCallback("CsStrings.Substr(\"Hello World!\", 5) => then "))
-      .catch(getCallback("CsStrings.Substr(\"Hello World!\", 5) => catch "));
-    NativeModules.CsStrings.Substr("Hello World!", 20)
-      .then(getCallback("CsStrings.Substr(\"Hello World!\", 20) => then "))
-      .catch(getCallback("CsStrings.Substr(\"Hello World!\", 20) => catch "));
+    if (!this._initedMyModuleOnChanged) {
+      this._initedMyModuleOnChanged = true;
+      BatchedBridge.registerLazyCallableModule('MyModule', () => {
+        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyModule);
+        myModuleEventEmitter.addListener('OnChanged', getCallback("MyModule.OnChanged: "), this);
+        return myModuleEventEmitter;
+      });
+    }
+
+    NativeModules.MyModule.Add(2, 4, getCallback("MyModule.Add(2, 4) => "));
+    NativeModules.MyModule.PrintAdd(1, 2);
+
+    NativeModules.Calculator.Add(5, 6, getCallback("Calculator.Add(5, 6) => "));
+    NativeModules.Calculator.Add(5, 12, getCallback("Calculator.Add(5, 12) => "));
+    NativeModules.Calculator.Subtract(6, 5).then(getCallback("Calculator.Subtract(6, 5) => then "))
+                                           .catch(getCallback("Calculator.Subtract(6, 5) => catch "));
+    NativeModules.Calculator.Subtract(5, 6).then(getCallback("Calculator.Subtract(5, 6) => then "))
+                                           .catch(getCallback("Calculator.Subtract(5, 6) => catch "));
+
+    NativeModules.CsStrings.Length("Hello!", getCallback("CsStrings.Length(\"Hello!\") => "));
+    NativeModules.CsStrings.Concat("Hello", "World!", getCallback("CsStrings.Concat(\"Hello\", \"World!\") => "));
+    NativeModules.CsStrings.Substr("Hello World!", 5).then(getCallback("CsStrings.Substr(\"Hello World!\", 5) => then "))
+                                                     .catch(getCallback("CsStrings.Substr(\"Hello World!\", 5) => catch "));
+    NativeModules.CsStrings.Substr("Hello World!", 20).then(getCallback("CsStrings.Substr(\"Hello World!\", 20) => then "))
+                                                      .catch(getCallback("CsStrings.Substr(\"Hello World!\", 20) => catch "));
   }
 
   render() {

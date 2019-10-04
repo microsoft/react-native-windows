@@ -4,6 +4,7 @@
 #pragma once
 
 #include <functional>
+#include <sstream>
 #include "NativeModules.h"
 
 namespace TestApp {
@@ -34,7 +35,9 @@ struct MyModule {
 
   RN_METHOD(PrintAdd);
   void PrintAdd(int x, int y) noexcept {
-    printf("PrintAdd: %d\n", x + y);
+    std::stringstream ss;
+    ss << "PrintAdd: " << x + y << "\n";
+    OutputDebugStringA(ss.str().c_str());
   }
 
   RN_METHOD(AddCallback);

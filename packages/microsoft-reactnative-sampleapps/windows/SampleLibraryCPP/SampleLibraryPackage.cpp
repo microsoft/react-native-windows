@@ -17,7 +17,7 @@ namespace winrt::SampleLibraryCPP::implementation {
 IVectorView<Bridge::INativeModule> SampleLibraryPackage::CreateNativeModules(
     ReactContext const &reactContext) {
   auto modules =
-      single_threaded_vector<Bridge::INativeModule>({SampleModuleABI()});
+      single_threaded_vector<Bridge::INativeModule>({/*SampleModuleABI()*/});
   return modules.GetView();
 }
 

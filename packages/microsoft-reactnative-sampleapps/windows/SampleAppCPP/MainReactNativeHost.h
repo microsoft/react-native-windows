@@ -9,18 +9,17 @@
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
-
 using namespace Microsoft::ReactNative;
 using namespace Microsoft::ReactNative::Bridge;
-
 using namespace SampleLibraryCPP;
 
 namespace winrt::SampleApp::implementation {
+
 struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   MainReactNativeHost() {
     auto instanceSettings = InstanceSettings();
     instanceSettings.UseWebDebugger(
-        false); // Disabled temporarily because of issue #2877
+        true); // Disabled temporarily because of issue #2877
     instanceSettings.UseLiveReload(
         true); // true by default in debug builds already
     instanceSettings.UseJsi(true);
@@ -29,17 +28,21 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   hstring MainComponentName() {
     return L"SampleApp";
   };
+
   hstring JavaScriptMainModuleName() {
     return L"index.windows";
   };
+
   bool UseDeveloperSupport() {
-    return TRUE;
+    return true;
   };
+
   IVectorView<IReactPackage> Packages() {
     auto packages =
         single_threaded_vector<IReactPackage>({SampleLibraryPackage()});
     return packages.GetView();
   };
+
   IVectorView<INativeModulePackage> ModulePackages() {
     OutputDebugStringW(L"My output string.");
     auto packages = single_threaded_vector<INativeModulePackage>(
