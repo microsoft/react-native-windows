@@ -23,8 +23,6 @@ class AppTheme : public react::windows::AppTheme,
   const std::string getCurrentTheme() override;
   bool getIsHighContrast() override;
 
-  static void uiThreadAvailable();
-
  private:
   // High Contrast Color helper methods
   folly::dynamic getHighContrastColors();
@@ -33,7 +31,7 @@ class AppTheme : public react::windows::AppTheme,
   void fireHighContrastChanged();
   void fireThemeChanged();
   void fireEvent(std::string const &eventName, folly::dynamic &&eventData);
-  void uiDependentOperations();
+  void updateAndSubscribeForChanges();
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;

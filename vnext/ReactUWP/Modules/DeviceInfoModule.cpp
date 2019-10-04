@@ -17,13 +17,40 @@ DeviceInfo::DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance)
 }
 
 DeviceInfo::DeviceInfo() {
-  m_dimensions = getDimensions(nullptr, nullptr);
+
+  // The LeavingBackgound event subscription must be set up from the UI Thread.
+  // Subscribing to this event on other threads does not throw. But the handler won't be called when you expect.
+  m_leavingBackgroundRevoker =
+    winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
+      winrt::auto_revoke,
+      [wk_parent = wk_parent](
+        winrt::Windows::Foundation::IInspectable const& /*sender*/,
+        winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
+        & /*e*/) {
+          if (auto parent = wk_parent.lock()) {
+            parent->sendDimensionsChangedEvent();
+          }
+      });
 }
 
-folly::dynamic DeviceInfo::getDimensions(
-    winrt::Windows::Graphics::Display::DisplayInformation displayInfo,
-    winrt::Windows::UI::Core::CoreWindow window) {
-  winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+folly::dynamic DeviceInfo::getDimensions() {
+
+  try {
+    auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+    auto const& window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
+    winrt::Windows::UI::ViewManagement::UISettings uiSettings;
+
+    return getFollyDimensions(window.Bounds().Width, window.Bounds().Height, displayInfo.ScreenWidthInRawPixels(), displayInfo.ScreenHeightInRawPixels(), static_cast<int>(displayInfo.ResolutionScale()) / 100, uiSettings.TextScaleFactor(), displayInfo.LogicalDpi());
+  }
+  catch (...) {
+    // Check for HResult E_RPC_WRONG_THREAD
+
+    // Send fake data when we are in the background.
+    // Using 1 for all values since it should be obviously fake, and avoids consumers dividing by 0
+    return getFollyDimensions(1, 1, 1, 1, 1, 1, 1);
+  }
+}
+
 
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
@@ -48,13 +75,28 @@ folly::dynamic DeviceInfo::getDimensions(
               : 1)("fontScale", uiSettings.TextScaleFactor())(
           "densityDpi",
           displayInfo != nullptr ? displayInfo.LogicalDpi() : 100));
+		  
+folly::dynamic DeviceInfo::getFollyDimensions(float windowWidth, float windowHeight, uint32_t screenWidth, uint32_t screenHeight, int scale, double fontScale, float dpi) {
+  
+  return folly::dynamic::object(
+    "windowPhysicalPixels",
+    folly::dynamic::object(
+      "width", windowWidth)(
+      "height", windowHeight)(
+      "scale", scale)(
+      "fontScale", fontScale)(
+      "densityDpi", dpi))(
+    "screenPhysicalPixels",
+    folly::dynamic::object(
+      "width", screenWidth)(
+      "height", screenHeight)(
+      "scale", scale)(
+      "fontScale", fontScale)(
+      "densityDpi", dpi));
 }
 
-void DeviceInfo::update() {
-  m_dimensions = getDimensions(
-      winrt::Windows::Graphics::Display::DisplayInformation::
-          GetForCurrentView(),
-      winrt::Windows::UI::Xaml::Window::Current().CoreWindow());
+void DeviceInfo::setParent(std::weak_ptr<DeviceInfoModule> parent) {
+  wk_parent = parent;
 }
 
 void DeviceInfo::updateRootElementSize(float width, float height) {
@@ -98,13 +140,8 @@ const char *DeviceInfoModule::name = "DeviceInfo";
 
 DeviceInfoModule::DeviceInfoModule(std::shared_ptr<DeviceInfo> deviceInfo)
     : m_deviceInfo(std::move(deviceInfo)) {
-  m_leavingBackgroundRevoker =
-      winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
-          winrt::auto_revoke,
-          [this](
-              winrt::Windows::Foundation::IInspectable const & /*sender*/,
-              winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
-                  & /*e*/) { sendDimensionsChangedEvent(); });
+
+  m_deviceInfo->setParent(std::weak_ptr<DeviceInfoModule>(shared_from_this()));
 }
 
 std::string DeviceInfoModule::getName() {
@@ -113,20 +150,16 @@ std::string DeviceInfoModule::getName() {
 
 void DeviceInfoModule::sendDimensionsChangedEvent() {
   if (auto instance = getInstance().lock()) {
-    m_deviceInfo->update();
-    auto args = m_deviceInfo->GetDimensionsConstants();
-
     instance->callJSFunction(
         "RCTDeviceEventEmitter",
         "emit",
-        folly::dynamic::array("didUpdateDimensions", std::move(args)));
+        folly::dynamic::array("didUpdateDimensions", std::move(m_deviceInfo->getDimensions())));
   }
 }
 
 std::map<std::string, folly::dynamic> DeviceInfoModule::getConstants() {
-  // Set Dummy values initially to avoid dependency on UI Thread
   std::map<std::string, folly::dynamic> constants{
-      {"Dimensions", m_deviceInfo->GetDimensionsConstants()}};
+      {"Dimensions", m_deviceInfo->getDimensions()}};
 
   return constants;
 }

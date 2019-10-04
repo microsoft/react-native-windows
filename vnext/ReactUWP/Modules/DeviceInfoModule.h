@@ -38,6 +38,18 @@ class DeviceInfo {
   winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker
       m_sizeChangedRevoker;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
+
+
+  folly::dynamic getDimensions();
+
+  void setParent(std::weak_ptr<DeviceInfoModule> parent);
+
+ private:
+
+  folly::dynamic getFollyDimensions(float windowWidth, float windowHeight, uint32_t screenWidth, uint32_t screenHeight, int scale, double fontScale, float dpi);
+  std::weak_ptr<DeviceInfoModule> wk_parent;
+
+  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
 };
 
 class DeviceInfoModule : public facebook::xplat::module::CxxModule,
@@ -53,8 +65,7 @@ class DeviceInfoModule : public facebook::xplat::module::CxxModule,
   static const char *name;
 
  private:
-  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker
-      m_leavingBackgroundRevoker;
+  friend class DeviceInfo;
   void sendDimensionsChangedEvent();
   std::shared_ptr<DeviceInfo> m_deviceInfo;
 };

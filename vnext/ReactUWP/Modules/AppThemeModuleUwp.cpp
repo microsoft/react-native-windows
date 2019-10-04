@@ -31,13 +31,22 @@ AppTheme::AppTheme(
     : react::windows::AppTheme(),
       m_wkReactInstance(reactInstance),
       m_queueThread(defaultQueueThread) {
-  m_leavingBackgroundRevoker =
-      winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
-          winrt::auto_revoke,
-          [this](
-              winrt::Windows::Foundation::IInspectable const & /*sender*/,
-              winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
-                  & /*e*/) { uiDependentOperations(); });
+  try {
+    updateAndSubscribeForChanges();
+  } catch (...) {
+    // Check for HResult E_RPC_WRONG_THREAD
+    m_leavingBackgroundRevoker =
+        winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
+            winrt::auto_revoke,
+            [this](
+                winrt::Windows::Foundation::IInspectable const & /*sender*/,
+                winrt::Windows::ApplicationModel::
+                    LeavingBackgroundEventArgs const & /*e*/) {
+              updateAndSubscribeForChanges();
+              fireHighContrastChanged();
+              fireThemeChanged();
+            });
+  }
 }
 
 AppTheme::~AppTheme() = default;
@@ -52,7 +61,7 @@ bool AppTheme::getIsHighContrast() {
   ;
 }
 
-void AppTheme::uiDependentOperations() {
+void AppTheme::updateAndSubscribeForChanges() {
   m_currentTheme = winrt::Application::Current().RequestedTheme();
   m_isHighContrast = m_accessibilitySettings.HighContrast();
   m_highContrastColors = getHighContrastColors();
