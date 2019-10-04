@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Update V8JSI package version",
+  "packageName": "react-native-windows",
+  "email": "tudorm@microsoft.com",
+  "commit": "441c4364fca8f6b9de50dccdfe989efd949f696b",
+  "date": "2019-10-04T22:51:00.999Z"
+}
