@@ -9,44 +9,44 @@
 // - Return void and have a Callback as a last parameter. The Callback type can
 // be any std::function like type. I.e. Func<void(Args...)>.
 // - Return void and have two callbacks as last parameters. In JavaScript the
-// method returns Promise. To keep it as two callbacks use the RN_ASYNC_METHOD
+// method returns Promise. To keep it as two callbacks use the REACT_ASYNC_METHOD
 // macro.
 // - Return non-void value. In JavaScript it is treated as a method with one
 // Callback. Return std::pair<Error, Value> to be able to communicate error
 // condition.
-#define RN_METHOD(method) RN_METHOD_JSNAME(method, #method)
+#define REACT_METHOD(method) REACT_METHOD_JSNAME(method, #method)
 
-// The same as RN_METHOD but with custom JS name.
-#define RN_METHOD_JSNAME(method, jsName) \
-  RN_METHOD_INTERNAL(method, jsName, , false)
+// The same as REACT_METHOD but with custom JS name.
+#define REACT_METHOD_JSNAME(method, jsName) \
+  REACT_METHOD_INTERNAL(method, jsName, , false)
 
-// The same as RN_METHOD, but two callbacks are exposed as callbacks, and not as
+// The same as REACT_METHOD, but two callbacks are exposed as callbacks, and not as
 // a Promise.
-#define RN_ASYNC_METHOD(method) RN_METHOD_ASYNC_JSNAME(method, #method)
+#define REACT_ASYNC_METHOD(method) REACT_METHOD_ASYNC_JSNAME(method, #method)
 
-// The same as RN_ASYNC_METHOD but with custom JS name.
-#define RN_ASYNC_METHOD_JSNAME(method, jsName) \
-  RN_METHOD_INTERNAL(method, jsName, , true)
+// The same as REACT_ASYNC_METHOD but with custom JS name.
+#define REACT_ASYNC_METHOD_JSNAME(method, jsName) \
+  REACT_METHOD_INTERNAL(method, jsName, , true)
 
 // A method that is called synchronously. It must be used rarely because it may
 // cause out-of-order execution when used along with asynchronous methods.
-#define RN_SYNC_METHOD(method) RN_SYNC_METHOD_JSNAME(method, #method)
+#define REACT_SYNC_METHOD(method) REACT_SYNC_METHOD_JSNAME(method, #method)
 
-// The same as RN_SYNC_METHOD but with custom JS name.
-#define RN_SYNC_METHOD_JSNAME(method, jsName) \
-  RN_METHOD_INTERNAL(method, jsName, Sync, false)
+// The same as REACT_SYNC_METHOD but with custom JS name.
+#define REACT_SYNC_METHOD_JSNAME(method, jsName) \
+  REACT_METHOD_INTERNAL(method, jsName, Sync, false)
 
 // A method where we can define constants.
 // Constant definition relies on a TLS context that is setup when object is
 // created.
-#define RN_CONST_METHOD(method) RN_METHOD_INTERNAL(method, "", Const, false)
+#define REACT_CONST_METHOD(method) REACT_METHOD_INTERNAL(method, "", Const, false)
 
 // Internal implementation details.
 // Registration of a method relies on a TLS context that is setup when object is
 // created. The advantage is that we do zero work during static initialization.
 // The disadvantage is that we require to have one bool field per registration.
-#define RN_METHOD_INTERNAL(method, jsName, type, isAsync)          \
-  bool RN_reg##method{                                             \
+#define REACT_METHOD_INTERNAL(method, jsName, type, isAsync)          \
+  bool REACT_reg##method{                                             \
       ::Microsoft::ReactNative::Module##type##MethodInfo<decltype( \
           &std::remove_pointer_t<decltype(this)>::method)>::       \
           Register(                                                \
@@ -55,53 +55,53 @@
               &std::remove_pointer_t<decltype(this)>::method,      \
               isAsync)};
 
-#define RN_CONSTANT(field) RN_CONSTANT_JSNAME(field, #field)
+#define REACT_CONSTANT(field) REACT_CONSTANT_JSNAME(field, #field)
 
-#define RN_CONSTANT_JSNAME(field, jsName)                      \
-  bool RN_reg##field{                                          \
+#define REACT_CONSTANT_JSNAME(field, jsName)                      \
+  bool REACT_reg##field{                                          \
       ::Microsoft::ReactNative::ModuleConstFieldInfo<decltype( \
           &std::remove_pointer_t<decltype(this)>::field)>::    \
           Register(                                            \
               this, jsName, &std::remove_pointer_t<decltype(this)>::field)};
 
-#define RN_EVENT(field) RN_EVENT_JSNAME(field, #field)
+#define REACT_EVENT(field) REACT_EVENT_JSNAME(field, #field)
 
-#define RN_EVENT_JSNAME(field, jsName)                         \
-  bool RN_reg##field{                                          \
+#define REACT_EVENT_JSNAME(field, jsName)                         \
+  bool REACT_reg##field{                                          \
       ::Microsoft::ReactNative::ModuleEventFieldInfo<decltype( \
           &std::remove_pointer_t<decltype(this)>::field)>::    \
           Register(                                            \
               this, jsName, &std::remove_pointer_t<decltype(this)>::field)};
 
-#define RN_REGISTER_METHOD(method) RN_REGISTER_METHOD_JSNAME(method, #method)
+#define REACT_REGISTER_METHOD(method) REACT_REGISTER_METHOD_JSNAME(method, #method)
 
-// The same as RN_METHOD but with custom JS name.
-#define RN_REGISTER_METHOD_JSNAME(method, jsName) \
-  RN_REGISTER_METHOD_INTERNAL(method, jsName, , false)
+// The same as REACT_METHOD but with custom JS name.
+#define REACT_REGISTER_METHOD_JSNAME(method, jsName) \
+  REACT_REGISTER_METHOD_INTERNAL(method, jsName, , false)
 
-// The same as RN_METHOD, but two callbacks are exposed as callbacks, and not as
+// The same as REACT_METHOD, but two callbacks are exposed as callbacks, and not as
 // a Promise.
-#define RN_REGISTER_ASYNC_METHOD(method) \
-  RN_REGISTER_METHOD_ASYNC_JSNAME(method, #method)
+#define REACT_REGISTER_ASYNC_METHOD(method) \
+  REACT_REGISTER_METHOD_ASYNC_JSNAME(method, #method)
 
-// The same as RN_ASYNC_METHOD but with custom JS name.
-#define RN_REGISTER_ASYNC_METHOD_JSNAME(method, jsName) \
-  RN_REGISTER_METHOD_INTERNAL(method, jsName, , true)
+// The same as REACT_ASYNC_METHOD but with custom JS name.
+#define REACT_REGISTER_ASYNC_METHOD_JSNAME(method, jsName) \
+  REACT_REGISTER_METHOD_INTERNAL(method, jsName, , true)
 
 // A method that is called synchronously. It must be used rarely because it may
 // cause out-of-order execution when used along with asynchronous methods.
-#define RN_REGISTER_SYNC_METHOD(method) \
-  RN_REGISTER_SYNC_METHOD_JSNAME(method, #method)
+#define REACT_REGISTER_SYNC_METHOD(method) \
+  REACT_REGISTER_SYNC_METHOD_JSNAME(method, #method)
 
-// The same as RN_SYNC_METHOD but with custom JS name.
-#define RN_REGISTER_SYNC_METHOD_JSNAME(method, jsName) \
-  RN_REGISTER_METHOD_INTERNAL(method, jsName, Sync, false)
+// The same as REACT_SYNC_METHOD but with custom JS name.
+#define REACT_REGISTER_SYNC_METHOD_JSNAME(method, jsName) \
+  REACT_REGISTER_METHOD_INTERNAL(method, jsName, Sync, false)
 
-// The same as RN_SYNC_METHOD but with custom JS name.
-#define RN_REGISTER_CONST_METHOD(method) \
-  RN_REGISTER_METHOD_INTERNAL(method, "", Const, false)
+// The same as REACT_SYNC_METHOD but with custom JS name.
+#define REACT_REGISTER_CONST_METHOD(method) \
+  REACT_REGISTER_METHOD_INTERNAL(method, "", Const, false)
 
-#define RN_REGISTER_METHOD_INTERNAL(method, jsName, type, isAsync)   \
+#define REACT_REGISTER_METHOD_INTERNAL(method, jsName, type, isAsync)   \
   (void)::Microsoft::ReactNative::Module##type##MethodInfo<decltype( \
       &std::remove_pointer_t<decltype(this)>::method)>::             \
       Register(                                                      \
@@ -110,9 +110,9 @@
           &std::remove_pointer_t<decltype(this)>::method,            \
           isAsync);
 
-#define RN_REGISTER_CONSTANT(field) RN_REGISTER_CONSTANT_JSNAME(field, #field)
+#define REACT_REGISTER_CONSTANT(field) REACT_REGISTER_CONSTANT_JSNAME(field, #field)
 
-#define RN_REGISTER_CONSTANT_JSNAME(field, jsName)         \
+#define REACT_REGISTER_CONSTANT_JSNAME(field, jsName)         \
   ::Microsoft::ReactNative::ModuleConstFieldInfo<decltype( \
       &std::remove_pointer_t<decltype(this)>::field)>::    \
       Register(this, jsName, &std::remove_pointer_t<decltype(this)>::field);
@@ -120,12 +120,12 @@
 // A method where we can define constants.
 // Constant definition relies on a TLS context that is setup when object is
 // created.
-#define RN_CONSTANT_VALUE(jsName, value) \
+#define REACT_CONSTANT_VALUE(jsName, value) \
   ::Microsoft::ReactNative::ModuleConstantInfo::Register(this, jsName, value);
 
-#define RN_REGISTER_EVENT(field) RN_REGISTER_EVENT_JSNAME(field, #field)
+#define REACT_REGISTER_EVENT(field) REACT_REGISTER_EVENT_JSNAME(field, #field)
 
-#define RN_REGISTER_EVENT_JSNAME(field, jsName)                  \
+#define REACT_REGISTER_EVENT_JSNAME(field, jsName)                  \
   (void)::Microsoft::ReactNative::ModuleEventFieldInfo<decltype( \
       &std::remove_pointer_t<decltype(this)>::field)>::          \
       Register(this, jsName, &std::remove_pointer_t<decltype(this)>::field);

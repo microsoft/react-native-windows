@@ -7,7 +7,7 @@ namespace TestApp {
 
 struct DebugConsole {
 
-  RN_METHOD(Log);
+  REACT_METHOD(Log);
   void Log(std::string message) noexcept {
     OutputDebugStringA(message.c_str());
   }

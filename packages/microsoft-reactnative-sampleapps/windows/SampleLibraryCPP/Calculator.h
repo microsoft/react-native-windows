@@ -8,12 +8,12 @@
 namespace SampleLibraryCPP {
 
 struct Calculator {
-  RN_METHOD(Add);
+  REACT_METHOD(Add);
   int Add(int x, int y) noexcept {
     return x + y;
   }
 
-  RN_METHOD(Subtract);
+  REACT_METHOD(Subtract);
   void Subtract(
       int x,
       int y,

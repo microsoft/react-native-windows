@@ -10,13 +10,13 @@
 namespace TestApp {
 
 struct MyModule {
-  RN_CONSTANT(m_fieldConst);
+  REACT_CONSTANT(m_fieldConst);
   const int m_fieldConst = 42;
 
-  RN_CONSTANT_JSNAME(m_fldConst, "fldConst");
+  REACT_CONSTANT_JSNAME(m_fldConst, "fldConst");
   const int m_fldConst = 43;
 
-  RN_CONST_METHOD(SimpleConstants);
+  REACT_CONST_METHOD(SimpleConstants);
   void SimpleConstants(
       const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter
           &writer) noexcept {
@@ -24,29 +24,29 @@ struct MyModule {
     ::Microsoft::ReactNative::WriteProperty(writer, "simpleConst2", "World");
   }
 
-  RN_EVENT(OnChanged);
+  REACT_EVENT(OnChanged);
   std::function<void(int)> OnChanged;
 
-  RN_METHOD(Add);
+  REACT_METHOD(Add);
   int Add(int x, int y) noexcept {
     OnChanged(x + y);
     return x + y;
   }
 
-  RN_METHOD(PrintAdd);
+  REACT_METHOD(PrintAdd);
   void PrintAdd(int x, int y) noexcept {
     std::stringstream ss;
     ss << "PrintAdd: " << x + y << "\n";
     OutputDebugStringA(ss.str().c_str());
   }
 
-  RN_METHOD(AddCallback);
+  REACT_METHOD(AddCallback);
   void AddCallback(int x, int y, std::function<void(int)> &&result) noexcept {
     // printf("AddCallback: %d\n", x + y);
     result(x + y);
   }
 
-  RN_METHOD(SubtractCallback);
+  REACT_METHOD(SubtractCallback);
   void SubtractCallback(
       int x,
       int y,
@@ -59,17 +59,17 @@ struct MyModule {
     }
   }
 
-  RN_METHOD(NoArg0);
+  REACT_METHOD(NoArg0);
   void NoArg0() noexcept {
     printf("no arg \n");
   }
 
-  RN_METHOD(NoArg1);
+  REACT_METHOD(NoArg1);
   int NoArg1() noexcept {
     return 10;
   }
 
-  RN_SYNC_METHOD_JSNAME(GetRegValue, "regValue");
+  REACT_SYNC_METHOD_JSNAME(GetRegValue, "regValue");
   std::string GetRegValue(std::string key) noexcept {
     if (key == "Key1") {
       return "Simple1";
