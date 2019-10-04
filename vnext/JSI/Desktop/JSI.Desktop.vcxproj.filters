@@ -15,8 +15,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChakraCoreRuntimeFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <!-- Future ClIncludes -->
+    <ClInclude Include="ChakraCoreRuntimeFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

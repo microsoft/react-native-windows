@@ -56,7 +56,7 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 
 // foreward declaration.
 namespace facebook {
@@ -514,7 +514,7 @@ InstanceImpl::InstanceImpl(
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
-              std::make_shared<ChakraJSIRuntimeHolder>(
+              std::make_shared<ChakraRuntimeHolder>(
                   m_devSettings, jsQueue, nullptr, nullptr);
           break;
       }

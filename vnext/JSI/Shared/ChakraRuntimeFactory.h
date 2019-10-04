@@ -9,10 +9,10 @@ namespace facebook {
 namespace jsi {
 namespace chakraruntime {
 
-struct ChakraJsiRuntimeArgs;
+struct ChakraRuntimeArgs;
 
-std::unique_ptr<jsi::Runtime> makeChakraJsiRuntime(
-    ChakraJsiRuntimeArgs &&args) noexcept;
+std::unique_ptr<jsi::Runtime> makeChakraRuntime(
+    ChakraRuntimeArgs &&args) noexcept;
 
 } // namespace chakraruntime
 } // namespace jsi

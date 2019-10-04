@@ -1,7 +1,7 @@
 #include "JsiRuntimeUnitTests.h"
 
-#include "JSI/Shared/ChakraJsiRuntimeArgs.h"
-#include "JSI/Shared/ChakraJsiRuntimeFactory.h"
+#include "JSI/Shared/ChakraRuntimeArgs.h"
+#include "JSI/Shared/ChakraRuntimeFactory.h"
 #include "MemoryTracker.h"
 
 // TODO (yicyao): #2730 Introduces a vcxitem for shared test code and move this
@@ -15,8 +15,8 @@
 using facebook::jsi::JsiRuntimeUnitTests;
 using facebook::jsi::Runtime;
 using facebook::jsi::RuntimeFactory;
-using facebook::jsi::chakraruntime::ChakraJsiRuntimeArgs;
-using facebook::jsi::chakraruntime::makeChakraJsiRuntime;
+using facebook::jsi::chakraruntime::ChakraRuntimeArgs;
+using facebook::jsi::chakraruntime::makeChakraRuntime;
 using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::React::Test::TestMessageQueueThread;
@@ -26,7 +26,7 @@ using Microsoft::React::Test::TestMessageQueueThread;
 
 std::vector<RuntimeFactory> runtimeGenerators() {
   return {[]() -> std::unique_ptr<Runtime> {
-    ChakraJsiRuntimeArgs args{};
+    ChakraRuntimeArgs args{};
 
     args.jsQueue = std::make_shared<TestMessageQueueThread>();
 
@@ -36,7 +36,7 @@ std::vector<RuntimeFactory> runtimeGenerators() {
     args.memoryTracker =
         CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
 
-    return makeChakraJsiRuntime(std::move(args));
+    return makeChakraRuntime(std::move(args));
   }};
 }
 

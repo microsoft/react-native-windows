@@ -1,8 +1,8 @@
 #include "pch.h"
 
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 
-#include <JSI/Shared/ChakraJsiRuntimeFactory.h>
+#include <JSI/Shared/ChakraRuntimeFactory.h>
 
 using namespace facebook;
 using namespace facebook::react;
@@ -11,26 +11,26 @@ using namespace facebook::jsi::chakraruntime;
 namespace Microsoft::React::Test {
 
 std::shared_ptr<facebook::jsi::Runtime>
-ChakraJSIRuntimeHolder::getRuntime() noexcept {
+ChakraRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
 
   if (!runtime_)
     std::terminate();
 
-  // ChakraJsiRuntime is not thread safe as of now.
+  // ChakraRuntime is not thread safe as of now.
   if (own_thread_id_ != std::this_thread::get_id())
     std::terminate();
 
   return runtime_;
 }
 
-void ChakraJSIRuntimeHolder::initRuntime() noexcept {
+void ChakraRuntimeHolder::initRuntime() noexcept {
   runtime_ =
-      facebook::jsi::chakraruntime::makeChakraJsiRuntime(std::move(args_));
+      facebook::jsi::chakraruntime::makeChakraRuntime(std::move(args_));
   own_thread_id_ = std::this_thread::get_id();
 }
 
-Logger ChakraJSIRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
+Logger ChakraRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
     facebook::react::NativeLoggingHook loggingCallback) noexcept {
   return [loggingCallback = std::move(loggingCallback)](
              const char *message, LogLevel logLevel) -> void {
@@ -39,9 +39,9 @@ Logger ChakraJSIRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
   };
 }
 
-ChakraJsiRuntimeArgs ChakraJSIRuntimeHolder::RuntimeArgsFromDevSettings(
+ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
     std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
-  ChakraJsiRuntimeArgs runtimeArgs;
+  ChakraRuntimeArgs runtimeArgs;
 
   runtimeArgs.debuggerBreakOnNextLine = devSettings->debuggerBreakOnNextLine;
   runtimeArgs.debuggerPort = devSettings->debuggerPort;

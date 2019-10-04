@@ -5,18 +5,18 @@
 #include <jsi/RuntimeHolder.h>
 #include <jsi/ScriptStore.h>
 
-#include <JSI/Shared/ChakraJsiRuntimeArgs.h>
+#include <JSI/Shared/ChakraRuntimeArgs.h>
 
 #include <Logging.h>
 
 namespace facebook {
 namespace react {
 
-class ChakraJSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
 
-  ChakraJSIRuntimeHolder(
+  ChakraRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
       std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
@@ -29,14 +29,14 @@ class ChakraJSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   }
 
  private:
-  facebook::jsi::chakraruntime::ChakraJsiRuntimeArgs RuntimeArgsFromDevSettings(
+  facebook::jsi::chakraruntime::ChakraRuntimeArgs RuntimeArgsFromDevSettings(
       std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
   facebook::jsi::chakraruntime::Logger ChakraRuntimeLoggerFromReactLogger(
       facebook::react::NativeLoggingHook loggingCallback) noexcept;
 
   void initRuntime() noexcept;
 
-  facebook::jsi::chakraruntime::ChakraJsiRuntimeArgs args_;
+  facebook::jsi::chakraruntime::ChakraRuntimeArgs args_;
   std::shared_ptr<facebook::jsi::Runtime> runtime_;
 
   std::once_flag once_flag_;

@@ -141,7 +141,7 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebSocketJSExecutorFactory.h" />
     <ClInclude Include="WebSocketModule.h" />
-    <ClInclude Include="ChakraJSIRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="ChakraRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="HermesRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClInclude Include="V8JSIRuntimeHolder.h" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
@@ -167,7 +167,7 @@
     <ClCompile Include="unicode.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="ViewManager.cpp" />
-    <ClCompile Include="ChakraJSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="ChakraRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
