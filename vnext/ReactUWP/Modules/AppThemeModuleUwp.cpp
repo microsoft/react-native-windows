@@ -34,13 +34,10 @@ AppTheme::AppTheme(
   m_leavingBackgroundRevoker =
       winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
           winrt::auto_revoke,
-          [weakThis = std::weak_ptr<AppTheme>(shared_from_this())](winrt::Windows::Foundation::IInspectable const& /*sender*/,
-            winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
-            & /*e*/) {
-            if (auto strongThis = weakThis.lock()) {
-              strongThis->uiDependentOperations();
-            }
-          });
+          [this](
+              winrt::Windows::Foundation::IInspectable const & /*sender*/,
+              winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
+                  & /*e*/) { uiDependentOperations(); });
 }
 
 AppTheme::~AppTheme() = default;
