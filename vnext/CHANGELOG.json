@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 04 Oct 2019 17:58:56 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.197",
+      "version": "0.59.0-vnext.197",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update ChakraCore to 1.11.13",
+            "author": "acoates@microsoft.com",
+            "commit": "5b5dca4a2df3115caed8e38ea929f99fac6939a4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Oct 2019 16:33:00 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.196",
       "version": "0.59.0-vnext.196",

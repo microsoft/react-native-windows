@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 04 Oct 2019 16:33:00 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Oct 2019 17:58:56 GMT and should not be manually modified.
 
+## 0.59.0-vnext.197
+Fri, 04 Oct 2019 17:58:56 GMT
+
+### Changes
+
+- Update ChakraCore to 1.11.13 (acoates@microsoft.com)
 ## 0.59.0-vnext.196
 Fri, 04 Oct 2019 16:33:00 GMT
 
