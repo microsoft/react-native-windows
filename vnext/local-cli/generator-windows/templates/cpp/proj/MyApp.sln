@@ -44,18 +44,18 @@ Global
 		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		DebugBundle|ARM = Debug|ARM
-		DebugBundle|ARM64 = Debug|ARM64
-		DebugBundle|x64 = Debug|x64
-		DebugBundle|x86 = Debug|x86
+		DebugBundle|ARM = DebugBundle|ARM
+		DebugBundle|ARM64 = DebugBundle|ARM64
+		DebugBundle|x64 = DebugBundle|x64
+		DebugBundle|x86 = DebugBundle|x86
 		Release|ARM = Release|ARM
 		Release|ARM64 = Release|ARM64
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-		ReleaseBundle|ARM = Release|ARM
-		ReleaseBundle|ARM64 = Release|ARM64
-		ReleaseBundle|x64 = Release|x64
-		ReleaseBundle|x86 = Release|x86
+		ReleaseBundle|ARM = ReleaseBundle|ARM
+		ReleaseBundle|ARM64 = ReleaseBundle|ARM64
+		ReleaseBundle|x64 = ReleaseBundle|x64
+		ReleaseBundle|x86 = ReleaseBundle|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.ActiveCfg = Debug|ARM
@@ -107,6 +107,13 @@ Global
 		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x64.Build.0 = Release|x64
 		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x86.ActiveCfg = Release|Win32
 		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.Release|x86.Build.0 = Release|Win32
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|ARM64.ActiveCfg = Release|Win32
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|x64.Build.0 = Release|x64
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{2D5D43D9-CFFC-4C40-B4CD-02EFB4E2742B}.ReleaseBundle|x86.Build.0 = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM.ActiveCfg = Debug|ARM
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM.Build.0 = Debug|ARM
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM64.ActiveCfg = Debug|Win32
@@ -114,6 +121,13 @@ Global
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x64.Build.0 = Debug|x64
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x86.ActiveCfg = Debug|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x86.Build.0 = Debug|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|ARM64.ActiveCfg = Debug|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|x64.Build.0 = Debug|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.DebugBundle|x86.Build.0 = Debug|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|ARM.ActiveCfg = Release|ARM
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|ARM.Build.0 = Release|ARM
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|ARM64.ActiveCfg = Release|Win32
@@ -121,6 +135,13 @@ Global
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x64.Build.0 = Release|x64
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.ActiveCfg = Release|Win32
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.Build.0 = Release|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|ARM.ActiveCfg = Release|ARM
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.ReleaseBundle|ARM64.ActiveCfg = Release|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.ReleaseBundle|x64.Build.0 = Release|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.ReleaseBundle|x86.Build.0 = Release|Win32
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|ARM.ActiveCfg = Debug|ARM
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|ARM.Build.0 = Debug|ARM
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|ARM64.ActiveCfg = Debug|Win32
@@ -128,6 +149,13 @@ Global
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x64.Build.0 = Debug|x64
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x86.ActiveCfg = Debug|Win32
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Debug|x86.Build.0 = Debug|Win32
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|ARM64.ActiveCfg = Debug|Win32
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|x64.Build.0 = Debug|x64
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{11C084A3-A57C-4296-A679-CAC17B603144}.DebugBundle|x86.Build.0 = Debug|Win32
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|ARM.ActiveCfg = Release|ARM
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|ARM.Build.0 = Release|ARM
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|ARM64.ActiveCfg = Release|Win32
@@ -135,6 +163,13 @@ Global
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x64.Build.0 = Release|x64
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.ActiveCfg = Release|Win32
 		{11C084A3-A57C-4296-A679-CAC17B603144}.Release|x86.Build.0 = Release|Win32
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|ARM64.ActiveCfg = Release|Win32
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x64.Build.0 = Release|x64
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{11C084A3-A57C-4296-A679-CAC17B603144}.ReleaseBundle|x86.Build.0 = Release|Win32
 		{<%=projectGuid%>}.Debug|ARM.ActiveCfg = Debug|ARM
 		{<%=projectGuid%>}.Debug|ARM.Build.0 = Debug|ARM
 		{<%=projectGuid%>}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -145,6 +180,16 @@ Global
 		{<%=projectGuid%>}.Debug|x86.ActiveCfg = Debug|Win32
 		{<%=projectGuid%>}.Debug|x86.Build.0 = Debug|Win32
 		{<%=projectGuid%>}.Debug|x86.Deploy.0 = Debug|Win32
+		{<%=projectGuid%>}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{<%=projectGuid%>}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{<%=projectGuid%>}.DebugBundle|ARM.Deploy.0 = Debug|ARM
+		{<%=projectGuid%>}.DebugBundle|ARM64.ActiveCfg = Debug|Win32
+		{<%=projectGuid%>}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{<%=projectGuid%>}.DebugBundle|x64.Build.0 = Debug|x64
+		{<%=projectGuid%>}.DebugBundle|x64.Deploy.0 = Debug|x64
+		{<%=projectGuid%>}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{<%=projectGuid%>}.DebugBundle|x86.Build.0 = Debug|Win32
+		{<%=projectGuid%>}.DebugBundle|x86.Deploy.0 = Debug|Win32
 		{<%=projectGuid%>}.Release|ARM.ActiveCfg = Release|ARM
 		{<%=projectGuid%>}.Release|ARM.Build.0 = Release|ARM
 		{<%=projectGuid%>}.Release|ARM.Deploy.0 = Release|ARM
@@ -155,6 +200,16 @@ Global
 		{<%=projectGuid%>}.Release|x86.ActiveCfg = Release|Win32
 		{<%=projectGuid%>}.Release|x86.Build.0 = Release|Win32
 		{<%=projectGuid%>}.Release|x86.Deploy.0 = Release|Win32
+		{<%=projectGuid%>}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{<%=projectGuid%>}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{<%=projectGuid%>}.ReleaseBundle|ARM.Deploy.0 = Release|ARM
+		{<%=projectGuid%>}.ReleaseBundle|ARM64.ActiveCfg = Release|Win32
+		{<%=projectGuid%>}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{<%=projectGuid%>}.ReleaseBundle|x64.Build.0 = Release|x64
+		{<%=projectGuid%>}.ReleaseBundle|x64.Deploy.0 = Release|x64
+		{<%=projectGuid%>}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{<%=projectGuid%>}.ReleaseBundle|x86.Build.0 = Release|Win32
+		{<%=projectGuid%>}.ReleaseBundle|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,11 @@ using namespace react::uwp;
 
 namespace winrt::<%=ns%>::implementation
 {
+#ifdef BUNDLE  
+  const wchar_t* JSFILENAME = L"index.windows";
+#else  
   const wchar_t* JSFILENAME = L"index";
+#endif
   const wchar_t* JSCOMPONENTNAME = L"<%=name%>";
 
     MainPage::MainPage()
@@ -23,8 +27,13 @@ namespace winrt::<%=ns%>::implementation
   {
     InstanceSettings settings;
 
+#ifdef BUNDLE
+    settings.UseLiveReload = false;
+    settings.UseWebDebugger = false;
+#else    
     settings.UseLiveReload = true;
     settings.UseWebDebugger = true;
+#endif
 
     auto instance = Instance::Create(winrt::hstring(JSFILENAME));
     instance.Start(settings);
