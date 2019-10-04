@@ -157,6 +157,7 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Universal.sln
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:

@@ -9,7 +9,7 @@ parameters:
   msbuildVersion: 16.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
-  platformToolset: v142
+  platformToolset: v141
   targetPlatformVersion: 10.0.18362.0
   msbuildArguments: ''
   yarnBuildCmd: build
