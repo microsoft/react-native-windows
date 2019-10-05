@@ -1,48 +1,46 @@
 #include "pch.h"
 
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 
-#include <JSI/Shared/ChakraJsiRuntimeFactory.h>
+#include <JSI/Shared/ChakraRuntimeFactory.h>
 
 using namespace facebook;
 using namespace facebook::react;
-using namespace facebook::jsi::chakraruntime;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::React::Test {
 
 std::shared_ptr<facebook::jsi::Runtime>
-ChakraJSIRuntimeHolder::getRuntime() noexcept {
+ChakraRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
 
   if (!runtime_)
     std::terminate();
 
-  // ChakraJsiRuntime is not thread safe as of now.
+  // ChakraRuntime is not thread safe as of now.
   if (own_thread_id_ != std::this_thread::get_id())
     std::terminate();
 
   return runtime_;
 }
 
-void ChakraJSIRuntimeHolder::initRuntime() noexcept {
-  runtime_ =
-      facebook::jsi::chakraruntime::makeChakraJsiRuntime(std::move(args_));
+void ChakraRuntimeHolder::initRuntime() noexcept {
+  runtime_ = Microsoft::JSI::makeChakraRuntime(std::move(args_));
   own_thread_id_ = std::this_thread::get_id();
 }
 
-Logger ChakraJSIRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
+Microsoft::JSI::Logger ChakraRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
     facebook::react::NativeLoggingHook loggingCallback) noexcept {
   return [loggingCallback = std::move(loggingCallback)](
-             const char *message, LogLevel logLevel) -> void {
+             const char *message, Microsoft::JSI::LogLevel logLevel) -> void {
     loggingCallback(
         static_cast<facebook::react::RCTLogLevel>(logLevel), message);
   };
 }
 
-ChakraJsiRuntimeArgs ChakraJSIRuntimeHolder::RuntimeArgsFromDevSettings(
+Microsoft::JSI::ChakraRuntimeArgs
+ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
     std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
-  ChakraJsiRuntimeArgs runtimeArgs;
+  Microsoft::JSI::ChakraRuntimeArgs runtimeArgs;
 
   runtimeArgs.debuggerBreakOnNextLine = devSettings->debuggerBreakOnNextLine;
   runtimeArgs.debuggerPort = devSettings->debuggerPort;
@@ -65,5 +63,4 @@ ChakraJsiRuntimeArgs ChakraJSIRuntimeHolder::RuntimeArgsFromDevSettings(
   return runtimeArgs;
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::React::Test

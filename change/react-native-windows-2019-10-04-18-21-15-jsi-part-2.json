@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Rename ChakraJsiRuntime* to ChakraRuntime* and move them into Microsoft::JSI namespace.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "01197c0d210ec8fc1e740bfa87891bf3114c1967",
+  "date": "2019-10-05T01:21:15.034Z"
+}
