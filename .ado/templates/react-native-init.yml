@@ -4,6 +4,7 @@ parameters:
   version:
   platform:
   configuration:
+  vsComponents: ''
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -61,6 +62,17 @@ steps:
     inputs:
       command: restore
       restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
+
+  - task: PowerShell@2
+    displayName: Install Visual Studio dependencies
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+      arguments:
+        -InstallerUri ${{ parameters.vsInstallerUri }}
+        -Components ${{ parameters.vsComponents }}
+        -Collect:$${{ parameters.debug }}
+    condition: ne('${{parameters.vsComponents}}', '')
 
   - task: MSBuild@1
     displayName: MSBuild - testcli
