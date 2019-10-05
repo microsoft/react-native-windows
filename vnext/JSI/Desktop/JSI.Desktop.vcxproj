@@ -63,12 +63,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="ChakraCoreRuntimeFactory.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- Future ClIncludes -->
-    <ClInclude Include="ChakraCoreRuntime.h" />
-    <ClInclude Include="ChakraCoreRuntimeFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
