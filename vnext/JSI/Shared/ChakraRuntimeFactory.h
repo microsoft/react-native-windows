@@ -13,4 +13,3 @@ std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(
     ChakraRuntimeArgs &&args) noexcept;
 
 } // namespace Microsoft::JSI
-

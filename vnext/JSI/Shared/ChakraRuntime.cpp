@@ -185,8 +185,7 @@ ChakraRuntime::prepareJavaScript(
 }
 
 facebook::jsi::Value ChakraRuntime::evaluatePreparedJavaScript(
-    const std::shared_ptr<const facebook::jsi::PreparedJavaScript>
-        &) {
+    const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &) {
   throw facebook::jsi::JSINativeException("Not implemented!");
 }
 
@@ -295,8 +294,7 @@ facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneSymbol(
   throw facebook::jsi::JSINativeException("Not implemented!");
 }
 
-std::string ChakraRuntime::symbolToString(
-    const facebook::jsi::Symbol &) {
+std::string ChakraRuntime::symbolToString(const facebook::jsi::Symbol &) {
   throw facebook::jsi::JSINativeException("Not implemented!");
 }
 

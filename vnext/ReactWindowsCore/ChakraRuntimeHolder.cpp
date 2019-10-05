@@ -4,7 +4,6 @@
 
 #include <JSI/Shared/ChakraRuntimeFactory.h>
 
-
 namespace Microsoft::JSI {
 
 std::shared_ptr<facebook::jsi::Runtime>

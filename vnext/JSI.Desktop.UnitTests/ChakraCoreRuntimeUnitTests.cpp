@@ -15,10 +15,10 @@
 using facebook::jsi::JsiRuntimeUnitTests;
 using facebook::jsi::Runtime;
 using facebook::jsi::RuntimeFactory;
-using Microsoft::JSI::ChakraRuntimeArgs;
-using Microsoft::JSI::makeChakraRuntime;
 using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
+using Microsoft::JSI::ChakraRuntimeArgs;
+using Microsoft::JSI::makeChakraRuntime;
 using Microsoft::React::Test::TestMessageQueueThread;
 
 // TODO (yicyao): #2729 We need to add tests for ChakraCoreRuntime specific

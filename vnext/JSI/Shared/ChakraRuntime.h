@@ -246,13 +246,12 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       const facebook::jsi::Buffer &serializedScriptBuffer,
       const std::string &sourceURL);
 
-  std::shared_ptr<const facebook::jsi::PreparedJavaScript>
-  prepareJavaScript(
+  std::shared_ptr<const facebook::jsi::PreparedJavaScript> prepareJavaScript(
       const std::shared_ptr<const facebook::jsi::Buffer> &,
       std::string) override;
   facebook::jsi::Value evaluatePreparedJavaScript(
-      const std::shared_ptr<const facebook::jsi::PreparedJavaScript>
-          &) override;
+      const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &)
+      override;
 
   PointerValue *cloneString(const Runtime::PointerValue *pv) override;
   PointerValue *cloneObject(const Runtime::PointerValue *pv) override;
