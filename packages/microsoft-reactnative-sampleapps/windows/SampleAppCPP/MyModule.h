@@ -36,13 +36,12 @@ struct MyModule {
   REACT_METHOD(PrintAdd);
   void PrintAdd(int x, int y) noexcept {
     std::stringstream ss;
-    ss << "PrintAdd: " << x + y << "\n";
+    ss << "MyModule.PrintAdd: " << x + y << "\n";
     OutputDebugStringA(ss.str().c_str());
   }
 
   REACT_METHOD(AddCallback);
   void AddCallback(int x, int y, std::function<void(int)> &&result) noexcept {
-    // printf("AddCallback: %d\n", x + y);
     result(x + y);
   }
 
@@ -61,7 +60,9 @@ struct MyModule {
 
   REACT_METHOD(NoArg0);
   void NoArg0() noexcept {
-    printf("no arg \n");
+    std::stringstream ss;
+    ss << "MyModule.NoArg0 \n";
+    OutputDebugStringA(ss.str().c_str());
   }
 
   REACT_METHOD(NoArg1);

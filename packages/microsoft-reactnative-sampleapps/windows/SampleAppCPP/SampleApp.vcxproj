@@ -112,6 +112,7 @@
       <DependentUpon>MainReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="MyCtorModule.h" />
     <ClInclude Include="MyModule.h" />
     <ClInclude Include="NativeModulePackage.h" />
     <ClInclude Include="pch.h" />

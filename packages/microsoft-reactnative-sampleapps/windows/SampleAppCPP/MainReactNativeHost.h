@@ -19,7 +19,7 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   MainReactNativeHost() {
     auto instanceSettings = InstanceSettings();
     instanceSettings.UseWebDebugger(
-        true); // Disabled temporarily because of issue #2877
+        false); // Disabled temporarily because of issue #2877
     instanceSettings.UseLiveReload(
         true); // true by default in debug builds already
     instanceSettings.UseJsi(true);

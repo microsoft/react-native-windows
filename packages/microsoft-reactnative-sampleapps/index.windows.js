@@ -142,6 +142,14 @@ class SampleApp extends Component {
       };
     }
 
+    var callOnce = function(id, func) {
+      var propId = "callonce_" + id;
+      if (!this[propId]) {
+        this[propId] = true;
+        func();
+      }
+    }
+    
     log("Hello from JS!");
 
     log(`MyModule.m_fieldConst: ${NativeModules.MyModule.m_fieldConst}`);
@@ -149,17 +157,37 @@ class SampleApp extends Component {
     log(`MyModule.simpleConst1: ${NativeModules.MyModule.simpleConst1}`);
     log(`MyModule.simpleConst2: ${NativeModules.MyModule.simpleConst2}`);
 
-    if (!this._initedMyModuleOnChanged) {
-      this._initedMyModuleOnChanged = true;
+    callOnce("OnChangeEvent", function() {
       BatchedBridge.registerLazyCallableModule('MyModule', () => {
         const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyModule);
         myModuleEventEmitter.addListener('OnChanged', getCallback("MyModule.OnChanged: "), this);
         return myModuleEventEmitter;
       });
-    }
+    });
 
     NativeModules.MyModule.Add(2, 4, getCallback("MyModule.Add(2, 4) => "));
     NativeModules.MyModule.PrintAdd(1, 2);
+    NativeModules.MyModule.AddCallback(2, 5, getCallback("MyModule.AddCallback(2, 5) => "));
+    NativeModules.MyModule.SubtractCallback(6, 5).then(getCallback("MyModule.SubtractCallback(6, 5) => then "))
+                                                 .catch(getCallback("MyModule.SubtractCallback(6, 5) => catch "));
+    NativeModules.MyModule.SubtractCallback(5, 6).then(getCallback("MyModule.SubtractCallback(5, 6) => then "))
+                                                 .catch(getCallback("MyModule.SubtractCallback(5, 6) => catch "));
+    NativeModules.MyModule.NoArg0();
+    NativeModules.MyModule.NoArg1(getCallback("MyModule.NoArg1() => "));
+    
+    log(`MyModule.regValue("Key1") => ${NativeModules.MyModule.regValue("Key1")}`);
+    log(`MyModule.regValue("Key2") => ${NativeModules.MyModule.regValue("Key2")}`);
+    log(`MyModule.regValue("Key3") => ${NativeModules.MyModule.regValue("Key3")}`);
+
+    callOnce("OnChangeEvent2", function() {
+      BatchedBridge.registerLazyCallableModule('MyCtorModule', () => {
+        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyModule);
+        myModuleEventEmitter.addListener('OnChanged', getCallback("MyCtorModule.OnChanged: "), this);
+        return myModuleEventEmitter;
+      });
+    });
+
+    NativeModules.MyCtorModule.AddWithBias2(2, 4, getCallback("MyCtorModule.AddWithBias2(2, 4) => "));
 
     NativeModules.Calculator.Add(5, 6, getCallback("Calculator.Add(5, 6) => "));
     NativeModules.Calculator.Add(5, 12, getCallback("Calculator.Add(5, 12) => "));

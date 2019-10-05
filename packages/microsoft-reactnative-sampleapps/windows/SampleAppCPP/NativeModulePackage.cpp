@@ -5,6 +5,7 @@
 #include "NativeModulePackage.h"
 #include "DebugConsole.h"
 #include "MyModule.h"
+#include "MyCtorModule.h"
 
 namespace winrt::SampleApp::implementation {
 
@@ -18,6 +19,7 @@ void NativeModulePackage::CreateModuleProviders(
     Microsoft::ReactNative::Bridge::ModuleProviderAdder
         addModuleProvider) noexcept {
   addModuleProvider(L"MyModule", MakeModuleProvider<TestApp::MyModule>());
+  addModuleProvider(L"MyCtorModule", MakeModuleProvider<TestApp::MyCtorModule>());
   addModuleProvider(
       L"DebugConsole", MakeModuleProvider<TestApp::DebugConsole>());
 }
