@@ -28,14 +28,14 @@ class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   }
 
  private:
-  facebook::jsi::chakraruntime::ChakraRuntimeArgs RuntimeArgsFromDevSettings(
+  Microsoft::JSI::ChakraRuntimeArgs RuntimeArgsFromDevSettings(
       std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
-  facebook::jsi::chakraruntime::Logger ChakraRuntimeLoggerFromReactLogger(
+  Microsoft::JSI::Logger ChakraRuntimeLoggerFromReactLogger(
       facebook::react::NativeLoggingHook loggingCallback) noexcept;
 
   void initRuntime() noexcept;
 
-  facebook::jsi::chakraruntime::ChakraRuntimeArgs args_;
+  Microsoft::JSI::ChakraRuntimeArgs args_;
   std::shared_ptr<facebook::jsi::Runtime> runtime_;
 
   std::once_flag once_flag_;

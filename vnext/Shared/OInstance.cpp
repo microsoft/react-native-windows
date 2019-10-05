@@ -514,7 +514,7 @@ InstanceImpl::InstanceImpl(
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
-              std::make_shared<ChakraRuntimeHolder>(
+              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
                   m_devSettings, jsQueue, nullptr, nullptr);
           break;
       }

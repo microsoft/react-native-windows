@@ -24,5 +24,8 @@
     <ClInclude Include="ChakraCoreRuntimeFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ChakraCoreRuntime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

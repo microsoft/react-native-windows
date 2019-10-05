@@ -15,8 +15,8 @@
 using facebook::jsi::JsiRuntimeUnitTests;
 using facebook::jsi::Runtime;
 using facebook::jsi::RuntimeFactory;
-using facebook::jsi::chakraruntime::ChakraRuntimeArgs;
-using facebook::jsi::chakraruntime::makeChakraRuntime;
+using Microsoft::JSI::ChakraRuntimeArgs;
+using Microsoft::JSI::makeChakraRuntime;
 using facebook::react::CreateMemoryTracker;
 using facebook::react::MessageQueueThread;
 using Microsoft::React::Test::TestMessageQueueThread;

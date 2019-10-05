@@ -5,15 +5,12 @@
 
 #include <jsi/jsi.h>
 
-namespace facebook {
-namespace jsi {
-namespace chakraruntime {
+namespace Microsoft::JSI {
 
 struct ChakraRuntimeArgs;
 
-std::unique_ptr<jsi::Runtime> makeChakraRuntime(
+std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(
     ChakraRuntimeArgs &&args) noexcept;
 
-} // namespace chakraruntime
-} // namespace jsi
-} // namespace facebook
+} // namespace Microsoft::JSI
+

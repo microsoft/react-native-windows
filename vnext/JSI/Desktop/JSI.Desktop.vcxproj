@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- Future ClIncludes -->
+    <ClInclude Include="ChakraCoreRuntime.h" />
     <ClInclude Include="ChakraCoreRuntimeFactory.h" />
   </ItemGroup>
   <ItemGroup>

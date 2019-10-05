@@ -4,12 +4,8 @@
 
 #include <JSI/Shared/ChakraRuntimeFactory.h>
 
-using namespace facebook;
-using namespace facebook::react;
-using namespace facebook::jsi::chakraruntime;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::JSI {
 
 std::shared_ptr<facebook::jsi::Runtime>
 ChakraRuntimeHolder::getRuntime() noexcept {
@@ -26,8 +22,7 @@ ChakraRuntimeHolder::getRuntime() noexcept {
 }
 
 void ChakraRuntimeHolder::initRuntime() noexcept {
-  runtime_ =
-      facebook::jsi::chakraruntime::makeChakraRuntime(std::move(args_));
+  runtime_ = Microsoft::JSI::makeChakraRuntime(std::move(args_));
   own_thread_id_ = std::this_thread::get_id();
 }
 
@@ -65,5 +60,4 @@ ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
   return runtimeArgs;
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::JSI

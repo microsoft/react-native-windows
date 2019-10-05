@@ -6,7 +6,6 @@
 
 using namespace facebook;
 using namespace facebook::react;
-using namespace facebook::jsi::chakraruntime;
 
 namespace Microsoft::React::Test {
 
@@ -25,23 +24,23 @@ ChakraRuntimeHolder::getRuntime() noexcept {
 }
 
 void ChakraRuntimeHolder::initRuntime() noexcept {
-  runtime_ =
-      facebook::jsi::chakraruntime::makeChakraRuntime(std::move(args_));
+  runtime_ = Microsoft::JSI::makeChakraRuntime(std::move(args_));
   own_thread_id_ = std::this_thread::get_id();
 }
 
-Logger ChakraRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
+Microsoft::JSI::Logger ChakraRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
     facebook::react::NativeLoggingHook loggingCallback) noexcept {
   return [loggingCallback = std::move(loggingCallback)](
-             const char *message, LogLevel logLevel) -> void {
+             const char *message, Microsoft::JSI::LogLevel logLevel) -> void {
     loggingCallback(
         static_cast<facebook::react::RCTLogLevel>(logLevel), message);
   };
 }
 
-ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
+Microsoft::JSI::ChakraRuntimeArgs
+ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
     std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
-  ChakraRuntimeArgs runtimeArgs;
+  Microsoft::JSI::ChakraRuntimeArgs runtimeArgs;
 
   runtimeArgs.debuggerBreakOnNextLine = devSettings->debuggerBreakOnNextLine;
   runtimeArgs.debuggerPort = devSettings->debuggerPort;

@@ -52,7 +52,7 @@ class ByteArrayBuffer final : public facebook::jsi::Buffer {
   std::unique_ptr<uint8_t[]> byteArray_;
 };
 
-class ChakraRuntime final : public facebook::jsi::Runtime {
+class ChakraRuntime : public facebook::jsi::Runtime {
  public:
   ChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
   ~ChakraRuntime() noexcept;
