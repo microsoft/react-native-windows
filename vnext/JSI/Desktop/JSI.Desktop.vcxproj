@@ -69,14 +69,14 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\..\packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('..\..\packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets')" />
+    <Import Project="..\..\packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('..\..\packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="..\..\packages\ChakraCore.Debugger.0.0.0.39\build\native\ChakraCore.Debugger.targets" Condition="Exists('..\..\packages\ChakraCore.Debugger.0.0.0.39\build\native\ChakraCore.Debugger.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ChakraCore.vc140.1.11.10\build\native\Microsoft.ChakraCore.vc140.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('..\..\packages\ChakraCore.Debugger.0.0.0.39\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\ChakraCore.Debugger.0.0.0.39\build\native\ChakraCore.Debugger.targets'))" />
   </Target>
 </Project>

@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Thu, 03 Oct 2019 22:17:13 GMT",
+      "tag": "rnpm-plugin-windows_v0.3.5",
+      "version": "0.3.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support contextMenuHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "18b68810d1f1687889909782e47750afe6f06b24"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Oct 2019 18:17:42 GMT",
       "tag": "rnpm-plugin-windows_v0.3.5",
       "version": "0.3.5",
