@@ -23,6 +23,13 @@ Get-ChildItem -Path $ReactNativeRoot\ReactCommon -Name -Recurse -Include $patter
 	-Force
 }
 
+Copy-Item -Force $ReactNativeRoot\Chakra\ChakraCoreDebugger.h -Destination $TargetRoot\inc\jsi
+
+%COPYCMD%  %SRCROOT%\Chakra\ChakraCoreDebugger.h                          %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeArgs.h                        %DESTROOT%\inc\jsi
+%COPYCMD%  %SRCROOT%\Chakra\ChakraJsiRuntimeFactory.h                     %DESTROOT%\inc\jsi
+
+
 # Yoga headers
 Get-ChildItem -Path $ReactNativeRoot\ReactCommon\yoga\yoga -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $ReactNativeRoot\ReactCommon\yoga\yoga\$_ `
