@@ -25,7 +25,7 @@ namespace Microsoft.ReactNative
     Boolean HasInstance{ get; };
 
     overridable IVectorView<Microsoft.ReactNative.Bridge.IReactPackage> Packages{ get; };
-    overridable IVectorView<Microsoft.ReactNative.Bridge.INativeModulePackage> ModulePackages{ get; };
+    overridable IVectorView<Microsoft.ReactNative.Bridge.IReactPackageProvider> PackageProviders { get; };
 
     overridable String MainComponentName{ get; };
     overridable Boolean UseDeveloperSupport{ get; };

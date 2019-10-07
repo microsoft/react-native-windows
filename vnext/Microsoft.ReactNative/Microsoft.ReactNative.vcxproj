@@ -158,6 +158,7 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ReactPackageBuilder.h" />
     <ClInclude Include="ReactRootView.h">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -219,6 +220,7 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="ReactPackageBuilder.cpp" />
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -235,6 +237,8 @@
     <Midl Include="INativeModuleBuilder.idl" />
     <Midl Include="INativeModulePackage.idl" />
     <Midl Include="IReactPackage.idl" />
+    <Midl Include="IReactPackageBuilder.idl" />
+    <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="MethodInfo.idl">
       <SubType>Designer</SubType>

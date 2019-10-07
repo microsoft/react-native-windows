@@ -1,0 +1,15 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "INativeModuleBuilder.idl";
+
+namespace Microsoft.ReactNative.Bridge {
+
+  delegate Object ReactModuleProvider(INativeModuleBuilder moduleBuilder);
+
+  interface IReactPackageBuilder {
+    // TODO: Add message thread argument
+    void AddModule(String moduleName, ReactModuleProvider moduleProvider);
+  };
+
+} // namespace Microsoft.ReactNative.Bridge

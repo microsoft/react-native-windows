@@ -37,7 +37,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   virtual hstring JavaScriptBundleFile();
   virtual bool UseDeveloperSupport();
   virtual IVectorView<IReactPackage> Packages();
-  virtual IVectorView<INativeModulePackage> ModulePackages();
+  virtual IVectorView<IReactPackageProvider> PackageProviders();
 
   bool HasInstance() {
     return m_reactInstanceManager != nullptr;
