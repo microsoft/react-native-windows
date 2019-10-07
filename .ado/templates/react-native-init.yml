@@ -72,7 +72,6 @@ steps:
       arguments:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
-        -Collect:$${{ parameters.debug }}
     condition: ne('${{parameters.vsComponents}}', '')
 
   - task: MSBuild@1
