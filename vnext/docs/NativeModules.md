@@ -12,14 +12,20 @@ View Managers are for exposing new native XAML controls as React Native Componen
 
 Native modules contain (or wrap) native code which can then be exposed to JS. To accomplish this in RNW, at a high level you must:
 
-1. Author a Windows Runtime Class which implements [Microsoft.ReactNative.INativeModule](../Microsoft.ReactNative/INativeModule.idl) and calls your native code.
-2. Register your new `INativeModule` within the native code of your React Native host application.
-3. Invoke your NativeModule from within your Raact Native JS code.
+1. Author a class that calls your native code.
+2. Add custom attributes to your class:
+   1. `ReactModule` for the class.
+   2. `ReactMethod` or `ReactSyncMethod` for asynchronous or synchronous methods.
+   3. `ReactConstant` for fields that represent constants.
+   4. `ReactConstantProvider` for methods that provide a set of constants.
+   5. `ReactEvent` for fields or properties that represent events.
+3. Register your new native module in a package. A package is a public class that implements `INativeModulePackage` interface.
+4. Add the package to your React Native application.
+5. Invoke your native module from within your React Native JS code.
 
-*Open Questions:*
-* How do native modules fire events into RN?
+As an alternative to using classes with attributes, we can add native module definitions directly in the React package.
 
-### Sample Native Module using Microsoft.ReactNative.Managed (recommended)
+### Sample Native Module using Microsoft.ReactNative.SharedManaged (recommended)
 
 #### 1. Authoring your Native Module
 
@@ -28,25 +34,20 @@ Here is a sample native module written in C# called `FancyMath`. It is a simple 
 *FancyMath.cs*
 ```csharp
 using System;
-
-using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 
 namespace NativeModuleSample
 {
-    public sealed class FancyMath : IManagedNativeModule
+    [ReactModule]
+    class FancyMath
     {
-        public string Name => "FancyMath";
-
-        public void Initialize() { }
-
-        [NativeModuleConstant]
+        [ReactConstant]
         public double E => Math.E;
 
-        [NativeModuleConstant(Name = "Pi")]
+        [ReactConstant("Pi")]
         public double PI => Math.PI;
 
-        [NativeModuleMethod(Name = "add")]
+        [ReactMethod("add")]
         public static double Add(double a, double b)
         {
             return a + b;
@@ -55,39 +56,30 @@ namespace NativeModuleSample
 }
 ```
 
-First off, you'll see that we're making use of the `Microsoft.ReactNative.Managed` library, which provides the easiest (and recommended) experience for authoring native modules. Rather than implement the `INativeModule` interface directly with our class, we're implementing [IManagedNativeModule](../Microsoft.ReactNative.Managed/ManagedNativeModule.cs), which will be passsed as a parameter to the `ManagedNativeModule` helper class.
+First off, you'll see that we're making use of the `Microsoft.ReactNative.SharedManaged` shared library, which provides the easiest (and recommended) experience for authoring native modules. Rather than providing native module meta information directly, we use reflection to discover it, and then use LINQ Expressions to build and compile bindings at runtime.
 
-To fulfill `IManagedNativeModule`, we only have to implement two things: the `Name` property getter and the `Initialize()` method.
+The `ReactModule` attribute designates a class to be ReactNative module. It has an optional parameter for the name visible to JavaScript and name of the event emitter. By default both these names are the same as the class name. E.g. ` [ReactModule("math", EventEmitterName = "mathEmitter")]`.
 
-The `Name` string specifies the name of the object that you will use in JS to access the native module's constants and methods. In this case, we've called it "FancyMath".
+Now we'll define some constants, and it's as easy as creating a public property or field and giving it a `[ReactConstant]` attribute. Here FancyMath has defined two constants: `E` and `Pi`. By default, the name exposed to JS will be the same name as the field (`E` for `E`), but you can override this by specifying an argument in the `[ReactConstant]` attribute (hence `Pi` instead of `PI`).
 
-The `Initialize()` method specifies any native code that you need React Native to run in initialize your native module. For this sample, FancyMath doesn't have any initialization.
-
-Now we'll define some constants, and it's as easy as creating a public property or field and giving it an `[NativeModuleConstant]` attribute. Here FancyMath has defined two constants: `E` and `Pi`. By default, the name exposed to JS will be the same name as the field (`E` for `E`), but you can override this by specifying a `Name` argument in the `[NativeModuleConstant]` attribute (hence `Pi` instead of `PI`).
-
-It's just as easy to add custom methods, by attributing a public method with `[NativeModuleMethod]`. In FancyMath we have one method, `add`, which takes two doubles and returns their sum. Again, we've specified the optional `Name` argument in the `[NativeModuleMethod]` attribute so in JS we call `add` instead of `Add`.
+It's just as easy to add custom methods, by attributing a public method with `[ReactMethod]`. In FancyMath we have one method, `add`, which takes two doubles and returns their sum. Again, we've specified the optional `Name` argument in the `[ReactMethod]` attribute so in JS we call `add` instead of `Add`.
 
 #### 2. Registering your Native Module
 
-Now, we want to register our new `FancyMath` module with React Native so we can actually use it. To do this, first we're going to create a `FancyMathPackage` which implements [Microsoft.ReactNative.IReactPackage](../Microsoft.ReactNative/IReactPackage.idl).
+Now, we want to register our new `FancyMath` module with React Native so we can actually use it. To do this, first we're going to create a `FancyMathPackage` which implements [Microsoft.ReactNative.Bridge.INativeModulePackage](../Microsoft.ReactNative/INativeModulePackage.idl).
 
 *FancyMathPackage.cs*
 ```csharp
-using System;
-using System.Collections.Generic;
-
-using Microsoft.ReactNative;
+using Microsoft.ReactNative.Bridge;
 using Microsoft.ReactNative.Managed;
 
 namespace NativeModuleSample
 {
-    public sealed class FancyMathPackage : IReactPackage
+    public sealed class FancyMathPackage : INativeModulePackage
     {
-        public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
+        public void CreateModuleProviders(ModuleProviderAdder addModuleProvider)
         {
-            return new List<INativeModule>() {
-                new ManagedNativeModule(new FancyMath()),
-            };
+            ReactModuleInfo.AddAttributedModules(addModuleProvider);
         }
 
         /*
@@ -97,7 +89,7 @@ namespace NativeModuleSample
 }
 ```
 
-Here we've implemented the `CreateNativeModules` method, which returns a read-only collection of `INativeModule` instances. We're only going have one native module in this package, and as previously mentioned, we're going to use the `ManagedNativeModule` adapter class provided by `Microsoft.ReactNative.Managed`.
+Here we've implemented the `CreateModuleProviders` method, which is expected the `addModuleProvider` delegate to be called for each native module provider. Since we are using reflection to discover and bind native module, we can call `ReactModuleInfo.AddAttributedModules` to register all native modules in our assembly.
 
 `ManagedNativeModule` implements `INativeModule` by reflecting over an `IManagedNativeModule` which uses the `[NativeModuleConstant]` and `[NativeModuleMethod]` attributes. So in our package, we simply pass an instance of `FancyMath` into `ManagedNativeModule`.
 
