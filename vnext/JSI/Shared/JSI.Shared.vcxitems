@@ -14,11 +14,11 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.cpp" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" Condition="'$(OSS_RN)' != 'true'" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true'"/>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true'"/>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime.h" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" Condition="'$(OSS_RN)' != 'true'" />
   </ItemGroup>
 </Project>
