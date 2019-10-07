@@ -60,7 +60,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <ClCompile Include="ChakraJSIRuntimeHolder.cpp" />
+    <ClCompile Include="ChakraRuntimeHolder.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
     <ClCompile Include="RNTesterIntegrationTests.cpp" />
     <ClCompile Include="DesktopTestInstance.cpp" />
@@ -97,7 +97,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ChakraJSIRuntimeHolder.h" />
+    <ClInclude Include="ChakraRuntimeHolder.h" />
     <ClInclude Include="DesktopTestInstance.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

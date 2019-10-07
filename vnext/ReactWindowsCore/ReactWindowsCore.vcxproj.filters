@@ -60,9 +60,6 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\AppThemeModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -95,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="tracing\tracing.cpp">
       <Filter>tracing</Filter>
+    </ClCompile>
+    <ClCompile Include="ChakraRuntimeHolder.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +215,6 @@
     <ClInclude Include="WebSocketJSExecutorFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraJSIRuntimeHolder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BatchingMessageQueueThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -228,6 +225,9 @@
       <Filter>tracing</Filter>
     </ClInclude>
     <ClInclude Include="MemoryMappedBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ChakraRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

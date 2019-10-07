@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2019 21:46:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.20",
+      "version": "0.60.0-vnext.20",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename ChakraJsiRuntime* to ChakraRuntime* and move them into Microsoft::JSI namespace.",
+            "author": "yicyao@microsoft.com",
+            "commit": "01197c0d210ec8fc1e740bfa87891bf3114c1967"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump V8 and Hermes JSI package versions",
+            "author": "tudorm@microsoft.com",
+            "commit": "03687c736e10aa54998572a706c7718ca8342f34"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Oct 2019 19:04:20 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.19",
       "version": "0.60.0-vnext.19",
