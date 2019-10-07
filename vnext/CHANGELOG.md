@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 04 Oct 2019 17:58:56 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Oct 2019 01:17:11 GMT and should not be manually modified.
 
+## 0.59.0-vnext.199
+Mon, 07 Oct 2019 01:17:11 GMT
+
+### Changes
+
+- Include some chakra headers in win32 nuget (acoates@microsoft.com)
+## 0.59.0-vnext.198
+Sat, 05 Oct 2019 01:01:43 GMT
+
+### Changes
+
+- Update V8JSI package version (tudorm@microsoft.com)
 ## 0.59.0-vnext.197
 Fri, 04 Oct 2019 17:58:56 GMT
 

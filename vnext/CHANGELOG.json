@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2019 01:17:11 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.199",
+      "version": "0.59.0-vnext.199",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Include some chakra headers in win32 nuget",
+            "author": "acoates@microsoft.com",
+            "commit": "8aa915d55f85f3bac08b2f9a7caaa9c36e6c25c0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 05 Oct 2019 01:01:43 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.198",
+      "version": "0.59.0-vnext.198",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update V8JSI package version",
+            "author": "tudorm@microsoft.com",
+            "commit": "441c4364fca8f6b9de50dccdfe989efd949f696b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Oct 2019 17:58:56 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.197",
       "version": "0.59.0-vnext.197",
