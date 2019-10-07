@@ -198,7 +198,7 @@ namespace {
 void runtimeInstaller(jsi::Runtime &runtime) {
 #ifdef ENABLE_JS_SYSTRACE
   facebook::react::tracing::initializeJSHooks(runtime);
-#endif`
+#endif
 }
 
 class OJSIExecutorFactory : public JSExecutorFactory {
