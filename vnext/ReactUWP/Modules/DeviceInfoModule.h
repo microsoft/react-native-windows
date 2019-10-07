@@ -2,6 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
+<<<<<<< HEAD
+=======
+
+#include <IReactInstance.h>
+>>>>>>> 1933859e1... some more adjustments
 #include <cxxReact/Instance.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
@@ -13,6 +18,8 @@
 
 namespace react {
 namespace uwp {
+
+class DeviceInfoModule;
 
 // TODO: Emit event to react when dimensions change.
 class DeviceInfo {
@@ -39,15 +46,13 @@ class DeviceInfo {
       m_sizeChangedRevoker;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
 
-
   folly::dynamic getDimensions();
-
-  void setParent(std::weak_ptr<DeviceInfoModule> parent);
+  void update();
 
  private:
-
   folly::dynamic getFollyDimensions(float windowWidth, float windowHeight, uint32_t screenWidth, uint32_t screenHeight, int scale, double fontScale, float dpi);
-  std::weak_ptr<DeviceInfoModule> wk_parent;
+  std::weak_ptr<IReactInstance> m_wkReactInstance;
+  folly::dynamic m_dimensions;
 
   winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
 };
@@ -65,8 +70,6 @@ class DeviceInfoModule : public facebook::xplat::module::CxxModule,
   static const char *name;
 
  private:
-  friend class DeviceInfo;
-  void sendDimensionsChangedEvent();
   std::shared_ptr<DeviceInfo> m_deviceInfo;
 };
 

@@ -294,7 +294,7 @@ void UwpReactInstance::Start(
       std::make_shared<react::uwp::ProxyMessageQueueThread>();
   
   // Objects that must be created on the UI thread	
-  std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
+  std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>(spThis);
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
   std::shared_ptr<react::windows::AppTheme> appTheme = std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
 
