@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include some chakra headers in win32 nuget",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "8aa915d55f85f3bac08b2f9a7caaa9c36e6c25c0",
-  "date": "2019-10-06T23:38:36.922Z"
-}
