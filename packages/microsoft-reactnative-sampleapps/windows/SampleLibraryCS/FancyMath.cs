@@ -54,14 +54,8 @@ namespace SampleLibraryCS
         {
             new MethodInfo("add", ReturnType.Callback, (args, callback, ___) =>
             {
-                // TODO: args are being sent as a json string, but should already be an object array, ie.
-                // double a = (double)args[0];
-                // double b = (double)args[1];
-
-                string[] split = args[0].ToString().Trim('[',']').Split(',');
-
-                double a = double.Parse(split[0]);
-                double b = double.Parse(split[1]);
+                double a = (double)args[0];
+                double b = (double)args[1];
 
                 double result = a + b;
 

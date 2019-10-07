@@ -47,10 +47,10 @@ class SampleApp extends Component {
     NativeModules.SampleModule.ExplicitCallbackMethodWithArgs(numberArg, logCallback);
 
     var promise1 = NativeModules.SampleModule.ExplicitPromiseMethod();
-    promise1.then(logCallback, logCallback);
+    promise1.then(logCallback).catch(logCallback);
 
     var promise2 = NativeModules.SampleModule.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(logCallback, logCallback);
+    promise2.then(logCallback).catch(logCallback);
   }
 
   _onPressHandlerFM() {
@@ -103,10 +103,10 @@ class SampleApp extends Component {
     NativeModules.SampleModuleABI.ExplicitCallbackMethodWithArgs(numberArg, logCallback);
 
     var promise1 = NativeModules.SampleModuleABI.ExplicitPromiseMethod();
-    promise1.then(logCallback, logCallback);
+    promise1.then(logCallback).catch(logCallback);
 
     var promise2 = NativeModules.SampleModuleABI.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(logCallback, logCallback);
+    promise2.then(logCallback).catch(logCallback);
   }
 
   _onPressHandlerFMA() {

@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-using Windows.Data.Json;
-
 using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
@@ -97,7 +95,7 @@ namespace Microsoft.ReactNative.Managed
                   returnType = ReturnType.Void;
                   method = (args, callback, ___) =>
                   {
-                    var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                    var nativeArguments = ParseNativeArguments(args, methodInfo.GetParameters());
                     methodInfo.Invoke(NativeModule, nativeArguments);
                   };
                 }
@@ -107,7 +105,7 @@ namespace Microsoft.ReactNative.Managed
                   returnType = ReturnType.Callback;
                   method = (args, callback, ___) =>
                   {
-                    var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                    var nativeArguments = ParseNativeArguments(args, methodInfo.GetParameters());
                     var result = methodInfo.Invoke(NativeModule, nativeArguments);
                     callback(new object[] { result });
                   };
@@ -117,7 +115,7 @@ namespace Microsoft.ReactNative.Managed
               {
                 method = (args, __, ___) =>
                 {
-                  var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                  var nativeArguments = ParseNativeArguments(args, methodInfo.GetParameters());
                   methodInfo.Invoke(NativeModule, nativeArguments);
                 };
               }
@@ -126,7 +124,7 @@ namespace Microsoft.ReactNative.Managed
                 // Callback
                 method = (args, callback, ___) =>
                 {
-                  var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                  var nativeArguments = ParseNativeArguments(args, methodInfo.GetParameters());
                   nativeArguments[nativeArguments.Length - 1] = callback;
                   methodInfo.Invoke(NativeModule, nativeArguments);
                 };
@@ -136,7 +134,7 @@ namespace Microsoft.ReactNative.Managed
                 // Promise
                 method = (args, resolve, reject) =>
                 {
-                  var nativeArguments = ParseJsonArguments(args, methodInfo.GetParameters());
+                  var nativeArguments = ParseNativeArguments(args, methodInfo.GetParameters());
                   nativeArguments[nativeArguments.Length - 2] = resolve;
                   nativeArguments[nativeArguments.Length - 1] = reject;
                   methodInfo.Invoke(NativeModule, nativeArguments);
@@ -164,33 +162,10 @@ namespace Microsoft.ReactNative.Managed
       return ReflectionHelpers.GetAttributeValueByName<ReturnType>(customAttributeData, "ReturnType");
     }
 
-    // TODO: args are being sent as a json string, but should already be an object array, so this logic should be moved into ABIModule
-    private static object[] ParseJsonArguments(IReadOnlyList<object> input, ParameterInfo[] targetParameters)
+    private static object[] ParseNativeArguments(IReadOnlyList<object> input, ParameterInfo[] targetParameters)
     {
-      var inputArray = JsonValue.Parse(string.Join(", ", input)).GetArray();
-
       var outputArray = new object[targetParameters.Length];
-
-      for (int i = 0; i < targetParameters.Length; i++)
-      {
-        if (i < inputArray.Count)
-        {
-          IJsonValue inputValue = inputArray[i];
-          switch (inputValue.ValueType)
-          {
-            case JsonValueType.Boolean:
-              outputArray[i] = Convert.ChangeType(inputValue.GetBoolean(), targetParameters[i].ParameterType);
-              break;
-            case JsonValueType.Number:
-              outputArray[i] = Convert.ChangeType(inputValue.GetNumber(), targetParameters[i].ParameterType);
-              break;
-            case JsonValueType.String:
-              outputArray[i] = Convert.ChangeType(inputValue.GetString(), targetParameters[i].ParameterType);
-              break;
-          }
-        }
-      }
-
+      Array.Copy(input.ToArray(), outputArray, input.Count);
       return outputArray;
     }
   }

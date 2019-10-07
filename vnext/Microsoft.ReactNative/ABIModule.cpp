@@ -67,11 +67,15 @@ auto ABIModule::WrapAction(
   return facebook::xplat::module::CxxModule::Method(
       to_string(methodName),
       [this, nativeMethod = std::move(nativeMethod)](folly::dynamic args) {
-        hstring str = to_hstring(folly::toJson(args));
-        auto methodArgs =
-            single_threaded_vector<IInspectable>({box_value(str)});
+        auto iinspectableArgs = ConvertToIInspectable(args);
 
-        nativeMethod(methodArgs.GetView(), nullptr, nullptr);
+        auto methodArgs = iinspectableArgs.try_as<IVectorView<IInspectable>>();
+
+        if (methodArgs == nullptr) {
+          methodArgs = single_threaded_vector<IInspectable>({iinspectableArgs}).GetView();
+        }
+
+        nativeMethod(methodArgs, nullptr, nullptr);
       });
 }
 
@@ -83,10 +87,14 @@ auto ABIModule::WrapCallback(
       to_string(methodName),
       [this, nativeMethod = std::move(nativeMethod)](
           folly::dynamic args, Callback jsMethod) {
-        std::string strArgs = folly::toJson(args);
-        auto strValue = to_hstring(strArgs);
-        auto abiParameter =
-            single_threaded_vector<IInspectable>({box_value(strValue)});
+        auto iinspectableArgs = ConvertToIInspectable(args);
+
+        auto methodArgs = iinspectableArgs.try_as<IVectorView<IInspectable>>();
+
+        if (methodArgs == nullptr) {
+          methodArgs = single_threaded_vector<IInspectable>({iinspectableArgs})
+                           .GetView();
+        }
 
         auto jsCallbackABI =
             Bridge::Callback([jsMethod = std::move(jsMethod)](
@@ -104,7 +112,7 @@ auto ABIModule::WrapCallback(
               jsMethod(args);
             });
 
-        nativeMethod(abiParameter.GetView(), jsCallbackABI, nullptr);
+        nativeMethod(methodArgs, jsCallbackABI, nullptr);
       });
 }
 
@@ -116,9 +124,14 @@ auto ABIModule::WrapPromise(
       to_string(methodName),
       [this, nativeMethod = std::move(nativeMethod)](
           folly::dynamic args, Callback cbResolve, Callback cbReject) {
-        hstring strArgs = to_hstring(folly::toJson(args));
-        auto abiParameter =
-            single_threaded_vector<IInspectable>({box_value(strArgs)});
+        auto iinspectableArgs = ConvertToIInspectable(args);
+
+        auto methodArgs = iinspectableArgs.try_as<IVectorView<IInspectable>>();
+
+        if (methodArgs == nullptr) {
+          methodArgs = single_threaded_vector<IInspectable>({iinspectableArgs})
+                           .GetView();
+        }
 
         // Create a wrapper for the callback into JS that the native
         // code can invoke.
@@ -150,8 +163,7 @@ auto ABIModule::WrapPromise(
               cbReject(args);
             });
 
-        nativeMethod(
-            abiParameter.GetView(), jsResolveCallback, jsRejectCallback);
+        nativeMethod(methodArgs, jsResolveCallback, jsRejectCallback);
       });
 }
 
