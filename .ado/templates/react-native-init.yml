@@ -5,6 +5,7 @@ parameters:
   platform:
   configuration:
   vsComponents: ''
+  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
