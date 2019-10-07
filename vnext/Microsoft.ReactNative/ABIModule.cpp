@@ -72,7 +72,8 @@ auto ABIModule::WrapAction(
         auto methodArgs = iinspectableArgs.try_as<IVectorView<IInspectable>>();
 
         if (methodArgs == nullptr) {
-          methodArgs = single_threaded_vector<IInspectable>({iinspectableArgs}).GetView();
+          methodArgs = single_threaded_vector<IInspectable>({iinspectableArgs})
+                           .GetView();
         }
 
         nativeMethod(methodArgs, nullptr, nullptr);
