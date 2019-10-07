@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump Hermes package version to 0.1.3",
-  "packageName": "react-native-windows",
-  "email": "tudorm@microsoft.com",
-  "commit": "7be7008811500300bf299c4df5d3e631adfab8f5",
-  "date": "2019-10-07T22:34:20.265Z"
-}

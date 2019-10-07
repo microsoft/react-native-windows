@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2019 23:36:58 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.200",
+      "version": "0.59.0-vnext.200",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump Hermes package version to 0.1.3",
+            "author": "tudorm@microsoft.com",
+            "commit": "7be7008811500300bf299c4df5d3e631adfab8f5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2019 01:17:11 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.199",
       "version": "0.59.0-vnext.199",

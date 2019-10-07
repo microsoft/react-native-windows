@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Oct 2019 01:17:11 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Oct 2019 23:36:58 GMT and should not be manually modified.
 
+## 0.59.0-vnext.200
+Mon, 07 Oct 2019 23:36:58 GMT
+
+### Changes
+
+- Bump Hermes package version to 0.1.3 (tudorm@microsoft.com)
 ## 0.59.0-vnext.199
 Mon, 07 Oct 2019 01:17:11 GMT
 
