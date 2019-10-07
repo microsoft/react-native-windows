@@ -101,8 +101,8 @@ auto ReactNativeHost::Packages() -> IVectorView<IReactPackage> {
   return single_threaded_vector<IReactPackage>().GetView();
 }
 
-auto ReactNativeHost::ModulePackages() -> IVectorView<INativeModulePackage> {
-  return single_threaded_vector<INativeModulePackage>().GetView();
+auto ReactNativeHost::PackageProviders() -> IVectorView<IReactPackageProvider> {
+  return single_threaded_vector<IReactPackageProvider>().GetView();
 }
 
 auto ReactNativeHost::InstanceSettings()

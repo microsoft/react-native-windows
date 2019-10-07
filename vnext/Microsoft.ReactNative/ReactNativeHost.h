@@ -46,12 +46,15 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   hstring get_MainComponentName() {
     return overridable().MainComponentName();
   }
+
   hstring get_JavaScriptMainModuleName() {
     return overridable().JavaScriptMainModuleName();
   }
+
   hstring get_JavaScriptBundleFile() {
     return overridable().JavaScriptBundleFile();
   }
+
   bool get_UseDeveloperSupport() {
     return overridable().UseDeveloperSupport();
   }
@@ -60,8 +63,8 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
     return overridable().Packages();
   }
 
-  IVectorView<INativeModulePackage> get_ModulePackages() {
-    return overridable().ModulePackages();
+  IVectorView<IReactPackageProvider> get_PackageProviders() {
+    return overridable().PackageProviders();
   }
 
  private:

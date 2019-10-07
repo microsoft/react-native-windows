@@ -24,20 +24,20 @@ ReactInstanceManager::ReactInstanceManager(
     std::string jsBundleFile,
     std::string jsMainModuleName,
     IVectorView<IReactPackage> &packages,
-    IVectorView<INativeModulePackage> &modulePackages,
+    IVectorView<IReactPackageProvider> &packageProviders,
     bool useDeveloperSupport,
     /*TODO*/ LifecycleState /*initialLifecycleState*/)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
       m_packages(packages),
-      m_modulePackages(
-          modulePackages ? std::vector<INativeModulePackage>(
-                               begin(modulePackages),
-                               end(modulePackages))
-                         : std::vector<INativeModulePackage>()),
+      m_packageProviders(
+          packageProviders ? std::vector<IReactPackageProvider>(
+                               begin(packageProviders),
+                                 end(packageProviders))
+                           : std::vector<IReactPackageProvider>()),
       m_useDeveloperSupport(useDeveloperSupport) {
-  if (packages == nullptr || modulePackages == nullptr) {
+  if (packages == nullptr || packageProviders == nullptr) {
     throw hresult_invalid_argument(L"packages");
   }
 
@@ -181,8 +181,8 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
       }
     }
 
-    for (auto modulePackage : m_modulePackages) {
-      m_modulesProvider->AddPackage(modulePackage);
+    for (auto packageProvider : m_packageProviders) {
+      m_modulesProvider->AddPackageProvider(packageProvider);
     }
   }
 
