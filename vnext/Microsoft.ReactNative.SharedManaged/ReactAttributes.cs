@@ -13,9 +13,9 @@ namespace Microsoft.ReactNative.Managed
       ModuleName = moduleName;
     }
 
-    public string ModuleName { get; internal set; }
+    public string ModuleName { get; set; }
 
-    public string EventEmitterName { get; internal set; }
+    public string EventEmitterName { get; set; }
   }
 
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
