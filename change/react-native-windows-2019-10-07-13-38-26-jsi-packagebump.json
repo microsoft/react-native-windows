@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump V8 and Hermes JSI package versions",
-  "packageName": "react-native-windows",
-  "email": "tudorm@microsoft.com",
-  "commit": "03687c736e10aa54998572a706c7718ca8342f34",
-  "date": "2019-10-07T20:38:25.953Z",
-  "file": "D:\\React\\react-native-windows\\change\\react-native-windows-2019-10-07-13-38-26-jsi-packagebump.json"
-}
