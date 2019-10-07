@@ -12,24 +12,27 @@ View Managers are for exposing new native XAML controls as React Native Componen
 
 Native modules contain (or wrap) native code which can then be exposed to JS. To accomplish this in RNW, at a high level you must:
 
-1. Author a class that calls your native code.
+1. Author a class that calls your native code. There are no requirements that the class is inherited from a specific class or interface.
 2. Add custom attributes to your class:
    1. `ReactModule` for the class.
    2. `ReactMethod` or `ReactSyncMethod` for asynchronous or synchronous methods.
-   3. `ReactConstant` for fields that represent constants.
+   3. `ReactConstant` for fields or properties that represent constants.
    4. `ReactConstantProvider` for methods that provide a set of constants.
    5. `ReactEvent` for fields or properties that represent events.
-3. Register your new native module in a package. A package is a public class that implements `INativeModulePackage` interface.
+3. Register your new native module in a ReactNative package. A package is a public class that implements `IReactPackageProvider` interface.
 4. Add the package to your React Native application.
-5. Invoke your native module from within your React Native JS code.
+5. In JavaScript code:
+   1. Read native module constants.
+   2. Subscribe to the native module events.
+   3. Invoke the native module methods. 
 
 As an alternative to using classes with attributes, we can add native module definitions directly in the React package.
 
-### Sample Native Module using Microsoft.ReactNative.SharedManaged (recommended)
+### Sample Native Module using Microsoft.ReactNative.Managed (recommended)
 
 #### 1. Authoring your Native Module
 
-Here is a sample native module written in C# called `FancyMath`. It is a simple class which provides its name, an initialization method, two numerical constants and a method.
+Here is a sample native module written in C# called `FancyMath`. It is a simple class that defines two numerical constants and a method 'add'.
 
 *FancyMath.cs*
 ```csharp
@@ -38,62 +41,55 @@ using Microsoft.ReactNative.Managed;
 
 namespace NativeModuleSample
 {
-    [ReactModule]
-    class FancyMath
+  [ReactModule]
+  class FancyMath
+  {
+    [ReactConstant]
+    public double E = Math.E;
+
+    [ReactConstant("Pi")]
+    public double PI = Math.PI;
+
+    [ReactMethod("add")]
+    public double Add(double a, double b)
     {
-        [ReactConstant]
-        public double E => Math.E;
-
-        [ReactConstant("Pi")]
-        public double PI => Math.PI;
-
-        [ReactMethod("add")]
-        public static double Add(double a, double b)
-        {
-            return a + b;
-        }
+        return a + b;
     }
+  }
 }
 ```
 
-First off, you'll see that we're making use of the `Microsoft.ReactNative.SharedManaged` shared library, which provides the easiest (and recommended) experience for authoring native modules. Rather than providing native module meta information directly, we use reflection to discover it, and then use LINQ Expressions to build and compile bindings at runtime.
+First off, you see that we're making use of the `Microsoft.ReactNative.Managed` shared library, which provides the easiest (and recommended) experience for authoring native modules. Rather than providing native module meta information directly, we use reflection to discover it, and then use LINQ Expressions to build bindings at runtime.
 
-The `ReactModule` attribute designates a class to be ReactNative module. It has an optional parameter for the name visible to JavaScript and name of the event emitter. By default both these names are the same as the class name. E.g. ` [ReactModule("math", EventEmitterName = "mathEmitter")]`.
+The `ReactModule` attribute says that the class is a ReactNative native module. It has an optional parameter for the name visible to JavaScript and the name of the event emitter. By default both these names are the same as the class name. They can be provided explicitly as the following: `[ReactModule("math", EventEmitterName = "mathEmitter")]`.
 
-Now we'll define some constants, and it's as easy as creating a public property or field and giving it a `[ReactConstant]` attribute. Here FancyMath has defined two constants: `E` and `Pi`. By default, the name exposed to JS will be the same name as the field (`E` for `E`), but you can override this by specifying an argument in the `[ReactConstant]` attribute (hence `Pi` instead of `PI`).
+Then we define constants, and it's as easy as creating a public property or field and giving it a `[ReactConstant]` attribute. Here FancyMath has defined two constants: `E` and `Pi`. By default, the name exposed to JS will be the same name as the field (`E` for `E`), but you can override this by specifying an argument in the `[ReactConstant]` attribute (hence `Pi` instead of `PI`).
 
 It's just as easy to add custom methods, by attributing a public method with `[ReactMethod]`. In FancyMath we have one method, `add`, which takes two doubles and returns their sum. Again, we've specified the optional `Name` argument in the `[ReactMethod]` attribute so in JS we call `add` instead of `Add`.
 
 #### 2. Registering your Native Module
 
-Now, we want to register our new `FancyMath` module with React Native so we can actually use it. To do this, first we're going to create a `FancyMathPackage` which implements [Microsoft.ReactNative.Bridge.INativeModulePackage](../Microsoft.ReactNative/INativeModulePackage.idl).
+Now, we want to register our new `FancyMath` module with React Native so we can use it from JavaScript code. To do this, first we're going to create a `FancyMathPackageProvider` which implements [Microsoft.ReactNative.IReactPackageProvider](../Microsoft.ReactNative/IReactPackageProvider.idl).
 
-*FancyMathPackage.cs*
+*FancyMathPackageProvider.cs*
 ```csharp
-using Microsoft.ReactNative.Bridge;
 using Microsoft.ReactNative.Managed;
 
 namespace NativeModuleSample
 {
-    public sealed class FancyMathPackage : INativeModulePackage
+  public sealed class FancyMathPackageProvider : IReactPackageProvider
+  {
+    public void CreatePackage(IReactPackageBuilder packageBuilder)
     {
-        public void CreateModuleProviders(ModuleProviderAdder addModuleProvider)
-        {
-            ReactModuleInfo.AddAttributedModules(addModuleProvider);
-        }
-
-        /*
-            Other Code
-        */
+      packageBuilder.AddAttributedModules();
     }
+  }
 }
 ```
 
-Here we've implemented the `CreateModuleProviders` method, which is expected the `addModuleProvider` delegate to be called for each native module provider. Since we are using reflection to discover and bind native module, we can call `ReactModuleInfo.AddAttributedModules` to register all native modules in our assembly.
+Here we've implemented the `CreatePackage` method, which receives `packageBuilder` to build contents of the package. Since we use reflection to discover and bind native module, we call `AddAttributedModules` extension method to register all native modules in our assembly that have the `ReactModule` attribute.
 
-`ManagedNativeModule` implements `INativeModule` by reflecting over an `IManagedNativeModule` which uses the `[NativeModuleConstant]` and `[NativeModuleMethod]` attributes. So in our package, we simply pass an instance of `FancyMath` into `ManagedNativeModule`.
-
-Now that we have a `FancyMathPackage`, it's time to actually register it within our React Native host application's native code. To do that, we're going to look for the class which inherits from `Microsoft.ReactNative.ReactNativeHost`, the default of which (if you created your app using the RNW CLI) is called `MainReactNativeHost`.
+Now that we have the `FancyMathPackageProvider`, it's time to register it within our React Native host application's native code. To do that, we're going to look for the class which inherits from `Microsoft.ReactNative.ReactNativeHost`, the default of which (if you created your app using the RNW CLI) is called `MainReactNativeHost`.
 
 *MainReactNativeHost.cs*
 ```csharp
@@ -103,20 +99,18 @@ using Microsoft.ReactNative;
 
 namespace NativeModuleSample
 {
-    sealed class MainReactNativeHost : ReactNativeHost
-    {
-        /*
-            Other Code
-        */
+  sealed class MainReactNativeHost : ReactNativeHost
+  {
+    /* ... Other Code ... */
 
-        protected override IReadOnlyList<IReactPackage> Packages
-        {
-            get
-            {
-                return new IReactPackage[] { new FancyMathPackage() };
-            }
-        }
+    protected override IReadOnlyList<IReactPackageProvider> PackageProviders
+    {
+      get
+      {
+        return new IReactPackageProvider[] { new FancyMathPackageProvider() };
+      }
     }
+  }
 }
 ```
 
@@ -136,40 +130,28 @@ import {
 } from 'react-native';
 
 class NativeModuleSample extends Component {
-    _onPressHandler() {
-        NativeModules.FancyMath.add(
-            /* arg a */ NativeModules.FancyMath.Pi,
-            /* arg b */ NativeModules.FancyMath.E,
-            /* callback */ function (result) {
-            Alert.alert(
-                'FancyMath',
-                `FancyMath says ${NativeModules.FancyMath.Pi} + ${NativeModules.FancyMath.E} = ${result}`,
-                [
-                {
-                    text: 'OK',
-                },
-                ],
-                {cancelable: false},
-            );
-            }
-        );
-    }
+  _onPressHandler() {
+    NativeModules.FancyMath.add(
+      /* arg a */ NativeModules.FancyMath.Pi,
+      /* arg b */ NativeModules.FancyMath.E,
+      /* callback */ function (result) {
+        Alert.alert(
+          'FancyMath',
+          `FancyMath says ${NativeModules.FancyMath.Pi} + ${NativeModules.FancyMath.E} = ${result}`,
+          [{ text: 'OK' }],
+          {cancelable: false});
+      });
+  }
 
-    render() {
-        return (
-            <View>
-            <Text>
-                FancyMath says PI = {NativeModules.FancyMath.Pi}
-            </Text>
-            <Text>
-                FancyMath says E = {NativeModules.FancyMath.E}
-            </Text>
-            <Button onPress={this._onPressHandler} title="Click me!"/>
-            </View>
-        );
-    }
+  render() {
+    return (
+      <View>
+         <Text>FancyMath says PI = {NativeModules.FancyMath.Pi}</Text>
+         <Text>FancyMath says E = {NativeModules.FancyMath.E}</Text>
+         <Button onPress={this._onPressHandler} title="Click me!"/>
+      </View>);
+  }
 }
-});
 
 AppRegistry.registerComponent('NativeModuleSample', () => NativeModuleSample);
 ```
@@ -178,87 +160,147 @@ As you can see, to access your native modules, you need to import `NativeModules
 
 To access our `FancyMath` constants, we can simply call `NativeModules.FancyMath.E` and `NativeModules.FancyMath.Pi`.
 
-Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case `FancyMath.add()` returns a value, so in addtion to the two necessary parameters we also include a callback function which will be called with the result of `FancyMath.add()`. In the example above, we can see that the callback raises an Alert dialog with the result value.
+Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case `FancyMath.add()` returns a value, so in addition to the two necessary parameters we also include a callback function which will be called with the result of `FancyMath.add()`. In the example above, we can see that the callback raises an Alert dialog with the result value.
 
 ### Sample Native Module using just Microsoft.ReactNative (not recommended)
 
-Now for reference, it is possible and supported to write directly against `INativeModule` however it is not recommended unless you know what you're doing.
+Now for reference, it is possible to write directly against `INativeModule` however it is not recommended unless you know what you're doing.
 
 #### 1. Authoring your Native Module
 
-Here is the same `FancyMath` native module we created above, but here we write it directly against `INativeModule` without the benefit of `Microsoft.ReactNative.Managed`.
+Here is the same `FancyMath` native module we created above, but we do not use custom attributes and going to implement registration of its members ourselves without using reflection.
 
 *FancyMath.cs*
 ```csharp
 using System;
-using System.Collections.Generic;
-
-using Microsoft.ReactNative;
+using Microsoft.ReactNative.Managed;
 
 namespace NativeModuleSample
 {
-    public sealed class FancyMath : INativeModule
+  class FancyMath
+  {
+    public double E = Math.E;
+
+    public double PI = Math.PI;
+
+    public double Add(double a, double b)
     {
-        public string Name => "FancyMath";
-
-        public void Initialize() { }
-
-        public IReadOnlyDictionary<string, object> Constants => _constants ?? (_constants = new Dictionary<string, object>(1)
-        {
-            { "E", Math.E },
-            { "Pi", Math.PI },
-        });
-        private IReadOnlyDictionary<string, object> _constants;
-
-        public IReadOnlyList<MethodInfo> Methods => _methods ?? (_methods = new List<MethodInfo>(1)
-        {
-            new MethodInfo("add", ReturnType.Callback, (args, callback, ___) =>
-            {
-                double a = (double)args[0];
-                double b = (double)args[1];
-
-                double result = a + b;
-
-                callback(new object[] { result });
-            }),
-        });
-        private IReadOnlyList<MethodInfo> _methods;
+        return a + b;
     }
+  }
 }
 ```
-
-As you can see, it's a little more complicated, and more "glue" code that you're responsible for.
 
 #### 2. Registering your Native Module
 
-Here's our `FancyMathPackage` again, and again this time we're not depending on the `Microsoft.ReactNative.Managed` library.
+Here's our `FancyMathPackageProvider` where we do not use Reflection to register native module members.
 
-*FancyMathPackage.cs*
+*FancyMathPackageProvider.cs*
 ```csharp
-using System;
-using System.Collections.Generic;
-
-using Microsoft.ReactNative;
-
 namespace NativeModuleSample
 {
-    public sealed class FancyMathPackage : IReactPackage
+  public sealed class FancyMathPackageProvider : IReactPackageProvider
+  {
+    public void CreatePackage(IReactPackageBuilder packageBuilder)
     {
-        public IReadOnlyList<INativeModule> CreateNativeModules(ReactContext reactContext)
-        {
-            return new List<INativeModule>() {
-                new FancyMath()),
-            };
-        }
-
-        /*
-            Other Code
-        */
+      packageBuilder.AddModule("FancyMath", (IReactModuleBuilder moduleBuilder) => {
+        var module = new FancyMath();
+        moduleBuilder.SetName("FancyMath");
+        moduleBuilder.AddConstantProvider((IJSValueWriter writer) => {
+          writer.WritePropertyName("E");
+          writer.WriteDouble(module.E);
+          writer.WritePropertyName("Pi");
+          writer.WriteDouble(module.PI);
+        });
+        moduleBuilder.AddMethod("add", MethodReturnType.Callback,
+          (IJSValueReader inputReader,
+          IJSValueWriter outputWriter,
+          MethodResultCallback resolve,
+          MethodResultCallback reject) => {
+           inputReader.ReadNext();
+           inputReader.ReadNext();
+           inputReader.TryGetDouble(out double a);
+           inputReader.ReadNext();
+           inputReader.TryGetDouble(out double b);
+           double result = module.Add(a, b);
+           writer.WriteArrayBegin();
+           writer.WriteDouble(result);
+           writer.WriteArrayEnd();
+           resolve(writer);
+          });
+        return module;
+      });
     }
+  }
 }
 ```
 
-And as for the rest, once we have the `IReactPackage`, registering that package is the same as in the example above.
+As you can see, it is possible to use the API directly, but the code looks a little bit more complicated. The most complexity is related to the value serialization and deserialization. We can choose using helper methods for that and then the code would look a little bit simpler:
+
+*FancyMathPackageProvider.cs*
+```csharp
+namespace NativeModuleSample
+{
+  public sealed class FancyMathPackageProvider : IReactPackageProvider
+  {
+    public void CreatePackage(IReactPackageBuilder packageBuilder)
+    {
+      packageBuilder.AddModule("FancyMath", (IReactModuleBuilder moduleBuilder) => {
+        var module = new FancyMath();
+        moduleBuilder.SetName("FancyMath");
+        moduleBuilder.AddConstantProvider((IJSValueWriter writer) => {
+          writer.WriteProperty("E", module.E);
+          writer.WriteProperty("Pi", module.PI);
+        });
+        moduleBuilder.AddMethod("add", MethodReturnType.Callback,
+          (IJSValueReader inputReader,
+          IJSValueWriter outputWriter,
+          MethodResultCallback resolve,
+          MethodResultCallback reject) => {
+           object[] args = inputReader.ReadArgs();
+           double result = module.Add((double)args[0], (double)args[1]);
+           writer.WriteArgs(result);
+           resolve(writer);
+          });
+        return module;
+      });
+    }
+  }
+}
+```
+
+It is possible to simplify the code even more by hiding the use of the value reader and writer interfaces:
+
+*FancyMathPackageProvider.cs*
+```csharp
+namespace NativeModuleSample
+{
+  public sealed class FancyMathPackageProvider : IReactPackageProvider
+  {
+    public void CreatePackage(IReactPackageBuilder packageBuilder)
+    {
+      packageBuilder.AddModule("FancyMath", (IReactModuleBuilder moduleBuilder) => {
+        var module = new FancyMath();
+        moduleBuilder.SetName("FancyMath");
+        moduleBuilder.AddConstantProvider(() => new Dictionary<string, object> {
+          ["E"] = module.E,
+          ["Pi"] = module.PI
+        });
+        moduleBuilder.AddMethod("add", MethodReturnType.Callback, (MethodCallContext callContext) => {
+          double result = module.Add((double)callContext.Args[0], (double)callContext.Args[1]);
+          callContext.resolve(result);
+        });
+        return module;
+      });
+    }
+  }
+}
+```
+
+This code looks much better, but we are getting the overhead of boxing values that involves memory allocation for each call. The code generation that we do using LINQ Expression avoids this extra overhead. Though, the initial use of reflection and code generation has some penalty too.
+From the maintenance point of view, the attributed code is much simple to support because we do not need to describe the same things in two different places.
+
+And as for the rest of the code, once we have the `IReactPackageProvider`, registering that package is the same as in the example above that uses custom attributes.
 
 #### 3. Using your Native Module in JS
 
