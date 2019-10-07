@@ -1,8 +1,8 @@
 #
 parameters:
-  name: ''
+  name: ""
   pool:
-  BuildPlatform: 'x86' # ARM, x86, x64
+  BuildPlatform: "x86" # ARM, x86, x64
   UseRNFork: true
 
 jobs:
@@ -71,7 +71,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script:  react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
           workingDirectory: packages/E2ETest
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
@@ -90,6 +90,6 @@ jobs:
 
       - task: PublishTestResults@2
         inputs:
-          testResultsFormat: 'JUnit'
-          testResultsFiles: 'packages/E2ETest/reports/*.log'
+          testResultsFormat: "JUnit"
+          testResultsFiles: "packages/E2ETest/reports/*.log"
         condition: succeededOrFailed()
