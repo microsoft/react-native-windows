@@ -33,8 +33,12 @@ AppTheme::AppTheme(
       m_queueThread(defaultQueueThread) {
   try {
     updateAndSubscribeForChanges();
-  } catch (...) {
-    // Check for HResult E_RPC_WRONG_THREAD
+  } catch (winrt::hresult_error const& ex) {
+    if (ex.code() != 0x80070490) {
+      // PEER_E_NOT_FOUND Expected when app starts in the background.
+      winrt::throw_last_error();
+    }
+
     m_leavingBackgroundRevoker =
         winrt::Windows::UI::Xaml::Application::Current().LeavingBackground(
             winrt::auto_revoke,
@@ -45,6 +49,7 @@ AppTheme::AppTheme(
               updateAndSubscribeForChanges();
               fireHighContrastChanged();
               fireThemeChanged();
+              m_leavingBackgroundRevoker.revoke();
             });
   }
 }

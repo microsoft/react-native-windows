@@ -147,8 +147,10 @@ void Timing::createTimer(
     try {
       m_rendering = winrt::CompositionTarget::Rendering(
           winrt::auto_revoke, {this, &Timing::OnRendering});
-    } catch (winrt::hresult error) {
-      OutputDebugString(L"Caught exception subscribing to rendering");
+    } catch (winrt::hresult_wrong_thread) {
+      // Eat this exception.
+      // This means we are running in the background. Potentially to run a HeadlessJS task.
+      // Android does not support setTimeout in HeadlessJS tasks, so this is parity.
     }
   }
 

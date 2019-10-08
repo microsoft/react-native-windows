@@ -294,17 +294,9 @@ void UwpReactInstance::Start(
       std::make_shared<react::uwp::ProxyMessageQueueThread>();
   
   // Objects that must be created on the UI thread	
-  std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>(spThis);
+  m_deviceInfo = std::make_shared<DeviceInfo>(spThis);
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
   std::shared_ptr<react::windows::AppTheme> appTheme = std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
-
-  // Objects that must be created on the UI thread
-  m_deviceInfo = std::make_shared<DeviceInfo>(spThis);
-  std::shared_ptr<facebook::react::AppState> appstate =
-      std::make_shared<react::uwp::AppState>(spThis);
-  std::shared_ptr<react::windows::AppTheme> appTheme =
-      std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
-  std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
 
   // TODO: Figure out threading. What thread should this really be on?
   m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
@@ -312,8 +304,6 @@ void UwpReactInstance::Start(
       m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
-                                settings,
-                                i18nInfo = std::move(i18nInfo),
                                 settings,
                                 appstate = std::move(appstate),
                                 appTheme = std::move(appTheme)]() mutable {
