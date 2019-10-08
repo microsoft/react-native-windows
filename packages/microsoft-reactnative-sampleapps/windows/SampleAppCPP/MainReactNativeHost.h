@@ -3,7 +3,7 @@
 // Licensed under the MIT License.
 
 #include "MainReactNativeHost.g.h"
-#include "NativeModulePackage.h"
+#include "ReactPackageProvider.h"
 #include "winrt/SampleLibraryCPP.h"
 #include "winrt/SampleLibraryCS.h"
 
@@ -46,7 +46,7 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   IVectorView<IReactPackageProvider> PackageProviders() {
     OutputDebugStringW(L"My output string.");
     auto packages = single_threaded_vector<IReactPackageProvider>(
-        {make<NativeModulePackage>(),
+        {make<ReactPackageProvider>(),
          winrt::SampleLibraryCPP::SampleLibraryCppPackage(),
          winrt::SampleLibraryCS::CsStringsPackageProvider()});
     return packages.GetView();

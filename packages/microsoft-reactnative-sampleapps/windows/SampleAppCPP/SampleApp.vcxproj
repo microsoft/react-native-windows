@@ -112,9 +112,7 @@
       <DependentUpon>MainReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="MyCtorModule.h" />
-    <ClInclude Include="MyModule.h" />
-    <ClInclude Include="NativeModulePackage.h" />
+    <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -145,7 +143,7 @@
       <DependentUpon>MainReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="NativeModulePackage.cpp" />
+    <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

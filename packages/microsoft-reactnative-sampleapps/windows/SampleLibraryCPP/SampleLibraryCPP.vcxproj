@@ -105,6 +105,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
+    <ClInclude Include="MyCtorModule.h" />
+    <ClInclude Include="MyModule.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SampleLibraryCppPackage.h">
       <DependentUpon>SampleLibraryCppPackage.idl</DependentUpon>
