@@ -9,6 +9,7 @@
 #include <jsrt.h>
 #endif
 
+#include "ByteArrayBuffer.h"
 #include "ChakraRuntimeArgs.h"
 
 #include <jsi/jsi.h>
@@ -29,28 +30,6 @@ class DebugService {};
 #endif
 
 namespace Microsoft::JSI {
-
-class ByteArrayBuffer final : public facebook::jsi::Buffer {
- public:
-  size_t size() const override {
-    return size_;
-  }
-
-  const uint8_t *data() const {
-    return byteArray_.get();
-  }
-
-  uint8_t *data() {
-    return byteArray_.get();
-  }
-
-  ByteArrayBuffer(int size)
-      : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
-
- private:
-  int size_;
-  std::unique_ptr<uint8_t[]> byteArray_;
-};
 
 class ChakraRuntime : public facebook::jsi::Runtime {
  public:
