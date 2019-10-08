@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Oct 2019 18:33:16 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.21",
+      "version": "0.60.0-vnext.21",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix UT script assemblies defaults.",
+            "author": "julio@rochsquadron.net",
+            "commit": "39c8a70f7db96c6e17345a40c8ca9faba420be1d"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "re-enable Chakra Core on UWP",
+            "author": "stecrain@microsoft.com",
+            "commit": "45d2336aa91e4842713b73ddd788fc1ad3b278ae"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2019 21:46:39 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.20",
       "version": "0.60.0-vnext.20",
