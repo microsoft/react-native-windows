@@ -249,10 +249,10 @@ stages:
 
       - job: CliInit
         displayName: Verify react-native init
-          pool:
-            vmImage: $(VmImage)
-          timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+        pool:
+          vmImage: $(VmImage)
+        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+        cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
         steps:
           - checkout: self # self represents the repo where the initial Pipelines YAML file was found
             clean: true # whether to fetch clean each time
@@ -352,7 +352,7 @@ stages:
           - task: CmdLine@2
             displayName: Check for change files
             inputs:
-                    script: node ./node_modules/beachball/bin/beachball.js check --branch origin/0.59-vnext-stable --changehint "Run `yarn change` from root of repo to generate a change file."
+              script: node ./node_modules/beachball/bin/beachball.js check --branch origin/0.59-vnext-stable --changehint "Run `yarn change` from root of repo to generate a change file."
 
           - task: CmdLine@2
             displayName: yarn format:verify
