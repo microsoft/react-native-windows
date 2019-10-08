@@ -3,31 +3,31 @@
 
 #pragma once
 
-#if defined(CHAKRACORE)
-#include <ChakraCore.h>
-#else
-#include <jsrt.h>
-#endif
-
 #include "ByteArrayBuffer.h"
 #include "ChakraRuntimeArgs.h"
 
-#include <jsi/jsi.h>
+#include "jsi/jsi.h"
+
+#ifdef CHAKRACORE
+#include "ChakraCore.h"
+#include "ChakraCoreDebugger.h"
+#else
+#ifndef USE_EDGEMODE_JSRT
+#define USE_EDGEMODE_JSRT
+#endif
+#include "jsrt.h"
+#endif
 
 #include <memory>
 #include <mutex>
 #include <sstream>
 
 #if !defined(CHAKRACORE)
-typedef JsValueRef JsWeakRef;
-#endif
-
-#if defined(CHAKRACORE)
-#include "ChakraCoreDebugger.h"
-#else
 class DebugProtocolHandler {};
 class DebugService {};
+using JsWeakRef = JsValueRef;
 #endif
+
 
 namespace Microsoft::JSI {
 
@@ -36,15 +36,153 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   ChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
   ~ChakraRuntime() noexcept;
 
+#pragma region Functions_inherited_from_Runtime
+
   facebook::jsi::Value evaluateJavaScript(
       const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
       const std::string &sourceURL) override;
+
+  std::shared_ptr<const facebook::jsi::PreparedJavaScript> prepareJavaScript(
+      const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
+      std::string sourceURL) override;
+
+  facebook::jsi::Value evaluatePreparedJavaScript(
+      const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js)
+      override;
 
   facebook::jsi::Object global() override;
 
   std::string description() override;
 
   bool isInspectable() override;
+
+  // We use the default instrumentation() implementation that returns an
+  // Instrumentation instance which returns no metrics.
+
+ protected:
+  PointerValue *cloneSymbol(const PointerValue *pv) override;
+  PointerValue *cloneString(const PointerValue *pv) override;
+  PointerValue *cloneObject(const PointerValue *pv) override;
+  PointerValue *clonePropNameID(const PointerValue *pv) override;
+
+  facebook::jsi::PropNameID createPropNameIDFromAscii(
+      const char *str,
+      size_t length) override;
+  facebook::jsi::PropNameID createPropNameIDFromUtf8(
+      const uint8_t *utf8,
+      size_t length) override;
+  facebook::jsi::PropNameID createPropNameIDFromString(
+      const facebook::jsi::String &str) override;
+  std::string utf8(const facebook::jsi::PropNameID &str) override;
+  bool compare(
+      const facebook::jsi::PropNameID &lhs,
+      const facebook::jsi::PropNameID &rhs) override;
+
+  std::string symbolToString(const facebook::jsi::Symbol &s) override;
+
+  facebook::jsi::String createStringFromAscii(const char *str, size_t length)
+      override;
+  facebook::jsi::String createStringFromUtf8(const uint8_t *utf8, size_t length)
+      override;
+  std::string utf8(const facebook::jsi::String &str) override;
+
+  facebook::jsi::Object createObject() override;
+  facebook::jsi::Object createObject(
+      std::shared_ptr<facebook::jsi::HostObject> ho) override;
+  std::shared_ptr<facebook::jsi::HostObject> getHostObject(
+      const facebook::jsi::Object &) override;
+  facebook::jsi::HostFunctionType &getHostFunction(
+      const facebook::jsi::Function &) override;
+
+  facebook::jsi::Value getProperty(
+      const facebook::jsi::Object &obj,
+      const facebook::jsi::PropNameID &name) override;
+  facebook::jsi::Value getProperty(
+      const facebook::jsi::Object &obj,
+      const facebook::jsi::String &name) override;
+  bool hasProperty(
+      const facebook::jsi::Object &obj,
+      const facebook::jsi::PropNameID &name) override;
+  bool hasProperty(
+      const facebook::jsi::Object &obj,
+      const facebook::jsi::String &name) override;
+  void setPropertyValue(
+      facebook::jsi::Object &obj,
+      const facebook::jsi::PropNameID &name,
+      const facebook::jsi::Value &value) override;
+  void setPropertyValue(
+      facebook::jsi::Object &obj,
+      const facebook::jsi::String &name,
+      const facebook::jsi::Value &value) override;
+
+  bool isArray(const facebook::jsi::Object &obj) const override;
+  bool isArrayBuffer(const facebook::jsi::Object &obj) const override;
+  bool isFunction(const facebook::jsi::Object &obj) const override;
+  bool isHostObject(const facebook::jsi::Object &obj) const override;
+  bool isHostFunction(const facebook::jsi::Function &func) const override;
+  facebook::jsi::Array getPropertyNames(
+      const facebook::jsi::Object &obj) override;
+
+  facebook::jsi::WeakObject createWeakObject(
+      const facebook::jsi::Object &obj) override;
+  facebook::jsi::Value lockWeakObject(
+      const facebook::jsi::WeakObject &weakObj) override;
+
+  facebook::jsi::Array createArray(size_t length) override;
+  size_t size(const facebook::jsi::Array &arr) override;
+  size_t size(const facebook::jsi::ArrayBuffer &arrBuf) override;
+  uint8_t *data(const facebook::jsi::ArrayBuffer &arrBuf) override;
+  facebook::jsi::Value getValueAtIndex(
+      const facebook::jsi::Array &arr,
+      size_t index) override;
+  void setValueAtIndexImpl(
+      facebook::jsi::Array &arr,
+      size_t index,
+      const facebook::jsi::Value &value) override;
+
+  facebook::jsi::Function createFunctionFromHostFunction(
+      const facebook::jsi::PropNameID &name,
+      unsigned int paramCount,
+      facebook::jsi::HostFunctionType func) override;
+  facebook::jsi::Value call(
+      const facebook::jsi::Function &func,
+      const facebook::jsi::Value &jsThis,
+      const facebook::jsi::Value *args,
+      size_t count) override;
+  facebook::jsi::Value callAsConstructor(
+      const facebook::jsi::Function &func,
+      const facebook::jsi::Value *args,
+      size_t count) override;
+
+  // For now, pushing a scope does nothing, and popping a scope forces the
+  // JavaScript garbage collector to run.
+  ScopeState *pushScope() override;
+  void popScope(ScopeState *) override;
+
+  bool strictEquals(
+      const facebook::jsi::Symbol &a,
+      const facebook::jsi::Symbol &b) const override;
+  bool strictEquals(
+      const facebook::jsi::String &a,
+      const facebook::jsi::String &b) const override;
+  bool strictEquals(
+      const facebook::jsi::Object &a,
+      const facebook::jsi::Object &b) const override;
+
+  bool instanceOf(
+      const facebook::jsi::Object &o,
+      const facebook::jsi::Function &f) override;
+
+#pragma endregion Functions_inherited_from_Runtime
+
+
+
+
+
+
+
+
+  
 
   void setDescription(const std::string &desc);
 
@@ -75,7 +213,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   void setupNativePromiseContinuation() noexcept;
   void setupMemoryTracker() noexcept;
 
- private:
   // Arguments shared by the specializations ..
   ChakraRuntimeArgs m_args;
 
@@ -95,7 +232,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   // serialized scripts.
   std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedScripts;
 
- private:
   static std::once_flag s_runtimeVersionInitFlag;
 
   static uint64_t s_runtimeVersion;
@@ -111,7 +247,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     return s_runtimeVersion;
   }
 
- private:
   class HostObjectProxy {
    public:
     facebook::jsi::Value Get(const facebook::jsi::PropNameID &propNameId) {
@@ -207,7 +342,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     JsWeakRef m_obj;
   };
 
- private:
   facebook::jsi::Object createProxy(
       facebook::jsi::Object &&target,
       facebook::jsi::Object &&handler) noexcept;
@@ -225,120 +359,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       const facebook::jsi::Buffer &serializedScriptBuffer,
       const std::string &sourceURL);
 
-  std::shared_ptr<const facebook::jsi::PreparedJavaScript> prepareJavaScript(
-      const std::shared_ptr<const facebook::jsi::Buffer> &,
-      std::string) override;
-  facebook::jsi::Value evaluatePreparedJavaScript(
-      const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &)
-      override;
-
-  PointerValue *cloneString(const Runtime::PointerValue *pv) override;
-  PointerValue *cloneObject(const Runtime::PointerValue *pv) override;
-  PointerValue *clonePropNameID(const Runtime::PointerValue *pv) override;
-  facebook::jsi::Runtime::PointerValue *cloneSymbol(
-      const facebook::jsi::Runtime::PointerValue *) override;
-
-  std::string symbolToString(const facebook::jsi::Symbol &) override;
-
-  facebook::jsi::PropNameID createPropNameIDFromAscii(
-      const char *str,
-      size_t length) override;
-  facebook::jsi::PropNameID createPropNameIDFromUtf8(
-      const uint8_t *utf8,
-      size_t length) override;
-  facebook::jsi::PropNameID createPropNameIDFromString(
-      const facebook::jsi::String &str) override;
-  std::string utf8(const facebook::jsi::PropNameID &) override;
-  bool compare(
-      const facebook::jsi::PropNameID &,
-      const facebook::jsi::PropNameID &) override;
-
-  facebook::jsi::String createStringFromAscii(const char *str, size_t length)
-      override;
-  facebook::jsi::String createStringFromUtf8(const uint8_t *utf8, size_t length)
-      override;
-  std::string utf8(const facebook::jsi::String &) override;
-
-  facebook::jsi::Object createObject() override;
-  facebook::jsi::Object createObject(
-      std::shared_ptr<facebook::jsi::HostObject> hostObject) override;
-  virtual std::shared_ptr<facebook::jsi::HostObject> getHostObject(
-      const facebook::jsi::Object &) override;
-  facebook::jsi::HostFunctionType &getHostFunction(
-      const facebook::jsi::Function &) override;
-
-  facebook::jsi::Value getProperty(
-      const facebook::jsi::Object &,
-      const facebook::jsi::String &name) override;
-  facebook::jsi::Value getProperty(
-      const facebook::jsi::Object &,
-      const facebook::jsi::PropNameID &name) override;
-  bool hasProperty(
-      const facebook::jsi::Object &,
-      const facebook::jsi::String &name) override;
-  bool hasProperty(
-      const facebook::jsi::Object &,
-      const facebook::jsi::PropNameID &name) override;
-  void setPropertyValue(
-      facebook::jsi::Object &,
-      const facebook::jsi::String &name,
-      const facebook::jsi::Value &value) override;
-  void setPropertyValue(
-      facebook::jsi::Object &,
-      const facebook::jsi::PropNameID &name,
-      const facebook::jsi::Value &value) override;
-  bool isArray(const facebook::jsi::Object &) const override;
-  bool isArrayBuffer(const facebook::jsi::Object &) const override;
-  bool isFunction(const facebook::jsi::Object &) const override;
-  bool isHostObject(const facebook::jsi::Object &) const override;
-  bool isHostFunction(const facebook::jsi::Function &) const override;
-  facebook::jsi::Array getPropertyNames(const facebook::jsi::Object &) override;
-
-  facebook::jsi::WeakObject createWeakObject(
-      const facebook::jsi::Object &) override;
-  facebook::jsi::Value lockWeakObject(
-      const facebook::jsi::WeakObject &) override;
-
-  facebook::jsi::Array createArray(size_t length) override;
-  size_t size(const facebook::jsi::Array &) override;
-  size_t size(const facebook::jsi::ArrayBuffer &) override;
-  uint8_t *data(const facebook::jsi::ArrayBuffer &) override;
-  facebook::jsi::Value getValueAtIndex(const facebook::jsi::Array &, size_t i)
-      override;
-  void setValueAtIndexImpl(
-      facebook::jsi::Array &,
-      size_t i,
-      const facebook::jsi::Value &value) override;
-
-  facebook::jsi::Function createFunctionFromHostFunction(
-      const facebook::jsi::PropNameID &name,
-      unsigned int paramCount,
-      facebook::jsi::HostFunctionType func) override;
-  facebook::jsi::Value call(
-      const facebook::jsi::Function &,
-      const facebook::jsi::Value &jsThis,
-      const facebook::jsi::Value *args,
-      size_t count) override;
-  facebook::jsi::Value callAsConstructor(
-      const facebook::jsi::Function &,
-      const facebook::jsi::Value *args,
-      size_t count) override;
-
-  bool strictEquals(
-      const facebook::jsi::String &a,
-      const facebook::jsi::String &b) const override;
-  bool strictEquals(
-      const facebook::jsi::Object &a,
-      const facebook::jsi::Object &b) const override;
-  bool strictEquals(
-      const facebook::jsi::Symbol &,
-      const facebook::jsi::Symbol &) const override;
-
-  bool instanceOf(
-      const facebook::jsi::Object &o,
-      const facebook::jsi::Function &f) override;
-
- private:
   // Basically convenience casts
   static JsValueRef stringRef(const facebook::jsi::String &str);
   static JsPropertyIdRef propIdRef(const facebook::jsi::PropNameID &sym);
@@ -386,7 +406,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       std::unique_ptr<DebugService> &debugService);
   void ProcessDebuggerCommandQueue();
 
- private:
   JsRuntimeHandle m_runtime;
   JsContextRef m_ctx;
   std::string m_desc;
@@ -396,7 +415,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   std::unique_ptr<DebugProtocolHandler> m_debugProtocolHandler;
   std::unique_ptr<DebugService> m_debugService;
 
- private:
   constexpr static char DebuggerDefaultRuntimeName[] = "runtime1";
   constexpr static int DebuggerDefaultPort = 9229;
 
