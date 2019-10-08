@@ -9,6 +9,7 @@
 
 namespace TestApp {
 
+REACT_MODULE(MyModule);
 struct MyModule {
   REACT_CONSTANT(m_fieldConst);
   const int m_fieldConst = 42;

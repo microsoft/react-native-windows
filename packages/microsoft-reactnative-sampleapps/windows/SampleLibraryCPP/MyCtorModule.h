@@ -23,6 +23,7 @@ bool WriteValue(
 
 } // namespace
 
+REACT_MODULE(MyCtorModule);
 struct MyCtorModule {
   MyCtorModule() noexcept {
     REACT_REGISTER_METHOD(AddWithBias2);

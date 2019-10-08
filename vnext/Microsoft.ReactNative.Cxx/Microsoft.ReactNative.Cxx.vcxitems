@@ -14,6 +14,10 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
   </ItemGroup>
 </Project>

@@ -15,12 +15,7 @@ namespace winrt::SampleLibraryCPP::implementation {
 
 void SampleLibraryCppPackage::CreatePackage(
     IReactPackageBuilder const &packageBuilder) noexcept {
-  packageBuilder.AddModule(
-      L"Calculator", MakeModuleProvider<::SampleLibraryCPP::Calculator>());
-  packageBuilder.AddModule(
-      L"MyModule", MakeModuleProvider<TestApp::MyModule>());
-  packageBuilder.AddModule(
-      L"MyCtorModule", MakeModuleProvider<TestApp::MyCtorModule>());
+  AddAttributedModules(packageBuilder);
 }
 
 } // namespace winrt::SampleLibraryCPP::implementation

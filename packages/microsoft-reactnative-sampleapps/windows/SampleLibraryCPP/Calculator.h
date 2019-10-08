@@ -7,6 +7,7 @@
 
 namespace SampleLibraryCPP {
 
+REACT_MODULE(Calculator);
 struct Calculator {
   REACT_METHOD(Add);
   int Add(int x, int y) noexcept {

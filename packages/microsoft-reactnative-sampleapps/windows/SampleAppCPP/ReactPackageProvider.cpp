@@ -16,8 +16,7 @@ namespace winrt::SampleApp::implementation {
 
 void ReactPackageProvider::CreatePackage(
     IReactPackageBuilder const &packageBuilder) noexcept {
-  packageBuilder.AddModule(
-      L"DebugConsole", MakeModuleProvider<TestApp::DebugConsole>());
+  AddAttributedModules(packageBuilder);
 }
 
 } // namespace winrt::SampleApp::implementation
