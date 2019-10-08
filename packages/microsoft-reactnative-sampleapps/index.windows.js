@@ -181,7 +181,7 @@ class SampleApp extends Component {
 
     callOnce("OnChangeEvent2", function() {
       BatchedBridge.registerLazyCallableModule('MyCtorModule', () => {
-        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyModule);
+        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyCtorModule);
         myModuleEventEmitter.addListener('OnChanged', getCallback("MyCtorModule.OnChanged: "), this);
         return myModuleEventEmitter;
       });
