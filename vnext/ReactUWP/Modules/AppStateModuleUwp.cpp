@@ -16,8 +16,10 @@ namespace uwp {
 
 AppState::AppState(const std::shared_ptr<IReactInstance> &reactInstance)
     : facebook::react::AppState(), m_wkReactInstance(reactInstance) {
-
-  m_lastState = winrt::Windows::UI::Xaml::Window::Current().CoreWindow() == nullptr ? "background" : "active"; 
+  m_lastState =
+      winrt::Windows::UI::Xaml::Window::Current().CoreWindow() == nullptr
+      ? "background"
+      : "active";
 
   m_enteredBackgroundRevoker =
       winrt::Windows::UI::Xaml::Application::Current().EnteredBackground(

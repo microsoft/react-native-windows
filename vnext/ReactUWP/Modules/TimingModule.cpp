@@ -149,8 +149,9 @@ void Timing::createTimer(
           winrt::auto_revoke, {this, &Timing::OnRendering});
     } catch (winrt::hresult_wrong_thread) {
       // Eat this exception.
-      // This means we are running in the background. Potentially to run a HeadlessJS task.
-      // Android does not support setTimeout in HeadlessJS tasks, so this is parity.
+      // This means we are running in the background. Potentially to run a
+      // HeadlessJS task. Android does not support setTimeout in HeadlessJS
+      // tasks, so this is parity.
     }
   }
 

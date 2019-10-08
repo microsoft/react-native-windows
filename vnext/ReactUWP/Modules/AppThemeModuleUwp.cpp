@@ -33,7 +33,7 @@ AppTheme::AppTheme(
       m_queueThread(defaultQueueThread) {
   try {
     updateAndSubscribeForChanges();
-  } catch (winrt::hresult_error const& ex) {
+  } catch (winrt::hresult_error const &ex) {
     if (ex.code() != 0x80070490) {
       // PEER_E_NOT_FOUND Expected when app starts in the background.
       winrt::throw_last_error();

@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "ProxyMessageQueueThread.h"
 #include <Threading/WorkerMessageQueueThread.h>
 #include <memory>
-#include "ProxyMessageQueueThread.h"
 
 using namespace react::uwp;
 
@@ -25,8 +25,7 @@ void ProxyMessageQueueThread::runOnQueue(std::function<void()> &&func) {
   }
 }
 
-void ProxyMessageQueueThread::runOnQueueSync(
-    std::function<void()> &&func) {
+void ProxyMessageQueueThread::runOnQueueSync(std::function<void()> &&func) {
   if (m_uiThreadQueue != nullptr) {
     m_uiThreadQueue->runOnQueueSync(std::move(func));
   } else {

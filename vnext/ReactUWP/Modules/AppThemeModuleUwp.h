@@ -48,7 +48,7 @@ class AppTheme : public react::windows::AppTheme,
   winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker
       m_colorValuesChangedRevoker{};
 
-    winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker
+  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker
       m_leavingBackgroundRevoker;
 };
 
