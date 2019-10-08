@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix UT script assemblies defaults.",
-  "packageName": "react-native-windows",
-  "email": "julio@rochsquadron.net",
-  "commit": "39c8a70f7db96c6e17345a40c8ca9faba420be1d",
-  "date": "2019-10-08T02:41:01.161Z",
-  "file": "D:\\Extra\\react\\windows\\dev\\change\\react-native-windows-2019-10-07-19-41-01-fixutassemblies.json"
-}
