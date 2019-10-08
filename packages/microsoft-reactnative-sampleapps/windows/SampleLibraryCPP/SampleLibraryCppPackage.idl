@@ -4,10 +4,10 @@
 namespace SampleLibraryCPP {
 
 runtimeclass SampleLibraryCppPackage
-    : Microsoft.ReactNative.Bridge.INativeModulePackage {
+    : Microsoft.ReactNative.Bridge.IReactPackageProvider {
   SampleLibraryCppPackage();
-  void CreateModuleProviders(
-      Microsoft.ReactNative.Bridge.ModuleProviderAdder addModuleProvider);
+  void CreatePackage(
+      Microsoft.ReactNative.Bridge.IReactPackageBuilder packageBuilder);
 };
 
 } // namespace CppModule

@@ -5,11 +5,11 @@ using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactModulePackage : INativeModulePackage
+  class ReactPackageProvider : IReactPackageProvider
   {
-    public void CreateModuleProviders(ModuleProviderAdder addModuleProvider)
+    public void CreatePackage(IReactPackageBuilder packageBuilder)
     {
-      ReactModuleInfo.AddAttributedModules(addModuleProvider);
+      packageBuilder.AddAttributedModules();
     }
   }
 }

@@ -43,12 +43,12 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
     return packages.GetView();
   };
 
-  IVectorView<INativeModulePackage> ModulePackages() {
+  IVectorView<IReactPackageProvider> PackageProviders() {
     OutputDebugStringW(L"My output string.");
-    auto packages = single_threaded_vector<INativeModulePackage>(
+    auto packages = single_threaded_vector<IReactPackageProvider>(
         {make<NativeModulePackage>(),
          winrt::SampleLibraryCPP::SampleLibraryCppPackage(),
-         winrt::SampleLibraryCS::CsStringsPackage()});
+         winrt::SampleLibraryCS::CsStringsPackageProvider()});
     return packages.GetView();
   };
 };

@@ -19,14 +19,20 @@ class NativeModulesProvider final
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
       const std::shared_ptr<facebook::react::MessageQueueThread>
           &defaultQueueThread) override;
+
+ public:
+  NativeModulesProvider() noexcept;
   void RegisterModule(INativeModule const &module);
-  void AddPackageProvider(Microsoft::ReactNative::Bridge::IReactPackageProvider packageProvider);
+  void AddModuleProvider(
+      winrt::hstring const &moduleName,
+      ReactModuleProvider const &moduleProvider) noexcept;
 
  private:
   std::vector<INativeModule> m_modules;
-  std::map<std::string, Microsoft::ReactNative::Bridge::NativeModuleProvider>
+  std::map<std::string, Microsoft::ReactNative::Bridge::ReactModuleProvider>
       m_moduleProviders;
   std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{
       nullptr};
+  Microsoft::ReactNative::Bridge::IReactPackageBuilder m_packageBuilder;
 };
 } // namespace winrt::Microsoft::ReactNative::Bridge

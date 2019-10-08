@@ -4,15 +4,15 @@
 #pragma once
 #include "SampleLibraryCppPackage.g.h"
 
+using namespace winrt::Microsoft::ReactNative::Bridge;
+
 namespace winrt::SampleLibraryCPP::implementation {
 
 struct SampleLibraryCppPackage
     : SampleLibraryCppPackageT<SampleLibraryCppPackage> {
   SampleLibraryCppPackage() = default;
 
-  void CreateModuleProviders(
-      Microsoft::ReactNative::Bridge::ModuleProviderAdder const
-          &addModuleProvider);
+  void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
 };
 
 } // namespace winrt::SampleLibraryCPP::implementation

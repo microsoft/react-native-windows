@@ -15,12 +15,14 @@ using namespace ::Microsoft::ReactNative;
 // NativeModulePackage implementation
 //===========================================================================
 
-void NativeModulePackage::CreateModuleProviders(
-    Microsoft::ReactNative::Bridge::ModuleProviderAdder
-        addModuleProvider) noexcept {
-  addModuleProvider(L"MyModule", MakeModuleProvider<TestApp::MyModule>());
-  addModuleProvider(L"MyCtorModule", MakeModuleProvider<TestApp::MyCtorModule>());
-  addModuleProvider(
+void NativeModulePackage::CreatePackage(
+    Microsoft::ReactNative::Bridge::IReactPackageBuilder const&
+        packageBuilder) noexcept {
+  packageBuilder.AddModule(
+      L"MyModule", MakeModuleProvider<TestApp::MyModule>());
+  packageBuilder.AddModule(
+      L"MyCtorModule", MakeModuleProvider<TestApp::MyCtorModule>());
+  packageBuilder.AddModule(
       L"DebugConsole", MakeModuleProvider<TestApp::DebugConsole>());
 }
 

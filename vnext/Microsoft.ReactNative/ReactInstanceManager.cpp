@@ -8,6 +8,7 @@
 #endif
 
 #include "ReactInstanceCreator.h"
+#include "ReactPackageBuilder.h"
 
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/Instance.h>
@@ -33,7 +34,7 @@ ReactInstanceManager::ReactInstanceManager(
       m_packages(packages),
       m_packageProviders(
           packageProviders ? std::vector<IReactPackageProvider>(
-                               begin(packageProviders),
+                                 begin(packageProviders),
                                  end(packageProviders))
                            : std::vector<IReactPackageProvider>()),
       m_useDeveloperSupport(useDeveloperSupport) {
@@ -180,10 +181,6 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
         }
       }
     }
-
-    for (auto packageProvider : m_packageProviders) {
-      m_modulesProvider->AddPackageProvider(packageProvider);
-    }
   }
 
   if (m_viewManagersProvider == nullptr) {
@@ -193,6 +190,14 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
     // The registration that currently happens in the moduleregistry.cpp
     // should happen here if we convert all modules to go through the ABI
     // rather than directly against facebook's types.
+  }
+
+  if (!m_packageBuilder) {
+    m_packageBuilder = make<ReactPackageBuilder>(m_modulesProvider);
+
+    for (auto& packageProvider : m_packageProviders) {
+      packageProvider.CreatePackage(m_packageBuilder);
+    }
   }
 
   // TODO: Could access to the module registry be easier if the ReactInstance

@@ -59,6 +59,8 @@ NativeModulesProvider::GetModules(
   return modules;
 }
 
+NativeModulesProvider::NativeModulesProvider() noexcept {}
+
 void NativeModulesProvider::RegisterModule(
     winrt::Microsoft::ReactNative::Bridge::INativeModule const &module) {
   // TODO: This is taking a naive approach right now and just adding
@@ -69,14 +71,10 @@ void NativeModulesProvider::RegisterModule(
   m_modules.push_back(module);
 }
 
-void NativeModulesProvider::AddPackage(
-    Microsoft::ReactNative::Bridge::INativeModulePackage package) {
-  package.CreateModuleProviders([this](
-      hstring moduleName,
-      Microsoft::ReactNative::Bridge::NativeModuleProvider
-          moduleProvider) noexcept {
-    m_moduleProviders.emplace(to_string(moduleName), moduleProvider);
-  });
+void NativeModulesProvider::AddModuleProvider(
+    winrt::hstring const &moduleName,
+    ReactModuleProvider const &moduleProvider) noexcept {
+  m_moduleProviders.emplace(to_string(moduleName), moduleProvider);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

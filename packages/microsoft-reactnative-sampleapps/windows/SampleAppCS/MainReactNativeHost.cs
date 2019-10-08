@@ -29,14 +29,14 @@ namespace SampleApp
             }
         }
 
-        protected override IReadOnlyList<INativeModulePackage> ModulePackages
+        protected override IReadOnlyList<IReactPackageProvider> PackageProviders
         {
             get
             {
-                return new INativeModulePackage[] {
-                    new ReactModulePackage(),
+                return new IReactPackageProvider[] {
+                    new ReactPackageProvider(),
                     new SampleLibraryCPP.SampleLibraryCppPackage(),
-                    new SampleLibraryCS.CsStringsPackage()
+                    new SampleLibraryCS.CsStringsPackageProvider()
                 };
             }
         }

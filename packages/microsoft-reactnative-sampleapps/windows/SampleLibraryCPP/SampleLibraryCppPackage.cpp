@@ -11,9 +11,9 @@ using namespace Microsoft::ReactNative;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
-void SampleLibraryCppPackage::CreateModuleProviders(
-    ModuleProviderAdder const &addModuleProvider) {
-  addModuleProvider(
+void SampleLibraryCppPackage::CreatePackage(
+    IReactPackageBuilder const &packageBuilder) noexcept {
+  packageBuilder.AddModule(
       L"Calculator", MakeModuleProvider<::SampleLibraryCPP::Calculator>());
 }
 

@@ -31,20 +31,7 @@ namespace Microsoft.ReactNative.Managed
       m_constantProviderInfos = new Lazy<List<ReactConstantProviderInfo>>(InitConstantProviderInfos, LazyThreadSafetyMode.PublicationOnly);
     }
 
-    internal static void AddAttributedModules(ModuleProviderAdder addModuleProvider)
-    {
-      foreach (var type in typeof(ReactModulePackage).GetTypeInfo().Assembly.GetTypes())
-      {
-        var moduleAttribute = type.GetTypeInfo().GetCustomAttribute<ReactModuleAttribute>();
-        if (moduleAttribute != null)
-        {
-          ReactModuleInfo moduleInfo = GetOrAddModuleInfo(type, moduleAttribute);
-          addModuleProvider(moduleInfo.ModuleName, moduleInfo.ModuleProvider);
-        }
-      }
-    }
-
-    private static ReactModuleInfo GetOrAddModuleInfo(Type moduleType, ReactModuleAttribute moduleAttribute)
+    internal static ReactModuleInfo GetOrAddModuleInfo(Type moduleType, ReactModuleAttribute moduleAttribute)
     {
       lock (s_moduleInfoMutex)
       {
@@ -191,7 +178,7 @@ namespace Microsoft.ReactNative.Managed
 
     public Type ModuleType { get; private set; }
 
-    public NativeModuleProvider ModuleProvider { get; private set; }
+    public ReactModuleProvider ModuleProvider { get; private set; }
 
     private static object s_moduleInfoMutex = new object();
     private static Dictionary<Type, ReactModuleInfo> s_moduleInfos;

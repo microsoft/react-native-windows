@@ -6,12 +6,12 @@
 
 namespace winrt::SampleApp::implementation {
 
-struct NativeModulePackage : winrt::implements<NativeModulePackage, Microsoft::ReactNative::Bridge::INativeModulePackage>
+struct NativeModulePackage : winrt::implements<NativeModulePackage, Microsoft::ReactNative::Bridge::IReactPackageProvider>
 {
   NativeModulePackage() = default;
 
-public: // INativeModulePackage
-  void CreateModuleProviders(Microsoft::ReactNative::Bridge::ModuleProviderAdder addModuleProvider) noexcept;
+public: // IReactPackageProvider
+  void CreatePackage(Microsoft::ReactNative::Bridge::IReactPackageBuilder const& packageBuilder) noexcept;
 };
 
 } // namespace winrt::CppSampleApp::implementation

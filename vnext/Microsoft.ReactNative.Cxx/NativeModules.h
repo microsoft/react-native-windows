@@ -469,7 +469,7 @@ using CurrentNativeModuleBuilder = Internal::ThreadLocalHolder<
 //==============================================================================
 
 template <class TModule>
-inline winrt::Microsoft::ReactNative::Bridge::NativeModuleProvider
+inline winrt::Microsoft::ReactNative::Bridge::ReactModuleProvider
 MakeModuleProvider() noexcept {
   using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
 

@@ -133,7 +133,7 @@ ReactNativeHost::CreateReactInstanceManager() {
   builder.JavaScriptBundleFile(get_JavaScriptBundleFile());
   builder.JavaScriptMainModuleName(get_JavaScriptMainModuleName());
   builder.Packages(get_Packages());
-  builder.ModulePackages(get_ModulePackages());
+  builder.PackageProviders(get_PackageProviders());
 
   return builder.Build();
 }
