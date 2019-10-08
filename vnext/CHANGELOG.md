@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Oct 2019 21:46:39 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Oct 2019 18:33:16 GMT and should not be manually modified.
 
+## 0.60.0-vnext.21
+Tue, 08 Oct 2019 18:33:16 GMT
+
+### Changes
+
+- re-enable Chakra Core on UWP (stecrain@microsoft.com)
 ## 0.60.0-vnext.20
 Mon, 07 Oct 2019 21:46:39 GMT
 
