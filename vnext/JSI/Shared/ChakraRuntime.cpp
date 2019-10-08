@@ -136,7 +136,7 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScript(
       std::shared_ptr<const facebook::jsi::Buffer>(std::move(scriptBuffer));
 
   facebook::jsi::ScriptSignature scriptSignature = {sourceURL, scriptVersion};
-  facebook::jsi::JSRuntimeSignature runtimeSignature = {s_runtimeType,
+  facebook::jsi::JSRuntimeSignature runtimeSignature = {description().c_str(),
                                                         getRuntimeVersion()};
 
   auto preparedScript = runtimeArgs().preparedScriptStore->tryGetPreparedScript(
@@ -196,10 +196,7 @@ facebook::jsi::Object ChakraRuntime::global() {
 }
 
 std::string ChakraRuntime::description() {
-  if (m_desc.empty()) {
-    m_desc = std::string("<ChakraRuntime>");
-  }
-  return m_desc;
+  return "ChakraRuntime";
 }
 
 bool ChakraRuntime::isInspectable() {
@@ -1175,6 +1172,15 @@ facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
           }));
 
   return handlerObj;
+}
+
+facebook::jsi::Runtime::ScopeState *ChakraRuntime::pushScope() {
+  return nullptr;
+}
+
+void ChakraRuntime::popScope(Runtime::ScopeState *state) {
+  assert(state == nullptr);
+  checkException(JsCollectGarbage(m_runtime), "JsCollectGarbage");
 }
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(
