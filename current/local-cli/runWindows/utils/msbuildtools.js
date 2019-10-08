@@ -45,7 +45,7 @@ class MSBuildTools {
 
     // Set platform toolset for VS 2019
     if (this.version === '16.0') {
-      args.push('/p:PlatformToolset=v142');
+      args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=16.0');
     }
 
@@ -76,7 +76,7 @@ function checkMSBuildVersion(version) {
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
     const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`).toString().split(EOL)[0];
-    
+
     // VS 2019 changed path naming convention
     const vsVersion = (version == '16.0') ? 'Current' : version;
 
@@ -116,7 +116,7 @@ function checkMSBuildVersion(version) {
 module.exports.findAvailableVersion = function () {
   const versions = MSBUILD_VERSIONS.map(checkMSBuildVersion);
   const msbuildTools = versions.find(Boolean);
-  
+
   if (!msbuildTools) {
     throw new Error('MSBuild tools not found');
   }
