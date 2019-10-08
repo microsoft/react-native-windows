@@ -10,7 +10,7 @@ In this `vnext` sub-folder, we are working on a rewrite of `react-native-windows
 ## Status and roadmap
 The development of the React Native Windows `vnext` implementation is ongoing. You can take a look at [Milestones](https://github.com/microsoft/react-native-windows/milestones) and [Projects](https://github.com/microsoft/react-native-windows/projects) for a view on the work streams and tasks. 
 
-The `vnext` package currently supports `v0.59` of corresponding `react-native` major version. See [releases](./docs/releases.md) for more information on `vnext` release strategy.
+The `vnext` package currently supports `v0.60` of corresponding `react-native` major version. See [releases](./docs/releases.md) for more information on `vnext` release strategy.
 
 ## Documentation
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](http://facebook.github.io/react/) for further details about the React API in general.
