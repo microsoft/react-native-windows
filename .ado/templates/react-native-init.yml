@@ -64,6 +64,8 @@ steps:
       command: restore
       restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
+  - template: install-SDK.yml
+
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
@@ -72,7 +74,7 @@ steps:
       arguments:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
-    condition: ne('${{parameters.vsComponents}}', '')
+    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
   - task: MSBuild@1
     displayName: MSBuild - testcli
@@ -86,7 +88,7 @@ steps:
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-        /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
+        /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150"
 
       clean: true # Optional
 

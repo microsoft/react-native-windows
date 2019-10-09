@@ -56,6 +56,8 @@ steps:
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
+  - template: install-SDK.yml
+
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
@@ -65,7 +67,7 @@ steps:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: ne('${{parameters.vsComponents}}', '')
+    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
   - task: MSBuild@1
     displayName: MSBuild ${{parameters.project}}

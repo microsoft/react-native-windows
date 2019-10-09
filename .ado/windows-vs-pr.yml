@@ -8,7 +8,7 @@ pr:
 
 variables:
   # General / Default
-  VmImage: windows-2019
+  VmImage: vs2017-win2016
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
@@ -66,7 +66,7 @@ jobs:
     cancelTimeoutInMinutes: 5
 
     variables:
-      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
       - checkout: self
@@ -176,8 +176,8 @@ jobs:
 
     variables:
       Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
+      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
       - checkout: self
@@ -194,6 +194,11 @@ jobs:
             /p:RNW_PKG_VERSION_STR="Private Build"
             /p:RNW_PKG_VERSION="1000,0,0,0"
             /p:VCTargetsPath="$(VCTargetsPath)"
+
+      #TODO: Remove
+      - powershell: |
+          ls -Name -Recurse C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\
+          ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -396,6 +401,8 @@ jobs:
           script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
           workingDirectory: current
 
+      - template: install-SDK.yml
+
       - task: PowerShell@2
         displayName: Install Visual Studio dependencies
         inputs:
@@ -404,7 +411,7 @@ jobs:
           arguments:
             -InstallerUri https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe
             -Components $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.AR
-        condition: ne(variables['VsComponents'], '')
+        condition: and(ne(variables['VsComponents'], ''), eq(variables['VmImage'], 'windows-2019'))
 
       - task: MSBuild@1
         displayName: MSBuild
