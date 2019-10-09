@@ -361,7 +361,7 @@ const PasswordBoxWindows = createReactClass({
         'focus',
         el => {
           if (this === el) {
-            this.requestAnimationFrame(this.focus);
+            this._rafId = requestAnimationFrame(this.focus);
           } else if (this.isFocused()) {
             this.blur();
           }
@@ -372,7 +372,7 @@ const PasswordBoxWindows = createReactClass({
       }
     } else {
       if (this.props.autoFocus) {
-        this.requestAnimationFrame(this.focus);
+        this._rafId = requestAnimationFrame(this.focus);
       }
     }
   },
@@ -385,6 +385,9 @@ const PasswordBoxWindows = createReactClass({
     const tag = ReactNative.findNodeHandle(this._inputRef);
     if (tag != null) {
       TextInputState.unregisterInput(tag);
+    }
+    if (this._rafId != null) {
+      cancelAnimationFrame(this._rafId);
     }
   },
 
