@@ -195,11 +195,6 @@ jobs:
             /p:RNW_PKG_VERSION="1000,0,0,0"
 #            /p:VCTargetsPath="$(VCTargetsPath)"
 
-      #TODO: Remove
-      - powershell: |
-          ls -Name -Recurse C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\
-          ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
-
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
