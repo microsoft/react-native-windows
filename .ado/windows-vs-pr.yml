@@ -266,7 +266,7 @@ jobs:
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     steps:
       - template: templates/react-native-init.yml
         parameters:
@@ -341,7 +341,7 @@ jobs:
         #  BuildPlatform: x86
         #  UTTestOutputConfigDir: Release
     pool:
-      vmImage: vs2017-win2016
+      vmImage: $(VmImage)
     timeoutInMinutes: 15 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -452,7 +452,7 @@ jobs:
     parameters:
       name: E2ETest
       pool:
-        vmImage: vs2017-win2016
+        vmImage: $(VmImage)
       BuildPlatform: x64
       UseRNFork: true
 
