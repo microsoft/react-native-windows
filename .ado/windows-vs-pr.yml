@@ -73,9 +73,9 @@ jobs:
         clean: false
         submodules: false
 
-      #TODO: Remove
-      - powershell: |
-          ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
+      # #TODO: Remove
+      # - powershell: |
+      #     ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
 
       - template: templates/build-rnw.yml
         parameters:
@@ -180,7 +180,7 @@ jobs:
 
     variables:
       Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
+      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
       # VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
