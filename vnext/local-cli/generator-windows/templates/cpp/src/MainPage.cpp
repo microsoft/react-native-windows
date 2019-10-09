@@ -17,11 +17,11 @@ namespace winrt::<%=ns%>::implementation
 #endif
   const wchar_t* JSCOMPONENTNAME = L"<%=name%>";
 
-    MainPage::MainPage()
-    {
-        InitializeComponent();
+  MainPage::MainPage()
+  {
+    InitializeComponent();
     LoadReact();
-    }
+  }
 
   void MainPage::LoadReact()
   {
