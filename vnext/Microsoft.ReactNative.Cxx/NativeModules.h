@@ -3,20 +3,22 @@
 #include "winrt/Microsoft.ReactNative.h"
 
 #include <type_traits>
+#include "ModuleMemberRegistration.h"
 #include "ModuleRegistration.h"
 
-// The macro to annotate C++ class to become a ReactNative module.
+// The macro to annotate a C++ class as a ReactNative module.
+//
 // Arguments:
-// - className (required) - the class name it is attached to
+// - moduleClass (required) - the class name the macro is attached to.
 // - moduleName (optional) - the module name visible to JavaScript. Default is
-//     the className.
-// - eventEmitterName (optional) - the event emitter name use din JavaScript.
+//     the moduleClass name.
+// - eventEmitterName (optional) - the event emitter name used in JavaScript.
 //     Default is the moduleName.
-#define REACT_MODULE(moduleClass, ...)                          \
-  INTERNAL_REACT_MODULE_MACRO_CHOOSER(moduleClass, __VA_ARGS__) \
-  (moduleClass, __VA_ARGS__)
+#define REACT_MODULE(                                               \
+    /* moduleClass, [opt] moduleName, [opt] eventEmitterName */...) \
+  INTERNAL_REACT_MODULE_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
-// The macro to annotate a method that it must be exported to JavaScript.
+// The macro to annotate a method to export to JavaScript.
 // It declares an asynchronous method. To return a value:
 // - Return void and have a Callback as a last parameter. The Callback type can
 // be any std::function like type. I.e. Func<void(Args...)>.
@@ -26,47 +28,31 @@
 // - Return non-void value. In JavaScript it is treated as a method with one
 // Callback. Return std::pair<Error, Value> to be able to communicate error
 // condition.
-#define REACT_METHOD(method) REACT_METHOD_JSNAME(method, #method)
-
-// The same as REACT_METHOD but with custom JS name.
-#define REACT_METHOD_JSNAME(method, jsName) \
-  REACT_METHOD_INTERNAL(method, jsName, , false)
+//
+// Arguments:
+// - method (required) - the method name the macro is attached to.
+// - methodName (optional) - the method name visible to JavaScript. Default is
+//     the method name.
+#define REACT_METHOD(/* method, [opt] methodName */...) \
+  INTERNAL_REACT_METHOD_MACRO_CHOOSER(__VA_ARGS__)(, false, __VA_ARGS__)
 
 // The same as REACT_METHOD, but two callbacks are exposed as callbacks, and not
 // as a Promise.
-#define REACT_ASYNC_METHOD(method) REACT_METHOD_ASYNC_JSNAME(method, #method)
-
-// The same as REACT_ASYNC_METHOD but with custom JS name.
-#define REACT_ASYNC_METHOD_JSNAME(method, jsName) \
-  REACT_METHOD_INTERNAL(method, jsName, , true)
+#define REACT_ASYNC_METHOD(/* method, [opt] methodName */...) \
+  INTERNAL_REACT_METHOD_MACRO_CHOOSER(__VA_ARGS__)            \
+  (, true, __VA_ARGS__)
 
 // A method that is called synchronously. It must be used rarely because it may
 // cause out-of-order execution when used along with asynchronous methods.
-#define REACT_SYNC_METHOD(method) REACT_SYNC_METHOD_JSNAME(method, #method)
-
-// The same as REACT_SYNC_METHOD but with custom JS name.
-#define REACT_SYNC_METHOD_JSNAME(method, jsName) \
-  REACT_METHOD_INTERNAL(method, jsName, Sync, false)
+#define REACT_SYNC_METHOD(/* method, [opt] methodName */...) \
+  INTERNAL_REACT_METHOD_MACRO_CHOOSER(__VA_ARGS__)           \
+  (Sync, false, __VA_ARGS__)
 
 // A method where we can define constants.
 // Constant definition relies on a TLS context that is setup when object is
 // created.
-#define REACT_CONST_METHOD(method) \
-  REACT_METHOD_INTERNAL(method, "", Const, false)
-
-// Internal implementation details.
-// Registration of a method relies on a TLS context that is setup when object is
-// created. The advantage is that we do zero work during static initialization.
-// The disadvantage is that we require to have one bool field per registration.
-#define REACT_METHOD_INTERNAL(method, jsName, type, isAsync)       \
-  bool REACT_reg##method{                                          \
-      ::Microsoft::ReactNative::Module##type##MethodInfo<decltype( \
-          &std::remove_pointer_t<decltype(this)>::method)>::       \
-          Register(                                                \
-              this,                                                \
-              jsName,                                              \
-              &std::remove_pointer_t<decltype(this)>::method,      \
-              isAsync)};
+#define REACT_CONST_PROVIDER(method) \
+  INTERNAL_REACT_METHOD_4_ARGS(Const, false, method, "")
 
 #define REACT_CONSTANT(field) REACT_CONSTANT_JSNAME(field, #field)
 

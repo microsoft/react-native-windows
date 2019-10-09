@@ -35,12 +35,15 @@
 
 #define INTERNAL_REACT_MODULE_4TH_ARG(arg1, arg2, arg3, arg4, ...) arg4
 
+#define INTERNAL_REACT_MODULE_RECOMPOSER(argsWithParentheses) \
+  INTERNAL_REACT_MODULE_4TH_ARG argsWithParentheses
+
 #define INTERNAL_REACT_MODULE_MACRO_CHOOSER(...) \
-  INTERNAL_REACT_MODULE_4TH_ARG(                 \
-      __VA_ARGS__,                               \
-      INTERNAL_REACT_MODULE_3_ARGS,              \
-      INTERNAL_REACT_MODULE_2_ARGS,              \
-      INTERNAL_REACT_MODULE_1_ARGS, )
+  INTERNAL_REACT_MODULE_RECOMPOSER(              \
+      (__VA_ARGS__,                              \
+       INTERNAL_REACT_MODULE_3_ARGS,             \
+       INTERNAL_REACT_MODULE_2_ARGS,             \
+       INTERNAL_REACT_MODULE_1_ARGS, ))
 
 namespace Microsoft::ReactNative {
 

@@ -17,7 +17,7 @@ struct MyModule {
   REACT_CONSTANT_JSNAME(m_fldConst, "fldConst");
   const int m_fldConst = 43;
 
-  REACT_CONST_METHOD(SimpleConstants);
+  REACT_CONST_PROVIDER(SimpleConstants);
   void SimpleConstants(
       const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter
           &writer) noexcept {
@@ -71,7 +71,7 @@ struct MyModule {
     return 10;
   }
 
-  REACT_SYNC_METHOD_JSNAME(GetRegValue, "regValue");
+  REACT_SYNC_METHOD(GetRegValue, "regValue");
   std::string GetRegValue(std::string key) noexcept {
     if (key == "Key1") {
       return "Simple1";
