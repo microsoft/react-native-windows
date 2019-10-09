@@ -2,6 +2,46 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Oct 2019 18:17:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.23",
+      "version": "0.60.0-vnext.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add support for forever animations.",
+            "author": "stpete@microsoft.com",
+            "commit": "395ad50941a8d5bdaa1fd5dd38715acbf3d3eb06"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Oct 2019 15:13:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.22",
+      "version": "0.60.0-vnext.22",
+      "comments": {
+        "none": [
+          {
+            "comment": "minor adjustments to enable building react-native-win32.dll with the Office compiler",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2b46a701bb3f6a0fd0c069a78635da5d065455c"
+          },
+          {
+            "comment": "Reorganize ChakraRuntime functions for better readability.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5490fa52aa94ea059d92a50ab828d05d1a4388b5"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.5",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "574a2f3a55ae93514d2b362d3a1eaa68c46dabb4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Oct 2019 18:33:16 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.21",
       "version": "0.60.0-vnext.21",

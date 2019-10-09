@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "minor adjustments to enable building react-native-win32.dll with the Office compiler",
-  "packageName": "react-native-windows",
-  "email": "aeulitz@microsoft.com",
-  "commit": "d2b46a701bb3f6a0fd0c069a78635da5d065455c",
-  "date": "2019-10-08T23:19:12.904Z",
-  "file": "D:\\ISS\\react-native-windows\\change\\react-native-windows-2019-10-08-16-19-12-prep_officebuild.json"
-}
