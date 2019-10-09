@@ -84,6 +84,10 @@ jobs:
           script: yarn run bundle
           workingDirectory: packages/E2ETest
 
+      #TODO: Remove
+      - powershell: |
+          [System.Environment]::OSVersion.Version
+
       - task: CmdLine@2
         displayName: run-windows
         inputs:
