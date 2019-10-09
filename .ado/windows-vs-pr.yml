@@ -401,7 +401,7 @@ jobs:
           script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
           workingDirectory: current
 
-      - template: install-SDK.yml
+      - template: templates\install-SDK.yml
 
       - task: PowerShell@2
         displayName: Install Visual Studio dependencies
