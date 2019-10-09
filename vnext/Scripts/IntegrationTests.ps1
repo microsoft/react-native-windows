@@ -24,8 +24,8 @@ param (
 
 	[System.IO.FileInfo[]] $Assemblies =
 	(
-		"$PSScriptRoot\..\target\$Platform\$Configuration\" +
-		"React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll"
+		("$(Split-Path $PSScriptRoot)\target\$Platform\$Configuration\" +
+		"React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll")
 	),
 
 	[switch] $NoRun,
