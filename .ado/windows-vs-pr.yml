@@ -15,7 +15,6 @@ variables:
   MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
   VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
 
 jobs:
   - job: Setup
@@ -65,6 +64,10 @@ jobs:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
+
+    variables:
+      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+
     steps:
       - checkout: self
         clean: false
