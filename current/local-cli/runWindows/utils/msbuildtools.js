@@ -18,7 +18,7 @@ class MSBuildTools {
   }
 
   cleanProject(slnFile) {
-    const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" t/:Clean`;
+    const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" /t:Clean`;
     const results = child_process.execSync(cmd).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
@@ -45,7 +45,7 @@ class MSBuildTools {
 
     // Set platform toolset for VS 2019
     if (this.version === '16.0') {
-      args.push('/p:PlatformToolset=v141');
+      args.push('/p:PlatformToolset=v142');
       args.push('/p:VisualStudioVersion=16.0');
     }
 
