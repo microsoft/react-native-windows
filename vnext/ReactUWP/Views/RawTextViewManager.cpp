@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "RawTextViewManager.h"
+#include "TextViewManager.h"
 
 #include <Views/ShadowNodeBase.h>
 
@@ -80,7 +81,11 @@ void RawTextViewManager::NotifyAncestorsTextChanged(
   ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
       host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
   while (parent) {
-    parent->GetViewManager()->OnDescendantTextPropertyChanged(parent);
+    auto viewManager = parent->GetViewManager();
+    if (!std::strcmp(viewManager->GetName(), "RCTText")) {
+      (static_cast<TextViewManager *>(viewManager))
+          ->OnDescendantTextPropertyChanged(parent);
+    }
     parent = static_cast<ShadowNodeBase *>(
         host->FindShadowNodeForTag(parent->GetParent()));
   }

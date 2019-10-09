@@ -89,8 +89,6 @@ class REACTWINDOWS_EXPORT ViewManagerBase
 
   virtual void TransferProperties(XamlView oldView, XamlView newView);
 
-  virtual void OnDescendantTextPropertyChanged(ShadowNodeBase *node){};
-
  protected:
   virtual XamlView CreateViewCore(int64_t tag) = 0;
 
