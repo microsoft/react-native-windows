@@ -65,8 +65,8 @@ jobs:
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
 
-    variables:
-      # VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
+#    variables:
+#       VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
       - checkout: self
