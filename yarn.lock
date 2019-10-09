@@ -2431,12 +2431,12 @@
     chalk "^2.3.0"
 
 "@wdio/jasmine-framework@^5.12.1":
-  version "5.12.1"
-  resolved "https://registry.yarnpkg.com/@wdio/jasmine-framework/-/jasmine-framework-5.12.1.tgz#d15a19783e9aba42851b1c3a9e916d32153070ce"
-  integrity sha512-iNQ3LDwAySCq/RyUteyhvdFV5sOQ7yuJuuF8/H14jr519vz3Ysf1C7mK+9P6P5QiXWTqx+8E8G9SktoY+4KyNA==
+  version "5.14.5"
+  resolved "https://registry.yarnpkg.com/@wdio/jasmine-framework/-/jasmine-framework-5.14.5.tgz#dd9e1295e2039bc203a4db37f4e066698cd00b35"
+  integrity sha512-cAdtuIsKAJ6U3gvVMrtW7rT7FJTWcNwk4e9y9hihhS9iRPCgKS+6KR3IbpEBpnWoIOhxy6WZAMxih90MYxTR/A==
   dependencies:
-    "@wdio/config" "^5.12.1"
-    "@wdio/logger" "^5.12.1"
+    "@wdio/logger" "5.13.2"
+    "@wdio/utils" "5.14.4"
     jasmine "^3.3.0"
 
 "@wdio/junit-reporter@^5.12.1":
@@ -2513,10 +2513,18 @@
     fibers "^4.0.1"
     fibers_node_v8 "^3.1.2"
 
-"@wdio/utils@5.13.2", "@wdio/utils@^5.13.0":
+"@wdio/utils@5.13.2":
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.13.2.tgz#2e56b5488521e394bce02de9b4236f21d1d582eb"
   integrity sha512-DGwoZZKpGo6BkLOIXnBHu+9mg0RABq0Sh9cb1GLOAeBeIEW7efCDYqT9+rczEJSgHKnKJra1+T8I4IfoxyUX/w==
+  dependencies:
+    "@wdio/logger" "5.13.2"
+    deepmerge "^4.0.0"
+
+"@wdio/utils@5.14.4", "@wdio/utils@^5.13.0":
+  version "5.14.4"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-5.14.4.tgz#3ee571fefcba547d132b2b120403a7fd793b84b9"
+  integrity sha512-sRBCR20VpDxcB0bvU6Sg4dco7PehPVul7JOK+abn5Tk/Azau0C/JypAh7abRnTil5udiz+NTWQyE9A/vrcXs0Q==
   dependencies:
     "@wdio/logger" "5.13.2"
     deepmerge "^4.0.0"
@@ -9868,10 +9876,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz":
-  version "0.60.0-microsoft.3"
-  uid a547be3bac4b2e499203c2536b706c6addeb2e9e
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz#a547be3bac4b2e499203c2536b706c6addeb2e9e"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz":
+  version "0.60.0-microsoft.5"
+  uid "4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz#4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
