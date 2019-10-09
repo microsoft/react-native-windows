@@ -182,17 +182,42 @@ void FlyoutShadowNode::createView() {
         }
       });
 
-  // Turn off AllowFocusOnInteraction so that focus cannot land in the top
-  // content element of the flyout. If focus lands in the flyout presenter, then
-  // on moving focus somewhere else, including the children on the flyout
-  // presenter, the flyout can dismiss.
+  // After opening the flyout, turn off AllowFocusOnInteraction so that
+  // focus cannot land in the top content element of the flyout. If focus
+  // lands in the flyout presenter, then on moving focus somewhere else,
+  // including the children on the flyout presenter, the flyout can dismiss.
+  // (Wait until after opening, so that the flyout presenter has a chance to
+  // move focus to the first focusable element in the flyout.)
   //
-  // However, turning AllowFocusOnInteraction off at the root of the flyout and
+  m_flyoutOpenedRevoker =
+      m_flyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
+        auto instance = wkinstance.lock();
+
+        m_flyout.AllowFocusOnInteraction(false);
+
+        if (!m_updating && instance != nullptr) {
+          if (auto flyoutPresenter = GetFlyoutPresenter()) {
+            // When multiple flyouts are overlapping, XAML's theme shadows
+            // don't render properly. As a workaround we enable a z-index
+            // translation based on an elevation derived from the count of
+            // open flyouts. We apply this translation on open of the flyout.
+            // (Translation is only supported on RS5+, eg. IUIElement9)
+            if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
+              winrt::Numerics::float3 translation{
+                  0, 0, (float)16 * s_cOpenFlyouts};
+              flyoutPresenter.Translation(translation);
+            }
+
+            flyoutPresenter.AllowFocusOnInteraction(false);
+          }
+        }
+      });
+
+  // Turning AllowFocusOnInteraction off at the root of the flyout and
   // flyout presenter turns it off for all children of the flyout. In order to
   // make sure that interactions with the content of the flyout still work as
-  // expected, AllowFocusOnInteraction is turned on the content element.
-  m_flyout.AllowFocusOnInteraction(false);
-
+  // expected, AllowFocusOnInteraction is turned on the content element when
+  // the Content property is updated.
   m_tokenContentPropertyChangeCallback =
       m_flyout.RegisterPropertyChangedCallback(
           winrt::Flyout::ContentProperty(),
@@ -205,26 +230,6 @@ void FlyoutShadowNode::createView() {
               }
             }
           });
-
-  // When multiple flyouts are overlapping, XAML's theme shadows don't render
-  // properly. As a workaround we enable a z-index translation based on an
-  // elevation derived from the count of open flyouts. We apply this
-  // translation on open of the flyout.
-  // (Translation is only supported on RS5+)
-  if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
-    m_flyoutOpenedRevoker =
-        m_flyout.Opened(winrt::auto_revoke, [=](auto &&, auto &&) {
-          auto instance = wkinstance.lock();
-
-          if (!m_updating && instance != nullptr) {
-            if (auto flyoutPresenter = GetFlyoutPresenter()) {
-              winrt::Numerics::float3 translation{
-                  0, 0, (float)16 * s_cOpenFlyouts};
-              flyoutPresenter.Translation(translation);
-            }
-          }
-        });
-  }
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
   if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {

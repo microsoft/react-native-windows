@@ -43,11 +43,15 @@ FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
     normalizedProgress = std::min(normalizedProgress += step, 1.0f);
     animation.InsertKeyFrame(
         normalizedProgress,
-        static_cast<float>(fromValue + (frame * (m_toValue - fromValue))));
+        static_cast<float>(frame * (m_toValue - fromValue)));
   }
 
-  animation.IterationCount(static_cast<int32_t>(m_iterations));
-  animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
+  if (m_iterations == -1) {
+    animation.IterationBehavior(winrt::AnimationIterationBehavior::Forever);
+  } else {
+    animation.IterationCount(static_cast<int32_t>(m_iterations));
+    animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
+  }
 
   return std::make_tuple(animation, scopedBatch);
 }
