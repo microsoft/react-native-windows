@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Oct 2019 18:17:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.23",
+      "version": "0.60.0-vnext.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add support for forever animations.",
+            "author": "stpete@microsoft.com",
+            "commit": "395ad50941a8d5bdaa1fd5dd38715acbf3d3eb06"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Oct 2019 15:13:21 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.22",
       "version": "0.60.0-vnext.22",

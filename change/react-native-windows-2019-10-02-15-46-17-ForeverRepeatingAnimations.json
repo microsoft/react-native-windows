@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add support for forever animations.",
-  "packageName": "react-native-windows",
-  "email": "stpete@microsoft.com",
-  "commit": "395ad50941a8d5bdaa1fd5dd38715acbf3d3eb06",
-  "date": "2019-10-02T22:46:17.395Z"
-}
