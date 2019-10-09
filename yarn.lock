@@ -2440,11 +2440,11 @@
     jasmine "^3.3.0"
 
 "@wdio/junit-reporter@^5.12.1":
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/@wdio/junit-reporter/-/junit-reporter-5.13.2.tgz#aec16794d9d5614888fac7ac1ef73c011a9456ff"
-  integrity sha512-iRvQcF7Y0Iu2qFxNPmoxPeGoPIwK8j8xGHlqj6Fgrcs6qn12w1kGqc6bly5OHOACzFWwZNCr5tHrUxe3dQEu0Q==
+  version "5.14.5"
+  resolved "https://registry.yarnpkg.com/@wdio/junit-reporter/-/junit-reporter-5.14.5.tgz#c3d3d82a9917be3bb43e1c394d238bbb960708d4"
+  integrity sha512-48bWnSjFLeE2mLasQJd+kSm9rTLFSol92XKXjBTP65HsKRDg+pBPtTpJDGVukpdfBR7Az/6W3fG31iWVLsZp3A==
   dependencies:
-    "@wdio/reporter" "5.13.2"
+    "@wdio/reporter" "5.14.5"
     json-stringify-safe "^5.0.1"
     junit-report-builder "^1.3.0"
     validator "^11.0.0"
@@ -2486,6 +2486,13 @@
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-5.13.2.tgz#df755d25ff49f86e0d7a6ddccc4b4dfa40483a73"
   integrity sha512-oHKlsNw1vcw6k7HZvww3hhmyuDpBrlSK7mneHkqv/hg/oOnsDDxbY3RZzyquni+ZVMUHnnlQ/8YxforVMCt1aA==
+  dependencies:
+    fs-extra "^8.0.1"
+
+"@wdio/reporter@5.14.5":
+  version "5.14.5"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-5.14.5.tgz#2d04579e2bb86bf6cd36346b5de6d9f7d7e91be6"
+  integrity sha512-ySFUny5LBKIso1wZW5is5AyBU3Kje/7AzWok1Dz45kxr2vg0IfUyd3NIjiUxJf3TLm7YVRJvCDouaDr5betXPA==
   dependencies:
     fs-extra "^8.0.1"
 
@@ -9868,10 +9875,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz":
-  version "0.60.0-microsoft.3"
-  uid a547be3bac4b2e499203c2536b706c6addeb2e9e
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz#a547be3bac4b2e499203c2536b706c6addeb2e9e"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz":
+  version "0.60.0-microsoft.5"
+  uid "4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz#4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
