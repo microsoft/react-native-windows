@@ -274,6 +274,7 @@ jobs:
           version: 0.60.6
           platform: x64
           configuration: Debug
+          vsComponents: $(VsComponents)
 
   - job: RNWFormatting
     displayName: Verify change files + formatting
