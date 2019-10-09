@@ -3,7 +3,7 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 variables:
   VmImage: vs2017-win2016
   VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-  VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
+  # VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
 trigger:
   batch: true
@@ -106,7 +106,7 @@ jobs:
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
-            /p:VCTargetsPath="$(VCTargetsPath)"
+#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -158,7 +158,7 @@ jobs:
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
           msbuildArguments:
-            /p:VCTargetsPath="$(VCTargetsPath)"
+#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
