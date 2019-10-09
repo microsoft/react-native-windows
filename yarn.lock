@@ -2423,11 +2423,11 @@
     glob "^7.1.2"
 
 "@wdio/dot-reporter@^5.11.7":
-  version "5.13.2"
-  resolved "https://registry.yarnpkg.com/@wdio/dot-reporter/-/dot-reporter-5.13.2.tgz#b0ea10d8e15d3a4c02cc77568ee6ff9c5b208a8f"
-  integrity sha512-BeyWBigwsn02xzMtEZkPFKb9skBZcfazPWW42PuMIp6N6yde8HAMeyihJ//ms+ouz5lzJ3vZ4/RmSR2LMXr0Qw==
+  version "5.14.5"
+  resolved "https://registry.yarnpkg.com/@wdio/dot-reporter/-/dot-reporter-5.14.5.tgz#8c2e55ca1729a661713344a67beb4fe26cd43658"
+  integrity sha512-P3M1HAr2kofJmHCreW3BdzeXAqfRA4S8vHO1sSF2nG1mGvtj8/bHE4l+p3ETjMI3fpinpwcRwux7Mqv241S7ag==
   dependencies:
-    "@wdio/reporter" "5.13.2"
+    "@wdio/reporter" "5.14.5"
     chalk "^2.3.0"
 
 "@wdio/jasmine-framework@^5.12.1":
@@ -2486,6 +2486,13 @@
   version "5.13.2"
   resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-5.13.2.tgz#df755d25ff49f86e0d7a6ddccc4b4dfa40483a73"
   integrity sha512-oHKlsNw1vcw6k7HZvww3hhmyuDpBrlSK7mneHkqv/hg/oOnsDDxbY3RZzyquni+ZVMUHnnlQ/8YxforVMCt1aA==
+  dependencies:
+    fs-extra "^8.0.1"
+
+"@wdio/reporter@5.14.5":
+  version "5.14.5"
+  resolved "https://registry.yarnpkg.com/@wdio/reporter/-/reporter-5.14.5.tgz#2d04579e2bb86bf6cd36346b5de6d9f7d7e91be6"
+  integrity sha512-ySFUny5LBKIso1wZW5is5AyBU3Kje/7AzWok1Dz45kxr2vg0IfUyd3NIjiUxJf3TLm7YVRJvCDouaDr5betXPA==
   dependencies:
     fs-extra "^8.0.1"
 
@@ -9868,10 +9875,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz":
-  version "0.60.0-microsoft.3"
-  uid a547be3bac4b2e499203c2536b706c6addeb2e9e
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.3.tar.gz#a547be3bac4b2e499203c2536b706c6addeb2e9e"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz":
+  version "0.60.0-microsoft.5"
+  uid "4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz#4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
