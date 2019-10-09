@@ -188,6 +188,10 @@ jobs:
         clean: false
         submodules: false
 
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          testPlatformVersion: 16.3.0
+
       - template: templates/build-rnw.yml
         parameters:
           yarnBuildCmd: buildci
@@ -214,6 +218,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
 
       - template: templates/stop-packagers.yml
 
@@ -236,6 +241,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
 
       - template: templates/stop-packagers.yml
 
