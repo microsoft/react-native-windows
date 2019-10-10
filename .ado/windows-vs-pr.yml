@@ -309,6 +309,8 @@ stages:
               command: restore
               restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
+          - template: templates\install-SDK.yml
+
           - task: MSBuild@1
             displayName: MSBuild - testcli
             inputs:
