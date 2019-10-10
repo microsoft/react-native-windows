@@ -1,8 +1,8 @@
 #
 parameters:
-  name: ""
+  name: ''
   pool:
-  BuildPlatform: "x86" # ARM, x86, x64
+  BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
   vsComponents: ''
   vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
@@ -13,7 +13,7 @@ jobs:
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool: ${{ parameters.pool }}
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 90 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -83,10 +83,6 @@ jobs:
         inputs:
           script: yarn run bundle
           workingDirectory: packages/E2ETest
-
-      #TODO: Remove
-      - powershell: |
-          [System.Environment]::OSVersion.Version
 
       - task: CmdLine@2
         displayName: run-windows
