@@ -42,6 +42,11 @@ steps:
     condition: and(succeeded(), not('${{parameters.useRnFork}}'))
 
   - task: CmdLine@2
+    displayName: yarn lint:fix
+    inputs:
+      script: yarn lint:fix
+
+  - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}

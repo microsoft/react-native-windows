@@ -65,6 +65,11 @@ jobs:
       - template: stop-packagers.yml
 
       - task: CmdLine@2
+        displayName: yarn lint:fix
+        inputs:
+          script: yarn lint:fix
+
+      - task: CmdLine@2
         displayName: yarn build
         inputs:
           script: yarn build
