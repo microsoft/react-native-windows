@@ -148,10 +148,13 @@ void Timing::createTimer(
       m_rendering = winrt::CompositionTarget::Rendering(
           winrt::auto_revoke, {this, &Timing::OnRendering});
     } catch (winrt::hresult_wrong_thread) {
-      // Eat this exception.
-      // This means we are running in the background. Potentially to run a
-      // HeadlessJS task. Android does not support setTimeout in HeadlessJS
-      // tasks, so this is parity.
+      // This means the app is in the background. Potentially to run a
+      // HeadlessJS task.
+      // Any Timers that are created while an app is in the background
+      // will not fire until the app moves to the foreground.
+      // Note: the decision to not remove the Timer is intentional as it
+      // matches the Android implementation.
+      // https://facebook.github.io/react-native/docs/0.60/headless-js-android#caveats
     }
   }
 
