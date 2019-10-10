@@ -26,13 +26,6 @@ class SliderShadowNode : public ShadowNodeBase {
   SliderShadowNode() = default;
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
-
- private:
-  //static void
-  //OnCheckedChanged(IReactInstance &instance, int64_t tag, bool newValue);
-
-  //winrt::CheckBox::Checked_revoker m_checkBoxCheckedRevoker{};
-  //winrt::CheckBox::Unchecked_revoker m_checkBoxUncheckedRevoker{};
 };
 
 void SliderShadowNode::createView() {
@@ -40,18 +33,6 @@ void SliderShadowNode::createView() {
 
   auto slider = GetView().as<winrt::Slider>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  //m_checkBoxCheckedRevoker =
-  //    checkbox.Checked(winrt::auto_revoke, [=](auto &&, auto &&) {
-  //      auto instance = wkinstance.lock();
-  //      if (!m_updating && instance != nullptr)
-  //        OnCheckedChanged(*instance, m_tag, true);
-  //    });
-  //m_checkBoxUncheckedRevoker =
-  //    checkbox.Unchecked(winrt::auto_revoke, [=](auto &&, auto &&) {
-  //      auto instance = wkinstance.lock();
-  //      if (!m_updating && instance != nullptr)
-  //        OnCheckedChanged(*instance, m_tag, false);
-  //    });
 }
 
 void SliderShadowNode::updateProperties(const folly::dynamic &&props) {
@@ -59,15 +40,6 @@ void SliderShadowNode::updateProperties(const folly::dynamic &&props) {
   Super::updateProperties(std::move(props));
   m_updating = false;
 }
-
-///*static*/ void SliderShadowNode::OnCheckedChanged(
-//    IReactInstance &instance,
-//    int64_t tag,
-//    bool newValue) {
-//  folly::dynamic eventData =
-//      folly::dynamic::object("target", tag)("value", newValue);
-//  instance.DispatchEvent(tag, "topChange", std::move(eventData));
-//}
 
 SliderViewManager::SliderViewManager(
     const std::shared_ptr<IReactInstance> &reactInstance)
@@ -80,8 +52,8 @@ const char *SliderViewManager::GetName() const {
 folly::dynamic SliderViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  //props.update(
-  //    folly::dynamic::object("value", "boolean")("disabled", "boolean"));
+  props.update(
+      folly::dynamic::object("value", "integer")("disabled", "boolean"));
 
   return props;
 }
@@ -92,6 +64,7 @@ facebook::react::ShadowNode *SliderViewManager::createShadow() const {
 
 XamlView SliderViewManager::CreateViewCore(int64_t tag) {
   auto slider = winrt::Slider();
+  slider.MinHeight(100);
   return slider;
 }
 
@@ -111,7 +84,13 @@ void SliderViewManager::UpdateProperties(
         slider.IsEnabled(!propertyValue.asBool());
       else if (pair.second.isNull())
         slider.ClearValue(winrt::Control::IsEnabledProperty());
-    } 
+    }
+    else if (propertyName == "value") {
+      if (propertyValue.isNumber())
+        slider.Value(static_cast<int>(propertyValue.asDouble()));
+      else if (pair.second.isNull())
+        slider.Value(0);
+    }
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
