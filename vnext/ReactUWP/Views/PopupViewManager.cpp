@@ -82,12 +82,14 @@ void PopupShadowNode::createView() {
           // translation based on an elevation derived from the count of open
           // popups/flyouts. We apply this translation on open of the popup.
           // (Translation is only supported on RS5+, eg. IUIElement9)
-          if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) { 
-            winrt::Numerics::float3 translation{
-                0, 0, (float)16 * CountOpenPopups()};
-            popup.Translation(translation);
+          if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
+            auto numOpenPopups = CountOpenPopups();
+            if (numOpenPopups > 0) {
+              winrt::Numerics::float3 translation{
+                  0, 0, (float)16 * numOpenPopups};
+              popup.Translation(translation);
+            }
           }
-
         }
       });
 }

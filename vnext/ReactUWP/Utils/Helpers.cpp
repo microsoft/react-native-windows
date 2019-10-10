@@ -43,7 +43,7 @@ std::int32_t CountOpenPopups() {
   // RS6
   winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups =
       winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
-  return (int32_t) popups.Size();
+  return (int32_t)popups.Size();
 }
 
 } // namespace uwp

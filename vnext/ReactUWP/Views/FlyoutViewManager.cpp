@@ -201,9 +201,12 @@ void FlyoutShadowNode::createView() {
             // of open popups/flyouts. We apply this translation on open of the
             // flyout. (Translation is only supported on RS5+, eg. IUIElement9)
             if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
-              winrt::Numerics::float3 translation{
-                  0, 0, (float)16 * CountOpenPopups()};
-              flyoutPresenter.Translation(translation);
+              auto numOpenPopups = CountOpenPopups();
+              if (numOpenPopups > 0) {
+                winrt::Numerics::float3 translation{
+                    0, 0, (float)16 * numOpenPopups};
+                flyoutPresenter.Translation(translation);
+              }
             }
 
             flyoutPresenter.AllowFocusOnInteraction(false);
