@@ -44,6 +44,7 @@ steps:
   - task: CmdLine@2
     displayName: yarn lint:fix
     inputs:
+      workingDirectory: $(Build.SourcesDirectory)/vnext
       script: yarn lint:fix
 
   - task: CmdLine@2
