@@ -107,8 +107,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.Test.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Shared", "JSI\Shared\JSI.Shared.vcxitems", "{0CC28589-39E4-4288-B162-97B959F8B843}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Desktop", "JSI\Desktop\JSI.Desktop.vcxproj", "{17DD1B17-3094-40DD-9373-AC2497932ECA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
+		JSI\Shared\JSI.Shared.vcxitems*{17dd1b17-3094-40dd-9373-ac2497932eca}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{6f354505-fe3a-4bd2-a9a6-d12bbf37a85c}*SharedItemsImports = 4
@@ -230,6 +236,14 @@ Global
 		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x64.Build.0 = Release|x64
 		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x86.ActiveCfg = Release|Win32
 		{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}.Release|x86.Build.0 = Release|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x64.ActiveCfg = Debug|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x64.Build.0 = Debug|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x86.ActiveCfg = Debug|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Debug|x86.Build.0 = Debug|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x64.ActiveCfg = Release|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x64.Build.0 = Release|x64
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x86.ActiveCfg = Release|Win32
+		{17DD1B17-3094-40DD-9373-AC2497932ECA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

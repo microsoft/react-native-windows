@@ -47,6 +47,7 @@ node_modules
 /IntegrationTests/*.png
 /lib
 /Libraries
+/jest
 /RNTester
 /RNTester.*
 /index.*

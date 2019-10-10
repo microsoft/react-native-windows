@@ -53,7 +53,6 @@
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/ClipboardModule.h>
-#include <Modules/DeviceInfoModule.h>
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/LocationObserverModule.h>
@@ -89,7 +88,7 @@
 #include <codecvt>
 #include <locale>
 #else
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 #endif
 #endif
 
@@ -296,7 +295,7 @@ void UwpReactInstance::Start(
           m_uiDispatcher);
 
   // Objects that must be created on the UI thread
-  std::shared_ptr<DeviceInfo> deviceInfo = std::make_shared<DeviceInfo>();
+  m_deviceInfo = std::make_shared<DeviceInfo>(spThis);
   std::shared_ptr<facebook::react::AppState> appstate =
       std::make_shared<react::uwp::AppState>(spThis);
   std::shared_ptr<react::windows::AppTheme> appTheme =
@@ -309,7 +308,6 @@ void UwpReactInstance::Start(
       m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
-                                deviceInfo,
                                 settings,
                                 i18nInfo = std::move(i18nInfo),
                                 appstate = std::move(appstate),
@@ -370,7 +368,7 @@ void UwpReactInstance::Start(
         GetModules(
             m_uiManager,
             m_batchingNativeThread,
-            deviceInfo,
+            m_deviceInfo,
             devSettings,
             std::move(i18nInfo),
             std::move(appstate),
@@ -417,7 +415,7 @@ void UwpReactInstance::Start(
             winrt::to_hstring(settings.ByteCodeFileUri));
       }
       devSettings->jsiRuntimeHolder =
-          std::make_shared<facebook::react::ChakraJSIRuntimeHolder>(
+          std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
               devSettings,
               jsQueue,
               std::move(scriptStore),
@@ -451,11 +449,17 @@ void UwpReactInstance::Start(
 void UwpReactInstance::AttachMeasuredRootView(
     IXamlRootView *pRootView,
     folly::dynamic &&initProps) {
-  if (!IsInError())
+  if (!IsInError()) {
     m_instanceWrapper->AttachMeasuredRootView(pRootView, std::move(initProps));
+    auto rootView = pRootView->GetXamlView().try_as<winrt::FrameworkElement>();
+    if (rootView) {
+      m_deviceInfo->attachRoot(rootView);
+    }
+  }
 }
 
 void UwpReactInstance::DetachRootView(IXamlRootView *pRootView) {
+  m_deviceInfo->detachRoot();
   m_instanceWrapper->DetachRootView(pRootView);
 }
 

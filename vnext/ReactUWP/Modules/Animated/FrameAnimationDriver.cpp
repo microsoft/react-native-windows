@@ -43,7 +43,7 @@ FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
     normalizedProgress = std::min(normalizedProgress += step, 1.0f);
     animation.InsertKeyFrame(
         normalizedProgress,
-        static_cast<float>(fromValue + (frame * (m_toValue - fromValue))));
+        static_cast<float>(frame * (m_toValue - fromValue)));
   }
 
   if (m_iterations == -1) {

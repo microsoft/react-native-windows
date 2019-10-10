@@ -295,7 +295,9 @@
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\StatusBarModule.cpp" />
+    <ClCompile Include="Modules\StatusBarModule.cpp">
+      <Filter>Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Views\SliderViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -634,10 +636,12 @@
     <ClInclude Include="Utils\CppWinrtLessExceptions.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\StatusBarModule.h" />
     <ClInclude Include="Views\SliderViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\StatusBarModule.h">
+      <Filter>Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
