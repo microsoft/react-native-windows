@@ -173,7 +173,9 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   marginTop: 10,
                 }}>
                 <Button
-                  onPress={() => {this.setState({isPopupVisible: true})}}
+                  onPress={() => {
+                    this.setState({isPopupVisible: true});
+                  }}
                   title={'Open A Popup'}
                 />
               </View>
@@ -198,11 +200,18 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
             isOpen={this.state.isPopupVisible}
             isLightDismissEnabled={this.state.isLightDismissEnabled}
             target={this._anchorTwo}
-            onDismiss={() => {this.setState({isPopupVisible: false})}}>
+            onDismiss={() => {
+              this.setState({isPopupVisible: false});
+            }}>
             <View
               style={{backgroundColor: 'lightblue', width: 200, height: 300}}>
               <Text>{lorumIpsum}</Text>
-              <Button onPress={() => {this.setState({isPopupVisible: false})}} title="Close" />
+              <Button
+                onPress={() => {
+                  this.setState({isPopupVisible: false});
+                }}
+                title="Close"
+              />
             </View>
           </Popup>
         )}
