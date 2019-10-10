@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 #include <string>
-#include "../ReactWindowsCore/unicode.h"
+#include "../Common/unicode.h"
 #include "UnicodeTestStrings.h"
 
 using facebook::react::unicode::utf16ToUtf8;
