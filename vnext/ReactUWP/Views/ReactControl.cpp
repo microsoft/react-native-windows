@@ -100,6 +100,72 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
   }
 }
 
+void ReactControl::HandleInstanceWaiting() {
+  auto weakThis = weak_from_this();
+  m_uiDispatcher.RunAsync(
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+        if (auto This = weakThis.lock()) {
+          This->HandleInstanceWaitingOnUIThread();
+        }
+      });
+}
+
+void ReactControl::HandleInstanceWaitingOnUIThread() {
+  if (m_reactInstance->IsWaitingForDebugger()) {
+    auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
+
+    // Remove existing children from root view (from the hosted app)
+    xamlRootGrid.Children().Clear();
+
+    // Create Grid & TextBlock to hold text
+    if (m_waitingTextBlock == nullptr) {
+      m_waitingTextBlock = winrt::TextBlock();
+      m_greenBoxGrid = winrt::Grid();
+      m_greenBoxGrid.Background(winrt::SolidColorBrush(
+          winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Children().Append(m_waitingTextBlock);
+      m_greenBoxGrid.VerticalAlignment(
+          winrt::Windows::UI::Xaml::VerticalAlignment::Top);
+    }
+
+    // Add box grid to root view
+    xamlRootGrid.Children().Append(m_greenBoxGrid);
+
+    // Place message into TextBlock
+    std::wstring wstrMessage(L"Connecting to remote debugger");
+    m_waitingTextBlock.Text(wstrMessage);
+
+    // Format TextBlock
+    m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
+    m_waitingTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
+    m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
+    m_waitingTextBlock.Foreground(
+        winrt::SolidColorBrush(winrt::Colors::White()));
+    winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
+    m_waitingTextBlock.Margin(margin);
+  }
+}
+
+void ReactControl::HandleDebuggerAttach() {
+  auto weakThis = weak_from_this();
+  m_uiDispatcher.RunAsync(
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+        if (auto This = weakThis.lock()) {
+          This->HandleDebuggerAttachOnUIThread();
+        }
+      });
+}
+
+void ReactControl::HandleDebuggerAttachOnUIThread() {
+  if (!m_reactInstance->IsWaitingForDebugger() &&
+      !m_reactInstance->IsInError()) {
+    auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
+
+    // Remove existing children from root view (from the hosted app)
+    xamlRootGrid.Children().Clear();
+  }
+}
+
 void ReactControl::AttachRoot() noexcept {
   if (m_isAttached)
     return;
@@ -111,13 +177,18 @@ void ReactControl::AttachRoot() noexcept {
   if (m_reactInstance->IsInError())
     HandleInstanceError();
 
+  // Show the Waiting for debugger to connect message if the instance is still
+  // waiting
+  if (m_reactInstance->IsWaitingForDebugger())
+    HandleInstanceWaiting();
+
   if (!m_touchEventHandler)
     m_touchEventHandler = std::make_shared<TouchEventHandler>(m_reactInstance);
 
   m_previewKeyboardEventHandlerOnRoot =
       std::make_shared<PreviewKeyboardEventHandlerOnRoot>(m_reactInstance);
 
-  // Register callback from instance for live reload
+  // Register callback from instance for errors
   m_errorCallbackCookie = m_reactInstance->RegisterErrorCallback(
       [this]() { HandleInstanceError(); });
 
@@ -133,6 +204,11 @@ void ReactControl::AttachRoot() noexcept {
               }
             });
       });
+
+  // Register callback from instance for degugger attaching
+  m_debuggerAttachCallbackCookie =
+      m_reactInstance->RegisterDebuggerAttachCallback(
+          [this]() { HandleDebuggerAttach(); });
 
   // We assume Attach has been called from the UI thread
 #ifdef DEBUG

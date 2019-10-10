@@ -104,7 +104,9 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
             ->ConnectAsync(
                 facebook::react::DevServerHelper::get_WebsocketProxyUrl(
                     settings.debugHost),
-                settings.errorCallback)
+                settings.errorCallback,
+                settings.waitingForDebuggerCallback,
+                settings.debuggerAttachCallback)
             .get();
       } catch (...) {
         m_exceptionCaught = true;
