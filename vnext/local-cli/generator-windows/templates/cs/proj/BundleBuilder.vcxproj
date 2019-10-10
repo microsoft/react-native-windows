@@ -74,7 +74,8 @@
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)' == 'ReleaseBundle' or '$(Configuration)' == 'DebugBundle'">
     <CustomBuildStep>
-      <Command>yarn bundle</Command>
+      <Command>cd $(SolutionDir)..
+react-native bundle --platform windows --entry-file index.js --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle</Command>
       <Outputs>$(ProjectDir)..\Bundle\index.windows.bundle;$(ProjectDir)..\Bundle\assets</Outputs>
       <Inputs>$(SolutionDir)..\index.js</Inputs>
       <TreatOutputAsContent>true</TreatOutputAsContent>
