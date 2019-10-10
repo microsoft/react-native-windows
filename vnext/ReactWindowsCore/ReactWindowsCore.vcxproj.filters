@@ -51,9 +51,6 @@
     <ClCompile Include="ShadowNodeRegistry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="unicode.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -195,12 +192,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tracing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\ReactWindowsCore\unicode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="utilities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">

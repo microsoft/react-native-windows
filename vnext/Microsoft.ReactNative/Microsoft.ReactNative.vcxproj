@@ -81,7 +81,7 @@
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>

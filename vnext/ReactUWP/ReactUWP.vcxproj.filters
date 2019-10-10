@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Modules\DeviceInfoModule.cpp">
@@ -641,8 +641,7 @@
     </ClInclude>
     <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
-    </ClCompile>
-    
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">

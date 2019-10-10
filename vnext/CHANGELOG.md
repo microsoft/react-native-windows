@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 08 Oct 2019 18:33:16 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Oct 2019 18:17:42 GMT and should not be manually modified.
 
+## 0.60.0-vnext.23
+Wed, 09 Oct 2019 18:17:42 GMT
+
+### Changes
+
+- Add support for forever animations. (stpete@microsoft.com)
+## 0.60.0-vnext.22
+Wed, 09 Oct 2019 15:13:21 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.5 (53619745+rnbot@users.noreply.github.com)
 ## 0.60.0-vnext.21
 Tue, 08 Oct 2019 18:33:16 GMT
 

@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Add Common.vcxproj and move unicode.* and utilities.h into it.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "43ef742af7e981826609529e755f734f1c8e3f68",
+  "date": "2019-10-10T01:40:09.781Z",
+  "file": "D:\\Git\\hansenyy-react-native-windows-4\\change\\react-native-windows-2019-10-09-18-40-09-common-vcxproj.json"
+}

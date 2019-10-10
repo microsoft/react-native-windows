@@ -40,7 +40,7 @@ namespace Microsoft::VisualStudio::CppUnitTestFramework {
 
 template <>
 std::wstring ToString<enum facebook::react::LayoutAnimation::AnimationType>(
-    const enum facebook::react::LayoutAnimation::AnimationType &t) {
+    const enum class facebook::react::LayoutAnimation::AnimationType &t) {
   switch (t) {
     case facebook::react::LayoutAnimation::AnimationType::Linear:
       return L"Linear";
@@ -62,7 +62,7 @@ std::wstring ToString<enum facebook::react::LayoutAnimation::AnimationType>(
 template <>
 std::wstring
 ToString<enum facebook::react::LayoutAnimation::AnimatableProperty>(
-    const enum facebook::react::LayoutAnimation::AnimatableProperty &t) {
+    const enum class facebook::react::LayoutAnimation::AnimatableProperty &t) {
   switch (t) {
     case facebook::react::LayoutAnimation::AnimatableProperty::Opacity:
       return L"Opacity";
