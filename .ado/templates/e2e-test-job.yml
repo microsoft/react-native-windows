@@ -69,7 +69,15 @@ jobs:
         inputs:
           script: yarn build
 
-      - template: install-SDK.yml
+      - task: PowerShell@2
+        displayName: Install Visual Studio dependencies
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+          arguments:
+            -InstallerUri ${{ parameters.vsInstallerUri }}
+            -Components ${{ parameters.vsComponents }}
+        condition: ne('${{parameters.vsComponents}}', '')
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
