@@ -4,6 +4,7 @@ This is a description of each of the core projects, their purpose and output art
 Sample applications are not covered.
 
 ## Alphabetical Index
+- [Common\Common.vcxproj](#Common)
 - [Chakra\Chakra.vcxitems](#Chakra)
 - [Desktop\React.Windows.Desktop.vcxproj](#React.Windows.Desktop)
 - **[Desktop.DLL\React.Windows.Desktop.DLL.vcxproj](#React.Windows.Desktop.DLL)**
@@ -13,6 +14,9 @@ Sample applications are not covered.
 - [FollyWin32\FollyWin32.vcxproj](#FollyWin32)
 - [IntegrationTestScripts\IntegrationTests.njsproj](#IntegrationTests-Node-Project)
 - [IntegrationTests\React.Windows.IntegrationTests.vcxproj](#React.Windows.IntegrationTests)
+- [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop)
+- [JSI\Shared\JSI.Shared.vcxitems](#JSI.Shared)
+- [JSI\Universal\JSI.Universal.vcxproj](#JSI.Universal)
 - [JSI.Desktop.UnitTests\JSI.Desktop.UnitTests](#JSI.Desktop.UnitTests)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
 - **[ReactUWP\ReactUWP.vcxproj](#ReactUWP)**
@@ -22,6 +26,10 @@ Sample applications are not covered.
 - [Universal.UnitTests\React.Windows.Universal.UnitTests.vcxproj](#React.Windows.Universal.UnitTests)
 
 ## Common Projects
+
+### Common
+*Static Library*<br/>
+Functionality shared between React and JSI projects that do not depend on React or JSI functionality.
 
 ### ReactWindowsCore
 *Static Library*<br/>
@@ -46,6 +54,10 @@ Sources provided as part of the `react-native` Node dependency. Not part of this
 ### Chakra
 *Shared Items (no build artifact)*<br/>
 ChakraCore bridging layer. May use different compiler flags between Windows variants.
+
+### JSI.Shared
+*Shared Items (no build artifact)*<br/>
+Code shared between [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop) and [JSI\Universal\JSI.Universal.vcxproj](#JSI.Universal).
 
 ### React.Windows.IntegrationTests
 *Static Library*<br/>
@@ -78,6 +90,10 @@ Set of component tests that validate functionality against external runtime comp
 (i.e. networking servers, file system, React Native applications, external processes).<br/>
 Validates [React.Windows.Desktop.DLL](#React.Windows.Desktop.DLL).
 
+### JSI.Desktop
+*Static Library*<br/>
+ChakraCore based JSI::Runtime implementation.
+
 ### JSI.Desktop.UnitTests
 *Google Test Executable*<br/>
 Set of unit tests for jsi::runtime.
@@ -103,3 +119,7 @@ Set of isolated (mocked) tests for types defined in [ReactUWP](#ReactUWP).
 Set of component tests that validate functionality against external runtime components
 (i.e. networking servers, file system, React Native applications, external processes).<br/>
 Validates [ReactUWP](#ReactUWP).
+
+### JSI.Universal
+*Static Library*<br/>
+Chakra based JSI::Runtime implementation.
