@@ -9,6 +9,36 @@
 
 namespace Microsoft::JSI {
 
+JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
+  return objectRef(obj);
+}
+
+JsValueRef ChakraRuntime::strongObjectRef(
+    const facebook::jsi::WeakObject &obj) {
+  return objectRef(obj); // Return the original strong ref.
+}
+
+JsValueRef ChakraRuntime::createJSString(const char *data, size_t length) {
+  const std::wstring script16 = facebook::react::unicode::utf8ToUtf16(
+      reinterpret_cast<const char *>(data), length);
+  JsValueRef value;
+  JsPointerToString(script16.c_str(), script16.size(), &value);
+  return value;
+}
+
+JsValueRef ChakraRuntime::createJSPropertyId(const char *data, size_t length) {
+  JsValueRef propIdRef;
+  const std::wstring name16 = facebook::react::unicode::utf8ToUtf16(
+      reinterpret_cast<const char *>(data), length);
+  if (JsNoError != JsGetPropertyIdFromName(name16.c_str(), &propIdRef))
+    std::terminate();
+  return propIdRef;
+}
+
+void ChakraRuntime::setupNativePromiseContinuation() noexcept {
+  // NOP
+}
+
 void ChakraRuntime::startDebuggingIfNeeded() {
   if (runtimeArgs().enableDebugging)
     JsStartDebugging();
@@ -18,13 +48,30 @@ void ChakraRuntime::stopDebuggingIfNeeded() {
   // NOP AFAIK
 }
 
-JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
-  return objectRef(obj);
+void ChakraRuntime::initRuntimeVersion() noexcept {
+  // NOP
 }
 
-JsValueRef ChakraRuntime::strongObjectRef(
-    const facebook::jsi::WeakObject &obj) {
-  return objectRef(obj); // Return the original strong ref.
+std::unique_ptr<const facebook::jsi::Buffer>
+ChakraRuntime::generatePreparedScript(
+    const std::string &sourceURL,
+    const facebook::jsi::Buffer &sourceBuffer) noexcept {
+  const std::wstring scriptUTF16 = facebook::react::unicode::utf8ToUtf16(
+      reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
+
+  unsigned long bytecodeSize = 0;
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) ==
+      JsNoError) {
+    std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(
+        std::make_unique<ByteArrayBuffer>(bytecodeSize));
+    if (JsSerializeScript(
+            scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) ==
+        JsNoError) {
+      return bytecodeBuffer;
+    }
+  }
+
+  return nullptr;
 }
 
 facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
@@ -75,53 +122,6 @@ bool ChakraRuntime::evaluateSerializedScript(
     checkException(ret);
     return true;
   }
-}
-
-std::unique_ptr<const facebook::jsi::Buffer>
-ChakraRuntime::generatePreparedScript(
-    const std::string &sourceURL,
-    const facebook::jsi::Buffer &sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 = facebook::react::unicode::utf8ToUtf16(
-      reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
-
-  unsigned long bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) ==
-      JsNoError) {
-    std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(
-        std::make_unique<ByteArrayBuffer>(bytecodeSize));
-    if (JsSerializeScript(
-            scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) ==
-        JsNoError) {
-      return bytecodeBuffer;
-    }
-  }
-
-  return nullptr;
-}
-
-JsValueRef ChakraRuntime::createJSString(const char *data, size_t length) {
-  const std::wstring script16 = facebook::react::unicode::utf8ToUtf16(
-      reinterpret_cast<const char *>(data), length);
-  JsValueRef value;
-  JsPointerToString(script16.c_str(), script16.size(), &value);
-  return value;
-}
-
-JsValueRef ChakraRuntime::createJSPropertyId(const char *data, size_t length) {
-  JsValueRef propIdRef;
-  const std::wstring name16 = facebook::react::unicode::utf8ToUtf16(
-      reinterpret_cast<const char *>(data), length);
-  if (JsNoError != JsGetPropertyIdFromName(name16.c_str(), &propIdRef))
-    std::terminate();
-  return propIdRef;
-}
-
-void ChakraRuntime::setupNativePromiseContinuation() noexcept {
-  // NOP
-}
-
-void ChakraRuntime::initRuntimeVersion() noexcept {
-  // NOP
 }
 
 } // namespace Microsoft::JSI

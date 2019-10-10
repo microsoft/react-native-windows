@@ -96,6 +96,12 @@ jobs:
           script: |
             Start-Sleep -Seconds 30
 
+      - task: PowerShell@2
+        displayName: 'Check TestApp'
+        inputs:
+          targetType: 'inline'
+          script: 'if ((Get-Process React*) -eq $Null) { echo "TestApp is not running"; exit 1}'
+
       - task: CmdLine@2
         displayName: run test
         inputs:
