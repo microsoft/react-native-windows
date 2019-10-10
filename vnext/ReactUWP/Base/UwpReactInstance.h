@@ -55,6 +55,10 @@ class UwpReactInstance
   ErrorCallbackCookie RegisterErrorCallback(
       std::function<void()> callback) override;
   void UnregisterErrorCallback(ErrorCallbackCookie &cookie) override;
+  DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(
+      std::function<void()> callback) override;
+  void UnRegisterDebuggerAttachCallback(
+      DebuggerAttachCallbackCookie &cookie) override;
   void DispatchEvent(
       int64_t viewTag,
       std::string eventName,
@@ -80,6 +84,9 @@ class UwpReactInstance
   }
   bool IsInError() const noexcept override {
     return m_isInError;
+  }
+  bool IsWaitingForDebugger() const noexcept override {
+    return m_isWaitingForDebugger;
   }
   const std::string &LastErrorMessage() const noexcept override {
     return m_errorMessage;
@@ -109,6 +116,8 @@ class UwpReactInstance
 
  private:
   void OnHitError(const std::string &error) noexcept;
+  void OnWaitingForDebugger() noexcept;
+  void OnDebuggerAttach() noexcept;
 
  private:
 #if defined(USE_V8)
@@ -126,9 +135,12 @@ class UwpReactInstance
   std::map<LiveReloadCallbackCookie, std::function<void()>>
       m_liveReloadCallbacks;
   std::map<ErrorCallbackCookie, std::function<void()>> m_errorCallbacks;
+  std::map<DebuggerAttachCallbackCookie, std::function<void()>>
+      m_debuggerAttachCallbacks;
   bool m_needsReload{false};
   bool m_started{false};
   std::atomic_bool m_isInError{false};
+  std::atomic_bool m_isWaitingForDebugger{false};
   std::string m_errorMessage;
   ExpressionAnimationStore m_expressionAnimationStore;
 

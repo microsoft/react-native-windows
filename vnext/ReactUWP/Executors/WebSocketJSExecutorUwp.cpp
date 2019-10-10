@@ -195,10 +195,27 @@ void WebSocketJSExecutor::OnHitError(std::string message) {
   SetState(State::Error);
 }
 
+void WebSocketJSExecutor::OnWaitingForDebugger() {
+  SetState(State::Waiting);
+  PollPrepareJavaScriptRuntime();
+  if (m_waitingForDebuggerCallback != nullptr)
+    m_waitingForDebuggerCallback();
+}
+
+void WebSocketJSExecutor::OnDebuggerAttach() {
+  SetState(State::Running);
+  if (m_debuggerAttachCallback != nullptr)
+    m_debuggerAttachCallback();
+}
+
 winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(
     const std::string &webSocketServerUrl,
-    const std::function<void(std::string)> &errorCallback) {
+    const std::function<void(std::string)> &errorCallback,
+    const std::function<void()> &waitingForDebuggerCallback,
+    const std::function<void()> &debuggerAttachCallback) {
   m_errorCallback = errorCallback;
+  m_debuggerAttachCallback = debuggerAttachCallback;
+  m_waitingForDebuggerCallback = waitingForDebuggerCallback;
 
   winrt::Windows::Foundation::Uri uri(
       facebook::react::unicode::utf8ToUtf16(webSocketServerUrl));
@@ -206,30 +223,41 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(
 
   SetState(State::Connected);
 
-  if (PrepareJavaScriptRuntime()) {
+  if (PrepareJavaScriptRuntime(250)) {
     SetState(State::Running);
   } else {
-    OnHitError(
-        "Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
+    m_state = State::Waiting;
+    OnWaitingForDebugger();
   }
 }
 
-bool WebSocketJSExecutor::PrepareJavaScriptRuntime() {
-  auto timeout = std::chrono::milliseconds(250);
+bool WebSocketJSExecutor::PrepareJavaScriptRuntime(int milliseconds) {
+  auto timeout = std::chrono::milliseconds(milliseconds);
 
-  for (uint32_t retries = 20; retries > 0; --retries) {
-    int requestId = ++m_requestId;
+  int requestId = ++m_requestId;
 
-    folly::dynamic request =
-        folly::dynamic::object("id", requestId)("method", "prepareJSRuntime");
-    std::string str = folly::toJson(request);
+  folly::dynamic request =
+      folly::dynamic::object("id", requestId)("method", "prepareJSRuntime");
+  std::string str = folly::toJson(request);
 
-    if (SendMessageAsync(requestId, std::move(str)).wait_for(timeout) ==
-        std::future_status::ready) {
-      return true;
+  return SendMessageAsync(requestId, std::move(str)).wait_for(timeout) ==
+      std::future_status::ready;
+}
+
+void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
+  m_messageQueueThread->runOnQueue([this]() {
+    auto timeout = std::chrono::milliseconds(750);
+
+    for (uint32_t retries = 20; retries > 0; --retries) {
+      if (PrepareJavaScriptRuntime(750)) {
+        OnDebuggerAttach();
+        return;
+      }
     }
-  }
-  return false;
+
+    OnHitError(
+        "Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
+  });
 }
 
 std::future<std::string> WebSocketJSExecutor::SendMessageAsync(

@@ -358,6 +358,28 @@ void UwpReactInstance::Start(
       }
     };
 
+    if (settings.UseWebDebugger) {
+      devSettings->waitingForDebuggerCallback =
+          [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept {
+        auto strongThis = weakThis.lock();
+        if (strongThis != nullptr) {
+          auto uwpInstance =
+              std::static_pointer_cast<UwpReactInstance>(strongThis);
+          uwpInstance->OnWaitingForDebugger();
+        }
+      };
+
+      devSettings->debuggerAttachCallback =
+          [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept {
+        auto strongThis = weakThis.lock();
+        if (strongThis != nullptr) {
+          auto uwpInstance =
+              std::static_pointer_cast<UwpReactInstance>(strongThis);
+          uwpInstance->OnDebuggerAttach();
+        }
+      };
+    }
+
     // Create NativeUIManager & UIManager
     m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
@@ -499,6 +521,23 @@ void UwpReactInstance::UnregisterErrorCallback(ErrorCallbackCookie &cookie) {
   cookie = 0;
 }
 
+DebuggerAttachCallbackCookie UwpReactInstance::RegisterDebuggerAttachCallback(
+    std::function<void()> callback) {
+  static DebuggerAttachCallbackCookie g_nextDebuggerAttachCallbackCookie(0);
+
+  // Add callback to map with new cookie
+  DebuggerAttachCallbackCookie cookie = ++g_nextDebuggerAttachCallbackCookie;
+  m_debuggerAttachCallbacks[cookie] = callback;
+
+  return cookie;
+}
+
+void UwpReactInstance::UnRegisterDebuggerAttachCallback(
+    DebuggerAttachCallbackCookie &cookie) {
+  m_debuggerAttachCallbacks.erase(cookie);
+  cookie = 0;
+}
+
 void UwpReactInstance::DispatchEvent(
     int64_t viewTag,
     std::string eventName,
@@ -592,6 +631,18 @@ void UwpReactInstance::OnHitError(const std::string &error) noexcept {
 
   // Invoke every callback registered
   for (auto const &current : m_errorCallbacks)
+    current.second();
+}
+
+void UwpReactInstance::OnWaitingForDebugger() noexcept {
+  m_isWaitingForDebugger = true;
+}
+
+void UwpReactInstance::OnDebuggerAttach() noexcept {
+  m_isWaitingForDebugger = false;
+
+  // Invoke every callback registered
+  for (auto const &current : m_debuggerAttachCallbacks)
     current.second();
 }
 

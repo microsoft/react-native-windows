@@ -55,6 +55,8 @@ struct DevSettings {
   std::string platformName{STRING(RN_PLATFORM)};
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
+  std::function<void()> waitingForDebuggerCallback;
+  std::function<void()> debuggerAttachCallback;
   NativeLoggingHook loggingCallback;
   std::function<void(JSExceptionInfo &&)> jsExceptionCallback;
 
