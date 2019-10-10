@@ -12,13 +12,13 @@ Below are a list of components and their status towards parity between the lean 
 |:-|:-|:-|:-|
 |ActivityIndicator|**Complete**|-|**Complete**|
 |Button|**Complete**|-|**Complete**|
-|FlatList|Partial|[2795](https://github.com/microsoft/react-native-windows/issues/2795)|**Complete**|
-|Image|Partial|[2111](https://github.com/microsoft/react-native-windows/issues/2111)|Partial|
-|ScrollView|Partial|[2113](https://github.com/microsoft/react-native-windows/issues/2113)|Partial|
-|Switch|Partial|[2140](https://github.com/microsoft/react-native-windows/issues/2140)|**Complete**|
-|Text|Partial|[2162](https://github.com/microsoft/react-native-windows/issues/2162), [2121](https://github.com/microsoft/react-native-windows/issues/2121)|Partial|
-|TextInput|Partial|[2136](https://github.com/microsoft/react-native-windows/issues/2136)|Partial|
-|View|Partial|[2796](https://github.com/microsoft/react-native-windows/issues/2796)|**Complete**|
+|FlatList|**Complete**|-|**Complete**|
+|Image|Partial|[Image project board](https://github.com/microsoft/react-native-windows/projects/18)|Partial|
+|ScrollView|Partial|[ScrollView project board](https://github.com/microsoft/react-native-windows/projects/17)|Partial|
+|Switch|**Complete**|-|**Complete**|
+|Text|**Complete** *(Some properties not supported due to device platform differences, docs coming soon)*|-|**Complete**|
+|TextInput|Partial|[TextInput project board](https://github.com/microsoft/react-native-windows/projects/20)|Partial|
+|View|Partial (some Style props left)|[View Style props project board](https://github.com/microsoft/react-native-windows/projects/19)|**Complete**|
 |VirtualizedList|Partial|No Issues Logged|**Complete**|
 
 ### Modules
@@ -28,13 +28,14 @@ Also tracked are NativeModules, as they are essential, even if not part of the c
 
 |Module| `vnext` version Status | `vnext` Issues remaining | `current` version Status|
 |:-|:-|:-|:-|
-|Accessibility|**Completed**|-|Partial|
+|Accessibility|Partial|[Accessibility project board](https://github.com/microsoft/react-native-windows/projects/21)|Partial|
 |LayoutProps|**Completed**|-|Partial|
 |Alert|**Completed**|-|**Complete**|
-|AppState|Not Started|[2144](https://github.com/microsoft/react-native-windows/issues/2144)|**Complete**|
-|Keyboard|Not Started|No Issues Logged|Not Implemented|
+|AppState|Partial|[2144](https://github.com/microsoft/react-native-windows/issues/2144)|**Complete**|
+|Keyboard|Partial|[2852](https://github.com/microsoft/react-native-windows/issues/2852)|Not Implemented|
+|Linking|Partial|[2853](https://github.com/microsoft/react-native-windows/issues/2853)|Partial|
 |LayoutAnimation|Not Started|[2494](https://github.com/microsoft/react-native-windows/issues/2494)|Partial|
-|Networking|Not Started|[2460](https://github.com/microsoft/react-native-windows/issues/2460)|**Complete**|
+|Networking|Partial|[2460](https://github.com/microsoft/react-native-windows/issues/2460), [3178](https://github.com/microsoft/react-native-windows/issues/3178)|**Complete**|
 
 
 ## Packages to be Refactored Separately
@@ -65,7 +66,6 @@ These set of components and modules are not part of [React Native Lean Core](htt
 |NativeMethodsMixin|Not Started|*nothing logged*|**Complete**|
 |PixelRatio|Not Started|*nothing logged*|**Complete**|
 |Settings|Not Started|*nothing logged*|Not Started|
-|ShadowProps|Not Started|*nothing logged*|Not Started|
 |Timers|Not Started|*nothing logged*|**Complete**|
 |Vibration|Not Started|*nothing logged*|**Complete**|
 |Dimensions|Not Started|[2470](https://github.com/microsoft/react-native-windows/issues/2470)|**Complete**|

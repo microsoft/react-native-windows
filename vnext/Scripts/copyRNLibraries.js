@@ -59,6 +59,10 @@ exports.copyRNLibraries = () => {
   if (fs.existsSync(librariesDest)) {
     rimraf.sync(librariesDest);
   }
+  const jestDest = path.resolve(__dirname, '../jest');
+  if (fs.existsSync(jestDest)) {
+    rimraf.sync(jestDest);
+  }
   const rnTesterDest = path.resolve(__dirname, '../RNTester');
   if (fs.existsSync(rnTesterDest)) {
     rimraf.sync(rnTesterDest);
@@ -71,6 +75,8 @@ exports.copyRNLibraries = () => {
     );
   }
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'Libraries'), baseDir);
+  copyJSFolderRecursiveSync(path.resolve(rnPath, 'jest'), baseDir);
+  copyJSFolderRecursiveSync(path.resolve(baseDir, 'src/jest'), baseDir); // Copy js files from src/jest to jest
 
   fs.writeFileSync(
     path.resolve(__dirname, '../rn-get-polyfills.js'),

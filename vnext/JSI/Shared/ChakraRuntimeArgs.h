@@ -5,16 +5,12 @@
 #include <jsi/ScriptStore.h>
 #include <jsi/jsi.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 class MemoryTracker;
 class MessageQueueThread;
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
 
-namespace facebook {
-namespace jsi {
-namespace chakraruntime {
+namespace Microsoft::JSI {
 
 enum class LogLevel {
   Trace = 0,
@@ -26,7 +22,7 @@ enum class LogLevel {
 
 using Logger = std::function<void(const char *message, LogLevel logLevel)>;
 
-struct ChakraJsiRuntimeArgs {
+struct ChakraRuntimeArgs {
   bool enableJITCompilation{true};
 
   Logger loggingCallback{};
@@ -47,10 +43,8 @@ struct ChakraJsiRuntimeArgs {
 
   // Script store which manages script and prepared script storage and
   // versioning.
-  std::unique_ptr<jsi::ScriptStore> scriptStore;
-  std::unique_ptr<jsi::PreparedScriptStore> preparedScriptStore;
+  std::unique_ptr<facebook::jsi::ScriptStore> scriptStore;
+  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
 };
 
-} // namespace chakraruntime
-} // namespace jsi
-} // namespace facebook
+} // namespace Microsoft::JSI

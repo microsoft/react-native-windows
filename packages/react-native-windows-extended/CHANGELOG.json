@@ -2,6 +2,90 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Wed, 09 Oct 2019 15:13:21 GMT",
+      "tag": "react-native-windows-extended_v0.60.5",
+      "version": "0.60.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.5",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "fd90172c7a95a3fc2f940db4334bccfee984d730"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Oct 2019 16:32:45 GMT",
+      "tag": "react-native-windows-extended_v0.60.4",
+      "version": "0.60.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.3",
+            "author": "acoates@microsoft.com",
+            "commit": "378ecaa3ff2eeb2a86263b2e1a3f4742002c3a77"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Oct 2019 22:17:13 GMT",
+      "tag": "react-native-windows-extended_v0.60.3",
+      "version": "0.60.3",
+      "comments": {
+        "none": [
+          {
+            "comment": "Support contextMenuHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "18b68810d1f1687889909782e47750afe6f06b24"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Oct 2019 00:14:42 GMT",
+      "tag": "react-native-windows-extended_v0.60.3",
+      "version": "0.60.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Align rnw-extended version number with rnw",
+            "author": "email not defined",
+            "commit": "b5b1638ed39829de47539477a239dcec8ee6469f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Oct 2019 18:17:42 GMT",
+      "tag": "react-native-windows-extended_v0.61.1",
+      "version": "0.61.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "The customer provided examples revealed a few of issues.  One, we were dubble counding the starting value of animatiosn in some cases. Two we were incorrectly relying on JS to tell us to flatten our animated values. Three we were detaching the expression animations that tied the property to the UIElement and in certain cases the JS thread does not inform us that we need to rebuild this cuppling.  There is an open issue with this final part #3280",
+            "author": "stpete@microsoft.com",
+            "commit": "87e54197b92a06e15acc0d3da7c4016eb3c95448"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Sep 2019 16:21:08 GMT",
+      "tag": "react-native-windows-extended_v0.61.1",
+      "version": "0.61.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump up to latest published version. (#3275)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a72208e39a88f9d3b732d5679a5c77cbc7750560"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Sep 2019 17:34:59 GMT",
       "tag": "react-native-windows-extended_v0.61.0",
       "version": "0.61.0",
