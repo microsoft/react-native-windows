@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include "Utf8DebugExtensions.h"
 #include "Unicode.h"
+#include "Utf8DebugExtensions.h"
 
 #include <malloc.h>
 #include <stdlib.h>
@@ -45,7 +45,8 @@ JsErrorCode JsPointerToStringUtf8(
   // JsCreateString is not supported in universal chakra engine
   // So we convert the utf8 string to utf16 first and call JsPointerToString to
   // convert the string to JsValueRef
-  std::wstring wstr = unicode::utf8ToUtf16(stringValue, stringLength);
+  std::wstring wstr =
+      Microsoft::Common::Unicode::Utf8ToUtf16(stringValue, stringLength);
   return JsPointerToString(wstr.c_str(), wstr.size(), string);
 
 #else
@@ -61,7 +62,7 @@ JsErrorCode JsStringToStdStringUtf8(
   JsErrorCode err = JsStringToPointer(stringValue, &wstr, &wstrLen);
 
   if (err == JsNoError)
-    string = unicode::utf16ToUtf8(wstr, wstrLen);
+    string = Microsoft::Common::Unicode::Utf16ToUtf8(wstr, wstrLen);
   else
     string.clear();
 

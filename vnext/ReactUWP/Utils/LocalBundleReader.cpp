@@ -18,7 +18,7 @@ namespace uwp {
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(
     const std::string &bundleUri) {
-  winrt::hstring str(facebook::react::unicode::utf8ToUtf16(bundleUri));
+  winrt::hstring str(Microsoft::Common::Unicode::Utf8ToUtf16(bundleUri));
   winrt::Windows::Foundation::Uri uri(str);
 
   co_await winrt::resume_background();

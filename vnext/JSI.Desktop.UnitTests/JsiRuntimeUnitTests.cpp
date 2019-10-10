@@ -2,8 +2,8 @@
 
 #include "JsiRuntimeUnitTests.h"
 
-#include <jsi/jsi.h>
 #include <Utilities.h>
+#include <jsi/jsi.h>
 
 #include <gtest/gtest.h>
 

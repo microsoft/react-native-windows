@@ -49,7 +49,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(
             reader.ReadBytes(data);
 
             std::string str(
-                facebook::react::utilities::checkedReinterpretCast<char *>(
+                Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(
                     data.data()),
                 data.size());
             OnMessageReceived(str);
@@ -57,7 +57,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(
             OnHitError("Unexpected MessageType from MessageWebSocket.");
           }
         } catch (winrt::hresult_error const &e) {
-          OnHitError(facebook::react::unicode::utf16ToUtf8(
+          OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(
               e.message().c_str(), e.message().size()));
         } catch (std::exception &e) {
           OnHitError(e.what());
@@ -201,7 +201,7 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(
   m_errorCallback = errorCallback;
 
   winrt::Windows::Foundation::Uri uri(
-      facebook::react::unicode::utf8ToUtf16(webSocketServerUrl));
+      Microsoft::Common::Unicode::Utf8ToUtf16(webSocketServerUrl));
   co_await m_socket.ConnectAsync(uri);
 
   SetState(State::Connected);
@@ -244,9 +244,9 @@ std::future<std::string> WebSocketJSExecutor::SendMessageAsync(
         winrt::Windows::Networking::Sockets::SocketMessageType::Utf8);
 
     winrt::array_view<const uint8_t> arr(
-        facebook::react::utilities::checkedReinterpretCast<const uint8_t *>(
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
             message.c_str()),
-        facebook::react::utilities::checkedReinterpretCast<const uint8_t *>(
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
             message.c_str()) +
             message.length());
     m_socketDataWriter.WriteBytes(arr);

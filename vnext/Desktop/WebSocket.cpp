@@ -72,7 +72,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Handshake(
         // Collect headers
         for (const auto &header : options) {
           req.insert(
-              facebook::react::unicode::utf16ToUtf8(header.first),
+              Microsoft::Common::Unicode::Utf16ToUtf8(header.first),
               header.second);
         }
       },

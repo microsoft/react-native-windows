@@ -104,7 +104,7 @@ FileMappingBigString::FileMappingBigString(
 #if (defined(WINRT))
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
       CreateFile2(
-          unicode::utf8ToUtf16(filenameUtf8).c_str(),
+          Microsoft::Common::Unicode::Utf8ToUtf16(filenameUtf8).c_str(),
           GENERIC_READ,
           FILE_SHARE_READ,
           OPEN_EXISTING,
@@ -113,7 +113,7 @@ FileMappingBigString::FileMappingBigString(
 #else
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
       CreateFileW(
-          unicode::utf8ToUtf16(filenameUtf8).c_str(),
+          Microsoft::Common::Unicode::Utf8ToUtf16(filenameUtf8).c_str(),
           GENERIC_READ,
           FILE_SHARE_READ,
           nullptr /* lpSecurityAttributes */,

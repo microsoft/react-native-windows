@@ -141,7 +141,7 @@ void LocationObserverModule::LocationObserver::getCurrentPosition(
     errorCallback({folly::dynamic::object("code", 1)(
         "message",
         "Error in GetGeoposition:" +
-            facebook::react::unicode::utf16ToUtf8(e.message()))});
+            Microsoft::Common::Unicode::Utf16ToUtf8(e.message()))});
     return;
   }
 

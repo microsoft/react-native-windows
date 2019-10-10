@@ -7,7 +7,7 @@
 #include <Logging.h>
 #include <Unicode.h>
 
-using namespace facebook::react::unicode;
+using namespace Microsoft::Common::Unicode;
 
 namespace winrt::facebook::react::implementation {
 namespace {
@@ -22,7 +22,7 @@ uint32_t NativeLogEventSource::InitializeLogging(
   std::function<void(::facebook::react::RCTLogLevel, const char *)>
       internalHandler = [](::facebook::react::RCTLogLevel ll, const char *m) {
         assert(g_abiHandler);
-        g_abiHandler(static_cast<LogLevel>(ll), utf8ToUtf16(m));
+        g_abiHandler(static_cast<LogLevel>(ll), Utf8ToUtf16(m));
       };
 
   ::facebook::react::InitializeLogging(std::move(internalHandler));

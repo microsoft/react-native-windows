@@ -18,7 +18,7 @@ namespace uwp {
 
   auto langs = winrt::Windows::Globalization::ApplicationLanguages::Languages();
   if (langs.Size() > 0) {
-    locale = facebook::react::unicode::utf16ToUtf8(langs.GetAt(0));
+    locale = Microsoft::Common::Unicode::Utf16ToUtf8(langs.GetAt(0));
 
     auto layoutDirection =
         winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()

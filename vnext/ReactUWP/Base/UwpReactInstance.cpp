@@ -435,7 +435,7 @@ void UwpReactInstance::Start(
       OnHitError(e.what());
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     } catch (winrt::hresult_error const &e) {
-      OnHitError(facebook::react::unicode::utf16ToUtf8(
+      OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(
           e.message().c_str(), e.message().size()));
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     } catch (...) {
@@ -565,7 +565,8 @@ static std::string PrettyError(const std::string &error) noexcept {
         replWide += hexVal(prettyError[pos + 3]) << 8;
         replWide += hexVal(prettyError[pos + 4]) << 4;
         replWide += hexVal(prettyError[pos + 5]);
-        std::string repl = facebook::react::unicode::utf16ToUtf8(&replWide, 1);
+        std::string repl =
+            Microsoft::Common::Unicode::Utf16ToUtf8(&replWide, 1);
 
         prettyError.replace(pos, 6, repl);
       }

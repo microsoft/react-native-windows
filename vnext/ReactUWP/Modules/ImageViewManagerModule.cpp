@@ -72,7 +72,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     ImageSource source;
     source.uri = uriString;
 
-    winrt::Uri uri{facebook::react::unicode::utf8ToUtf16(uriString)};
+    winrt::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(uriString)};
     winrt::hstring scheme{uri.SchemeName()};
     bool needsDownload = (scheme == L"http") || (scheme == L"https");
     bool inlineData = scheme == L"data";

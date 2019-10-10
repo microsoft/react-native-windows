@@ -85,7 +85,7 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
 
     // Place error message into TextBlock
     std::wstring wstrErrorMessage(L"ERROR: Instance failed to start.\n\n");
-    wstrErrorMessage += facebook::react::unicode::utf8ToUtf16(
+    wstrErrorMessage += Microsoft::Common::Unicode::Utf8ToUtf16(
                             m_reactInstance->LastErrorMessage())
                             .c_str();
     m_errorTextBlock.Text(wstrErrorMessage);

@@ -76,7 +76,7 @@ TestResult TestRunner::RunTest(
   devSettings->debugHost = "localhost:8081";
   devSettings->liveReloadCallback = []() {}; // Enables ChakraExecutor
   devSettings->errorCallback = [&result](string message) {
-    result.Message = facebook::react::unicode::utf8ToUtf16(message);
+    result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(message);
     result.Status = TestStatus::Failed;
   };
   devSettings->loggingCallback = std::move(loggingCallback);
@@ -94,7 +94,7 @@ TestResult TestRunner::RunTest(
           switch (logLevel) {
             case RCTLogLevel::Error:
             case RCTLogLevel::Fatal:
-              result.Message = facebook::react::unicode::utf8ToUtf16(message);
+              result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(message);
               result.Status = TestStatus::Failed;
               ::SetEvent(functionCalled);
               break;

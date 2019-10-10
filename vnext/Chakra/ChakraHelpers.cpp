@@ -175,7 +175,7 @@ void serializeBytecodeToFileCore(
   // fopen_s
   if (_wfopen_s(
           &bytecodeFilePtr,
-          unicode::utf8ToUtf16(bytecodeFileName).c_str(),
+          Microsoft::Common::Unicode::Utf8ToUtf16(bytecodeFileName).c_str(),
           L"wb")) {
     return;
   }
@@ -183,7 +183,7 @@ void serializeBytecodeToFileCore(
       bytecodeFilePtr, fclose);
 
   const std::wstring scriptUTF16 =
-      unicode::utf8ToUtf16(script->c_str(), script->size());
+      Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
 
   unsigned int bytecodeSize = 0;
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) !=

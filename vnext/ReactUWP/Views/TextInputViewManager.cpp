@@ -333,7 +333,7 @@ void TextInputShadowNode::registerEvents() {
           std::string key;
           wchar_t s[2] = L" ";
           s[0] = args.Character();
-          key = facebook::react::unicode::utf16ToUtf8(s, 1);
+          key = Microsoft::Common::Unicode::Utf16ToUtf8(s, 1);
 
           if (key.compare("\r") == 0) {
             key = "Enter";

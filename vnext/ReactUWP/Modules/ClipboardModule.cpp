@@ -56,7 +56,7 @@ ClipboardModule::getMethods() {
 
 /*static*/ void ClipboardModule::SetClipboardText(const std::string &text) {
   winrt::Windows::ApplicationModel::DataTransfer::DataPackage data;
-  data.SetText(facebook::react::unicode::utf8ToUtf16(text));
+  data.SetText(Microsoft::Common::Unicode::Utf8ToUtf16(text));
   winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(data);
 }
 
@@ -67,7 +67,7 @@ winrt::fire_and_forget GetClipboardTextAsync(
       winrt::Windows::ApplicationModel::DataTransfer::Clipboard::GetContent();
   try {
     std::wstring text = std::wstring(co_await data.GetTextAsync());
-    cbSuccess({facebook::react::unicode::utf16ToUtf8(text)});
+    cbSuccess({Microsoft::Common::Unicode::Utf16ToUtf8(text)});
   } catch (...) {
     cbFail({});
   }

@@ -197,12 +197,12 @@ DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds) {
 }
 
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d) {
-  return facebook::react::unicode::utf8ToUtf16(d.getString());
+  return Microsoft::Common::Unicode::Utf8ToUtf16(d.getString());
 }
 
 REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr) {
   return folly::dynamic(
-      facebook::react::unicode::utf16ToUtf8(hstr.c_str(), hstr.size()));
+      Microsoft::Common::Unicode::Utf16ToUtf8(hstr.c_str(), hstr.size()));
 }
 
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d) {
