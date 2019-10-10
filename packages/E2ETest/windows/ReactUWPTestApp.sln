@@ -36,7 +36,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactUWPTestApp", "ReactUWP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Universal", "..\..\..\vnext\JSI\Universal\JSI.Universal.vcxproj", "{A62D504A-16B8-41D2-9F19-E2E86019E5E4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\vnext\Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
