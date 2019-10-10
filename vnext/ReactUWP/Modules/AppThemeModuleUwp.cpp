@@ -63,7 +63,6 @@ const std::string AppTheme::getCurrentTheme() {
 
 bool AppTheme::getIsHighContrast() {
   return m_accessibilitySettings.HighContrast();
-  ;
 }
 
 void AppTheme::updateAndSubscribeForChanges() {
