@@ -1,13 +1,15 @@
 #
 parameters:
-  name: ''
+  name: ""
   pool:
-  BuildPlatform: 'x86' # ARM, x86, x64
+  BuildPlatform: "x86" # ARM, x86, x64
   UseRNFork: true
 
 jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool: ${{ parameters.pool }}
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -20,9 +22,9 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: PowerShell@2
-        displayName: 'Remove WebDriverIO Workaround'
+        displayName: "Remove WebDriverIO Workaround"
         inputs:
-          targetType: 'inline'
+          targetType: "inline"
           script: '((Get-Content -path packages/E2ETest/package.json -Raw) -replace ".*webdriver.git.*","") | Set-Content -Path packages/E2ETest/package.json'
 
       - task: CmdLine@2
@@ -53,11 +55,11 @@ jobs:
         condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'false'))
 
       - task: PowerShell@2
-        displayName: 'Patch WebDriverIO'
+        displayName: "Patch WebDriverIO"
         inputs:
-          targetType: 'inline'
+          targetType: "inline"
           script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
-      
+
       - template: stop-packagers.yml
 
       - task: CmdLine@2
@@ -83,7 +85,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script:  react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
           workingDirectory: packages/E2ETest
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
@@ -94,6 +96,12 @@ jobs:
           script: |
             Start-Sleep -Seconds 30
 
+      - task: PowerShell@2
+        displayName: 'Check TestApp'
+        inputs:
+          targetType: 'inline'
+          script: 'if ((Get-Process React*) -eq $Null) { echo "TestApp is not running"; exit 1}'
+
       - task: CmdLine@2
         displayName: run test
         inputs:
@@ -102,27 +110,27 @@ jobs:
 
       - task: PublishTestResults@2
         inputs:
-          testResultsFormat: 'JUnit'
-          testResultsFiles: 'packages/E2ETest/reports/*.log'
+          testResultsFormat: "JUnit"
+          testResultsFiles: "packages/E2ETest/reports/*.log"
         condition: succeededOrFailed()
 
       - task: PowerShell@2
-        displayName: 'Show package.json'
+        displayName: "Show package.json"
         inputs:
-          targetType: 'inline'
-          script: 'Get-Content packages/E2ETest/package.json | foreach {Write-Output $_}'
+          targetType: "inline"
+          script: "Get-Content packages/E2ETest/package.json | foreach {Write-Output $_}"
         condition: failed()
 
       - task: PowerShell@2
-        displayName: 'Show node_modules/webdriver/build/utils.js'
+        displayName: "Show node_modules/webdriver/build/utils.js"
         inputs:
-          targetType: 'inline'
-          script: 'Get-Content node_modules/webdriver/build/utils.js | foreach {Write-Output $_}'
+          targetType: "inline"
+          script: "Get-Content node_modules/webdriver/build/utils.js | foreach {Write-Output $_}"
         condition: failed()
 
       - task: PowerShell@2
-        displayName: 'Show appium log'
+        displayName: "Show appium log"
         inputs:
-          targetType: 'inline'
-          script: 'Get-Content packages/E2ETest/reports/appium.txt | foreach {Write-Output $_}'
+          targetType: "inline"
+          script: "Get-Content packages/E2ETest/reports/appium.txt | foreach {Write-Output $_}"
         condition: failed()

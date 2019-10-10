@@ -87,7 +87,7 @@
 #include <codecvt>
 #include <locale>
 #else
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 #endif
 #endif
 
@@ -413,7 +413,7 @@ void UwpReactInstance::Start(
             winrt::to_hstring(settings.ByteCodeFileUri));
       }
       devSettings->jsiRuntimeHolder =
-          std::make_shared<facebook::react::ChakraJSIRuntimeHolder>(
+          std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
               devSettings,
               jsQueue,
               std::move(scriptStore),

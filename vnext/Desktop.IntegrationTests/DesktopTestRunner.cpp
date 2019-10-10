@@ -9,7 +9,7 @@
 #include <Modules/NetworkingModule.h>
 #include <NativeModuleFactories.h>
 #include <WebSocketModule.h>
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
 #include "TestMessageQueueThread.h"
 #include "TestModule.h"
@@ -49,7 +49,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = make_shared<TestMessageQueueThread>();
   auto jsQueue = make_shared<TestMessageQueueThread>();
 
-  devSettings->jsiRuntimeHolder = std::make_shared<ChakraJSIRuntimeHolder>(
+  devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(
       devSettings, jsQueue, nullptr, nullptr);
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>>

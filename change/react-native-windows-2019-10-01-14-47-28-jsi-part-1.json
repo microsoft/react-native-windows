@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Move JSI files into their own projects.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "53dba4bf45777df9d979f4fa5b001cb02e1577c5",
-  "date": "2019-10-01T21:47:28.565Z"
-}

@@ -10,7 +10,8 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset Condition="'$(ReactNativeWindows_PlatformToolset)' != ''">$(ReactNativeWindows_PlatformToolset)</PlatformToolset>
+    <PlatformToolset Condition="'$(ReactNativeWindows_PlatformToolset)' == ''">v141</PlatformToolset>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
