@@ -1,7 +1,8 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
-  VmImage: windows-2019
+  VmImage: vs2017-win2016
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 trigger:
   batch: true
@@ -85,10 +86,6 @@ jobs:
     pool:
       vmImage: $(VmImage)
 
-    variables:
-      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
-
     steps:
       - task: DownloadBuildArtifacts@0
         displayName: Download VersionEnvVars
@@ -105,9 +102,9 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           platformToolset: v141
           vsComponents: $(VsComponents)
-          msbuildArguments: /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
+          msbuildArguments:
+            /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
-            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:

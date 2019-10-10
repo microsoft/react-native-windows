@@ -2,14 +2,14 @@
 parameters:
   name: ''
   pool:
-  BuildPlatform: 'x86' # ARM, x86, x64
+  BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
 
 jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
     pool: ${{ parameters.pool }}
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -71,7 +71,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script:  react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
           workingDirectory: packages/E2ETest
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
@@ -90,6 +90,6 @@ jobs:
 
       - task: PublishTestResults@2
         inputs:
-          testResultsFormat: 'JUnit'
-          testResultsFiles: 'packages/E2ETest/reports/*.log'
+          testResultsFormat: JUnit
+          testResultsFiles: packages/E2ETest/reports/*.log
         condition: succeededOrFailed()

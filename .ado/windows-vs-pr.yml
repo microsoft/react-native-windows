@@ -9,11 +9,11 @@ pr:
 
 variables:
   # General / Default
-  VmImage: windows-2019
+  VmImage: vs2017-win2016
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
-  MSBuildPlatformToolset: v142
+  MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
 
 stages:
@@ -176,14 +176,16 @@ stages:
 
         variables:
           Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-          GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-          VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-          VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+          GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
 
         steps:
           - checkout: self
             clean: false
             submodules: false
+
+          - task: VisualStudioTestPlatformInstaller@1
+            inputs:
+              testPlatformVersion: 16.3.0
 
           - template: templates/build-rnw.yml
             parameters:
@@ -194,7 +196,6 @@ stages:
               msbuildArguments:
                 /p:RNW_PKG_VERSION_STR="Private Build"
                 /p:RNW_PKG_VERSION="1000,0,0,0"
-                /p:VCTargetsPath="$(VCTargetsPath)"
 
           - task: VSTest@2
             displayName: Run Desktop Unit Tests
@@ -211,6 +212,7 @@ stages:
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
               collectDumpOn: onAbortOnly
+              vsTestVersion: toolsInstaller
 
           - template: templates/stop-packagers.yml
 
@@ -233,6 +235,7 @@ stages:
               configuration: $(BuildConfiguration)
               publishRunAttachments: true
               collectDumpOn: onAbortOnly
+              vsTestVersion: toolsInstaller
 
           - template: templates/stop-packagers.yml
 
@@ -442,6 +445,8 @@ stages:
               script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
               workingDirectory: current
 
+          - template: templates\install-SDK.yml
+
           - task: MSBuild@1
             displayName: MSBuild
             inputs:
@@ -509,19 +514,19 @@ stages:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
 
     jobs:
-      - job: RNWNugetPR
-        displayName: Build and Pack Nuget
-        pool:
-          vmImage: $(VmImage)
-        timeoutInMinutes: 30
-        cancelTimeoutInMinutes: 5
-        steps:
-          - checkout: self
-            fetchDepth: 1
+    - job: RNWNugetPR
+      displayName: Build and Pack Nuget
+      pool:
+        vmImage: $(VmImage)
+      timeoutInMinutes: 30
+      cancelTimeoutInMinutes: 5
+      steps:
+        - checkout: self
+          fetchDepth: 1
 
-          # The commit tag in the nuspec requires that we use at least nuget 4.6
-          - task: NuGetToolInstaller@0
-            inputs:
-              versionSpec: ">=4.6.0"
+        # The commit tag in the nuspec requires that we use at least nuget 4.6
+        - task: NuGetToolInstaller@0
+          inputs:
+            versionSpec: ">=4.6.0"
 
-          - template: templates/prep-and-pack-nuget.yml
+        - template: templates/prep-and-pack-nuget.yml
