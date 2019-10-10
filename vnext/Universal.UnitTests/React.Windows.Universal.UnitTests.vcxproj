@@ -52,7 +52,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalOptions>/await /bigobj %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactUWP;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactUWP;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RN_PLATFORM=windows;USE_EDGEMODE_JSRT;GTEST_LANG_CXX11=1;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;BOOST_ASIO_WINDOWS_APP;BOOST_BEAST_USE_WIN32_FILE=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <CompileAsWinRT>true</CompileAsWinRT>
       <PrecompiledHeader>Use</PrecompiledHeader>
