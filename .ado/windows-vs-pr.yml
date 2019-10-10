@@ -476,9 +476,10 @@ jobs:
     parameters:
       name: E2ETest
       pool:
-        vmImage: $(VmImage)
+        vmImage: windows-2019
       BuildPlatform: x64
       UseRNFork: true
+      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget
