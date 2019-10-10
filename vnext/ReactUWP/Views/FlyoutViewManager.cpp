@@ -9,6 +9,7 @@
 #include "ViewPanel.h"
 
 #include <Modules/NativeUIManager.h>
+#include <Utils/Helpers.h>
 #include <Utils/PropertyHandlerUtils.h>
 #include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 
@@ -111,7 +112,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   float m_verticalOffset = 0;
   bool m_isFlyoutShowOptionsSupported = false;
   winrt::FlyoutShowOptions m_showOptions = nullptr;
-  static thread_local std::int32_t s_cOpenFlyouts;
 
   std::unique_ptr<TouchEventHandler> m_touchEventHanadler;
   std::unique_ptr<PreviewKeyboardEventHandlerOnRoot>
@@ -122,8 +122,6 @@ class FlyoutShadowNode : public ShadowNodeBase {
   int64_t m_tokenContentPropertyChangeCallback;
   winrt::Flyout::Opened_revoker m_flyoutOpenedRevoker{};
 };
-
-thread_local std::int32_t FlyoutShadowNode::s_cOpenFlyouts = 0;
 
 FlyoutShadowNode::~FlyoutShadowNode() {
   m_touchEventHanadler->RemoveTouchHandlers();
@@ -197,14 +195,14 @@ void FlyoutShadowNode::createView() {
 
         if (!m_updating && instance != nullptr) {
           if (auto flyoutPresenter = GetFlyoutPresenter()) {
-            // When multiple flyouts are overlapping, XAML's theme shadows
-            // don't render properly. As a workaround we enable a z-index
-            // translation based on an elevation derived from the count of
-            // open flyouts. We apply this translation on open of the flyout.
-            // (Translation is only supported on RS5+, eg. IUIElement9)
+            // When multiple flyouts/popups are overlapping, XAML's theme
+            // shadows don't render properly. As a workaround we enable a
+            // z-index translation based on an elevation derived from the count
+            // of open popups/flyouts. We apply this translation on open of the
+            // flyout. (Translation is only supported on RS5+, eg. IUIElement9)
             if (auto uiElement9 = GetView().try_as<winrt::IUIElement9>()) {
               winrt::Numerics::float3 translation{
-                  0, 0, (float)16 * s_cOpenFlyouts};
+                  0, 0, (float)16 * CountOpenPopups()};
               flyoutPresenter.Translation(translation);
             }
 
@@ -256,8 +254,6 @@ void FlyoutShadowNode::onDropViewInstance() {
   if (m_isOpen) {
     m_isOpen = false;
     m_flyout.Hide();
-    s_cOpenFlyouts -= 1;
-    assert(s_cOpenFlyouts >= 0);
   }
 }
 
@@ -342,7 +338,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
 
   if (updateIsOpen) {
     if (m_isOpen) {
-      s_cOpenFlyouts += 1;
       AdjustDefaultFlyoutStyle(50000, 50000);
       if (m_isFlyoutShowOptionsSupported) {
         m_flyout.ShowAt(m_targetElement, m_showOptions);
@@ -355,8 +350,6 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         popup.IsLightDismissEnabled(m_isLightDismissEnabled);
     } else {
       m_flyout.Hide();
-      s_cOpenFlyouts -= 1;
-      assert(s_cOpenFlyouts >= 0);
     }
   }
 

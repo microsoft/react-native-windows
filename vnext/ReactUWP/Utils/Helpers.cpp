@@ -6,6 +6,11 @@
 #include <Modules/NativeUIManager.h>
 #include "Helpers.h"
 
+namespace winrt {
+using namespace Windows::UI::Xaml::Controls::Primitives;
+using namespace Windows::UI::Xaml::Media;
+} // namespace winrt
+
 namespace react {
 namespace uwp {
 
@@ -32,6 +37,14 @@ ReactId getViewId(
   }
   return reactId;
 };
+
+std::int32_t CountOpenPopups() {
+  // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against
+  // RS6
+  winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups =
+      winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
+  return (int32_t) popups.Size();
+}
 
 } // namespace uwp
 }; // namespace react
