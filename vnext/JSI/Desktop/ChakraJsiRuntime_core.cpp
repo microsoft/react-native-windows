@@ -3,7 +3,7 @@
 
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <cxxreact/MessageQueueThread.h>
 

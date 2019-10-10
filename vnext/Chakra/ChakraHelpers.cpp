@@ -6,7 +6,7 @@
 #include "ChakraHelpers.h"
 #include "ChakraUtils.h"
 #include "ChakraValue.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #ifdef WITH_FBSYSTRACE
 #include <fbsystrace.h>

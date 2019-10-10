@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #if !defined(CHAKRACORE)
 #include <jsrt.h>

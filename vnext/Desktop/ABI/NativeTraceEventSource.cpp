@@ -5,7 +5,7 @@
 #include "NativeTraceEventSource.g.cpp"
 
 #include <Tracing.h>
-#include <unicode.h>
+#include <Unicode.h>
 
 using namespace ::facebook::react::unicode;
 

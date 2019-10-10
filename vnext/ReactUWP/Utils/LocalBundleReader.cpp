@@ -6,7 +6,7 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Storage.h>
 #include "LocalBundleReader.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage

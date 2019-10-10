@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "Utf8DebugExtensions.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <malloc.h>
 #include <stdlib.h>

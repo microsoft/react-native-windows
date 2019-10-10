@@ -9,7 +9,7 @@
 
 #include <mutex>
 #include <sstream>
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <jsi/ScriptStore.h>
 

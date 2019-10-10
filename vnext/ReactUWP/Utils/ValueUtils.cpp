@@ -5,7 +5,7 @@
 
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <folly/dynamic.h>
 #include <iomanip>

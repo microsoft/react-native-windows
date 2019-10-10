@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "NamedPipeEndpoint.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <Sddl.h>
 

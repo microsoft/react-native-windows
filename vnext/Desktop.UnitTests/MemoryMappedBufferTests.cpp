@@ -1,5 +1,5 @@
 #include "MemoryMappedBuffer.h"
-#include "utilities.h"
+#include "Utilities.h"
 
 #include <CppUnitTest.h>
 

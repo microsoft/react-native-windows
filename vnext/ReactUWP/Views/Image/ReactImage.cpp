@@ -8,7 +8,7 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Web.Http.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace winrt {
 using namespace Windows::Foundation;

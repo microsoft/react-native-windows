@@ -12,7 +12,7 @@
 #if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
 #endif
-#include "unicode.h"
+#include "Unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"
 #include "../Chakra/ChakraUtils.h"

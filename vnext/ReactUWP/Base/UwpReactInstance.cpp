@@ -17,7 +17,7 @@
 #include <InstanceManager.h>
 #include <NativeModuleProvider.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>

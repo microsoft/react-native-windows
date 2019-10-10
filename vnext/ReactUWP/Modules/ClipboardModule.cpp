@@ -6,7 +6,7 @@
 #include "ClipboardModule.h"
 
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)

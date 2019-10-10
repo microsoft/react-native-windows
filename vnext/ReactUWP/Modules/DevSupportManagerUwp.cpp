@@ -12,8 +12,8 @@
 
 #include <Executors/WebSocketJSExecutorUwp.h>
 
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Storage.Streams.h>

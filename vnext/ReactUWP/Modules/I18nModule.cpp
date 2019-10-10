@@ -7,7 +7,7 @@
 
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <winrt/Windows.Globalization.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace react {
 namespace uwp {

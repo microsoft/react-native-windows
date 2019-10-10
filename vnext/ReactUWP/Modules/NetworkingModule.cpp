@@ -10,8 +10,8 @@
 #include "NetworkingModule.h"
 
 #include <future>
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #include "windows.h"
 

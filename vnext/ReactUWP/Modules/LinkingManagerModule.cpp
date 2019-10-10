@@ -6,7 +6,7 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.System.h>
 #include "LinkingManagerModule.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)

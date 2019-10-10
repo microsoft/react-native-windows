@@ -5,7 +5,7 @@
 
 #include "TextInputViewManager.h"
 
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>

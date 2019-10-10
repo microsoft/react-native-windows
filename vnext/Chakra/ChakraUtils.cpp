@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "ChakraUtils.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <memoryapi.h>
 #include <werapi.h>

@@ -9,8 +9,8 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <future>
 #include "WebSocketModuleUwp.h"
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)

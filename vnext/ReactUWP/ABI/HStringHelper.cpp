@@ -4,7 +4,7 @@
 #include <pch.h>
 
 #include "HStringHelper.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <winrt/base.h>
 

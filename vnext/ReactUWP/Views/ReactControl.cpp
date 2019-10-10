@@ -8,7 +8,7 @@
 #include <CxxMessageQueue.h>
 #include <ReactUWP/InstanceFactory.h>
 #include <Utils/ValueUtils.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <INativeUIManager.h>
 #include <Views/KeyboardEventHandler.h>

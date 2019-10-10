@@ -7,7 +7,7 @@
 #include "PickerViewManager.h"
 
 #include <Utils/ValueUtils.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <IReactInstance.h>
 

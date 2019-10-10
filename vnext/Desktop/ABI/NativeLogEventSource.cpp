@@ -5,7 +5,7 @@
 #include "NativeLogEventSource.g.cpp"
 
 #include <Logging.h>
-#include <unicode.h>
+#include <Unicode.h>
 
 using namespace facebook::react::unicode;
 

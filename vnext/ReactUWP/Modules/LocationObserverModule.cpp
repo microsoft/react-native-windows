@@ -6,7 +6,7 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.Devices.Geolocation.h>
 #include "LocationObserverModule.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)

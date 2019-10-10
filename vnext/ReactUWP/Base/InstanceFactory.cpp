@@ -9,7 +9,7 @@
 
 #include <ReactUWP/ReactRootView.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace react {
 namespace uwp {

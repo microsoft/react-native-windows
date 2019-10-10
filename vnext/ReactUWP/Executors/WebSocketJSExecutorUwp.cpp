@@ -10,8 +10,8 @@
 #include <folly/dynamic.h>
 #include <folly/json.h>
 
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #include <winrt/Windows.Storage.Streams.h>
 

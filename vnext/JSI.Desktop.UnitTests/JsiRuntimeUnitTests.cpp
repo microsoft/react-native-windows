@@ -3,7 +3,7 @@
 #include "JsiRuntimeUnitTests.h"
 
 #include <jsi/jsi.h>
-#include <utilities.h>
+#include <Utilities.h>
 
 #include <gtest/gtest.h>
 

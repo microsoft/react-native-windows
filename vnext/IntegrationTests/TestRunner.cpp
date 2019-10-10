@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "TestRunner.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <DevSettings.h>
 #include <InstanceManager.h>
