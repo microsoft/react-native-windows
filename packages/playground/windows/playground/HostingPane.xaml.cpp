@@ -19,9 +19,9 @@
 #include <Windows.UI.Xaml.h>
 
 #include <Tracing.h>
+#include <Unicode.h>
 #include <cxxReact/Instance.h>
 #include <folly/dynamic.h>
-#include <unicode.h>
 #include <codecvt>
 
 #include <react-native-windows-extended.h>
