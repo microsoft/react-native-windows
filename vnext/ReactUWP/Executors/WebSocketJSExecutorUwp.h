@@ -8,6 +8,7 @@
 #include <DevServerHelper.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/JSModulesUnbundle.h>
+#include <cxxreact/MessageQueueThread.h>
 #pragma warning(pop)
 
 #include <WebSocketJSExecutorFactory.h>
@@ -71,19 +72,23 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
 
   winrt::Windows::Foundation::IAsyncAction ConnectAsync(
       const std::string &webSocketServerUrl,
-      const std::function<void(std::string)> &errorCallback);
+      const std::function<void(std::string)> &errorCallback,
+      const std::function<void()> &debuggerAttach,
+      const std::function<void()> &waitingForDebuggerCallback);
 
  private:
   enum class State {
     Disconnected,
     Connected, // Websocket is connected, still need to prepare the runtime.
+    Waiting, // Waiting for debugger to connect
     Running, // Runtime is running.
     Disposed, // Executor has been shutdown.
     Error
   };
 
  private:
-  bool PrepareJavaScriptRuntime();
+  bool PrepareJavaScriptRuntime(int milliseconds);
+  void PollPrepareJavaScriptRuntime();
   std::string Call(const std::string &methodName, folly::dynamic &arguments);
   std::future<std::string> SendMessageAsync(
       int requestId,
@@ -100,6 +105,9 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
   bool IsRunning() const noexcept {
     return m_state == State::Running;
   }
+  bool IsWaiting() const noexcept {
+    return m_state == State::Waiting;
+  }
   bool IsInError() const noexcept {
     return m_state == State::Error;
   }
@@ -107,6 +115,8 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
     return m_state == State::Disposed;
   }
   void OnHitError(std::string message);
+  void OnWaitingForDebugger();
+  void OnDebuggerAttach();
 
   const int ConnectTimeoutMilliseconds = 5000;
   const int ConnectRetryCount = 3;
@@ -129,6 +139,8 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
 
   State m_state = State::Disconnected;
   std::function<void(std::string)> m_errorCallback;
+  std::function<void()> m_debuggerAttachCallback;
+  std::function<void()> m_waitingForDebuggerCallback;
 
   std::atomic<LONG> m_requestId{0};
 };
