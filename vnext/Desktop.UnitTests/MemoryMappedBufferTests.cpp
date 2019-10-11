@@ -1,5 +1,5 @@
 #include "MemoryMappedBuffer.h"
-#include "utilities.h"
+#include "Utilities.h"
 
 #include <CppUnitTest.h>
 
@@ -11,7 +11,7 @@
 
 using facebook::jsi::Buffer;
 using facebook::jsi::JSINativeException;
-using facebook::react::utilities::checkedReinterpretCast;
+using Microsoft::Common::Utilities::CheckedReinterpretCast;
 using Microsoft::JSI::MakeMemoryMappedBuffer;
 using Microsoft::VisualStudio::CppUnitTestFramework::Assert;
 
@@ -95,7 +95,7 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
 
     Assert::IsTrue(buffer->size() == size);
     Assert::IsTrue(
-        strcmp(checkedReinterpretCast<const char *>(buffer->data()), content) ==
+        strcmp(CheckedReinterpretCast<const char *>(buffer->data()), content) ==
         0);
   }
 
@@ -112,7 +112,7 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
     Assert::IsTrue(buffer->size() == fileSize - fileOffset);
     Assert::IsTrue(
         strcmp(
-            checkedReinterpretCast<const char *>(buffer->data()),
+            CheckedReinterpretCast<const char *>(buffer->data()),
             fileContent + fileOffset) == 0);
   }
 
@@ -126,7 +126,7 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
     Assert::IsTrue(buffer->size() == content.length());
     Assert::IsTrue(
         strcmp(
-            checkedReinterpretCast<const char *>(buffer->data()),
+            CheckedReinterpretCast<const char *>(buffer->data()),
             content.c_str()) == 0);
   }
 
@@ -141,7 +141,7 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
     Assert::IsTrue(buffer->size() == content.length() - fileOffset);
     Assert::IsTrue(
         strcmp(
-            checkedReinterpretCast<const char *>(buffer->data()),
+            CheckedReinterpretCast<const char *>(buffer->data()),
             content.c_str() + fileOffset) == 0);
   }
 

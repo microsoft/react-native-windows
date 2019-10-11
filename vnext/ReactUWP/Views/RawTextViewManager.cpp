@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "RawTextViewManager.h"
+#include "TextViewManager.h"
 
 #include <Views/ShadowNodeBase.h>
 
@@ -53,10 +54,8 @@ void RawTextViewManager::UpdateProperties(
     if (propertyName == "text") {
       run.Text(asHstring(propertyValue));
       if (nodeToUpdate->GetParent() != -1) {
-        auto instance = this->m_wkReactInstance.lock();
-        const ShadowNodeBase *parent = nullptr;
-        if (instance) {
-          parent = static_cast<ShadowNodeBase *>(
+        if (auto instance = this->m_wkReactInstance.lock()) {
+          const ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
               instance->NativeUIManager()->getHost()->FindShadowNodeForTag(
                   nodeToUpdate->GetParent()));
           if (parent && parent->m_children.size() == 1) {
@@ -66,11 +65,30 @@ void RawTextViewManager::UpdateProperties(
               textBlock.Text(run.Text());
             }
           }
+
+          NotifyAncestorsTextChanged(instance.operator->(), nodeToUpdate);
         }
       }
     }
   }
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+}
+
+void RawTextViewManager::NotifyAncestorsTextChanged(
+    IReactInstance *instance,
+    ShadowNodeBase *nodeToUpdate) {
+  auto host = instance->NativeUIManager()->getHost();
+  ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(
+      host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
+  while (parent) {
+    auto viewManager = parent->GetViewManager();
+    if (!std::strcmp(viewManager->GetName(), "RCTText")) {
+      (static_cast<TextViewManager *>(viewManager))
+          ->OnDescendantTextPropertyChanged(parent);
+    }
+    parent = static_cast<ShadowNodeBase *>(
+        host->FindShadowNodeForTag(parent->GetParent()));
+  }
 }
 
 void RawTextViewManager::SetLayoutProps(

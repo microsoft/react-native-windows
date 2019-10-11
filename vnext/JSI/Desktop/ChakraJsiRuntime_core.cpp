@@ -3,7 +3,7 @@
 
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <cxxreact/MessageQueueThread.h>
 
@@ -293,7 +293,7 @@ std::unique_ptr<const facebook::jsi::Buffer>
 ChakraRuntime::generatePreparedScript(
     const std::string &sourceURL,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 = facebook::react::unicode::utf8ToUtf16(
+  const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(
       reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
 
   unsigned int bytecodeSize = 0;

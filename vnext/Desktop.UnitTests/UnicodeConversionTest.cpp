@@ -3,11 +3,11 @@
 
 #include <CppUnitTest.h>
 #include <string>
+#include "Unicode.h"
 #include "UnicodeTestStrings.h"
-#include "unicode.h"
 
-using facebook::react::unicode::utf16ToUtf8;
-using facebook::react::unicode::utf8ToUtf16;
+using Microsoft::Common::Unicode::Utf16ToUtf8;
+using Microsoft::Common::Unicode::Utf8ToUtf16;
 using Microsoft::VisualStudio::CppUnitTestFramework::Assert;
 
 namespace Microsoft::React::Test {
@@ -21,20 +21,20 @@ TEST_CLASS(UnicodeConversionTest) {
     Assert::IsTrue(wcslen(SimpleTestStringBomUtf16) == 4);
   }
 
-  TEST_METHOD(utf8ToUtf16SimpleTestNoBom) {
+  TEST_METHOD(Utf8ToUtf16SimpleTestNoBom) {
     Assert::IsTrue(
-        utf8ToUtf16(
+        Utf8ToUtf16(
             SimpleTestStringNoBomUtf8, strlen(SimpleTestStringNoBomUtf8)) ==
         SimpleTestStringNoBomUtf16);
   }
 
-  TEST_METHOD(utf8ToUtf16SimpleTestBom) {
+  TEST_METHOD(Utf8ToUtf16SimpleTestBom) {
     Assert::IsTrue(
-        utf8ToUtf16(SimpleTestStringBomUtf8, strlen(SimpleTestStringBomUtf8)) ==
+        Utf8ToUtf16(SimpleTestStringBomUtf8, strlen(SimpleTestStringBomUtf8)) ==
         SimpleTestStringBomUtf16);
   }
 
-  TEST_METHOD(utf8ToUtf16InvalidCharacterTest) {
+  TEST_METHOD(Utf8ToUtf16InvalidCharacterTest) {
     // In UTF-8, cc must the first byte of a two byte sequence, but 22 cannot be
     // the second byte of a two byte sequence (in fact, it is the double quote
     // ASCII character). To prevent over comsumption attacks, we test that 22 is
@@ -43,34 +43,34 @@ TEST_CLASS(UnicodeConversionTest) {
     // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
     constexpr const char *const invalidUtf8 = "\xcc\x22\x3c";
     Assert::IsTrue(
-        utf8ToUtf16(invalidUtf8) == L"\xfffd" + utf8ToUtf16(invalidUtf8 + 1));
+        Utf8ToUtf16(invalidUtf8) == L"\xfffd" + Utf8ToUtf16(invalidUtf8 + 1));
 
     // Although ed a3 a9 follows the correct binary format for a three byte
     // UTF-8 sequence, the Unicode code point it encodes is not valid. While
-    // converting this string, utf8ToUtf16 will not realize this until it
-    // encounters a9, upon which it will replace ed a3 with U+FFFD. utf8ToUtf16
+    // converting this string, Utf8ToUtf16 will not realize this until it
+    // encounters a9, upon which it will replace ed a3 with U+FFFD. Utf8ToUtf16
     // will then try to interpret a9 on its own and, realizing that a9 can only
     // be the third byte unit of a three byte UTF-8 sequence, will replace it
     // with U+FFFD as well. Hence the result it outputs is U+FFFD U+FFFD.
     constexpr const char *const anotherInvalidUtf8 = "\xed\xa3\xa9";
-    Assert::IsTrue(utf8ToUtf16(anotherInvalidUtf8) == L"\xfffd\xfffd");
+    Assert::IsTrue(Utf8ToUtf16(anotherInvalidUtf8) == L"\xfffd\xfffd");
   }
 
-  TEST_METHOD(utf16ToUtf8SimpleTestNoBom) {
+  TEST_METHOD(Utf16ToUtf8SimpleTestNoBom) {
     Assert::IsTrue(
-        utf16ToUtf8(
+        Utf16ToUtf8(
             SimpleTestStringNoBomUtf16, wcslen(SimpleTestStringNoBomUtf16)) ==
         SimpleTestStringNoBomUtf8);
   }
 
-  TEST_METHOD(utf16ToUtf8SimpleTestBom) {
+  TEST_METHOD(Utf16ToUtf8SimpleTestBom) {
     Assert::IsTrue(
-        utf16ToUtf8(
+        Utf16ToUtf8(
             SimpleTestStringBomUtf16, wcslen(SimpleTestStringBomUtf16)) ==
         SimpleTestStringBomUtf8);
   }
 
-  TEST_METHOD(utf16ToUtf8InvalidCharacterTest) {
+  TEST_METHOD(Utf16ToUtf8InvalidCharacterTest) {
     // In Utf-16, D801 must be the first two bytes of a surrogate pair, but 0022
     // cannot be the second two bytes of a surrogate pair (in fact, it is the
     // double quote ASCII character). To prevent over consumption attacks, we
@@ -78,13 +78,13 @@ TEST_CLASS(UnicodeConversionTest) {
     // UTF-8. For more information on overconsumption attaks, see
     // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
     constexpr const char16_t *const invalidUtf16 = u"\xD801\x0022";
-    Assert::IsTrue(utf16ToUtf8(invalidUtf16) == "\xef\xbf\xbd\x22");
+    Assert::IsTrue(Utf16ToUtf8(invalidUtf16) == "\xef\xbf\xbd\x22");
   }
 
   TEST_METHOD(SymmetricConversionNoBom) {
     for (size_t i = 0; i < g_utf8TestStrings.size(); ++i) {
-      std::wstring utf16 = utf8ToUtf16(g_utf8TestStrings[i]);
-      std::string utf8 = utf16ToUtf8(utf16);
+      std::wstring utf16 = Utf8ToUtf16(g_utf8TestStrings[i]);
+      std::string utf8 = Utf16ToUtf8(utf16);
       Assert::IsTrue(utf8 == g_utf8TestStrings[i]);
     }
   }
@@ -101,10 +101,10 @@ TEST_CLASS(UnicodeConversionTest) {
         Assert::IsTrue(utf8Original[i] == utf8Bom[i]);
       }
 
-      std::wstring utf16 = utf8ToUtf16(utf8Original);
+      std::wstring utf16 = Utf8ToUtf16(utf8Original);
       Assert::IsTrue(utf16[0] == utf16Bom);
 
-      std::string utf8 = utf16ToUtf8(utf16);
+      std::string utf8 = Utf16ToUtf8(utf16);
       Assert::IsTrue(utf8 == utf8Original);
     }
   }

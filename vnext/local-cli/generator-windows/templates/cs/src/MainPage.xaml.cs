@@ -23,7 +23,12 @@ namespace <%=ns%>
   /// </summary>
   public sealed partial class MainPage : Page
   {
+#if BUNDLE    
+    const string JSFILENAME = "index.windows";
+#else    
     const string JSFILENAME = "index";
+#endif
+
     const string JSCOMPONENTNAME = "<%=name%>";
 
     public MainPage()
@@ -35,8 +40,14 @@ namespace <%=ns%>
     private void LoadReact()
     {
       InstanceSettings settings;
+
+#if BUNDLE      
+      settings.UseWebDebugger = false;
+      settings.UseLiveReload = false;
+#else      
       settings.UseWebDebugger = true;
       settings.UseLiveReload = true;
+#endif      
 
       var instance = Instance.Create(JSFILENAME);
 

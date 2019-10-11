@@ -26,6 +26,7 @@ class ExpressionAnimationStore;
 
 typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;
+typedef unsigned int DebuggerAttachCallbackCookie;
 
 struct ReactInstanceSettings {
   bool UseWebDebugger{false};
@@ -66,6 +67,11 @@ struct IReactInstance {
       std::function<void()> callback) = 0;
   virtual void UnregisterErrorCallback(ErrorCallbackCookie &cookie) = 0;
 
+  virtual DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(
+      std::function<void()> callback) = 0;
+  virtual void UnRegisterDebuggerAttachCallback(
+      DebuggerAttachCallbackCookie &cookie) = 0;
+
   virtual void DispatchEvent(
       int64_t viewTag,
       std::string eventName,
@@ -96,6 +102,7 @@ struct IReactInstance {
       noexcept = 0;
 
   virtual bool IsInError() const noexcept = 0;
+  virtual bool IsWaitingForDebugger() const noexcept = 0;
   virtual const std::string &LastErrorMessage() const noexcept = 0;
 
   virtual void loadBundle(std::string &&jsBundleRelativePath) = 0;

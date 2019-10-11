@@ -7,7 +7,7 @@
 
 #include <winrt/Windows.ApplicationModel.Resources.Core.h>
 #include <winrt/Windows.Globalization.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace react {
 namespace uwp {
@@ -19,7 +19,7 @@ I18nModule::I18nModule() {
   auto langs = winrt::Windows::Globalization::ApplicationLanguages::Languages();
   if (langs.Size() > 0) {
     auto localHstring = langs.GetAt(0);
-    locale = facebook::react::unicode::utf16ToUtf8(localHstring);
+    locale = Microsoft::Common::Unicode::Utf16ToUtf8(localHstring);
 
     // Using Win32 api to avoid requiring UI Thread
     unsigned long reading_layout;

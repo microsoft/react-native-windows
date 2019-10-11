@@ -2,6 +2,82 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2019 22:15:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.26",
+      "version": "0.60.0-vnext.26",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add Common.vcxproj to CLI solutions",
+            "author": "kmelmon@microsoft.com",
+            "commit": "8311e49738c94a9682c8e4ecb054e870ff2f2b40"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Oct 2019 20:47:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.25",
+      "version": "0.60.0-vnext.25",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Narrator for Text when accessibilityLabel is not set",
+            "author": "licanhua@live.com",
+            "commit": "e8a9f2d6a75d812552ee5c0cb38d29341f261023"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support caretHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b6255479abbc300ec48d125038bdfe1fc688b77e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Oct 2019 10:21:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.24",
+      "version": "0.60.0-vnext.24",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add support for offline bundles",
+            "author": "kmelmon@microsoft.com",
+            "commit": "2bd8d285f148ffc11843902735ac66ce1b2d4a8c"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Enforce VCTargetsPath for v141.",
+            "author": "julio@rochsquadron.net",
+            "commit": "e2dd0fbb2c3a9f5c3c7f9cde0c17dfef9c92213b"
+          },
+          {
+            "comment": "Added 'Connecting to remote debugger' page",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "686b612e151a2dea2fecaaab4c994a379f343cdb"
+          },
+          {
+            "comment": "Add Common.vcxproj and move unicode.* and utilities.h into it.",
+            "author": "yicyao@microsoft.com",
+            "commit": "43ef742af7e981826609529e755f734f1c8e3f68"
+          },
+          {
+            "comment": "Move things in Common into the Microsoft namespace.",
+            "author": "yicyao@microsoft.com",
+            "commit": "17ffb067ea1ef05a9acae20548e32dd22ac25eef"
+          },
+          {
+            "comment": "Add missing ; to msbuild arg statement.",
+            "author": "julio@rochsquadron.net",
+            "commit": "eaa62948ede5c1658c5ec0c6bec3424fea401cbc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Oct 2019 18:17:42 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.23",
       "version": "0.60.0-vnext.23",

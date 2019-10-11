@@ -10,8 +10,8 @@
 #include <folly/dynamic.h>
 #include <folly/json.h>
 
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -49,7 +49,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(
             reader.ReadBytes(data);
 
             std::string str(
-                facebook::react::utilities::checkedReinterpretCast<char *>(
+                Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(
                     data.data()),
                 data.size());
             OnMessageReceived(str);
@@ -57,7 +57,7 @@ WebSocketJSExecutor::WebSocketJSExecutor(
             OnHitError("Unexpected MessageType from MessageWebSocket.");
           }
         } catch (winrt::hresult_error const &e) {
-          OnHitError(facebook::react::unicode::utf16ToUtf8(
+          OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(
               e.message().c_str(), e.message().size()));
         } catch (std::exception &e) {
           OnHitError(e.what());
@@ -195,41 +195,69 @@ void WebSocketJSExecutor::OnHitError(std::string message) {
   SetState(State::Error);
 }
 
+void WebSocketJSExecutor::OnWaitingForDebugger() {
+  SetState(State::Waiting);
+  PollPrepareJavaScriptRuntime();
+  if (m_waitingForDebuggerCallback != nullptr)
+    m_waitingForDebuggerCallback();
+}
+
+void WebSocketJSExecutor::OnDebuggerAttach() {
+  SetState(State::Running);
+  if (m_debuggerAttachCallback != nullptr)
+    m_debuggerAttachCallback();
+}
+
 winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(
     const std::string &webSocketServerUrl,
-    const std::function<void(std::string)> &errorCallback) {
+    const std::function<void(std::string)> &errorCallback,
+    const std::function<void()> &waitingForDebuggerCallback,
+    const std::function<void()> &debuggerAttachCallback) {
   m_errorCallback = errorCallback;
+  m_debuggerAttachCallback = debuggerAttachCallback;
+  m_waitingForDebuggerCallback = waitingForDebuggerCallback;
 
   winrt::Windows::Foundation::Uri uri(
-      facebook::react::unicode::utf8ToUtf16(webSocketServerUrl));
+      Microsoft::Common::Unicode::Utf8ToUtf16(webSocketServerUrl));
   co_await m_socket.ConnectAsync(uri);
 
   SetState(State::Connected);
 
-  if (PrepareJavaScriptRuntime()) {
+  if (PrepareJavaScriptRuntime(250)) {
     SetState(State::Running);
   } else {
-    OnHitError(
-        "Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
+    m_state = State::Waiting;
+    OnWaitingForDebugger();
   }
 }
 
-bool WebSocketJSExecutor::PrepareJavaScriptRuntime() {
-  auto timeout = std::chrono::milliseconds(250);
+bool WebSocketJSExecutor::PrepareJavaScriptRuntime(int milliseconds) {
+  auto timeout = std::chrono::milliseconds(milliseconds);
 
-  for (uint32_t retries = 20; retries > 0; --retries) {
-    int requestId = ++m_requestId;
+  int requestId = ++m_requestId;
 
-    folly::dynamic request =
-        folly::dynamic::object("id", requestId)("method", "prepareJSRuntime");
-    std::string str = folly::toJson(request);
+  folly::dynamic request =
+      folly::dynamic::object("id", requestId)("method", "prepareJSRuntime");
+  std::string str = folly::toJson(request);
 
-    if (SendMessageAsync(requestId, std::move(str)).wait_for(timeout) ==
-        std::future_status::ready) {
-      return true;
+  return SendMessageAsync(requestId, std::move(str)).wait_for(timeout) ==
+      std::future_status::ready;
+}
+
+void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
+  m_messageQueueThread->runOnQueue([this]() {
+    auto timeout = std::chrono::milliseconds(750);
+
+    for (uint32_t retries = 20; retries > 0; --retries) {
+      if (PrepareJavaScriptRuntime(750)) {
+        OnDebuggerAttach();
+        return;
+      }
     }
-  }
-  return false;
+
+    OnHitError(
+        "Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
+  });
 }
 
 std::future<std::string> WebSocketJSExecutor::SendMessageAsync(
@@ -244,9 +272,9 @@ std::future<std::string> WebSocketJSExecutor::SendMessageAsync(
         winrt::Windows::Networking::Sockets::SocketMessageType::Utf8);
 
     winrt::array_view<const uint8_t> arr(
-        facebook::react::utilities::checkedReinterpretCast<const uint8_t *>(
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
             message.c_str()),
-        facebook::react::utilities::checkedReinterpretCast<const uint8_t *>(
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
             message.c_str()) +
             message.length());
     m_socketDataWriter.WriteBytes(arr);
