@@ -2,6 +2,32 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2019 17:23:14 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.201",
+      "version": "0.59.0-vnext.201",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Extending Flyout shadow fix to support Popups",
+            "author": "kenander@microsoft.com",
+            "commit": "938708918336b230d095b93fd185a0635459d71b"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Merge from azure/pipes/uwptov141.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "ba6a8c4ac1957248977ae150cff1a314ec14473d"
+          },
+          {
+            "comment": "Add missing ; to msbuild arg statement.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a9aeb46ce5ba22bdf4f7827b5c89358fa1b4e02b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2019 23:36:58 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.200",
       "version": "0.59.0-vnext.200",
