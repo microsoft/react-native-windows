@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 //
 // App.xaml.h
@@ -9,6 +9,12 @@
 
 #include "App.g.h"
 
+namespace react {
+    namespace uwp {
+        struct IReactInstanceCreator;
+    } // namespace uwp
+}
+
 namespace Playground {
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application
@@ -18,6 +24,10 @@ ref class App sealed {
  protected:
   virtual void OnLaunched(
       Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^
+      e) override;
+
+  virtual void OnBackgroundActivated(
+      Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs ^
       e) override;
 
   internal : App();

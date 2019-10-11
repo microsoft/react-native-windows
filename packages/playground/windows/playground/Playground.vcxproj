@@ -78,7 +78,9 @@
       <DependentUpon>HostingPane.xaml</DependentUpon>
     </ClInclude>
     <ClInclude Include="NativeModules\HeadlessJsTaskSupport.h" />
+    <ClInclude Include="HeadlessReactInstanceCreator.h" />
     <ClInclude Include="NativeModules\SampleCxxModule.h" />
+    <ClInclude Include="NativeModules\SampleNativeModuleProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -126,7 +128,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="NativeModules\HeadlessJsTaskSupport.cpp" />
+    <ClCompile Include="HeadlessReactInstanceCreator.cpp" />
     <ClCompile Include="NativeModules\SampleCxxModule.cpp" />
+    <ClCompile Include="NativeModules\SampleNativeModuleProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

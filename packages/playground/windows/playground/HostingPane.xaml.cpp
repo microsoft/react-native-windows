@@ -7,9 +7,9 @@
 
 #include "pch.h"
 
+#include "HeadlessReactInstanceCreator.h"
 #include "HostingPane.xaml.h"
-#include "NativeModules/HeadlessJsTaskSupport.h"
-#include "NativeModules/SampleCxxModule.h"
+#include "NativeModules/SampleNativeModuleProvider.h"
 
 #include <ReactUWP/ReactUwp.h>
 #include <ViewManager.h>
@@ -69,31 +69,6 @@ void EnsureExportedFunctions(bool createThings) {
   }
 }
 
-class SampleNativeModuleProvider final
-    : public facebook::react::NativeModuleProvider {
- public:
-  virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread) override {
-    // Note The defaultQueueThread is the UI Thread Queue.
-    // For maximum app responsive-ness prefer to put modules on a WorkerThreadQueue, unless the UI Thread is required.
-
-    std::vector<facebook::react::NativeModuleDescription> modules;
-
-    modules.emplace_back(
-        SampleCxxModule::Name,
-        []() { return std::make_unique<SampleCxxModule>(); },
-        react::uwp::CreateWorkerMessageQueue());
-
-    modules.emplace_back(
-        HeadlessJsTaskSupport::Name,
-        []() { return std::make_unique<HeadlessJsTaskSupport>(); },
-        react::uwp::CreateWorkerMessageQueue());
-
-    return modules;
-  }
-};
-
 class SampleViewManagerProvider final : public react::uwp::ViewManagerProvider {
  public:
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
@@ -149,6 +124,11 @@ HostingPane::HostingPane() {
   LoadFilenameSettings();
 
   m_instanceCreator = std::make_shared<HostingPaneReactInstanceCreator>(this);
+
+  if (x_JavaScriptFilename->SelectedItem->ToString() ==
+      L"Samples\\headlessjs") {
+    m_instanceCreator = HeadlessReactInstanceCreator::get();
+  }
 }
 
 void HostingPane::AddPaneCommand::set(ICommand ^ value) {

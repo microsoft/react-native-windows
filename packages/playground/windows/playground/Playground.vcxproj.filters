@@ -33,6 +33,10 @@
     <ClCompile Include="NativeModules\SampleCxxModule.cpp">
       <Filter>NativeModules</Filter>
     </ClCompile>
+    <ClCompile Include="NativeModules\SampleNativeModuleProvider.cpp">
+      <Filter>NativeModules</Filter>
+    </ClCompile>
+    <ClCompile Include="HeadlessReactInstanceCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -49,6 +53,10 @@
     <ClInclude Include="NativeModules\SampleCxxModule.h">
       <Filter>NativeModules</Filter>
     </ClInclude>
+    <ClInclude Include="NativeModules\SampleNativeModuleProvider.h">
+      <Filter>NativeModules</Filter>
+    </ClInclude>
+    <ClInclude Include="HeadlessReactInstanceCreator.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
