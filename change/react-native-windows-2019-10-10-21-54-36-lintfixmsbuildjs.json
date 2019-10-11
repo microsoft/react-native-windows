@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Add missing ; to msbuild arg statement.",
+  "packageName": "react-native-windows",
+  "email": "julio@rochsquadron.net",
+  "commit": "eaa62948ede5c1658c5ec0c6bec3424fea401cbc",
+  "date": "2019-10-11T04:54:36.296Z",
+  "file": "D:\\Extra\\react\\windows\\azp\\change\\react-native-windows-2019-10-10-21-54-36-lintfixmsbuildjs.json"
+}
