@@ -253,16 +253,17 @@ jobs:
   - job: CliInit
     displayName: Verify react-native init
     dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    vsComponents: $(VsComponents)
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )    
     strategy:
       matrix:
         DebugCs:
           language: cs
           configuration: Debug
+          vsComponents: $(VsComponents)
         DebugCpp:
           language: cpp
           configuration: Debug
+          vsComponents: $(VsComponents)
 #        DebugBundleCpp:
 #          language: cpp
 #          configuration: DebugBundle
