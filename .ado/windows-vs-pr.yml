@@ -8,12 +8,13 @@ pr:
 
 variables:
   # General / Default
-  VmImage: windows-2019
+  VmImage: vs2017-win2016
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
-  MSBuildPlatformToolset: v142
+  MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 jobs:
   - job: Setup
@@ -24,6 +25,7 @@ jobs:
         inputs:
           targetType: filePath
           filePath: .ado/shouldSkipPRBuild.ps1
+
   - job: RNWUniversalPR
     displayName: Universal PR
     dependsOn: Setup
@@ -63,16 +65,24 @@ jobs:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
+
     steps:
       - checkout: self
         clean: false
         submodules: false
+
+      # #TODO: Remove
+      # - powershell: |
+      #     ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
 
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
           yarnBuildCmd: buildci
           project: vnext/ReactWindows-Universal.sln
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          msbuildArguments:
+#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -163,19 +173,22 @@ jobs:
 
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
       Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
-      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-      VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150'
+      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
+      # VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
       - checkout: self
         clean: false
         submodules: false
+
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          testPlatformVersion: 16.3.0
 
       - template: templates/build-rnw.yml
         parameters:
@@ -183,9 +196,10 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           platformToolset: v141
           vsComponents: $(VsComponents)
-          msbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build"
+          msbuildArguments:
+            /p:RNW_PKG_VERSION_STR="Private Build"
             /p:RNW_PKG_VERSION="1000,0,0,0"
-            /p:VCTargetsPath="$(VCTargetsPath)"
+#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -202,6 +216,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
 
       - template: templates/stop-packagers.yml
 
@@ -224,6 +239,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
 
       - template: templates/stop-packagers.yml
 
@@ -238,20 +254,21 @@ jobs:
     displayName: Verify react-native init
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    vsComponents: $(VsComponents)
     strategy:
       matrix:
         DebugCs:
           language: cs
           configuration: Debug
-        DebugBundleCs:
-          language: cs
-          configuration: DebugBundle
         DebugCpp:
           language: cpp
           configuration: Debug
-        DebugBundleCpp:
-          language: cpp
-          configuration: DebugBundle
+#        DebugBundleCpp:
+#          language: cpp
+#          configuration: DebugBundle
+#        DebugBundleCs:
+#          language: cs
+#          configuration: DebugBundle
 
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -330,7 +347,7 @@ jobs:
         #  UTTestOutputConfigDir: Release
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:
@@ -383,6 +400,18 @@ jobs:
           script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
           workingDirectory: current
 
+      - template: templates\install-SDK.yml
+
+      - task: PowerShell@2
+        displayName: Install Visual Studio dependencies
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+          arguments:
+            -InstallerUri https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe
+            -Components $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.AR
+        condition: and(ne(variables['VsComponents'], ''), eq(variables['VmImage'], 'windows-2019'))
+
       - task: MSBuild@1
         displayName: MSBuild
         inputs:
@@ -398,6 +427,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:TargetPlatformVersion=$(TargetPlatformVersion)
             /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
+#            /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
           #clean: true # Optional
           #maximumCpuCount: false # Optional
           #restoreNugetPackages: false # Optional
@@ -440,9 +470,10 @@ jobs:
     parameters:
       name: E2ETest
       pool:
-        vmImage: $(VmImage)
+        vmImage: windows-2019
       BuildPlatform: x64
       UseRNFork: true
+      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

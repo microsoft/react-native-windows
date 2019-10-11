@@ -8,7 +8,7 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include "../ReactWindowsCore/Utils.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 using namespace facebook::xplat;
 using namespace folly;
@@ -55,7 +55,7 @@ WebSocketModule::getMethods() {
               dynamic headersDynamic = optionsDynamic["headers"];
               for (const auto &header : headersDynamic.items()) {
                 options.emplace(
-                    facebook::react::unicode::utf8ToUtf16(
+                    Microsoft::Common::Unicode::Utf8ToUtf16(
                         header.first.getString()),
                     header.second.getString());
               }

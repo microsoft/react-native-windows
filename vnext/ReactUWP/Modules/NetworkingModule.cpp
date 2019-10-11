@@ -10,8 +10,8 @@
 #include "NetworkingModule.h"
 
 #include <future>
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4146)
@@ -132,7 +132,7 @@ winrt::fire_and_forget SendRequestAsync(
         std::vector<uint8_t> data(len);
         reader.ReadBytes(data);
         std::string responseData = std::string(
-            facebook::react::utilities::checkedReinterpretCast<char *>(
+            Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(
                 data.data()),
             data.size());
 
@@ -142,7 +142,7 @@ winrt::fire_and_forget SendRequestAsync(
         winrt::hstring data = winrt::Windows::Security::Cryptography::
             CryptographicBuffer::EncodeToBase64String(buffer);
         std::string responseData =
-            facebook::react::unicode::utf16ToUtf8(std::wstring_view(data));
+            Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view(data));
 
         networking->OnDataReceived(requestId, std::move(responseData));
       }
@@ -182,8 +182,8 @@ void NetworkingModule::NetworkingHelper::FillHeadersMap(
     winrt::Windows::Foundation::Collections::
         IMap<winrt::hstring, winrt::hstring> headers) {
   for (const auto &header : headers) {
-    auto name = facebook::react::unicode::utf16ToUtf8(header.Key());
-    auto value = facebook::react::unicode::utf16ToUtf8(header.Value());
+    auto name = Microsoft::Common::Unicode::Utf16ToUtf8(header.Key());
+    auto value = Microsoft::Common::Unicode::Utf16ToUtf8(header.Value());
     if (headersMap.count(name) == 0) {
       headersMap[name] = value;
     } else {
@@ -204,7 +204,7 @@ void NetworkingModule::NetworkingHelper::OnResponseReceived(
       requestId,
       static_cast<int64_t>(response.StatusCode()),
       headers,
-      facebook::react::unicode::utf16ToUtf8(
+      Microsoft::Common::Unicode::Utf16ToUtf8(
           response.RequestMessage().RequestUri().AbsoluteUri()));
 
   sendEvent("didReceiveNetworkResponse", std::move(receiveArgs));
@@ -243,7 +243,7 @@ void AttachContentHeaders(
     content.Headers().ContentType(contentType);
   if (!contentEncoding.empty())
     content.Headers().ContentEncoding().ParseAdd(
-        facebook::react::unicode::utf8ToUtf16(contentEncoding));
+        Microsoft::Common::Unicode::Utf8ToUtf16(contentEncoding));
 }
 
 void AttachMultipartHeaders(
@@ -254,8 +254,8 @@ void AttachMultipartHeaders(
     auto &value = header.second.getString();
 
     content.Headers().Append(
-        facebook::react::unicode::utf8ToUtf16(name),
-        facebook::react::unicode::utf8ToUtf16(value));
+        Microsoft::Common::Unicode::Utf8ToUtf16(name),
+        Microsoft::Common::Unicode::Utf8ToUtf16(value));
   }
 }
 
@@ -279,9 +279,9 @@ void NetworkingModule::NetworkingHelper::SendRequest(
 
   try {
     winrt::Windows::Web::Http::HttpMethod httpMethod(
-        facebook::react::unicode::utf8ToUtf16(method));
+        Microsoft::Common::Unicode::Utf8ToUtf16(method));
     winrt::Windows::Foundation::Uri uri(
-        facebook::react::unicode::utf8ToUtf16(url));
+        Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
     winrt::Windows::Web::Http::HttpRequestMessage request(httpMethod, uri);
 
@@ -297,17 +297,17 @@ void NetworkingModule::NetworkingHelper::SendRequest(
         if (_stricmp(name.c_str(), "content-type") == 0)
           winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue::
               TryParse(
-                  facebook::react::unicode::utf8ToUtf16(value), contentType);
+                  Microsoft::Common::Unicode::Utf8ToUtf16(value), contentType);
         else if (_stricmp(name.c_str(), "content-encoding") == 0)
           contentEncoding = value;
         else if (_stricmp(name.c_str(), "authorization") == 0)
           request.Headers().TryAppendWithoutValidation(
-              facebook::react::unicode::utf8ToUtf16(name),
-              facebook::react::unicode::utf8ToUtf16(value));
+              Microsoft::Common::Unicode::Utf8ToUtf16(name),
+              Microsoft::Common::Unicode::Utf8ToUtf16(value));
         else
           request.Headers().Append(
-              facebook::react::unicode::utf8ToUtf16(name),
-              facebook::react::unicode::utf8ToUtf16(value));
+              Microsoft::Common::Unicode::Utf8ToUtf16(name),
+              Microsoft::Common::Unicode::Utf8ToUtf16(value));
       }
     }
 
@@ -315,21 +315,22 @@ void NetworkingModule::NetworkingHelper::SendRequest(
       winrt::Windows::Web::Http::IHttpContent content(nullptr);
       if (!bodyData["string"].empty()) {
         winrt::Windows::Web::Http::HttpStringContent contentString(
-            facebook::react::unicode::utf8ToUtf16(
+            Microsoft::Common::Unicode::Utf8ToUtf16(
                 bodyData["string"].asString()));
         content = contentString;
       } else if (!bodyData["base64"].empty()) {
         // base64 encoding binary request
         auto buffer =
             winrt::Windows::Security::Cryptography::CryptographicBuffer::
-                DecodeFromBase64String(facebook::react::unicode::utf8ToUtf16(
+                DecodeFromBase64String(Microsoft::Common::Unicode::Utf8ToUtf16(
                     bodyData["base64"].asString()));
         winrt::Windows::Web::Http::HttpBufferContent contentBase64(buffer);
         content = contentBase64;
       } else if (!bodyData["uri"].empty()) {
         // file content request
         winrt::Windows::Foundation::Uri uri(
-            facebook::react::unicode::utf8ToUtf16(bodyData["uri"].asString()));
+            Microsoft::Common::Unicode::Utf8ToUtf16(
+                bodyData["uri"].asString()));
         winrt::Windows::Storage::StorageFile file =
             winrt::Windows::Storage::StorageFile::
                 GetFileFromApplicationUriAsync(uri)
@@ -345,13 +346,13 @@ void NetworkingModule::NetworkingHelper::SendRequest(
         for (auto &formDataPart : formData) {
           if (!formDataPart["string"].empty()) {
             winrt::Windows::Web::Http::HttpStringContent multipartStringValue{
-                facebook::react::unicode::utf8ToUtf16(
+                Microsoft::Common::Unicode::Utf8ToUtf16(
                     formDataPart["string"].asString())};
             AttachMultipartHeaders(
                 multipartStringValue, formDataPart["headers"]);
             multiPartContent.Add(
                 multipartStringValue,
-                facebook::react::unicode::utf8ToUtf16(
+                Microsoft::Common::Unicode::Utf8ToUtf16(
                     formDataPart["fieldName"].asString()));
           } else if (!formDataPart["uri"].empty()) {
             auto filePath = winrt::to_hstring(formDataPart["uri"].asString());
@@ -366,7 +367,7 @@ void NetworkingModule::NetworkingHelper::SendRequest(
             AttachMultipartHeaders(multipartFileValue, formDataPart["headers"]);
             multiPartContent.Add(
                 multipartFileValue,
-                facebook::react::unicode::utf8ToUtf16(
+                Microsoft::Common::Unicode::Utf8ToUtf16(
                     formDataPart["fieldName"].asString()));
           }
         }

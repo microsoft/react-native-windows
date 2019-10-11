@@ -2,8 +2,8 @@
 
 #include "JsiRuntimeUnitTests.h"
 
+#include <Utilities.h>
 #include <jsi/jsi.h>
-#include <utilities.h>
 
 #include <gtest/gtest.h>
 
@@ -20,7 +20,7 @@
 #include <unordered_set>
 
 using namespace facebook::jsi;
-using namespace facebook::react::utilities;
+using namespace Microsoft::Common::Utilities;
 
 TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
