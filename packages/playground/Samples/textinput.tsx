@@ -48,6 +48,11 @@ export default class Bootstrap extends React.Component<{}, any> {
         />
         <TextInput
           style={styles.input}
+          caretHidden={true}
+          placeholder={'caretHidden'}
+        />
+        <TextInput
+          style={styles.input}
           keyboardType="number-pad"
           placeholder={'number-pad keyboardType'}
         />
@@ -86,12 +91,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   input: {
-    margin: 15,
-    height: 80,
+    margin: 5,
+    height: 40,
     width: 700,
     borderColor: '#7a42f4',
     borderWidth: 1,
-    fontSize: 40,
+    fontSize: 15,
   },
 });
 
