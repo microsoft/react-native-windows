@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 11 Oct 2019 20:47:08 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Oct 2019 22:15:37 GMT and should not be manually modified.
 
+## 0.60.0-vnext.26
+Fri, 11 Oct 2019 22:15:37 GMT
+
+### Changes
+
+- add Common.vcxproj to CLI solutions (kmelmon@microsoft.com)
 ## 0.60.0-vnext.25
 Fri, 11 Oct 2019 20:47:08 GMT
 

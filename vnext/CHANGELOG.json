@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2019 22:15:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.26",
+      "version": "0.60.0-vnext.26",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add Common.vcxproj to CLI solutions",
+            "author": "kmelmon@microsoft.com",
+            "commit": "8311e49738c94a9682c8e4ecb054e870ff2f2b40"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Oct 2019 20:47:08 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.25",
       "version": "0.60.0-vnext.25",

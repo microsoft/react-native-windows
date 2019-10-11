@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add Common.vcxproj to CLI solutions",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "8311e49738c94a9682c8e4ecb054e870ff2f2b40",
-  "date": "2019-10-11T20:58:55.630Z"
-}
