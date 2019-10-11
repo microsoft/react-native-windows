@@ -284,16 +284,6 @@ jobs:
           configuration: Debug
           vsComponents: $(VsComponents)
 
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
-    steps:
-      - template: templates/react-native-init.yml
-        parameters:
-          version: 0.60.6
-          platform: x64
-
   - job: RNWFormatting
     displayName: Verify change files + formatting
     dependsOn: Setup
