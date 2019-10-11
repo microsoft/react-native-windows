@@ -9,7 +9,7 @@ parameters:
   msbuildVersion: 16.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
-  platformToolset: v142
+  platformToolset: v141
   targetPlatformVersion: 10.0.18362.0
   msbuildArguments: ''
   yarnBuildCmd: build
@@ -42,6 +42,12 @@ steps:
     condition: and(succeeded(), not('${{parameters.useRnFork}}'))
 
   - task: CmdLine@2
+    displayName: Fix any extraneous escaping sequences
+    inputs:
+      workingDirectory: $(Build.SourcesDirectory)/vnext
+      script: yarn lint:fix
+
+  - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}
@@ -56,6 +62,8 @@ steps:
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
+  - template: install-SDK.yml
+
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
@@ -65,7 +73,7 @@ steps:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: ne('${{parameters.vsComponents}}', '')
+    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
   - task: MSBuild@1
     displayName: MSBuild ${{parameters.project}}

@@ -4,6 +4,8 @@ parameters:
   version:
   platform:
   configuration:
+  vsComponents: ''
+  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -18,6 +20,12 @@ steps:
     displayName: yarn install (local react-native-windows)
     inputs:
       script: yarn install --frozen-lockfile
+
+  - task: CmdLine@2
+    displayName: Fix any extraneous escaping sequences
+    inputs:
+      workingDirectory: $(Build.SourcesDirectory)/vnext
+      script: yarn lint:fix
 
   - task: CmdLine@2
     displayName: yarn build (local react-native-windows)
@@ -62,6 +70,18 @@ steps:
       command: restore
       restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
+  - template: install-SDK.yml
+
+  - task: PowerShell@2
+    displayName: Install Visual Studio dependencies
+    inputs:
+      targetType: filePath
+      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+      arguments:
+        -InstallerUri ${{ parameters.vsInstallerUri }}
+        -Components ${{ parameters.vsComponents }}
+    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
+
   - task: MSBuild@1
     displayName: MSBuild - testcli
     inputs:
@@ -74,6 +94,8 @@ steps:
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
+#        /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150"
+
       clean: true # Optional
 
   - task: CmdLine@2
