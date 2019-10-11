@@ -110,7 +110,7 @@ class TextInputShadowNode : public ShadowNodeBase {
  private:
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
-  void UpdateCaret();
+  void HideCaretIfNeeded();
   winrt::Shape FindCaret(winrt::DependencyObject element);
 
   bool m_shouldClearTextOnFocus = false;
@@ -250,7 +250,7 @@ void TextInputShadowNode::registerEvents() {
             control.as<winrt::PasswordBox>().SelectAll();
           }
         }
-        UpdateCaret();
+        HideCaretIfNeeded();
 
         auto instance = wkinstance.lock();
         folly::dynamic eventData = folly::dynamic::object("target", tag);
@@ -335,7 +335,7 @@ void TextInputShadowNode::registerEvents() {
                 }
               });
         }
-        UpdateCaret();
+        HideCaretIfNeeded();
       });
 
   if (control.try_as<winrt::IUIElement7>()) {
@@ -382,15 +382,15 @@ winrt::Shape TextInputShadowNode::FindCaret(winrt::DependencyObject element) {
 }
 
 // hacking solution to hide the caret
-void TextInputShadowNode::UpdateCaret() {
-  auto control = GetView().as<winrt::Control>();
-  auto caret = FindCaret(control);
-
-  if (caret != nullptr && m_hideCaret) {
-    caret.CompositeMode(
-        winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
-    winrt::SolidColorBrush transparentColor(winrt::Colors::Transparent());
-    caret.Fill(transparentColor);
+void TextInputShadowNode::HideCaretIfNeeded() {
+  if (m_hideCaret) {
+    auto control = GetView().as<winrt::Control>();
+    if (auto caret = FindCaret(control)) {
+      caret.CompositeMode(
+          winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
+      winrt::SolidColorBrush transparentColor(winrt::Colors::Transparent());
+      caret.Fill(transparentColor);
+    }
   }
 }
 
@@ -431,7 +431,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "caretHidden") {
       if (propertyValue.isBool()) {
         m_hideCaret = propertyValue.asBool();
-        UpdateCaret();
+        HideCaretIfNeeded();
       }
     } else if (propertyName == "secureTextEntry") {
       if (propertyValue.isBool()) {
