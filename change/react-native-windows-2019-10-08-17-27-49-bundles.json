@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add support for offline bundles",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "2bd8d285f148ffc11843902735ac66ce1b2d4a8c",
-  "date": "2019-10-09T00:27:49.665Z"
-}
