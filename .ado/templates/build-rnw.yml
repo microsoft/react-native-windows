@@ -42,6 +42,12 @@ steps:
     condition: and(succeeded(), not('${{parameters.useRnFork}}'))
 
   - task: CmdLine@2
+    displayName: Fix any extraneous escaping sequences
+    inputs:
+      workingDirectory: $(Build.SourcesDirectory)/vnext
+      script: yarn lint:fix
+
+  - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}

@@ -4,12 +4,14 @@ parameters:
   pool:
   BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
+  vsComponents: ''
+  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
 
 jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
     pool: ${{ parameters.pool }}
-    timeoutInMinutes: 120 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
       - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -49,11 +51,25 @@ jobs:
       - template: stop-packagers.yml
 
       - task: CmdLine@2
+        displayName: Fix any extraneous escaping sequences
+        inputs:
+          workingDirectory: $(Build.SourcesDirectory)/vnext
+          script: yarn lint:fix
+
+      - task: CmdLine@2
         displayName: yarn build
         inputs:
           script: yarn build
 
-      - template: install-SDK.yml
+      - task: PowerShell@2
+        displayName: Install Visual Studio dependencies
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+          arguments:
+            -InstallerUri ${{ parameters.vsInstallerUri }}
+            -Components ${{ parameters.vsComponents }}
+        condition: ne('${{parameters.vsComponents}}', '')
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp

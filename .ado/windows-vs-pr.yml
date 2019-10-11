@@ -15,6 +15,7 @@ variables:
   MSBuildPreferredToolArchitecture: x64
   MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
+  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 stages:
   - stage: SetupStage
@@ -83,6 +84,8 @@ stages:
               useRnFork: $(UseRNFork)
               yarnBuildCmd: buildci
               project: vnext/ReactWindows-Universal.sln
+              vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+              msbuildArguments:
 
           - template: templates/publish-build-artifacts-for-nuget.yml
             parameters:
@@ -171,7 +174,7 @@ stages:
 
         pool:
           vmImage: $(VmImage)
-        timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+        timeoutInMinutes: 60 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
         variables:
@@ -394,7 +397,7 @@ stages:
             #  UTTestOutputConfigDir: Release
         pool:
           vmImage: $(VmImage)
-        timeoutInMinutes: 15 # how long to run the job before automatically cancelling
+        timeoutInMinutes: 30 # how long to run the job before automatically cancelling
         cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
         steps:
@@ -448,6 +451,16 @@ stages:
               workingDirectory: current
 
           - template: templates\install-SDK.yml
+
+          - task: PowerShell@2
+            displayName: Install Visual Studio dependencies
+            inputs:
+              targetType: filePath
+              filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+              arguments:
+                -InstallerUri https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe
+                -Components $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.AR
+            condition: and(ne(variables['VsComponents'], ''), eq(variables['VmImage'], 'windows-2019'))
 
           - task: MSBuild@1
             displayName: MSBuild
@@ -506,9 +519,10 @@ stages:
         parameters:
           name: E2ETest
           pool:
-            vmImage: $(VmImage)
+            vmImage: windows-2019
           BuildPlatform: x64
           UseRNFork: true
+          vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
   - stage:
     displayName: Pack
