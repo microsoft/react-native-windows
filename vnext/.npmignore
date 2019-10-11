@@ -7,7 +7,7 @@
 api-extractor.json
 build
 CMakeLists.txt
-Desktop
+/Desktop
 Desktop.Dll
 Desktop.IntegrationTests
 Desktop.UnitTests

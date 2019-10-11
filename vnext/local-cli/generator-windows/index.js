@@ -70,6 +70,7 @@ function copyProjectTemplateAndReplace(
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
   createDir(path.join(destPath, windowsDir, newProjectName, reactAssetsDir));
+  createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
 
   const language = options.language;
   const ns = options.ns || newProjectName;
@@ -100,8 +101,9 @@ function copyProjectTemplateAndReplace(
   ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
   if (language === 'cs') {
-    [      
+    [
       { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
+      { from: path.join(srcPath, projDir, 'BundleBuilder.vcxproj'), to: path.join(windowsDir, newProjectName, 'BundleBuilder', 'BundleBuilder.vcxproj') },
     ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
   }
   else {

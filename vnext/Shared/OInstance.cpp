@@ -12,7 +12,7 @@
 #if !defined(OSS_RN)
 #include <cxxreact/Platform.h>
 #endif
-#include "unicode.h"
+#include "Unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"
 #include "../Chakra/ChakraUtils.h"
@@ -56,7 +56,7 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 
 // foreward declaration.
 namespace facebook {
@@ -106,7 +106,7 @@ std::string GetJSBundleDirectory(
       return jsBundleRelativePath;
 
     std::string jsBundlePath =
-        facebook::react::unicode::utf16ToUtf8(modulePath, wcslen(modulePath));
+        Microsoft::Common::Unicode::Utf16ToUtf8(modulePath, wcslen(modulePath));
     if (!jsBundlePath.empty() && jsBundlePath.back() != '\\')
       jsBundlePath += '\\';
 
@@ -157,7 +157,8 @@ std::string GetJSBundleFilePath(
 }
 
 bool GetLastWriteTime(const std::string &fileName, uint64_t &result) noexcept {
-  std::wstring fileNameUtf16 = facebook::react::unicode::utf8ToUtf16(fileName);
+  std::wstring fileNameUtf16 =
+      Microsoft::Common::Unicode::Utf8ToUtf16(fileName);
 
   std::unique_ptr<void, decltype(&CloseHandle)> handle{
       CreateFileW(
@@ -502,7 +503,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   m_devSettings,
-                  jsQueue,
+                  m_jsThread,
                   std::move(scriptStore),
                   std::move(preparedScriptStore));
           break;
@@ -514,8 +515,8 @@ InstanceImpl::InstanceImpl(
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
-              std::make_shared<ChakraJSIRuntimeHolder>(
-                  m_devSettings, jsQueue, nullptr, nullptr);
+              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+                  m_devSettings, m_jsThread, nullptr, nullptr);
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(

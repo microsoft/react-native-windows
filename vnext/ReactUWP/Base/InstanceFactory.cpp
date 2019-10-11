@@ -9,7 +9,7 @@
 
 #include <ReactUWP/ReactRootView.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace react {
 namespace uwp {
@@ -54,7 +54,7 @@ CreateReactRootView(
     const wchar_t *pJsComponentName,
     const ReactInstanceCreator &instanceCreator) {
   // Convert input strings to std::string
-  std::string jsComponentName = facebook::react::unicode::utf16ToUtf8(
+  std::string jsComponentName = Microsoft::Common::Unicode::Utf16ToUtf8(
       pJsComponentName, wcslen(pJsComponentName));
 
   auto rootView = std::make_shared<react::uwp::ReactRootView>(parentView);

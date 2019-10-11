@@ -2,6 +2,193 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2019 10:21:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.24",
+      "version": "0.60.0-vnext.24",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add support for offline bundles",
+            "author": "kmelmon@microsoft.com",
+            "commit": "2bd8d285f148ffc11843902735ac66ce1b2d4a8c"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Enforce VCTargetsPath for v141.",
+            "author": "julio@rochsquadron.net",
+            "commit": "e2dd0fbb2c3a9f5c3c7f9cde0c17dfef9c92213b"
+          },
+          {
+            "comment": "Added 'Connecting to remote debugger' page",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "686b612e151a2dea2fecaaab4c994a379f343cdb"
+          },
+          {
+            "comment": "Add Common.vcxproj and move unicode.* and utilities.h into it.",
+            "author": "yicyao@microsoft.com",
+            "commit": "43ef742af7e981826609529e755f734f1c8e3f68"
+          },
+          {
+            "comment": "Move things in Common into the Microsoft namespace.",
+            "author": "yicyao@microsoft.com",
+            "commit": "17ffb067ea1ef05a9acae20548e32dd22ac25eef"
+          },
+          {
+            "comment": "Add missing ; to msbuild arg statement.",
+            "author": "julio@rochsquadron.net",
+            "commit": "eaa62948ede5c1658c5ec0c6bec3424fea401cbc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Oct 2019 18:17:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.23",
+      "version": "0.60.0-vnext.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add support for forever animations.",
+            "author": "stpete@microsoft.com",
+            "commit": "395ad50941a8d5bdaa1fd5dd38715acbf3d3eb06"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Oct 2019 15:13:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.22",
+      "version": "0.60.0-vnext.22",
+      "comments": {
+        "none": [
+          {
+            "comment": "minor adjustments to enable building react-native-win32.dll with the Office compiler",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2b46a701bb3f6a0fd0c069a78635da5d065455c"
+          },
+          {
+            "comment": "Reorganize ChakraRuntime functions for better readability.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5490fa52aa94ea059d92a50ab828d05d1a4388b5"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.5",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "574a2f3a55ae93514d2b362d3a1eaa68c46dabb4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Oct 2019 18:33:16 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.21",
+      "version": "0.60.0-vnext.21",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix UT script assemblies defaults.",
+            "author": "julio@rochsquadron.net",
+            "commit": "39c8a70f7db96c6e17345a40c8ca9faba420be1d"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "re-enable Chakra Core on UWP",
+            "author": "stecrain@microsoft.com",
+            "commit": "45d2336aa91e4842713b73ddd788fc1ad3b278ae"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Oct 2019 21:46:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.20",
+      "version": "0.60.0-vnext.20",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename ChakraJsiRuntime* to ChakraRuntime* and move them into Microsoft::JSI namespace.",
+            "author": "yicyao@microsoft.com",
+            "commit": "01197c0d210ec8fc1e740bfa87891bf3114c1967"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump V8 and Hermes JSI package versions",
+            "author": "tudorm@microsoft.com",
+            "commit": "03687c736e10aa54998572a706c7718ca8342f34"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Oct 2019 19:04:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.19",
+      "version": "0.60.0-vnext.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update ChakraCore to v1.11.13",
+            "author": "acoates@microsoft.com",
+            "commit": "965bf2e14e281623a8d54413b24467505ccbcd16"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Oct 2019 16:32:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.18",
+      "version": "0.60.0-vnext.18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.3",
+            "author": "acoates@microsoft.com",
+            "commit": "378ecaa3ff2eeb2a86263b2e1a3f4742002c3a77"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Oct 2019 22:17:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.17",
+      "version": "0.60.0-vnext.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "change file",
+            "author": "randyfl@microsoft.com",
+            "commit": "c8d5ae604e177fc6c119d2b1abd0448c09edfee7"
+          },
+          {
+            "comment": "Support contextMenuHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "18b68810d1f1687889909782e47750afe6f06b24"
+          },
+          {
+            "comment": "Remove react-native as a haste root, as all the files should be in react-native-windows",
+            "author": "acoates@microsoft.com",
+            "commit": "4c4387cd6198eb3ec61d6cfed60b88f775148db8"
+          },
+          {
+            "comment": "Connect DeviceInfo dimensions with root element",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "aab2b80b68fb5a98822013729cd38cb72b473d91"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Move JSI files into their own projects.",
+            "author": "yicyao@microsoft.com",
+            "commit": "53dba4bf45777df9d979f4fa5b001cb02e1577c5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Oct 2019 18:17:42 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.16",
       "version": "0.60.0-vnext.16",

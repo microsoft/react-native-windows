@@ -1,7 +1,58 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 01 Oct 2019 18:17:42 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Oct 2019 10:21:12 GMT and should not be manually modified.
 
+## 0.60.0-vnext.24
+Fri, 11 Oct 2019 10:21:12 GMT
+
+### Changes
+
+- add support for offline bundles (kmelmon@microsoft.com)
+## 0.60.0-vnext.23
+Wed, 09 Oct 2019 18:17:42 GMT
+
+### Changes
+
+- Add support for forever animations. (stpete@microsoft.com)
+## 0.60.0-vnext.22
+Wed, 09 Oct 2019 15:13:21 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.5 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.21
+Tue, 08 Oct 2019 18:33:16 GMT
+
+### Changes
+
+- re-enable Chakra Core on UWP (stecrain@microsoft.com)
+## 0.60.0-vnext.20
+Mon, 07 Oct 2019 21:46:39 GMT
+
+### Changes
+
+- Bump V8 and Hermes JSI package versions (tudorm@microsoft.com)
+## 0.60.0-vnext.19
+Fri, 04 Oct 2019 19:04:20 GMT
+
+### Changes
+
+- Update ChakraCore to v1.11.13 (acoates@microsoft.com)
+## 0.60.0-vnext.18
+Fri, 04 Oct 2019 16:32:45 GMT
+
+### Changes
+
+- Update to react-native@0.60.0-microsoft.3 (acoates@microsoft.com)
+## 0.60.0-vnext.17
+Thu, 03 Oct 2019 22:17:13 GMT
+
+### Changes
+
+- change file (randyfl@microsoft.com)
+- Support contextMenuHidden (dida@ntdev.microsoft.com)
+- Remove react-native as a haste root, as all the files should be in react-native-windows (acoates@microsoft.com)
+- Connect DeviceInfo dimensions with root element (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.16
 Tue, 01 Oct 2019 18:17:42 GMT
 

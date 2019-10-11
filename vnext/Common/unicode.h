@@ -9,9 +9,7 @@
 #include <string_view>
 #endif
 
-namespace facebook {
-namespace react {
-namespace unicode {
+namespace Microsoft::Common::Unicode {
 
 // All functions in this header offer the strong exception safety guarantee and
 // may throw the following exceptions:
@@ -50,15 +48,15 @@ class UnicodeConversionException : public std::runtime_error {
 //
 // For (2), utf8 must be null terminated. The behavior is undefined otherwise.
 //
-/* (1) */ std::wstring utf8ToUtf16(const char *utf8, size_t utf8Len);
-/* (2) */ std::wstring utf8ToUtf16(const char *utf8);
-/* (3) */ std::wstring utf8ToUtf16(const std::string &utf8);
+/* (1) */ std::wstring Utf8ToUtf16(const char *utf8, size_t utf8Len);
+/* (2) */ std::wstring Utf8ToUtf16(const char *utf8);
+/* (3) */ std::wstring Utf8ToUtf16(const std::string &utf8);
 #if _HAS_CXX17
-/* (4) */ std::wstring utf8ToUtf16(const std::string_view &utf8);
+/* (4) */ std::wstring Utf8ToUtf16(const std::string_view &utf8);
 #endif
 
 // The following functions convert UTF-16BE strings to UTF-8 strings. Their
-// behaviors mirror those of the above utf8ToUtf16 functions.
+// behaviors mirror those of the above Utf8ToUtf16 functions.
 //
 // For (1) and (2), utf16 does not have to be null terminated, and utf16Len must
 // reflect the length of utf16, without the null terminator if it has one. The
@@ -67,17 +65,15 @@ class UnicodeConversionException : public std::runtime_error {
 // For (3) and (4), utf16 must be null terminated. The behavior is undefined
 // otherwise.
 //
-/* (1) */ std::string utf16ToUtf8(const wchar_t *utf16, size_t utf16Len);
-/* (2) */ std::string utf16ToUtf8(const char16_t *utf16, size_t utf16Len);
-/* (3) */ std::string utf16ToUtf8(const wchar_t *utf16);
-/* (4) */ std::string utf16ToUtf8(const char16_t *utf16);
-/* (5) */ std::string utf16ToUtf8(const std::wstring &utf16);
-/* (6) */ std::string utf16ToUtf8(const std::u16string &utf16);
+/* (1) */ std::string Utf16ToUtf8(const wchar_t *utf16, size_t utf16Len);
+/* (2) */ std::string Utf16ToUtf8(const char16_t *utf16, size_t utf16Len);
+/* (3) */ std::string Utf16ToUtf8(const wchar_t *utf16);
+/* (4) */ std::string Utf16ToUtf8(const char16_t *utf16);
+/* (5) */ std::string Utf16ToUtf8(const std::wstring &utf16);
+/* (6) */ std::string Utf16ToUtf8(const std::u16string &utf16);
 #if _HAS_CXX17
-/* (7) */ std::string utf16ToUtf8(const std::wstring_view &utf16);
-/* (8) */ std::string utf16ToUtf8(const std::u16string_view &utf16);
+/* (7) */ std::string Utf16ToUtf8(const std::wstring_view &utf16);
+/* (8) */ std::string Utf16ToUtf8(const std::u16string_view &utf16);
 #endif
 
-} // namespace unicode
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::Common::Unicode

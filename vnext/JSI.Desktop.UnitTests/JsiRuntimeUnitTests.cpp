@@ -2,8 +2,8 @@
 
 #include "JsiRuntimeUnitTests.h"
 
+#include <Utilities.h>
 #include <jsi/jsi.h>
-#include <utilities.h>
 
 #include <gtest/gtest.h>
 
@@ -20,7 +20,7 @@
 #include <unordered_set>
 
 using namespace facebook::jsi;
-using namespace facebook::react::utilities;
+using namespace Microsoft::Common::Utilities;
 
 TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
@@ -29,7 +29,7 @@ TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
 }
 
 // TODO (yicyao) #2703: Currently, comparison of property IDs is broken for
-// ChakraJsiRuntime. Enable this test once we fix it.
+// ChakraRuntime. Enable this test once we fix it.
 TEST_P(JsiRuntimeUnitTests, DISABLED_PropNameIDTest) {
   // This is a little weird to test, because it doesn't really exist
   // in JS yet.  All I can do is create them, compare them, and
@@ -184,7 +184,7 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
 }
 
 // TODO (yicyao): Enable this once host object is implemented for
-// ChakraJsiRuntime.
+// ChakraRuntime.
 TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectTest) {
   class ConstantHostObject : public HostObject {
     Value get(Runtime &, const PropNameID &sym) override {
