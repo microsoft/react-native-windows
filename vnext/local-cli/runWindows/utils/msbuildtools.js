@@ -67,7 +67,9 @@ class MSBuildTools {
     if (this.version === '16.0') {
       args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=16.0');
-      args.push('/p:VCTargetsPath=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\MSBuild\\Microsoft\\VC\\v150\\');
+      args.push(
+        '/p:VCTargetsPath=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\MSBuild\\Microsoft\\VC\\v150\\',
+      );
     }
 
     if (config) {
