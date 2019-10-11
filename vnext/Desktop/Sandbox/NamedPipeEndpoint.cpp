@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include "NamedPipeEndpoint.h"
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <Sddl.h>
 
@@ -582,7 +582,8 @@ struct NamedPipeEndpoint::Impl {
 };
 
 NamedPipeEndpoint::Impl::Impl(const std::string &pipeName) {
-  m_pipeName = PIPE_NAME_PREFIX + unicode::utf8ToUtf16(pipeName);
+  m_pipeName =
+      PIPE_NAME_PREFIX + Microsoft::Common::Unicode::Utf8ToUtf16(pipeName);
   m_ioThreadPool = std::make_unique<IoThreadPool>();
   m_conn = std::make_shared<IPCConn>(m_pipeName);
 }

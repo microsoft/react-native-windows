@@ -12,8 +12,8 @@
 
 #include <Executors/WebSocketJSExecutorUwp.h>
 
-#include "unicode.h"
-#include "utilities.h"
+#include "Unicode.h"
+#include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -46,7 +46,7 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(
       winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
   winrt::Windows::Web::Http::HttpClient httpClient(filter);
   winrt::Windows::Foundation::Uri uri(
-      facebook::react::unicode::utf8ToUtf16(url));
+      Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
   co_await winrt::resume_background();
 
@@ -116,7 +116,7 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
     };
   } catch (winrt::hresult_error const &e) {
     m_exceptionCaught = true;
-    throw std::exception(facebook::react::unicode::utf16ToUtf8(
+    throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(
                              e.message().c_str(), e.message().size())
                              .c_str());
   }
@@ -154,7 +154,7 @@ std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
     const std::string &url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(
-      facebook::react::unicode::utf8ToUtf16(url));
+      Microsoft::Common::Unicode::Utf8ToUtf16(url));
   httpClient.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
 
   winrt::Windows::Web::Http::HttpResponseMessage responseMessage;
@@ -209,7 +209,7 @@ void DevSupportManager::StartPollingLiveReload(
         // Just let the live reload stop working when the connection fails,
         // rather than bringing down the app.
         std::string errorMessage = "Live Reload Stopped:" +
-            facebook::react::unicode::utf16ToUtf8(
+            Microsoft::Common::Unicode::Utf16ToUtf8(
                                        e.message().c_str(), e.message().size());
         OutputDebugStringA(errorMessage.c_str());
         m_exceptionCaught = true;
@@ -247,7 +247,7 @@ std::string DevSupportManager::GetJavaScriptFromServer(
   } catch (winrt::hresult_error const &e) {
     m_exceptionCaught = true;
     return "Error:" +
-        facebook::react::unicode::utf16ToUtf8(
+        Microsoft::Common::Unicode::Utf16ToUtf8(
                e.message().c_str(), e.message().size());
   }
 }

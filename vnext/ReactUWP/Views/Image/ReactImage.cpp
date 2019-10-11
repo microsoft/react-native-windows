@@ -8,7 +8,7 @@
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Web.Http.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -18,9 +18,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Web::Http;
 } // namespace winrt
 
-namespace facebook {
-using namespace facebook::react::unicode;
-}
+using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -66,7 +64,7 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
     uriString.replace(0, 7, source.bundleRootPath);
   }
 
-  winrt::Uri uri{facebook::utf8ToUtf16(uriString)};
+  winrt::Uri uri{Utf8ToUtf16(uriString)};
   winrt::hstring scheme{uri.SchemeName()};
   bool needsDownload = (scheme == L"http") || (scheme == L"https");
   bool inlineData = scheme == L"data";
@@ -121,12 +119,11 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(
   try {
     co_await winrt::resume_background();
 
-    auto httpMethod{
-        source.method.empty()
-            ? winrt::HttpMethod::Get()
-            : winrt::HttpMethod{facebook::utf8ToUtf16(source.method)}};
+    auto httpMethod{source.method.empty()
+                        ? winrt::HttpMethod::Get()
+                        : winrt::HttpMethod{Utf8ToUtf16(source.method)}};
 
-    winrt::Uri uri{facebook::utf8ToUtf16(source.uri)};
+    winrt::Uri uri{Utf8ToUtf16(source.uri)};
     winrt::HttpRequestMessage request{httpMethod, uri};
 
     if (!source.headers.empty()) {
@@ -136,10 +133,9 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(
 
         if (_stricmp(name.c_str(), "authorization") == 0) {
           request.Headers().TryAppendWithoutValidation(
-              facebook::utf8ToUtf16(name), facebook::utf8ToUtf16(value));
+              Utf8ToUtf16(name), Utf8ToUtf16(value));
         } else {
-          request.Headers().Append(
-              facebook::utf8ToUtf16(name), facebook::utf8ToUtf16(value));
+          request.Headers().Append(Utf8ToUtf16(name), Utf8ToUtf16(value));
         }
       }
     }
@@ -175,8 +171,7 @@ GetImageInlineDataAsync(ImageSource source) {
     std::string_view base64String(
         source.uri.c_str() + start + 1, source.uri.length() - start - 1);
     auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::
-        DecodeFromBase64String(
-            facebook::react::unicode::utf8ToUtf16(base64String));
+        DecodeFromBase64String(Utf8ToUtf16(base64String));
 
     winrt::InMemoryRandomAccessStream memoryStream;
     co_await memoryStream.WriteAsync(buffer);

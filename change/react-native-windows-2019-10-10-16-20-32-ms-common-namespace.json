@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Move things in Common into the Microsoft namespace.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "17ffb067ea1ef05a9acae20548e32dd22ac25eef",
+  "date": "2019-10-10T23:20:32.681Z",
+  "file": "D:\\Git\\hansenyy-react-native-windows-4\\change\\react-native-windows-2019-10-10-16-20-32-ms-common-namespace.json"
+}

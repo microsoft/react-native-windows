@@ -63,8 +63,8 @@ EXPORTS
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?typeName@dynamic@folly@@QEBAPEBDXZ
 ?update@DeviceInfo@uwp@react@@QEAAXXZ
-?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
+?Utf16ToUtf8@Unicode@Common@Microsoft@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?Utf16ToUtf8@Unicode@Common@Microsoft@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
 ?warnAboutToCrash@ScopeGuardImplBase@detail@folly@@KAXXZ
 dallocxWeak
 mallctlWeak
