@@ -27,7 +27,7 @@
 class HeadlessJsTaskSupport : public facebook::xplat::module::CxxModule {
   // Constants
  public:
-  static const char *NAME;
+  static const char *Name;
 
   // Methods
  public:

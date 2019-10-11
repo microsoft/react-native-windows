@@ -407,6 +407,7 @@ void HostingPane::InitComboBoxes() {
   m_jsFileNames->Append(L"Samples\\flexbox");
   m_jsFileNames->Append(L"Samples\\focusTest");
   m_jsFileNames->Append(L"Samples\\geosample");
+  m_jsFileNames->Append(L"Samples\\headlessjs");
   m_jsFileNames->Append(L"Samples\\image");
   m_jsFileNames->Append(L"Samples\\index");
   m_jsFileNames->Append(L"Samples\\mouse");

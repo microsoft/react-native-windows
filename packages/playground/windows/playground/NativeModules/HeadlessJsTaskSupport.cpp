@@ -6,7 +6,7 @@
 #include "HeadlessJsTaskSupport.h"
 #include "winrt/Windows.ApplicationModel.Background.h"
 
-const char *HeadlessJsTaskSupport::NAME = "HeadlessJsTaskSupport";
+const char *HeadlessJsTaskSupport::Name = "HeadlessJsTaskSupport";
 
 winrt::Windows::ApplicationModel::Background::BackgroundTaskDeferral
     HeadlessJsTaskSupport::s_taskDefferal{nullptr};
@@ -16,13 +16,13 @@ using namespace winrt::Windows::ApplicationModel::Background;
 }
 
 std::string HeadlessJsTaskSupport::getName() {
-  return NAME;
+  return Name;
 }
 
 void HeadlessJsTaskSupport::registerNativeJsTaskHook(
     const folly::dynamic &args) {
   auto taskName = args[0]["taskName"].asString();
-  auto runInterval = args[0]["runInterval"].asInt();
+  auto runInterval = static_cast<uint32_t>(args[0]["runInterval"].asInt());
 
   auto taskRegistrations = winrt::BackgroundTaskRegistration::AllTasks();
 
