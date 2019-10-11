@@ -11,6 +11,9 @@
     <Filter Include="Utilities">
       <UniqueIdentifier>{3b677e86-ff39-4eac-a41d-f9970085d111}</UniqueIdentifier>
     </Filter>
+    <Filter Include="NativeModules">
+      <UniqueIdentifier>{88836824-a205-4e7d-85c1-a0dc353b442d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml" />
@@ -24,6 +27,12 @@
       <Filter>Utilities</Filter>
     </ClCompile>
     <ClCompile Include="HostingPane.xaml.cpp" />
+    <ClCompile Include="NativeModules\HeadlessJsTaskSupport.cpp">
+      <Filter>NativeModules</Filter>
+    </ClCompile>
+    <ClCompile Include="NativeModules\SampleCxxModule.cpp">
+      <Filter>NativeModules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -34,6 +43,12 @@
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="HostingPane.xaml.h" />
+    <ClInclude Include="NativeModules\HeadlessJsTaskSupport.h">
+      <Filter>NativeModules</Filter>
+    </ClInclude>
+    <ClInclude Include="NativeModules\SampleCxxModule.h">
+      <Filter>NativeModules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">

@@ -77,6 +77,8 @@
     <ClInclude Include="HostingPane.xaml.h">
       <DependentUpon>HostingPane.xaml</DependentUpon>
     </ClInclude>
+    <ClInclude Include="NativeModules\HeadlessJsTaskSupport.h" />
+    <ClInclude Include="NativeModules\SampleCxxModule.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
       <DependentUpon>App.xaml</DependentUpon>
@@ -123,6 +125,8 @@
     <ClCompile Include="MainPage.xaml.cpp">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </ClCompile>
+    <ClCompile Include="NativeModules\HeadlessJsTaskSupport.cpp" />
+    <ClCompile Include="NativeModules\SampleCxxModule.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -8,6 +8,8 @@
 #include "pch.h"
 
 #include "HostingPane.xaml.h"
+#include "NativeModules/HeadlessJsTaskSupport.h"
+#include "NativeModules/SampleCxxModule.h"
 
 #include <ReactUWP/ReactUwp.h>
 #include <ViewManager.h>
@@ -67,67 +69,26 @@ void EnsureExportedFunctions(bool createThings) {
   }
 }
 
-class SampleCxxModule : public facebook::xplat::module::CxxModule {
- public:
-  SampleCxxModule() {}
-  virtual ~SampleCxxModule() = default;
-  static const char *Name;
-  std::string getName() override {
-    return Name;
-  }
-
-  std::map<std::string, folly::dynamic> getConstants() override;
-  std::vector<Method> getMethods() override;
-
- private:
-};
-
-const char *SampleCxxModule::Name = "Sample";
-
-std::map<std::string, folly::dynamic> SampleCxxModule::getConstants() {
-  return {
-      {"one", 1},
-      {"two", 2},
-      {"animal", "fox"},
-  };
-}
-
-std::vector<facebook::xplat::module::CxxModule::Method>
-SampleCxxModule::getMethods() {
-  return {
-      facebook::xplat::module::CxxModule::Method(
-          "GetStuff",
-          [this](folly::dynamic args, Callback cb) {
-            folly::dynamic d =
-                folly::dynamic::object("Message", "Hello World!")(
-                    "Data",
-                    folly::dynamic::array(
-                        folly::dynamic::object("name", "item1")("prop1", "foo")(
-                            "anotherprop1", "bar"),
-                        folly::dynamic::object("name", "item2")("prop2", "bar")(
-                            "anotherprop2", "yyyyy"),
-                        folly::dynamic::object("name", "item3")("prop3", "baz")(
-                            "anotherprop1", "zzz")));
-
-            cb({d});
-          }),
-  };
-}
-
 class SampleNativeModuleProvider final
     : public facebook::react::NativeModuleProvider {
  public:
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
       const std::shared_ptr<facebook::react::MessageQueueThread>
           &defaultQueueThread) override {
+    // Note The defaultQueueThread is the UI Thread Queue.
+    // For maximum app responsive-ness prefer to put modules on a WorkerThreadQueue, unless the UI Thread is required.
+
     std::vector<facebook::react::NativeModuleDescription> modules;
-    std::shared_ptr<facebook::react::MessageQueueThread> queue =
-        defaultQueueThread;
 
     modules.emplace_back(
         SampleCxxModule::Name,
         []() { return std::make_unique<SampleCxxModule>(); },
-        queue);
+        react::uwp::CreateWorkerMessageQueue());
+
+    modules.emplace_back(
+        HeadlessJsTaskSupport::Name,
+        []() { return std::make_unique<HeadlessJsTaskSupport>(); },
+        react::uwp::CreateWorkerMessageQueue());
 
     return modules;
   }
