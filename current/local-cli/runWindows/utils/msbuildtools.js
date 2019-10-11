@@ -18,7 +18,7 @@ class MSBuildTools {
   }
 
   cleanProject(slnFile) {
-    const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" t/:Clean`;
+    const cmd = `"${path.join(this.path, 'msbuild.exe')}" "${slnFile}" /t:Clean`;
     const results = child_process.execSync(cmd).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
@@ -45,8 +45,9 @@ class MSBuildTools {
 
     // Set platform toolset for VS 2019
     if (this.version === '16.0') {
-      args.push('/p:PlatformToolset=v142');
+      args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=16.0');
+      args.push('/p:VCTargetsPath=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\MSBuild\\Microsoft\\VC\\v150\\');
     }
 
     if (config) {
@@ -64,6 +65,7 @@ class MSBuildTools {
 
     const cmd = `"${path.join(this.path, 'msbuild.exe')}" ` + ['"' + slnFile + '"'].concat(args).join(' ');
     // Always inherit from stdio as we're controlling verbosity output above.
+    console.log(`About to execute command: ${cmd}`);
     child_process.execSync(cmd, { stdio: 'inherit' });
   }
 }
@@ -76,7 +78,7 @@ function checkMSBuildVersion(version) {
   // Check if vswhere is present and try to find MSBuild.
   if (fs.existsSync(vsWherePath)) {
     const vsPath = child_process.execSync(`"${vsWherePath}" -latest -products * Microsoft.Component.MSBuild -property installationPath`).toString().split(EOL)[0];
-    
+
     // VS 2019 changed path naming convention
     const vsVersion = (version == '16.0') ? 'Current' : version;
 
@@ -116,7 +118,7 @@ function checkMSBuildVersion(version) {
 module.exports.findAvailableVersion = function () {
   const versions = MSBUILD_VERSIONS.map(checkMSBuildVersion);
   const msbuildTools = versions.find(Boolean);
-  
+
   if (!msbuildTools) {
     throw new Error('MSBuild tools not found');
   }

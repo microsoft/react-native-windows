@@ -60,3 +60,11 @@
 ## Authoring Native Modules (vnext)
 
 See [Native Modules and React Native Windows](NativeModules.md).
+
+## Building a standalone React Native Windows App
+Follow these steps to build a version of your app that you can install or publish to the store.  This version will package your bundle and assets into the appx package so you don't need to run Metro.
+
+- Open the solution in Visual Studio
+- Select the DebugBundle or ReleaseBundle configuration from the Configuration Manager dropdown.  DebugBundle is similar to Debug in that it adds more debugging info to the native code.  Use this if you want to debug the native code.  ReleaseBundle is similar to Release, you'll typically use this when producing a final package to publish to the store.
+- Build the solution.  You can now launch without first launching Metro.
+- If you want to build an appx package to share or publish, use the Project => Publish => Create App Packages... option.

@@ -21,3 +21,6 @@ export const PASSWORD_ON_LOGIN = 'Password';
 export const SUBMIT_ON_LOGIN = 'Submit';
 export const LOGINRESULT_ON_LOGIN = 'Result';
 export const SHOWPASSWORD_ON_LOGIN = 'ShowPassword';
+
+// Accessibility
+export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
