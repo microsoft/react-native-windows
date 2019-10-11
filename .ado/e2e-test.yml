@@ -11,6 +11,6 @@ jobs:
     parameters:
       name: E2ETest
       pool:
-        vmImage: 'windows-2019'
+        vmImage: vs2017-win2016
       BuildPlatform: x64
       UseRNFork: true
