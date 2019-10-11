@@ -250,26 +250,39 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
-  - job: CliInit
-    displayName: Verify react-native init
+ - job: CliInitCpp
+    displayName: Verify react-native init (cpp)
     dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )    
-    strategy:
-      matrix:
-        DebugCs:
-          language: cs
-          configuration: Debug
-          vsComponents: $(VsComponents)
-        DebugCpp:
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - template: templates/react-native-init.yml
+        parameters:
           language: cpp
+          version: 0.60.6
+          platform: x64
           configuration: Debug
           vsComponents: $(VsComponents)
-#        DebugBundleCpp:
-#          language: cpp
-#          configuration: DebugBundle
-#        DebugBundleCs:
-#          language: cs
-#          configuration: DebugBundle
+
+  - job: CliInitCs
+    displayName: Verify react-native init (cs)
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    pool:
+      vmImage: $(VmImage)
+    steps:
+      - template: templates/react-native-init.yml
+        parameters:
+          language: cs
+          version: 0.60.6
+          platform: x64
+          configuration: Debug
+          vsComponents: $(VsComponents)
 
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
