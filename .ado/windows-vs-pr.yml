@@ -25,6 +25,7 @@ jobs:
         inputs:
           targetType: filePath
           filePath: .ado/shouldSkipPRBuild.ps1
+
   - job: RNWUniversalPR
     displayName: Universal PR
     dependsOn: Setup
@@ -64,9 +65,6 @@ jobs:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
-
-#    variables:
-#       VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
 
     steps:
       - checkout: self
@@ -175,7 +173,7 @@ jobs:
 
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 50 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
@@ -353,7 +351,7 @@ jobs:
         #  UTTestOutputConfigDir: Release
     pool:
       vmImage: $(VmImage)
-    timeoutInMinutes: 15 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:
