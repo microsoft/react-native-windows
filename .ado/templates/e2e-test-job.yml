@@ -51,12 +51,6 @@ jobs:
       - template: stop-packagers.yml
 
       - task: CmdLine@2
-        displayName: Fix any extraneous escaping sequences
-        inputs:
-          workingDirectory: $(Build.SourcesDirectory)/vnext
-          script: yarn lint:fix
-
-      - task: CmdLine@2
         displayName: yarn build
         inputs:
           script: yarn build
