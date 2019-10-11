@@ -56,7 +56,7 @@ SpringAnimationDriver::MakeAnimation(const folly::dynamic &config) {
         compositor.CreateLinearEasingFunction());
   }();
 
-  const auto startValue = GetAnimatedValue()->RawValue();
+  const auto startValue = GetAnimatedValue()->Value();
   std::vector<float> keyFrames = [this, startValue]() {
     std::vector<float> keyFrames;
     bool done = false;
@@ -80,12 +80,13 @@ SpringAnimationDriver::MakeAnimation(const folly::dynamic &config) {
   animation.Duration(duration);
 
   auto normalizedProgress = 0.0f;
+  // We are animating the values offset property which should start at 0.
   animation.InsertKeyFrame(
-      normalizedProgress, static_cast<float>(startValue), easingFunction);
+      normalizedProgress, 0.0f, easingFunction);
   for (const auto keyFrame : keyFrames) {
     normalizedProgress =
         std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
-    animation.InsertKeyFrame(normalizedProgress, keyFrame, easingFunction);
+    animation.InsertKeyFrame(normalizedProgress, keyFrame - static_cast<float>(startValue), easingFunction);
   }
 
   if (m_iterations == -1) {
