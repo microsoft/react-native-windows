@@ -250,7 +250,7 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
- - job: CliInitCpp
+  - job: CliInitCpp
     displayName: Verify react-native init (cpp)
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
