@@ -270,6 +270,12 @@ stages:
               script: yarn install --frozen-lockfile
 
           - task: CmdLine@2
+            displayName: Fix any extraneous escaping sequences
+            inputs:
+              workingDirectory: $(Build.SourcesDirectory)/vnext
+              script: yarn lint:fix
+
+          - task: CmdLine@2
             displayName: yarn build (local react-native-windows)
             inputs:
               script: yarn build
