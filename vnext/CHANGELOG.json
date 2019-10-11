@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2019 22:15:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.26",
+      "version": "0.60.0-vnext.26",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add Common.vcxproj to CLI solutions",
+            "author": "kmelmon@microsoft.com",
+            "commit": "8311e49738c94a9682c8e4ecb054e870ff2f2b40"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Oct 2019 20:47:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.25",
+      "version": "0.60.0-vnext.25",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Narrator for Text when accessibilityLabel is not set",
+            "author": "licanhua@live.com",
+            "commit": "e8a9f2d6a75d812552ee5c0cb38d29341f261023"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support caretHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b6255479abbc300ec48d125038bdfe1fc688b77e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Oct 2019 10:21:12 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.24",
       "version": "0.60.0-vnext.24",

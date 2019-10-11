@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix Narrator for Text when accessibilityLabel is not set",
-  "packageName": "react-native-windows",
-  "email": "licanhua@live.com",
-  "commit": "e8a9f2d6a75d812552ee5c0cb38d29341f261023",
-  "date": "2019-09-26T20:28:06.960Z"
-}
