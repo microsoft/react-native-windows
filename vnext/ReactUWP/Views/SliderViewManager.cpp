@@ -84,8 +84,7 @@ void SliderViewManager::UpdateProperties(
         slider.IsEnabled(!propertyValue.asBool());
       else if (pair.second.isNull())
         slider.ClearValue(winrt::Control::IsEnabledProperty());
-    }
-    else if (propertyName == "value") {
+    } else if (propertyName == "value") {
       if (propertyValue.isNumber())
         slider.Value(static_cast<int>(propertyValue.asDouble()));
       else if (pair.second.isNull())
