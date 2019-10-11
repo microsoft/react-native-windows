@@ -35,9 +35,9 @@ EXPORTS
 ?size@dynamic@folly@@QBAIXZ
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PAV?$Range@PBD@2@@Z
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABUdynamic@1@@Z
-?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
-?utf16ToUtf8@unicode@react@facebook@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
-?utf8ToUtf16@unicode@react@facebook@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?Utf16ToUtf8@Unicode@Common@Microsoft@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
+?Utf16ToUtf8@Unicode@Common@Microsoft@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV?$basic_string_view@_WU?$char_traits@_W@std@@@5@@Z
+?Utf8ToUtf16@Unicode@Common@Microsoft@@YA?AV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 dallocxWeak
 mallctlWeak
 mallctlbymibWeak

@@ -9,7 +9,7 @@
 
 #include <mutex>
 #include <sstream>
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <jsi/ScriptStore.h>
 
@@ -292,7 +292,7 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &sym) {
   const wchar_t *name;
   checkException(JsGetPropertyNameFromId(propIdRef(sym), &name));
-  return facebook::react::unicode::utf16ToUtf8(name, wcslen(name));
+  return Microsoft::Common::Unicode::Utf16ToUtf8(name, wcslen(name));
 }
 
 bool ChakraRuntime::compare(
@@ -1091,7 +1091,7 @@ std::string ChakraRuntime::JSStringToSTLString(JsValueRef str) {
 
   // Note: This results in multiple buffer copyings. We should look for
   // optimization.
-  return facebook::react::unicode::utf16ToUtf8(std::wstring(value, length));
+  return Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring(value, length));
 }
 
 void ChakraRuntime::setupMemoryTracker() noexcept {

@@ -1,9 +1,11 @@
 #
 parameters:
-  name: ""
+  name: ''
   pool:
-  BuildPlatform: "x86" # ARM, x86, x64
+  BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
+  vsComponents: ''
+  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
 
 jobs:
   - job: ${{ parameters.name }}
@@ -67,7 +69,15 @@ jobs:
         inputs:
           script: yarn build
 
-      - template: install-SDK.yml
+      - task: PowerShell@2
+        displayName: Install Visual Studio dependencies
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
+          arguments:
+            -InstallerUri ${{ parameters.vsInstallerUri }}
+            -Components ${{ parameters.vsComponents }}
+        condition: ne('${{parameters.vsComponents}}', '')
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp

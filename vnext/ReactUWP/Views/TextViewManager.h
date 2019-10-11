@@ -27,6 +27,8 @@ class TextViewManager : public FrameworkElementViewManager {
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
+  void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
+
  protected:
   XamlView CreateViewCore(int64_t tag) override;
 };

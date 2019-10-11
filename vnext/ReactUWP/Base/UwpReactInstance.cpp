@@ -17,7 +17,7 @@
 #include <InstanceManager.h>
 #include <NativeModuleProvider.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 // Standard View Managers
 #include <Views/ActivityIndicatorViewManager.h>
@@ -360,6 +360,28 @@ void UwpReactInstance::Start(
       }
     };
 
+    if (settings.UseWebDebugger) {
+      devSettings->waitingForDebuggerCallback =
+          [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept {
+        auto strongThis = weakThis.lock();
+        if (strongThis != nullptr) {
+          auto uwpInstance =
+              std::static_pointer_cast<UwpReactInstance>(strongThis);
+          uwpInstance->OnWaitingForDebugger();
+        }
+      };
+
+      devSettings->debuggerAttachCallback =
+          [weakThis = std::weak_ptr<IReactInstance>(spThis)]() noexcept {
+        auto strongThis = weakThis.lock();
+        if (strongThis != nullptr) {
+          auto uwpInstance =
+              std::static_pointer_cast<UwpReactInstance>(strongThis);
+          uwpInstance->OnDebuggerAttach();
+        }
+      };
+    }
+
     // Create NativeUIManager & UIManager
     m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
@@ -437,7 +459,7 @@ void UwpReactInstance::Start(
       OnHitError(e.what());
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     } catch (winrt::hresult_error const &e) {
-      OnHitError(facebook::react::unicode::utf16ToUtf8(
+      OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(
           e.message().c_str(), e.message().size()));
       OnHitError("UwpReactInstance: Failed to create React Instance.");
     } catch (...) {
@@ -498,6 +520,23 @@ ErrorCallbackCookie UwpReactInstance::RegisterErrorCallback(
 
 void UwpReactInstance::UnregisterErrorCallback(ErrorCallbackCookie &cookie) {
   m_errorCallbacks.erase(cookie);
+  cookie = 0;
+}
+
+DebuggerAttachCallbackCookie UwpReactInstance::RegisterDebuggerAttachCallback(
+    std::function<void()> callback) {
+  static DebuggerAttachCallbackCookie g_nextDebuggerAttachCallbackCookie(0);
+
+  // Add callback to map with new cookie
+  DebuggerAttachCallbackCookie cookie = ++g_nextDebuggerAttachCallbackCookie;
+  m_debuggerAttachCallbacks[cookie] = callback;
+
+  return cookie;
+}
+
+void UwpReactInstance::UnRegisterDebuggerAttachCallback(
+    DebuggerAttachCallbackCookie &cookie) {
+  m_debuggerAttachCallbacks.erase(cookie);
   cookie = 0;
 }
 
@@ -567,7 +606,8 @@ static std::string PrettyError(const std::string &error) noexcept {
         replWide += hexVal(prettyError[pos + 3]) << 8;
         replWide += hexVal(prettyError[pos + 4]) << 4;
         replWide += hexVal(prettyError[pos + 5]);
-        std::string repl = facebook::react::unicode::utf16ToUtf8(&replWide, 1);
+        std::string repl =
+            Microsoft::Common::Unicode::Utf16ToUtf8(&replWide, 1);
 
         prettyError.replace(pos, 6, repl);
       }
@@ -594,6 +634,18 @@ void UwpReactInstance::OnHitError(const std::string &error) noexcept {
 
   // Invoke every callback registered
   for (auto const &current : m_errorCallbacks)
+    current.second();
+}
+
+void UwpReactInstance::OnWaitingForDebugger() noexcept {
+  m_isWaitingForDebugger = true;
+}
+
+void UwpReactInstance::OnDebuggerAttach() noexcept {
+  m_isWaitingForDebugger = false;
+
+  // Invoke every callback registered
+  for (auto const &current : m_debuggerAttachCallbacks)
     current.second();
 }
 

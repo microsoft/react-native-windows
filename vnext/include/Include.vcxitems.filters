@@ -29,9 +29,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\SourceCodeModule.h">
       <Filter>ReactWindowsCore</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\unicode.h">
-      <Filter>ReactWindowsCore</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactWindowsCore\ViewManager.h">
       <Filter>ReactWindowsCore</Filter>
     </ClInclude>
