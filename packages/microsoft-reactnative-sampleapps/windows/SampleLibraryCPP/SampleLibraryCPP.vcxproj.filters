@@ -35,5 +35,6 @@
     <Midl Include="SampleLibraryPackage.idl" />
     <Midl Include="SampleModuleABI.idl" />
     <Midl Include="SampleLibraryCppPackage.idl" />
+    <Midl Include="FancyMathABI.idl" />
   </ItemGroup>
 </Project>

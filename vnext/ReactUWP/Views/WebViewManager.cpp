@@ -37,7 +37,11 @@ const char *WebViewManager::GetName() const {
 }
 
 XamlView WebViewManager::CreateViewCore(int64_t tag) {
+#ifdef CHAKRACORE_UWP
+  return winrt::WebView(winrt::WebViewExecutionMode::SeparateProcess);
+#else
   return winrt::WebView();
+#endif
 }
 
 void WebViewManager::UpdateProperties(

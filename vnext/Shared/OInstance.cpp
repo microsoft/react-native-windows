@@ -56,7 +56,7 @@
 #include "BaseScriptStoreImpl.h"
 #include "V8JSIRuntimeHolder.h"
 #endif
-#include "ChakraJSIRuntimeHolder.h"
+#include "ChakraRuntimeHolder.h"
 
 // foreward declaration.
 namespace facebook {
@@ -69,8 +69,6 @@ void initializeJSHooks(facebook::jsi::Runtime &runtime);
 } // namespace facebook
 
 #endif
-
-#include <fstream>
 
 namespace {
 
@@ -208,20 +206,22 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   std::unique_ptr<JSExecutor> createJSExecutor(
       std::shared_ptr<ExecutorDelegate> delegate,
       std::shared_ptr<MessageQueueThread> jsQueue) override {
-    // TODO :: Ensure the logLevels are mapped properly.
-    JSIExecutor::Logger logger;
-
+    Logger logger;
     if (loggingHook_) {
+      // TODO :: Ensure the logLevels are mapped properly.
       logger = [loggingHook = std::move(loggingHook_)](
                    const std::string &message, unsigned int logLevel) {
         loggingHook(static_cast<RCTLogLevel>(logLevel), message.c_str());
       };
+    } else {
+      logger = [loggingHook = std::move(loggingHook_)](
+                   const std::string &message, unsigned int logLevel) { ; };
     }
+    bindNativeLogger(*runtimeHolder_->getRuntime(), logger);
 
     return std::make_unique<JSIExecutor>(
         runtimeHolder_->getRuntime(),
         std::move(delegate),
-        logger,
         JSIExecutor::defaultTimeoutInvoker,
         runtimeInstaller);
   }
@@ -502,7 +502,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   m_devSettings,
-                  jsQueue,
+                  m_jsThread,
                   std::move(scriptStore),
                   std::move(preparedScriptStore));
           break;
@@ -514,8 +514,8 @@ InstanceImpl::InstanceImpl(
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
-              std::make_shared<ChakraJSIRuntimeHolder>(
-                  m_devSettings, jsQueue, nullptr, nullptr);
+              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(
+                  m_devSettings, m_jsThread, nullptr, nullptr);
           break;
       }
       jsef = std::make_shared<OJSIExecutorFactory>(

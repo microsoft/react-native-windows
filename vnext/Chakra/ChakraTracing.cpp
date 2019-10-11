@@ -135,8 +135,7 @@ static void beginOrEndAsync(
   // arguments[1]: TRACE_TAG_REACT_APPS, constant int (1 << 17)
   // arguments[2]: profileName, string | undefined
   // arguments[3]: cookie, int
-  // arguments[4]: unknown purpose, constant int 0
-  assert(argumentCount == 5);
+  assert(argumentCount == 4);
 
   JsValueType argumentType;
 
@@ -179,15 +178,6 @@ static void beginOrEndAsync(
   assert(argumentType == JsValueType::JsNumber);
 #endif
   CHAKRA_ASSERTDO(JsNumberToInt(arguments[3], &cookie));
-
-  /* arguments[4]: unknown purpose */
-#ifndef NDEBUG
-  CHAKRA_ASSERTDO(JsGetValueType(arguments[4], &argumentType));
-  assert(argumentType == JsValueType::JsNumber);
-  int argument4;
-  CHAKRA_ASSERTDO(JsNumberToInt(arguments[4], &argument4));
-  assert(argument4 == 0);
-#endif
 
   /* Call hook */
   if (isEnd) {

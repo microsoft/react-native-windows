@@ -16,14 +16,22 @@ using namespace Microsoft::ReactNative;
 namespace winrt::SampleLibraryCPP::implementation {
 IVectorView<Bridge::INativeModule> SampleLibraryPackage::CreateNativeModules(
     ReactContext const &reactContext) {
-  auto modules =
-      single_threaded_vector<Bridge::INativeModule>({/*SampleModuleABI()*/});
-  return modules.GetView();
+  if (nullptr == m_nativeModules) {
+    auto modules = single_threaded_vector<Bridge::INativeModule>(
+        {FancyMathABI(), SampleModuleABI()});
+    m_nativeModules = modules.GetView();
+  }
+
+  return m_nativeModules;
 }
 
 IVectorView<Bridge::IViewManager> SampleLibraryPackage::CreateViewManagers(
     ReactContext const &reactContext) {
-  auto viewManagers = single_threaded_vector<Bridge::IViewManager>();
-  return viewManagers.GetView();
+  if (nullptr == m_viewManagers) {
+    auto viewManagers = single_threaded_vector<Bridge::IViewManager>();
+    m_viewManagers = viewManagers.GetView();
+  }
+
+  return m_viewManagers;
 }
 } // namespace winrt::SampleLibraryCPP::implementation

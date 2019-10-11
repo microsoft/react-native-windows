@@ -87,8 +87,13 @@ SpringAnimationDriver::MakeAnimation(const folly::dynamic &config) {
         std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
     animation.InsertKeyFrame(normalizedProgress, keyFrame, easingFunction);
   }
-  animation.IterationCount(static_cast<int32_t>(m_iterations));
-  animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
+
+  if (m_iterations == -1) {
+    animation.IterationBehavior(winrt::AnimationIterationBehavior::Forever);
+  } else {
+    animation.IterationCount(static_cast<int32_t>(m_iterations));
+    animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
+  }
 
   return std::make_tuple(animation, scopedBatch);
 }

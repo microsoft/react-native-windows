@@ -39,7 +39,7 @@
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraJSIRuntimeHolder.cpp">
+    <ClCompile Include="ChakraRuntimeHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="DesktopTestInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ChakraJSIRuntimeHolder.h">
+    <ClInclude Include="ChakraRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -21,7 +21,7 @@ class PickerItem extends React.Component<IPickerItemProps> {
   }
 }
 
-export interface IPickerItemData {
+interface IPickerItemData {
   label: string;
   // tslint:disable-next-line:no-any
   value?: any;
@@ -46,7 +46,7 @@ type PickerPropsWithChildren = Readonly<{children?: React.ReactNode}> &
  * To maintain the text in the controlled component, props should reflect
  * that state by specifying selectedValue of null and specify the text property.
  */
-export class Picker extends React.Component<IPickerProps, State> {
+class Picker extends React.Component<IPickerProps, State> {
   public static Item = PickerItem;
 
   // tslint:disable-next-line:no-any
@@ -122,4 +122,4 @@ export class Picker extends React.Component<IPickerProps, State> {
   };
 }
 
-export default Picker;
+module.exports = Picker;

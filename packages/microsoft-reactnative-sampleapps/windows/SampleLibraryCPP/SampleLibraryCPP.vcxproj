@@ -14,7 +14,7 @@
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -107,6 +107,10 @@
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="MyCtorModule.h" />
     <ClInclude Include="MyModule.h" />
+    <ClInclude Include="FancyMathABI.h">
+      <DependentUpon>FancyMathABI.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="SampleLibraryCppPackage.h">
       <DependentUpon>SampleLibraryCppPackage.idl</DependentUpon>
@@ -121,6 +125,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FancyMathABI.cpp">
+      <DependentUpon>FancyMathABI.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -139,6 +147,9 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="SampleLibraryCppPackage.idl" />
+    <Midl Include="FancyMathABI.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="SampleLibraryPackage.idl">
       <SubType>Designer</SubType>
     </Midl>

@@ -29,7 +29,6 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
-    <AppContainerApplication>true</AppContainerApplication>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>

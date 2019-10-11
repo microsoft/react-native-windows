@@ -9,6 +9,7 @@ EXPORTS
 ??0AppStateModule@react@facebook@@QAE@$$QAV?$shared_ptr@VAppState@react@facebook@@@std@@@Z
 ??0ColdClass@cold_detail@folly@@QAE@XZ
 ??0DeviceInfoModule@uwp@react@@QAE@V?$shared_ptr@VDeviceInfo@uwp@react@@@std@@@Z
+??0DeviceInfo@uwp@react@@QAE@ABV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0ImageViewManager@uwp@react@@QAE@ABV?$shared_ptr@UIReactInstance@uwp@react@@@std@@@Z
 ??0LocationObserverModule@uwp@react@@QAE@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@@Z
 ??0NativeUIManager@uwp@react@@QAE@XZ
@@ -48,7 +49,7 @@ EXPORTS
 ?assume_check@detail@folly@@YGX_N@Z
 ?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
 ?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
-?callJSFunction@Instance@react@facebook@@UAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
+?callJSFunction@Instance@react@facebook@@QAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 ?demangle@folly@@YG?AV?$basic_fbstring@DU?$char_traits@D@std@@V?$allocator@D@2@V?$fbstring_core@D@folly@@@1@PBD@Z
 ?destroy@dynamic@folly@@AAEXXZ

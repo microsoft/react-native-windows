@@ -50,12 +50,12 @@ function generateCertificate(srcPath, destPath, newProjectName, currentUser) {
 }
 
 function copyProjectTemplateAndReplace(
-  srcPath,
+  srcRootPath,
   destPath,
   newProjectName,
   options = {}
 ) {
-  if (!srcPath) {
+  if (!srcRootPath) {
     throw new Error('Need a path to copy from');
   }
 
@@ -71,13 +71,17 @@ function copyProjectTemplateAndReplace(
   createDir(path.join(destPath, windowsDir, newProjectName));
   createDir(path.join(destPath, windowsDir, newProjectName, reactAssetsDir));
 
+  const language = options.language;
   const ns = options.ns || newProjectName;
+  const srcPath = path.join(srcRootPath, language);
   const projectGuid = uuid.v4();
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
   const templateVars = {
+    '// clang-format off': '',
+    '// clang-format on': '',
     '<%=ns%>': ns,
     '<%=name%>': newProjectName,
     '<%=projectGuid%>': projectGuid,
@@ -87,16 +91,28 @@ function copyProjectTemplateAndReplace(
   };
 
   [
-    { from: path.join(srcPath, 'index.windows.js'), to: 'index.windows.js' },
+    { from: path.join(srcRootPath, 'react-native.config.js'), to: 'react-native.config.js' },
+    { from: path.join(srcRootPath, 'metro.config.js'), to: 'metro.config.js' },
+    { from: path.join(srcRootPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
+    { from: path.join(srcRootPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
+    { from: path.join(srcRootPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
     { from: path.join(srcPath, projDir, 'MyApp.sln'), to: path.join(windowsDir, newProjectName + '.sln') },
-    { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
-    { from: path.join(srcPath, '_gitignore'), to: path.join(windowsDir, '.gitignore') },
-    { from: path.join(srcPath, 'ra_gitignore'), to: path.join(windowsDir, newProjectName, reactAssetsDir, '.gitignore') },
-    { from: path.join(srcPath, 'index.windows.bundle'), to: path.join(windowsDir, newProjectName, reactAssetsDir, 'index.windows.bundle') },
-  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars));
+  ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
 
-  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars);
-  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars);
+  if (language === 'cs') {
+    [
+      { from: path.join(srcPath, projDir, 'MyApp.csproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.csproj') },
+    ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+  }
+  else {
+    [
+      { from: path.join(srcPath, projDir, 'MyApp.vcxproj'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj') },
+      { from: path.join(srcPath, projDir, 'MyApp.vcxproj.filters'), to: path.join(windowsDir, newProjectName, newProjectName + '.vcxproj.filters') },
+    ].forEach((mapping) => copyAndReplaceWithChangedCallback(mapping.from, destPath, mapping.to, templateVars, options.overwrite));
+  }
+
+  copyAndReplaceAll(path.join(srcPath, 'assets'), destPath, path.join(windowsDir, newProjectName, 'Assets'), templateVars, options.overwrite);
+  copyAndReplaceAll(path.join(srcPath, 'src'), destPath, path.join(windowsDir, newProjectName), templateVars, options.overwrite);
 
   console.log(chalk.white.bold('To run your app on UWP:'));
   console.log(chalk.white('   react-native run-windows'));

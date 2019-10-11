@@ -1,7 +1,119 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 19 Sep 2019 17:02:46 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Oct 2019 18:17:42 GMT and should not be manually modified.
 
+## 0.60.0-vnext.23
+Wed, 09 Oct 2019 18:17:42 GMT
+
+### Changes
+
+- Add support for forever animations. (stpete@microsoft.com)
+## 0.60.0-vnext.22
+Wed, 09 Oct 2019 15:13:21 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.5 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.21
+Tue, 08 Oct 2019 18:33:16 GMT
+
+### Changes
+
+- re-enable Chakra Core on UWP (stecrain@microsoft.com)
+## 0.60.0-vnext.20
+Mon, 07 Oct 2019 21:46:39 GMT
+
+### Changes
+
+- Bump V8 and Hermes JSI package versions (tudorm@microsoft.com)
+## 0.60.0-vnext.19
+Fri, 04 Oct 2019 19:04:20 GMT
+
+### Changes
+
+- Update ChakraCore to v1.11.13 (acoates@microsoft.com)
+## 0.60.0-vnext.18
+Fri, 04 Oct 2019 16:32:45 GMT
+
+### Changes
+
+- Update to react-native@0.60.0-microsoft.3 (acoates@microsoft.com)
+## 0.60.0-vnext.17
+Thu, 03 Oct 2019 22:17:13 GMT
+
+### Changes
+
+- change file (randyfl@microsoft.com)
+- Support contextMenuHidden (dida@ntdev.microsoft.com)
+- Remove react-native as a haste root, as all the files should be in react-native-windows (acoates@microsoft.com)
+- Connect DeviceInfo dimensions with root element (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.16
+Tue, 01 Oct 2019 18:17:42 GMT
+
+### Changes
+
+- Turn ControlFlowGuard on by default (acoates@microsoft.com)
+- The customer provided examples revealed a few of issues.  One, we were dubble counding the starting value of animatiosn in some cases. Two we were incorrectly relying on JS to tell us to flatten our animated values. Three we were detaching the expression animations that tied the property to the UIElement and in certain cases the JS thread does not inform us that we need to rebuild this cuppling.  There is an open issue with this final part #3280 (stpete@microsoft.com)
+## 0.60.0-vnext.11
+Mon, 30 Sep 2019 18:28:23 GMT
+
+### Changes
+
+- Update to folly 2019.09.30.00 (acoates@microsoft.com)
+## 0.60.0-vnext.10
+Mon, 30 Sep 2019 16:21:08 GMT
+
+### Changes
+
+- Bump up to latest published version. (#3275) (julio.rocha@microsoft.com)
+## 0.60.0-vnext.9
+Sat, 28 Sep 2019 01:21:33 GMT
+
+### Changes
+
+- add support for cpp template app (email not defined)
+## 0.60.0-vnext.8
+Sat, 28 Sep 2019 00:21:32 GMT
+
+### Changes
+
+- Fix build break when using latest Visual Studio compiler versions (acoates@microsoft.com)
+## 0.60.0-vnext.7
+Fri, 27 Sep 2019 17:40:33 GMT
+
+### Changes
+
+- Allow focus transfer to Flyout on Open (kenander@microsoft.com)
+## 0.60.0-vnext.6
+Fri, 27 Sep 2019 17:34:59 GMT
+
+### Changes
+
+- change file (randyfl@microsoft.com)
+## 0.60.0-vnext.5
+Fri, 27 Sep 2019 00:08:28 GMT
+
+### Changes
+
+- Allow focus transfer to Flyout on Open (kenander@microsoft.com)
+## 0.60.0-vnext.4
+Wed, 25 Sep 2019 18:32:05 GMT
+
+### Changes
+
+- Enabling Systrace/ETW plumbing by default. The tracing will be controlled by whether the provider is enabled or not (anandrag@microsoft.com)
+## 0.60.0-vnext.3
+Tue, 24 Sep 2019 23:29:18 GMT
+
+### Changes
+
+- Create stub StatusBarManager to avoid crash when using <StatusBar> (acoates@microsoft.com)
+## 0.60.0-vnext.2
+Tue, 24 Sep 2019 19:11:20 GMT
+
+### Changes
+
+- Update to react-native 0.60 (acoates@microsoft.com)
 ## 0.59.0-vnext.190
 Thu, 19 Sep 2019 17:02:46 GMT
 

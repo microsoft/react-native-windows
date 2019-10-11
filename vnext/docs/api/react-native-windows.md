@@ -4,18 +4,17 @@
 
 ## react-native-windows package
 
+This package provides Windows specific components and provides JS implementations for some react-native primitives Cross platform React-native primitives should be imported from 'react-native' Windows specific components need to be imported from 'react-native-windows'
+
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
-|  [Alert](./react-native-windows.alert.md) |  |
-|  [CheckBox](./react-native-windows.checkbox.md) |  |
 |  [DatePicker](./react-native-windows.datepicker.md) |  |
 |  [Flyout](./react-native-windows.flyout.md) |  |
 |  [Glyph](./react-native-windows.glyph.md) |  |
 |  [Picker](./react-native-windows.picker.md) |  |
 |  [Popup](./react-native-windows.popup.md) |  |
-|  [ViewWindows](./react-native-windows.viewwindows.md) | Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra windows specific functionality |
 
 ## Enumerations
 
@@ -47,13 +46,15 @@
 |  --- | --- |
 |  [AppTheme](./react-native-windows.apptheme.md) |  |
 |  [supportKeyboard](./react-native-windows.supportkeyboard.md) |  |
+|  [ViewWindows](./react-native-windows.viewwindows.md) | Same as [react-native's View](https://facebook.github.io/react-native/docs/view)<!-- -->, but with extra windows specific functionality |
 
 ## Type Aliases
 
 |  Type Alias | Description |
 |  --- | --- |
+|  [AppTheme](./react-native-windows.apptheme.md) |  |
 |  [AppThemeTypes](./react-native-windows.appthemetypes.md) |  |
-|  [Buttons](./react-native-windows.buttons.md) |  |
 |  [IKeyboardEvent](./react-native-windows.ikeyboardevent.md) |  |
 |  [Placement](./react-native-windows.placement.md) |  |
+|  [ViewWindows](./react-native-windows.viewwindows.md) |  |
 

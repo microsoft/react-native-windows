@@ -8,7 +8,6 @@ using System.Diagnostics;
 using Microsoft.ReactNative.Bridge;
 using Microsoft.ReactNative.Managed;
 
-
 namespace SampleLibraryCS
 {
     // Example using IManagedNativeModule and attributes (recommended)
@@ -153,11 +152,7 @@ namespace SampleLibraryCS
             }),
             new MethodInfo(nameof(VoidMethodWithArgs), ReturnType.Void, (args, __, ___) =>
             {
-                // TODO: args are being sent as a json string, but should already be an object array, ie.
-                // double arg = (double)args[0];
-
-                string[] split = args[0].ToString().Trim('[',']').Split(',');
-                double arg = double.Parse(split[0]);
+                double arg = (double)args[0];
 
                 VoidMethodWithArgs(arg);
             }),
@@ -168,11 +163,7 @@ namespace SampleLibraryCS
 
             new MethodInfo(nameof(ReturnMethodWithArgs), ReturnType.Callback, (args, callback, ___) =>
             {
-                // TODO: args are being sent as a json string, but should already be an object array, ie.
-                // double arg = (double)args[0];
-
-                string[] split = args[0].ToString().Trim('[',']').Split(',');
-                double arg = double.Parse(split[0]);
+                double arg = (double)args[0];
 
                 callback(new object[] { ReturnMethodWithArgs(arg) });
             }),
@@ -182,11 +173,7 @@ namespace SampleLibraryCS
             }),
             new MethodInfo(nameof(ExplicitVoidMethodWithArgs), ReturnType.Void, (args, __, ___) =>
             {
-                // TODO: args are being sent as a json string, but should already be an object array, ie.
-                // double arg = (double)args[0];
-
-                string[] split = args[0].ToString().Trim('[',']').Split(',');
-                double arg = double.Parse(split[0]);
+                double arg = (double)args[0];
 
                 ExplicitVoidMethodWithArgs(arg);
             }),
@@ -196,11 +183,7 @@ namespace SampleLibraryCS
             }),
             new MethodInfo(nameof(ExplicitCallbackMethodWithArgs), ReturnType.Callback, (args, callback, ___) =>
             {
-                // TODO: args are being sent as a json string, but should already be an object array, ie.
-                // double arg = (double)args[0];
-
-                string[] split = args[0].ToString().Trim('[',']').Split(',');
-                double arg = double.Parse(split[0]);
+                double arg = (double)args[0];
 
                 ExplicitCallbackMethodWithArgs(arg, callback);
             }),
@@ -210,11 +193,7 @@ namespace SampleLibraryCS
             }),
             new MethodInfo(nameof(ExplicitPromiseMethodWithArgs), ReturnType.Promise, (args, resolve, reject) =>
             {
-                // TODO: args are being sent as a json string, but should already be an object array, ie.
-                // double arg = (double)args[0];
-
-                string[] split = args[0].ToString().Trim('[',']').Split(',');
-                double arg = double.Parse(split[0]);
+                double arg = (double)args[0];
 
                 ExplicitPromiseMethodWithArgs(arg, resolve, reject);
             }),

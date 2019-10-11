@@ -60,7 +60,7 @@ function launchMetroServer() {
         '../node_modules/react-native/local-cli/cli.js',
         'start',
         '--config',
-        '../../../react-native-win/rn-cli.config.js',
+        '../../../react-native-win/metro.config.js',
       ],
       {cwd: __dirname},
     );

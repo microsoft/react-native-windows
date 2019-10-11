@@ -29,6 +29,7 @@ EXPORTS
 ?MakeMemoryMappedBuffer@JSI@Microsoft@@YA?AV?$shared_ptr@VBuffer@jsi@facebook@@@std@@QEB_WI@Z
 ?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
 ?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
+?callJSFunction@Instance@react@facebook@@QEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ?createI18nModule@windows@react@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
 ?createIUIManager@react@facebook@@YA?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@$$QEAV?$vector@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@V?$allocator@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@@2@@4@PEAUINativeUIManager@12@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
@@ -40,6 +41,7 @@ EXPORTS
 ?hash@dynamic@folly@@QEBA_KXZ
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
+?setGlobalVariable@Instance@react@facebook@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
 ?size@dynamic@folly@@QEBA_KXZ
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PEAV?$Range@PEBD@2@@Z
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
@@ -65,23 +67,17 @@ YGConfigSetPointScaleFactor
 YGConfigSetUseLegacyStretchBehaviour
 YGConfigSetUseWebDefaults
 YGFloatIsUndefined
-YGLog
-YGLogWithConfig
 YGNodeCalculateLayout
 YGNodeCanUseCachedMeasurement
 YGNodeCopyStyle
 YGNodeFree
 YGNodeFreeRecursive
-YGNodeGetBaselineFunc
 YGNodeGetChild
 YGNodeGetChildCount
 YGNodeGetContext
 YGNodeGetHasNewLayout
-YGNodeGetInstanceCount
-YGNodeGetMeasureFunc
 YGNodeGetNodeType
 YGNodeGetParent
-YGNodeGetPrintFunc
 YGNodeInsertChild
 YGNodeIsDirty
 YGNodeLayoutGetBorder
@@ -97,7 +93,6 @@ YGNodeLayoutGetWidth
 YGNodeMarkDirty
 YGNodeNew
 YGNodeNewWithConfig
-YGNodePrint
 YGNodeRemoveChild
 YGNodeReset
 YGNodeSetBaselineFunc

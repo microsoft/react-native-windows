@@ -25,14 +25,14 @@ async function runWindows(config, args, options) {
       newError(
         'Visual Studio Solution file not found. Maybe run "react-native windows" first?',
       );
-      return;
+      process.exit(1);
     }
 
     try {
       await build.restoreNuGetPackages(options, slnFile, verbose);
     } catch (e) {
       newError('Failed to restore the NuGet packages: ' + e.toString());
-      return;
+      process.exit(1);
     }
 
     // Get build/deploy options
@@ -43,7 +43,7 @@ async function runWindows(config, args, options) {
       newError(
         `Build failed with message ${e}. Check your build configuration.`,
       );
-      return;
+      process.exit(1);
     }
   } else {
     newInfo('Build step is skipped');
@@ -60,7 +60,7 @@ async function runWindows(config, args, options) {
       }
     } catch (e) {
       newError(`Failed to deploy: ${e.message}`);
-      return;
+      process.exit(1);
     }
   } else {
     newInfo('Deploy step is skipped');

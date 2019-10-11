@@ -42,6 +42,10 @@ task('eslint', () => {
 task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
 });
+task('initRNLibraries', () => {
+  require('./Scripts/copyRNLibraries').copyRNLibraries();
+});
+
 task('ts', () => {
   return tscTask({
     pretty: true,
@@ -55,7 +59,9 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['Libraries', 'RNTester', 'lib'].map(p => path.join(process.cwd(), p)),
+    ['jest', 'Libraries', 'RNTester', 'lib'].map(p =>
+      path.join(process.cwd(), p),
+    ),
   );
 });
 
@@ -64,6 +70,7 @@ task(
   series(
     condition('clean', () => true || argv().clean),
     'eslint',
+    'initRNLibraries',
     'copyFlowFiles',
     'ts',
     condition('apiExtractorVerify', () => argv().ci),

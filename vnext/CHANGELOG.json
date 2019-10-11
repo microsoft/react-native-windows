@@ -2,6 +2,354 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Oct 2019 18:17:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.23",
+      "version": "0.60.0-vnext.23",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add support for forever animations.",
+            "author": "stpete@microsoft.com",
+            "commit": "395ad50941a8d5bdaa1fd5dd38715acbf3d3eb06"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Oct 2019 15:13:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.22",
+      "version": "0.60.0-vnext.22",
+      "comments": {
+        "none": [
+          {
+            "comment": "minor adjustments to enable building react-native-win32.dll with the Office compiler",
+            "author": "aeulitz@microsoft.com",
+            "commit": "d2b46a701bb3f6a0fd0c069a78635da5d065455c"
+          },
+          {
+            "comment": "Reorganize ChakraRuntime functions for better readability.",
+            "author": "yicyao@microsoft.com",
+            "commit": "5490fa52aa94ea059d92a50ab828d05d1a4388b5"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.5",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "574a2f3a55ae93514d2b362d3a1eaa68c46dabb4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Oct 2019 18:33:16 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.21",
+      "version": "0.60.0-vnext.21",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix UT script assemblies defaults.",
+            "author": "julio@rochsquadron.net",
+            "commit": "39c8a70f7db96c6e17345a40c8ca9faba420be1d"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "re-enable Chakra Core on UWP",
+            "author": "stecrain@microsoft.com",
+            "commit": "45d2336aa91e4842713b73ddd788fc1ad3b278ae"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Oct 2019 21:46:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.20",
+      "version": "0.60.0-vnext.20",
+      "comments": {
+        "none": [
+          {
+            "comment": "Rename ChakraJsiRuntime* to ChakraRuntime* and move them into Microsoft::JSI namespace.",
+            "author": "yicyao@microsoft.com",
+            "commit": "01197c0d210ec8fc1e740bfa87891bf3114c1967"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump V8 and Hermes JSI package versions",
+            "author": "tudorm@microsoft.com",
+            "commit": "03687c736e10aa54998572a706c7718ca8342f34"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Oct 2019 19:04:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.19",
+      "version": "0.60.0-vnext.19",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update ChakraCore to v1.11.13",
+            "author": "acoates@microsoft.com",
+            "commit": "965bf2e14e281623a8d54413b24467505ccbcd16"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Oct 2019 16:32:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.18",
+      "version": "0.60.0-vnext.18",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.3",
+            "author": "acoates@microsoft.com",
+            "commit": "378ecaa3ff2eeb2a86263b2e1a3f4742002c3a77"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Oct 2019 22:17:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.17",
+      "version": "0.60.0-vnext.17",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "change file",
+            "author": "randyfl@microsoft.com",
+            "commit": "c8d5ae604e177fc6c119d2b1abd0448c09edfee7"
+          },
+          {
+            "comment": "Support contextMenuHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "18b68810d1f1687889909782e47750afe6f06b24"
+          },
+          {
+            "comment": "Remove react-native as a haste root, as all the files should be in react-native-windows",
+            "author": "acoates@microsoft.com",
+            "commit": "4c4387cd6198eb3ec61d6cfed60b88f775148db8"
+          },
+          {
+            "comment": "Connect DeviceInfo dimensions with root element",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "aab2b80b68fb5a98822013729cd38cb72b473d91"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Move JSI files into their own projects.",
+            "author": "yicyao@microsoft.com",
+            "commit": "53dba4bf45777df9d979f4fa5b001cb02e1577c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Oct 2019 18:17:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.16",
+      "version": "0.60.0-vnext.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Turn ControlFlowGuard on by default",
+            "author": "acoates@microsoft.com",
+            "commit": "9249e5aeddb86c8d7f5d3e21fea8979a9c2dd5a5"
+          },
+          {
+            "comment": "The customer provided examples revealed a few of issues.  One, we were dubble counding the starting value of animatiosn in some cases. Two we were incorrectly relying on JS to tell us to flatten our animated values. Three we were detaching the expression animations that tied the property to the UIElement and in certain cases the JS thread does not inform us that we need to rebuild this cuppling.  There is an open issue with this final part #3280",
+            "author": "stpete@microsoft.com",
+            "commit": "87e54197b92a06e15acc0d3da7c4016eb3c95448"
+          }
+        ],
+        "none": [
+          {
+            "comment": "fix webview",
+            "author": "ngbu@microsoft.com",
+            "commit": "12bceff146ddff6f07655833bbbc0f784be76bfc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Sep 2019 18:28:23 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.11",
+      "version": "0.60.0-vnext.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to folly 2019.09.30.00",
+            "author": "acoates@microsoft.com",
+            "commit": "412556d92d4b300745cfee502eea46bc4e26b853"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Sep 2019 16:21:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.10",
+      "version": "0.60.0-vnext.10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump up to latest published version. (#3275)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a72208e39a88f9d3b732d5679a5c77cbc7750560"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Sep 2019 01:21:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.9",
+      "version": "0.60.0-vnext.9",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add support for cpp template app",
+            "author": "email not defined",
+            "commit": "10233b95839d33eb57d32eaa6b67462f643884c4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Sep 2019 00:21:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.8",
+      "version": "0.60.0-vnext.8",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix build break when using latest Visual Studio compiler versions",
+            "author": "acoates@microsoft.com",
+            "commit": "1f1d803bd62b7f396c9e1978f05a43a915e38779"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Sep 2019 17:40:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.7",
+      "version": "0.60.0-vnext.7",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Sep 2019 17:34:59 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.6",
+      "version": "0.60.0-vnext.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "change file",
+            "author": "randyfl@microsoft.com",
+            "commit": "c8d5ae604e177fc6c119d2b1abd0448c09edfee7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Sep 2019 00:08:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.5",
+      "version": "0.60.0-vnext.5",
+      "comments": {
+        "none": [
+          {
+            "comment": "update E2E doc",
+            "author": "licanhua@live.com",
+            "commit": "08a536aad65ec6a1440489218c31243ee210988b"
+          },
+          {
+            "comment": "Remove v8 related files from ReactCommon.vcxproj.",
+            "author": "yicyao@microsoft.com",
+            "commit": "0d0de897ea568ffa189941d3680e4f3d89e544cc"
+          },
+          {
+            "comment": "Only publish react-native-windows using vnext tag",
+            "author": "acoates@microsoft.com",
+            "commit": "a5f8ac0327970f73404ddc2599655497f6a404e2"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Allow focus transfer to Flyout on Open",
+            "author": "kenander@microsoft.com",
+            "commit": "0d9bdd9d2c7ebfca96b2f2cdc871e0ea0555f908"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Sep 2019 18:32:05 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.4",
+      "version": "0.60.0-vnext.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "Install v141 on demand.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "7cdd36bf66c8e6bd06a19e25a4ff4b9da921e087"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Enabling Systrace/ETW plumbing by default. The tracing will be controlled by whether the provider is enabled or not",
+            "author": "anandrag@microsoft.com",
+            "commit": "3af742122b2ba22052f1ad0bef55662ae2af223a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Sep 2019 23:29:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.3",
+      "version": "0.60.0-vnext.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Create stub StatusBarManager to avoid crash when using <StatusBar>",
+            "author": "acoates@microsoft.com",
+            "commit": "8f10f575517dcc7a3b5de86bc58748b47513dd35"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Sep 2019 19:11:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.2",
+      "version": "0.60.0-vnext.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native 0.60",
+            "author": "acoates@microsoft.com",
+            "commit": "def1019f7463ed407d4fc9e4c0c59d7c43703176"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Remove Universal projects from Desktop solution.",
+            "author": "julio@rochsquadron.net",
+            "commit": "c2d6941c53444b98f2ec078b7d8f7b19f83fe5fe"
+          },
+          {
+            "comment": "CLI has error exit code",
+            "author": "licanhua@live.com",
+            "commit": "6fa8a6916c6074df421bd085f298e736b50af540"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Sep 2019 17:02:46 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.190",
       "version": "0.59.0-vnext.190",

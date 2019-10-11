@@ -15,7 +15,7 @@ set SRCROOT=%~dp0
 :: Remove trailing \ from srcroot
 IF %SRCROOT:~-1%==\ SET SRCROOT=%SRCROOT:~0,-1%
 set RNROOT=%~dp0..\node_modules\react-native
-set FOLLYROOT=%~dp0..\node_modules\.folly\folly-2019.08.12.00
+set FOLLYROOT=%~dp0..\node_modules\.folly\folly-2019.09.30.00
 
 echo Source root: %SRCROOT%
 echo Dest root: %DESTROOT%
@@ -64,5 +64,5 @@ mkdir %DESTROOT%\inc\ReactUWP >nul 2>&1
 %COPYCMD%  %SRCROOT%\Desktop.DLL\react-native-win32.*.def                 %DESTROOT%\inc
 %COPYCMD%  %SRCROOT%\Desktop.Test.DLL\React.Windows.Desktop.Test.*.def    %DESTROOT%\inc
 
-%COPYCMD%  %SRCROOT%\ReactWin32.nuspec                                    %DESTROOT%
-%COPYCMD%  %SRCROOT%\ReactUwp.nuspec                                      %DESTROOT%
+%COPYCMD%  %SRCROOT%\Scripts\ReactWin32.nuspec                                    %DESTROOT%
+%COPYCMD%  %SRCROOT%\Scripts\ReactUwp.nuspec                                      %DESTROOT%
