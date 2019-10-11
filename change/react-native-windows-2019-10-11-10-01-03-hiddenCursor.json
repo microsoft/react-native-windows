@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Support caretHidden",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "b6255479abbc300ec48d125038bdfe1fc688b77e",
+  "date": "2019-10-11T17:01:03.246Z",
+  "file": "D:\\react-native-windows\\change\\react-native-windows-2019-10-11-10-01-03-hiddenCursor.json"
+}
