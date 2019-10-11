@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Add missing ; to msbuild arg statement.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "a9aeb46ce5ba22bdf4f7827b5c89358fa1b4e02b",
+  "date": "2019-10-11T08:10:38.974Z"
+}
