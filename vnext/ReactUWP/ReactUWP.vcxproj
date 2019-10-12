@@ -25,6 +25,30 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugBundle|ARM">
+      <Configuration>DebugBundle</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugBundle|x64">
+      <Configuration>DebugBundle</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBundle|ARM">
+      <Configuration>ReleaseBundle</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBundle|x64">
+      <Configuration>ReleaseBundle</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugBundle|Win32">
+      <Configuration>DebugBundle</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBundle|Win32">
+      <Configuration>ReleaseBundle</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</ProjectGuid>
@@ -104,10 +128,7 @@
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
     <ClCompile>
-      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</RuntimeTypeInfo>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
@@ -120,10 +141,7 @@
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
     </Link>
     <ClCompile>
-      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</RuntimeTypeInfo>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
@@ -136,10 +154,7 @@
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
     </Link>
     <ClCompile>
-      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">false</RuntimeTypeInfo>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeTypeInfo Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">false</RuntimeTypeInfo>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'=='true'">
