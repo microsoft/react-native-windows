@@ -48,6 +48,13 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
     m_enableByteCodeCaching = value;
   }
 
+  bool EnableDeveloperMenu() {
+    return m_enableDeveloperMenu;
+  }
+  void EnableDeveloperMenu(bool value) {
+    m_enableDeveloperMenu = value;
+  }
+
   hstring ByteCodeFileUri() {
     return m_byteCodeFileUri;
   }

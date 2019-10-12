@@ -57,7 +57,8 @@ ReactInstanceCreator::getInstance() {
   settings.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   settings.DebugBundlePath = to_string(m_instanceSettings.DebugBundlePath());
   settings.DebugHost = to_string(m_instanceSettings.DebugHost());
-  settings.EnableByteCodeCacheing = m_instanceSettings.EnableByteCodeCaching();
+  settings.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
+  settings.EnableDeveloperMenu = m_instanceSettings.EnableDeveloperMenu();
   settings.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
   settings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
   settings.UseJsi = m_instanceSettings.UseJsi();
