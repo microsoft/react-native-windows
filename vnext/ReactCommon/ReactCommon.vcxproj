@@ -26,27 +26,27 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugBundle|ARM">
-      <Configuration>Debug</Configuration>
+      <Configuration>DebugBundle</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugBundle|x64">
-      <Configuration>Debug</Configuration>
+      <Configuration>DebugBundle</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseBundle|ARM">
-      <Configuration>Release</Configuration>
+      <Configuration>ReleaseBundle</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseBundle|x64">
-      <Configuration>Release</Configuration>
+      <Configuration>ReleaseBundle</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="DebugBundle|Win32">
-      <Configuration>Debug</Configuration>
+      <Configuration>DebugBundle</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="ReleaseBundle|Win32">
-      <Configuration>Release</Configuration>
+      <Configuration>ReleaseBundle</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
