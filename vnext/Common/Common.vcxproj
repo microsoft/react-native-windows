@@ -25,30 +25,6 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugBundle|x64">
-      <Configuration>DebugBundle</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseBundle|x64">
-      <Configuration>ReleaseBundle</Configuration>
-      <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugBundle|Win32">
-      <Configuration>DebugBundle</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseBundle|Win32">
-      <Configuration>ReleaseBundle</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="DebugBundle|ARM">
-      <Configuration>DebugBundle</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="ReleaseBundle|ARM">
-      <Configuration>ReleaseBundle</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}</ProjectGuid>
