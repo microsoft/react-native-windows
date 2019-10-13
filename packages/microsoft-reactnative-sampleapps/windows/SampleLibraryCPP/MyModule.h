@@ -17,7 +17,7 @@ struct MyModule {
   REACT_CONSTANT_JSNAME(m_fldConst, "fldConst");
   const int m_fldConst = 43;
 
-  REACT_CONST_PROVIDER(SimpleConstants);
+  REACT_CONSTANT_PROVIDER(SimpleConstants);
   void SimpleConstants(
       const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter
           &writer) noexcept {
