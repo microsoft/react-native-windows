@@ -32,3 +32,21 @@
       (__VA_ARGS__,                              \
        INTERNAL_REACT_METHOD_4_ARGS,             \
        INTERNAL_REACT_METHOD_3_ARGS, ))
+
+#define INTERNAL_REACT_CONSTANT_2_ARGS(field, constantName)    \
+  bool REACT_reg##field{                                       \
+      ::Microsoft::ReactNative::ModuleConstFieldInfo<decltype( \
+          &std::remove_pointer_t<decltype(this)>::field)>::    \
+          Register(                                            \
+              this,                                            \
+              constantName,                                    \
+              &std::remove_pointer_t<decltype(this)>::field)};
+
+#define INTERNAL_REACT_CONSTANT_1_ARGS(field) \
+  INTERNAL_REACT_CONSTANT_2_ARGS(field, #field)
+
+#define INTERNAL_REACT_CONSTANT_MACRO_CHOOSER(...) \
+  INTERNAL_REACT_MEMBER_RECOMPOSER(                \
+      (__VA_ARGS__,                                \
+       INTERNAL_REACT_CONSTANT_2_ARGS,             \
+       INTERNAL_REACT_CONSTANT_1_ARGS, ))

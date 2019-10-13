@@ -59,14 +59,9 @@
 #define REACT_CONSTANT_PROVIDER(method) \
   INTERNAL_REACT_METHOD_4_ARGS(Const, false, method, "")
 
-#define REACT_CONSTANT(field) REACT_CONSTANT_JSNAME(field, #field)
-
-#define REACT_CONSTANT_JSNAME(field, jsName)                   \
-  bool REACT_reg##field{                                       \
-      ::Microsoft::ReactNative::ModuleConstFieldInfo<decltype( \
-          &std::remove_pointer_t<decltype(this)>::field)>::    \
-          Register(                                            \
-              this, jsName, &std::remove_pointer_t<decltype(this)>::field)};
+// Use with a field to provide a constant
+#define REACT_CONSTANT(/* field, [opt] constantName */...) \
+  INTERNAL_REACT_CONSTANT_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
 #define REACT_EVENT(field) REACT_EVENT_JSNAME(field, #field)
 

@@ -14,7 +14,7 @@ struct MyModule {
   REACT_CONSTANT(m_fieldConst);
   const int m_fieldConst = 42;
 
-  REACT_CONSTANT_JSNAME(m_fldConst, "fldConst");
+  REACT_CONSTANT(m_fldConst, "fldConst");
   const int m_fldConst = 43;
 
   REACT_CONSTANT_PROVIDER(SimpleConstants);
