@@ -5,7 +5,7 @@
 #include "NativeModulesProvider.h"
 #include "ABICxxModule.h"
 #include "ABIModule.h"
-#include "NativeModuleBuilder.h"
+#include "IReactModuleBuilder.h"
 
 #include <ReactUWP/ReactUwp.h>
 #include <folly/json.h>
@@ -44,13 +44,13 @@ NativeModulesProvider::GetModules(
     modules.emplace_back(
         entry.first,
         [moduleName = entry.first, moduleProvider = entry.second]() {
-          winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder
+          winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder
               moduleBuilder = winrt::make<
-                  winrt::Microsoft::ReactNative::Bridge::NativeModuleBuilder>();
+                  winrt::Microsoft::ReactNative::Bridge::ReactModuleBuilder>();
           moduleBuilder.SetName(winrt::to_hstring(moduleName));
           auto providedModule = moduleProvider(moduleBuilder);
           return moduleBuilder
-              .as<winrt::Microsoft::ReactNative::Bridge::NativeModuleBuilder>()
+              .as<winrt::Microsoft::ReactNative::Bridge::ReactModuleBuilder>()
               ->MakeCxxModule(providedModule);
         },
         m_modulesWorkerQueue);

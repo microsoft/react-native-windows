@@ -315,7 +315,7 @@ namespace Microsoft.ReactNative.Managed
 
     public Lazy<ReactMethodImpl> MethodImpl { get; private set; }
 
-    public void AddToModuleBuilder(INativeModuleBuilder moduleBuilder, object module)
+    public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
       moduleBuilder.AddMethod(MethodName, MethodReturnType, (
           IJSValueReader inputReader,

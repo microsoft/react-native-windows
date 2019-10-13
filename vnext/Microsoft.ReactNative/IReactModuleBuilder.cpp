@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "NativeModuleBuilder.h"
+#include "IReactModuleBuilder.h"
 #include "ABICxxModule.h"
 #include "DynamicWriter.h"
 
@@ -11,20 +11,20 @@ using namespace facebook::xplat::module;
 namespace winrt::Microsoft::ReactNative::Bridge {
 
 //===========================================================================
-// NativeModuleBuilder implementation
+// ReactModuleBuilder implementation
 //===========================================================================
 
-NativeModuleBuilder::NativeModuleBuilder() noexcept {}
+ReactModuleBuilder::ReactModuleBuilder() noexcept {}
 
-void NativeModuleBuilder::SetName(hstring const &name) noexcept {
+void ReactModuleBuilder::SetName(hstring const &name) noexcept {
   m_name = to_string(name);
 }
 
-void NativeModuleBuilder::SetEventEmitterName(hstring const &name) noexcept {
+void ReactModuleBuilder::SetEventEmitterName(hstring const &name) noexcept {
   m_eventEmitterName = to_string(name);
 }
 
-void NativeModuleBuilder::AddMethod(
+void ReactModuleBuilder::AddMethod(
     hstring const &name,
     MethodReturnType returnType,
     MethodDelegate method) noexcept {
@@ -62,7 +62,7 @@ void NativeModuleBuilder::AddMethod(
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void NativeModuleBuilder::AddSyncMethod(
+void ReactModuleBuilder::AddSyncMethod(
     hstring const &name,
     SyncMethodDelegate method) noexcept {
   CxxModule::Method cxxMethod(
@@ -78,19 +78,19 @@ void NativeModuleBuilder::AddSyncMethod(
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void NativeModuleBuilder::AddConstantWriter(
+void ReactModuleBuilder::AddConstantWriter(
     ConstantWriterDelegate constantWriter) noexcept {
   m_constants.push_back(constantWriter);
 }
 
-void NativeModuleBuilder::AddEventRegister(
+void ReactModuleBuilder::AddEventRegister(
     hstring const &name,
     EventSetter eventSetter) noexcept {
   m_eventSetters.push_back(
       ABICxxModuleEventSetter{winrt::to_string(name), eventSetter});
 }
 
-/*static*/ MethodResultCallback NativeModuleBuilder::MakeMethodResultCallback(
+/*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(
     CxxModule::Callback callback) noexcept {
   if (callback) {
     return [callback = std::move(callback)](
@@ -107,7 +107,7 @@ void NativeModuleBuilder::AddEventRegister(
   return {};
 }
 
-std::unique_ptr<CxxModule> NativeModuleBuilder::MakeCxxModule(
+std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
     IInspectable &nativeModule) noexcept {
   return std::make_unique<ABICxxModule>(
       nativeModule,

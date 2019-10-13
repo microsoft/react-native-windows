@@ -15,7 +15,7 @@ namespace Microsoft.ReactNative.Managed
     {
       ModuleName = moduleName;
       ModuleType = moduleType;
-      ModuleProvider = (INativeModuleBuilder moduleBuilder) =>
+      ModuleProvider = (IReactModuleBuilder moduleBuilder) =>
       {
         moduleBuilder.SetName(moduleName);
         moduleBuilder.SetEventEmitterName(eventEmitterName);
@@ -55,7 +55,7 @@ namespace Microsoft.ReactNative.Managed
       }
     }
 
-    private void AddModuleMembers(INativeModuleBuilder moduleBuilder, object module)
+    private void AddModuleMembers(IReactModuleBuilder moduleBuilder, object module)
     {
       foreach (var methodInfo in m_methodInfos.Value)
       {

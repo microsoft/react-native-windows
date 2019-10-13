@@ -73,7 +73,7 @@ namespace Microsoft.ReactNative.Managed
 
     public Lazy<ReactEventImpl> EventImpl { get; private set; }
 
-    public void AddToModuleBuilder(INativeModuleBuilder moduleBuilder, object module)
+    public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
       moduleBuilder.AddEventRegister(EventName, (RaiseEvent raiseEvent) =>
       {

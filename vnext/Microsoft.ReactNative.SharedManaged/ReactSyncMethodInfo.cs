@@ -80,7 +80,7 @@ namespace Microsoft.ReactNative.Managed
 
     public Lazy<ReactSyncMethodImpl> MethodImpl { get; private set; }
 
-    public void AddToModuleBuilder(INativeModuleBuilder moduleBuilder, object module)
+    public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
       moduleBuilder.AddSyncMethod(MethodName, (IJSValueReader inputReader, IJSValueWriter outputWriter) =>
       {

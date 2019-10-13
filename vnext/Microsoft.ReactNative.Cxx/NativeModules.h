@@ -190,7 +190,7 @@ template <class T>
 } // namespace Internal
 
 using CurrentNativeModuleBuilder = Internal::ThreadLocalHolder<
-    const winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder>;
+    const winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder>;
 
 //==============================================================================
 // Module registration helpers
@@ -199,10 +199,10 @@ using CurrentNativeModuleBuilder = Internal::ThreadLocalHolder<
 template <class TModule>
 inline winrt::Microsoft::ReactNative::Bridge::ReactModuleProvider
 MakeModuleProvider() noexcept {
-  using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
+  using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
 
   return [module = std::shared_ptr<TModule>{nullptr}](
-      INativeModuleBuilder const &moduleBuilder) mutable noexcept {
+      IReactModuleBuilder const &moduleBuilder) mutable noexcept {
     CurrentNativeModuleBuilder currentModuleBuilder{&moduleBuilder};
     module = std::make_shared<TModule>();
     return winrt::Windows::Foundation::IInspectable{nullptr};
@@ -361,7 +361,7 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
       const char *jsName,
       MethodType method,
       [[maybe_unused]] bool isAsync) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
+    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
     using winrt::Microsoft::ReactNative::Bridge::MethodReturnType;
 
     if (auto m = static_cast<ModuleType *>(module)) {
@@ -427,7 +427,7 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
       const char *jsName,
       MethodType method,
       bool /*isAsync*/) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
+    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
     using winrt::Microsoft::ReactNative::Bridge::MethodReturnType;
 
     if (auto m = static_cast<ModuleType *>(module)) {
@@ -482,7 +482,7 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
       const char *jsName,
       MethodType method,
       bool /*isAsync*/) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
+    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
 
     if (auto m = static_cast<ModuleType *>(module)) {
       SyncMethodDelegate syncMethodDelegate =
@@ -509,7 +509,7 @@ struct ModuleConstMethodInfo<void (TModule::*)(
       const char * /*jsName*/,
       MethodType method,
       bool /*isAsync*/) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
+    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
 
     if (auto m = static_cast<ModuleType *>(module)) {
       CurrentNativeModuleBuilder::Get()->AddConstantWriter(
@@ -531,7 +531,7 @@ struct ModuleConstFieldInfo<TValue TModule::*> {
 
   static bool
   Register(void *module, const char *jsName, FieldType field) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::INativeModuleBuilder;
+    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
     using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
 
     if (auto m = static_cast<ModuleType *>(module)) {

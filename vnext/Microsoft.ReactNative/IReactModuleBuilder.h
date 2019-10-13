@@ -8,11 +8,11 @@
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-struct NativeModuleBuilder
-    : winrt::implements<NativeModuleBuilder, INativeModuleBuilder> {
-  NativeModuleBuilder() noexcept;
+struct ReactModuleBuilder
+    : winrt::implements<ReactModuleBuilder, IReactModuleBuilder> {
+  ReactModuleBuilder() noexcept;
 
- public: // INativeModuleBuilder
+ public: // IReactModuleBuilder
   void SetName(hstring const &name) noexcept;
   void SetEventEmitterName(hstring const &name) noexcept;
   void AddMethod(

@@ -120,8 +120,8 @@
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="NativeModuleBuilder.h">
-      <DependentUpon>INativeModuleBuilder.idl</DependentUpon>
+    <ClInclude Include="IReactModuleBuilder.h">
+      <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="NativeModuleRegistry.h">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
@@ -181,8 +181,8 @@
       <DependentUpon>MethodInfo.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="NativeModuleBuilder.cpp">
-      <DependentUpon>INativeModuleBuilder.idl</DependentUpon>
+    <ClCompile Include="IReactModuleBuilder.cpp">
+      <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="NativeModuleRegistry.cpp">
       <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
@@ -238,7 +238,7 @@
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="INativeModule.idl" />
-    <Midl Include="INativeModuleBuilder.idl" />
+    <Midl Include="IReactModuleBuilder.idl" />
     <Midl Include="IReactPackage.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
