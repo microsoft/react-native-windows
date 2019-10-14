@@ -55,7 +55,7 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi\;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi\;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)ReactWindowsCore;$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -85,7 +85,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_edgemode.cpp" Condition="'$(OSS_RN)' != 'true'"/>
   </ItemGroup>
   <ItemGroup>
-    <!-- Future ClIncludes -->
+    <ProjectReference Include="..\..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -42,7 +42,7 @@
   <PropertyGroup>
     <!-- We need $(ReactNativeWindowsDir)Chakra for ChakraCoreDebugger.h.
     We should remove it from IncludePath once we retire the ChakraExecutor stack. -->
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)Chakra;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)Chakra;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)ReactWindowsCore;$(IncludePath)</IncludePath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -72,6 +72,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" Condition="'$(CHAKRACOREUWP)'!='true'">

@@ -58,6 +58,10 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>,
  private:
   void HandleInstanceError();
   void HandleInstanceErrorOnUIThread();
+  void HandleInstanceWaiting();
+  void HandleInstanceWaitingOnUIThread();
+  void HandleDebuggerAttach();
+  void HandleDebuggerAttachOnUIThread();
   void PrepareXamlRootView(XamlView const &rootView);
   void EnsureFocusSafeHarbor();
   void InitializeDeveloperMenu();
@@ -90,12 +94,15 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>,
   bool m_isAttached{false};
   LiveReloadCallbackCookie m_liveReloadCallbackCookie{0};
   ErrorCallbackCookie m_errorCallbackCookie{0};
+  DebuggerAttachCallbackCookie m_debuggerAttachCallbackCookie{0};
 
   winrt::ContentControl m_focusSafeHarbor{nullptr};
   winrt::ContentControl::LosingFocus_revoker
       m_focusSafeHarborLosingFocusRevoker{};
   winrt::Grid m_redBoxGrid{nullptr};
+  winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_errorTextBlock{nullptr};
+  winrt::TextBlock m_waitingTextBlock{nullptr};
   winrt::Grid m_developerMenuRoot{nullptr};
   winrt::Button::Click_revoker m_remoteDebugJSRevoker{};
   winrt::Button::Click_revoker m_cancelRevoker{};

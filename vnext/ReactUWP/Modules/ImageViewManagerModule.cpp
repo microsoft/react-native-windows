@@ -16,7 +16,7 @@
 
 #include <Views/Image/ReactImage.h>
 
-#include "unicode.h"
+#include "Unicode.h"
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -72,7 +72,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     ImageSource source;
     source.uri = uriString;
 
-    winrt::Uri uri{facebook::react::unicode::utf8ToUtf16(uriString)};
+    winrt::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(uriString)};
     winrt::hstring scheme{uri.SchemeName()};
     bool needsDownload = (scheme == L"http") || (scheme == L"https");
     bool inlineData = scheme == L"data";

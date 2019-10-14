@@ -8,7 +8,7 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 namespace react {
 namespace uwp {

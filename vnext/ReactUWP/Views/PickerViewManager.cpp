@@ -7,7 +7,7 @@
 #include "PickerViewManager.h"
 
 #include <Utils/ValueUtils.h>
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <IReactInstance.h>
 
@@ -146,7 +146,7 @@ void PickerShadowNode::RepopulateItems() {
       auto comboboxItem = winrt::ComboBoxItem();
 
       comboboxItem.Content(
-          winrt::box_value(facebook::react::unicode::utf8ToUtf16(label)));
+          winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(label)));
 
       if (item.count("textColor") && IsValidColorValue(item["textColor"]))
         comboboxItem.Foreground(BrushFrom(item["textColor"]));

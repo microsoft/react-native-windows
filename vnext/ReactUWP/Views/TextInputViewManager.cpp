@@ -5,13 +5,20 @@
 
 #include "TextInputViewManager.h"
 
-#include "unicode.h"
+#include "Unicode.h"
 
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
+#include <winrt/Windows.UI.Xaml.Shapes.h>
+
+namespace winrt {
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Shapes;
+} // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -103,9 +110,13 @@ class TextInputShadowNode : public ShadowNodeBase {
  private:
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
+  void HideCaretIfNeeded();
+  winrt::Shape FindCaret(winrt::DependencyObject element);
+
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
   bool m_contextMenuHidden = false;
+  bool m_hideCaret = false;
   bool m_isTextBox = true;
 
   // Javascripts is running in a different thread. If the typing is very fast,
@@ -239,6 +250,7 @@ void TextInputShadowNode::registerEvents() {
             control.as<winrt::PasswordBox>().SelectAll();
           }
         }
+        HideCaretIfNeeded();
 
         auto instance = wkinstance.lock();
         folly::dynamic eventData = folly::dynamic::object("target", tag);
@@ -323,6 +335,7 @@ void TextInputShadowNode::registerEvents() {
                 }
               });
         }
+        HideCaretIfNeeded();
       });
 
   if (control.try_as<winrt::IUIElement7>()) {
@@ -333,7 +346,7 @@ void TextInputShadowNode::registerEvents() {
           std::string key;
           wchar_t s[2] = L" ";
           s[0] = args.Character();
-          key = facebook::react::unicode::utf16ToUtf8(s, 1);
+          key = Microsoft::Common::Unicode::Utf16ToUtf8(s, 1);
 
           if (key.compare("\r") == 0) {
             key = "Enter";
@@ -348,6 +361,36 @@ void TextInputShadowNode::registerEvents() {
                 tag, "topTextInputKeyPress", std::move(eventData));
           }
         });
+  }
+}
+
+winrt::Shape TextInputShadowNode::FindCaret(winrt::DependencyObject element) {
+  if (element == nullptr)
+    return nullptr;
+
+  if (auto shape = element.try_as<winrt::Shape>())
+    return shape;
+
+  int childrenCount = winrt::VisualTreeHelper::GetChildrenCount(element);
+  for (int i = 0; i < childrenCount; i++) {
+    auto result = FindCaret(winrt::VisualTreeHelper::GetChild(element, i));
+    if (result != nullptr)
+      return result;
+  }
+
+  return nullptr;
+}
+
+// hacking solution to hide the caret
+void TextInputShadowNode::HideCaretIfNeeded() {
+  if (m_hideCaret) {
+    auto control = GetView().as<winrt::Control>();
+    if (auto caret = FindCaret(control)) {
+      caret.CompositeMode(
+          winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
+      winrt::SolidColorBrush transparentColor(winrt::Colors::Transparent());
+      caret.Fill(transparentColor);
+    }
   }
 }
 
@@ -385,6 +428,11 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "contextMenuHidden") {
       if (propertyValue.isBool())
         m_contextMenuHidden = propertyValue.asBool();
+    } else if (propertyName == "caretHidden") {
+      if (propertyValue.isBool()) {
+        m_hideCaret = propertyValue.asBool();
+        HideCaretIfNeeded();
+      }
     } else if (propertyName == "secureTextEntry") {
       if (propertyValue.isBool()) {
         if (propertyValue.asBool()) {
@@ -556,7 +604,7 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
       "secureTextEntry", "boolean")("keyboardType", "string")(
-      "contextMenuHidden", "boolean"));
+      "contextMenuHidden", "boolean")("caretHidden", "boolean"));
 
   return props;
 }
