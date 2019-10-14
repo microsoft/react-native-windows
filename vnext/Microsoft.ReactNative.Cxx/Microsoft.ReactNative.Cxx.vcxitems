@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{da8b35b3-da00-4b02-bde6-6a397b3fd46b}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleMemberRegistration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
+  </ItemGroup>
+</Project>

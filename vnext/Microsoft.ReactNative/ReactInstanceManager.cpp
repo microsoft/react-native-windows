@@ -8,6 +8,7 @@
 #endif
 
 #include "ReactInstanceCreator.h"
+#include "ReactPackageBuilder.h"
 
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/Instance.h>
@@ -24,14 +25,20 @@ ReactInstanceManager::ReactInstanceManager(
     std::string jsBundleFile,
     std::string jsMainModuleName,
     IVectorView<IReactPackage> &packages,
+    IVectorView<IReactPackageProvider> &packageProviders,
     bool useDeveloperSupport,
     /*TODO*/ LifecycleState /*initialLifecycleState*/)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
       m_packages(packages),
+      m_packageProviders(
+          packageProviders ? std::vector<IReactPackageProvider>(
+                                 begin(packageProviders),
+                                 end(packageProviders))
+                           : std::vector<IReactPackageProvider>()),
       m_useDeveloperSupport(useDeveloperSupport) {
-  if (packages == nullptr) {
+  if (packages == nullptr || packageProviders == nullptr) {
     throw hresult_invalid_argument(L"packages");
   }
 
@@ -154,7 +161,7 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
   }
   */
 
-  auto moduleRegistryList = single_threaded_vector<NativeModuleBase>();
+  auto moduleRegistryList = single_threaded_vector<INativeModule>();
   if (m_modulesProvider == nullptr) {
     m_modulesProvider = std::make_shared<NativeModulesProvider>();
 
@@ -162,14 +169,16 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
     // TODO: Wrap/re-implement our existing set of core modules and add
     // them to the CoreModulesPackage.
 
-    for (auto package : m_packages) {
-      auto modules = package.CreateNativeModules(reactContext);
-      for (auto module : modules) {
-        // TODO: Allow a module to override another if they conflict on name?
-        // Something that the registry would handle.  And should that inform
-        // which modules get iniitalized?
-        m_modulesProvider->RegisterModule(module);
-        moduleRegistryList.Append(module);
+    if (m_packages) {
+      for (auto package : m_packages) {
+        auto modules = package.CreateNativeModules(reactContext);
+        for (auto module : modules) {
+          // TODO: Allow a module to override another if they conflict on name?
+          // Something that the registry would handle.  And should that inform
+          // which modules get initialized?
+          m_modulesProvider->RegisterModule(module);
+          moduleRegistryList.Append(module);
+        }
       }
     }
   }
@@ -181,6 +190,14 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
     // The registration that currently happens in the moduleregistry.cpp
     // should happen here if we convert all modules to go through the ABI
     // rather than directly against facebook's types.
+  }
+
+  if (!m_packageBuilder) {
+    m_packageBuilder = make<ReactPackageBuilder>(m_modulesProvider);
+
+    for (auto &packageProvider : m_packageProviders) {
+      packageProvider.CreatePackage(m_packageBuilder);
+    }
   }
 
   // TODO: Could access to the module registry be easier if the ReactInstance

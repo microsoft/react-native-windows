@@ -1,0 +1,38 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IJSValueReader.idl";
+import "IJSValueWriter.idl";
+
+namespace Microsoft.ReactNative.Bridge {
+  enum MethodReturnType {
+    Void,
+    Callback,
+    TwoCallbacks,
+    Promise,
+  };
+
+  delegate void MethodResultCallback(IJSValueWriter outputWriter);
+  delegate void MethodDelegate(
+      IJSValueReader inputReader,
+      IJSValueWriter outputWriter,
+      MethodResultCallback resolve,
+      MethodResultCallback reject);
+  delegate void SyncMethodDelegate(
+      IJSValueReader inputReader, IJSValueWriter outputWriter);
+  delegate void ConstantProvider(IJSValueWriter constantWriter);
+
+  delegate void ReactArgWriter(IJSValueWriter writer);
+  delegate void ReactEventHandler(ReactArgWriter argWriter);
+  delegate void ReactEventHandlerSetter(ReactEventHandler eventHandler);
+
+  interface IReactModuleBuilder {
+    void SetEventEmitterName(String name);
+    void AddMethod(
+        String name, MethodReturnType returnType, MethodDelegate method);
+    void AddSyncMethod(String name, SyncMethodDelegate method);
+    void AddConstantProvider(ConstantProvider constantProvider);
+    void AddEventHandlerSetter(
+        String name, ReactEventHandlerSetter eventHandlerSetter);
+  };
+} // namespace Microsoft.ReactNative.Bridge
