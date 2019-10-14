@@ -79,11 +79,11 @@ void ReactModuleBuilder::AddConstantProvider(
   m_constants.push_back(constantProvider);
 }
 
-void ReactModuleBuilder::AddEventSetter(
+void ReactModuleBuilder::AddEventHandlerSetter(
     hstring const &name,
-    EventSetter const &eventSetter) noexcept {
-  m_eventSetters.push_back(
-      ABICxxModuleEventSetter{winrt::to_string(name), eventSetter});
+    ReactEventHandlerSetter const &eventHandlerSetter) noexcept {
+  m_eventHandlerSetters.push_back(ABICxxModuleEventHandlerSetter{
+      winrt::to_string(name), eventHandlerSetter});
 }
 
 /*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(
@@ -112,7 +112,7 @@ std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
       m_eventEmitterName,
       m_methods,
       m_constants,
-      m_eventSetters);
+      m_eventHandlerSetters);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

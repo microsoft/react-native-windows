@@ -46,13 +46,13 @@ namespace Microsoft.ReactNative.Managed
 
       // Input parameters for generated lambda
       ParameterExpression moduleParameter = Expression.Parameter(typeof(object), "module");
-      ParameterExpression raiseEventParameter = Expression.Parameter(typeof(RaiseEvent), "raiseEvent");
+      ParameterExpression raiseEventParameter = Expression.Parameter(typeof(ReactEventHandler), "eventHandler");
 
       // Create a lambda to be passed to raiseEvent
       ParameterExpression argParameter = Expression.Parameter(parameter.ParameterType, "arg");
       ParameterExpression argWriterParameter = Expression.Parameter(typeof(IJSValueWriter), "argWriter");
       var writeValueCall = Expression.Call(null, JSValueWriter.GetWriteValueMethod(parameter.ParameterType), argWriterParameter, argParameter);
-      var eventHandlerLambda = Expression.Lambda<Bridge.EventHandler>(writeValueCall, argWriterParameter);
+      var eventHandlerLambda = Expression.Lambda<ReactArgWriter>(writeValueCall, argWriterParameter);
 
       // Create a lambda that we assign to the event property
       var raiseEventCall = Expression.Invoke(raiseEventParameter, eventHandlerLambda);
@@ -67,7 +67,7 @@ namespace Microsoft.ReactNative.Managed
       return lambda.Compile();
     }
 
-    public delegate void ReactEventImpl(object module, RaiseEvent raiseEvent);
+    public delegate void ReactEventImpl(object module, ReactEventHandler eventHandler);
 
     public string EventName { get; private set; }
 
@@ -75,9 +75,9 @@ namespace Microsoft.ReactNative.Managed
 
     public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
-      moduleBuilder.AddEventSetter(EventName, (RaiseEvent raiseEvent) =>
+      moduleBuilder.AddEventHandlerSetter(EventName, (ReactEventHandler eventHandler) =>
       {
-        EventImpl.Value(module, raiseEvent);
+        EventImpl.Value(module, eventHandler);
       });
     }
   }

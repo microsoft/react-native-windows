@@ -22,9 +22,9 @@ struct ReactModuleBuilder
       hstring const &name,
       SyncMethodDelegate const &method) noexcept;
   void AddConstantProvider(ConstantProvider const &constantProvider) noexcept;
-  void AddEventSetter(
+  void AddEventHandlerSetter(
       hstring const &name,
-      EventSetter const &eventSetter) noexcept;
+      ReactEventHandlerSetter const &eventHandlerSetter) noexcept;
 
  public:
   std::unique_ptr<facebook::xplat::module::CxxModule> MakeCxxModule(
@@ -39,7 +39,7 @@ struct ReactModuleBuilder
   std::string m_eventEmitterName;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
   std::vector<ConstantProvider> m_constants;
-  std::vector<ABICxxModuleEventSetter> m_eventSetters;
+  std::vector<ABICxxModuleEventHandlerSetter> m_eventHandlerSetters;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

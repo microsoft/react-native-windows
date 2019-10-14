@@ -14,9 +14,9 @@
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-struct ABICxxModuleEventSetter {
+struct ABICxxModuleEventHandlerSetter {
   std::string Name;
-  EventSetter EventSetter;
+  ReactEventHandlerSetter EventHandlerSetter;
 };
 
 struct ABICxxModule : facebook::xplat::module::CxxModule {
@@ -26,7 +26,7 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
       std::string eventEmitterName,
       std::vector<facebook::xplat::module::CxxModule::Method> methods,
       std::vector<ConstantProvider> constants,
-      std::vector<ABICxxModuleEventSetter> eventSetters) noexcept;
+      std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept;
 
  public: // CxxModule implementation
   std::string getName() override;
@@ -34,7 +34,8 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
  private:
-  void InitEvents(std::vector<ABICxxModuleEventSetter> eventSetters) noexcept;
+  void InitEvents(
+      std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept;
 
  private:
   winrt::Windows::Foundation::IInspectable m_nativeModule;

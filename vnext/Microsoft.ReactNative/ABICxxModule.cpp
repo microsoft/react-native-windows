@@ -16,13 +16,13 @@ ABICxxModule::ABICxxModule(
     std::string eventEmitterName,
     std::vector<CxxModule::Method> methods,
     std::vector<ConstantProvider> constants,
-    std::vector<ABICxxModuleEventSetter> eventSetters) noexcept
+    std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept
     : m_nativeModule{nativeModule},
       m_name{std::move(name)},
       m_eventEmitterName{std::move(eventEmitterName)},
       m_methods{std::move(methods)},
       m_constants(std::move(constants)) {
-  InitEvents(std::move(eventSetters));
+  InitEvents(std::move(eventHandlerSetters));
 }
 
 std::string ABICxxModule::getName() {
@@ -52,16 +52,16 @@ std::vector<CxxModule::Method> ABICxxModule::getMethods() {
 }
 
 void ABICxxModule::InitEvents(
-    std::vector<ABICxxModuleEventSetter> eventSetters) noexcept {
-  for (auto &event : eventSetters) {
-    event.EventSetter([ this, name = event.Name ](
-        winrt::Microsoft::ReactNative::Bridge::EventHandler const
-            &argCreator) noexcept {
-      if (std::shared_ptr<facebook::react::Instance> instance = getInstance().lock()) {
+    std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept {
+  for (auto &eventHandler : eventHandlerSetters) {
+    eventHandler.EventHandlerSetter([ this, name = eventHandler.Name ](
+        ReactArgWriter const &argWriter) noexcept {
+      if (std::shared_ptr<facebook::react::Instance> instance =
+              getInstance().lock()) {
         DynamicWriter writer;
         writer.WriteArrayBegin();
         writer.WriteString(winrt::to_hstring(name));
-        argCreator(writer);
+        argWriter(writer);
         writer.WriteArrayEnd();
 
         std::string emitterName =
