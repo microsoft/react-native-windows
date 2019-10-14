@@ -6,7 +6,7 @@
 
 import React from 'react';
 import {Text, TextInput, View} from 'react-native';
-import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT} from './Consts';
+import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT, PREVTEXT_ON_TEXTINPUT} from './Consts';
 
 interface ITextInputTestPageState {
   curText: string;
@@ -75,7 +75,7 @@ export class TextInputTestPage extends React.Component<
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text testID="CurText">curText: {this.state.curText}</Text>
-          <Text testID="PrevText">prev: {this.state.prevText}</Text>
+          <Text testID={PREVTEXT_ON_TEXTINPUT}>prev: {this.state.prevText}</Text>
           <Text testID="Prev2Text">prev2: {this.state.prev2Text})</Text>
           <Text testID="Prev3Text">prev3: {this.state.prev3Text}</Text>
         </View>

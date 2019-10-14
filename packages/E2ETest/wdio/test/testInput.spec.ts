@@ -23,6 +23,14 @@ describe('First', () => {
     assert.equal(TextInputTestPage.getTextInputText(), 'def');
   });
 
+  it('Type abc on multiline TextInput then press Enter key', () => {
+    TextInputTestPage.clearAndEnterOnTextInput('abc');
+    assert.equal(
+      TextInputTestPage.getTextInputPrevText(),
+      'prev: onSubmitEditing text: abc'
+    );
+  });
+
   it('Type abc on multiline TextInput', () => {
     TextInputTestPage.clearAndTypeOnMLTextInput('abc');
     assert.equal(TextInputTestPage.getMLTextInputText(), 'abc');

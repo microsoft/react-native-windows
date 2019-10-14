@@ -7,6 +7,7 @@ import { BasePage, By } from './BasePage';
 import {
   TEXTINPUT_ON_TEXTINPUT,
   ML_TEXTINPUT_ON_TEXTINPUT,
+  PREVTEXT_ON_TEXTINPUT,
 } from '../../app/Consts';
 
 class TextInputTestPage extends BasePage {
@@ -16,6 +17,11 @@ class TextInputTestPage extends BasePage {
 
   clearAndTypeOnTextInput(text: string) {
     this.textInput.setValue(text);
+  }
+
+  clearAndEnterOnTextInput(text: string) {
+    this.textInput.setValue(text);
+    this.textInput.addValue('Enter');
   }
 
   clearAndTypeOnMLTextInput(text: string) {
@@ -28,6 +34,10 @@ class TextInputTestPage extends BasePage {
     this.multiLineTextInput.addValue(text);
   }
 
+  getTextInputPrevText() {
+    return this.prevTextInput.getText();
+  }
+
   getTextInputText() {
     return this.textInput.getText();
   }
@@ -38,6 +48,10 @@ class TextInputTestPage extends BasePage {
 
   private get textInput() {
     return By(TEXTINPUT_ON_TEXTINPUT);
+  }
+
+  private get prevTextInput() {
+    return By(PREVTEXT_ON_TEXTINPUT);
   }
 
   private get multiLineTextInput() {

@@ -142,6 +142,7 @@ class TextInputShadowNode : public ShadowNodeBase {
 
   winrt::Control::GotFocus_revoker m_controlGotFocusRevoker{};
   winrt::Control::LostFocus_revoker m_controlLostFocusRevoker{};
+  winrt::Control::KeyDown_revoker m_controlKeyDownRevoker{};
   winrt::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
   winrt::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
@@ -277,6 +278,28 @@ void TextInputShadowNode::registerEvents() {
               tag, "topTextInputBlur", std::move(eventDataBlur));
           instance->DispatchEvent(
               tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
+        }
+      });
+
+  m_controlKeyDownRevoker = control.KeyDown(
+      winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
+        if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
+          auto instance = wkinstance.lock();
+          folly::dynamic eventDataSubmitEditing = {};
+          if (m_isTextBox) {
+            eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                "text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
+          } else {
+            eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                "text",
+                HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
+          }
+          if (!m_updating && instance != nullptr) {
+            instance->DispatchEvent(
+                tag,
+                "topTextInputSubmitEditing",
+                std::move(eventDataSubmitEditing));
+          }
         }
       });
 
@@ -628,6 +651,8 @@ folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants()
       folly::dynamic::object("registrationName", "onKeyPress");
   directEvents["topTextInputOnScroll"] =
       folly::dynamic::object("registrationName", "onScroll");
+  directEvents["topTextInputSubmitEditing"] =
+      folly::dynamic::object("registrationName", "onSubmitEditing");
 
   return directEvents;
 }

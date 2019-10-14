@@ -6,7 +6,12 @@
 import * as React from 'react';
 import { TextInputTestPage } from './TextInputTestPage';
 import { UnknownPage } from './UnknownPage';
-import { TEXTINPUT_TESTPAGE, UNKNOWN_TESTPAGE, LOGIN_TESTPAGE, ACCESSBILITY_TESTPAGE } from './Consts';
+import {
+  TEXTINPUT_TESTPAGE,
+  UNKNOWN_TESTPAGE,
+  LOGIN_TESTPAGE,
+  ACCESSBILITY_TESTPAGE,
+} from './Consts';
 import { LoginTestPage } from './LoginTestPage';
 import { AccessibilityTestPage } from './AccessibilityTestPage';
 
@@ -30,13 +35,13 @@ const TestPages: ITestPage[] = [
   {
     testId: ACCESSBILITY_TESTPAGE,
     description: 'Accessiblity Test Page',
-    content: AccessibilityTestPage
+    content: AccessibilityTestPage,
   },
   {
     testId: UNKNOWN_TESTPAGE,
     description: 'Unknown Page',
     content: UnknownPage,
-  }
+  },
 ];
 
 export default TestPages;
