@@ -10,10 +10,10 @@
 #include "App.g.h"
 
 namespace react {
-    namespace uwp {
-        struct IReactInstanceCreator;
-    } // namespace uwp
-}
+namespace uwp {
+struct IReactInstanceCreator;
+} // namespace uwp
+} // namespace react
 
 namespace Playground {
 /// <summary>

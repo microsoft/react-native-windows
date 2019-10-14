@@ -23,6 +23,7 @@ void HeadlessJsTaskSupport::registerNativeJsTaskHook(
     const folly::dynamic &args) {
   auto taskName = args[0]["taskName"].asString();
   auto runInterval = static_cast<uint32_t>(args[0]["runInterval"].asInt());
+  auto oneShot = !args[0]["repeat"].asBool();
 
   auto taskRegistrations = winrt::BackgroundTaskRegistration::AllTasks();
 
@@ -38,7 +39,7 @@ void HeadlessJsTaskSupport::registerNativeJsTaskHook(
   if (runInterval >= 15) {
     winrt::BackgroundTaskBuilder builder;
     builder.Name(winrt::to_hstring(taskName));
-    builder.SetTrigger(winrt::TimeTrigger(runInterval, false));
+    builder.SetTrigger(winrt::TimeTrigger(runInterval, oneShot));
     auto registration = builder.Register();
   }
 }

@@ -52,4 +52,4 @@ HeadlessReactInstanceCreator::get() {
 }
 
 std::shared_ptr<HeadlessReactInstanceCreator>
-HeadlessReactInstanceCreator::s_headlessReactInstanceCreator = nullptr;
+    HeadlessReactInstanceCreator::s_headlessReactInstanceCreator = nullptr;

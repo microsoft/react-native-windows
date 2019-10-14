@@ -6,11 +6,11 @@
 //
 
 #include "pch.h"
-#include "HeadlessReactInstanceCreator.h"
-#include "NativeModules/HeadlessJsTaskSupport.h"
-#include "MainPage.xaml.h"
-#include <wrl.h>
 #include <Windows.ApplicationModel.h>
+#include <wrl.h>
+#include "HeadlessReactInstanceCreator.h"
+#include "MainPage.xaml.h"
+#include "NativeModules/HeadlessJsTaskSupport.h"
 
 using namespace Playground;
 
@@ -97,21 +97,21 @@ void App::OnLaunched(
 void App::OnBackgroundActivated(
     Windows::ApplicationModel::Activation::BackgroundActivatedEventArgs ^ e) {
   // Retrieve ABI pointer from C++/CX pointer
-  Microsoft::WRL::ComPtr<::ABI::Windows::ApplicationModel::Background::IBackgroundTaskInstance>
+  Microsoft::WRL::ComPtr<
+      ::ABI::Windows::ApplicationModel::Background::IBackgroundTaskInstance>
       spTaskInstanceABI =
-          reinterpret_cast<ABI::Windows::ApplicationModel::Background::IBackgroundTaskInstance *>(
-          e->TaskInstance);
+          reinterpret_cast<ABI::Windows::ApplicationModel::Background::
+                               IBackgroundTaskInstance *>(e->TaskInstance);
 
   // Create C++/WinRT pointer from ABI pointer
   winrt::Windows::ApplicationModel::Background::IBackgroundTaskInstance
-      taskInstance = reinterpret_cast<const winrt::Windows::ApplicationModel::
-                                      Background::IBackgroundTaskInstance &>(spTaskInstanceABI);
-
-
+      taskInstance =
+          reinterpret_cast<const winrt::Windows::ApplicationModel::Background::
+                               IBackgroundTaskInstance &>(spTaskInstanceABI);
 
   HeadlessJsTaskSupport::nativeJsTaskEntry(
-      taskInstance, HeadlessReactInstanceCreator::get()->getInstance()->GetInnerInstance());
-  
+      taskInstance,
+      HeadlessReactInstanceCreator::get()->getInstance()->GetInnerInstance());
 }
 
 /// <summary>

@@ -5,6 +5,9 @@
 #pragma once
 #include <ReactUWP/ReactUwp.h>
 
+/// This instance creator exists to demonstrate starting a React Instance while
+/// running an in-process background task, and transitioning that instance to
+/// run in the forground.
 struct HeadlessReactInstanceCreator : react::uwp::IReactInstanceCreator {
   static std::shared_ptr<HeadlessReactInstanceCreator> get();
 

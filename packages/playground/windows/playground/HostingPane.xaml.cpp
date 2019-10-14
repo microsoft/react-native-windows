@@ -125,6 +125,9 @@ HostingPane::HostingPane() {
 
   m_instanceCreator = std::make_shared<HostingPaneReactInstanceCreator>(this);
 
+  // If we restored the headlessjs sample, use this instance creator instead.
+  // This allows demonstrating a React Instance being started for a background
+  // task, and re-used when launched in the foreground
   if (x_JavaScriptFilename->SelectedItem->ToString() ==
       L"Samples\\headlessjs") {
     m_instanceCreator = HeadlessReactInstanceCreator::get();
