@@ -22,7 +22,7 @@
 /// implementation assumes that there is only one background task being
 /// registered.
 ///		  If you need to extend this to support multiple background
-///tasks then you will need to keep track of their deferrals separately. (Think
+/// tasks then you will need to keep track of their deferrals separately. (Think
 /// a map of taskId to deferral)
 class HeadlessJsTaskSupport : public facebook::xplat::module::CxxModule {
   // Constants
