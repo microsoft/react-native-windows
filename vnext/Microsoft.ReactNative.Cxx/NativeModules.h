@@ -512,7 +512,7 @@ struct ModuleConstMethodInfo<void (TModule::*)(
     using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
 
     if (auto m = static_cast<ModuleType *>(module)) {
-      CurrentNativeModuleBuilder::Get()->AddConstantWriter(
+      CurrentNativeModuleBuilder::Get()->AddConstantProvider(
           [ m, method ](const IJSValueWriter &argWriter) mutable noexcept {
             (m->*method)(argWriter);
           });
@@ -535,7 +535,7 @@ struct ModuleConstFieldInfo<TValue TModule::*> {
     using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
 
     if (auto m = static_cast<ModuleType *>(module)) {
-      CurrentNativeModuleBuilder::Get()->AddConstantWriter(
+      CurrentNativeModuleBuilder::Get()->AddConstantProvider(
           [ m, name = std::string(jsName),
             field ](const IJSValueWriter &argWriter) mutable noexcept {
             ::Microsoft::ReactNative::WriteProperty(argWriter, name, m->*field);
@@ -552,7 +552,7 @@ struct ModuleConstantInfo {
     using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
 
     if (module) {
-      CurrentNativeModuleBuilder::Get()->AddConstantWriter(
+      CurrentNativeModuleBuilder::Get()->AddConstantProvider(
           [ name = std::string(jsName), value = std::forward<TValue>(value) ](
               const IJSValueWriter &argWriter) mutable noexcept {
             ::Microsoft::ReactNative::WriteProperty(argWriter, name, value);

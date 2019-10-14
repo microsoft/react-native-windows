@@ -15,7 +15,7 @@ ABICxxModule::ABICxxModule(
     std::string name,
     std::string eventEmitterName,
     std::vector<CxxModule::Method> methods,
-    std::vector<ConstantWriterDelegate> constants,
+    std::vector<ConstantProvider> constants,
     std::vector<ABICxxModuleEventSetter> eventSetters) noexcept
     : m_nativeModule{nativeModule},
       m_name{std::move(name)},

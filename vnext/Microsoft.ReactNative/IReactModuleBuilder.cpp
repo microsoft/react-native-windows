@@ -23,7 +23,7 @@ void ReactModuleBuilder::SetEventEmitterName(hstring const &name) noexcept {
 void ReactModuleBuilder::AddMethod(
     hstring const &name,
     MethodReturnType returnType,
-    MethodDelegate method) noexcept {
+    MethodDelegate const &method) noexcept {
   CxxModule::Method cxxMethod(
       to_string(name),
       [method = std::move(method)](
@@ -60,7 +60,7 @@ void ReactModuleBuilder::AddMethod(
 
 void ReactModuleBuilder::AddSyncMethod(
     hstring const &name,
-    SyncMethodDelegate method) noexcept {
+    SyncMethodDelegate const &method) noexcept {
   CxxModule::Method cxxMethod(
       to_string(name),
       [method = std::move(method)](folly::dynamic args) mutable noexcept {
@@ -74,14 +74,14 @@ void ReactModuleBuilder::AddSyncMethod(
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void ReactModuleBuilder::AddConstantWriter(
-    ConstantWriterDelegate constantWriter) noexcept {
-  m_constants.push_back(constantWriter);
+void ReactModuleBuilder::AddConstantProvider(
+    ConstantProvider const &constantProvider) noexcept {
+  m_constants.push_back(constantProvider);
 }
 
 void ReactModuleBuilder::AddEventRegister(
     hstring const &name,
-    EventSetter eventSetter) noexcept {
+    EventSetter const &eventSetter) noexcept {
   m_eventSetters.push_back(
       ABICxxModuleEventSetter{winrt::to_string(name), eventSetter});
 }

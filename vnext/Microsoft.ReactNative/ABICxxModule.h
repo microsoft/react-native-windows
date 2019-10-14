@@ -25,7 +25,7 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
       std::string name,
       std::string eventEmitterName,
       std::vector<facebook::xplat::module::CxxModule::Method> methods,
-      std::vector<ConstantWriterDelegate> constants,
+      std::vector<ConstantProvider> constants,
       std::vector<ABICxxModuleEventSetter> eventSetters) noexcept;
 
  public: // CxxModule implementation
@@ -41,7 +41,7 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::string m_name;
   std::string m_eventEmitterName;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
-  std::vector<ConstantWriterDelegate> m_constants;
+  std::vector<ConstantProvider> m_constants;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

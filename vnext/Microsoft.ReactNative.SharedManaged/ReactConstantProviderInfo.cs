@@ -43,7 +43,7 @@ namespace Microsoft.ReactNative.Managed
 
     public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
-      moduleBuilder.AddConstantWriter((IJSValueWriter writer) =>
+      moduleBuilder.AddConstantProvider((IJSValueWriter writer) =>
       {
         ReactConstantProvider constantProvider = new ReactConstantProvider(writer);
         ConstantProviderImpl.Value(module, constantProvider);

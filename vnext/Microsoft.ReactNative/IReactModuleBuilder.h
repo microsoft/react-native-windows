@@ -17,10 +17,14 @@ struct ReactModuleBuilder
   void AddMethod(
       hstring const &name,
       MethodReturnType returnType,
-      MethodDelegate method) noexcept;
-  void AddSyncMethod(hstring const &name, SyncMethodDelegate method) noexcept;
-  void AddConstantWriter(ConstantWriterDelegate constantWriter) noexcept;
-  void AddEventRegister(hstring const &name, EventSetter eventSetter) noexcept;
+      MethodDelegate const &method) noexcept;
+  void AddSyncMethod(
+      hstring const &name,
+      SyncMethodDelegate const &method) noexcept;
+  void AddConstantProvider(ConstantProvider const &constantProvider) noexcept;
+  void AddEventRegister(
+      hstring const &name,
+      EventSetter const &eventSetter) noexcept;
 
  public:
   std::unique_ptr<facebook::xplat::module::CxxModule> MakeCxxModule(
@@ -34,7 +38,7 @@ struct ReactModuleBuilder
  private:
   std::string m_eventEmitterName;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
-  std::vector<ConstantWriterDelegate> m_constants;
+  std::vector<ConstantProvider> m_constants;
   std::vector<ABICxxModuleEventSetter> m_eventSetters;
 };
 

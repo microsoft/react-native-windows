@@ -20,7 +20,7 @@ namespace Microsoft.ReactNative.Bridge {
       MethodResultCallback reject);
   delegate void SyncMethodDelegate(
       IJSValueReader inputReader, IJSValueWriter outputWriter);
-  delegate void ConstantWriterDelegate(IJSValueWriter writer);
+  delegate void ConstantProvider(IJSValueWriter writer);
 
   delegate void EventHandler(IJSValueWriter writer);
   delegate void RaiseEvent(EventHandler handler);
@@ -31,7 +31,7 @@ namespace Microsoft.ReactNative.Bridge {
     void AddMethod(
         String name, MethodReturnType returnType, MethodDelegate method);
     void AddSyncMethod(String name, SyncMethodDelegate method);
-    void AddConstantWriter(ConstantWriterDelegate constantWriter);
+    void AddConstantProvider(ConstantProvider constantProvider);
     void AddEventRegister(String name, EventSetter eventSetter);
   };
 } // namespace Microsoft.ReactNative.Bridge
