@@ -1166,7 +1166,6 @@ void NativeUIManager::measure(
 
 void NativeUIManager::measureInWindow(
     facebook::react::ShadowNode &shadowNode,
-    facebook::react::ShadowNode &shadowRoot,
     facebook::xplat::module::CxxModule::Callback callback) {
   std::vector<folly::dynamic> args;
 

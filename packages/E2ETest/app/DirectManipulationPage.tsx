@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { MEASURE_IN_WINDOW_BUTTON, MEASURE_IN_WINDOW_RESULT } from './Consts';
@@ -7,9 +12,9 @@ const styles = StyleSheet.create({
         padding: 20
     },
     text: {
-        color: '#fff',
         textAlign: 'center',
-        fontWeight: '700'
+        fontWeight: '700',
+        height: 30
     }
 });
 
