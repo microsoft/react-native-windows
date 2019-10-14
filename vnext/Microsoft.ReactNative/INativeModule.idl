@@ -1,0 +1,33 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "MethodInfo.idl";
+
+namespace Microsoft.ReactNative.Bridge
+{
+	[attributeusage(target_field, target_property)]
+	[webhosthidden]
+	attribute NativeModuleConstantAttribute
+	{
+		String Name;
+	};
+
+	[attributeusage(target_method)]
+	[webhosthidden]
+	attribute NativeModuleMethodAttribute
+	{
+		String Name;
+    ReturnType ReturnType;
+	};
+
+	[webhosthidden]
+	interface INativeModule
+	{
+		String Name { get; };
+
+		void Initialize();
+
+		Windows.Foundation.Collections.IMapView<String, IInspectable> Constants { get; };
+		Windows.Foundation.Collections.IVectorView<MethodInfo> Methods { get; };
+	};
+}
