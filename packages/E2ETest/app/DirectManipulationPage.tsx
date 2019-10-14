@@ -26,9 +26,9 @@ export function DirectManipulationTestPage() {
     return (
         <View ref={viewRef} style={styles.container}>
             <Text style={styles.text}>MeasureInWindowResult:
-                <Text testID={MEASURE_IN_WINDOW_RESULT}>
-                    {measureInWindowState}
-                </Text>
+            </Text>
+            <Text testID={MEASURE_IN_WINDOW_RESULT}>
+                {measureInWindowState}
             </Text>
             <Button title='Call MeasureInWindow'
                 onPress={() => {
