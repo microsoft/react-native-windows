@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 12 Oct 2019 16:49:47 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Oct 2019 23:02:23 GMT and should not be manually modified.
 
+## 0.60.0-vnext.28
+Mon, 14 Oct 2019 23:02:23 GMT
+
+### Changes
+
+- Microsoft.ReactNative attribute-based NativeModules (jthysell@microsoft.com)
 ## 0.60.0-vnext.27
 Sat, 12 Oct 2019 16:49:47 GMT
 
