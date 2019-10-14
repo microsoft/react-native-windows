@@ -79,7 +79,7 @@ void ReactModuleBuilder::AddConstantProvider(
   m_constants.push_back(constantProvider);
 }
 
-void ReactModuleBuilder::AddEventRegister(
+void ReactModuleBuilder::AddEventSetter(
     hstring const &name,
     EventSetter const &eventSetter) noexcept {
   m_eventSetters.push_back(

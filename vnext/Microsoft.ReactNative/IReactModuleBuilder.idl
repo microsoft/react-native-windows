@@ -32,6 +32,6 @@ namespace Microsoft.ReactNative.Bridge {
         String name, MethodReturnType returnType, MethodDelegate method);
     void AddSyncMethod(String name, SyncMethodDelegate method);
     void AddConstantProvider(ConstantProvider constantProvider);
-    void AddEventRegister(String name, EventSetter eventSetter);
+    void AddEventSetter(String name, EventSetter eventSetter);
   };
 } // namespace Microsoft.ReactNative.Bridge

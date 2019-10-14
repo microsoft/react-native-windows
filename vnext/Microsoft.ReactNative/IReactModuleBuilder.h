@@ -22,7 +22,7 @@ struct ReactModuleBuilder
       hstring const &name,
       SyncMethodDelegate const &method) noexcept;
   void AddConstantProvider(ConstantProvider const &constantProvider) noexcept;
-  void AddEventRegister(
+  void AddEventSetter(
       hstring const &name,
       EventSetter const &eventSetter) noexcept;
 

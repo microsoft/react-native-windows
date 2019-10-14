@@ -577,7 +577,7 @@ struct ModuleEventFieldInfo<TFunc<void(TArg)> TModule::*> {
     using winrt::Microsoft::ReactNative::Bridge::RaiseEvent;
     using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
 
-    CurrentNativeModuleBuilder::Get()->AddEventRegister(
+    CurrentNativeModuleBuilder::Get()->AddEventSetter(
         winrt::to_hstring(jsName),
         [ module, field ](const RaiseEvent &raiseEvent) noexcept {
           module->*field = [raiseEvent](TArg arg) noexcept {

@@ -75,7 +75,7 @@ namespace Microsoft.ReactNative.Managed
 
     public void AddToModuleBuilder(IReactModuleBuilder moduleBuilder, object module)
     {
-      moduleBuilder.AddEventRegister(EventName, (RaiseEvent raiseEvent) =>
+      moduleBuilder.AddEventSetter(EventName, (RaiseEvent raiseEvent) =>
       {
         EventImpl.Value(module, raiseEvent);
       });
