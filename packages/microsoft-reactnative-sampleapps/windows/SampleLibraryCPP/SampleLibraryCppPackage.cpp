@@ -5,7 +5,6 @@
 #include "SampleLibraryCppPackage.h"
 #include "SampleLibraryCppPackage.g.cpp"
 #include "Calculator.h"
-#include "MyCtorModule.h"
 #include "MyModule.h"
 
 using namespace winrt::Microsoft::ReactNative::Bridge;

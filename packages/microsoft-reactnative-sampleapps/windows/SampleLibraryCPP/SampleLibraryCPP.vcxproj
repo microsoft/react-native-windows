@@ -105,7 +105,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
-    <ClInclude Include="MyCtorModule.h" />
     <ClInclude Include="MyModule.h" />
     <ClInclude Include="FancyMathABI.h">
       <DependentUpon>FancyMathABI.idl</DependentUpon>

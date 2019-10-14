@@ -67,65 +67,6 @@
 #define REACT_EVENT(/* field, [opt] eventName */...) \
   INTERNAL_REACT_EVENT_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
-#define REACT_REGISTER_METHOD(method) \
-  REACT_REGISTER_METHOD_JSNAME(method, #method)
-
-// The same as REACT_METHOD but with custom JS name.
-#define REACT_REGISTER_METHOD_JSNAME(method, jsName) \
-  REACT_REGISTER_METHOD_INTERNAL(method, jsName, , false)
-
-// The same as REACT_METHOD, but two callbacks are exposed as callbacks, and not
-// as a Promise.
-#define REACT_REGISTER_ASYNC_METHOD(method) \
-  REACT_REGISTER_METHOD_ASYNC_JSNAME(method, #method)
-
-// The same as REACT_ASYNC_METHOD but with custom JS name.
-#define REACT_REGISTER_ASYNC_METHOD_JSNAME(method, jsName) \
-  REACT_REGISTER_METHOD_INTERNAL(method, jsName, , true)
-
-// A method that is called synchronously. It must be used rarely because it may
-// cause out-of-order execution when used along with asynchronous methods.
-#define REACT_REGISTER_SYNC_METHOD(method) \
-  REACT_REGISTER_SYNC_METHOD_JSNAME(method, #method)
-
-// The same as REACT_SYNC_METHOD but with custom JS name.
-#define REACT_REGISTER_SYNC_METHOD_JSNAME(method, jsName) \
-  REACT_REGISTER_METHOD_INTERNAL(method, jsName, Sync, false)
-
-// The same as REACT_SYNC_METHOD but with custom JS name.
-#define REACT_REGISTER_CONST_METHOD(method) \
-  REACT_REGISTER_METHOD_INTERNAL(method, "", Const, false)
-
-#define REACT_REGISTER_METHOD_INTERNAL(method, jsName, type, isAsync) \
-  (void)::Microsoft::ReactNative::Module##type##MethodInfo<decltype(  \
-      &std::remove_pointer_t<decltype(this)>::method)>::              \
-      Register(                                                       \
-          this,                                                       \
-          jsName,                                                     \
-          &std::remove_pointer_t<decltype(this)>::method,             \
-          isAsync);
-
-#define REACT_REGISTER_CONSTANT(field) \
-  REACT_REGISTER_CONSTANT_JSNAME(field, #field)
-
-#define REACT_REGISTER_CONSTANT_JSNAME(field, jsName)      \
-  ::Microsoft::ReactNative::ModuleConstFieldInfo<decltype( \
-      &std::remove_pointer_t<decltype(this)>::field)>::    \
-      Register(this, jsName, &std::remove_pointer_t<decltype(this)>::field);
-
-// A method where we can define constants.
-// Constant definition relies on a TLS context that is setup when object is
-// created.
-#define REACT_CONSTANT_VALUE(jsName, value) \
-  ::Microsoft::ReactNative::ModuleConstantInfo::Register(this, jsName, value);
-
-#define REACT_REGISTER_EVENT(field) REACT_REGISTER_EVENT_JSNAME(field, #field)
-
-#define REACT_REGISTER_EVENT_JSNAME(field, jsName)               \
-  (void)::Microsoft::ReactNative::ModuleEventFieldInfo<decltype( \
-      &std::remove_pointer_t<decltype(this)>::field)>::          \
-      Register(this, jsName, &std::remove_pointer_t<decltype(this)>::field);
-
 namespace Microsoft::ReactNative {
 
 namespace Internal {
