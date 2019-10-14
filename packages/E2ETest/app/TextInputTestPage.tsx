@@ -6,7 +6,7 @@
 
 import React from 'react';
 import {Text, TextInput, View} from 'react-native';
-import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT} from './Consts';
+import {TEXTINPUT_ON_TEXTINPUT, ML_TEXTINPUT_ON_TEXTINPUT, CAP_TEXTINPUT_ON_TEXTINPUT} from './Consts';
 
 interface ITextInputTestPageState {
   curText: string;
@@ -72,6 +72,12 @@ export class TextInputTestPage extends React.Component<
           style={{height: 80}}
           placeholder="MultiLine"
           multiline={true}
+        />
+        <TextInput
+          testID={CAP_TEXTINPUT_ON_TEXTINPUT}
+          style={{height: 80}}
+          placeholder="autoCapitalize"
+          autoCapitalize="characters"
         />
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
           <Text testID="CurText">curText: {this.state.curText}</Text>

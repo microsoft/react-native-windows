@@ -13,6 +13,7 @@ export const TEXTINPUT_TESTPAGE = 'TextInputTestPage';
 
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
 export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
+export const CAP_TEXTINPUT_ON_TEXTINPUT = 'TextInputAutoCap';
 
 // LoginTestPage
 export const LOGIN_TESTPAGE = 'LoginTestPage';
