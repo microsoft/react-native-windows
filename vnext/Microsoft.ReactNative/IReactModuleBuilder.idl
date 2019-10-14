@@ -27,7 +27,6 @@ namespace Microsoft.ReactNative.Bridge {
   delegate void EventSetter(RaiseEvent raiseEvent);
 
   interface IReactModuleBuilder {
-    void SetName(String name);
     void SetEventEmitterName(String name);
     void AddMethod(
         String name, MethodReturnType returnType, MethodDelegate method);

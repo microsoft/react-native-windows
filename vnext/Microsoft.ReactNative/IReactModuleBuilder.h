@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "cxxreact/CxxModule.h"
 #include "ABICxxModule.h"
+#include "cxxreact/CxxModule.h"
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 
 namespace winrt::Microsoft::ReactNative::Bridge {
@@ -13,7 +13,6 @@ struct ReactModuleBuilder
   ReactModuleBuilder() noexcept;
 
  public: // IReactModuleBuilder
-  void SetName(hstring const &name) noexcept;
   void SetEventEmitterName(hstring const &name) noexcept;
   void AddMethod(
       hstring const &name,
@@ -25,6 +24,7 @@ struct ReactModuleBuilder
 
  public:
   std::unique_ptr<facebook::xplat::module::CxxModule> MakeCxxModule(
+      std::string const &name,
       IInspectable &nativeModule) noexcept;
 
  private:
@@ -32,7 +32,6 @@ struct ReactModuleBuilder
       facebook::xplat::module::CxxModule::Callback callback) noexcept;
 
  private:
-  std::string m_name;
   std::string m_eventEmitterName;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
   std::vector<ConstantWriterDelegate> m_constants;

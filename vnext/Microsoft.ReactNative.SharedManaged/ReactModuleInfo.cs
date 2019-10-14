@@ -17,7 +17,6 @@ namespace Microsoft.ReactNative.Managed
       ModuleType = moduleType;
       ModuleProvider = (IReactModuleBuilder moduleBuilder) =>
       {
-        moduleBuilder.SetName(moduleName);
         moduleBuilder.SetEventEmitterName(eventEmitterName);
         object module = Activator.CreateInstance(moduleType);
         AddModuleMembers(moduleBuilder, module);

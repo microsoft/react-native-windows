@@ -35,4 +35,5 @@ class NativeModulesProvider final
       nullptr};
   Microsoft::ReactNative::Bridge::IReactPackageBuilder m_packageBuilder;
 };
+
 } // namespace winrt::Microsoft::ReactNative::Bridge

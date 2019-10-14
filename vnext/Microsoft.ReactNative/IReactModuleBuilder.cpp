@@ -16,10 +16,6 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 
 ReactModuleBuilder::ReactModuleBuilder() noexcept {}
 
-void ReactModuleBuilder::SetName(hstring const &name) noexcept {
-  m_name = to_string(name);
-}
-
 void ReactModuleBuilder::SetEventEmitterName(hstring const &name) noexcept {
   m_eventEmitterName = to_string(name);
 }
@@ -108,10 +104,11 @@ void ReactModuleBuilder::AddEventRegister(
 }
 
 std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
+    std::string const &name,
     IInspectable &nativeModule) noexcept {
   return std::make_unique<ABICxxModule>(
       nativeModule,
-      m_name,
+      name,
       m_eventEmitterName,
       m_methods,
       m_constants,

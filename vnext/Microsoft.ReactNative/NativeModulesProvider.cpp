@@ -44,14 +44,10 @@ NativeModulesProvider::GetModules(
     modules.emplace_back(
         entry.first,
         [moduleName = entry.first, moduleProvider = entry.second]() {
-          winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder
-              moduleBuilder = winrt::make<
-                  winrt::Microsoft::ReactNative::Bridge::ReactModuleBuilder>();
-          moduleBuilder.SetName(winrt::to_hstring(moduleName));
+          IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>();
           auto providedModule = moduleProvider(moduleBuilder);
-          return moduleBuilder
-              .as<winrt::Microsoft::ReactNative::Bridge::ReactModuleBuilder>()
-              ->MakeCxxModule(providedModule);
+          return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(
+              moduleName, providedModule);
         },
         m_modulesWorkerQueue);
   }
@@ -61,8 +57,7 @@ NativeModulesProvider::GetModules(
 
 NativeModulesProvider::NativeModulesProvider() noexcept {}
 
-void NativeModulesProvider::RegisterModule(
-    winrt::Microsoft::ReactNative::Bridge::INativeModule const &module) {
+void NativeModulesProvider::RegisterModule(INativeModule const &module) {
   // TODO: This is taking a naive approach right now and just adding
   // everything. Consider whether to add the CanOverrideExistingModule on
   // INativeModule and then check it here to see whether a module being
