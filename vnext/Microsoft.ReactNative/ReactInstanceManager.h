@@ -27,8 +27,7 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
       std::string jsBundleFile,
       std::string jsMainModuleName,
       IVectorView<IReactPackage> &packages,
-      IVectorView<IReactPackageProvider>
-          &packageProviders,
+      IVectorView<IReactPackageProvider> &packageProviders,
       bool useDeveloperSupport,
       LifecycleState initialLifecycleState);
 

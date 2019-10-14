@@ -8,7 +8,6 @@
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 #include "winrt/Microsoft.ReactNative.h"
 
-
 //==============================================================================
 // IJSValueWriter helpers
 //==============================================================================

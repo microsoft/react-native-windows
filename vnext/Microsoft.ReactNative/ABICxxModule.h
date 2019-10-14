@@ -7,9 +7,9 @@
 // NativeModule.
 //
 
-#include "cxxreact/CxxModule.h"
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
+#include "cxxreact/CxxModule.h"
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 
 namespace winrt::Microsoft::ReactNative::Bridge {
