@@ -284,17 +284,18 @@ void TextInputShadowNode::registerEvents() {
   m_controlKeyDownRevoker = control.KeyDown(
       winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
         if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
-          auto instance = wkinstance.lock();
-          folly::dynamic eventDataSubmitEditing = {};
-          if (m_isTextBox) {
-            eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                "text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
-          } else {
-            eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                "text",
-                HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
-          }
-          if (!m_updating && instance != nullptr) {
+          if (auto instance = wkinstance.lock()) {
+            folly::dynamic eventDataSubmitEditing = {};
+            if (m_isTextBox) {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text",
+                  HstringToDynamic(control.as<winrt::TextBox>().Text()));
+            } else {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text",
+                  HstringToDynamic(
+                      control.as<winrt::PasswordBox>().Password()));
+            }
             instance->DispatchEvent(
                 tag,
                 "topTextInputSubmitEditing",
