@@ -48,23 +48,6 @@ JsValueRef ChakraRuntime::strongObjectRef(
   return strongRef;
 }
 
-// Note :: ChakraCore header provides an API which takes 8-bit string .. which
-// is not available in edge mode.
-JsValueRef ChakraRuntime::createJSString(const char *data, size_t length) {
-  JsValueRef value;
-  JsCreateString(reinterpret_cast<const char *>(data), length, &value);
-  return value;
-}
-
-// Note :: ChakraCore header provides an API which takes 8-bit string .. which
-// is not available in edge mode.
-JsValueRef ChakraRuntime::createJSPropertyId(const char *data, size_t length) {
-  JsValueRef propIdRef;
-  if (JsNoError != JsCreatePropertyId(data, length, &propIdRef))
-    std::terminate();
-  return propIdRef;
-}
-
 // ES6 Promise callback
 void CALLBACK ChakraRuntime::PromiseContinuationCallback(
     JsValueRef funcRef,

@@ -119,32 +119,32 @@ void ChakraObjectRef::Invalidate() {
   }
 }
 
-JsValueType getValueType(const ChakraObjectRef &jsValue) {
+JsValueType GetValueType(const ChakraObjectRef &jsValue) {
   JsValueType type;
   ThrowUponChakraError(JsGetValueType(jsValue, &type), "JsGetValueType");
   return type;
 }
 
-JsPropertyIdType getPropertyIdType(const ChakraObjectRef &jsPropId) {
+JsPropertyIdType GetPropertyIdType(const ChakraObjectRef &jsPropId) {
   JsPropertyIdType type;
   ThrowUponChakraError(
       JsGetPropertyIdType(jsPropId, &type), "JsGetPropertyIdType");
   return type;
 }
 
-std::wstring getPropertyName(const ChakraObjectRef &id) {
-  if (getPropertyIdType(id) != JsPropertyIdTypeString) {
+std::wstring GetPropertyName(const ChakraObjectRef &id) {
+  if (GetPropertyIdType(id) != JsPropertyIdTypeString) {
     throw facebook::jsi::JSINativeException(
         "It is llegal to retrieve the name of a property symbol.");
   }
-  const wchar_t *propertyName;
+  const wchar_t *propertyName = nullptr;
   ThrowUponChakraError(
       JsGetPropertyNameFromId(id, &propertyName), "JsGetPropertyNameFromId");
   return std::wstring{propertyName};
 }
 
-ChakraObjectRef getPropertySymbol(const ChakraObjectRef &id) {
-  if (getPropertyIdType(id) != JsPropertyIdTypeSymbol) {
+ChakraObjectRef GetPropertySymbol(const ChakraObjectRef &id) {
+  if (GetPropertyIdType(id) != JsPropertyIdTypeSymbol) {
     throw facebook::jsi::JSINativeException(
         "It is llegal to retrieve the symbol associated with a property name.");
   }
@@ -154,14 +154,28 @@ ChakraObjectRef getPropertySymbol(const ChakraObjectRef &id) {
   return ChakraObjectRef{symbol};
 }
 
-ChakraObjectRef getPropertyId(const wchar_t *const name) {
+ChakraObjectRef GetPropertyId(const char *const utf8, size_t length){
+  // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
+  // using ChakraCore's JsCreateString API.
+#ifdef CHAKRACORE
   JsPropertyIdRef id = nullptr;
   ThrowUponChakraError(
-      JsGetPropertyIdFromName(name, &id), "JsGetPropertyIdFromName");
+      JsCreatePropertyId(utf8, length, &id), "JsCreatePropertyId");
+  return ChakraObjectRef(id);
+#else
+  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8);
+  return GetPropertyId(utf16);
+#endif
+}
+
+ChakraObjectRef GetPropertyId(const std::wstring &utf16) {
+  JsPropertyIdRef id = nullptr;
+  ThrowUponChakraError(
+      JsGetPropertyIdFromName(utf16.c_str(), &id), "JsGetPropertyIdFromName");
   return ChakraObjectRef(id);
 }
 
-std::string toStdString(const ChakraObjectRef &jsString) {
+std::string ToStdString(const ChakraObjectRef &jsString) {
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCreateString API.
 #ifdef CHAKRACORE
@@ -175,49 +189,55 @@ std::string toStdString(const ChakraObjectRef &jsString) {
   assert(length == result.length());
   return result;
 #else
-  return Common::Unicode::Utf16ToUtf8(toStdWstring(jsString));
+  return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
 #endif
 }
 
-std::wstring toStdWstring(const ChakraObjectRef &jsString) {
-  assert(getValueType(jsString) == JsString);
+std::wstring ToStdWstring(const ChakraObjectRef &jsString) {
+  assert(GetValueType(jsString) == JsString);
 
-  const wchar_t *utf16;
-  size_t length;
+  const wchar_t *utf16 = nullptr;
+  size_t length = 0;
   ThrowUponChakraError(
       JsStringToPointer(jsString, &utf16, &length), "JsStringToPointer");
 
   return std::wstring(utf16, length);
 }
 
-ChakraObjectRef toJsString(const char *utf8, size_t length) {
-  JsValueRef result;
+ChakraObjectRef ToJsString(const char *utf8, size_t length) {
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCreateString API.
 #ifdef CHAKRACORE
+  JsValueRef result = nullptr;
   ThrowUponChakraError(JsCreateString(utf8, length, &result), "JsCreateString");
   return ChakraObjectRef(result);
 #else
   std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8, length);
-  return toJsString(utf16.c_str(), utf16.length());
+  return ToJsString(utf16.c_str(), utf16.length());
 #endif
 }
 
-ChakraObjectRef toJsString(const wchar_t *const utf16, size_t length) {
-  JsValueRef result;
+ChakraObjectRef ToJsString(const wchar_t *const utf16, size_t length) {
+  JsValueRef result = nullptr;
   ThrowUponChakraError(
       JsPointerToString(utf16, length, &result), "JsPointerToString");
   return ChakraObjectRef(result);
 }
 
-ChakraObjectRef toJsString(const ChakraObjectRef &ref) {
+ChakraObjectRef ToJsString(const ChakraObjectRef &ref) {
   JsValueRef str = nullptr;
   ThrowUponChakraError(
       JsConvertValueToString(ref, &str), "JsConvertValueToString");
   return ChakraObjectRef(str);
 }
 
-ChakraObjectRef toJsExternalArrayBuffer(
+ChakraObjectRef ToJsNumber(int num) {
+  JsValueRef result = nullptr;
+  ThrowUponChakraError(JsIntToNumber(num, &result), "JsIntToNumber");
+  return ChakraObjectRef(result);
+}
+
+ChakraObjectRef ToJsExternalArrayBuffer(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer) {
   size_t size = buffer->size();
   assert(size < UINT_MAX);
@@ -251,7 +271,7 @@ ChakraObjectRef toJsExternalArrayBuffer(
   return ChakraObjectRef(arrayBuffer);
 }
 
-bool compareJsValues(
+bool CompareJsValues(
     const ChakraObjectRef &jsValue1,
     const ChakraObjectRef &jsValue2) {
   bool result = false;
@@ -262,11 +282,11 @@ bool compareJsValues(
   return result;
 }
 
-bool compareJsPropertyIds(
+bool CompareJsPropertyIds(
     const ChakraObjectRef &jsPropId1,
     const ChakraObjectRef &jsPropId2) {
-  JsPropertyIdType type1 = getPropertyIdType(jsPropId1);
-  JsPropertyIdType type2 = getPropertyIdType(jsPropId2);
+  JsPropertyIdType type1 = GetPropertyIdType(jsPropId1);
+  JsPropertyIdType type2 = GetPropertyIdType(jsPropId2);
 
   if (type1 != type2) {
     return false;
@@ -274,13 +294,13 @@ bool compareJsPropertyIds(
 
   if (type1 == JsPropertyIdTypeString) {
     assert(type2 == JsPropertyIdTypeString);
-    return getPropertyName(jsPropId1) == getPropertyName(jsPropId2);
+    return GetPropertyName(jsPropId1) == GetPropertyName(jsPropId2);
   }
 
   if (type1 == JsPropertyIdTypeSymbol) {
     assert(type2 == JsPropertyIdTypeSymbol);
-    return compareJsValues(
-        getPropertySymbol(jsPropId1), getPropertySymbol(jsPropId2));
+    return CompareJsValues(
+        GetPropertySymbol(jsPropId1), GetPropertySymbol(jsPropId2));
   }
 
   // Control should never reach here.

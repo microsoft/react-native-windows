@@ -65,51 +65,56 @@ class ChakraObjectRef {
 };
 
 // jsValue must be managing a JsValueRef.
-JsValueType getValueType(const ChakraObjectRef &jsValue);
+JsValueType GetValueType(const ChakraObjectRef &jsValue);
 
 // jsPropId must be managing a JsPropertyIdRef.
-JsPropertyIdType getPropertyIdType(const ChakraObjectRef &jsPropId);
+JsPropertyIdType GetPropertyIdType(const ChakraObjectRef &jsPropId);
 
 // jsPropId must be managing a JsPropertyIdRef of type JsPropertyIdTypeString.
-std::wstring getPropertyName(const ChakraObjectRef &jsPropId);
+std::wstring GetPropertyName(const ChakraObjectRef &jsPropId);
 
 // jsPropId must be managing a JsPropertyIdRef of type JsPropertyIdTypeSymbol.
 // Returns a ChakraObjectRef managing a JsValueRef pointing to a JS Symbol.
-ChakraObjectRef getPropertySymbol(const ChakraObjectRef &jsPropId);
+ChakraObjectRef GetPropertySymbol(const ChakraObjectRef &jsPropId);
 
-// name must be null terminated.
-ChakraObjectRef getPropertyId(const wchar_t *const name);
+// utf8 does not have to be null terminated.
+ChakraObjectRef GetPropertyId(const char *const utf8, size_t length);
+
+ChakraObjectRef GetPropertyId(const std::wstring &utf16);
 
 // jsString must be managing a JsValueRef pointing to a JS string. The returned
 // std::string/std::wstring is UTF-8/UTF-16 encoded. These functions copy the JS
 // string buffer into the returned std::string/std::wstring.
-std::string toStdString(const ChakraObjectRef &jsString);
-std::wstring toStdWstring(const ChakraObjectRef &jsString);
+std::string ToStdString(const ChakraObjectRef &jsString);
+std::wstring ToStdWstring(const ChakraObjectRef &jsString);
 
 // Returns a ChakraObjectRef managing a JsValueRef pointing to a JS string.
-// utf8/utf16 must point to a UTF-8/UTF-16 encoded buffer. These buffers do not
-// have to be null terminated and are copied to JS engine owned memory.
-ChakraObjectRef toJsString(const char *const utf8, size_t length);
-ChakraObjectRef toJsString(const wchar_t *const utf16, size_t length);
+// utf8 and utf16 do not have to be null terminated and are copied to JS engine
+// owned memory.
+ChakraObjectRef ToJsString(const char *const utf8, size_t length);
+ChakraObjectRef ToJsString(const wchar_t *const utf16, size_t length);
 
 // jsValue must be mananing a JsValueRef. Returns a ChakraObjectRef managing a
 // JsValueRef that points the return value of the JS .toString function.
-ChakraObjectRef toJsString(const ChakraObjectRef &jsValue);
+ChakraObjectRef ToJsString(const ChakraObjectRef &jsValue);
+
+// Returns a ChakraObjectRef managing a JsValueRef pointing to a JS number.
+ChakraObjectRef ToJsNumber(int num);
 
 // Returns a ChakraObjectRef managing a JsValueRef pointing to a JS ArrayBuffer.
 // This ArrayBuffer is backed by buffer and keeps buffer alive till the garbage
 // collector finalizes it.
-ChakraObjectRef toJsExternalArrayBuffer(
+ChakraObjectRef ToJsExternalArrayBuffer(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
 
 // Both jsValue1 and jsValue2 must be managing a JsValueRef. Returns whether
 // jsValue1 anf jsValue2 are strictly equal.
-bool compareJsValues(
+bool CompareJsValues(
     const ChakraObjectRef &jsValue1,
     const ChakraObjectRef &jsValue2);
 
 // Both jsPropId1 and jsPropId2 must be managing a JsPropertyIdRef.
-bool compareJsPropertyIds(
+bool CompareJsPropertyIds(
     const ChakraObjectRef &jsPropId1,
     const ChakraObjectRef &jsPropId2);
 
