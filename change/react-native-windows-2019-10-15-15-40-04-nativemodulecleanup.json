@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Reduced and simplified sample native modules",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "59f5a4c1dcc8b084d2e6082425501d192011ae91",
+  "date": "2019-10-15T22:40:04.059Z",
+  "file": "F:\\code\\rnw\\change\\react-native-windows-2019-10-15-15-40-04-nativemodulecleanup.json"
+}
