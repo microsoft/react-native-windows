@@ -85,15 +85,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "Microsoft.ReactNative\Microsoft.ReactNative.vcxproj", "{F7D32BD0-2749-483E-9A0D-1635EF7E3136}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Managed", "Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj", "{0CEA72C6-3F89-47D2-B9D1-05289F989277}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx", "Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems", "{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
 		Chakra\Chakra.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
 		Shared\Shared.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
+		Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems*{67a1076f-7790-4203-86ea-4402ccb5e782}*SharedItemsImports = 13
 		JSI\Shared\JSI.Shared.vcxitems*{a62d504a-16b8-41d2-9f19-e2e86019e5e4}*SharedItemsImports = 4
 		Chakra\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
+		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -232,18 +236,6 @@ Global
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x64.Build.0 = Release|x64
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.ActiveCfg = Release|Win32
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.Build.0 = Release|Win32
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|ARM.ActiveCfg = Debug|ARM
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|ARM.Build.0 = Debug|ARM
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x64.ActiveCfg = Debug|x64
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x64.Build.0 = Debug|x64
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x86.ActiveCfg = Debug|x86
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Debug|x86.Build.0 = Debug|x86
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|ARM.ActiveCfg = Release|ARM
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|ARM.Build.0 = Release|ARM
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x64.ActiveCfg = Release|x64
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x64.Build.0 = Release|x64
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x86.ActiveCfg = Release|x86
-		{0CEA72C6-3F89-47D2-B9D1-05289F989277}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

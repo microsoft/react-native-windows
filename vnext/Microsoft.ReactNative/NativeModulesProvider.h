@@ -22,13 +22,11 @@ class NativeModulesProvider final
 
  public:
   NativeModulesProvider() noexcept;
-  void RegisterModule(INativeModule const &module);
   void AddModuleProvider(
       winrt::hstring const &moduleName,
       ReactModuleProvider const &moduleProvider) noexcept;
 
  private:
-  std::vector<INativeModule> m_modules;
   std::map<std::string, Microsoft::ReactNative::Bridge::ReactModuleProvider>
       m_moduleProviders;
   std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{

@@ -19,13 +19,6 @@ namespace SampleApp
 
         protected override string MainComponentName => "SampleApp";
         protected override string JavaScriptMainModuleName => "index.windows";
-        protected override IReadOnlyList<IReactPackage> Packages
-        {
-            get
-            {
-                return new IReactPackage[] { };
-            }
-        }
 
         protected override IReadOnlyList<IReactPackageProvider> PackageProviders
         {

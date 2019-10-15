@@ -41,14 +41,8 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
     return true;
   };
 
-  IVectorView<IReactPackage> Packages() {
-    auto packages = single_threaded_vector<IReactPackage>();
-    return packages.GetView();
-  };
-
   IVectorView<Microsoft::ReactNative::Bridge::IReactPackageProvider>
   PackageProviders() {
-    OutputDebugStringW(L"My output string.");
     auto packages = single_threaded_vector<
         Microsoft::ReactNative::Bridge::IReactPackageProvider>(
         {make<ReactPackageProvider>(),

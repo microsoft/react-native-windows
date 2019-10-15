@@ -26,7 +26,6 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
       Microsoft::ReactNative::ReactInstanceSettings instanceSettings,
       std::string jsBundleFile,
       std::string jsMainModuleName,
-      IVectorView<IReactPackage> &packages,
       IVectorView<IReactPackageProvider> &packageProviders,
       bool useDeveloperSupport,
       LifecycleState initialLifecycleState);
@@ -56,7 +55,6 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   std::string m_jsBundleFile{};
   std::string m_jsMainModuleName{};
-  Windows::Foundation::Collections::IVectorView<IReactPackage> m_packages;
   std::vector<IReactPackageProvider> m_packageProviders;
   bool m_useDeveloperSupport{false};
   std::shared_ptr<NativeModulesProvider> m_modulesProvider{nullptr};
