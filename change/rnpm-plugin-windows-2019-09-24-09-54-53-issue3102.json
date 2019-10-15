@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Updates logic for `wpf` command to install correct dependency",
-  "packageName": "rnpm-plugin-windows",
-  "email": "erozell@outlook.com",
-  "commit": "2325263a2cd4bd66ae7f78f2fa01650aee280345",
-  "date": "2019-09-24T13:54:53.668Z"
-}
