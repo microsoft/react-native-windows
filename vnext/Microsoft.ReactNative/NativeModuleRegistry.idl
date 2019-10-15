@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import "NativeModuleBase.idl";
+import "INativeModule.idl";
 
 namespace Microsoft.ReactNative.Bridge
 {
@@ -9,7 +9,9 @@ namespace Microsoft.ReactNative.Bridge
   runtimeclass NativeModuleRegistry 
   {
     NativeModuleRegistry();
-    NativeModuleRegistry(IVectorView<NativeModuleBase> modules);
-    IVectorView<NativeModuleBase> Modules { get; };
+    NativeModuleRegistry(IVectorView<INativeModule> modules);
+    IVectorView<INativeModule> Modules {
+      get;
+    };
   }
 }

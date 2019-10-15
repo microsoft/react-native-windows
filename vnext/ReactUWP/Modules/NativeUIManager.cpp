@@ -1164,6 +1164,29 @@ void NativeUIManager::measure(
   callback(args);
 }
 
+void NativeUIManager::measureInWindow(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  std::vector<folly::dynamic> args;
+
+  ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
+  if (auto view = node.GetView().try_as<winrt::FrameworkElement>()) {
+    auto windowTransform =
+        view.TransformToVisual(winrt::Window::Current().Content());
+    auto positionInWindow = windowTransform.TransformPoint({0, 0});
+
+    // x, y
+    args.push_back(positionInWindow.X);
+    args.push_back(positionInWindow.Y);
+
+    // Size
+    args.push_back(view.ActualWidth());
+    args.push_back(view.ActualHeight());
+  }
+
+  callback(args);
+}
+
 void NativeUIManager::findSubviewIn(
     facebook::react::ShadowNode &shadowNode,
     float x,

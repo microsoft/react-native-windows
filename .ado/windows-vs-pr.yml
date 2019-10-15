@@ -124,6 +124,7 @@ jobs:
           command: restore
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
       - task: MSBuild@1
         displayName: MSBuild - SampleApps
@@ -137,13 +138,14 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
           workingDirectory: packages\microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
@@ -250,27 +252,25 @@ jobs:
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
 
-  - job: CliInitCpp
-    displayName: Verify react-native init (cpp)
+  - job: CliInit
+    displayName: Verify react-native init
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-    pool:
-      vmImage: $(VmImage)
-    steps:
-      - template: templates/react-native-init.yml
-        parameters:
+    strategy:
+      matrix:
+        DebugCpp:
           language: cpp
-          version: 0.60.6
-          platform: x64
           configuration: Debug
-          vsComponents: $(VsComponents)
+        DebugCs:
+          language: cs
+          configuration: Debug
+        DebugBundleCpp:
+          language: cpp
+          configuration: DebugBundle
+        DebugBundleCs:
+          language: cs
+          configuration: DebugBundle
 
-  - job: CliInitCs
-    displayName: Verify react-native init (cs)
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
@@ -278,10 +278,8 @@ jobs:
     steps:
       - template: templates/react-native-init.yml
         parameters:
-          language: cs
           version: 0.60.6
           platform: x64
-          configuration: Debug
           vsComponents: $(VsComponents)
 
   - job: RNWFormatting

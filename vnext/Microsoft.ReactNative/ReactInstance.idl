@@ -1,13 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-import "NativeModuleBase.idl";
+import "INativeModule.idl";
 
 namespace Microsoft.ReactNative.Bridge
 {
 	interface IReactInstance
 	{
-    IVectorView<NativeModuleBase> NativeModules { get; };
+    IVectorView<INativeModule> NativeModules {
+      get;
+    };
     void InvokeFunction(String moduleName, String method, IVectorView<IInspectable> arguments);
     Windows.Foundation.IAsyncAction InitializeAsync();
 	};

@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Tue, 01 Oct 2019 18:17:42 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Oct 2019 13:59:27 GMT and should not be manually modified.
 
+## 0.3.6
+Tue, 15 Oct 2019 13:59:27 GMT
+
+### Patches
+
+- Updates logic for `wpf` command to install correct dependency (erozell@outlook.com)
 ## 0.3.5
 Tue, 01 Oct 2019 18:17:42 GMT
 
