@@ -6,7 +6,6 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  Alert,
   Button,
   StyleSheet,
   Text,
@@ -14,184 +13,75 @@ import {
 } from 'react-native';
 import { NativeModules } from 'react-native';
 
-const BatchedBridge = require('BatchedBridge');
-const NativeEventEmitter = require('NativeEventEmitter');
+var log = function(result) {
+  console.log(result);
+  NativeModules.DebugConsole.Log('' + result);
+};
+
+var getCallback = function(prefix) {
+  return function(result) {
+    log(prefix + result);
+  };
+};
 
 class SampleApp extends Component {
-  _onPressHandlerSM() {
+
+  _onPressHandlerSMCS() {
     var numberArg = 42;
 
-    var logCallback = function(result) {
-      console.log(result);
-    };
+    // SampleModuleCS constants
 
-    // SampleModule constants
+    log(`SampleModuleCS.NumberConstant: ${NativeModules.SampleModuleCS.NumberConstant}`);
+    log(`SampleModuleCS.StringConstant: ${NativeModules.SampleModuleCS.StringConstant}`);
 
-    logCallback(`SampleModule.NumberConstant: ${NativeModules.SampleModule.NumberConstant}`);
-    logCallback(`SampleModule.StringConstant: ${NativeModules.SampleModule.StringConstant}`);
+    // SampleModuleCS method calls
 
-    // SampleModule method calls
+    NativeModules.SampleModuleCS.VoidMethod();
 
-    NativeModules.SampleModule.VoidMethod();
+    NativeModules.SampleModuleCS.VoidMethodWithArgs(numberArg);
 
-    NativeModules.SampleModule.VoidMethodWithArgs(numberArg);
+    NativeModules.SampleModuleCS.ReturnMethod(getCallback('SampleModuleCS.ReturnMethod => '));
 
-    NativeModules.SampleModule.ReturnMethod(logCallback);
+    NativeModules.SampleModuleCS.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCS.ReturnMethodWithArgs => '));
 
-    NativeModules.SampleModule.ReturnMethodWithArgs(numberArg, logCallback);
+    NativeModules.SampleModuleCS.ExplicitCallbackMethod(getCallback('SampleModuleCS.ExplicitCallbackMethod => '));
 
-    NativeModules.SampleModule.ExplicitVoidMethod();
+    NativeModules.SampleModuleCS.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCS.ExplicitCallbackMethodWithArgs => '));
 
-    NativeModules.SampleModule.ExplicitVoidMethodWithArgs(numberArg);
+    var promise1 = NativeModules.SampleModuleCS.ExplicitPromiseMethod();
+    promise1.then(getCallback('SampleModuleCS.ExplicitPromiseMethod then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethod catch => '));
 
-    NativeModules.SampleModule.ExplicitCallbackMethod(logCallback);
-
-    NativeModules.SampleModule.ExplicitCallbackMethodWithArgs(numberArg, logCallback);
-
-    var promise1 = NativeModules.SampleModule.ExplicitPromiseMethod();
-    promise1.then(logCallback).catch(logCallback);
-
-    var promise2 = NativeModules.SampleModule.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(logCallback).catch(logCallback);
+    var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
+    promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
   }
 
-  _onPressHandlerFM() {
-    // FancyMath Callback
-    NativeModules.FancyMath.add(
-      /* args */ NativeModules.FancyMath.Pi, NativeModules.FancyMath.E,
-      /* callback */ function(result) {
-        Alert.alert(
-          'FancyMath',
-          `FancyMath says ${NativeModules.FancyMath.Pi} + ${NativeModules.FancyMath.E} = ${result}`,
-          [
-            {
-              text: 'OK',
-            },
-          ],
-          {cancelable: false},
-        );
-      }
-    );
-  }
-
-  _onPressHandlerSMA() {
+  _onPressHandlerSMCPP() {
     var numberArg = 42;
 
-    var logCallback = function(result) {
-      console.log(result);
-    };
+    // SampleModuleCPP constants
 
-    // SampleModuleABI constants
+    log(`SampleModuleCPP.NumberConstant: ${NativeModules.SampleModuleCPP.NumberConstant}`);
+    log(`SampleModuleCPP.StringConstant: ${NativeModules.SampleModuleCPP.StringConstant}`);
 
-    logCallback(`SampleModuleABI.NumberConstant: ${NativeModules.SampleModuleABI.NumberConstant}`);
-    logCallback(`SampleModuleABI.StringConstant: ${NativeModules.SampleModuleABI.StringConstant}`);
+    // SampleModuleCPP method calls
 
-    // SampleModuleABI method calls
+    NativeModules.SampleModuleCPP.VoidMethod();
 
-    NativeModules.SampleModuleABI.VoidMethod();
+    NativeModules.SampleModuleCPP.VoidMethodWithArgs(numberArg);
 
-    NativeModules.SampleModuleABI.VoidMethodWithArgs(numberArg);
+    NativeModules.SampleModuleCPP.ReturnMethod(getCallback('SampleModuleCPP.ReturnMethod => '));
 
-    NativeModules.SampleModuleABI.ReturnMethod(logCallback);
+    NativeModules.SampleModuleCPP.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ReturnMethodWithArgs => '));
 
-    NativeModules.SampleModuleABI.ReturnMethodWithArgs(numberArg, logCallback);
+    NativeModules.SampleModuleCPP.ExplicitCallbackMethod(getCallback('SampleModuleCPP.ExplicitCallbackMethod => '));
 
-    NativeModules.SampleModuleABI.ExplicitVoidMethod();
+    NativeModules.SampleModuleCPP.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ExplicitCallbackMethodWithArgs => '));
 
-    NativeModules.SampleModuleABI.ExplicitVoidMethodWithArgs(numberArg);
+    var promise1 = NativeModules.SampleModuleCPP.ExplicitPromiseMethod();
+    promise1.then(getCallback('SampleModuleCPP.ExplicitPromiseMethod then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethod catch => '));
 
-    NativeModules.SampleModuleABI.ExplicitCallbackMethod(logCallback);
-
-    NativeModules.SampleModuleABI.ExplicitCallbackMethodWithArgs(numberArg, logCallback);
-
-    var promise1 = NativeModules.SampleModuleABI.ExplicitPromiseMethod();
-    promise1.then(logCallback).catch(logCallback);
-
-    var promise2 = NativeModules.SampleModuleABI.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(logCallback).catch(logCallback);
-  }
-
-  _onPressHandlerFMA() {
-    // FancyMathABI Callback
-    NativeModules.FancyMathABI.add(
-      /* args */ NativeModules.FancyMathABI.Pi, NativeModules.FancyMathABI.E,
-      /* callback */ function(result) {
-        Alert.alert(
-          'FancyMathABI',
-          `FancyMathABI says ${NativeModules.FancyMathABI.Pi} + ${NativeModules.FancyMathABI.E} = ${result}`,
-          [
-            {
-              text: 'OK',
-            },
-          ],
-          {cancelable: false},
-        );
-      }
-    );
-  }
-
-  _onPressHandlerCppCalculator() {
-    var log = function(message) {
-      console.log(message);
-      NativeModules.DebugConsole.Log(message + '\n');
-    };
-
-    var getCallback = function(prefix) {
-      return function(result) {
-        log(prefix + result);
-      };
-    };
-
-    var callOnce = function(id, func) {
-      var propId = 'callonce_' + id;
-      if (!this[propId]) {
-        this[propId] = true;
-        func();
-      }
-    };
-
-    log('Hello from JS!');
-
-    log(`MyModule.m_fieldConst: ${NativeModules.MyModule.m_fieldConst}`);
-    log(`MyModule.fldConst: ${NativeModules.MyModule.fldConst}`);
-    log(`MyModule.simpleConst1: ${NativeModules.MyModule.simpleConst1}`);
-    log(`MyModule.simpleConst2: ${NativeModules.MyModule.simpleConst2}`);
-
-    callOnce('OnChangeEvent', function() {
-      BatchedBridge.registerLazyCallableModule('MyModule', () => {
-        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyModule);
-        myModuleEventEmitter.addListener('OnChanged', getCallback('MyModule.OnChanged: '), this);
-        return myModuleEventEmitter;
-      });
-    });
-
-    NativeModules.MyModule.Add(2, 4, getCallback('MyModule.Add(2, 4) => '));
-    NativeModules.MyModule.PrintAdd(1, 2);
-    NativeModules.MyModule.AddCallback(2, 5, getCallback('MyModule.AddCallback(2, 5) => '));
-    NativeModules.MyModule.SubtractCallback(6, 5).then(getCallback('MyModule.SubtractCallback(6, 5) => then '))
-                                                 .catch(getCallback('MyModule.SubtractCallback(6, 5) => catch '));
-    NativeModules.MyModule.SubtractCallback(5, 6).then(getCallback('MyModule.SubtractCallback(5, 6) => then '))
-                                                 .catch(getCallback('MyModule.SubtractCallback(5, 6) => catch '));
-    NativeModules.MyModule.NoArg0();
-    NativeModules.MyModule.NoArg1(getCallback('MyModule.NoArg1() => '));
-
-    log(`MyModule.regValue("Key1") => ${NativeModules.MyModule.regValue('Key1')}`);
-    log(`MyModule.regValue("Key2") => ${NativeModules.MyModule.regValue('Key2')}`);
-    log(`MyModule.regValue("Key3") => ${NativeModules.MyModule.regValue('Key3')}`);
-
-    NativeModules.Calculator.Add(5, 6, getCallback('Calculator.Add(5, 6) => '));
-    NativeModules.Calculator.Add(5, 12, getCallback('Calculator.Add(5, 12) => '));
-    NativeModules.Calculator.Subtract(6, 5).then(getCallback('Calculator.Subtract(6, 5) => then '))
-                                           .catch(getCallback('Calculator.Subtract(6, 5) => catch '));
-    NativeModules.Calculator.Subtract(5, 6).then(getCallback('Calculator.Subtract(5, 6) => then '))
-                                           .catch(getCallback('Calculator.Subtract(5, 6) => catch '));
-
-    NativeModules.CsStrings.Length('Hello!', getCallback('CsStrings.Length("Hello!") => '));
-    NativeModules.CsStrings.Concat('Hello', 'World!', getCallback('CsStrings.Concat("Hello", "World!") => '));
-    NativeModules.CsStrings.Substr('Hello World!', 5).then(getCallback('CsStrings.Substr("Hello World!", 5) => then '))
-                                                     .catch(getCallback('CsStrings.Substr("Hello World!", 5) => catch '));
-    NativeModules.CsStrings.Substr('Hello World!', 20).then(getCallback('CsStrings.Substr("Hello World!", 20) => then '))
-                                                      .catch(getCallback('CsStrings.Substr("Hello World!", 20) => catch '));
+    var promise2 = NativeModules.SampleModuleCPP.ExplicitPromiseMethodWithArgs(numberArg);
+    promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
   }
 
   render() {
@@ -203,14 +93,8 @@ class SampleApp extends Component {
         <Text style={styles.instructions}>
           To get started, edit index.windows.js
         </Text>
-
-        <Button onPress={this._onPressHandlerSM} title="Call SampleModule!" disabled={NativeModules.SampleModule == null} />
-        <Button onPress={this._onPressHandlerFM} title="Call FancyMath!" disabled={NativeModules.FancyMath == null} />
-
-        <Button onPress={this._onPressHandlerSMA} title="Call SampleModuleABI!" disabled={NativeModules.SampleModuleABI == null} />
-        <Button onPress={this._onPressHandlerFMA} title="Call FancyMathABI!" disabled={NativeModules.FancyMathABI == null} />
-
-        <Button onPress={this._onPressHandlerCppCalculator} title="Call SampleLibraryCPP Calculator"/>
+        <Button onPress={this._onPressHandlerSMCS} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
+        <Button onPress={this._onPressHandlerSMCPP} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
       </View>
     );
   }

@@ -12,7 +12,7 @@ namespace SampleApp
         [ReactMethod]
         public void Log(string message)
         {
-            Debug.Write(message);
+            Debug.WriteLine(message);
         }
     }
 }

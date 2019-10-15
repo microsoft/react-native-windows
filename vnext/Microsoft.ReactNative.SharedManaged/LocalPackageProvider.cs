@@ -5,7 +5,7 @@ using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
-  class ReactPackageProvider : IReactPackageProvider
+  class LocalPackageProvider : IReactPackageProvider
   {
     public void CreatePackage(IReactPackageBuilder packageBuilder)
     {

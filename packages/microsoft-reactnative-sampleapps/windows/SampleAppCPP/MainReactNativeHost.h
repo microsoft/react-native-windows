@@ -3,7 +3,11 @@
 // Licensed under the MIT License.
 
 #include "MainReactNativeHost.g.h"
+
 #include "ReactPackageProvider.h"
+
+#include "winrt/Microsoft.ReactNative.Bridge.h"
+
 #include "winrt/SampleLibraryCPP.h"
 #include "winrt/SampleLibraryCS.h"
 
@@ -38,17 +42,18 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   };
 
   IVectorView<IReactPackage> Packages() {
-    auto packages =
-        single_threaded_vector<IReactPackage>({SampleLibraryPackage()});
+    auto packages = single_threaded_vector<IReactPackage>();
     return packages.GetView();
   };
 
-  IVectorView<IReactPackageProvider> PackageProviders() {
+  IVectorView<Microsoft::ReactNative::Bridge::IReactPackageProvider>
+  PackageProviders() {
     OutputDebugStringW(L"My output string.");
-    auto packages = single_threaded_vector<IReactPackageProvider>(
+    auto packages = single_threaded_vector<
+        Microsoft::ReactNative::Bridge::IReactPackageProvider>(
         {make<ReactPackageProvider>(),
-         winrt::SampleLibraryCPP::SampleLibraryCppPackage(),
-         winrt::SampleLibraryCS::CsStringsPackageProvider()});
+         winrt::SampleLibraryCPP::ReactPackageProvider(),
+         winrt::SampleLibraryCS::ReactPackageProvider()});
     return packages.GetView();
   };
 };

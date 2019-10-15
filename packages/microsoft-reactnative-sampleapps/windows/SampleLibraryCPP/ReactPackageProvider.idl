@@ -3,9 +3,9 @@
 
 namespace SampleLibraryCPP {
 
-runtimeclass SampleLibraryCppPackage
+runtimeclass ReactPackageProvider
     : Microsoft.ReactNative.Bridge.IReactPackageProvider {
-  SampleLibraryCppPackage();
+  ReactPackageProvider();
   void CreatePackage(
       Microsoft.ReactNative.Bridge.IReactPackageBuilder packageBuilder);
 };

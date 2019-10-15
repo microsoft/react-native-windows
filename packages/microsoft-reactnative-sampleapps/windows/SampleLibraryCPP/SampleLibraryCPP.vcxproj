@@ -106,55 +106,23 @@
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
     <ClInclude Include="MyModule.h" />
-    <ClInclude Include="FancyMathABI.h">
-      <DependentUpon>FancyMathABI.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SampleLibraryCppPackage.h">
-      <DependentUpon>SampleLibraryCppPackage.idl</DependentUpon>
+    <ClInclude Include="ReactPackageProvider.h">
+      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="SampleLibraryPackage.h">
-      <DependentUpon>SampleLibraryPackage.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="SampleModuleABI.h">
-      <DependentUpon>SampleModuleABI.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
+    <ClInclude Include="SampleModuleCPP.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FancyMathABI.cpp">
-      <DependentUpon>FancyMathABI.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SampleLibraryCppPackage.cpp">
-      <DependentUpon>SampleLibraryCppPackage.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="SampleLibraryPackage.cpp">
-      <DependentUpon>SampleLibraryPackage.idl</DependentUpon>
-      <SubType>Code</SubType>
+    <ClCompile Include="ReactPackageProvider.cpp">
+      <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="SampleModuleABI.cpp">
-      <DependentUpon>SampleModuleABI.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="SampleLibraryCppPackage.idl" />
-    <Midl Include="FancyMathABI.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="SampleLibraryPackage.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="SampleModuleABI.idl">
-      <SubType>Designer</SubType>
-    </Midl>
+    <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

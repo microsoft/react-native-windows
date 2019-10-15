@@ -1,6 +1,9 @@
-using Microsoft.ReactNative.Bridge;
-using Microsoft.ReactNative.Managed;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Reflection;
+
+using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {

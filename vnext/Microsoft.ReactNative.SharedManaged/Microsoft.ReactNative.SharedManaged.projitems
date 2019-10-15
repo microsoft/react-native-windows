@@ -22,7 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ReactException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactMethodInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactModuleInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ReactModulePackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)LocalPackageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactPackageBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ReactSyncMethodInfo.cs" />
   </ItemGroup>
