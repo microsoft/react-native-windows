@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Tue, 15 Oct 2019 13:59:27 GMT",
+      "tag": "rnpm-plugin-windows_v0.3.6",
+      "version": "0.3.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updates logic for `wpf` command to install correct dependency",
+            "author": "erozell@outlook.com",
+            "commit": "2325263a2cd4bd66ae7f78f2fa01650aee280345"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Oct 2019 22:17:13 GMT",
       "tag": "rnpm-plugin-windows_v0.3.5",
       "version": "0.3.5",
