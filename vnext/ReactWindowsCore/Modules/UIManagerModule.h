@@ -66,6 +66,9 @@ class UIManager : public IUIManager, INativeUIManagerHost {
   void measure(
       int64_t reactTag,
       facebook::xplat::module::CxxModule::Callback callback) override;
+  void measureInWindow(
+      int64_t reactTag,
+      facebook::xplat::module::CxxModule::Callback callback) override;
   void findSubviewIn(
       int64_t reactTag,
       folly::dynamic &&coordinates,
