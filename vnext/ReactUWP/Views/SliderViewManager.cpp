@@ -30,9 +30,6 @@ class SliderShadowNode : public ShadowNodeBase {
 
 void SliderShadowNode::createView() {
   Super::createView();
-
-  auto slider = GetView().as<winrt::Slider>();
-  auto wkinstance = GetViewManager()->GetReactInstance();
 }
 
 void SliderShadowNode::updateProperties(const folly::dynamic &&props) {
@@ -64,14 +61,13 @@ facebook::react::ShadowNode *SliderViewManager::createShadow() const {
 
 XamlView SliderViewManager::CreateViewCore(int64_t tag) {
   auto slider = winrt::Slider();
-  slider.MinHeight(100);
   return slider;
 }
 
 void SliderViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
-  auto slider = nodeToUpdate->GetView().as<winrt::Slider>();
+  auto slider = nodeToUpdate->GetView().try_as<winrt::Slider>();
   if (slider == nullptr)
     return;
 
@@ -86,7 +82,7 @@ void SliderViewManager::UpdateProperties(
         slider.ClearValue(winrt::Control::IsEnabledProperty());
     } else if (propertyName == "value") {
       if (propertyValue.isNumber())
-        slider.Value(static_cast<int>(propertyValue.asDouble()));
+        slider.Value(propertyValue.asDouble());
       else if (pair.second.isNull())
         slider.Value(0);
     }
