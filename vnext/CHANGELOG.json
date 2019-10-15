@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Oct 2019 22:35:30 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.30",
+      "version": "0.60.0-vnext.30",
+      "comments": {
+        "none": [
+          {
+            "comment": "supports measureInWindow",
+            "author": "licanhua@live.com",
+            "commit": "137abefe6aaf33513000e3775b343f218ca8171d"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.7",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "4908a69f0b290e4292864c994bc72d24aebfd376"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Oct 2019 13:17:22 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.29",
       "version": "0.60.0-vnext.29",
