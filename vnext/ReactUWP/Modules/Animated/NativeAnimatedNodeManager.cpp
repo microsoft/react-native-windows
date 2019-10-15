@@ -34,7 +34,7 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_transformNodes.count(tag) > 0 || m_propsNodes.count(tag) > 0 ||
       m_styleNodes.count(tag) > 0 || m_valueNodes.count(tag) > 0) {
-    throw new std::invalid_argument(
+    throw std::invalid_argument(
         "AnimatedNode with tag " + std::to_string(tag) + " already exists.");
     return;
   }
