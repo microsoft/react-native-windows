@@ -133,65 +133,65 @@ class SampleApp extends Component {
   _onPressHandlerCppCalculator() {
     var log = function(message) {
       console.log(message);
-      NativeModules.DebugConsole.Log(message + "\n");
-    }
+      NativeModules.DebugConsole.Log(message + '\n');
+    };
 
     var getCallback = function(prefix) {
       return function(result) {
         log(prefix + result);
       };
-    }
+    };
 
     var callOnce = function(id, func) {
-      var propId = "callonce_" + id;
+      var propId = 'callonce_' + id;
       if (!this[propId]) {
         this[propId] = true;
         func();
       }
-    }
-    
-    log("Hello from JS!");
+    };
+
+    log('Hello from JS!');
 
     log(`MyModule.m_fieldConst: ${NativeModules.MyModule.m_fieldConst}`);
     log(`MyModule.fldConst: ${NativeModules.MyModule.fldConst}`);
     log(`MyModule.simpleConst1: ${NativeModules.MyModule.simpleConst1}`);
     log(`MyModule.simpleConst2: ${NativeModules.MyModule.simpleConst2}`);
 
-    callOnce("OnChangeEvent", function() {
+    callOnce('OnChangeEvent', function() {
       BatchedBridge.registerLazyCallableModule('MyModule', () => {
         const myModuleEventEmitter = new NativeEventEmitter(NativeModules.MyModule);
-        myModuleEventEmitter.addListener('OnChanged', getCallback("MyModule.OnChanged: "), this);
+        myModuleEventEmitter.addListener('OnChanged', getCallback('MyModule.OnChanged: '), this);
         return myModuleEventEmitter;
       });
     });
 
-    NativeModules.MyModule.Add(2, 4, getCallback("MyModule.Add(2, 4) => "));
+    NativeModules.MyModule.Add(2, 4, getCallback('MyModule.Add(2, 4) => '));
     NativeModules.MyModule.PrintAdd(1, 2);
-    NativeModules.MyModule.AddCallback(2, 5, getCallback("MyModule.AddCallback(2, 5) => "));
-    NativeModules.MyModule.SubtractCallback(6, 5).then(getCallback("MyModule.SubtractCallback(6, 5) => then "))
-                                                 .catch(getCallback("MyModule.SubtractCallback(6, 5) => catch "));
-    NativeModules.MyModule.SubtractCallback(5, 6).then(getCallback("MyModule.SubtractCallback(5, 6) => then "))
-                                                 .catch(getCallback("MyModule.SubtractCallback(5, 6) => catch "));
+    NativeModules.MyModule.AddCallback(2, 5, getCallback('MyModule.AddCallback(2, 5) => '));
+    NativeModules.MyModule.SubtractCallback(6, 5).then(getCallback('MyModule.SubtractCallback(6, 5) => then '))
+                                                 .catch(getCallback('MyModule.SubtractCallback(6, 5) => catch '));
+    NativeModules.MyModule.SubtractCallback(5, 6).then(getCallback('MyModule.SubtractCallback(5, 6) => then '))
+                                                 .catch(getCallback('MyModule.SubtractCallback(5, 6) => catch '));
     NativeModules.MyModule.NoArg0();
-    NativeModules.MyModule.NoArg1(getCallback("MyModule.NoArg1() => "));
-    
-    log(`MyModule.regValue("Key1") => ${NativeModules.MyModule.regValue("Key1")}`);
-    log(`MyModule.regValue("Key2") => ${NativeModules.MyModule.regValue("Key2")}`);
-    log(`MyModule.regValue("Key3") => ${NativeModules.MyModule.regValue("Key3")}`);
+    NativeModules.MyModule.NoArg1(getCallback('MyModule.NoArg1() => '));
 
-    NativeModules.Calculator.Add(5, 6, getCallback("Calculator.Add(5, 6) => "));
-    NativeModules.Calculator.Add(5, 12, getCallback("Calculator.Add(5, 12) => "));
-    NativeModules.Calculator.Subtract(6, 5).then(getCallback("Calculator.Subtract(6, 5) => then "))
-                                           .catch(getCallback("Calculator.Subtract(6, 5) => catch "));
-    NativeModules.Calculator.Subtract(5, 6).then(getCallback("Calculator.Subtract(5, 6) => then "))
-                                           .catch(getCallback("Calculator.Subtract(5, 6) => catch "));
+    log(`MyModule.regValue('Key1') => ${NativeModules.MyModule.regValue('Key1')}`);
+    log(`MyModule.regValue('Key2') => ${NativeModules.MyModule.regValue('Key2')}`);
+    log(`MyModule.regValue('Key3') => ${NativeModules.MyModule.regValue('Key3')}`);
 
-    NativeModules.CsStrings.Length("Hello!", getCallback("CsStrings.Length(\"Hello!\") => "));
-    NativeModules.CsStrings.Concat("Hello", "World!", getCallback("CsStrings.Concat(\"Hello\", \"World!\") => "));
-    NativeModules.CsStrings.Substr("Hello World!", 5).then(getCallback("CsStrings.Substr(\"Hello World!\", 5) => then "))
-                                                     .catch(getCallback("CsStrings.Substr(\"Hello World!\", 5) => catch "));
-    NativeModules.CsStrings.Substr("Hello World!", 20).then(getCallback("CsStrings.Substr(\"Hello World!\", 20) => then "))
-                                                      .catch(getCallback("CsStrings.Substr(\"Hello World!\", 20) => catch "));
+    NativeModules.Calculator.Add(5, 6, getCallback('Calculator.Add(5, 6) => '));
+    NativeModules.Calculator.Add(5, 12, getCallback('Calculator.Add(5, 12) => '));
+    NativeModules.Calculator.Subtract(6, 5).then(getCallback('Calculator.Subtract(6, 5) => then '))
+                                           .catch(getCallback('Calculator.Subtract(6, 5) => catch '));
+    NativeModules.Calculator.Subtract(5, 6).then(getCallback('Calculator.Subtract(5, 6) => then '))
+                                           .catch(getCallback('Calculator.Subtract(5, 6) => catch '));
+
+    NativeModules.CsStrings.Length('Hello!', getCallback('CsStrings.Length(\'Hello!\') => '));
+    NativeModules.CsStrings.Concat('Hello', 'World!', getCallback('CsStrings.Concat(\'Hello\', \'World!\') => '));
+    NativeModules.CsStrings.Substr('Hello World!', 5).then(getCallback('CsStrings.Substr(\'Hello World!\', 5) => then '))
+                                                     .catch(getCallback('CsStrings.Substr(\'Hello World!\', 5) => catch '));
+    NativeModules.CsStrings.Substr('Hello World!', 20).then(getCallback('CsStrings.Substr(\'Hello World!\', 20) => then '))
+                                                      .catch(getCallback('CsStrings.Substr(\'Hello World!\', 20) => catch '));
   }
 
   render() {
@@ -209,7 +209,7 @@ class SampleApp extends Component {
 
         <Button onPress={this._onPressHandlerSMA} title="Call SampleModuleABI!" disabled={NativeModules.SampleModuleABI == null} />
         <Button onPress={this._onPressHandlerFMA} title="Call FancyMathABI!" disabled={NativeModules.FancyMathABI == null} />
-       
+
         <Button onPress={this._onPressHandlerCppCalculator} title="Call SampleLibraryCPP Calculator"/>
       </View>
     );
