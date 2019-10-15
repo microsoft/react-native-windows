@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 15 Oct 2019 22:35:30 GMT and should not be manually modified.
+This log was last generated on Tue, 15 Oct 2019 23:45:52 GMT and should not be manually modified.
 
+## 0.60.0-vnext.31
+Tue, 15 Oct 2019 23:45:52 GMT
+
+### Changes
+
+- Reduced and simplified sample native modules (jthysell@microsoft.com)
 ## 0.60.0-vnext.30
 Tue, 15 Oct 2019 22:35:30 GMT
 

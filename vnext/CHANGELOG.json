@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Oct 2019 23:45:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.31",
+      "version": "0.60.0-vnext.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reduced and simplified sample native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "59f5a4c1dcc8b084d2e6082425501d192011ae91"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Oct 2019 22:35:30 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.30",
       "version": "0.60.0-vnext.30",
