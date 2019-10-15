@@ -13,8 +13,6 @@ auto ViewManagersProvider::GetViewManagers(
     -> std::vector<react::uwp::NativeViewManager> {
   std::vector<react::uwp::NativeViewManager> viewManagers;
 
-  // viewManagers.emplace_back(std::make_unique<Outlook::CalendarViewViewManager>(instance));
-
   return viewManagers;
 }
 } // namespace winrt::Microsoft::ReactNative::Bridge

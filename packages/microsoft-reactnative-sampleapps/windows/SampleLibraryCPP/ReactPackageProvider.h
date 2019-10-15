@@ -2,15 +2,14 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "SampleLibraryCppPackage.g.h"
+#include "ReactPackageProvider.g.h"
 
 using namespace winrt::Microsoft::ReactNative::Bridge;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
-struct SampleLibraryCppPackage
-    : SampleLibraryCppPackageT<SampleLibraryCppPackage> {
-  SampleLibraryCppPackage() = default;
+struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
+  ReactPackageProvider() = default;
 
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
 };
@@ -19,9 +18,8 @@ struct SampleLibraryCppPackage
 
 namespace winrt::SampleLibraryCPP::factory_implementation {
 
-struct SampleLibraryCppPackage : SampleLibraryCppPackageT<
-                                     SampleLibraryCppPackage,
-                                     implementation::SampleLibraryCppPackage> {
-};
+struct ReactPackageProvider : ReactPackageProviderT<
+                                  ReactPackageProvider,
+                                  implementation::ReactPackageProvider> {};
 
 } // namespace winrt::SampleLibraryCPP::factory_implementation
