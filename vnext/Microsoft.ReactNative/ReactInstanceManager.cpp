@@ -188,8 +188,8 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
   // implementation were lifted up into this project.
 
   auto instancePtr = InstanceCreator()->getInstance();
-  auto reactInstance = winrt::make<Bridge::implementation::ReactInstance>(
-      instancePtr);
+  auto reactInstance =
+      winrt::make<Bridge::implementation::ReactInstance>(instancePtr);
 
   Bridge::implementation::ReactContext *contextImpl{
       get_self<Bridge::implementation::ReactContext>(reactContext)};

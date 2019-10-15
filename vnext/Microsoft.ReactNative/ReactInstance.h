@@ -15,8 +15,7 @@ namespace winrt::Microsoft::ReactNative::Bridge::implementation {
 
 struct ReactInstance : ReactInstanceT<ReactInstance> {
   ReactInstance() = default;
-  ReactInstance(
-      std::shared_ptr<react::uwp::IReactInstance> instance)
+  ReactInstance(std::shared_ptr<react::uwp::IReactInstance> instance)
       : m_instance(instance) {
     if (instance == nullptr) {
       throw hresult_null_argument(L"instance");

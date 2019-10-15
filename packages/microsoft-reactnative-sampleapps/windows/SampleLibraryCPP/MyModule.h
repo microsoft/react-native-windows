@@ -86,4 +86,4 @@ struct MyModule {
   }
 };
 
-} // namespace TestApp
+} // namespace SampleLibraryCPP

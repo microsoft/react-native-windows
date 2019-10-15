@@ -8,8 +8,7 @@ using namespace winrt::Microsoft::ReactNative::Bridge;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
-struct ReactPackageProvider
-    : ReactPackageProviderT<ReactPackageProvider> {
+struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
   ReactPackageProvider() = default;
 
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
@@ -20,8 +19,7 @@ struct ReactPackageProvider
 namespace winrt::SampleLibraryCPP::factory_implementation {
 
 struct ReactPackageProvider : ReactPackageProviderT<
-                                     ReactPackageProvider,
-                                     implementation::ReactPackageProvider> {
-};
+                                  ReactPackageProvider,
+                                  implementation::ReactPackageProvider> {};
 
 } // namespace winrt::SampleLibraryCPP::factory_implementation
