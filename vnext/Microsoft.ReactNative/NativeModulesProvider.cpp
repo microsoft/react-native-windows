@@ -3,7 +3,9 @@
 
 #include "pch.h"
 #include "NativeModulesProvider.h"
+#include "ABICxxModule.h"
 #include "ABIModule.h"
+#include "IReactModuleBuilder.h"
 
 #include <ReactUWP/ReactUwp.h>
 #include <folly/json.h>
@@ -31,24 +33,43 @@ NativeModulesProvider::GetModules(
     m_modulesWorkerQueue = react::uwp::CreateWorkerMessageQueue();
   }
 
-  for (auto module : m_modules) {
+  for (auto &module : m_modules) {
     modules.emplace_back(
         winrt::to_string(module.Name()),
         [module]() { return std::make_unique<ABIModule>(module); },
         m_modulesWorkerQueue);
   }
 
+  for (auto &entry : m_moduleProviders) {
+    modules.emplace_back(
+        entry.first,
+        [moduleName = entry.first, moduleProvider = entry.second]() {
+          IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>();
+          auto providedModule = moduleProvider(moduleBuilder);
+          return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(
+              moduleName, providedModule);
+        },
+        m_modulesWorkerQueue);
+  }
+
   return modules;
 }
 
-void NativeModulesProvider::RegisterModule(
-    winrt::Microsoft::ReactNative::Bridge::NativeModuleBase const &module) {
+NativeModulesProvider::NativeModulesProvider() noexcept {}
+
+void NativeModulesProvider::RegisterModule(INativeModule const &module) {
   // TODO: This is taking a naive approach right now and just adding
   // everything. Consider whether to add the CanOverrideExistingModule on
-  // NativeModuleBase and then check it here to see whether a module being
+  // INativeModule and then check it here to see whether a module being
   // registered is allowed to take precedence over one that was already
   // registered.
   m_modules.push_back(module);
+}
+
+void NativeModulesProvider::AddModuleProvider(
+    winrt::hstring const &moduleName,
+    ReactModuleProvider const &moduleProvider) noexcept {
+  m_moduleProviders.emplace(to_string(moduleName), moduleProvider);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

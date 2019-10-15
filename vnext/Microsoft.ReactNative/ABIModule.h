@@ -4,7 +4,6 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 #include "MethodInfo.h"
-#include "NativeModuleBase.h"
 #include "ReactSupport.h"
 
 using namespace winrt;
@@ -23,7 +22,7 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 // is a string containing the JSON representation.
 class ABIModule : public facebook::xplat::module::CxxModule {
  public:
-  ABIModule(NativeModuleBase const &module) : m_module(module) {
+  ABIModule(INativeModule const &module) : m_module(module) {
     assert(module != nullptr);
   }
 
@@ -32,7 +31,7 @@ class ABIModule : public facebook::xplat::module::CxxModule {
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
  private:
-  NativeModuleBase m_module{nullptr};
+  INativeModule m_module{nullptr};
 
   // TODO: should implement a ConvertToIInspectable(folly::dynamic object) and
   // use it

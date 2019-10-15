@@ -27,6 +27,7 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
       std::string jsBundleFile,
       std::string jsMainModuleName,
       IVectorView<IReactPackage> &packages,
+      IVectorView<IReactPackageProvider> &packageProviders,
       bool useDeveloperSupport,
       LifecycleState initialLifecycleState);
 
@@ -55,10 +56,12 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   std::string m_jsBundleFile{};
   std::string m_jsMainModuleName{};
-  IVectorView<IReactPackage> m_packages;
+  Windows::Foundation::Collections::IVectorView<IReactPackage> m_packages;
+  std::vector<IReactPackageProvider> m_packageProviders;
   bool m_useDeveloperSupport{false};
   std::shared_ptr<NativeModulesProvider> m_modulesProvider{nullptr};
   std::shared_ptr<ViewManagersProvider> m_viewManagersProvider{nullptr};
+  IReactPackageBuilder m_packageBuilder;
 
   //	There should be one react instance creator per instance, as it
   //	both holds the current instance and is responsible for creating new

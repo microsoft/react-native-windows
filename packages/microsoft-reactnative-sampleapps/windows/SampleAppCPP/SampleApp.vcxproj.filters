@@ -6,23 +6,20 @@
   <ItemGroup>
     <Midl Include="App.idl" />
     <Midl Include="MainReactNativeHost.idl" />
-    <Midl Include="SampleModule.idl" />
-    <Midl Include="SamplePackage.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="MainReactNativeHost.cpp" />
-    <ClCompile Include="AppModulesPackage.cpp" />
-    <ClCompile Include="SampleModule.cpp" />
+    <ClCompile Include="ReactPackageProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="MainReactNativeHost.h" />
-    <ClInclude Include="AppModulesPackage.h" />
-    <ClInclude Include="SampleModule.h" />
+    <ClInclude Include="DebugConsole.h" />
+    <ClInclude Include="ReactPackageProvider.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
@@ -51,7 +48,6 @@
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SampleApp_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +62,6 @@
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
+    <Natvis Include="$(ReactNativeWindowsDir)\Folly\Folly.natvis" />
   </ItemGroup>
 </Project>

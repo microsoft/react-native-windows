@@ -3,13 +3,18 @@
 // Licensed under the MIT License.
 
 #include "MainReactNativeHost.g.h"
-#include "SamplePackage.h"
+#include "ReactPackageProvider.h"
+#include "winrt/SampleLibraryCPP.h"
+#include "winrt/SampleLibraryCS.h"
 
 using namespace winrt;
-using namespace Microsoft::ReactNative;
 using namespace Windows::Foundation::Collections;
+using namespace Microsoft::ReactNative;
+using namespace Microsoft::ReactNative::Bridge;
+using namespace SampleLibraryCPP;
 
 namespace winrt::SampleApp::implementation {
+
 struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   MainReactNativeHost() {
     auto instanceSettings = InstanceSettings();
@@ -23,15 +28,27 @@ struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost> {
   hstring MainComponentName() {
     return L"SampleApp";
   };
+
   hstring JavaScriptMainModuleName() {
     return L"index.windows";
   };
+
   bool UseDeveloperSupport() {
-    return TRUE;
+    return true;
   };
+
   IVectorView<IReactPackage> Packages() {
     auto packages =
-        single_threaded_vector<IReactPackage>({winrt::make<SamplePackage>()});
+        single_threaded_vector<IReactPackage>({SampleLibraryPackage()});
+    return packages.GetView();
+  };
+
+  IVectorView<IReactPackageProvider> PackageProviders() {
+    OutputDebugStringW(L"My output string.");
+    auto packages = single_threaded_vector<IReactPackageProvider>(
+        {make<ReactPackageProvider>(),
+         winrt::SampleLibraryCPP::SampleLibraryCppPackage(),
+         winrt::SampleLibraryCS::CsStringsPackageProvider()});
     return packages.GetView();
   };
 };

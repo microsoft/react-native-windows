@@ -2,6 +2,34 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Oct 2019 13:17:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.29",
+      "version": "0.60.0-vnext.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "dont new up exceptions",
+            "author": "adamgor@microsoft.com",
+            "commit": "c0e33187035ab6a2a9eebd43228333f2664f74aa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Oct 2019 23:02:23 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.28",
+      "version": "0.60.0-vnext.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Microsoft.ReactNative attribute-based NativeModules",
+            "author": "jthysell@microsoft.com",
+            "commit": "8e6b7fd614f601c4bc4e53c9c7ca6522f93c02bd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Oct 2019 16:49:47 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.27",
       "version": "0.60.0-vnext.27",
