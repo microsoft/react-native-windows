@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Don't hardcode the path to v141 platform toolset",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "commit": "5259e65b49ff7d0131cc7d731ca7bd3438b03776",
+  "date": "2019-10-16T01:17:54.674Z",
+  "file": "F:\\rnw\\change\\react-native-windows-2019-10-15-18-17-54-v141path.json"
+}
