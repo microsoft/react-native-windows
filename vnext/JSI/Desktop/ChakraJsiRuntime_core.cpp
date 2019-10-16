@@ -37,7 +37,8 @@ struct FileVersionInfoResource {
 } // namespace
 
 // TODO (yicyao): We temporarily removed weak reference semantics from
-// ChakraCore based jsi::Runtime.
+// ChakraCore based jsi::Runtime. Renable these when we switch to class
+// hierarchy.
 
 // JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
 //  JsWeakRef weakRef;

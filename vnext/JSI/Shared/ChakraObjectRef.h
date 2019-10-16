@@ -82,29 +82,47 @@ ChakraObjectRef GetPropertyId(const char *const utf8, size_t length);
 
 ChakraObjectRef GetPropertyId(const std::wstring &utf16);
 
-// jsString must be managing a JsValueRef pointing to a JS string. The returned
-// std::string/std::wstring is UTF-8/UTF-16 encoded. These functions copy the JS
-// string buffer into the returned std::string/std::wstring.
+// jsString must be managing a JS string. The returned std::string/std::wstring
+// is UTF-8/UTF-16 encoded. These functions copy the JS  string buffer into the
+// returned std::string/std::wstring.
 std::string ToStdString(const ChakraObjectRef &jsString);
 std::wstring ToStdWstring(const ChakraObjectRef &jsString);
 
-// Returns a ChakraObjectRef managing a JsValueRef pointing to a JS string.
-// utf8 and utf16 do not have to be null terminated and are copied to JS engine
-// owned memory.
+// Returns a ChakraObjectRef managing a JS string. utf8 and utf16 do not have to
+// be null terminated and are copied to JS engine owned memory.
 ChakraObjectRef ToJsString(const char *const utf8, size_t length);
 ChakraObjectRef ToJsString(const wchar_t *const utf16, size_t length);
 
-// jsValue must be mananing a JsValueRef. Returns a ChakraObjectRef managing a
-// JsValueRef that points the return value of the JS .toString function.
+// jsValue must be mananing a JsValueRef. Returns a ChakraObjectRef managing the
+// return value of the JS .toString function.
 ChakraObjectRef ToJsString(const ChakraObjectRef &jsValue);
 
-// Returns a ChakraObjectRef managing a JsValueRef pointing to a JS number.
+// Returns a ChakraObjectRef managing a JS number.
 ChakraObjectRef ToJsNumber(int num);
 
-// Returns a ChakraObjectRef managing a JsValueRef pointing to a JS ArrayBuffer.
-// This ArrayBuffer is backed by buffer and keeps buffer alive till the garbage
-// collector finalizes it.
-ChakraObjectRef ToJsExternalArrayBuffer(
+// Returns a ChakraObjectRef managing a JS Object. This Object is backed by data
+// and keeps data alive till the garbage collector finalizes it.
+template <typename T>
+ChakraObjectRef ToJsObject(std::unique_ptr<T> &&data) {
+  assert(data);
+
+  JsValueRef obj = nullptr;
+  ThrowUponChakraError(JsCreateExternalObject(
+      data.get(),
+      [](void *dataToDestroy) {
+        // We wrap dataToDestroy in a unique_ptr to avoid calling delete
+        // explicitly.
+        std::unique_ptr<T> wrapper{static_cast<T *>(dataToDestroy)};
+      },
+      &obj));
+
+  data.release();
+  return ChakraObjectRef(obj);
+}
+
+// Returns a ChakraObjectRef managing a JS ArrayBuffer. This ArrayBuffer is
+// backed by buffer and keeps buffer alive till the GC finalizes it.
+ChakraObjectRef ToJsArrayBuffer(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
 
 // Both jsValue1 and jsValue2 must be managing a JsValueRef. Returns whether

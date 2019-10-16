@@ -154,14 +154,17 @@ ChakraObjectRef GetPropertySymbol(const ChakraObjectRef &id) {
   return ChakraObjectRef{symbol};
 }
 
-ChakraObjectRef GetPropertyId(const char *const utf8, size_t length){
+ChakraObjectRef GetPropertyId(const char *const utf8, size_t length) {
+  assert(utf8);
+
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
-  // using ChakraCore's JsCreateString API.
+  // using ChakraCore's JsCreatePropertyId API.
 #ifdef CHAKRACORE
   JsPropertyIdRef id = nullptr;
   ThrowUponChakraError(
       JsCreatePropertyId(utf8, length, &id), "JsCreatePropertyId");
   return ChakraObjectRef(id);
+
 #else
   std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8);
   return GetPropertyId(utf16);
@@ -177,7 +180,7 @@ ChakraObjectRef GetPropertyId(const std::wstring &utf16) {
 
 std::string ToStdString(const ChakraObjectRef &jsString) {
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
-  // using ChakraCore's JsCreateString API.
+  // using ChakraCore's JsCopyString API.
 #ifdef CHAKRACORE
   size_t length = 0;
   ThrowUponChakraError(
@@ -188,6 +191,7 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
       "JsCopyString");
   assert(length == result.length());
   return result;
+
 #else
   return Common::Unicode::Utf16ToUtf8(ToStdWstring(jsString));
 #endif
@@ -205,12 +209,15 @@ std::wstring ToStdWstring(const ChakraObjectRef &jsString) {
 }
 
 ChakraObjectRef ToJsString(const char *utf8, size_t length) {
+  assert(utf8);
+
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCreateString API.
 #ifdef CHAKRACORE
   JsValueRef result = nullptr;
   ThrowUponChakraError(JsCreateString(utf8, length, &result), "JsCreateString");
   return ChakraObjectRef(result);
+
 #else
   std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8, length);
   return ToJsString(utf16.c_str(), utf16.length());
@@ -218,6 +225,7 @@ ChakraObjectRef ToJsString(const char *utf8, size_t length) {
 }
 
 ChakraObjectRef ToJsString(const wchar_t *const utf16, size_t length) {
+  assert(utf16);
   JsValueRef result = nullptr;
   ThrowUponChakraError(
       JsPointerToString(utf16, length, &result), "JsPointerToString");
@@ -237,13 +245,15 @@ ChakraObjectRef ToJsNumber(int num) {
   return ChakraObjectRef(result);
 }
 
-ChakraObjectRef ToJsExternalArrayBuffer(
+ChakraObjectRef ToJsArrayBuffer(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer) {
+  assert(buffer);
+
   size_t size = buffer->size();
   assert(size < UINT_MAX);
 
   JsValueRef arrayBuffer = nullptr;
-  auto bufferRef =
+  auto bufferWrapper =
       std::make_unique<std::shared_ptr<const facebook::jsi::Buffer>>(buffer);
 
   // We allocate a copy of buffer on the heap, a shared_ptr which is deleted
@@ -263,11 +273,11 @@ ChakraObjectRef ToJsExternalArrayBuffer(
                     static_cast<std::shared_ptr<const facebook::jsi::Buffer> *>(
                         bufferToDestroy)};
           },
-          bufferRef.get(),
+          bufferWrapper.get(),
           &arrayBuffer),
       "JsCreateExternalArrayBuffer");
 
-  bufferRef.release();
+  bufferWrapper.release();
   return ChakraObjectRef(arrayBuffer);
 }
 

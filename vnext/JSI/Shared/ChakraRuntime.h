@@ -199,6 +199,8 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   }
 
  private:
+  void ThrowUponJsError(JsErrorCode error, const char *const chakraApiName);
+
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
   // and must only be used for this purpose. Every instance of
   // ChakraPointerValue should be allocated on the heap and be used as an
@@ -258,6 +260,11 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   using ChakraPointerValue = ChakraPointerValueTemplate<ChakraObjectRef>;
 
   template <typename T>
+  inline T MakePointer(JsValueRef ref) {
+    return MakePointer<T>(ChakraObjectRef(ref));
+  }
+
+  template <typename T>
   inline T MakePointer(ChakraObjectRef &&ref) {
     static_assert(
         std::is_base_of<facebook::jsi::Pointer, T>::value,
@@ -280,41 +287,16 @@ class ChakraRuntime : public facebook::jsi::Runtime {
         ->GetRef();
   }
 
-  class HostObjectProxy {
-   public:
-    facebook::jsi::Value Get(const facebook::jsi::PropNameID &propNameId) {
-      return hostObject_->get(runtime_, propNameId);
-    }
-
-    void Set(
-        const facebook::jsi::PropNameID &propNameId,
-        const facebook::jsi::Value &value) {
-      hostObject_->set(runtime_, propNameId, value);
-    }
-
-    std::vector<facebook::jsi::PropNameID> Enumerator() {
-      return hostObject_->getPropertyNames(runtime_);
-    }
-
-    HostObjectProxy(
-        ChakraRuntime &rt,
-        const std::shared_ptr<facebook::jsi::HostObject> &hostObject)
-        : runtime_(rt), hostObject_(hostObject) {}
-    std::shared_ptr<facebook::jsi::HostObject> getHostObject() {
-      return hostObject_;
-    }
-
-   private:
-    ChakraRuntime &runtime_;
-    std::shared_ptr<facebook::jsi::HostObject> hostObject_;
-  };
-
-  template <class T>
+  // HostObject and HostFunction helpers
+  template <typename T>
   class ObjectWithExternalData : public facebook::jsi::Object {
    public:
-    static facebook::jsi::Object create(ChakraRuntime &rt, T *externalData);
+    static facebook::jsi::Object create(
+        ChakraRuntime &runtime,
+        std::unique_ptr<T> &&externalData);
+
     static ObjectWithExternalData<T> fromExisting(
-        ChakraRuntime &rt,
+        ChakraRuntime &runtime,
         facebook::jsi::Object &&obj);
 
    public:
@@ -323,19 +305,41 @@ class ChakraRuntime : public facebook::jsi::Runtime {
         : Object(const_cast<Runtime::PointerValue *>(value)) {
     } // TODO :: const_cast
 
-    ObjectWithExternalData(ObjectWithExternalData &&) = default;
-    ObjectWithExternalData &operator=(ObjectWithExternalData &&) = default;
+    ObjectWithExternalData(ObjectWithExternalData &&other) = default;
+    ObjectWithExternalData &operator=(ObjectWithExternalData &&other) = default;
   };
 
   template <class T>
   friend class ObjectWithExternalData;
 
-  void ThrowUponJsError(JsErrorCode error, const char *const chakraApiName);
+  class HostObjectProxy {
+   public:
+    facebook::jsi::Value Get(const facebook::jsi::PropNameID &propNameId) {
+      return m_hostObject->get(m_runtime, propNameId);
+    }
 
-  template <class T>
-  facebook::jsi::Object createObject(JsValueRef objectRef, T *externalData)
-      const;
-  facebook::jsi::Object createObject(JsValueRef objectRef) const;
+    void Set(
+        const facebook::jsi::PropNameID &propNameId,
+        const facebook::jsi::Value &value) {
+      m_hostObject->set(m_runtime, propNameId, value);
+    }
+
+    std::vector<facebook::jsi::PropNameID> Enumerator() {
+      return m_hostObject->getPropertyNames(m_runtime);
+    }
+
+    HostObjectProxy(
+        ChakraRuntime &rt,
+        const std::shared_ptr<facebook::jsi::HostObject> &hostObject)
+        : m_runtime(rt), m_hostObject(hostObject) {}
+    std::shared_ptr<facebook::jsi::HostObject> getHostObject() {
+      return m_hostObject;
+    }
+
+   private:
+    ChakraRuntime &m_runtime;
+    std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
+  };
 
   facebook::jsi::Object createProxy(
       facebook::jsi::Object &&target,
@@ -343,13 +347,12 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   facebook::jsi::Function createProxyConstructor() noexcept;
   facebook::jsi::Object createHostObjectProxyHandler() noexcept;
 
-  // TODO (yicyao)
-  // Used by factory methods and clone methods
-  template <class T>
-  facebook::jsi::Runtime::PointerValue *makeObjectValue(
-      JsValueRef obj,
-      T *externaldata) const;
-  facebook::jsi::Runtime::PointerValue *makeObjectValue(JsValueRef obj) const;
+  static JsValueRef CALLBACK HostFunctionCall(
+      JsValueRef callee,
+      bool isConstructCall,
+      JsValueRef *argumentsIncThis,
+      unsigned short argumentCountIncThis,
+      void *callbackState);
 
   // Promise Helpers
   static void CALLBACK
@@ -390,7 +393,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     return s_runtimeVersion;
   }
 
-  // Miscellaneous
+  // JavaScript evaluation helpers
   std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
       const facebook::jsi::Buffer &sourceBuffer) noexcept;
@@ -401,12 +404,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,
       const std::string &sourceURL);
-  static JsValueRef CALLBACK HostFunctionCall(
-      JsValueRef callee,
-      bool isConstructCall,
-      JsValueRef *argumentsIncThis,
-      unsigned short argumentCountIncThis,
-      void *callbackState);
 
   static std::once_flag s_runtimeVersionInitFlag;
   static uint64_t s_runtimeVersion;
