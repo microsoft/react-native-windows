@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 15 Oct 2019 23:45:52 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Oct 2019 02:19:39 GMT and should not be manually modified.
 
+## 0.60.0-vnext.32
+Wed, 16 Oct 2019 02:19:39 GMT
+
+### Changes
+
+- Extend flyout shadow fix to Popups (kenander@microsoft.com)
 ## 0.60.0-vnext.31
 Tue, 15 Oct 2019 23:45:52 GMT
 
