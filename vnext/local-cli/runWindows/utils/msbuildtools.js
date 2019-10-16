@@ -65,11 +65,17 @@ class MSBuildTools {
 
     // Set platform toolset for VS 2019
     if (this.version === '16.0') {
+      const v141path = child_process
+        .execSync('"%ProgramFiles(x86)%\\Microsoft Visual Studio\\Installer\\vswhere.exe" -requires Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141 -property installationPath')
+        .toString().split(EOL)[0]
+        + '\\MSBuild\\Microsoft\\VC\\v150\\';
+
       args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=16.0');
       args.push(
-        '/p:VCTargetsPath=C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\\MSBuild\\Microsoft\\VC\\v150\\',
+        '/p:VCTargetsPath=' + v141path,
       );
+
     }
 
     if (config) {
@@ -84,6 +90,8 @@ class MSBuildTools {
       newError(e.message);
       return;
     }
+
+    console.log('MSBuild args: ' + args.join(' '));
 
     const progressName = 'Building Solution';
     const spinner = newSpinner(progressName);
