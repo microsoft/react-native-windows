@@ -81,12 +81,14 @@ SpringAnimationDriver::MakeAnimation(const folly::dynamic &config) {
 
   auto normalizedProgress = 0.0f;
   // We are animating the values offset property which should start at 0.
-  animation.InsertKeyFrame(
-      normalizedProgress, 0.0f, easingFunction);
+  animation.InsertKeyFrame(normalizedProgress, 0.0f, easingFunction);
   for (const auto keyFrame : keyFrames) {
     normalizedProgress =
         std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
-    animation.InsertKeyFrame(normalizedProgress, keyFrame - static_cast<float>(startValue), easingFunction);
+    animation.InsertKeyFrame(
+        normalizedProgress,
+        keyFrame - static_cast<float>(startValue),
+        easingFunction);
   }
 
   if (m_iterations == -1) {

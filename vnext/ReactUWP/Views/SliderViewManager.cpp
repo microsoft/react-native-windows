@@ -67,7 +67,7 @@ XamlView SliderViewManager::CreateViewCore(int64_t tag) {
 void SliderViewManager::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     const folly::dynamic &reactDiffMap) {
-  auto slider = nodeToUpdate->GetView().try_as<winrt::Slider>();
+  auto slider = nodeToUpdate->GetView().as<winrt::Slider>();
   if (slider == nullptr)
     return;
 
