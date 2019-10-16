@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Extend flyout shadow fix to Popups",
+  "packageName": "react-native-windows",
+  "email": "kenander@microsoft.com",
+  "commit": "2e896420694fe6b89d3a0a46450b9ea6c887b058",
+  "date": "2019-10-16T00:00:10.032Z",
+  "file": "F:\\react-native-windows\\change\\react-native-windows-2019-10-15-17-00-10-popup-shadow-fix.json"
+}
