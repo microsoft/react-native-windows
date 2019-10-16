@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "ByteArrayBuffer.h"
 #include "ChakraObjectRef.h"
 #include "ChakraRuntimeArgs.h"
 
@@ -194,12 +193,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       size_t count);
   facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
 
-  // TODO (yicyao):
-  // JsValueRef->JSValue (needs make.*Value so it must be member function)
-  facebook::jsi::Value createValue(JsValueRef value) const;
-  // Value->JsValueRef (similar to above)
-  JsValueRef valueRef(const facebook::jsi::Value &value);
-
  protected:
   ChakraRuntimeArgs &runtimeArgs() {
     return m_args;
@@ -337,19 +330,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   template <class T>
   friend class ObjectWithExternalData;
 
-  // TODO (yicyao)
-  inline void checkException(JsErrorCode res);
-  inline void checkException(JsErrorCode res, const char *msg);
   void ThrowUponJsError(JsErrorCode error, const char *const chakraApiName);
-
-  // TODO (yicyao)
-  // static JsWeakRef newWeakObjectRef(const facebook::jsi::Object &obj);
-  // static JsValueRef strongObjectRef(const facebook::jsi::WeakObject &obj);
-
-  // TODO (yicyao)
-  // Factory methods for creating String/Object
-  // facebook::jsi::String createString(JsValueRef stringRef) const;
-  // facebook::jsi::PropNameID createPropNameID(JsValueRef stringRef);
 
   template <class T>
   facebook::jsi::Object createObject(JsValueRef objectRef, T *externalData)
@@ -364,15 +345,11 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
   // TODO (yicyao)
   // Used by factory methods and clone methods
-  facebook::jsi::Runtime::PointerValue *makeStringValue(JsValueRef str) const;
   template <class T>
   facebook::jsi::Runtime::PointerValue *makeObjectValue(
       JsValueRef obj,
       T *externaldata) const;
   facebook::jsi::Runtime::PointerValue *makeObjectValue(JsValueRef obj) const;
-  facebook::jsi::Runtime::PointerValue *makePropertyIdValue(
-      JsPropertyIdRef propId) const;
-  facebook::jsi::Runtime::PointerValue *makeWeakRefValue(JsWeakRef obj) const;
 
   // Promise Helpers
   static void CALLBACK

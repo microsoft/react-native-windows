@@ -182,7 +182,7 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
   size_t length = 0;
   ThrowUponChakraError(
       JsCopyString(jsString, nullptr, 0, &length), "JsCopyString");
-  std::string result('a', length);
+  std::string result(length, 'a');
   ThrowUponChakraError(
       JsCopyString(jsString, result.data(), result.length(), &length),
       "JsCopyString");

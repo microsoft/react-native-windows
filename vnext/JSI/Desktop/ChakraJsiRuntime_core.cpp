@@ -3,9 +3,10 @@
 
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
-#include "Unicode.h"
 
 #include <cxxreact/MessageQueueThread.h>
+#include "ByteArrayBuffer.h"
+#include "Unicode.h"
 
 // This file contains non-edge-mode (or win32) implementations.
 #if !defined(USE_EDGEMODE_JSRT)
@@ -35,18 +36,21 @@ struct FileVersionInfoResource {
 
 } // namespace
 
-JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
-  JsWeakRef weakRef;
-  JsCreateWeakReference(objectRef(obj), &weakRef);
-  return weakRef;
-}
+// TODO (yicyao): We temporarily removed weak reference semantics from
+// ChakraCore based jsi::Runtime.
 
-JsValueRef ChakraRuntime::strongObjectRef(
-    const facebook::jsi::WeakObject &obj) {
-  JsValueRef strongRef;
-  JsGetWeakReferenceValue(objectRef(obj), &strongRef);
-  return strongRef;
-}
+// JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
+//  JsWeakRef weakRef;
+//  JsCreateWeakReference(objectRef(obj), &weakRef);
+//  return weakRef;
+//}
+//
+// JsValueRef ChakraRuntime::strongObjectRef(
+//    const facebook::jsi::WeakObject &obj) {
+//  JsValueRef strongRef;
+//  JsGetWeakReferenceValue(objectRef(obj), &strongRef);
+//  return strongRef;
+//}
 
 // ES6 Promise callback
 void CALLBACK ChakraRuntime::PromiseContinuationCallback(
@@ -71,7 +75,9 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
     runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
       JsValueRef undefinedValue;
       JsGetUndefinedValue(&undefinedValue);
-      checkException(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      ThrowUponJsError(
+          JsCallFunction(funcRef, &undefinedValue, 1, nullptr),
+          "JsCallFunction");
       JsRelease(funcRef, nullptr);
     });
   }
@@ -94,7 +100,7 @@ void ChakraRuntime::PromiseRejectionTracker(
         JsValueRef stackStrValue;
         error = JsConvertValueToString(stack, &stackStrValue);
         if (error == JsNoError) {
-          errorStream << JSStringToSTLString(stackStrValue);
+          errorStream << ToStdString(ChakraObjectRef(stackStrValue));
         }
       }
     }
@@ -104,7 +110,7 @@ void ChakraRuntime::PromiseRejectionTracker(
       JsValueRef strValue;
       error = JsConvertValueToString(reason, &strValue);
       if (error == JsNoError) {
-        errorStream << JSStringToSTLString(strValue);
+        errorStream << ToStdString(ChakraObjectRef(strValue));
       }
     }
 
@@ -308,16 +314,16 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
       &sourceURLRef);
 
   JsValueRef result;
-  checkException(
+  ThrowUponJsError(
       JsRun(
           sourceRef,
           0,
           sourceURLRef,
           JsParseScriptAttributes::JsParseScriptAttributeNone,
           &result),
-      sourceURL.c_str());
+      "JsRun");
 
-  return createValue(result);
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 // TODO :: Return result
@@ -334,7 +340,7 @@ bool ChakraRuntime::evaluateSerializedScript(
           &bytecodeArrayBuffer) == JsNoError) {
     JsValueRef sourceURLRef = nullptr;
     if (!sourceURL.empty()) {
-      sourceURLRef = createJSString(
+      sourceURLRef = ToJsString(
           reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size());
     }
 
@@ -366,7 +372,7 @@ bool ChakraRuntime::evaluateSerializedScript(
     } else if (result == JsErrorBadSerializedScript) {
       return false;
     } else {
-      checkException(result);
+      ThrowUponChakraError(result);
     }
   }
 
