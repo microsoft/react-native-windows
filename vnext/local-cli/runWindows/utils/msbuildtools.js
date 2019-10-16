@@ -5,7 +5,6 @@
  */
 // @ts-check
 'use strict';
-
 const EOL = require('os').EOL;
 const fs = require('fs');
 const path = require('path');
@@ -65,17 +64,21 @@ class MSBuildTools {
 
     // Set platform toolset for VS 2019
     if (this.version === '16.0') {
-      const v141path = child_process
-        .execSync('"%ProgramFiles(x86)%\\Microsoft Visual Studio\\Installer\\vswhere.exe" -requires Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141 -property installationPath')
-        .toString().split(EOL)[0]
-        + '\\MSBuild\\Microsoft\\VC\\v150\\';
+      const results =
+        child_process
+          .execSync(
+            '"%ProgramFiles(x86)%\\Microsoft Visual Studio\\Installer\\vswhere.exe" -requires Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141 -property installationPath',
+          )
+          .toString()
+          .split(EOL)[0] + '\\MSBuild\\Microsoft\\VC\\v150\\';
+
+      console.warn('v141Path = ' + results);
 
       args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=16.0');
-      args.push(
-        '/p:VCTargetsPath=' + v141path,
-      );
+      args.push('/p:VCTargetsPath=' + results);
 
+      console.warn(args.join(' '));
     }
 
     if (config) {
@@ -90,8 +93,6 @@ class MSBuildTools {
       newError(e.message);
       return;
     }
-
-    console.log('MSBuild args: ' + args.join(' '));
 
     const progressName = 'Building Solution';
     const spinner = newSpinner(progressName);
