@@ -12,13 +12,14 @@
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="SampleLibraryCppPackage.cpp" />
+    <ClCompile Include="ReactPackageProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="Calculator.h" />
-    <ClInclude Include="SampleLibraryCppPackage.h" />
+    <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="MyModule.h" />
+    <ClInclude Include="SampleModuleCPP.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SampleLibraryCPP.def" />
@@ -31,9 +32,6 @@
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="SampleLibraryPackage.idl" />
-    <Midl Include="SampleModuleABI.idl" />
-    <Midl Include="SampleLibraryCppPackage.idl" />
-    <Midl Include="FancyMathABI.idl" />
+    <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
 </Project>

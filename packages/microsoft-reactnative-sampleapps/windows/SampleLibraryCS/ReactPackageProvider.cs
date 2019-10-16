@@ -3,7 +3,7 @@ using Microsoft.ReactNative.Managed;
 
 namespace SampleLibraryCS
 {
-    public sealed class CsStringsPackageProvider : IReactPackageProvider
+    public sealed class ReactPackageProvider : IReactPackageProvider
     {
         public void CreatePackage(IReactPackageBuilder packageBuilder)
         {

@@ -6,12 +6,13 @@
 
 import React = require('react');
 import {Button, CheckBox, Text, TextInput, View} from 'react-native';
-import {Flyout, Picker} from 'react-native-windows';
+import {Flyout, Picker, Popup} from 'react-native-windows';
 import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;
   isFlyoutTwoVisible: boolean;
+  isPopupVisible: boolean;
   buttonTitle: string;
   isLightDismissEnabled: boolean;
   isOverlayEnabled: boolean;
@@ -43,6 +44,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   public state: IFlyoutExampleState = {
     isFlyoutVisible: false,
     isFlyoutTwoVisible: false,
+    isPopupVisible: false,
     buttonTitle: 'Open Flyout',
     isLightDismissEnabled: true,
     isOverlayEnabled: false,
@@ -164,6 +166,19 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   ref={this._setRefTwo}
                 />
               </View>
+              <View
+                style={{
+                  width: 150,
+                  marginLeft: 75,
+                  marginTop: 10,
+                }}>
+                <Button
+                  onPress={() => {
+                    this.setState({isPopupVisible: true});
+                  }}
+                  title={'Open A Popup'}
+                />
+              </View>
             </View>
           </Flyout>
         )}
@@ -179,6 +194,26 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
               <Text>{lorumIpsum}</Text>
             </View>
           </Flyout>
+        )}
+        {this.state.isPopupVisible && (
+          <Popup
+            isOpen={this.state.isPopupVisible}
+            isLightDismissEnabled={this.state.isLightDismissEnabled}
+            target={this._anchorTwo}
+            onDismiss={() => {
+              this.setState({isPopupVisible: false});
+            }}>
+            <View
+              style={{backgroundColor: 'lightblue', width: 200, height: 300}}>
+              <Text>{lorumIpsum}</Text>
+              <Button
+                onPress={() => {
+                  this.setState({isPopupVisible: false});
+                }}
+                title="Close"
+              />
+            </View>
+          </Popup>
         )}
       </View>
     );
@@ -199,6 +234,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   _onFlyoutDismissed = (_isOpen: boolean) => {
     this.setState({isFlyoutVisible: false});
     this.setState({isFlyoutTwoVisible: false});
+    this.setState({isPopupVisible: false});
     this.setState({buttonTitle: 'Open Flyout'});
   };
 

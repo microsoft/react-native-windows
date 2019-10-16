@@ -97,10 +97,6 @@ bool ReactNativeHost::UseDeveloperSupport() {
 #endif
 }
 
-auto ReactNativeHost::Packages() -> IVectorView<IReactPackage> {
-  return single_threaded_vector<IReactPackage>().GetView();
-}
-
 auto ReactNativeHost::PackageProviders() -> IVectorView<IReactPackageProvider> {
   return single_threaded_vector<IReactPackageProvider>().GetView();
 }
@@ -132,7 +128,6 @@ ReactNativeHost::CreateReactInstanceManager() {
   builder.InitialLifecycleState(LifecycleState::BeforeCreate);
   builder.JavaScriptBundleFile(get_JavaScriptBundleFile());
   builder.JavaScriptMainModuleName(get_JavaScriptMainModuleName());
-  builder.Packages(get_Packages());
   builder.PackageProviders(get_PackageProviders());
 
   return builder.Build();
