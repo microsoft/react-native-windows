@@ -4,13 +4,27 @@
 namespace Microsoft.ReactNative.Bridge
 {
 	[webhosthidden]
+	enum ViewManagerPropertyType
+	{
+		Boolean,
+		Number,
+		String,
+		Array,
+    Color,
+	};
+
+	[webhosthidden]
 	interface IViewManager
 	{
-    String Name { get; };
-		
+		String Name { get; };
+
 		Windows.UI.Xaml.FrameworkElement CreateView();
 
-    Windows.Foundation.Collections.IMapView<String, String> NativeProps { get; };
+		Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedViewConstants { get; };
+
+		Windows.Foundation.Collections.IMapView<String, IInspectable> Commands { get; };
+
+		Windows.Foundation.Collections.IMapView<String, ViewManagerPropertyType> NativeProps{ get; };
 
 		void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
 	};

@@ -32,7 +32,7 @@ namespace SampleApp
             get
             {
                 return new IReactPackageProvider[] {
-                    new Microsoft.ReactNative.Managed.LocalPackageProvider(), // Includes any modules in this project
+                    new Microsoft.ReactNative.Managed.ReactPackageProvider(), // Includes any modules in this project
                     new SampleLibraryCS.ReactPackageProvider(),
                     new SampleLibraryCPP.ReactPackageProvider(),
                 };

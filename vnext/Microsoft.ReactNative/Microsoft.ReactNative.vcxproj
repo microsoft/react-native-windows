@@ -106,6 +106,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
+    <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Crash.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -161,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
+    <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="DynamicReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>

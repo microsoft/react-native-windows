@@ -7,11 +7,14 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Button,
+  requireNativeComponent,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { NativeModules } from 'react-native';
+
+let CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 
 var log = function(result) {
   console.log(result);
@@ -88,13 +91,17 @@ class SampleApp extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          SampleApp
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.windows.js
+          This app consumes custom Native Modules and View Managers.
         </Text>
         <Button onPress={this._onPressHandlerSMCS} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={this._onPressHandlerSMCPP} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" />
+        <Text style={styles.instructions}>
+          Hello from Seattle!
+        </Text>
       </View>
     );
   }
@@ -116,6 +123,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  customcontrol: {
+    color: '#333333',
+    backgroundColor: '#006666',
+    width: 200,
+    height: 20,
+    margin: 10,
   },
 });
 

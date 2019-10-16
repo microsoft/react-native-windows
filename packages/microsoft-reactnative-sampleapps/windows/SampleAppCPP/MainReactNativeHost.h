@@ -1,15 +1,13 @@
-#pragma once
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#pragma once
 
 #include "MainReactNativeHost.g.h"
 
 #include "ReactPackageProvider.h"
 
 #include "winrt/Microsoft.ReactNative.Bridge.h"
-
-#include "winrt/SampleLibraryCPP.h"
-#include "winrt/SampleLibraryCS.h"
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;
