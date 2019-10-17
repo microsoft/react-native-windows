@@ -429,15 +429,11 @@ facebook::jsi::Array ChakraRuntime::getPropertyNames(
       "  }\n"
       "})()";
 
-  // TODO (yicyao): Comment on why this variable is not static.
-  std::shared_ptr<facebook::jsi::StringBuffer> jsGetPropertyNamesSourceBuffer =
-      std::make_shared<facebook::jsi::StringBuffer>(jsGetPropertyNamesSource);
-
-  // TODO (yicyao): Need some refactoring here to ensure lifetime correctness,
-  // reduce duplicate code, and improve efficiency.
+  static facebook::jsi::StringBuffer jsGetPropertyNamesSourceBuffer{
+      jsGetPropertyNamesSource};
 
   facebook::jsi::Function jsGetPropertyNames =
-      evaluateJavaScript(jsGetPropertyNamesSourceBuffer, "")
+      evaluateJavaScriptSimple(jsGetPropertyNamesSourceBuffer, "")
           .asObject(*this)
           .asFunction(*this);
 
@@ -585,7 +581,7 @@ facebook::jsi::Value ChakraRuntime::call(
   assert(argsWithThis.size() <= USHRT_MAX);
 
   JsValueRef result;
-  ThrowUponChakraError(
+  ThrowUponJsError(
       JsCallFunction(
           GetChakraObjectRef(func),
           argsWithThis.data(),

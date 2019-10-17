@@ -36,8 +36,8 @@ void ThrowUponChakraError(JsErrorCode error, const char *const chakraApiName) {
   }
 }
 
-ChakraObjectRef::ChakraObjectRef(const ChakraObjectRef &other) noexcept
-    : m_ref{other.m_ref}, m_state{other.m_state} {
+ChakraObjectRef::ChakraObjectRef(const ChakraObjectRef &original) noexcept
+    : m_ref{original.m_ref}, m_state{original.m_state} {
   if (m_state == State::Initialized) {
     assert(m_ref);
     CheckedJsAddRef(m_ref);
@@ -46,19 +46,19 @@ ChakraObjectRef::ChakraObjectRef(const ChakraObjectRef &other) noexcept
   }
 }
 
-ChakraObjectRef::ChakraObjectRef(ChakraObjectRef &&other) noexcept {
-  std::swap(*this, other);
+ChakraObjectRef::ChakraObjectRef(ChakraObjectRef &&original) noexcept {
+  swap(original);
 }
 
 ChakraObjectRef &ChakraObjectRef::operator=(
     const ChakraObjectRef &rhs) noexcept {
   ChakraObjectRef rhsCopy(rhs);
-  std::swap(*this, rhsCopy);
+  swap(rhsCopy);
   return *this;
 }
 
 ChakraObjectRef &ChakraObjectRef::operator=(ChakraObjectRef &&rhs) noexcept {
-  std::swap(*this, rhs);
+  swap(rhs);
   return *this;
 }
 
@@ -117,6 +117,11 @@ void ChakraObjectRef::Invalidate() {
       break;
     }
   }
+}
+
+void ChakraObjectRef::swap(ChakraObjectRef &other) {
+  std::swap(m_ref, other.m_ref);
+  std::swap(m_state, other.m_state);
 }
 
 JsValueType GetValueType(const ChakraObjectRef &jsValue) {

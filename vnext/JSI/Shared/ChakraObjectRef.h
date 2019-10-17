@@ -42,8 +42,8 @@ class ChakraObjectRef {
     Initialize(ref);
   }
 
-  ChakraObjectRef(const ChakraObjectRef &other) noexcept;
-  ChakraObjectRef(ChakraObjectRef &&other) noexcept;
+  ChakraObjectRef(const ChakraObjectRef &original) noexcept;
+  ChakraObjectRef(ChakraObjectRef &&original) noexcept;
 
   ChakraObjectRef &operator=(const ChakraObjectRef &rhs) noexcept;
   ChakraObjectRef &operator=(ChakraObjectRef &&rhs) noexcept;
@@ -58,6 +58,8 @@ class ChakraObjectRef {
   }
 
  private:
+  void swap(ChakraObjectRef &other);
+
   enum class State { Uninitialized, Initialized, Invalidated };
 
   JsRef m_ref = nullptr;
