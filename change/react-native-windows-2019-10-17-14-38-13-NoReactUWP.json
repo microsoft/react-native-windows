@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Microsoft.ReactNative made independent from ReactUWP",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "6c84bdd61984f3e0b45eb62cc293b2a1a1b044f5",
+  "date": "2019-10-17T21:38:13.762Z",
+  "file": "c:\\git\\vmoroz\\react-native-windows\\change\\react-native-windows-2019-10-17-14-38-13-NoReactUWP.json"
+}
