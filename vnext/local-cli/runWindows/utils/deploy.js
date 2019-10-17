@@ -164,7 +164,7 @@ async function deployToDesktop(options, verbose) {
     verbose,
   );
 
-  const devmodeText = 'Enable Developer Mode';
+  const devmodeText = 'Enabling Developer Mode';
   const devmodeEnable = `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; EnableDevmode "${script}"`;
 
   await commandWithProgress(
@@ -176,14 +176,13 @@ async function deployToDesktop(options, verbose) {
   );
 
   const installingText = 'Installing new version of the app';
-  const installApp = `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}"`;
-  const installAppCmd = installApp + ' -Force';
-
+  const installApp = `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}" -Force`;
+  
   await commandWithProgress(
     newSpinner(installingText),
     installingText,
     'powershell',
-    installAppCmd.split(' '),
+    installApp.split(' '),
     verbose,
   );
 
