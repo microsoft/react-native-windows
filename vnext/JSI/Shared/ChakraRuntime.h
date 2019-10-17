@@ -187,11 +187,11 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
  public:
   // These three functions only performs shallow copies.
+  facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
   ChakraObjectRef ToChakraObjectRef(const facebook::jsi::Value &value);
   std::vector<ChakraObjectRef> ToChakraObjectRefs(
       const facebook::jsi::Value *value,
       size_t count);
-  facebook::jsi::Value ToJsiValue(ChakraObjectRef &&ref);
 
  protected:
   ChakraRuntimeArgs &runtimeArgs() {
@@ -199,8 +199,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   }
 
  private:
-  void ThrowUponJsError(JsErrorCode error, const char *const chakraApiName);
-
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
   // and must only be used for this purpose. Every instance of
   // ChakraPointerValue should be allocated on the heap and be used as an
@@ -287,31 +285,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
         ->GetRef();
   }
 
-  // HostObject and HostFunction helpers
-  template <typename T>
-  class ObjectWithExternalData : public facebook::jsi::Object {
-   public:
-    static facebook::jsi::Object create(
-        ChakraRuntime &runtime,
-        std::unique_ptr<T> &&externalData);
-
-    static ObjectWithExternalData<T> fromExisting(
-        ChakraRuntime &runtime,
-        facebook::jsi::Object &&obj);
-
-   public:
-    T *getExternalData();
-    ObjectWithExternalData(const Runtime::PointerValue *value)
-        : Object(const_cast<Runtime::PointerValue *>(value)) {
-    } // TODO :: const_cast
-
-    ObjectWithExternalData(ObjectWithExternalData &&other) = default;
-    ObjectWithExternalData &operator=(ObjectWithExternalData &&other) = default;
-  };
-
-  template <class T>
-  friend class ObjectWithExternalData;
-
   class HostObjectProxy {
    public:
     facebook::jsi::Value Get(const facebook::jsi::PropNameID &propNameId) {
@@ -341,18 +314,37 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
   };
 
+  template <typename T>
+  class ObjectWithExternalData : public facebook::jsi::Object {
+   public:
+    static facebook::jsi::Object create(
+        ChakraRuntime &runtime,
+        std::unique_ptr<T> &&externalData);
+
+    static ObjectWithExternalData<T> fromExisting(
+        ChakraRuntime &runtime,
+        facebook::jsi::Object &&obj);
+
+   public:
+    T *getExternalData();
+    ObjectWithExternalData(const Runtime::PointerValue *value)
+        : Object(const_cast<Runtime::PointerValue *>(value)) {
+    } // TODO :: const_cast
+
+    ObjectWithExternalData(ObjectWithExternalData &&other) = default;
+    ObjectWithExternalData &operator=(ObjectWithExternalData &&other) = default;
+  };
+
+  template <class T>
+  friend class ObjectWithExternalData;
+
+  void ThrowUponJsError(JsErrorCode error, const char *const chakraApiName);
+
   facebook::jsi::Object createProxy(
       facebook::jsi::Object &&target,
       facebook::jsi::Object &&handler) noexcept;
   facebook::jsi::Function createProxyConstructor() noexcept;
   facebook::jsi::Object createHostObjectProxyHandler() noexcept;
-
-  static JsValueRef CALLBACK HostFunctionCall(
-      JsValueRef callee,
-      bool isConstructCall,
-      JsValueRef *argumentsIncThis,
-      unsigned short argumentCountIncThis,
-      void *callbackState);
 
   // Promise Helpers
   static void CALLBACK
@@ -393,7 +385,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
     return s_runtimeVersion;
   }
 
-  // JavaScript evaluation helpers
+  // Miscellaneous
   std::unique_ptr<const facebook::jsi::Buffer> generatePreparedScript(
       const std::string &sourceURL,
       const facebook::jsi::Buffer &sourceBuffer) noexcept;
@@ -404,6 +396,12 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       const facebook::jsi::Buffer &scriptBuffer,
       const facebook::jsi::Buffer &serializedScriptBuffer,
       const std::string &sourceURL);
+  static JsValueRef CALLBACK HostFunctionCall(
+      JsValueRef callee,
+      bool isConstructCall,
+      JsValueRef *argumentsIncThis,
+      unsigned short argumentCountIncThis,
+      void *callbackState);
 
   static std::once_flag s_runtimeVersionInitFlag;
   static uint64_t s_runtimeVersion;

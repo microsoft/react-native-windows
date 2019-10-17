@@ -481,18 +481,6 @@ size_t ChakraRuntime::size(const facebook::jsi::Array &arr) {
   return static_cast<size_t>(getProperty(arr, propId).asNumber());
 }
 
-size_t ChakraRuntime::size(const facebook::jsi::ArrayBuffer &arrBuf) {
-  assert(isArrayBuffer(arrBuf));
-
-  constexpr const uint8_t propName[] = {
-      'b', 'y', 't', 'e', 'l', 'e', 'n', 'g', 't', 'h'};
-
-  facebook::jsi::PropNameID propId = createPropNameIDFromUtf8(
-      propName, Common::Utilities::ArraySize(propName));
-
-  return static_cast<size_t>(getProperty(arrBuf, propId).asNumber());
-}
-
 uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer &arrBuf) {
   assert(isArrayBuffer(arrBuf));
 
@@ -504,6 +492,18 @@ uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer &arrBuf) {
       "JsGetArrayBufferStorage");
 
   return buffer;
+}
+
+size_t ChakraRuntime::size(const facebook::jsi::ArrayBuffer &arrBuf) {
+  assert(isArrayBuffer(arrBuf));
+
+  constexpr const uint8_t propName[] = {
+      'b', 'y', 't', 'e', 'l', 'e', 'n', 'g', 't', 'h'};
+
+  facebook::jsi::PropNameID propId = createPropNameIDFromUtf8(
+      propName, Common::Utilities::ArraySize(propName));
+
+  return static_cast<size_t>(getProperty(arrBuf, propId).asNumber());
 }
 
 facebook::jsi::Value ChakraRuntime::getValueAtIndex(
@@ -620,12 +620,6 @@ void ChakraRuntime::popScope(Runtime::ScopeState *state) {
 }
 
 bool ChakraRuntime::strictEquals(
-    const facebook::jsi::Symbol &a,
-    const facebook::jsi::Symbol &b) const {
-  return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
-}
-
-bool ChakraRuntime::strictEquals(
     const facebook::jsi::String &a,
     const facebook::jsi::String &b) const {
   return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
@@ -634,6 +628,12 @@ bool ChakraRuntime::strictEquals(
 bool ChakraRuntime::strictEquals(
     const facebook::jsi::Object &a,
     const facebook::jsi::Object &b) const {
+  return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
+}
+
+bool ChakraRuntime::strictEquals(
+    const facebook::jsi::Symbol &a,
+    const facebook::jsi::Symbol &b) const {
   return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
 }
 
@@ -648,57 +648,6 @@ bool ChakraRuntime::instanceOf(
 }
 
 #pragma endregion Functions_inherited_from_Runtime
-
-ChakraObjectRef ChakraRuntime::ToChakraObjectRef(
-    const facebook::jsi::Value &value) {
-  if (value.isUndefined()) {
-    JsValueRef ref;
-    ThrowUponJsError(JsGetUndefinedValue(&ref), "JsGetUndefinedValue");
-    return ChakraObjectRef(ref);
-
-  } else if (value.isNull()) {
-    JsValueRef ref;
-    ThrowUponJsError(JsGetNullValue(&ref), "JsGetNullValue");
-    return ChakraObjectRef(ref);
-
-  } else if (value.isBool()) {
-    JsValueRef ref;
-    ThrowUponJsError(JsBoolToBoolean(value.getBool(), &ref), "JsBoolToBoolean");
-    return ChakraObjectRef(ref);
-
-  } else if (value.isNumber()) {
-    JsValueRef ref;
-    ThrowUponJsError(
-        JsDoubleToNumber(value.asNumber(), &ref), "JsDoubleToNumber");
-    return ChakraObjectRef(ref);
-
-  } else if (value.isSymbol()) {
-    return GetChakraObjectRef(value.asSymbol(*this));
-
-  } else if (value.isString()) {
-    return GetChakraObjectRef(value.asString(*this));
-
-  } else if (value.isObject()) {
-    return GetChakraObjectRef(value.asObject(*this));
-
-  } else {
-    // Control flow should never reach here.
-    std::terminate();
-  }
-}
-
-std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(
-    const facebook::jsi::Value *value,
-    size_t count) {
-  std::vector<ChakraObjectRef> result{};
-
-  for (unsigned int i = 0; i < count; ++i) {
-    result.emplace_back(ToChakraObjectRef(*value));
-    ++value;
-  }
-
-  return result;
-}
 
 facebook::jsi::Value ChakraRuntime::ToJsiValue(ChakraObjectRef &&ref) {
   JsValueType type = GetValueType(ref);
@@ -756,33 +705,55 @@ facebook::jsi::Value ChakraRuntime::ToJsiValue(ChakraObjectRef &&ref) {
   std::terminate();
 }
 
-void ChakraRuntime::ThrowUponJsError(
-    JsErrorCode error,
-    const char *const chakraApiName) {
-  switch (error) {
-    case JsNoError: {
-      return;
-      break;
-    }
+ChakraObjectRef ChakraRuntime::ToChakraObjectRef(
+    const facebook::jsi::Value &value) {
+  if (value.isUndefined()) {
+    JsValueRef ref;
+    ThrowUponJsError(JsGetUndefinedValue(&ref), "JsGetUndefinedValue");
+    return ChakraObjectRef(ref);
 
-    case JsErrorScriptException: {
-      JsValueRef jsError;
-      CrashUponChakraError(JsGetAndClearException(&jsError));
-      throw facebook::jsi::JSError(
-          "A JavaScript Error was thrown.",
-          *this,
-          ToJsiValue(ChakraObjectRef(jsError)));
-      break;
-    }
+  } else if (value.isNull()) {
+    JsValueRef ref;
+    ThrowUponJsError(JsGetNullValue(&ref), "JsGetNullValue");
+    return ChakraObjectRef(ref);
 
-    default: {
-      ThrowUponChakraError(error, chakraApiName);
-      break;
-    }
-  } // switch (error)
+  } else if (value.isBool()) {
+    JsValueRef ref;
+    ThrowUponJsError(JsBoolToBoolean(value.getBool(), &ref), "JsBoolToBoolean");
+    return ChakraObjectRef(ref);
 
-  // Control flow should never reach here.
-  std::terminate();
+  } else if (value.isNumber()) {
+    JsValueRef ref;
+    ThrowUponJsError(
+        JsDoubleToNumber(value.asNumber(), &ref), "JsDoubleToNumber");
+    return ChakraObjectRef(ref);
+
+  } else if (value.isSymbol()) {
+    return GetChakraObjectRef(value.asSymbol(*this));
+
+  } else if (value.isString()) {
+    return GetChakraObjectRef(value.asString(*this));
+
+  } else if (value.isObject()) {
+    return GetChakraObjectRef(value.asObject(*this));
+
+  } else {
+    // Control flow should never reach here.
+    std::terminate();
+  }
+}
+
+std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(
+    const facebook::jsi::Value *value,
+    size_t count) {
+  std::vector<ChakraObjectRef> result{};
+
+  for (unsigned int i = 0; i < count; ++i) {
+    result.emplace_back(ToChakraObjectRef(*value));
+    ++value;
+  }
+
+  return result;
 }
 
 // clang-format off
@@ -812,6 +783,35 @@ T *ChakraRuntime::ObjectWithExternalData<T>::getExternalData() {
           GetChakraObjectRef(*this), reinterpret_cast<void **>(&externalData)),
       "JsGetExternalData");
   return externalData;
+}
+
+void ChakraRuntime::ThrowUponJsError(
+    JsErrorCode error,
+    const char *const chakraApiName) {
+  switch (error) {
+    case JsNoError: {
+      return;
+      break;
+    }
+
+    case JsErrorScriptException: {
+      JsValueRef jsError;
+      CrashUponChakraError(JsGetAndClearException(&jsError));
+      throw facebook::jsi::JSError(
+          "A JavaScript Error was thrown.",
+          *this,
+          ToJsiValue(ChakraObjectRef(jsError)));
+      break;
+    }
+
+    default: {
+      ThrowUponChakraError(error, chakraApiName);
+      break;
+    }
+  } // switch (error)
+
+  // Control flow should never reach here.
+  std::terminate();
 }
 
 facebook::jsi::Object ChakraRuntime::createProxy(
@@ -938,6 +938,42 @@ facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
   return handlerObj;
 }
 
+void ChakraRuntime::setupMemoryTracker() noexcept {
+  if (runtimeArgs().memoryTracker) {
+    size_t initialMemoryUsage = 0;
+    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
+    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
+
+    if (runtimeArgs().runtimeMemoryLimit > 0)
+      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
+
+    JsSetRuntimeMemoryAllocationCallback(
+        m_runtime,
+        runtimeArgs().memoryTracker.get(),
+        [](void *callbackState,
+           JsMemoryEventType allocationEvent,
+           size_t allocationSize) -> bool {
+          auto memoryTrackerPtr =
+              static_cast<facebook::react::MemoryTracker *>(callbackState);
+          switch (allocationEvent) {
+            case JsMemoryAllocate:
+              memoryTrackerPtr->OnAllocation(allocationSize);
+              break;
+
+            case JsMemoryFree:
+              memoryTrackerPtr->OnDeallocation(allocationSize);
+              break;
+
+            case JsMemoryFailure:
+            default:
+              break;
+          }
+
+          return true;
+        });
+  }
+}
+
 JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
     JsValueRef callee,
     bool isConstructCall,
@@ -999,42 +1035,6 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
   }
 
   return res;
-}
-
-void ChakraRuntime::setupMemoryTracker() noexcept {
-  if (runtimeArgs().memoryTracker) {
-    size_t initialMemoryUsage = 0;
-    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
-    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
-
-    if (runtimeArgs().runtimeMemoryLimit > 0)
-      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
-
-    JsSetRuntimeMemoryAllocationCallback(
-        m_runtime,
-        runtimeArgs().memoryTracker.get(),
-        [](void *callbackState,
-           JsMemoryEventType allocationEvent,
-           size_t allocationSize) -> bool {
-          auto memoryTrackerPtr =
-              static_cast<facebook::react::MemoryTracker *>(callbackState);
-          switch (allocationEvent) {
-            case JsMemoryAllocate:
-              memoryTrackerPtr->OnAllocation(allocationSize);
-              break;
-
-            case JsMemoryFree:
-              memoryTrackerPtr->OnDeallocation(allocationSize);
-              break;
-
-            case JsMemoryFailure:
-            default:
-              break;
-          }
-
-          return true;
-        });
-  }
 }
 
 /*static*/ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
