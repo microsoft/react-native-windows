@@ -46,13 +46,13 @@
     "eslint": "5.1.0",
     "just-scripts": "^0.24.2",
     "prettier": "1.17.0",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.7.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.8.tar.gz",
     "react": "16.8.6",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft.7 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.7.tar.gz"
+    "react-native": "^0.60.0 || 0.60.0-microsoft.8 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.8.tar.gz"
   },
   "beachball": {
     "defaultNpmTag": "vnext",
