@@ -3,5 +3,10 @@ $installationPath = . $installerPath\vswhere.exe -latest -property installationP
 
 $p = Start-Process -PassThru $installerPath\vs_installer.exe -ArgumentList "export --installpath `"$installationPath`" --quiet --config .\vsconfig" -Wait 
 $p.WaitForExit()
-Sleep 30
+while (!(Test-Path .\vsconfig))
+{
+    Sleep 5
+    Write-Host "Waiting for vsconfig file..."
+}
+
 gc .\vsconfig
