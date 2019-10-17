@@ -12,7 +12,7 @@ AdditionAnimatedNode::AdditionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : ValueAnimatedNode(tag, config, manager) {
+    : ValueAnimatedNode(tag, manager) {
   for (const auto &inputNode : config.find(s_inputName).dereference().second) {
     m_inputNodes.insert(static_cast<int64_t>(inputNode.asDouble()));
   }
@@ -24,7 +24,7 @@ AdditionAnimatedNode::AdditionAnimatedNode(
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"0";
       for (const auto tag : nodes) {
-        const auto identifier = std::to_wstring(tag);
+        const auto identifier = L"n" + std::to_wstring(tag);
         anim.SetReferenceParameter(
             identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
         expr = expr + L" + " + identifier + L"." + s_valueName + L" + " +
