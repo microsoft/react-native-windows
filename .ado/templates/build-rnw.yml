@@ -80,4 +80,13 @@ steps:
       msbuildArguments:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
+        /bl
         ${{parameters.msbuildArguments}}
+
+  - task: PublishBuildArtifacts@1
+    condition:  succeededOrFailed()
+    inputs:    
+      pathtoPublish: ${{parameters.project}}/msbuild.binlog 
+      artifactName: ${{parameters.project}}$(BuildConfiguration)$(BuildPlatform)
+      publishLocation: 'Container'
+
