@@ -57,6 +57,10 @@
    - Run `yarn start` from your project directory, and wait for the React Native packager to report success.
    - Click the `Run` button to the right of the platform combo box control in VS, or select the `Debug`->`Start without Debugging` menu item. You now see your new app and Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
+## Authoring Native Modules (vnext)
+
+See [Native Modules and React Native Windows](NativeModules.md).
+
 ## Building a standalone React Native Windows App
 Follow these steps to build a version of your app that you can install or publish to the store.  This version will package your bundle and assets into the appx package so you don't need to run Metro.
 

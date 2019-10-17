@@ -105,20 +105,18 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ABIModule.h" />
+    <ClInclude Include="ABICxxModule.h" />
+    <ClInclude Include="Crash.h" />
+    <ClInclude Include="DynamicReader.h">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="DynamicWriter.h">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
-    <ClInclude Include="MethodInfo.h">
-      <DependentUpon>MethodInfo.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="NativeModuleBase.h">
-      <DependentUpon>NativeModuleBase.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="NativeModuleRegistry.h">
-      <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
-      <SubType>Code</SubType>
+    <ClInclude Include="IReactModuleBuilder.h">
+      <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
@@ -151,6 +149,9 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ReactPackageBuilder.h">
+      <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="ReactRootView.h">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -159,18 +160,15 @@
     <ClInclude Include="ViewManagersProvider.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABIModule.cpp" />
-    <ClCompile Include="MethodInfo.cpp">
-      <DependentUpon>MethodInfo.idl</DependentUpon>
-      <SubType>Code</SubType>
+    <ClCompile Include="ABICxxModule.cpp" />
+    <ClCompile Include="DynamicReader.cpp">
+      <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="NativeModuleBase.cpp">
-      <DependentUpon>NativeModuleBase.idl</DependentUpon>
-      <SubType>Code</SubType>
+    <ClCompile Include="DynamicWriter.cpp">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="NativeModuleRegistry.cpp">
-      <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
-      <SubType>Code</SubType>
+    <ClCompile Include="IReactModuleBuilder.cpp">
+      <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
@@ -206,6 +204,9 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="ReactPackageBuilder.cpp">
+      <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="ReactRootView.cpp">
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -215,17 +216,13 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IBackgroundEventListener.idl" />
+    <Midl Include="IJSValueReader.idl" />
+    <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
-    <Midl Include="IReactPackage.idl" />
-    <Midl Include="MethodInfo.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="NativeModuleBase.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="NativeModuleRegistry.idl">
-      <SubType>Designer</SubType>
-    </Midl>
+    <Midl Include="IReactModuleBuilder.idl" />
+    <Midl Include="IReactPackageBuilder.idl" />
+    <Midl Include="IReactPackageProvider.idl" />
+    <Midl Include="IViewManager.idl" />
     <Midl Include="ReactApplication.idl" />
     <Midl Include="ReactApplicationDelegate.idl">
       <SubType>Designer</SubType>
@@ -263,8 +260,9 @@
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\ReactUWP\ReactUWP.vcxproj">
+    <ProjectReference Include="..\ReactUWP\ReactUWP.vcxproj">
       <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
+      <Private>false</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

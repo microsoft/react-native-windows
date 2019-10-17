@@ -66,6 +66,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\..\..\..\vnext\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -102,21 +105,15 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="SamplePackage.h">
-      <DependentUpon>SamplePackage.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
+    <ClInclude Include="DebugConsole.h" />
     <ClInclude Include="MainReactNativeHost.h">
       <DependentUpon>MainReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="SampleModule.h">
-      <DependentUpon>SampleModule.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -140,14 +137,11 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SamplePackage.cpp">
-      <DependentUpon>SamplePackage.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="MainReactNativeHost.cpp">
       <DependentUpon>MainReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -155,22 +149,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="SampleModule.cpp">
-      <DependentUpon>SampleModule.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
     </Midl>
-    <Midl Include="SamplePackage.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="MainReactNativeHost.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="SampleModule.idl">
       <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>
@@ -184,8 +168,17 @@
     <Natvis Include="$(ReactNativeWindowsDir)\Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+    <ProjectReference Include="..\..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\vnext\ReactUWP\ReactUWP.vcxproj">
+      <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleLibraryCPP\SampleLibraryCPP.vcxproj">
+      <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\SampleLibraryCS\SampleLibraryCS.csproj">
+      <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

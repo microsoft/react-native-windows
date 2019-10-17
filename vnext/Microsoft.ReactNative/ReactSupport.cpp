@@ -179,4 +179,40 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
 
   return value;
 }
+
+IInspectable ConvertToIInspectable(folly::dynamic const &object) {
+  if (object == nullptr)
+    return nullptr;
+
+  switch (object.type()) {
+    case folly::dynamic::NULLT:
+      return nullptr;
+    case folly::dynamic::ARRAY: {
+      auto objs = single_threaded_vector<IInspectable>();
+      for (size_t i = 0; i < object.size(); i++) {
+        objs.Append(ConvertToIInspectable(object.at(i)));
+      }
+      return objs.GetView();
+    }
+    case folly::dynamic::BOOL:
+      return box_value(object.asBool());
+    case folly::dynamic::DOUBLE:
+      return box_value(object.asDouble());
+    case folly::dynamic::INT64:
+      return box_value(object.asInt());
+    case folly::dynamic::OBJECT: {
+      auto objs = single_threaded_map<IInspectable, IInspectable>();
+      for (auto it : object.items()) {
+        objs.Insert(
+            ConvertToIInspectable(it.first), ConvertToIInspectable(it.second));
+      }
+      return objs.GetView();
+    }
+    case folly::dynamic::STRING:
+      return box_value(to_hstring(object.asString()));
+    default:
+      throw hresult_invalid_argument(L"Unrecognized argument value type.");
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::Bridge

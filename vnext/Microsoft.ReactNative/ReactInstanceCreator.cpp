@@ -6,6 +6,7 @@
 #include <ReactUWP/ReactUwp.h>
 
 using namespace winrt;
+using namespace winrt::Microsoft::ReactNative::Bridge;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

@@ -29,7 +29,7 @@ ReactInstanceManagerBuilder::Build() {
       m_instanceSettings,
       to_string(m_jsBundleFile),
       to_string(m_jsMainModuleName),
-      m_packages,
+      m_packageProviders,
       m_useDeveloperSupport,
       m_initialLifecycleState);
   return instanceManager;
