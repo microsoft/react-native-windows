@@ -373,7 +373,7 @@ bool ChakraRuntime::evaluateSerializedScript(
     } else if (result == JsErrorBadSerializedScript) {
       return false;
     } else {
-      ThrowUponChakraError(result);
+      ThrowUponChakraError(result, "JsRunSerialized");
     }
   }
 

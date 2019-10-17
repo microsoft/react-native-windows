@@ -2,38 +2,14 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
+
+#include "ByteArrayBuffer.h"
 #include "Unicode.h"
 
 #if !defined(CHAKRACORE)
 #include <jsrt.h>
 
 namespace Microsoft::JSI {
-
-JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
-  return objectRef(obj);
-}
-
-JsValueRef ChakraRuntime::strongObjectRef(
-    const facebook::jsi::WeakObject &obj) {
-  return objectRef(obj); // Return the original strong ref.
-}
-
-JsValueRef ChakraRuntime::createJSString(const char *data, size_t length) {
-  const std::wstring script16 = Microsoft::Common::Unicode::Utf8ToUtf16(
-      reinterpret_cast<const char *>(data), length);
-  JsValueRef value;
-  JsPointerToString(script16.c_str(), script16.size(), &value);
-  return value;
-}
-
-JsValueRef ChakraRuntime::createJSPropertyId(const char *data, size_t length) {
-  JsValueRef propIdRef;
-  const std::wstring name16 = Microsoft::Common::Unicode::Utf8ToUtf16(
-      reinterpret_cast<const char *>(data), length);
-  if (JsNoError != JsGetPropertyIdFromName(name16.c_str(), &propIdRef))
-    std::terminate();
-  return propIdRef;
-}
 
 void ChakraRuntime::setupNativePromiseContinuation() noexcept {
   // NOP
@@ -87,13 +63,15 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
     throw facebook::jsi::JSINativeException("Script URL can't be empty.");
 
   JsValueRef result;
-  checkException(JsRunScript(
-      script16.c_str(),
-      JS_SOURCE_CONTEXT_NONE /*sourceContext*/,
-      url16.c_str(),
-      &result));
+  ThrowUponJsError(
+      JsRunScript(
+          script16.c_str(),
+          JS_SOURCE_CONTEXT_NONE /*sourceContext*/,
+          url16.c_str(),
+          &result),
+      "JsRunScript");
 
-  return createValue(result);
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 // TODO :: Return result
@@ -119,7 +97,7 @@ bool ChakraRuntime::evaluateSerializedScript(
   } else if (ret == JsErrorBadSerializedScript) {
     return false;
   } else {
-    checkException(ret);
+    ThrowUponChakraError(ret, "JsRunSerializedScript");
     return true;
   }
 }
