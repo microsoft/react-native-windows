@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "exclude Generated Files",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "fc6d271706cbf6e4d58baef7dab2b1c02cd0fc1c",
-  "date": "2019-10-16T21:54:29.329Z"
-}
