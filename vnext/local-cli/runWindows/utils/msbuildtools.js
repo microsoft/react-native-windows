@@ -60,20 +60,13 @@ class MSBuildTools {
       '/p:AppxBundle=Never',
     ];
 
+    args.push('/p:PlatformToolset=v141');
+
     // Set platform toolset for VS 2017 (this way we can keep the base sln file working for VS 2015)
     if (this.version === '15.0') {
-      args.push('/p:PlatformToolset=v141');
       args.push('/p:VisualStudioVersion=15.0');
-    }
-
-    // Set platform toolset for VS 2019
-    if (this.version === '16.0') {
-      // we are guaranteed to have Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
-      const vsPath = path.resolve(this.path, '../../..');
-      const targetsPath = path.join(vsPath, 'MSBuild\\Microsoft\\VC\\v150\\');
-      args.push('/p:PlatformToolset=v141');
+    } else if (this.version === '16.0') {
       args.push('/p:VisualStudioVersion=16.0');
-      args.push('/p:VCTargetsPath=' + targetsPath);
     }
 
     if (config) {
@@ -128,15 +121,15 @@ function VSWhere(requires, version, property) {
       const output = child_process.execSync(query).toString();
       let toolsPathOutput = /MSBuildToolsPath\s+REG_SZ\s+(.*)/i.exec(output);
       if (toolsPathOutput) {
-        toolsPathOutput = toolsPathOutput[1];
+        let toolsPathOutputStr = toolsPathOutput[1];
         // Win10 on .NET Native uses x86 arch compiler, if using x64 Node, use x86 tools
         if (
           version === '15.0' ||
-          (version === '14.0' && toolsPath.indexOf('amd64') > -1)
+          (version === '14.0' && toolsPathOutputStr.indexOf('amd64') > -1)
         ) {
-          toolsPathOutput = path.resolve(toolsPathOutput, '..');
+          toolsPathOutputStr = path.resolve(toolsPathOutputStr, '..');
         }
-        toolsPath = toolsPathOutput;
+        toolsPath = toolsPathOutputStr;
       }
     } catch (e) {
       toolsPath = null;
@@ -151,11 +144,21 @@ function checkMSBuildVersion(version, verbose) {
     console.log('Searching for MSBuild version ' + version);
   }
 
-  const requiresUWP =
-    'Microsoft.Component.MSBuild Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141';
-  const vsPath = VSWhere(requiresUWP, version, 'installationPath');
+  // https://aka.ms/vs/workloads
+  const requires16 = [
+    'Microsoft.Component.MSBuild',
+    'Microsoft.VisualStudio.Component.VC.v141.x86.x64',
+  ];
+  const requires15 = [
+    'Microsoft.Component.MSBuild',
+    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+  ];
+
+  const requires = version === '16.0' ? requires16 : requires15;
+
+  const vsPath = VSWhere(requires.join(' '), version, 'installationPath');
   const installationVersion = VSWhere(
-    requiresUWP,
+    requires.join(' '),
     version,
     'installationVersion',
   );
@@ -197,11 +200,11 @@ module.exports.findAvailableVersion = function(verbose) {
       throw new Error(
         `MSBuild tools not found for version ${
           process.env.VisualStudioVersion
-        } (from environment). Make sure all components have been installed (e.g. UWP v141 support)`,
+        } (from environment). Make sure all required components have been installed (e.g. v141 support)`,
       );
     } else {
       throw new Error(
-        'MSBuild tools not found. Make sure all components have been installed (e.g. UWP v141 support)',
+        'MSBuild tools not found. Make sure all required components have been installed (e.g. v141 support)',
       );
     }
   }
