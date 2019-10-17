@@ -16,6 +16,9 @@
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.15063.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>
+    <CppWinRTModernIDL>true</CppWinRTModernIDL>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -64,6 +67,9 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
+    <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <Import Project="..\JSI\Shared\JSI.Shared.vcxitems" Label="Shared" />
+    <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -80,13 +86,26 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
-      <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION /wd4100 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(FollyDir);$(ReactNativeDir)ReactCommon;$(ReactNativeDir)ReactCommon\jsi;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--
+        REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
+        OLD_CPPWINRT is a workaround to make target version to 19H1
+      -->
+      <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_TRACING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_TRACE_POSTPROCESSING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACE_POSTPROCESSING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=windows;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(BaseOutDir)\ReactUWP\React.UWP.lib;ChakraRT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ChakraRT.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
@@ -106,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
+    <ClInclude Include="Base\UwpReactInstance.h" />
     <ClInclude Include="Crash.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -113,13 +133,58 @@
     <ClInclude Include="DynamicWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="IReactModuleBuilder.h">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="Modules\AlertModuleUwp.h" />
+    <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\AnimatedNodeType.h" />
+    <ClInclude Include="Modules\Animated\AnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\AnimationType.h" />
+    <ClInclude Include="Modules\Animated\DecayAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\DiffClampAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\DivisionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\EventAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\ExtrapolationType.h" />
+    <ClInclude Include="Modules\Animated\FacadeType.h" />
+    <ClInclude Include="Modules\Animated\FrameAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\InterpolationAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\ModulusAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\MultiplicationAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedModule.h" />
+    <ClInclude Include="Modules\Animated\NativeAnimatedNodeManager.h" />
+    <ClInclude Include="Modules\Animated\PropsAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
+    <ClInclude Include="Modules\Animated\StyleAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\SubtractionAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\TransformAnimatedNode.h" />
+    <ClInclude Include="Modules\Animated\ValueAnimatedNode.h" />
+    <ClInclude Include="Modules\AppStateModuleUwp.h" />
+    <ClInclude Include="Modules\AppThemeModuleUwp.h" />
+    <ClInclude Include="Modules\ClipboardModule.h" />
+    <ClInclude Include="Modules\DeviceInfoModule.h" />
+    <ClInclude Include="Modules\DevSupportManagerUwp.h" />
+    <ClInclude Include="Modules\I18nModule.h" />
+    <ClInclude Include="Modules\ImageViewManagerModule.h" />
+    <ClInclude Include="Modules\LinkingManagerModule.h" />
+    <ClInclude Include="Modules\LocationObserverModule.h" />
+    <ClInclude Include="Modules\NativeUIManager.h" />
+    <ClInclude Include="Modules\NetworkingModule.h" />
+    <ClInclude Include="Modules\StatusBarModule.h" />
+    <ClInclude Include="Modules\TimingModule.h" />
+    <ClInclude Include="Modules\WebSocketModuleUwp.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Polyester\ButtonContentViewManager.h" />
+    <ClInclude Include="Polyester\ButtonViewManager.h" />
+    <ClInclude Include="Polyester\ContentControlViewManager.h" />
+    <ClInclude Include="Polyester\HyperlinkViewManager.h" />
+    <ClInclude Include="Polyester\IconViewManager.h" />
     <ClInclude Include="ReactApplication.h">
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClInclude>
@@ -149,6 +214,12 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ReactOptions.h">
+      <DependentUpon>IReactOptions.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="ReactOptionsBuilder.h">
+      <DependentUpon>ReactOptionsBuilder.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="ReactPackageBuilder.h">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClInclude>
@@ -157,23 +228,111 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="Threading\AsyncWorkQueue.h" />
+    <ClInclude Include="Threading\AsyncWorkQueue_Priv.h" />
+    <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
+    <ClInclude Include="Threading\JSQueueThread.h" />
+    <ClInclude Include="Threading\UIMessageQueueThread.h" />
+    <ClInclude Include="Threading\WorkerMessageQueueThread.h" />
+    <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="Utils\Helpers.h" />
+    <ClInclude Include="Utils\LocalBundleReader.h" />
+    <ClInclude Include="Utils\PropertyHandlerUtils.h" />
+    <ClInclude Include="Utils\PropertyUtils.h" />
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
+    <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
+    <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\DatePickerViewManager.h" />
+    <ClInclude Include="Views\DynamicAutomationPeer.h" />
+    <ClInclude Include="Views\DynamicAutomationProperties.h" />
+    <ClInclude Include="Views\ExpressionAnimationStore.h" />
+    <ClInclude Include="Views\FlyoutViewManager.h" />
+    <ClInclude Include="Views\Image\BorderEffect.h" />
+    <ClInclude Include="Views\Image\ImageViewManager.h" />
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
+    <ClInclude Include="Views\Image\ReactImage.h" />
+    <ClInclude Include="Views\Image\ReactImageBrush.h" />
+    <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
+    <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\PickerViewManager.h" />
+    <ClInclude Include="Views\PopupViewManager.h" />
+    <ClInclude Include="Views\RawTextViewManager.h" />
+    <ClInclude Include="Views\ReactControl.h" />
+    <ClInclude Include="Views\RootViewManager.h" />
+    <ClInclude Include="Views\ScrollContentViewManager.h" />
+    <ClInclude Include="Views\ScrollViewManager.h" />
+    <ClInclude Include="Views\SwitchViewManager.h" />
+    <ClInclude Include="Views\TextInputViewManager.h" />
+    <ClInclude Include="Views\TextViewManager.h" />
+    <ClInclude Include="Views\TouchEventHandler.h" />
+    <ClInclude Include="Views\ViewControl.h" />
+    <ClInclude Include="Views\ViewPanel.h" />
+    <ClInclude Include="Views\ViewViewManager.h" />
+    <ClInclude Include="Views\VirtualTextViewManager.h" />
+    <ClInclude Include="Views\WebViewManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
+    <ClCompile Include="Base\InstanceFactory.cpp" />
+    <ClCompile Include="Base\UwpReactInstance.cpp" />
+    <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="DynamicReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="DynamicWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="Executors\WebSocketJSExecutorUwp.cpp" />
     <ClCompile Include="IReactModuleBuilder.cpp">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="Modules\AlertModuleUwp.cpp" />
+    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp" />
+    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp" />
+    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
+    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp" />
+    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp" />
+    <ClCompile Include="Modules\AppStateModuleUwp.cpp" />
+    <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
+    <ClCompile Include="Modules\ClipboardModule.cpp" />
+    <ClCompile Include="Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="Modules\DevSupportManagerUwp.cpp" />
+    <ClCompile Include="Modules\I18nModule.cpp" />
+    <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
+    <ClCompile Include="Modules\LinkingManagerModule.cpp" />
+    <ClCompile Include="Modules\LocationObserverModule.cpp" />
+    <ClCompile Include="Modules\NativeUIManager.cpp" />
+    <ClCompile Include="Modules\NetworkingModule.cpp" />
+    <ClCompile Include="Modules\StatusBarModule.cpp" />
+    <ClCompile Include="Modules\TimingModule.cpp" />
+    <ClCompile Include="Modules\WebSocketModuleUwp.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Polyester\ButtonContentViewManager.cpp" />
+    <ClCompile Include="Polyester\ButtonViewManager.cpp" />
+    <ClCompile Include="Polyester\ContentControlViewManager.cpp" />
+    <ClCompile Include="Polyester\HyperlinkViewManager.cpp" />
+    <ClCompile Include="Polyester\IconViewManager.cpp" />
     <ClCompile Include="ReactApplication.cpp">
       <DependentUpon>ReactApplication.idl</DependentUpon>
     </ClCompile>
@@ -204,6 +363,12 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="ReactOptions.cpp">
+      <DependentUpon>IReactOptions.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="ReactOptionsBuilder.cpp">
+      <DependentUpon>ReactOptionsBuilder.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="ReactPackageBuilder.cpp">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClCompile>
@@ -212,7 +377,53 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="Sandbox\DevSupportManagerUwpSandbox.cpp" />
+    <ClCompile Include="Threading\AsyncWorkQueue.cpp" />
+    <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
+    <ClCompile Include="Threading\JSQueueThread.cpp" />
+    <ClCompile Include="Threading\UIMessageQueueThread.cpp" />
+    <ClCompile Include="Threading\WorkerMessageQueueThread.cpp" />
+    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
+    <ClCompile Include="Utils\Helpers.cpp" />
+    <ClCompile Include="Utils\LocalBundleReader.cpp" />
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
+    <ClCompile Include="Utils\UwpScriptStore.cpp" />
+    <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
+    <ClCompile Include="Views\CheckboxViewManager.cpp" />
+    <ClCompile Include="Views\ControlViewManager.cpp" />
+    <ClCompile Include="Views\DatePickerViewManager.cpp" />
+    <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
+    <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
+    <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
+    <ClCompile Include="Views\FlyoutViewManager.cpp" />
+    <ClCompile Include="Views\FrameworkElementViewManager.cpp" />
+    <ClCompile Include="Views\Image\ImageViewManager.cpp" />
+    <ClCompile Include="Views\Image\ReactImage.cpp" />
+    <ClCompile Include="Views\Image\ReactImageBrush.cpp" />
+    <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
+    <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
+    <ClCompile Include="Views\KeyboardEventHandler.cpp" />
+    <ClCompile Include="Views\PickerViewManager.cpp" />
+    <ClCompile Include="Views\PopupViewManager.cpp" />
+    <ClCompile Include="Views\RawTextViewManager.cpp" />
+    <ClCompile Include="Views\ReactControl.cpp" />
+    <ClCompile Include="Views\ReactRootView2.cpp" />
+    <ClCompile Include="Views\RootViewManager.cpp" />
+    <ClCompile Include="Views\ScrollContentViewManager.cpp" />
+    <ClCompile Include="Views\ScrollViewManager.cpp" />
+    <ClCompile Include="Views\ShadowNodeBase.cpp" />
+    <ClCompile Include="Views\SwitchViewManager.cpp" />
+    <ClCompile Include="Views\TextInputViewManager.cpp" />
+    <ClCompile Include="Views\TextViewManager.cpp" />
+    <ClCompile Include="Views\TouchEventHandler.cpp" />
+    <ClCompile Include="Views\ViewControl.cpp" />
+    <ClCompile Include="Views\ViewManagerBase.cpp" />
+    <ClCompile Include="Views\ViewPanel.cpp" />
+    <ClCompile Include="Views\ViewViewManager.cpp" />
+    <ClCompile Include="Views\VirtualTextViewManager.cpp" />
+    <ClCompile Include="Views\WebViewManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IBackgroundEventListener.idl" />
@@ -220,6 +431,7 @@
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
+    <Midl Include="IReactOptions.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
@@ -242,9 +454,13 @@
     <Midl Include="ReactNativeHost.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="ReactOptionsBuilder.idl" />
     <Midl Include="ReactRootView.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="Views\cppwinrt\BorderEffect.idl" />
+    <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
+    <Midl Include="Views\cppwinrt\ViewPanel.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -260,9 +476,20 @@
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReactUWP\ReactUWP.vcxproj">
-      <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
-      <Private>false</Private>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Folly\Folly.vcxproj">
+      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj">
+      <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
+      <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
+      <Project>{11c084a3-a57c-4296-a679-cac17b603144}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

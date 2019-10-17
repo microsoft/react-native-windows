@@ -1,0 +1,60 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// This file was used to generate the files in the cppwinrt subfolders
+//
+// If you modify this file, be sure to run buildcppwinrt.cmd in this folder
+// to generate new headers
+
+import "Views/cppwinrt/DynamicAutomationPeer.idl";
+
+namespace react.uwp
+{
+	[default_interface]
+	[webhosthidden]
+	runtimeclass ViewPanel : Windows.UI.Xaml.Controls.Panel
+	{
+		// Constructors
+		ViewPanel();
+
+		// Public Methods
+		void InsertAt(UInt32 index, Windows.UI.Xaml.UIElement value);
+		void RemoveAt(UInt32 index);
+		void Clear();
+
+		void FinalizeProperties();
+		Windows.UI.Xaml.Controls.Border GetOuterBorder();
+
+		// Public Properties
+		Windows.UI.Xaml.Media.Brush ViewBackground { get; set; };
+		Windows.UI.Xaml.Thickness BorderThickness { get; set; };
+		Windows.UI.Xaml.Media.Brush BorderBrush { get; set; };
+		Windows.UI.Xaml.CornerRadius CornerRadius { get; set; };
+		Boolean ClipChildren { get; set; };
+
+		// ViewPanel Properties
+		static Windows.UI.Xaml.DependencyProperty ViewBackgroundProperty { get; };
+		static Windows.UI.Xaml.DependencyProperty BorderThicknessProperty { get; };
+		static Windows.UI.Xaml.DependencyProperty BorderBrushProperty { get; };
+		static Windows.UI.Xaml.DependencyProperty CornerRadiusProperty { get; };
+		static Windows.UI.Xaml.DependencyProperty ClipChildrenProperty { get; };
+
+		// Attached Properties
+		static Windows.UI.Xaml.DependencyProperty TopProperty { get; };
+		static void SetTop(Windows.UI.Xaml.UIElement element, Double value);
+		static Double GetTop(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty LeftProperty { get; };
+		static void SetLeft(Windows.UI.Xaml.UIElement element, Double value);
+		static Double GetLeft(Windows.UI.Xaml.UIElement element);
+	}
+
+	[default_interface]
+	[webhosthidden]
+	runtimeclass ViewControl : Windows.UI.Xaml.Controls.ContentControl
+	{
+		ViewControl();
+
+		ViewPanel GetPanel();
+	}
+}

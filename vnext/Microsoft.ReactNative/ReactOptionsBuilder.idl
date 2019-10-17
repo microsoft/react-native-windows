@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IReactOptions.idl";
+
+namespace Microsoft.ReactNative {
+
+  [webhosthidden]
+  [default_interface] runtimeclass ReactOptionsBuilder {
+    ReactOptionsBuilder();
+    ReactOptionsBuilder(IReactOptions options);
+
+    IVector<Microsoft.ReactNative.Bridge.IReactPackageProvider> PackageProviders { get; };
+    String MainComponentName { get; set; };
+    Boolean UseDeveloperSupport { get; set; };
+    String JavaScriptMainModuleName { get; set; };
+    String JavaScriptBundleFile { get; set; };
+
+    IReactOptions CreateOptions();
+  };
+
+} // namespace Microsoft.ReactNative

@@ -1,0 +1,14 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IReactPackageProvider.idl";
+
+namespace Microsoft.ReactNative {
+  interface IReactOptions {
+    IVectorView<Microsoft.ReactNative.Bridge.IReactPackageProvider> PackageProviders { get; };
+    String MainComponentName { get; };
+    Boolean UseDeveloperSupport { get; };
+    String JavaScriptMainModuleName { get; };
+    String JavaScriptBundleFile { get; };
+  };
+} // namespace Microsoft.ReactNative
