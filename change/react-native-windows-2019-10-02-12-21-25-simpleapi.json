@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Microsoft.ReactNative attribute-based NativeModules",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "8e6b7fd614f601c4bc4e53c9c7ca6522f93c02bd",
-  "date": "2019-10-02T19:21:25.139Z"
-}
