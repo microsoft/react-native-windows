@@ -49,6 +49,12 @@ namespace <%=ns%>
       settings.UseLiveReload = true;
 #endif      
 
+#if DEBUG
+      settings.EnableDeveloperMenu = true;
+#else
+      settings.EnableDeveloperMenu = false;
+#endif        
+
       var instance = Instance.Create(JSFILENAME);
 
       //instantiate sample module for registering callbacks for live reload, JS error handling etc.,

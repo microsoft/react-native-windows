@@ -18,6 +18,7 @@ namespace react{
   {
       boolean	UseWebDebugger;
       boolean	UseLiveReload;
+      boolean EnableDeveloperMenu;
   };
 
   [version(VERSION)]
