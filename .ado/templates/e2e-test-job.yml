@@ -103,7 +103,7 @@ jobs:
           pathtoPublish: packages/E2ETest/msbuild.binlog 
           artifactName: 'ReactUWPTestApp build log' 
           publishLocation: 'Container'
-          condition:  always()
+          condition:  succeededOrFailed()
           
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
