@@ -71,7 +71,12 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   ensureNugetSpinner.succeed('Found NuGet Binary');
 
   const msbuildTools = MSBuildTools.findAvailableVersion();
-  await nugetRestore(nugetPath, slnFile, verbose, msbuildTools.installationVersion);
+  await nugetRestore(
+    nugetPath,
+    slnFile,
+    verbose,
+    msbuildTools.installationVersion,
+  );
 }
 
 function getSolutionFile(options) {

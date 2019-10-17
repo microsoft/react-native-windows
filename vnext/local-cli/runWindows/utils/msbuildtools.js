@@ -122,6 +122,7 @@ function VSWhere(requires, version, property) {
     return vsPath;
   } else {
     const query = `reg query HKLM\\SOFTWARE\\Microsoft\\MSBuild\\ToolsVersions\\${version} /s /v MSBuildToolsPath`;
+    let toolsPath = null;
     // Try to get the MSBuild path using registry
     try {
       const output = child_process.execSync(query).toString();
@@ -150,7 +151,8 @@ function checkMSBuildVersion(version) {
     console.log('Searching for MSBuild version ' + version);
   }
 
-  const requiresUWP = 'Microsoft.Component.MSBuild Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141';
+  const requiresUWP =
+    'Microsoft.Component.MSBuild Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141';
   const vsPath = VSWhere(requiresUWP, version, 'installationPath');
   const installationVersion = VSWhere(
     requiresUWP,
