@@ -4,9 +4,9 @@
 #include "pch.h"
 
 #include <winrt/Windows.Graphics.Display.h>
+#include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include <winrt/Windows.UI.Xaml.h>
-#include <winrt/Windows.UI.Core.h>
 #include "DeviceInfoModule.h"
 
 namespace react {

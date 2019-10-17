@@ -35,7 +35,6 @@ struct ReactOptionsBuilder : ReactOptionsBuilderT<ReactOptionsBuilder> {
   ReactOptionsData m_data;
 };
 
-
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {

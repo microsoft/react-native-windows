@@ -3,9 +3,9 @@
 
 #include "pch.h"
 
+#include "react.uwp.ViewControl.g.cpp"
 #include "DynamicAutomationPeer.h"
 #include "ViewControl.h"
-#include "react.uwp.ViewControl.g.cpp"
 
 namespace winrt {
 using namespace Windows::UI::Xaml::Automation::Peers;
