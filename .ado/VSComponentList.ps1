@@ -11,4 +11,4 @@ while (!(Test-Path .\vsconfig) -and ([datetime]::Now -lt $x))
     Write-Host "Waiting for vsconfig file..."
 }
 
-gc .\vsconfig
+gc $vsconfig
