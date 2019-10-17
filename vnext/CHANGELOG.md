@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 17 Oct 2019 00:14:32 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Oct 2019 02:48:28 GMT and should not be manually modified.
 
+## 0.60.0-vnext.34
+Thu, 17 Oct 2019 02:48:28 GMT
+
+### Changes
+
+- Support onSubmitEditing event (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.33
 Thu, 17 Oct 2019 00:14:32 GMT
 
