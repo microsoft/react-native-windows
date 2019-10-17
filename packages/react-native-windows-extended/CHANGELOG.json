@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Thu, 17 Oct 2019 20:58:22 GMT",
+      "tag": "react-native-windows-extended_v0.60.7",
+      "version": "0.60.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag.",
+            "author": "stpete@microsoft.com",
+            "commit": "62049fdbd667fc71ae09b09f074446d8593d826d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Oct 2019 22:35:30 GMT",
       "tag": "react-native-windows-extended_v0.60.6",
       "version": "0.60.6",
