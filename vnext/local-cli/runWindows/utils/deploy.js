@@ -177,7 +177,7 @@ async function deployToDesktop(options, verbose) {
 
   const installingText = 'Installing new version of the app';
   const installApp = `-ExecutionPolicy RemoteSigned Import-Module "${windowsStoreAppUtils}"; Install-App "${script}" -Force`;
-  
+
   await commandWithProgress(
     newSpinner(installingText),
     installingText,
