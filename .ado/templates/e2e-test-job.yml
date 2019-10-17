@@ -24,6 +24,12 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: PowerShell@2
+        displayName: VS Component list
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
+
+      - task: PowerShell@2
         displayName: "Remove WebDriverIO Workaround"
         inputs:
           targetType: "inline"
@@ -33,11 +39,6 @@ jobs:
         displayName: Install react-native-cli
         inputs:
           script: npm install -g react-native-cli
-
-      - task: CmdLine@2
-        displayName: VS Component list
-        inputs:
-          script: "\"C:\\Program Files (x86)\\Microsoft Visual Studio\\Installer\\vs_installer.exe\" export --installpath \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Enterprise\" --quiet --config %temp%\\vsconfig && (timeout 30 > NUL) && type %temp%\\vsconfig"
 
       - task: CmdLine@2
         displayName: Modify package.json to use unforked RN
