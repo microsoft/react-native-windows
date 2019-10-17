@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 17 Oct 2019 02:48:28 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Oct 2019 16:18:52 GMT and should not be manually modified.
 
+## 0.60.0-vnext.35
+Thu, 17 Oct 2019 16:18:52 GMT
+
+### Changes
+
+- Support autoCapitalize Characters (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.34
 Thu, 17 Oct 2019 02:48:28 GMT
 
