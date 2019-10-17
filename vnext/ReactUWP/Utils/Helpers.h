@@ -30,5 +30,6 @@ inline typename T asEnum(folly::dynamic const &obj) {
 ReactId getViewId(
     _In_ IReactInstance *instance,
     winrt::FrameworkElement const &fe);
+std::int32_t CountOpenPopups();
 } // namespace uwp
 } // namespace react

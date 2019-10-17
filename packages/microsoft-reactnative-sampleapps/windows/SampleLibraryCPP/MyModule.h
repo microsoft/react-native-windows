@@ -3,11 +3,14 @@
 
 #pragma once
 
+#include "pch.h"
+
 #include <functional>
 #include <sstream>
+
 #include "NativeModules.h"
 
-namespace TestApp {
+namespace SampleLibraryCPP {
 
 REACT_MODULE(MyModule);
 struct MyModule {
@@ -83,4 +86,4 @@ struct MyModule {
   }
 };
 
-} // namespace TestApp
+} // namespace SampleLibraryCPP

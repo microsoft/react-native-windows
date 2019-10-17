@@ -36,10 +36,6 @@ class ReactInstanceManagerBuilder {
     m_isLifecycleStateSet = TRUE;
   };
 
-  void Packages(IVectorView<IReactPackage> const &packages) {
-    m_packages = packages;
-  }
-
   void PackageProviders(
       IVectorView<IReactPackageProvider> const &packageProviders) {
     m_packageProviders = packageProviders;
@@ -48,7 +44,6 @@ class ReactInstanceManagerBuilder {
   Microsoft::ReactNative::ReactInstanceManager Build();
 
  private:
-  Windows::Foundation::Collections::IVectorView<IReactPackage> m_packages;
   Windows::Foundation::Collections::IVectorView<IReactPackageProvider>
       m_packageProviders;
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};

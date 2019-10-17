@@ -83,13 +83,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CsStrings.cs" />
-    <Compile Include="CsStringsPackageProvider.cs" />
-    <Compile Include="FancyMath.cs" />
-    <Compile Include="CircleViewManager.cs" />
+    <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SampleLibraryPackage.cs" />
-    <Compile Include="SampleModule.cs" />
+    <Compile Include="SampleModuleCS.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -97,11 +93,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\vnext\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj">
-      <Project>{0cea72c6-3f89-47d2-b9d1-05289f989277}</Project>
-      <Name>Microsoft.ReactNative.Managed</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\..\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
       <Name>Microsoft.ReactNative</Name>

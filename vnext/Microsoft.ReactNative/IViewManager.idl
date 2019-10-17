@@ -3,13 +3,6 @@
 
 namespace Microsoft.ReactNative.Bridge
 {
-	[attributeusage(target_method)]
-	[webhosthidden]
-	attribute ViewManagerPropertySetterAttribute
-	{
-		String Name;
-	};
-
 	[webhosthidden]
 	interface IViewManager
 	{

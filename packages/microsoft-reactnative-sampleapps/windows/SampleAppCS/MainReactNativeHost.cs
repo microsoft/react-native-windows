@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 using Microsoft.ReactNative;
 using Microsoft.ReactNative.Bridge;
-using Microsoft.ReactNative.Managed;
-using SampleLibraryCS;
 
 namespace SampleApp
 {
@@ -21,22 +19,15 @@ namespace SampleApp
 
         protected override string MainComponentName => "SampleApp";
         protected override string JavaScriptMainModuleName => "index.windows";
-        protected override IReadOnlyList<IReactPackage> Packages
-        {
-            get
-            {
-                return new IReactPackage[] { new SampleLibraryPackage() };
-            }
-        }
 
         protected override IReadOnlyList<IReactPackageProvider> PackageProviders
         {
             get
             {
                 return new IReactPackageProvider[] {
-                    new ReactPackageProvider(),
-                    new SampleLibraryCPP.SampleLibraryCppPackage(),
-                    new SampleLibraryCS.CsStringsPackageProvider()
+                    new Microsoft.ReactNative.Managed.LocalPackageProvider(), // Includes any modules in this project
+                    new SampleLibraryCS.ReactPackageProvider(),
+                    new SampleLibraryCPP.ReactPackageProvider(),
                 };
             }
         }

@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace SampleLibraryCPP
+{
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider
+        : Microsoft.ReactNative.Bridge.IReactPackageProvider {
+      ReactPackageProvider();
+    };
+} // namespace CppModule
