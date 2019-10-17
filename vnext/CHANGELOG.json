@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Oct 2019 23:10:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.37",
+      "version": "0.60.0-vnext.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.8",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "35f748784744598ebea97c6b039a14a008547f50"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Oct 2019 20:58:22 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.36",
       "version": "0.60.0-vnext.36",
