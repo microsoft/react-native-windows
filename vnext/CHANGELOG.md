@@ -1,7 +1,73 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 11 Oct 2019 10:21:12 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Oct 2019 16:18:52 GMT and should not be manually modified.
 
+## 0.60.0-vnext.35
+Thu, 17 Oct 2019 16:18:52 GMT
+
+### Changes
+
+- Support autoCapitalize Characters (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.34
+Thu, 17 Oct 2019 02:48:28 GMT
+
+### Changes
+
+- Support onSubmitEditing event (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.33
+Thu, 17 Oct 2019 00:14:32 GMT
+
+### Changes
+
+- exclude Generated Files (kmelmon@microsoft.com)
+## 0.60.0-vnext.32
+Wed, 16 Oct 2019 02:19:39 GMT
+
+### Changes
+
+- Extend flyout shadow fix to Popups (kenander@microsoft.com)
+## 0.60.0-vnext.31
+Tue, 15 Oct 2019 23:45:52 GMT
+
+### Changes
+
+- Reduced and simplified sample native modules (jthysell@microsoft.com)
+## 0.60.0-vnext.30
+Tue, 15 Oct 2019 22:35:30 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.7 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.29
+Tue, 15 Oct 2019 13:17:22 GMT
+
+### Changes
+
+- dont new up exceptions (adamgor@microsoft.com)
+## 0.60.0-vnext.28
+Mon, 14 Oct 2019 23:02:23 GMT
+
+### Changes
+
+- Microsoft.ReactNative attribute-based NativeModules (jthysell@microsoft.com)
+## 0.60.0-vnext.27
+Sat, 12 Oct 2019 16:49:47 GMT
+
+### Changes
+
+- add tests (kmelmon@microsoft.com)
+## 0.60.0-vnext.26
+Fri, 11 Oct 2019 22:15:37 GMT
+
+### Changes
+
+- add Common.vcxproj to CLI solutions (kmelmon@microsoft.com)
+## 0.60.0-vnext.25
+Fri, 11 Oct 2019 20:47:08 GMT
+
+### Changes
+
+- Support caretHidden (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.24
 Fri, 11 Oct 2019 10:21:12 GMT
 

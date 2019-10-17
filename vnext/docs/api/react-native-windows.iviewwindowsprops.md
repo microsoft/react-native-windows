@@ -10,6 +10,12 @@
 export interface IViewWindowsProps extends IKeyboardProps, ViewProps 
 ```
 
+## Remarks
+
+Props type for ViewWindows component
+
+Extends: [IKeyboardProps](./react-native-windows.ikeyboardprops.md) and [react-native's ViewProps](https://facebook.github.io/react-native/docs/view)
+
 ## Properties
 
 |  Property | Type | Description |
@@ -18,10 +24,4 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps
 |  [accessibilityPosInSet](./react-native-windows.iviewwindowsprops.accessibilityposinset.md) | <code>number</code> | Indicates to accessibility services that the UI Component is within a set and has the given numbered position.<!-- -->See https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md |
 |  [accessibilitySetSize](./react-native-windows.iviewwindowsprops.accessibilitysetsize.md) | <code>number</code> | Indicates to accessibility services that the UI Component is within a set with the given size.<!-- -->See https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md |
 |  [children](./react-native-windows.iviewwindowsprops.children.md) | <code>any</code> |  |
-
-## Remarks
-
-Props type for ViewWindows component
-
-Extends: [IKeyboardProps](./react-native-windows.ikeyboardprops.md) and [react-native's ViewProps](https://facebook.github.io/react-native/docs/view)
 

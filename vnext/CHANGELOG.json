@@ -2,6 +2,174 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Oct 2019 16:18:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.35",
+      "version": "0.60.0-vnext.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support autoCapitalize Characters",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "ba8d6abb2b955bb89428fc717033cdb2af792837"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 02:48:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.34",
+      "version": "0.60.0-vnext.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support onSubmitEditing event",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "02aa39cf03c6b1b9e0d40e4b50fe463d864b8831"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 00:14:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.33",
+      "version": "0.60.0-vnext.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "exclude Generated Files",
+            "author": "kmelmon@microsoft.com",
+            "commit": "fc6d271706cbf6e4d58baef7dab2b1c02cd0fc1c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Oct 2019 02:19:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.32",
+      "version": "0.60.0-vnext.32",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Extend flyout shadow fix to Popups",
+            "author": "kenander@microsoft.com",
+            "commit": "2e896420694fe6b89d3a0a46450b9ea6c887b058"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 23:45:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.31",
+      "version": "0.60.0-vnext.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reduced and simplified sample native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "59f5a4c1dcc8b084d2e6082425501d192011ae91"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 22:35:30 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.30",
+      "version": "0.60.0-vnext.30",
+      "comments": {
+        "none": [
+          {
+            "comment": "supports measureInWindow",
+            "author": "licanhua@live.com",
+            "commit": "137abefe6aaf33513000e3775b343f218ca8171d"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.7",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "4908a69f0b290e4292864c994bc72d24aebfd376"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 13:17:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.29",
+      "version": "0.60.0-vnext.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "dont new up exceptions",
+            "author": "adamgor@microsoft.com",
+            "commit": "c0e33187035ab6a2a9eebd43228333f2664f74aa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Oct 2019 23:02:23 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.28",
+      "version": "0.60.0-vnext.28",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Microsoft.ReactNative attribute-based NativeModules",
+            "author": "jthysell@microsoft.com",
+            "commit": "8e6b7fd614f601c4bc4e53c9c7ca6522f93c02bd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Oct 2019 16:49:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.27",
+      "version": "0.60.0-vnext.27",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add tests",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ddbcd81828492210de11f95bfd04017a45102248"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Oct 2019 22:15:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.26",
+      "version": "0.60.0-vnext.26",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "add Common.vcxproj to CLI solutions",
+            "author": "kmelmon@microsoft.com",
+            "commit": "8311e49738c94a9682c8e4ecb054e870ff2f2b40"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Oct 2019 20:47:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.25",
+      "version": "0.60.0-vnext.25",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Narrator for Text when accessibilityLabel is not set",
+            "author": "licanhua@live.com",
+            "commit": "e8a9f2d6a75d812552ee5c0cb38d29341f261023"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support caretHidden",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "b6255479abbc300ec48d125038bdfe1fc688b77e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Oct 2019 10:21:12 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.24",
       "version": "0.60.0-vnext.24",

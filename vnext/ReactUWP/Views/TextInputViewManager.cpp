@@ -12,6 +12,13 @@
 #include <Utils/ValueUtils.h>
 
 #include <IReactInstance.h>
+#include <winrt/Windows.UI.Xaml.Shapes.h>
+
+namespace winrt {
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+using namespace Windows::UI::Xaml::Shapes;
+} // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -103,9 +110,13 @@ class TextInputShadowNode : public ShadowNodeBase {
  private:
   void dispatchTextInputChangeEvent(winrt::hstring newText);
   void registerEvents();
+  void HideCaretIfNeeded();
+  winrt::Shape FindCaret(winrt::DependencyObject element);
+
   bool m_shouldClearTextOnFocus = false;
   bool m_shouldSelectTextOnFocus = false;
   bool m_contextMenuHidden = false;
+  bool m_hideCaret = false;
   bool m_isTextBox = true;
 
   // Javascripts is running in a different thread. If the typing is very fast,
@@ -131,6 +142,7 @@ class TextInputShadowNode : public ShadowNodeBase {
 
   winrt::Control::GotFocus_revoker m_controlGotFocusRevoker{};
   winrt::Control::LostFocus_revoker m_controlLostFocusRevoker{};
+  winrt::Control::KeyDown_revoker m_controlKeyDownRevoker{};
   winrt::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
   winrt::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
@@ -239,6 +251,7 @@ void TextInputShadowNode::registerEvents() {
             control.as<winrt::PasswordBox>().SelectAll();
           }
         }
+        HideCaretIfNeeded();
 
         auto instance = wkinstance.lock();
         folly::dynamic eventData = folly::dynamic::object("target", tag);
@@ -265,6 +278,29 @@ void TextInputShadowNode::registerEvents() {
               tag, "topTextInputBlur", std::move(eventDataBlur));
           instance->DispatchEvent(
               tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
+        }
+      });
+
+  m_controlKeyDownRevoker = control.KeyDown(
+      winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
+        if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
+          if (auto instance = wkinstance.lock()) {
+            folly::dynamic eventDataSubmitEditing = {};
+            if (m_isTextBox) {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text",
+                  HstringToDynamic(control.as<winrt::TextBox>().Text()));
+            } else {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text",
+                  HstringToDynamic(
+                      control.as<winrt::PasswordBox>().Password()));
+            }
+            instance->DispatchEvent(
+                tag,
+                "topTextInputSubmitEditing",
+                std::move(eventDataSubmitEditing));
+          }
         }
       });
 
@@ -323,6 +359,7 @@ void TextInputShadowNode::registerEvents() {
                 }
               });
         }
+        HideCaretIfNeeded();
       });
 
   if (control.try_as<winrt::IUIElement7>()) {
@@ -348,6 +385,36 @@ void TextInputShadowNode::registerEvents() {
                 tag, "topTextInputKeyPress", std::move(eventData));
           }
         });
+  }
+}
+
+winrt::Shape TextInputShadowNode::FindCaret(winrt::DependencyObject element) {
+  if (element == nullptr)
+    return nullptr;
+
+  if (auto shape = element.try_as<winrt::Shape>())
+    return shape;
+
+  int childrenCount = winrt::VisualTreeHelper::GetChildrenCount(element);
+  for (int i = 0; i < childrenCount; i++) {
+    auto result = FindCaret(winrt::VisualTreeHelper::GetChild(element, i));
+    if (result != nullptr)
+      return result;
+  }
+
+  return nullptr;
+}
+
+// hacking solution to hide the caret
+void TextInputShadowNode::HideCaretIfNeeded() {
+  if (m_hideCaret) {
+    auto control = GetView().as<winrt::Control>();
+    if (auto caret = FindCaret(control)) {
+      caret.CompositeMode(
+          winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
+      winrt::SolidColorBrush transparentColor(winrt::Colors::Transparent());
+      caret.Fill(transparentColor);
+    }
   }
 }
 
@@ -385,6 +452,11 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "contextMenuHidden") {
       if (propertyValue.isBool())
         m_contextMenuHidden = propertyValue.asBool();
+    } else if (propertyName == "caretHidden") {
+      if (propertyValue.isBool()) {
+        m_hideCaret = propertyValue.asBool();
+        HideCaretIfNeeded();
+      }
     } else if (propertyName == "secureTextEntry") {
       if (propertyValue.isBool()) {
         if (propertyValue.asBool()) {
@@ -515,6 +587,18 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             } else if (propertyValue.isNull())
               textBox.ClearValue(winrt::TextBox::TextProperty());
           }
+        } else if (propertyName == "autoCapitalize") {
+          if (textBox.try_as<winrt::ITextBox6>()) {
+            if (propertyValue.isString()) {
+              if (propertyValue.asString() == "characters") {
+                textBox.CharacterCasing(winrt::CharacterCasing::Upper);
+              } else { // anything else turns off autoCap (should be "None" but
+                       // we don't support "words"/"senetences" yet)
+                textBox.CharacterCasing(winrt::CharacterCasing::Normal);
+              }
+            } else if (propertyValue.isNull())
+              textBox.ClearValue(winrt::TextBox::CharacterCasingProperty());
+          }
         }
       } else { // Applicable properties for PasswordBox
         if (propertyName == "text") {
@@ -556,7 +640,8 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
       "secureTextEntry", "boolean")("keyboardType", "string")(
-      "contextMenuHidden", "boolean"));
+      "contextMenuHidden", "boolean")("caretHidden", "boolean")(
+      "autoCapitalize", "string"));
 
   return props;
 }
@@ -580,6 +665,8 @@ folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants()
       folly::dynamic::object("registrationName", "onKeyPress");
   directEvents["topTextInputOnScroll"] =
       folly::dynamic::object("registrationName", "onScroll");
+  directEvents["topTextInputSubmitEditing"] =
+      folly::dynamic::object("registrationName", "onSubmitEditing");
 
   return directEvents;
 }

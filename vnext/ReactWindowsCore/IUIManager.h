@@ -60,6 +60,9 @@ class IUIManager {
   virtual void measure(
       int64_t reactTag,
       facebook::xplat::module::CxxModule::Callback callback) = 0;
+  virtual void measureInWindow(
+      int64_t reactTag,
+      facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual INativeUIManager *getNativeUIManager() = 0;
 
   virtual void focus(int64_t tag) = 0;
