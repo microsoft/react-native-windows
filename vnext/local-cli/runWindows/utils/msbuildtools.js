@@ -145,9 +145,9 @@ function VSWhere(requires, version, property) {
   }
 }
 
-function checkMSBuildVersion(version) {
+function checkMSBuildVersion(version, verbose) {
   let toolsPath = null;
-  if (process.argv.indexOf('--logging') >= 0) {
+  if (verbose) {
     console.log('Searching for MSBuild version ' + version);
   }
 
@@ -183,11 +183,13 @@ function checkMSBuildVersion(version) {
   }
 }
 
-module.exports.findAvailableVersion = function() {
+module.exports.findAvailableVersion = function(verbose) {
   const versions =
     process.env.VisualStudioVersion != null
-      ? [checkMSBuildVersion(process.env.VisualStudioVersion)]
-      : MSBUILD_VERSIONS.map(checkMSBuildVersion);
+      ? [checkMSBuildVersion(process.env.VisualStudioVersion, verbose)]
+      : MSBUILD_VERSIONS.map(function(value) {
+          return checkMSBuildVersion(value, verbose);
+        });
   const msbuildTools = versions.find(Boolean);
 
   if (!msbuildTools) {
@@ -206,9 +208,11 @@ module.exports.findAvailableVersion = function() {
   return msbuildTools;
 };
 
-module.exports.findAllAvailableVersions = function() {
+module.exports.findAllAvailableVersions = function(verbose) {
   console.log(chalk.green('Searching for available MSBuild versions...'));
-  return MSBUILD_VERSIONS.map(checkMSBuildVersion).filter(item => !!item);
+  return MSBUILD_VERSIONS.map(function(value) {
+    return checkMSBuildVersion(value, verbose);
+  }).filter(item => !!item);
 };
 
 module.exports.getAllAvailableUAPVersions = function() {

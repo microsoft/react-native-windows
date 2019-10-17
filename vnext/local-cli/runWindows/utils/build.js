@@ -25,7 +25,7 @@ async function buildSolution(slnFile, buildType, buildArch, verbose) {
     );
   }
 
-  const msBuildTools = MSBuildTools.findAvailableVersion();
+  const msBuildTools = MSBuildTools.findAvailableVersion(verbose);
   await msBuildTools.buildProject(slnFile, buildType, buildArch, null, verbose);
 }
 
@@ -70,7 +70,7 @@ async function restoreNuGetPackages(options, slnFile, verbose) {
   }
   ensureNugetSpinner.succeed('Found NuGet Binary');
 
-  const msbuildTools = MSBuildTools.findAvailableVersion();
+  const msbuildTools = MSBuildTools.findAvailableVersion(verbose);
   await nugetRestore(
     nugetPath,
     slnFile,
