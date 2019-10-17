@@ -9831,10 +9831,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz":
-  version "0.60.0-microsoft.5"
-  uid "4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.5.tar.gz#4c3fa1679b4ad4b45bf76e117dfa936359beef2a"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.7.tar.gz":
+  version "0.60.0-microsoft.7"
+  uid dbf8aaeede1d495c0d8cf7b7ba503d7f6550a4a9
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.7.tar.gz#dbf8aaeede1d495c0d8cf7b7ba503d7f6550a4a9"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
@@ -10368,10 +10368,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rnpm-plugin-windows@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.5.tgz#6c84bedda93445017ce7d6d4035b25a1e86cdaf2"
-  integrity sha512-dCqiEr6QS7/yODKdoBY0b0VzocFilZ8RZDsnIPHIXtQhpo8y1VhJYqxoQAxnE3kFLGDKYuLwgfD8bTo0P2zZcg==
+rnpm-plugin-windows@^0.3.6:
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.6.tgz#7052b5a29972972e822c199947c5d8f9b6cb3652"
+  integrity sha512-GBotxkgZhpost5AsHC+MilJKQLVdOVTYC07Wv2slkjgENsuwSxO6WMPcGidgLS4w2Pcga5nzTvmn1QxFULlmnw==
   dependencies:
     chalk "^1.1.3"
     extract-zip "^1.6.7"
