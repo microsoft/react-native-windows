@@ -291,7 +291,6 @@ facebook::jsi::Object ChakraRuntime::createObject() {
   return MakePointer<facebook::jsi::Object>(obj);
 }
 
-// TODO (yicyao)
 facebook::jsi::Object ChakraRuntime::createObject(
     std::shared_ptr<facebook::jsi::HostObject> hostObject) {
   facebook::jsi::Object proxyTarget =
@@ -300,7 +299,6 @@ facebook::jsi::Object ChakraRuntime::createObject(
   return createProxy(std::move(proxyTarget), createHostObjectProxyHandler());
 }
 
-// TODO (yicyao)
 std::shared_ptr<facebook::jsi::HostObject> ChakraRuntime::getHostObject(
     const facebook::jsi::Object &obj) {
   if (!isHostObject(obj))
@@ -323,7 +321,6 @@ std::shared_ptr<facebook::jsi::HostObject> ChakraRuntime::getHostObject(
   return externalData->getHostObject();
 }
 
-// TODO (yicyao)
 facebook::jsi::HostFunctionType &ChakraRuntime::getHostFunction(
     const facebook::jsi::Function &obj) {
   throw std::runtime_error(
@@ -398,7 +395,6 @@ bool ChakraRuntime::isFunction(const facebook::jsi::Object &obj) const {
   return GetValueType(GetChakraObjectRef(obj)) == JsFunction;
 }
 
-// TODO (yicyao)
 bool ChakraRuntime::isHostObject(const facebook::jsi::Object &obj) const {
   facebook::jsi::Value val = obj.getProperty(
       const_cast<ChakraRuntime &>(*this), s_proxyIsHostObjectPropName);
@@ -408,7 +404,6 @@ bool ChakraRuntime::isHostObject(const facebook::jsi::Object &obj) const {
     return false;
 }
 
-// TODO (yicyao)
 bool ChakraRuntime::isHostFunction(const facebook::jsi::Function &obj) const {
   throw std::runtime_error("ChakraRuntime::isHostFunction is not implemented.");
 }

@@ -28,8 +28,6 @@ TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
 }
 
-// TODO (yicyao) #2703: Currently, comparison of property IDs is broken for
-// ChakraRuntime. Enable this test once we fix it.
 TEST_P(JsiRuntimeUnitTests, PropNameIDTest) {
   // This is a little weird to test, because it doesn't really exist
   // in JS yet.  All I can do is create them, compare them, and
