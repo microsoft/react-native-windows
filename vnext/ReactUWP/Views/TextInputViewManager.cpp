@@ -587,6 +587,18 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             } else if (propertyValue.isNull())
               textBox.ClearValue(winrt::TextBox::TextProperty());
           }
+        } else if (propertyName == "autoCapitalize") {
+          if (textBox.try_as<winrt::ITextBox6>()) {
+            if (propertyValue.isString()) {
+              if (propertyValue.asString() == "characters") {
+                textBox.CharacterCasing(winrt::CharacterCasing::Upper);
+              } else { // anything else turns off autoCap (should be "None" but
+                       // we don't support "words"/"senetences" yet)
+                textBox.CharacterCasing(winrt::CharacterCasing::Normal);
+              }
+            } else if (propertyValue.isNull())
+              textBox.ClearValue(winrt::TextBox::CharacterCasingProperty());
+          }
         }
       } else { // Applicable properties for PasswordBox
         if (propertyName == "text") {
@@ -628,7 +640,8 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
       "secureTextEntry", "boolean")("keyboardType", "string")(
-      "contextMenuHidden", "boolean")("caretHidden", "boolean"));
+      "contextMenuHidden", "boolean")("caretHidden", "boolean")(
+      "autoCapitalize", "string"));
 
   return props;
 }

@@ -23,6 +23,11 @@ describe('First', () => {
     assert.equal(TextInputTestPage.getTextInputText(), 'def');
   });
 
+  it('Type hello world on autoCap TextInput', () => {
+    TextInputTestPage.clearAndTypeOnAutoCapTextInput('hello world');
+    assert.equal(TextInputTestPage.getAutoCapTextInput(), 'HELLO WORLD');
+  });
+
   it('Type abc on multiline TextInput then press Enter key', () => {
     TextInputTestPage.clearAndEnterOnTextInput('abc');
     assert.equal(
