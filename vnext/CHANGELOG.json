@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Oct 2019 20:36:35 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.38",
+      "version": "0.60.0-vnext.38",
+      "comments": {
+        "none": [
+          {
+            "comment": "Don't hardcode the path to v141 platform toolset",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "5259e65b49ff7d0131cc7d731ca7bd3438b03776"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "add developer menu property",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5d42737bfacccb3f90dcde8af3b4a104d26f840d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Oct 2019 23:10:13 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.37",
       "version": "0.60.0-vnext.37",
