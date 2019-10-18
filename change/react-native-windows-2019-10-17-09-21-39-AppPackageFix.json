@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix run-windows app installation hang",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "6c1f607816162e9beb50f942a0babe9229ac7d68",
-  "date": "2019-10-17T16:21:39.147Z",
-  "file": "D:\\react-native-windows\\change\\react-native-windows-2019-10-17-09-21-39-AppPackageFix.json"
-}

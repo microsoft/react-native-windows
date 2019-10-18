@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 18 Oct 2019 20:36:35 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Oct 2019 21:22:01 GMT and should not be manually modified.
 
+## 0.60.0-vnext.39
+Fri, 18 Oct 2019 21:22:01 GMT
+
+### Changes
+
+- Fix run-windows app installation hang (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.38
 Fri, 18 Oct 2019 20:36:35 GMT
 
