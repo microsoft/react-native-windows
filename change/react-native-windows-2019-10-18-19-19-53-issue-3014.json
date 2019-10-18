@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "code clean up -unreferenced formal parameter",
+  "packageName": "react-native-windows",
+  "email": "agarcia-caicedo@myseneca.ca",
+  "commit": "a18292a39bb6c7dd7f23a2e0d8dd5ccf962f485d",
+  "date": "2019-10-18T23:19:53.645Z",
+  "file": "C:\\Users\\Deep Thought\\Documents\\GitHub\\react-native-windows\\change\\react-native-windows-2019-10-18-19-19-53-issue-3014.json"
+}
