@@ -34,7 +34,7 @@ void VerifyChakraErrorElseThrow(JsErrorCode error);
  * that JsAddRef and JsRelease are called upon initialization and invalidation,
  * respectively. It also allows users to implicitly convert it into a JsRef. A
  * ChakraObjectRef must only be initialized once and invalidated once.
- */ 
+ */
 class ChakraObjectRef {
  public:
   ChakraObjectRef() noexcept {}
@@ -132,7 +132,7 @@ std::wstring ToStdWstring(const ChakraObjectRef &jsString);
  *
  * @remarks The content of utf8 is copied into JS engine owned memory. When
  * using Chakra instead of ChakraCore, this function incurs a UTF-8 to UTF-16
- * conversion. 
+ * conversion.
  */
 ChakraObjectRef ToJsString(const std::string_view &utf8);
 
