@@ -1,7 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 16 Oct 2019 02:19:39 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Oct 2019 23:10:13 GMT and should not be manually modified.
 
+## 0.60.0-vnext.37
+Thu, 17 Oct 2019 23:10:13 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.8 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.36
+Thu, 17 Oct 2019 20:58:22 GMT
+
+### Changes
+
+- Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag. (stpete@microsoft.com)
+## 0.60.0-vnext.35
+Thu, 17 Oct 2019 16:18:52 GMT
+
+### Changes
+
+- Support autoCapitalize Characters (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.34
+Thu, 17 Oct 2019 02:48:28 GMT
+
+### Changes
+
+- Support onSubmitEditing event (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.33
+Thu, 17 Oct 2019 00:14:32 GMT
+
+### Changes
+
+- exclude Generated Files (kmelmon@microsoft.com)
 ## 0.60.0-vnext.32
 Wed, 16 Oct 2019 02:19:39 GMT
 

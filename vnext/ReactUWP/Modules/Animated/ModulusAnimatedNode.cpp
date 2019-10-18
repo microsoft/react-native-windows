@@ -12,7 +12,7 @@ ModulusAnimatedNode::ModulusAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : ValueAnimatedNode(tag, config, manager) {
+    : ValueAnimatedNode(tag, manager) {
   m_inputNodeTag = static_cast<int64_t>(
       config.find(s_inputName).dereference().second.asDouble());
   m_modulus = static_cast<int64_t>(

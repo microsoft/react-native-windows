@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Oct 2019 23:10:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.37",
+      "version": "0.60.0-vnext.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.8",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "35f748784744598ebea97c6b039a14a008547f50"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 20:58:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.36",
+      "version": "0.60.0-vnext.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag.",
+            "author": "stpete@microsoft.com",
+            "commit": "62049fdbd667fc71ae09b09f074446d8593d826d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 16:18:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.35",
+      "version": "0.60.0-vnext.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support autoCapitalize Characters",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "ba8d6abb2b955bb89428fc717033cdb2af792837"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 02:48:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.34",
+      "version": "0.60.0-vnext.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support onSubmitEditing event",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "02aa39cf03c6b1b9e0d40e4b50fe463d864b8831"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 00:14:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.33",
+      "version": "0.60.0-vnext.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "exclude Generated Files",
+            "author": "kmelmon@microsoft.com",
+            "commit": "fc6d271706cbf6e4d58baef7dab2b1c02cd0fc1c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Oct 2019 02:19:39 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.32",
       "version": "0.60.0-vnext.32",

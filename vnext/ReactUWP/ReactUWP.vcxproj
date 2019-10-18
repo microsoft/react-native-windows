@@ -252,6 +252,7 @@
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
     <ClInclude Include="Views\SwitchViewManager.h" />
+    <ClInclude Include="Views\SliderViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
@@ -350,6 +351,7 @@
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
+    <ClCompile Include="Views\SliderViewManager.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
     <ClCompile Include="Views\SwitchViewManager.cpp" />
     <ClCompile Include="Views\TextInputViewManager.cpp" />
