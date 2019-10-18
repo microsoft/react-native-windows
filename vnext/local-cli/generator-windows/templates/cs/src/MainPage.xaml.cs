@@ -49,10 +49,10 @@ namespace <%=ns%>
       settings.UseLiveReload = true;
 #endif      
 
-#if DEBUG
-      settings.EnableDeveloperMenu = true;
-#else
+#if NDEBUG
       settings.EnableDeveloperMenu = false;
+#else
+      settings.EnableDeveloperMenu = true;
 #endif        
 
       var instance = Instance.Create(JSFILENAME);

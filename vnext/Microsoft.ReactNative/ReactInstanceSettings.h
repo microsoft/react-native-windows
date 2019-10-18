@@ -94,6 +94,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool m_useWebDebugger{FALSE};
   bool m_useLiveReload{FALSE};
 #endif
+  bool m_enableDeveloperMenu{FALSE};
   bool m_useDirectDebugger{FALSE};
   bool m_useJsi{TRUE};
   bool m_enableJITCompilation{TRUE};

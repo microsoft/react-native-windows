@@ -35,7 +35,7 @@ struct ReactInstanceSettings {
   bool UseJsi{true};
   bool EnableJITCompilation{true};
   bool EnableByteCodeCaching{false};
-  bool EnableDeveloperMenu{true};
+  bool EnableDeveloperMenu{false};
 
   std::string ByteCodeFileUri;
   std::string DebugHost;
