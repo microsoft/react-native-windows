@@ -34,22 +34,6 @@ struct AccessibilityInvokeEventHandler : Windows::Foundation::IUnknown
     void operator()() const;
 };
 
-struct AccessibilityAction
-{
-    hstring Name;
-    hstring Label;
-};
-
-inline bool operator==(AccessibilityAction const& left, AccessibilityAction const& right) noexcept
-{
-    return left.Name == right.Name && left.Label == right.Label;
-}
-
-inline bool operator!=(AccessibilityAction const& left, AccessibilityAction const& right) noexcept
-{
-    return !(left == right);
-}
-
 }
 
 namespace winrt::impl {
@@ -57,6 +41,13 @@ namespace winrt::impl {
 }
 
 WINRT_EXPORT namespace winrt::react::uwp {
+
+struct WINRT_EBO AccessibilityAction :
+    react::uwp::IAccessibilityAction
+{
+    AccessibilityAction(std::nullptr_t) noexcept {}
+    AccessibilityAction();
+};
 
 struct WINRT_EBO DynamicAutomationPeer :
     react::uwp::IDynamicAutomationPeer,

@@ -298,6 +298,9 @@
     <ClCompile Include="Modules\StatusBarModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Views\AccessibilityAction.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -635,6 +638,12 @@
     </ClInclude>
     <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\cppwinrt\AccessibilityAction.g.h">
+      <Filter>Views\cppwinrt</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\AccessibilityAction.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

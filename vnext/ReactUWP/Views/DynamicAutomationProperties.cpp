@@ -287,13 +287,12 @@ DynamicAutomationProperties::GetAccessibilityActions(
 void DynamicAutomationProperties::DispatchAccessibilityAction(
     Windows::UI::Xaml::UIElement const &element,
     std::wstring_view const &actionName) {
-  react::uwp::AccessibilityAction action;
   if (element) {
     auto vector = GetAccessibilityActions(element);
     if (vector) {
       for (uint32_t i = 0; i < vector.Size(); i++) {
         auto item = vector.GetAt(i);
-        if (item.Name.operator std::wstring_view() == actionName) {
+        if (item.Name().operator std::wstring_view() == actionName) {
           if (auto const &handler =
                   GetAccessibilityActionEventHandler(element)) {
             handler(item);

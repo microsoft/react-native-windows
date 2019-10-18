@@ -57,10 +57,13 @@ namespace react.uwp
 		CountStates
 	};
 
-	[version(VERSION)]
-	struct AccessibilityAction {
-		HSTRING Name;
-		HSTRING Label;
+	[default_interface]
+	[webhosthidden]
+	runtimeclass AccessibilityAction {
+		AccessibilityAction();
+		
+		String Name { get; set; };
+		String Label { get; set; };
 	};
 
 	declare {

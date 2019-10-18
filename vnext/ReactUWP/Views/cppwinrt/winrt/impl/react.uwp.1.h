@@ -12,6 +12,13 @@
 
 WINRT_EXPORT namespace winrt::react::uwp {
 
+struct WINRT_EBO IAccessibilityAction :
+    Windows::Foundation::IInspectable,
+    impl::consume_t<IAccessibilityAction>
+{
+    IAccessibilityAction(std::nullptr_t = nullptr) noexcept {}
+};
+
 struct WINRT_EBO IDynamicAutomationPeer :
     Windows::Foundation::IInspectable,
     impl::consume_t<IDynamicAutomationPeer>

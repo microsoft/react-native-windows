@@ -54,10 +54,10 @@ class ViewShadowNode : public ShadowNodeBase {
         panel, [=](winrt::react::uwp::AccessibilityAction const &action) {
           folly::dynamic eventData = folly::dynamic::object("target", m_tag);
 
-          if (action.Label.empty()) {
-              eventData.insert("actionName", HstringToDynamic(action.Name));
+          if (action.Label().empty()) {
+              eventData.insert("actionName", HstringToDynamic(action.Name()));
           } else {
-            eventData.insert("actionName", HstringToDynamic(action.Label));
+            eventData.insert("actionName", HstringToDynamic(action.Label()));
           }
 
           DispatchEvent(

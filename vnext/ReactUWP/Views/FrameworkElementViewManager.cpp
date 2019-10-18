@@ -22,6 +22,7 @@
 #include <winrt/Windows.UI.Xaml.h>
 #include "Utils/PropertyHandlerUtils.h"
 
+#include "AccessibilityAction.h"
 #include "DynamicAutomationProperties.h"
 
 namespace winrt {
@@ -36,12 +37,14 @@ template <>
 struct json_type_traits<winrt::react::uwp::AccessibilityAction> {
   static winrt::react::uwp::AccessibilityAction parseJson(
       const folly::dynamic &json) {
-    winrt::react::uwp::AccessibilityAction action;
+    auto action =
+        winrt::make<winrt::react::uwp::implementation::AccessibilityAction>();
+
     for (auto &item : json.items()) {
       if (item.first == "name") {
-        action.Name = react::uwp::asHstring(item.second);
+        action.Name(react::uwp::asHstring(item.second));
       } else if (item.first == "label") {
-        action.Label = react::uwp::asHstring(item.second);
+        action.Label(react::uwp::asHstring(item.second));
       }
     }
     return action;

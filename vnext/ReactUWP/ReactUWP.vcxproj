@@ -223,8 +223,10 @@
     <ClInclude Include="Utils\LocalBundleReader.h" />
     <ClInclude Include="Utils\PropertyHandlerUtils.h" />
     <ClInclude Include="Utils\PropertyUtils.h" />
+    <ClInclude Include="Views\AccessibilityAction.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\cppwinrt\AccessibilityAction.g.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h" />
     <ClInclude Include="Views\cppwinrt\ViewControl.g.h" />
@@ -330,6 +332,7 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
+    <ClCompile Include="Views\AccessibilityAction.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
@@ -403,7 +406,7 @@
     <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'!='true'">
       <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
     </ProjectReference>
-	<ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'=='true'">
+    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'=='true'">
       <Project>{17DD1B17-3094-40DD-9373-AC2497932ECA}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">

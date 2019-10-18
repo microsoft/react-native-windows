@@ -19,6 +19,30 @@ static_assert(winrt::check_version(CPPWINRT_VERSION, "1.0.190111.3"), "Mismatche
 
 namespace winrt::impl {
 
+template <typename D> hstring consume_react_uwp_IAccessibilityAction<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(react::uwp::IAccessibilityAction)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_react_uwp_IAccessibilityAction<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(react::uwp::IAccessibilityAction)->put_Name(get_abi(value)));
+}
+
+template <typename D> hstring consume_react_uwp_IAccessibilityAction<D>::Label() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(react::uwp::IAccessibilityAction)->get_Label(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_react_uwp_IAccessibilityAction<D>::Label(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(react::uwp::IAccessibilityAction)->put_Label(get_abi(value)));
+}
+
 template <typename D> react::uwp::DynamicAutomationPeer consume_react_uwp_IDynamicAutomationPeerFactory<D>::CreateInstance(Windows::UI::Xaml::FrameworkElement const& owner) const
 {
     react::uwp::DynamicAutomationPeer value{ nullptr };
@@ -409,7 +433,7 @@ template <> struct delegate<react::uwp::AccessibilityActionEventHandler>
     {
         type(H&& handler) : implements_delegate<react::uwp::AccessibilityActionEventHandler, H>(std::forward<H>(handler)) {}
 
-        int32_t WINRT_CALL Invoke(struct struct_react_uwp_AccessibilityAction action) noexcept final
+        int32_t WINRT_CALL Invoke(void* action) noexcept final
         {
             try
             {
@@ -444,6 +468,60 @@ template <> struct delegate<react::uwp::AccessibilityInvokeEventHandler>
             }
         }
     };
+};
+
+template <typename D>
+struct produce<D, react::uwp::IAccessibilityAction> : produce_base<D, react::uwp::IAccessibilityAction>
+{
+    int32_t WINRT_CALL get_Name(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Name, WINRT_WRAP(hstring));
+            *value = detach_from<hstring>(this->shim().Name());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Name(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Name, WINRT_WRAP(void), hstring const&);
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_Label(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Label, WINRT_WRAP(hstring));
+            *value = detach_from<hstring>(this->shim().Label());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL put_Label(void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(Label, WINRT_WRAP(void), hstring const&);
+            this->shim().Label(*reinterpret_cast<hstring const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
 };
 
 template <typename D>
@@ -1236,6 +1314,10 @@ struct produce<D, react::uwp::IViewPanelStatics> : produce_base<D, react::uwp::I
 
 WINRT_EXPORT namespace winrt::react::uwp {
 
+inline AccessibilityAction::AccessibilityAction() :
+    AccessibilityAction(impl::call_factory<AccessibilityAction>([](auto&& f) { return f.template ActivateInstance<AccessibilityAction>(); }))
+{}
+
 inline DynamicAutomationPeer::DynamicAutomationPeer(Windows::UI::Xaml::FrameworkElement const& owner) :
     DynamicAutomationPeer(impl::call_factory<DynamicAutomationPeer, react::uwp::IDynamicAutomationPeerFactory>([&](auto&& f) { return f.CreateInstance(owner); }))
 {}
@@ -1521,6 +1603,61 @@ inline void AccessibilityInvokeEventHandler::operator()() const
 }
 
 namespace winrt::impl {
+
+struct property_react_uwp_IAccessibilityAction
+{ struct named {
+    struct Label
+    {
+        struct name { static constexpr std::wstring_view value{ L"Label"sv }; };
+        using property_type = winrt::hstring;
+        using target_type = winrt::react::uwp::IAccessibilityAction;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Label();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Label(std::forward<Value>(value));
+            }
+        };
+    };
+    struct Name
+    {
+        struct name { static constexpr std::wstring_view value{ L"Name"sv }; };
+        using property_type = winrt::hstring;
+        using target_type = winrt::react::uwp::IAccessibilityAction;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Name();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Name(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Label, named::Name>; };
+};
 
 struct property_react_uwp_IDynamicAutomationPropertiesStatics
 { struct named {
@@ -1966,6 +2103,61 @@ struct property_react_uwp_IViewPanelStatics
         };
     };};
     struct list { using type = impl::typelist<named::BorderBrushProperty, named::BorderThicknessProperty, named::ClipChildrenProperty, named::CornerRadiusProperty, named::LeftProperty, named::TopProperty, named::ViewBackgroundProperty>; };
+};
+
+struct property_react_uwp_AccessibilityAction
+{ struct named {
+    struct Name
+    {
+        struct name { static constexpr std::wstring_view value{ L"Name"sv }; };
+        using property_type = winrt::hstring;
+        using target_type = winrt::react::uwp::AccessibilityAction;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Name();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Name(std::forward<Value>(value));
+            }
+        };
+    };
+    struct Label
+    {
+        struct name { static constexpr std::wstring_view value{ L"Label"sv }; };
+        using property_type = winrt::hstring;
+        using target_type = winrt::react::uwp::AccessibilityAction;
+
+        using is_readable = std::true_type;
+        using is_writable = std::true_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.Label();
+            }
+        };
+        struct setter
+        {
+            template <typename Value>
+            void operator()(target_type const& target, Value&& value) const
+            {
+                target.Label(std::forward<Value>(value));
+            }
+        };
+    };};
+    struct list { using type = impl::typelist<named::Name, named::Label>; };
 };
 
 struct property_react_uwp_DynamicAutomationPeer
@@ -2519,12 +2711,16 @@ struct property_react_uwp_ViewPanel
 }
 
 WINRT_EXPORT namespace winrt::experimental::reflect {
+template <> struct named_property<react::uwp::IAccessibilityAction> : impl::property_react_uwp_IAccessibilityAction::named {};
+template <> struct properties<react::uwp::IAccessibilityAction> : impl::property_react_uwp_IAccessibilityAction::list {};
 template <> struct named_property<react::uwp::IDynamicAutomationPropertiesStatics> : impl::property_react_uwp_IDynamicAutomationPropertiesStatics::named {};
 template <> struct properties<react::uwp::IDynamicAutomationPropertiesStatics> : impl::property_react_uwp_IDynamicAutomationPropertiesStatics::list {};
 template <> struct named_property<react::uwp::IViewPanel> : impl::property_react_uwp_IViewPanel::named {};
 template <> struct properties<react::uwp::IViewPanel> : impl::property_react_uwp_IViewPanel::list {};
 template <> struct named_property<react::uwp::IViewPanelStatics> : impl::property_react_uwp_IViewPanelStatics::named {};
 template <> struct properties<react::uwp::IViewPanelStatics> : impl::property_react_uwp_IViewPanelStatics::list {};
+template <> struct named_property<react::uwp::AccessibilityAction> : impl::property_react_uwp_AccessibilityAction::named {};
+template <> struct properties<react::uwp::AccessibilityAction> : impl::property_react_uwp_AccessibilityAction::list {};
 template <> struct named_property<react::uwp::DynamicAutomationPeer> : impl::property_react_uwp_DynamicAutomationPeer::named {};
 template <> struct properties<react::uwp::DynamicAutomationPeer> : impl::property_react_uwp_DynamicAutomationPeer::list {};
 template <> struct named_property<react::uwp::DynamicAutomationProperties> : impl::property_react_uwp_DynamicAutomationProperties::named {};
@@ -2636,6 +2832,7 @@ template <> struct get_enumerator_values<react::uwp::AccessibilityStates>
 
 WINRT_EXPORT namespace std {
 
+template<> struct hash<winrt::react::uwp::IAccessibilityAction> : winrt::impl::hash_base<winrt::react::uwp::IAccessibilityAction> {};
 template<> struct hash<winrt::react::uwp::IDynamicAutomationPeer> : winrt::impl::hash_base<winrt::react::uwp::IDynamicAutomationPeer> {};
 template<> struct hash<winrt::react::uwp::IDynamicAutomationPeerFactory> : winrt::impl::hash_base<winrt::react::uwp::IDynamicAutomationPeerFactory> {};
 template<> struct hash<winrt::react::uwp::IDynamicAutomationProperties> : winrt::impl::hash_base<winrt::react::uwp::IDynamicAutomationProperties> {};
@@ -2643,6 +2840,7 @@ template<> struct hash<winrt::react::uwp::IDynamicAutomationPropertiesStatics> :
 template<> struct hash<winrt::react::uwp::IViewControl> : winrt::impl::hash_base<winrt::react::uwp::IViewControl> {};
 template<> struct hash<winrt::react::uwp::IViewPanel> : winrt::impl::hash_base<winrt::react::uwp::IViewPanel> {};
 template<> struct hash<winrt::react::uwp::IViewPanelStatics> : winrt::impl::hash_base<winrt::react::uwp::IViewPanelStatics> {};
+template<> struct hash<winrt::react::uwp::AccessibilityAction> : winrt::impl::hash_base<winrt::react::uwp::AccessibilityAction> {};
 template<> struct hash<winrt::react::uwp::DynamicAutomationPeer> : winrt::impl::hash_base<winrt::react::uwp::DynamicAutomationPeer> {};
 template<> struct hash<winrt::react::uwp::DynamicAutomationProperties> : winrt::impl::hash_base<winrt::react::uwp::DynamicAutomationProperties> {};
 template<> struct hash<winrt::react::uwp::ViewControl> : winrt::impl::hash_base<winrt::react::uwp::ViewControl> {};
