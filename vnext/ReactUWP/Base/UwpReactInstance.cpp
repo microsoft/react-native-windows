@@ -430,8 +430,7 @@ void UwpReactInstance::Start(
               std::move(scriptStore),
               std::move(preparedScriptStore));
 #else
-      if (settings.EnableByteCodeCaching ||
-          !settings.ByteCodeFileUri.empty()) {
+      if (settings.EnableByteCodeCaching || !settings.ByteCodeFileUri.empty()) {
         scriptStore = std::make_unique<UwpScriptStore>();
         preparedScriptStore = std::make_unique<UwpPreparedScriptStore>(
             winrt::to_hstring(settings.ByteCodeFileUri));
