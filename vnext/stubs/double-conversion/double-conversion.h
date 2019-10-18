@@ -114,7 +114,7 @@ class DoubleToStringConverter {
     s->m_ss << d;
   }
 
-  bool ToExponential(double value, int requested_digits, StringBuilder *s)
+  bool ToExponential(double value, int /*requested_digits*/, StringBuilder *s)
       const {
     s->m_ss << value;
     if (s->m_ss.fail()) {
