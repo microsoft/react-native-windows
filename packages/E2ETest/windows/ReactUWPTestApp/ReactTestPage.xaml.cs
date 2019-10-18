@@ -35,6 +35,7 @@ namespace ReactUWPTestApp
       settings.UseWebDebugger = true;
       settings.UseLiveReload = true;
 #endif
+      settings.EnableDeveloperMenu = false;
       var instance = Instance.Create(JSFileName);
 
       instance.Start(settings);

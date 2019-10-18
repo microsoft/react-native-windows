@@ -14,6 +14,7 @@ namespace Microsoft.ReactNative
         Boolean UseJsi { get; set; };
         Boolean EnableJITCompilation { get; set; };
         Boolean EnableByteCodeCaching { get; set; };
+        Boolean EnableDeveloperMenu { get; set; };
 
         String ByteCodeFileUri { get; set; };
         String DebugHost { get; set; };
