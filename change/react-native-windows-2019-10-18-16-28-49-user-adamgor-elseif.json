@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "fix else if for null",
+  "packageName": "react-native-windows",
+  "email": "adamgor@microsoft.com",
+  "commit": "8c9afe38a4c5b6e39fb42a5f0af7e3fbc1cfcbae",
+  "date": "2019-10-18T23:28:49.533Z",
+  "file": "F:\\GS\\repo\\RNW\\change\\react-native-windows-2019-10-18-16-28-49-user-adamgor-elseif.json"
+}
