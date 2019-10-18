@@ -14,24 +14,11 @@
 
 namespace Microsoft::JSI {
 
-namespace {
-
-inline void CheckedJsAddRef(JsRef ref) {
-  ThrowUponChakraError(JsAddRef(ref, nullptr), "JsAddRef");
-}
-
-inline void CheckedJsRelease(JsRef ref) {
-  ThrowUponChakraError(JsRelease(ref, nullptr), "JsRelease");
-}
-
-} // namespace
-
-void ThrowUponChakraError(JsErrorCode error, const char *const chakraApiName) {
+void VerifyChakraErrorElseThrow(JsErrorCode error) {
   if (error != JsNoError) {
     std::ostringstream errorString;
-    errorString << "A call to "
-                << (chakraApiName ? chakraApiName : "Chakra(Core) API")
-                << " returned error code 0x" << std::hex << error << '.';
+    errorString << "A call to Chakra(Core) API returned error code 0x"
+                << std::hex << error << '.';
     throw facebook::jsi::JSINativeException(errorString.str());
   }
 }
@@ -39,41 +26,33 @@ void ThrowUponChakraError(JsErrorCode error, const char *const chakraApiName) {
 ChakraObjectRef::ChakraObjectRef(const ChakraObjectRef &original) noexcept
     : m_ref{original.m_ref}, m_state{original.m_state} {
   if (m_state == State::Initialized) {
-    assert(m_ref);
-    CheckedJsAddRef(m_ref);
-  } else {
-    assert(!m_ref);
+    VerifyChakraErrorElseThrow(JsAddRef(m_ref, nullptr));
   }
 }
 
 ChakraObjectRef::ChakraObjectRef(ChakraObjectRef &&original) noexcept {
-  swap(original);
+  Swap(original);
 }
 
 ChakraObjectRef &ChakraObjectRef::operator=(
     const ChakraObjectRef &rhs) noexcept {
   ChakraObjectRef rhsCopy(rhs);
-  swap(rhsCopy);
+  Swap(rhsCopy);
   return *this;
 }
 
 ChakraObjectRef &ChakraObjectRef::operator=(ChakraObjectRef &&rhs) noexcept {
-  swap(rhs);
+  Swap(rhs);
   return *this;
 }
 
 ChakraObjectRef::~ChakraObjectRef() noexcept {
   if (m_state == State::Initialized) {
-    assert(m_ref);
-    CheckedJsRelease(m_ref);
-  } else {
-    assert(!m_ref);
+    VerifyChakraErrorElseThrow(JsRelease(m_ref, nullptr));
   }
 }
 
 void ChakraObjectRef::Initialize(JsRef ref) {
-  assert(!m_ref);
-
   if (m_state != State::Uninitialized) {
     throw facebook::jsi::JSINativeException(
         "A ChakraObjectRef can only be initialzed once.");
@@ -84,7 +63,7 @@ void ChakraObjectRef::Initialize(JsRef ref) {
         "Cannot initialize a ChakraObjectRef with a null reference.");
   }
 
-  CheckedJsAddRef(ref);
+  VerifyChakraErrorElseThrow(JsAddRef(ref, nullptr));
   m_ref = ref;
   m_state = State::Initialized;
 }
@@ -92,20 +71,17 @@ void ChakraObjectRef::Initialize(JsRef ref) {
 void ChakraObjectRef::Invalidate() {
   switch (m_state) {
     case State::Uninitialized: {
-      assert(!m_ref);
       throw facebook::jsi::JSINativeException(
           "Cannot invalidate a ChakraObjectRef that has not been initialized.");
       break;
     }
     case State::Initialized: {
-      assert(m_ref);
-      CheckedJsRelease(m_ref);
+      VerifyChakraErrorElseThrow(JsRelease(m_ref, nullptr));
       m_ref = nullptr;
       m_state = State::Invalidated;
       break;
     }
     case State::Invalidated: {
-      assert(!m_ref);
       throw facebook::jsi::JSINativeException(
           "Cannot invalidate a ChakraObjectRef that has already been "
           "invalidated.");
@@ -119,21 +95,20 @@ void ChakraObjectRef::Invalidate() {
   }
 }
 
-void ChakraObjectRef::swap(ChakraObjectRef &other) {
+void ChakraObjectRef::Swap(ChakraObjectRef &other) {
   std::swap(m_ref, other.m_ref);
   std::swap(m_state, other.m_state);
 }
 
 JsValueType GetValueType(const ChakraObjectRef &jsValue) {
   JsValueType type;
-  ThrowUponChakraError(JsGetValueType(jsValue, &type), "JsGetValueType");
+  VerifyChakraErrorElseThrow(JsGetValueType(jsValue, &type));
   return type;
 }
 
 JsPropertyIdType GetPropertyIdType(const ChakraObjectRef &jsPropId) {
   JsPropertyIdType type;
-  ThrowUponChakraError(
-      JsGetPropertyIdType(jsPropId, &type), "JsGetPropertyIdType");
+  VerifyChakraErrorElseThrow(JsGetPropertyIdType(jsPropId, &type));
   return type;
 }
 
@@ -143,8 +118,7 @@ std::wstring GetPropertyName(const ChakraObjectRef &id) {
         "It is llegal to retrieve the name of a property symbol.");
   }
   const wchar_t *propertyName = nullptr;
-  ThrowUponChakraError(
-      JsGetPropertyNameFromId(id, &propertyName), "JsGetPropertyNameFromId");
+  VerifyChakraErrorElseThrow(JsGetPropertyNameFromId(id, &propertyName));
   return std::wstring{propertyName};
 }
 
@@ -154,47 +128,56 @@ ChakraObjectRef GetPropertySymbol(const ChakraObjectRef &id) {
         "It is llegal to retrieve the symbol associated with a property name.");
   }
   JsValueRef symbol = nullptr;
-  ThrowUponChakraError(
-      JsGetSymbolFromPropertyId(id, &symbol), "JsGetSymbolFromPropertyId");
+  VerifyChakraErrorElseThrow(JsGetSymbolFromPropertyId(id, &symbol));
   return ChakraObjectRef{symbol};
 }
 
-ChakraObjectRef GetPropertyId(const char *const utf8, size_t length) {
-  assert(utf8);
+ChakraObjectRef GetPropertyId(const std::string_view &utf8) {
+  if (!utf8.data()) {
+    throw facebook::jsi::JSINativeException(
+        "Property name cannot be a nullptr.");
+  }
 
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCreatePropertyId API.
 #ifdef CHAKRACORE
   JsPropertyIdRef id = nullptr;
-  ThrowUponChakraError(
-      JsCreatePropertyId(utf8, length, &id), "JsCreatePropertyId");
+  VerifyChakraErrorElseThrow(
+      JsCreatePropertyId(utf8.data(), utf8.length(), &id));
   return ChakraObjectRef(id);
 
 #else
-  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8, length);
+  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
   return GetPropertyId(utf16);
 #endif
 }
 
 ChakraObjectRef GetPropertyId(const std::wstring &utf16) {
   JsPropertyIdRef id = nullptr;
-  ThrowUponChakraError(
-      JsGetPropertyIdFromName(utf16.c_str(), &id), "JsGetPropertyIdFromName");
+  VerifyChakraErrorElseThrow(JsGetPropertyIdFromName(utf16.c_str(), &id));
   return ChakraObjectRef(id);
 }
 
 std::string ToStdString(const ChakraObjectRef &jsString) {
+  if (GetValueType(jsString) != JsString) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot convert a non JS string ChakraObjectRef to a std::string.");
+  }
+
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCopyString API.
 #ifdef CHAKRACORE
   size_t length = 0;
-  ThrowUponChakraError(
-      JsCopyString(jsString, nullptr, 0, &length), "JsCopyString");
+  VerifyChakraErrorElseThrow(JsCopyString(jsString, nullptr, 0, &length));
+
   std::string result(length, 'a');
-  ThrowUponChakraError(
-      JsCopyString(jsString, result.data(), result.length(), &length),
-      "JsCopyString");
-  assert(length == result.length());
+  VerifyChakraErrorElseThrow(
+      JsCopyString(jsString, result.data(), result.length(), &length));
+
+  if (length != result.length()) {
+    throw facebook::jsi::JSINativeException(
+        "Failed to convert a JS string to a std::string.");
+  }
   return result;
 
 #else
@@ -203,59 +186,76 @@ std::string ToStdString(const ChakraObjectRef &jsString) {
 }
 
 std::wstring ToStdWstring(const ChakraObjectRef &jsString) {
-  assert(GetValueType(jsString) == JsString);
+  if (GetValueType(jsString) != JsString) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot convert a non JS string ChakraObjectRef to a std::wstring.");
+  }
 
   const wchar_t *utf16 = nullptr;
   size_t length = 0;
-  ThrowUponChakraError(
-      JsStringToPointer(jsString, &utf16, &length), "JsStringToPointer");
+  VerifyChakraErrorElseThrow(JsStringToPointer(jsString, &utf16, &length));
 
   return std::wstring(utf16, length);
 }
 
-ChakraObjectRef ToJsString(const char *utf8, size_t length) {
-  assert(utf8);
+ChakraObjectRef ToJsString(const std::string_view &utf8) {
+  if (!utf8.data()) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot convert a nullptr to a JS string.");
+  }
 
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCreateString API.
 #ifdef CHAKRACORE
   JsValueRef result = nullptr;
-  ThrowUponChakraError(JsCreateString(utf8, length, &result), "JsCreateString");
+  VerifyChakraErrorElseThrow(
+      JsCreateString(utf8.data(), utf8.length(), &result));
   return ChakraObjectRef(result);
 
 #else
-  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8, length);
-  return ToJsString(utf16.c_str(), utf16.length());
+  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8.data(), utf8.length());
+  return ToJsString(std::wstring_view{utf16.c_str(), utf16.length()});
 #endif
 }
 
-ChakraObjectRef ToJsString(const wchar_t *const utf16, size_t length) {
-  assert(utf16);
+ChakraObjectRef ToJsString(const std::wstring_view &utf16) {
+  if (!utf16.data()) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot convert a nullptr to a JS string.");
+  }
+
   JsValueRef result = nullptr;
-  ThrowUponChakraError(
-      JsPointerToString(utf16, length, &result), "JsPointerToString");
+  VerifyChakraErrorElseThrow(
+      JsPointerToString(utf16.data(), utf16.length(), &result));
+
   return ChakraObjectRef(result);
 }
 
 ChakraObjectRef ToJsString(const ChakraObjectRef &ref) {
   JsValueRef str = nullptr;
-  ThrowUponChakraError(
-      JsConvertValueToString(ref, &str), "JsConvertValueToString");
+  VerifyChakraErrorElseThrow(JsConvertValueToString(ref, &str));
   return ChakraObjectRef(str);
 }
 
 ChakraObjectRef ToJsNumber(int num) {
   JsValueRef result = nullptr;
-  ThrowUponChakraError(JsIntToNumber(num, &result), "JsIntToNumber");
+  VerifyChakraErrorElseThrow(JsIntToNumber(num, &result));
   return ChakraObjectRef(result);
 }
 
 ChakraObjectRef ToJsArrayBuffer(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer) {
-  assert(buffer);
+  if (!buffer) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot create an external JS ArrayBuffer without backing buffer.");
+  }
 
   size_t size = buffer->size();
-  assert(size < UINT_MAX);
+
+  if (size > UINT_MAX) {
+    throw facebook::jsi::JSINativeException(
+        "The external backing buffer for a JS ArrayBuffer is too large.");
+  }
 
   JsValueRef arrayBuffer = nullptr;
   auto bufferWrapper =
@@ -265,23 +265,23 @@ ChakraObjectRef ToJsArrayBuffer(
   // when the JavaScript garbage collecotr releases the created external array
   // buffer. This ensures that buffer stays alive while the JavaScript engine is
   // using it.
-  ThrowUponChakraError(
-      JsCreateExternalArrayBuffer(
-          Common::Utilities::CheckedReinterpretCast<char *>(
-              const_cast<uint8_t *>(buffer->data())),
-          static_cast<unsigned int>(size),
-          [](void *bufferToDestroy) {
-            // We wrap bufferToDestroy in a unique_ptr to avoid calling delete
-            // explicitly.
-            std::unique_ptr<std::shared_ptr<const facebook::jsi::Buffer>>
-                wrapper{
-                    static_cast<std::shared_ptr<const facebook::jsi::Buffer> *>(
-                        bufferToDestroy)};
-          },
-          bufferWrapper.get(),
-          &arrayBuffer),
-      "JsCreateExternalArrayBuffer");
+  VerifyChakraErrorElseThrow(JsCreateExternalArrayBuffer(
+      Common::Utilities::CheckedReinterpretCast<char *>(
+          const_cast<uint8_t *>(buffer->data())),
+      static_cast<unsigned int>(size),
+      [](void *bufferToDestroy) {
+        // We wrap bufferToDestroy in a unique_ptr to avoid calling delete
+        // explicitly.
+        std::unique_ptr<std::shared_ptr<const facebook::jsi::Buffer>> wrapper{
+            static_cast<std::shared_ptr<const facebook::jsi::Buffer> *>(
+                bufferToDestroy)};
+      },
+      bufferWrapper.get(),
+      &arrayBuffer));
 
+  // We only call bufferWrapper.release() after JsCreateExternalObject succeeds.
+  // Otherwise, when JsCreateExternalObject fails and an exception is thrown,
+  // the shared_ptr that bufferWrapper used to own will be leaked.
   bufferWrapper.release();
   return ChakraObjectRef(arrayBuffer);
 }
@@ -292,8 +292,7 @@ bool CompareJsValues(
   bool result = false;
   // Note that JsStrictEquals should only be used for JsValueRefs and not for
   // other types of JsRefs (e.g. JsPropertyIdRef, etc.).
-  ThrowUponChakraError(
-      JsStrictEquals(jsValue1, jsValue2, &result), "JsStrictEquals");
+  VerifyChakraErrorElseThrow(JsStrictEquals(jsValue1, jsValue2, &result));
   return result;
 }
 
@@ -308,12 +307,10 @@ bool CompareJsPropertyIds(
   }
 
   if (type1 == JsPropertyIdTypeString) {
-    assert(type2 == JsPropertyIdTypeString);
     return GetPropertyName(jsPropId1) == GetPropertyName(jsPropId2);
   }
 
   if (type1 == JsPropertyIdTypeSymbol) {
-    assert(type2 == JsPropertyIdTypeSymbol);
     return CompareJsValues(
         GetPropertySymbol(jsPropId1), GetPropertySymbol(jsPropId2));
   }

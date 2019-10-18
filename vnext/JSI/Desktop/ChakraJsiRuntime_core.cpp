@@ -37,21 +37,7 @@ struct FileVersionInfoResource {
 } // namespace
 
 // TODO (yicyao): We temporarily removed weak reference semantics from
-// ChakraCore based jsi::Runtime. Renable these when we switch to class
-// hierarchy.
-
-// JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
-//  JsWeakRef weakRef;
-//  JsCreateWeakReference(objectRef(obj), &weakRef);
-//  return weakRef;
-//}
-//
-// JsValueRef ChakraRuntime::strongObjectRef(
-//    const facebook::jsi::WeakObject &obj) {
-//  JsValueRef strongRef;
-//  JsGetWeakReferenceValue(objectRef(obj), &strongRef);
-//  return strongRef;
-//}
+// ChakraCore based jsi::Runtime.
 
 // ES6 Promise callback
 void CALLBACK ChakraRuntime::PromiseContinuationCallback(
@@ -76,9 +62,8 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
     runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
       JsValueRef undefinedValue;
       JsGetUndefinedValue(&undefinedValue);
-      ThrowUponJsError(
-          JsCallFunction(funcRef, &undefinedValue, 1, nullptr),
-          "JsCallFunction");
+      VerifyJsErrorElseThrow(
+          JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
       JsRelease(funcRef, nullptr);
     });
   }
@@ -315,14 +300,12 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
       &sourceURLRef);
 
   JsValueRef result;
-  ThrowUponJsError(
-      JsRun(
-          sourceRef,
-          0,
-          sourceURLRef,
-          JsParseScriptAttributes::JsParseScriptAttributeNone,
-          &result),
-      "JsRun");
+  VerifyJsErrorElseThrow(JsRun(
+      sourceRef,
+      0,
+      sourceURLRef,
+      JsParseScriptAttributes::JsParseScriptAttributeNone,
+      &result));
 
   return ToJsiValue(ChakraObjectRef(result));
 }
@@ -341,8 +324,8 @@ bool ChakraRuntime::evaluateSerializedScript(
           &bytecodeArrayBuffer) == JsNoError) {
     JsValueRef sourceURLRef = nullptr;
     if (!sourceURL.empty()) {
-      sourceURLRef = ToJsString(
-          reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size());
+      sourceURLRef = ToJsString(std::string_view{
+          reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size()});
     }
 
     JsValueRef value = nullptr;
@@ -373,7 +356,7 @@ bool ChakraRuntime::evaluateSerializedScript(
     } else if (result == JsErrorBadSerializedScript) {
       return false;
     } else {
-      ThrowUponChakraError(result, "JsRunSerialized");
+      VerifyChakraErrorElseThrow(result);
     }
   }
 

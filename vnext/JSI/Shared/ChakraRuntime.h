@@ -85,6 +85,8 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
   std::string symbolToString(const facebook::jsi::Symbol &s) override;
 
+  // Despite its name, createPropNameIDFromAscii is the same function as
+  // createStringFromUtf8.
   facebook::jsi::String createStringFromAscii(const char *str, size_t length)
       override;
   facebook::jsi::String createStringFromUtf8(const uint8_t *utf8, size_t length)
@@ -338,7 +340,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   template <class T>
   friend class ObjectWithExternalData;
 
-  void ThrowUponJsError(JsErrorCode error, const char *const chakraApiName);
+  void VerifyJsErrorElseThrow(JsErrorCode error);
 
   facebook::jsi::Object createProxy(
       facebook::jsi::Object &&target,
