@@ -8,7 +8,9 @@
 #ifdef CHAKRACORE
 #include "ChakraCore.h"
 #else
+#ifndef USE_EDGEMODE_JSRT
 #define USE_EDGEMODE_JSRT
+#endif
 #include <jsrt.h>
 #endif
 

@@ -61,13 +61,11 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
   const std::wstring url16 = Microsoft::Common::Unicode::Utf8ToUtf16(sourceURL);
 
   JsValueRef result;
-  ThrowUponJsError(
-      JsRunScript(
-          script16.c_str(),
-          JS_SOURCE_CONTEXT_NONE /*sourceContext*/,
-          url16.c_str(),
-          &result),
-      "JsRunScript");
+  VerifyJsErrorElseThrow(JsRunScript(
+      script16.c_str(),
+      JS_SOURCE_CONTEXT_NONE /*sourceContext*/,
+      url16.c_str(),
+      &result));
 
   return ToJsiValue(ChakraObjectRef(result));
 }
@@ -95,7 +93,7 @@ bool ChakraRuntime::evaluateSerializedScript(
   } else if (ret == JsErrorBadSerializedScript) {
     return false;
   } else {
-    ThrowUponChakraError(ret, "JsRunSerializedScript");
+    VerifyChakraErrorElseThrow(ret);
     return true;
   }
 }

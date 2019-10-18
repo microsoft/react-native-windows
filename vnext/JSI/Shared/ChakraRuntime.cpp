@@ -703,8 +703,18 @@ ChakraObjectRef ChakraRuntime::ToChakraObjectRef(
     VerifyJsErrorElseThrow(JsDoubleToNumber(value.asNumber(), &ref));
     return ChakraObjectRef(ref);
 
-  } else { // value.isSymbol() || value.isString() || value.isObject()
+  } else if (value.isSymbol()) {
+    return GetChakraObjectRef(value.asSymbol(*this));
+
+  } else if (value.isString()) {
+    return GetChakraObjectRef(value.asString(*this));
+
+  } else if (value.isObject()) {
     return GetChakraObjectRef(value.asObject(*this));
+
+  } else {
+    // Control flow should never reach here.
+    std::terminate();
   }
 }
 
