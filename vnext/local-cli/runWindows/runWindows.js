@@ -93,7 +93,6 @@ runWindows({
  *    no-launch: Boolean - Do not launch the app after deployment
  *    no-build: Boolean - Do not build the solution
  *    no-deploy: Boolean - Do not deploy the app
- *    force: Boolean - same as Add-AppDevPackage.ps1 Force flag
  */
 module.exports = {
   name: 'run-windows',
@@ -144,11 +143,6 @@ module.exports = {
       command: '--bundle',
       description:
         'Enable Bundle configuration and it would be ReleaseBundle/DebugBundle other than Release/Debug',
-      default: false,
-    },
-    {
-      command: '--force',
-      description: 'same as Add-AppDevPackage.ps1 Force flag',
       default: false,
     },
     {
