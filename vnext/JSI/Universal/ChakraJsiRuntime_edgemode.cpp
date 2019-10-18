@@ -59,8 +59,6 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
     throw facebook::jsi::JSINativeException("Script can't be empty.");
 
   const std::wstring url16 = Microsoft::Common::Unicode::Utf8ToUtf16(sourceURL);
-  if (url16.empty())
-    throw facebook::jsi::JSINativeException("Script URL can't be empty.");
 
   JsValueRef result;
   ThrowUponJsError(

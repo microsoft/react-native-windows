@@ -171,7 +171,7 @@ ChakraObjectRef GetPropertyId(const char *const utf8, size_t length) {
   return ChakraObjectRef(id);
 
 #else
-  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8);
+  std::wstring utf16 = Common::Unicode::Utf8ToUtf16(utf8, length);
   return GetPropertyId(utf16);
 #endif
 }
