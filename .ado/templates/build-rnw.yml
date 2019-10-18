@@ -86,7 +86,7 @@ steps:
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
     inputs:    
-      pathtoPublish: /msbuild.binlog 
+      pathtoPublish: $(Build.SourcesDirectory)/msbuild.binlog 
       artifactName: ${{parameters.project}}$(BuildConfiguration)$(BuildPlatform)
       publishLocation: 'Container'
 
