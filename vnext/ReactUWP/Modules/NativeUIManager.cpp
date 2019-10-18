@@ -443,7 +443,7 @@ static void StyleYogaNode(
 
       if (value == "auto" || value.isNull())
         align = YGAlignAuto;
-      if (value == "stretch")
+      else if (value == "stretch")
         align = YGAlignStretch;
       else if (value == "flex-start")
         align = YGAlignFlexStart;
