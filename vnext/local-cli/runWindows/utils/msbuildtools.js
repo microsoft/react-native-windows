@@ -138,7 +138,31 @@ function VSWhere(requires, version, property) {
   }
 }
 
-function checkMSBuildVersion(version, verbose) {
+function getVC141Component(version, buildArch) {
+  if (version === '16.0') {
+    switch (buildArch.toLowerCase()) {
+      case 'x86':
+      case 'x64':
+        return 'Microsoft.VisualStudio.Component.VC.v141.x86.x64';
+      case 'arm':
+        return 'Microsoft.VisualStudio.Component.VC.v141.ARM';
+      case 'arm64':
+        return 'Microsoft.VisualStudio.Component.VC.v141.ARM64';
+    }
+  } else {
+    switch (buildArch.toLowerCase()) {
+      case 'x86':
+      case 'x64':
+        return 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64';
+      case 'arm':
+        return 'Microsoft.VisualStudio.Component.VC.Tools.ARM';
+      case 'arm64':
+        return 'Microsoft.VisualStudio.Component.VC.Tools.ARM64';
+    }
+  }
+}
+
+function checkMSBuildVersion(version, buildArch, verbose) {
   let toolsPath = null;
   if (verbose) {
     console.log('Searching for MSBuild version ' + version);
@@ -147,11 +171,13 @@ function checkMSBuildVersion(version, verbose) {
   // https://aka.ms/vs/workloads
   const requires16 = [
     'Microsoft.Component.MSBuild',
-    'Microsoft.VisualStudio.Component.VC.v141.x86.x64',
+    getVC141Component(version, buildArch),
+    'Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141',
   ];
   const requires15 = [
     'Microsoft.Component.MSBuild',
-    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
+    getVC141Component(version, buildArch),
+    'Microsoft.VisualStudio.ComponentGroup.UWP.VC',
   ];
 
   const requires = version === '16.0' ? requires16 : requires15;
@@ -186,12 +212,18 @@ function checkMSBuildVersion(version, verbose) {
   }
 }
 
-module.exports.findAvailableVersion = function(verbose) {
+module.exports.findAvailableVersion = function(buildArch, verbose) {
   const versions =
     process.env.VisualStudioVersion != null
-      ? [checkMSBuildVersion(process.env.VisualStudioVersion, verbose)]
+      ? [
+          checkMSBuildVersion(
+            process.env.VisualStudioVersion,
+            buildArch,
+            verbose,
+          ),
+        ]
       : MSBUILD_VERSIONS.map(function(value) {
-          return checkMSBuildVersion(value, verbose);
+          return checkMSBuildVersion(value, buildArch, verbose);
         });
   const msbuildTools = versions.find(Boolean);
 
@@ -209,13 +241,6 @@ module.exports.findAvailableVersion = function(verbose) {
     }
   }
   return msbuildTools;
-};
-
-module.exports.findAllAvailableVersions = function(verbose) {
-  console.log(chalk.green('Searching for available MSBuild versions...'));
-  return MSBUILD_VERSIONS.map(function(value) {
-    return checkMSBuildVersion(value, verbose);
-  }).filter(item => !!item);
 };
 
 module.exports.getAllAvailableUAPVersions = function() {
