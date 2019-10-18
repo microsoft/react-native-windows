@@ -34,7 +34,7 @@ DivisionAnimatedNode::DivisionAnimatedNode(
               L"." + s_valueName + L" + " + s_baseName + L"." + s_offsetName +
               L")";
           for (const auto tag : nodes) {
-            const auto identifier = std::to_wstring(tag);
+            const auto identifier = L"n" + std::to_wstring(tag);
             anim.SetReferenceParameter(
                 identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
             expr = expr + L" / (" + identifier + L"." + s_valueName + L" " +

@@ -109,7 +109,7 @@ void SandboxJSExecutor::loadApplicationScript(
             // Return task to wait for reply.
             return task<void>(callback);
           } else {
-            throw new exception("Failed to send");
+            throw exception("Failed to send");
           }
         })
         .get();
@@ -198,7 +198,7 @@ void SandboxJSExecutor::Call(
             // Return task to wait for reply.
             return task<void>(callback);
           } else {
-            throw new exception("Failed to send");
+            throw exception("Failed to send");
           }
         })
         .get(); // wait until get reply

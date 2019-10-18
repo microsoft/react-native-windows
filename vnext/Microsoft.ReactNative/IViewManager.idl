@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Microsoft.ReactNative.Bridge
+{
+	[webhosthidden]
+	interface IViewManager
+	{
+    String Name { get; };
+		
+		Windows.UI.Xaml.FrameworkElement CreateView();
+
+    Windows.Foundation.Collections.IMapView<String, String> NativeProps { get; };
+
+		void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
+	};
+}

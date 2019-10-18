@@ -142,6 +142,7 @@ class TextInputShadowNode : public ShadowNodeBase {
 
   winrt::Control::GotFocus_revoker m_controlGotFocusRevoker{};
   winrt::Control::LostFocus_revoker m_controlLostFocusRevoker{};
+  winrt::Control::KeyDown_revoker m_controlKeyDownRevoker{};
   winrt::Control::SizeChanged_revoker m_controlSizeChangedRevoker{};
   winrt::Control::CharacterReceived_revoker m_controlCharacterReceivedRevoker{};
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
@@ -277,6 +278,29 @@ void TextInputShadowNode::registerEvents() {
               tag, "topTextInputBlur", std::move(eventDataBlur));
           instance->DispatchEvent(
               tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
+        }
+      });
+
+  m_controlKeyDownRevoker = control.KeyDown(
+      winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
+        if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
+          if (auto instance = wkinstance.lock()) {
+            folly::dynamic eventDataSubmitEditing = {};
+            if (m_isTextBox) {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text",
+                  HstringToDynamic(control.as<winrt::TextBox>().Text()));
+            } else {
+              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+                  "text",
+                  HstringToDynamic(
+                      control.as<winrt::PasswordBox>().Password()));
+            }
+            instance->DispatchEvent(
+                tag,
+                "topTextInputSubmitEditing",
+                std::move(eventDataSubmitEditing));
+          }
         }
       });
 
@@ -563,6 +587,18 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             } else if (propertyValue.isNull())
               textBox.ClearValue(winrt::TextBox::TextProperty());
           }
+        } else if (propertyName == "autoCapitalize") {
+          if (textBox.try_as<winrt::ITextBox6>()) {
+            if (propertyValue.isString()) {
+              if (propertyValue.asString() == "characters") {
+                textBox.CharacterCasing(winrt::CharacterCasing::Upper);
+              } else { // anything else turns off autoCap (should be "None" but
+                       // we don't support "words"/"senetences" yet)
+                textBox.CharacterCasing(winrt::CharacterCasing::Normal);
+              }
+            } else if (propertyValue.isNull())
+              textBox.ClearValue(winrt::TextBox::CharacterCasingProperty());
+          }
         }
       } else { // Applicable properties for PasswordBox
         if (propertyName == "text") {
@@ -604,7 +640,8 @@ folly::dynamic TextInputViewManager::GetNativeProps() const {
       "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
       "text", "string")("mostRecentEventCount", "int")(
       "secureTextEntry", "boolean")("keyboardType", "string")(
-      "contextMenuHidden", "boolean")("caretHidden", "boolean"));
+      "contextMenuHidden", "boolean")("caretHidden", "boolean")(
+      "autoCapitalize", "string"));
 
   return props;
 }
@@ -628,6 +665,8 @@ folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants()
       folly::dynamic::object("registrationName", "onKeyPress");
   directEvents["topTextInputOnScroll"] =
       folly::dynamic::object("registrationName", "onScroll");
+  directEvents["topTextInputSubmitEditing"] =
+      folly::dynamic::object("registrationName", "onSubmitEditing");
 
   return directEvents;
 }

@@ -18,20 +18,20 @@ namespace react {
 JSBigStringResourceDll::JSBigStringResourceDll(HMODULE dll, HRSRC resource) {
   HGLOBAL loadedResource{LoadResource(dll, resource)};
   if (loadedResource == nullptr) {
-    throw new std::invalid_argument("Could not load resource");
+    throw std::invalid_argument("Could not load resource");
   }
   this->resource = static_cast<char *>(LockResource(loadedResource));
   if (this->resource == nullptr) {
-    throw new std::invalid_argument("Could not lock resource");
+    throw std::invalid_argument("Could not lock resource");
   }
 
   this->resourceSize = SizeofResource(dll, resource);
   if (this->resourceSize == 0) {
-    throw new std::invalid_argument("Could not retrieve size of resource");
+    throw std::invalid_argument("Could not retrieve size of resource");
   }
 
   if (this->c_str()[this->size()] != '\0') {
-    throw new std::invalid_argument("Resource was not null-terminated");
+    throw std::invalid_argument("Resource was not null-terminated");
   }
 }
 

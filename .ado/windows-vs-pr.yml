@@ -124,6 +124,7 @@ jobs:
           command: restore
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
       - task: MSBuild@1
         displayName: MSBuild - SampleApps
@@ -137,13 +138,14 @@ jobs:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled until we switch to VS 2019
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
           workingDirectory: packages\microsoft-reactnative-sampleapps
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
@@ -473,7 +475,7 @@ jobs:
         vmImage: windows-2019
       BuildPlatform: x64
       UseRNFork: true
-      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
+      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64, Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

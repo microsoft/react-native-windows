@@ -21,6 +21,27 @@ PropsAnimatedNode::PropsAnimatedNode(
     m_propMapping.insert({entry.first.getString(),
                           static_cast<int64_t>(entry.second.asDouble())});
   }
+
+  m_subchannelPropertySet =
+      winrt::Window::Current().Compositor().CreatePropertySet();
+  m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
+  m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
+  m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
+  m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
+
+  m_translationCombined =
+      winrt::Window::Current().Compositor().CreateExpressionAnimation(
+          L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
+  m_translationCombined.SetReferenceParameter(
+      L"subchannels", m_subchannelPropertySet);
+  m_translationCombined.Target(L"Translation");
+
+  m_scaleCombined =
+      winrt::Window::Current().Compositor().CreateExpressionAnimation(
+          L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
+  m_scaleCombined.SetReferenceParameter(
+      L"subchannels", m_subchannelPropertySet);
+  m_scaleCombined.Target(L"Scale");
 }
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
@@ -89,7 +110,21 @@ void PropsAnimatedNode::StartAnimations() {
     if (const auto uiElement = GetUIElement()) {
       uiElement.RotationAxis(m_rotationAxis);
       for (const auto anim : m_expressionAnimations) {
-        uiElement.StartAnimation(anim.second);
+        if (anim.second.Target() == L"Translation.X") {
+          m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else if (anim.second.Target() == L"Translation.Y") {
+          m_subchannelPropertySet.StartAnimation(L"TranslationY", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else if (anim.second.Target() == L"Scale.X") {
+          m_subchannelPropertySet.StartAnimation(L"ScaleX", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else if (anim.second.Target() == L"Scale.Y") {
+          m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else {
+          uiElement.StartAnimation(anim.second);
+        }
       }
       if (m_needsCenterPointAnimation) {
         if (!m_centerPointAnimation) {

@@ -11,38 +11,78 @@ import {
   Text,
   View,
 } from 'react-native';
-
 import { NativeModules } from 'react-native';
 
+var log = function(result) {
+  console.log(result);
+  NativeModules.DebugConsole.Log('' + result);
+};
+
+var getCallback = function(prefix) {
+  return function(result) {
+    log(prefix + result);
+  };
+};
+
 class SampleApp extends Component {
-    _onPressHandler() {
-        // Simple fire and forget method
-        NativeModules.SampleModule.method1();
 
-        // Method with a callback
-        NativeModules.SampleModule.method2(
-               /* input */ 42,
-               /* callback */ function(arg1, arg2, arg3, arg4, arg5) {
-                   console.log(arg1);
-                   console.log(arg2);
-                   console.log(arg3);
-                   console.log(arg4);
-                   console.log(arg5);
-               });
+  _onPressHandlerSMCS() {
+    var numberArg = 42;
 
-        // Another callback
-        NativeModules.SampleModule.method3(
-           'foo',
-           function(json) {
-               console.log(`called back: ${json.result}`);
-           });
+    // SampleModuleCS constants
 
-        // An async method that returns a Promise
-        var promise = NativeModules.SampleModule.method4(84);
+    log(`SampleModuleCS.NumberConstant: ${NativeModules.SampleModuleCS.NumberConstant}`);
+    log(`SampleModuleCS.StringConstant: ${NativeModules.SampleModuleCS.StringConstant}`);
 
-        // log the result
-        promise.then(function(result) { console.log(result); });
-    }
+    // SampleModuleCS method calls
+
+    NativeModules.SampleModuleCS.VoidMethod();
+
+    NativeModules.SampleModuleCS.VoidMethodWithArgs(numberArg);
+
+    NativeModules.SampleModuleCS.ReturnMethod(getCallback('SampleModuleCS.ReturnMethod => '));
+
+    NativeModules.SampleModuleCS.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCS.ReturnMethodWithArgs => '));
+
+    NativeModules.SampleModuleCS.ExplicitCallbackMethod(getCallback('SampleModuleCS.ExplicitCallbackMethod => '));
+
+    NativeModules.SampleModuleCS.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCS.ExplicitCallbackMethodWithArgs => '));
+
+    var promise1 = NativeModules.SampleModuleCS.ExplicitPromiseMethod();
+    promise1.then(getCallback('SampleModuleCS.ExplicitPromiseMethod then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethod catch => '));
+
+    var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
+    promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
+  }
+
+  _onPressHandlerSMCPP() {
+    var numberArg = 42;
+
+    // SampleModuleCPP constants
+
+    log(`SampleModuleCPP.NumberConstant: ${NativeModules.SampleModuleCPP.NumberConstant}`);
+    log(`SampleModuleCPP.StringConstant: ${NativeModules.SampleModuleCPP.StringConstant}`);
+
+    // SampleModuleCPP method calls
+
+    NativeModules.SampleModuleCPP.VoidMethod();
+
+    NativeModules.SampleModuleCPP.VoidMethodWithArgs(numberArg);
+
+    NativeModules.SampleModuleCPP.ReturnMethod(getCallback('SampleModuleCPP.ReturnMethod => '));
+
+    NativeModules.SampleModuleCPP.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ReturnMethodWithArgs => '));
+
+    NativeModules.SampleModuleCPP.ExplicitCallbackMethod(getCallback('SampleModuleCPP.ExplicitCallbackMethod => '));
+
+    NativeModules.SampleModuleCPP.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ExplicitCallbackMethodWithArgs => '));
+
+    var promise1 = NativeModules.SampleModuleCPP.ExplicitPromiseMethod();
+    promise1.then(getCallback('SampleModuleCPP.ExplicitPromiseMethod then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethod catch => '));
+
+    var promise2 = NativeModules.SampleModuleCPP.ExplicitPromiseMethodWithArgs(numberArg);
+    promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
+  }
 
   render() {
     return (
@@ -53,7 +93,8 @@ class SampleApp extends Component {
         <Text style={styles.instructions}>
           To get started, edit index.windows.js
         </Text>
-        <Button onPress={this._onPressHandler} title="Click me!"/>
+        <Button onPress={this._onPressHandlerSMCS} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
+        <Button onPress={this._onPressHandlerSMCPP} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
       </View>
     );
   }
