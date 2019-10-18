@@ -195,6 +195,36 @@ struct WINRT_EBO DynamicAutomationPropertiesT : implements<D, Windows::Foundatio
     {
         return T::GetAccessibilityInvokeEventHandler(element);
     }
+
+    Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty()
+    {
+        return T::AccessibilityActionsProperty();
+    }
+
+    void SetAccessibilityActions(Windows::UI::Xaml::UIElement const& element, Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> const& value)
+    {
+        T::SetAccessibilityActions(element, value);
+    }
+
+    Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> GetAccessibilityActions(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityActions(element);
+    }
+
+    Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty()
+    {
+        return T::AccessibilityActionEventHandlerProperty();
+    }
+
+    void SetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityActionEventHandler const& value)
+    {
+        T::SetAccessibilityActionEventHandler(element, value);
+    }
+
+    react::uwp::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element)
+    {
+        return T::GetAccessibilityActionEventHandler(element);
+    }
 };
 
 }

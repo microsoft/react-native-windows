@@ -95,15 +95,34 @@ struct DynamicAutomationProperties
   static winrt::react::uwp::AccessibilityInvokeEventHandler
   GetAccessibilityInvokeEventHandler(
       winrt::Windows::UI::Xaml::UIElement const &element);
+
+  static winrt::Windows::UI::Xaml::DependencyProperty
+  AccessibilityActionsProperty();
+
+  static void SetAccessibilityActions(
+      Windows::UI::Xaml::UIElement const &element,
+      Windows::Foundation::Collections::IVector<
+          react::uwp::AccessibilityAction> const &value);
+
+  static Windows::Foundation::Collections::IVector<
+      react::uwp::AccessibilityAction>
+  GetAccessibilityActions(Windows::UI::Xaml::UIElement const &element);
+
+  static react::uwp::AccessibilityAction GetAccessibilityAction(
+      Windows::UI::Xaml::UIElement const &element,
+      std::wstring_view const& actionName);
+
+  static winrt::Windows::UI::Xaml::DependencyProperty
+  AccessibilityActionEventHandlerProperty();
+  static void SetAccessibilityActionEventHandler(
+      Windows::UI::Xaml::UIElement const &element,
+      winrt::react::uwp::AccessibilityActionEventHandler const &value);
+  static winrt::react::uwp::AccessibilityActionEventHandler
+  GetAccessibilityActionEventHandler(
+      winrt::Windows::UI::Xaml::UIElement const &element);
 };
 
-} // namespace winrt::react::uwp::implementation
 
-namespace winrt::react::uwp::factory_implementation {
-struct DynamicAutomationProperties
-    : DynamicAutomationPropertiesT<
-          DynamicAutomationProperties,
-          implementation::DynamicAutomationProperties> {};
 } // namespace winrt::react::uwp::factory_implementation
 
 namespace react::uwp {

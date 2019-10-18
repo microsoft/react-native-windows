@@ -20,6 +20,7 @@
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Xaml.h>
+#include "Utils/PropertyHandlerUtils.h"
 
 #include "DynamicAutomationProperties.h"
 
@@ -28,7 +29,44 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
+using namespace Windows::Foundation::Collections;
 } // namespace winrt
+
+template <>
+struct json_type_traits<winrt::react::uwp::AccessibilityAction> {
+  static winrt::react::uwp::AccessibilityAction parseJson(
+      const folly::dynamic &json) {
+    winrt::react::uwp::AccessibilityAction action;
+    for (auto &item : json.items()) {
+      if (item.first == "name") {
+        action.Name = react::uwp::asHstring(item.second);
+      } else if (item.first == "label") {
+        action.Label = react::uwp::asHstring(item.second);
+      }
+    }
+    return action;
+  }
+};
+
+template <>
+struct json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>> {
+  static winrt::IVector<winrt::react::uwp::AccessibilityAction>
+  parseJson(
+      const folly::dynamic &json) {
+    auto vector =
+        winrt::single_threaded_vector<winrt::react::uwp::AccessibilityAction>();
+
+    if (json.isArray()) {
+      for (const auto &action : json) {
+        if (!action.isObject())
+          continue;
+
+        vector.Append(json_type_traits<winrt::react::uwp::AccessibilityAction>::parseJson(action));
+      }
+    }
+    return vector;
+  }
+};
 
 namespace react {
 namespace uwp {
@@ -154,7 +192,8 @@ folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
       "accessibilityRole", "string")("accessibilityStates", "array")(
       "accessibilityHint", "string")("accessibilityLabel", "string")(
       "accessibilityPosInSet", "number")("accessibilitySetSize", "number")(
-      "testID", "string")("tooltip", "string"));
+      "testID", "string")("tooltip", "string")(
+      "accessibilityActions", "array"));
   return props;
 }
 
@@ -552,6 +591,10 @@ void FrameworkElementViewManager::UpdateProperties(
         }
       } else if (TryUpdateFlowDirection(element, propertyName, propertyValue)) {
         continue;
+      } else if (propertyName == "accessibilityActions") {
+        auto value = json_type_traits<winrt::IVector<
+            winrt::react::uwp::AccessibilityAction>>::parseJson(propertyValue);
+        DynamicAutomationProperties::SetAccessibilityActions(element, value);
       }
     }
   }

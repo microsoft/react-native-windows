@@ -250,6 +250,7 @@ winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
 
 void DynamicAutomationPeer::Expand() const {
   // Right now RN does not have "expand" events, so this is a no-op
+
 }
 
 void DynamicAutomationPeer::Collapse() const {

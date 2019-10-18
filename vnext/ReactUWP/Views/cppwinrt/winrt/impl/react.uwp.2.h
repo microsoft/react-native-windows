@@ -12,6 +12,17 @@
 
 WINRT_EXPORT namespace winrt::react::uwp {
 
+struct AccessibilityActionEventHandler : Windows::Foundation::IUnknown
+{
+    AccessibilityActionEventHandler(std::nullptr_t = nullptr) noexcept {}
+    template <typename L> AccessibilityActionEventHandler(L lambda);
+    template <typename F> AccessibilityActionEventHandler(F* function);
+    template <typename O, typename M> AccessibilityActionEventHandler(O* object, M method);
+    template <typename O, typename M> AccessibilityActionEventHandler(com_ptr<O>&& object, M method);
+    template <typename O, typename M> AccessibilityActionEventHandler(weak_ref<O>&& object, M method);
+    void operator()(react::uwp::AccessibilityAction const& action) const;
+};
+
 struct AccessibilityInvokeEventHandler : Windows::Foundation::IUnknown
 {
     AccessibilityInvokeEventHandler(std::nullptr_t = nullptr) noexcept {}
@@ -22,6 +33,22 @@ struct AccessibilityInvokeEventHandler : Windows::Foundation::IUnknown
     template <typename O, typename M> AccessibilityInvokeEventHandler(weak_ref<O>&& object, M method);
     void operator()() const;
 };
+
+struct AccessibilityAction
+{
+    hstring Name;
+    hstring Label;
+};
+
+inline bool operator==(AccessibilityAction const& left, AccessibilityAction const& right) noexcept
+{
+    return left.Name == right.Name && left.Label == right.Label;
+}
+
+inline bool operator!=(AccessibilityAction const& left, AccessibilityAction const& right) noexcept
+{
+    return !(left == right);
+}
 
 }
 
@@ -71,6 +98,12 @@ struct WINRT_EBO DynamicAutomationProperties :
     static Windows::UI::Xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
     static void SetAccessibilityInvokeEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityInvokeEventHandler const& value);
     static react::uwp::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty();
+    static void SetAccessibilityActions(Windows::UI::Xaml::UIElement const& element, param::vector<react::uwp::AccessibilityAction> const& value);
+    static Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> GetAccessibilityActions(Windows::UI::Xaml::UIElement const& element);
+    static Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
+    static void SetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityActionEventHandler const& value);
+    static react::uwp::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element);
 };
 
 struct WINRT_EBO ViewControl :
