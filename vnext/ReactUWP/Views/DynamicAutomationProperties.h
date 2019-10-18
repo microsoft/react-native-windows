@@ -108,7 +108,7 @@ struct DynamicAutomationProperties
       react::uwp::AccessibilityAction>
   GetAccessibilityActions(Windows::UI::Xaml::UIElement const &element);
 
-  static react::uwp::AccessibilityAction GetAccessibilityAction(
+  static void DispatchAccessibilityAction(
       Windows::UI::Xaml::UIElement const &element,
       std::wstring_view const& actionName);
 
@@ -122,7 +122,13 @@ struct DynamicAutomationProperties
       winrt::Windows::UI::Xaml::UIElement const &element);
 };
 
+} // namespace winrt::react::uwp::implementation
 
+namespace winrt::react::uwp::factory_implementation {
+struct DynamicAutomationProperties
+    : DynamicAutomationPropertiesT<
+          DynamicAutomationProperties,
+          implementation::DynamicAutomationProperties> {};
 } // namespace winrt::react::uwp::factory_implementation
 
 namespace react::uwp {

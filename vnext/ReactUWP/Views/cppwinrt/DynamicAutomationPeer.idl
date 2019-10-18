@@ -57,18 +57,18 @@ namespace react.uwp
 		CountStates
 	};
 
-  [version(VERSION)]
-  struct AccessibilityAction {
-     HSTRING Name;
-     HSTRING Label;
-  };
+	[version(VERSION)]
+	struct AccessibilityAction {
+		HSTRING Name;
+		HSTRING Label;
+	};
 
-  declare {
-    interface Windows.Foundation.Collections.IVector<AccessibilityAction>;
-  }
+	declare {
+		interface Windows.Foundation.Collections.IVector<AccessibilityAction>;
+	}
 
 	delegate void AccessibilityInvokeEventHandler();
-  delegate void AccessibilityActionEventHandler(AccessibilityAction action);
+  	delegate void AccessibilityActionEventHandler(AccessibilityAction action);
 
 	[default_interface]
 	[webhosthidden]
@@ -111,13 +111,13 @@ namespace react.uwp
 		static void SetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityInvokeEventHandler value);
 		static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element);
 
-    static Windows.UI.Xaml.DependencyProperty AccessibilityActionsProperty { get; };
-    static void SetAccessibilityActions(Windows.UI.Xaml.UIElement element, Windows.Foundation.Collections.IVector<AccessibilityAction> value);
-    static Windows.Foundation.Collections.IVector<AccessibilityAction> GetAccessibilityActions(Windows.UI.Xaml.UIElement element);
+		static Windows.UI.Xaml.DependencyProperty AccessibilityActionsProperty { get; };
+		static void SetAccessibilityActions(Windows.UI.Xaml.UIElement element, Windows.Foundation.Collections.IVector<AccessibilityAction> value);
+		static Windows.Foundation.Collections.IVector<AccessibilityAction> GetAccessibilityActions(Windows.UI.Xaml.UIElement element);
 
 		static Windows.UI.Xaml.DependencyProperty AccessibilityActionEventHandlerProperty { get; };
-    static void SetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityActionEventHandler value);
-    static AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element);
+		static void SetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityActionEventHandler value);
+		static AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element);
 	}
 
 	[default_interface]

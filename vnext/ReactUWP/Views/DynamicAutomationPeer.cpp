@@ -161,6 +161,8 @@ winrt::hstring DynamicAutomationPeer::GetItemStatusCore() const {
 // IInvokeProvider
 
 void DynamicAutomationPeer::Invoke() const {
+  DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"invoke");
+
   if (auto const &invokeHandler = GetAccessibilityInvokeEventHandler()) {
     invokeHandler();
   }
@@ -195,15 +197,16 @@ winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer()
 }
 
 void DynamicAutomationPeer::AddToSelection() const {
-  // Right now RN does not have "selection" events, so this is a no-op
+  DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"addToSelection");
 }
 
 void DynamicAutomationPeer::RemoveFromSelection() const {
-  // Right now RN does not have "selection" events, so this is a no-op
+  DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"removeFromSelection");
 }
 
 void DynamicAutomationPeer::Select() const {
-  // Right now RN does not have "selection" events, so this is a no-op
+  DynamicAutomationProperties::DispatchAccessibilityAction(
+      Owner(), L"select");
 }
 
 // IToggleProvider
@@ -224,6 +227,8 @@ winrt::ToggleState DynamicAutomationPeer::ToggleState() const {
 }
 
 void DynamicAutomationPeer::Toggle() const {
+  DynamicAutomationProperties::DispatchAccessibilityAction(Owner(), L"toggle");
+
   if (auto const &invokeHandler = GetAccessibilityInvokeEventHandler()) {
     invokeHandler();
   }
@@ -249,12 +254,13 @@ winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
 }
 
 void DynamicAutomationPeer::Expand() const {
-  // Right now RN does not have "expand" events, so this is a no-op
-
+  DynamicAutomationProperties::DispatchAccessibilityAction(
+      Owner(), L"expand");
 }
 
 void DynamicAutomationPeer::Collapse() const {
-  // Right now RN does not have "collapse" events, so this is a no-op
+  DynamicAutomationProperties::DispatchAccessibilityAction(
+      Owner(), L"collapse");
 }
 
 // Private Methods
