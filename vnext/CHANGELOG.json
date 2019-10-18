@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Oct 2019 21:22:01 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.39",
+      "version": "0.60.0-vnext.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix run-windows app installation hang",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "6c1f607816162e9beb50f942a0babe9229ac7d68"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Oct 2019 20:36:35 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.38",
+      "version": "0.60.0-vnext.38",
+      "comments": {
+        "none": [
+          {
+            "comment": "Don't hardcode the path to v141 platform toolset",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "5259e65b49ff7d0131cc7d731ca7bd3438b03776"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "add developer menu property",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5d42737bfacccb3f90dcde8af3b4a104d26f840d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 23:10:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.37",
+      "version": "0.60.0-vnext.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.8",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "35f748784744598ebea97c6b039a14a008547f50"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 20:58:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.36",
+      "version": "0.60.0-vnext.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag.",
+            "author": "stpete@microsoft.com",
+            "commit": "62049fdbd667fc71ae09b09f074446d8593d826d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Oct 2019 16:18:52 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.35",
       "version": "0.60.0-vnext.35",

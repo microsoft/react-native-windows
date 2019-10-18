@@ -15,6 +15,13 @@ namespace SampleApp
             this.InstanceSettings.UseWebDebugger = false; // Disabled temporarily because of issue #2877
             this.InstanceSettings.UseLiveReload = true; // true by default in debug builds already
             this.InstanceSettings.UseJsi = true;
+
+#if DEBUG
+            this.InstanceSettings.EnableDeveloperMenu = true;
+#else
+            this.InstanceSettings.EnableDeveloperMenu = false;
+#endif
+
         }
 
         protected override string MainComponentName => "SampleApp";

@@ -223,11 +223,9 @@ void ReactControl::AttachRoot() noexcept {
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
   m_isAttached = true;
 
-#ifdef DEBUG
-  // TODO:  Enable this in retail builds via a new API
-  // https://github.com/microsoft/react-native-windows/issues/2870
-  InitializeDeveloperMenu();
-#endif
+  if (m_reactInstance->GetReactInstanceSettings().EnableDeveloperMenu) {
+    InitializeDeveloperMenu();
+  }
 }
 
 void ReactControl::DetachRoot() noexcept {

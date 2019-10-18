@@ -35,6 +35,12 @@ namespace winrt::<%=ns%>::implementation
     settings.UseWebDebugger = true;
 #endif
 
+#ifdef NDEBUG
+    settings.EnableDeveloperMenu = false;
+#else
+    settings.EnableDeveloperMenu = true;
+#endif        
+
     auto instance = Instance::Create(winrt::hstring(JSFILENAME));
     instance.Start(settings);
 
