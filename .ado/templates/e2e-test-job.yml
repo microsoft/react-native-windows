@@ -24,12 +24,6 @@ jobs:
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
       - task: PowerShell@2
-        displayName: VS Component list
-        inputs:
-          targetType: filePath
-          filePath: $(Build.SourcesDirectory)/.ado/VSComponentList.ps1
-
-      - task: PowerShell@2
         displayName: "Remove WebDriverIO Workaround"
         inputs:
           targetType: "inline"
