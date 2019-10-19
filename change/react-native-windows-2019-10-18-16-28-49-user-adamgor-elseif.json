@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "fix else if for null",
+  "comment": "fix assert/missing else when setting alignSelf to null",
   "packageName": "react-native-windows",
   "email": "adamgor@microsoft.com",
   "commit": "8c9afe38a4c5b6e39fb42a5f0af7e3fbc1cfcbae",
