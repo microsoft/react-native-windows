@@ -84,10 +84,10 @@ steps:
         /p:PlatformToolset=${{parameters.platformToolset}}
         ${{parameters.msbuildArguments}}
 
-#  - task: PublishBuildArtifacts@1
-#    condition:  succeededOrFailed()
-#    inputs:    
-#      pathtoPublish: $(Build.SourcesDirectory)/msbuild.binlog 
-#      artifactName: ${{parameters.project}}$(BuildConfiguration)$(BuildPlatform)
-#      publishLocation: 'Container'
+  - task: PublishBuildArtifacts@1
+    condition:  succeededOrFailed()
+    inputs:    
+      pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log 
+      artifactName: ${{parameters.project}}$(BuildConfiguration)$(BuildPlatform)
+      publishLocation: 'Container'
 
