@@ -76,6 +76,7 @@ std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance() {
     ::react::uwp::ReactInstanceSettings innerSettings;
     innerSettings.UseLiveReload = m_settings.UseLiveReload;
     innerSettings.UseWebDebugger = m_settings.UseWebDebugger;
+    innerSettings.EnableDeveloperMenu = m_settings.EnableDeveloperMenu;
     m_instance->Start(m_instance, innerSettings);
     m_instance->loadBundle(std::string(m_jsBundleName));
   }
@@ -104,6 +105,7 @@ HRESULT Instance::Start(ABI::react::uwp::InstanceSettings settings) {
 
   m_settings.UseLiveReload = settings.UseLiveReload;
   m_settings.UseWebDebugger = settings.UseWebDebugger;
+  m_settings.EnableDeveloperMenu = settings.EnableDeveloperMenu;
   getInstance();
 
   return S_OK;
