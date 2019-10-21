@@ -140,7 +140,7 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
   } else {
     const auto envelope = std::exp(-omega0 * time);
     const auto value = static_cast<float>(
-        toValue * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0)));
+        toValue - envelope * (x0 + (v0 + omega0 * x0) * time));
     const auto velocity =
         envelope * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0));
     return std::make_tuple(value, velocity);
