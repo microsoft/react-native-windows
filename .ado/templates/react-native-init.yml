@@ -90,7 +90,6 @@ steps:
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-      clean: true # Optional
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
