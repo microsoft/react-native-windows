@@ -29,10 +29,7 @@ This repository adds support for the [Windows 10 SDK](https://developer.microsof
 
 We are in the process of re-implementing react-native-windows in C++, for better performance, and to better align with the shared C++ react-native core as it evolves. Please see the [Roadmap 2019](blog/Roadmap2019.md) blog for details on this effort and investment roadmap for the upcoming months.
 
-### Latest updates 
-*Last updated: July 2019*
-
-Both the `current` and `vnext` implementations of `react-native-windows` have been upgraded to support [React Native version 0.59](https://facebook.github.io/react-native/blog/2019/03/12/releasing-react-native-059). Please see the [July 2019 Updates Blog](blog/July2019Updates.md) for all the latest updates!
+Please see the [July 2019 Updates Blog](blog/July2019Updates.md) for all the latest updates!
 
 ## Quick Links
 
@@ -54,7 +51,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 - You can run React Native Windows UWP apps only on Windows 10 devices
    - React Native Windows -[current](https://github.com/microsoft/react-native-windows/tree/master/current) supports Windows 10 SDK >= [14393](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive) and Windows 8.1
-   - React Native Windows -[vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) currently supports Windows 10 SDK >= [15063](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive)
+   - React Native Windows -[vnext](https://github.com/microsoft/react-native-windows/tree/master/vnext) currently supports Windows 10 SDK >= [15063](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive). See [Windows 10 Compatability](./win10compat.md) for version support details.
 - You can run React Native Windows WPF apps using the [current](https://github.com/microsoft/react-native-windows/tree/master/current) implementation on Windows 7-10 so long as .NET 4.6 is installed on the end user's machine
 - Download [Visual Studio 2017 Community or Greater](https://www.visualstudio.com/downloads/). (Visual Studio 2015 support has been deprecated.)
 	- You will need to start Visual Studio after it is installed to do some final setup before it can be used to build or run your React Native Windows application
