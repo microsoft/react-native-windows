@@ -3,8 +3,9 @@
 
 #pragma once
 
-#include <memory>
 #include "jsi/jsi.h"
+
+#include <memory>
 
 namespace Microsoft::JSI {
 

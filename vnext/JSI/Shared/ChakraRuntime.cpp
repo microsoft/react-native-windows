@@ -2,18 +2,17 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
-#include "ChakraRuntimeArgs.h"
+
+#include "Unicode.h"
+#include "Utilities.h"
 
 #include <MemoryTracker.h>
 #include <cxxreact/MessageQueueThread.h>
-
-#include <mutex>
-#include <sstream>
-#include "Unicode.h"
-
 #include <jsi/ScriptStore.h>
 
-using namespace facebook::react;
+#include <climits>
+#include <mutex>
+#include <sstream>
 
 namespace Microsoft::JSI {
 
@@ -39,41 +38,18 @@ class HostFunctionProxy {
   ChakraRuntime &m_runtime;
 };
 
-class ArgsConverterForCall {
- public:
-  ArgsConverterForCall(
-      ChakraRuntime &rt,
-      JsValueRef thisObj,
-      const facebook::jsi::Value *args,
-      size_t count) {
-    JsValueRef *destination = inline_;
-    if (count + 1 > maxStackArgs) {
-      outOfLine_ = std::make_unique<JsValueRef[]>(count + 1);
-      destination = outOfLine_.get();
-    }
-
-    if (thisObj == nullptr) {
-      JsValueRef undefinedValue;
-      JsGetUndefinedValue(&undefinedValue);
-      destination[0] = undefinedValue;
-    } else {
-      destination[0] = thisObj;
-    }
-
-    for (size_t i = 0; i < count; ++i) {
-      destination[i + 1] = rt.valueRef(args[i]);
-    }
+// Callers of this functions must make sure that jsThis and args are alive when
+// using the return value of this function.
+std::vector<JsValueRef> constructJsFunctionArguments(
+    const ChakraObjectRef &jsThis,
+    const std::vector<ChakraObjectRef> &args) {
+  std::vector<JsValueRef> result;
+  result.push_back(JsRef(jsThis));
+  for (const ChakraObjectRef &ref : args) {
+    result.push_back(JsRef(ref));
   }
-
-  operator JsValueRef *() {
-    return outOfLine_ ? outOfLine_.get() : inline_;
-  }
-
- private:
-  constexpr static unsigned maxStackArgs = 8;
-  JsValueRef inline_[maxStackArgs];
-  std::unique_ptr<JsValueRef[]> outOfLine_;
-};
+  return result;
+}
 
 } // namespace
 
@@ -81,25 +57,24 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept
     : m_args{std::move(args)} {
   JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
 
-  if (!runtimeArgs().enableJITCompilation) {
+  if (!m_args.enableJITCompilation) {
     runtimeAttributes = static_cast<JsRuntimeAttributes>(
         runtimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration |
         JsRuntimeAttributeDisableExecutablePageAllocation);
   }
 
-  if (JsCreateRuntime(runtimeAttributes, nullptr, &m_runtime) != JsNoError) {
-    std::terminate();
-  }
+  VerifyChakraErrorElseThrow(
+      JsCreateRuntime(runtimeAttributes, nullptr, &m_runtime));
 
   setupMemoryTracker();
 
-  // Create an execution context
-  JsCreateContext(m_runtime, &m_ctx);
-  JsAddRef(m_ctx, nullptr);
+  JsContextRef context = nullptr;
+  VerifyChakraErrorElseThrow(JsCreateContext(m_runtime, &context));
+  m_context.Initialize(context);
 
   // Note :: We currently assume that the runtime will be created and
   // exclusively used in a single thread.
-  JsSetCurrentContext(m_ctx);
+  VerifyChakraErrorElseThrow(JsSetCurrentContext(m_context));
 
   startDebuggingIfNeeded();
 
@@ -111,12 +86,12 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept
 ChakraRuntime::~ChakraRuntime() noexcept {
   stopDebuggingIfNeeded();
 
-  JsSetCurrentContext(JS_INVALID_REFERENCE);
-  JsRelease(m_ctx, nullptr);
+  VerifyChakraErrorElseThrow(JsSetCurrentContext(JS_INVALID_REFERENCE));
+  m_context.Invalidate();
 
   JsSetRuntimeMemoryAllocationCallback(m_runtime, nullptr, nullptr);
 
-  JsDisposeRuntime(m_runtime);
+  VerifyChakraErrorElseThrow(JsDisposeRuntime(m_runtime));
 }
 
 #pragma region Functions_inherited_from_Runtime
@@ -214,9 +189,9 @@ facebook::jsi::Value ChakraRuntime::evaluatePreparedJavaScript(
 }
 
 facebook::jsi::Object ChakraRuntime::global() {
-  JsValueRef value;
-  JsGetGlobalObject(&value);
-  return createObject(value);
+  JsValueRef global;
+  VerifyJsErrorElseThrow(JsGetGlobalObject(&global));
+  return MakePointer<facebook::jsi::Object>(global);
 }
 
 std::string ChakraRuntime::description() {
@@ -228,115 +203,94 @@ bool ChakraRuntime::isInspectable() {
 }
 
 facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneSymbol(
-    const facebook::jsi::Runtime::PointerValue *) {
-  throw facebook::jsi::JSINativeException("Not implemented!");
+    const facebook::jsi::Runtime::PointerValue *pointerValue) {
+  return CloneChakraPointerValue(pointerValue);
 }
 
 facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneString(
-    const facebook::jsi::Runtime::PointerValue *pv) {
-  if (!pv) {
-    return nullptr;
-  }
-  const ChakraStringValue *string = static_cast<const ChakraStringValue *>(pv);
-  return makeStringValue(string->m_str);
+    const facebook::jsi::Runtime::PointerValue *pointerValue) {
+  return CloneChakraPointerValue(pointerValue);
 }
 
 facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneObject(
-    const facebook::jsi::Runtime::PointerValue *pv) {
-  if (!pv) {
-    return nullptr;
-  }
-
-  const ChakraObjectValue *object = static_cast<const ChakraObjectValue *>(pv);
-  return makeObjectValue(object->m_obj);
+    const facebook::jsi::Runtime::PointerValue *pointerValue) {
+  return CloneChakraPointerValue(pointerValue);
 }
 
 facebook::jsi::Runtime::PointerValue *ChakraRuntime::clonePropNameID(
-    const facebook::jsi::Runtime::PointerValue *pv) {
-  if (!pv) {
-    return nullptr;
-  }
-
-  const ChakraPropertyIdValue *propId =
-      static_cast<const ChakraPropertyIdValue *>(pv);
-  return makePropertyIdValue(propId->m_propId);
+    const facebook::jsi::Runtime::PointerValue *pointerValue) {
+  return CloneChakraPointerValue(pointerValue);
 }
 
 facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromAscii(
     const char *str,
     size_t length) {
-  JsValueRef propIdRef = createJSPropertyId(str, length);
-
-  auto res = createPropNameID(propIdRef);
-  return res;
+  ChakraObjectRef propId = GetPropertyId(std::string_view{str, length});
+  return MakePointer<facebook::jsi::PropNameID>(std::move(propId));
 }
 
 facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromUtf8(
     const uint8_t *utf8,
     size_t length) {
-  JsValueRef prpoIdRef =
-      createJSPropertyId(reinterpret_cast<const char *>(utf8), length);
-
-  auto res = createPropNameID(prpoIdRef);
-  return res;
+  return createPropNameIDFromAscii(
+      Common::Utilities::CheckedReinterpretCast<const char *>(utf8), length);
 }
 
 facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(
     const facebook::jsi::String &str) {
-  std::string propNameString = JSStringToSTLString(stringRef(str));
-  return createPropNameIDFromUtf8(
-      reinterpret_cast<const uint8_t *>(propNameString.c_str()),
-      propNameString.length());
+  // We don not use the functions:
+  //   std::string ChakraRuntime::utf8(const String& str), and
+  //   std::string ToStdString(const ChakraObjectRef &jsString)
+  // here to avoud excessive Unicode conversions.
+  std::wstring propName = ToStdWstring(GetChakraObjectRef(str));
+  return MakePointer<facebook::jsi::PropNameID>(GetPropertyId(propName));
 }
 
-std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &sym) {
-  const wchar_t *name;
-  checkException(JsGetPropertyNameFromId(propIdRef(sym), &name));
-  return Microsoft::Common::Unicode::Utf16ToUtf8(name, wcslen(name));
+std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
+  return Common::Unicode::Utf16ToUtf8(GetPropertyName(GetChakraObjectRef(id)));
 }
 
 bool ChakraRuntime::compare(
-    const facebook::jsi::PropNameID &a,
-    const facebook::jsi::PropNameID &b) {
-  bool result;
-  JsEquals(propIdRef(a), propIdRef(b), &result);
-  return result;
+    const facebook::jsi::PropNameID &lhs,
+    const facebook::jsi::PropNameID &rhs) {
+  return CompareJsPropertyIds(GetChakraObjectRef(lhs), GetChakraObjectRef(rhs));
 }
 
-std::string ChakraRuntime::symbolToString(const facebook::jsi::Symbol &) {
-  throw facebook::jsi::JSINativeException("Not implemented!");
+std::string ChakraRuntime::symbolToString(const facebook::jsi::Symbol &s) {
+  return ToStdString(ToJsString(GetChakraObjectRef(s)));
 }
 
 facebook::jsi::String ChakraRuntime::createStringFromAscii(
     const char *str,
     size_t length) {
-  // Yes we end up double casting for semantic reasons (UTF8 contains ASCII,
-  // not the other way around)
-  return this->createStringFromUtf8(
-      reinterpret_cast<const uint8_t *>(str), length);
+  // Unfortunately due to the typing used by JSI and Chakra, we have to do a
+  // double reinterpret cast here.
+  return createStringFromUtf8(
+      Common::Utilities::CheckedReinterpretCast<const uint8_t *>(str), length);
 }
 
 facebook::jsi::String ChakraRuntime::createStringFromUtf8(
     const uint8_t *str,
     size_t length) {
-  JsValueRef stringRef =
-      createJSString(reinterpret_cast<const char *>(str), length);
-  return createString(stringRef);
+  return MakePointer<facebook::jsi::String>(ToJsString(std::string_view{
+      Common::Utilities::CheckedReinterpretCast<const char *>(str), length}));
 }
 
 std::string ChakraRuntime::utf8(const facebook::jsi::String &str) {
-  return JSStringToSTLString(stringRef(str));
+  return ToStdString(GetChakraObjectRef(str));
 }
 
 facebook::jsi::Object ChakraRuntime::createObject() {
-  return createObject(static_cast<JsValueRef>(nullptr));
+  JsValueRef obj;
+  VerifyJsErrorElseThrow(JsCreateObject(&obj));
+  return MakePointer<facebook::jsi::Object>(obj);
 }
 
 facebook::jsi::Object ChakraRuntime::createObject(
     std::shared_ptr<facebook::jsi::HostObject> hostObject) {
   facebook::jsi::Object proxyTarget =
       ObjectWithExternalData<HostObjectProxy>::create(
-          *this, new HostObjectProxy(*this, hostObject));
+          *this, std::make_unique<HostObjectProxy>(*this, hostObject));
   return createProxy(std::move(proxyTarget), createHostObjectProxyHandler());
 }
 
@@ -370,84 +324,66 @@ facebook::jsi::HostFunctionType &ChakraRuntime::getHostFunction(
 
 facebook::jsi::Value ChakraRuntime::getProperty(
     const facebook::jsi::Object &obj,
-    const facebook::jsi::String &name) {
-  JsValueRef objRef = objectRef(obj);
-
-  std::wstring propName = JSStringToSTLWString(stringRef(name));
-  JsPropertyIdRef propIdRef;
-  checkException(JsGetPropertyIdFromName(propName.c_str(), &propIdRef));
-
-  JsValueRef value;
-  checkException(JsGetProperty(objectRef(obj), propIdRef, &value));
-  return createValue(value);
+    const facebook::jsi::PropNameID &name) {
+  JsValueRef result = nullptr;
+  VerifyJsErrorElseThrow(JsGetProperty(
+      GetChakraObjectRef(obj), GetChakraObjectRef(name), &result));
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 facebook::jsi::Value ChakraRuntime::getProperty(
     const facebook::jsi::Object &obj,
+    const facebook::jsi::String &name) {
+  return getProperty(obj, createPropNameIDFromString(name));
+}
+
+bool ChakraRuntime::hasProperty(
+    const facebook::jsi::Object &obj,
     const facebook::jsi::PropNameID &name) {
-  JsValueRef objRef = objectRef(obj);
-  JsValueRef exc = nullptr;
-  JsValueRef res;
-  checkException(JsGetProperty(objRef, propIdRef(name), &res));
-  return createValue(res);
+  bool result = false;
+  VerifyJsErrorElseThrow(JsHasProperty(
+      GetChakraObjectRef(obj), GetChakraObjectRef(name), &result));
+  return result;
 }
 
 bool ChakraRuntime::hasProperty(
     const facebook::jsi::Object &obj,
     const facebook::jsi::String &name) {
-  std::wstring propName = JSStringToSTLWString(stringRef(name));
-
-  JsPropertyIdRef propId = JS_INVALID_REFERENCE;
-  checkException(JsGetPropertyIdFromName(propName.c_str(), &propId));
-
-  bool hasProperty;
-  checkException(JsHasProperty(objectRef(obj), propId, &hasProperty));
-  return hasProperty;
-}
-
-bool ChakraRuntime::hasProperty(
-    const facebook::jsi::Object &obj,
-    const facebook::jsi::PropNameID &name) {
-  bool hasProperty;
-  checkException(JsHasProperty(objectRef(obj), propIdRef(name), &hasProperty));
-  return hasProperty;
+  return hasProperty(obj, createPropNameIDFromString(name));
 }
 
 void ChakraRuntime::setPropertyValue(
     facebook::jsi::Object &object,
     const facebook::jsi::PropNameID &name,
     const facebook::jsi::Value &value) {
-  checkException(
-      JsSetProperty(objectRef(object), propIdRef(name), valueRef(value), true));
+  // We use strict rules for property assignments here, so any assignment that
+  // silently fails in normal code (assignment to a non-writable global or
+  // property, assignment to a getter-only property, assignment to a new
+  // property on a non-extensible object) will throw.
+  VerifyJsErrorElseThrow(JsSetProperty(
+      GetChakraObjectRef(object),
+      GetChakraObjectRef(name),
+      ToChakraObjectRef(value),
+      true /* useStrictRules */));
 }
 
 void ChakraRuntime::setPropertyValue(
     facebook::jsi::Object &object,
     const facebook::jsi::String &name,
     const facebook::jsi::Value &value) {
-  std::wstring propName = JSStringToSTLWString(stringRef(name));
-
-  JsPropertyIdRef propId = JS_INVALID_REFERENCE;
-  checkException(JsGetPropertyIdFromName(propName.c_str(), &propId));
-
-  checkException(
-      JsSetProperty(objectRef(object), propId, valueRef(value), true));
+  setPropertyValue(object, createPropNameIDFromString(name), value);
 }
 
-bool ChakraRuntime::isArray(const facebook::jsi::Object &obj) const {
-  JsValueType type;
-  JsGetValueType(objectRef(obj), &type);
-  return type == JsValueType::JsArray;
+bool ChakraRuntime::isArray(const facebook::jsi::Object &object) const {
+  return GetValueType(GetChakraObjectRef(object)) == JsArray;
 }
 
-bool ChakraRuntime::isArrayBuffer(const facebook::jsi::Object & /*obj*/) const {
-  throw std::runtime_error("Unsupported");
+bool ChakraRuntime::isArrayBuffer(const facebook::jsi::Object &object) const {
+  return GetValueType(GetChakraObjectRef(object)) == JsArrayBuffer;
 }
 
 bool ChakraRuntime::isFunction(const facebook::jsi::Object &obj) const {
-  JsValueType type;
-  JsGetValueType(objectRef(obj), &type);
-  return type == JsValueType::JsFunction;
+  return GetValueType(GetChakraObjectRef(obj)) == JsFunction;
 }
 
 bool ChakraRuntime::isHostObject(const facebook::jsi::Object &obj) const {
@@ -464,91 +400,124 @@ bool ChakraRuntime::isHostFunction(const facebook::jsi::Function &obj) const {
 }
 
 facebook::jsi::Array ChakraRuntime::getPropertyNames(
-    const facebook::jsi::Object &obj) {
-  JsValueRef propertyNamesArrayRef;
-  checkException(JsGetOwnPropertyNames(objectRef(obj), &propertyNamesArrayRef));
+    const facebook::jsi::Object &object) {
+  constexpr const char *const jsGetPropertyNamesSource =
+      "(function()\n"
+      "{\n"
+      "  return function(obj)\n"
+      "  {\n"
+      "    var propertyNames = []\n"
+      "    for (propertyName in obj) \n"
+      "    {\n"
+      "      propertyNames.push(propertyName)\n"
+      "    }\n"
+      "    return propertyNames\n"
+      "  }\n"
+      "})()";
 
-  JsPropertyIdRef propertyId;
-  checkException(JsGetPropertyIdFromName(L"length", &propertyId));
-  JsValueRef countRef;
-  checkException(JsGetProperty(propertyNamesArrayRef, propertyId, &countRef));
-  int count;
-  checkException(JsNumberToInt(countRef, &count));
+  static facebook::jsi::StringBuffer jsGetPropertyNamesSourceBuffer{
+      jsGetPropertyNamesSource};
 
-  auto result = createArray(count);
-  for (int i = 0; i < count; i++) {
-    JsValueRef index;
-    checkException(JsIntToNumber(i, &index));
-    JsValueRef propertyName;
-    checkException(
-        JsGetIndexedProperty(propertyNamesArrayRef, index, &propertyName));
-    result.setValueAtIndex(*this, i, createString(propertyName));
-  }
+  facebook::jsi::Function jsGetPropertyNames =
+      evaluateJavaScriptSimple(jsGetPropertyNamesSourceBuffer, "")
+          .asObject(*this)
+          .asFunction(*this);
 
-  return result;
+  facebook::jsi::Value objAsValue(*this, object);
+  return call(
+             jsGetPropertyNames,
+             facebook::jsi::Value::undefined(),
+             &objAsValue,
+             1)
+      .asObject(*this)
+      .asArray(*this);
 }
 
+// Only ChakraCore supports weak reference semantics, so ChakraRuntime
+// WeakObjects are in fact strong references.
+
 facebook::jsi::WeakObject ChakraRuntime::createWeakObject(
-    const facebook::jsi::Object &obj) {
+    const facebook::jsi::Object &object) {
   return make<facebook::jsi::WeakObject>(
-      makeWeakRefValue(newWeakObjectRef(obj)));
+      CloneChakraPointerValue(getPointerValue(object)));
 }
 
 facebook::jsi::Value ChakraRuntime::lockWeakObject(
-    const facebook::jsi::WeakObject &weakObj) {
-  return createValue(strongObjectRef(weakObj));
+    const facebook::jsi::WeakObject &weakObject) {
+  // We need to make a copy of the ChakraObjectRef held within weakObj's
+  // member PointerValue for the returned jsi::Value here.
+  ChakraObjectRef ref = GetChakraObjectRef(weakObject);
+  return ToJsiValue(std::move(ref));
 }
 
 facebook::jsi::Array ChakraRuntime::createArray(size_t length) {
-  JsValueRef result;
-  checkException(JsCreateArray(static_cast<unsigned int>(length), &result));
-  return createObject(result).getArray(*this);
+  assert(length <= UINT_MAX);
+  JsValueRef result = nullptr;
+
+  VerifyJsErrorElseThrow(
+      JsCreateArray(static_cast<unsigned int>(length), &result));
+
+  return MakePointer<facebook::jsi::Object>(result).asArray(*this);
 }
 
 size_t ChakraRuntime::size(const facebook::jsi::Array &arr) {
-  std::string lengthStr = "length";
+  assert(isArray(arr));
 
-  JsPropertyIdRef propId =
-      createJSPropertyId(lengthStr.c_str(), lengthStr.length());
+  constexpr const uint8_t propName[] = {'l', 'e', 'n', 'g', 't', 'h'};
 
-  JsValueRef valueObject;
-  checkException(JsGetProperty(objectRef(arr), propId, &valueObject));
+  facebook::jsi::PropNameID propId = createPropNameIDFromUtf8(
+      propName, Common::Utilities::ArraySize(propName));
 
-  JsValueRef numberValue;
-  checkException(JsConvertValueToNumber(valueObject, &numberValue));
-
-  int intValue;
-  checkException(JsNumberToInt(numberValue, &intValue));
-
-  return intValue;
+  return static_cast<size_t>(getProperty(arr, propId).asNumber());
 }
 
-uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer & /*obj*/) {
-  throw std::runtime_error("Unsupported");
+uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer &arrBuf) {
+  assert(isArrayBuffer(arrBuf));
+
+  uint8_t *buffer = nullptr;
+  unsigned int size = 0;
+
+  VerifyJsErrorElseThrow(
+      JsGetArrayBufferStorage(GetChakraObjectRef(arrBuf), &buffer, &size));
+
+  return buffer;
 }
 
-size_t ChakraRuntime::size(const facebook::jsi::ArrayBuffer & /*obj*/) {
-  throw std::runtime_error("Unsupported");
+size_t ChakraRuntime::size(const facebook::jsi::ArrayBuffer &arrBuf) {
+  assert(isArrayBuffer(arrBuf));
+
+  constexpr const uint8_t propName[] = {
+      'b', 'y', 't', 'e', 'l', 'e', 'n', 'g', 't', 'h'};
+
+  facebook::jsi::PropNameID propId = createPropNameIDFromUtf8(
+      propName, Common::Utilities::ArraySize(propName));
+
+  return static_cast<size_t>(getProperty(arrBuf, propId).asNumber());
 }
 
 facebook::jsi::Value ChakraRuntime::getValueAtIndex(
     const facebook::jsi::Array &arr,
-    size_t i) {
-  JsValueRef index;
-  JsIntToNumber(static_cast<int>(i), &index);
-  JsValueRef property;
-  checkException(JsGetIndexedProperty(objectRef(arr), index, &property));
-  return createValue(property);
+    size_t index) {
+  assert(isArray(arr));
+  assert(index <= INT_MAX);
+
+  JsValueRef result = nullptr;
+  VerifyJsErrorElseThrow(JsGetIndexedProperty(
+      GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), &result));
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 void ChakraRuntime::setValueAtIndexImpl(
     facebook::jsi::Array &arr,
-    size_t i,
+    size_t index,
     const facebook::jsi::Value &value) {
-  JsValueRef index;
-  JsIntToNumber(static_cast<int>(i), &index);
+  assert(isArray(arr));
+  assert(index <= INT_MAX);
 
-  checkException(JsSetIndexedProperty(objectRef(arr), index, valueRef(value)));
+  VerifyJsErrorElseThrow(JsSetIndexedProperty(
+      GetChakraObjectRef(arr),
+      ToJsNumber(static_cast<int>(index)),
+      ToChakraObjectRef(value)));
 }
 
 facebook::jsi::Function ChakraRuntime::createFunctionFromHostFunction(
@@ -557,48 +526,65 @@ facebook::jsi::Function ChakraRuntime::createFunctionFromHostFunction(
     facebook::jsi::HostFunctionType func) {
   // Currently, we are allocating this proxy object in heap .. and deleting it
   // whenever the JS object is garbage collected.
+  // TODO (yicyao): We should get rid of these naked new and delete calls using
+  // the same trick in ToJsObject and ToJsArrayBuffer.
   HostFunctionProxy *hostFuncProxy = new HostFunctionProxy(func, *this);
 
   JsValueRef funcRef;
-  checkException(JsCreateFunction(
+  VerifyJsErrorElseThrow(JsCreateFunction(
       ChakraRuntime::HostFunctionCall, hostFuncProxy, &funcRef));
-  checkException(JsSetObjectBeforeCollectCallback(
+
+  VerifyJsErrorElseThrow(JsSetObjectBeforeCollectCallback(
       funcRef, hostFuncProxy, [](JsRef ref, void *hostFuncProxy) {
         delete hostFuncProxy;
       }));
 
-  return createObject(funcRef).getFunction(*this);
+  return MakePointer<facebook::jsi::Object>(funcRef).getFunction(*this);
 }
 
 facebook::jsi::Value ChakraRuntime::call(
-    const facebook::jsi::Function &f,
+    const facebook::jsi::Function &func,
     const facebook::jsi::Value &jsThis,
     const facebook::jsi::Value *args,
     size_t count) {
-  JsValueRef result = nullptr;
-  checkException(JsCallFunction(
-      objectRef(f),
-      ArgsConverterForCall(
-          *this,
-          jsThis.isUndefined() ? nullptr : objectRef(jsThis.getObject(*this)),
-          args,
-          count),
-      static_cast<unsigned short>(count + 1),
+  // We must store these ChakraObjectRefs on the stack to make sure that they do
+  // not go out of scope when JsCallFunction is called.
+  ChakraObjectRef thisRef = ToChakraObjectRef(jsThis);
+  std::vector<ChakraObjectRef> argRefs = ToChakraObjectRefs(args, count);
+
+  std::vector<JsValueRef> argsWithThis =
+      constructJsFunctionArguments(thisRef, argRefs);
+  assert(argsWithThis.size() <= USHRT_MAX);
+
+  JsValueRef result;
+  VerifyJsErrorElseThrow(JsCallFunction(
+      GetChakraObjectRef(func),
+      argsWithThis.data(),
+      static_cast<unsigned short>(argsWithThis.size()),
       &result));
-  return createValue(result);
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 facebook::jsi::Value ChakraRuntime::callAsConstructor(
-    const facebook::jsi::Function &f,
+    const facebook::jsi::Function &func,
     const facebook::jsi::Value *args,
     size_t count) {
-  JsValueRef result = nullptr;
-  checkException(JsConstructObject(
-      objectRef(f),
-      ArgsConverterForCall(*this, nullptr, args, count),
-      static_cast<unsigned short>(count),
+  // We must store these ChakraObjectRefs on the stack to make sure that they do
+  // not go out of scope when JsConstructObject is called.
+  ChakraObjectRef undefinedRef = ToChakraObjectRef(facebook::jsi::Value());
+  std::vector<ChakraObjectRef> argRefs = ToChakraObjectRefs(args, count);
+
+  std::vector<JsValueRef> argsWithThis =
+      constructJsFunctionArguments(undefinedRef, argRefs);
+  assert(argsWithThis.size() <= USHRT_MAX);
+
+  JsValueRef result;
+  VerifyJsErrorElseThrow(JsConstructObject(
+      GetChakraObjectRef(func),
+      argsWithThis.data(),
+      static_cast<unsigned short>(argsWithThis.size()),
       &result));
-  return createValue(result);
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 facebook::jsi::Runtime::ScopeState *ChakraRuntime::pushScope() {
@@ -607,284 +593,196 @@ facebook::jsi::Runtime::ScopeState *ChakraRuntime::pushScope() {
 
 void ChakraRuntime::popScope(Runtime::ScopeState *state) {
   assert(state == nullptr);
-  checkException(JsCollectGarbage(m_runtime), "JsCollectGarbage");
+  VerifyJsErrorElseThrow(JsCollectGarbage(m_runtime));
 }
 
 bool ChakraRuntime::strictEquals(
     const facebook::jsi::String &a,
     const facebook::jsi::String &b) const {
-  bool result;
-  JsStrictEquals(stringRef(a), stringRef(b), &result);
-  return result;
+  return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
 }
 
 bool ChakraRuntime::strictEquals(
     const facebook::jsi::Object &a,
     const facebook::jsi::Object &b) const {
-  bool result;
-  JsStrictEquals(objectRef(a), objectRef(b), &result);
-  return result;
+  return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
 }
 
 bool ChakraRuntime::strictEquals(
-    const facebook::jsi::Symbol &,
-    const facebook::jsi::Symbol &) const {
-  throw facebook::jsi::JSINativeException("Not implemented!");
+    const facebook::jsi::Symbol &a,
+    const facebook::jsi::Symbol &b) const {
+  return CompareJsValues(GetChakraObjectRef(a), GetChakraObjectRef(b));
 }
 
 bool ChakraRuntime::instanceOf(
-    const facebook::jsi::Object &o,
-    const facebook::jsi::Function &f) {
-  bool res;
-  checkException(JsInstanceOf(objectRef(o), objectRef(f), &res));
-  return res;
+    const facebook::jsi::Object &obj,
+    const facebook::jsi::Function &func) {
+  bool result;
+  VerifyJsErrorElseThrow(
+      JsInstanceOf(GetChakraObjectRef(obj), GetChakraObjectRef(func), &result));
+  return result;
 }
 
 #pragma endregion Functions_inherited_from_Runtime
 
-facebook::jsi::Value ChakraRuntime::createValue(JsValueRef value) const {
-  JsValueType type;
-  JsGetValueType(value, &type);
+facebook::jsi::Value ChakraRuntime::ToJsiValue(ChakraObjectRef &&ref) {
+  JsValueType type = GetValueType(ref);
 
   switch (type) {
-    case JsUndefined:
+    case JsUndefined: {
       return facebook::jsi::Value();
-
-    case JsNull:
-      return facebook::jsi::Value(nullptr);
-
-    case JsNumber: {
-      double doubleValue;
-      JsNumberToDouble(value, &doubleValue);
-      facebook::jsi::Value val(doubleValue);
-      return val;
-    }
-
-    case JsString: {
-      std::string utf8str = JSStringToSTLString(value);
-      return facebook::jsi::String::createFromUtf8(
-          *const_cast<facebook::jsi::Runtime *>(
-              reinterpret_cast<const facebook::jsi::Runtime *>(this)),
-          reinterpret_cast<const uint8_t *>(utf8str.c_str()),
-          utf8str.size());
       break;
     }
-
-    case JsBoolean: {
-      bool boolValue;
-      JsBooleanToBool(value, &boolValue);
-      facebook::jsi::Value val(boolValue);
-      return val;
+    case JsNull: {
+      return facebook::jsi::Value(nullptr);
+      break;
     }
-
+    case JsNumber: {
+      double number;
+      VerifyJsErrorElseThrow(JsNumberToDouble(ref, &number));
+      return facebook::jsi::Value(number);
+      break;
+    }
+    case JsString: {
+      return facebook::jsi::Value(
+          *this, MakePointer<facebook::jsi::String>(std::move(ref)));
+      break;
+    }
+    case JsBoolean: {
+      bool b;
+      VerifyJsErrorElseThrow(JsBooleanToBool(ref, &b));
+      return facebook::jsi::Value(b);
+      break;
+    }
+    case JsSymbol: {
+      return facebook::jsi::Value(
+          *this, MakePointer<facebook::jsi::Symbol>(std::move(ref)));
+      break;
+    }
     case JsObject:
     case JsFunction:
-    case JsArray: {
-      return facebook::jsi::Value(createObject(value));
-      break;
-    }
-
     case JsError:
-    case JsSymbol:
+    case JsArray:
     case JsArrayBuffer:
     case JsTypedArray:
-    case JsDataView:
-    default:
+    case JsDataView: {
+      return facebook::jsi::Value(
+          *this, MakePointer<facebook::jsi::Object>(std::move(ref)));
+      break;
+    }
+    default: {
+      // Control flow should never reach here.
       std::terminate();
       break;
+    }
   }
+
+  // Control flow should never reach here.
+  std::terminate();
 }
 
-JsValueRef ChakraRuntime::valueRef(const facebook::jsi::Value &valueIn) {
-  if (valueIn.isUndefined()) {
-    JsValueRef value;
-    JsGetUndefinedValue(&value);
-    return value;
-  } else if (valueIn.isNull()) {
-    JsValueRef value;
-    JsGetNullValue(&value);
-    return value;
-  } else if (valueIn.isBool()) {
-    JsValueRef value;
-    JsBoolToBoolean(valueIn.getBool(), &value);
-    return value;
-  } else if (valueIn.isNumber()) {
-    JsValueRef value;
-    JsDoubleToNumber(valueIn.getNumber(), &value);
-    return value;
-  } else if (valueIn.isString()) {
-    return stringRef(valueIn.getString(*this));
-  } else if (valueIn.isObject()) {
-    return objectRef(valueIn.getObject(*this));
+ChakraObjectRef ChakraRuntime::ToChakraObjectRef(
+    const facebook::jsi::Value &value) {
+  if (value.isUndefined()) {
+    JsValueRef ref;
+    VerifyJsErrorElseThrow(JsGetUndefinedValue(&ref));
+    return ChakraObjectRef(ref);
+
+  } else if (value.isNull()) {
+    JsValueRef ref;
+    VerifyJsErrorElseThrow(JsGetNullValue(&ref));
+    return ChakraObjectRef(ref);
+
+  } else if (value.isBool()) {
+    JsValueRef ref;
+    VerifyJsErrorElseThrow(JsBoolToBoolean(value.getBool(), &ref));
+    return ChakraObjectRef(ref);
+
+  } else if (value.isNumber()) {
+    JsValueRef ref;
+    VerifyJsErrorElseThrow(JsDoubleToNumber(value.asNumber(), &ref));
+    return ChakraObjectRef(ref);
+
+  } else if (value.isSymbol()) {
+    return GetChakraObjectRef(value.asSymbol(*this));
+
+  } else if (value.isString()) {
+    return GetChakraObjectRef(value.asString(*this));
+
+  } else if (value.isObject()) {
+    return GetChakraObjectRef(value.asObject(*this));
+
   } else {
-    // What are you?
-    abort();
+    // Control flow should never reach here.
+    std::terminate();
   }
 }
 
-ChakraRuntime::ChakraPropertyIdValue::~ChakraPropertyIdValue() {
-  JsRelease(m_propId, nullptr);
+std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(
+    const facebook::jsi::Value *value,
+    size_t count) {
+  std::vector<ChakraObjectRef> result{};
+
+  for (unsigned int i = 0; i < count; ++i) {
+    result.emplace_back(ToChakraObjectRef(*value));
+    ++value;
+  }
+
+  return result;
 }
 
-void ChakraRuntime::ChakraPropertyIdValue::invalidate() {
-  delete this;
+// clang-format off
+template <typename T>
+/* static */ facebook::jsi::Object
+ChakraRuntime::ObjectWithExternalData<T>::create(
+    ChakraRuntime &runtime,
+    std::unique_ptr<T> &&externalData) {
+  return runtime.MakePointer<ObjectWithExternalData<T>>(
+      ToJsObject(std::move(externalData)));
 }
 
-ChakraRuntime::ChakraPropertyIdValue::ChakraPropertyIdValue(
-    JsPropertyIdRef propIdRef)
-    : m_propId(propIdRef) {
-  JsAddRef(propIdRef, nullptr);
-}
-
-ChakraRuntime::ChakraStringValue::ChakraStringValue(JsValueRef str)
-    : m_str(str) {
-  JsAddRef(str, nullptr);
-}
-
-void ChakraRuntime::ChakraStringValue::invalidate() {
-  delete this;
-}
-
-ChakraRuntime::ChakraStringValue::~ChakraStringValue() {
-  JsRelease(m_str, nullptr);
-}
-
-ChakraRuntime::ChakraObjectValue::ChakraObjectValue(JsValueRef obj)
-    : m_obj(obj) {
-  JsAddRef(m_obj, nullptr);
-}
-
-void ChakraRuntime::ChakraObjectValue::invalidate() {
-  delete this;
-}
-
-ChakraRuntime::ChakraObjectValue::~ChakraObjectValue() {
-  JsRelease(m_obj, nullptr);
-}
-
-ChakraRuntime::ChakraWeakRefValue::ChakraWeakRefValue(JsWeakRef obj)
-    : m_obj(obj) {
-  JsAddRef(m_obj, nullptr);
-}
-
-void ChakraRuntime::ChakraWeakRefValue::invalidate() {
-  delete this;
-}
-
-ChakraRuntime::ChakraWeakRefValue::~ChakraWeakRefValue() {
-  JsRelease(m_obj, nullptr);
-}
-
-template <class T>
-/*static */ facebook::jsi::Object ChakraRuntime::ObjectWithExternalData<
-    T>::create(ChakraRuntime &rt, T *externalData) {
-  return rt.createObject(static_cast<JsValueRef>(nullptr), externalData);
-}
-
-template <class T>
-/*static */ ChakraRuntime::ObjectWithExternalData<T>
+template <typename T>
+/* static */ ChakraRuntime::ObjectWithExternalData<T>
 ChakraRuntime::ObjectWithExternalData<T>::fromExisting(
-    ChakraRuntime &rt,
+    ChakraRuntime &runtime,
     facebook::jsi::Object &&obj) {
-  return ObjectWithExternalData<T>(rt.cloneObject(getPointerValue(obj)));
+  return ObjectWithExternalData<T>(runtime.cloneObject(getPointerValue(obj)));
 }
+// clang-format on
 
-template <class T>
+template <typename T>
 T *ChakraRuntime::ObjectWithExternalData<T>::getExternalData() {
   T *externalData;
-  JsGetExternalData(
-      static_cast<const ChakraObjectValue *>(getPointerValue(*this))->m_obj,
-      reinterpret_cast<void **>(&externalData));
+  VerifyChakraErrorElseThrow(JsGetExternalData(
+      GetChakraObjectRef(*this), reinterpret_cast<void **>(&externalData)));
   return externalData;
 }
 
-void ChakraRuntime::checkException(JsErrorCode result) {
-  bool hasException = false;
-  if (result == JsNoError && (JsHasException(&hasException), !hasException))
-    return;
-
-  checkException(result, nullptr);
-}
-
-void ChakraRuntime::checkException(JsErrorCode result, const char *message) {
-  bool hasException = false;
-  if (result == JsNoError && (JsHasException(&hasException), !hasException))
-    return;
-
-  std::ostringstream errorStream;
-
-  if (message != nullptr)
-    errorStream << message << ". ";
-
-  if (result != JsNoError) {
-    errorStream << "ChakraCore API Error :" << std::hex << result << ". ";
-  }
-
-  if (hasException || result == JsErrorScriptException) {
-    errorStream << "JS exception found: ";
-
-    JsValueRef exn;
-    JsGetAndClearException(&exn);
-
-    JsPropertyIdRef messageName;
-    JsGetPropertyIdFromName(L"stack", &messageName);
-
-    JsValueRef messageValue;
-    if (JsGetProperty(exn, messageName, &messageValue) == JsNoError) {
-      if (JsConvertValueToString(exn, &messageValue) != JsNoError) {
-        errorStream << "Unable to retrieve JS exception stack";
-      } else {
-        errorStream << JSStringToSTLString(messageValue);
-      }
-    } else {
-      JsValueRef exnJStr;
-      if (JsConvertValueToString(exn, &exnJStr) != JsNoError) {
-        errorStream << "Unable to describe JS exception";
-      } else {
-        errorStream << JSStringToSTLString(exnJStr);
-      }
+void ChakraRuntime::VerifyJsErrorElseThrow(JsErrorCode error) {
+  switch (error) {
+    case JsNoError: {
+      return;
+      break;
     }
-  }
 
-  std::string errorString = errorStream.str();
-  throw facebook::jsi::JSError(
-      *this, createStringFromAscii(errorString.c_str(), errorString.length()));
-}
+    case JsErrorScriptException: {
+      JsValueRef jsError;
+      VerifyChakraErrorElseThrow(JsGetAndClearException(&jsError));
+      throw facebook::jsi::JSError(
+          "A JavaScript Error was thrown.",
+          *this,
+          ToJsiValue(ChakraObjectRef(jsError)));
+      break;
+    }
 
-JsValueRef ChakraRuntime::stringRef(const facebook::jsi::String &str) {
-  return static_cast<const ChakraStringValue *>(getPointerValue(str))->m_str;
-}
+    default: {
+      VerifyChakraErrorElseThrow(error);
+      break;
+    }
+  } // switch (error)
 
-JsPropertyIdRef ChakraRuntime::propIdRef(const facebook::jsi::PropNameID &sym) {
-  return static_cast<const ChakraPropertyIdValue *>(getPointerValue(sym))
-      ->m_propId;
-}
-
-JsValueRef ChakraRuntime::objectRef(const facebook::jsi::Object &obj) {
-  return static_cast<const ChakraObjectValue *>(getPointerValue(obj))->m_obj;
-}
-
-JsWeakRef ChakraRuntime::objectRef(const facebook::jsi::WeakObject &obj) {
-  return static_cast<const ChakraWeakRefValue *>(getPointerValue(obj))->m_obj;
-}
-
-facebook::jsi::String ChakraRuntime::createString(JsValueRef str) const {
-  return make<facebook::jsi::String>(makeStringValue(str));
-}
-
-facebook::jsi::PropNameID ChakraRuntime::createPropNameID(JsValueRef str) {
-  return make<facebook::jsi::PropNameID>(makePropertyIdValue(str));
-}
-
-template <class T>
-facebook::jsi::Object ChakraRuntime::createObject(
-    JsValueRef objectRef,
-    T *externalData) const {
-  return make<facebook::jsi::Object>(makeObjectValue(objectRef, externalData));
-}
-
-facebook::jsi::Object ChakraRuntime::createObject(JsValueRef obj) const {
-  return make<facebook::jsi::Object>(makeObjectValue(obj));
+  // Control flow should never reach here.
+  std::terminate();
 }
 
 facebook::jsi::Object ChakraRuntime::createProxy(
@@ -1011,89 +909,6 @@ facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
   return handlerObj;
 }
 
-facebook::jsi::Runtime::PointerValue *ChakraRuntime::makeStringValue(
-    JsValueRef stringRef) const {
-  if (!stringRef) {
-    JsValueRef emptyJsValue = createJSString("", 0);
-    stringRef = emptyJsValue;
-  }
-  return new ChakraStringValue(stringRef);
-}
-
-facebook::jsi::Runtime::PointerValue *ChakraRuntime::makeObjectValue(
-    JsValueRef objectRef) const {
-  if (!objectRef) {
-    JsCreateObject(&objectRef);
-  }
-
-  ChakraObjectValue *chakraObjValue = new ChakraObjectValue(objectRef);
-  return chakraObjValue;
-}
-
-template <class T>
-facebook::jsi::Runtime::PointerValue *ChakraRuntime::makeObjectValue(
-    JsValueRef objectRef,
-    T *externaldata) const {
-  if (!externaldata) {
-    return makeObjectValue(objectRef);
-  }
-
-  // Note :: We explicitly delete the external data proxy when the JS value is
-  // finalized. The proxy is expected to do the right thing in destructor, for
-  // e.g. decrease the ref count of a shared resource.
-  if (!objectRef) {
-    JsCreateExternalObject(
-        externaldata, [](void *data) { delete data; }, &objectRef);
-  } else {
-    JsSetExternalData(
-        objectRef, externaldata); // TODO : Is there an API to listen to
-                                  // finalization of arbitrary objects ?
-  }
-
-  ChakraObjectValue *chakraObjValue = new ChakraObjectValue(objectRef);
-  return chakraObjValue;
-}
-
-facebook::jsi::Runtime::PointerValue *ChakraRuntime::makePropertyIdValue(
-    JsPropertyIdRef propIdRef) const {
-  if (!propIdRef) {
-    std::terminate();
-  }
-  return new ChakraPropertyIdValue(propIdRef);
-}
-
-facebook::jsi::Runtime::PointerValue *ChakraRuntime::makeWeakRefValue(
-    JsWeakRef objWeakRef) const {
-  if (!objWeakRef)
-    std::terminate();
-  return new ChakraWeakRefValue(objWeakRef);
-}
-
-std::wstring ChakraRuntime::JSStringToSTLWString(JsValueRef str) {
-  const wchar_t *value;
-  size_t length;
-
-  if (JsNoError != JsStringToPointer(str, &value, &length)) {
-    std::terminate();
-  }
-
-  // Note: Copying the string out of JsString, as required.
-  return std::wstring(value, length);
-}
-
-std::string ChakraRuntime::JSStringToSTLString(JsValueRef str) {
-  const wchar_t *value;
-  size_t length;
-
-  if (JsNoError != JsStringToPointer(str, &value, &length)) {
-    std::terminate();
-  }
-
-  // Note: This results in multiple buffer copyings. We should look for
-  // optimization.
-  return Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring(value, length));
-}
-
 void ChakraRuntime::setupMemoryTracker() noexcept {
   if (runtimeArgs().memoryTracker) {
     size_t initialMemoryUsage = 0;
@@ -1109,7 +924,8 @@ void ChakraRuntime::setupMemoryTracker() noexcept {
         [](void *callbackState,
            JsMemoryEventType allocationEvent,
            size_t allocationSize) -> bool {
-          auto memoryTrackerPtr = static_cast<MemoryTracker *>(callbackState);
+          auto memoryTrackerPtr =
+              static_cast<facebook::react::MemoryTracker *>(callbackState);
           switch (allocationEvent) {
             case JsMemoryAllocate:
               memoryTrackerPtr->OnAllocation(allocationSize);
@@ -1148,36 +964,45 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
 
   if (argumentCount > maxStackArgCount) {
     heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
+
     for (size_t i = 1; i < argumentCountIncThis; i++) {
-      heapArgs[i - 1] =
-          hostFuncProxy.getRuntime().createValue(argumentsIncThis[i]);
+      heapArgs[i - 1] = hostFuncProxy.getRuntime().ToJsiValue(
+          ChakraObjectRef(argumentsIncThis[i]));
     }
     args = heapArgs.get();
+
   } else {
     for (size_t i = 1; i < argumentCountIncThis; i++) {
-      stackArgs[i - 1] =
-          hostFuncProxy.getRuntime().createValue(argumentsIncThis[i]);
+      stackArgs[i - 1] = hostFuncProxy.getRuntime().ToJsiValue(
+          ChakraObjectRef(argumentsIncThis[i]));
     }
     args = stackArgs;
   }
+
   JsValueRef res{JS_INVALID_REFERENCE};
   facebook::jsi::Value thisVal(
-      hostFuncProxy.getRuntime().createObject(argumentsIncThis[0]));
+      hostFuncProxy.getRuntime().MakePointer<facebook::jsi::Object>(
+          argumentsIncThis[0]));
+
   try {
     facebook::jsi::Value retVal = hostFuncProxy.getHostFunction()(
         hostFuncProxy.getRuntime(), thisVal, args, argumentCount);
-    res = hostFuncProxy.getRuntime().valueRef(retVal);
+    res = hostFuncProxy.getRuntime().ToChakraObjectRef(retVal);
+
   } catch (const facebook::jsi::JSError &error) {
-    JsSetException(hostFuncProxy.getRuntime().valueRef(error.value()));
+    JsSetException(hostFuncProxy.getRuntime().ToChakraObjectRef(error.value()));
+
   } catch (const std::exception &ex) {
     std::string exwhat(ex.what());
     JsValueRef exn;
-    exn = createJSString(exwhat.c_str(), exwhat.size());
+    exn = ToJsString(std::string_view{exwhat.c_str(), exwhat.size()});
     JsSetException(exn);
+
   } catch (...) {
     std::string exceptionString("Exception in HostFunction: <unknown>");
     JsValueRef exn;
-    exn = createJSString(exceptionString.c_str(), exceptionString.size());
+    exn = ToJsString(
+        std::string_view{exceptionString.c_str(), exceptionString.size()});
     JsSetException(exn);
   }
 

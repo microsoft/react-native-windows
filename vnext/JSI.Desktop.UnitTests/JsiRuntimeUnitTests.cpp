@@ -28,9 +28,7 @@ TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   EXPECT_EQ(rt.global().getProperty(rt, "x").getNumber(), 1);
 }
 
-// TODO (yicyao) #2703: Currently, comparison of property IDs is broken for
-// ChakraRuntime. Enable this test once we fix it.
-TEST_P(JsiRuntimeUnitTests, DISABLED_PropNameIDTest) {
+TEST_P(JsiRuntimeUnitTests, PropNameIDTest) {
   // This is a little weird to test, because it doesn't really exist
   // in JS yet.  All I can do is create them, compare them, and
   // receive one as an argument to a HostObject.
@@ -926,9 +924,6 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_ExceptionStackTraceTest) {
   EXPECT_NE(stack.find("world"), std::string::npos);
 }
 
-// TODO (T28293178) Remove this once exceptions are supported in all builds.
-#ifndef JSI_NO_EXCEPTION_TESTS
-
 namespace {
 
 unsigned countOccurences(const std::string &of, const std::string &in) {
@@ -944,7 +939,7 @@ unsigned countOccurences(const std::string &of, const std::string &in) {
 } // namespace
 
 TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
-  unsigned callsBeoreError = 5;
+  unsigned callsBeforeError = 5;
 
   Function sometimesThrows = function(
       "function sometimesThrows(shouldThrow, callback) {"
@@ -958,25 +953,21 @@ TEST_P(JsiRuntimeUnitTests, JSErrorsArePropagatedNicely) {
       rt,
       PropNameID::forAscii(rt, "callback"),
       0,
-      [&sometimesThrows, &callsBeoreError](
+      [&sometimesThrows, &callsBeforeError](
           Runtime &rt, const Value &thisVal, const Value *args, size_t count) {
-        return sometimesThrows.call(rt, --callsBeoreError == 0, args[0]);
+        return sometimesThrows.call(rt, --callsBeforeError == 0, args[0]);
       });
 
   try {
     sometimesThrows.call(rt, false, callback);
   } catch (JSError &error) {
-    // TODO (yicyao): Need to fix getMessage().
-    // EXPECT_EQ(error.getMessage(), "Omg, what a nasty exception");
-
-    // TODO (yicyao): Need to fix getStack().
-    // EXPECT_EQ(countOccurences("sometimesThrows", error.getStack()), 6);
+    EXPECT_EQ(error.getMessage(), "Omg, what a nasty exception");
+    EXPECT_EQ(countOccurences("sometimesThrows", error.getStack()), 6);
 
     // system JSC JSI does not implement host function names
     // EXPECT_EQ(countOccurences("callback", error.getStack(rt)), 5);
   }
 }
-#endif
 
 TEST_P(JsiRuntimeUnitTests, JSErrorsCanBeConstructedWithStack) {
   auto err = JSError(rt, "message", "stack");
