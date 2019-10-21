@@ -89,6 +89,6 @@ steps:
     timeoutInMinutes: 10
     inputs:    
       pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log 
-      artifactName: ${{parameters.project}}$(BuildConfiguration)$(BuildPlatform)
+      artifactName: Detailed Logs for ${{parameters.project}} $(BuildConfiguration) $(BuildPlatform)
       publishLocation: 'Container'
 
