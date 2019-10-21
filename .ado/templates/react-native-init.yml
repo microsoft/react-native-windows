@@ -96,7 +96,7 @@ steps:
     condition:  succeededOrFailed()
     timeoutInMinutes: 10
     inputs:    
-      pathtoPublish: $(Build.SourcesDirectory)/testcli.sln.log
+      pathtoPublish: $(Build.SourcesDirectory)/testcli/windows/testcli.sln.log
       artifactName: Detailed Logs for testcli.sln ${{ parameters.platform }} ${{ parameters.configuration }}
       publishLocation: 'Container'
 
