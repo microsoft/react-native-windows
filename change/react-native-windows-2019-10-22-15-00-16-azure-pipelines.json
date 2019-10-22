@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Add more logs to troubleshoot undefinedBuild and Pack NuGet randomly fails",
+  "packageName": "react-native-windows",
+  "email": "licanhua@live.com",
+  "commit": "b9f8626afe67dc7c9a006f4f44b3a1aa51fb0891",
+  "date": "2019-10-22T22:00:15.617Z",
+  "file": "f:\\repo\\react-native-windows\\change\\react-native-windows-2019-10-22-15-00-16-azure-pipelines.json"
+}
