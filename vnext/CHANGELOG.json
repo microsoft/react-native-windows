@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Oct 2019 01:01:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.40",
+      "version": "0.60.0-vnext.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix build issue with react-native run-windows",
+            "author": "kmelmon@microsoft.com",
+            "commit": "0faddb46f52a6409b802afa54df7ac33b6159681"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Introduce ChakraPointerValue and reimplement many Runtime functions with it.",
+            "author": "yicyao@microsoft.com",
+            "commit": "af2be74461b33fa6fdcafbb53d4f4388b16a98d6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Oct 2019 21:22:01 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.39",
       "version": "0.60.0-vnext.39",
