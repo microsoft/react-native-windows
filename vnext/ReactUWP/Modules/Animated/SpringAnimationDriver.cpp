@@ -17,7 +17,12 @@ SpringAnimationDriver::SpringAnimationDriver(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager,
     const folly::dynamic &dynamicToValues)
     : m_dynamicToValues(dynamicToValues),
-      CalculatedAnimationDriver(id, animatedValueTag, endCallback, config, manager) {
+      CalculatedAnimationDriver(
+          id,
+          animatedValueTag,
+          endCallback,
+          config,
+          manager) {
   m_springStiffness = config.find(s_springStiffnessParameterName)
                           .dereference()
                           .second.asDouble();
@@ -107,8 +112,7 @@ bool SpringAnimationDriver::IsAtRest(
        m_springStiffness == 0);
 }
 
-bool SpringAnimationDriver::IsOvershooting(
-    double currentValue) {
+bool SpringAnimationDriver::IsOvershooting(double currentValue) {
   return m_springStiffness > 0 &&
       ((m_startValue < m_endValue && currentValue > m_endValue) ||
        (m_startValue > m_endValue && currentValue < m_endValue));

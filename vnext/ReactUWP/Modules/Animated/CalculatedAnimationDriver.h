@@ -3,22 +3,21 @@
 
 #pragma once
 #include <folly/dynamic.h>
+#include <utility>
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
-#include <utility>
 
 namespace react {
 namespace uwp {
 class CalculatedAnimationDriver : public AnimationDriver {
  public:
-   using AnimationDriver::AnimationDriver;
+  using AnimationDriver::AnimationDriver;
 
   std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
   MakeAnimation(const folly::dynamic &config) override;
 
  protected:
-  virtual std::tuple<float, double> GetValueAndVelocityForTime(
-      double time) = 0;
+  virtual std::tuple<float, double> GetValueAndVelocityForTime(double time) = 0;
 
   virtual bool IsAnimationDone(double currentValue, double currentVelocity) = 0;
   double m_startValue{0};

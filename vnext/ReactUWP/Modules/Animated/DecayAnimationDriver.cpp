@@ -30,8 +30,9 @@ std::tuple<float, double> DecayAnimationDriver::GetValueAndVelocityForTime(
     double time) {
   const auto value = m_startValue +
       m_velocity / (1 - m_deceleration) *
-          (1 - std::exp(-(1 - m_deceleration) * (1000*time)));
-  return std::make_tuple(static_cast<float>(value), 42.0f); // we don't need the velocity
+          (1 - std::exp(-(1 - m_deceleration) * (1000 * time)));
+  return std::make_tuple(
+      static_cast<float>(value), 42.0f); // we don't need the velocity
 }
 
 bool DecayAnimationDriver::IsAnimationDone(

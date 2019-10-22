@@ -27,8 +27,7 @@ CalculatedAnimationDriver::MakeAnimation(const folly::dynamic &config) {
     double time = 0;
     while (!done) {
       time += 1.0f / 60.0f;
-      auto [currentValue, currentVelocity] =
-          GetValueAndVelocityForTime(time);
+      auto [currentValue, currentVelocity] = GetValueAndVelocityForTime(time);
       keyFrames.push_back(currentValue);
       if (IsAnimationDone(currentValue, currentVelocity)) {
         done = true;
