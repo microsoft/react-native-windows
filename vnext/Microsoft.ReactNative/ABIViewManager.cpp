@@ -94,7 +94,8 @@ void ABIViewManager::UpdateProperties(
     auto propertyName = pair.first.getString();
     auto propertyNameHstring = react::uwp::asHstring(propertyName);
 
-    if (const auto &propertyType = m_nativeProps.TryLookup(propertyNameHstring)) {
+    if (const auto &propertyType =
+            m_nativeProps.TryLookup(propertyNameHstring)) {
       IInspectable propertyValue = nullptr;
 
       if (propertyType.value() == ViewManagerPropertyType::Color &&

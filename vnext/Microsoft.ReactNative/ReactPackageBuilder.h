@@ -12,7 +12,8 @@ struct ReactPackageBuilder
     : winrt::implements<ReactPackageBuilder, IReactPackageBuilder> {
   ReactPackageBuilder(
       std::shared_ptr<NativeModulesProvider> const &modulesProvider,
-      std::shared_ptr<ViewManagersProvider> const &viewManagersProvider) noexcept;
+      std::shared_ptr<ViewManagersProvider> const
+          &viewManagersProvider) noexcept;
 
  public: // IReactPackageBuilder
   void AddModule(

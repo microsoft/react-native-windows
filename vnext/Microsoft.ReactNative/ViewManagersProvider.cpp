@@ -30,8 +30,8 @@ ViewManagersProvider::GetViewManagers(
 ViewManagersProvider::ViewManagersProvider() noexcept {}
 
 void ViewManagersProvider::AddViewManagerProvider(
-  winrt::hstring const& viewManagerName,
-  ReactViewManagerProvider const& viewManagerProvider) noexcept {
+    winrt::hstring const &viewManagerName,
+    ReactViewManagerProvider const &viewManagerProvider) noexcept {
   m_viewManagerProviders.emplace(
       to_string(viewManagerName), viewManagerProvider);
 }

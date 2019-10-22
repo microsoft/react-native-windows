@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 //
-// The ABIViewManager implements a FrameworkElementViewManager subclass and wraps up the ABI-safe
-// ViewManager.
+// The ABIViewManager implements a FrameworkElementViewManager subclass and
+// wraps up the ABI-safe ViewManager.
 //
 
 #pragma once
@@ -20,13 +20,13 @@
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 
 namespace winrt::Microsoft::ReactNative::Bridge {
-  class ABIViewManager : public react::uwp::FrameworkElementViewManager {
-    using Super = react::uwp::FrameworkElementViewManager;
+class ABIViewManager : public react::uwp::FrameworkElementViewManager {
+  using Super = react::uwp::FrameworkElementViewManager;
 
-  public:
-    ABIViewManager(
-        const std::shared_ptr<react::uwp::IReactInstance> &reactInstance,
-        const winrt::Microsoft::ReactNative::Bridge::IViewManager &viewManager);
+ public:
+  ABIViewManager(
+      const std::shared_ptr<react::uwp::IReactInstance> &reactInstance,
+      const winrt::Microsoft::ReactNative::Bridge::IViewManager &viewManager);
 
   const char *GetName() const override;
 
@@ -39,7 +39,8 @@ namespace winrt::Microsoft::ReactNative::Bridge {
       const folly::dynamic &reactDiffMap) override;
 
  protected:
-  winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t tag) override;
+  winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(
+      int64_t tag) override;
 
   std::string m_name;
   winrt::Microsoft::ReactNative::Bridge::IViewManager m_viewManager;
@@ -47,5 +48,5 @@ namespace winrt::Microsoft::ReactNative::Bridge {
   winrt::Windows::Foundation::Collections::
       IMapView<winrt::hstring, ViewManagerPropertyType>
           m_nativeProps;
-  };
-}
+};
+} // namespace winrt::Microsoft::ReactNative::Bridge

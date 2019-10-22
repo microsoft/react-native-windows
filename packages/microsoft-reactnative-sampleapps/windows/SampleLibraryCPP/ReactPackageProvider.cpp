@@ -7,6 +7,7 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
+#include "CustomUserControlViewManagerCPP.h"
 #include "SampleModuleCPP.h"
 
 using namespace winrt::Microsoft::ReactNative::Bridge;
@@ -17,6 +18,9 @@ namespace winrt::SampleLibraryCPP::implementation {
 void ReactPackageProvider::CreatePackage(
     IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
+  packageBuilder.AddViewManager(L"CustomUserControlViewManagerCPP", []() {
+    return winrt::make<CustomUserControlViewManagerCPP>();
+  });
 }
 
 } // namespace winrt::SampleLibraryCPP::implementation

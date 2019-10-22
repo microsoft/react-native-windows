@@ -105,6 +105,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Calculator.h" />
+    <ClInclude Include="CustomUserControlCPP.h">
+      <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="CustomUserControlViewManagerCPP.h" />
     <ClInclude Include="MyModule.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactPackageProvider.h">
@@ -113,6 +117,10 @@
     <ClInclude Include="SampleModuleCPP.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CustomUserControlCPP.cpp">
+      <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -122,6 +130,7 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="CustomUserControlCPP.idl" />
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,11 @@
       <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
       <Private>false</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <DeploymentContent>true</DeploymentContent>
+    </Page>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

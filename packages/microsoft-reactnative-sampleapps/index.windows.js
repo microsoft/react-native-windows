@@ -15,6 +15,7 @@ import {
 import { NativeModules } from 'react-native';
 
 let CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
+let CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
 var log = function(result) {
   console.log(result);
@@ -99,6 +100,7 @@ class SampleApp extends Component {
         <Button onPress={this._onPressHandlerSMCS} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={this._onPressHandlerSMCPP} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
         <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" />
+        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
         <Text style={styles.instructions}>
           Hello from Seattle!
         </Text>
