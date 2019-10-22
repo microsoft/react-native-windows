@@ -185,7 +185,7 @@ ChakraObjectRef ToJsObject(std::unique_ptr<T> &&data) {
 
   // We only call data.release() after JsCreateExternalObject succeeds.
   // Otherwise, when JsCreateExternalObject fails and an exception is thrown,
-  // the buffer that data used to own will be leaked.
+  // the memory that data used to own will be leaked.
   data.release();
   return ChakraObjectRef(obj);
 }
