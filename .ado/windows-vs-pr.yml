@@ -230,6 +230,21 @@ jobs:
           arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 30
 
       - task: VSTest@2
+        displayName: List Desktop Integration Tests
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+          otherConsoleOptions: '/ListTests'
+
+      - task: VSTest@2
         displayName: Run Desktop Integration Tests
         inputs:
           testSelector: testAssemblies
@@ -242,6 +257,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
+          otherConsoleOptions: 'RunConfiguration.TestSessionTimeout=100000'    
 
       - template: templates/stop-packagers.yml
 
