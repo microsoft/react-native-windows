@@ -17,7 +17,7 @@ SpringAnimationDriver::SpringAnimationDriver(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager,
     const folly::dynamic &dynamicToValues)
     : m_dynamicToValues(dynamicToValues),
-      AnimationDriver(id, animatedValueTag, endCallback, config, manager) {
+      CalculatedAnimationDriver(id, animatedValueTag, endCallback, config, manager) {
   m_springStiffness = config.find(s_springStiffnessParameterName)
                           .dereference()
                           .second.asDouble();
@@ -45,71 +45,22 @@ SpringAnimationDriver::SpringAnimationDriver(
       config.find(s_iterationsParameterName).dereference().second.asDouble());
 }
 
-std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-SpringAnimationDriver::MakeAnimation(const folly::dynamic &config) {
-  const auto [scopedBatch, animation, easingFunction] = []() {
-    const auto compositor = winrt::Window::Current().Compositor();
-    return std::make_tuple(
-        compositor.CreateScopedBatch(
-            winrt::CompositionBatchTypes::AllAnimations),
-        compositor.CreateScalarKeyFrameAnimation(),
-        compositor.CreateLinearEasingFunction());
-  }();
-
-  const auto startValue = GetAnimatedValue()->Value();
-  std::vector<float> keyFrames = [this, startValue]() {
-    std::vector<float> keyFrames;
-    bool done = false;
-    double time = 0;
-    while (!done) {
-      time += 1.0f / 60.0f;
-      auto [currentValue, currentVelocity] =
-          GetValueAndVelocityForTime(time, startValue);
-      keyFrames.push_back(currentValue);
-      if (IsAtRest(currentVelocity, currentValue, m_endValue) ||
-          (m_overshootClampingEnabled &&
-           IsOvershooting(currentValue, startValue))) {
-        done = true;
-      }
-    }
-    return keyFrames;
-  }();
-
-  std::chrono::milliseconds duration(
-      static_cast<int>(keyFrames.size() / 60.0f * 1000.0f));
-  animation.Duration(duration);
-
-  auto normalizedProgress = 0.0f;
-  // We are animating the values offset property which should start at 0.
-  animation.InsertKeyFrame(normalizedProgress, 0.0f, easingFunction);
-  for (const auto keyFrame : keyFrames) {
-    normalizedProgress =
-        std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
-    animation.InsertKeyFrame(
-        normalizedProgress,
-        keyFrame - static_cast<float>(startValue),
-        easingFunction);
-  }
-
-  if (m_iterations == -1) {
-    animation.IterationBehavior(winrt::AnimationIterationBehavior::Forever);
-  } else {
-    animation.IterationCount(static_cast<int32_t>(m_iterations));
-    animation.IterationBehavior(winrt::AnimationIterationBehavior::Count);
-  }
-
-  return std::make_tuple(animation, scopedBatch);
+bool SpringAnimationDriver::IsAnimationDone(
+    double currentValue,
+    double currentVelocity) {
+  return (
+      IsAtRest(currentVelocity, currentValue, m_endValue) ||
+      (m_overshootClampingEnabled && IsOvershooting(currentValue)));
 }
 
 std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
-    double time,
-    double startValue) {
-  const auto toValue = [this, time, startValue]() {
+    double time) {
+  const auto toValue = [this, time]() {
     const auto frameFromTime = static_cast<int>(time * 60.0);
     if (frameFromTime < static_cast<int>(m_dynamicToValues.size())) {
-      return startValue +
+      return m_startValue +
           (m_dynamicToValues[frameFromTime].asDouble() *
-           (m_endValue - startValue));
+           (m_endValue - m_startValue));
     }
     return m_endValue;
   }();
@@ -121,7 +72,7 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
   const auto zeta = c / (2 * std::sqrt(k * m));
   const auto omega0 = std::sqrt(k / m);
   const auto omega1 = omega0 * std::sqrt(1.0 - (zeta * zeta));
-  const auto x0 = toValue - startValue;
+  const auto x0 = toValue - m_startValue;
 
   if (zeta < 1) {
     const auto envelope = std::exp(-zeta * omega0 * time);
@@ -140,7 +91,7 @@ std::tuple<float, double> SpringAnimationDriver::GetValueAndVelocityForTime(
   } else {
     const auto envelope = std::exp(-omega0 * time);
     const auto value = static_cast<float>(
-        toValue * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0)));
+        m_endValue - envelope * (x0 + (v0 + omega0 * x0) * time));
     const auto velocity =
         envelope * (v0 * (time * omega0 - 1) + time * x0 * (omega0 * omega0));
     return std::make_tuple(value, velocity);
@@ -157,11 +108,10 @@ bool SpringAnimationDriver::IsAtRest(
 }
 
 bool SpringAnimationDriver::IsOvershooting(
-    double currentValue,
-    double startValue) {
+    double currentValue) {
   return m_springStiffness > 0 &&
-      ((startValue < m_endValue && currentValue > m_endValue) ||
-       (startValue > m_endValue && currentValue < m_endValue));
+      ((m_startValue < m_endValue && currentValue > m_endValue) ||
+       (m_startValue > m_endValue && currentValue < m_endValue));
 }
 
 double SpringAnimationDriver::ToValue() {
