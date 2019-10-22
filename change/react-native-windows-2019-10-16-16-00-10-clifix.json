@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix build issue with react-native run-windows",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "0faddb46f52a6409b802afa54df7ac33b6159681",
-  "date": "2019-10-16T23:00:10.422Z"
-}

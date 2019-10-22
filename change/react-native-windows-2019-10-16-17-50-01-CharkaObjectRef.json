@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Introduce ChakraPointerValue and reimplement many Runtime functions with it.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "af2be74461b33fa6fdcafbb53d4f4388b16a98d6",
-  "date": "2019-10-17T00:50:01.129Z",
-  "file": "D:\\Git\\hansenyy-react-native-windows-3\\change\\react-native-windows-2019-10-16-17-50-01-CharkaObjectRef.json"
-}
