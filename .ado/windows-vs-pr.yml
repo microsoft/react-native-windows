@@ -242,7 +242,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
-          otherConsoleOptions: 'RunConfiguration.TestSessionTimeout=100000'
+          otherConsoleOptions: '-- RunConfiguration.TestSessionTimeout=100000'
 
       - task: VSTest@2
         displayName: List Desktop Integration Tests
