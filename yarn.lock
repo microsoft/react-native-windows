@@ -1987,13 +1987,13 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.5.0.tgz#444265cf9080ca4574ea57e72216a0921b3ae377"
-  integrity sha512-jeLFI++McNAu9deF47AnPvlMnZIeSGRQwjo5GVIZ378nN7tOziZhUFnmKfwPW8gQqjVVylB5tudxI4LvzC6BUA==
+  version "7.5.3"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.5.3.tgz#df0f091bf486966536deb88a43713d29d6b7e497"
+  integrity sha512-zo9mHZR9dusemfMWVxKHoWywfcZrAj5U8YEQect3nwkBYOFzfRbgJ+JZcYxXDiQ5sz11rX0ZCp0fczzvf8XD2w==
   dependencies:
-    "@microsoft/api-extractor-model" "7.5.1"
-    "@microsoft/node-core-library" "3.15.1"
-    "@microsoft/ts-command-line" "4.3.2"
+    "@microsoft/api-extractor-model" "7.5.2"
+    "@microsoft/node-core-library" "3.16.0"
+    "@microsoft/ts-command-line" "4.3.4"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
     js-yaml "~3.13.1"
@@ -2005,6 +2005,14 @@
   integrity sha512-qzgmJeoqpJqYDS1yj9YTPdd/+9OWGFwfzGFyr6kVarexomdPSltcoQYIS5JnrB/RFNeUgTNUlwn5mYdyp2Xv6A==
   dependencies:
     "@microsoft/node-core-library" "3.15.1"
+    "@microsoft/tsdoc" "0.12.14"
+
+"@microsoft/api-extractor-model@7.5.2":
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.2.tgz#39a3c015ca01a3435b5f161b8fce07117e6039be"
+  integrity sha512-wDXQ6IvrVg7tp3iqA+7f7yrSzjUPQ2kVNKsrxD5AqbGeohsJYePbmWvz6V8yxxO7ZuM9W7V5zLY6pYh4epq8Dg==
+  dependencies:
+    "@microsoft/node-core-library" "3.16.0"
     "@microsoft/tsdoc" "0.12.14"
 
 "@microsoft/api-extractor@^7.3.8":
@@ -2033,6 +2041,17 @@
     jju "~1.4.0"
     z-schema "~3.18.3"
 
+"@microsoft/node-core-library@3.16.0":
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.16.0.tgz#cdd3a27b1513cb470d1098ba32d50ca22a1fb75c"
+  integrity sha512-zjgOAmOhWgE5eX8ofmRagcomeIhs96GizRm7m9UfAuzhEmWtQSOE33/WpZzoyw41S/bjevHi7YbkY+R70mdjFg==
+  dependencies:
+    "@types/node" "8.10.54"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    z-schema "~3.18.3"
+
 "@microsoft/package-deps-hash@^2.2.153":
   version "2.2.170"
   resolved "https://registry.yarnpkg.com/@microsoft/package-deps-hash/-/package-deps-hash-2.2.170.tgz#32c6e9268c2e129e98b4452b530c6fc152044f4a"
@@ -2042,6 +2061,15 @@
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.2.tgz#87341de2e24f279259297ebd38530300a9f97bc3"
   integrity sha512-2QeyilabCe6IpBylPXuY6dCA1S9ym3Ii0zakXVPpyfjSj1NesnyuUeuh6e8kyIqzqJ+3LYjfPG63XzUBtwGqqw==
+  dependencies:
+    "@types/argparse" "1.0.33"
+    argparse "~1.0.9"
+    colors "~1.2.1"
+
+"@microsoft/ts-command-line@4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.4.tgz#a52214bd86f6d65c8975f46e6b12fad68545058a"
+  integrity sha512-PNqh7tACiOaM3znLX2EjECbabk0PfChEn6lMzrC62+xtV2Xr0N0dj1PtvDX125cxxF4FNcWoZqCODzJI/cB0GA==
   dependencies:
     "@types/argparse" "1.0.33"
     argparse "~1.0.9"
@@ -5225,9 +5253,9 @@ es-abstract@^1.10.0, es-abstract@^1.11.0, es-abstract@^1.13.0, es-abstract@^1.5.
     object-keys "^1.0.12"
 
 es-abstract@^1.12.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.15.0.tgz#8884928ec7e40a79e3c9bc812d37d10c8b24cc57"
-  integrity sha512-bhkEqWJ2t2lMeaJDuk7okMkJWI/yqgH/EoGwpcvv0XW9RWQsRspI4wt6xuyuvMvvQE3gg/D9HXppgk21w78GyQ==
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.16.0.tgz#d3a26dc9c3283ac9750dca569586e976d9dcc06d"
+  integrity sha512-xdQnfykZ9JMEiasTAJZJdMWCQ1Vm00NBw79/AWi7ELfZuuPCSOMDZbT9mkOfSctVtfhb+sAAzrm+j//GjjLHLg==
   dependencies:
     es-to-primitive "^1.2.0"
     function-bind "^1.1.1"
@@ -9831,10 +9859,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.8.tar.gz":
-  version "0.60.0-microsoft.8"
-  uid a2bd4cdb70c85ada46cea8fc3294c7e7bca5139c
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.8.tar.gz#a2bd4cdb70c85ada46cea8fc3294c7e7bca5139c"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.9.tar.gz":
+  version "0.60.0-microsoft.9"
+  uid e3882023fd841d13833dce99dcf88eedd63a9f79
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.9.tar.gz#e3882023fd841d13833dce99dcf88eedd63a9f79"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
