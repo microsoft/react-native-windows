@@ -35,9 +35,7 @@ JSBigStringResourceDll::JSBigStringResourceDll(HMODULE dll, HRSRC resource) {
   }
 }
 
-std::unique_ptr<const JSBigStringResourceDll> JSBigStringResourceDll::Make(
-    HMODULE dll,
-    HRSRC resource) {
+std::unique_ptr<const JSBigStringResourceDll> JSBigStringResourceDll::Make(HMODULE dll, HRSRC resource) {
   return std::make_unique<const JSBigStringResourceDll>(dll, resource);
 }
 

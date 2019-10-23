@@ -24,8 +24,7 @@ std::wstring GetTestFileName() {
   }
 
   wchar_t testFileName[MAX_PATH];
-  if (!GetTempFileNameW(
-          tempPath, L"MemoryMappedBufferUnitTests", 0, testFileName)) {
+  if (!GetTempFileNameW(tempPath, L"MemoryMappedBufferUnitTests", 0, testFileName)) {
     std::terminate();
   }
 
@@ -55,18 +54,15 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
       std::terminate();
     }
 
-    std::unique_ptr<FILE, decltype(&fclose)> testFilePtrWrapper(
-        testFilePtr, fclose);
+    std::unique_ptr<FILE, decltype(&fclose)> testFilePtrWrapper(testFilePtr, fclose);
 
-    if (fwrite(content, sizeof(*content), size, testFilePtrWrapper.get()) !=
-        size) {
+    if (fwrite(content, sizeof(*content), size, testFilePtrWrapper.get()) != size) {
       std::terminate();
     }
   }
 
   void DeleteTestFile() {
-    if (!DeleteFileW(m_testFileName.c_str()) &&
-        GetLastError() != ERROR_FILE_NOT_FOUND) {
+    if (!DeleteFileW(m_testFileName.c_str()) && GetLastError() != ERROR_FILE_NOT_FOUND) {
       std::terminate();
     }
     if (PathFileExistsW(m_testFileName.c_str())) {
@@ -90,44 +86,32 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
     const size_t size = strlen(content);
     WriteTestFile(content, size);
 
-    std::shared_ptr<Buffer> buffer =
-        MakeMemoryMappedBuffer(m_testFileName.c_str());
+    std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(m_testFileName.c_str());
 
     Assert::IsTrue(buffer->size() == size);
-    Assert::IsTrue(
-        strcmp(CheckedReinterpretCast<const char *>(buffer->data()), content) ==
-        0);
+    Assert::IsTrue(strcmp(CheckedReinterpretCast<const char *>(buffer->data()), content) == 0);
   }
 
   TEST_METHOD(SimpleTest_WithOffest) {
-    constexpr const char *const fileContent =
-        "This is another very interesting string.";
+    constexpr const char *const fileContent = "This is another very interesting string.";
     const size_t fileSize = strlen(fileContent);
     WriteTestFile(fileContent, fileSize);
 
     const size_t fileOffset = 3;
-    std::shared_ptr<Buffer> buffer =
-        MakeMemoryMappedBuffer(m_testFileName.c_str(), fileOffset);
+    std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(m_testFileName.c_str(), fileOffset);
 
     Assert::IsTrue(buffer->size() == fileSize - fileOffset);
-    Assert::IsTrue(
-        strcmp(
-            CheckedReinterpretCast<const char *>(buffer->data()),
-            fileContent + fileOffset) == 0);
+    Assert::IsTrue(strcmp(CheckedReinterpretCast<const char *>(buffer->data()), fileContent + fileOffset) == 0);
   }
 
   TEST_METHOD(EdgeCaseFileSizeTest_NoOffset) {
     std::string content("a", GetPageSize());
     WriteTestFile(content.c_str(), content.length());
 
-    std::shared_ptr<Buffer> buffer =
-        MakeMemoryMappedBuffer(m_testFileName.c_str());
+    std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(m_testFileName.c_str());
 
     Assert::IsTrue(buffer->size() == content.length());
-    Assert::IsTrue(
-        strcmp(
-            CheckedReinterpretCast<const char *>(buffer->data()),
-            content.c_str()) == 0);
+    Assert::IsTrue(strcmp(CheckedReinterpretCast<const char *>(buffer->data()), content.c_str()) == 0);
   }
 
   TEST_METHOD(EdgeCaseFileSizeTest_WithOffset) {
@@ -135,28 +119,21 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
     WriteTestFile(content.c_str(), content.length());
 
     const size_t fileOffset = 15;
-    std::shared_ptr<Buffer> buffer =
-        MakeMemoryMappedBuffer(m_testFileName.c_str(), fileOffset);
+    std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(m_testFileName.c_str(), fileOffset);
 
     Assert::IsTrue(buffer->size() == content.length() - fileOffset);
-    Assert::IsTrue(
-        strcmp(
-            CheckedReinterpretCast<const char *>(buffer->data()),
-            content.c_str() + fileOffset) == 0);
+    Assert::IsTrue(strcmp(CheckedReinterpretCast<const char *>(buffer->data()), content.c_str() + fileOffset) == 0);
   }
 
   TEST_METHOD(ErrorTest_NullptrFileName) {
-    Assert::ExpectException<JSINativeException>([] {
-      std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(nullptr);
-    });
+    Assert::ExpectException<JSINativeException>(
+        [] { std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(nullptr); });
   }
   TEST_METHOD(ErrorTest_EmptyFile) {
     WriteTestFile("", 0);
 
-    Assert::ExpectException<JSINativeException>([this] {
-      std::shared_ptr<Buffer> buffer =
-          MakeMemoryMappedBuffer(m_testFileName.c_str());
-    });
+    Assert::ExpectException<JSINativeException>(
+        [this] { std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(m_testFileName.c_str()); });
   }
 
   TEST_METHOD(ErrorTest_InvalidOffset) {
@@ -164,8 +141,7 @@ TEST_CLASS(MemoryMappedBufferUnitTests) {
 
     Assert::ExpectException<JSINativeException>([this] {
       uint32_t badOffset = 3;
-      std::shared_ptr<Buffer> buffer =
-          MakeMemoryMappedBuffer(m_testFileName.c_str(), badOffset);
+      std::shared_ptr<Buffer> buffer = MakeMemoryMappedBuffer(m_testFileName.c_str(), badOffset);
     });
   }
 };

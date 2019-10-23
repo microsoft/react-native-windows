@@ -14,19 +14,15 @@ InterpolationAnimatedNode::InterpolationAnimatedNode(
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : ValueAnimatedNode(tag, manager) {
-  for (const auto &rangeValue :
-       config.find(s_inputRangeName).dereference().second) {
+  for (const auto &rangeValue : config.find(s_inputRangeName).dereference().second) {
     m_inputRanges.push_back(rangeValue.asDouble());
   }
-  for (const auto &rangeValue :
-       config.find(s_outputRangeName).dereference().second) {
+  for (const auto &rangeValue : config.find(s_outputRangeName).dereference().second) {
     m_outputRanges.push_back(rangeValue.asDouble());
   }
 
-  m_extrapolateLeft =
-      config.find(s_extrapolateLeftName).dereference().second.asString();
-  m_extrapolateRight =
-      config.find(s_extrapolateRightName).dereference().second.asString();
+  m_extrapolateLeft = config.find(s_extrapolateLeftName).dereference().second.asString();
+  m_extrapolateRight = config.find(s_extrapolateRightName).dereference().second.asString();
 }
 
 void InterpolationAnimatedNode::Update() {}
@@ -49,27 +45,22 @@ void InterpolationAnimatedNode::OnAttachToNode(int64_t animatedNodeTag) {
       if (const auto parent = manager->GetValueAnimatedNode(m_parentTag)) {
         const auto compositor = winrt::Window::Current().Compositor();
 
-        const auto rawValueAnimation =
-            CreateExpressionAnimation(compositor, *parent);
-        rawValueAnimation.Expression(GetExpression(
-            s_parentPropsName + static_cast<winrt::hstring>(L".") +
-            s_valueName));
+        const auto rawValueAnimation = CreateExpressionAnimation(compositor, *parent);
+        rawValueAnimation.Expression(
+            GetExpression(s_parentPropsName + static_cast<winrt::hstring>(L".") + s_valueName));
 
-        const auto offsetAnimation =
-            CreateExpressionAnimation(compositor, *parent);
+        const auto offsetAnimation = CreateExpressionAnimation(compositor, *parent);
         offsetAnimation.Expression(
             L"(" +
             GetExpression(
-                s_parentPropsName + static_cast<winrt::hstring>(L".") +
-                s_offsetName + L" + " + s_parentPropsName + L"." +
-                s_valueName) +
+                s_parentPropsName + static_cast<winrt::hstring>(L".") + s_offsetName + L" + " + s_parentPropsName +
+                L"." + s_valueName) +
             L") - this.target." + s_valueName);
 
         return std::make_tuple(rawValueAnimation, offsetAnimation);
       }
     }
-    return std::tuple<winrt::ExpressionAnimation, winrt::ExpressionAnimation>(
-        nullptr, nullptr);
+    return std::tuple<winrt::ExpressionAnimation, winrt::ExpressionAnimation>(nullptr, nullptr);
   }();
 
   m_propertySet.StartAnimation(s_valueName, rawValueAnimation);
@@ -85,20 +76,15 @@ winrt::ExpressionAnimation InterpolationAnimatedNode::CreateExpressionAnimation(
   const auto animation = compositor.CreateExpressionAnimation();
   animation.SetReferenceParameter(s_parentPropsName, parent.PropertySet());
   for (size_t i = 0; i < m_inputRanges.size(); i++) {
-    animation.SetScalarParameter(
-        s_inputName.data() + std::to_wstring(i),
-        static_cast<float>(m_inputRanges[i]));
+    animation.SetScalarParameter(s_inputName.data() + std::to_wstring(i), static_cast<float>(m_inputRanges[i]));
   }
   for (size_t i = 0; i < m_outputRanges.size(); i++) {
-    animation.SetScalarParameter(
-        s_outputName.data() + std::to_wstring(i),
-        static_cast<float>(m_outputRanges[i]));
+    animation.SetScalarParameter(s_outputName.data() + std::to_wstring(i), static_cast<float>(m_outputRanges[i]));
   }
   return animation;
 }
 
-winrt::hstring InterpolationAnimatedNode::GetExpression(
-    const winrt::hstring &value) {
+winrt::hstring InterpolationAnimatedNode::GetExpression(const winrt::hstring &value) {
   const auto leftInterpolateExpression = GetInterpolateExpression(
       value,
       s_inputName.data() + std::to_wstring(0),
@@ -114,8 +100,8 @@ winrt::hstring InterpolationAnimatedNode::GetExpression(
       s_outputName.data() + std::to_wstring(size - 2),
       s_outputName.data() + std::to_wstring(size - 1));
 
-  auto returnValue = GetLeftExpression(value, leftInterpolateExpression) +
-      GetRightExpression(value, rightInterpolateExpression);
+  auto returnValue =
+      GetLeftExpression(value, leftInterpolateExpression) + GetRightExpression(value, rightInterpolateExpression);
 
   // Start at 1 because we use the index and previous for each step.
   for (size_t i = 1; i < size - 1; i++) {
@@ -124,8 +110,7 @@ winrt::hstring InterpolationAnimatedNode::GetExpression(
     const std::wstring outMin = s_outputName.data() + std::to_wstring(i - 1);
     const std::wstring outMax = s_outputName.data() + std::to_wstring(i);
 
-    returnValue = returnValue + value + L" >= " + inMin + L" && " + value +
-        L" <= " + inMax + L" ? " +
+    returnValue = returnValue + value + L" >= " + inMin + L" && " + value + L" <= " + inMax + L" ? " +
         GetInterpolateExpression(value, inMin, inMax, outMin, outMax) + L" : ";
   }
 
@@ -146,9 +131,8 @@ winrt::hstring InterpolationAnimatedNode::GetInterpolateExpression(
     const std::wstring &inputMax,
     const std::wstring &outputMin,
     const std::wstring &outputMax) {
-  return outputMin + static_cast<winrt::hstring>(L" + ((") + outputMax +
-      L" - " + outputMin + L") * ((" + value + L" - " + inputMin + L") / (" +
-      inputMax + L" - " + inputMin + L")))";
+  return outputMin + static_cast<winrt::hstring>(L" + ((") + outputMax + L" - " + outputMin + L") * ((" + value +
+      L" - " + inputMin + L") / (" + inputMax + L" - " + inputMin + L")))";
 }
 
 winrt::hstring InterpolationAnimatedNode::GetLeftExpression(
@@ -161,8 +145,7 @@ winrt::hstring InterpolationAnimatedNode::GetLeftExpression(
     case ExtrapolationType::Identity:
       return value + L" < " + firstInput + L" ? " + value + L" : ";
     case ExtrapolationType::Extend:
-      return value + L" < " + firstInput + L" ? " + leftInterpolateExpression +
-          L" : ";
+      return value + L" < " + firstInput + L" ? " + leftInterpolateExpression + L" : ";
     default:
       return L"";
   }
@@ -171,16 +154,14 @@ winrt::hstring InterpolationAnimatedNode::GetLeftExpression(
 winrt::hstring InterpolationAnimatedNode::GetRightExpression(
     const winrt::hstring &value,
     const winrt::hstring &rightInterpolateExpression) {
-  const auto lastInput =
-      s_inputName.data() + std::to_wstring(m_inputRanges.size() - 1);
+  const auto lastInput = s_inputName.data() + std::to_wstring(m_inputRanges.size() - 1);
   switch (ExtrapolationTypeFromString(m_extrapolateRight)) {
     case ExtrapolationType::Clamp:
       return value + L" > " + lastInput + L" ? " + lastInput + L" : ";
     case ExtrapolationType::Identity:
       return value + L" > " + lastInput + L" ? " + value + L" : ";
     case ExtrapolationType::Extend:
-      return value + L" > " + lastInput + L" ? " + rightInterpolateExpression +
-          L" : ";
+      return value + L" > " + lastInput + L" ? " + rightInterpolateExpression + L" : ";
     default:
       return L"";
   }

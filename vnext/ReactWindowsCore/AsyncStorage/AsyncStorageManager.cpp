@@ -15,10 +15,7 @@ const std::vector<folly::dynamic> noErrorVector = {noError};
 AsyncStorageManager::AsyncStorageManager(const WCHAR *storageFileName)
     : m_aofKVStorage{make_unique<KeyValueStorage>(storageFileName)},
       m_stopConsumer{false},
-      m_consumerTask{std::async(
-          std::launch::async,
-          &AsyncStorageManager::consumeSetRequest,
-          this)} {}
+      m_consumerTask{std::async(std::launch::async, &AsyncStorageManager::consumeSetRequest, this)} {}
 
 AsyncStorageManager::~AsyncStorageManager() {
   m_stopConsumer = true;
@@ -31,8 +28,7 @@ void AsyncStorageManager::putRequestOnQueue(
     const dynamic &args,
     const module::CxxModule::Callback &jsCallback) noexcept {
   std::unique_ptr<AsyncRequestQueueArguments> arguments =
-      make_unique<AsyncRequestQueueArguments>(
-          operation, std::move(args), std::move(jsCallback));
+      make_unique<AsyncRequestQueueArguments>(operation, std::move(args), std::move(jsCallback));
   {
     std::lock_guard<std::mutex> lockGuard(m_setQueueMutex);
     m_asyncQueue.push(std::move(arguments));
@@ -44,25 +40,20 @@ void AsyncStorageManager::putRequestOnQueue(
 void AsyncStorageManager::consumeSetRequest() noexcept {
   while (!m_stopConsumer) {
     std::unique_lock<std::mutex> uniqueMutex(m_setQueueMutex);
-    m_storageQueueConditionVariable.wait(uniqueMutex, [this] {
-      return m_stopConsumer || !m_asyncQueue.empty();
-    });
+    m_storageQueueConditionVariable.wait(uniqueMutex, [this] { return m_stopConsumer || !m_asyncQueue.empty(); });
 
     if (!m_asyncQueue.empty()) {
-      std::unique_ptr<AsyncRequestQueueArguments> arguments =
-          std::move(m_asyncQueue.front());
+      std::unique_ptr<AsyncRequestQueueArguments> arguments = std::move(m_asyncQueue.front());
       m_asyncQueue.pop();
 
       uniqueMutex.unlock();
 
-      executeAsyncKVOperation(
-          arguments->m_operation, arguments->m_args, arguments->m_jsCallback);
+      executeAsyncKVOperation(arguments->m_operation, arguments->m_args, arguments->m_jsCallback);
     }
   }
 }
 
-folly::dynamic AsyncStorageManager::makeError(
-    std::string &&strErrorMessage) noexcept {
+folly::dynamic AsyncStorageManager::makeError(std::string &&strErrorMessage) noexcept {
   folly::dynamic error = folly::dynamic::object("message", strErrorMessage);
   return {error};
 }
@@ -113,9 +104,7 @@ void AsyncStorageManager::executeAsyncKVOperation(
         break;
 
       default:
-        [this, jsCallback] {
-          jsCallback({makeError("Invalid AsyncStorage operation")});
-        };
+        [this, jsCallback] { jsCallback({makeError("Invalid AsyncStorage operation")}); };
         break;
     }
   } catch (std::exception &e) {
@@ -123,51 +112,35 @@ void AsyncStorageManager::executeAsyncKVOperation(
   }
 }
 
-void AsyncStorageManager::multiGetInternal(
-    const dynamic &args,
-    const module::CxxModule::Callback &jsCallback) {
+void AsyncStorageManager::multiGetInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
   std::vector<std::tuple<std::string, std::string>> retVals =
-      m_aofKVStorage->multiGet(
-          FollyDynamicConverter::jsArgAsStringVector(args));
-  folly::dynamic jsRetVal =
-      FollyDynamicConverter::tupleStringVectorAsRetVal(retVals);
+      m_aofKVStorage->multiGet(FollyDynamicConverter::jsArgAsStringVector(args));
+  folly::dynamic jsRetVal = FollyDynamicConverter::tupleStringVectorAsRetVal(retVals);
   jsCallback({noError, jsRetVal});
 }
 
-void AsyncStorageManager::multiSetInternal(
-    const dynamic &args,
-    const module::CxxModule::Callback &jsCallback) {
-  m_aofKVStorage->multiSet(
-      FollyDynamicConverter::jsArgAsTupleStringVector(args));
+void AsyncStorageManager::multiSetInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
+  m_aofKVStorage->multiSet(FollyDynamicConverter::jsArgAsTupleStringVector(args));
   jsCallback(noErrorVector);
 }
 
-void AsyncStorageManager::multiRemoveInternal(
-    const dynamic &args,
-    const module::CxxModule::Callback &jsCallback) {
+void AsyncStorageManager::multiRemoveInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
   m_aofKVStorage->multiRemove(FollyDynamicConverter::jsArgAsStringVector(args));
   jsCallback(noErrorVector);
 }
 
-void AsyncStorageManager::clearInternal(
-    const dynamic &args,
-    const module::CxxModule::Callback &jsCallback) {
+void AsyncStorageManager::clearInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
   UNREFERENCED_PARAMETER(args);
   m_aofKVStorage->clear();
   jsCallback(noErrorVector);
 }
 
-void AsyncStorageManager::multiMergeInternal(
-    const dynamic &args,
-    const module::CxxModule::Callback &jsCallback) {
-  m_aofKVStorage->multiMerge(
-      FollyDynamicConverter::jsArgAsTupleStringVector(args));
+void AsyncStorageManager::multiMergeInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
+  m_aofKVStorage->multiMerge(FollyDynamicConverter::jsArgAsTupleStringVector(args));
   jsCallback(noErrorVector);
 }
 
-void AsyncStorageManager::getAllKeysInternal(
-    const dynamic &args,
-    const module::CxxModule::Callback &jsCallback) {
+void AsyncStorageManager::getAllKeysInternal(const dynamic &args, const module::CxxModule::Callback &jsCallback) {
   std::vector<std::string> keys = m_aofKVStorage->getAllKeys();
   if (!keys.empty()) {
     folly::dynamic jsRetVal = FollyDynamicConverter::stringVectorAsRetVal(keys);

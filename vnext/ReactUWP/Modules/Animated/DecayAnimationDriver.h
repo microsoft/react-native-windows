@@ -31,8 +31,7 @@ class DecayAnimationDriver : public CalculatedAnimationDriver {
   static constexpr std::string_view s_decelerationName{"deceleration"};
 
   static constexpr std::wstring_view s_velocityParameterName{L"velocity"};
-  static constexpr std::wstring_view s_decelerationParameterName{
-      L"deceleration"};
+  static constexpr std::wstring_view s_decelerationParameterName{L"deceleration"};
   static constexpr std::wstring_view s_durationName{L"duration"};
 };
 } // namespace uwp

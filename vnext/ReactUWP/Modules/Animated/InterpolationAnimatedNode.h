@@ -24,9 +24,7 @@ class InterpolationAnimatedNode : public ValueAnimatedNode {
   static constexpr std::wstring_view ExtrapolateTypeExtend = L"extend";
 
  private:
-  winrt::ExpressionAnimation CreateExpressionAnimation(
-      const winrt::Compositor &compositor,
-      ValueAnimatedNode &parent);
+  winrt::ExpressionAnimation CreateExpressionAnimation(const winrt::Compositor &compositor, ValueAnimatedNode &parent);
 
   winrt::hstring GetExpression(const winrt::hstring &value);
   winrt::hstring GetInterpolateExpression(
@@ -35,12 +33,8 @@ class InterpolationAnimatedNode : public ValueAnimatedNode {
       const std::wstring &inputMax,
       const std::wstring &outputMin,
       const std::wstring &outputMax);
-  winrt::hstring GetLeftExpression(
-      const winrt::hstring &value,
-      const winrt::hstring &leftInterpolateExpression);
-  winrt::hstring GetRightExpression(
-      const winrt::hstring &,
-      const winrt::hstring &rightInterpolateExpression);
+  winrt::hstring GetLeftExpression(const winrt::hstring &value, const winrt::hstring &leftInterpolateExpression);
+  winrt::hstring GetRightExpression(const winrt::hstring &, const winrt::hstring &rightInterpolateExpression);
 
   winrt::ExpressionAnimation m_rawValueAnimation{nullptr};
   winrt::ExpressionAnimation m_offsetAnimation{nullptr};

@@ -13,9 +13,7 @@ namespace uwp {
 
 class ImageViewManagerModule : public facebook::xplat::module::CxxModule {
  public:
-  ImageViewManagerModule(
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread);
+  ImageViewManagerModule(const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
   virtual ~ImageViewManagerModule();
 
   // CxxModule

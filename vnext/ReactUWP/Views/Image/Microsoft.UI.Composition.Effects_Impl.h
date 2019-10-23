@@ -29,8 +29,7 @@ using namespace winrt::Windows::Graphics::Effects;
 using namespace winrt::Windows::UI;
 } // namespace winrt
 
-inline winrt::IGraphicsEffectSource &to_winrt(
-    abi::IGraphicsEffectSource *&instance) {
+inline winrt::IGraphicsEffectSource &to_winrt(abi::IGraphicsEffectSource *&instance) {
   return reinterpret_cast<winrt::IGraphicsEffectSource &>(instance);
 }
 
@@ -40,13 +39,11 @@ inline winrt::IPropertyValue &to_winrt(abi::IPropertyValue *&instance) {
 
 namespace winrt::Microsoft::UI::Composition::Effects::implementation {
 // Base class for Win2D-like effect descriptions
-class EffectBase
-    : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1Interop> {
+class EffectBase : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1Interop> {
  protected:
   // This is a header file so we can't use "using namespace", but we can do
   // this:
-  typedef winrt::Color
-      UIColor; // Renamed because we use "Color" as a field name
+  typedef winrt::Color UIColor; // Renamed because we use "Color" as a field name
   typedef winrt::PropertyValue PropertyValue;
   typedef abi::GRAPHICS_EFFECT_PROPERTY_MAPPING PropertyMapping;
 
@@ -69,8 +66,7 @@ class EffectBase
     return S_OK;
   }
 
-  IFACEMETHODIMP GetSource(UINT, _Outptr_ abi::IGraphicsEffectSource **)
-      override {
+  IFACEMETHODIMP GetSource(UINT, _Outptr_ abi::IGraphicsEffectSource **) override {
     return E_INVALIDARG;
   }
 
@@ -78,10 +74,8 @@ class EffectBase
     return E_INVALIDARG;
   }
 
-  IFACEMETHODIMP GetNamedPropertyMapping(
-      LPCWSTR,
-      _Out_ UINT *,
-      _Out_ abi::GRAPHICS_EFFECT_PROPERTY_MAPPING *) override {
+  IFACEMETHODIMP GetNamedPropertyMapping(LPCWSTR, _Out_ UINT *, _Out_ abi::GRAPHICS_EFFECT_PROPERTY_MAPPING *)
+      override {
     return E_INVALIDARG;
   }
 
@@ -98,13 +92,9 @@ class EffectBase
 
   template <UINT32 ComponentCount>
   static winrt::IInspectable CreateColor(UIColor color) {
-    static_assert(
-        ComponentCount == 3 || ComponentCount == 4,
-        "Unexpected color component count.");
-    float values[] = {
-        color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f};
-    return winrt::PropertyValue::CreateSingleArray(
-        reinterpret_cast<std::array<float, ComponentCount> &>(values));
+    static_assert(ComponentCount == 3 || ComponentCount == 4, "Unexpected color component count.");
+    float values[] = {color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f};
+    return winrt::PropertyValue::CreateSingleArray(reinterpret_cast<std::array<float, ComponentCount> &>(values));
   }
 
   // Helpers to implement GetNamedPropertyMapping more succintly
@@ -164,19 +154,18 @@ class EffectBase
 
 #pragma push_macro("DECLARE_SINGLE_SOURCE")
 #undef DECLARE_SINGLE_SOURCE
-#define DECLARE_SINGLE_SOURCE(Name)                                            \
-  DECLARE_SOURCE(Name)                                                         \
-  IFACEMETHODIMP GetSourceCount(_Out_ UINT *count) override {                  \
-    *count = 1;                                                                \
-    return S_OK;                                                               \
-  }                                                                            \
-  IFACEMETHODIMP GetSource(                                                    \
-      UINT index, _Outptr_ abi::IGraphicsEffectSource **source) override try { \
-    if (index == 0)                                                            \
-      to_winrt(*source) = m_##Name;                                            \
-    else                                                                       \
-      throw winrt::hresult_invalid_argument();                                 \
-    CATCH_RETURN;                                                              \
+#define DECLARE_SINGLE_SOURCE(Name)                                                                 \
+  DECLARE_SOURCE(Name)                                                                              \
+  IFACEMETHODIMP GetSourceCount(_Out_ UINT *count) override {                                       \
+    *count = 1;                                                                                     \
+    return S_OK;                                                                                    \
+  }                                                                                                 \
+  IFACEMETHODIMP GetSource(UINT index, _Outptr_ abi::IGraphicsEffectSource **source) override try { \
+    if (index == 0)                                                                                 \
+      to_winrt(*source) = m_##Name;                                                                 \
+    else                                                                                            \
+      throw winrt::hresult_invalid_argument();                                                      \
+    CATCH_RETURN;                                                                                   \
   }
 
 #pragma push_macro("DECLARE_POD_PROPERTY")
@@ -198,13 +187,10 @@ class EffectBase
 
 #pragma push_macro("DECLARE_NAMED_PROPERTY_MAPPING")
 #undef DECLARE_NAMED_PROPERTY_MAPPING
-#define DECLARE_NAMED_PROPERTY_MAPPING(...)                            \
-  IFACEMETHODIMP GetNamedPropertyMapping(                              \
-      LPCWSTR name,                                                    \
-      _Out_ UINT *index,                                               \
-      _Out_ abi::GRAPHICS_EFFECT_PROPERTY_MAPPING *mapping) override { \
-    static const NamedProperty s_Properties[] = {__VA_ARGS__};         \
-    return GetNamedPropertyMappingImpl(                                \
-        s_Properties, _countof(s_Properties), name, index, mapping);   \
+#define DECLARE_NAMED_PROPERTY_MAPPING(...)                                                             \
+  IFACEMETHODIMP GetNamedPropertyMapping(                                                               \
+      LPCWSTR name, _Out_ UINT *index, _Out_ abi::GRAPHICS_EFFECT_PROPERTY_MAPPING *mapping) override { \
+    static const NamedProperty s_Properties[] = {__VA_ARGS__};                                          \
+    return GetNamedPropertyMappingImpl(s_Properties, _countof(s_Properties), name, index, mapping);     \
   }
 } // namespace winrt::Microsoft::UI::Composition::Effects::implementation

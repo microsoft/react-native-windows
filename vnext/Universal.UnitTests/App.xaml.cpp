@@ -40,8 +40,7 @@ App::App() {
 /// specific file.
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
-void App::OnLaunched(
-    Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ e) {
+void App::OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs ^ e) {
   auto rootFrame = dynamic_cast<Frame ^>(Window::Current->Content);
 
   // Do not repeat app initialization when the Window already has content,
@@ -52,8 +51,7 @@ void App::OnLaunched(
     rootFrame = ref new Frame();
 
     rootFrame->NavigationFailed +=
-        ref new Windows::UI::Xaml::Navigation::NavigationFailedEventHandler(
-            this, &App::OnNavigationFailed);
+        ref new Windows::UI::Xaml::Navigation::NavigationFailedEventHandler(this, &App::OnNavigationFailed);
 
     if (e->PreviousExecutionState == ApplicationExecutionState::Terminated) {
       // TODO: Restore the saved session state only when appropriate, scheduling
@@ -105,9 +103,6 @@ void App::OnSuspending(Object ^ sender, SuspendingEventArgs ^ e) {
 /// </summary>
 /// <param name="sender">The Frame which failed navigation</param>
 /// <param name="e">Details about the navigation failure</param>
-void App::OnNavigationFailed(
-    Platform::Object ^ sender,
-    Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^ e) {
-  throw ref new FailureException(
-      "Failed to load Page " + e->SourcePageType.Name);
+void App::OnNavigationFailed(Platform::Object ^ sender, Windows::UI::Xaml::Navigation::NavigationFailedEventArgs ^ e) {
+  throw ref new FailureException("Failed to load Page " + e->SourcePageType.Name);
 }

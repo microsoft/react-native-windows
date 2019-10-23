@@ -20,12 +20,7 @@ namespace facebook {
 namespace react {
 namespace tracing {
 
-enum class TraceTask : uint16_t {
-  EvaluateScript,
-  CallJSFunction,
-  CallNativeModules,
-  Unknown
-};
+enum class TraceTask : uint16_t { EvaluateScript, CallJSFunction, CallNativeModules, Unknown };
 
 void trace_begin_section(
     uint64_t tag,
@@ -34,11 +29,7 @@ void trace_begin_section(
     uint8_t size,
     TraceTask task);
 
-void trace_end_section(
-    uint64_t tag,
-    const std::string &profile_name,
-    double duration,
-    TraceTask task);
+void trace_end_section(uint64_t tag, const std::string &profile_name, double duration, TraceTask task);
 } // namespace tracing
 } // namespace react
 } // namespace facebook
@@ -50,16 +41,14 @@ namespace fbsystrace {
 class FbSystraceSection {
  public:
   void begin_section() {
-    facebook::react::tracing::trace_begin_section(
-        tag_, profile_name_, std::move(args_), index_, task_);
+    facebook::react::tracing::trace_begin_section(tag_, profile_name_, std::move(args_), index_, task_);
   }
 
   void end_section() {
     facebook::react::tracing::trace_end_section(
         tag_,
         profile_name_,
-        std::chrono::duration_cast<std::chrono::duration<double>>(
-            std::chrono::high_resolution_clock::now() - start_)
+        std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - start_)
             .count(),
         task_);
   }
@@ -91,10 +80,7 @@ class FbSystraceSection {
   }
 
   template <typename... ConvertsToStringPiece>
-  FbSystraceSection(
-      uint64_t tag,
-      std::string &&v,
-      ConvertsToStringPiece &&... rest)
+  FbSystraceSection(uint64_t tag, std::string &&v, ConvertsToStringPiece &&... rest)
       : tag_(tag), profile_name_(std::move(v)) {
 // This post processing helps in analysing the trace when profiling, but it adds
 // some overhead even when the traces are not being captured (i.e. ETW provider
@@ -122,11 +108,9 @@ class FbSystraceSection {
   uint64_t tag_{0};
   std::string profile_name_;
   uint8_t index_{0};
-  facebook::react::tracing::TraceTask task_{
-      facebook::react::tracing::TraceTask::Unknown};
+  facebook::react::tracing::TraceTask task_{facebook::react::tracing::TraceTask::Unknown};
 
-  std::chrono::high_resolution_clock::time_point start_{
-      std::chrono::high_resolution_clock::now()};
+  std::chrono::high_resolution_clock::time_point start_{std::chrono::high_resolution_clock::now()};
 };
 
 struct FbSystraceAsyncFlow {
@@ -134,7 +118,6 @@ struct FbSystraceAsyncFlow {
   static void end(uint64_t tag, const char *name, int cookie);
 
   static std::mutex s_tracker_mutex_;
-  static std::unordered_map<int, std::chrono::high_resolution_clock::time_point>
-      s_tracker_;
+  static std::unordered_map<int, std::chrono::high_resolution_clock::time_point> s_tracker_;
 };
 } // namespace fbsystrace

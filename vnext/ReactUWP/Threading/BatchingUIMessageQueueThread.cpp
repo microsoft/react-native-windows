@@ -10,8 +10,7 @@
 namespace react {
 namespace uwp {
 
-BatchingUIMessageQueueThread::BatchingUIMessageQueueThread(
-    winrt::Windows::UI::Core::CoreDispatcher dispatcher)
+BatchingUIMessageQueueThread::BatchingUIMessageQueueThread(winrt::Windows::UI::Core::CoreDispatcher dispatcher)
     : m_uiDispatcher(dispatcher) {}
 
 BatchingUIMessageQueueThread::~BatchingUIMessageQueueThread() {}
@@ -25,12 +24,7 @@ void BatchingUIMessageQueueThread::runOnQueue(std::function<void()> &&func) {
 #ifdef TRACK_UI_CALLS
   char buffer[1024];
   static uint32_t cCalls = 0;
-  _snprintf_s(
-      buffer,
-      _countof(buffer),
-      _TRUNCATE,
-      "BatchingUIMessageQueueThread Calls: %u\r\n",
-      ++cCalls);
+  _snprintf_s(buffer, _countof(buffer), _TRUNCATE, "BatchingUIMessageQueueThread Calls: %u\r\n", ++cCalls);
   OutputDebugStringA(buffer);
 #endif
 }
@@ -57,18 +51,15 @@ void BatchingUIMessageQueueThread::onBatchComplete() {
   std::shared_ptr<WorkItemQueue> queue = m_queue;
   m_queue = nullptr;
   if (queue) {
-    m_uiDispatcher.RunAsync(
-        winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-        [queue{std::move(queue)}]() {
-          for (auto &func : *queue) {
-            func();
-          }
-        });
+    m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [queue{std::move(queue)}]() {
+      for (auto &func : *queue) {
+        func();
+      }
+    });
   }
 }
 
-void BatchingUIMessageQueueThread::runOnQueueSync(
-    std::function<void()> &&func) {
+void BatchingUIMessageQueueThread::runOnQueueSync(std::function<void()> &&func) {
   // Not supported
   // TODO: crash
 }

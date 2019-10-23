@@ -23,10 +23,7 @@ using namespace Windows::UI::Xaml;
 namespace react {
 namespace uwp {
 
-float GetConstrainedResult(
-    float constrainTo,
-    float measuredSize,
-    YGMeasureMode measureMode) {
+float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
   measuredSize = ceil(measuredSize);
 
@@ -43,24 +40,20 @@ YGSize DefaultYogaSelfMeasureFunc(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  YogaContext *context =
-      reinterpret_cast<YogaContext *>(YGNodeGetContext(node));
+  YogaContext *context = reinterpret_cast<YogaContext *>(YGNodeGetContext(node));
 
   // TODO: VEC context != nullptr, DefaultYogaSelfMeasureFunc expects a context.
 
   XamlView view = context->view;
   auto element = view.as<winrt::UIElement>();
 
-  float constrainToWidth = widthMode == YGMeasureMode::YGMeasureModeUndefined
-      ? std::numeric_limits<float>::max()
-      : width;
-  float constrainToHeight = heightMode == YGMeasureMode::YGMeasureModeUndefined
-      ? std::numeric_limits<float>::max()
-      : height;
+  float constrainToWidth =
+      widthMode == YGMeasureMode::YGMeasureModeUndefined ? std::numeric_limits<float>::max() : width;
+  float constrainToHeight =
+      heightMode == YGMeasureMode::YGMeasureModeUndefined ? std::numeric_limits<float>::max() : height;
 
   try {
-    winrt::Windows::Foundation::Size availableSpace(
-        constrainToWidth, constrainToHeight);
+    winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
 
     // Clear out current size so it doesn't constrain the measurement
     auto widthProp = winrt::FrameworkElement::WidthProperty();
@@ -79,16 +72,12 @@ YGSize DefaultYogaSelfMeasureFunc(
     assert(false);
   }
 
-  YGSize desiredSize = {
-      GetConstrainedResult(
-          constrainToWidth, element.DesiredSize().Width, widthMode),
-      GetConstrainedResult(
-          constrainToHeight, element.DesiredSize().Height, heightMode)};
+  YGSize desiredSize = {GetConstrainedResult(constrainToWidth, element.DesiredSize().Width, widthMode),
+                        GetConstrainedResult(constrainToHeight, element.DesiredSize().Height, heightMode)};
   return desiredSize;
 }
 
-ViewManagerBase::ViewManagerBase(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+ViewManagerBase::ViewManagerBase(const std::shared_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance) {}
 
 dynamic ViewManagerBase::GetExportedViewConstants() const {
@@ -101,22 +90,18 @@ dynamic ViewManagerBase::GetCommands() const {
 
 dynamic ViewManagerBase::GetNativeProps() const {
   folly::dynamic props = folly::dynamic::object();
-  props.update(folly::dynamic::object("onLayout", "function")(
-      "keyDownEvents", "array")("keyUpEvents", "array"));
+  props.update(folly::dynamic::object("onLayout", "function")("keyDownEvents", "array")("keyUpEvents", "array"));
   return props;
 }
 
 dynamic ViewManagerBase::GetConstants() const {
-  folly::dynamic constants =
-      folly::dynamic::object("Constants", GetExportedViewConstants())(
-          "Commands", GetCommands())("NativeProps", GetNativeProps());
+  folly::dynamic constants = folly::dynamic::object("Constants", GetExportedViewConstants())("Commands", GetCommands())(
+      "NativeProps", GetNativeProps());
 
-  const auto bubblingEventTypesConstants =
-      GetExportedCustomBubblingEventTypeConstants();
+  const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
   if (!bubblingEventTypesConstants.empty())
     constants["bubblingEventTypes"] = std::move(bubblingEventTypesConstants);
-  const auto directEventTypesConstants =
-      GetExportedCustomDirectEventTypeConstants();
+  const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
   if (!directEventTypesConstants.empty())
     constants["directEventTypes"] = std::move(directEventTypesConstants);
 
@@ -168,8 +153,7 @@ dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
     registration["captured"] = bubbleName + "Capture";
     registration["bubbled"] = std::move(bubbleName);
 
-    bubblingEvents[std::move(eventName)] = folly::dynamic::object(
-        "phasedRegistrationNames", std::move(registration));
+    bubblingEvents[std::move(eventName)] = folly::dynamic::object("phasedRegistrationNames", std::move(registration));
   }
 
   return bubblingEvents;
@@ -177,12 +161,9 @@ dynamic ViewManagerBase::GetExportedCustomBubblingEventTypeConstants() const {
 
 dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
   folly::dynamic eventTypes = folly::dynamic::object();
-  eventTypes.update(folly::dynamic::object(
-      "topLayout", folly::dynamic::object("registrationName", "onLayout"))(
-      "topMouseEnter",
-      folly::dynamic::object("registrationName", "onMouseEnter"))(
-      "topMouseLeave",
-      folly::dynamic::object("registrationName", "onMouseLeave"))
+  eventTypes.update(folly::dynamic::object("topLayout", folly::dynamic::object("registrationName", "onLayout"))(
+      "topMouseEnter", folly::dynamic::object("registrationName", "onMouseEnter"))(
+      "topMouseLeave", folly::dynamic::object("registrationName", "onMouseLeave"))
                     //    ("topMouseMove",
                     //    folly::dynamic::object("registrationName",
                     //    "onMouseMove"))
@@ -224,17 +205,12 @@ void ViewManagerBase::RemoveChildAt(XamlView parent, int64_t index) {
 
 void ViewManagerBase::RemoveAllChildren(XamlView parent) {}
 
-void ViewManagerBase::ReplaceChild(
-    XamlView parent,
-    XamlView oldChild,
-    XamlView newChild) {
+void ViewManagerBase::ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild) {
   // ASSERT: Child must either implement or not allow children.
   assert(false);
 }
 
-void ViewManagerBase::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const dynamic &reactDiffMap) {
+void ViewManagerBase::UpdateProperties(ShadowNodeBase *nodeToUpdate, const dynamic &reactDiffMap) {
   // Directly dirty this node since non-layout changes like the text property do
   // not trigger relayout
   //  There isn't actually a yoga node for RawText views, but it will invalidate
@@ -243,16 +219,14 @@ void ViewManagerBase::UpdateProperties(
   int64_t tag = GetTag(nodeToUpdate->GetView());
   auto instance = m_wkReactInstance.lock();
   if (instance != nullptr)
-    static_cast<NativeUIManager *>(instance->NativeUIManager())
-        ->DirtyYogaNode(tag);
+    static_cast<NativeUIManager *>(instance->NativeUIManager())->DirtyYogaNode(tag);
 
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
 
     if (propertyName == "onLayout") {
-      nodeToUpdate->m_onLayout =
-          !propertyValue.isNull() && propertyValue.asBool();
+      nodeToUpdate->m_onLayout = !propertyValue.isNull() && propertyValue.asBool();
     } else if (propertyName == "keyDownEvents") {
       nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
     } else if (propertyName == "keyUpEvents") {
@@ -261,14 +235,9 @@ void ViewManagerBase::UpdateProperties(
   }
 }
 
-void ViewManagerBase::TransferProperties(
-    XamlView /*oldView*/,
-    XamlView /*newView*/) {}
+void ViewManagerBase::TransferProperties(XamlView /*oldView*/, XamlView /*newView*/) {}
 
-void ViewManagerBase::DispatchCommand(
-    XamlView viewToUpdate,
-    int64_t commandId,
-    const folly::dynamic &commandArgs) {
+void ViewManagerBase::DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic &commandArgs) {
   assert(false); // View did not handle its command
 }
 
@@ -296,11 +265,9 @@ void ViewManagerBase::SetLayoutProps(
   // Fire Events
   if (nodeToUpdate.m_onLayout) {
     int64_t tag = GetTag(viewToUpdate);
-    folly::dynamic layout = folly::dynamic::object("x", left)("y", top)(
-        "height", height)("width", width);
+    folly::dynamic layout = folly::dynamic::object("x", left)("y", top)("height", height)("width", width);
 
-    folly::dynamic eventData =
-        folly::dynamic::object("target", tag)("layout", std::move(layout));
+    folly::dynamic eventData = folly::dynamic::object("target", tag)("layout", std::move(layout));
 
     auto instance = m_wkReactInstance.lock();
     if (instance != nullptr)

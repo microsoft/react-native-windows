@@ -9,8 +9,7 @@ SnapPointManagingContentControl::SnapPointManagingContentControl() {
   IsTabStop(false);
 }
 
-/*static*/ winrt::com_ptr<SnapPointManagingContentControl>
-SnapPointManagingContentControl::Create() {
+/*static*/ winrt::com_ptr<SnapPointManagingContentControl> SnapPointManagingContentControl::Create() {
   return winrt::make_self<SnapPointManagingContentControl>();
 }
 
@@ -22,8 +21,7 @@ void SnapPointManagingContentControl::SnapToInterval(float interval) {
   }
 }
 
-void SnapPointManagingContentControl::SnapToOffsets(
-    const winrt::IVectorView<float> &offsets) {
+void SnapPointManagingContentControl::SnapToOffsets(const winrt::IVectorView<float> &offsets) {
   m_offsets = offsets;
   m_interval = 0;
   m_horizontalSnapPointsChangedEventSource(*this, nullptr);
@@ -42,8 +40,7 @@ winrt::event_token SnapPointManagingContentControl::HorizontalSnapPointsChanged(
     winrt::EventHandler<winrt::IInspectable> const &value) {
   return m_horizontalSnapPointsChangedEventSource.add(value);
 }
-void SnapPointManagingContentControl::HorizontalSnapPointsChanged(
-    winrt::event_token const &token) {
+void SnapPointManagingContentControl::HorizontalSnapPointsChanged(winrt::event_token const &token) {
   m_horizontalSnapPointsChangedEventSource.remove(token);
 }
 
@@ -51,13 +48,11 @@ winrt::event_token SnapPointManagingContentControl::VerticalSnapPointsChanged(
     winrt::EventHandler<winrt::IInspectable> const &value) {
   return m_verticalSnapPointsChangedEventSource.add(value);
 }
-void SnapPointManagingContentControl::VerticalSnapPointsChanged(
-    winrt::event_token const &token) {
+void SnapPointManagingContentControl::VerticalSnapPointsChanged(winrt::event_token const &token) {
   m_verticalSnapPointsChangedEventSource.remove(token);
 }
 
-winrt::IVectorView<float>
-SnapPointManagingContentControl::GetIrregularSnapPoints(
+winrt::IVectorView<float> SnapPointManagingContentControl::GetIrregularSnapPoints(
     winrt::Orientation orientation,
     winrt::SnapPointsAlignment alignment) {
   const auto retVal = winrt::single_threaded_vector<float>();
@@ -98,9 +93,7 @@ void SnapPointManagingContentControl::SetHorizontal(bool horizontal) {
   }
 }
 
-void SnapPointManagingContentControl::SetWidthBounds(
-    float startWidth,
-    float endWidth) {
+void SnapPointManagingContentControl::SetWidthBounds(float startWidth, float endWidth) {
   const auto update = [this, startWidth, endWidth]() {
     const auto endUpdated = [this, endWidth]() {
       if (m_endWidth != endWidth) {
@@ -126,9 +119,7 @@ void SnapPointManagingContentControl::SetWidthBounds(
   }
 }
 
-void SnapPointManagingContentControl::SetHeightBounds(
-    float startHeight,
-    float endHeight) {
+void SnapPointManagingContentControl::SetHeightBounds(float startHeight, float endHeight) {
   const auto update = [this, startHeight, endHeight]() {
     const auto endUpdated = [this, endHeight]() {
       if (m_endHeight != endHeight) {

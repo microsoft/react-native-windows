@@ -23,9 +23,7 @@ void LogHook(RCTLogLevel logLevel, const char *message) {
 }
 
 static double nativePerformanceNow() {
-  return std::chrono::duration<double, std::milli>(
-             std::chrono::steady_clock::now().time_since_epoch())
-      .count();
+  return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
 #if !defined(OSS_RN)

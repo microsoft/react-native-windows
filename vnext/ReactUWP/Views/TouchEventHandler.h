@@ -32,24 +32,12 @@ class TouchEventHandler {
   void RemoveTouchHandlers();
 
  private:
-  void OnPointerPressed(
-      const winrt::IInspectable &,
-      const winrt::PointerRoutedEventArgs &args);
-  void OnPointerReleased(
-      const winrt::IInspectable &,
-      const winrt::PointerRoutedEventArgs &args);
-  void OnPointerCanceled(
-      const winrt::IInspectable &,
-      const winrt::PointerRoutedEventArgs &args);
-  void OnPointerCaptureLost(
-      const winrt::IInspectable &,
-      const winrt::PointerRoutedEventArgs &args);
-  void OnPointerExited(
-      const winrt::IInspectable &,
-      const winrt::PointerRoutedEventArgs &args);
-  void OnPointerMoved(
-      const winrt::IInspectable &,
-      const winrt::PointerRoutedEventArgs &args);
+  void OnPointerPressed(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
+  void OnPointerReleased(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
+  void OnPointerCanceled(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
+  void OnPointerCaptureLost(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
+  void OnPointerExited(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
+  void OnPointerMoved(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
   winrt::event_revoker<winrt::IUIElement> m_pressedRevoker;
   winrt::event_revoker<winrt::IUIElement> m_releasedRevoker;
   winrt::event_revoker<winrt::IUIElement> m_canceledRevoker;
@@ -76,49 +64,27 @@ class TouchEventHandler {
     bool ctrlKey = false;
     bool altKey = false;
   };
-  size_t AddReactPointer(
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t tag,
-      winrt::FrameworkElement sourceElement);
-  ReactPointer CreateReactPointer(
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t tag,
-      winrt::FrameworkElement sourceElement);
+  size_t AddReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  ReactPointer
+  CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
   void UpdateReactPointer(
       ReactPointer &pointer,
       const winrt::PointerRoutedEventArgs &args,
       winrt::FrameworkElement sourceElement);
-  void UpdatePointersInViews(
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t tag,
-      winrt::FrameworkElement sourceElement);
-  void SendPointerMove(
-      const winrt::PointerRoutedEventArgs &args,
-      int64_t tag,
-      winrt::FrameworkElement sourceElement);
+  void
+  UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
+  void SendPointerMove(const winrt::PointerRoutedEventArgs &args, int64_t tag, winrt::FrameworkElement sourceElement);
 
-  enum class TouchEventType {
-    Start = 0,
-    End,
-    Move,
-    Cancel,
-    PointerEntered,
-    PointerExited,
-    PointerMove
-  };
-  void OnPointerConcluded(
-      TouchEventType eventType,
-      const winrt::PointerRoutedEventArgs &args);
+  enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
+  void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
-  const char *GetPointerDeviceTypeName(
-      winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+  const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
   const char *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
   folly::dynamic GetPointerJson(const ReactPointer &pointer, int64_t target);
   std::vector<ReactPointer> m_pointers;
-  std::unordered_map<uint32_t /*pointerId*/, std::set<int64_t> /*tags*/>
-      m_pointersInViews;
+  std::unordered_map<uint32_t /*pointerId*/, std::set<int64_t> /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
   bool TagFromOriginalSource(

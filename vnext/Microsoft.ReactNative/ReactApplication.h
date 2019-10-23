@@ -18,8 +18,7 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
   ReactApplication() noexcept;
 
   Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
-  void InstanceSettings(
-      Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept;
+  void InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept;
 
   IVector<IReactPackageProvider> PackageProviders() noexcept;
   void PackageProviders(IVector<IReactPackageProvider> const &value) noexcept;
@@ -40,9 +39,7 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
 
   virtual void OnLaunched(Activation::LaunchActivatedEventArgs const &);
   virtual void OnSuspending(IInspectable const &, SuspendingEventArgs const &);
-  virtual void OnNavigationFailed(
-      IInspectable const &,
-      NavigationFailedEventArgs const &);
+  virtual void OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &);
 
  protected:
   virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();
@@ -65,8 +62,7 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
 
-struct ReactApplication
-    : ReactApplicationT<ReactApplication, implementation::ReactApplication> {};
+struct ReactApplication : ReactApplicationT<ReactApplication, implementation::ReactApplication> {};
 
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
 
@@ -76,13 +72,11 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // ReactApplication inline implementation
 //=============================================================================
 
-inline void ReactApplication::InstanceSettings(
-    Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept {
+inline void ReactApplication::InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept {
   m_instanceSettings = value;
 }
 
-inline void ReactApplication::PackageProviders(
-    IVector<IReactPackageProvider> const &value) noexcept {
+inline void ReactApplication::PackageProviders(IVector<IReactPackageProvider> const &value) noexcept {
   m_packageProviders = value;
 }
 
@@ -106,8 +100,7 @@ inline hstring ReactApplication::JavaScriptMainModuleName() noexcept {
   return m_javaScriptMainModuleName;
 }
 
-inline void ReactApplication::JavaScriptMainModuleName(
-    hstring const &value) noexcept {
+inline void ReactApplication::JavaScriptMainModuleName(hstring const &value) noexcept {
   m_javaScriptMainModuleName = value;
 }
 
@@ -115,8 +108,7 @@ inline hstring ReactApplication::JavaScriptBundleFile() noexcept {
   return m_javaScriptBundleFile;
 }
 
-inline void ReactApplication::JavaScriptBundleFile(
-    hstring const &value) noexcept {
+inline void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
 }
 

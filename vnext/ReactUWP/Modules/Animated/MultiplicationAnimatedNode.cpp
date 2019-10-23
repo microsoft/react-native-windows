@@ -18,17 +18,14 @@ MultiplicationAnimatedNode::MultiplicationAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim =
-        winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"1";
       for (const auto tag : nodes) {
         auto identifier = L"n" + std::to_wstring(tag);
-        anim.SetReferenceParameter(
-            identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
-        expr = expr + L" * (" + identifier + L"." + s_valueName + L" + " +
-            identifier + L"." + s_offsetName + L")";
+        anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
+        expr = expr + L" * (" + identifier + L"." + s_valueName + L" + " + identifier + L"." + s_offsetName + L")";
       }
       return expr;
     }());

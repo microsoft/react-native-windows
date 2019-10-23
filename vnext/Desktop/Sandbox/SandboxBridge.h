@@ -27,16 +27,11 @@ class ModuleRegistry;
 
 class SandboxHostNativeBridge : public react::ExecutorDelegate {
  public:
-  SandboxHostNativeBridge(
-      std::shared_ptr<ModuleRegistry> registry,
-      std::shared_ptr<InstanceCallback> callback);
+  SandboxHostNativeBridge(std::shared_ptr<ModuleRegistry> registry, std::shared_ptr<InstanceCallback> callback);
 
   // ExecutorDelegate methods
   std::shared_ptr<ModuleRegistry> getModuleRegistry() override;
-  void callNativeModules(
-      JSExecutor &executor,
-      folly::dynamic &&calls,
-      bool isEndOfBatch) override;
+  void callNativeModules(JSExecutor &executor, folly::dynamic &&calls, bool isEndOfBatch) override;
   MethodCallResult callSerializableNativeHook(
       JSExecutor &executor,
       unsigned int moduleId,
@@ -64,10 +59,7 @@ class SandboxJsToNativeBridge : public react::ExecutorDelegate {
 
   // ExecutorDelegate methods
   std::shared_ptr<ModuleRegistry> getModuleRegistry() override;
-  void callNativeModules(
-      JSExecutor &executor,
-      folly::dynamic &&calls,
-      bool isEndOfBatch) override;
+  void callNativeModules(JSExecutor &executor, folly::dynamic &&calls, bool isEndOfBatch) override;
   MethodCallResult callSerializableNativeHook(
       JSExecutor &executor,
       unsigned int moduleId,

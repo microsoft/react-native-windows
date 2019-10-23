@@ -22,19 +22,14 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
   // Constructors
   ViewPanel();
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer
-  OnCreateAutomationPeer();
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   // Overrides
-  virtual winrt::Windows::Foundation::Size MeasureOverride(
-      winrt::Windows::Foundation::Size availableSize);
-  virtual winrt::Windows::Foundation::Size ArrangeOverride(
-      winrt::Windows::Foundation::Size finalSize);
+  virtual winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
+  virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
 
   // Public Methods
-  void InsertAt(
-      uint32_t const index,
-      winrt::Windows::UI::Xaml::UIElement const &value) const;
+  void InsertAt(uint32_t const index, winrt::Windows::UI::Xaml::UIElement const &value) const;
   void RemoveAt(uint32_t const index) const;
   void Clear() const;
 
@@ -43,26 +38,22 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
   // Public Properties
   winrt::Windows::UI::Xaml::Media::Brush ViewBackground() {
-    return GetValue(ViewBackgroundProperty())
-        .as<winrt::Windows::UI::Xaml::Media::Brush>();
+    return GetValue(ViewBackgroundProperty()).as<winrt::Windows::UI::Xaml::Media::Brush>();
   }
   void ViewBackground(winrt::Windows::UI::Xaml::Media::Brush const &value);
 
   winrt::Windows::UI::Xaml::Thickness BorderThickness() {
-    return winrt::unbox_value<winrt::Windows::UI::Xaml::Thickness>(
-        GetValue(BorderThicknessProperty()));
+    return winrt::unbox_value<winrt::Windows::UI::Xaml::Thickness>(GetValue(BorderThicknessProperty()));
   }
   void BorderThickness(winrt::Windows::UI::Xaml::Thickness const &value);
 
   winrt::Windows::UI::Xaml::Media::Brush BorderBrush() {
-    return GetValue(BorderBrushProperty())
-        .as<winrt::Windows::UI::Xaml::Media::Brush>();
+    return GetValue(BorderBrushProperty()).as<winrt::Windows::UI::Xaml::Media::Brush>();
   }
   void BorderBrush(winrt::Windows::UI::Xaml::Media::Brush const &value);
 
   winrt::Windows::UI::Xaml::CornerRadius CornerRadius() {
-    return winrt::unbox_value<winrt::Windows::UI::Xaml::CornerRadius>(
-        GetValue(CornerRadiusProperty()));
+    return winrt::unbox_value<winrt::Windows::UI::Xaml::CornerRadius>(GetValue(CornerRadiusProperty()));
   }
   void CornerRadius(winrt::Windows::UI::Xaml::CornerRadius const &value);
 
@@ -80,17 +71,13 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
   // Attached Properties
   static winrt::Windows::UI::Xaml::DependencyProperty TopProperty();
-  static void SetTop(
-      winrt::Windows::UI::Xaml::UIElement const &element,
-      double value);
+  static void SetTop(winrt::Windows::UI::Xaml::UIElement const &element, double value);
   static double GetTop(winrt::Windows::UI::Xaml::UIElement const &element) {
     return winrt::unbox_value<double>(element.GetValue(TopProperty()));
   }
 
   static winrt::Windows::UI::Xaml::DependencyProperty LeftProperty();
-  static void SetLeft(
-      winrt::Windows::UI::Xaml::UIElement const &element,
-      double value);
+  static void SetLeft(winrt::Windows::UI::Xaml::UIElement const &element, double value);
   static double GetLeft(winrt::Windows::UI::Xaml::UIElement const &element) {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
   }

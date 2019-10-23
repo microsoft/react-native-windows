@@ -29,8 +29,7 @@ std::wstring Utf8ToUtf16(const char *utf8, size_t utf8Len) {
   // Extra parentheses needed here to prevent expanding max as a
   // Windows-specific preprocessor macro.
   if (utf8Len > static_cast<size_t>((std::numeric_limits<int>::max)())) {
-    throw std::overflow_error(
-        "Length of input string to Utf8ToUtf16() must fit into an int.");
+    throw std::overflow_error("Length of input string to Utf8ToUtf16() must fit into an int.");
   }
 
   const int utf8Length = static_cast<int>(utf8Len);
@@ -80,8 +79,7 @@ std::wstring Utf8ToUtf16(const char *utf8, size_t utf8Len) {
 
   if (result == 0) {
     throw UnicodeConversionException(
-        "Cannot convert from UTF-8 to UTF-16 (MultiByteToWideChar failed).",
-        GetLastError());
+        "Cannot convert from UTF-8 to UTF-16 (MultiByteToWideChar failed).", GetLastError());
   }
 
   return utf16;
@@ -112,8 +110,7 @@ std::string Utf16ToUtf8(const wchar_t *utf16, size_t utf16Len) {
   // Extra parentheses needed here to prevent expanding max as a
   // Windows-specific preprocessor macro.
   if (utf16Len > static_cast<size_t>((std::numeric_limits<int>::max)())) {
-    throw std::overflow_error(
-        "Length of input string to Utf16ToUtf8() must fit into an int.");
+    throw std::overflow_error("Length of input string to Utf16ToUtf8() must fit into an int.");
   }
 
   const int utf16Length = static_cast<int>(utf16Len);
@@ -167,16 +164,14 @@ std::string Utf16ToUtf8(const wchar_t *utf16, size_t utf16Len) {
 
   if (result == 0) {
     throw UnicodeConversionException(
-        "Cannot convert from UTF-16 to UTF-8 (WideCharToMultiByte failed).",
-        GetLastError());
+        "Cannot convert from UTF-16 to UTF-8 (WideCharToMultiByte failed).", GetLastError());
   }
 
   return utf8;
 }
 
 std::string Utf16ToUtf8(const char16_t *utf16, size_t utf16Len) {
-  return Utf16ToUtf8(
-      Utilities::CheckedReinterpretCast<const wchar_t *>(utf16), utf16Len);
+  return Utf16ToUtf8(Utilities::CheckedReinterpretCast<const wchar_t *>(utf16), utf16Len);
 }
 
 std::string Utf16ToUtf8(const wchar_t *utf16) {
@@ -192,9 +187,7 @@ std::string Utf16ToUtf8(const std::wstring &utf16) {
 }
 
 std::string Utf16ToUtf8(const std::u16string &utf16) {
-  return Utf16ToUtf8(
-      Utilities::CheckedReinterpretCast<const wchar_t *>(utf16.c_str()),
-      utf16.length());
+  return Utf16ToUtf8(Utilities::CheckedReinterpretCast<const wchar_t *>(utf16.c_str()), utf16.length());
 }
 
 #if _HAS_CXX17
@@ -203,9 +196,7 @@ std::string Utf16ToUtf8(const std::wstring_view &utf16) {
 }
 
 std::string Utf16ToUtf8(const std::u16string_view &utf16) {
-  return Utf16ToUtf8(
-      Utilities::CheckedReinterpretCast<const wchar_t *>(utf16.data()),
-      utf16.length());
+  return Utf16ToUtf8(Utilities::CheckedReinterpretCast<const wchar_t *>(utf16.data()), utf16.length());
 }
 #endif
 

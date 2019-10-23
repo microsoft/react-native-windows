@@ -7,10 +7,7 @@
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-struct DynamicReader
-    : winrt::implements<
-          DynamicReader,
-          winrt::Microsoft::ReactNative::Bridge::IJSValueReader> {
+struct DynamicReader : winrt::implements<DynamicReader, winrt::Microsoft::ReactNative::Bridge::IJSValueReader> {
   DynamicReader(const folly::dynamic &root) noexcept;
 
  public: // IJSValueReader
@@ -32,8 +29,7 @@ struct DynamicReader
   };
 
  private:
-  winrt::Microsoft::ReactNative::Bridge::JSValueReaderState ReadValue(
-      const folly::dynamic *value) noexcept;
+  winrt::Microsoft::ReactNative::Bridge::JSValueReaderState ReadValue(const folly::dynamic *value) noexcept;
   static std::u16string Utf8ToUtf16(const char *value, size_t size) noexcept;
 
  private:

@@ -19,9 +19,7 @@ namespace uwp {
 
 class LocationObserverModule : public facebook::xplat::module::CxxModule {
  public:
-  LocationObserverModule(
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread);
+  LocationObserverModule(const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
   virtual ~LocationObserverModule();
 
   // CxxModule

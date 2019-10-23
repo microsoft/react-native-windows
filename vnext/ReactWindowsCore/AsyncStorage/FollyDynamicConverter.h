@@ -16,12 +16,9 @@ namespace react {
 class FollyDynamicConverter {
  public:
   static std::vector<string> jsArgAsStringVector(const dynamic &args) noexcept;
-  static std::vector<tuple<string, string>> jsArgAsTupleStringVector(
-      const dynamic &args) noexcept;
-  static folly::dynamic stringVectorAsRetVal(
-      const std::vector<string> &vec) noexcept;
-  static folly::dynamic tupleStringVectorAsRetVal(
-      const std::vector<tuple<string, string>> &vec) noexcept;
+  static std::vector<tuple<string, string>> jsArgAsTupleStringVector(const dynamic &args) noexcept;
+  static folly::dynamic stringVectorAsRetVal(const std::vector<string> &vec) noexcept;
+  static folly::dynamic tupleStringVectorAsRetVal(const std::vector<tuple<string, string>> &vec) noexcept;
 };
 } // namespace react
 } // namespace facebook
