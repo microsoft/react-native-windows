@@ -227,7 +227,7 @@ jobs:
         inputs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 30
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
