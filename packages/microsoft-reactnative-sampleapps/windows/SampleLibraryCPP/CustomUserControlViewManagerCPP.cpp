@@ -32,12 +32,6 @@ CustomUserControlViewManagerCPP::ExportedViewConstants() noexcept {
   return constants.GetView();
 }
 
-IMapView<hstring, IInspectable>
-CustomUserControlViewManagerCPP::Commands() noexcept {
-  auto commands = winrt::single_threaded_map<hstring, IInspectable>();
-  return commands.GetView();
-}
-
 IMapView<hstring, ViewManagerPropertyType>
 CustomUserControlViewManagerCPP::NativeProps() noexcept {
   auto nativeProps =
@@ -85,5 +79,16 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
     }
   }
 }
+
+IMapView<hstring, int64_t>
+CustomUserControlViewManagerCPP::Commands() noexcept {
+  auto commands = winrt::single_threaded_map<hstring, int64_t>();
+  return commands.GetView();
+}
+
+void CustomUserControlViewManagerCPP::DispatchCommand(
+    FrameworkElement const &view,
+    int64_t commandId,
+    IVectorView<IInspectable> commandArgs) noexcept {}
 
 } // namespace winrt::SampleLibraryCPP::implementation

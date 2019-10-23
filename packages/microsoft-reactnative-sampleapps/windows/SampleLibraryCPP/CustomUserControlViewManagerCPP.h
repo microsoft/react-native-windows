@@ -23,10 +23,6 @@ struct CustomUserControlViewManagerCPP
       IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
       ExportedViewConstants() noexcept;
 
-  winrt::Windows::Foundation::Collections::
-      IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-      Commands() noexcept;
-
   winrt::Windows::Foundation::Collections::IMapView<
       winrt::hstring,
       winrt::Microsoft::ReactNative::Bridge::ViewManagerPropertyType>
@@ -37,6 +33,15 @@ struct CustomUserControlViewManagerCPP
       winrt::Windows::Foundation::Collections::IMapView<
           winrt::hstring,
           winrt::Windows::Foundation::IInspectable> const &propertyMap);
+
+  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, int64_t>
+  Commands() noexcept;
+
+  void DispatchCommand(
+      winrt::Windows::UI::Xaml::FrameworkElement const &view,
+      int64_t commandId,
+      winrt::Windows::Foundation::Collections::IVectorView<
+          winrt::Windows::Foundation::IInspectable> commandArgs) noexcept;
 };
 
 } // namespace winrt::SampleLibraryCPP::implementation

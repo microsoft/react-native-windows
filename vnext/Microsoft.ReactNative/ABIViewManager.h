@@ -40,6 +40,11 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
   folly::dynamic GetCommands() const override;
 
+  void DispatchCommand(
+      winrt::Windows::UI::Xaml::DependencyObject viewToUpdate,
+      int64_t commandId,
+      const folly::dynamic &commandArgs) override;
+
  protected:
   winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;
 

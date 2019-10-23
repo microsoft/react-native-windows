@@ -105,11 +105,26 @@ folly::dynamic ABIViewManager::GetCommands() const {
   auto outerChild = m_viewManager.Commands();
   for (const auto &pair : outerChild) {
     std::string key = to_string(pair.Key());
-    folly::dynamic value = ConvertToDynamic(pair.Value());
+    folly::dynamic value{pair.Value()};
     innerParent.insert(key, value);
   }
 
   return innerParent;
+}
+
+void ABIViewManager::DispatchCommand(
+    winrt::Windows::UI::Xaml::DependencyObject viewToUpdate,
+    int64_t commandId,
+    const folly::dynamic &commandArgs) {
+  auto view = viewToUpdate.as<winrt::FrameworkElement>();
+
+  auto iinspectableArgs = ConvertToIInspectable(commandArgs);
+
+  auto listArgs =
+      iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::
+                                  IVectorView<winrt::IInspectable>>();
+
+  m_viewManager.DispatchCommand(view, commandId, listArgs);
 }
 
 winrt::Windows::UI::Xaml::DependencyObject ABIViewManager::CreateViewCore(

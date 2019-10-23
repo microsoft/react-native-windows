@@ -28,6 +28,6 @@ class ViewManagersProvider final : public react::uwp::ViewManagerProvider {
   std::unordered_map<
       std::string,
       Microsoft::ReactNative::Bridge::ReactViewManagerProvider>
-          m_viewManagerProviders;
+      m_viewManagerProviders;
 };
 } // namespace winrt::Microsoft::ReactNative::Bridge

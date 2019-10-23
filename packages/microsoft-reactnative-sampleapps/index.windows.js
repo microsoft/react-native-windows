@@ -7,14 +7,17 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Button,
+  findNodeHandle,
   requireNativeComponent,
   StyleSheet,
   Text,
+  UIManager,
   View,
 } from 'react-native';
 import { NativeModules } from 'react-native';
 
 let CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
+
 let CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
 var log = function(result) {
@@ -29,8 +32,14 @@ var getCallback = function(prefix) {
 };
 
 class SampleApp extends Component {
+  constructor(props) {
+    super(props);
+    this._cuccsRef = React.createRef();
+  }
 
   _onPressHandlerSMCS() {
+    log('SampleApp._onPressHandlerSMCS()');
+
     var numberArg = 42;
 
     // SampleModuleCS constants
@@ -60,6 +69,8 @@ class SampleApp extends Component {
   }
 
   _onPressHandlerSMCPP() {
+    log('SampleApp._onPressHandlerSMCPP()');
+
     var numberArg = 42;
 
     // SampleModuleCPP constants
@@ -88,6 +99,17 @@ class SampleApp extends Component {
     promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
   }
 
+  _onPressHandlerCUCCS() {
+    log('SampleApp._onPressHandlerCUCCS()');
+
+    if (this._cuccsRef)
+    {
+      const cuccsTag = findNodeHandle(this._cuccsRef);
+      log(`tag: ${cuccsTag}`);
+      UIManager.dispatchViewManagerCommand(cuccsTag, UIManager.CustomUserControlCS.Commands.CustomCommand, ['Hello World!']);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -97,9 +119,13 @@ class SampleApp extends Component {
         <Text style={styles.instructions}>
           This app consumes custom Native Modules and View Managers.
         </Text>
-        <Button onPress={this._onPressHandlerSMCS} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
-        <Button onPress={this._onPressHandlerSMCPP} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
-        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" />
+
+        <Button onPress={() => { this._onPressHandlerSMCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
+        <Button onPress={() => { this._onPressHandlerSMCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
+
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._cuccsRef = ref; }} />
+        <Button onPress={() => { this._onPressHandlerCUCCS(); }} title="Call CustomUserControlCS Commands!" />
+
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
         <Text style={styles.instructions}>
           Hello from Microsoft!

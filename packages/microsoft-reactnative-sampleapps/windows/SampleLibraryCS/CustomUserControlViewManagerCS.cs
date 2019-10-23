@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 
 using Microsoft.ReactNative.Managed;
+using System.Collections.Generic;
 
 namespace SampleLibraryCS
 {
@@ -47,6 +49,12 @@ namespace SampleLibraryCS
             {
                 view.ClearValue(Control.BackgroundProperty);
             }
+        }
+
+        [ViewManagerCommand]
+        public void CustomCommand(CustomUserControlCS view, IReadOnlyList<object> args)
+        {
+            Debug.WriteLine($"{Name}.{nameof(CustomCommand)}({args[0].ToString()})");
         }
     }
 }

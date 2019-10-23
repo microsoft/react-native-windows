@@ -17,6 +17,13 @@ namespace Microsoft.ReactNative.Managed
       Name = name ?? throw new ArgumentNullException(nameof(name));
     }
   }
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+  internal class ViewManagerExportedViewConstantAttribute : ViewManagerNamedAttribute
+  {
+    public ViewManagerExportedViewConstantAttribute(string name) : base(name)
+    {
+    }
+  }
 
   [AttributeUsage(AttributeTargets.Method)]
   internal class ViewManagerPropertySetterAttribute : ViewManagerNamedAttribute
@@ -33,19 +40,23 @@ namespace Microsoft.ReactNative.Managed
     }
   }
 
-  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  internal class ViewManagerExportedViewConstantAttribute : ViewManagerNamedAttribute
+  [AttributeUsage(AttributeTargets.Method)]
+  internal class ViewManagerCommandAttribute : Attribute
   {
-    public ViewManagerExportedViewConstantAttribute(string name) : base(name)
-    {
-    }
-  }
+    public string Name { get; set; }
 
-  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  internal class ViewManagerCommandAttribute : ViewManagerNamedAttribute
-  {
-    public ViewManagerCommandAttribute(string name) : base(name)
+    public long? CommandId { get; set; }
+
+    public ViewManagerCommandAttribute() : base() { }
+
+    public ViewManagerCommandAttribute(string name) : base()
     {
+      Name = name;
+    }
+
+    public ViewManagerCommandAttribute(string name, long commandId) : this(name)
+    {
+      CommandId = commandId;
     }
   }
 }
