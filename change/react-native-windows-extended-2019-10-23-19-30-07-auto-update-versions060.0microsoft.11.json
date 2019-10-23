@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Updating react-native to version: 0.60.0-microsoft.11",
-  "packageName": "react-native-windows-extended",
-  "email": "53619745+rnbot@users.noreply.github.com",
-  "commit": "74e58fd265922fa0016bf2b6d416bb073ecc4230",
-  "date": "2019-10-23T19:30:07.195Z",
-  "file": "D:\\a\\1\\s\\change\\react-native-windows-extended-2019-10-23-19-30-07-auto-update-versions060.0microsoft.11.json"
-}
