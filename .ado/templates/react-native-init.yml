@@ -64,6 +64,8 @@ steps:
       command: restore
       restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
+  - template: install-SDK.yml
+
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
