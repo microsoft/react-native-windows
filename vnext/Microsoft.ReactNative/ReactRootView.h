@@ -4,7 +4,6 @@
 
 #include "ReactRootView.g.h"
 
-#include "ReactApplication.h"
 #include "ReactInstanceManager.h"
 #include "ReactNativeHost.h"
 #include "ViewManagerProvider.h"

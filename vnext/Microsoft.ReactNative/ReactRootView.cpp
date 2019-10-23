@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "ReactRootView.h"
-#if __has_include("ReactRootView.g.cpp")
 #include "ReactRootView.g.cpp"
-#endif
+#include <winrt/Windows.UI.Core.h>
 
 using namespace winrt;
 using namespace Windows::UI::Core;
