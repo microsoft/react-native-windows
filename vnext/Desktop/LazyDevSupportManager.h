@@ -29,9 +29,7 @@ class LazyDevSupportManager : public IDevSupportManager {
       const std::string &debugHost,
       const std::string &jsBundleName,
       const std::string &platform) override;
-  void StartPollingLiveReload(
-      const std::string &debugHost,
-      std::function<void()> onChangeCallback) override;
+  void StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) override;
   void StopPollingLiveReload() override;
   bool HasException() override;
 

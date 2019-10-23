@@ -21,10 +21,8 @@ class IViewManager {
   virtual void destroyShadow(ShadowNode *) const = 0;
 
   virtual ::folly::dynamic GetConstants() const = 0;
-  virtual ::folly::dynamic GetExportedCustomBubblingEventTypeConstants()
-      const = 0;
-  virtual ::folly::dynamic GetExportedCustomDirectEventTypeConstants()
-      const = 0;
+  virtual ::folly::dynamic GetExportedCustomBubblingEventTypeConstants() const = 0;
+  virtual ::folly::dynamic GetExportedCustomDirectEventTypeConstants() const = 0;
 };
 
 class ViewManagerBase : public IViewManager {

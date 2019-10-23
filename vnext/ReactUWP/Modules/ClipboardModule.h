@@ -22,9 +22,7 @@ class ClipboardModule final : public facebook::xplat::module::CxxModule {
 
  private:
   static void SetClipboardText(const std::string &text);
-  static void GetClipboardText(
-      const Callback &cbSuccess,
-      const Callback &cbFail);
+  static void GetClipboardText(const Callback &cbSuccess, const Callback &cbFail);
 };
 
 } // namespace uwp

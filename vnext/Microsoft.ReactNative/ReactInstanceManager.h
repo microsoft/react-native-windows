@@ -64,15 +64,12 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
   //	There should be one react instance creator per instance, as it
   //	both holds the current instance and is responsible for creating new
   //	instances on live reload.
-  std::shared_ptr<react::uwp::IReactInstanceCreator> m_reactInstanceCreator{
-      nullptr};
+  std::shared_ptr<react::uwp::IReactInstanceCreator> m_reactInstanceCreator{nullptr};
 
   IAsyncOperation<ReactContext> CreateReactContextCoreAsync();
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct ReactInstanceManager : ReactInstanceManagerT<
-                                  ReactInstanceManager,
-                                  implementation::ReactInstanceManager> {};
+struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager, implementation::ReactInstanceManager> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

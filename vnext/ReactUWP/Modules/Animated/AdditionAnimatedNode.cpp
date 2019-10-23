@@ -18,17 +18,14 @@ AdditionAnimatedNode::AdditionAnimatedNode(
   }
 
   m_propertySet.StartAnimation(s_valueName, [nodes = m_inputNodes, manager]() {
-    const auto anim =
-        winrt::Window::Current().Compositor().CreateExpressionAnimation();
+    const auto anim = winrt::Window::Current().Compositor().CreateExpressionAnimation();
 
     anim.Expression([nodes, manager, anim]() {
       winrt::hstring expr = L"0";
       for (const auto tag : nodes) {
         const auto identifier = L"n" + std::to_wstring(tag);
-        anim.SetReferenceParameter(
-            identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
-        expr = expr + L" + " + identifier + L"." + s_valueName + L" + " +
-            identifier + L"." + s_offsetName;
+        anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
+        expr = expr + L" + " + identifier + L"." + s_valueName + L" + " + identifier + L"." + s_offsetName;
       }
       return expr;
     }());

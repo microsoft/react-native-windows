@@ -26,8 +26,7 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   bool IsAnimationDone(double currentValue, double currentVelocity) override;
 
  private:
-  bool
-  IsAtRest(double currentVelocity, double currentPosition, double endValue);
+  bool IsAtRest(double currentVelocity, double currentPosition, double endValue);
   bool IsOvershooting(double currentValue);
 
   double m_springStiffness{0};
@@ -44,15 +43,11 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   static constexpr std::string_view s_springStiffnessParameterName{"stiffness"};
   static constexpr std::string_view s_springDampingParameterName{"damping"};
   static constexpr std::string_view s_springMassParameterName{"mass"};
-  static constexpr std::string_view s_initialVelocityParameterName{
-      "initialVelocity"};
+  static constexpr std::string_view s_initialVelocityParameterName{"initialVelocity"};
   static constexpr std::string_view s_endValueParameterName{"toValue"};
-  static constexpr std::string_view s_restSpeedThresholdParameterName{
-      "restSpeedThreshold"};
-  static constexpr std::string_view
-      s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
-  static constexpr std::string_view s_overshootClampingEnabledParameterName{
-      "overshootClamping"};
+  static constexpr std::string_view s_restSpeedThresholdParameterName{"restSpeedThreshold"};
+  static constexpr std::string_view s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
+  static constexpr std::string_view s_overshootClampingEnabledParameterName{"overshootClamping"};
   static constexpr std::string_view s_iterationsParameterName{"iterations"};
 }; // namespace uwp
 } // namespace uwp

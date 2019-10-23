@@ -37,8 +37,7 @@ REACTWINDOWS_EXPORT YGSize DefaultYogaSelfMeasureFunc(
 #pragma warning(push)
 #pragma warning(disable : 4275) // base is not DLL exported
 #pragma warning(disable : 4251) // member is not DLL exported
-class REACTWINDOWS_EXPORT ViewManagerBase
-    : public facebook::react::IViewManager {
+class REACTWINDOWS_EXPORT ViewManagerBase : public facebook::react::IViewManager {
  public:
   ViewManagerBase(const std::shared_ptr<IReactInstance> &reactInstance);
   virtual ~ViewManagerBase() {}
@@ -59,26 +58,15 @@ class REACTWINDOWS_EXPORT ViewManagerBase
   virtual void AddView(XamlView parent, XamlView child, int64_t index);
   virtual void RemoveAllChildren(XamlView parent);
   virtual void RemoveChildAt(XamlView parent, int64_t index);
-  virtual void
-  ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild);
+  virtual void ReplaceChild(XamlView parent, XamlView oldChild, XamlView newChild);
 
-  virtual void UpdateProperties(
-      ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap);
+  virtual void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap);
 
-  virtual void DispatchCommand(
-      XamlView viewToUpdate,
-      int64_t commandId,
-      const folly::dynamic &commandArgs);
+  virtual void DispatchCommand(XamlView viewToUpdate, int64_t commandId, const folly::dynamic &commandArgs);
 
   // Yoga Layout
-  virtual void SetLayoutProps(
-      ShadowNodeBase &nodeToUpdate,
-      XamlView viewToUpdate,
-      float left,
-      float top,
-      float width,
-      float height);
+  virtual void
+  SetLayoutProps(ShadowNodeBase &nodeToUpdate, XamlView viewToUpdate, float left, float top, float width, float height);
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;

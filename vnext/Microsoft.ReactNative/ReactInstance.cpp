@@ -14,11 +14,9 @@ void ReactInstance::InvokeFunction(
     hstring const &moduleName,
     hstring const &method,
     IVectorView<IInspectable> const &arguments) {
-  folly::dynamic args =
-      Microsoft::ReactNative::Bridge::ConvertToDynamic(arguments);
+  folly::dynamic args = Microsoft::ReactNative::Bridge::ConvertToDynamic(arguments);
 
-  m_instance->CallJsFunction(
-      to_string(moduleName), to_string(method), std::move(args));
+  m_instance->CallJsFunction(to_string(moduleName), to_string(method), std::move(args));
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge::implementation

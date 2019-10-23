@@ -20,9 +20,7 @@ struct ShadowNode {
 
   virtual void updateProperties(const folly::dynamic &&props);
   virtual void onDropViewInstance() = 0;
-  virtual void dispatchCommand(
-      int64_t commandId,
-      const folly::dynamic &commandArgs);
+  virtual void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs);
   virtual void removeAllChildren() = 0;
   virtual void AddView(ShadowNode &child, int64_t index) = 0;
   virtual void RemoveChildAt(int64_t indexToRemove) = 0;

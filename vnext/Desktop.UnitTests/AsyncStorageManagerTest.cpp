@@ -66,24 +66,17 @@ TEST_CLASS(AsyncStorageManagerTest) {
 
   inline void cleanupStorageFiles() {
     WCHAR wzMyAppDataDirPathArr[MAX_PATH];
-    HRESULT hr = SHGetFolderPathW(
-        nullptr,
-        CSIDL_LOCAL_APPDATA,
-        nullptr,
-        SHGFP_TYPE_CURRENT,
-        wzMyAppDataDirPathArr);
+    HRESULT hr = SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzMyAppDataDirPathArr);
     if (hr != S_OK)
       throwLastErrorMessage();
 
     const std::wstring strLocalAppDataPath{wzMyAppDataDirPathArr};
-    const std::wstring strMicrosoftFullPath =
-        strLocalAppDataPath + L"\\Microsoft";
+    const std::wstring strMicrosoftFullPath = strLocalAppDataPath + L"\\Microsoft";
     const std::wstring strOfficeFullPath = strMicrosoftFullPath + L"\\Office";
-    const std::wstring strStorageFolderFullPath =
-        strOfficeFullPath + L"\\SDXStorage";
+    const std::wstring strStorageFolderFullPath = strOfficeFullPath + L"\\SDXStorage";
     const std::wstring strStorageFileExtension = L".txt";
-    const std::wstring strStorageFileFullPath = strStorageFolderFullPath +
-        L"\\" + m_storageFileName + strStorageFileExtension;
+    const std::wstring strStorageFileFullPath =
+        strStorageFolderFullPath + L"\\" + m_storageFileName + strStorageFileExtension;
     // full path should be like -
     // C:\Users\<username>\AppData\Local\Microsoft\Office\SDXStorage\ReactNativeAsyncStorage.txt
 
@@ -100,8 +93,7 @@ TEST_CLASS(AsyncStorageManagerTest) {
 
   TEST_METHOD(AsyncStorageManagerTest_SimpleOperations) {
     AsyncStorageManager kvManager(this->m_storageFileName);
-    std::function<void(vector<folly::dynamic>)> callback =
-        storeCallbackArgAndNotify;
+    std::function<void(vector<folly::dynamic>)> callback = storeCallbackArgAndNotify;
 
     // Empty the storage.
     std::unique_lock<std::recursive_mutex> lock(m);
@@ -115,16 +107,11 @@ TEST_CLASS(AsyncStorageManagerTest) {
 
     // Set two KV pairs. Note that it waits until the condition variable is
     // signalled from the Callback function.
-    vector<tuple<string, string>> setArgs = {
-        make_tuple(SAMPLE_KEY_1, SAMPLE_VAL_1),
-        make_tuple(SAMPLE_KEY_2, SAMPLE_VAL_2)};
+    vector<tuple<string, string>> setArgs = {make_tuple(SAMPLE_KEY_1, SAMPLE_VAL_1),
+                                             make_tuple(SAMPLE_KEY_2, SAMPLE_VAL_2)};
     folly::dynamic jsSetArgs = folly::dynamic::array;
-    jsSetArgs.push_back(
-        FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
-    kvManager.executeKVOperation(
-        AsyncStorageManager::AsyncStorageOperation::multiSet,
-        jsSetArgs,
-        callback);
+    jsSetArgs.push_back(FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
+    kvManager.executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiSet, jsSetArgs, callback);
     cv.wait(lock);
 
     // Check if any error was returned.
@@ -134,15 +121,11 @@ TEST_CLASS(AsyncStorageManagerTest) {
     vector<string> getArgs = {SAMPLE_KEY_1, SAMPLE_KEY_2};
     folly::dynamic jsGetArgs = folly::dynamic::array;
     jsGetArgs.push_back(FollyDynamicConverter::stringVectorAsRetVal(getArgs));
-    kvManager.executeKVOperation(
-        AsyncStorageManager::AsyncStorageOperation::multiGet,
-        jsGetArgs,
-        callback);
+    kvManager.executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiGet, jsGetArgs, callback);
 
     folly::dynamic jsReturnValues = folly::dynamic::array;
     jsReturnValues.push_back(returnedValues[1]);
-    vector<tuple<string, string>> retTupleVals =
-        FollyDynamicConverter::jsArgAsTupleStringVector(jsReturnValues);
+    vector<tuple<string, string>> retTupleVals = FollyDynamicConverter::jsArgAsTupleStringVector(jsReturnValues);
     Assert::IsTrue(returnedValues[0] == dynamicNULL);
     Assert::IsTrue(retTupleVals == setArgs);
 
@@ -154,8 +137,7 @@ TEST_CLASS(AsyncStorageManagerTest) {
 
     folly::dynamic jsAllKeys = folly::dynamic::array;
     jsAllKeys.push_back(returnedValues[1]);
-    vector<string> retVals =
-        FollyDynamicConverter::jsArgAsStringVector(jsAllKeys);
+    vector<string> retVals = FollyDynamicConverter::jsArgAsStringVector(jsAllKeys);
     Assert::IsTrue(returnedValues[0] == dynamicNULL);
     Assert::IsTrue(retVals == getArgs);
 
@@ -173,8 +155,7 @@ TEST_CLASS(AsyncStorageManagerTest) {
 
   TEST_METHOD(AsyncStorageManagerTest_QueueHeavyLoad) {
     AsyncStorageManager kvManager(this->m_storageFileName);
-    std::function<void(vector<folly::dynamic>)> callback =
-        storeCallbackArgAndNotify;
+    std::function<void(vector<folly::dynamic>)> callback = storeCallbackArgAndNotify;
 
     // Clear the storage.
     std::unique_lock<std::recursive_mutex> lock(m);
@@ -199,27 +180,18 @@ TEST_CLASS(AsyncStorageManagerTest) {
         setArgs.push_back(make_tuple(key, val));
       }
       folly::dynamic jsSetArgs = folly::dynamic::array;
-      jsSetArgs.push_back(
-          FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
-      kvManager.executeKVOperation(
-          AsyncStorageManager::AsyncStorageOperation::multiSet,
-          jsSetArgs,
-          callback);
+      jsSetArgs.push_back(FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
+      kvManager.executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiSet, jsSetArgs, callback);
     }
 
     callback = storeCallbackArgAndNotify;
 
     // Do one last set with the notify callback so we can wait until all sets
     // have been executed.
-    vector<tuple<string, string>> setArgs = {
-        make_tuple(SAMPLE_KEY_2, SAMPLE_VAL_2)};
+    vector<tuple<string, string>> setArgs = {make_tuple(SAMPLE_KEY_2, SAMPLE_VAL_2)};
     folly::dynamic jsLastSetArg = folly::dynamic::array;
-    jsLastSetArg.push_back(
-        FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
-    kvManager.executeKVOperation(
-        AsyncStorageManager::AsyncStorageOperation::multiSet,
-        jsLastSetArg,
-        callback);
+    jsLastSetArg.push_back(FollyDynamicConverter::tupleStringVectorAsRetVal(setArgs));
+    kvManager.executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiSet, jsLastSetArg, callback);
     cv.wait(lock);
 
     Assert::IsTrue(returnedValues[0] == dynamicNULL);
@@ -231,11 +203,9 @@ TEST_CLASS(AsyncStorageManagerTest) {
         callback);
     folly::dynamic jsRetValues = folly::dynamic::array;
     jsRetValues.push_back(returnedValues[1]);
-    size_t returnedSize =
-        FollyDynamicConverter::jsArgAsStringVector(jsRetValues).size();
+    size_t returnedSize = FollyDynamicConverter::jsArgAsStringVector(jsRetValues).size();
     Assert::IsTrue(returnedValues[0] == dynamicNULL);
-    Assert::AreEqual(
-        returnedSize, static_cast<size_t>(numOperations * numBlocks + 1));
+    Assert::AreEqual(returnedSize, static_cast<size_t>(numOperations * numBlocks + 1));
 
     // Verify random key-value pairing.
     std::srand(static_cast<unsigned int>(std::time(0)));
@@ -247,16 +217,12 @@ TEST_CLASS(AsyncStorageManagerTest) {
     vector<string> getArgs = {key};
     folly::dynamic jsGetArgs = folly::dynamic::array;
     jsGetArgs.push_back(FollyDynamicConverter::stringVectorAsRetVal(getArgs));
-    kvManager.executeKVOperation(
-        AsyncStorageManager::AsyncStorageOperation::multiGet,
-        jsGetArgs,
-        callback);
+    kvManager.executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiGet, jsGetArgs, callback);
 
     vector<tuple<string, string>> expectedTupleVals = {make_tuple(key, val)};
     folly::dynamic jsRetTupleValues = folly::dynamic::array;
     jsRetTupleValues.push_back(returnedValues[1]);
-    vector<tuple<string, string>> retTupleVals =
-        FollyDynamicConverter::jsArgAsTupleStringVector(jsRetTupleValues);
+    vector<tuple<string, string>> retTupleVals = FollyDynamicConverter::jsArgAsTupleStringVector(jsRetTupleValues);
     Assert::IsTrue(returnedValues[0] == dynamicNULL);
     Assert::IsTrue(retTupleVals == expectedTupleVals);
 

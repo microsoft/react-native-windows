@@ -15,18 +15,12 @@ ValueAnimatedNode::ValueAnimatedNode(
     : AnimatedNode(tag, manager) {
   m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
   m_propertySet.InsertScalar(
-      s_valueName,
-      static_cast<float>(
-          config.find(s_jsValueName).dereference().second.asDouble()));
+      s_valueName, static_cast<float>(config.find(s_jsValueName).dereference().second.asDouble()));
   m_propertySet.InsertScalar(
-      s_offsetName,
-      static_cast<float>(
-          config.find(s_jsOffsetName).dereference().second.asDouble()));
+      s_offsetName, static_cast<float>(config.find(s_jsOffsetName).dereference().second.asDouble()));
 }
 
-ValueAnimatedNode::ValueAnimatedNode(
-    int64_t tag,
-    const std::shared_ptr<NativeAnimatedNodeManager> &manager)
+ValueAnimatedNode::ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
   m_propertySet = winrt::Window::Current().Compositor().CreatePropertySet();
   m_propertySet.InsertScalar(s_valueName, 0.0);
@@ -120,8 +114,7 @@ void ValueAnimatedNode::RemoveActiveTrackingNode(int64_t trackingNodeTag) {
 void ValueAnimatedNode::UpdateTrackingNodes() {
   if (auto const manager = m_manager.lock()) {
     for (auto trackingNodeTag : m_activeTrackingNodes) {
-      if (auto trackingNode =
-              manager->GetTrackingAnimatedNode(trackingNodeTag)) {
+      if (auto trackingNode = manager->GetTrackingAnimatedNode(trackingNodeTag)) {
         trackingNode->Update();
       }
     }

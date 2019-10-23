@@ -33,17 +33,15 @@ void ButtonShadowNode::createView() {
 
   auto button = GetView().as<winrt::Button>();
 
-  m_buttonClickRevoker =
-      button.Click(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto instance = GetViewManager()->GetReactInstance().lock();
-        folly::dynamic eventData = folly::dynamic::object("target", m_tag);
-        if (instance != nullptr)
-          instance->DispatchEvent(m_tag, "topClick", std::move(eventData));
-      });
+  m_buttonClickRevoker = button.Click(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto instance = GetViewManager()->GetReactInstance().lock();
+    folly::dynamic eventData = folly::dynamic::object("target", m_tag);
+    if (instance != nullptr)
+      instance->DispatchEvent(m_tag, "topClick", std::move(eventData));
+  });
 }
 
-ButtonViewManager::ButtonViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+ButtonViewManager::ButtonViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : ContentControlViewManager(reactInstance) {}
 
 const char *ButtonViewManager::GetName() const {
@@ -54,17 +52,14 @@ const char *ButtonViewManager::GetName() const {
 folly::dynamic ButtonViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("accessibilityLabel", "string")(
-      "disabled", "boolean")("buttonType", "string"));
+  props.update(folly::dynamic::object("accessibilityLabel", "string")("disabled", "boolean")("buttonType", "string"));
 
   return props;
 }
 
-folly::dynamic ButtonViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic ButtonViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topClick"] =
-      folly::dynamic::object("registrationName", "onClick");
+  directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
 
   return directEvents;
 }
@@ -78,9 +73,7 @@ XamlView ButtonViewManager::CreateViewCore(int64_t tag) {
   return button;
 }
 
-void ButtonViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void ButtonViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto button = nodeToUpdate->GetView().as<winrt::Button>();
   if (button == nullptr)
     return;

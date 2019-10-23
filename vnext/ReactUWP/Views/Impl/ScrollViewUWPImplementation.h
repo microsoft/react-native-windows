@@ -35,8 +35,7 @@ class ScrollViewUWPImplementation {
   void UpdateScrollableSize() const;
 
   winrt::ScrollViewer ScrollViewer() const;
-  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager()
-      const;
+  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager() const;
 
  private:
   winrt::weak_ref<winrt::ScrollViewer> m_scrollViewer{};

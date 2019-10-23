@@ -19,9 +19,7 @@ class CheckBoxViewManager : public ControlViewManager {
 
   facebook::react::ShadowNode *createShadow() const override;
 
-  void UpdateProperties(
-      ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;

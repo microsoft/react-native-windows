@@ -38,8 +38,7 @@ ReactRootView::ReactRootView(XamlView rootView) {
 
 ReactRootView::~ReactRootView() {}
 
-std::shared_ptr<IReactInstance> ReactRootView::GetReactInstance() const
-    noexcept {
+std::shared_ptr<IReactInstance> ReactRootView::GetReactInstance() const noexcept {
   return m_pimpl->GetReactInstance();
 }
 
@@ -51,8 +50,7 @@ void ReactRootView::SetJSComponentName(std::string &&jsComponentName) noexcept {
   m_pimpl->SetJSComponentName(std::move(jsComponentName));
 }
 
-void ReactRootView::SetInstanceCreator(
-    const ReactInstanceCreator &instanceCreator) noexcept {
+void ReactRootView::SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept {
   m_pimpl->SetInstanceCreator(instanceCreator);
 }
 
@@ -68,8 +66,7 @@ void ReactRootView::DetachRoot() noexcept {
   m_pimpl->DetachRoot();
 }
 
-std::shared_ptr<::react::uwp::IXamlReactControl>
-ReactRootView::GetXamlReactControl() const noexcept {
+std::shared_ptr<::react::uwp::IXamlReactControl> ReactRootView::GetXamlReactControl() const noexcept {
   return m_pimpl;
 }
 

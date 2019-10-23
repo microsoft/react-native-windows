@@ -10,24 +10,19 @@ using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 
 namespace winrt::Microsoft::ReactNative::implementation {
-void ReactRootView::OnCreate(
-    Microsoft::ReactNative::ReactNativeHost const &host) {
+void ReactRootView::OnCreate(Microsoft::ReactNative::ReactNativeHost const &host) {
   auto resources = Application::Current().Resources();
-  auto brush =
-      resources.Lookup(box_value(L"ApplicationPageBackgroundThemeBrush"))
-          .as<Media::SolidColorBrush>();
+  auto brush = resources.Lookup(box_value(L"ApplicationPageBackgroundThemeBrush")).as<Media::SolidColorBrush>();
   this->Background(brush);
 
   if (Dispatcher().HasThreadAccess()) {
     SystemNavigationManager::GetForCurrentView().BackRequested(
-        [host = std::move(host)](
-            IInspectable sender, BackRequestedEventArgs e) {
+        [host = std::move(host)](IInspectable sender, BackRequestedEventArgs e) {
           ReactRootView::OnBackRequested(host, sender, e);
         });
 
     Window::Current().CoreWindow().Dispatcher().AcceleratorKeyActivated(
-        [host = std::move(host)](
-            CoreDispatcher sender, AcceleratorKeyEventArgs e) {
+        [host = std::move(host)](CoreDispatcher sender, AcceleratorKeyEventArgs e) {
           ReactRootView::OnAcceleratorKeyActivated(host, sender, e);
         });
   }
@@ -42,8 +37,7 @@ fire_and_forget ReactRootView::StartReactApplicationAsync(
   }
 
   if (m_reactInstanceManager != nullptr) {
-    throw hresult_invalid_operation(
-        L"This root view has already been attached to an instance manager.");
+    throw hresult_invalid_operation(L"This root view has already been attached to an instance manager.");
   }
 
   m_reactInstanceManager = instanceManager;
@@ -51,15 +45,13 @@ fire_and_forget ReactRootView::StartReactApplicationAsync(
   m_initialProps = initialProps;
 
   // Nudge the ReactInstanceManager to create the instance and wrapping context
-  ReactInstanceManager *instanceManagerImpl{
-      get_self<ReactInstanceManager>(instanceManager)};
+  ReactInstanceManager *instanceManagerImpl{get_self<ReactInstanceManager>(instanceManager)};
 
   auto context = co_await instanceManagerImpl->GetOrCreateReactContextAsync();
 
   auto instanceCreator = instanceManagerImpl->InstanceCreator();
 
-  m_xamlView = react::uwp::CreateReactRootView(
-      *this, componentName.c_str(), instanceCreator);
+  m_xamlView = react::uwp::CreateReactRootView(*this, componentName.c_str(), instanceCreator);
 
   if (m_xamlView == nullptr)
     co_return;
@@ -120,7 +112,6 @@ void ReactRootView::OnAcceleratorKeyActivated(
 }
 
 bool ReactRootView::IsKeyDown(CoreAcceleratorKeyEventType t) {
-  return t == CoreAcceleratorKeyEventType::KeyDown ||
-      t == CoreAcceleratorKeyEventType::SystemKeyDown;
+  return t == CoreAcceleratorKeyEventType::KeyDown || t == CoreAcceleratorKeyEventType::SystemKeyDown;
 }
 } // namespace winrt::Microsoft::ReactNative::implementation

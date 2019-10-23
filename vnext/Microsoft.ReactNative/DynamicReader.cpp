@@ -11,8 +11,7 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 // DynamicReader implementation
 //===========================================================================
 
-DynamicReader::DynamicReader(const folly::dynamic &root) noexcept
-    : m_root{&root} {}
+DynamicReader::DynamicReader(const folly::dynamic &root) noexcept : m_root{&root} {}
 
 JSValueReaderState DynamicReader::ReadNext() noexcept {
   switch (m_state) {
@@ -100,8 +99,7 @@ JSValueReaderState DynamicReader::ReadNext() noexcept {
   }
 }
 
-JSValueReaderState DynamicReader::ReadValue(
-    const folly::dynamic *value) noexcept {
+JSValueReaderState DynamicReader::ReadValue(const folly::dynamic *value) noexcept {
   m_stack.emplace_back(value);
   switch (value->type()) {
     case folly::dynamic::Type::NULLT:
@@ -123,8 +121,7 @@ JSValueReaderState DynamicReader::ReadValue(
   }
 }
 
-_Success_(return ) bool DynamicReader::TryGetBoolen(
-    _Out_ bool &value) noexcept {
+_Success_(return ) bool DynamicReader::TryGetBoolen(_Out_ bool &value) noexcept {
   if (m_state == JSValueReaderState::BooleanValue) {
     VerifyElseCrash(!m_stack.empty());
     value = m_stack.back().Value->asBool();
@@ -135,8 +132,7 @@ _Success_(return ) bool DynamicReader::TryGetBoolen(
   return false;
 }
 
-_Success_(return ) bool DynamicReader::TryGetInt64(
-    _Out_ int64_t &value) noexcept {
+_Success_(return ) bool DynamicReader::TryGetInt64(_Out_ int64_t &value) noexcept {
   if (m_state == JSValueReaderState::Int64Value) {
     VerifyElseCrash(!m_stack.empty());
     value = m_stack.back().Value->asInt();
@@ -151,8 +147,7 @@ _Success_(return ) bool DynamicReader::TryGetInt64(
   return false;
 }
 
-_Success_(return ) bool DynamicReader::TryGetDouble(
-    _Out_ double &value) noexcept {
+_Success_(return ) bool DynamicReader::TryGetDouble(_Out_ double &value) noexcept {
   if (m_state == JSValueReaderState::DoubleValue) {
     VerifyElseCrash(!m_stack.empty());
     value = m_stack.back().Value->asDouble();
@@ -167,8 +162,7 @@ _Success_(return ) bool DynamicReader::TryGetDouble(
   return false;
 }
 
-_Success_(return ) bool DynamicReader::TryGetString(
-    winrt::hstring &value) noexcept {
+_Success_(return ) bool DynamicReader::TryGetString(winrt::hstring &value) noexcept {
   if (m_state == JSValueReaderState::StringValue) {
     VerifyElseCrash(!m_stack.empty());
     const std::string &str = m_stack.back().Value->asString();

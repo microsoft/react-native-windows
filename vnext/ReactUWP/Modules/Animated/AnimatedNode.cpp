@@ -9,9 +9,7 @@
 namespace react {
 namespace uwp {
 
-AnimatedNode::AnimatedNode(
-    int64_t tag,
-    const std::shared_ptr<NativeAnimatedNodeManager> &manager)
+AnimatedNode::AnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : m_tag(tag), m_manager(manager) {}
 
 int64_t AnimatedNode::Tag() {
@@ -31,8 +29,7 @@ void AnimatedNode::RemoveChild(const int64_t tag) {
 }
 
 AnimatedNode *AnimatedNode::GetChildNode(int64_t tag) {
-  if (std::find(m_children.begin(), m_children.end(), tag) !=
-      m_children.end()) {
+  if (std::find(m_children.begin(), m_children.end(), tag) != m_children.end()) {
     if (const auto manager = m_manager.lock()) {
       return manager->GetAnimatedNode(tag);
     }

@@ -31,9 +31,7 @@ ReactInstanceManager::ReactInstanceManager(
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
       m_packageProviders(
-          packageProviders ? std::vector<IReactPackageProvider>(
-                                 begin(packageProviders),
-                                 end(packageProviders))
+          packageProviders ? std::vector<IReactPackageProvider>(begin(packageProviders), end(packageProviders))
                            : std::vector<IReactPackageProvider>()),
       m_useDeveloperSupport(useDeveloperSupport) {
   if (packageProviders == nullptr) {
@@ -65,8 +63,7 @@ void ReactInstanceManager::OnSuspend() {
 
 // Called when the host entered background mode.
 void ReactInstanceManager::OnEnteredBackground() {
-  OutputDebugStringW(
-      L"TODO: ReactInstanceManager::OnEnteredBackground not implemented");
+  OutputDebugStringW(L"TODO: ReactInstanceManager::OnEnteredBackground not implemented");
 
   // DispatcherHelpers.AssertOnDispatcher();
   //_lifecycleStateMachine.OnEnteredBackground();
@@ -74,8 +71,7 @@ void ReactInstanceManager::OnEnteredBackground() {
 
 // Called when the host is leaving background mode.
 void ReactInstanceManager::OnLeavingBackground() {
-  OutputDebugStringW(
-      L"TODO: ReactInstanceManager::OnLeavingBackground not implemented");
+  OutputDebugStringW(L"TODO: ReactInstanceManager::OnLeavingBackground not implemented");
 
   // DispatcherHelpers.AssertOnDispatcher();
   //_lifecycleStateMachine.OnLeavingBackground();
@@ -100,8 +96,7 @@ void ReactInstanceManager::OnResume(OnResumeAction const & /*action*/) {
 }
 
 void ReactInstanceManager::OnBackPressed() {
-  throw hresult_not_implemented(
-      L"TODO: ReactInstanceManager::OnBackPressed not implemented");
+  throw hresult_not_implemented(L"TODO: ReactInstanceManager::OnBackPressed not implemented");
 
   // DispatcherHelpers.AssertOnDispatcher();
   // var reactContext = _currentReactContext;
@@ -117,22 +112,16 @@ void ReactInstanceManager::OnBackPressed() {
   //}
 }
 
-std::shared_ptr<react::uwp::IReactInstanceCreator>
-ReactInstanceManager::InstanceCreator() {
+std::shared_ptr<react::uwp::IReactInstanceCreator> ReactInstanceManager::InstanceCreator() {
   if (m_reactInstanceCreator == nullptr) {
     m_reactInstanceCreator = std::make_shared<ReactInstanceCreator>(
-        m_instanceSettings,
-        m_jsBundleFile,
-        m_jsMainModuleName,
-        m_modulesProvider,
-        m_viewManagersProvider);
+        m_instanceSettings, m_jsBundleFile, m_jsMainModuleName, m_modulesProvider, m_viewManagersProvider);
   }
 
   return m_reactInstanceCreator;
 }
 
-auto ReactInstanceManager::GetOrCreateReactContextAsync()
-    -> IAsyncOperation<ReactContext> {
+auto ReactInstanceManager::GetOrCreateReactContextAsync() -> IAsyncOperation<ReactContext> {
   if (m_currentReactContext != nullptr)
     co_return m_currentReactContext;
 
@@ -143,8 +132,7 @@ auto ReactInstanceManager::GetOrCreateReactContextAsync()
 
 // TODO: Should we make this method async?  On first run when getInstance
 // is called it starts things up. Does this need to block?
-auto ReactInstanceManager::CreateReactContextCoreAsync()
-    -> IAsyncOperation<ReactContext> {
+auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<ReactContext> {
   auto reactContext = ReactContext();
 
   /* TODO hook up an exception handler if UseDeveloperSupport is set
@@ -188,11 +176,9 @@ auto ReactInstanceManager::CreateReactContextCoreAsync()
   // implementation were lifted up into this project.
 
   auto instancePtr = InstanceCreator()->getInstance();
-  auto reactInstance =
-      winrt::make<Bridge::implementation::ReactInstance>(instancePtr);
+  auto reactInstance = winrt::make<Bridge::implementation::ReactInstance>(instancePtr);
 
-  Bridge::implementation::ReactContext *contextImpl{
-      get_self<Bridge::implementation::ReactContext>(reactContext)};
+  Bridge::implementation::ReactContext *contextImpl{get_self<Bridge::implementation::ReactContext>(reactContext)};
   contextImpl->InitializeWithInstance(reactInstance);
 
   // TODO: Investigate whether we need the equivalent of the

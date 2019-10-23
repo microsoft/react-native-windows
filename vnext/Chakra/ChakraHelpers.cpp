@@ -40,9 +40,7 @@ namespace {
 
 template <class T>
 size_t fwrite(T *p, size_t count, FILE *file) noexcept {
-  static_assert(
-      std::is_trivially_copyable<T>::value,
-      "T must be trivially copyable to be serialized into a file");
+  static_assert(std::is_trivially_copyable<T>::value, "T must be trivially copyable to be serialized into a file");
   return fwrite(p, sizeof(*p), count, file);
 }
 
@@ -64,11 +62,7 @@ struct FileVersionInfoResource {
 #endif
 class ChakraVersionInfo {
  public:
-  ChakraVersionInfo() noexcept
-      : m_fileVersionMS{0},
-        m_fileVersionLS{0},
-        m_productVersionMS{0},
-        m_productVersionLS{0} {}
+  ChakraVersionInfo() noexcept : m_fileVersionMS{0}, m_fileVersionLS{0}, m_productVersionMS{0}, m_productVersionLS{0} {}
 
   bool initialize() noexcept {
 #if !defined(CHAKRACORE_UWP)
@@ -84,24 +78,20 @@ class ChakraVersionInfo {
     std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper(
         moduleHandle, std::move(freeLibraryWrapper));
 
-    HRSRC versionResourceHandle = FindResourceW(
-        moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
+    HRSRC versionResourceHandle = FindResourceW(moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
     if (!versionResourceHandle ||
-        SizeofResource(
-            static_cast<HMODULE>(moduleHandleWrapper.get()),
-            versionResourceHandle) < sizeof(FileVersionInfoResource)) {
+        SizeofResource(static_cast<HMODULE>(moduleHandleWrapper.get()), versionResourceHandle) <
+            sizeof(FileVersionInfoResource)) {
       return false;
     }
 
-    HGLOBAL versionResourcePtrHandle =
-        LoadResource(moduleHandle, versionResourceHandle);
+    HGLOBAL versionResourcePtrHandle = LoadResource(moduleHandle, versionResourceHandle);
     if (!versionResourcePtrHandle) {
       return false;
     }
 
     FileVersionInfoResource *chakraVersionInfo =
-        static_cast<FileVersionInfoResource *>(
-            LockResource(versionResourcePtrHandle));
+        static_cast<FileVersionInfoResource *>(LockResource(versionResourcePtrHandle));
     if (!chakraVersionInfo) {
       return false;
     }
@@ -115,10 +105,8 @@ class ChakraVersionInfo {
   }
 
   bool operator==(const ChakraVersionInfo &rhs) const noexcept {
-    return (m_fileVersionMS == rhs.m_fileVersionMS) &&
-        (m_fileVersionLS == rhs.m_fileVersionLS) &&
-        (m_productVersionMS == rhs.m_productVersionMS) &&
-        (m_productVersionLS == rhs.m_productVersionLS);
+    return (m_fileVersionMS == rhs.m_fileVersionMS) && (m_fileVersionLS == rhs.m_fileVersionLS) &&
+        (m_productVersionMS == rhs.m_productVersionMS) && (m_productVersionLS == rhs.m_productVersionLS);
   }
 
   bool operator!=(const ChakraVersionInfo &rhs) const noexcept {
@@ -134,19 +122,15 @@ class ChakraVersionInfo {
 
 class BytecodePrefix {
  public:
-  static std::pair<bool, BytecodePrefix> getBytecodePrefix(
-      JsValueRef scriptFileName,
-      uint64_t bundleVersion) noexcept {
-    std::pair<bool, BytecodePrefix> result{false,
-                                           BytecodePrefix{bundleVersion}};
+  static std::pair<bool, BytecodePrefix> getBytecodePrefix(JsValueRef scriptFileName, uint64_t bundleVersion) noexcept {
+    std::pair<bool, BytecodePrefix> result{false, BytecodePrefix{bundleVersion}};
     result.first = result.second.m_chakraVersionInfo.initialize();
     return result;
   }
 
   bool operator==(const BytecodePrefix &rhs) const noexcept {
     return (m_bytecodeFileFormatVersion == rhs.m_bytecodeFileFormatVersion) &&
-        (m_bundleVersion == rhs.m_bundleVersion) &&
-        (m_chakraVersionInfo == rhs.m_chakraVersionInfo);
+        (m_bundleVersion == rhs.m_bundleVersion) && (m_chakraVersionInfo == rhs.m_chakraVersionInfo);
   }
 
   bool operator!=(const BytecodePrefix &rhs) const noexcept {
@@ -173,59 +157,44 @@ void serializeBytecodeToFileCore(
   FILE *bytecodeFilePtr;
   // bytecode is a binary representation, so we need to pass in the "b" flag to
   // fopen_s
-  if (_wfopen_s(
-          &bytecodeFilePtr,
-          Microsoft::Common::Unicode::Utf8ToUtf16(bytecodeFileName).c_str(),
-          L"wb")) {
+  if (_wfopen_s(&bytecodeFilePtr, Microsoft::Common::Unicode::Utf8ToUtf16(bytecodeFileName).c_str(), L"wb")) {
     return;
   }
-  std::unique_ptr<FILE, decltype(&fclose)> bytecodeFilePtrWrapper(
-      bytecodeFilePtr, fclose);
+  std::unique_ptr<FILE, decltype(&fclose)> bytecodeFilePtrWrapper(bytecodeFilePtr, fclose);
 
-  const std::wstring scriptUTF16 =
-      Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
+  const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
 
   unsigned int bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) !=
-      JsNoError) {
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) != JsNoError) {
     return;
   }
 
-  std::unique_ptr<uint8_t[]> bytecode(
-      std::make_unique<uint8_t[]>(bytecodeSize));
-  if (JsSerializeScript(scriptUTF16.c_str(), bytecode.get(), &bytecodeSize) !=
-      JsNoError) {
+  std::unique_ptr<uint8_t[]> bytecode(std::make_unique<uint8_t[]>(bytecodeSize));
+  if (JsSerializeScript(scriptUTF16.c_str(), bytecode.get(), &bytecodeSize) != JsNoError) {
     return;
   }
 
   constexpr size_t bytecodePrefixSize = sizeof(bytecodePrefix);
   uint8_t zeroArray[sizeof(bytecodePrefix)]{};
 
-  if (fwrite(zeroArray, bytecodePrefixSize, bytecodeFilePtrWrapper.get()) !=
-          bytecodePrefixSize ||
-      fwrite(bytecode.get(), bytecodeSize, bytecodeFilePtrWrapper.get()) !=
-          bytecodeSize ||
+  if (fwrite(zeroArray, bytecodePrefixSize, bytecodeFilePtrWrapper.get()) != bytecodePrefixSize ||
+      fwrite(bytecode.get(), bytecodeSize, bytecodeFilePtrWrapper.get()) != bytecodeSize ||
       fflush(bytecodeFilePtrWrapper.get())) {
     return;
   }
 
   fseek(bytecodeFilePtrWrapper.get(), 0, SEEK_SET);
-  if (!fwrite(bytecodePrefix, bytecodeFilePtrWrapper.get()) ||
-      fflush(bytecodeFilePtrWrapper.get())) {
+  if (!fwrite(bytecodePrefix, bytecodeFilePtrWrapper.get()) || fflush(bytecodeFilePtrWrapper.get())) {
     return;
   }
 }
 
-std::unique_ptr<JSBigString> tryGetBytecode(
-    const BytecodePrefix &bytecodePrefix,
-    const std::string &bytecodeFileName) {
-  auto bytecodeBigStringPtr = std::make_unique<FileMappingBigString>(
-      bytecodeFileName, static_cast<uint32_t>(sizeof(BytecodePrefix)));
+std::unique_ptr<JSBigString> tryGetBytecode(const BytecodePrefix &bytecodePrefix, const std::string &bytecodeFileName) {
+  auto bytecodeBigStringPtr =
+      std::make_unique<FileMappingBigString>(bytecodeFileName, static_cast<uint32_t>(sizeof(BytecodePrefix)));
 
-  if (!bytecodeBigStringPtr->file_data() ||
-      bytecodeBigStringPtr->file_size() < sizeof(bytecodePrefix) ||
-      *reinterpret_cast<const BytecodePrefix *>(
-          bytecodeBigStringPtr->file_data()) != bytecodePrefix) {
+  if (!bytecodeBigStringPtr->file_data() || bytecodeBigStringPtr->file_size() < sizeof(bytecodePrefix) ||
+      *reinterpret_cast<const BytecodePrefix *>(bytecodeBigStringPtr->file_data()) != bytecodePrefix) {
     return nullptr;
   }
 
@@ -268,23 +237,14 @@ MinimalChakraRuntime::MinimalChakraRuntime(bool multithreaded)
                 delete c;
               }} {
   JsErrorCode lastError = JsCreateRuntime(
-      multithreaded ? JsRuntimeAttributeNone
-                    : JsRuntimeAttributeDisableBackgroundWork,
-      nullptr,
-      &(*runtime));
-  assert(
-      lastError == JsNoError &&
-      "JsCreateRuntime failed in MinimalChakraRuntime constructor.");
+      multithreaded ? JsRuntimeAttributeNone : JsRuntimeAttributeDisableBackgroundWork, nullptr, &(*runtime));
+  assert(lastError == JsNoError && "JsCreateRuntime failed in MinimalChakraRuntime constructor.");
 
   lastError = JsCreateContext(*runtime, &(*context));
-  assert(
-      lastError == JsNoError &&
-      "JsCreateContext failed in MinimalChakraRuntime constructor.");
+  assert(lastError == JsNoError && "JsCreateContext failed in MinimalChakraRuntime constructor.");
 
   lastError = JsSetCurrentContext(*context);
-  assert(
-      lastError == JsNoError &&
-      "JsSetCurrentContext failed in MinimalChakraRuntime constructor.");
+  assert(lastError == JsNoError && "JsSetCurrentContext failed in MinimalChakraRuntime constructor.");
 }
 
 JsValueRef functionCaller(
@@ -315,10 +275,7 @@ JsValueRef makeFunction(JsValueRef name, ChakraJSFunction function) {
   return functionObject;
 }
 
-void ChakraJSException::buildMessage(
-    JsValueRef exn,
-    JsValueRef sourceURL,
-    const char *errorMsg) {
+void ChakraJSException::buildMessage(JsValueRef exn, JsValueRef sourceURL, const char *errorMsg) {
   std::ostringstream msgBuilder;
   if (errorMsg && strlen(errorMsg) > 0) {
     msgBuilder << errorMsg << ": ";
@@ -330,8 +287,7 @@ void ChakraJSException::buildMessage(
   // The null/empty-ness of source tells us if the JS came from a
   // file/resource, or was a constructed statement.  The location
   // info will include that source, if any.
-  std::string locationInfo =
-      sourceURL != nullptr ? ChakraString::ref(sourceURL).str() : "";
+  std::string locationInfo = sourceURL != nullptr ? ChakraString::ref(sourceURL).str() : "";
   ChakraObject exnObject = exnValue.asObject();
   auto line = exnObject.getProperty("line");
   if (line != nullptr && line.isNumber()) {
@@ -339,8 +295,7 @@ void ChakraJSException::buildMessage(
       // If there is a non-trivial line number, but there was no
       // location info, we include a placeholder, and the line
       // number.
-      locationInfo =
-          folly::to<std::string>("<unknown file>:", line.asInteger());
+      locationInfo = folly::to<std::string>("<unknown file>:", line.asInteger());
     } else if (!locationInfo.empty()) {
       // If there is location info, we always include the line
       // number, regardless of its value.
@@ -377,22 +332,19 @@ void installGlobalFunction(const char *name, ChakraJSFunction function) {
 JsValueRef makeFunction(const char *name, JsNativeFunction callback) {
   auto jsName = ChakraString(name);
   JsValueRef functionObj;
-  JsCreateNamedFunction(
-      jsName, callback, nullptr /*callbackstate*/, &functionObj);
+  JsCreateNamedFunction(jsName, callback, nullptr /*callbackstate*/, &functionObj);
   return functionObj;
 }
 
 void installGlobalFunction(const char *name, JsNativeFunction callback) {
   ChakraString jsName(name);
   JsValueRef functionObj;
-  JsCreateNamedFunction(
-      jsName, callback, nullptr /*callbackstate*/, &functionObj);
+  JsCreateNamedFunction(jsName, callback, nullptr /*callbackstate*/, &functionObj);
   ChakraObject::getGlobalObject().setProperty(jsName, ChakraValue(functionObj));
 }
 
 void removeGlobal(const char *name) {
-  ChakraObject::getGlobalObject().setProperty(
-      name, ChakraValue::makeUndefined());
+  ChakraObject::getGlobalObject().setProperty(name, ChakraValue::makeUndefined());
 }
 
 JsSourceContext getNextSourceContext() {
@@ -414,17 +366,14 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
   size_t sourceRawLength;
   JsStringToPointer(source, &sourceRaw, &sourceRawLength);
 
-  auto result = JsRunScript(
-      scriptRaw, JS_SOURCE_CONTEXT_NONE /*sourceContext*/, sourceRaw, &value);
+  auto result = JsRunScript(scriptRaw, JS_SOURCE_CONTEXT_NONE /*sourceContext*/, sourceRaw, &value);
 #else
   JsSourceContext sourceContext = getNextSourceContext();
-  auto result =
-      JsRun(script, sourceContext, source, JsParseScriptAttributeNone, &value);
+  auto result = JsRun(script, sourceContext, source, JsParseScriptAttributeNone, &value);
 #endif
 
   bool hasException = false;
-  if (result == JsErrorInExceptionState ||
-      (JsHasException(&hasException), hasException)) {
+  if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
     JsGetAndClearException(&exn);
     throw ChakraJSException(exn, source);
   }
@@ -436,9 +385,7 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
   return value;
 }
 
-JsValueRef evaluateScript(
-    std::unique_ptr<const JSBigString> &&script,
-    JsValueRef sourceURL) {
+JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRef sourceURL) {
 #if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
 #endif
@@ -471,22 +418,16 @@ JsValueRef evaluateScriptWithBytecode(
   // code right now.
   return evaluateScript(std::move(script), scriptFileName);
 #else
-  auto bytecodePrefixOptional =
-      BytecodePrefix::getBytecodePrefix(scriptFileName, scriptVersion);
+  auto bytecodePrefixOptional = BytecodePrefix::getBytecodePrefix(scriptFileName, scriptVersion);
   if (!bytecodePrefixOptional.first) {
     return evaluateScript(std::move(script), scriptFileName);
   }
 
   auto &bytecodePrefix = bytecodePrefixOptional.second;
-  std::unique_ptr<const JSBigString> bytecode =
-      tryGetBytecode(bytecodePrefix, bytecodeFileName);
+  std::unique_ptr<const JSBigString> bytecode = tryGetBytecode(bytecodePrefix, bytecodeFileName);
   if (!bytecode) {
     std::shared_ptr<const JSBigString> sharedScript(script.release());
-    serializeBytecodeToFile(
-        sharedScript,
-        bytecodePrefix,
-        std::move(bytecodeFileName),
-        asyncBytecodeGeneration);
+    serializeBytecodeToFile(sharedScript, bytecodePrefix, std::move(bytecodeFileName), asyncBytecodeGeneration);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
     JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(sharedScript);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
@@ -500,9 +441,7 @@ JsValueRef evaluateScriptWithBytecode(
   JsValueRef value = nullptr;
   JsErrorCode result = JsRunSerialized(
       jsArrayBufferFromBigString(std::move(bytecode)).get(),
-      [](JsSourceContext sourceContext,
-         JsValueRef *value,
-         JsParseScriptAttributes *parseAttributes) {
+      [](JsSourceContext sourceContext, JsValueRef *value, JsParseScriptAttributes *parseAttributes) {
         *value = reinterpret_cast<JsValueRef>(sourceContext);
         *parseAttributes = JsParseScriptAttributeNone;
         return true;
@@ -525,11 +464,9 @@ JsValueRef evaluateScriptWithBytecode(
   // This code is duplicated from evaluateScript.
   // TODO (yicyao, task 1977635) get rid of this duplicated code.
   bool hasException = false;
-  if (result == JsErrorInExceptionState ||
-      (JsHasException(&hasException), hasException)) {
+  if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
     JsGetAndClearException(&exn);
-    std::string exceptionDescription = "JavaScriptException in " +
-        ChakraValue(scriptFileName).toString().str();
+    std::string exceptionDescription = "JavaScriptException in " + ChakraValue(scriptFileName).toString().str();
 
     throw ChakraJSException(exn, exceptionDescription.c_str());
   }
@@ -549,8 +486,7 @@ void formatAndThrowJSException(JsValueRef exn, JsValueRef source) {
   // The null/empty-ness of source tells us if the JS came from a
   // file/resource, or was a constructed statement.  The location
   // info will include that source, if any.
-  std::string locationInfo =
-      source != nullptr ? ChakraString::ref(source).str() : "";
+  std::string locationInfo = source != nullptr ? ChakraString::ref(source).str() : "";
   ChakraObject exObject = exception.asObject();
   auto line = exObject.getProperty("line");
   if (line != nullptr && line.isNumber()) {
@@ -558,8 +494,7 @@ void formatAndThrowJSException(JsValueRef exn, JsValueRef source) {
       // If there is a non-trivial line number, but there was no
       // location info, we include a placeholder, and the line
       // number.
-      locationInfo =
-          folly::to<std::string>("<unknown file>:", line.asInteger());
+      locationInfo = folly::to<std::string>("<unknown file>:", line.asInteger());
     } else if (!locationInfo.empty()) {
       // If there is location info, we always include the line
       // number, regardless of its value.
@@ -578,13 +513,11 @@ void formatAndThrowJSException(JsValueRef exn, JsValueRef source) {
     throwJSExecutionException("%s", exceptionText.c_str());
   } else {
     LOG(ERROR) << "Got JS Stack: " << jsStack.toString().str();
-    throwJSExecutionExceptionWithStack(
-        exceptionText.c_str(), jsStack.toString().str().c_str());
+    throwJSExecutionExceptionWithStack(exceptionText.c_str(), jsStack.toString().str().c_str());
   }
 }
 
-JsValueRef translatePendingCppExceptionToJSError(
-    const char *exceptionLocation) {
+JsValueRef translatePendingCppExceptionToJSError(const char *exceptionLocation) {
   std::ostringstream msg;
   try {
     throw;
@@ -594,8 +527,7 @@ JsValueRef translatePendingCppExceptionToJSError(
     msg << "C++ Exception in '" << exceptionLocation << "': " << ex.what();
     return ChakraValue::makeError(msg.str().c_str());
   } catch (const char *ex) {
-    msg << "C++ Exception (thrown as a char*) in '" << exceptionLocation
-        << "': " << ex;
+    msg << "C++ Exception (thrown as a char*) in '" << exceptionLocation << "': " << ex;
     return ChakraValue::makeError(msg.str().c_str());
   } catch (...) {
     msg << "Unknown C++ Exception in '" << exceptionLocation << "'";
@@ -605,12 +537,10 @@ JsValueRef translatePendingCppExceptionToJSError(
 
 JsValueRef translatePendingCppExceptionToJSError(JsValueRef jsFunctionCause) {
   try {
-    auto functionName =
-        ChakraObject(jsFunctionCause).getProperty("name").toString().str();
+    auto functionName = ChakraObject(jsFunctionCause).getProperty("name").toString().str();
     return translatePendingCppExceptionToJSError(functionName.c_str());
   } catch (...) {
-    return ChakraValue::makeError(
-        "Failed to get function name while handling exception");
+    return ChakraValue::makeError("Failed to get function name while handling exception");
   }
 }
 
@@ -649,10 +579,7 @@ JsValueRef JSObjectCallAsFunction(
 
   JsValueRef value;
   auto result = JsCallFunction(
-      methodJSRef,
-      const_cast<JsValueRef *>(argsWithThis),
-      static_cast<unsigned short>(nArgs + 1),
-      &value);
+      methodJSRef, const_cast<JsValueRef *>(argsWithThis), static_cast<unsigned short>(nArgs + 1), &value);
   delete[] argsWithThis;
   bool hasException = false;
   if (result != JsNoError || (JsHasException(&hasException), hasException)) {
@@ -674,8 +601,7 @@ JsValueRef JSValueMakeFromJSONString(JsValueRef string) {
   auto jsonObject = GetJSONObject();
 
   JsPropertyIdRef propertyId;
-  if (JsNoError != JsGetPropertyIdFromName(L"parse", &propertyId) ||
-      !jsonObject) {
+  if (JsNoError != JsGetPropertyIdFromName(L"parse", &propertyId) || !jsonObject) {
     return nullptr;
   }
   JsValueRef parseFunction;
@@ -685,19 +611,14 @@ JsValueRef JSValueMakeFromJSONString(JsValueRef string) {
 
   JsValueRef error;
   JsValueRef arguments[1] = {string};
-  return JSObjectCallAsFunction(
-      parseFunction, jsonObject, 1, arguments, &error);
+  return JSObjectCallAsFunction(parseFunction, jsonObject, 1, arguments, &error);
 }
 
-JsValueRef JSValueCreateJSONString(
-    JsValueRef value,
-    unsigned /*indent*/,
-    JsValueRef *error) {
+JsValueRef JSValueCreateJSONString(JsValueRef value, unsigned /*indent*/, JsValueRef *error) {
   auto jsonObject = GetJSONObject();
 
   JsPropertyIdRef propertyId;
-  if (JsNoError != JsGetPropertyIdFromName(L"stringify", &propertyId) ||
-      !jsonObject) {
+  if (JsNoError != JsGetPropertyIdFromName(L"stringify", &propertyId) || !jsonObject) {
     JsGetAndClearException(error);
     return nullptr;
   }
@@ -708,15 +629,11 @@ JsValueRef JSValueCreateJSONString(
   }
 
   JsValueRef arguments[1] = {value};
-  return JSObjectCallAsFunction(
-      stringifyFunction, jsonObject, 1, arguments, error);
+  return JSObjectCallAsFunction(stringifyFunction, jsonObject, 1, arguments, error);
 }
 
 // TODO ensure proper clean up of error states in the middle of function
-JsValueRef JSObjectGetProperty(
-    JsValueRef object,
-    JsValueRef propertyName,
-    JsValueRef *exception) {
+JsValueRef JSObjectGetProperty(JsValueRef object, JsValueRef propertyName, JsValueRef *exception) {
   std::string propName;
 
   auto result = JsStringToStdStringUtf8(propertyName, propName);
@@ -735,10 +652,7 @@ JsValueRef JSObjectGetProperty(
   return value;
 }
 
-JsValueRef JSObjectGetPropertyAtIndex(
-    JsValueRef object,
-    unsigned propertyIndex,
-    JsValueRef *exception) {
+JsValueRef JSObjectGetPropertyAtIndex(JsValueRef object, unsigned propertyIndex, JsValueRef *exception) {
   JsValueRef index;
   JsIntToNumber(propertyIndex, &index);
   JsValueRef property;
@@ -792,9 +706,7 @@ unsigned JSPropertyNameArrayGetCount(JsValueRef namesRef) {
   return count;
 }
 
-JsValueRef JSPropertyNameArrayGetNameAtIndex(
-    JsValueRef namesRef,
-    unsigned idx) {
+JsValueRef JSPropertyNameArrayGetNameAtIndex(JsValueRef namesRef, unsigned idx) {
   JsValueRef index;
   JsIntToNumber(idx, &index);
   JsValueRef propertyName;

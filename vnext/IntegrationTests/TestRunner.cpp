@@ -41,10 +41,7 @@ void TestRunner::AwaitEvent(HANDLE &event, TestResult &result) {
 
 TestRunner::TestRunner() {}
 
-TestResult TestRunner::RunTest(
-    string &&bundlePath,
-    string &&appName,
-    NativeLoggingHook &&loggingCallback) {
+TestResult TestRunner::RunTest(string &&bundlePath, string &&appName, NativeLoggingHook &&loggingCallback) {
   // Set up
   HANDLE functionCalled = CreateEvent(
       /* lpEventAttributes */ NULL,
@@ -57,11 +54,9 @@ TestResult TestRunner::RunTest(
   try {
     // TODO: Defer MessageQueueThread creation to variant implementations
     // (Win32, WinRT).
-    vector<tuple<string, CxxModule::Provider>> modules{make_tuple(
-        TestModule::name,
-        [this, &result, &functionCalled]() -> unique_ptr<CxxModule> {
-          return make_unique<TestModule>([this, &result, &functionCalled](
-                                             bool success) {
+    vector<tuple<string, CxxModule::Provider>> modules{
+        make_tuple(TestModule::name, [this, &result, &functionCalled]() -> unique_ptr<CxxModule> {
+          return make_unique<TestModule>([this, &result, &functionCalled](bool success) {
             if (TestStatus::Pending != result.Status)
               return;
 
@@ -74,8 +69,7 @@ TestResult TestRunner::RunTest(
     // Note, further configuration should be done in each Windows variant's
     // TestRunner implementation.
     shared_ptr<DevSettings> devSettings = make_shared<DevSettings>();
-    devSettings->useWebDebugger =
-        false; // WebSocketJSExecutor can't register native log hooks.
+    devSettings->useWebDebugger = false; // WebSocketJSExecutor can't register native log hooks.
     devSettings->debugHost = "localhost:8081";
     devSettings->liveReloadCallback = []() {}; // Enables ChakraExecutor
     devSettings->errorCallback = [&result](string message) {
@@ -86,11 +80,10 @@ TestResult TestRunner::RunTest(
 
     // React instance scope
     {
-      shared_ptr<ITestInstance> instance = GetInstance(
-          std::move(bundlePath), std::move(modules), std::move(devSettings));
+      shared_ptr<ITestInstance> instance =
+          GetInstance(std::move(bundlePath), std::move(modules), std::move(devSettings));
 
-      InitializeLogging([&result, &functionCalled](
-                            RCTLogLevel logLevel, const char *message) {
+      InitializeLogging([&result, &functionCalled](RCTLogLevel logLevel, const char *message) {
         if (TestStatus::Pending != result.Status)
           return;
 
@@ -125,8 +118,8 @@ TestResult TestRunner::RunTest(
     CloseHandle(functionCalled);
     functionCalled = NULL;
   } catch (...) {
-    result.Message = Microsoft::Common::Unicode::Utf8ToUtf16(
-        boost::current_exception_diagnostic_information(/*verbose*/ true));
+    result.Message =
+        Microsoft::Common::Unicode::Utf8ToUtf16(boost::current_exception_diagnostic_information(/*verbose*/ true));
     result.Status = TestStatus::Failed;
   }
   return result;

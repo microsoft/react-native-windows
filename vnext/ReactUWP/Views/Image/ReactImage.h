@@ -40,12 +40,10 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   friend auto winrt::make_self(Args &&... args);
 
   // Overrides
-  virtual winrt::Windows::Foundation::Size ArrangeOverride(
-      winrt::Windows::Foundation::Size finalSize);
+  virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
 
   // Events
-  winrt::event_token OnLoadEnd(
-      winrt::Windows::Foundation::EventHandler<bool> const &handler);
+  winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<bool> const &handler);
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
@@ -65,16 +63,13 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   ImageSource m_imageSource;
   winrt::com_ptr<ReactImageBrush> m_brush;
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
-  winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker
-      m_surfaceLoadedRevoker;
+  winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
 };
 
 // Helper functions
-winrt::Windows::Foundation::IAsyncOperation<
-    winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
 GetImageStreamAsync(ImageSource source);
-winrt::Windows::Foundation::IAsyncOperation<
-    winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
 GetImageInlineDataAsync(ImageSource source);
 } // namespace uwp
 } // namespace react

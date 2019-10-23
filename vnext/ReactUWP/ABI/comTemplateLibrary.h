@@ -52,8 +52,7 @@ class AggregableComObject : public INonDelegatingInspectable, public TBASE {
   }
 
   template <class... TArgs>
-  AggregableComObject(__in IInspectable *pOuter, TArgs &&... args)
-      : TBASE(std::forward<TArgs>(args)...) {
+  AggregableComObject(__in IInspectable *pOuter, TArgs &&... args) : TBASE(std::forward<TArgs>(args)...) {
     static_assert(
         __is_base_of(::Microsoft::WRL::Details::RuntimeClassBase, TBASE),
         "AggregableComObject can only be used with ::Microsoft::WRL::RuntimeClass types");
@@ -62,17 +61,14 @@ class AggregableComObject : public INonDelegatingInspectable, public TBASE {
   }
 
   // IInspectable (non-delegating) implementation
-  IFACEMETHODIMP NonDelegatingQueryInterface(REFIID iid, void **ppInterface)
-      override {
+  IFACEMETHODIMP NonDelegatingQueryInterface(REFIID iid, void **ppInterface) override {
     ValidateOutputArgPtr(ppInterface);
     IUnknown *pInterface = nullptr;
 
     if (iid == IID_IUnknown) {
-      pInterface = reinterpret_cast<IUnknown *>(
-          static_cast<ctl::INonDelegatingUnknown *>(this));
+      pInterface = reinterpret_cast<IUnknown *>(static_cast<ctl::INonDelegatingUnknown *>(this));
     } else if (iid == IID_IInspectable) {
-      pInterface = reinterpret_cast<IInspectable *>(
-          static_cast<ctl::INonDelegatingInspectable *>(this));
+      pInterface = reinterpret_cast<IInspectable *>(static_cast<ctl::INonDelegatingInspectable *>(this));
     } else {
       return TBASE::QueryInterface(iid, ppInterface);
     }
@@ -90,19 +86,15 @@ class AggregableComObject : public INonDelegatingInspectable, public TBASE {
     return TBASE::Release();
   }
 
-  IFACEMETHODIMP NonDelegatingGetRuntimeClassName(
-      __out HSTRING *pClassName) override {
+  IFACEMETHODIMP NonDelegatingGetRuntimeClassName(__out HSTRING *pClassName) override {
     return TBASE::GetRuntimeClassName(pClassName);
   }
 
-  IFACEMETHODIMP NonDelegatingGetTrustLevel(
-      __out TrustLevel *trustLevel) override {
+  IFACEMETHODIMP NonDelegatingGetTrustLevel(__out TrustLevel *trustLevel) override {
     return TBASE::GetTrustLevel(trustLevel);
   }
 
-  IFACEMETHODIMP NonDelegatingGetIids(
-      __out ULONG *iidCount,
-      __deref_out IID **iids) override {
+  IFACEMETHODIMP NonDelegatingGetIids(__out ULONG *iidCount, __deref_out IID **iids) override {
     return TBASE::GetIids(iidCount, iids);
   }
 
@@ -127,14 +119,12 @@ class AggregableComObject : public INonDelegatingInspectable, public TBASE {
     return m_pControllingUnknown->GetTrustLevel(trustLvl);
   }
 
-  IFACEMETHODIMP GetIids(__out ULONG *iidCount, __deref_out IID **iids)
-      override {
+  IFACEMETHODIMP GetIids(__out ULONG *iidCount, __deref_out IID **iids) override {
     return m_pControllingUnknown->GetIids(iidCount, iids);
   }
 
  public:
-  static __checkReturn HRESULT
-  CreateInstance(__in IInspectable *pOuter, __deref_out TBASE **ppNewInstance) {
+  static __checkReturn HRESULT CreateInstance(__in IInspectable *pOuter, __deref_out TBASE **ppNewInstance) {
     ValidateOutputArgPtr(ppNewInstance);
     ::Microsoft::WRL::ComPtr<ctl::AggregableComObject<TBASE>> pNewInstance(
         ::Microsoft::WRL::Make<ctl::AggregableComObject<TBASE>>(pOuter));
@@ -144,22 +134,18 @@ class AggregableComObject : public INonDelegatingInspectable, public TBASE {
   }
 
   template <class... TArgs>
-  static __checkReturn HRESULT CreateInstance(
-      __in IInspectable *pOuter,
-      __deref_out TBASE **ppNewInstance,
-      TArgs &&... args) {
+  static __checkReturn HRESULT
+  CreateInstance(__in IInspectable *pOuter, __deref_out TBASE **ppNewInstance, TArgs &&... args) {
     ValidateOutputArgPtr(ppNewInstance);
     ::Microsoft::WRL::ComPtr<ctl::AggregableComObject<TBASE>> pNewInstance(
-        ::Microsoft::WRL::Make<ctl::AggregableComObject<TBASE>>(
-            pOuter, std::forward<TArgs>(args)...));
+        ::Microsoft::WRL::Make<ctl::AggregableComObject<TBASE>>(pOuter, std::forward<TArgs>(args)...));
     CheckAllocationPtr(pNewInstance);
     *ppNewInstance = static_cast<TBASE *>(pNewInstance.Detach());
     return S_OK;
   }
 
   template <class T>
-  static __checkReturn HRESULT
-  CreateInstance(__in IInspectable *pOuter, __deref_out T **ppNewInstance) {
+  static __checkReturn HRESULT CreateInstance(__in IInspectable *pOuter, __deref_out T **ppNewInstance) {
     ValidateOutputArgPtr(ppNewInstance);
     ::Microsoft::WRL::ComPtr<ctl::AggregableComObject<TBASE>> pNewInstance(
         ::Microsoft::WRL::Make<ctl::AggregableComObject<TBASE>>(pOuter));
@@ -168,14 +154,11 @@ class AggregableComObject : public INonDelegatingInspectable, public TBASE {
   }
 
   template <class T, class... TArgs>
-  static __checkReturn HRESULT CreateInstance(
-      __in IInspectable *pOuter,
-      __deref_out T **ppNewInstance,
-      TArgs &&... args) {
+  static __checkReturn HRESULT
+  CreateInstance(__in IInspectable *pOuter, __deref_out T **ppNewInstance, TArgs &&... args) {
     ValidateOutputArgPtr(ppNewInstance);
     ::Microsoft::WRL::ComPtr<ctl::AggregableComObject<TBASE>> pNewInstance(
-        ::Microsoft::WRL::Make<ctl::AggregableComObject<TBASE>>(
-            pOuter, std::forward<TArgs>(args)...));
+        ::Microsoft::WRL::Make<ctl::AggregableComObject<TBASE>>(pOuter, std::forward<TArgs>(args)...));
     CheckAllocationPtr(pNewInstance);
     return pNewInstance.CopyTo(ppNewInstance);
   }
@@ -195,20 +178,16 @@ class AggregableComFactory {
   }
 
   template <class... TArgs>
-  static HRESULT STDMETHODCALLTYPE
-  ActivateInstance(IInspectable **ppInstance, TArgs &&... args) {
+  static HRESULT STDMETHODCALLTYPE ActivateInstance(IInspectable **ppInstance, TArgs &&... args) {
     ValidateOutputArgPtr(ppInstance);
-    ::Microsoft::WRL::ComPtr<TBASE> instance(
-        ::Microsoft::WRL::Make<TBASE>(std::forward<TArgs>(args)...));
+    ::Microsoft::WRL::ComPtr<TBASE> instance(::Microsoft::WRL::Make<TBASE>(std::forward<TArgs>(args)...));
     CheckAllocationPtr(instance);
     return instance.CopyTo(ppInstance);
   }
 
   template <class TInterface>
-  static HRESULT STDMETHODCALLTYPE CreateInstance(
-      IInspectable *pOuter,
-      IInspectable **ppInner,
-      TInterface **ppInstance) {
+  static HRESULT STDMETHODCALLTYPE
+  CreateInstance(IInspectable *pOuter, IInspectable **ppInner, TInterface **ppInstance) {
     ValidateOutputArgPtr(ppInstance);
     if (pOuter != nullptr && ppInner == nullptr)
       return E_UNEXPECTED;
@@ -223,18 +202,14 @@ class AggregableComFactory {
   }
 
   template <class TInterface, class... TArgs>
-  static HRESULT STDMETHODCALLTYPE CreateInstance(
-      IInspectable *pOuter,
-      IInspectable **ppInner,
-      TInterface **ppInstance,
-      TArgs &&... args) {
+  static HRESULT STDMETHODCALLTYPE
+  CreateInstance(IInspectable *pOuter, IInspectable **ppInner, TInterface **ppInstance, TArgs &&... args) {
     ValidateOutputArgPtr(ppInstance);
     if (pOuter != nullptr && ppInner == nullptr)
       return E_UNEXPECTED;
 
     if (pOuter != nullptr) {
-      return CreateAggregatedInstance(
-          pOuter, ppInner, ppInstance, std::forward<TArgs>(args)...);
+      return CreateAggregatedInstance(pOuter, ppInner, ppInstance, std::forward<TArgs>(args)...);
     } else {
       ::Microsoft::WRL::ComPtr<IInspectable> pInstance;
       ActivateInstance(&pInstance, std::forward<TArgs>(args)...);
@@ -244,10 +219,7 @@ class AggregableComFactory {
 
  private:
   template <class TInterface>
-  static HRESULT CreateAggregatedInstance(
-      IInspectable *pOuter,
-      IInspectable **ppInner,
-      TInterface **ppInstance) {
+  static HRESULT CreateAggregatedInstance(IInspectable *pOuter, IInspectable **ppInner, TInterface **ppInstance) {
     ValidateOutputArgPtr(ppInstance);
     ValidateOutputArgPtr(ppInner);
     if (pOuter != nullptr)
@@ -256,8 +228,7 @@ class AggregableComFactory {
     ctl::AggregableComObject<TBASE> *pInstance = nullptr;
     ctl::AggregableComObject<TBASE>::CreateInstance(pOuter, &pInstance);
 
-    *ppInner = reinterpret_cast<IInspectable *>(
-        static_cast<ctl::INonDelegatingInspectable *>(pInstance));
+    *ppInner = reinterpret_cast<IInspectable *>(static_cast<ctl::INonDelegatingInspectable *>(pInstance));
 
     *ppInstance = static_cast<TInterface *>(pInstance);
     (*ppInstance)->AddRef();
@@ -265,22 +236,17 @@ class AggregableComFactory {
   }
 
   template <class TInterface, class... TArgs>
-  static HRESULT CreateAggregatedInstance(
-      IInspectable *pOuter,
-      IInspectable **ppInner,
-      TInterface **ppInstance,
-      TArgs &&... args) {
+  static HRESULT
+  CreateAggregatedInstance(IInspectable *pOuter, IInspectable **ppInner, TInterface **ppInstance, TArgs &&... args) {
     ValidateOutputArgPtr(ppInstance);
     ValidateOutputArgPtr(ppInner);
     if (pOuter != nullptr)
       return E_INVALIDARG;
 
     ctl::AggregableComObject<TBASE> *pInstance = nullptr;
-    ctl::AggregableComObject<TBASE>::CreateInstance(
-        pOuter, &pInstance, std::forward<TArgs>(args)...);
+    ctl::AggregableComObject<TBASE>::CreateInstance(pOuter, &pInstance, std::forward<TArgs>(args)...);
 
-    *ppInner = reinterpret_cast<IInspectable *>(
-        static_cast<ctl::INonDelegatingInspectable *>(pInstance));
+    *ppInner = reinterpret_cast<IInspectable *>(static_cast<ctl::INonDelegatingInspectable *>(pInstance));
 
     *ppInstance = static_cast<TInterface *>(pInstance);
     (*ppInstance)->AddRef();

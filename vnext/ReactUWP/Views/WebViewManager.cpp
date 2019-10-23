@@ -26,9 +26,7 @@ using namespace Windows::UI::Xaml::Controls;
 namespace react {
 namespace uwp {
 
-WebViewManager::WebViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {
+WebViewManager::WebViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {
   SetupPropertyHandlersInternal();
 }
 
@@ -44,9 +42,7 @@ XamlView WebViewManager::CreateViewCore(int64_t tag) {
 #endif
 }
 
-void WebViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void WebViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   XamlView view = nodeToUpdate->GetView();
   UpdatePropertiesInternal(view, reactDiffMap);
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
@@ -75,15 +71,11 @@ void WebViewManager::setSource(XamlView viewToUpdate, const WebSource &source) {
   view.Navigate(uri);
 }
 
-folly::dynamic WebViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic WebViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topLoadStart"] =
-      folly::dynamic::object("registrationName", "onLoadStart");
-  directEvents["topLoad"] =
-      folly::dynamic::object("registrationName", "onLoad");
-  directEvents["topLoadEnd"] =
-      folly::dynamic::object("registrationName", "onLoadEnd");
+  directEvents["topLoadStart"] = folly::dynamic::object("registrationName", "onLoadStart");
+  directEvents["topLoad"] = folly::dynamic::object("registrationName", "onLoad");
+  directEvents["topLoadEnd"] = folly::dynamic::object("registrationName", "onLoadEnd");
 
   return directEvents;
 }

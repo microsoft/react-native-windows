@@ -9,7 +9,6 @@ namespace Microsoft::JSI {
 
 struct ChakraRuntimeArgs;
 
-std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(
-    ChakraRuntimeArgs &&args) noexcept;
+std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept;
 
 } // namespace Microsoft::JSI

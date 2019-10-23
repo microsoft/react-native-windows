@@ -42,8 +42,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
   Microsoft::ReactNative::ReactInstanceManager ReactInstanceManager() noexcept;
   Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
-  void InstanceSettings(
-      Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept;
+  void InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept;
   bool HasInstance() noexcept;
   IVector<IReactPackageProvider> PackageProviders() noexcept;
   void PackageProviders(IVector<IReactPackageProvider> const &value) noexcept;
@@ -63,8 +62,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
  private:
   void Init() noexcept;
-  Microsoft::ReactNative::ReactInstanceManager
-  CreateReactInstanceManager() noexcept;
+  Microsoft::ReactNative::ReactInstanceManager CreateReactInstanceManager() noexcept;
   std::shared_ptr<ReactRootView> CreateRootView() noexcept;
 
  private:
@@ -83,8 +81,7 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
 
-struct ReactNativeHost
-    : ReactNativeHostT<ReactNativeHost, implementation::ReactNativeHost> {};
+struct ReactNativeHost : ReactNativeHostT<ReactNativeHost, implementation::ReactNativeHost> {};
 
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
 
@@ -94,8 +91,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // ReactNativeHost inline implementation
 //=============================================================================
 
-inline void ReactNativeHost::InstanceSettings(
-    Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept {
+inline void ReactNativeHost::InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept {
   m_instanceSettings = value;
 }
 
@@ -103,8 +99,7 @@ inline bool ReactNativeHost::HasInstance() noexcept {
   return m_reactInstanceManager != nullptr;
 }
 
-inline void ReactNativeHost::PackageProviders(
-    IVector<IReactPackageProvider> const &value) noexcept {
+inline void ReactNativeHost::PackageProviders(IVector<IReactPackageProvider> const &value) noexcept {
   m_packageProviders = value;
 }
 
@@ -128,8 +123,7 @@ inline hstring ReactNativeHost::JavaScriptMainModuleName() noexcept {
   return m_javaScriptMainModuleName;
 }
 
-inline void ReactNativeHost::JavaScriptMainModuleName(
-    hstring const &value) noexcept {
+inline void ReactNativeHost::JavaScriptMainModuleName(hstring const &value) noexcept {
   m_javaScriptMainModuleName = value;
 }
 
@@ -137,8 +131,7 @@ inline hstring ReactNativeHost::JavaScriptBundleFile() noexcept {
   return m_javaScriptBundleFile;
 }
 
-inline void ReactNativeHost::JavaScriptBundleFile(
-    hstring const &value) noexcept {
+inline void ReactNativeHost::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
 }
 

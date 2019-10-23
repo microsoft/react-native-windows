@@ -21,17 +21,14 @@ namespace react {
 namespace uwp {
 UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
   if (!uri.empty()) {
-    m_byteCodeFileAsync =
-        winrt::StorageFile::GetFileFromApplicationUriAsync(winrt::Uri(uri));
+    m_byteCodeFileAsync = winrt::StorageFile::GetFileFromApplicationUriAsync(winrt::Uri(uri));
   }
 }
 
-std::shared_ptr<const facebook::jsi::Buffer>
-UwpPreparedScriptStore::tryGetPreparedScript(
+std::shared_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPreparedScript(
     const facebook::jsi::ScriptSignature &scriptSignature,
     const facebook::jsi::JSRuntimeSignature &runtimeSignature,
-    const char
-        *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+    const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept {
   try {
     // check if app bundle version is older than or equal to the prepared script
@@ -45,9 +42,8 @@ UwpPreparedScriptStore::tryGetPreparedScript(
     auto buffer = winrt::FileIO::ReadBufferAsync(byteCodeFile).get();
     auto bytecodeBuffer(std::make_shared<ByteCodeBuffer>(buffer.Length()));
     auto dataReader{winrt::Streams::DataReader::FromBuffer(buffer)};
-    dataReader.ReadBytes(winrt::array_view<uint8_t>{
-        &bytecodeBuffer->data()[0],
-        &bytecodeBuffer->data()[bytecodeBuffer->size()]});
+    dataReader.ReadBytes(
+        winrt::array_view<uint8_t>{&bytecodeBuffer->data()[0], &bytecodeBuffer->data()[bytecodeBuffer->size()]});
     dataReader.Close();
 
     return bytecodeBuffer;
@@ -60,31 +56,25 @@ void UwpPreparedScriptStore::persistPreparedScript(
     std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
     const facebook::jsi::ScriptSignature &scriptMetadata,
     const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
-    const char
-        *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+    const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept {
-  persistPreparedScriptAsync(
-      preparedScript, scriptMetadata, runtimeMetadata, prepareTag);
+  persistPreparedScriptAsync(preparedScript, scriptMetadata, runtimeMetadata, prepareTag);
 }
 
 winrt::fire_and_forget UwpPreparedScriptStore::persistPreparedScriptAsync(
     std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
     const facebook::jsi::ScriptSignature &scriptMetadata,
     const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
-    const char
-        *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+    const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
 ) {
   try {
     co_await winrt::resume_background();
     auto folder = winrt::ApplicationData::Current().LocalCacheFolder();
     auto fileName = winrt::to_hstring(scriptMetadata.url + ".bytecode");
-    auto file = co_await folder.CreateFileAsync(
-        fileName, winrt::CreationCollisionOption::ReplaceExisting);
+    auto file = co_await folder.CreateFileAsync(fileName, winrt::CreationCollisionOption::ReplaceExisting);
     winrt::FileIO::WriteBytesAsync(
         file,
-        winrt::array_view<const uint8_t>{
-            &preparedScript->data()[0],
-            &preparedScript->data()[preparedScript->size()]});
+        winrt::array_view<const uint8_t>{&preparedScript->data()[0], &preparedScript->data()[preparedScript->size()]});
   } catch (...) {
   }
 }
@@ -94,8 +84,7 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
   try {
     if (m_byteCodeFileAsync != nullptr) {
       auto file = m_byteCodeFileAsync.get();
-      auto byteCodeVersion =
-          UwpScriptStore::GetFileVersion(file.Path().c_str());
+      auto byteCodeVersion = UwpScriptStore::GetFileVersion(file.Path().c_str());
 
       if (byteCodeVersion >= scriptSignature.version) {
         return file;
@@ -110,10 +99,7 @@ winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
   // or the file uri was specified but it is outdated. Try looking in LocalCache
   // folder for bytecode file and use that.
   auto fileName = winrt::to_hstring(scriptSignature.url + ".bytecode");
-  auto file = winrt::ApplicationData::Current()
-                  .LocalCacheFolder()
-                  .GetFileAsync(fileName)
-                  .get();
+  auto file = winrt::ApplicationData::Current().LocalCacheFolder().GetFileAsync(fileName).get();
 
   auto byteCodeVersion = UwpScriptStore::GetFileVersion(file.Path().c_str());
 

@@ -13,9 +13,7 @@ void ShadowNodeDeleter::operator()(ShadowNode *node) {
     node->m_viewManager->destroyShadow(node);
 }
 
-void ShadowNodeRegistry::addRootView(
-    std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&root,
-    int64_t rootViewTag) {
+void ShadowNodeRegistry::addRootView(std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&root, int64_t rootViewTag) {
   m_roots.insert(rootViewTag);
   m_allNodes[rootViewTag] = std::move(root);
 }
@@ -30,9 +28,7 @@ void ShadowNodeRegistry::removeRootView(int64_t rootViewTag) {
   removeNode(rootViewTag);
 }
 
-void ShadowNodeRegistry::addNode(
-    std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&node,
-    int64_t tag) {
+void ShadowNodeRegistry::addNode(std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&node, int64_t tag) {
   m_allNodes[tag] = std::move(node);
 }
 
@@ -49,8 +45,7 @@ void ShadowNodeRegistry::removeNode(int64_t tag) {
   m_allNodes.erase(tag);
 }
 
-void ShadowNodeRegistry::removeAllRootViews(
-    const std::function<void(int64_t rootViewTag)> &fn) {
+void ShadowNodeRegistry::removeAllRootViews(const std::function<void(int64_t rootViewTag)> &fn) {
   while (!m_roots.empty())
     fn(*m_roots.begin());
 }
