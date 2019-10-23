@@ -56,8 +56,6 @@ steps:
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-  - template: install-SDK.yml
-
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:

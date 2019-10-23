@@ -8,13 +8,11 @@ pr:
 
 variables:
   # General / Default
-  VmImage: vs2017-win2016
+  VmImage: windows-2019
   MSBuildVersion: 16.0
   MSBuildArchitecture: x64
   MSBuildPreferredToolArchitecture: x64
-  MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 jobs:
   - job: Setup
@@ -80,7 +78,6 @@ jobs:
           useRnFork: $(UseRNFork)
           yarnBuildCmd: buildci
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
           msbuildArguments:
 
       - template: templates/publish-build-artifacts-for-nuget.yml
@@ -107,7 +104,6 @@ jobs:
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -135,7 +131,6 @@ jobs:
           configuration: $(BuildConfiguration) # Optional
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
 
@@ -350,160 +345,6 @@ jobs:
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
-
-  - job: CurrentPR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    displayName: Current (C#) PR
-    strategy:
-      matrix:
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Debug
-        #X64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x64
-        #  UTTestOutputConfigDir: Release
-        X64DebugBundle:
-          BuildConfiguration: DebugBundle
-          BuildPlatform: x64
-          UTTestOutputConfigDir: Debug
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-          UTTestOutputConfigDir: Debug
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          UTTestOutputConfigDir: Debug
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
-        #X86ReleaseBundle:
-        #  BuildConfiguration: ReleaseBundle
-        #  BuildPlatform: x86
-        #  UTTestOutputConfigDir: Release
-    pool:
-      vmImage: $(VmImage)
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-
-    steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-      - task: PowerShell@2
-        displayName: Download Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            curl -o $(System.DefaultWorkingDirectory)\winium.zip https://github.com/2gis/Winium.Desktop/releases/download/v1.6.0/Winium.Desktop.Driver.zip
-
-      - task: ExtractFiles@1
-        displayName: Extract Winium
-        inputs:
-          archiveFilePatterns: $(System.DefaultWorkingDirectory)\winium.zip
-          destinationFolder: $(System.DefaultWorkingDirectory)\winium
-
-      - task: NuGetCommand@2
-        displayName: NuGet restore
-        inputs:
-          command: restore
-          restoreSolution: current/ReactWindows/ReactNative.sln
-          verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
-
-      - task: CmdLine@2
-        displayName: npm install
-        inputs:
-          script: npm install
-          workingDirectory: current
-
-      - task: CmdLine@2
-        displayName: Make Bundle Dir
-        inputs:
-          script: mkdir current\ReactWindows\Playground.Net46\ReactAssets
-
-      - task: CmdLine@2
-        displayName: Make Bundle
-        inputs:
-          script: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
-          workingDirectory: current
-
-      - template: templates\install-SDK.yml
-
-      - task: PowerShell@2
-        displayName: Install Visual Studio dependencies
-        inputs:
-          targetType: filePath
-          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-          arguments:
-            -InstallerUri https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe
-            -Components $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.AR
-        condition: and(ne(variables['VsComponents'], ''), eq(variables['VmImage'], 'windows-2019'))
-
-      - task: MSBuild@1
-        displayName: MSBuild
-        inputs:
-          solution: current/ReactWindows/ReactNative.sln
-          #msbuildLocationMethod: 'version' # Optional. Options: version, location
-          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-          #msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-          #msbuildLocation: # Optional
-          platform: $(BuildPlatform) # Optional
-          configuration: $(BuildConfiguration) # Optional
-          msbuildArguments:
-            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-            /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:TargetPlatformVersion=$(TargetPlatformVersion)
-            /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
-          #clean: true # Optional
-          #maximumCpuCount: false # Optional
-          #restoreNugetPackages: false # Optional
-          #logProjectEvents: false # Optional
-          #createLogFile: false # Optional
-          #logFileVerbosity: 'normal' # Optional. Options: quiet, minimal, normal, detailed, diagnostic
-
-      - task: PowerShell@2
-        displayName: Start Winium
-        inputs:
-          targetType: inline # filePath | inline
-          script: |
-            $winium = Start-Process -PassThru $(System.DefaultWorkingDirectory)\winium\Winium.Desktop.Driver.exe
-            Start-Sleep -s 5
-
-      - task: VSTest@2
-        displayName: Run Unit Tests
-        timeoutInMinutes: 5 # Set smaller timeout for UTs, since there have been some hangs, and this allows the job to timeout quicker
-        inputs:
-          testSelector: testAssemblies
-          testAssemblyVer2: ReactNative.Net46.Tests.dll # Required when testSelector == TestAssemblies
-          searchFolder: '$(Build.SourcesDirectory)\current\ReactWindows\ReactNative.Net46.Tests\bin\$(BuildPlatform)\$(UTTestOutputConfigDir)'
-          # vsTestVersion: $(VsTestVersion)
-          runTestsInIsolation: true
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          publishRunAttachments: true
-          collectDumpOn: onAbortOnly
-        condition: and(succeeded(), ne(variables['BuildPlatform'], 'ARM'))
-      # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
-      # It currently fails, so commenting this out for now
-      #- task: CmdLine@2
-      #  displayName: npm test
-      #  inputs:
-      #    script: npm test
-      #    workingDirectory: current
-      #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
