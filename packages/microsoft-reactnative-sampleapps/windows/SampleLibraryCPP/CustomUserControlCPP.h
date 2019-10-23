@@ -4,8 +4,7 @@
 #pragma once
 #include "CustomUserControlCPP.g.h"
 
-namespace winrt::SampleLibraryCPP::implementation
-{
+namespace winrt::SampleLibraryCPP::implementation {
 struct CustomUserControlCPP : CustomUserControlCPPT<CustomUserControlCPP> {
   CustomUserControlCPP();
 
@@ -28,4 +27,3 @@ struct CustomUserControlCPP : CustomUserControlCPPT<
                                   CustomUserControlCPP,
                                   implementation::CustomUserControlCPP> {};
 } // namespace winrt::SampleLibraryCPP::factory_implementation
-

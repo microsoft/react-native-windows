@@ -3,7 +3,6 @@
 // Licensed under the MIT License.
 
 #include "ReactApplicationDelegate.g.h"
-#include "ReactApplication.h"
 
 using namespace winrt;
 using namespace Windows::UI::Xaml;

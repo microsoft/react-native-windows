@@ -1390,16 +1390,16 @@
     read-package-tree "^5.1.6"
     semver "^6.2.0"
 
-"@lerna/changed@3.18.2":
-  version "3.18.2"
-  resolved "https://registry.yarnpkg.com/@lerna/changed/-/changed-3.18.2.tgz#4d7c2cd5de92808064891f99fb7c29711439deb9"
-  integrity sha512-xVnFuj4A6Avxem+8R+KOuKDxfnxp1S5tM5nwsh7n3IhCN5Ga7YINV/JgPhrwgcpqPCVBvAowkilghT/I0r6wUw==
+"@lerna/changed@3.18.3":
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/@lerna/changed/-/changed-3.18.3.tgz#50529e8bd5d7fe2d0ace046a6e274d3de652a493"
+  integrity sha512-xZW7Rm+DlDIGc0EvKGyJZgT9f8FFa4d52mr/Y752dZuXR2qRmf9tXhVloRG39881s2A6yi3jqLtXZggKhsQW4Q==
   dependencies:
     "@lerna/collect-updates" "3.18.0"
     "@lerna/command" "3.18.0"
     "@lerna/listable" "3.18.0"
     "@lerna/output" "3.13.0"
-    "@lerna/version" "3.18.2"
+    "@lerna/version" "3.18.3"
 
 "@lerna/check-working-tree@3.16.5":
   version "3.16.5"
@@ -1832,10 +1832,10 @@
     inquirer "^6.2.0"
     npmlog "^4.1.2"
 
-"@lerna/publish@3.18.2":
-  version "3.18.2"
-  resolved "https://registry.yarnpkg.com/@lerna/publish/-/publish-3.18.2.tgz#96f65f2d5ecf8cc7803050482b2d144e768b994d"
-  integrity sha512-lLQOjoaFv/gc9HtOCMRsOK6NIub8eHnnvmQARjXY/HayA8GuLaD2Px9xOu1L7il+Q0LlMU3wASB9Khy/CiHJUQ==
+"@lerna/publish@3.18.3":
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/@lerna/publish/-/publish-3.18.3.tgz#478bb94ee712a40b723413e437bcb9e307d3709c"
+  integrity sha512-XlfWOWIhaSK0Y2sX5ppNWI5Y3CDtlxMcQa1hTbZlC5rrDA6vD32iutbmH6Ix3c6wtvVbSkgA39GWsQEXxPS+7w==
   dependencies:
     "@evocateur/libnpmaccess" "^3.1.2"
     "@evocateur/npm-registry-fetch" "^4.0.0"
@@ -1858,7 +1858,7 @@
     "@lerna/run-lifecycle" "3.16.2"
     "@lerna/run-topologically" "3.18.0"
     "@lerna/validation-error" "3.13.0"
-    "@lerna/version" "3.18.2"
+    "@lerna/version" "3.18.3"
     figgy-pudding "^3.5.1"
     fs-extra "^8.1.0"
     npm-package-arg "^6.1.0"
@@ -1970,10 +1970,10 @@
   dependencies:
     npmlog "^4.1.2"
 
-"@lerna/version@3.18.2":
-  version "3.18.2"
-  resolved "https://registry.yarnpkg.com/@lerna/version/-/version-3.18.2.tgz#f2b54aed7f41d293d0fc5f79baf5cba166bc7e34"
-  integrity sha512-nmCJpw3A2DoNGbjmvI5UB3ZwTQUayI8M/b3rOA6ZzYeGmoQmm2QBKun05aBRasqTuUo4XjSuas5CqHN+x4f8Ww==
+"@lerna/version@3.18.3":
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/@lerna/version/-/version-3.18.3.tgz#01344b39c0749fdeb6c178714733bacbde4d602f"
+  integrity sha512-IXXRlyM3Q/jrc+QZio+bgjG4ZaK+4LYmY4Yql1xyY0wZhAKsWP/Q6ho7e1EJNjNC5dUJO99Fq7qB05MkDf2OcQ==
   dependencies:
     "@lerna/check-working-tree" "3.16.5"
     "@lerna/child-process" "3.16.5"
@@ -2306,9 +2306,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
-  version "12.11.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.2.tgz#75ba3beda30d690b89a5089ca1c6e8e386150b76"
-  integrity sha512-dsfE4BHJkLQW+reOS6b17xhZ/6FB1rB8eRRvO08nn5o+voxf3i74tuyFWNH6djdfgX7Sm5s6LD8t6mJug4dpDw==
+  version "12.11.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.5.tgz#6c3c8dc84988aff11fd2a63d7b5fbf39eaaab7b1"
+  integrity sha512-LC8ALj/24PhByn39nr5jnTvpE7MujK8y7LQmV74kHYF5iQ0odCPkMH4IZNZw+cobKfSXqaC8GgegcbIsQpffdA==
 
 "@types/node@8.10.54":
   version "8.10.54"
@@ -2853,13 +2853,13 @@ appium-base-driver@^4.0.0:
     ws "^7.0.0"
 
 appium-chromedriver@^4.13.0:
-  version "4.16.0"
-  resolved "https://registry.yarnpkg.com/appium-chromedriver/-/appium-chromedriver-4.16.0.tgz#34635c9a1728125a12bb3a84295c1d35c17e746b"
-  integrity sha512-+Sf4jQVhvVKo1o9sWZ2TNUwPMLSV9W4uAMLRlXyvlN8+CXFan0zBapbHj3y4jbEoxKgOn4oprsYdy/YtlZ0STw==
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/appium-chromedriver/-/appium-chromedriver-4.17.0.tgz#41fefd1150efff6cc0a55a3ad89b9d8fff75a03d"
+  integrity sha512-/aRXB+khvdDCOMS9KHepBv61UFqdF/OE4RdmTcrQ10kXA2lQcS60AUtarapjZX9PuoikXnzdlSBLWBLFpRIXAw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-base-driver "^4.0.0"
-    appium-support "^2.29.0"
+    appium-support "^2.33.1"
     asyncbox "^2.0.2"
     bluebird "^3.5.1"
     compare-versions "^3.4.0"
@@ -3116,9 +3116,9 @@ appium-tizen-driver@^1.1.1-beta.3:
     yargs "^12.0.2"
 
 appium-uiautomator2-driver@1.x:
-  version "1.37.2"
-  resolved "https://registry.yarnpkg.com/appium-uiautomator2-driver/-/appium-uiautomator2-driver-1.37.2.tgz#374030144c1cb7638339d019424d7544fe920d76"
-  integrity sha512-oyXS7KZ0W89rzCZWhZm6OBxf3XPf+cw/BWJYhgJbK91aB2g50/hP4U5a65f7w0QOe6X542WK70lFXkdyM3Mi4g==
+  version "1.37.4"
+  resolved "https://registry.yarnpkg.com/appium-uiautomator2-driver/-/appium-uiautomator2-driver-1.37.4.tgz#0292f90aedfc3950195cedd072e3e622e483231f"
+  integrity sha512-FpJAIGnY2iSMk0dkY1KJgKrzZfebyWhIlBsC7Qj33w93CxU2kkimD98p2HEgf6IWAXoZlcX/f93UcaNG1hBnNQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     appium-adb "^7.4.0"
@@ -3767,9 +3767,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.14.1.tgz#91683f5c98d87778548b66458480e99fcdff1226"
-  integrity sha512-MKPaTaBeycAyDXailj1On0Lxsi6AKnVnNdrcBIj++Lpfy2xRnjACuP1CX+Yvw4qf6+FRPmbgVbj/xyU+GZbXXA==
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.14.2.tgz#aab2a947a8f607962b91f8ec0ed3c9a9891a3cf7"
+  integrity sha512-/NfY72bBBcykAuZ7o14OzPEhygJgfDpZqIdZWxH3nISnO1xSwnZlGosrUixsQjgcuibQ1q9sLDmP5VO/06XtSA==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
@@ -4946,9 +4946,9 @@ deepmerge@^3.2.0:
   integrity sha512-GRQOafGHwMHpjPx9iCvTgpu9NojZ49q794EEL94JVEw6VaeA8XTUyBKvAkOOjBX9oJNiV6G3P+T+tihFjo2TqA==
 
 deepmerge@^4.0.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.2.0.tgz#77a97af6746882cd1ed85d4b925be8cd4120b630"
-  integrity sha512-/pED+kD8V9n15L1lon8DXEiWLQMW4tTiegn1kIWIQ+DBudOkFitz1cfjWQiSeKMPBQOknT3LpueyAmMVJ1Ho2g==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-4.2.1.tgz#018a3e5dfe82b95e35e36a9a29ba15ddb194e40f"
+  integrity sha512-32P7FIV6JKt0hPMFNlWFytzVGpppYHFKdnhFUEMXheWc8Lw4HnHEzJa5yxhaQedDAXv2SI6zD7+UbqnC5k9g9Q==
 
 default-resolution@^2.0.0:
   version "2.0.0"
@@ -5816,9 +5816,9 @@ fecha@^2.3.3:
   integrity sha512-lUGBnIamTAwk4znq5BcqsDaxSmZ9nDVJaij6NvRt/Tg4R69gERA+otPKbS86ROw9nxVMw2/mp1fnaiWqbs6Sdg==
 
 fibers@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/fibers/-/fibers-4.0.1.tgz#34fe8a8d010db7f9096adb2558a45bbc1d03fe45"
-  integrity sha512-H79EJn7DMWXk48ygmC82bMP8KNcFBZF1CPfwBpYF6cO85hGWoIrlu7eyX9ayxfjP9Nsl0JXxdI6fpYU4DWVw2w==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/fibers/-/fibers-4.0.2.tgz#d04f9ccd0aba179588202202faeb4fed65d497f5"
+  integrity sha512-FhICi1K4WZh9D6NC18fh2ODF3EWy1z0gzIdV9P7+s2pRjfRBnCkMDJ6x3bV1DkVymKH8HGrQa/FNOBjYvnJ/tQ==
   dependencies:
     detect-libc "^1.0.3"
 
@@ -6512,7 +6512,7 @@ http-status-codes@^1.3.0:
   resolved "https://registry.yarnpkg.com/http-status-codes/-/http-status-codes-1.3.2.tgz#181dfa4455ef454e5e4d827718fca3936680d10d"
   integrity sha512-nDUtj0ltIt08tGi2VWSpSzNNFye0v3YSe9lX3lIqLTuVvvRiYCvs4QQBSHo0eomFYw1wlUuofurUAlTm+vHnXg==
 
-https-proxy-agent@^2.2.1:
+https-proxy-agent@^2.2.1, https-proxy-agent@^2.2.3:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/https-proxy-agent/-/https-proxy-agent-2.2.3.tgz#fb6cd98ed5b9c35056b5a73cd01a8a721d7193d1"
   integrity sha512-Ytgnz23gm2DVftnzqRRz2dOXZbGd2uiajSw/95bPp6v53zPRspQjLm/AfBgqbJ2qfeRXWIOMVLpp86+/5yX39Q==
@@ -7522,13 +7522,13 @@ lcid@^2.0.0:
     invert-kv "^2.0.0"
 
 lerna@^3.16.1:
-  version "3.18.2"
-  resolved "https://registry.yarnpkg.com/lerna/-/lerna-3.18.2.tgz#a7bdcd4f0989723044d705da74d573a1e7249237"
-  integrity sha512-XznkKk2LY9HxaH+AtqyNZq7A0f9mMuv1OUeJBjJdl2oEZQPedWrmZNK6DuJNcyjjRJk6B9Xvb8eqIpe5aCHy1w==
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-3.18.3.tgz#c94556e76f98df9c7ae4ed3bc0166117cc42cd13"
+  integrity sha512-Bnr/RjyDSVA2Vu+NArK7do4UIpyy+EShOON7tignfAekPbi7cNDnMMGgSmbCQdKITkqPACMfCMdyq0hJlg6n3g==
   dependencies:
     "@lerna/add" "3.18.0"
     "@lerna/bootstrap" "3.18.0"
-    "@lerna/changed" "3.18.2"
+    "@lerna/changed" "3.18.3"
     "@lerna/clean" "3.18.0"
     "@lerna/cli" "3.18.0"
     "@lerna/create" "3.18.0"
@@ -7538,9 +7538,9 @@ lerna@^3.16.1:
     "@lerna/init" "3.18.0"
     "@lerna/link" "3.18.0"
     "@lerna/list" "3.18.0"
-    "@lerna/publish" "3.18.2"
+    "@lerna/publish" "3.18.3"
     "@lerna/run" "3.18.0"
-    "@lerna/version" "3.18.2"
+    "@lerna/version" "3.18.3"
     import-local "^2.0.0"
     npmlog "^4.1.2"
 
@@ -7915,15 +7915,15 @@ make-fetch-happen@^4.0.2:
     ssri "^6.0.0"
 
 make-fetch-happen@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/make-fetch-happen/-/make-fetch-happen-5.0.0.tgz#a8e3fe41d3415dd656fe7b8e8172e1fb4458b38d"
-  integrity sha512-nFr/vpL1Jc60etMVKeaLOqfGjMMb3tAHFVJWxHOFCFS04Zmd7kGlMxo0l1tzfhoQje0/UPnd0X8OeGUiXXnfPA==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/make-fetch-happen/-/make-fetch-happen-5.0.1.tgz#fac65400ab5f7a9c001862a3e9b0f417f0840175"
+  integrity sha512-b4dfaMvUDR67zxUq1+GN7Ke9rH5WvGRmoHuMH7l+gmUCR2tCXFP6mpeJ9Dp+jB6z8mShRopSf1vLRBhRs8Cu5w==
   dependencies:
     agentkeepalive "^3.4.1"
     cacache "^12.0.0"
     http-cache-semantics "^3.8.1"
     http-proxy-agent "^2.1.0"
-    https-proxy-agent "^2.2.1"
+    https-proxy-agent "^2.2.3"
     lru-cache "^5.1.1"
     mississippi "^3.0.0"
     node-fetch-npm "^2.0.2"
@@ -9873,9 +9873,9 @@ react-devtools-core@^3.6.0:
     ws "^3.3.1"
 
 react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
-  version "16.10.2"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
-  integrity sha512-INBT1QEgtcCCgvccr5/86CfD71fw9EPmDxgiJX4I2Ddr6ZsV6iFXsuby+qWJPtmNuMY0zByTsG4468P7nHuNWA==
+  version "16.11.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
+  integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
 "react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.9.tar.gz":
   version "0.60.0-microsoft.9"
@@ -11638,9 +11638,9 @@ uglify-es@^3.1.9:
     source-map "~0.6.1"
 
 uglify-js@^3.1.4:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.6.3.tgz#1351533bbe22cc698f012589ed6bd4cbd971bff8"
-  integrity sha512-KfQUgOqTkLp2aZxrMbCuKCDGW9slFYu2A23A36Gs7sGzTLcRBDORdOi5E21KWHFIfkY8kzgi/Pr1cXCh0yIp5g==
+  version "3.6.4"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.6.4.tgz#88cc880c6ed5cf9868fdfa0760654e7bed463f1d"
+  integrity sha512-9Yc2i881pF4BPGhjteCXQNaXx1DCwm3dtOyBaG2hitHjLWOczw/ki8vD1bqyT3u6K0Ms/FpCShkmfg+FtlOfYA==
   dependencies:
     commander "~2.20.3"
     source-map "~0.6.1"

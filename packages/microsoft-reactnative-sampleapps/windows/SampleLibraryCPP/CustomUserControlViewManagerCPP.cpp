@@ -53,7 +53,8 @@ CustomUserControlViewManagerCPP::NativeProps() noexcept {
 void CustomUserControlViewManagerCPP::UpdateProperties(
     FrameworkElement const &view,
     IMapView<hstring, IInspectable> const &propertyMap) {
-  if (auto control = view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
+  if (auto control =
+          view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
     for (auto const &pair : propertyMap) {
       auto const &propertyName = pair.Key();
       auto const &propertyValue = pair.Value();
@@ -70,15 +71,13 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
         }
       } else if (propertyName == L"color") {
         if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::ForegroundProperty(),
-              propertyValue);
+          control.SetValue(Control::ForegroundProperty(), propertyValue);
         } else {
           control.ClearValue(Control::ForegroundProperty());
         }
       } else if (propertyName == L"backgroundColor") {
         if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::BackgroundProperty(),
-              propertyValue);
+          control.SetValue(Control::BackgroundProperty(), propertyValue);
         } else {
           control.ClearValue(Control::BackgroundProperty());
         }

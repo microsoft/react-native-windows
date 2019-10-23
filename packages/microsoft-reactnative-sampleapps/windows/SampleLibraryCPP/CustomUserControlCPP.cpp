@@ -36,7 +36,8 @@ void CustomUserControlCPP::Label(hstring const &value) {
 void CustomUserControlCPP::OnLabelChanged(
     Windows::UI::Xaml::DependencyObject const &d,
     Windows::UI::Xaml::DependencyPropertyChangedEventArgs const &e) {
-  if (auto const &control = d.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
+  if (auto const &control =
+          d.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
   }
 }
 
