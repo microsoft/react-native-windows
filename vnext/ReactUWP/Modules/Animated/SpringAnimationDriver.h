@@ -5,11 +5,11 @@
 #pragma once
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
-#include "AnimationDriver.h"
+#include "CalculatedAnimationDriver.h"
 
 namespace react {
 namespace uwp {
-class SpringAnimationDriver : public AnimationDriver {
+class SpringAnimationDriver : public CalculatedAnimationDriver {
  public:
   SpringAnimationDriver(
       int64_t id,
@@ -19,18 +19,16 @@ class SpringAnimationDriver : public AnimationDriver {
       const std::shared_ptr<NativeAnimatedNodeManager> &manager,
       const folly::dynamic &dynamicToValues = folly::dynamic::array());
 
-  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-  MakeAnimation(const folly::dynamic &config) override;
-
   double ToValue() override;
 
+ protected:
+  std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
+  bool IsAnimationDone(double currentValue, double currentVelocity) override;
+
  private:
-  std::tuple<float, double> GetValueAndVelocityForTime(
-      double time,
-      double startValue);
   bool
   IsAtRest(double currentVelocity, double currentPosition, double endValue);
-  bool IsOvershooting(double currentValue, double startValue);
+  bool IsOvershooting(double currentValue);
 
   double m_springStiffness{0};
   double m_springDamping{0};
