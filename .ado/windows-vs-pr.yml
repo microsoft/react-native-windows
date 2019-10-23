@@ -260,6 +260,29 @@ jobs:
           otherConsoleOptions: '/ListTests'
         condition: failed()
 
+      - task: VSTest@2
+        displayName: Re-Run Desktop Integration Tests
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        condition: failed()
+
+      - task: PowerShell@2
+        displayName: Check the metro bundle server
+        inputs:
+          targetType: 'inline'
+          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
+        condition: failed()
+
       - template: templates/stop-packagers.yml
 
       - template: templates/publish-build-artifacts-for-nuget.yml
