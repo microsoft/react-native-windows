@@ -106,10 +106,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DebugConsole.h" />
-    <ClInclude Include="MainReactNativeHost.h">
-      <DependentUpon>MainReactNativeHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
@@ -137,10 +133,6 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainReactNativeHost.cpp">
-      <DependentUpon>MainReactNativeHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -153,9 +145,6 @@
   <ItemGroup>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
-    </Midl>
-    <Midl Include="MainReactNativeHost.idl">
-      <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>
   <ItemGroup>
