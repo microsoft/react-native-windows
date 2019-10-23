@@ -13,10 +13,7 @@ Windows::UI::Xaml::DependencyProperty CustomUserControlCPP::m_labelProperty =
         winrt::xaml_typename<winrt::hstring>(),
         winrt::xaml_typename<winrt::SampleLibraryCPP::CustomUserControlCPP>(),
         Windows::UI::Xaml::PropertyMetadata{
-            winrt::box_value(winrt::hstring()),
-            Windows::UI::Xaml::PropertyChangedCallback{
-                &winrt::SampleLibraryCPP::CustomUserControlCPP::
-                    OnLabelChanged}});
+            winrt::box_value(winrt::hstring())});
 
 CustomUserControlCPP::CustomUserControlCPP() {
   DefaultStyleKey(winrt::box_value(L"SampleLibraryCPP.CustomUserControlCPP"));
@@ -29,16 +26,9 @@ Windows::UI::Xaml::DependencyProperty CustomUserControlCPP::LabelProperty() {
 hstring CustomUserControlCPP::Label() {
   return winrt::unbox_value<winrt::hstring>(GetValue(m_labelProperty));
 }
+
 void CustomUserControlCPP::Label(hstring const &value) {
   SetValue(m_labelProperty, winrt::box_value(value));
-}
-
-void CustomUserControlCPP::OnLabelChanged(
-    Windows::UI::Xaml::DependencyObject const &d,
-    Windows::UI::Xaml::DependencyPropertyChangedEventArgs const &e) {
-  if (auto const &control =
-          d.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
-  }
 }
 
 } // namespace winrt::SampleLibraryCPP::implementation

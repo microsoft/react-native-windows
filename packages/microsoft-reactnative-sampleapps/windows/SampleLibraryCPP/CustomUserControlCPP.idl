@@ -9,8 +9,5 @@ runtimeclass CustomUserControlCPP : Windows.UI.Xaml.Controls.Control {
     get;
   };
   String Label;
-  static void OnLabelChanged(
-      Windows.UI.Xaml.DependencyObject d,
-      Windows.UI.Xaml.DependencyPropertyChangedEventArgs e);
 }
 } // namespace SampleLibraryCPP

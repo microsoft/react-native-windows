@@ -3,7 +3,7 @@
 
 namespace Microsoft.ReactNative.Bridge {
 
-    // Listener for application life cycle events.
+  // Listener for application life cycle events.
   [webhosthidden]
   interface IBackgroundEventListener
   {

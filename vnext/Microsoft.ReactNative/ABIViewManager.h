@@ -31,16 +31,17 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   const char *GetName() const override;
 
   folly::dynamic GetExportedViewConstants() const override;
-  folly::dynamic GetCommands() const override;
+
   folly::dynamic GetNativeProps() const override;
 
   void UpdateProperties(
       react::uwp::ShadowNodeBase *nodeToUpdate,
       const folly::dynamic &reactDiffMap) override;
 
+  folly::dynamic GetCommands() const override;
+
  protected:
-  winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(
-      int64_t tag) override;
+  winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;
 
   std::string m_name;
   winrt::Microsoft::ReactNative::Bridge::IViewManager m_viewManager;

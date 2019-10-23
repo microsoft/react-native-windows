@@ -25,8 +25,9 @@ class ViewManagersProvider final : public react::uwp::ViewManagerProvider {
       ReactViewManagerProvider const &viewManagerProvider) noexcept;
 
  private:
-  std::
-      map<std::string, Microsoft::ReactNative::Bridge::ReactViewManagerProvider>
+  std::unordered_map<
+      std::string,
+      Microsoft::ReactNative::Bridge::ReactViewManagerProvider>
           m_viewManagerProviders;
 };
 } // namespace winrt::Microsoft::ReactNative::Bridge

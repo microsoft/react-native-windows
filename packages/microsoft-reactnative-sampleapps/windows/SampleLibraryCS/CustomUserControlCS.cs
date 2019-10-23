@@ -22,27 +22,19 @@ namespace SampleLibraryCS
             }
         }
 
-        public static void OnLabelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is CustomUserControlCS control)
-            {
-
-            }
-        }
-
         static CustomUserControlCS()
         {
             LabelProperty = DependencyProperty.Register(
                 nameof(Label),
                 typeof(string),
                 typeof(CustomUserControlCS),
-                new PropertyMetadata(default(string), new PropertyChangedCallback(OnLabelChanged))
+                new PropertyMetadata(default(string))
                 );
         }
 
         public CustomUserControlCS()
         {
-            this.DefaultStyleKey = typeof(CustomUserControlCS);
+            DefaultStyleKey = typeof(CustomUserControlCS);
         }
     }
 }

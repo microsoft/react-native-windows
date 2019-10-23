@@ -102,7 +102,7 @@ class SampleApp extends Component {
         <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" />
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
         <Text style={styles.instructions}>
-          Hello from Seattle!
+          Hello from Microsoft!
         </Text>
       </View>
     );

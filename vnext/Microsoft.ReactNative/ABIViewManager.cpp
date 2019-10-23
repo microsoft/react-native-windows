@@ -12,14 +12,10 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 ABIViewManager::ABIViewManager(
     const std::shared_ptr<react::uwp::IReactInstance> &reactInstance,
     const winrt::Microsoft::ReactNative::Bridge::IViewManager &viewManager)
-    : Super(reactInstance) {
-  if (nullptr == viewManager) {
-    throw winrt::hresult_null_argument(L"viewManager");
-  }
-  m_viewManager = viewManager;
-  m_name = to_string(m_viewManager.Name());
-  m_nativeProps = m_viewManager.NativeProps();
-}
+    : Super(reactInstance),
+      m_viewManager{viewManager},
+      m_name{to_string(viewManager.Name())},
+      m_nativeProps{viewManager.NativeProps()} {}
 
 const char *ABIViewManager::GetName() const {
   return m_name.c_str();
@@ -29,7 +25,7 @@ folly::dynamic ABIViewManager::GetExportedViewConstants() const {
   folly::dynamic parent = Super::GetExportedViewConstants();
 
   auto outerChild = m_viewManager.ExportedViewConstants();
-  for (auto const &pair : outerChild) {
+  for (const auto &pair : outerChild) {
     std::string key = to_string(pair.Key());
     folly::dynamic value = ConvertToDynamic(pair.Value());
     parent.insert(key, value);
@@ -38,24 +34,11 @@ folly::dynamic ABIViewManager::GetExportedViewConstants() const {
   return parent;
 }
 
-folly::dynamic ABIViewManager::GetCommands() const {
-  folly::dynamic innerParent = Super::GetCommands();
-
-  auto outerChild = m_viewManager.Commands();
-  for (auto const &pair : outerChild) {
-    std::string key = to_string(pair.Key());
-    folly::dynamic value = ConvertToDynamic(pair.Value());
-    innerParent.insert(key, value);
-  }
-
-  return innerParent;
-}
-
 folly::dynamic ABIViewManager::GetNativeProps() const {
   folly::dynamic innerParent = Super::GetNativeProps();
 
   auto outerChild = m_nativeProps;
-  for (auto const &pair : outerChild) {
+  for (const auto &pair : outerChild) {
     std::string key = to_string(pair.Key());
 
     folly::dynamic value;
@@ -116,8 +99,21 @@ void ABIViewManager::UpdateProperties(
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
+folly::dynamic ABIViewManager::GetCommands() const {
+  folly::dynamic innerParent = Super::GetCommands();
+
+  auto outerChild = m_viewManager.Commands();
+  for (const auto &pair : outerChild) {
+    std::string key = to_string(pair.Key());
+    folly::dynamic value = ConvertToDynamic(pair.Value());
+    innerParent.insert(key, value);
+  }
+
+  return innerParent;
+}
+
 winrt::Windows::UI::Xaml::DependencyObject ABIViewManager::CreateViewCore(
-    int64_t tag) {
+    int64_t) {
   auto view = m_viewManager.CreateView();
   return view;
 }

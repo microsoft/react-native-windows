@@ -84,6 +84,10 @@ namespace Microsoft.ReactNative.Managed
           }
         }
       }
+      else
+      {
+        throw new ArgumentOutOfRangeException(nameof(view));
+      }
     }
 
     private static ViewManagerPropertyType TypeToViewManagerPropertyType(Type t)
@@ -100,6 +104,10 @@ namespace Microsoft.ReactNative.Managed
                t == typeof(double?) || t == typeof(float?) || t == typeof(long?) || t == typeof(int?) || t == typeof(byte?))
       {
         return ViewManagerPropertyType.Number;
+      }
+      else if (t == typeof(object[]))
+      {
+        return ViewManagerPropertyType.Array;
       }
       else if (t == typeof(Brush))
       {
