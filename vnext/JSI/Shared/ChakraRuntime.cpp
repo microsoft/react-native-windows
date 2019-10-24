@@ -297,7 +297,7 @@ std::shared_ptr<facebook::jsi::HostObject> ChakraRuntime::getHostObject(const fa
 
   facebook::jsi::Object target = obj.getPropertyAsObject(*this, g_proxyGetHostObjectTargetPropName);
 
-  return *GetExternalData<std::shared_ptr<facebook::jsi::HostObject>>(GetChakraObjectRef(target));
+  return GetExternalData<facebook::jsi::HostObject>(GetChakraObjectRef(target));
 }
 
 facebook::jsi::HostFunctionType &ChakraRuntime::getHostFunction(const facebook::jsi::Function &obj) {
@@ -701,59 +701,6 @@ std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(const facebook::j
   return result;
 }
 
-JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
-    JsValueRef callee,
-    bool isConstructCall,
-    JsValueRef *argumentsIncThis,
-    unsigned short argumentCountIncThis,
-    void *callbackState) {
-  HostFunctionProxy *hostFuncProxy = static_cast<HostFunctionProxy *>(callbackState);
-  ChakraRuntime &runtime = hostFuncProxy->GetRuntime();
-  const facebook::jsi::HostFunctionType &hostFunc = hostFuncProxy->GetHostFunction();
-
-  constexpr uint32_t maxStackArgCount = 8;
-  facebook::jsi::Value stackArgs[maxStackArgCount];
-  std::unique_ptr<facebook::jsi::Value[]> heapArgs = nullptr;
-  facebook::jsi::Value *args = nullptr;
-
-  // Accounting for 'this' object at 0
-  unsigned short argumentCount = argumentCountIncThis - 1;
-
-  if (argumentCount > maxStackArgCount) {
-    heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
-    for (size_t i = 1; i < argumentCountIncThis; i++) {
-      heapArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
-    }
-    args = heapArgs.get();
-
-  } else {
-    for (size_t i = 1; i < argumentCountIncThis; i++) {
-      stackArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
-    }
-    args = stackArgs;
-  }
-
-  JsValueRef result = JS_INVALID_REFERENCE;
-  facebook::jsi::Value thisVal = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[0]));
-
-  try {
-    result = runtime.ToChakraObjectRef(hostFunc(runtime, thisVal, args, argumentCount));
-
-  } catch (const facebook::jsi::JSError &error) {
-    runtime.VerifyJsErrorElseThrow(JsSetException(runtime.ToChakraObjectRef(error.value())));
-
-  } catch (const std::exception &exn) {
-    std::string message = "Exception in HostFunction: ";
-    message += exn.what();
-    ThrowJsException(message);
-
-  } catch (...) {
-    ThrowJsException("Exception in HostFunction: <unknown>");
-  }
-
-  return result;
-}
-
 facebook::jsi::Value ChakraRuntime::HostObjectGetTrap(
     Runtime &runtime,
     const facebook::jsi::Value & /*thisVal*/,
@@ -784,8 +731,7 @@ facebook::jsi::Value ChakraRuntime::HostObjectGetTrap(
     return chakraRuntime.ToJsiValue(std::move(target));
 
   } else {
-    std::shared_ptr<facebook::jsi::HostObject> &hostObject =
-        *GetExternalData<std::shared_ptr<facebook::jsi::HostObject>>(target);
+    const std::shared_ptr<facebook::jsi::HostObject> &hostObject = GetExternalData<facebook::jsi::HostObject>(target);
     return hostObject->get(chakraRuntime, chakraRuntime.createPropNameIDFromAscii(propName.c_str(), propName.length()));
   }
 
@@ -826,8 +772,7 @@ facebook::jsi::Value ChakraRuntime::HostObjectSetTrap(
   } else {
     ChakraObjectRef target = chakraRuntime.ToChakraObjectRef(args[0]);
 
-    std::shared_ptr<facebook::jsi::HostObject> &hostObject =
-        *GetExternalData<std::shared_ptr<facebook::jsi::HostObject>>(target);
+    const std::shared_ptr<facebook::jsi::HostObject> &hostObject = GetExternalData<facebook::jsi::HostObject>(target);
 
     hostObject->set(
         chakraRuntime, chakraRuntime.createPropNameIDFromAscii(propName.c_str(), propName.length()), args[2]);
@@ -854,8 +799,7 @@ facebook::jsi::Value ChakraRuntime::HostObjectOwnKeysTrap(
   ChakraRuntime &chakraRuntime = static_cast<ChakraRuntime &>(runtime);
   ChakraObjectRef target = chakraRuntime.ToChakraObjectRef(args[0]);
 
-  std::shared_ptr<facebook::jsi::HostObject> &hostObject =
-      *GetExternalData<std::shared_ptr<facebook::jsi::HostObject>>(target);
+  const std::shared_ptr<facebook::jsi::HostObject> &hostObject = GetExternalData<facebook::jsi::HostObject>(target);
 
   auto ownKeys = hostObject->getPropertyNames(chakraRuntime);
 
@@ -929,6 +873,59 @@ void ChakraRuntime::setupMemoryTracker() noexcept {
           return true;
         });
   }
+}
+
+JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
+    JsValueRef callee,
+    bool isConstructCall,
+    JsValueRef *argumentsIncThis,
+    unsigned short argumentCountIncThis,
+    void *callbackState) {
+  HostFunctionProxy *hostFuncProxy = static_cast<HostFunctionProxy *>(callbackState);
+  ChakraRuntime &runtime = hostFuncProxy->GetRuntime();
+  const facebook::jsi::HostFunctionType &hostFunc = hostFuncProxy->GetHostFunction();
+
+  constexpr uint32_t maxStackArgCount = 8;
+  facebook::jsi::Value stackArgs[maxStackArgCount];
+  std::unique_ptr<facebook::jsi::Value[]> heapArgs = nullptr;
+  facebook::jsi::Value *args = nullptr;
+
+  // Accounting for 'this' object at 0
+  unsigned short argumentCount = argumentCountIncThis - 1;
+
+  if (argumentCount > maxStackArgCount) {
+    heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
+    for (size_t i = 1; i < argumentCountIncThis; i++) {
+      heapArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
+    }
+    args = heapArgs.get();
+
+  } else {
+    for (size_t i = 1; i < argumentCountIncThis; i++) {
+      stackArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
+    }
+    args = stackArgs;
+  }
+
+  JsValueRef result = JS_INVALID_REFERENCE;
+  facebook::jsi::Value thisVal = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[0]));
+
+  try {
+    result = runtime.ToChakraObjectRef(hostFunc(runtime, thisVal, args, argumentCount));
+
+  } catch (const facebook::jsi::JSError &error) {
+    runtime.VerifyJsErrorElseThrow(JsSetException(runtime.ToChakraObjectRef(error.value())));
+
+  } catch (const std::exception &exn) {
+    std::string message = "Exception in HostFunction: ";
+    message += exn.what();
+    ThrowJsException(message);
+
+  } catch (...) {
+    ThrowJsException("Exception in HostFunction: <unknown>");
+  }
+
+  return result;
 }
 
 std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;

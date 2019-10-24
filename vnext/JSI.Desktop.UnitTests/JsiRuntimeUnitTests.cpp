@@ -159,7 +159,6 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
   EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
 }
 
-// TODO (yicyao): Fix this test.
 TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
   class ConstantHostObject : public HostObject {
     Value get(Runtime &, const PropNameID &sym) override {
@@ -618,8 +617,7 @@ TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
       function("function (f) { return f('A cat'); }").call(rt, callable).getString(rt).utf8(rt),
       "A cat was called with std::function::target");
   EXPECT_TRUE(callable.isHostFunction(rt));
-  // TODO (yicyao): Chakra(Core)Runtime currently does not support
-  // GetHostFunction.
+  // TODO (yicyao): Chakra(Core)Runtime currently does not support GetHostFunction.
   // EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
 
   std::string strval = "strval1";

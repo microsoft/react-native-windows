@@ -203,13 +203,15 @@ ChakraObjectRef ToJsObject(const std::shared_ptr<T> &data) {
 }
 
 /**
- * TODO (yicyao): Add documentation here.
+ * @param object A ChakraObjectRef returned by ToJsObject.
+ *
+ * @returns The backing external data for object.
  */
 template <typename T>
-T *GetExternalData(const ChakraObjectRef &object) {
+const std::shared_ptr<T> &GetExternalData(const ChakraObjectRef &object) {
   void *data;
   VerifyChakraErrorElseThrow(JsGetExternalData(object, &data));
-  return static_cast<T *>(data);
+  return *static_cast<std::shared_ptr<T> *>(data);
 }
 
 /**
@@ -231,7 +233,9 @@ bool CompareJsValues(const ChakraObjectRef &jsValue1, const ChakraObjectRef &jsV
 bool CompareJsPropertyIds(const ChakraObjectRef &jsPropId1, const ChakraObjectRef &jsPropId2);
 
 /**
- * TODO (yicyao): Add documentation here.
+ * @brief Cause a JS Error to be thrown in the engine's current context.
+ *
+ * @param message The message of the JS Error thrown.
  */
 void ThrowJsException(const std::string_view &message);
 
