@@ -16,9 +16,9 @@ import {
 } from 'react-native';
 import { NativeModules } from 'react-native';
 
-let CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
+const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 
-let CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
+const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
 var log = function(result) {
   console.log(result);

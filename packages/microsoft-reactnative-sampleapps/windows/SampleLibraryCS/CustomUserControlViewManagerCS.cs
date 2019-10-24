@@ -12,7 +12,7 @@ namespace SampleLibraryCS
 {
     internal class CustomUserControlViewManagerCS : AttributedViewManager<CustomUserControlCS>
     {
-        [ViewManagerPropertySetter("label")]
+        [ViewManagerProperty("label")]
         public void SetLabel(CustomUserControlCS view, string value)
         {
             if (null != value)
@@ -25,7 +25,7 @@ namespace SampleLibraryCS
             }
         }
 
-        [ViewManagerPropertySetter("color")]
+        [ViewManagerProperty("color")]
         public void SetColor(CustomUserControlCS view, Brush value)
         {
             if (null != value)
@@ -38,7 +38,7 @@ namespace SampleLibraryCS
             }
         }
 
-        [ViewManagerPropertySetter("backgroundColor")]
+        [ViewManagerProperty("backgroundColor")]
         public void SetBackgroundColor(CustomUserControlCS view, Brush value)
         {
             if (null != value)

@@ -31,7 +31,7 @@ namespace Microsoft.ReactNative.Managed
         {
           var nativeProps = new Dictionary<string, ViewManagerPropertyType>();
 
-          foreach (var kvp in PropertySetters)
+          foreach (var kvp in ViewManagerProperties)
           {
             nativeProps.Add(kvp.Key, kvp.Value.Type);
           }
@@ -43,37 +43,37 @@ namespace Microsoft.ReactNative.Managed
     }
     private IReadOnlyDictionary<string, ViewManagerPropertyType> _nativeProps;
 
-    internal Dictionary<string, ViewManagerPropertySetter<T>> PropertySetters
+    internal Dictionary<string, ViewManagerProperty<T>> ViewManagerProperties
     {
       get
       {
-        if (null == _propertySetters)
+        if (null == _properties)
         {
-          var propertySetters = new Dictionary<string, ViewManagerPropertySetter<T>>();
+          var properties = new Dictionary<string, ViewManagerProperty<T>>();
 
           foreach (var methodInfo in GetType().GetTypeInfo().DeclaredMethods)
           {
-            var setterAttribute = methodInfo.GetCustomAttribute<ViewManagerPropertySetterAttribute>();
-            if (null != setterAttribute)
+            var propertyAttribute = methodInfo.GetCustomAttribute<ViewManagerPropertyAttribute>();
+            if (null != propertyAttribute)
             {
-              var setter = new ViewManagerPropertySetter<T>();
-              setter.Name = setterAttribute.Name;
-              setter.Type = setterAttribute.Type ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
-              setter.Method = (view, propertyValue) =>
+              var setter = new ViewManagerProperty<T>();
+              setter.Name = propertyAttribute.Name ?? methodInfo.Name;
+              setter.Type = propertyAttribute.Type ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
+              setter.Setter = (view, propertyValue) =>
               {
                 methodInfo.Invoke(this, new object[] { view, propertyValue });
               };
-              propertySetters.Add(setter.Name, setter);
+              properties.Add(setter.Name, setter);
             }
           }
 
-          _propertySetters = propertySetters;
+          _properties = properties;
         }
 
-        return _propertySetters;
+        return _properties;
       }
     }
-    private Dictionary<string, ViewManagerPropertySetter<T>> _propertySetters;
+    private Dictionary<string, ViewManagerProperty<T>> _properties;
 
     public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
     {
@@ -81,9 +81,9 @@ namespace Microsoft.ReactNative.Managed
       {
         foreach (var property in propertyMap)
         {
-          if (PropertySetters.TryGetValue(property.Key, out ViewManagerPropertySetter<T> setter))
+          if (ViewManagerProperties.TryGetValue(property.Key, out ViewManagerProperty<T> setter))
           {
-            setter.Method(viewAsT, property.Value);
+            setter.Setter(viewAsT, property.Value);
           }
         }
       }
@@ -93,11 +93,11 @@ namespace Microsoft.ReactNative.Managed
       }
     }
 
-    internal struct ViewManagerPropertySetter<U> where U : T
+    internal struct ViewManagerProperty<U> where U : T
     {
       public string Name;
       public ViewManagerPropertyType Type;
-      public Action<U, object> Method;
+      public Action<U, object> Setter;
     }
 
     private static ViewManagerPropertyType TypeToViewManagerPropertyType(Type t)
@@ -141,7 +141,7 @@ namespace Microsoft.ReactNative.Managed
 
           foreach (var kvp in ViewManagerCommands)
           {
-            commands.Add(kvp.Value.Name, kvp.Value.Id);
+            commands.Add(kvp.Value.CommandName, kvp.Value.CommandId);
           }
 
           _commands = commands;
@@ -165,13 +165,13 @@ namespace Microsoft.ReactNative.Managed
             if (null != commandAttribute)
             {
               var command = new ViewManagerCommand<T>();
-              command.Name = commandAttribute.Name ?? methodInfo.Name;
-              command.Id = commandAttribute.CommandId ?? viewManagerCommands.Count;
-              command.Method = (view, commandArgs) =>
+              command.CommandName = commandAttribute.Name ?? methodInfo.Name;
+              command.CommandId = commandAttribute.CommandId ?? viewManagerCommands.Count;
+              command.CommandMethod = (view, commandArgs) =>
               {
                 methodInfo.Invoke(this, new object[] { view, commandArgs });
               };
-              viewManagerCommands.Add(command.Id, command);
+              viewManagerCommands.Add(command.CommandId, command);
             }
           }
 
@@ -188,7 +188,7 @@ namespace Microsoft.ReactNative.Managed
       {
         if (ViewManagerCommands.TryGetValue(commandId, out ViewManagerCommand<T> command))
         {
-          command.Method(viewAsT, commandArgs);
+          command.CommandMethod(viewAsT, commandArgs);
         }
       }
       else
@@ -199,9 +199,9 @@ namespace Microsoft.ReactNative.Managed
 
     internal struct ViewManagerCommand<U> where U : T
     {
-      public string Name;
-      public long Id;
-      public Action<U, IReadOnlyList<object>> Method;
+      public string CommandName;
+      public long CommandId;
+      public Action<U, IReadOnlyList<object>> CommandMethod;
     }
 
     #endregion
