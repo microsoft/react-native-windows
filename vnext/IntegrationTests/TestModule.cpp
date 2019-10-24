@@ -18,8 +18,7 @@ namespace Microsoft::React::Test {
 
 /*static*/ string TestModule::name = "TestModule";
 
-TestModule::TestModule(function<void(bool)> &&testPassedHandler)
-    : m_testPassedHandler{move(testPassedHandler)} {}
+TestModule::TestModule(function<void(bool)> &&testPassedHandler) : m_testPassedHandler{move(testPassedHandler)} {}
 
 #pragma region TestModule.js methods
 
@@ -52,12 +51,8 @@ vector<module::CxxModule::Method> TestModule::getMethods() {
           [this](dynamic args) {
             this->sendAppEvent(jsArgAsString(args, 0)); // TODO: 2nd arg?
           }),
-      Method(
-          "markTestCompleted",
-          [this](dynamic args) { this->markTestCompleted(); }),
-      Method(
-          "markTestPassed",
-          [this](dynamic args) { this->markTestPassed(jsArgAsBool(args, 0)); }),
+      Method("markTestCompleted", [this](dynamic args) { this->markTestCompleted(); }),
+      Method("markTestPassed", [this](dynamic args) { this->markTestPassed(jsArgAsBool(args, 0)); }),
       Method("shouldResolve", [this](dynamic args) { shouldResolve(); }),
   };
 }

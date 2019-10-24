@@ -29,8 +29,7 @@ class RAMBundleRegistry;
 
 class ChakraExecutorFactory : public JSExecutorFactory {
  public:
-  ChakraExecutorFactory(ChakraInstanceArgs &&instanceArgs)
-      : m_instanceArgs(std::move(instanceArgs)) {}
+  ChakraExecutorFactory(ChakraInstanceArgs &&instanceArgs) : m_instanceArgs(std::move(instanceArgs)) {}
   virtual std::unique_ptr<JSExecutor> createJSExecutor(
       std::shared_ptr<ExecutorDelegate> delegate,
       std::shared_ptr<MessageQueueThread> jsQueue) override;
@@ -80,24 +79,16 @@ class ChakraExecutor : public JSExecutor {
 #endif
       ) override;
 
-  virtual void setBundleRegistry(
-      std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
+  virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
 
-  virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath)
+  virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
+
+  virtual void callFunction(const std::string &moduleId, const std::string &methodId, const folly::dynamic &arguments)
       override;
 
-  virtual void callFunction(
-      const std::string &moduleId,
-      const std::string &methodId,
-      const folly::dynamic &arguments) override;
+  virtual void invokeCallback(const double callbackId, const folly::dynamic &arguments) override;
 
-  virtual void invokeCallback(
-      const double callbackId,
-      const folly::dynamic &arguments) override;
-
-  virtual void setGlobalVariable(
-      std::string propName,
-      std::unique_ptr<const JSBigString> jsonValue) override;
+  virtual void setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue) override;
 
   virtual std::string getDescription() override;
 
@@ -115,8 +106,7 @@ class ChakraExecutor : public JSExecutor {
   JsContextRef m_context;
   std::shared_ptr<ExecutorDelegate> m_delegate;
   int m_workerId = 0; // if this is a worker executor, this is non-zero
-  ChakraExecutor *m_owner =
-      nullptr; // if this is a worker executor, this is non-null
+  ChakraExecutor *m_owner = nullptr; // if this is a worker executor, this is non-null
   std::shared_ptr<bool> m_isDestroyed = std::shared_ptr<bool>(new bool(false));
   std::unordered_map<int, WorkerRegistration> m_ownedWorkers;
   std::shared_ptr<MessageQueueThread> m_messageQueueThread;
@@ -144,15 +134,9 @@ class ChakraExecutor : public JSExecutor {
       const folly::dynamic &jscConfig);
 
   void initOnJSVMThread();
-  bool isNetworkInspected(
-      const std::string &owner,
-      const std::string &app,
-      const std::string &device);
+  bool isNetworkInspected(const std::string &owner, const std::string &app, const std::string &device);
   // This method is experimental, and may be modified or removed.
-  ChakraValue callFunctionSyncWithValue(
-      const std::string &module,
-      const std::string &method,
-      ChakraValue value);
+  ChakraValue callFunctionSyncWithValue(const std::string &module, const std::string &method, ChakraValue value);
   void terminateOnJSVMThread();
   void bindBridge() noexcept;
   void callNativeModules(ChakraValue &&);
@@ -164,8 +148,7 @@ class ChakraExecutor : public JSExecutor {
       uint16_t port,
       std::unique_ptr<DebugProtocolHandler> &debugProtocolHandler,
       std::unique_ptr<DebugService> &debugService);
-  static void CHAKRA_CALLBACK
-  ProcessDebuggerCommandQueueCallback(void *callbackState);
+  static void CHAKRA_CALLBACK ProcessDebuggerCommandQueueCallback(void *callbackState);
   void ProcessDebuggerCommandQueue();
   bool needToRedirectConsoleToDebugger = false;
   JsErrorCode RedirectConsoleToDebugger(JsValueRef debuggerConsoleObject);
@@ -178,22 +161,12 @@ class ChakraExecutor : public JSExecutor {
   void installNativeHook(const char *name);
   JsValueRef getNativeModule(JsValueRef object, JsValueRef propertyName);
 
-  JsValueRef nativePostMessageToWorker(
-      size_t argumentCount,
-      const JsValueRef arguments[]);
-  JsValueRef nativeTerminateWorker(
-      size_t argumentCount,
-      const JsValueRef arguments[]);
+  JsValueRef nativePostMessageToWorker(size_t argumentCount, const JsValueRef arguments[]);
+  JsValueRef nativeTerminateWorker(size_t argumentCount, const JsValueRef arguments[]);
   JsValueRef nativeRequire(size_t argumentCount, const JsValueRef arguments[]);
-  JsValueRef nativeFlushQueueImmediate(
-      size_t argumentCount,
-      const JsValueRef arguments[]);
-  JsValueRef nativeCallSyncHook(
-      size_t argumentCount,
-      const JsValueRef arguments[]);
-  JsValueRef nativeLoggingHook(
-      size_t argumentCount,
-      const JsValueRef arguments[]);
+  JsValueRef nativeFlushQueueImmediate(size_t argumentCount, const JsValueRef arguments[]);
+  JsValueRef nativeCallSyncHook(size_t argumentCount, const JsValueRef arguments[]);
+  JsValueRef nativeLoggingHook(size_t argumentCount, const JsValueRef arguments[]);
 };
 
 template <JsValueRef (ChakraExecutor::*method)(size_t, const JsValueRef[])>

@@ -39,11 +39,7 @@ TimerQueue::TimerQueue() {
   std::make_heap(m_timerVector.begin(), m_timerVector.end());
 }
 
-void TimerQueue::Push(
-    int64_t id,
-    TDateTime targetTime,
-    TTimeSpan period,
-    bool repeat) {
+void TimerQueue::Push(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat) {
   m_timerVector.emplace_back(id, targetTime, period, repeat);
   std::push_heap(m_timerVector.begin(), m_timerVector.end());
 }
@@ -89,9 +85,7 @@ std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
   return m_parent->getInstance();
 }
 
-void Timing::OnRendering(
-    const winrt::IInspectable &,
-    const winrt::IInspectable &args) {
+void Timing::OnRendering(const winrt::IInspectable &, const winrt::IInspectable &args) {
   std::vector<int64_t> readyTimers;
   auto now = winrt::DateTime::clock::now();
 
@@ -117,24 +111,18 @@ void Timing::OnRendering(
       for (size_t i = 0, c = readyTimers.size(); i < c; ++i)
         params.push_back(folly::dynamic(readyTimers[i]));
 
-      instance->callJSFunction(
-          "JSTimers", "callTimers", folly::dynamic::array(params));
+      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
     } else {
       assert(false && "getInstance().lock failed");
     }
   }
 }
 
-void Timing::createTimer(
-    int64_t id,
-    double duration,
-    double jsSchedulingTime,
-    bool repeat) {
+void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat) {
   if (duration == 0 && !repeat) {
     if (auto instance = getInstance().lock()) {
       folly::dynamic params = folly::dynamic::array(id);
-      instance->callJSFunction(
-          "JSTimers", "callTimers", folly::dynamic::array(params));
+      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
     } else {
       assert(false && "getInstance().lock failed");
     }
@@ -144,16 +132,14 @@ void Timing::createTimer(
 
   if (m_timerQueue.IsEmpty()) {
     m_rendering.revoke();
-    m_rendering = winrt::CompositionTarget::Rendering(
-        winrt::auto_revoke, {this, &Timing::OnRendering});
+    m_rendering = winrt::CompositionTarget::Rendering(winrt::auto_revoke, {this, &Timing::OnRendering});
   }
 
   // Convert double duration in ms to TimeSpan
   // Make sure duration is always larger than 16ms to avoid unnecessary wakeups.
   auto period = TimeSpanFromMs(std::max(duration, 16.0));
   const int64_t msFrom1601to1970 = 11644473600000;
-  winrt::DateTime scheduledTime(
-      TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
+  winrt::DateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
   auto initialTargetTime = scheduledTime + period;
 
   m_timerQueue.Push(id, initialTargetTime, period, repeat);
@@ -199,10 +185,7 @@ auto TimingModule::getMethods() -> std::vector<Method> {
                                  // jsSchedulingTime, bool repeat
           {
             timing->createTimer(
-                jsArgAsInt(args, 0),
-                jsArgAsDouble(args, 1),
-                jsArgAsDouble(args, 2),
-                jsArgAsBool(args, 3));
+                jsArgAsInt(args, 0), jsArgAsDouble(args, 1), jsArgAsDouble(args, 2), jsArgAsBool(args, 3));
           }),
       Method(
           "deleteTimer",

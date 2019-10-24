@@ -18,8 +18,7 @@ class MinimalChakraRuntime {
   MinimalChakraRuntime(bool multithreaded);
 
  private:
-  std::unique_ptr<JsRuntimeHandle, std::function<void(JsRuntimeHandle *)>>
-      runtime;
+  std::unique_ptr<JsRuntimeHandle, std::function<void(JsRuntimeHandle *)>> runtime;
   std::unique_ptr<JsContextRef, std::function<void(JsContextRef *)>> context;
 };
 
@@ -72,14 +71,11 @@ inline void throwJSExecutionException(const char *fmt, Args... args) {
 }
 
 template <typename... Args>
-inline void throwJSExecutionExceptionWithStack(
-    const char *msg,
-    const char *stack) {
+inline void throwJSExecutionExceptionWithStack(const char *msg, const char *stack) {
   // throw JSException(msg, stack);
 }
 
-using ChakraJSFunction = std::function<
-    JsValueRef(JsContextRef, JsValueRef, size_t, const JsValueRef[])>;
+using ChakraJSFunction = std::function<JsValueRef(JsContextRef, JsValueRef, size_t, const JsValueRef[])>;
 
 JsValueRef makeFunction(JsValueRef name, ChakraJSFunction function);
 
@@ -97,9 +93,7 @@ static JsSourceContext getNextSourceContext();
 
 JsValueRef evaluateScript(JsValueRef script, JsValueRef sourceURL);
 
-JsValueRef evaluateScript(
-    std::unique_ptr<const JSBigString> &&script,
-    JsValueRef sourceURL);
+JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRef sourceURL);
 
 JsValueRef evaluateScriptWithBytecode(
     std::unique_ptr<const JSBigString> &&script,
@@ -126,20 +120,11 @@ JsValueRef JSObjectCallAsFunction(
     const JsValueRef args[],
     JsValueRef *error);
 JsValueRef JSValueMakeFromJSONString(JsValueRef string);
-JsValueRef JSValueCreateJSONString(
-    JsValueRef value,
-    unsigned /*indent*/,
-    JsValueRef *error);
+JsValueRef JSValueCreateJSONString(JsValueRef value, unsigned /*indent*/, JsValueRef *error);
 
 // TODO ensure proper clean up of error states in the middle of function
-JsValueRef JSObjectGetProperty(
-    JsValueRef object,
-    JsValueRef propertyName,
-    JsValueRef *exception);
-JsValueRef JSObjectGetPropertyAtIndex(
-    JsValueRef object,
-    unsigned propertyIndex,
-    JsValueRef *exception);
+JsValueRef JSObjectGetProperty(JsValueRef object, JsValueRef propertyName, JsValueRef *exception);
+JsValueRef JSObjectGetPropertyAtIndex(JsValueRef object, unsigned propertyIndex, JsValueRef *exception);
 
 // Only support None
 void JSObjectSetProperty(

@@ -41,20 +41,14 @@ struct INativeUIManager {
   virtual void AddRootView(
       facebook::react::ShadowNode &shadowNode,
       facebook::react::IReactRootView *pReactRootView) = 0;
-  virtual void CreateView(
-      facebook::react::ShadowNode &shadowNode,
-      folly::dynamic /*ReadableMap*/ props) = 0;
+  virtual void CreateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) = 0;
   virtual void AddView(
       facebook::react::ShadowNode &parentShadowNode,
       facebook::react::ShadowNode &childShadowNode,
       uint64_t index) = 0;
-  virtual void RemoveView(
-      facebook::react::ShadowNode &shadowNode,
-      bool removeChildren = true) = 0;
+  virtual void RemoveView(facebook::react::ShadowNode &shadowNode, bool removeChildren = true) = 0;
   virtual void ReplaceView(facebook::react::ShadowNode &shadowNode) = 0;
-  virtual void UpdateView(
-      facebook::react::ShadowNode &shadowNode,
-      folly::dynamic /*ReadableMap*/ props) = 0;
+  virtual void UpdateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) = 0;
   virtual void onBatchComplete() = 0;
   virtual void ensureInBatch() = 0;
   virtual void measure(

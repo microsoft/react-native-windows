@@ -32,13 +32,7 @@ namespace uwp {
 
 void OutputDebugString(const char *format, winrt::hresult_error const &e) {
   char buffer[1024];
-  _snprintf_s(
-      buffer,
-      _countof(buffer),
-      _TRUNCATE,
-      format,
-      e.code(),
-      e.message().c_str());
+  _snprintf_s(buffer, _countof(buffer), _TRUNCATE, format, e.code(), e.message().c_str());
   OutputDebugStringA(buffer);
 }
 
@@ -71,8 +65,7 @@ class WebSocketModule::WebSocket {
   WebSocketModule *m_parent;
   std::map<int64_t, winrt::MessageWebSocket> m_ws_clients;
   std::map<int64_t, winrt::Windows::Storage::Streams::DataWriter> m_dataWriters;
-  std::map<int64_t, winrt::MessageWebSocket::MessageReceived_revoker>
-      m_msgReceiveds;
+  std::map<int64_t, winrt::MessageWebSocket::MessageReceived_revoker> m_msgReceiveds;
 };
 
 std::future<HRESULT> Connect(
@@ -82,8 +75,7 @@ std::future<HRESULT> Connect(
 #ifdef DEFAULT_CPPWINRT_EXCEPTIONS
   co_await async;
 #else
-  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{
-      async};
+  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncAction>{async};
 #endif
   return async.ErrorCode();
 }
@@ -95,8 +87,7 @@ void WebSocketModule::WebSocket::connect(
     int64_t id) {
   m_ws_clients.emplace(id, winrt::MessageWebSocket());
   auto socket = m_ws_clients[id];
-  m_dataWriters.emplace(
-      id, winrt::Windows::Storage::Streams::DataWriter(socket.OutputStream()));
+  m_dataWriters.emplace(id, winrt::Windows::Storage::Streams::DataWriter(socket.OutputStream()));
 
   if (!options.empty() && !options["headers"].empty()) {
     auto headers = options["headers"];
@@ -105,62 +96,48 @@ void WebSocketModule::WebSocket::connect(
       auto value = header.second.getString();
 
       socket.SetRequestHeader(
-          Microsoft::Common::Unicode::Utf8ToUtf16(name),
-          Microsoft::Common::Unicode::Utf8ToUtf16(value));
+          Microsoft::Common::Unicode::Utf8ToUtf16(name), Microsoft::Common::Unicode::Utf8ToUtf16(value));
     }
   }
 
   if (!protocols.empty()) {
-    winrt::Windows::Foundation::Collections::IVector<winrt::hstring>
-        supportedProtocols = socket.Control().SupportedProtocols();
+    winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
+        socket.Control().SupportedProtocols();
     for (auto &protocol : protocols) {
       auto protocolStr = protocol.getString();
-      supportedProtocols.Append(
-          Microsoft::Common::Unicode::Utf8ToUtf16(protocolStr));
+      supportedProtocols.Append(Microsoft::Common::Unicode::Utf8ToUtf16(protocolStr));
     }
   }
 
-  m_msgReceiveds[id] = socket.MessageReceived(
-      winrt::auto_revoke, [this, id](auto &&, auto &&args) {
-        try {
-          std::string response;
-          winrt::Windows::Storage::Streams::DataReader reader =
-              args.GetDataReader();
+  m_msgReceiveds[id] = socket.MessageReceived(winrt::auto_revoke, [this, id](auto &&, auto &&args) {
+    try {
+      std::string response;
+      winrt::Windows::Storage::Streams::DataReader reader = args.GetDataReader();
 
-          uint32_t len = reader.UnconsumedBufferLength();
-          if (args.MessageType() == winrt::SocketMessageType::Utf8) {
-            reader.UnicodeEncoding(
-                winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-            std::vector<uint8_t> data(len);
-            reader.ReadBytes(data);
+      uint32_t len = reader.UnconsumedBufferLength();
+      if (args.MessageType() == winrt::SocketMessageType::Utf8) {
+        reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+        std::vector<uint8_t> data(len);
+        reader.ReadBytes(data);
 
-            response = std::string(
-                Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(
-                    data.data()),
-                data.size());
-          } else {
-            auto buffer = reader.ReadBuffer(len);
-            winrt::hstring data = winrt::Windows::Security::Cryptography::
-                CryptographicBuffer::EncodeToBase64String(buffer);
+        response = std::string(Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+      } else {
+        auto buffer = reader.ReadBuffer(len);
+        winrt::hstring data = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToBase64String(buffer);
 
-            response = Microsoft::Common::Unicode::Utf16ToUtf8(
-                std::wstring_view(data));
-          }
+        response = Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring_view(data));
+      }
 
-          folly::dynamic params = folly::dynamic::object("id", id)(
-              "data", response)(
-              "type",
-              args.MessageType() == winrt::SocketMessageType::Utf8 ? "text"
-                                                                   : "binary");
-          sendEvent("websocketMessage", std::move(params));
-        } catch (winrt::hresult_error const &e) {
-          OutputDebugString("Read failed (0x%8X) %ls\n", e);
-          onError(id, e);
-        }
-      });
+      folly::dynamic params = folly::dynamic::object("id", id)("data", response)(
+          "type", args.MessageType() == winrt::SocketMessageType::Utf8 ? "text" : "binary");
+      sendEvent("websocketMessage", std::move(params));
+    } catch (winrt::hresult_error const &e) {
+      OutputDebugString("Read failed (0x%8X) %ls\n", e);
+      onError(id, e);
+    }
+  });
 
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
   HRESULT hr = S_OK;
   try {
@@ -193,11 +170,8 @@ void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
     socket.Control().MessageType(winrt::SocketMessageType::Utf8);
 
     winrt::array_view<const uint8_t> arr(
-        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
-            message.c_str()),
-        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
-            message.c_str()) +
-            message.length());
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(message.c_str()),
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(message.c_str()) + message.length());
     dataWriter.WriteBytes(arr);
     dataWriter.StoreAsync();
   } catch (winrt::hresult_error const &e) {
@@ -206,17 +180,14 @@ void WebSocketModule::WebSocket::send(const std::string &message, int64_t id) {
   }
 }
 
-void WebSocketModule::WebSocket::sendBinary(
-    const std::string &base64String,
-    int64_t id) {
+void WebSocketModule::WebSocket::sendBinary(const std::string &base64String, int64_t id) {
   try {
     auto socket = m_ws_clients[id];
     auto dataWriter = m_dataWriters[id];
     socket.Control().MessageType(winrt::SocketMessageType::Binary);
 
-    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::
-        DecodeFromBase64String(
-            Microsoft::Common::Unicode::Utf8ToUtf16(base64String));
+    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(
+        Microsoft::Common::Unicode::Utf8ToUtf16(base64String));
     dataWriter.WriteBuffer(buffer);
     dataWriter.StoreAsync();
   } catch (winrt::hresult_error const &e) {
@@ -233,11 +204,8 @@ void WebSocketModule::WebSocket::ping(int64_t id) {
 
     std::string s("");
     winrt::array_view<const uint8_t> arr(
-        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
-            s.c_str()),
-        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
-            s.c_str()) +
-            s.length());
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(s.c_str()),
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(s.c_str()) + s.length());
     dataWriter.WriteBytes(arr);
     dataWriter.StoreAsync();
   } catch (winrt::hresult_error const &e) {
@@ -246,26 +214,18 @@ void WebSocketModule::WebSocket::ping(int64_t id) {
   }
 }
 
-void WebSocketModule::WebSocket::onError(
-    int64_t id,
-    winrt::hresult_error const &e) {
-  folly::dynamic errorObj = folly::dynamic::object("id", id)(
-      "message", static_cast<int32_t>(e.code()));
+void WebSocketModule::WebSocket::onError(int64_t id, winrt::hresult_error const &e) {
+  folly::dynamic errorObj = folly::dynamic::object("id", id)("message", static_cast<int32_t>(e.code()));
   sendEvent("websocketFailed", std::move(errorObj));
 }
 
-void WebSocketModule::WebSocket::sendEvent(
-    std::string &&eventName,
-    folly::dynamic &&parameters) {
+void WebSocketModule::WebSocket::sendEvent(std::string &&eventName, folly::dynamic &&parameters) {
   if (!m_parent)
     return;
 
   auto instance = m_parent->getInstance().lock();
   if (instance)
-    instance->callJSFunction(
-        "RCTDeviceEventEmitter",
-        "emit",
-        folly::dynamic::array(eventName, std::move(parameters)));
+    instance->callJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(parameters)));
 }
 
 //
@@ -274,8 +234,7 @@ void WebSocketModule::WebSocket::sendEvent(
 
 const char *WebSocketModule::name = "WebSocketModule";
 
-WebSocketModule::WebSocketModule()
-    : m_webSocket(std::make_shared<WebSocket>(this)) {}
+WebSocketModule::WebSocketModule() : m_webSocket(std::make_shared<WebSocket>(this)) {}
 
 WebSocketModule::~WebSocketModule() {
   m_webSocket->Disconnect();
@@ -296,11 +255,9 @@ auto WebSocketModule::getMethods() -> std::vector<Method> {
   return {
       Method(
           "connect",
-          [webSocket](
-              folly::dynamic
-                  args) // const std::string& url, folly::dynamic /* @Nullable
-                        // final ReadableArray */ protocols, folly::dynamic /*
-                        // @Nullable final ReadableArray */ headers, int64_t id
+          [webSocket](folly::dynamic args) // const std::string& url, folly::dynamic /* @Nullable
+                                           // final ReadableArray */ protocols, folly::dynamic /*
+                                           // @Nullable final ReadableArray */ headers, int64_t id
           {
             webSocket->connect(
                 facebook::xplat::jsArgAsString(args, 0),
@@ -314,22 +271,12 @@ auto WebSocketModule::getMethods() -> std::vector<Method> {
           { webSocket->close(facebook::xplat::jsArgAsInt(args, 0)); }),
       Method(
           "send",
-          [webSocket](
-              folly::dynamic args) // const std::string& message, int64_t id
-          {
-            webSocket->send(
-                facebook::xplat::jsArgAsString(args, 0),
-                facebook::xplat::jsArgAsInt(args, 1));
-          }),
+          [webSocket](folly::dynamic args) // const std::string& message, int64_t id
+          { webSocket->send(facebook::xplat::jsArgAsString(args, 0), facebook::xplat::jsArgAsInt(args, 1)); }),
       Method(
           "sendBinary",
-          [webSocket](folly::dynamic
-                          args) // const std::string& base64String, int64_t id
-          {
-            webSocket->sendBinary(
-                facebook::xplat::jsArgAsString(args, 0),
-                facebook::xplat::jsArgAsInt(args, 1));
-          }),
+          [webSocket](folly::dynamic args) // const std::string& base64String, int64_t id
+          { webSocket->sendBinary(facebook::xplat::jsArgAsString(args, 0), facebook::xplat::jsArgAsInt(args, 1)); }),
       Method(
           "ping",
           [webSocket](folly::dynamic args) // int64_t id

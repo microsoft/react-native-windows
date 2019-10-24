@@ -78,18 +78,13 @@ class ImageShadowNode : public ShadowNodeBase {
     ShadowNodeBase::createView();
     auto reactImage{m_view.as<ReactImage>()};
 
-    m_onLoadEndToken = reactImage->OnLoadEnd(
-        [imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
-         reactImage](const auto &, const bool &succeeded) {
-          ImageSource source{reactImage->Source()};
+    m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
+                                              reactImage](const auto &, const bool &succeeded) {
+      ImageSource source{reactImage->Source()};
 
-          imageViewManager->EmitImageEvent(
-              reactImage.as<winrt::Canvas>(),
-              succeeded ? "topLoad" : "topError",
-              source);
-          imageViewManager->EmitImageEvent(
-              reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
-        });
+      imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
+      imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
+    });
   }
 
   void onDropViewInstance() override {
@@ -101,9 +96,7 @@ class ImageShadowNode : public ShadowNodeBase {
   winrt::event_token m_onLoadEndToken;
 };
 
-ImageViewManager::ImageViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+ImageViewManager::ImageViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *ImageViewManager::GetName() const {
   return "RCTImageView";
@@ -117,9 +110,7 @@ facebook::react::ShadowNode *ImageViewManager::createShadow() const {
   return new ImageShadowNode();
 }
 
-void ImageViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto canvas{nodeToUpdate->GetView().as<winrt::Canvas>()};
 
   if (canvas == nullptr)
@@ -132,8 +123,7 @@ void ImageViewManager::UpdateProperties(
     if (propertyName == "source") {
       setSource(canvas, propertyValue);
     } else if (propertyName == "resizeMode") {
-      auto resizeMode{
-          json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
+      auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
       auto reactImage{canvas.as<ReactImage>()};
       reactImage->ResizeMode(resizeMode);
     }
@@ -144,26 +134,20 @@ void ImageViewManager::UpdateProperties(
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
-void ImageViewManager::EmitImageEvent(
-    winrt::Canvas canvas,
-    const char *eventName,
-    ImageSource &source) {
+void ImageViewManager::EmitImageEvent(winrt::Canvas canvas, const char *eventName, ImageSource &source) {
   auto reactInstance{m_wkReactInstance.lock()};
   if (reactInstance == nullptr)
     return;
 
   int64_t tag = canvas.Tag().as<winrt::IPropertyValue>().GetInt64();
-  folly::dynamic imageSource = folly::dynamic::object()("url", source.uri)(
-      "width", source.width)("height", source.height);
+  folly::dynamic imageSource =
+      folly::dynamic::object()("url", source.uri)("width", source.width)("height", source.height);
 
-  folly::dynamic eventData =
-      folly::dynamic::object()("target", tag)("source", imageSource);
+  folly::dynamic eventData = folly::dynamic::object()("target", tag)("source", imageSource);
   reactInstance->DispatchEvent(tag, eventName, std::move(eventData));
 }
 
-void ImageViewManager::setSource(
-    winrt::Canvas canvas,
-    const folly::dynamic &data) {
+void ImageViewManager::setSource(winrt::Canvas canvas, const folly::dynamic &data) {
   auto instance{m_wkReactInstance.lock()};
   if (instance == nullptr)
     return;
@@ -177,17 +161,12 @@ void ImageViewManager::setSource(
   reactImage->Source(sources[0]);
 }
 
-folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topLoadStart"] =
-      folly::dynamic::object("registrationName", "onLoadStart");
-  directEvents["topLoad"] =
-      folly::dynamic::object("registrationName", "onLoad");
-  directEvents["topLoadEnd"] =
-      folly::dynamic::object("registrationName", "onLoadEnd");
-  directEvents["topError"] =
-      folly::dynamic::object("registrationName", "onError");
+  directEvents["topLoadStart"] = folly::dynamic::object("registrationName", "onLoadStart");
+  directEvents["topLoad"] = folly::dynamic::object("registrationName", "onLoad");
+  directEvents["topLoadEnd"] = folly::dynamic::object("registrationName", "onLoadEnd");
+  directEvents["topError"] = folly::dynamic::object("registrationName", "onError");
 
   return directEvents;
 }
@@ -195,8 +174,7 @@ folly::dynamic ImageViewManager::GetExportedCustomDirectEventTypeConstants()
 folly::dynamic ImageViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
   // TODO: implement native props propagation from property map
-  props.update(folly::dynamic::object("source", "Map")("resizeMode", "string")(
-      "accessibilityLabel", "string"));
+  props.update(folly::dynamic::object("source", "Map")("resizeMode", "string")("accessibilityLabel", "string"));
 
   return props;
 }

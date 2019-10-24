@@ -32,18 +32,14 @@ class LocationObserverModule::LocationObserver {
  public:
   LocationObserver(
       LocationObserverModule *parent,
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread)
+      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
       : m_parent(parent), m_queueThread(defaultQueueThread) {}
 
   void Disconnect() {
     m_parent = nullptr;
   }
 
-  void getCurrentPosition(
-      const folly::dynamic &options,
-      Callback successCallback,
-      Callback errorCallback);
+  void getCurrentPosition(const folly::dynamic &options, Callback successCallback, Callback errorCallback);
   void startObserving(const folly::dynamic &options);
   void stopObserving();
   void requestAuthorization();
@@ -53,10 +49,8 @@ class LocationObserverModule::LocationObserver {
 
   LocationObserverModule *m_parent;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
-  winrt::event_revoker<winrt::Windows::Devices::Geolocation::IGeolocator>
-      m_positionChanged;
-  winrt::event_revoker<winrt::Windows::Devices::Geolocation::IGeolocator>
-      m_statusChanged;
+  winrt::event_revoker<winrt::Windows::Devices::Geolocation::IGeolocator> m_positionChanged;
+  winrt::event_revoker<winrt::Windows::Devices::Geolocation::IGeolocator> m_statusChanged;
 };
 
 class LocationObserverOptions {
@@ -82,18 +76,14 @@ class LocationObserverOptions {
   }
 };
 
-static folly::dynamic ObjFromGeopos(
-    winrt::Windows::Devices::Geolocation::Geoposition &geopos) {
-  auto timestamp = winrt::Windows::Foundation::TimeSpan(
-      geopos.Coordinate().Timestamp().time_since_epoch());
+static folly::dynamic ObjFromGeopos(winrt::Windows::Devices::Geolocation::Geoposition &geopos) {
+  auto timestamp = winrt::Windows::Foundation::TimeSpan(geopos.Coordinate().Timestamp().time_since_epoch());
 
   folly::dynamic result = folly::dynamic::object(
       "coords",
-      folly::dynamic::object(
-          "latitude", geopos.Coordinate().Point().Position().Latitude)(
+      folly::dynamic::object("latitude", geopos.Coordinate().Point().Position().Latitude)(
           "longitude", geopos.Coordinate().Point().Position().Longitude)(
-          "altitude", geopos.Coordinate().Point().Position().Altitude)(
-          "accuracy", geopos.Coordinate().Accuracy()))(
+          "altitude", geopos.Coordinate().Point().Position().Altitude)("accuracy", geopos.Coordinate().Accuracy()))(
       "timestamp", timestamp.count());
 
   // Since we can't pass NaN via json, don't include optional bearing/speed for
@@ -108,13 +98,11 @@ static folly::dynamic ObjFromGeopos(
   return result;
 }
 
-winrt::Windows::Foundation::IAsyncOperation<
-    winrt::Windows::Devices::Geolocation::Geoposition>
-GetGeoposition(
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Geolocation::Geoposition> GetGeoposition(
     winrt::Windows::Devices::Geolocation::Geolocator &geoLocator,
     LocationObserverOptions &options) {
-  auto location = co_await geoLocator.GetGeopositionAsync(
-      TimeSpanFromMs(options.maxAge), TimeSpanFromMs(options.timeout));
+  auto location =
+      co_await geoLocator.GetGeopositionAsync(TimeSpanFromMs(options.maxAge), TimeSpanFromMs(options.timeout));
   return location;
 }
 
@@ -126,76 +114,60 @@ void LocationObserverModule::LocationObserver::getCurrentPosition(
 
   winrt::Windows::Devices::Geolocation::Geolocator geoLocator;
   geoLocator.DesiredAccuracy(
-      options.highAccuracy
-          ? winrt::Windows::Devices::Geolocation::PositionAccuracy::High
-          : winrt::Windows::Devices::Geolocation::PositionAccuracy::Default);
+      options.highAccuracy ? winrt::Windows::Devices::Geolocation::PositionAccuracy::High
+                           : winrt::Windows::Devices::Geolocation::PositionAccuracy::Default);
   geoLocator.MovementThreshold(options.distanceFilter);
 
-  winrt::Windows::Foundation::IAsyncOperation<
-      winrt::Windows::Devices::Geolocation::Geoposition>
-      result;
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Devices::Geolocation::Geoposition> result;
   try {
     result = GetGeoposition(geoLocator, options);
     result.get();
   } catch (winrt::hresult_error const &e) {
     errorCallback({folly::dynamic::object("code", 1)(
-        "message",
-        "Error in GetGeoposition:" +
-            Microsoft::Common::Unicode::Utf16ToUtf8(e.message()))});
+        "message", "Error in GetGeoposition:" + Microsoft::Common::Unicode::Utf16ToUtf8(e.message()))});
     return;
   }
 
-  winrt::Windows::Devices::Geolocation::Geoposition geopos =
-      result.GetResults();
+  winrt::Windows::Devices::Geolocation::Geoposition geopos = result.GetResults();
   folly::dynamic pos = ObjFromGeopos(geopos);
 
   successCallback({pos});
 }
 
-void LocationObserverModule::LocationObserver::startObserving(
-    const folly::dynamic &optionsIn) {
+void LocationObserverModule::LocationObserver::startObserving(const folly::dynamic &optionsIn) {
   LocationObserverOptions options(optionsIn);
 
   winrt::Windows::Devices::Geolocation::Geolocator geoLocator;
   geoLocator.DesiredAccuracy(
-      options.highAccuracy
-          ? winrt::Windows::Devices::Geolocation::PositionAccuracy::High
-          : winrt::Windows::Devices::Geolocation::PositionAccuracy::Default);
+      options.highAccuracy ? winrt::Windows::Devices::Geolocation::PositionAccuracy::High
+                           : winrt::Windows::Devices::Geolocation::PositionAccuracy::Default);
   geoLocator.MovementThreshold(options.distanceFilter);
 
-  m_positionChanged = geoLocator.PositionChanged(
-      winrt::auto_revoke, [this](auto &&, auto &&args) {
-        winrt::Windows::Devices::Geolocation::Geoposition geopos =
-            args.Position();
-        folly::dynamic pos = ObjFromGeopos(geopos);
+  m_positionChanged = geoLocator.PositionChanged(winrt::auto_revoke, [this](auto &&, auto &&args) {
+    winrt::Windows::Devices::Geolocation::Geoposition geopos = args.Position();
+    folly::dynamic pos = ObjFromGeopos(geopos);
 
-        sendEvent("geolocationDidChange", std::move(pos));
-      });
+    sendEvent("geolocationDidChange", std::move(pos));
+  });
 
-  m_statusChanged = geoLocator.StatusChanged(
-      winrt::auto_revoke, [this](auto &&, auto &&args) {
-        winrt::Windows::Devices::Geolocation::PositionStatus status =
-            args.Status();
-        switch (status) {
-          case winrt::Windows::Devices::Geolocation::PositionStatus::Disabled:
-            sendEvent("geolocationError", "Geolocation access is disabled");
-            break;
-          case winrt::Windows::Devices::Geolocation::PositionStatus::
-              NotAvailable:
-            sendEvent("geolocationError", "Geolocation access is not enabled");
-            break;
-          case winrt::Windows::Devices::Geolocation::PositionStatus::NoData:
-          case winrt::Windows::Devices::Geolocation::PositionStatus::
-              Initializing:
-            sendEvent(
-                "geolocationError",
-                "Geolocation access is temporarily not available");
-            break;
+  m_statusChanged = geoLocator.StatusChanged(winrt::auto_revoke, [this](auto &&, auto &&args) {
+    winrt::Windows::Devices::Geolocation::PositionStatus status = args.Status();
+    switch (status) {
+      case winrt::Windows::Devices::Geolocation::PositionStatus::Disabled:
+        sendEvent("geolocationError", "Geolocation access is disabled");
+        break;
+      case winrt::Windows::Devices::Geolocation::PositionStatus::NotAvailable:
+        sendEvent("geolocationError", "Geolocation access is not enabled");
+        break;
+      case winrt::Windows::Devices::Geolocation::PositionStatus::NoData:
+      case winrt::Windows::Devices::Geolocation::PositionStatus::Initializing:
+        sendEvent("geolocationError", "Geolocation access is temporarily not available");
+        break;
 
-          default:
-            break;
-        }
-      });
+      default:
+        break;
+    }
+  });
 }
 
 void LocationObserverModule::LocationObserver::stopObserving() {
@@ -210,18 +182,13 @@ void LocationObserverModule::LocationObserver::requestAuthorization() {
   });
 }
 
-void LocationObserverModule::LocationObserver::sendEvent(
-    std::string &&eventName,
-    folly::dynamic &&parameters) {
+void LocationObserverModule::LocationObserver::sendEvent(std::string &&eventName, folly::dynamic &&parameters) {
   if (!m_parent)
     return;
 
   auto instance = m_parent->getInstance().lock();
   if (instance)
-    instance->callJSFunction(
-        "RCTDeviceEventEmitter",
-        "emit",
-        folly::dynamic::array(eventName, std::move(parameters)));
+    instance->callJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array(eventName, std::move(parameters)));
 }
 
 //
@@ -230,10 +197,8 @@ void LocationObserverModule::LocationObserver::sendEvent(
 const char *LocationObserverModule::name = "LocationObserver";
 
 LocationObserverModule::LocationObserverModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread>
-        &defaultQueueThread)
-    : m_locationObserver(
-          std::make_shared<LocationObserver>(this, defaultQueueThread)) {}
+    const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
+    : m_locationObserver(std::make_shared<LocationObserver>(this, defaultQueueThread)) {}
 
 LocationObserverModule::~LocationObserverModule() {}
 
@@ -252,28 +217,18 @@ auto LocationObserverModule::getMethods() -> std::vector<Method> {
   return {
       Method(
           "getCurrentPosition",
-          [locationObserver](
-              folly::dynamic args,
-              Callback successCallback,
-              Callback errorCallback) {
+          [locationObserver](folly::dynamic args, Callback successCallback, Callback errorCallback) {
             locationObserver->getCurrentPosition(
-                facebook::xplat::jsArgAsDynamic(args, 0),
-                successCallback,
-                errorCallback);
+                facebook::xplat::jsArgAsDynamic(args, 0), successCallback, errorCallback);
           },
           AsyncTag),
       Method(
           "startObserving",
           [locationObserver](folly::dynamic args) {
-            locationObserver->startObserving(
-                facebook::xplat::jsArgAsDynamic(args, 0));
+            locationObserver->startObserving(facebook::xplat::jsArgAsDynamic(args, 0));
           }),
-      Method(
-          "stopObserving",
-          [locationObserver]() { locationObserver->stopObserving(); }),
-      Method(
-          "requestAuthorization",
-          [locationObserver]() { locationObserver->requestAuthorization(); }),
+      Method("stopObserving", [locationObserver]() { locationObserver->stopObserving(); }),
+      Method("requestAuthorization", [locationObserver]() { locationObserver->requestAuthorization(); }),
   };
 }
 

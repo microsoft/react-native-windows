@@ -25,15 +25,10 @@ ReactControl::ReactControl() : m_rendering(false) {
 
   ComPtr<IGrid> spControl;
   ComPtr<IGridFactory> spFactory;
-  HRESULT hr = GetActivationFactory(
-      Wrappers::HStringReference(RuntimeClass_Windows_UI_Xaml_Controls_Grid)
-          .Get(),
-      &spFactory);
+  HRESULT hr =
+      GetActivationFactory(Wrappers::HStringReference(RuntimeClass_Windows_UI_Xaml_Controls_Grid).Get(), &spFactory);
 
-  spFactory->CreateInstance(
-      static_cast<ABI::react::uwp::IReactControl *>(this),
-      &_spInnerInspectable,
-      &spControl);
+  spFactory->CreateInstance(static_cast<ABI::react::uwp::IReactControl *>(this), &_spInnerInspectable, &spControl);
   SetComposableBasePointers(_spInnerInspectable.Get(), spFactory.Get());
 }
 
@@ -44,8 +39,7 @@ HRESULT ReactControl::get_Instance(ABI::react::uwp::IInstance **value) {
 
 HRESULT ReactControl::put_Instance(ABI::react::uwp::IInstance *value) {
   if (m_pInnerControl)
-    m_pInnerControl->SetInstanceCreator(
-        static_cast<Instance *>(value)->GetReactInstanceCreator());
+    m_pInnerControl->SetInstanceCreator(static_cast<Instance *>(value)->GetReactInstanceCreator());
   _spInstance = value;
   return S_OK;
 }
@@ -93,8 +87,7 @@ HRESULT ReactControlFactory::CreateInstance(
     IInspectable *pOuter,
     IInspectable **ppInner,
     ABI::react::uwp::IReactControl **ppInstance) {
-  return ctl::AggregableComFactory<ReactControl>::CreateInstance(
-      pOuter, ppInner, ppInstance);
+  return ctl::AggregableComFactory<ReactControl>::CreateInstance(pOuter, ppInner, ppInstance);
 }
 
 void ReactControl::Refresh() {
@@ -116,26 +109,21 @@ void ReactControl::Refresh() {
 
 void ReactControl::CreateInnerInstance() {
   Microsoft::WRL::ComPtr<ABI::react::uwp::ReactControl> spThis(this);
-  Microsoft::WRL::ComPtr<ABI::Windows::UI::Xaml::IFrameworkElement>
-      spFrameworkElementABI;
+  Microsoft::WRL::ComPtr<ABI::Windows::UI::Xaml::IFrameworkElement> spFrameworkElementABI;
   spThis.As(&spFrameworkElementABI);
   ::react::uwp::XamlView pXamlView =
-      reinterpret_cast<const winrt::Windows::UI::Xaml::FrameworkElement &>(
-          spFrameworkElementABI);
+      reinterpret_cast<const winrt::Windows::UI::Xaml::FrameworkElement &>(spFrameworkElementABI);
 
-  m_pInnerControl =
-      std::make_shared<::react::uwp::ReactControl>(this, pXamlView);
+  m_pInnerControl = std::make_shared<::react::uwp::ReactControl>(this, pXamlView);
   m_pInnerControl->SetJSComponentName(std::string(m_jsComponentName));
   m_pInnerControl->SetInitialProps(folly::parseJson(m_initialProps));
-  m_pInnerControl->SetInstanceCreator(
-      static_cast<Instance *>(_spInstance.Get())->GetReactInstanceCreator());
+  m_pInnerControl->SetInstanceCreator(static_cast<Instance *>(_spInstance.Get())->GetReactInstanceCreator());
 
   m_pInnerControl->AttachRoot();
 }
 
 // IReactRootView implementations
-std::shared_ptr<::react::uwp::IReactInstance> ReactControl::GetReactInstance()
-    const noexcept {
+std::shared_ptr<::react::uwp::IReactInstance> ReactControl::GetReactInstance() const noexcept {
   return m_pInnerControl->GetReactInstance();
 }
 
@@ -147,8 +135,7 @@ void ReactControl::SetJSComponentName(std::string &&jsComponentName) noexcept {
   m_pInnerControl->SetJSComponentName(std::move(jsComponentName));
 }
 
-void ReactControl::SetInstanceCreator(
-    const ::react::uwp::ReactInstanceCreator &instanceCreator) noexcept {
+void ReactControl::SetInstanceCreator(const ::react::uwp::ReactInstanceCreator &instanceCreator) noexcept {
   m_pInnerControl->SetInstanceCreator(instanceCreator);
   _spInstance = Microsoft::WRL::Make<Instance>(instanceCreator);
 }
@@ -165,8 +152,7 @@ void ReactControl::DetachRoot() noexcept {
   m_pInnerControl->DetachRoot();
 }
 
-std::shared_ptr<::react::uwp::IXamlReactControl>
-ReactControl::GetXamlReactControl() const noexcept {
+std::shared_ptr<::react::uwp::IXamlReactControl> ReactControl::GetXamlReactControl() const noexcept {
   return m_pInnerControl;
 }
 

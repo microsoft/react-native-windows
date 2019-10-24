@@ -17,25 +17,17 @@ TEST_CLASS(UIManagerModuleTests) {
   std::unique_ptr<EmptyUIManager> m_emptyUIManager;
   std::shared_ptr<NodeRegistry> m_nodeRegistry;
 
-  std::shared_ptr<EmptyUINode> createSimpleTextHierarchy(
-      EmptyUIManager * uiManager, std::string text) {
+  std::shared_ptr<EmptyUINode> createSimpleTextHierarchy(EmptyUIManager * uiManager, std::string text) {
     int64_t rootTag = 1;
     auto rootView = uiManager->addRootView(rootTag);
 
     int64_t textTag = rootTag + 1;
     int64_t rawTextTag = textTag + 1;
 
-    uiManager->createView(
-        textTag,
-        "RCTText",
-        rootTag,
-        folly::dynamic::object("collapsable", false));
+    uiManager->createView(textTag, "RCTText", rootTag, folly::dynamic::object("collapsable", false));
 
     uiManager->createView(
-        rawTextTag,
-        "RCTRawText",
-        rootTag,
-        folly::dynamic::object("text", text)("collapsable", false));
+        rawTextTag, "RCTRawText", rootTag, folly::dynamic::object("text", text)("collapsable", false));
 
     // TODO: use managechildren instead of setchildren after it is implemented
     // in EmptyUIManager.
@@ -63,8 +55,7 @@ TEST_CLASS(UIManagerModuleTests) {
  public:
   UIManagerModuleTests() {
     // Native views types
-    auto viewmanagers =
-        std::make_unique<std::vector<std::unique_ptr<IViewManager>>>();
+    auto viewmanagers = std::make_unique<std::vector<std::unique_ptr<IViewManager>>>();
     // TODO: Fix linking errors.
     // viewmanagers->push_back(std::make_unique<ViewManager>()); // RCTView
     // viewmanagers->push_back(std::make_unique<StubViewManager>("RCTText"));
@@ -73,8 +64,7 @@ TEST_CLASS(UIManagerModuleTests) {
     m_nodeRegistry = std::make_shared<NodeRegistry>();
 
     // EmptyUIManager
-    m_emptyUIManager = std::make_unique<EmptyUIManager>(
-        std::move(viewmanagers), m_nodeRegistry);
+    m_emptyUIManager = std::make_unique<EmptyUIManager>(std::move(viewmanagers), m_nodeRegistry);
   }
 
   ~UIManagerModuleTests() {
@@ -85,8 +75,7 @@ TEST_CLASS(UIManagerModuleTests) {
   // Tests taken from
   // react-native\ReactAndroid\src\test\java\com\facebook\react\uimanager\UIManagerModuleTest.java
   TEST_METHOD(UIManagerModuleTests_CreateSimpleHierarchy) {
-    auto rootView =
-        createSimpleTextHierarchy(m_emptyUIManager.get(), "Some Text");
+    auto rootView = createSimpleTextHierarchy(m_emptyUIManager.get(), "Some Text");
     Assert::AreEqual(static_cast<size_t>(1), rootView->m_children.size());
 
     auto textView = m_nodeRegistry->m_allNodes[rootView->m_children[0]];

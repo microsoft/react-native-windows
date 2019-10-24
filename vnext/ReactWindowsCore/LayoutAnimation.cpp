@@ -55,13 +55,11 @@ LayoutAnimation::AnimationType AnimationTypeFromConfig(folly::dynamic &config) {
   else if (type == c_keyboardSz)
     return LayoutAnimation::AnimationType::Keyboard;
   else {
-    throw std::exception(
-        "Unknown animation type requested for LayoutAnimations.");
+    throw std::exception("Unknown animation type requested for LayoutAnimations.");
   }
 }
 
-LayoutAnimation::AnimatableProperty AnimatablePropertyFromConfig(
-    folly::dynamic &config) {
+LayoutAnimation::AnimatableProperty AnimatablePropertyFromConfig(folly::dynamic &config) {
   if (config.isNull())
     return LayoutAnimation::AnimatableProperty::None;
 
@@ -81,21 +79,16 @@ LayoutAnimation::AnimatableProperty AnimatablePropertyFromConfig(
   }
 }
 
-void SetAnimationSpecificProperties(
-    folly::dynamic &&config,
-    LayoutAnimation::LayoutAnimationProperties &props) {
+void SetAnimationSpecificProperties(folly::dynamic &&config, LayoutAnimation::LayoutAnimationProperties &props) {
   if (config.isNull()) {
-    throw std::exception(
-        "Cannot set animation-specific properties with null config.");
+    throw std::exception("Cannot set animation-specific properties with null config.");
   }
 
   if (config[c_typeSz] == c_springSz) {
-    props.springAnimationProperties.initialVelocity =
-        (config.find(c_initialVelocitySz) != config.items().end())
+    props.springAnimationProperties.initialVelocity = (config.find(c_initialVelocitySz) != config.items().end())
         ? static_cast<float>(config[c_initialVelocitySz].asDouble())
         : c_defaultInitialVelocity;
-    props.springAnimationProperties.springDamping =
-        (config.find(c_springDampingSz) != config.items().end())
+    props.springAnimationProperties.springDamping = (config.find(c_springDampingSz) != config.items().end())
         ? static_cast<float>(config[c_springDampingSz].asDouble())
         : c_defaultSpringDamping;
   }
@@ -112,9 +105,8 @@ void SetAnimationProperties(
 
   props.animationType = AnimationTypeFromConfig(config);
   props.animatedProp = AnimatablePropertyFromConfig(config);
-  props.delay = (config.find(c_delaySz) != config.items().end())
-      ? static_cast<float>(config[c_delaySz].asDouble())
-      : c_defaultDelay;
+  props.delay = (config.find(c_delaySz) != config.items().end()) ? static_cast<float>(config[c_delaySz].asDouble())
+                                                                 : c_defaultDelay;
   props.duration = (config.find(c_durationSz) != config.items().end())
       ? static_cast<float>(config[c_durationSz].asDouble())
       : defaultDuration;
@@ -137,21 +129,11 @@ LayoutAnimation::LayoutAnimation(folly::dynamic config) {
     throw std::exception("LayoutAnimation must include default duration.");
   }
 
-  auto defaultDuration =
-      static_cast<float>(duration.asDouble()); // duration provided in ms
+  auto defaultDuration = static_cast<float>(duration.asDouble()); // duration provided in ms
 
-  SetAnimationProperties(
-      std::move(config[c_createSz]),
-      m_props.createAnimationProps,
-      defaultDuration);
-  SetAnimationProperties(
-      std::move(config[c_updateSz]),
-      m_props.updateAnimationProps,
-      defaultDuration);
-  SetAnimationProperties(
-      std::move(config[c_deleteSz]),
-      m_props.deleteAnimationProps,
-      defaultDuration);
+  SetAnimationProperties(std::move(config[c_createSz]), m_props.createAnimationProps, defaultDuration);
+  SetAnimationProperties(std::move(config[c_updateSz]), m_props.updateAnimationProps, defaultDuration);
+  SetAnimationProperties(std::move(config[c_deleteSz]), m_props.deleteAnimationProps, defaultDuration);
 }
 
 } // namespace react

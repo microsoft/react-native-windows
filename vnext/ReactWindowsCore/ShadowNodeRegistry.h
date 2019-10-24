@@ -17,15 +17,11 @@ struct ShadowNodeDeleter {
 using shadow_ptr = std::unique_ptr<ShadowNode, ShadowNodeDeleter>;
 
 struct ShadowNodeRegistry {
-  void addRootView(
-      std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&root,
-      int64_t rootViewTag);
+  void addRootView(std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&root, int64_t rootViewTag);
   ShadowNode &getRoot(int64_t rootViewTag);
   void removeRootView(int64_t rootViewTag);
 
-  void addNode(
-      std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&node,
-      int64_t tag);
+  void addNode(std::unique_ptr<ShadowNode, ShadowNodeDeleter> &&node, int64_t tag);
   ShadowNode &getNode(int64_t tag);
   ShadowNode *findNode(int64_t tag);
   void removeNode(int64_t tag);

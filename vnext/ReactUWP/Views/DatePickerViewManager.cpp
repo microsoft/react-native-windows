@@ -26,18 +26,13 @@ class DatePickerShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
 
  private:
-  void OnDateChanged(
-      IReactInstance &instance,
-      int64_t tag,
-      winrt::DateTime const &newDate);
+  void OnDateChanged(IReactInstance &instance, int64_t tag, winrt::DateTime const &newDate);
 
   int64_t m_selectedTime, m_maxTime,
       m_minTime; // These values are expected to be in milliseconds
-  int64_t m_timeZoneOffsetInSeconds =
-      0; // Timezone offset is expected to be in seconds
+  int64_t m_timeZoneOffsetInSeconds = 0; // Timezone offset is expected to be in seconds
 
-  winrt::CalendarDatePicker::DateChanged_revoker
-      m_dataPickerDateChangedRevoker{};
+  winrt::CalendarDatePicker::DateChanged_revoker m_dataPickerDateChangedRevoker{};
 };
 
 void DatePickerShadowNode::createView() {
@@ -48,8 +43,7 @@ void DatePickerShadowNode::createView() {
 
   m_dataPickerDateChangedRevoker = datePicker.DateChanged(
       winrt::auto_revoke,
-      [=](winrt::CalendarDatePicker /*picker*/,
-          winrt::CalendarDatePickerDateChangedEventArgs args) {
+      [=](winrt::CalendarDatePicker /*picker*/, winrt::CalendarDatePickerDateChangedEventArgs args) {
         auto instance = wkinstance.lock();
         if (!m_updating && instance != nullptr && args.NewDate() != nullptr)
           OnDateChanged(*instance, m_tag, args.NewDate().Value());
@@ -75,8 +69,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isString())
         datePicker.DayOfWeekFormat(asHstring(propertyValue));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(
-            winrt::CalendarDatePicker::DayOfWeekFormatProperty());
+        datePicker.ClearValue(winrt::CalendarDatePicker::DayOfWeekFormatProperty());
     } else if (propertyName == "dateFormat") {
       if (propertyValue.isString())
         datePicker.DateFormat(asHstring(propertyValue));
@@ -84,11 +77,9 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
         datePicker.ClearValue(winrt::CalendarDatePicker::DateFormatProperty());
     } else if (propertyName == "firstDayOfWeek") {
       if (propertyValue.isNumber())
-        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(
-            static_cast<int64_t>(propertyValue.asDouble())));
+        datePicker.FirstDayOfWeek(static_cast<winrt::DayOfWeek>(static_cast<int64_t>(propertyValue.asDouble())));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(
-            winrt::CalendarDatePicker::FirstDayOfWeekProperty());
+        datePicker.ClearValue(winrt::CalendarDatePicker::FirstDayOfWeekProperty());
     } else if (propertyName == "maxDate") {
       if (propertyValue.isNumber()) {
         m_maxTime = static_cast<int64_t>(propertyValue.asDouble());
@@ -107,8 +98,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
       if (propertyValue.isString())
         datePicker.PlaceholderText(asHstring(propertyValue));
       else if (propertyValue.isNull())
-        datePicker.ClearValue(
-            winrt::CalendarDatePicker::PlaceholderTextProperty());
+        datePicker.ClearValue(winrt::CalendarDatePicker::PlaceholderTextProperty());
     } else if (propertyName == "selectedDate") {
       if (propertyValue.isNumber()) {
         m_selectedTime = static_cast<int64_t>(propertyValue.asDouble());
@@ -118,8 +108,7 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
       }
     } else if (propertyName == "timeZoneOffsetInSeconds") {
       if (propertyValue.isNumber())
-        m_timeZoneOffsetInSeconds =
-            static_cast<int64_t>(propertyValue.asDouble());
+        m_timeZoneOffsetInSeconds = static_cast<int64_t>(propertyValue.asDouble());
       else if (propertyValue.isNull())
         m_timeZoneOffsetInSeconds = 0;
     }
@@ -138,21 +127,15 @@ void DatePickerShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-void DatePickerShadowNode::OnDateChanged(
-    IReactInstance &instance,
-    int64_t tag,
-    winrt::DateTime const &newDate) {
-  auto timeInMilliseconds =
-      DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
+void DatePickerShadowNode::OnDateChanged(IReactInstance &instance, int64_t tag, winrt::DateTime const &newDate) {
+  auto timeInMilliseconds = DateTimeToDynamic(newDate, m_timeZoneOffsetInSeconds);
   if (!timeInMilliseconds.isNull()) {
-    folly::dynamic eventData =
-        folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
+    folly::dynamic eventData = folly::dynamic::object("target", tag)("newDate", timeInMilliseconds);
     instance.DispatchEvent(tag, "topChange", std::move(eventData));
   }
 }
 
-DatePickerViewManager::DatePickerViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+DatePickerViewManager::DatePickerViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
 const char *DatePickerViewManager::GetName() const {
@@ -162,10 +145,9 @@ const char *DatePickerViewManager::GetName() const {
 folly::dynamic DatePickerViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("dayOfWeekFormat", "string")(
-      "dateFormat", "string")("firstDayOfWeek", "number")("maxDate", "number")(
-      "minDate", "number")("placeholderText", "string")(
-      "selectedDate", "number")("timeZoneOffsetInSeconds", "number"));
+  props.update(folly::dynamic::object("dayOfWeekFormat", "string")("dateFormat", "string")("firstDayOfWeek", "number")(
+      "maxDate", "number")("minDate", "number")("placeholderText", "string")("selectedDate", "number")(
+      "timeZoneOffsetInSeconds", "number"));
 
   return props;
 }
