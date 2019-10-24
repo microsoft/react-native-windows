@@ -15,17 +15,13 @@ namespace winrt::Microsoft::ReactNative::Bridge::implementation {
 
 struct ReactInstance : ReactInstanceT<ReactInstance> {
   ReactInstance() = default;
-  ReactInstance(std::shared_ptr<react::uwp::IReactInstance> instance)
-      : m_instance(instance) {
+  ReactInstance(std::shared_ptr<react::uwp::IReactInstance> instance) : m_instance(instance) {
     if (instance == nullptr) {
       throw hresult_null_argument(L"instance");
     }
   }
 
-  void InvokeFunction(
-      hstring const &moduleName,
-      hstring const &method,
-      IVectorView<IInspectable> const &arguments);
+  void InvokeFunction(hstring const &moduleName, hstring const &method, IVectorView<IInspectable> const &arguments);
 
  private:
   std::shared_ptr<react::uwp::IReactInstance> m_instance{nullptr};
@@ -33,6 +29,5 @@ struct ReactInstance : ReactInstanceT<ReactInstance> {
 } // namespace winrt::Microsoft::ReactNative::Bridge::implementation
 
 namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation {
-struct ReactInstance
-    : ReactInstanceT<ReactInstance, implementation::ReactInstance> {};
+struct ReactInstance : ReactInstanceT<ReactInstance, implementation::ReactInstance> {};
 } // namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation

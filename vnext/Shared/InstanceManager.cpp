@@ -17,8 +17,7 @@ namespace react {
 namespace {
 
 const std::shared_ptr<IDevSupportManager> &GetSharedDevManager() noexcept {
-  static std::shared_ptr<IDevSupportManager> s_devManager(
-      CreateDevSupportManager());
+  static std::shared_ptr<IDevSupportManager> s_devManager(CreateDevSupportManager());
 
   return s_devManager;
 }
@@ -27,10 +26,9 @@ const std::shared_ptr<IDevSupportManager> &GetSharedDevManager() noexcept {
 
 std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::string &&jsBundleBasePath,
-    std::vector<std::tuple<
-        std::string,
-        facebook::xplat::module::CxxModule::Provider,
-        std::shared_ptr<MessageQueueThread>>> &&cxxModules,
+    std::vector<
+        std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
+        &&cxxModules,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -51,10 +49,9 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
 std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
-    std::vector<std::tuple<
-        std::string,
-        facebook::xplat::module::CxxModule::Provider,
-        std::shared_ptr<MessageQueueThread>>> &&cxxModules,
+    std::vector<
+        std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
+        &&cxxModules,
     std::shared_ptr<IUIManager> uimanager,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -82,8 +79,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
-    std::function<void(std::string &&message)>
-        &&sendNativeModuleCall) noexcept {
+    std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept {
   return CreateReactInstanceForSandbox(
       std::string(),
       std::move(jsString),
@@ -103,8 +99,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
-    std::function<void(std::string &&message)>
-        &&sendNativeModuleCall) noexcept {
+    std::function<void(std::string &&message)> &&sendNativeModuleCall) noexcept {
   // Now create the instance
   std::shared_ptr<InstanceWrapper> instance = InstanceImpl::MakeSandbox(
       std::move(jsBundleBasePath),

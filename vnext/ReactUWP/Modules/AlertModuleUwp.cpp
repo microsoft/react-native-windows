@@ -40,21 +40,15 @@ std::map<std::string, folly::dynamic> AlertModule::getConstants() {
   return {};
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method>
-AlertModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> AlertModule::getMethods() {
   return {
       Method(
-          "showAlert",
-          [](folly::dynamic args, Callback actionResult) {
-            AlertModule::showAlert(args, actionResult);
-          }),
+          "showAlert", [](folly::dynamic args, Callback actionResult) { AlertModule::showAlert(args, actionResult); }),
 
   };
 }
 
-/*static*/ winrt::fire_and_forget AlertModule::showAlert(
-    folly::dynamic &args,
-    Callback actionResult) {
+/*static*/ winrt::fire_and_forget AlertModule::showAlert(folly::dynamic &args, Callback actionResult) {
   winrt::hstring alertTitle;
   winrt::hstring alertContent;
   winrt::hstring alertPrimaryButtonText;

@@ -36,15 +36,11 @@ std::map<std::string, folly::dynamic> ClipboardModule::getConstants() {
   return {};
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method>
-ClipboardModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> ClipboardModule::getMethods() {
   return {
       Method(
           "setString",
-          [](folly::dynamic args) {
-            ClipboardModule::SetClipboardText(
-                facebook::xplat::jsArgAsString(args, 0));
-          }),
+          [](folly::dynamic args) { ClipboardModule::SetClipboardText(facebook::xplat::jsArgAsString(args, 0)); }),
       Method(
           "getString",
           [](folly::dynamic args, Callback cbSuccess, Callback cbFail) {
@@ -73,9 +69,7 @@ winrt::fire_and_forget GetClipboardTextAsync(
   }
 }
 
-/*static*/ void ClipboardModule::GetClipboardText(
-    const Callback &cbSuccess,
-    const Callback &cbFail) {
+/*static*/ void ClipboardModule::GetClipboardText(const Callback &cbSuccess, const Callback &cbFail) {
   GetClipboardTextAsync(cbSuccess, cbFail);
 }
 

@@ -36,13 +36,9 @@ class PropsAnimatedNode : public AnimatedNode {
   folly::dynamic m_propMap{};
 
   int64_t m_connectedViewTag{s_connectedViewTagUnset};
-  std::unordered_map<
-      int64_t,
-      winrt::Windows::UI::Composition::CompositionAnimation>
-      m_expressionAnimations{};
+  std::unordered_map<int64_t, winrt::Windows::UI::Composition::CompositionAnimation> m_expressionAnimations{};
   std::vector<int64_t> m_suspendedExpressionAnimationTags{};
-  winrt::Windows::UI::Composition::ExpressionAnimation m_centerPointAnimation{
-      nullptr};
+  winrt::Windows::UI::Composition::ExpressionAnimation m_centerPointAnimation{nullptr};
   winrt::Numerics::float3 m_rotationAxis{0, 0, 1};
   bool m_needsCenterPointAnimation{false};
   winrt::CompositionPropertySet m_subchannelPropertySet{nullptr};

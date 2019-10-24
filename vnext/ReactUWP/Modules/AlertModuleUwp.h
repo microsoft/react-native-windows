@@ -24,9 +24,7 @@ class AlertModule final : public facebook::xplat::module::CxxModule {
   static const char *name;
 
  private:
-  static winrt::fire_and_forget showAlert(
-      folly::dynamic &args,
-      Callback actionResult);
+  static winrt::fire_and_forget showAlert(folly::dynamic &args, Callback actionResult);
 };
 
 } // namespace uwp

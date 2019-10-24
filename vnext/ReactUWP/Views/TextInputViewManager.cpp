@@ -60,27 +60,22 @@ struct json_type_traits<react::uwp::Selection> {
   }
 };
 
-static const std::unordered_map<std::string, winrt::InputScopeNameValue>
-    textBoxKeyboardTypeMap = {
-        {"default", winrt::InputScopeNameValue::Default},
-        {"number-pad", winrt::InputScopeNameValue::TelephoneNumber},
-        {"decimal-pad", winrt::InputScopeNameValue::Digits},
-        {"email-address", winrt::InputScopeNameValue::EmailNameOrAddress},
-        {"phone-pad", winrt::InputScopeNameValue::TelephoneNumber},
-        {"numeric", winrt::InputScopeNameValue::Number},
-        {"url", winrt::InputScopeNameValue::Url},
-        {"web-search", winrt::InputScopeNameValue::Search}};
+static const std::unordered_map<std::string, winrt::InputScopeNameValue> textBoxKeyboardTypeMap = {
+    {"default", winrt::InputScopeNameValue::Default},
+    {"number-pad", winrt::InputScopeNameValue::TelephoneNumber},
+    {"decimal-pad", winrt::InputScopeNameValue::Digits},
+    {"email-address", winrt::InputScopeNameValue::EmailNameOrAddress},
+    {"phone-pad", winrt::InputScopeNameValue::TelephoneNumber},
+    {"numeric", winrt::InputScopeNameValue::Number},
+    {"url", winrt::InputScopeNameValue::Url},
+    {"web-search", winrt::InputScopeNameValue::Search}};
 
-static const std::unordered_map<std::string, winrt::InputScopeNameValue>
-    passwordBoxKeyboardTypeMap = {
-        {"default", winrt::InputScopeNameValue::Password},
-        {"numeric", winrt::InputScopeNameValue::NumericPin}};
+static const std::unordered_map<std::string, winrt::InputScopeNameValue> passwordBoxKeyboardTypeMap = {
+    {"default", winrt::InputScopeNameValue::Password},
+    {"numeric", winrt::InputScopeNameValue::NumericPin}};
 
-static winrt::InputScopeNameValue parseKeyboardType(
-    const folly::dynamic &val,
-    const bool isTextBox) {
-  auto keyboardTypeMap =
-      isTextBox ? textBoxKeyboardTypeMap : passwordBoxKeyboardTypeMap;
+static winrt::InputScopeNameValue parseKeyboardType(const folly::dynamic &val, const bool isTextBox) {
+  auto keyboardTypeMap = isTextBox ? textBoxKeyboardTypeMap : passwordBoxKeyboardTypeMap;
 
   auto iter = keyboardTypeMap.find(val.asString());
 
@@ -88,8 +83,7 @@ static winrt::InputScopeNameValue parseKeyboardType(
     return iter->second;
   }
 
-  return isTextBox ? winrt::InputScopeNameValue::Default
-                   : winrt::InputScopeNameValue::Password;
+  return isTextBox ? winrt::InputScopeNameValue::Default : winrt::InputScopeNameValue::Password;
 }
 
 namespace react {
@@ -130,15 +124,11 @@ class TextInputShadowNode : public ShadowNodeBase {
   winrt::TextBox::TextChanging_revoker m_textBoxTextChangingRevoker{};
   winrt::TextBox::TextChanged_revoker m_textBoxTextChangedRevoker{};
   winrt::TextBox::SelectionChanged_revoker m_textBoxSelectionChangedRevoker{};
-  winrt::TextBox::ContextMenuOpening_revoker
-      m_textBoxContextMenuOpeningRevoker{};
+  winrt::TextBox::ContextMenuOpening_revoker m_textBoxContextMenuOpeningRevoker{};
 
-  winrt::PasswordBox::PasswordChanging_revoker
-      m_passwordBoxPasswordChangingRevoker{};
-  winrt::PasswordBox::PasswordChanged_revoker
-      m_passwordBoxPasswordChangedRevoker{};
-  winrt::PasswordBox::ContextMenuOpening_revoker
-      m_passwordBoxContextMenuOpeningRevoker{};
+  winrt::PasswordBox::PasswordChanging_revoker m_passwordBoxPasswordChangingRevoker{};
+  winrt::PasswordBox::PasswordChanged_revoker m_passwordBoxPasswordChangedRevoker{};
+  winrt::PasswordBox::ContextMenuOpening_revoker m_passwordBoxContextMenuOpeningRevoker{};
 
   winrt::Control::GotFocus_revoker m_controlGotFocusRevoker{};
   winrt::Control::LostFocus_revoker m_controlLostFocusRevoker{};
@@ -159,8 +149,8 @@ void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
 
   if (auto instance = wkinstance.lock()) {
     m_nativeEventCount++;
-    folly::dynamic eventData = folly::dynamic::object("target", m_tag)(
-        "text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
+    folly::dynamic eventData =
+        folly::dynamic::object("target", m_tag)("text", HstringToDynamic(newText))("eventCount", m_nativeEventCount);
     instance->DispatchEvent(m_tag, "topTextInputChange", std::move(eventData));
   }
 }
@@ -184,39 +174,33 @@ void TextInputShadowNode::registerEvents() {
   // another TextChanged event with correct event count.
   if (m_isTextBox) {
     m_passwordBoxPasswordChangingRevoker = {};
-    m_textBoxTextChangingRevoker = control.as<winrt::TextBox>().TextChanging(
-        winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
+    m_textBoxTextChangingRevoker =
+        control.as<winrt::TextBox>().TextChanging(winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
   } else {
     m_textBoxTextChangingRevoker = {};
     if (control.try_as<winrt::IPasswordBox4>()) {
-      m_passwordBoxPasswordChangingRevoker =
-          control.as<winrt::IPasswordBox4>().PasswordChanging(
-              winrt::auto_revoke,
-              [=](auto &&, auto &&) { m_nativeEventCount++; });
+      m_passwordBoxPasswordChangingRevoker = control.as<winrt::IPasswordBox4>().PasswordChanging(
+          winrt::auto_revoke, [=](auto &&, auto &&) { m_nativeEventCount++; });
     }
   }
 
   if (m_isTextBox) {
     m_passwordBoxPasswordChangedRevoker = {};
     auto textBox = control.as<winrt::TextBox>();
-    m_textBoxTextChangedRevoker =
-        textBox.TextChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-          dispatchTextInputChangeEvent(textBox.Text());
-        });
+    m_textBoxTextChangedRevoker = textBox.TextChanged(
+        winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(textBox.Text()); });
   } else {
     m_textBoxTextChangedRevoker = {};
     auto passwordBox = control.as<winrt::PasswordBox>();
-    m_passwordBoxPasswordChangedRevoker =
-        passwordBox.PasswordChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-          dispatchTextInputChangeEvent(passwordBox.Password());
-        });
+    m_passwordBoxPasswordChangedRevoker = passwordBox.PasswordChanged(
+        winrt::auto_revoke, [=](auto &&, auto &&) { dispatchTextInputChangeEvent(passwordBox.Password()); });
   }
 
   if (m_isTextBox) {
     m_passwordBoxContextMenuOpeningRevoker = {};
     auto textBox = control.as<winrt::TextBox>();
-    m_textBoxContextMenuOpeningRevoker = textBox.ContextMenuOpening(
-        winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
+    m_textBoxContextMenuOpeningRevoker =
+        textBox.ContextMenuOpening(winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
           if (m_contextMenuHidden) {
             e.Handled(true);
           }
@@ -224,148 +208,117 @@ void TextInputShadowNode::registerEvents() {
   } else {
     m_textBoxContextMenuOpeningRevoker = {};
     auto passwordBox = control.as<winrt::PasswordBox>();
-    m_passwordBoxContextMenuOpeningRevoker = passwordBox.ContextMenuOpening(
-        winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
+    m_passwordBoxContextMenuOpeningRevoker =
+        passwordBox.ContextMenuOpening(winrt::auto_revoke, [=](auto &&, winrt::ContextMenuEventArgs const &e) {
           if (m_contextMenuHidden) {
             e.Handled(true);
           }
         });
   }
 
-  m_controlGotFocusRevoker =
-      control.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-        if (m_shouldClearTextOnFocus) {
-          if (m_isTextBox) {
-            control.as<winrt::TextBox>().ClearValue(
-                winrt::TextBox::TextProperty());
-          } else {
-            control.as<winrt::PasswordBox>().ClearValue(
-                winrt::PasswordBox::PasswordProperty());
-          }
-        }
+  m_controlGotFocusRevoker = control.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+    if (m_shouldClearTextOnFocus) {
+      if (m_isTextBox) {
+        control.as<winrt::TextBox>().ClearValue(winrt::TextBox::TextProperty());
+      } else {
+        control.as<winrt::PasswordBox>().ClearValue(winrt::PasswordBox::PasswordProperty());
+      }
+    }
 
-        if (m_shouldSelectTextOnFocus) {
-          if (m_isTextBox) {
-            control.as<winrt::TextBox>().SelectAll();
-          } else {
-            control.as<winrt::PasswordBox>().SelectAll();
-          }
-        }
-        HideCaretIfNeeded();
+    if (m_shouldSelectTextOnFocus) {
+      if (m_isTextBox) {
+        control.as<winrt::TextBox>().SelectAll();
+      } else {
+        control.as<winrt::PasswordBox>().SelectAll();
+      }
+    }
+    HideCaretIfNeeded();
 
-        auto instance = wkinstance.lock();
-        folly::dynamic eventData = folly::dynamic::object("target", tag);
-        if (!m_updating && instance != nullptr)
-          instance->DispatchEvent(
-              tag, "topTextInputFocus", std::move(eventData));
-      });
+    auto instance = wkinstance.lock();
+    folly::dynamic eventData = folly::dynamic::object("target", tag);
+    if (!m_updating && instance != nullptr)
+      instance->DispatchEvent(tag, "topTextInputFocus", std::move(eventData));
+  });
 
-  m_controlLostFocusRevoker =
-      control.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto instance = wkinstance.lock();
-        folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
-        folly::dynamic eventDataEndEditing = {};
+  m_controlLostFocusRevoker = control.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto instance = wkinstance.lock();
+    folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
+    folly::dynamic eventDataEndEditing = {};
+    if (m_isTextBox) {
+      eventDataEndEditing =
+          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
+    } else {
+      eventDataEndEditing =
+          folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
+    }
+    if (!m_updating && instance != nullptr) {
+      instance->DispatchEvent(tag, "topTextInputBlur", std::move(eventDataBlur));
+      instance->DispatchEvent(tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
+    }
+  });
+
+  m_controlKeyDownRevoker = control.KeyDown(winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
+    if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
+      if (auto instance = wkinstance.lock()) {
+        folly::dynamic eventDataSubmitEditing = {};
         if (m_isTextBox) {
-          eventDataEndEditing = folly::dynamic::object("target", tag)(
-              "text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
+          eventDataSubmitEditing =
+              folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<winrt::TextBox>().Text()));
         } else {
-          eventDataEndEditing = folly::dynamic::object("target", tag)(
-              "text",
-              HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
+          eventDataSubmitEditing = folly::dynamic::object("target", tag)(
+              "text", HstringToDynamic(control.as<winrt::PasswordBox>().Password()));
         }
-        if (!m_updating && instance != nullptr) {
-          instance->DispatchEvent(
-              tag, "topTextInputBlur", std::move(eventDataBlur));
-          instance->DispatchEvent(
-              tag, "topTextInputEndEditing", std::move(eventDataEndEditing));
-        }
-      });
-
-  m_controlKeyDownRevoker = control.KeyDown(
-      winrt::auto_revoke, [=](auto &&, winrt::KeyRoutedEventArgs const &args) {
-        if (args.Key() == winrt::VirtualKey::Enter && !args.Handled()) {
-          if (auto instance = wkinstance.lock()) {
-            folly::dynamic eventDataSubmitEditing = {};
-            if (m_isTextBox) {
-              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                  "text",
-                  HstringToDynamic(control.as<winrt::TextBox>().Text()));
-            } else {
-              eventDataSubmitEditing = folly::dynamic::object("target", tag)(
-                  "text",
-                  HstringToDynamic(
-                      control.as<winrt::PasswordBox>().Password()));
-            }
-            instance->DispatchEvent(
-                tag,
-                "topTextInputSubmitEditing",
-                std::move(eventDataSubmitEditing));
-          }
-        }
-      });
+        instance->DispatchEvent(tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
+      }
+    }
+  });
 
   if (m_isTextBox) {
     auto textBox = control.as<winrt::TextBox>();
-    m_textBoxSelectionChangedRevoker =
-        textBox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-          auto instance = wkinstance.lock();
-          folly::dynamic selectionData =
-              folly::dynamic::object("start", textBox.SelectionStart())(
-                  "end", textBox.SelectionStart() + textBox.SelectionLength());
-          folly::dynamic eventData = folly::dynamic::object("target", tag)(
-              "selection", std::move(selectionData));
-          if (!m_updating && instance != nullptr)
-            instance->DispatchEvent(
-                tag, "topTextInputSelectionChange", std::move(eventData));
-        });
+    m_textBoxSelectionChangedRevoker = textBox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
+      auto instance = wkinstance.lock();
+      folly::dynamic selectionData = folly::dynamic::object("start", textBox.SelectionStart())(
+          "end", textBox.SelectionStart() + textBox.SelectionLength());
+      folly::dynamic eventData = folly::dynamic::object("target", tag)("selection", std::move(selectionData));
+      if (!m_updating && instance != nullptr)
+        instance->DispatchEvent(tag, "topTextInputSelectionChange", std::move(eventData));
+    });
   }
 
-  m_controlSizeChangedRevoker = control.SizeChanged(
-      winrt::auto_revoke,
-      [=](auto &&, winrt::SizeChangedEventArgs const &args) {
+  m_controlSizeChangedRevoker =
+      control.SizeChanged(winrt::auto_revoke, [=](auto &&, winrt::SizeChangedEventArgs const &args) {
         if (m_isTextBox) {
-          if (control.as<winrt::TextBox>().TextWrapping() ==
-              winrt::TextWrapping::Wrap) {
+          if (control.as<winrt::TextBox>().TextWrapping() == winrt::TextWrapping::Wrap) {
             auto instance = wkinstance.lock();
-            folly::dynamic contentSizeData = folly::dynamic::object(
-                "width", args.NewSize().Width)("height", args.NewSize().Height);
-            folly::dynamic eventData = folly::dynamic::object("target", tag)(
-                "contentSize", std::move(contentSizeData));
+            folly::dynamic contentSizeData =
+                folly::dynamic::object("width", args.NewSize().Width)("height", args.NewSize().Height);
+            folly::dynamic eventData = folly::dynamic::object("target", tag)("contentSize", std::move(contentSizeData));
             if (!m_updating && instance != nullptr)
-              instance->DispatchEvent(
-                  tag, "topTextInputContentSizeChange", std::move(eventData));
+              instance->DispatchEvent(tag, "topTextInputContentSizeChange", std::move(eventData));
           }
         }
       });
 
-  m_controlLoadedRevoker =
-      control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto textBoxView = control.GetTemplateChild(asHstring("ContentElement"))
-                               .as<winrt::ScrollViewer>();
-        if (textBoxView) {
-          m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
-              winrt::auto_revoke,
-              [=](auto &&,
-                  winrt::ScrollViewerViewChangingEventArgs const &args) {
-                auto instance = wkinstance.lock();
-                if (!m_updating && instance != nullptr) {
-                  folly::dynamic offsetData = folly::dynamic::object(
-                      "x", args.FinalView().HorizontalOffset())(
-                      "y", args.FinalView().VerticalOffset());
-                  folly::dynamic eventData = folly::dynamic::object(
-                      "target", tag)("contentOffset", std::move(offsetData));
-                  instance->DispatchEvent(
-                      tag, "topTextInputOnScroll", std::move(eventData));
-                }
-              });
-        }
-        HideCaretIfNeeded();
-      });
+  m_controlLoadedRevoker = control.Loaded(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto textBoxView = control.GetTemplateChild(asHstring("ContentElement")).as<winrt::ScrollViewer>();
+    if (textBoxView) {
+      m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
+          winrt::auto_revoke, [=](auto &&, winrt::ScrollViewerViewChangingEventArgs const &args) {
+            auto instance = wkinstance.lock();
+            if (!m_updating && instance != nullptr) {
+              folly::dynamic offsetData = folly::dynamic::object("x", args.FinalView().HorizontalOffset())(
+                  "y", args.FinalView().VerticalOffset());
+              folly::dynamic eventData = folly::dynamic::object("target", tag)("contentOffset", std::move(offsetData));
+              instance->DispatchEvent(tag, "topTextInputOnScroll", std::move(eventData));
+            }
+          });
+    }
+    HideCaretIfNeeded();
+  });
 
   if (control.try_as<winrt::IUIElement7>()) {
     m_controlCharacterReceivedRevoker = control.CharacterReceived(
-        winrt::auto_revoke,
-        [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
+        winrt::auto_revoke, [=](auto &&, winrt::CharacterReceivedRoutedEventArgs const &args) {
           auto instance = wkinstance.lock();
           std::string key;
           wchar_t s[2] = L" ";
@@ -379,10 +332,8 @@ void TextInputShadowNode::registerEvents() {
           }
 
           if (!m_updating && instance != nullptr) {
-            folly::dynamic eventData = folly::dynamic::object("target", tag)(
-                "key", folly::dynamic(key));
-            instance->DispatchEvent(
-                tag, "topTextInputKeyPress", std::move(eventData));
+            folly::dynamic eventData = folly::dynamic::object("target", tag)("key", folly::dynamic(key));
+            instance->DispatchEvent(tag, "topTextInputKeyPress", std::move(eventData));
           }
         });
   }
@@ -410,8 +361,7 @@ void TextInputShadowNode::HideCaretIfNeeded() {
   if (m_hideCaret) {
     auto control = GetView().as<winrt::Control>();
     if (auto caret = FindCaret(control)) {
-      caret.CompositeMode(
-          winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
+      caret.CompositeMode(winrt::Windows::UI::Xaml::Media::ElementCompositeMode::Inherit);
       winrt::SolidColorBrush transparentColor(winrt::Colors::Transparent());
       caret.Fill(transparentColor);
     }
@@ -431,8 +381,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     // Applicable properties for both TextBox and PasswordBox
     if (TryUpdateFontProperties(control, propertyName, propertyValue)) {
       continue;
-    } else if (TryUpdateCharacterSpacing(
-                   control, propertyName, propertyValue)) {
+    } else if (TryUpdateCharacterSpacing(control, propertyName, propertyValue)) {
       continue;
     } else if (propertyName == "allowFontScaling") {
       if (propertyValue.isBool())
@@ -482,25 +431,19 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
     } else if (propertyName == "maxLength") {
       if (propertyValue.isNumber()) {
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::MaxLengthProperty()
-                        : winrt::PasswordBox::MaxLengthProperty(),
-            winrt::PropertyValue::CreateInt32(
-                static_cast<int32_t>(propertyValue.asDouble())));
+            m_isTextBox ? winrt::TextBox::MaxLengthProperty() : winrt::PasswordBox::MaxLengthProperty(),
+            winrt::PropertyValue::CreateInt32(static_cast<int32_t>(propertyValue.asDouble())));
       } else if (propertyValue.isNull()) {
-        control.ClearValue(
-            m_isTextBox ? winrt::TextBox::MaxLengthProperty()
-                        : winrt::PasswordBox::MaxLengthProperty());
+        control.ClearValue(m_isTextBox ? winrt::TextBox::MaxLengthProperty() : winrt::PasswordBox::MaxLengthProperty());
       }
     } else if (propertyName == "placeholder") {
       if (propertyValue.isString()) {
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty()
-                        : winrt::PasswordBox::PlaceholderTextProperty(),
+            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty() : winrt::PasswordBox::PlaceholderTextProperty(),
             winrt::PropertyValue::CreateString(asHstring(propertyValue)));
       } else if (propertyValue.isNull()) {
         control.ClearValue(
-            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty()
-                        : winrt::PasswordBox::PlaceholderTextProperty());
+            m_isTextBox ? winrt::TextBox::PlaceholderTextProperty() : winrt::PasswordBox::PlaceholderTextProperty());
       }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
@@ -510,9 +453,8 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             SolidColorBrushFrom(propertyValue));
       } else if (propertyValue.isNull())
         control.ClearValue(
-            m_isTextBox
-                ? winrt::TextBox::SelectionHighlightColorProperty()
-                : winrt::PasswordBox::SelectionHighlightColorProperty());
+            m_isTextBox ? winrt::TextBox::SelectionHighlightColorProperty()
+                        : winrt::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
       if (propertyValue.isString()) {
         auto inputScopeNameVaue = parseKeyboardType(propertyValue, m_isTextBox);
@@ -521,13 +463,10 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         auto names = scope.Names();
         names.Append(scopeName);
         control.SetValue(
-            m_isTextBox ? winrt::TextBox::InputScopeProperty()
-                        : winrt::PasswordBox::InputScopeProperty(),
-            scope);
+            m_isTextBox ? winrt::TextBox::InputScopeProperty() : winrt::PasswordBox::InputScopeProperty(), scope);
       } else if (propertyValue.isNull())
         control.ClearValue(
-            m_isTextBox ? winrt::TextBox::InputScopeProperty()
-                        : winrt::PasswordBox::InputScopeProperty());
+            m_isTextBox ? winrt::TextBox::InputScopeProperty() : winrt::PasswordBox::InputScopeProperty());
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -535,9 +474,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
         } else if (propertyName == "multiline") {
           if (propertyValue.isBool()) {
             const bool isMultiline = propertyValue.asBool();
-            textBox.TextWrapping(
-                isMultiline ? winrt::TextWrapping::Wrap
-                            : winrt::TextWrapping::NoWrap);
+            textBox.TextWrapping(isMultiline ? winrt::TextWrapping::Wrap : winrt::TextWrapping::NoWrap);
             textBox.AcceptsReturn(isMultiline);
           } else if (propertyValue.isNull())
             textBox.ClearValue(winrt::TextBox::TextWrappingProperty());
@@ -551,22 +488,17 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
             if (IsValidColorValue(propertyValue))
               textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
             else if (propertyValue.isNull())
-              textBox.ClearValue(
-                  winrt::TextBox::PlaceholderForegroundProperty());
+              textBox.ClearValue(winrt::TextBox::PlaceholderForegroundProperty());
           }
         } else if (propertyName == "scrollEnabled") {
-          if (propertyValue.isBool() &&
-              textBox.TextWrapping() == winrt::TextWrapping::Wrap) {
-            auto scrollMode = propertyValue.asBool()
-                ? winrt::ScrollMode::Auto
-                : winrt::ScrollMode::Disabled;
+          if (propertyValue.isBool() && textBox.TextWrapping() == winrt::TextWrapping::Wrap) {
+            auto scrollMode = propertyValue.asBool() ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled;
             winrt::ScrollViewer::SetVerticalScrollMode(textBox, scrollMode);
             winrt::ScrollViewer::SetHorizontalScrollMode(textBox, scrollMode);
           }
         } else if (propertyName == "selection") {
           if (propertyValue.isObject()) {
-            auto selection =
-                json_type_traits<Selection>::parseJson(propertyValue);
+            auto selection = json_type_traits<Selection>::parseJson(propertyValue);
 
             if (selection.isValid())
               textBox.Select(selection.start, selection.end - selection.start);
@@ -621,8 +553,7 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-TextInputViewManager::TextInputViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+TextInputViewManager::TextInputViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
 const char *TextInputViewManager::GetName() const {
@@ -632,41 +563,27 @@ const char *TextInputViewManager::GetName() const {
 folly::dynamic TextInputViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("allowFontScaling", "boolean")(
-      "clearTextOnFocus", "boolean")("editable", "boolean")("maxLength", "int")(
-      "multiline", "boolean")("placeholder", "string")(
-      "placeholderTextColor", "Color")("scrollEnabled", "boolean")(
-      "selection", "Map")("selectionColor", "Color")(
-      "selectTextOnFocus", "boolean")("spellCheck", "boolean")(
-      "text", "string")("mostRecentEventCount", "int")(
-      "secureTextEntry", "boolean")("keyboardType", "string")(
-      "contextMenuHidden", "boolean")("caretHidden", "boolean")(
+  props.update(folly::dynamic::object("allowFontScaling", "boolean")("clearTextOnFocus", "boolean")(
+      "editable", "boolean")("maxLength", "int")("multiline", "boolean")("placeholder", "string")(
+      "placeholderTextColor", "Color")("scrollEnabled", "boolean")("selection", "Map")("selectionColor", "Color")(
+      "selectTextOnFocus", "boolean")("spellCheck", "boolean")("text", "string")("mostRecentEventCount", "int")(
+      "secureTextEntry", "boolean")("keyboardType", "string")("contextMenuHidden", "boolean")("caretHidden", "boolean")(
       "autoCapitalize", "string"));
 
   return props;
 }
 
-folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic TextInputViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topTextInputChange"] =
-      folly::dynamic::object("registrationName", "onChange");
-  directEvents["topTextInputFocus"] =
-      folly::dynamic::object("registrationName", "onFocus");
-  directEvents["topTextInputBlur"] =
-      folly::dynamic::object("registrationName", "onBlur");
-  directEvents["topTextInputEndEditing"] =
-      folly::dynamic::object("registrationName", "onEndEditing");
-  directEvents["topTextInputSelectionChange"] =
-      folly::dynamic::object("registrationName", "onSelectionChange");
-  directEvents["topTextInputContentSizeChange"] =
-      folly::dynamic::object("registrationName", "onContentSizeChange");
-  directEvents["topTextInputKeyPress"] =
-      folly::dynamic::object("registrationName", "onKeyPress");
-  directEvents["topTextInputOnScroll"] =
-      folly::dynamic::object("registrationName", "onScroll");
-  directEvents["topTextInputSubmitEditing"] =
-      folly::dynamic::object("registrationName", "onSubmitEditing");
+  directEvents["topTextInputChange"] = folly::dynamic::object("registrationName", "onChange");
+  directEvents["topTextInputFocus"] = folly::dynamic::object("registrationName", "onFocus");
+  directEvents["topTextInputBlur"] = folly::dynamic::object("registrationName", "onBlur");
+  directEvents["topTextInputEndEditing"] = folly::dynamic::object("registrationName", "onEndEditing");
+  directEvents["topTextInputSelectionChange"] = folly::dynamic::object("registrationName", "onSelectionChange");
+  directEvents["topTextInputContentSizeChange"] = folly::dynamic::object("registrationName", "onContentSizeChange");
+  directEvents["topTextInputKeyPress"] = folly::dynamic::object("registrationName", "onKeyPress");
+  directEvents["topTextInputOnScroll"] = folly::dynamic::object("registrationName", "onScroll");
+  directEvents["topTextInputSubmitEditing"] = folly::dynamic::object("registrationName", "onSubmitEditing");
 
   return directEvents;
 }
@@ -684,10 +601,7 @@ YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-void TextInputViewManager::TransferInputScope(
-    XamlView oldView,
-    XamlView newView,
-    const bool copyToPasswordBox) {
+void TextInputViewManager::TransferInputScope(XamlView oldView, XamlView newView, const bool copyToPasswordBox) {
   // transfer input scope, only common keyboardType between secureTextEntry
   // on/off is numeric, so only need to transfer input scope "Number" <=>
   // "NumericPin", everything else leave it as default.
@@ -701,70 +615,46 @@ void TextInputViewManager::TransferInputScope(
   if (inputScope != nullptr) {
     auto nameValue = inputScope.Names().GetAt(0).NameValue();
 
-    if ((nameValue == winrt::InputScopeNameValue::Number &&
-         copyToPasswordBox) ||
-        (nameValue == winrt::InputScopeNameValue::NumericPin &&
-         !copyToPasswordBox)) {
+    if ((nameValue == winrt::InputScopeNameValue::Number && copyToPasswordBox) ||
+        (nameValue == winrt::InputScopeNameValue::NumericPin && !copyToPasswordBox)) {
       auto newScope = winrt::InputScope();
       auto scopeName = winrt::InputScopeName(
-          copyToPasswordBox ? winrt::InputScopeNameValue::NumericPin
-                            : winrt::InputScopeNameValue::Number);
+          copyToPasswordBox ? winrt::InputScopeNameValue::NumericPin : winrt::InputScopeNameValue::Number);
       auto names = newScope.Names();
       names.Append(scopeName);
       newView.SetValue(
-          copyToPasswordBox ? winrt::PasswordBox::InputScopeProperty()
-                            : winrt::TextBox::InputScopeProperty(),
+          copyToPasswordBox ? winrt::PasswordBox::InputScopeProperty() : winrt::TextBox::InputScopeProperty(),
           newScope);
     }
   }
 }
 
-void TextInputViewManager::TransferProperties(
-    XamlView oldView,
-    XamlView newView) {
-  if ((oldView.try_as<winrt::TextBox>() != nullptr &&
-       newView.try_as<winrt::PasswordBox>() != nullptr) ||
-      (oldView.try_as<winrt::PasswordBox>() != nullptr &&
-       newView.try_as<winrt::TextBox>() != nullptr)) {
+void TextInputViewManager::TransferProperties(XamlView oldView, XamlView newView) {
+  if ((oldView.try_as<winrt::TextBox>() != nullptr && newView.try_as<winrt::PasswordBox>() != nullptr) ||
+      (oldView.try_as<winrt::PasswordBox>() != nullptr && newView.try_as<winrt::TextBox>() != nullptr)) {
     bool copyToPasswordBox = oldView.try_as<winrt::TextBox>() != nullptr;
 
     // sync common properties between TextBox and PasswordBox
     if (copyToPasswordBox) {
+      TransferProperty(oldView, newView, winrt::TextBox::MaxLengthProperty(), winrt::PasswordBox::MaxLengthProperty());
       TransferProperty(
-          oldView,
-          newView,
-          winrt::TextBox::MaxLengthProperty(),
-          winrt::PasswordBox::MaxLengthProperty());
-      TransferProperty(
-          oldView,
-          newView,
-          winrt::TextBox::PlaceholderTextProperty(),
-          winrt::PasswordBox::PlaceholderTextProperty());
+          oldView, newView, winrt::TextBox::PlaceholderTextProperty(), winrt::PasswordBox::PlaceholderTextProperty());
       TransferProperty(
           oldView,
           newView,
           winrt::TextBox::SelectionHighlightColorProperty(),
           winrt::PasswordBox::SelectionHighlightColorProperty());
-      newView.as<winrt::PasswordBox>().Password(
-          oldView.as<winrt::TextBox>().Text());
+      newView.as<winrt::PasswordBox>().Password(oldView.as<winrt::TextBox>().Text());
     } else {
+      TransferProperty(oldView, newView, winrt::PasswordBox::MaxLengthProperty(), winrt::TextBox::MaxLengthProperty());
       TransferProperty(
-          oldView,
-          newView,
-          winrt::PasswordBox::MaxLengthProperty(),
-          winrt::TextBox::MaxLengthProperty());
-      TransferProperty(
-          oldView,
-          newView,
-          winrt::PasswordBox::PlaceholderTextProperty(),
-          winrt::TextBox::PlaceholderTextProperty());
+          oldView, newView, winrt::PasswordBox::PlaceholderTextProperty(), winrt::TextBox::PlaceholderTextProperty());
       TransferProperty(
           oldView,
           newView,
           winrt::PasswordBox::SelectionHighlightColorProperty(),
           winrt::TextBox::SelectionHighlightColorProperty());
-      newView.as<winrt::TextBox>().Text(
-          oldView.as<winrt::PasswordBox>().Password());
+      newView.as<winrt::TextBox>().Text(oldView.as<winrt::PasswordBox>().Password());
     }
 
     TransferInputScope(oldView, newView, copyToPasswordBox);

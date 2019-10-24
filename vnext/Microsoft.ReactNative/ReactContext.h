@@ -17,10 +17,7 @@ struct ReactContext : ReactContextT<ReactContext> {
 
   void InitializeWithInstance(Bridge::ReactInstance const &instance);
 
-  void CallJSFunction(
-      hstring const &moduleName,
-      hstring const &method,
-      IVectorView<IInspectable> const &params);
+  void CallJSFunction(hstring const &moduleName, hstring const &method, IVectorView<IInspectable> const &params);
 
  private:
   Bridge::ReactInstance m_reactInstance{nullptr};
@@ -28,6 +25,5 @@ struct ReactContext : ReactContextT<ReactContext> {
 } // namespace winrt::Microsoft::ReactNative::Bridge::implementation
 
 namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation {
-struct ReactContext
-    : ReactContextT<ReactContext, implementation::ReactContext> {};
+struct ReactContext : ReactContextT<ReactContext, implementation::ReactContext> {};
 } // namespace winrt::Microsoft::ReactNative::Bridge::factory_implementation

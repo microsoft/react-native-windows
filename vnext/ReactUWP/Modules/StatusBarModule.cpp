@@ -23,8 +23,7 @@ std::map<std::string, folly::dynamic> StatusBarModule::getConstants() {
   return {{"HEIGHT", 0}};
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method>
-StatusBarModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> StatusBarModule::getMethods() {
   return {};
 }
 

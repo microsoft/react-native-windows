@@ -4,20 +4,16 @@
 
 namespace ABITests {
 MessageQueueShim::MessageQueueShim()
-    : m_messageQueueThread{std::make_shared<
-          Microsoft::React::Test::ControllableMessageQueueThread>()} {}
+    : m_messageQueueThread{std::make_shared<Microsoft::React::Test::ControllableMessageQueueThread>()} {}
 
-MessageQueueShim::MessageQueueShim(
-    std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread)
+MessageQueueShim::MessageQueueShim(std::shared_ptr<::facebook::react::MessageQueueThread> messageQueueThread)
     : m_messageQueueThread{std::move(messageQueueThread)} {}
 
-void MessageQueueShim::Run(
-    ::winrt::facebook::react::QueueItem const &item) const {
+void MessageQueueShim::Run(::winrt::facebook::react::QueueItem const &item) const {
   m_messageQueueThread->runOnQueue(item);
 }
 
-void MessageQueueShim::RunSync(
-    ::winrt::facebook::react::QueueItem const &item) const {
+void MessageQueueShim::RunSync(::winrt::facebook::react::QueueItem const &item) const {
   m_messageQueueThread->runOnQueueSync(item);
 }
 

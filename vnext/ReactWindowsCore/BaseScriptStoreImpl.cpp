@@ -23,8 +23,7 @@ class ByteArrayBuffer : public facebook::jsi::Buffer {
     return byteArray_.get();
   }
 
-  ByteArrayBuffer(size_t size)
-      : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
+  ByteArrayBuffer(size_t size) : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
 
   ByteArrayBuffer(ByteArrayBuffer &&) = default;
   ByteArrayBuffer &operator=(ByteArrayBuffer &&) = default;
@@ -51,10 +50,7 @@ class BufferViewBuffer : public facebook::jsi::Buffer {
     return const_cast<uint8_t *>(buffer_->data()) + offset_;
   }
 
-  BufferViewBuffer(
-      std::unique_ptr<const facebook::jsi::Buffer> buffer,
-      size_t offset,
-      size_t size)
+  BufferViewBuffer(std::unique_ptr<const facebook::jsi::Buffer> buffer, size_t offset, size_t size)
       : buffer_(std::move(buffer)), offset_(offset), size_(size) {
     if (size_ > buffer_->size() - offset)
       std::terminate();
@@ -94,8 +90,7 @@ struct PreparedScriptSuffix {
 
 } // namespace
 
-jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(
-    const std::string &url) noexcept {
+jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(const std::string &url) noexcept {
   std::ifstream file(url, std::ios::binary | std::ios::ate);
 
   if (!file) {
@@ -112,13 +107,10 @@ jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(
 
   file.close();
 
-  return {std::move(buffer),
-          versionProvider_ ? versionProvider_->getVersion(url)
-                           : static_cast<uint64_t>(size)};
+  return {std::move(buffer), versionProvider_ ? versionProvider_->getVersion(url) : static_cast<uint64_t>(size)};
 }
 
-jsi::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(
-    const std::string &url) noexcept {
+jsi::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(const std::string &url) noexcept {
   if (versionProvider_) {
     return versionProvider_->getVersion(url);
   } else {
@@ -135,8 +127,7 @@ jsi::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(
   }
 }
 
-std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(
-    const std::string &bufferId) noexcept {
+std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const std::string &bufferId) noexcept {
   // 1. Store path must be set
   // 2. It must be a directory that exists. TODO :: Figure out a cross platform
   // way to ensure this.
@@ -146,8 +137,7 @@ std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(
   }
 
   // Treat buffer id as the relative path fragment.
-  std::ifstream file(
-      storeDirectory_ + bufferId, std::ios::binary | std::ios::ate);
+  std::ifstream file(storeDirectory_ + bufferId, std::ios::binary | std::ios::ate);
 
   if (!file) {
     return nullptr;
@@ -196,19 +186,13 @@ std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
   // As a crude heuristic we choose the last 64 characters of the source url.
   constexpr int MAXLENGTH = 64;
   prparedScriptFileName.append(
-      scriptUrl.begin() +
-          ((scriptUrl.size() < MAXLENGTH) ? 0 : (scriptUrl.size() - MAXLENGTH)),
-      scriptUrl.end());
+      scriptUrl.begin() + ((scriptUrl.size() < MAXLENGTH) ? 0 : (scriptUrl.size() - MAXLENGTH)), scriptUrl.end());
 
   // Make a valid file name.
-  std::replace(
-      prparedScriptFileName.begin(), prparedScriptFileName.end(), '\\', '_');
-  std::replace(
-      prparedScriptFileName.begin(), prparedScriptFileName.end(), '/', '_');
-  std::replace(
-      prparedScriptFileName.begin(), prparedScriptFileName.end(), ':', '_');
-  std::replace(
-      prparedScriptFileName.begin(), prparedScriptFileName.end(), '.', '_');
+  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '\\', '_');
+  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '/', '_');
+  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), ':', '_');
+  std::replace(prparedScriptFileName.begin(), prparedScriptFileName.end(), '.', '_');
 
   if (runtimeSignature.runtimeName.empty()) {
     std::terminate();
@@ -231,13 +215,11 @@ std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
   return prparedScriptFileName;
 }
 
-std::shared_ptr<const jsi::Buffer>
-BasePreparedScriptStoreImpl::tryGetPreparedScript(
+std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedScript(
     const jsi::ScriptSignature &scriptSignature,
     const jsi::JSRuntimeSignature &runtimeSignature,
     const char *prepareTag) noexcept {
-  std::string preparedScriptFilePath =
-      getPreparedScriptFileName(scriptSignature, runtimeSignature, prepareTag);
+  std::string preparedScriptFilePath = getPreparedScriptFileName(scriptSignature, runtimeSignature, prepareTag);
 
   auto buffer = bufferStore_->getBuffer(preparedScriptFilePath);
 
@@ -245,8 +227,7 @@ BasePreparedScriptStoreImpl::tryGetPreparedScript(
     return nullptr;
   }
 
-  const PreparedScriptPrefix *prefix =
-      reinterpret_cast<const PreparedScriptPrefix *>(buffer->data());
+  const PreparedScriptPrefix *prefix = reinterpret_cast<const PreparedScriptPrefix *>(buffer->data());
 
   if (strncmp(prefix->magic, PERSIST_MAGIC, sizeof(prefix->magic)) != 0) {
     // magic value doesn't match!! The store is very likely corrupted or belongs
@@ -264,17 +245,14 @@ BasePreparedScriptStoreImpl::tryGetPreparedScript(
     return nullptr;
   }
 
-  if (prefix->sizeInBytes !=
-      buffer->size() - sizeof(PreparedScriptPrefix) -
-          sizeof(PreparedScriptSuffix)) {
+  if (prefix->sizeInBytes != buffer->size() - sizeof(PreparedScriptPrefix) - sizeof(PreparedScriptSuffix)) {
     // Size is not as expected. Store is possibly corrupted .. It is safer to
     // bail out.
     return nullptr;
   }
 
-  const PreparedScriptSuffix *suffix =
-      reinterpret_cast<const PreparedScriptSuffix *>(
-          buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
+  const PreparedScriptSuffix *suffix = reinterpret_cast<const PreparedScriptSuffix *>(
+      buffer->data() + sizeof(PreparedScriptPrefix) + prefix->sizeInBytes);
   if (strncmp(suffix->eof, PERSIST_EOF, sizeof(suffix->eof)) != 0) {
     // magic value doesn't match!! The store is very likely corrupted or belongs
     // to old version.
@@ -282,9 +260,7 @@ BasePreparedScriptStoreImpl::tryGetPreparedScript(
   }
 
   return std::make_shared<BufferViewBuffer>(
-      std::move(buffer),
-      sizeof(PreparedScriptPrefix),
-      static_cast<size_t>(prefix->sizeInBytes));
+      std::move(buffer), sizeof(PreparedScriptPrefix), static_cast<size_t>(prefix->sizeInBytes));
 }
 
 void BasePreparedScriptStoreImpl::persistPreparedScript(
@@ -295,16 +271,10 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
   // TODO :: Unfortunately, The current abstraction is forcing us to make a
   // copy. Need to re-evaluate.
   auto newBuffer = std::make_unique<ByteArrayBuffer>(
-      sizeof(PreparedScriptPrefix) + preparedScript->size() +
-      sizeof(PreparedScriptSuffix));
+      sizeof(PreparedScriptPrefix) + preparedScript->size() + sizeof(PreparedScriptSuffix));
 
-  PreparedScriptPrefix *prefix =
-      reinterpret_cast<PreparedScriptPrefix *>(newBuffer->data());
-  memcpy_s(
-      prefix->magic,
-      sizeof(prefix->magic),
-      PERSIST_MAGIC,
-      sizeof(prefix->magic));
+  PreparedScriptPrefix *prefix = reinterpret_cast<PreparedScriptPrefix *>(newBuffer->data());
+  memcpy_s(prefix->magic, sizeof(prefix->magic), PERSIST_MAGIC, sizeof(prefix->magic));
   prefix->scriptVersion = scriptMetadata.version;
   prefix->runtimeVersion = runtimeMetadata.version;
   prefix->sizeInBytes = preparedScript->size();
@@ -316,12 +286,10 @@ void BasePreparedScriptStoreImpl::persistPreparedScript(
       preparedScript->size());
 
   PreparedScriptSuffix *suffix = reinterpret_cast<PreparedScriptSuffix *>(
-      newBuffer->data() + sizeof(PreparedScriptPrefix) +
-      preparedScript->size());
+      newBuffer->data() + sizeof(PreparedScriptPrefix) + preparedScript->size());
   memcpy_s(suffix->eof, sizeof(suffix->eof), PERSIST_EOF, sizeof(suffix->eof));
 
-  std::string preparedScriptFilePath =
-      getPreparedScriptFileName(scriptMetadata, runtimeMetadata, prepareTag);
+  std::string preparedScriptFilePath = getPreparedScriptFileName(scriptMetadata, runtimeMetadata, prepareTag);
 
   bufferStore_->persistBuffer(preparedScriptFilePath, std::move(newBuffer));
 }

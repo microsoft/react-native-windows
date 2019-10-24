@@ -20,9 +20,8 @@ using std::string;
 using std::unique_ptr;
 using std::vector;
 
-TEST_CLASS(WebSocketResourcePerformanceTest){
-    // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
-    int32_t GetCurrentThreadCount(){DWORD procId = GetCurrentProcessId();
+TEST_CLASS(WebSocketResourcePerformanceTest){// See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
+                                             int32_t GetCurrentThreadCount(){DWORD procId = GetCurrentProcessId();
 HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPALL, 0 /*th32ProcessID*/);
 
 PROCESSENTRY32 entry = {0};
@@ -59,19 +58,17 @@ TEST_METHOD(ProcessThreadsPerResource) {
     vector<unique_ptr<IWebSocket>> resources;
     for (int i = 0; i < resourceTotal; i++) {
       auto ws = IWebSocket::Make("ws://localhost:5555/");
-      ws->SetOnMessage(
-          [this, &threadCount](size_t size, const string &message) {
-            auto count = this->GetCurrentThreadCount();
-            if (count > threadCount.load())
-              threadCount.store(count);
-          });
+      ws->SetOnMessage([this, &threadCount](size_t size, const string &message) {
+        auto count = this->GetCurrentThreadCount();
+        if (count > threadCount.load())
+          threadCount.store(count);
+      });
       ws->SetOnSend([this, &threadCount](size_t) {
         auto count = this->GetCurrentThreadCount();
         if (count > threadCount.load())
           threadCount.store(count);
       });
-      ws->SetOnClose([this, &threadCount](
-                         IWebSocket::CloseCode, const string & /*reason*/) {
+      ws->SetOnClose([this, &threadCount](IWebSocket::CloseCode, const string & /*reason*/) {
         auto count = this->GetCurrentThreadCount();
         if (count > threadCount.load())
           threadCount.store(count);
@@ -87,8 +84,7 @@ TEST_METHOD(ProcessThreadsPerResource) {
     }
   }
 
-  int64_t threadsPerResource =
-      (threadCount.load() - startThreadCount) / resourceTotal;
+  int64_t threadsPerResource = (threadCount.load() - startThreadCount) / resourceTotal;
   Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
 }
 }

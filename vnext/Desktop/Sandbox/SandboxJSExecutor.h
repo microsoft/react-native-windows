@@ -67,9 +67,7 @@ class SandboxJSExecutorFactory : public JSExecutorFactory {
 
 class SandboxJSExecutor : public JSExecutor {
  public:
-  SandboxJSExecutor(
-      std::shared_ptr<ExecutorDelegate> delegate,
-      std::shared_ptr<MessageQueueThread> messageQueueThread);
+  SandboxJSExecutor(std::shared_ptr<ExecutorDelegate> delegate, std::shared_ptr<MessageQueueThread> messageQueueThread);
   ~SandboxJSExecutor() override;
 
   virtual void loadApplicationScript(
@@ -77,20 +75,12 @@ class SandboxJSExecutor : public JSExecutor {
       uint64_t scriptVersion,
       std::string sourceURL,
       std::string &&bytecodeFileName) override;
-  virtual void setBundleRegistry(
-      std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
-  virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath)
+  virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
+  virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
+  virtual void callFunction(const std::string &moduleId, const std::string &methodId, const folly::dynamic &arguments)
       override;
-  virtual void callFunction(
-      const std::string &moduleId,
-      const std::string &methodId,
-      const folly::dynamic &arguments) override;
-  virtual void invokeCallback(
-      const double callbackId,
-      const folly::dynamic &arguments) override;
-  virtual void setGlobalVariable(
-      std::string propName,
-      std::unique_ptr<const JSBigString> jsonValue) override;
+  virtual void invokeCallback(const double callbackId, const folly::dynamic &arguments) override;
+  virtual void setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue) override;
   virtual void *getJavaScriptContext() override;
   virtual std::string getDescription() override;
 #ifdef WITH_JSC_MEMORY_PRESSURE
@@ -105,10 +95,7 @@ class SandboxJSExecutor : public JSExecutor {
  private:
   Concurrency::task<bool> PrepareJavaScriptRuntimeAsync();
   void Call(const std::string &methodName, folly::dynamic &arguments);
-  Concurrency::task<bool> SendMessageAsync(
-      int64_t requestId,
-      const std::string &methodName,
-      folly::dynamic &arguments);
+  Concurrency::task<bool> SendMessageAsync(int64_t requestId, const std::string &methodName, folly::dynamic &arguments);
   void CompleteRequest(int64_t requestId);
 
   void OnReplyMessage(int64_t replyId);

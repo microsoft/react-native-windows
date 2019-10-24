@@ -84,14 +84,8 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   void SetAnimatedNodeOffset(int64_t tag, double offset);
   void FlattenAnimatedNodeOffset(int64_t tag);
   void ExtractAnimatedNodeOffset(int64_t tag);
-  void AddAnimatedEventToView(
-      int64_t tag,
-      const std::string &eventName,
-      const folly::dynamic &eventMapping);
-  void RemoveAnimatedEventFromView(
-      int64_t tag,
-      const std::string &eventName,
-      int64_t animatedValueTag);
+  void AddAnimatedEventToView(int64_t tag, const std::string &eventName, const folly::dynamic &eventMapping);
+  void RemoveAnimatedEventFromView(int64_t tag, const std::string &eventName, int64_t animatedValueTag);
   void StartListeningToAnimatedNodeValue(int64_t tag);
   void StopListeningToAnimatedNodeValue(int64_t tag);
 
@@ -115,6 +109,8 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   static const char *s_extractAnimatedNodeOffsetName;
   static const char *s_addAnimatedEventToViewName;
   static const char *s_removeAnimatedEventFromViewName;
+  static const char *s_startListeningToAnimatedNodeValueName;
+  static const char *s_stopListeningToAnimatedNodeValueName;
 };
 } // namespace uwp
 } // namespace react

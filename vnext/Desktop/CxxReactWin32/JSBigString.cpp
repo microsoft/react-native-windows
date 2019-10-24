@@ -40,8 +40,7 @@ int JSBigFileString::fd() const {
   std::terminate();
 }
 
-std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(
-    const std::string &sourceURL) {
+std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(const std::string &sourceURL) {
   std::terminate();
 }
 

@@ -20,20 +20,18 @@ FrameAnimationDriver::FrameAnimationDriver(
   m_toValue = config.find("toValue").dereference().second.asDouble();
 }
 
-std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
+std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> FrameAnimationDriver::MakeAnimation(
+    const folly::dynamic &config) {
   const auto [scopedBatch, animation] = []() {
     const auto compositor = winrt::Window::Current().Compositor();
     return std::make_tuple(
-        compositor.CreateScopedBatch(
-            winrt::CompositionBatchTypes::AllAnimations),
+        compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation());
   }();
 
   // Frames contains 60 values per second of duration of the animation, convert
   // the size of frames to duration in ms.
-  std::chrono::milliseconds duration(
-      static_cast<int>(m_frames.size() * 1000.0 / 60.0));
+  std::chrono::milliseconds duration(static_cast<int>(m_frames.size() * 1000.0 / 60.0));
   animation.Duration(duration);
 
   auto normalizedProgress = 0.0f;
@@ -41,9 +39,7 @@ FrameAnimationDriver::MakeAnimation(const folly::dynamic &config) {
   auto fromValue = GetAnimatedValue()->RawValue();
   for (auto frame : m_frames) {
     normalizedProgress = std::min(normalizedProgress += step, 1.0f);
-    animation.InsertKeyFrame(
-        normalizedProgress,
-        static_cast<float>(frame * (m_toValue - fromValue)));
+    animation.InsertKeyFrame(normalizedProgress, static_cast<float>(frame * (m_toValue - fromValue)));
   }
 
   if (m_iterations == -1) {

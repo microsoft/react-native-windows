@@ -50,45 +50,28 @@ struct IReactInstance {
 
   // Start the instance, triggering NativeModules descriptions and things to be
   // resolved spThis make caller have full ability to create the shared_ptr
-  virtual void Start(
-      const std::shared_ptr<IReactInstance> &spThis,
-      const ReactInstanceSettings &settings) = 0;
+  virtual void Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) = 0;
 
-  virtual void AttachMeasuredRootView(
-      IXamlRootView *pRootView,
-      folly::dynamic &&initProps) = 0;
+  virtual void AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) = 0;
   virtual void DetachRootView(IXamlRootView *pRootView) = 0;
 
-  virtual LiveReloadCallbackCookie RegisterLiveReloadCallback(
-      std::function<void()> callback) = 0;
-  virtual void UnregisterLiveReloadCallback(
-      LiveReloadCallbackCookie &cookie) = 0;
+  virtual LiveReloadCallbackCookie RegisterLiveReloadCallback(std::function<void()> callback) = 0;
+  virtual void UnregisterLiveReloadCallback(LiveReloadCallbackCookie &cookie) = 0;
 
-  virtual ErrorCallbackCookie RegisterErrorCallback(
-      std::function<void()> callback) = 0;
+  virtual ErrorCallbackCookie RegisterErrorCallback(std::function<void()> callback) = 0;
   virtual void UnregisterErrorCallback(ErrorCallbackCookie &cookie) = 0;
 
-  virtual DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(
-      std::function<void()> callback) = 0;
-  virtual void UnRegisterDebuggerAttachCallback(
-      DebuggerAttachCallbackCookie &cookie) = 0;
+  virtual DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(std::function<void()> callback) = 0;
+  virtual void UnRegisterDebuggerAttachCallback(DebuggerAttachCallbackCookie &cookie) = 0;
 
-  virtual void DispatchEvent(
-      int64_t viewTag,
-      std::string eventName,
-      folly::dynamic &&eventData) = 0;
+  virtual void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) = 0;
 
-  virtual void CallJsFunction(
-      std::string &&moduleName,
-      std::string &&method,
-      folly::dynamic &&params) noexcept = 0;
+  virtual void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept = 0;
 
-  virtual const std::shared_ptr<facebook::react::MessageQueueThread>
-      &JSMessageQueueThread() const noexcept = 0;
-  virtual const std::shared_ptr<facebook::react::MessageQueueThread>
-      &DefaultNativeMessageQueueThread() const noexcept = 0;
-  virtual facebook::react::INativeUIManager *NativeUIManager() const
+  virtual const std::shared_ptr<facebook::react::MessageQueueThread> &JSMessageQueueThread() const noexcept = 0;
+  virtual const std::shared_ptr<facebook::react::MessageQueueThread> &DefaultNativeMessageQueueThread() const
       noexcept = 0;
+  virtual facebook::react::INativeUIManager *NativeUIManager() const noexcept = 0;
 
   // Returns a flag that indicates some properties of the existing instance has
   // been changed (like using web debugger), and this instance should not be
@@ -99,8 +82,7 @@ struct IReactInstance {
   // (like useWebDebugger).
   virtual void SetAsNeedsReload() noexcept = 0;
 
-  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const
-      noexcept = 0;
+  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
 
   virtual bool IsInError() const noexcept = 0;
   virtual bool IsWaitingForDebugger() const noexcept = 0;
@@ -113,8 +95,7 @@ struct IReactInstance {
   virtual std::string GetBundleRootPath() const noexcept = 0;
 
   // Test Hooks
-  virtual void SetXamlViewCreatedTestHook(
-      std::function<void(react::uwp::XamlView)> testHook) = 0;
+  virtual void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) = 0;
   virtual void CallXamlViewCreatedTestHook(react::uwp::XamlView view) = 0;
 
   virtual ExpressionAnimationStore &GetExpressionAnimationStore() = 0;

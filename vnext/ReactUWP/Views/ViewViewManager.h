@@ -27,9 +27,7 @@ class ViewViewManager : public FrameworkElementViewManager {
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
   facebook::react::ShadowNode *createShadow() const override;
 
-  void UpdateProperties(
-      ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   // Yoga Layout
   void SetLayoutProps(
@@ -42,10 +40,7 @@ class ViewViewManager : public FrameworkElementViewManager {
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
-  void TryUpdateView(
-      ViewShadowNode *viewShadowNode,
-      winrt::react::uwp::ViewPanel &pPanel,
-      bool useControl);
+  void TryUpdateView(ViewShadowNode *viewShadowNode, winrt::react::uwp::ViewPanel &pPanel, bool useControl);
 };
 
 } // namespace uwp

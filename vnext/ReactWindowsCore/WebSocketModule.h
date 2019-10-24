@@ -14,14 +14,7 @@ namespace Microsoft::React {
 ///
 class WebSocketModule : public facebook::xplat::module::CxxModule {
  public:
-  enum MethodId {
-    Connect = 0,
-    Close = 1,
-    Send = 2,
-    SendBinary = 3,
-    Ping = 4,
-    SIZE = 5
-  };
+  enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
   WebSocketModule();
 
@@ -50,9 +43,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// <summary>
   /// Creates or retrieves a raw <c>IWebSocket</c> pointer.
   /// </summary>
-  IWebSocket *GetOrCreateWebSocket(
-      int64_t id,
-      std::string &&url = std::string());
+  IWebSocket *GetOrCreateWebSocket(int64_t id, std::string &&url = std::string());
 
   /// <summary>
   /// Keeps <c>IWebSocket</c> instances identified by <c>id</c>.
