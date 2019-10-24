@@ -15,12 +15,10 @@ using namespace Microsoft::ReactNative;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
-void ReactPackageProvider::CreatePackage(
-    IReactPackageBuilder const &packageBuilder) noexcept {
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
-  packageBuilder.AddViewManager(L"CustomUserControlViewManagerCPP", []() {
-    return winrt::make<CustomUserControlViewManagerCPP>();
-  });
+  packageBuilder.AddViewManager(
+      L"CustomUserControlViewManagerCPP", []() { return winrt::make<CustomUserControlViewManagerCPP>(); });
 }
 
 } // namespace winrt::SampleLibraryCPP::implementation

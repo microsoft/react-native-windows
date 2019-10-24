@@ -12,8 +12,7 @@ Windows::UI::Xaml::DependencyProperty CustomUserControlCPP::m_labelProperty =
         L"Label",
         winrt::xaml_typename<winrt::hstring>(),
         winrt::xaml_typename<winrt::SampleLibraryCPP::CustomUserControlCPP>(),
-        Windows::UI::Xaml::PropertyMetadata{
-            winrt::box_value(winrt::hstring())});
+        Windows::UI::Xaml::PropertyMetadata{winrt::box_value(winrt::hstring())});
 
 CustomUserControlCPP::CustomUserControlCPP() {
   DefaultStyleKey(winrt::box_value(L"SampleLibraryCPP.CustomUserControlCPP"));

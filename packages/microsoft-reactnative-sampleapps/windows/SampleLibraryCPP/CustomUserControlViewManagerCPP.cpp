@@ -26,16 +26,13 @@ FrameworkElement CustomUserControlViewManagerCPP::CreateView() noexcept {
   return view;
 }
 
-IMapView<hstring, IInspectable>
-CustomUserControlViewManagerCPP::ExportedViewConstants() noexcept {
+IMapView<hstring, IInspectable> CustomUserControlViewManagerCPP::ExportedViewConstants() noexcept {
   auto constants = winrt::single_threaded_map<hstring, IInspectable>();
   return constants.GetView();
 }
 
-IMapView<hstring, ViewManagerPropertyType>
-CustomUserControlViewManagerCPP::NativeProps() noexcept {
-  auto nativeProps =
-      winrt::single_threaded_map<hstring, ViewManagerPropertyType>();
+IMapView<hstring, ViewManagerPropertyType> CustomUserControlViewManagerCPP::NativeProps() noexcept {
+  auto nativeProps = winrt::single_threaded_map<hstring, ViewManagerPropertyType>();
 
   nativeProps.Insert(L"label", ViewManagerPropertyType::String);
   nativeProps.Insert(L"color", ViewManagerPropertyType::Color);
@@ -47,8 +44,7 @@ CustomUserControlViewManagerCPP::NativeProps() noexcept {
 void CustomUserControlViewManagerCPP::UpdateProperties(
     FrameworkElement const &view,
     IMapView<hstring, IInspectable> const &propertyMap) {
-  if (auto control =
-          view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
+  if (auto control = view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
     for (auto const &pair : propertyMap) {
       auto const &propertyName = pair.Key();
       auto const &propertyValue = pair.Value();
@@ -56,12 +52,9 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
       if (propertyName == L"label") {
         if (propertyValue != nullptr) {
           auto value = winrt::unbox_value<hstring>(propertyValue);
-          control.SetValue(
-              winrt::SampleLibraryCPP::CustomUserControlCPP::LabelProperty(),
-              propertyValue);
+          control.SetValue(winrt::SampleLibraryCPP::CustomUserControlCPP::LabelProperty(), propertyValue);
         } else {
-          control.ClearValue(
-              winrt::SampleLibraryCPP::CustomUserControlCPP::LabelProperty());
+          control.ClearValue(winrt::SampleLibraryCPP::CustomUserControlCPP::LabelProperty());
         }
       } else if (propertyName == L"color") {
         if (auto value = propertyValue.try_as<Brush>()) {
@@ -80,8 +73,7 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
   }
 }
 
-IMapView<hstring, int64_t>
-CustomUserControlViewManagerCPP::Commands() noexcept {
+IMapView<hstring, int64_t> CustomUserControlViewManagerCPP::Commands() noexcept {
   auto commands = winrt::single_threaded_map<hstring, int64_t>();
   return commands.GetView();
 }

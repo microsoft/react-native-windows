@@ -23,7 +23,5 @@ struct CustomUserControlCPP : CustomUserControlCPPT<CustomUserControlCPP> {
 } // namespace winrt::SampleLibraryCPP::implementation
 
 namespace winrt::SampleLibraryCPP::factory_implementation {
-struct CustomUserControlCPP : CustomUserControlCPPT<
-                                  CustomUserControlCPP,
-                                  implementation::CustomUserControlCPP> {};
+struct CustomUserControlCPP : CustomUserControlCPPT<CustomUserControlCPP, implementation::CustomUserControlCPP> {};
 } // namespace winrt::SampleLibraryCPP::factory_implementation

@@ -10,8 +10,10 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 // ReactPackageBuilder implementation
 //===========================================================================
 
-ReactPackageBuilder::ReactPackageBuilder(std::shared_ptr<NativeModulesProvider> const &modulesProvider) noexcept
-    : m_modulesProvider{modulesProvider} {}
+ReactPackageBuilder::ReactPackageBuilder(
+    std::shared_ptr<NativeModulesProvider> const &modulesProvider,
+    std::shared_ptr<ViewManagersProvider> const &viewManagersProvider) noexcept
+    : m_modulesProvider{modulesProvider}, m_viewManagersProvider{viewManagersProvider} {}
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
   m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);

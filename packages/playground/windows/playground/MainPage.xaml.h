@@ -14,8 +14,7 @@
 
 namespace Playground {
 
-[Windows::Foundation::Metadata::WebHostHidden] public ref class MainPage
-    sealed {
+[Windows::Foundation::Metadata::WebHostHidden] public ref class MainPage sealed {
  public:
   MainPage();
 

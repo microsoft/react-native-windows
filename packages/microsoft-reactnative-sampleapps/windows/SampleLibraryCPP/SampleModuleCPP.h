@@ -82,9 +82,7 @@ struct SampleModuleCPP {
   }
 
   REACT_METHOD(ExplicitCallbackMethodWithArgs);
-  void ExplicitCallbackMethodWithArgs(
-      double arg,
-      std::function<void(double)> &&callback) noexcept {
+  void ExplicitCallbackMethodWithArgs(double arg, std::function<void(double)> &&callback) noexcept {
     DebugWriteLine("ExplicitCallbackMethodWithArgs", arg);
     callback(M_PI);
   }
