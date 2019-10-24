@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Oct 2019 09:06:03 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.43",
+      "version": "0.60.0-vnext.43",
+      "comments": {
+        "none": [
+          {
+            "comment": "change clang format column count to 120",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "a1e10087ad39b3c4f26a806a50acdcf719056ba6"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Register 2x NYI stubs for NativeAnimatedModule",
+            "author": "adamgor@microsoft.com",
+            "commit": "7fe94c3453054779d8004da83f3e7efd1c433caa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Oct 2019 20:38:22 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.42",
       "version": "0.60.0-vnext.42",

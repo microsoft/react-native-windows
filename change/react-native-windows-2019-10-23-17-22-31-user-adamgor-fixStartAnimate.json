@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Register 2x NYI stubs for NativeAnimatedModule",
-  "packageName": "react-native-windows",
-  "email": "adamgor@microsoft.com",
-  "commit": "7fe94c3453054779d8004da83f3e7efd1c433caa",
-  "date": "2019-10-24T00:22:31.233Z",
-  "file": "F:\\GS\\repo\\RNW\\change\\react-native-windows-2019-10-23-17-22-31-user-adamgor-fixStartAnimate.json"
-}
