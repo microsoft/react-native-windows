@@ -701,6 +701,114 @@ std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(const facebook::j
   return result;
 }
 
+facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
+  // TODO (yicyao): handler can be cached and reused for multiple HostObjects.
+
+  facebook::jsi::Object handler = createObject();
+
+  constexpr const char *const getPropName = "get";
+  constexpr const char *const setPropName = "set";
+  constexpr const char *const ownKeysPropName = "ownKeys";
+
+  facebook::jsi::PropNameID getPropId = createPropNameIDFromAscii(getPropName, strlen(getPropName));
+  facebook::jsi::PropNameID setPropId = createPropNameIDFromAscii(setPropName, strlen(setPropName));
+  facebook::jsi::PropNameID ownKeysPropId = createPropNameIDFromAscii(ownKeysPropName, strlen(ownKeysPropName));
+
+  handler.setProperty(*this, getPropName, createFunctionFromHostFunction(getPropId, 2, HostObjectGetTrap));
+
+  handler.setProperty(*this, setPropName, createFunctionFromHostFunction(setPropId, 3, HostObjectSetTrap));
+
+  handler.setProperty(*this, ownKeysPropName, createFunctionFromHostFunction(ownKeysPropId, 1, HostObjectOwnKeysTrap));
+
+  return handler;
+}
+
+void ChakraRuntime::setupMemoryTracker() noexcept {
+  if (runtimeArgs().memoryTracker) {
+    size_t initialMemoryUsage = 0;
+    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
+    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
+
+    if (runtimeArgs().runtimeMemoryLimit > 0)
+      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
+
+    JsSetRuntimeMemoryAllocationCallback(
+        m_runtime,
+        runtimeArgs().memoryTracker.get(),
+        [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
+          auto memoryTrackerPtr = static_cast<facebook::react::MemoryTracker *>(callbackState);
+          switch (allocationEvent) {
+            case JsMemoryAllocate:
+              memoryTrackerPtr->OnAllocation(allocationSize);
+              break;
+
+            case JsMemoryFree:
+              memoryTrackerPtr->OnDeallocation(allocationSize);
+              break;
+
+            case JsMemoryFailure:
+            default:
+              break;
+          }
+
+          return true;
+        });
+  }
+}
+
+JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
+    JsValueRef callee,
+    bool isConstructCall,
+    JsValueRef *argumentsIncThis,
+    unsigned short argumentCountIncThis,
+    void *callbackState) {
+  HostFunctionProxy *hostFuncProxy = static_cast<HostFunctionProxy *>(callbackState);
+  ChakraRuntime &runtime = hostFuncProxy->GetRuntime();
+  const facebook::jsi::HostFunctionType &hostFunc = hostFuncProxy->GetHostFunction();
+
+  constexpr uint32_t maxStackArgCount = 8;
+  facebook::jsi::Value stackArgs[maxStackArgCount];
+  std::unique_ptr<facebook::jsi::Value[]> heapArgs = nullptr;
+  facebook::jsi::Value *args = nullptr;
+
+  // Accounting for 'this' object at 0
+  unsigned short argumentCount = argumentCountIncThis - 1;
+
+  if (argumentCount > maxStackArgCount) {
+    heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
+    for (size_t i = 1; i < argumentCountIncThis; i++) {
+      heapArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
+    }
+    args = heapArgs.get();
+
+  } else {
+    for (size_t i = 1; i < argumentCountIncThis; i++) {
+      stackArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
+    }
+    args = stackArgs;
+  }
+
+  JsValueRef result = JS_INVALID_REFERENCE;
+  facebook::jsi::Value thisVal = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[0]));
+
+  try {
+    result = runtime.ToChakraObjectRef(hostFunc(runtime, thisVal, args, argumentCount));
+
+  } catch (const facebook::jsi::JSError &error) {
+    runtime.VerifyJsErrorElseThrow(JsSetException(runtime.ToChakraObjectRef(error.value())));
+
+  } catch (const std::exception &exn) {
+    std::string message = "Exception in HostFunction: ";
+    message += exn.what();
+    ThrowJsException(message);
+
+  } catch (...) {
+    ThrowJsException("Exception in HostFunction: <unknown>");
+  }
+
+  return result;
+}
+
 facebook::jsi::Value ChakraRuntime::HostObjectGetTrap(
     Runtime &runtime,
     const facebook::jsi::Value & /*thisVal*/,
@@ -815,114 +923,6 @@ facebook::jsi::Value ChakraRuntime::HostObjectOwnKeysTrap(
   for (const std::string &key : dedupedOwnKeys) {
     result.setValueAtIndex(chakraRuntime, index, facebook::jsi::String::createFromUtf8(chakraRuntime, key));
     ++index;
-  }
-
-  return result;
-}
-
-facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
-  // TODO (yicyao): handler can be cached and reused for multiple HostObjects.
-
-  facebook::jsi::Object handler = createObject();
-
-  constexpr const char *const getPropName = "get";
-  constexpr const char *const setPropName = "set";
-  constexpr const char *const ownKeysPropName = "ownKeys";
-
-  facebook::jsi::PropNameID getPropId = createPropNameIDFromAscii(getPropName, strlen(getPropName));
-  facebook::jsi::PropNameID setPropId = createPropNameIDFromAscii(setPropName, strlen(setPropName));
-  facebook::jsi::PropNameID ownKeysPropId = createPropNameIDFromAscii(ownKeysPropName, strlen(ownKeysPropName));
-
-  handler.setProperty(*this, getPropName, createFunctionFromHostFunction(getPropId, 2, HostObjectGetTrap));
-
-  handler.setProperty(*this, setPropName, createFunctionFromHostFunction(setPropId, 3, HostObjectSetTrap));
-
-  handler.setProperty(*this, ownKeysPropName, createFunctionFromHostFunction(ownKeysPropId, 1, HostObjectOwnKeysTrap));
-
-  return handler;
-}
-
-void ChakraRuntime::setupMemoryTracker() noexcept {
-  if (runtimeArgs().memoryTracker) {
-    size_t initialMemoryUsage = 0;
-    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
-    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
-
-    if (runtimeArgs().runtimeMemoryLimit > 0)
-      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
-
-    JsSetRuntimeMemoryAllocationCallback(
-        m_runtime,
-        runtimeArgs().memoryTracker.get(),
-        [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
-          auto memoryTrackerPtr = static_cast<facebook::react::MemoryTracker *>(callbackState);
-          switch (allocationEvent) {
-            case JsMemoryAllocate:
-              memoryTrackerPtr->OnAllocation(allocationSize);
-              break;
-
-            case JsMemoryFree:
-              memoryTrackerPtr->OnDeallocation(allocationSize);
-              break;
-
-            case JsMemoryFailure:
-            default:
-              break;
-          }
-
-          return true;
-        });
-  }
-}
-
-JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
-    JsValueRef callee,
-    bool isConstructCall,
-    JsValueRef *argumentsIncThis,
-    unsigned short argumentCountIncThis,
-    void *callbackState) {
-  HostFunctionProxy *hostFuncProxy = static_cast<HostFunctionProxy *>(callbackState);
-  ChakraRuntime &runtime = hostFuncProxy->GetRuntime();
-  const facebook::jsi::HostFunctionType &hostFunc = hostFuncProxy->GetHostFunction();
-
-  constexpr uint32_t maxStackArgCount = 8;
-  facebook::jsi::Value stackArgs[maxStackArgCount];
-  std::unique_ptr<facebook::jsi::Value[]> heapArgs = nullptr;
-  facebook::jsi::Value *args = nullptr;
-
-  // Accounting for 'this' object at 0
-  unsigned short argumentCount = argumentCountIncThis - 1;
-
-  if (argumentCount > maxStackArgCount) {
-    heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
-    for (size_t i = 1; i < argumentCountIncThis; i++) {
-      heapArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
-    }
-    args = heapArgs.get();
-
-  } else {
-    for (size_t i = 1; i < argumentCountIncThis; i++) {
-      stackArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
-    }
-    args = stackArgs;
-  }
-
-  JsValueRef result = JS_INVALID_REFERENCE;
-  facebook::jsi::Value thisVal = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[0]));
-
-  try {
-    result = runtime.ToChakraObjectRef(hostFunc(runtime, thisVal, args, argumentCount));
-
-  } catch (const facebook::jsi::JSError &error) {
-    runtime.VerifyJsErrorElseThrow(JsSetException(runtime.ToChakraObjectRef(error.value())));
-
-  } catch (const std::exception &exn) {
-    std::string message = "Exception in HostFunction: ";
-    message += exn.what();
-    ThrowJsException(message);
-
-  } catch (...) {
-    ThrowJsException("Exception in HostFunction: <unknown>");
   }
 
   return result;
