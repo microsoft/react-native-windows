@@ -13,8 +13,8 @@ class CalculatedAnimationDriver : public AnimationDriver {
  public:
   using AnimationDriver::AnimationDriver;
 
-  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-  MakeAnimation(const folly::dynamic &config) override;
+  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> MakeAnimation(
+      const folly::dynamic &config) override;
 
  protected:
   virtual std::tuple<float, double> GetValueAndVelocityForTime(double time) = 0;

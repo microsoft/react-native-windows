@@ -32,76 +32,59 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
     const folly::dynamic &config,
     const std::weak_ptr<IReactInstance> &instance,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
-  if (m_transformNodes.count(tag) > 0 || m_propsNodes.count(tag) > 0 ||
-      m_styleNodes.count(tag) > 0 || m_valueNodes.count(tag) > 0) {
-    throw std::invalid_argument(
-        "AnimatedNode with tag " + std::to_string(tag) + " already exists.");
+  if (m_transformNodes.count(tag) > 0 || m_propsNodes.count(tag) > 0 || m_styleNodes.count(tag) > 0 ||
+      m_valueNodes.count(tag) > 0) {
+    throw std::invalid_argument("AnimatedNode with tag " + std::to_string(tag) + " already exists.");
     return;
   }
 
-  switch (const auto type = AnimatedNodeTypeFromString(
-              config.find("type").dereference().second.getString())) {
+  switch (const auto type = AnimatedNodeTypeFromString(config.find("type").dereference().second.getString())) {
     case AnimatedNodeType::Style: {
-      m_styleNodes.emplace(
-          tag, std::make_unique<StyleAnimatedNode>(tag, config, manager));
+      m_styleNodes.emplace(tag, std::make_unique<StyleAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Value: {
-      m_valueNodes.emplace(
-          tag, std::make_unique<ValueAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<ValueAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Props: {
-      m_propsNodes.emplace(
-          tag,
-          std::make_unique<PropsAnimatedNode>(tag, config, instance, manager));
+      m_propsNodes.emplace(tag, std::make_unique<PropsAnimatedNode>(tag, config, instance, manager));
       break;
     }
     case AnimatedNodeType::Interpolation: {
-      m_valueNodes.emplace(
-          tag,
-          std::make_unique<InterpolationAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<InterpolationAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Addition: {
-      m_valueNodes.emplace(
-          tag, std::make_unique<AdditionAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<AdditionAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Subtraction: {
-      m_valueNodes.emplace(
-          tag, std::make_unique<SubtractionAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<SubtractionAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Division: {
-      m_valueNodes.emplace(
-          tag, std::make_unique<DivisionAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<DivisionAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Multiplication: {
-      m_valueNodes.emplace(
-          tag,
-          std::make_unique<MultiplicationAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<MultiplicationAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Modulus: {
-      m_valueNodes.emplace(
-          tag, std::make_unique<ModulusAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<ModulusAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Diffclamp: {
-      m_valueNodes.emplace(
-          tag, std::make_unique<DiffClampAnimatedNode>(tag, config, manager));
+      m_valueNodes.emplace(tag, std::make_unique<DiffClampAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Transform: {
-      m_transformNodes.emplace(
-          tag, std::make_unique<TransformAnimatedNode>(tag, config, manager));
+      m_transformNodes.emplace(tag, std::make_unique<TransformAnimatedNode>(tag, config, manager));
       break;
     }
     case AnimatedNodeType::Tracking: {
-      m_trackingNodes.emplace(
-          tag, std::make_unique<TrackingAnimatedNode>(tag, config, manager));
+      m_trackingNodes.emplace(tag, std::make_unique<TrackingAnimatedNode>(tag, config, manager));
       break;
     }
     default: {
@@ -111,29 +94,21 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
   }
 }
 
-void NativeAnimatedNodeManager::ConnectAnimatedNodeToView(
-    int64_t propsNodeTag,
-    int64_t viewTag) {
+void NativeAnimatedNodeManager::ConnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag) {
   m_propsNodes.at(propsNodeTag)->ConnectToView(viewTag);
 }
 
-void NativeAnimatedNodeManager::DisconnectAnimatedNodeToView(
-    int64_t propsNodeTag,
-    int64_t viewTag) {
+void NativeAnimatedNodeManager::DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag) {
   m_propsNodes.at(propsNodeTag)->DisconnectFromView(viewTag);
 }
 
-void NativeAnimatedNodeManager::ConnectAnimatedNode(
-    int64_t parentNodeTag,
-    int64_t childNodeTag) {
+void NativeAnimatedNodeManager::ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag) {
   if (const auto parentNode = GetAnimatedNode(parentNodeTag)) {
     parentNode->AddChild(childNodeTag);
   }
 }
 
-void NativeAnimatedNodeManager::DisconnectAnimatedNode(
-    int64_t parentNodeTag,
-    int64_t childNodeTag) {
+void NativeAnimatedNodeManager::DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag) {
   if (const auto parentNode = GetAnimatedNode(parentNodeTag)) {
     parentNode->RemoveChild(childNodeTag);
   }
@@ -182,19 +157,14 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
   auto updatedAnimationConfig = animationConfig;
   for (auto &item : m_activeAnimations) {
     if (item.second->AnimatedValueTag() == animatedToValueTag) {
-      updatedAnimationConfig.insert(
-          static_cast<folly::StringPiece>(s_toValueIdName),
-          item.second->ToValue());
+      updatedAnimationConfig.insert(static_cast<folly::StringPiece>(s_toValueIdName), item.second->ToValue());
 
-      switch (AnimationTypeFromString(
-          animationConfig.find("type").dereference().second.getString())) {
+      switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString())) {
         case AnimationType::Frames:
           updatedAnimationConfig.insert(
-              static_cast<folly::StringPiece>(s_framesName),
-              [animationConfig, activeFrames = item.second->Frames()]() {
+              static_cast<folly::StringPiece>(s_framesName), [animationConfig, activeFrames = item.second->Frames()]() {
                 auto frames = folly::dynamic::array();
-                for (auto const &frame :
-                     animationConfig.find("frames").dereference().second) {
+                for (auto const &frame : animationConfig.find("frames").dereference().second) {
                   frames.push_back(0.0);
                 }
                 for (auto const &frame : activeFrames) {
@@ -205,8 +175,7 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
           break;
         case AnimationType::Spring:
           updatedAnimationConfig.insert(
-              static_cast<folly::StringPiece>(s_dynamicToValuesName),
-              [activeFrames = item.second->Frames()]() {
+              static_cast<folly::StringPiece>(s_dynamicToValuesName), [activeFrames = item.second->Frames()]() {
                 auto dynamicToValues = folly::dynamic::array();
                 for (auto const &frame : activeFrames) {
                   dynamicToValues.push_back(frame);
@@ -227,15 +196,9 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
     }
   }
   if (track) {
-    m_trackingAndLeadNodeTags.push_back(
-        std::make_tuple(animationId, animatedToValueTag));
+    m_trackingAndLeadNodeTags.push_back(std::make_tuple(animationId, animatedToValueTag));
   }
-  StartAnimatingNode(
-      animationId,
-      animatedNodeTag,
-      updatedAnimationConfig,
-      endCallback,
-      manager);
+  StartAnimatingNode(animationId, animatedNodeTag, updatedAnimationConfig, endCallback, manager);
 }
 
 void NativeAnimatedNodeManager::StartAnimatingNode(
@@ -244,43 +207,26 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
     const folly::dynamic &animationConfig,
     const Callback &endCallback,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
-  switch (AnimationTypeFromString(
-      animationConfig.find("type").dereference().second.getString())) {
+  switch (AnimationTypeFromString(animationConfig.find("type").dereference().second.getString())) {
     case AnimationType::Decay:
       m_activeAnimations.emplace(
           animationId,
-          std::make_unique<DecayAnimationDriver>(
-              animationId,
-              animatedNodeTag,
-              endCallback,
-              animationConfig,
-              manager));
+          std::make_unique<DecayAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
       break;
     case AnimationType::Frames:
       m_activeAnimations.emplace(
           animationId,
-          std::make_unique<FrameAnimationDriver>(
-              animationId,
-              animatedNodeTag,
-              endCallback,
-              animationConfig,
-              manager));
+          std::make_unique<FrameAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
       break;
     case AnimationType::Spring: {
       folly::dynamic dynamicValues = [animationConfig]() {
         const auto dynamicValues = animationConfig.count(s_dynamicToValuesName);
-        return dynamicValues ? animationConfig.at(s_dynamicToValuesName)
-                             : folly::dynamic::array();
+        return dynamicValues ? animationConfig.at(s_dynamicToValuesName) : folly::dynamic::array();
       }();
       m_activeAnimations.emplace(
           animationId,
           std::make_unique<SpringAnimationDriver>(
-              animationId,
-              animatedNodeTag,
-              endCallback,
-              animationConfig,
-              manager,
-              dynamicValues));
+              animationId, animatedNodeTag, endCallback, animationConfig, manager, dynamicValues));
       break;
     }
     default:
@@ -293,10 +239,7 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
 
     for (auto const &trackingAndLead : m_trackingAndLeadNodeTags) {
       if (std::get<1>(trackingAndLead) == animatedNodeTag) {
-        RestartTrackingAnimatedNode(
-            std::get<0>(trackingAndLead),
-            std::get<1>(trackingAndLead),
-            manager);
+        RestartTrackingAnimatedNode(std::get<0>(trackingAndLead), std::get<1>(trackingAndLead), manager);
       }
     }
   }
@@ -309,17 +252,13 @@ void NativeAnimatedNodeManager::DropAnimatedNode(int64_t tag) {
   m_transformNodes.erase(tag);
 }
 
-void NativeAnimatedNodeManager::SetAnimatedNodeValue(
-    int64_t tag,
-    double value) {
+void NativeAnimatedNodeManager::SetAnimatedNodeValue(int64_t tag, double value) {
   if (const auto valueNode = m_valueNodes.at(tag).get()) {
     valueNode->RawValue(static_cast<float>(value));
   }
 }
 
-void NativeAnimatedNodeManager::SetAnimatedNodeOffset(
-    int64_t tag,
-    double offset) {
+void NativeAnimatedNodeManager::SetAnimatedNodeOffset(int64_t tag, double offset) {
   if (const auto valueNode = m_valueNodes.at(tag).get()) {
     valueNode->Offset(static_cast<float>(offset));
   }
@@ -342,19 +281,15 @@ void NativeAnimatedNodeManager::AddAnimatedEventToView(
     const std::string &eventName,
     const folly::dynamic &eventMapping,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
-  const auto valueNodeTag = static_cast<int64_t>(
-      eventMapping.find("animatedValueTag").dereference().second.asDouble());
-  const auto pathList =
-      eventMapping.find("nativeEventPath").dereference().second;
+  const auto valueNodeTag = static_cast<int64_t>(eventMapping.find("animatedValueTag").dereference().second.asDouble());
+  const auto pathList = eventMapping.find("nativeEventPath").dereference().second;
 
   const auto key = std::make_tuple(viewTag, eventName);
   if (m_eventDrivers.count(key)) {
-    m_eventDrivers.at(key).emplace_back(std::make_unique<EventAnimationDriver>(
-        pathList, valueNodeTag, manager));
+    m_eventDrivers.at(key).emplace_back(std::make_unique<EventAnimationDriver>(pathList, valueNodeTag, manager));
   } else {
     auto vector = std::vector<std::unique_ptr<EventAnimationDriver>>{};
-    vector.emplace_back(std::make_unique<EventAnimationDriver>(
-        pathList, valueNodeTag, manager));
+    vector.emplace_back(std::make_unique<EventAnimationDriver>(pathList, valueNodeTag, manager));
     m_eventDrivers.insert({key, std::move(vector)});
   }
 }
@@ -401,8 +336,9 @@ void NativeAnimatedNodeManager::AddDelayedPropsNode(
     const std::shared_ptr<IReactInstance> &instance) {
   m_delayedPropsNodes.push_back(propsNodeTag);
   if (m_delayedPropsNodes.size() <= 1) {
-    static_cast<NativeUIManager *>(instance->NativeUIManager())
-        ->AddBatchCompletedCallback([this]() { ProcessDelayedPropsNodes(); });
+    static_cast<NativeUIManager *>(instance->NativeUIManager())->AddBatchCompletedCallback([this]() {
+      ProcessDelayedPropsNodes();
+    });
   }
 }
 
@@ -425,40 +361,35 @@ AnimatedNode *NativeAnimatedNodeManager::GetAnimatedNode(int64_t tag) {
   return static_cast<AnimatedNode *>(nullptr);
 }
 
-ValueAnimatedNode *NativeAnimatedNodeManager::GetValueAnimatedNode(
-    int64_t tag) {
+ValueAnimatedNode *NativeAnimatedNodeManager::GetValueAnimatedNode(int64_t tag) {
   if (m_valueNodes.count(tag)) {
     return m_valueNodes.at(tag).get();
   }
   return static_cast<ValueAnimatedNode *>(nullptr);
 }
 
-PropsAnimatedNode *NativeAnimatedNodeManager::GetPropsAnimatedNode(
-    int64_t tag) {
+PropsAnimatedNode *NativeAnimatedNodeManager::GetPropsAnimatedNode(int64_t tag) {
   if (m_propsNodes.count(tag)) {
     return m_propsNodes.at(tag).get();
   }
   return static_cast<PropsAnimatedNode *>(nullptr);
 }
 
-StyleAnimatedNode *NativeAnimatedNodeManager::GetStyleAnimatedNode(
-    int64_t tag) {
+StyleAnimatedNode *NativeAnimatedNodeManager::GetStyleAnimatedNode(int64_t tag) {
   if (m_styleNodes.count(tag)) {
     return m_styleNodes.at(tag).get();
   }
   return static_cast<StyleAnimatedNode *>(nullptr);
 }
 
-TransformAnimatedNode *NativeAnimatedNodeManager::GetTransformAnimatedNode(
-    int64_t tag) {
+TransformAnimatedNode *NativeAnimatedNodeManager::GetTransformAnimatedNode(int64_t tag) {
   if (m_transformNodes.count(tag)) {
     return m_transformNodes.at(tag).get();
   }
   return static_cast<TransformAnimatedNode *>(nullptr);
 }
 
-TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(
-    int64_t tag) {
+TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t tag) {
   if (m_trackingNodes.count(tag)) {
     return m_trackingNodes.at(tag).get();
   }

@@ -12,8 +12,7 @@ namespace Microsoft::React::Test {
 
 #pragma region TestMessageQueueThread members
 
-ControllableMessageQueueThread::Lock::Lock(HANDLE mutex) noexcept
-    : m_mutex{mutex} {
+ControllableMessageQueueThread::Lock::Lock(HANDLE mutex) noexcept : m_mutex{mutex} {
   assert(mutex != NULL);
   DWORD waitResult = WaitForSingleObject(m_mutex, INFINITE);
   assert(waitResult == WAIT_OBJECT_0);
@@ -28,9 +27,7 @@ ControllableMessageQueueThread::ControllableMessageQueueThread(
     Mode mode,
     VoidFunctor &&initializeThread,
     VoidFunctor &&uninitializeThread) noexcept
-    : m_mode{mode},
-      m_initializeThread{move(initializeThread)},
-      m_uninitializeThread{move(uninitializeThread)} {
+    : m_mode{mode}, m_initializeThread{move(initializeThread)}, m_uninitializeThread{move(uninitializeThread)} {
   m_creatorThreadId = GetCurrentThreadId();
 
   m_queueMutex = CreateMutex(
@@ -105,8 +102,7 @@ void ControllableMessageQueueThread::runOnQueue(VoidFunctor &&func) noexcept {
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
 // used for initialization and cleanup.
-void ControllableMessageQueueThread::runOnQueueSync(
-    VoidFunctor &&func) noexcept {
+void ControllableMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
   assert(m_state == State::Running);
 
   if (IsWorkerThread()) {
@@ -134,20 +130,16 @@ bool ControllableMessageQueueThread::IsEmpty() const noexcept {
   return m_queue.empty();
 }
 
-bool ControllableMessageQueueThread::DispatchOne(
-    std::chrono::milliseconds timeout) noexcept {
+bool ControllableMessageQueueThread::DispatchOne(std::chrono::milliseconds timeout) noexcept {
   assert(m_mode == Mode::ManualDispatch);
 
-  DWORD timeoutMilliseconds = timeout == std::chrono::milliseconds::max()
-      ? INFINITE
-      : static_cast<DWORD>(timeout.count());
+  DWORD timeoutMilliseconds =
+      timeout == std::chrono::milliseconds::max() ? INFINITE : static_cast<DWORD>(timeout.count());
 
   switch (WaitForSingleObject(m_queueItemPresent, timeoutMilliseconds)) {
     case WAIT_OBJECT_0:
-      SetEvent(m_threadSignals[static_cast<int>(
-          ThreadSignalIndex::FunctorAvailable)]);
-      return WaitForSingleObject(m_queueItemProcessed, timeoutMilliseconds) ==
-          WAIT_OBJECT_0;
+      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+      return WaitForSingleObject(m_queueItemProcessed, timeoutMilliseconds) == WAIT_OBJECT_0;
 
     default:
       return false;
@@ -156,8 +148,7 @@ bool ControllableMessageQueueThread::DispatchOne(
 
 void ControllableMessageQueueThread::quitInternal() noexcept {
   if (m_state != State::WorkerThreadHasExited) {
-    SetEvent(
-        m_threadSignals[static_cast<int>(ThreadSignalIndex::QuitRequested)]);
+    SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::QuitRequested)]);
     DWORD waitResult = WaitForSingleObject(m_workerThread, INFINITE);
     assert(waitResult == WAIT_OBJECT_0);
     m_state = State::WorkerThreadHasExited;
@@ -170,8 +161,7 @@ void ControllableMessageQueueThread::quitInternal() noexcept {
 void ControllableMessageQueueThread::SignalDispatch() noexcept {
   switch (m_mode) {
     case Mode::AutoDispatch:
-      SetEvent(m_threadSignals[static_cast<int>(
-          ThreadSignalIndex::FunctorAvailable)]);
+      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
       break;
 
     case Mode::ManualDispatch:
@@ -180,10 +170,8 @@ void ControllableMessageQueueThread::SignalDispatch() noexcept {
   }
 }
 
-/*static*/ DWORD WINAPI
-ControllableMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
-  ControllableMessageQueueThread *instance =
-      static_cast<ControllableMessageQueueThread *>(lpParameter);
+/*static*/ DWORD WINAPI ControllableMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
+  ControllableMessageQueueThread *instance = static_cast<ControllableMessageQueueThread *>(lpParameter);
   assert(instance != nullptr);
 
   if (instance->m_initializeThread) {
@@ -231,8 +219,7 @@ ControllableMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
 }
 
 bool ControllableMessageQueueThread::IsWorkerThread() {
-  return m_workerThread != NULL &&
-      GetCurrentThreadId() == GetThreadId(m_workerThread);
+  return m_workerThread != NULL && GetCurrentThreadId() == GetThreadId(m_workerThread);
 }
 
 #pragma endregion namespace TestMessageQueueThread members

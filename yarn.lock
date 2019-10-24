@@ -9877,10 +9877,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.9.tar.gz":
-  version "0.60.0-microsoft.9"
-  uid e3882023fd841d13833dce99dcf88eedd63a9f79
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.9.tar.gz#e3882023fd841d13833dce99dcf88eedd63a9f79"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.11.tar.gz":
+  version "0.60.0-microsoft.11"
+  uid ebe7f4b02073630382a24c31d5e72b45e0e02e6d
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.11.tar.gz#ebe7f4b02073630382a24c31d5e72b45e0e02e6d"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"

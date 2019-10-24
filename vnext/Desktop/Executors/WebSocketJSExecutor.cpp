@@ -53,15 +53,13 @@ void WebSocketJSExecutor::loadApplicationScript(
     lock_guard<mutex> lock(m_lockPromises);
     m_promises.emplace(requestId, std::move(requestPromise));
   }
-  dynamic request =
-      dynamic::object("id", requestId)("method", "executeApplicationScript")(
-          "url", script->c_str())("inject", m_injectedObjects);
+  dynamic request = dynamic::object("id", requestId)("method", "executeApplicationScript")("url", script->c_str())(
+      "inject", m_injectedObjects);
 
   string str = toJson(request);
   try {
     if (State::Running != m_state)
-      throw std::exception(
-          "Executor instance not connected to a WebSocket endpoint.");
+      throw std::exception("Executor instance not connected to a WebSocket endpoint.");
 
     SendMessageAsync(requestId, std::move(str)).get();
     if (State::Error == m_state)
@@ -76,20 +74,14 @@ void WebSocketJSExecutor::loadApplicationScript(
   }
 }
 
-void WebSocketJSExecutor::setBundleRegistry(
-    unique_ptr<RAMBundleRegistry> bundleRegistry) {}
+void WebSocketJSExecutor::setBundleRegistry(unique_ptr<RAMBundleRegistry> bundleRegistry) {}
 
-void WebSocketJSExecutor::registerBundle(
-    uint32_t /*bundleId*/,
-    const std::string & /*bundlePath*/) {
+void WebSocketJSExecutor::registerBundle(uint32_t /*bundleId*/, const std::string & /*bundlePath*/) {
   // NYI
   std::terminate();
 }
 
-void WebSocketJSExecutor::callFunction(
-    const string &moduleId,
-    const string &methodId,
-    const dynamic &arguments) {
+void WebSocketJSExecutor::callFunction(const string &moduleId, const string &methodId, const dynamic &arguments) {
   dynamic jArray = dynamic::array(moduleId, methodId, arguments);
   auto calls = Call("callFunctionReturnFlushedQueue", jArray);
   if (m_delegate && !IsInError()) {
@@ -97,9 +89,7 @@ void WebSocketJSExecutor::callFunction(
   }
 }
 
-void WebSocketJSExecutor::invokeCallback(
-    const double callbackId,
-    const dynamic &arguments) {
+void WebSocketJSExecutor::invokeCallback(const double callbackId, const dynamic &arguments) {
   dynamic jArray = dynamic::array(callbackId, arguments);
   auto calls = Call("invokeCallbackAndReturnFlushedQueue", jArray);
   if (m_delegate && !IsInError()) {
@@ -107,9 +97,7 @@ void WebSocketJSExecutor::invokeCallback(
   }
 }
 
-void WebSocketJSExecutor::setGlobalVariable(
-    string propName,
-    unique_ptr<const JSBigString> jsonValue) {
+void WebSocketJSExecutor::setGlobalVariable(string propName, unique_ptr<const JSBigString> jsonValue) {
   m_injectedObjects[propName] = string(jsonValue->c_str());
 }
 
@@ -141,25 +129,20 @@ std::future<bool> WebSocketJSExecutor::ConnectAsync(
   m_errorCallback = std::move(errorCallback);
 
   m_webSocket = IWebSocket::Make(webSocketServerUrl);
-  m_webSocket->SetOnMessage([this](size_t /*length*/, const string &message) {
-    this->OnMessageReceived(message);
-  });
-  m_webSocket->SetOnError(
-      [this](const IWebSocket::Error &err) { this->SetState(State::Error); });
+  m_webSocket->SetOnMessage([this](size_t /*length*/, const string &message) { this->OnMessageReceived(message); });
+  m_webSocket->SetOnError([this](const IWebSocket::Error &err) { this->SetState(State::Error); });
 
   try {
     promise<void> connectPromise;
     if (!IsConnected()) {
-      m_webSocket->SetOnConnect(
-          [&connectPromise]() { connectPromise.set_value(); });
+      m_webSocket->SetOnConnect([&connectPromise]() { connectPromise.set_value(); });
 
       m_webSocket->Connect({} /*protocols*/, {} /*options*/);
     } else {
       connectPromise.set_value();
     }
 
-    auto status = connectPromise.get_future().wait_for(
-        std::chrono::milliseconds(ConnectTimeoutMilliseconds));
+    auto status = connectPromise.get_future().wait_for(std::chrono::milliseconds(ConnectTimeoutMilliseconds));
     if (std::future_status::ready != status) {
       m_errorCallback("Timeout: Failed to connect to the dev server");
       m_webSocket->Close(IWebSocket::CloseCode::ProtocolError, "Timed out");
@@ -176,9 +159,7 @@ std::future<bool> WebSocketJSExecutor::ConnectAsync(
     resultPromise.set_value(IsRunning());
     return resultPromise.get_future(); // TODO: Return bool instead?
   } catch (const std::exception &) {
-    m_errorCallback(
-        IsConnected() ? "Timeout: preparing JS runtime"
-                      : "Timeout: Failed to connect to the dev server");
+    m_errorCallback(IsConnected() ? "Timeout: preparing JS runtime" : "Timeout: Failed to connect to the dev server");
 
     try {
       m_webSocket->Close(IWebSocket::CloseCode::ProtocolError, "Timed out");
@@ -194,8 +175,7 @@ std::future<bool> WebSocketJSExecutor::ConnectAsync(
 
 #pragma region private members
 
-/*static*/ const string WebSocketJSExecutor::s_description =
-    "WebSocketJSExecutor";
+/*static*/ const string WebSocketJSExecutor::s_description = "WebSocketJSExecutor";
 
 void WebSocketJSExecutor::PrepareJavaScriptRuntime() {
   promise<string> requestPromise;
@@ -205,8 +185,7 @@ void WebSocketJSExecutor::PrepareJavaScriptRuntime() {
     m_promises.emplace(requestId, std::move(requestPromise));
   }
 
-  dynamic request =
-      dynamic::object("id", requestId)("method", "prepareJSRuntime");
+  dynamic request = dynamic::object("id", requestId)("method", "prepareJSRuntime");
   string str = toJson(request);
 
   SendMessageAsync(requestId, std::move(str)).get();
@@ -222,14 +201,12 @@ string WebSocketJSExecutor::Call(const string &methodName, dynamic &arguments) {
     m_promises.emplace(requestId, std::move(requestPromise));
   }
 
-  dynamic request = dynamic::object("id", requestId)("method", methodName)(
-      "arguments", std::move(arguments));
+  dynamic request = dynamic::object("id", requestId)("method", methodName)("arguments", std::move(arguments));
   string str = toJson(request);
 
   try {
     if (State::Running != m_state)
-      throw std::exception(
-          "Executor instance not connected to a WebSocket endpoint.");
+      throw std::exception("Executor instance not connected to a WebSocket endpoint.");
 
     auto message{SendMessageAsync(requestId, std::move(str)).get()};
     if (State::Error == m_state)
@@ -246,9 +223,7 @@ string WebSocketJSExecutor::Call(const string &methodName, dynamic &arguments) {
   }
 }
 
-std::future<string> WebSocketJSExecutor::SendMessageAsync(
-    int requestId,
-    string &&message) {
+std::future<string> WebSocketJSExecutor::SendMessageAsync(int requestId, string &&message) {
   if (!IsDisposed()) {
     m_webSocket->Send(std::move(message));
     auto itr = m_promises.find(requestId);

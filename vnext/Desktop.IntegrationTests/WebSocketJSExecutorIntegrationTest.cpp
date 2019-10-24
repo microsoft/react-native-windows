@@ -20,20 +20,14 @@ using std::string;
 using std::unique_ptr;
 
 TEST_CLASS(WebSocketJSExecutorIntegrationTest){
-    BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncSucceeds)
-        END_TEST_METHOD_ATTRIBUTE() TEST_METHOD(ConnectAsyncSucceeds){
-            auto jsThread = make_shared<TestMessageQueueThread>();
+    BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncSucceeds) END_TEST_METHOD_ATTRIBUTE()
+        TEST_METHOD(ConnectAsyncSucceeds){auto jsThread = make_shared<TestMessageQueueThread>();
 auto delegate = make_shared<MockDelegate>();
 auto jse = make_unique<WebSocketJSExecutor>(delegate, jsThread);
 
 string errorMessage;
-auto errorCallback = [&errorMessage](string message) {
-  errorMessage = message;
-};
-bool connected = jse->ConnectAsync(
-                        "ws://localhost:8081/debugger-proxy?role=client",
-                        move(errorCallback))
-                     .get();
+auto errorCallback = [&errorMessage](string message) { errorMessage = message; };
+bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
 jsThread->quitSynchronous();
 
 Assert::AreEqual({}, errorMessage);
@@ -48,11 +42,8 @@ TEST_METHOD(ConnectAsyncFails) {
   auto jse = make_unique<WebSocketJSExecutor>(delegate, jsThread);
 
   string errorMessage;
-  auto errorCallback = [&errorMessage](string message) {
-    errorMessage = message;
-  };
-  bool connected =
-      jse->ConnectAsync("ws://localhost:0/", move(errorCallback)).get();
+  auto errorCallback = [&errorMessage](string message) { errorMessage = message; };
+  bool connected = jse->ConnectAsync("ws://localhost:0/", move(errorCallback)).get();
   jsThread->quitSynchronous();
 
   Assert::AreNotEqual({}, errorMessage);
@@ -69,17 +60,12 @@ TEST_METHOD(LoadApplicationScriptSucceeds) {
   jse->setGlobalVariable("__fbBatchedBridgeConfig", move(bridgeConfig));
 
   string errorMessage;
-  auto errorCallback = [&errorMessage](string message) {
-    errorMessage = message;
-  };
-  bool connected = jse->ConnectAsync(
-                          "ws://localhost:8081/debugger-proxy?role=client",
-                          move(errorCallback))
-                       .get();
+  auto errorCallback = [&errorMessage](string message) { errorMessage = message; };
+  bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
   // Point to an existing script accessible via the repository's packaging
   // service.
-  auto bigString = unique_ptr<JSBigString>(new JSBigStdString(
-      "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=ios&dev=true"));
+  auto bigString = unique_ptr<JSBigString>(
+      new JSBigStdString("http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=ios&dev=true"));
   jse->loadApplicationScript(
       std::move(bigString),
 #if !defined(OSS_RN)
@@ -107,16 +93,10 @@ TEST_METHOD(LoadApplicationScriptHandles404) {
   auto jse = make_unique<WebSocketJSExecutor>(delegate, jsThread);
 
   string errorMessage;
-  auto errorCallback = [&errorMessage](string message) {
-    errorMessage = message;
-  };
-  bool connected = jse->ConnectAsync(
-                          "ws://localhost:8081/debugger-proxy?role=client",
-                          move(errorCallback))
-                       .get();
+  auto errorCallback = [&errorMessage](string message) { errorMessage = message; };
+  bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
   // Point to a non-existing path.
-  auto bigString = unique_ptr<JSBigString>(
-      new JSBigStdString("http://localhost:8081/showme404"));
+  auto bigString = unique_ptr<JSBigString>(new JSBigStdString("http://localhost:8081/showme404"));
   jse->loadApplicationScript(
       std::move(bigString),
 #if !defined(OSS_RN)
@@ -144,16 +124,10 @@ TEST_METHOD(LoadApplicationScriptHandlesNonExistingBundle) {
   auto jse = make_unique<WebSocketJSExecutor>(delegate, jsThread);
 
   string errorMessage;
-  auto errorCallback = [&errorMessage](string message) {
-    errorMessage = message;
-  };
-  bool connected = jse->ConnectAsync(
-                          "ws://localhost:8081/debugger-proxy?role=client",
-                          move(errorCallback))
-                       .get();
+  auto errorCallback = [&errorMessage](string message) { errorMessage = message; };
+  bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
   // Point to a non-existing bundle.
-  auto bigString = unique_ptr<JSBigString>(
-      new JSBigStdString("http://localhost:8081/nonexisting.bundle"));
+  auto bigString = unique_ptr<JSBigString>(new JSBigStdString("http://localhost:8081/nonexisting.bundle"));
   jse->loadApplicationScript(
       std::move(bigString),
 #if !defined(OSS_RN)

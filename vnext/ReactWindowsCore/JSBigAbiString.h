@@ -13,8 +13,7 @@ namespace react {
 struct JSBigAbiString final : JSBigString {
   // Use Make method to ensure JSBigAbiString creation and deletion in the same
   // DLL.
-  static std::unique_ptr<const JSBigAbiString> Make(
-      AbiSafe::AbiStringPtr &&abiString) noexcept;
+  static std::unique_ptr<const JSBigAbiString> Make(AbiSafe::AbiStringPtr &&abiString) noexcept;
 
   JSBigAbiString(AbiSafe::AbiStringPtr &&abiString) noexcept;
 

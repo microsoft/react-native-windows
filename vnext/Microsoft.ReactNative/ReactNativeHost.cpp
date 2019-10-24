@@ -27,16 +27,14 @@ ReactNativeHost::ReactNativeHost() noexcept {
 
 void ReactNativeHost::Init() noexcept {
 #if _DEBUG
-  facebook::react::InitializeLogging(
-      [](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
-        std::string str = std::string("ReactNative:") + message;
-        OutputDebugStringA(str.c_str());
-      });
+  facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
+    std::string str = std::string("ReactNative:") + message;
+    OutputDebugStringA(str.c_str());
+  });
 #endif
 }
 
-Microsoft::ReactNative::ReactInstanceManager
-ReactNativeHost::CreateReactInstanceManager() noexcept {
+Microsoft::ReactNative::ReactInstanceManager ReactNativeHost::CreateReactInstanceManager() noexcept {
   auto builder = ReactInstanceManagerBuilder();
   builder.InstanceSettings(InstanceSettings());
   builder.UseDeveloperSupport(UseDeveloperSupport());
@@ -53,8 +51,7 @@ std::shared_ptr<ReactRootView> ReactNativeHost::CreateRootView() noexcept {
   return rootView;
 }
 
-Microsoft::ReactNative::ReactInstanceManager
-ReactNativeHost::ReactInstanceManager() noexcept {
+Microsoft::ReactNative::ReactInstanceManager ReactNativeHost::ReactInstanceManager() noexcept {
   if (m_reactInstanceManager == nullptr) {
     m_reactInstanceManager = CreateReactInstanceManager();
   }
@@ -62,27 +59,23 @@ ReactNativeHost::ReactInstanceManager() noexcept {
   return m_reactInstanceManager;
 }
 
-UIElement ReactNativeHost::GetOrCreateRootView(
-    IInspectable initialProps) noexcept {
+UIElement ReactNativeHost::GetOrCreateRootView(IInspectable initialProps) noexcept {
   if (m_reactRootView != nullptr) {
     return *m_reactRootView;
   }
 
-  folly::dynamic props =
-      Microsoft::ReactNative::Bridge::ConvertToDynamic(initialProps);
+  folly::dynamic props = Microsoft::ReactNative::Bridge::ConvertToDynamic(initialProps);
 
   m_reactRootView = CreateRootView();
   assert(m_reactRootView != nullptr);
 
   m_reactRootView->OnCreate(*this);
-  m_reactRootView->StartReactApplicationAsync(
-      ReactInstanceManager(), MainComponentName(), props);
+  m_reactRootView->StartReactApplicationAsync(ReactInstanceManager(), MainComponentName(), props);
 
   return *m_reactRootView;
 }
 
-auto ReactNativeHost::InstanceSettings() noexcept
-    -> Microsoft::ReactNative::ReactInstanceSettings {
+auto ReactNativeHost::InstanceSettings() noexcept -> Microsoft::ReactNative::ReactInstanceSettings {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
     m_instanceSettings.UseWebDebugger(false);
@@ -94,8 +87,7 @@ auto ReactNativeHost::InstanceSettings() noexcept
   return m_instanceSettings;
 }
 
-auto ReactNativeHost::PackageProviders() noexcept
-    -> IVector<IReactPackageProvider> {
+auto ReactNativeHost::PackageProviders() noexcept -> IVector<IReactPackageProvider> {
   if (!m_packageProviders) {
     m_packageProviders = single_threaded_vector<IReactPackageProvider>();
   }
@@ -121,8 +113,7 @@ void ReactNativeHost::OnLeavingBackground() noexcept {
   }
 }
 
-void ReactNativeHost::OnResume(
-    Microsoft::ReactNative::OnResumeAction const &action) noexcept {
+void ReactNativeHost::OnResume(Microsoft::ReactNative::OnResumeAction const &action) noexcept {
   if (HasInstance()) {
     ReactInstanceManager().OnResume(action);
   }

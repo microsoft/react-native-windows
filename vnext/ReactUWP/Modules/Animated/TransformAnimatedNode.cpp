@@ -13,22 +13,14 @@ TransformAnimatedNode::TransformAnimatedNode(
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager) {
-  for (const auto &transform :
-       config.find(s_transformsName).dereference().second) {
-    const auto property =
-        transform.find(s_propertyName).dereference().second.asString();
-    if (transform.find(s_typeName).dereference().second.asString() ==
-        s_animatedName) {
+  for (const auto &transform : config.find(s_transformsName).dereference().second) {
+    const auto property = transform.find(s_propertyName).dereference().second.asString();
+    if (transform.find(s_typeName).dereference().second.asString() == s_animatedName) {
       m_transformConfigs.push_back(TransformConfig{
-          property,
-          static_cast<int64_t>(
-              transform.find(s_nodeTagName).dereference().second.asDouble()),
-          0});
+          property, static_cast<int64_t>(transform.find(s_nodeTagName).dereference().second.asDouble()), 0});
     } else {
-      m_transformConfigs.push_back(TransformConfig{
-          property,
-          s_unsetNodeTag,
-          transform.find(s_valueName).dereference().second.asDouble()});
+      m_transformConfigs.push_back(
+          TransformConfig{property, s_unsetNodeTag, transform.find(s_valueName).dereference().second.asDouble()});
     }
   }
 }

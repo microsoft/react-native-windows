@@ -16,8 +16,7 @@ class MessageQueueueThread;
 // @param A MessageQueueThread on which this native module lives.
 // @return Native timing module
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread>
-        &nativeThread) noexcept;
+    const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept;
 
 } // namespace react
 } // namespace facebook

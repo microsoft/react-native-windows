@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 22 Oct 2019 03:28:58 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Oct 2019 09:06:03 GMT and should not be manually modified.
 
+## 0.60.0-vnext.43
+Thu, 24 Oct 2019 09:06:03 GMT
+
+### Changes
+
+- Register 2x NYI stubs for NativeAnimatedModule (adamgor@microsoft.com)
+## 0.60.0-vnext.42
+Wed, 23 Oct 2019 20:38:22 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.11 (53619745+rnbot@users.noreply.github.com)
 ## 0.60.0-vnext.41
 Tue, 22 Oct 2019 03:28:58 GMT
 

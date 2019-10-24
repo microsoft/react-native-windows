@@ -51,23 +51,18 @@ std::vector<CxxModule::Method> ABICxxModule::getMethods() {
   return m_methods;
 }
 
-void ABICxxModule::InitEvents(
-    std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept {
+void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept {
   for (auto &eventHandler : eventHandlerSetters) {
-    eventHandler.EventHandlerSetter([ this, name = eventHandler.Name ](
-        ReactArgWriter const &argWriter) noexcept {
-      if (std::shared_ptr<facebook::react::Instance> instance =
-              getInstance().lock()) {
+    eventHandler.EventHandlerSetter([ this, name = eventHandler.Name ](ReactArgWriter const &argWriter) noexcept {
+      if (std::shared_ptr<facebook::react::Instance> instance = getInstance().lock()) {
         DynamicWriter writer;
         writer.WriteArrayBegin();
         writer.WriteString(winrt::to_hstring(name));
         argWriter(writer);
         writer.WriteArrayEnd();
 
-        std::string emitterName =
-            m_eventEmitterName.empty() ? m_name : m_eventEmitterName;
-        instance->callJSFunction(
-            std::move(emitterName), "emit", writer.TakeValue());
+        std::string emitterName = m_eventEmitterName.empty() ? m_name : m_eventEmitterName;
+        instance->callJSFunction(std::move(emitterName), "emit", writer.TakeValue());
       }
     });
   }

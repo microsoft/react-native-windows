@@ -36,9 +36,7 @@ bool ShadowNodeBase::NeedsForceLayout() {
   return false;
 }
 
-void ShadowNodeBase::dispatchCommand(
-    int64_t commandId,
-    const folly::dynamic &commandArgs) {
+void ShadowNodeBase::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
   GetViewManager()->DispatchCommand(GetView(), commandId, commandArgs);
 }
 
@@ -47,8 +45,7 @@ void ShadowNodeBase::removeAllChildren() {
 }
 
 void ShadowNodeBase::AddView(ShadowNode &child, int64_t index) {
-  this->GetViewManager()->AddView(
-      GetView(), static_cast<ShadowNodeBase &>(child).GetView(), index);
+  this->GetViewManager()->AddView(GetView(), static_cast<ShadowNodeBase &>(child).GetView(), index);
 }
 
 void ShadowNodeBase::RemoveChildAt(int64_t indexToRemove) {
@@ -70,21 +67,17 @@ void ShadowNodeBase::ReplaceView(XamlView view) {
   }
 }
 
-void ShadowNodeBase::ReplaceChild(
-    XamlView oldChildView,
-    XamlView newChildView) {
+void ShadowNodeBase::ReplaceChild(XamlView oldChildView, XamlView newChildView) {
   GetViewManager()->ReplaceChild(m_view, oldChildView, newChildView);
 }
 
 void ShadowNodeBase::ReparentView(XamlView view) {
   GetViewManager()->TransferProperties(m_view, view);
   if (const auto instance = GetViewManager()->GetReactInstance().lock()) {
-    if (const auto nativeUIManager =
-            static_cast<NativeUIManager *>(instance->NativeUIManager())) {
+    if (const auto nativeUIManager = static_cast<NativeUIManager *>(instance->NativeUIManager())) {
       int64_t parentTag = GetParent();
       auto host = nativeUIManager->getHost();
-      auto pParentNode =
-          static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
+      auto pParentNode = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
       if (pParentNode != nullptr) {
         pParentNode->ReplaceChild(m_view, view);
       }
@@ -93,8 +86,7 @@ void ShadowNodeBase::ReparentView(XamlView view) {
   ReplaceView(view);
 }
 
-winrt::Windows::UI::Composition::CompositionPropertySet
-ShadowNodeBase::EnsureTransformPS() {
+winrt::Windows::UI::Composition::CompositionPropertySet ShadowNodeBase::EnsureTransformPS() {
   if (m_transformPS == nullptr) {
     m_transformPS = winrt::Window::Current().Compositor().CreatePropertySet();
     UpdateTransformPS();
@@ -117,8 +109,7 @@ void ShadowNodeBase::UpdateTransformPS() {
     m_transformPS.InsertVector3(L"center", {0, 0, 0});
     auto instance = GetViewManager()->GetReactInstance().lock();
     assert(instance != nullptr);
-    auto centeringAnimation = instance->GetExpressionAnimationStore()
-                                  .GetElementCenterPointExpression();
+    auto centeringAnimation = instance->GetExpressionAnimationStore().GetElementCenterPointExpression();
     centeringAnimation.SetExpressionReferenceParameter(L"uielement", uielement);
     m_transformPS.StartAnimation(L"center", centeringAnimation);
 
@@ -132,26 +123,20 @@ void ShadowNodeBase::UpdateTransformPS() {
     // XAML element.
     if (m_transformPS.TryGetMatrix4x4(L"transform", unused) ==
         winrt::Windows::UI::Composition::CompositionGetValueStatus::NotFound) {
-      m_transformPS.InsertMatrix4x4(
-          L"transform",
-          winrt::Windows::Foundation::Numerics::float4x4::identity());
+      m_transformPS.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
     }
   }
 }
 
-void ShadowNodeBase::UpdateHandledKeyboardEvents(
-    std::string const &propertyName,
-    folly::dynamic const &value) {
+void ShadowNodeBase::UpdateHandledKeyboardEvents(std::string const &propertyName, folly::dynamic const &value) {
   EnsureHandledKeyboardEventHandler();
-  m_handledKeyboardEventHandler->UpdateHandledKeyboardEvents(
-      propertyName, value);
+  m_handledKeyboardEventHandler->UpdateHandledKeyboardEvents(propertyName, value);
 }
 
 void ShadowNodeBase::EnsureHandledKeyboardEventHandler() {
   if (!m_handledKeyboardEventHandler) {
     assert(m_view);
-    m_handledKeyboardEventHandler =
-        std::make_unique<HandledKeyboardEventHandler>();
+    m_handledKeyboardEventHandler = std::make_unique<HandledKeyboardEventHandler>();
     m_handledKeyboardEventHandler->hook(m_view);
   }
 }

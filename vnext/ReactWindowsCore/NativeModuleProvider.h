@@ -28,14 +28,12 @@ namespace react {
 
 using NativeModuleDescription = std::tuple<
     std::string,
-    std::function<std::unique_ptr<
-        facebook::xplat::module::CxxModule>()>, // CxxModule::Provider
+    std::function<std::unique_ptr<facebook::xplat::module::CxxModule>()>, // CxxModule::Provider
     std::shared_ptr<facebook::react::MessageQueueThread>>;
 
 struct NativeModuleProvider {
   virtual std::vector<NativeModuleDescription> GetModules(
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread) = 0;
+      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread) = 0;
 };
 
 } // namespace react

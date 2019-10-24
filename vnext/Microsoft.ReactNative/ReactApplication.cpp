@@ -24,20 +24,17 @@ namespace winrt::Microsoft::ReactNative::implementation {
 ReactApplication::ReactApplication() noexcept {
   Suspending({this, &ReactApplication::OnSuspending});
 
-#if defined _DEBUG && \
-    !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
-  UnhandledException(
-      [this](IInspectable const &, UnhandledExceptionEventArgs const &e) {
-        if (IsDebuggerPresent()) {
-          auto errorMessage = e.Message();
-          __debugbreak();
-        }
-      });
+#if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
+  UnhandledException([this](IInspectable const &, UnhandledExceptionEventArgs const &e) {
+    if (IsDebuggerPresent()) {
+      auto errorMessage = e.Message();
+      __debugbreak();
+    }
+  });
 #endif
 }
 
-Microsoft::ReactNative::ReactInstanceSettings
-ReactApplication::InstanceSettings() noexcept {
+Microsoft::ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
     m_instanceSettings.UseWebDebugger(false);
@@ -92,8 +89,7 @@ void ReactApplication::OnCreate(LaunchActivatedEventArgs const &e) {
   if (IsDebuggerPresent()) {
     this->DebugSettings().EnableFrameRateCounter(TRUE);
 
-    SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(
-        AppViewBackButtonVisibility::Visible);
+    SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(AppViewBackButtonVisibility::Visible);
   }
 #endif
 
@@ -166,15 +162,11 @@ void ReactApplication::OnSuspending(
 /// </summary>
 /// <param name="sender">The Frame which failed navigation</param>
 /// <param name="e">Details about the navigation failure</param>
-void ReactApplication::OnNavigationFailed(
-    IInspectable const &,
-    NavigationFailedEventArgs const &e) {
-  throw hresult_error(
-      E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
+void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
+  throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
 }
 
-ReactApplicationDelegate __stdcall ReactApplication::
-    CreateReactApplicationDelegate() {
+ReactApplicationDelegate __stdcall ReactApplication::CreateReactApplicationDelegate() {
   return winrt::Microsoft::ReactNative::ReactApplicationDelegate(*this);
 }
 

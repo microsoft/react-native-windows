@@ -8,23 +8,11 @@ class BorderEffect : public BorderEffectT<BorderEffect, EffectBase> {
  public:
   DECLARE_D2D_GUID(CLSID_D2D1Border);
   DECLARE_SINGLE_SOURCE(Source);
-  DECLARE_POD_PROPERTY(
-      ExtendX,
-      winrt::CanvasEdgeBehavior,
-      winrt::CanvasEdgeBehavior::Clamp,
-      true);
-  DECLARE_POD_PROPERTY(
-      ExtendY,
-      winrt::CanvasEdgeBehavior,
-      winrt::CanvasEdgeBehavior::Clamp,
-      true);
+  DECLARE_POD_PROPERTY(ExtendX, winrt::CanvasEdgeBehavior, winrt::CanvasEdgeBehavior::Clamp, true);
+  DECLARE_POD_PROPERTY(ExtendY, winrt::CanvasEdgeBehavior, winrt::CanvasEdgeBehavior::Clamp, true);
   DECLARE_NAMED_PROPERTY_MAPPING(
-      {L"ExtendX",
-       D2D1_BORDER_PROP_EDGE_MODE_X,
-       PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT},
-      {L"ExtendY",
-       D2D1_BORDER_PROP_EDGE_MODE_Y,
-       PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});
+      {L"ExtendX", D2D1_BORDER_PROP_EDGE_MODE_X, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT},
+      {L"ExtendY", D2D1_BORDER_PROP_EDGE_MODE_Y, PropertyMapping::GRAPHICS_EFFECT_PROPERTY_MAPPING_DIRECT});
 
  public:
   IFACEMETHODIMP GetPropertyCount(_Out_ UINT *count) override {
@@ -32,8 +20,7 @@ class BorderEffect : public BorderEffectT<BorderEffect, EffectBase> {
     return S_OK;
   }
 
-  IFACEMETHODIMP GetProperty(UINT index, _Outptr_ abi::IPropertyValue **value)
-      override {
+  IFACEMETHODIMP GetProperty(UINT index, _Outptr_ abi::IPropertyValue **value) override {
     return UsePropertyFactory(value, [=]() {
       switch (index) {
         case D2D1_BORDER_PROP_EDGE_MODE_X:

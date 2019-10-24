@@ -34,39 +34,29 @@ WebSocketJSExecutor::WebSocketJSExecutor(
       m_messageQueueThread(messageQueueThread),
       m_socket(),
       m_socketDataWriter(m_socket.OutputStream()) {
-  m_msgReceived = m_socket.MessageReceived(
-      winrt::auto_revoke, [this](auto &&, auto &&args) {
-        try {
-          std::string response;
-          if (args.MessageType() ==
-              winrt::Windows::Networking::Sockets::SocketMessageType::Utf8) {
-            winrt::Windows::Storage::Streams::DataReader reader =
-                args.GetDataReader();
-            reader.UnicodeEncoding(
-                winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-            uint32_t len = reader.UnconsumedBufferLength();
-            std::vector<uint8_t> data(len);
-            reader.ReadBytes(data);
+  m_msgReceived = m_socket.MessageReceived(winrt::auto_revoke, [this](auto &&, auto &&args) {
+    try {
+      std::string response;
+      if (args.MessageType() == winrt::Windows::Networking::Sockets::SocketMessageType::Utf8) {
+        winrt::Windows::Storage::Streams::DataReader reader = args.GetDataReader();
+        reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+        uint32_t len = reader.UnconsumedBufferLength();
+        std::vector<uint8_t> data(len);
+        reader.ReadBytes(data);
 
-            std::string str(
-                Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(
-                    data.data()),
-                data.size());
-            OnMessageReceived(str);
-          } else {
-            OnHitError("Unexpected MessageType from MessageWebSocket.");
-          }
-        } catch (winrt::hresult_error const &e) {
-          OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(
-              e.message().c_str(), e.message().size()));
-        } catch (std::exception &e) {
-          OnHitError(e.what());
-        }
-      });
-
-  m_closed = m_socket.Closed(winrt::auto_revoke, [this](auto &&, auto &&args) {
-    SetState(State::Disconnected);
+        std::string str(Microsoft::Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        OnMessageReceived(str);
+      } else {
+        OnHitError("Unexpected MessageType from MessageWebSocket.");
+      }
+    } catch (winrt::hresult_error const &e) {
+      OnHitError(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+    } catch (std::exception &e) {
+      OnHitError(e.what());
+    }
   });
+
+  m_closed = m_socket.Closed(winrt::auto_revoke, [this](auto &&, auto &&args) { SetState(State::Disconnected); });
 }
 
 WebSocketJSExecutor::~WebSocketJSExecutor() {
@@ -93,9 +83,8 @@ void WebSocketJSExecutor::loadApplicationScript(
   }
 
   try {
-    folly::dynamic request = folly::dynamic::object("id", requestId)(
-        "method", "executeApplicationScript")("url", script->c_str())(
-        "inject", m_injectedObjects);
+    folly::dynamic request = folly::dynamic::object("id", requestId)("method", "executeApplicationScript")(
+        "url", script->c_str())("inject", m_injectedObjects);
     std::string str = folly::toJson(request);
     std::string strReturn = SendMessageAsync(requestId, str).get();
   } catch (const std::exception &e) {
@@ -103,12 +92,9 @@ void WebSocketJSExecutor::loadApplicationScript(
   }
 }
 
-void WebSocketJSExecutor::setBundleRegistry(
-    std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) {}
+void WebSocketJSExecutor::setBundleRegistry(std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) {}
 
-void WebSocketJSExecutor::registerBundle(
-    uint32_t bundleId,
-    const std::string &bundlePath) {
+void WebSocketJSExecutor::registerBundle(uint32_t bundleId, const std::string &bundlePath) {
   // NYI
   std::terminate();
 }
@@ -117,8 +103,7 @@ void WebSocketJSExecutor::flush() {
   folly::dynamic jarray = folly::dynamic::array();
   auto calls = Call("flushedQueue", jarray);
   if (m_delegate && !IsInError())
-    m_delegate->callNativeModules(
-        *this, folly::parseJson(std::move(calls)), true);
+    m_delegate->callNativeModules(*this, folly::parseJson(std::move(calls)), true);
 }
 
 void WebSocketJSExecutor::callFunction(
@@ -128,18 +113,14 @@ void WebSocketJSExecutor::callFunction(
   folly::dynamic jarray = folly::dynamic::array(moduleId, methodId, arguments);
   auto calls = Call("callFunctionReturnFlushedQueue", jarray);
   if (m_delegate && !IsInError())
-    m_delegate->callNativeModules(
-        *this, folly::parseJson(std::move(calls)), true);
+    m_delegate->callNativeModules(*this, folly::parseJson(std::move(calls)), true);
 }
 
-void WebSocketJSExecutor::invokeCallback(
-    const double callbackId,
-    const folly::dynamic &arguments) {
+void WebSocketJSExecutor::invokeCallback(const double callbackId, const folly::dynamic &arguments) {
   folly::dynamic jarray = folly::dynamic::array(callbackId, arguments);
   auto calls = Call("invokeCallbackAndReturnFlushedQueue", jarray);
   if (m_delegate && !IsInError())
-    m_delegate->callNativeModules(
-        *this, folly::parseJson(std::move(calls)), true);
+    m_delegate->callNativeModules(*this, folly::parseJson(std::move(calls)), true);
 }
 
 void WebSocketJSExecutor::setGlobalVariable(
@@ -167,9 +148,7 @@ void WebSocketJSExecutor::destroy() {
   SetState(State::Disposed);
 }
 
-std::string WebSocketJSExecutor::Call(
-    const std::string &methodName,
-    folly::dynamic &arguments) {
+std::string WebSocketJSExecutor::Call(const std::string &methodName, folly::dynamic &arguments) {
   int requestId = ++m_requestId;
 
   if (!IsRunning()) {
@@ -178,8 +157,8 @@ std::string WebSocketJSExecutor::Call(
   }
 
   try {
-    folly::dynamic request = folly::dynamic::object("id", requestId)(
-        "method", methodName)("arguments", std::move(arguments));
+    folly::dynamic request =
+        folly::dynamic::object("id", requestId)("method", methodName)("arguments", std::move(arguments));
     std::string str = folly::toJson(request);
     std::string strReturn = SendMessageAsync(requestId, str).get();
     return strReturn;
@@ -217,8 +196,7 @@ winrt::Windows::Foundation::IAsyncAction WebSocketJSExecutor::ConnectAsync(
   m_debuggerAttachCallback = debuggerAttachCallback;
   m_waitingForDebuggerCallback = waitingForDebuggerCallback;
 
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(webSocketServerUrl));
+  winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(webSocketServerUrl));
   co_await m_socket.ConnectAsync(uri);
 
   SetState(State::Connected);
@@ -236,12 +214,10 @@ bool WebSocketJSExecutor::PrepareJavaScriptRuntime(int milliseconds) {
 
   int requestId = ++m_requestId;
 
-  folly::dynamic request =
-      folly::dynamic::object("id", requestId)("method", "prepareJSRuntime");
+  folly::dynamic request = folly::dynamic::object("id", requestId)("method", "prepareJSRuntime");
   std::string str = folly::toJson(request);
 
-  return SendMessageAsync(requestId, std::move(str)).wait_for(timeout) ==
-      std::future_status::ready;
+  return SendMessageAsync(requestId, std::move(str)).wait_for(timeout) == std::future_status::ready;
 }
 
 void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
@@ -255,28 +231,21 @@ void WebSocketJSExecutor::PollPrepareJavaScriptRuntime() {
       }
     }
 
-    OnHitError(
-        "Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
+    OnHitError("Prepare JS runtime timed out, Executor instance is not connected to a WebSocket endpoint.");
   });
 }
 
-std::future<std::string> WebSocketJSExecutor::SendMessageAsync(
-    int requestId,
-    const std::string &message) {
+std::future<std::string> WebSocketJSExecutor::SendMessageAsync(int requestId, const std::string &message) {
   std::lock_guard<std::mutex> lock(m_lockPromises);
   auto it = m_promises.emplace(requestId, std::promise<std::string>()).first;
   auto future = it->second.get_future();
 
   if (!IsDisposed()) {
-    m_socket.Control().MessageType(
-        winrt::Windows::Networking::Sockets::SocketMessageType::Utf8);
+    m_socket.Control().MessageType(winrt::Windows::Networking::Sockets::SocketMessageType::Utf8);
 
     winrt::array_view<const uint8_t> arr(
-        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
-            message.c_str()),
-        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(
-            message.c_str()) +
-            message.length());
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(message.c_str()),
+        Microsoft::Common::Utilities::CheckedReinterpretCast<const uint8_t *>(message.c_str()) + message.length());
     m_socketDataWriter.WriteBytes(arr);
     m_socketDataWriter.StoreAsync();
   } else {

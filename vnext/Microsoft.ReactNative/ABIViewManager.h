@@ -34,9 +34,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
   folly::dynamic GetNativeProps() const override;
 
-  void UpdateProperties(
-      react::uwp::ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   folly::dynamic GetCommands() const override;
 
@@ -51,8 +49,6 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   std::string m_name;
   winrt::Microsoft::ReactNative::Bridge::IViewManager m_viewManager;
 
-  winrt::Windows::Foundation::Collections::
-      IMapView<winrt::hstring, ViewManagerPropertyType>
-          m_nativeProps;
+  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };
 } // namespace winrt::Microsoft::ReactNative::Bridge

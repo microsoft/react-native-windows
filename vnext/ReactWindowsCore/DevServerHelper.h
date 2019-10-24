@@ -8,23 +8,19 @@
 namespace facebook {
 namespace react {
 
-using JSECreator = std::function<std::unique_ptr<JSExecutor>(
-    std::shared_ptr<ExecutorDelegate>,
-    std::shared_ptr<MessageQueueThread>)>;
+using JSECreator =
+    std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>;
 
 class DevServerHelper {
  public:
   DevServerHelper() = default;
 
   static std::string get_WebsocketProxyUrl(const std::string &debugHost) {
-    return string_format(
-        WebsocketProxyUrlFormat, GetDeviceLocalHost(debugHost).c_str());
+    return string_format(WebsocketProxyUrlFormat, GetDeviceLocalHost(debugHost).c_str());
   }
 
-  static std::string get_LaunchDevToolsCommandUrl(
-      const std::string &debugHost) {
-    return string_format(
-        LaunchDevToolsCommandUrlFormat, GetDeviceLocalHost(debugHost).c_str());
+  static std::string get_LaunchDevToolsCommandUrl(const std::string &debugHost) {
+    return string_format(LaunchDevToolsCommandUrlFormat, GetDeviceLocalHost(debugHost).c_str());
   }
 
   static std::string get_BundleUrl(
@@ -43,8 +39,7 @@ class DevServerHelper {
   }
 
   static std::string get_OnChangeEndpointUrl(const std::string &debugHost) {
-    return string_format(
-        OnChangeEndpointUrlFormat, GetDeviceLocalHost(debugHost).c_str());
+    return string_format(OnChangeEndpointUrlFormat, GetDeviceLocalHost(debugHost).c_str());
   }
 
  private:
@@ -53,16 +48,11 @@ class DevServerHelper {
   }
 
   static constexpr const char s_DeviceLocalhost[] = "localhost:8081";
-  static constexpr const char BundleUrlFormat[] =
-      "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=true";
-  static constexpr const char SourceMapUrlFormat[] =
-      "http://%s/%s.map?platform=%s&dev=%s&hot=%s";
-  static constexpr const char LaunchDevToolsCommandUrlFormat[] =
-      "http://%s/launch-js-devtools";
-  static constexpr const char OnChangeEndpointUrlFormat[] =
-      "http://%s/onchange";
-  static constexpr const char WebsocketProxyUrlFormat[] =
-      "ws://%s/debugger-proxy?role=client";
+  static constexpr const char BundleUrlFormat[] = "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s&inlineSourceMap=true";
+  static constexpr const char SourceMapUrlFormat[] = "http://%s/%s.map?platform=%s&dev=%s&hot=%s";
+  static constexpr const char LaunchDevToolsCommandUrlFormat[] = "http://%s/launch-js-devtools";
+  static constexpr const char OnChangeEndpointUrlFormat[] = "http://%s/onchange";
+  static constexpr const char WebsocketProxyUrlFormat[] = "ws://%s/debugger-proxy?role=client";
   static constexpr const char PackagerStatusUrlFormat[] = "http://%s/status";
   static constexpr const char PackagerOkStatus[] = "packager-status:running";
   const int LongPollFailureDelayMs = 5000;

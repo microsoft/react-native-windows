@@ -66,9 +66,7 @@ folly::dynamic ABIViewManager::GetNativeProps() const {
   return innerParent;
 }
 
-void ABIViewManager::UpdateProperties(
-    react::uwp::ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void ABIViewManager::UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto view = nodeToUpdate->GetView().as<winrt::FrameworkElement>();
 
   auto propertyMap = winrt::single_threaded_map<hstring, IInspectable>();
@@ -77,12 +75,10 @@ void ABIViewManager::UpdateProperties(
     auto propertyName = pair.first.getString();
     auto propertyNameHstring = react::uwp::asHstring(propertyName);
 
-    if (const auto &propertyType =
-            m_nativeProps.TryLookup(propertyNameHstring)) {
+    if (const auto &propertyType = m_nativeProps.TryLookup(propertyNameHstring)) {
       IInspectable propertyValue = nullptr;
 
-      if (propertyType.value() == ViewManagerPropertyType::Color &&
-          react::uwp::IsValidColorValue(pair.second)) {
+      if (propertyType.value() == ViewManagerPropertyType::Color && react::uwp::IsValidColorValue(pair.second)) {
         propertyValue = react::uwp::BrushFrom(pair.second);
       } else {
         propertyValue = ConvertToIInspectable(pair.second);
@@ -120,15 +116,12 @@ void ABIViewManager::DispatchCommand(
 
   auto iinspectableArgs = ConvertToIInspectable(commandArgs);
 
-  auto listArgs =
-      iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::
-                                  IVectorView<winrt::IInspectable>>();
+  auto listArgs = iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::IVectorView<winrt::IInspectable>>();
 
   m_viewManager.DispatchCommand(view, commandId, listArgs);
 }
 
-winrt::Windows::UI::Xaml::DependencyObject ABIViewManager::CreateViewCore(
-    int64_t) {
+winrt::Windows::UI::Xaml::DependencyObject ABIViewManager::CreateViewCore(int64_t) {
   auto view = m_viewManager.CreateView();
   return view;
 }

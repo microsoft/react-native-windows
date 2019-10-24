@@ -11,8 +11,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::string;
 using std::vector;
 
-TEST_CLASS(HttpResourceIntegrationTest){
-    TEST_METHOD(MakeIsNotNull){auto rc = IHttpResource::Make();
+TEST_CLASS(HttpResourceIntegrationTest){TEST_METHOD(MakeIsNotNull){auto rc = IHttpResource::Make();
 Assert::IsFalse(nullptr == rc);
 }
 
@@ -25,15 +24,7 @@ TEST_METHOD(RequestGetSucceeds) {
   rc->SetOnResponse([&received](const string &message) { received = true; });
   rc->SetOnError([&error](const string &message) { error = message; });
 
-  rc->SendRequest(
-      "GET",
-      "http://localhost:8081/debugger-ui",
-      {},
-      dynamic(),
-      "text",
-      false,
-      1000,
-      [](int64_t) {});
+  rc->SendRequest("GET", "http://localhost:8081/debugger-ui", {}, dynamic(), "text", false, 1000, [](int64_t) {});
 
   Assert::IsTrue(sent);
   Assert::IsTrue(received);
@@ -45,15 +36,7 @@ TEST_METHOD(RequestGetFails) {
   string error;
   rc->SetOnError([&error](const string &message) { error = message; });
 
-  rc->SendRequest(
-      "GET",
-      "http://nonexistinghost",
-      {},
-      dynamic(),
-      "text",
-      false,
-      1000,
-      [](int64_t) {});
+  rc->SendRequest("GET", "http://nonexistinghost", {}, dynamic(), "text", false, 1000, [](int64_t) {});
 
   Assert::AreEqual(string("No such host is known"), error);
 }

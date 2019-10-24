@@ -9,13 +9,12 @@
 namespace react {
 namespace uwp {
 
-std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-CalculatedAnimationDriver::MakeAnimation(const folly::dynamic &config) {
+std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch> CalculatedAnimationDriver::MakeAnimation(
+    const folly::dynamic &config) {
   const auto [scopedBatch, animation, easingFunction] = []() {
     const auto compositor = winrt::Window::Current().Compositor();
     return std::make_tuple(
-        compositor.CreateScopedBatch(
-            winrt::CompositionBatchTypes::AllAnimations),
+        compositor.CreateScopedBatch(winrt::CompositionBatchTypes::AllAnimations),
         compositor.CreateScalarKeyFrameAnimation(),
         compositor.CreateLinearEasingFunction());
   }();
@@ -36,19 +35,14 @@ CalculatedAnimationDriver::MakeAnimation(const folly::dynamic &config) {
     return keyFrames;
   }();
 
-  std::chrono::milliseconds duration(
-      static_cast<int>(keyFrames.size() / 60.0f * 1000.0f));
+  std::chrono::milliseconds duration(static_cast<int>(keyFrames.size() / 60.0f * 1000.0f));
   animation.Duration(duration);
   auto normalizedProgress = 0.0f;
   // We are animating the values offset property which should start at 0.
   animation.InsertKeyFrame(normalizedProgress, 0.0f, easingFunction);
   for (const auto keyFrame : keyFrames) {
-    normalizedProgress =
-        std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
-    animation.InsertKeyFrame(
-        normalizedProgress,
-        keyFrame - static_cast<float>(m_startValue),
-        easingFunction);
+    normalizedProgress = std::min(normalizedProgress + 1.0f / keyFrames.size(), 1.0f);
+    animation.InsertKeyFrame(normalizedProgress, keyFrame - static_cast<float>(m_startValue), easingFunction);
   }
 
   if (m_iterations == -1) {

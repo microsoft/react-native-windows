@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Removed MainReactNativeHost from samples and use ReactApplication properties instead.",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "4562d6f570094dd439e7d5be225ffc11141c14c0",
-  "date": "2019-10-23T16:21:59.944Z",
-  "file": "c:\\git\\vmoroz\\react-native-windows\\change\\react-native-windows-2019-10-23-09-22-00-ReactApplication.json"
-}

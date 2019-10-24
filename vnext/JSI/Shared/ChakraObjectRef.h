@@ -169,8 +169,7 @@ ChakraObjectRef ToJsNumber(int num);
 template <typename T>
 ChakraObjectRef ToJsObject(std::unique_ptr<T> &&data) {
   if (!data) {
-    throw facebook::jsi::JSINativeException(
-        "Cannot create an external JS Object without backing data.");
+    throw facebook::jsi::JSINativeException("Cannot create an external JS Object without backing data.");
   }
 
   JsValueRef obj = nullptr;
@@ -196,8 +195,7 @@ ChakraObjectRef ToJsObject(std::unique_ptr<T> &&data) {
  * @remarks The returned ArrayBuffer is backed by buffer and keeps buffer alive
  * till the garbage collector finalizes it.
  */
-ChakraObjectRef ToJsArrayBuffer(
-    const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
+ChakraObjectRef ToJsArrayBuffer(const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
 
 /**
  * @param jsValue1 A ChakraObjectRef managing a JsValueRef.
@@ -206,9 +204,7 @@ ChakraObjectRef ToJsArrayBuffer(
  * @returns A boolean indicating whether jsValue1 and jsValue2 are strictly
  * equal.
  */
-bool CompareJsValues(
-    const ChakraObjectRef &jsValue1,
-    const ChakraObjectRef &jsValue2);
+bool CompareJsValues(const ChakraObjectRef &jsValue1, const ChakraObjectRef &jsValue2);
 
 /**
  * @param jsPropId1 A ChakraObjectRef managing a JsPropertyIdRef.
@@ -217,8 +213,6 @@ bool CompareJsValues(
  * @returns A boolean indicating whether jsPropId1 and jsPropId2 are strictly
  * equal.
  */
-bool CompareJsPropertyIds(
-    const ChakraObjectRef &jsPropId1,
-    const ChakraObjectRef &jsPropId2);
+bool CompareJsPropertyIds(const ChakraObjectRef &jsPropId1, const ChakraObjectRef &jsPropId2);
 
 } // namespace Microsoft::JSI

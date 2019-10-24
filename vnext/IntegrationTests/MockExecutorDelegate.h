@@ -9,15 +9,11 @@ namespace Microsoft::React::Test {
 
 class MockDelegate : public facebook::react::ExecutorDelegate {
  public:
-  std::shared_ptr<facebook::react::ModuleRegistry> getModuleRegistry()
-      override {
+  std::shared_ptr<facebook::react::ModuleRegistry> getModuleRegistry() override {
     return nullptr;
   }
 
-  void callNativeModules(
-      facebook::react::JSExecutor &executor,
-      folly::dynamic &&calls,
-      bool isEndOfBatch) override {}
+  void callNativeModules(facebook::react::JSExecutor &executor, folly::dynamic &&calls, bool isEndOfBatch) override {}
 
   facebook::react::MethodCallResult callSerializableNativeHook(
       facebook::react::JSExecutor &executor,

@@ -10,8 +10,7 @@
 namespace facebook {
 namespace react {
 
-ExceptionsManagerModule::ExceptionsManagerModule(
-    std::function<void(JSExceptionInfo)> &&jsExceptionCallback)
+ExceptionsManagerModule::ExceptionsManagerModule(std::function<void(JSExceptionInfo)> &&jsExceptionCallback)
     : m_jsExceptionCallback(std::move(jsExceptionCallback)) {}
 
 std::string ExceptionsManagerModule::getName() {
@@ -22,15 +21,13 @@ std::map<std::string, folly::dynamic> ExceptionsManagerModule::getConstants() {
   return std::map<std::string, folly::dynamic>();
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method>
-ExceptionsManagerModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> ExceptionsManagerModule::getMethods() {
   return {
       Method(
           "reportFatalException",
           [this](folly::dynamic args) noexcept {
             if (m_jsExceptionCallback) {
-              m_jsExceptionCallback(
-                  std::move(CreateExceptionInfo(args, JSExceptionType::Fatal)));
+              m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Fatal)));
             }
           }),
 
@@ -38,8 +35,7 @@ ExceptionsManagerModule::getMethods() {
           "reportSoftException",
           [this](folly::dynamic args) noexcept {
             if (m_jsExceptionCallback) {
-              m_jsExceptionCallback(
-                  std::move(CreateExceptionInfo(args, JSExceptionType::Soft)));
+              m_jsExceptionCallback(std::move(CreateExceptionInfo(args, JSExceptionType::Soft)));
             }
           }),
 
@@ -73,14 +69,11 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
   assert(args[0].isString());
   assert(args[1].isArray());
   assert(args[2].isNumber());
-  assert(
-      facebook::xplat::jsArgAsInt(args, 2) <=
-      std::numeric_limits<uint32_t>::max());
+  assert(facebook::xplat::jsArgAsInt(args, 2) <= std::numeric_limits<uint32_t>::max());
 
   JSExceptionInfo jsExceptionInfo;
   jsExceptionInfo.exceptionMessage = facebook::xplat::jsArgAsString(args, 0);
-  jsExceptionInfo.exceptionId =
-      static_cast<uint32_t>(facebook::xplat::jsArgAsInt(args, 2));
+  jsExceptionInfo.exceptionId = static_cast<uint32_t>(facebook::xplat::jsArgAsInt(args, 2));
   jsExceptionInfo.exceptionType = jsExceptionType;
 
   folly::dynamic stackAsFolly = facebook::xplat::jsArgAsArray(args, 1);
@@ -96,19 +89,10 @@ JSExceptionInfo ExceptionsManagerModule::CreateExceptionInfo(
 
     std::stringstream stackFrameInfo;
 
-    stackFrameInfo << RetrieveValueFromMap(
-                          stackFrame, "methodName", folly::dynamic::STRING)
-                   << ' ';
-    stackFrameInfo << "Line: "
-                   << RetrieveValueFromMap(
-                          stackFrame, "lineNumber", folly::dynamic::INT64)
-                   << ' ';
-    stackFrameInfo << "Column: "
-                   << RetrieveValueFromMap(
-                          stackFrame, "column", folly::dynamic::INT64)
-                   << ' ';
-    stackFrameInfo << RetrieveValueFromMap(
-        stackFrame, "file", folly::dynamic::STRING);
+    stackFrameInfo << RetrieveValueFromMap(stackFrame, "methodName", folly::dynamic::STRING) << ' ';
+    stackFrameInfo << "Line: " << RetrieveValueFromMap(stackFrame, "lineNumber", folly::dynamic::INT64) << ' ';
+    stackFrameInfo << "Column: " << RetrieveValueFromMap(stackFrame, "column", folly::dynamic::INT64) << ' ';
+    stackFrameInfo << RetrieveValueFromMap(stackFrame, "file", folly::dynamic::STRING);
 
     jsExceptionInfo.callstack.push_back(stackFrameInfo.str());
   }

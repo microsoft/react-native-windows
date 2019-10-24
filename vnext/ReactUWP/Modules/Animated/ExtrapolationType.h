@@ -8,8 +8,7 @@ enum ExtrapolationType {
   Extend,
 };
 
-static ExtrapolationType ExtrapolationTypeFromString(
-    const std::string &string) {
+static ExtrapolationType ExtrapolationTypeFromString(const std::string &string) {
   if (string == "identity")
     return ExtrapolationType::Identity;
   else if (string == "clamp")

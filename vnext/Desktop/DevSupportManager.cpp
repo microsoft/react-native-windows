@@ -40,16 +40,10 @@ void DevSupportManager::StopPollingLiveReload() {
   }
 };
 
-JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
-    const DevSettings &settings) {
-  return [settings](
-             shared_ptr<ExecutorDelegate> delegate,
-             shared_ptr<MessageQueueThread> jsQueue) {
+JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const DevSettings &settings) {
+  return [settings](shared_ptr<ExecutorDelegate> delegate, shared_ptr<MessageQueueThread> jsQueue) {
     auto websocketJSE = make_unique<WebSocketJSExecutor>(delegate, jsQueue);
-    websocketJSE
-        ->ConnectAsync(
-            DevServerHelper::get_WebsocketProxyUrl(settings.debugHost),
-            settings.errorCallback)
+    websocketJSE->ConnectAsync(DevServerHelper::get_WebsocketProxyUrl(settings.debugHost), settings.errorCallback)
         .wait();
     return websocketJSE;
   };
@@ -59,12 +53,8 @@ string DevSupportManager::GetJavaScriptFromServer(
     const string &debugHost,
     const string &jsBundleName,
     const string &platform) {
-  auto bundleUrl = DevServerHelper::get_BundleUrl(
-      debugHost,
-      jsBundleName,
-      platform /*platform*/,
-      "true" /*dev*/,
-      "false" /*hot*/);
+  auto bundleUrl =
+      DevServerHelper::get_BundleUrl(debugHost, jsBundleName, platform /*platform*/, "true" /*dev*/, "false" /*hot*/);
 
   try {
     Url url(bundleUrl);
@@ -82,9 +72,7 @@ string DevSupportManager::GetJavaScriptFromServer(
     response<string_body> response;
 
     parser<false, string_body> p{std::move(response)};
-    p.body_limit(
-        25 * 1024 *
-        1024); // 25MB (boost default of 1MB is too small for dev bundles)
+    p.body_limit(25 * 1024 * 1024); // 25MB (boost default of 1MB is too small for dev bundles)
 
     read(socket, buffer, p.base());
     response = p.release();
@@ -98,12 +86,8 @@ string DevSupportManager::GetJavaScriptFromServer(
   }
 }
 
-void DevSupportManager::StartPollingLiveReload(
-    const string &debugHost,
-    std::function<void()> onChangeCallback) {
-  auto t = create_task([this,
-                        debugHost,
-                        onChangeCallback = move(onChangeCallback)] {
+void DevSupportManager::StartPollingLiveReload(const string &debugHost, std::function<void()> onChangeCallback) {
+  auto t = create_task([this, debugHost, onChangeCallback = move(onChangeCallback)] {
     cancellation_token token = m_liveReloadCts.get_token();
     while (!token.is_canceled()) {
       try {
@@ -122,8 +106,7 @@ void DevSupportManager::StartPollingLiveReload(
         response<dynamic_body> response;
         read(socket, buffer, response);
 
-        if (response.result_int() == 205 /*ResetContent*/ &&
-            !token.is_canceled())
+        if (response.result_int() == 205 /*ResetContent*/ && !token.is_canceled())
           onChangeCallback();
       } catch (const std::exception & /*e*/) {
         // Just let the live reload stop working when the connection fails,
@@ -133,9 +116,7 @@ void DevSupportManager::StartPollingLiveReload(
   });
 }
 
-task<void> DevSupportManager::LaunchDevToolsAsync(
-    const string &debugHost,
-    const cancellation_token &token) {
+task<void> DevSupportManager::LaunchDevToolsAsync(const string &debugHost, const cancellation_token &token) {
   auto t = task_from_result();
 
   return t.then([=]() {

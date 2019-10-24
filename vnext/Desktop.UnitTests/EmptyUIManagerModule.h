@@ -29,24 +29,14 @@ struct NodeRegistry {
 class EmptyUIManager {
  public:
   EmptyUIManager(
-      std::unique_ptr<std::vector<
-          std::unique_ptr<facebook::react::IViewManager>>> viewManagers,
+      std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>> viewManagers,
       std::shared_ptr<NodeRegistry> nodeRegistry);
 
   void removeRootView(int64_t rootViewTag);
-  void createView(
-      int64_t tag,
-      const std::string &className,
-      int64_t rootViewTag,
-      folly::dynamic /*ReadableMap*/ props);
-  void setChildren(
-      int64_t viewTag,
-      folly::dynamic /*ReadableMap*/ childrenTags);
+  void createView(int64_t tag, const std::string &className, int64_t rootViewTag, folly::dynamic /*ReadableMap*/ props);
+  void setChildren(int64_t viewTag, folly::dynamic /*ReadableMap*/ childrenTags);
 #ifdef NOT_DEF
-  void updateView(
-      int64_t tag,
-      const std::string &className,
-      folly::dynamic /*ReadableMap*/ props);
+  void updateView(int64_t tag, const std::string &className, folly::dynamic /*ReadableMap*/ props);
   void manageChildren(
       int64_t viewTag,
       folly::dynamic * /*@Nullable ReadableArray*/ moveFrom,
@@ -57,9 +47,7 @@ class EmptyUIManager {
   void replaceExistingNonRootView(int64_t oldTag, int64_t newTag);
   void removeSubviewsFromContainerWithID(int64_t containerTag);
   void measure(int64_t reactTag, std::function<void()> /*Callback*/ callback);
-  void measureInWindow(
-      int64_t reactTag,
-      std::function<void()> /*Callback*/ callback);
+  void measureInWindow(int64_t reactTag, std::function<void()> /*Callback*/ callback);
   void measureLayout(
       int64_t tag,
       int64_t ancestorTag,
@@ -75,10 +63,7 @@ class EmptyUIManager {
       std::function<void()> /*final Callback*/ callback);
   void setJSResponder(int64_t reactTag, bool blockNativeResponder);
   void clearJSResponder();
-  void dispatchViewManagerCommand(
-      int64_t reactTag,
-      int64_t commandId,
-      folly::dynamic /*ReadableMap*/ commandArgs);
+  void dispatchViewManagerCommand(int64_t reactTag, int64_t commandId, folly::dynamic /*ReadableMap*/ commandArgs);
   void showPopupMenu(
       int64_t reactTag,
       folly::dynamic /*ReadableMap*/ items,
@@ -92,13 +77,11 @@ class EmptyUIManager {
   void sendAccessibilityEvent(int64_t tag, int64_t eventType);
 #endif
 
-  void PopulateViewManagerConstants(
-      std::map<std::string, folly::dynamic> &constants);
+  void PopulateViewManagerConstants(std::map<std::string, folly::dynamic> &constants);
   std::shared_ptr<EmptyUINode> addRootView(int64_t rootViewTag);
 
  private:
-  std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>>
-      m_viewManagers;
+  std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>> m_viewManagers;
   std::shared_ptr<NodeRegistry> m_nodeRegistry;
 };
 

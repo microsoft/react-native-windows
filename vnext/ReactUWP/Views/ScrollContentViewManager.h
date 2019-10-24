@@ -12,8 +12,7 @@ class ScrollContentViewManager : public ViewViewManager {
   using Super = ViewViewManager;
 
  public:
-  ScrollContentViewManager(
-      const std::shared_ptr<IReactInstance> &reactInstance);
+  ScrollContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
 };

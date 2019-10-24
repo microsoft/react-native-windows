@@ -6,8 +6,7 @@
 
 namespace Microsoft::JSI {
 
-std::shared_ptr<facebook::jsi::Runtime>
-ChakraRuntimeHolder::getRuntime() noexcept {
+std::shared_ptr<facebook::jsi::Runtime> ChakraRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
 
   if (!runtime_)
@@ -27,10 +26,8 @@ void ChakraRuntimeHolder::initRuntime() noexcept {
 
 Logger ChakraRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
     facebook::react::NativeLoggingHook loggingCallback) noexcept {
-  return [loggingCallback = std::move(loggingCallback)](
-             const char *message, LogLevel logLevel) -> void {
-    loggingCallback(
-        static_cast<facebook::react::RCTLogLevel>(logLevel), message);
+  return [loggingCallback = std::move(loggingCallback)](const char *message, LogLevel logLevel) -> void {
+    loggingCallback(static_cast<facebook::react::RCTLogLevel>(logLevel), message);
   };
 }
 
@@ -45,12 +42,10 @@ ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
   runtimeArgs.enableDebugging = devSettings->useDirectDebugger;
 
   if (devSettings->loggingCallback) {
-    runtimeArgs.loggingCallback =
-        ChakraRuntimeLoggerFromReactLogger(devSettings->loggingCallback);
+    runtimeArgs.loggingCallback = ChakraRuntimeLoggerFromReactLogger(devSettings->loggingCallback);
   }
 
-  runtimeArgs.enableNativePerformanceNow =
-      devSettings->enableNativePerformanceNow;
+  runtimeArgs.enableNativePerformanceNow = devSettings->enableNativePerformanceNow;
 
   runtimeArgs.enableJITCompilation = devSettings->useJITCompilation;
 

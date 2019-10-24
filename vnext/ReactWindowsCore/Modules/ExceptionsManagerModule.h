@@ -14,8 +14,7 @@ namespace react {
 
 class ExceptionsManagerModule : public facebook::xplat::module::CxxModule {
  public:
-  ExceptionsManagerModule(
-      std::function<void(JSExceptionInfo)> &&jsExceptionCallback);
+  ExceptionsManagerModule(std::function<void(JSExceptionInfo)> &&jsExceptionCallback);
 
   static constexpr const char *name = "ExceptionsManager";
 
@@ -26,13 +25,9 @@ class ExceptionsManagerModule : public facebook::xplat::module::CxxModule {
 
  private:
   std::function<void(JSExceptionInfo &&)> m_jsExceptionCallback;
-  JSExceptionInfo CreateExceptionInfo(
-      const folly::dynamic &args,
-      JSExceptionType jsExceptionType) const noexcept;
-  std::string RetrieveValueFromMap(
-      const folly::dynamic &map,
-      const std::string &key,
-      folly::dynamic::Type type) const noexcept;
+  JSExceptionInfo CreateExceptionInfo(const folly::dynamic &args, JSExceptionType jsExceptionType) const noexcept;
+  std::string RetrieveValueFromMap(const folly::dynamic &map, const std::string &key, folly::dynamic::Type type) const
+      noexcept;
 };
 
 } // namespace react

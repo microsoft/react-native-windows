@@ -40,8 +40,7 @@ TEST_CLASS(StringConversionTest_Desktop) {
     JsValueRef value;
     string str;
     for (size_t i = 0; i < g_utf8TestStrings.size(); i++) {
-      JsPointerToStringUtf8(
-          g_utf8TestStrings[i].c_str(), g_utf8TestStrings[i].length(), &value);
+      JsPointerToStringUtf8(g_utf8TestStrings[i].c_str(), g_utf8TestStrings[i].length(), &value);
       JsStringToStdStringUtf8(value, str);
       Assert::IsTrue(str.compare(g_utf8TestStrings[i]) == 0);
     }

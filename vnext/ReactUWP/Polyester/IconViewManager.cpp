@@ -40,8 +40,7 @@ class IconShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
 
  private:
-  static void UpdateFontColorProps(
-      winrt::Windows::UI::Xaml::Documents::Glyphs glyphs);
+  static void UpdateFontColorProps(winrt::Windows::UI::Xaml::Documents::Glyphs glyphs);
 
   std::optional<double> m_emSize;
   double m_height = 24;
@@ -121,16 +120,14 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
   auto application = winrt::Application::Current();
   if (!winrt::ViewManagement::AccessibilitySettings().HighContrast()) {
     // 0 - Light, 1 - Light Disabled, 2 - Dark, 3 - Dark Disabled
-    glyphs.ColorFontPaletteIndex(
-        application.RequestedTheme() == winrt::ApplicationTheme::Light ? 0 : 2);
+    glyphs.ColorFontPaletteIndex(application.RequestedTheme() == winrt::ApplicationTheme::Light ? 0 : 2);
   }
 
   // Set default Fill color
   auto appDictionary = application.Resources();
   auto color = winrt::Windows::UI::Colors::Black();
   if (appDictionary.HasKey(winrt::box_value(L"SystemAccentColor")))
-    color = winrt::unbox_value<winrt::Windows::UI::Color>(
-        appDictionary.Lookup(winrt::box_value(L"SystemAccentColor")));
+    color = winrt::unbox_value<winrt::Windows::UI::Color>(appDictionary.Lookup(winrt::box_value(L"SystemAccentColor")));
 
   glyphs.Fill(winrt::SolidColorBrush(color));
 }
@@ -138,9 +135,7 @@ void IconShadowNode::updateProperties(const folly::dynamic &&props) {
 //
 // IconViewManager
 //
-IconViewManager::IconViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+IconViewManager::IconViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *IconViewManager::GetName() const {
   return "PLYIcon";
@@ -153,8 +148,8 @@ facebook::react::ShadowNode *IconViewManager::createShadow() const {
 folly::dynamic IconViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("emSize", "number")("fontUri", "string")(
-      "glyph", "string")("colorEnabled", "boolean"));
+  props.update(
+      folly::dynamic::object("emSize", "number")("fontUri", "string")("glyph", "string")("colorEnabled", "boolean"));
 
   return props;
 }

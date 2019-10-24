@@ -65,10 +65,7 @@ bool TimerQueue::IsEmpty() const {
   return m_timerVector.empty();
 }
 
-/*static*/ void Timing::ThreadpoolTimerCallback(
-    PTP_CALLBACK_INSTANCE,
-    PVOID Parameter,
-    PTP_TIMER) noexcept {
+/*static*/ void Timing::ThreadpoolTimerCallback(PTP_CALLBACK_INSTANCE, PVOID Parameter, PTP_TIMER) noexcept {
   static_cast<Timing *>(Parameter)->OnTimerRaised();
 }
 
@@ -78,26 +75,22 @@ void Timing::OnTimerRaised() noexcept {
       // Make sure we execute it on native thread for native modules
       // Capture weak_ptr "this" because callback will be executed on native
       // thread even if "this" is destroyed.
-      nativeThread->runOnQueue([weakThis = std::weak_ptr<Timing>(
-                                    shared_from_this())]() {
+      nativeThread->runOnQueue([weakThis = std::weak_ptr<Timing>(shared_from_this())]() {
         auto strongThis = weakThis.lock();
         if (!strongThis) {
           return;
         }
 
-        if ((!strongThis->m_threadpoolTimer) ||
-            strongThis->m_timerQueue.IsEmpty()) {
+        if ((!strongThis->m_threadpoolTimer) || strongThis->m_timerQueue.IsEmpty()) {
           return;
         }
 
         folly::dynamic readyTimers = folly::dynamic::array();
         auto now = std::chrono::system_clock::now();
-        auto now_ms =
-            std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+        auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
 
         // Fire timers which will be expired in 10ms
-        while (!strongThis->m_timerQueue.IsEmpty() &&
-               now_ms > strongThis->m_timerQueue.Front().DueTime - 10ms) {
+        while (!strongThis->m_timerQueue.IsEmpty() && now_ms > strongThis->m_timerQueue.Front().DueTime - 10ms) {
           // Pop first timer from the queue and add it to list of timers ready
           // to fire
           auto next = strongThis->m_timerQueue.Front();
@@ -110,16 +103,12 @@ void Timing::OnTimerRaised() noexcept {
           // repetition 'next.Period' being greater than 10ms is intended to
           // prevent infinite loops
           if (next.Repeat)
-            strongThis->m_timerQueue.Push(
-                Timer{next.Id, now_ms + next.Period, next.Period, true});
+            strongThis->m_timerQueue.Push(Timer{next.Id, now_ms + next.Period, next.Period, true});
         }
 
         if (!readyTimers.empty()) {
           if (auto instance = strongThis->m_wkInstance.lock()) {
-            instance->callJSFunction(
-                "JSTimers",
-                "callTimers",
-                folly::dynamic::array(std::move(readyTimers)));
+            instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(std::move(readyTimers)));
           } else {
             assert(false && "m_wkInstance.lock failed");
           }
@@ -156,10 +145,7 @@ void Timing::createTimer(
 
   if (scheduledTime + period <= now_ms && !repeat) {
     if (auto inst = m_wkInstance.lock()) {
-      inst->callJSFunction(
-          "JSTimers",
-          "callTimers",
-          folly::dynamic::array(folly::dynamic::array(id)));
+      inst->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(folly::dynamic::array(id)));
     } else {
       assert(false && "m_wkInstance.lock failed");
     }
@@ -211,8 +197,7 @@ bool Timing::KernelTimerIsAboutToFire() noexcept {
   return false;
 }
 
-void Timing::SetInstance(
-    std::weak_ptr<facebook::react::Instance> instance) noexcept {
+void Timing::SetInstance(std::weak_ptr<facebook::react::Instance> instance) noexcept {
   if (m_wkInstance.expired())
     m_wkInstance = instance;
 }
@@ -237,8 +222,7 @@ void Timing::SetKernelTimer(DateTime dueTime) noexcept {
 
 void Timing::InitializeKernelTimer() noexcept {
   // Create ThreadPoolTimer
-  m_threadpoolTimer = CreateThreadpoolTimer(
-      &Timing::ThreadpoolTimerCallback, static_cast<PVOID>(this), NULL);
+  m_threadpoolTimer = CreateThreadpoolTimer(&Timing::ThreadpoolTimerCallback, static_cast<PVOID>(this), NULL);
   assert(m_threadpoolTimer && "CreateThreadpoolTimer failed.");
 }
 
@@ -269,8 +253,7 @@ Timing::~Timing() {
   }
 }
 
-TimingModule::TimingModule(std::shared_ptr<Timing> &&timing)
-    : m_timing(std::move(timing)) {}
+TimingModule::TimingModule(std::shared_ptr<Timing> &&timing) : m_timing(std::move(timing)) {}
 
 std::string TimingModule::getName() {
   return "Timing";
@@ -307,10 +290,8 @@ std::vector<module::CxxModule::Method> TimingModule::getMethods() noexcept {
 }
 
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread>
-        &nativeThread) noexcept {
-  auto module =
-      std::make_unique<TimingModule>(std::make_shared<Timing>(nativeThread));
+    const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept {
+  auto module = std::make_unique<TimingModule>(std::make_shared<Timing>(nativeThread));
   return std::move(module);
 }
 

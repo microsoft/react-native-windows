@@ -29,11 +29,7 @@ static void SetThreadName(DWORD dwThreadID, const char *threadName) {
 #pragma warning(push)
 #pragma warning(disable : 6320 6322)
   __try {
-    RaiseException(
-        MS_VC_EXCEPTION,
-        0,
-        sizeof(info) / sizeof(ULONG_PTR),
-        (ULONG_PTR *)&info);
+    RaiseException(MS_VC_EXCEPTION, 0, sizeof(info) / sizeof(ULONG_PTR), (ULONG_PTR *)&info);
   } __except (EXCEPTION_EXECUTE_HANDLER) {
   }
 #pragma warning(pop)
@@ -44,8 +40,7 @@ static void SetThreadName(std::thread &thread, const char *threadName) {
   SetThreadName(threadId, threadName);
 }
 
-std::shared_ptr<facebook::react::CxxMessageQueue>
-CreateAndStartJSQueueThread() {
+std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread() {
   auto q = std::make_shared<facebook::react::CxxMessageQueue>();
   std::thread t([q]() mutable {
     auto loop = facebook::react::CxxMessageQueue::getRunLoop(q);

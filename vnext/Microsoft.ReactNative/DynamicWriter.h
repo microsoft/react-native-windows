@@ -7,10 +7,7 @@
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-struct DynamicWriter
-    : winrt::implements<
-          DynamicWriter,
-          winrt::Microsoft::ReactNative::Bridge::IJSValueWriter> {
+struct DynamicWriter : winrt::implements<DynamicWriter, winrt::Microsoft::ReactNative::Bridge::IJSValueWriter> {
   folly::dynamic TakeValue() noexcept;
 
  public: // IJSValueWriter
@@ -29,16 +26,10 @@ struct DynamicWriter
   enum struct State { Start, PropertyName, PropertyValue, Array, Finish };
 
   struct StackEntry {
-    StackEntry(
-        State state,
-        folly::dynamic &&object,
-        std::string &&propertyName) noexcept
-        : State{state},
-          Dynamic{std::move(object)},
-          PropertyName{std::move(propertyName)} {}
+    StackEntry(State state, folly::dynamic &&object, std::string &&propertyName) noexcept
+        : State{state}, Dynamic{std::move(object)}, PropertyName{std::move(propertyName)} {}
 
-    StackEntry(State state, folly::dynamic &&array) noexcept
-        : State{state}, Dynamic(std::move(array)) {}
+    StackEntry(State state, folly::dynamic &&array) noexcept : State{state}, Dynamic(std::move(array)) {}
 
     State State;
     folly::dynamic Dynamic;

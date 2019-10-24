@@ -15,10 +15,7 @@ class NetworkingModule : public facebook::xplat::module::CxxModule {
 
   IHttpResource *GetResource(int64_t requestId) noexcept;
   void OnDataReceived(int64_t requestId, const std::string &data) noexcept;
-  void OnRequestError(
-      int64_t requestId,
-      const std::string &error,
-      bool isTimeOut) noexcept;
+  void OnRequestError(int64_t requestId, const std::string &error, bool isTimeOut) noexcept;
   void OnRequestSuccess(int64_t requestId) noexcept;
   void OnResponseReceived(
       int64_t requestId,

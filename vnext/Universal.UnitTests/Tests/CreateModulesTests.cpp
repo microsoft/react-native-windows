@@ -25,8 +25,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace react::uwp;
 
 TEST_CLASS(CreateModulesTest){TEST_METHOD(CreateModules_AppStateModule){
-    auto appStateModule =
-        std::make_unique<AppStateModule>(std::make_unique<AppState>());
+    auto appStateModule = std::make_unique<AppStateModule>(std::make_unique<AppState>());
 
 Assert::IsFalse(appStateModule == nullptr);
 }
@@ -39,18 +38,15 @@ TEST_METHOD(CreateModules_DevSupportManager) {
 TEST_METHOD(CreateModules_DeviceInfoModule) {
   auto reactInstance = react::uwp::CreateReactInstance(nullptr);
   Assert::IsFalse(reactInstance == nullptr);
-  auto deviceInfoModule = std::make_unique<DeviceInfoModule>(
-      std::make_unique<DeviceInfo>(reactInstance));
+  auto deviceInfoModule = std::make_unique<DeviceInfoModule>(std::make_unique<DeviceInfo>(reactInstance));
 
   Assert::IsFalse(deviceInfoModule == nullptr);
 }
 
 TEST_METHOD(CreateModules_LocationObserverModule) {
-  auto messageQueueThread =
-      std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
+  auto messageQueueThread = std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
 
-  auto locationObserverModule =
-      std::make_unique<LocationObserverModule>(messageQueueThread);
+  auto locationObserverModule = std::make_unique<LocationObserverModule>(messageQueueThread);
 
   Assert::IsFalse(locationObserverModule == nullptr);
 }
@@ -62,8 +58,7 @@ TEST_METHOD(CreateModules_NativeUIManager) {
 }
 
 TEST_METHOD(CreateModules_TimingModule) {
-  auto messageQueueThread =
-      std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
+  auto messageQueueThread = std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
 
   auto timingModule = CreateTimingModule(messageQueueThread);
 

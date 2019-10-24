@@ -16,9 +16,8 @@
 namespace facebook {
 namespace react {
 
-using JSECreator = std::function<std::unique_ptr<JSExecutor>(
-    std::shared_ptr<ExecutorDelegate>,
-    std::shared_ptr<MessageQueueThread>)>;
+using JSECreator =
+    std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>;
 
 struct DevSettings;
 
@@ -27,19 +26,15 @@ class DevSupportManager : public IDevSupportManager {
   DevSupportManager();
   ~DevSupportManager();
 
-  virtual JSECreator LoadJavaScriptInProxyMode(
-      const DevSettings &settings) override;
+  virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) override;
 #if !defined(OSS_RN)
-  virtual JSECreator LoadJavaScriptInSandboxMode(
-      const DevSettings &settings) override;
+  virtual JSECreator LoadJavaScriptInSandboxMode(const DevSettings &settings) override;
 #endif
   virtual std::string GetJavaScriptFromServer(
       const std::string &debugHost,
       const std::string &jsBundleName,
       const std::string &platform) override;
-  virtual void StartPollingLiveReload(
-      const std::string &debugHost,
-      std::function<void()> onChangeCallback) override;
+  virtual void StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
   virtual bool HasException() override {
     return m_exceptionCaught;
@@ -48,8 +43,7 @@ class DevSupportManager : public IDevSupportManager {
  private:
   Concurrency::task<void> LaunchDevToolsAsync(
       const std::string &debugHost,
-      const Concurrency::cancellation_token &token =
-          Concurrency::cancellation_token::none());
+      const Concurrency::cancellation_token &token = Concurrency::cancellation_token::none());
 
   bool m_exceptionCaught = false;
   boost::asio::io_context m_context;

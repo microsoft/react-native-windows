@@ -8,20 +8,14 @@
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-struct ReactPackageBuilder
-    : winrt::implements<ReactPackageBuilder, IReactPackageBuilder> {
+struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackageBuilder> {
   ReactPackageBuilder(
       std::shared_ptr<NativeModulesProvider> const &modulesProvider,
-      std::shared_ptr<ViewManagersProvider> const
-          &viewManagersProvider) noexcept;
+      std::shared_ptr<ViewManagersProvider> const &viewManagersProvider) noexcept;
 
  public: // IReactPackageBuilder
-  void AddModule(
-      hstring const &moduleName,
-      ReactModuleProvider const &moduleProvider) noexcept;
-  void AddViewManager(
-      hstring const &viewManagerName,
-      ReactViewManagerProvider const &viewManagerProvider) noexcept;
+  void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
+  void AddViewManager(hstring const &viewManagerName, ReactViewManagerProvider const &viewManagerProvider) noexcept;
 
  private:
   std::shared_ptr<NativeModulesProvider> m_modulesProvider;

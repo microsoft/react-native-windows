@@ -50,6 +50,5 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct ReactRootView
-    : ReactRootViewT<ReactRootView, implementation::ReactRootView> {};
+struct ReactRootView : ReactRootViewT<ReactRootView, implementation::ReactRootView> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
