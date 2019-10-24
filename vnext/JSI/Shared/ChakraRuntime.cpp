@@ -20,10 +20,28 @@ namespace Microsoft::JSI {
 
 namespace {
 
-constexpr const char *const g_functionIsHostFunctionPropName = "$$FunctionIsHostFunction$$";
+constexpr const char *const g_bootstrapBundleSource =
+    "function $$ChakraRuntimeGetPropertyNames$$(obj)\n"
+    "{\n"
+    "  var propertyNames = []\n"
+    "  for (propertyName in obj) \n"
+    "  {\n"
+    "    propertyNames.push(propertyName)\n"
+    "  }\n"
+    "  return propertyNames\n"
+    "}\n"
+    "function $$ChakraRuntimeProxyConstructor$$(target, handler)\n"
+    "{\n"
+    "  return new Proxy(target, handler)\n"
+    "}";
 
-constexpr const char *const g_proxyIsHostObjectPropName = "$$ProxyIsHostObject$$";
+constexpr const char *const g_getPropertyNamesBootstrapFuncName = "$$ChakraRuntimeGetPropertyNames$$";
+constexpr const char *const g_proxyConstructorBootstrapFuncName = "$$ChakraRuntimeProxyConstructor$$";
+
 constexpr const char *const g_proxyGetHostObjectTargetPropName = "$$ProxyGetHostObjectTarget$$";
+constexpr const char *const g_proxyIsHostObjectPropName = "$$ProxyIsHostObject$$";
+
+constexpr const char *const g_functionIsHostFunctionPropName = "$$FunctionIsHostFunction$$";
 
 class HostFunctionProxy {
  public:
@@ -84,6 +102,9 @@ ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::mo
   setupNativePromiseContinuation();
 
   std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
+
+  static facebook::jsi::StringBuffer bootstrapBundleSourceBuffer{g_bootstrapBundleSource};
+  evaluateJavaScriptSimple(bootstrapBundleSourceBuffer, "ChakraRuntime_bootstrap.bundle");
 }
 
 ChakraRuntime::~ChakraRuntime() noexcept {
@@ -269,23 +290,10 @@ facebook::jsi::Object ChakraRuntime::createObject() {
 }
 
 facebook::jsi::Object ChakraRuntime::createObject(std::shared_ptr<facebook::jsi::HostObject> hostObject) {
-  constexpr const char *const jsProxyConstructorWrapperSource =
-      "(function()\n"
-      "{\n"
-      "  return function(target, handler)\n"
-      "  {\n"
-      "    return new Proxy(target, handler)\n"
-      "  }\n"
-      "})()";
+  facebook::jsi::Function jsProxyConstructor =
+      global().getPropertyAsFunction(*this, g_proxyConstructorBootstrapFuncName);
 
-  static facebook::jsi::StringBuffer jsProxyConstructorWrapperSourceBuffer{jsProxyConstructorWrapperSource};
-
-  facebook::jsi::Function jsProxyConstructorWrapper =
-      evaluateJavaScriptSimple(jsProxyConstructorWrapperSourceBuffer, "ChakraRuntime_createObject.js")
-          .asObject(*this)
-          .asFunction(*this);
-
-  return jsProxyConstructorWrapper
+  return jsProxyConstructor
       .call(*this, MakePointer<facebook::jsi::Object>(ToJsObject(hostObject)), createHostObjectProxyHandler())
       .asObject(*this);
 }
@@ -378,26 +386,8 @@ bool ChakraRuntime::isHostFunction(const facebook::jsi::Function &obj) const {
 }
 
 facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object &object) {
-  constexpr const char *const jsGetPropertyNamesSource =
-      "(function()\n"
-      "{\n"
-      "  return function(obj)\n"
-      "  {\n"
-      "    var propertyNames = []\n"
-      "    for (propertyName in obj) \n"
-      "    {\n"
-      "      propertyNames.push(propertyName)\n"
-      "    }\n"
-      "    return propertyNames\n"
-      "  }\n"
-      "})()";
-
-  static facebook::jsi::StringBuffer jsGetPropertyNamesSourceBuffer{jsGetPropertyNamesSource};
-
   facebook::jsi::Function jsGetPropertyNames =
-      evaluateJavaScriptSimple(jsGetPropertyNamesSourceBuffer, "ChakraRuntime_getPropertyNames.js")
-          .asObject(*this)
-          .asFunction(*this);
+      global().getPropertyAsFunction(*this, g_getPropertyNamesBootstrapFuncName);
 
   facebook::jsi::Value objAsValue(*this, object);
   return call(jsGetPropertyNames, facebook::jsi::Value::undefined(), &objAsValue, 1).asObject(*this).asArray(*this);
