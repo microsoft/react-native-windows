@@ -39,6 +39,10 @@ const char *NativeAnimatedModule::s_addAnimatedEventToViewName{
     "addAnimatedEventToView"};
 const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{
     "removeAnimatedEventFromView"};
+const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValue{
+    "startListeningToAnimatedNodeValue" };
+const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValue{
+    "stopListeningToAnimatedNodeValue" };
 
 NativeAnimatedModule::NativeAnimatedModule(
     const std::weak_ptr<IReactInstance> &reactInstance)
@@ -152,13 +156,13 @@ NativeAnimatedModule::getMethods() {
                 viewTag, eventName, animatedValueTag);
           }),
       Method(
-          "startListeningToAnimatedNodeValue", // should be replaced with the s_ variation
+          s_startListeningToAnimatedNodeValue,
           [this](folly::dynamic args) {
             const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
             NativeAnimatedModule::StartListeningToAnimatedNodeValue(viewTag);
           }),
       Method(
-          "stopListeningToAnimatedNodeValue", // should be replaced with the s_ variation
+          s_stopListeningToAnimatedNodeValue,
           [this](folly::dynamic args) {
             const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
             NativeAnimatedModule::StopListeningToAnimatedNodeValue(viewTag);
