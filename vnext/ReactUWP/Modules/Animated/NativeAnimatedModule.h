@@ -109,6 +109,8 @@ class NativeAnimatedModule final : public facebook::xplat::module::CxxModule {
   static const char *s_extractAnimatedNodeOffsetName;
   static const char *s_addAnimatedEventToViewName;
   static const char *s_removeAnimatedEventFromViewName;
+  static const char *s_startListeningToAnimatedNodeValueName;
+  static const char *s_stopListeningToAnimatedNodeValueName;
 };
 } // namespace uwp
 } // namespace react

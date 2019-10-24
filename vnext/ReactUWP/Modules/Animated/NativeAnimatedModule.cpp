@@ -27,6 +27,8 @@ const char *NativeAnimatedModule::s_flattenAnimatedNodeOffsetName{"flattenAnimat
 const char *NativeAnimatedModule::s_extractAnimatedNodeOffsetName{"extractAnimatedNodeOffset"};
 const char *NativeAnimatedModule::s_addAnimatedEventToViewName{"addAnimatedEventToView"};
 const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{"removeAnimatedEventFromView"};
+const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValueName{"startListeningToAnimatedNodeValue"};
+const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValueName{"stopListeningToAnimatedNodeValue"};
 
 NativeAnimatedModule::NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance) {
@@ -131,6 +133,18 @@ std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::ge
             const auto eventName = facebook::xplat::jsArgAsString(args, 1);
             const auto animatedValueTag = facebook::xplat::jsArgAsInt(args, 2);
             NativeAnimatedModule::RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag);
+          }),
+      Method(
+          s_startListeningToAnimatedNodeValueName,
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StartListeningToAnimatedNodeValue(viewTag);
+          }),
+      Method(
+          s_stopListeningToAnimatedNodeValueName,
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StopListeningToAnimatedNodeValue(viewTag);
           }),
   };
 }
