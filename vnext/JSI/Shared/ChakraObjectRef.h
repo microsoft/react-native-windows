@@ -166,8 +166,7 @@ ChakraObjectRef ToJsNumber(int num);
  * @remarks The returned ArrayBuffer is backed by buffer and keeps buffer alive
  * till the garbage collector finalizes it.
  */
-ChakraObjectRef ToJsArrayBuffer(
-    const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
+ChakraObjectRef ToJsArrayBuffer(const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
 
 /**
  * @returns A ChakraObjectRef managing a JS Object.
@@ -178,8 +177,7 @@ ChakraObjectRef ToJsArrayBuffer(
 template <typename T>
 ChakraObjectRef ToJsObject(const std::shared_ptr<T> &data) {
   if (!data) {
-    throw facebook::jsi::JSINativeException(
-        "Cannot create an external JS Object without backing data.");
+    throw facebook::jsi::JSINativeException("Cannot create an external JS Object without backing data.");
   }
 
   JsValueRef obj = nullptr;
@@ -193,8 +191,7 @@ ChakraObjectRef ToJsObject(const std::shared_ptr<T> &data) {
       [](void *dataToDestroy) {
         // We wrap dataToDestroy in a unique_ptr to avoid calling delete
         // explicitly.
-        std::unique_ptr<std::shared_ptr<T>> wrapper{
-            static_cast<std::shared_ptr<T> *>(dataToDestroy)};
+        std::unique_ptr<std::shared_ptr<T>> wrapper{static_cast<std::shared_ptr<T> *>(dataToDestroy)};
       },
       &obj));
 
@@ -222,9 +219,7 @@ T *GetExternalData(const ChakraObjectRef &object) {
  * @returns A boolean indicating whether jsValue1 and jsValue2 are strictly
  * equal.
  */
-bool CompareJsValues(
-    const ChakraObjectRef &jsValue1,
-    const ChakraObjectRef &jsValue2);
+bool CompareJsValues(const ChakraObjectRef &jsValue1, const ChakraObjectRef &jsValue2);
 
 /**
  * @param jsPropId1 A ChakraObjectRef managing a JsPropertyIdRef.
@@ -233,9 +228,7 @@ bool CompareJsValues(
  * @returns A boolean indicating whether jsPropId1 and jsPropId2 are strictly
  * equal.
  */
-bool CompareJsPropertyIds(
-    const ChakraObjectRef &jsPropId1,
-    const ChakraObjectRef &jsPropId2);
+bool CompareJsPropertyIds(const ChakraObjectRef &jsPropId1, const ChakraObjectRef &jsPropId2);
 
 /**
  * TODO (yicyao): Add documentation here.
