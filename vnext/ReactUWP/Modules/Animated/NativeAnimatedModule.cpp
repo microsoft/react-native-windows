@@ -39,9 +39,9 @@ const char *NativeAnimatedModule::s_addAnimatedEventToViewName{
     "addAnimatedEventToView"};
 const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{
     "removeAnimatedEventFromView"};
-const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValue{
+const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValueName{
     "startListeningToAnimatedNodeValue" };
-const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValue{
+const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValueName{
     "stopListeningToAnimatedNodeValue" };
 
 NativeAnimatedModule::NativeAnimatedModule(
@@ -156,13 +156,13 @@ NativeAnimatedModule::getMethods() {
                 viewTag, eventName, animatedValueTag);
           }),
       Method(
-          s_startListeningToAnimatedNodeValue,
+          s_startListeningToAnimatedNodeValueName,
           [this](folly::dynamic args) {
             const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
             NativeAnimatedModule::StartListeningToAnimatedNodeValue(viewTag);
           }),
       Method(
-          s_stopListeningToAnimatedNodeValue,
+          s_stopListeningToAnimatedNodeValueName,
           [this](folly::dynamic args) {
             const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
             NativeAnimatedModule::StopListeningToAnimatedNodeValue(viewTag);
