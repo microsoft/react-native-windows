@@ -6,18 +6,24 @@ Playground is a sample standalone application that shows usage of React Native f
 1. Make sure your development machine has been set up with all the system requirements and dependencies mentioned [here](https://github.com/microsoft/react-native-windows/blob/master/vnext/docs/GettingStarted.md). Make sure a browser is launched and running.
 
 2. Open a command prompt in Administrator mode, Navigate to the root folder and install React Native
+
 `npm install -g react-native-cli`
 
 3. Install React Native for Windows
+
 `yarn add rnpm-plugin-windows`
+`yarn install`
 
 4. Ensure packages are built
+
 `yarn build`
 
 5. Navigate to the playground folder
+
 `cd packages\playground`
 
 6. Run the app
+
 `react-native run-windows`
 
 This command will build and deploy the application along with launching Metro bundler and the dev tools. 
