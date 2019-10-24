@@ -328,7 +328,7 @@ TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
   } catch (const JSError &ex) {
     exc = ex.what();
   }
-  //EXPECT_NE(exc.find("Cannot get"), std::string::npos);
+  EXPECT_NE(exc.find("Cannot get"), std::string::npos);
   //exc = "";
   //try {
   //  function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
@@ -597,7 +597,6 @@ TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
                   .instanceOf(rt, ctor));
 }
 
-// TODO (yicyao): Fix this test.
 TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
   auto one = std::make_shared<int>(1);
   Function plusOne = Function::createFromHostFunction(
@@ -969,9 +968,8 @@ TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashWhenValueEscapes) {
   EXPECT_EQ(v.getObject(rt).getProperty(rt, "a").getNumber(), 5);
 }
 
-// TODO (yicyao): Enable this test.
 // Verifies you can have a host object that emulates a normal object
-TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectWithValueMembers) {
+TEST_P(JsiRuntimeUnitTests, HostObjectWithValueMembers) {
   class Bag : public HostObject {
    public:
     Bag() = default;

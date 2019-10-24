@@ -299,6 +299,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       const facebook::jsi::Value *value,
       size_t count);
 
+  // Host function and host object helpers
   static JsValueRef CALLBACK HostFunctionCall(
       JsValueRef callee,
       bool isConstructCall,
@@ -306,63 +307,23 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       unsigned short argumentCountIncThis,
       void *callbackState);
 
-  template <typename T>
-  class ObjectWithExternalData : public facebook::jsi::Object {
-   public:
-    static facebook::jsi::Object create(
-        ChakraRuntime &runtime,
-        std::unique_ptr<T> &&externalData);
+  // For the following functions, runtime must be referring to a ChakraRuntime.
+  static facebook::jsi::Value HostObjectGetTrap(
+      Runtime &runtime,
+      const facebook::jsi::Value & /*thisVal*/,
+      const facebook::jsi::Value *args,
+      size_t count);
+  static facebook::jsi::Value HostObjectSetTrap(
+      Runtime &runtime,
+      const facebook::jsi::Value & /*thisVal*/,
+      const facebook::jsi::Value *args,
+      size_t count);
+  static facebook::jsi::Value HostObjectOwnKeysTrap(
+      Runtime &runtime,
+      const facebook::jsi::Value & /*thisVal*/,
+      const facebook::jsi::Value *args,
+      size_t count);
 
-    static ObjectWithExternalData<T> fromExisting(
-        ChakraRuntime &runtime,
-        facebook::jsi::Object &&obj);
-
-   public:
-    T *getExternalData();
-    ObjectWithExternalData(const Runtime::PointerValue *value)
-        : Object(const_cast<Runtime::PointerValue *>(value)) {
-    } // TODO :: const_cast
-
-    ObjectWithExternalData(ObjectWithExternalData &&other) = default;
-    ObjectWithExternalData &operator=(ObjectWithExternalData &&other) = default;
-  };
-
-  template <class T>
-  friend class ObjectWithExternalData;
-
-  class HostObjectProxy {
-   public:
-    facebook::jsi::Value Get(const facebook::jsi::PropNameID &propNameId) {
-      return m_hostObject->get(m_runtime, propNameId);
-    }
-
-    void Set(
-        const facebook::jsi::PropNameID &propNameId,
-        const facebook::jsi::Value &value) {
-      m_hostObject->set(m_runtime, propNameId, value);
-    }
-
-    std::vector<facebook::jsi::PropNameID> Enumerator() {
-      return m_hostObject->getPropertyNames(m_runtime);
-    }
-
-    HostObjectProxy(
-        ChakraRuntime &rt,
-        const std::shared_ptr<facebook::jsi::HostObject> &hostObject)
-        : m_runtime(rt), m_hostObject(hostObject) {}
-    std::shared_ptr<facebook::jsi::HostObject> getHostObject() {
-      return m_hostObject;
-    }
-
-   private:
-    ChakraRuntime &m_runtime;
-    std::shared_ptr<facebook::jsi::HostObject> m_hostObject;
-  };
-
-  facebook::jsi::Object createProxy(
-      facebook::jsi::Object &&target,
-      facebook::jsi::Object &&handler) noexcept;
-  facebook::jsi::Function createProxyConstructor() noexcept;
   facebook::jsi::Object createHostObjectProxyHandler() noexcept;
 
   // Promise Helpers

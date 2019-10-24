@@ -319,4 +319,10 @@ bool CompareJsPropertyIds(
   std::terminate();
 }
 
+void ThrowJsException(const std::string_view &message) {
+  JsValueRef error = nullptr;
+  VerifyChakraErrorElseThrow(JsCreateError(ToJsString(message), &error));
+  VerifyChakraErrorElseThrow(JsSetException(error));
+}
+
 } // namespace Microsoft::JSI

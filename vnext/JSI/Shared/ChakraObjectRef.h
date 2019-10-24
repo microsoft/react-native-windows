@@ -161,36 +161,6 @@ ChakraObjectRef ToJsString(const ChakraObjectRef &jsValue);
 ChakraObjectRef ToJsNumber(int num);
 
 /**
- * @returns A ChakraObjectRef managing a JS Object.
- *
- * @remarks The returned Object is backed by data and keeps data alive till the
- * garbage collector finalizes it.
- */
-template <typename T>
-ChakraObjectRef ToJsObject(std::unique_ptr<T> &&data) {
-  if (!data) {
-    throw facebook::jsi::JSINativeException(
-        "Cannot create an external JS Object without backing data.");
-  }
-
-  JsValueRef obj = nullptr;
-  VerifyChakraErrorElseThrow(JsCreateExternalObject(
-      data.get(),
-      [](void *dataToDestroy) {
-        // We wrap dataToDestroy in a unique_ptr to avoid calling delete
-        // explicitly.
-        std::unique_ptr<T> wrapper{static_cast<T *>(dataToDestroy)};
-      },
-      &obj));
-
-  // We only call data.release() after JsCreateExternalObject succeeds.
-  // Otherwise, when JsCreateExternalObject fails and an exception is thrown,
-  // the memory that data used to own will be leaked.
-  data.release();
-  return ChakraObjectRef(obj);
-}
-
-/**
  * @returns A ChakraObjectRef managing a JS ArrayBuffer.
  *
  * @remarks The returned ArrayBuffer is backed by buffer and keeps buffer alive
@@ -198,6 +168,52 @@ ChakraObjectRef ToJsObject(std::unique_ptr<T> &&data) {
  */
 ChakraObjectRef ToJsArrayBuffer(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
+
+/**
+ * @returns A ChakraObjectRef managing a JS Object.
+ *
+ * @remarks The returned Object is backed by data and keeps data alive till the
+ * garbage collector finalizes it.
+ */
+template <typename T>
+ChakraObjectRef ToJsObject(const std::shared_ptr<T> &data) {
+  if (!data) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot create an external JS Object without backing data.");
+  }
+
+  JsValueRef obj = nullptr;
+  auto dataWrapper = std::make_unique<std::shared_ptr<T>>(data);
+
+  // We allocate a copy of data on the heap, a shared_ptr which is deleted when
+  // the JavaScript garbage collecotr releases the created external Object. This
+  // ensures that data stays alive while the JavaScript engine is using it.
+  VerifyChakraErrorElseThrow(JsCreateExternalObject(
+      dataWrapper.get(),
+      [](void *dataToDestroy) {
+        // We wrap dataToDestroy in a unique_ptr to avoid calling delete
+        // explicitly.
+        std::unique_ptr<std::shared_ptr<T>> wrapper{
+            static_cast<std::shared_ptr<T> *>(dataToDestroy)};
+      },
+      &obj));
+
+  // We only call dataWrapper.release() after JsCreateExternalObject succeeds.
+  // Otherwise, when JsCreateExternalObject fails and an exception is thrown,
+  // the memory that dataWrapper used to own will be leaked.
+  dataWrapper.release();
+  return ChakraObjectRef(obj);
+}
+
+/**
+ * TODO (yicyao): Add documentation here.
+ */
+template <typename T>
+T *GetExternalData(const ChakraObjectRef &object) {
+  void *data;
+  VerifyChakraErrorElseThrow(JsGetExternalData(object, &data));
+  return static_cast<T *>(data);
+}
 
 /**
  * @param jsValue1 A ChakraObjectRef managing a JsValueRef.
@@ -220,5 +236,10 @@ bool CompareJsValues(
 bool CompareJsPropertyIds(
     const ChakraObjectRef &jsPropId1,
     const ChakraObjectRef &jsPropId2);
+
+/**
+ * TODO (yicyao): Add documentation here.
+ */
+void ThrowJsException(const std::string_view &message);
 
 } // namespace Microsoft::JSI
