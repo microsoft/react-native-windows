@@ -617,7 +617,7 @@ TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
       function("function (f) { return f('A cat'); }").call(rt, callable).getString(rt).utf8(rt),
       "A cat was called with std::function::target");
   EXPECT_TRUE(callable.isHostFunction(rt));
-  // TODO (yicyao): Chakra(Core)Runtime currently does not support GetHostFunction.
+  // TODO (yicyao): Chakra(Core)Runtime currently does not support getHostFunction.
   // EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
 
   std::string strval = "strval1";
