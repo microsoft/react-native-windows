@@ -151,6 +151,18 @@ NativeAnimatedModule::getMethods() {
             NativeAnimatedModule::RemoveAnimatedEventFromView(
                 viewTag, eventName, animatedValueTag);
           }),
+      Method(
+          "startListeningToAnimatedNodeValue", // should be replaced with the s_ variation
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StartListeningToAnimatedNodeValue(viewTag);
+          }),
+      Method(
+          "stopListeningToAnimatedNodeValue", // should be replaced with the s_ variation
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StopListeningToAnimatedNodeValue(viewTag);
+          }),
   };
 }
 
