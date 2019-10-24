@@ -18,8 +18,7 @@ namespace Microsoft::React::Test {
 #pragma region BaseWebSocketSession
 
 template <typename SocketLayer>
-BaseWebSocketSession<SocketLayer>::BaseWebSocketSession(
-    WebSocketServiceCallbacks &callbacks)
+BaseWebSocketSession<SocketLayer>::BaseWebSocketSession(WebSocketServiceCallbacks &callbacks)
     : m_callbacks{callbacks}, m_state{State::Stopped} {}
 
 template <typename SocketLayer>
@@ -50,8 +49,7 @@ void BaseWebSocketSession<SocketLayer>::Accept() {
 }
 
 template <typename SocketLayer>
-void BaseWebSocketSession<SocketLayer>::OnHandshake(
-    websocket::response_type &response) {
+void BaseWebSocketSession<SocketLayer>::OnHandshake(websocket::response_type &response) {
   if (m_callbacks.OnHandshake)
     m_callbacks.OnHandshake(response);
 }
@@ -87,9 +85,7 @@ void BaseWebSocketSession<SocketLayer>::Read() {
 }
 
 template <typename SocketLayer>
-void BaseWebSocketSession<SocketLayer>::OnRead(
-    error_code ec,
-    size_t /*transferred*/) {
+void BaseWebSocketSession<SocketLayer>::OnRead(error_code ec, size_t /*transferred*/) {
   if (websocket::error::closed == ec)
     return;
 
@@ -118,9 +114,7 @@ void BaseWebSocketSession<SocketLayer>::OnRead(
 }
 
 template <typename SocketLayer>
-void BaseWebSocketSession<SocketLayer>::OnWrite(
-    error_code ec,
-    size_t /*transferred*/) {
+void BaseWebSocketSession<SocketLayer>::OnWrite(error_code ec, size_t /*transferred*/) {
   if (ec)
     return; // TODO: fail
 
@@ -134,22 +128,17 @@ void BaseWebSocketSession<SocketLayer>::OnWrite(
 
 #pragma region WebSocketSession
 
-WebSocketSession::WebSocketSession(
-    ip::tcp::socket socket,
-    WebSocketServiceCallbacks &callbacks)
+WebSocketSession::WebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks &callbacks)
     : BaseWebSocketSession(callbacks) {
-  m_stream = std::make_shared<websocket::stream<boost::asio::ip::tcp::socket>>(
-      std::move(socket));
-  m_strand = std::make_shared<strand<io_context::executor_type>>(
-      m_stream->get_executor());
+  m_stream = std::make_shared<websocket::stream<boost::asio::ip::tcp::socket>>(std::move(socket));
+  m_strand = std::make_shared<strand<io_context::executor_type>>(m_stream->get_executor());
 }
 
 WebSocketSession::~WebSocketSession() {}
 
 #pragma region BaseWebSocketSession
 
-std::shared_ptr<BaseWebSocketSession<boost::asio::ip::tcp::socket>>
-WebSocketSession::SharedFromThis() /*override*/
+std::shared_ptr<BaseWebSocketSession<boost::asio::ip::tcp::socket>> WebSocketSession::SharedFromThis() /*override*/
 {
   return this->shared_from_this();
 }
@@ -160,9 +149,7 @@ WebSocketSession::SharedFromThis() /*override*/
 
 #pragma region SecureWebSocketSession
 
-SecureWebSocketSession::SecureWebSocketSession(
-    ip::tcp::socket socket,
-    WebSocketServiceCallbacks &callbacks)
+SecureWebSocketSession::SecureWebSocketSession(ip::tcp::socket socket, WebSocketServiceCallbacks &callbacks)
     : BaseWebSocketSession(callbacks) {
   // Initialize SSL context.
   string const cert =
@@ -230,29 +217,22 @@ SecureWebSocketSession::SecureWebSocketSession(
   auto context = ssl::context(ssl::context::sslv23);
 
   // TODO: Remove if not used.
-  context.set_password_callback(
-      [](size_t, ssl::context_base::password_purpose) { return "test"; });
+  context.set_password_callback([](size_t, ssl::context_base::password_purpose) { return "test"; });
 
-  context.set_options(
-      ssl::context::default_workarounds | ssl::context::no_sslv2 |
-      ssl::context::single_dh_use);
+  context.set_options(ssl::context::default_workarounds | ssl::context::no_sslv2 | ssl::context::single_dh_use);
   context.use_certificate_chain(buffer(cert.data(), cert.size()));
-  context.use_private_key(
-      buffer(key.data(), key.size()), ssl::context::file_format::pem);
+  context.use_private_key(buffer(key.data(), key.size()), ssl::context::file_format::pem);
   context.use_tmp_dh(buffer(dh.data(), dh.size()));
 
-  m_stream = std::make_shared<websocket::stream<ssl::stream<ip::tcp::socket>>>(
-      std::move(socket), context);
-  m_strand = std::make_shared<strand<io_context::executor_type>>(
-      m_stream->get_executor());
+  m_stream = std::make_shared<websocket::stream<ssl::stream<ip::tcp::socket>>>(std::move(socket), context);
+  m_strand = std::make_shared<strand<io_context::executor_type>>(m_stream->get_executor());
 }
 
 SecureWebSocketSession::~SecureWebSocketSession() {}
 
 #pragma region BaseWebSocketSession
 
-std::shared_ptr<BaseWebSocketSession<
-    boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>>
+std::shared_ptr<BaseWebSocketSession<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>>
 SecureWebSocketSession::SharedFromThis() /*override*/
 {
   return this->shared_from_this();
@@ -289,10 +269,7 @@ void SecureWebSocketSession::OnSslHandshake(error_code ec) {
 #pragma region WebSocketServer
 
 WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
-    : m_acceptor{m_context},
-      m_socket{m_context},
-      m_sessions{},
-      m_isSecure{isSecure} {
+    : m_acceptor{m_context}, m_socket{m_context}, m_sessions{}, m_isSecure{isSecure} {
   ip::tcp::endpoint ep{ip::make_address("0.0.0.0"), port};
   error_code ec;
 
@@ -317,8 +294,7 @@ WebSocketServer::WebSocketServer(uint16_t port, bool isSecure)
   }
 }
 
-WebSocketServer::WebSocketServer(int port, bool isSecure)
-    : WebSocketServer(static_cast<uint16_t>(port), isSecure) {}
+WebSocketServer::WebSocketServer(int port, bool isSecure) : WebSocketServer(static_cast<uint16_t>(port), isSecure) {}
 
 void WebSocketServer::Start() {
   if (!m_acceptor.is_open())
@@ -326,14 +302,11 @@ void WebSocketServer::Start() {
 
   Accept();
 
-  m_contextThread =
-      std::thread([self = shared_from_this()]() { self->m_context.run(); });
+  m_contextThread = std::thread([self = shared_from_this()]() { self->m_context.run(); });
 }
 
 void WebSocketServer::Accept() {
-  m_acceptor.async_accept(
-      m_socket,
-      std::bind(&WebSocketServer::OnAccept, shared_from_this(), /*ec*/ _1));
+  m_acceptor.async_accept(m_socket, std::bind(&WebSocketServer::OnAccept, shared_from_this(), /*ec*/ _1));
 }
 
 void WebSocketServer::Stop() {
@@ -349,11 +322,9 @@ void WebSocketServer::OnAccept(error_code ec) {
   } else {
     std::shared_ptr<IWebSocketSession> session;
     if (m_isSecure)
-      session = std::shared_ptr<IWebSocketSession>(
-          new SecureWebSocketSession(std::move(m_socket), m_callbacks));
+      session = std::shared_ptr<IWebSocketSession>(new SecureWebSocketSession(std::move(m_socket), m_callbacks));
     else
-      session = std::shared_ptr<IWebSocketSession>(
-          new WebSocketSession(std::move(m_socket), m_callbacks));
+      session = std::shared_ptr<IWebSocketSession>(new WebSocketSession(std::move(m_socket), m_callbacks));
 
     m_sessions.push_back(session);
     session->Start();
@@ -367,8 +338,7 @@ void WebSocketServer::SetOnConnection(function<void()> &&func) {
   m_callbacks.OnConnection = std::move(func);
 }
 
-void WebSocketServer::SetOnHandshake(
-    function<void(websocket::response_type &)> &&func) {
+void WebSocketServer::SetOnHandshake(function<void(websocket::response_type &)> &&func) {
   m_callbacks.OnHandshake = std::move(func);
 }
 

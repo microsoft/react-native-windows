@@ -52,13 +52,9 @@ class AsyncWorkQueue : public IAsyncWorkQueue {
   VOID ShutDown();
   VOID WaitForCallbacksToComplete() override;
 
-  HRESULT QueueWorkItem(
-      _In_ IAsyncCallback *pCallback,
-      _In_opt_ IUnknown *pUserData);
+  HRESULT QueueWorkItem(_In_ IAsyncCallback *pCallback, _In_opt_ IUnknown *pUserData);
 
-  HRESULT QueueWorkItemToFront(
-      _In_ IAsyncCallback *pCallback,
-      _In_opt_ IUnknown *pUserData);
+  HRESULT QueueWorkItemToFront(_In_ IAsyncCallback *pCallback, _In_opt_ IUnknown *pUserData);
 
  private:
   AsyncWorkQueue();
@@ -76,10 +72,7 @@ class AsyncWorkQueue : public IAsyncWorkQueue {
   ///   [in] A TP_WORK structure that defines the work object that generated the
   ///   callback.
   /// </param>
-  static VOID NTAPI s_WorkCallBack(
-      _In_ PTP_CALLBACK_INSTANCE pInstance,
-      _In_ PVOID pContext,
-      _In_ PTP_WORK pWork);
+  static VOID NTAPI s_WorkCallBack(_In_ PTP_CALLBACK_INSTANCE pInstance, _In_ PVOID pContext, _In_ PTP_WORK pWork);
 
   /// <summary>Callback for threadpool. Delegated to by
   /// s_WorkCallBack().</summary>
@@ -87,10 +80,7 @@ class AsyncWorkQueue : public IAsyncWorkQueue {
 
   enum InsertPosition { Front, Back };
 
-  HRESULT _QueueWorkItemAt(
-      _In_ IAsyncCallback *pCallback,
-      _In_opt_ IUnknown *pUserData,
-      _In_ InsertPosition position);
+  HRESULT _QueueWorkItemAt(_In_ IAsyncCallback *pCallback, _In_opt_ IUnknown *pUserData, _In_ InsertPosition position);
 
   VOID _CancelAllAndWait(_In_ BOOL permanentlyShutDown);
   VOID _CancelAllAsync(_In_ BOOL permanentlyShutDown);

@@ -13,9 +13,8 @@ using namespace Windows::UI::Xaml::Controls::Primitives;
 namespace react {
 namespace uwp {
 
-class SnapPointManagingContentControl : public winrt::ContentControlT<
-                                            SnapPointManagingContentControl,
-                                            winrt::IScrollSnapPointsInfo> {
+class SnapPointManagingContentControl
+    : public winrt::ContentControlT<SnapPointManagingContentControl, winrt::IScrollSnapPointsInfo> {
  private:
   SnapPointManagingContentControl();
 
@@ -32,22 +31,17 @@ class SnapPointManagingContentControl : public winrt::ContentControlT<
   bool AreHorizontalSnapPointsRegular();
   bool AreVerticalSnapPointsRegular();
 
-  winrt::event_token HorizontalSnapPointsChanged(
-      winrt::EventHandler<winrt::IInspectable> const &value);
+  winrt::event_token HorizontalSnapPointsChanged(winrt::EventHandler<winrt::IInspectable> const &value);
   void HorizontalSnapPointsChanged(winrt::event_token const &token);
 
-  winrt::event_token VerticalSnapPointsChanged(
-      winrt::EventHandler<winrt::IInspectable> const &value);
+  winrt::event_token VerticalSnapPointsChanged(winrt::EventHandler<winrt::IInspectable> const &value);
   void VerticalSnapPointsChanged(winrt::event_token const &token);
 
   winrt::IVectorView<float> GetIrregularSnapPoints(
       winrt::Orientation orientation,
       winrt::SnapPointsAlignment alignment);
 
-  float GetRegularSnapPoints(
-      winrt::Orientation orientation,
-      winrt::SnapPointsAlignment alignment,
-      float offset);
+  float GetRegularSnapPoints(winrt::Orientation orientation, winrt::SnapPointsAlignment alignment, float offset);
 
   // Helpers
   void SetHorizontal(bool horizontal);
@@ -59,10 +53,8 @@ class SnapPointManagingContentControl : public winrt::ContentControlT<
   winrt::IVectorView<float> m_offsets{};
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
-  winrt::event<winrt::EventHandler<winrt::IInspectable>>
-      m_horizontalSnapPointsChangedEventSource;
-  winrt::event<winrt::EventHandler<winrt::IInspectable>>
-      m_verticalSnapPointsChangedEventSource;
+  winrt::event<winrt::EventHandler<winrt::IInspectable>> m_horizontalSnapPointsChangedEventSource;
+  winrt::event<winrt::EventHandler<winrt::IInspectable>> m_verticalSnapPointsChangedEventSource;
 
   bool m_horizontal{false};
   float m_startHeight{0};

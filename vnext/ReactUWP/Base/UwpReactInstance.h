@@ -29,48 +29,28 @@ struct ViewManagerProvider;
 namespace react {
 namespace uwp {
 
-class UwpReactInstance
-    : public IReactInstance,
-      public ::std::enable_shared_from_this<UwpReactInstance> {
+class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from_this<UwpReactInstance> {
  public:
   // Creation
   UwpReactInstance(
-      const std::shared_ptr<facebook::react::NativeModuleProvider>
-          &moduleProvider,
-      const std::shared_ptr<ViewManagerProvider> &viewManagerProvider =
-          nullptr);
+      const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
+      const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
 
-  void Start(
-      const std::shared_ptr<IReactInstance> &spThis,
-      const ReactInstanceSettings &settings) override;
+  void Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) override;
 
   // IReactInstance implementation
-  void AttachMeasuredRootView(
-      IXamlRootView *pRootView,
-      folly::dynamic &&initProps) override;
+  void AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) override;
   void DetachRootView(IXamlRootView *pRootView) override;
-  LiveReloadCallbackCookie RegisterLiveReloadCallback(
-      std::function<void()> callback) override;
+  LiveReloadCallbackCookie RegisterLiveReloadCallback(std::function<void()> callback) override;
   void UnregisterLiveReloadCallback(LiveReloadCallbackCookie &cookie) override;
-  ErrorCallbackCookie RegisterErrorCallback(
-      std::function<void()> callback) override;
+  ErrorCallbackCookie RegisterErrorCallback(std::function<void()> callback) override;
   void UnregisterErrorCallback(ErrorCallbackCookie &cookie) override;
-  DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(
-      std::function<void()> callback) override;
-  void UnRegisterDebuggerAttachCallback(
-      DebuggerAttachCallbackCookie &cookie) override;
-  void DispatchEvent(
-      int64_t viewTag,
-      std::string eventName,
-      folly::dynamic &&eventData) override;
-  void CallJsFunction(
-      std::string &&moduleName,
-      std::string &&method,
-      folly::dynamic &&params) noexcept override;
-  const std::shared_ptr<facebook::react::MessageQueueThread>
-      &JSMessageQueueThread() const noexcept override;
-  const std::shared_ptr<facebook::react::MessageQueueThread>
-      &DefaultNativeMessageQueueThread() const noexcept override;
+  DebuggerAttachCallbackCookie RegisterDebuggerAttachCallback(std::function<void()> callback) override;
+  void UnRegisterDebuggerAttachCallback(DebuggerAttachCallbackCookie &cookie) override;
+  void DispatchEvent(int64_t viewTag, std::string eventName, folly::dynamic &&eventData) override;
+  void CallJsFunction(std::string &&moduleName, std::string &&method, folly::dynamic &&params) noexcept override;
+  const std::shared_ptr<facebook::react::MessageQueueThread> &JSMessageQueueThread() const noexcept override;
+  const std::shared_ptr<facebook::react::MessageQueueThread> &DefaultNativeMessageQueueThread() const noexcept override;
   facebook::react::INativeUIManager *NativeUIManager() const noexcept override;
   bool NeedsReload() const noexcept override {
     return m_needsReload;
@@ -78,8 +58,7 @@ class UwpReactInstance
   void SetAsNeedsReload() noexcept override {
     m_needsReload = true;
   }
-  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const
-      noexcept override {
+  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override {
     return m_instanceWrapper->GetInstance();
   }
   bool IsInError() const noexcept override {
@@ -106,13 +85,11 @@ class UwpReactInstance
   }
 
   // Test hooks
-  void SetXamlViewCreatedTestHook(
-      std::function<void(react::uwp::XamlView)> testHook) override;
+  void SetXamlViewCreatedTestHook(std::function<void(react::uwp::XamlView)> testHook) override;
   void CallXamlViewCreatedTestHook(react::uwp::XamlView view) override;
 
   // Public functions
-  std::shared_ptr<facebook::react::MessageQueueThread> GetNewUIMessageQueue()
-      const;
+  std::shared_ptr<facebook::react::MessageQueueThread> GetNewUIMessageQueue() const;
 
  private:
   void OnHitError(const std::string &error) noexcept;
@@ -132,11 +109,9 @@ class UwpReactInstance
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{nullptr};
   std::shared_ptr<facebook::react::NativeModuleProvider> m_moduleProvider;
   std::shared_ptr<ViewManagerProvider> m_viewManagerProvider;
-  std::map<LiveReloadCallbackCookie, std::function<void()>>
-      m_liveReloadCallbacks;
+  std::map<LiveReloadCallbackCookie, std::function<void()>> m_liveReloadCallbacks;
   std::map<ErrorCallbackCookie, std::function<void()>> m_errorCallbacks;
-  std::map<DebuggerAttachCallbackCookie, std::function<void()>>
-      m_debuggerAttachCallbacks;
+  std::map<DebuggerAttachCallbackCookie, std::function<void()>> m_debuggerAttachCallbacks;
   bool m_needsReload{false};
   bool m_started{false};
   std::atomic_bool m_isInError{false};

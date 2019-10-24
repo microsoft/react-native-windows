@@ -41,16 +41,13 @@ ShadowNode *TestViewManager::createShadow() const {
 void TestViewManager::destroyShadow(ShadowNode *) const {}
 
 dynamic TestViewManager::GetConstants() const {
-  folly::dynamic constants =
-      folly::dynamic::object("Constants", GetExportedViewConstants())(
-          "Commands", GetCommands())("NativeProps", GetNativeProps());
+  folly::dynamic constants = folly::dynamic::object("Constants", GetExportedViewConstants())("Commands", GetCommands())(
+      "NativeProps", GetNativeProps());
 
-  const auto bubblingEventTypesConstants =
-      GetExportedCustomBubblingEventTypeConstants();
+  const auto bubblingEventTypesConstants = GetExportedCustomBubblingEventTypeConstants();
   if (!bubblingEventTypesConstants.empty())
     constants["bubblingEventTypes"] = bubblingEventTypesConstants;
-  const auto directEventTypesConstants =
-      GetExportedCustomDirectEventTypeConstants();
+  const auto directEventTypesConstants = GetExportedCustomDirectEventTypeConstants();
   if (!directEventTypesConstants.empty())
     constants["directEventTypes"] = directEventTypesConstants;
 
@@ -76,8 +73,7 @@ void TestNativeUIManager::configureNextLayoutAnimation(
 
 void TestNativeUIManager::destroy() {}
 
-ShadowNode *TestNativeUIManager::createRootShadowNode(
-    IReactRootView *rootView) {
+ShadowNode *TestNativeUIManager::createRootShadowNode(IReactRootView *rootView) {
   return new TestShadowNode();
 }
 
@@ -112,25 +108,18 @@ void TestNativeUIManager::AddRootView(
     facebook::react::ShadowNode &shadowNode,
     facebook::react::IReactRootView *pReactRootView) {}
 
-void TestNativeUIManager::CreateView(
-    facebook::react::ShadowNode &shadowNode,
-    folly::dynamic /*ReadableMap*/ props) {}
+void TestNativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
 void TestNativeUIManager::AddView(
     facebook::react::ShadowNode &parentShadowNode,
     facebook::react::ShadowNode &childShadowNode,
     uint64_t index) {}
 
-void TestNativeUIManager::RemoveView(
-    facebook::react::ShadowNode &shadowNode,
-    bool removeChildren) {}
+void TestNativeUIManager::RemoveView(facebook::react::ShadowNode &shadowNode, bool removeChildren) {}
 
-void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
-}
+void TestNativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {}
 
-void TestNativeUIManager::UpdateView(
-    facebook::react::ShadowNode &shadowNode,
-    folly::dynamic /*ReadableMap*/ props) {}
+void TestNativeUIManager::UpdateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) {}
 
 void TestNativeUIManager::focus(int64_t reactTag) {}
 

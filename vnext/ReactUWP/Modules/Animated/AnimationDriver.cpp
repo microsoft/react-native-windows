@@ -14,13 +14,8 @@ AnimationDriver::AnimationDriver(
     const Callback &endCallback,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : m_id(id),
-      m_animatedValueTag(animatedValueTag),
-      m_endCallback(endCallback),
-      m_config(config),
-      m_manager(manager) {
-  m_iterations = [iterations = config.find("iterations"),
-                  end = config.items().end()]() {
+    : m_id(id), m_animatedValueTag(animatedValueTag), m_endCallback(endCallback), m_config(config), m_manager(manager) {
+  m_iterations = [iterations = config.find("iterations"), end = config.items().end()]() {
     if (iterations != end) {
       return static_cast<int64_t>(iterations.dereference().second.asDouble());
     }
@@ -41,24 +36,19 @@ void AnimationDriver::StartAnimation() {
     auto const rawValue = animatedValue->RawValue();
     auto const offsetValue = animatedValue->Offset();
 
-    animatedValue->PropertySet().StartAnimation(
-        ValueAnimatedNode::s_offsetName, animation);
+    animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_offsetName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken =
-      scopedBatch.Completed([EndCallback = m_endCallback,
-                             weakManager = m_manager,
-                             valueTag = m_animatedValueTag,
-                             id = m_id](auto sender, auto) {
+  m_scopedBatchCompletedToken = scopedBatch.Completed(
+      [EndCallback = m_endCallback, weakManager = m_manager, valueTag = m_animatedValueTag, id = m_id](
+          auto sender, auto) {
         if (EndCallback) {
-          EndCallback(std::vector<folly::dynamic>{
-              folly::dynamic::object("finished", true)});
+          EndCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", true)});
         }
         if (auto manager = weakManager.lock()) {
-          if (auto const animatedValue =
-                  manager->GetValueAnimatedNode(valueTag)) {
+          if (auto const animatedValue = manager->GetValueAnimatedNode(valueTag)) {
             animatedValue->RemoveActiveAnimation(id);
             animatedValue->FlattenOffset();
           }
@@ -78,8 +68,7 @@ void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
 
       if (m_scopedBatch) {
         if (m_endCallback)
-          m_endCallback(std::vector<folly::dynamic>{
-              folly::dynamic::object("finished", false)});
+          m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
         m_scopedBatch.Completed(m_scopedBatchCompletedToken);
         m_scopedBatch = nullptr;
       }

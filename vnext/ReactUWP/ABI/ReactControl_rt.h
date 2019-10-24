@@ -27,8 +27,7 @@ namespace uwp {
 
 class ReactControl : public Microsoft::WRL::RuntimeClass<
                          ABI::react::uwp::IReactControl,
-                         Microsoft::WRL::ComposableBase<
-                             ABI::Windows::UI::Xaml::Controls::IGridFactory>>,
+                         Microsoft::WRL::ComposableBase<ABI::Windows::UI::Xaml::Controls::IGridFactory>>,
                      public ::react::uwp::IXamlRootView {
   InspectableClass(RuntimeClass_react_uwp_ReactControl, BaseTrust);
 
@@ -37,8 +36,7 @@ class ReactControl : public Microsoft::WRL::RuntimeClass<
 
   virtual HRESULT STDMETHODCALLTYPE get_Instance(IInstance **value) override;
   virtual HRESULT STDMETHODCALLTYPE put_Instance(IInstance *value) override;
-  virtual HRESULT STDMETHODCALLTYPE
-  get_JsComponentName(HSTRING *value) override;
+  virtual HRESULT STDMETHODCALLTYPE get_JsComponentName(HSTRING *value) override;
   virtual HRESULT STDMETHODCALLTYPE put_JsComponentName(HSTRING value) override;
   virtual HRESULT STDMETHODCALLTYPE get_InitialProps(HSTRING *value) override;
   virtual HRESULT STDMETHODCALLTYPE put_InitialProps(HSTRING value) override;
@@ -49,21 +47,17 @@ class ReactControl : public Microsoft::WRL::RuntimeClass<
   void CreateInnerInstance();
 
   // IReactRootView implementations
-  virtual std::shared_ptr<::react::uwp::IReactInstance> GetReactInstance() const
-      noexcept override;
+  virtual std::shared_ptr<::react::uwp::IReactInstance> GetReactInstance() const noexcept override;
   virtual ::react::uwp::XamlView GetXamlView() const noexcept override;
 
-  virtual void SetJSComponentName(
-      std::string &&mainComponentName) noexcept override;
-  virtual void SetInstanceCreator(const ::react::uwp::ReactInstanceCreator
-                                      &instanceCreator) noexcept override;
+  virtual void SetJSComponentName(std::string &&mainComponentName) noexcept override;
+  virtual void SetInstanceCreator(const ::react::uwp::ReactInstanceCreator &instanceCreator) noexcept override;
   virtual void SetInitialProps(folly::dynamic &&initialProps) noexcept override;
 
   virtual void AttachRoot() noexcept override;
   virtual void DetachRoot() noexcept override;
 
-  virtual std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl()
-      const noexcept override;
+  virtual std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl() const noexcept override;
 
   // IReactRootView implementations
   virtual void ResetView() override;
@@ -85,11 +79,9 @@ class ReactControl : public Microsoft::WRL::RuntimeClass<
   std::shared_ptr<::react::uwp::ReactControl> m_pInnerControl;
 };
 
-class ReactControlFactory
-    : public Microsoft::WRL::AgileActivationFactory<IReactControlFactory> {
+class ReactControlFactory : public Microsoft::WRL::AgileActivationFactory<IReactControlFactory> {
  public:
-  virtual HRESULT STDMETHODCALLTYPE
-  ActivateInstance(_Outptr_ IInspectable **ppInstance) override;
+  virtual HRESULT STDMETHODCALLTYPE ActivateInstance(_Outptr_ IInspectable **ppInstance) override;
   virtual HRESULT STDMETHODCALLTYPE CreateInstance(
       _In_opt_ IInspectable *pOuter,
       _Outptr_opt_ IInspectable **ppInner,

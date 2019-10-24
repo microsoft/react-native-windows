@@ -17,9 +17,7 @@ class ValueAnimatedNode : public AnimatedNode {
       int64_t tag,
       const folly::dynamic &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
-  ValueAnimatedNode(
-      int64_t tag,
-      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  ValueAnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   double Value();
   double RawValue();
   void RawValue(double value);

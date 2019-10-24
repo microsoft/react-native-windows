@@ -15,16 +15,14 @@ class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
   std::shared_ptr<const facebook::jsi::Buffer> tryGetPreparedScript(
       const facebook::jsi::ScriptSignature &scriptSignature,
       const facebook::jsi::JSRuntimeSignature &runtimeSignature,
-      const char
-          *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+      const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
       ) noexcept override;
 
   void persistPreparedScript(
       std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
       const facebook::jsi::ScriptSignature &scriptMetadata,
       const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
-      const char
-          *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+      const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
       ) noexcept override;
 
   UwpPreparedScriptStore(const UwpPreparedScriptStore &) = delete;
@@ -35,14 +33,10 @@ class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
       std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
       const facebook::jsi::ScriptSignature &scriptMetadata,
       const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
-      const char
-          *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
+      const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
   );
-  winrt::Windows::Storage::StorageFile TryGetByteCodeFileSync(
-      const facebook::jsi::ScriptSignature &scriptSignature);
-  winrt::Windows::Foundation::IAsyncOperation<
-      winrt::Windows::Storage::StorageFile>
-      m_byteCodeFileAsync;
+  winrt::Windows::Storage::StorageFile TryGetByteCodeFileSync(const facebook::jsi::ScriptSignature &scriptSignature);
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> m_byteCodeFileAsync;
 };
 
 // This is very similiar to ByteArrayBuffer in ChakraJsiRuntime.h.
@@ -60,8 +54,7 @@ class ByteCodeBuffer final : public facebook::jsi::Buffer {
     return byteArray_.get();
   }
 
-  ByteCodeBuffer(int size)
-      : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
+  ByteCodeBuffer(int size) : size_(size), byteArray_(std::make_unique<uint8_t[]>(size)) {}
   ByteCodeBuffer(const ByteCodeBuffer &) = delete;
   void operator=(const ByteCodeBuffer &) = delete;
 

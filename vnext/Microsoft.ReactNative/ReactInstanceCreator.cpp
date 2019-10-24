@@ -12,11 +12,10 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 void InitReactNative() {
 #if _DEBUG
-  facebook::react::InitializeLogging(
-      [](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
-        std::string str = std::string("ReactNative:") + message;
-        OutputDebugStringA(str.c_str());
-      });
+  facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
+    std::string str = std::string("ReactNative:") + message;
+    OutputDebugStringA(str.c_str());
+  });
 #endif
 }
 
@@ -44,14 +43,12 @@ ReactInstanceCreator::ReactInstanceCreator(
   }
 }
 
-std::shared_ptr<react::uwp::IReactInstance>
-ReactInstanceCreator::getInstance() {
+std::shared_ptr<react::uwp::IReactInstance> ReactInstanceCreator::getInstance() {
   if (m_instance)
     return m_instance;
 
   std::shared_ptr<react::uwp::IReactInstance> reactInstance =
-      react::uwp::CreateReactInstance(
-          m_modulesProvider, m_viewManagersProvider);
+      react::uwp::CreateReactInstance(m_modulesProvider, m_viewManagersProvider);
 
   react::uwp::ReactInstanceSettings settings;
   settings.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());

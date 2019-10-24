@@ -68,6 +68,7 @@ class MSBuildTools {
     } else if (this.version === '16.0') {
       args.push('/p:VisualStudioVersion=16.0');
     }
+    args.push('/bl');
 
     if (config) {
       Object.keys(config).forEach(function(key) {

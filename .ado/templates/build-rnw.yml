@@ -77,7 +77,18 @@ steps:
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
+      createLogFile: true
+      logFileVerbosity: detailed
       msbuildArguments:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         ${{parameters.msbuildArguments}}
+
+  - task: PublishBuildArtifacts@1
+    condition:  succeededOrFailed()
+    timeoutInMinutes: 10
+    inputs:    
+      pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log 
+      artifactName: Detailed Logs for ${{parameters.project}} $(BuildConfiguration) $(BuildPlatform)
+      publishLocation: 'Container'
+

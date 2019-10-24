@@ -18,15 +18,11 @@ namespace uwp {
 typedef winrt::DependencyObject XamlView;
 
 inline int64_t GetTag(XamlView view) {
-  return view.GetValue(winrt::FrameworkElement::TagProperty())
-      .as<winrt::IPropertyValue>()
-      .GetInt64();
+  return view.GetValue(winrt::FrameworkElement::TagProperty()).as<winrt::IPropertyValue>().GetInt64();
 }
 
 inline void SetTag(XamlView view, int64_t tag) {
-  view.SetValue(
-      winrt::FrameworkElement::TagProperty(),
-      winrt::PropertyValue::CreateInt64(tag));
+  view.SetValue(winrt::FrameworkElement::TagProperty(), winrt::PropertyValue::CreateInt64(tag));
 }
 
 inline void SetTag(XamlView view, winrt::IInspectable tag) {
@@ -45,8 +41,7 @@ inline int64_t GetTag(winrt::IPropertyValue value) {
 
 inline winrt::IPropertyValue GetTagAsPropertyValue(winrt::FrameworkElement fe) {
   assert(fe);
-  return fe.GetValue(winrt::FrameworkElement::TagProperty())
-      .try_as<winrt::IPropertyValue>();
+  return fe.GetValue(winrt::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
 }
 
 } // namespace uwp

@@ -2,6 +2,72 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Oct 2019 20:38:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.42",
+      "version": "0.60.0-vnext.42",
+      "comments": {
+        "none": [
+          {
+            "comment": "Create Calculated Animation which allows for animations that don't follow Bezier curves",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3785eabdd6fad1417602b4ad78f4f46ab6b4a985"
+          },
+          {
+            "comment": "Add more logs to troubleshoot undefinedBuild and Pack NuGet randomly fails",
+            "author": "licanhua@live.com",
+            "commit": "b9f8626afe67dc7c9a006f4f44b3a1aa51fb0891"
+          },
+          {
+            "comment": "Removed MainReactNativeHost from samples and use ReactApplication properties instead.",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4562d6f570094dd439e7d5be225ffc11141c14c0"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.11",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "34944a2fcc931369ea3b5524b2c2cb3e6ba58691"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2019 03:28:58 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.41",
+      "version": "0.60.0-vnext.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.9",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "399ac7d57bb75dc49a4a9c8acba14301d8cb7dfc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2019 01:01:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.40",
+      "version": "0.60.0-vnext.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix build issue with react-native run-windows",
+            "author": "kmelmon@microsoft.com",
+            "commit": "0faddb46f52a6409b802afa54df7ac33b6159681"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Introduce ChakraPointerValue and reimplement many Runtime functions with it.",
+            "author": "yicyao@microsoft.com",
+            "commit": "af2be74461b33fa6fdcafbb53d4f4388b16a98d6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Oct 2019 21:22:01 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.39",
       "version": "0.60.0-vnext.39",

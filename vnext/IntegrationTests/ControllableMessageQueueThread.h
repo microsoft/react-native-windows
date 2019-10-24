@@ -10,8 +10,7 @@
 
 namespace Microsoft::React::Test {
 
-class ControllableMessageQueueThread
-    : public facebook::react::MessageQueueThread {
+class ControllableMessageQueueThread : public facebook::react::MessageQueueThread {
   class Lock {
    public:
     Lock(HANDLE mutex) noexcept;
@@ -50,11 +49,7 @@ class ControllableMessageQueueThread
   bool DispatchOne(std::chrono::milliseconds timeout) noexcept;
 
  private:
-  enum class State {
-    Running,
-    QuitSynchronousHasBeenCalled,
-    WorkerThreadHasExited
-  };
+  enum class State { Running, QuitSynchronousHasBeenCalled, WorkerThreadHasExited };
 
   enum class ThreadSignalIndex {
     FunctorAvailable = 0,

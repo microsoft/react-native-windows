@@ -11,8 +11,7 @@ namespace react {
 
 const char *SourceCodeModule::name = "SourceCode";
 
-SourceCodeModule::SourceCodeModule(const std::string &bundleUrl)
-    : m_bundleUrl(bundleUrl) {}
+SourceCodeModule::SourceCodeModule(const std::string &bundleUrl) : m_bundleUrl(bundleUrl) {}
 
 std::string SourceCodeModule::getName() {
   return name;

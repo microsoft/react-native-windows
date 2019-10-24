@@ -85,8 +85,7 @@ JsNativeFunction exceptionWrapMethod() {
 
 namespace {
 
-template <JsValueRef (
-    ChakraExecutor::*method)(JsValueRef object, JsValueRef propertyName)>
+template <JsValueRef (ChakraExecutor::*method)(JsValueRef object, JsValueRef propertyName)>
 JsNativeFunction exceptionWrapMethod() {
   struct funcWrapper {
     static JsValueRef call(
@@ -98,12 +97,9 @@ JsNativeFunction exceptionWrapMethod() {
       JsContextRef ctx;
       JsGetCurrentContext(&ctx);
       try {
-        JsValueRef thisObj = argumentCount > 0
-            ? arguments[0]
-            : (JsGetNullValue(&thisObj), thisObj);
-        JsValueRef thisPropertyName = argumentCount > 1
-            ? arguments[1]
-            : (JsGetNullValue(&thisPropertyName), thisPropertyName);
+        JsValueRef thisObj = argumentCount > 0 ? arguments[0] : (JsGetNullValue(&thisObj), thisObj);
+        JsValueRef thisPropertyName =
+            argumentCount > 1 ? arguments[1] : (JsGetNullValue(&thisPropertyName), thisPropertyName);
         ChakraExecutor *executor = nullptr;
         JsGetContextData(ctx, (void **)&executor);
         return (executor->*method)(thisObj, thisPropertyName);
@@ -125,8 +121,7 @@ std::unique_ptr<JSExecutor> ChakraExecutorFactory::createJSExecutor(
   // as we're moving m_instanceArgs, we can't call this more than once
   assert(++m_executorCreationCount == 1);
 #endif
-  return std::unique_ptr<JSExecutor>(
-      new ChakraExecutor(delegate, jsQueue, std::move(m_instanceArgs)));
+  return std::unique_ptr<JSExecutor>(new ChakraExecutor(delegate, jsQueue, std::move(m_instanceArgs)));
 }
 
 ChakraExecutor::ChakraExecutor(
@@ -150,8 +145,7 @@ ChakraExecutor::ChakraExecutor(
 }
 
 ChakraExecutor::~ChakraExecutor() {
-  CHECK(*m_isDestroyed)
-      << "ChakraExecutor::destroy() must be called before its destructor!";
+  CHECK(*m_isDestroyed) << "ChakraExecutor::destroy() must be called before its destructor!";
 }
 
 void ChakraExecutor::destroy() {
@@ -197,8 +191,7 @@ struct JsRuntimeTracker {
     }                         \
   }
 
-JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(
-    JsValueRef debuggerConsoleObject) {
+JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(JsValueRef debuggerConsoleObject) {
   JsValueRef globalObject = JS_INVALID_REFERENCE;
   IfFailRet(JsGetGlobalObject(&globalObject));
 
@@ -211,8 +204,7 @@ JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(
   JsValueRef undefinedValue = JS_INVALID_REFERENCE;
   IfFailRet(JsGetUndefinedValue(&undefinedValue));
 
-  if (consoleObject == JS_INVALID_REFERENCE ||
-      consoleObject == undefinedValue) {
+  if (consoleObject == JS_INVALID_REFERENCE || consoleObject == undefinedValue) {
     return JsErrorNotImplemented;
   }
 
@@ -242,17 +234,11 @@ JsErrorCode ChakraExecutor::RedirectConsoleToDebugger(
 
   JsValueRef scriptContentValue = JS_INVALID_REFERENCE;
   IfFailRet(JsCreateString(script, strlen(script), &scriptContentValue));
-  IfFailRet(JsRun(
-      scriptContentValue,
-      JS_SOURCE_CONTEXT_NONE,
-      scriptUrl,
-      JsParseScriptAttributeLibraryCode,
-      &patchFunction));
+  IfFailRet(
+      JsRun(scriptContentValue, JS_SOURCE_CONTEXT_NONE, scriptUrl, JsParseScriptAttributeLibraryCode, &patchFunction));
 
-  JsValueRef args[4] = {
-      undefinedValue, globalObject, consoleObject, debuggerConsoleObject};
-  IfFailRet(JsCallFunction(
-      patchFunction, args, _countof(args), nullptr /*no return value*/));
+  JsValueRef args[4] = {undefinedValue, globalObject, consoleObject, debuggerConsoleObject};
+  IfFailRet(JsCallFunction(patchFunction, args, _countof(args), nullptr /*no return value*/));
 
   return JsNoError;
 }
@@ -271,10 +257,7 @@ void ChakraExecutor::initOnJSVMThread() {
   // if there's not already a runtime
   if (tls_runtimeTracker.RuntimeHandle == nullptr) {
     // create a runtime
-    CHAKRA_ASSERTDO(JsCreateRuntime(
-        m_instanceArgs.RuntimeAttributes,
-        nullptr,
-        &tls_runtimeTracker.RuntimeHandle));
+    CHAKRA_ASSERTDO(JsCreateRuntime(m_instanceArgs.RuntimeAttributes, nullptr, &tls_runtimeTracker.RuntimeHandle));
 
 #if !defined(USE_EDGEMODE_JSRT)
     // if desired, enable debugging for the runtime
@@ -318,9 +301,7 @@ void ChakraExecutor::initOnJSVMThread() {
   JsSetRuntimeMemoryAllocationCallback(
       tls_runtimeTracker.RuntimeHandle,
       tls_runtimeTracker.MemoryTracker.get(),
-      [](void *callbackState,
-         JsMemoryEventType allocationEvent,
-         size_t allocationSize) -> bool {
+      [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
         auto memoryTrackerPtr = static_cast<MemoryTracker *>(callbackState);
         switch (allocationEvent) {
           case JsMemoryAllocate:
@@ -340,13 +321,11 @@ void ChakraExecutor::initOnJSVMThread() {
       });
 
   size_t initialMemoryUsage = 0;
-  JsGetRuntimeMemoryUsage(
-      tls_runtimeTracker.RuntimeHandle, &initialMemoryUsage);
+  JsGetRuntimeMemoryUsage(tls_runtimeTracker.RuntimeHandle, &initialMemoryUsage);
   tls_runtimeTracker.MemoryTracker->Initialize(initialMemoryUsage);
 
   if (m_instanceArgs.RuntimeMemoryLimit > 0)
-    CHAKRA_ASSERTDO(JsSetRuntimeMemoryLimit(
-        tls_runtimeTracker.RuntimeHandle, m_instanceArgs.RuntimeMemoryLimit));
+    CHAKRA_ASSERTDO(JsSetRuntimeMemoryLimit(tls_runtimeTracker.RuntimeHandle, m_instanceArgs.RuntimeMemoryLimit));
 
   m_context = nullptr;
   // Create an execution context
@@ -368,21 +347,18 @@ void ChakraExecutor::initOnJSVMThread() {
 #else
   if (enableDebugging && m_instanceArgs.DebuggerConsoleRedirection) {
     JsValueRef debuggerConsoleObject;
-    tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(
-        &debuggerConsoleObject);
+    tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
 
     JsValueRef undefinedValue = JS_INVALID_REFERENCE;
     JsGetUndefinedValue(&undefinedValue);
 
-    if (debuggerConsoleObject != JS_INVALID_REFERENCE &&
-        debuggerConsoleObject != undefinedValue) {
+    if (debuggerConsoleObject != JS_INVALID_REFERENCE && debuggerConsoleObject != undefinedValue) {
       needToRedirectConsoleToDebugger = true;
     }
   }
 #endif
 
-  installNativeHook<&ChakraExecutor::nativeFlushQueueImmediate>(
-      "nativeFlushQueueImmediate");
+  installNativeHook<&ChakraExecutor::nativeFlushQueueImmediate>("nativeFlushQueueImmediate");
   installNativeHook<&ChakraExecutor::nativeCallSyncHook>("nativeCallSyncHook");
   installNativeHook<&ChakraExecutor::nativeLoggingHook>("nativeLoggingHook");
 
@@ -393,8 +369,7 @@ void ChakraExecutor::initOnJSVMThread() {
 // JS Tracing enabled only in verbose mode.
 #ifdef ENABLE_JS_SYSTRACE
   addNativeTracingHooks();
-  setGlobalVariable(
-      "__RCTProfileIsProfiling", std::make_unique<JSBigStdString>("true"));
+  setGlobalVariable("__RCTProfileIsProfiling", std::make_unique<JSBigStdString>("true"));
 #endif
 
 #if !defined(USE_EDGEMODE_JSRT)
@@ -422,8 +397,7 @@ void ChakraExecutor::terminateOnJSVMThread() {
       JsErrorCode result = tls_runtimeTracker.DebugService->Close();
 
       if (result == JsNoError) {
-        result = tls_runtimeTracker.DebugService->UnregisterHandler(
-            tls_runtimeTracker.DebugRuntimeName);
+        result = tls_runtimeTracker.DebugService->UnregisterHandler(tls_runtimeTracker.DebugRuntimeName);
       }
     }
     tls_runtimeTracker.DebugService = nullptr;
@@ -439,8 +413,7 @@ void ChakraExecutor::terminateOnJSVMThread() {
   JsRelease(m_context, nullptr);
 
   // Reset runtime callback.
-  JsSetRuntimeMemoryAllocationCallback(
-      tls_runtimeTracker.RuntimeHandle, nullptr, nullptr);
+  JsSetRuntimeMemoryAllocationCallback(tls_runtimeTracker.RuntimeHandle, nullptr, nullptr);
 
   // dispose runtime only if there are no more contexts for it
   if (tls_runtimeTracker.RefCount == 0) {
@@ -466,21 +439,18 @@ JsErrorCode ChakraExecutor::enableDebugging(
   auto protocolHandler = std::make_unique<DebugProtocolHandler>(runtime);
   auto service = std::make_unique<DebugService>(runtime);
 
-  result =
-      service->RegisterHandler(runtimeName, *protocolHandler, breakOnNextLine);
+  result = service->RegisterHandler(runtimeName, *protocolHandler, breakOnNextLine);
 
   if (result == JsNoError) {
     if (protocolHandler) {
-      result = protocolHandler->SetCommandQueueCallback(
-          ProcessDebuggerCommandQueueCallback, this);
+      result = protocolHandler->SetCommandQueueCallback(ProcessDebuggerCommandQueueCallback, this);
     }
   }
 
   if (result == JsNoError) {
     result = service->Listen(port);
 
-    std::cout << "Listening on ws://127.0.0.1:" << port << "/" << runtimeName
-              << std::endl;
+    std::cout << "Listening on ws://127.0.0.1:" << port << "/" << runtimeName << std::endl;
   }
 
   if (result == JsNoError) {
@@ -493,8 +463,7 @@ JsErrorCode ChakraExecutor::enableDebugging(
 #endif
 
 #if !defined(USE_EDGEMODE_JSRT)
-/* static */ void ChakraExecutor::ProcessDebuggerCommandQueueCallback(
-    void *callbackState) {
+/* static */ void ChakraExecutor::ProcessDebuggerCommandQueueCallback(void *callbackState) {
   ChakraExecutor *executor = reinterpret_cast<ChakraExecutor *>(callbackState);
 
   if (executor) {
@@ -532,15 +501,13 @@ void ChakraExecutor::loadApplicationScript(
     std::string &&bytecodeFileName
 #endif
 ) {
-  SystraceSection s(
-      "ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
+  SystraceSection s("ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
 
   JSContextHolder ctx(m_context);
 
   std::string scriptName = simpleBasename(sourceURL);
 #if !defined(OSS_RN)
-  ReactMarker::logTaggedMarker(
-      ReactMarker::RUN_JS_BUNDLE_START, scriptName.c_str());
+  ReactMarker::logTaggedMarker(ReactMarker::RUN_JS_BUNDLE_START, scriptName.c_str());
 #endif
 
   ChakraString jsSourceURL(sourceURL.c_str());
@@ -555,19 +522,14 @@ void ChakraExecutor::loadApplicationScript(
   }
 #if !defined(OSS_RN)
   else {
-    evaluateScriptWithBytecode(
-        std::move(script),
-        scriptVersion,
-        jsSourceURL,
-        std::move(bytecodeFileName));
+    evaluateScriptWithBytecode(std::move(script), scriptVersion, jsSourceURL, std::move(bytecodeFileName));
   }
 #endif
 
 #if !defined(USE_EDGEMODE_JSRT)
   if (needToRedirectConsoleToDebugger) {
     JsValueRef debuggerConsoleObject;
-    tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(
-        &debuggerConsoleObject);
+    tls_runtimeTracker.DebugProtocolHandler->GetConsoleObject(&debuggerConsoleObject);
 
     JsErrorCode result = RedirectConsoleToDebugger(debuggerConsoleObject);
     if (result == JsNoError) {
@@ -585,22 +547,18 @@ void ChakraExecutor::loadApplicationScript(
 
 #if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::CREATE_REACT_CONTEXT_STOP);
-  ReactMarker::logTaggedMarker(
-      ReactMarker::RUN_JS_BUNDLE_STOP, scriptName.c_str());
+  ReactMarker::logTaggedMarker(ReactMarker::RUN_JS_BUNDLE_STOP, scriptName.c_str());
 #endif
 }
 
-void ChakraExecutor::setBundleRegistry(
-    std::unique_ptr<RAMBundleRegistry> bundleRegistry) {
+void ChakraExecutor::setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) {
   if (!m_bundleRegistry) {
     installNativeHook<&ChakraExecutor::nativeRequire>("nativeRequire");
   }
   m_bundleRegistry = std::move(bundleRegistry);
 }
 
-void ChakraExecutor::registerBundle(
-    uint32_t bundleId,
-    const std::string &bundlePath) {
+void ChakraExecutor::registerBundle(uint32_t bundleId, const std::string &bundlePath) {
   // NYI
   std::terminate();
 }
@@ -617,15 +575,11 @@ void ChakraExecutor::bindBridge() noexcept {
   }
 
   auto batchedBridge = batchedBridgeValue.asObject();
-  m_callFunctionReturnFlushedQueueJS =
-      batchedBridge.getProperty("callFunctionReturnFlushedQueue").asObject();
-  m_invokeCallbackAndReturnFlushedQueueJS =
-      batchedBridge.getProperty("invokeCallbackAndReturnFlushedQueue")
-          .asObject();
+  m_callFunctionReturnFlushedQueueJS = batchedBridge.getProperty("callFunctionReturnFlushedQueue").asObject();
+  m_invokeCallbackAndReturnFlushedQueueJS = batchedBridge.getProperty("invokeCallbackAndReturnFlushedQueue").asObject();
   m_flushedQueueJS = batchedBridge.getProperty("flushedQueue").asObject();
   m_callFunctionReturnResultAndFlushedQueueJS =
-      batchedBridge.getProperty("callFunctionReturnResultAndFlushedQueue")
-          .asObject();
+      batchedBridge.getProperty("callFunctionReturnResultAndFlushedQueue").asObject();
   m_bridgeEstablished = true;
 }
 
@@ -671,49 +625,39 @@ void ChakraExecutor::callFunction(
            ChakraValue(ChakraString::createExpectingAscii(methodId)),
            ChakraValue::fromDynamic(std::move(arguments))});
     } catch (...) {
-      std::throw_with_nested(std::runtime_error(
-          "Error calling function: " + moduleId + ":" + methodId));
+      std::throw_with_nested(std::runtime_error("Error calling function: " + moduleId + ":" + methodId));
     }
   }();
 
   callNativeModules(std::move(result));
 }
 
-void ChakraExecutor::invokeCallback(
-    const double callbackId,
-    const folly::dynamic &arguments) {
+void ChakraExecutor::invokeCallback(const double callbackId, const folly::dynamic &arguments) {
   SystraceSection s("ChakraExecutor::invokeCallback");
   JSContextHolder ctx(m_context);
 
   auto result = [&] {
     try {
       return m_invokeCallbackAndReturnFlushedQueueJS->callAsFunction(
-          {ChakraValue::makeNumber(callbackId),
-           ChakraValue::fromDynamic(std::move(arguments))});
+          {ChakraValue::makeNumber(callbackId), ChakraValue::fromDynamic(std::move(arguments))});
     } catch (...) {
-      std::throw_with_nested(std::runtime_error(
-          folly::to<std::string>("Error invoking callback.", callbackId)));
+      std::throw_with_nested(std::runtime_error(folly::to<std::string>("Error invoking callback.", callbackId)));
     }
   }();
 
   callNativeModules(std::move(result));
 }
 
-void ChakraExecutor::setGlobalVariable(
-    std::string propName,
-    std::unique_ptr<const JSBigString> jsonValue) {
+void ChakraExecutor::setGlobalVariable(std::string propName, std::unique_ptr<const JSBigString> jsonValue) {
   try {
     SystraceSection s("ChakraExecutor.setGlobalVariable", "propName", propName);
 
     JSContextHolder ctx(m_context);
 
-    auto valueToInject =
-        ChakraValue::fromJSON(jsStringFromBigString(*jsonValue));
-    ChakraObject::getGlobalObject().setProperty(
-        propName.c_str(), valueToInject);
+    auto valueToInject = ChakraValue::fromJSON(jsStringFromBigString(*jsonValue));
+    ChakraObject::getGlobalObject().setProperty(propName.c_str(), valueToInject);
   } catch (...) {
-    std::throw_with_nested(
-        std::runtime_error("Error setting global variable: " + propName));
+    std::throw_with_nested(std::runtime_error("Error setting global variable: " + propName));
   }
 }
 
@@ -767,9 +711,7 @@ void ChakraExecutor::installNativeHook(const char *name) {
   installGlobalFunction(name, exceptionWrapMethod<method>());
 }
 
-JsValueRef ChakraExecutor::getNativeModule(
-    JsValueRef object,
-    JsValueRef propertyName) {
+JsValueRef ChakraExecutor::getNativeModule(JsValueRef object, JsValueRef propertyName) {
   std::string string;
 
   /*auto result = */ JsStringToStdStringUtf8(propertyName, string);
@@ -790,9 +732,7 @@ JsValueRef ChakraExecutor::getNativeModule(
   return m_nativeModules.getModule(propertyName);
 }
 
-JsValueRef ChakraExecutor::nativeRequire(
-    size_t argumentCount,
-    const JsValueRef arguments[]) {
+JsValueRef ChakraExecutor::nativeRequire(size_t argumentCount, const JsValueRef arguments[]) {
   double moduleId = 0, bundleId = 0;
 
   if (argumentCount == 1) {
@@ -805,24 +745,20 @@ JsValueRef ChakraExecutor::nativeRequire(
   }
 
   if (moduleId < 0) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Received invalid module ID: ",
-        ChakraValue(arguments[0]).toString().str()));
+    throw std::invalid_argument(
+        folly::to<std::string>("Received invalid module ID: ", ChakraValue(arguments[0]).toString().str()));
   }
 
   if (bundleId < 0) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Received invalid bundle ID: ",
-        ChakraValue(arguments[1]).toString().str()));
+    throw std::invalid_argument(
+        folly::to<std::string>("Received invalid bundle ID: ", ChakraValue(arguments[1]).toString().str()));
   }
 
   loadModule(static_cast<uint32_t>(bundleId), static_cast<uint32_t>(moduleId));
   return ChakraValue::makeUndefined();
 }
 
-JsValueRef ChakraExecutor::nativeFlushQueueImmediate(
-    size_t argumentCount,
-    const JsValueRef arguments[]) {
+JsValueRef ChakraExecutor::nativeFlushQueueImmediate(size_t argumentCount, const JsValueRef arguments[]) {
   if (argumentCount != 1) {
     throw std::invalid_argument("Got wrong number of args");
   }
@@ -831,9 +767,7 @@ JsValueRef ChakraExecutor::nativeFlushQueueImmediate(
   return ChakraValue::makeUndefined();
 }
 
-JsValueRef ChakraExecutor::nativeCallSyncHook(
-    size_t argumentCount,
-    const JsValueRef arguments[]) {
+JsValueRef ChakraExecutor::nativeCallSyncHook(size_t argumentCount, const JsValueRef arguments[]) {
   if (argumentCount != 3) {
     throw std::invalid_argument("Got wrong number of args");
   }
@@ -842,8 +776,7 @@ JsValueRef ChakraExecutor::nativeCallSyncHook(
   unsigned int methodId = ChakraValue(arguments[1]).asUnsignedInteger();
   std::string argsJson = ChakraValue(arguments[2]).toJSONString();
 
-  MethodCallResult result = m_delegate->callSerializableNativeHook(
-      *this, moduleId, methodId, argsJson);
+  MethodCallResult result = m_delegate->callSerializableNativeHook(*this, moduleId, methodId, argsJson);
   if (!result.hasValue()) {
     return ChakraValue::makeUndefined();
   }
@@ -860,9 +793,7 @@ JsValueRef ChakraExecutor::nativeCallSyncHook(
   return ChakraValue::fromDynamic(result.value());
 }
 
-JsValueRef ChakraExecutor::nativeLoggingHook(
-    size_t argumentCount,
-    const JsValueRef arguments[]) {
+JsValueRef ChakraExecutor::nativeLoggingHook(size_t argumentCount, const JsValueRef arguments[]) {
   // arguments[0]: text message
   // arguments[1]: log level, optional
 

@@ -44,10 +44,8 @@ class HttpResource : public IHttpResource {
   void ClearCookies() noexcept override;
 
   void SetOnRequest(std::function<void()> &&handler) noexcept override;
-  void SetOnResponse(
-      std::function<void(const std::string &)> &&handler) noexcept override;
-  void SetOnError(
-      std::function<void(const std::string &)> &&handler) noexcept override;
+  void SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept override;
+  void SetOnError(std::function<void(const std::string &)> &&handler) noexcept override;
 
 #pragma endregion
 };

@@ -14,9 +14,7 @@
 namespace facebook {
 namespace react {
 
-JsErrorCode JsGetPropertyIdFromNameUtf8(
-    _In_z_ const char *name,
-    _Out_ JsPropertyIdRef *propertyId) {
+JsErrorCode JsGetPropertyIdFromNameUtf8(_In_z_ const char *name, _Out_ JsPropertyIdRef *propertyId) {
   if (name == nullptr) {
     return JsErrorNullArgument;
   }
@@ -24,8 +22,7 @@ JsErrorCode JsGetPropertyIdFromNameUtf8(
   size_t convertedChars = 0;
   size_t stringLength = strlen(name);
   std::unique_ptr<wchar_t[]> wname(new wchar_t[stringLength + 1]);
-  mbstowcs_s(
-      &convertedChars, wname.get(), stringLength + 1, name, stringLength);
+  mbstowcs_s(&convertedChars, wname.get(), stringLength + 1, name, stringLength);
 
   if (!wname.get()) {
     return JsErrorOutOfMemory;
@@ -45,8 +42,7 @@ JsErrorCode JsPointerToStringUtf8(
   // JsCreateString is not supported in universal chakra engine
   // So we convert the utf8 string to utf16 first and call JsPointerToString to
   // convert the string to JsValueRef
-  std::wstring wstr =
-      Microsoft::Common::Unicode::Utf8ToUtf16(stringValue, stringLength);
+  std::wstring wstr = Microsoft::Common::Unicode::Utf8ToUtf16(stringValue, stringLength);
   return JsPointerToString(wstr.c_str(), wstr.size(), string);
 
 #else
@@ -54,9 +50,7 @@ JsErrorCode JsPointerToStringUtf8(
 #endif
 }
 
-JsErrorCode JsStringToStdStringUtf8(
-    _In_ JsValueRef stringValue,
-    std::string &string) {
+JsErrorCode JsStringToStdStringUtf8(_In_ JsValueRef stringValue, std::string &string) {
   const wchar_t *wstr;
   size_t wstrLen;
   JsErrorCode err = JsStringToPointer(stringValue, &wstr, &wstrLen);

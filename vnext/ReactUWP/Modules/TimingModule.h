@@ -63,11 +63,7 @@ class Timing {
   Timing(TimingModule *parent);
   void Disconnect();
 
-  void createTimer(
-      int64_t id,
-      double duration,
-      double jsSchedulingTime,
-      bool repeat);
+  void createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat);
   void deleteTimer(int64_t id);
   void setSendIdleEvents(bool sendIdleEvents);
 
@@ -80,8 +76,7 @@ class Timing {
  private:
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
-  winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker
-      m_rendering;
+  winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
 };
 
 class TimingModule : public facebook::xplat::module::CxxModule {

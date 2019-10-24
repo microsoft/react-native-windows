@@ -18,13 +18,10 @@ namespace react {
 
 ChakraString jsStringFromBigString(const JSBigString &bigstr);
 
-using JsValueRefUniquePtr =
-    std::unique_ptr<void, std::function<void(JsValueRef)>>;
+using JsValueRefUniquePtr = std::unique_ptr<void, std::function<void(JsValueRef)>>;
 JsValueRefUniquePtr MakeJsValueRefUniquePtr(JsValueRef value);
-JsValueRefUniquePtr jsArrayBufferFromBigString(
-    std::unique_ptr<const JSBigString> &&bigstr);
-JsValueRefUniquePtr jsArrayBufferFromBigString(
-    const std::shared_ptr<const JSBigString> &bigstr);
+JsValueRefUniquePtr jsArrayBufferFromBigString(std::unique_ptr<const JSBigString> &&bigstr);
+JsValueRefUniquePtr jsArrayBufferFromBigString(const std::shared_ptr<const JSBigString> &bigstr);
 
 // We only support files whose size can fit within an uint32_t. Memory
 // mapping an empty or a larger file fails. If the file contents are not
@@ -56,8 +53,7 @@ class FileMappingBigString : public JSBigString {
     return m_fileSize;
   }
 
-  static std::unique_ptr<const FileMappingBigString> fromPath(
-      const std::string &filenameUtf8);
+  static std::unique_ptr<const FileMappingBigString> fromPath(const std::string &filenameUtf8);
 
  private:
   static void fileDataDeleter(void *p) {

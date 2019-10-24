@@ -14,10 +14,12 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" Condition="'$(OSS_RN)' != 'true'" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ByteArrayBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraObjectRef.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" Condition="'$(OSS_RN)' != 'true'" />

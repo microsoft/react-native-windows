@@ -108,7 +108,5 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct ReactInstanceSettings : ReactInstanceSettingsT<
-                                   ReactInstanceSettings,
-                                   implementation::ReactInstanceSettings> {};
+struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings, implementation::ReactInstanceSettings> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

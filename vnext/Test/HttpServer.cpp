@@ -27,8 +27,7 @@ namespace Microsoft::React::Test {
 
 boost::beast::multi_buffer CreateStringResponseBody(string &&content) {
   auto result = boost::beast::multi_buffer();
-  auto n = boost::asio::buffer_copy(
-      result.prepare(content.size()), boost::asio::buffer(content));
+  auto n = boost::asio::buffer_copy(result.prepare(content.size()), boost::asio::buffer(content));
   result.commit(n);
 
   return result;
@@ -39,9 +38,7 @@ boost::beast::multi_buffer CreateStringResponseBody(string &&content) {
 #pragma region HttpSession
 
 HttpSession::HttpSession(tcp::socket &socket, HttpCallbacks &callbacks)
-    : m_socket{socket},
-      m_strand{m_socket.get_executor()},
-      m_callbacks{callbacks} {}
+    : m_socket{socket}, m_strand{m_socket.get_executor()}, m_callbacks{callbacks} {}
 
 HttpSession::~HttpSession() {}
 
@@ -82,8 +79,7 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/) {
 void HttpSession::Respond() {
   switch (m_request.method()) {
     case http::verb::get:
-      m_response = make_shared<http::response<http::dynamic_body>>(
-          m_callbacks.OnGet(m_request));
+      m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnGet(m_request));
 
       http::async_write(
           m_socket,
@@ -101,15 +97,12 @@ void HttpSession::Respond() {
       break;
 
     case http::verb::options:
-      m_response = make_shared<http::response<http::dynamic_body>>(
-          http::status::accepted, m_request.version());
+      m_response = make_shared<http::response<http::dynamic_body>>(http::status::accepted, m_request.version());
       m_response->set(
           http::field::access_control_request_headers,
           "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
-      m_response->set(
-          http::field::access_control_allow_methods, "GET, POST, DELETE");
-      m_response->set(
-          http::field::access_control_expose_headers, "Header-expose-allowed");
+      m_response->set(http::field::access_control_allow_methods, "GET, POST, DELETE");
+      m_response->set(http::field::access_control_expose_headers, "Header-expose-allowed");
       m_response->result(http::status::ok);
 
       http::async_write(
@@ -140,10 +133,7 @@ void HttpSession::Respond() {
   }
 }
 
-void HttpSession::OnWrite(
-    error_code ec,
-    size_t /*transferred*/,
-    bool /*close*/) {
+void HttpSession::OnWrite(error_code ec, size_t /*transferred*/, bool /*close*/) {
   if (ec) {
     m_response = nullptr;
     return;
@@ -177,8 +167,7 @@ void HttpSession::Start() {
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port)
-    : m_acceptor{m_context}, m_socket{m_context}, m_sessions{} {
+HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, m_socket{m_context}, m_sessions{} {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
   m_acceptor.open(endpoint.protocol(), ec);
@@ -212,8 +201,7 @@ void HttpServer::Accept() {
   if (!m_acceptor.is_open())
     return;
 
-  m_acceptor.async_accept(
-      m_socket, std::bind(&HttpServer::OnAccept, shared_from_this(), _1));
+  m_acceptor.async_accept(m_socket, std::bind(&HttpServer::OnAccept, shared_from_this(), _1));
 }
 
 void HttpServer::OnAccept(error_code ec) {
@@ -254,8 +242,7 @@ void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept {
 }
 
 void HttpServer::SetOnGet(
-    function<http::response<http::dynamic_body>(
-        const http::request<http::string_body> &)> &&handler) noexcept {
+    function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept {
   m_callbacks.OnGet = std::move(handler);
 }
 

@@ -16,8 +16,7 @@ class DebugProtocolHandler {
   DebugProtocolHandler(JsRuntimeHandle runtime) {
     JsDebugProtocolHandler protocolHandler;
 
-    JsErrorCode result =
-        JsDebugProtocolHandlerCreate(runtime, &protocolHandler);
+    JsErrorCode result = JsDebugProtocolHandlerCreate(runtime, &protocolHandler);
 
     if (result != JsNoError) {
       throw new std::runtime_error("Unable to create debug protocol handler.");
@@ -30,12 +29,8 @@ class DebugProtocolHandler {
     Destroy();
   }
 
-  JsErrorCode Connect(
-      bool breakOnNextLine,
-      JsDebugProtocolHandlerSendResponseCallback callback,
-      void *callbackState) {
-    JsErrorCode result = JsDebugProtocolHandlerConnect(
-        m_protocolHandler, breakOnNextLine, callback, callbackState);
+  JsErrorCode Connect(bool breakOnNextLine, JsDebugProtocolHandlerSendResponseCallback callback, void *callbackState) {
+    JsErrorCode result = JsDebugProtocolHandlerConnect(m_protocolHandler, breakOnNextLine, callback, callbackState);
 
     return result;
   }
@@ -65,31 +60,25 @@ class DebugProtocolHandler {
   }
 
   JsErrorCode ProcessCommandQueue() {
-    JsErrorCode result =
-        JsDebugProtocolHandlerProcessCommandQueue(m_protocolHandler);
+    JsErrorCode result = JsDebugProtocolHandlerProcessCommandQueue(m_protocolHandler);
 
     return result;
   }
 
-  JsErrorCode SetCommandQueueCallback(
-      JsDebugProtocolHandlerCommandQueueCallback callback,
-      void *callbackState) {
-    JsErrorCode result = JsDebugProtocolHandlerSetCommandQueueCallback(
-        m_protocolHandler, callback, callbackState);
+  JsErrorCode SetCommandQueueCallback(JsDebugProtocolHandlerCommandQueueCallback callback, void *callbackState) {
+    JsErrorCode result = JsDebugProtocolHandlerSetCommandQueueCallback(m_protocolHandler, callback, callbackState);
 
     return result;
   }
 
   JsErrorCode WaitForDebugger() {
-    JsErrorCode result =
-        JsDebugProtocolHandlerWaitForDebugger(m_protocolHandler);
+    JsErrorCode result = JsDebugProtocolHandlerWaitForDebugger(m_protocolHandler);
 
     return result;
   }
 
   JsErrorCode GetConsoleObject(JsValueRef *consoleObject) {
-    JsErrorCode result = JsDebugProtocolHandlerCreateConsoleObject(
-        m_protocolHandler, consoleObject);
+    JsErrorCode result = JsDebugProtocolHandlerCreateConsoleObject(m_protocolHandler, consoleObject);
 
     return result;
   }
@@ -142,22 +131,16 @@ class DebugService {
     return result;
   }
 
-  JsErrorCode RegisterHandler(
-      std::string const &runtimeName,
-      DebugProtocolHandler &protocolHandler,
-      bool breakOnNextLine) {
-    JsErrorCode result = JsDebugServiceRegisterHandler(
-        m_service,
-        runtimeName.c_str(),
-        protocolHandler.GetHandle(),
-        breakOnNextLine);
+  JsErrorCode
+  RegisterHandler(std::string const &runtimeName, DebugProtocolHandler &protocolHandler, bool breakOnNextLine) {
+    JsErrorCode result =
+        JsDebugServiceRegisterHandler(m_service, runtimeName.c_str(), protocolHandler.GetHandle(), breakOnNextLine);
 
     return result;
   }
 
   JsErrorCode UnregisterHandler(std::string const &runtimeName) {
-    JsErrorCode result =
-        JsDebugServiceUnregisterHandler(m_service, runtimeName.c_str());
+    JsErrorCode result = JsDebugServiceUnregisterHandler(m_service, runtimeName.c_str());
 
     return result;
   }

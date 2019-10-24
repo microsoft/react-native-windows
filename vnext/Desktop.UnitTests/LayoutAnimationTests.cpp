@@ -60,8 +60,7 @@ std::wstring ToString<enum facebook::react::LayoutAnimation::AnimationType>(
 }
 
 template <>
-std::wstring
-ToString<enum facebook::react::LayoutAnimation::AnimatableProperty>(
+std::wstring ToString<enum facebook::react::LayoutAnimation::AnimatableProperty>(
     const enum class facebook::react::LayoutAnimation::AnimatableProperty &t) {
   switch (t) {
     case facebook::react::LayoutAnimation::AnimatableProperty::Opacity:

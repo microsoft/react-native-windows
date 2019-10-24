@@ -22,8 +22,7 @@ using namespace Windows::UI::Xaml::Documents;
 namespace react {
 namespace uwp {
 
-VirtualTextViewManager::VirtualTextViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+VirtualTextViewManager::VirtualTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
 const char *VirtualTextViewManager::GetName() const {
@@ -34,9 +33,7 @@ XamlView VirtualTextViewManager::CreateViewCore(int64_t tag) {
   return winrt::Span();
 }
 
-void VirtualTextViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void VirtualTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto span = nodeToUpdate->GetView().as<winrt::Span>();
   if (span == nullptr)
     return;
@@ -47,17 +44,13 @@ void VirtualTextViewManager::UpdateProperties(
 
     // FUTURE: In the future cppwinrt will generate code where static methods on
     // base types can be called.  For now we specify the base type explicitly
-    if (TryUpdateForeground<winrt::TextElement>(
-            span, propertyName, propertyValue)) {
+    if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
       continue;
-    } else if (TryUpdateFontProperties<winrt::TextElement>(
-                   span, propertyName, propertyValue)) {
+    } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
       continue;
-    } else if (TryUpdateCharacterSpacing<winrt::TextElement>(
-                   span, propertyName, propertyValue)) {
+    } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
       continue;
-    } else if (TryUpdateTextDecorationLine<winrt::TextElement>(
-                   span, propertyName, propertyValue)) {
+    } else if (TryUpdateTextDecorationLine<winrt::TextElement>(span, propertyName, propertyValue)) {
       continue;
     }
   }
@@ -65,10 +58,7 @@ void VirtualTextViewManager::UpdateProperties(
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
-void VirtualTextViewManager::AddView(
-    XamlView parent,
-    XamlView child,
-    int64_t index) {
+void VirtualTextViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   auto span(parent.as<winrt::Span>());
   auto childInline(child.as<winrt::Inline>());
   span.Inlines().InsertAt(static_cast<uint32_t>(index), childInline);

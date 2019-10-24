@@ -22,8 +22,7 @@ struct ViewControl : ViewControlT<ViewControl> {
   // Constructors
   ViewControl();
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer
-  OnCreateAutomationPeer();
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   winrt::react::uwp::ViewPanel GetPanel() const;
 };

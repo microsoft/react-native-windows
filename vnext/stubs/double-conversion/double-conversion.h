@@ -76,15 +76,7 @@ class DoubleToStringConverter {
     UNIQUE_ZERO = 8
   };
 
-  DoubleToStringConverter(
-      int,
-      const char *,
-      const char *,
-      char,
-      int,
-      int,
-      int,
-      int) {
+  DoubleToStringConverter(int, const char *, const char *, char, int, int, int, int) {
     // nyi();
   }
 
@@ -114,8 +106,7 @@ class DoubleToStringConverter {
     s->m_ss << d;
   }
 
-  bool ToExponential(double value, int requested_digits, StringBuilder *s)
-      const {
+  bool ToExponential(double value, int requested_digits, StringBuilder *s) const {
     s->m_ss << value;
     if (s->m_ss.fail()) {
       s->m_ss.clear();

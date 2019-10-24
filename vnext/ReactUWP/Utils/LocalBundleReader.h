@@ -11,8 +11,7 @@ namespace uwp {
 
 class LocalBundleReader {
  public:
-  static std::future<std::string> LoadBundleAsync(
-      const std::string &bundlePath);
+  static std::future<std::string> LoadBundleAsync(const std::string &bundlePath);
   static std::string LoadBundle(const std::string &bundlePath);
 };
 
