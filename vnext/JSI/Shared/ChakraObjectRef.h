@@ -64,7 +64,7 @@ class ChakraObjectRef {
 
   enum class State { Uninitialized, Initialized, Invalidated };
 
-  JsRef m_ref = nullptr;
+  JsRef m_ref = JS_INVALID_REFERENCE;
   State m_state = State::Uninitialized;
 };
 
