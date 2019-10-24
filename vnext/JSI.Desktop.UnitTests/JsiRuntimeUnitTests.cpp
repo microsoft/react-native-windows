@@ -362,11 +362,11 @@ TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
 
   Object howpn = Object::createFromHostObject(
       rt, std::make_shared<HostObjectWithPropertyNames>());
-  //EXPECT_TRUE(
-  //    function(
-  //        "function (o) { return Object.getOwnPropertyNames(o).length == 5 }")
-  //        .call(rt, howpn)
-  //        .getBool());
+  EXPECT_TRUE(
+      function(
+          "function (o) { return Object.getOwnPropertyNames(o).length == 5 }")
+          .call(rt, howpn)
+          .getBool());
 
   auto hasOwnPropertyName = function(
       "function (o, p) {"

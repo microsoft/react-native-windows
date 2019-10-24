@@ -13,6 +13,7 @@
 #include <climits>
 #include <cstring>
 #include <mutex>
+#include <set>
 #include <sstream>
 
 namespace Microsoft::JSI {
@@ -988,16 +989,22 @@ facebook::jsi::Value ChakraRuntime::HostObjectOwnKeysTrap(
       *GetExternalData<std::shared_ptr<facebook::jsi::HostObject>>(target);
 
   auto ownKeys = hostObject->getPropertyNames(chakraRuntime);
-  size_t numKeys = ownKeys.size();
 
+  std::set<std::string> dedupedOwnKeys{};
+  for (size_t i = 0; i < ownKeys.size(); ++i) {
+    dedupedOwnKeys.insert(ownKeys[i].utf8(chakraRuntime));
+  }
+
+  size_t numKeys = dedupedOwnKeys.size();
   facebook::jsi::Array result = chakraRuntime.createArray(numKeys);
 
-  for (size_t i = 0; i < numKeys; ++i) {
-    std::string keyStr = ownKeys[i].utf8(chakraRuntime);
+  size_t index = 0;
+  for (const std::string &key : dedupedOwnKeys) {
     result.setValueAtIndex(
         chakraRuntime,
-        i,
-        facebook::jsi::String::createFromUtf8(chakraRuntime, keyStr));
+        index,
+        facebook::jsi::String::createFromUtf8(chakraRuntime, key));
+    ++index;
   }
 
   return result;
