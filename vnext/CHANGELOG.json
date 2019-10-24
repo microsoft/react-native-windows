@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Oct 2019 18:04:40 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.44",
+      "version": "0.60.0-vnext.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix assert/missing else when setting alignSelf to null",
+            "author": "adamgor@microsoft.com",
+            "commit": "8c9afe38a4c5b6e39fb42a5f0af7e3fbc1cfcbae"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Oct 2019 09:06:03 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.43",
       "version": "0.60.0-vnext.43",
