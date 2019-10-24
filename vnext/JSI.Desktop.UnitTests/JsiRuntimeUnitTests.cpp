@@ -329,67 +329,67 @@ TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
     exc = ex.what();
   }
   EXPECT_NE(exc.find("Cannot get"), std::string::npos);
-  //exc = "";
-  //try {
-  //  function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
-  //} catch (const JSError &ex) {
-  //  exc = ex.what();
-  //}
-  //EXPECT_NE(exc.find("Cannot set"), std::string::npos);
+  exc = "";
+  try {
+    function("function (obj) { obj.thing = 'hello'; }").call(rt, thro);
+  } catch (const JSError &ex) {
+    exc = ex.what();
+  }
+  EXPECT_NE(exc.find("Cannot set"), std::string::npos);
 
-  //class NopHostObject : public HostObject {};
-  //Object nopHo =
-  //    Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
-  //EXPECT_TRUE(nopHo.isHostObject(rt));
-  //EXPECT_TRUE(function("function (obj) { return obj.thing; }")
-  //                .call(rt, nopHo)
-  //                .isUndefined());
+  class NopHostObject : public HostObject {};
+  Object nopHo =
+      Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
+  EXPECT_TRUE(nopHo.isHostObject(rt));
+  EXPECT_TRUE(function("function (obj) { return obj.thing; }")
+                  .call(rt, nopHo)
+                  .isUndefined());
 
-  //std::string nopExc;
-  //try {
-  //  function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
-  //} catch (const JSError &ex) {
-  //  nopExc = ex.what();
-  //}
-  //EXPECT_NE(nopExc.find("TypeError: "), std::string::npos);
+  std::string nopExc;
+  try {
+    function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
+  } catch (const JSError &ex) {
+    nopExc = ex.what();
+  }
+  EXPECT_NE(nopExc.find("TypeError: "), std::string::npos);
 
-  //class HostObjectWithPropertyNames : public HostObject {
-  //  std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
-  //    return PropNameID::names(
-  //        rt, "a_prop", "1", "false", "a_prop", "3", "c_prop");
-  //  }
-  //};
+  class HostObjectWithPropertyNames : public HostObject {
+    std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
+      return PropNameID::names(
+          rt, "a_prop", "1", "false", "a_prop", "3", "c_prop");
+    }
+  };
 
-  //Object howpn = Object::createFromHostObject(
-  //    rt, std::make_shared<HostObjectWithPropertyNames>());
+  Object howpn = Object::createFromHostObject(
+      rt, std::make_shared<HostObjectWithPropertyNames>());
   //EXPECT_TRUE(
   //    function(
   //        "function (o) { return Object.getOwnPropertyNames(o).length == 5 }")
   //        .call(rt, howpn)
   //        .getBool());
 
-  //auto hasOwnPropertyName = function(
-  //    "function (o, p) {"
-  //    "  return Object.getOwnPropertyNames(o).indexOf(p) >= 0"
-  //    "}");
-  //EXPECT_TRUE(
-  //    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "a_prop"))
-  //        .getBool());
-  //EXPECT_TRUE(
-  //    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "1"))
-  //        .getBool());
-  //EXPECT_TRUE(
-  //    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "false"))
-  //        .getBool());
-  //EXPECT_TRUE(
-  //    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "3"))
-  //        .getBool());
-  //EXPECT_TRUE(
-  //    hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop"))
-  //        .getBool());
-  //EXPECT_FALSE(hasOwnPropertyName
-  //                 .call(rt, howpn, String::createFromAscii(rt, "not_existing"))
-  //                 .getBool());
+  auto hasOwnPropertyName = function(
+      "function (o, p) {"
+      "  return Object.getOwnPropertyNames(o).indexOf(p) >= 0"
+      "}");
+  EXPECT_TRUE(
+      hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "a_prop"))
+          .getBool());
+  EXPECT_TRUE(
+      hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "1"))
+          .getBool());
+  EXPECT_TRUE(
+      hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "false"))
+          .getBool());
+  EXPECT_TRUE(
+      hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "3"))
+          .getBool());
+  EXPECT_TRUE(
+      hasOwnPropertyName.call(rt, howpn, String::createFromAscii(rt, "c_prop"))
+          .getBool());
+  EXPECT_FALSE(hasOwnPropertyName
+                   .call(rt, howpn, String::createFromAscii(rt, "not_existing"))
+                   .getBool());
 }
 
 TEST_P(JsiRuntimeUnitTests, ArrayTest) {

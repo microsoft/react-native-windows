@@ -695,9 +695,7 @@ void ChakraRuntime::VerifyJsErrorElseThrow(JsErrorCode error) {
       JsValueRef jsError;
       VerifyChakraErrorElseThrow(JsGetAndClearException(&jsError));
       throw facebook::jsi::JSError(
-          "A JavaScript Error was thrown.",
-          *this,
-          ToJsiValue(ChakraObjectRef(jsError)));
+          "", *this, ToJsiValue(ChakraObjectRef(jsError)));
       break;
     }
 
