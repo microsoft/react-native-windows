@@ -563,7 +563,6 @@ facebook::jsi::Value ChakraRuntime::GetProperty(const facebook::jsi::Object &obj
   // We have to use const_casts here because createPropNameIDFromAscii and
   // getProperty are not marked as const.
   facebook::jsi::PropNameID propId = const_cast<ChakraRuntime *>(this)->createPropNameIDFromAscii(name, strlen(name));
-
   return const_cast<ChakraRuntime *>(this)->getProperty(obj, propId);
 }
 
@@ -689,61 +688,6 @@ std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(const facebook::j
   }
 
   return result;
-}
-
-facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
-  // TODO (yicyao): handler can be cached and reused for multiple HostObjects.
-
-  facebook::jsi::Object handler = createObject();
-
-  constexpr const char *const getPropName = "get";
-  constexpr const char *const setPropName = "set";
-  constexpr const char *const ownKeysPropName = "ownKeys";
-
-  facebook::jsi::PropNameID getPropId = createPropNameIDFromAscii(getPropName, strlen(getPropName));
-  facebook::jsi::PropNameID setPropId = createPropNameIDFromAscii(setPropName, strlen(setPropName));
-  facebook::jsi::PropNameID ownKeysPropId = createPropNameIDFromAscii(ownKeysPropName, strlen(ownKeysPropName));
-
-  handler.setProperty(*this, getPropName, createFunctionFromHostFunction(getPropId, 2, HostObjectGetTrap));
-
-  handler.setProperty(*this, setPropName, createFunctionFromHostFunction(setPropId, 3, HostObjectSetTrap));
-
-  handler.setProperty(*this, ownKeysPropName, createFunctionFromHostFunction(ownKeysPropId, 1, HostObjectOwnKeysTrap));
-
-  return handler;
-}
-
-void ChakraRuntime::setupMemoryTracker() noexcept {
-  if (runtimeArgs().memoryTracker) {
-    size_t initialMemoryUsage = 0;
-    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
-    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
-
-    if (runtimeArgs().runtimeMemoryLimit > 0)
-      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
-
-    JsSetRuntimeMemoryAllocationCallback(
-        m_runtime,
-        runtimeArgs().memoryTracker.get(),
-        [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
-          auto memoryTrackerPtr = static_cast<facebook::react::MemoryTracker *>(callbackState);
-          switch (allocationEvent) {
-            case JsMemoryAllocate:
-              memoryTrackerPtr->OnAllocation(allocationSize);
-              break;
-
-            case JsMemoryFree:
-              memoryTrackerPtr->OnDeallocation(allocationSize);
-              break;
-
-            case JsMemoryFailure:
-            default:
-              break;
-          }
-
-          return true;
-        });
-  }
 }
 
 JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
@@ -916,6 +860,61 @@ facebook::jsi::Value ChakraRuntime::HostObjectOwnKeysTrap(
   }
 
   return result;
+}
+
+facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
+  // TODO (yicyao): handler can be cached and reused for multiple HostObjects.
+
+  facebook::jsi::Object handler = createObject();
+
+  constexpr const char *const getPropName = "get";
+  constexpr const char *const setPropName = "set";
+  constexpr const char *const ownKeysPropName = "ownKeys";
+
+  facebook::jsi::PropNameID getPropId = createPropNameIDFromAscii(getPropName, strlen(getPropName));
+  facebook::jsi::PropNameID setPropId = createPropNameIDFromAscii(setPropName, strlen(setPropName));
+  facebook::jsi::PropNameID ownKeysPropId = createPropNameIDFromAscii(ownKeysPropName, strlen(ownKeysPropName));
+
+  handler.setProperty(*this, getPropName, createFunctionFromHostFunction(getPropId, 2, HostObjectGetTrap));
+
+  handler.setProperty(*this, setPropName, createFunctionFromHostFunction(setPropId, 3, HostObjectSetTrap));
+
+  handler.setProperty(*this, ownKeysPropName, createFunctionFromHostFunction(ownKeysPropId, 1, HostObjectOwnKeysTrap));
+
+  return handler;
+}
+
+void ChakraRuntime::setupMemoryTracker() noexcept {
+  if (runtimeArgs().memoryTracker) {
+    size_t initialMemoryUsage = 0;
+    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
+    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
+
+    if (runtimeArgs().runtimeMemoryLimit > 0)
+      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
+
+    JsSetRuntimeMemoryAllocationCallback(
+        m_runtime,
+        runtimeArgs().memoryTracker.get(),
+        [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
+          auto memoryTrackerPtr = static_cast<facebook::react::MemoryTracker *>(callbackState);
+          switch (allocationEvent) {
+            case JsMemoryAllocate:
+              memoryTrackerPtr->OnAllocation(allocationSize);
+              break;
+
+            case JsMemoryFree:
+              memoryTrackerPtr->OnDeallocation(allocationSize);
+              break;
+
+            case JsMemoryFailure:
+            default:
+              break;
+          }
+
+          return true;
+        });
+  }
 }
 
 std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
