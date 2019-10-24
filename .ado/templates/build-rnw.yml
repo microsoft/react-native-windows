@@ -85,7 +85,7 @@ steps:
         ${{parameters.msbuildArguments}}
 
   - task: PublishBuildArtifacts@1
-    condition:  succeededOrFailed()
+    condition:  or(succeeded(), failed())
     timeoutInMinutes: 10
     inputs:    
       pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log 
