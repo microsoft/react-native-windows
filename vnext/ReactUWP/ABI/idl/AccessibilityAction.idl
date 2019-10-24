@@ -1,0 +1,21 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+// Note: This is just a workaround should be removed in the future.
+// Currently there are two folders which hold idl files: ABI/idl and Views/cppwinrt
+// ABI/idl is compiled by MidlRT target, but Views/cppwinrt is built by buildcppwinrt.
+// Views/cppwinrt is not merged into ReactUWP.Winmd, but ABI/idl is merged.
+// so it hits without this file: Exception thrown at 0x7646EF12 (KernelBase.dll) in ReactUWPTestApp.exe: WinRT originate error - 0x80131522 : 'System.TypeLoadException: Could not find Windows Runtime type 'react.uwp.AccessibilityAction'
+// This file has the same 'struct AccessibilityAction'  in Views/cppwinrt/AccessibilityAction.idl.
+
+import "inspectable.idl";
+
+namespace react.uwp
+{
+  [version(1)]
+    
+  struct AccessibilityAction {		
+      String Name;
+      String Label;
+  };
+}

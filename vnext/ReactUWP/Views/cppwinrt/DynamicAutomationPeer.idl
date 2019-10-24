@@ -6,6 +6,10 @@
 // If you modify this file, be sure to run buildcppwinrt.cmd in this folder
 // to generate new headers
 
+#define VERSION 1.0
+
+import "AccessibilityAction.idl";
+    
 namespace react.uwp
 {
 	enum AccessibilityRoles
@@ -56,6 +60,7 @@ namespace react.uwp
 	};
 
 	delegate void AccessibilityInvokeEventHandler();
+  	delegate void AccessibilityActionEventHandler(AccessibilityAction action);
 
 	[default_interface]
 	[webhosthidden]
@@ -97,6 +102,14 @@ namespace react.uwp
 		static Windows.UI.Xaml.DependencyProperty AccessibilityInvokeEventHandlerProperty { get; };
 		static void SetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityInvokeEventHandler value);
 		static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityActionsProperty { get; };
+		static void SetAccessibilityActions(Windows.UI.Xaml.UIElement element, Windows.Foundation.Collections.IVector<AccessibilityAction> value);
+		static Windows.Foundation.Collections.IVector<AccessibilityAction> GetAccessibilityActions(Windows.UI.Xaml.UIElement element);
+
+		static Windows.UI.Xaml.DependencyProperty AccessibilityActionEventHandlerProperty { get; };
+		static void SetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityActionEventHandler value);
+		static AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element);
 	}
 
 	[default_interface]

@@ -421,6 +421,7 @@
     <MidlRT Include="ABI\idl\Module.idl" />
     <MidlRT Include="ABI\idl\Instance.idl" />
     <MidlRT Include="ABI\idl\ReactControl.idl" />
+    <MidlRT Include="ABI\idl\AccessibilityAction.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
