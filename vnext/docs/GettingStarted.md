@@ -4,6 +4,7 @@ This is a summary of setup steps needed to install and work with React Native fo
 
 ## System requirements
 * You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.15063.0 or higher. See [Windows 10 Compatability](./win10compat.md) for version support details.
+  * Ensure Developer Mode is turned ON in Windows Settings App. 
 * [Visual Studio 2019](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
