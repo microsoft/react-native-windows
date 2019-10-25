@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Oct 2019 20:56:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.46",
+      "version": "0.60.0-vnext.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.12",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "44da446020182a3f5ab3d0a499a909e61d11c52d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Oct 2019 01:44:45 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.45",
       "version": "0.60.0-vnext.45",
