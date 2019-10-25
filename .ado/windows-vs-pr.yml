@@ -205,6 +205,21 @@ jobs:
       # - powershell: |
       #     ls -name $env:GOOGLETESTADAPTERPATH\
 
+      - task: DownloadBuildArtifacts@0
+        inputs:
+          buildType: specific
+          project: react-native-windows
+          pipeline: PR
+          specificBuildWithTriggering: false # Optional
+          buildVersionToDownload: specific
+          allowPartiallySucceededBuilds: false # Optional
+          buildId: 44662
+          #tags: # Optional
+          downloadType: single
+          artifactName: DesktopUt
+          itemPattern: '**' # Optional
+          downloadPath: $(Build.SourcesDirectory)\vnext\target
+
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
