@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Oct 2019 20:56:10 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Oct 2019 21:43:48 GMT and should not be manually modified.
 
+## 0.60.0-vnext.47
+Fri, 25 Oct 2019 21:43:48 GMT
+
+### Changes
+
+- go back to native implementation for getPropertyNames (stecrain@microsoft.com)
 ## 0.60.0-vnext.46
 Fri, 25 Oct 2019 20:56:10 GMT
 

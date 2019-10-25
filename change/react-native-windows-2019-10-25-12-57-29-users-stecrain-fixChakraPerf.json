@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "go back to native implementation for getPropertyNames",
-  "packageName": "react-native-windows",
-  "email": "stecrain@microsoft.com",
-  "commit": "b3e7a4d358874e8a6f693c8dc84c3022c7d4d087",
-  "date": "2019-10-25T19:57:29.289Z",
-  "file": "F:\\repos\\react-native-windows\\change\\react-native-windows-2019-10-25-12-57-29-users-stecrain-fixChakraPerf.json"
-}
