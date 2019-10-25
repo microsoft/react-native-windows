@@ -1,3 +1,5 @@
+/* TODO: Update or remove this example to reflect the new ViewManager architecture provided by Microsoft.ReactNative. */
+
 #pragma once
 
 // Examples of defining a custom ViewManager

@@ -1,3 +1,5 @@
+/* TODO: Update or remove this example to reflect the new ViewManager architecture provided by Microsoft.ReactNative. */
+
 #include "pch.h"
 
 #include <Views/ShadowNodeBase.h>
