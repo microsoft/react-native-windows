@@ -241,6 +241,7 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
 
       - task: VSTest@2
         displayName: List Desktop Integration Tests
