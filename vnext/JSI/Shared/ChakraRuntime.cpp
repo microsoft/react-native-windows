@@ -21,21 +21,11 @@ namespace Microsoft::JSI {
 namespace {
 
 constexpr const char *const g_bootstrapBundleSource =
-    "function $$ChakraRuntimeGetPropertyNames$$(obj)\n"
-    "{\n"
-    "  var propertyNames = []\n"
-    "  for (propertyName in obj) \n"
-    "  {\n"
-    "    propertyNames.push(propertyName)\n"
-    "  }\n"
-    "  return propertyNames\n"
-    "}\n"
     "function $$ChakraRuntimeProxyConstructor$$(target, handler)\n"
     "{\n"
     "  return new Proxy(target, handler)\n"
     "}";
 
-constexpr const char *const g_getPropertyNamesBootstrapFuncName = "$$ChakraRuntimeGetPropertyNames$$";
 constexpr const char *const g_proxyConstructorBootstrapFuncName = "$$ChakraRuntimeProxyConstructor$$";
 
 constexpr const char *const g_proxyGetHostObjectTargetPropName = "$$ProxyGetHostObjectTarget$$";
@@ -386,11 +376,28 @@ bool ChakraRuntime::isHostFunction(const facebook::jsi::Function &obj) const {
 }
 
 facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object &object) {
-  facebook::jsi::Function jsGetPropertyNames =
-      global().getPropertyAsFunction(*this, g_getPropertyNamesBootstrapFuncName);
+  JsValueRef propertyNamesArrayRef;
+  VerifyJsErrorElseThrow(JsGetOwnPropertyNames(GetChakraObjectRef(object), &propertyNamesArrayRef));
 
-  facebook::jsi::Value objAsValue(*this, object);
-  return call(jsGetPropertyNames, facebook::jsi::Value::undefined(), &objAsValue, 1).asObject(*this).asArray(*this);
+  JsPropertyIdRef propertyId;
+  VerifyJsErrorElseThrow(JsGetPropertyIdFromName(L"length", &propertyId));
+  JsValueRef countRef;
+  VerifyJsErrorElseThrow(JsGetProperty(propertyNamesArrayRef, propertyId, &countRef));
+  int count;
+
+  VerifyJsErrorElseThrow(JsNumberToInt(countRef, &count));
+
+  auto result = createArray(count);
+  for (int i = 0; i < count; i++) {
+    JsValueRef index;
+    VerifyJsErrorElseThrow(JsIntToNumber(i, &index));
+    JsValueRef propertyName;
+    VerifyJsErrorElseThrow(JsGetIndexedProperty(propertyNamesArrayRef, index, &propertyName));
+
+    result.setValueAtIndex(*this, i, MakePointer<facebook::jsi::String>(propertyName));
+  }
+
+  return result;
 }
 
 // Only ChakraCore supports weak reference semantics, so ChakraRuntime
