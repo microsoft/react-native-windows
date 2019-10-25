@@ -1,26 +1,24 @@
-// Copyright 2004-present Facebook. All Rights Reserved.
+/*
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 #include "JsiRuntimeUnitTests.h"
 
-#include <Utilities.h>
+#include <gtest/gtest.h>
+#include <jsi/decorator.h>
 #include <jsi/jsi.h>
 
-#include <gtest/gtest.h>
-
 #include <stdlib.h>
-
-// Note: We cannot use unistd.h here because it is a Unix header.
-//       Instead we use the standard chrono header.
-//#include <unistd.h>
 #include <chrono>
-
 #include <functional>
 #include <thread>
 #include <unordered_map>
 #include <unordered_set>
 
 using namespace facebook::jsi;
-using namespace Microsoft::Common::Utilities;
 
 TEST_P(JsiRuntimeUnitTests, RuntimeTest) {
   rt.evaluateJavaScript(std::make_unique<StringBuffer>("x = 1"), "");
@@ -103,10 +101,7 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
   EXPECT_EQ(x.getPropertyNames(rt).size(rt), 5);
   EXPECT_TRUE(eval("x.ten == 11").getBool());
 
-  // TODO (yicyao): #2704 The copy of jsi-inl.h in Microsoft/react-native is out
-  // of date and does not contain the float overload.
-  x.setProperty(rt, "e_as_float", 2.71);
-  // x.setProperty(rt, "e_as_float", 2.71f);
+  x.setProperty(rt, "e_as_float", 2.71f);
   EXPECT_TRUE(eval("Math.abs(x.e_as_float - 2.71) < 0.001").getBool());
 
   x.setProperty(rt, "e_as_double", 2.71);
@@ -160,16 +155,11 @@ TEST_P(JsiRuntimeUnitTests, ObjectTest) {
   EXPECT_EQ(obj.getProperty(rt, "a").getNumber(), 1);
   EXPECT_EQ(obj.getProperty(rt, "b").getNumber(), 2);
   Array names = obj.getPropertyNames(rt);
-  // TODO (yicyao): We need to fix getPropertyNames as it currently:
-  // - Does not traverse property chains.
-  // - Returns non-enumerable properties.
-  // EXPECT_EQ(names.size(rt), 1);
-  // EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
+  EXPECT_EQ(names.size(rt), 1);
+  EXPECT_EQ(names.getValueAtIndex(rt, 0).getString(rt).utf8(rt), "a");
 }
 
-// TODO (yicyao): Enable this once host object is implemented for
-// ChakraRuntime.
-TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectTest) {
+TEST_P(JsiRuntimeUnitTests, HostObjectTest) {
   class ConstantHostObject : public HostObject {
     Value get(Runtime &, const PropNameID &sym) override {
       return 9000;
@@ -278,8 +268,6 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectTest) {
       "hello");
   EXPECT_EQ(shbho->getThing(), "hello");
 
-  // TODO (T28293178) Remove this once exceptions are supported in all builds.
-#ifndef JSI_NO_EXCEPTION_TESTS
   class ThrowingHostObject : public HostObject {
     Value get(Runtime &rt, const PropNameID &sym) override {
       throw std::runtime_error("Cannot get");
@@ -306,14 +294,12 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectTest) {
     exc = ex.what();
   }
   EXPECT_NE(exc.find("Cannot set"), std::string::npos);
-#endif
 
   class NopHostObject : public HostObject {};
   Object nopHo = Object::createFromHostObject(rt, std::make_shared<NopHostObject>());
   EXPECT_TRUE(nopHo.isHostObject(rt));
   EXPECT_TRUE(function("function (obj) { return obj.thing; }").call(rt, nopHo).isUndefined());
-  // TODO (T28293178) Remove this once exceptions are supported in all builds.
-#ifndef JSI_NO_EXCEPTION_TESTS
+
   std::string nopExc;
   try {
     function("function (obj) { obj.thing = 'pika'; }").call(rt, nopHo);
@@ -321,7 +307,6 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectTest) {
     nopExc = ex.what();
   }
   EXPECT_NE(nopExc.find("TypeError: "), std::string::npos);
-#endif
 
   class HostObjectWithPropertyNames : public HostObject {
     std::vector<PropNameID> getPropertyNames(Runtime &rt) override {
@@ -437,11 +422,7 @@ TEST_P(JsiRuntimeUnitTests, FunctionTest) {
                    nullptr,
                    true,
                    3.14,
-                   2.71,
-                   // TODO (yicyao): #2704 The copy of jsi-inl.h in
-                   // Microsoft/react-native is out of date and does not contain
-                   // the float overload.
-                   // 2.71f,
+                   2.71f,
                    17,
                    "s1",
                    String::createFromAscii(rt, "s2"),
@@ -495,8 +476,7 @@ TEST_P(JsiRuntimeUnitTests, FunctionThisTest) {
   EXPECT_FALSE(checkPropertyFunction.call(rt).getBool());
 }
 
-// TODO (yicyao): Fix this test.
-TEST_P(JsiRuntimeUnitTests, DISABLED_FunctionConstructorTest) {
+TEST_P(JsiRuntimeUnitTests, FunctionConstructorTest) {
   Function ctor = function(
       "function (a) {"
       "  if (typeof a !== 'undefined') {"
@@ -522,7 +502,6 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_FunctionConstructorTest) {
   EXPECT_TRUE(date.isObject());
   EXPECT_TRUE(instanceof.call(rt, date, dateCtor).getBool());
   // Sleep for 50 milliseconds
-  // usleep(50000);
   std::this_thread::sleep_for(std::chrono::milliseconds(50));
   EXPECT_GE(
       function("function (d) { return (new Date()).getTime() - d.getTime(); }").call(rt, date).getNumber(),
@@ -541,8 +520,7 @@ TEST_P(JsiRuntimeUnitTests, InstanceOfTest) {
   EXPECT_TRUE(ctor.callAsConstructor(rt, nullptr, 0).getObject(rt).instanceOf(rt, ctor));
 }
 
-// TODO (yicyao): Fix this test.
-TEST_P(JsiRuntimeUnitTests, DISABLED_HostFunctionTest) {
+TEST_P(JsiRuntimeUnitTests, HostFunctionTest) {
   auto one = std::make_shared<int>(1);
   Function plusOne = Function::createFromHostFunction(
       rt,
@@ -574,10 +552,11 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_HostFunctionTest) {
   rt.global().setProperty(rt, "cons", dot);
   EXPECT_TRUE(eval("cons('left', 'right') == 'left.right'").getBool());
   EXPECT_TRUE(eval("cons.name == 'dot'").getBool());
-  EXPECT_TRUE(eval("cons.length == 2").getBool());
+  // TODO (yicyao): Chakra(Core)'s APIs can only create host functions that
+  // takes in no parameters. The arugmenst needed for the host function are
+  // passed through the arguments object. Disabling this test for now.
+  // EXPECT_TRUE(eval("cons.length == 2").getBool());
   EXPECT_TRUE(eval("cons instanceof Function").getBool());
-  // TODO (T28293178) Remove this once exceptions are supported in all builds.
-#ifndef JSI_NO_EXCEPTION_TESTS
   EXPECT_TRUE(eval("(function() {"
                    "  try {"
                    "    cons('fail'); return false;"
@@ -587,7 +566,7 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_HostFunctionTest) {
                    "                          'expected 2 args'));"
                    "  }})()")
                   .getBool());
-#endif
+
   Function coolify = Function::createFromHostFunction(
       rt,
       PropNameID::forAscii(rt, "coolify"),
@@ -638,7 +617,7 @@ TEST_P(JsiRuntimeUnitTests, DISABLED_HostFunctionTest) {
       function("function (f) { return f('A cat'); }").call(rt, callable).getString(rt).utf8(rt),
       "A cat was called with std::function::target");
   EXPECT_TRUE(callable.isHostFunction(rt));
-  // TODO (yicyao): This line failed to compile. Fix this.
+  // TODO (yicyao): Chakra(Core)Runtime currently does not support getHostFunction.
   // EXPECT_NE(callable.getHostFunction(rt).target<Callable>(), nullptr);
 
   std::string strval = "strval1";
@@ -740,9 +719,7 @@ TEST_P(JsiRuntimeUnitTests, ValueTest) {
   EXPECT_EQ(eval("456").asNumber(), 456);
   EXPECT_THROW(eval("'word'").asNumber(), JSIException);
   EXPECT_EQ(eval("({1:2, 3:4})").asObject(rt).getProperty(rt, "1").getNumber(), 2);
-  // TODO (yicyao): Currently this line would crash at the std::terminate()
-  // call in createValue. We need to fix this.
-  // EXPECT_THROW(eval("'oops'").asObject(rt), JSIException);
+  EXPECT_THROW(eval("'oops'").asObject(rt), JSIException);
 
   EXPECT_EQ(eval("['zero',1,2,3]").toString(rt).utf8(rt), "zero,1,2,3");
 }
@@ -787,8 +764,7 @@ TEST_P(JsiRuntimeUnitTests, EqualsTest) {
   EXPECT_FALSE(Value::strictEquals(rt, Value(rt, str), 1.0));
 }
 
-// TODO (yicyao): Need to fix getStack().
-TEST_P(JsiRuntimeUnitTests, DISABLED_ExceptionStackTraceTest) {
+TEST_P(JsiRuntimeUnitTests, ExceptionStackTraceTest) {
   static const char invokeUndefinedScript[] =
       "function hello() {"
       "  var a = {}; a.log(); }"
@@ -867,9 +843,8 @@ TEST_P(JsiRuntimeUnitTests, ScopeDoesNotCrashWhenValueEscapes) {
   EXPECT_EQ(v.getObject(rt).getProperty(rt, "a").getNumber(), 5);
 }
 
-// TODO (yicyao): Enable this test.
 // Verifies you can have a host object that emulates a normal object
-TEST_P(JsiRuntimeUnitTests, DISABLED_HostObjectWithValueMembers) {
+TEST_P(JsiRuntimeUnitTests, HostObjectWithValueMembers) {
   class Bag : public HostObject {
    public:
     Bag() = default;
