@@ -641,7 +641,7 @@
     </ClInclude>
     <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
-    </ClCompile>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">

@@ -19,8 +19,7 @@ App::App() noexcept {
   MainComponentName(L"SampleApp");
   JavaScriptMainModuleName(L"index.windows");
 
-  PackageProviders().Append(
-      make<ReactPackageProvider>()); // Includes all modules in this project
+  PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
   PackageProviders().Append(winrt::SampleLibraryCPP::ReactPackageProvider());
   PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());
 

@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "comment": "Fixed merge/clang",
+  "packageName": "react-native-windows-extended",
+  "email": "jthysell@microsoft.com",
+  "commit": "afaed3932e05b7d15cbbf8794f4600aacc2b38e7",
+  "date": "2019-10-24T17:40:34.226Z",
+  "file": "F:\\code\\rnw\\change\\react-native-windows-extended-2019-10-24-10-40-34-viewmanagers.json"
+}

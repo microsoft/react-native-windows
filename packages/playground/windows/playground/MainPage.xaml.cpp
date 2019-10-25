@@ -29,20 +29,12 @@ MainPage::MainPage() {
 
   // Create Commands
   m_addPaneCommand = ref new RelayCommand(
-      [this](Object ^ parameter) {
-        return x_PaneContainer->ColumnDefinitions->Size < 3;
-      },
-      [this](Object ^ parameter) {
-        this->AddPane(dynamic_cast<HostingPane ^>(parameter));
-      });
+      [this](Object ^ parameter) { return x_PaneContainer->ColumnDefinitions->Size < 3; },
+      [this](Object ^ parameter) { this->AddPane(dynamic_cast<HostingPane ^>(parameter)); });
 
   m_removePaneCommand = ref new RelayCommand(
-      [this](Object ^ parameter) {
-        return x_PaneContainer->ColumnDefinitions->Size > 1;
-      },
-      [this](Object ^ parameter) {
-        this->RemovePane(dynamic_cast<HostingPane ^>(parameter));
-      });
+      [this](Object ^ parameter) { return x_PaneContainer->ColumnDefinitions->Size > 1; },
+      [this](Object ^ parameter) { this->RemovePane(dynamic_cast<HostingPane ^>(parameter)); });
 
   AddPane(nullptr);
 }
@@ -62,8 +54,7 @@ void Playground::MainPage::RemovePane(HostingPane ^ pane) {
     // Decrement Column values on Panes after this one
     unsigned int countColumns = x_PaneContainer->ColumnDefinitions->Size;
     for (; index < countColumns; ++index) {
-      auto hostingPane =
-          dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(index));
+      auto hostingPane = dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(index));
       if (hostingPane != nullptr)
         hostingPane->SetValue(Grid::ColumnProperty, index);
       else
@@ -83,8 +74,7 @@ void Playground::MainPage::AddPane(HostingPane ^ afterPane) {
     // Where to insert? After the pane passed in. At start if not passed or not
     // found.
     unsigned int index = 0;
-    if ((afterPane != nullptr) &&
-        x_PaneContainer->Children->IndexOf(afterPane, &index))
+    if ((afterPane != nullptr) && x_PaneContainer->Children->IndexOf(afterPane, &index))
       ++index;
 
     // Add ColumnDefinition for Column that will host the Pane
@@ -102,8 +92,7 @@ void Playground::MainPage::AddPane(HostingPane ^ afterPane) {
     // Set the column indexes on all columns from this one to the end
     newPane->SetValue(Grid::ColumnProperty, index);
     for (unsigned int i = index + 1; i < countColumns; ++i) {
-      auto currentPane =
-          dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(i));
+      auto currentPane = dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(i));
       currentPane->SetValue(Grid::ColumnProperty, i);
     }
 
@@ -117,15 +106,12 @@ void Playground::MainPage::AddPane(HostingPane ^ afterPane) {
 void MainPage::UpdatePaneCommandState() {
   // Ensure all pane commands update their CanExecute status
   for (unsigned int i = 0, c = x_PaneContainer->Children->Size; i < c; ++i) {
-    auto currentPane =
-        dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(i));
+    auto currentPane = dynamic_cast<HostingPane ^>(x_PaneContainer->Children->GetAt(i));
 
-    auto addPaneCommand =
-        dynamic_cast<RelayCommand ^>(currentPane->AddPaneCommand);
+    auto addPaneCommand = dynamic_cast<RelayCommand ^>(currentPane->AddPaneCommand);
     addPaneCommand->RaiseCanExecuteChanged();
 
-    auto removePaneCommand =
-        dynamic_cast<RelayCommand ^>(currentPane->RemovePaneCommand);
+    auto removePaneCommand = dynamic_cast<RelayCommand ^>(currentPane->RemovePaneCommand);
     removePaneCommand->RaiseCanExecuteChanged();
   }
 }

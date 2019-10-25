@@ -29,5 +29,4 @@ RelayCommand::~RelayCommand() {
 RelayCommand::RelayCommand(
     std::function<bool(Platform::Object ^)> canExecuteCallback,
     std::function<void(Platform::Object ^)> executeCallback)
-    : _canExecuteCallback(canExecuteCallback),
-      _executeCallback(executeCallback) {}
+    : _canExecuteCallback(canExecuteCallback), _executeCallback(executeCallback) {}

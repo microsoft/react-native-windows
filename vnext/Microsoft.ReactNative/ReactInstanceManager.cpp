@@ -165,7 +165,7 @@ auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<Reac
   }
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(m_modulesProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(m_modulesProvider, m_viewManagersProvider);
 
     for (auto &packageProvider : m_packageProviders) {
       packageProvider.CreatePackage(m_packageBuilder);

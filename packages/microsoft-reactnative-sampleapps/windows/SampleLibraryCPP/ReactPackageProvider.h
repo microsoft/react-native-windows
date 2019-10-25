@@ -18,8 +18,6 @@ struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
 
 namespace winrt::SampleLibraryCPP::factory_implementation {
 
-struct ReactPackageProvider : ReactPackageProviderT<
-                                  ReactPackageProvider,
-                                  implementation::ReactPackageProvider> {};
+struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
 
 } // namespace winrt::SampleLibraryCPP::factory_implementation
