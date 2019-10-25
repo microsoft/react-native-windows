@@ -221,6 +221,21 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
 
+      - task: CopyFiles@2
+        displayName: Copy NuGet artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          targetFolder: $(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
+          contents:
+            React.Windows.Desktop.UnitTests/**
+            JSI.Desktop.UnitTests/**
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact: DesktopUt"
+        inputs:
+          artifactName: DesktopUt
+          pathtoPublish: $(Build.ArtifactStagingDirectory)
+
       # - template: templates/stop-packagers.yml
 
       # - task: PowerShell@2
