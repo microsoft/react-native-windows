@@ -189,20 +189,21 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
+          versionSelector: specificVersion
           testPlatformVersion: 16.3.0
 
-      - template: templates/build-rnw.yml
-        parameters:
-          yarnBuildCmd: buildci
-          project: vnext/ReactWindows-Desktop.sln
-          platformToolset: v141
-          vsComponents: $(VsComponents)
-          msbuildArguments:
-            /p:RNW_PKG_VERSION_STR="Private Build"
-            /p:RNW_PKG_VERSION="1000,0,0,0"
+      # - template: templates/build-rnw.yml
+      #   parameters:
+      #     yarnBuildCmd: buildci
+      #     project: vnext/ReactWindows-Desktop.sln
+      #     platformToolset: v141
+      #     vsComponents: $(VsComponents)
+      #     msbuildArguments:
+      #       /p:RNW_PKG_VERSION_STR="Private Build"
+      #       /p:RNW_PKG_VERSION="1000,0,0,0"
 
-      - powershell: |
-          ls -name $env:GOOGLETESTADAPTERPATH\
+      # - powershell: |
+      #     ls -name $env:GOOGLETESTADAPTERPATH\
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
