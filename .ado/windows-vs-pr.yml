@@ -226,7 +226,7 @@ jobs:
         inputs:
           sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           targetFolder: $(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
-          contents:
+          contents: |
             React.Windows.Desktop.UnitTests/**
             JSI.Desktop.UnitTests/**
 
