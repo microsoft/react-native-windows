@@ -17,14 +17,14 @@ variables:
   VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
 
 jobs:
-  - job: Setup
-    steps:
-      - task: powershell@2
-        name: checkPayload
-        displayName: "Check if build is required for this PR"
-        inputs:
-          targetType: filePath
-          filePath: .ado/shouldSkipPRBuild.ps1
+  # - job: Setup
+  #   steps:
+  #     - task: powershell@2
+  #       name: checkPayload
+  #       displayName: "Check if build is required for this PR"
+  #       inputs:
+  #         targetType: filePath
+  #         filePath: .ado/shouldSkipPRBuild.ps1
 
   # - job: RNWUniversalPR
   #   displayName: Universal PR
@@ -155,7 +155,7 @@ jobs:
 
   - job: RNWDesktopPR
     displayName: Desktop PR
-    dependsOn: Setup
+    # dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
@@ -218,7 +218,12 @@ jobs:
           downloadType: single
           artifactName: DesktopUt
           itemPattern: '**' # Optional
-          downloadPath: $(Build.SourcesDirectory)\vnext\target
+          downloadPath: $(Build.SourcesDirectory)/vnext/target
+
+      - task: ExtractFiles@1
+        inputs:
+          archiveFilePatterns: $(Build.SourcesDirectory)/vnext/target/DesktopUt.zip
+          destinationFolder: $(Build.SourcesDirectory)/vnext/target
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
