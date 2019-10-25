@@ -2,6 +2,37 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Oct 2019 01:44:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.45",
+      "version": "0.60.0-vnext.45",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update Docs with VS Code launch config",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "1df519266ddf300e9f8fd8948d2fb96e4d068546"
+          },
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.41.",
+            "author": "julio@rochsquadron.net",
+            "commit": "c6427453fb5ef753ad38b872f04990c4d4cca679"
+          },
+          {
+            "comment": "Fix remaining JSI unit tests and some code clean up.",
+            "author": "yicyao@microsoft.com",
+            "commit": "1413e2f189dd7d59511c6220823c37c251b5de89"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "make run-windows work on x86 machines",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "280c71dbe5b34e13bb5012d35446324e1df1b039"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Oct 2019 18:04:40 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.44",
       "version": "0.60.0-vnext.44",

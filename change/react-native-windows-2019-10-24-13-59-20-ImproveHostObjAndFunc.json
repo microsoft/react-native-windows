@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix remaining JSI unit tests and some code clean up.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "1413e2f189dd7d59511c6220823c37c251b5de89",
-  "date": "2019-10-24T20:59:20.310Z",
-  "file": "D:\\Git\\hansenyy-react-native-windows-3\\change\\react-native-windows-2019-10-24-13-59-20-ImproveHostObjAndFunc.json"
-}

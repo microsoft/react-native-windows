@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 24 Oct 2019 18:04:40 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Oct 2019 01:44:45 GMT and should not be manually modified.
 
+## 0.60.0-vnext.45
+Fri, 25 Oct 2019 01:44:45 GMT
+
+### Changes
+
+- make run-windows work on x86 machines (asklar@winse.microsoft.com)
 ## 0.60.0-vnext.44
 Thu, 24 Oct 2019 18:04:40 GMT
 
