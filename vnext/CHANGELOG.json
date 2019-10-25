@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Oct 2019 23:07:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.48",
+      "version": "0.60.0-vnext.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Custom View Managers E2E",
+            "author": "jthysell@microsoft.com",
+            "commit": "88cb2dc26682d9448ef07b15c94124ba07153594"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Oct 2019 21:43:48 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.47",
       "version": "0.60.0-vnext.47",

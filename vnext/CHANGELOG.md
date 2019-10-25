@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Oct 2019 21:43:48 GMT and should not be manually modified.
+This log was last generated on Fri, 25 Oct 2019 23:07:25 GMT and should not be manually modified.
 
+## 0.60.0-vnext.48
+Fri, 25 Oct 2019 23:07:25 GMT
+
+### Changes
+
+- Custom View Managers E2E (jthysell@microsoft.com)
 ## 0.60.0-vnext.47
 Fri, 25 Oct 2019 21:43:48 GMT
 
