@@ -100,7 +100,7 @@ class MSBuildTools {
 function VSWhere(requires, version, property) {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
-    process.env['ProgramFiles(x86)'],
+    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 
