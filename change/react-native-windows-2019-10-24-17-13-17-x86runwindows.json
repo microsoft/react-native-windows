@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "make run-windows work on x86 machines",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "commit": "280c71dbe5b34e13bb5012d35446324e1df1b039",
+  "date": "2019-10-25T00:13:17.214Z",
+  "file": "F:\\rnw\\change\\react-native-windows-2019-10-24-17-13-17-x86runwindows.json"
+}
