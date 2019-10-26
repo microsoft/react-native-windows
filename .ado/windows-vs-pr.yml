@@ -231,8 +231,8 @@ jobs:
         inputs:
           testSelector: testAssemblies
           testAssemblyVer2: |
-            React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
             JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
+#            React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
           runTestsInIsolation: true
