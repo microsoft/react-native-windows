@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 26 Oct 2019 02:55:31 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Oct 2019 21:50:14 GMT and should not be manually modified.
 
+## 0.60.0-vnext.50
+Sat, 26 Oct 2019 21:50:14 GMT
+
+### Changes
+
+- Fix remote debugger for Playground app. Now you can pass  the hostname:port of a running metro bundler instance and it will connect correctly (asklar@winse.microsoft.com)
 ## 0.60.0-vnext.49
 Sat, 26 Oct 2019 02:55:31 GMT
 
