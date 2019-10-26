@@ -173,7 +173,8 @@ jobs:
         #   BuildPlatform: x86
 
     pool:
-      vmImage: $(VmImage)
+      #vmImage: $(VmImage)
+      vmImage: windows-2019
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
