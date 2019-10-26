@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 26 Oct 2019 02:55:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.49",
+      "version": "0.60.0-vnext.49",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.42.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "fe65a1039840af846610bbc174a9772f3d4ca8e5"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.13",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "d4b0d7291715673659e8490ef5ba8c1d65f26e56"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Oct 2019 23:07:25 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.48",
       "version": "0.60.0-vnext.48",
