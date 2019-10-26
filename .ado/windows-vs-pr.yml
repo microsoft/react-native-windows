@@ -220,14 +220,8 @@ jobs:
           itemPattern: '**' # Optional
           downloadPath: $(Build.SourcesDirectory)/vnext/target
 
-      # - task: ExtractFiles@1
-      #   inputs:
-      #     archiveFilePatterns: $(Build.SourcesDirectory)/vnext/target/DesktopUt.zip
-      #     destinationFolder: $(Build.SourcesDirectory)/vnext/target
-
       - powershell: |
-          ls vnext\target
-          Expand-Archive vnext\target\DesktopUt.zip
+          mv vnext\target\DesktopUt\* vnext\target
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
