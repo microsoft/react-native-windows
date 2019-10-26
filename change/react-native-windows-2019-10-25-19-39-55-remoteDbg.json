@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Fix remote debugger for Playground app. Now you can pass  the hostname:port of a running metro bundler instance and it will connect correctly",
+  "packageName": "react-native-windows",
+  "email": "asklar@winse.microsoft.com",
+  "commit": "3c510d99cb0db6b1fc371c589b6e97f94d85c8b5",
+  "date": "2019-10-26T02:39:55.125Z",
+  "file": "F:\\rnw\\change\\react-native-windows-2019-10-25-19-39-55-remoteDbg.json"
+}

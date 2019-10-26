@@ -212,6 +212,9 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     settings.UseWebDebugger = x_UseWebDebuggerCheckBox->IsChecked->Value;
     settings.UseLiveReload = x_UseLiveReloadCheckBox->IsChecked->Value;
     settings.EnableDeveloperMenu = true;
+    if (params.find("debughost") != params.end()) {
+      settings.DebugHost = params["debughost"];
+    }
     settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
       OutputDebugStringA("In LoggingCallback");
       OutputDebugStringA(message);
