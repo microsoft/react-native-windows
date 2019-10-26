@@ -212,13 +212,18 @@ std::shared_ptr<react::uwp::IReactInstance> HostingPane::getInstance() {
     settings.UseWebDebugger = x_UseWebDebuggerCheckBox->IsChecked->Value;
     settings.UseLiveReload = x_UseLiveReloadCheckBox->IsChecked->Value;
     settings.EnableDeveloperMenu = true;
-    settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel, const char *message) {
+    if (params.find("debughost") != params.end()) {
+      settings.DebugHost = params["debughost"];
+    }
+    settings.LoggingCallback = [](facebook::react::RCTLogLevel logLevel,
+                                  const char *message) {
       OutputDebugStringA("In LoggingCallback");
       OutputDebugStringA(message);
     };
-    settings.JsExceptionCallback = [](facebook::react::JSExceptionInfo &&exceptionInfo) {
-      OutputDebugStringA("in JsExceptionCallback");
-    };
+    settings.JsExceptionCallback =
+        [](facebook::react::JSExceptionInfo &&exceptionInfo) {
+          OutputDebugStringA("in JsExceptionCallback");
+        };
     m_instance->Start(m_instance, settings);
     m_instance->loadBundle(Microsoft::Common::Unicode::Utf16ToUtf8(m_loadedBundleFileName));
   }

@@ -16,6 +16,9 @@
 #include <Windows.ApplicationModel.Core.h>
 #include <Windows.UI.Xaml.Controls.h>
 #include <Windows.UI.Xaml.h>
+#include <string>
+#include <locale>
+#include <codecvt>
 
 using namespace Playground;
 
@@ -26,7 +29,6 @@ using namespace Windows::UI::Xaml::Controls;
 
 MainPage::MainPage() {
   InitializeComponent();
-
   // Create Commands
   m_addPaneCommand = ref new RelayCommand(
       [this](Object ^ parameter) { return x_PaneContainer->ColumnDefinitions->Size < 3; },
@@ -113,5 +115,17 @@ void MainPage::UpdatePaneCommandState() {
 
     auto removePaneCommand = dynamic_cast<RelayCommand ^>(currentPane->RemovePaneCommand);
     removePaneCommand->RaiseCanExecuteChanged();
+  }
+}
+
+std::unordered_map<std::string, std::string> params;
+
+void MainPage::OnNavigatedTo(
+    Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) {
+  Platform::String ^ args = dynamic_cast<Platform::String ^>(e->Parameter);
+  if (!(args == nullptr || args->IsEmpty())) {
+    std::wstring a{args->Data()};
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    params["debughost"] = converter.to_bytes(a);
   }
 }

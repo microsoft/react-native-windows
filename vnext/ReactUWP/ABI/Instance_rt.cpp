@@ -69,10 +69,8 @@ std::shared_ptr<::react::uwp::IReactInstance> Instance::getInstance() {
 
   if (!m_instance) {
     m_instance = ::react::uwp::CreateReactInstance(m_spModuleProvider /*moduleLoader*/);
-    ::react::uwp::ReactInstanceSettings innerSettings;
-    innerSettings.UseLiveReload = m_settings.UseLiveReload;
-    innerSettings.UseWebDebugger = m_settings.UseWebDebugger;
-    innerSettings.EnableDeveloperMenu = m_settings.EnableDeveloperMenu;
+    ::react::uwp::ReactInstanceSettings innerSettings(m_settings);
+
     m_instance->Start(m_instance, innerSettings);
     m_instance->loadBundle(std::string(m_jsBundleName));
   }
