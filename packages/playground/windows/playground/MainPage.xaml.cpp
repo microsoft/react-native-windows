@@ -16,9 +16,9 @@
 #include <Windows.ApplicationModel.Core.h>
 #include <Windows.UI.Xaml.Controls.h>
 #include <Windows.UI.Xaml.h>
-#include <string>
-#include <locale>
 #include <codecvt>
+#include <locale>
+#include <string>
 
 using namespace Playground;
 
@@ -120,8 +120,7 @@ void MainPage::UpdatePaneCommandState() {
 
 std::unordered_map<std::string, std::string> params;
 
-void MainPage::OnNavigatedTo(
-    Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) {
+void MainPage::OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) {
   Platform::String ^ args = dynamic_cast<Platform::String ^>(e->Parameter);
   if (!(args == nullptr || args->IsEmpty())) {
     std::wstring a{args->Data()};

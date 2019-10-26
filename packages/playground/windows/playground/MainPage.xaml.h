@@ -9,9 +9,9 @@
 
 #include "MainPage.g.h"
 
+#include <unordered_map>
 #include "HostingPane.xaml.h"
 #include "Utilities/RelayCommand.h"
-#include <unordered_map>
 namespace Playground {
 
 [Windows::Foundation::Metadata::WebHostHidden] public ref class MainPage sealed {
@@ -29,8 +29,8 @@ namespace Playground {
   RelayCommand ^ m_addPaneCommand;
   RelayCommand ^ m_removePaneCommand;
 
-  protected:
-  virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs^ e) override;
+ protected:
+  virtual void OnNavigatedTo(Windows::UI::Xaml::Navigation::NavigationEventArgs ^ e) override;
 };
 
 } // namespace Playground

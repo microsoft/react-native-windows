@@ -9,9 +9,9 @@
 
 #include <collection.h>
 
+#include <unordered_map>
 #include "App.xaml.h"
 #include "ViewLifetimeControl.h"
-#include <unordered_map>
 
 extern std::unordered_map<std::string, std::string> params;
 
