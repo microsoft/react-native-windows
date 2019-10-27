@@ -20,7 +20,7 @@ This is a summary of setup steps needed to install and work with React Native fo
 ## Dependencies
 * Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of [Node.js](https://nodejs.org) is installed. [Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. But you can also install Node directly from [NodeJs](https://nodejs.org/en/download/).  To use chocolately, from an elevated Command Prompt, run:
   ```
-  choco install nodejs
+  choco install nodejs.install --version=12.9.1
   ```
 * Install [Chrome](https://www.google.com/chrome/) (*optional*, but needed for JS debugging)
 * Install [Yarn](https://yarnpkg.com/en/docs/install) (*optional* if consuming react-native-windows, but required to work in the react-native-windows repo)
