@@ -16,17 +16,14 @@ namespace uwp {
 // resolved, so they can be reused.
 class ExpressionAnimationStore {
  public:
-  winrt::Windows::UI::Composition::ExpressionAnimation
-  GetElementCenterPointExpression();
-  winrt::Windows::UI::Composition::ExpressionAnimation
-  GetTransformCenteringExpression();
+  winrt::Windows::UI::Composition::ExpressionAnimation GetElementCenterPointExpression();
+  winrt::Windows::UI::Composition::ExpressionAnimation GetTransformCenteringExpression();
 
  private:
   // Compositor bug, see notes in GetElementCenterPointExpression()
   //  winrt::Windows::UI::Composition::ExpressionAnimation
   //      m_elementCenterPointExpression{nullptr};
-  winrt::Windows::UI::Composition::ExpressionAnimation
-      m_transformCenteringExpression{nullptr};
+  winrt::Windows::UI::Composition::ExpressionAnimation m_transformCenteringExpression{nullptr};
 };
 
 } // namespace uwp

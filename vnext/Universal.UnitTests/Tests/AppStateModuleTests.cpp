@@ -13,8 +13,7 @@ typedef std::function<void(std::vector<folly::dynamic>)> Callback;
 
 TEST_CLASS(AppStateModuleTest){TEST_METHOD(AppStateModule_Initialize){
     // Retreive the module and its JS methods
-    auto appStateModule =
-        std::make_unique<AppStateModule>(std::make_unique<AppState>());
+    auto appStateModule = std::make_unique<AppStateModule>(std::make_unique<AppState>());
 auto methods = appStateModule -> getMethods();
 
 // Setup callbacks from method

@@ -10,8 +10,7 @@ namespace Microsoft::React {
 
 Url::Url(const string &source) {
   //      ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
-  regex expression(
-      "(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
+  regex expression("(http|https|ws|wss)://([^:/\\?]+)(:(\\d+))?(/[^\\?]*)?(\\?(.*))?$");
   //     protocol             host       port     path        query
   cmatch match;
   int index = 0;
@@ -64,12 +63,7 @@ void writeStderr(const char *s) {
 }
 } // namespace
 
-void assertionFailure(
-    const char *expr,
-    const char *msg,
-    const char *file,
-    unsigned int line,
-    const char *function) {
+void assertionFailure(const char *expr, const char *msg, const char *file, unsigned int line, const char *function) {
   // nyi
   std::terminate();
 }

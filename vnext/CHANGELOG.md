@@ -1,7 +1,115 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 16 Oct 2019 02:19:39 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Oct 2019 21:50:14 GMT and should not be manually modified.
 
+## 0.60.0-vnext.50
+Sat, 26 Oct 2019 21:50:14 GMT
+
+### Changes
+
+- Fix remote debugger for Playground app. Now you can pass  the hostname:port of a running metro bundler instance and it will connect correctly (asklar@winse.microsoft.com)
+## 0.60.0-vnext.49
+Sat, 26 Oct 2019 02:55:31 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.13 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.48
+Fri, 25 Oct 2019 23:07:25 GMT
+
+### Changes
+
+- Custom View Managers E2E (jthysell@microsoft.com)
+## 0.60.0-vnext.47
+Fri, 25 Oct 2019 21:43:48 GMT
+
+### Changes
+
+- go back to native implementation for getPropertyNames (stecrain@microsoft.com)
+## 0.60.0-vnext.46
+Fri, 25 Oct 2019 20:56:10 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.12 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.45
+Fri, 25 Oct 2019 01:44:45 GMT
+
+### Changes
+
+- make run-windows work on x86 machines (asklar@winse.microsoft.com)
+## 0.60.0-vnext.44
+Thu, 24 Oct 2019 18:04:40 GMT
+
+### Changes
+
+- fix assert/missing else when setting alignSelf to null (adamgor@microsoft.com)
+## 0.60.0-vnext.43
+Thu, 24 Oct 2019 09:06:03 GMT
+
+### Changes
+
+- Register 2x NYI stubs for NativeAnimatedModule (adamgor@microsoft.com)
+## 0.60.0-vnext.42
+Wed, 23 Oct 2019 20:38:22 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.11 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.41
+Tue, 22 Oct 2019 03:28:58 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.9 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.40
+Tue, 22 Oct 2019 01:01:42 GMT
+
+### Changes
+
+- Fix build issue with react-native run-windows (kmelmon@microsoft.com)
+## 0.60.0-vnext.39
+Fri, 18 Oct 2019 21:22:01 GMT
+
+### Changes
+
+- Fix run-windows app installation hang (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.38
+Fri, 18 Oct 2019 20:36:35 GMT
+
+### Changes
+
+- add developer menu property (kmelmon@microsoft.com)
+## 0.60.0-vnext.37
+Thu, 17 Oct 2019 23:10:13 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.8 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.36
+Thu, 17 Oct 2019 20:58:22 GMT
+
+### Changes
+
+- Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag. (stpete@microsoft.com)
+## 0.60.0-vnext.35
+Thu, 17 Oct 2019 16:18:52 GMT
+
+### Changes
+
+- Support autoCapitalize Characters (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.34
+Thu, 17 Oct 2019 02:48:28 GMT
+
+### Changes
+
+- Support onSubmitEditing event (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.33
+Thu, 17 Oct 2019 00:14:32 GMT
+
+### Changes
+
+- exclude Generated Files (kmelmon@microsoft.com)
 ## 0.60.0-vnext.32
 Wed, 16 Oct 2019 02:19:39 GMT
 

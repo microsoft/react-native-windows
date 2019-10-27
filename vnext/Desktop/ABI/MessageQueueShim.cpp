@@ -4,8 +4,7 @@
 
 namespace facebook::react {
 
-MessageQueueShim::MessageQueueShim(
-    const ::winrt::facebook::react::IMessageQueue &abiMessageQueue)
+MessageQueueShim::MessageQueueShim(const ::winrt::facebook::react::IMessageQueue &abiMessageQueue)
     : m_abiMessageQueue{abiMessageQueue} {}
 
 void MessageQueueShim::runOnQueue(std::function<void()> &&item) {

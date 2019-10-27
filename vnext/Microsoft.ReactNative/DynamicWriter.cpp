@@ -36,8 +36,7 @@ bool DynamicWriter::WriteString(const winrt::hstring &value) noexcept {
 
 bool DynamicWriter::WriteObjectBegin() noexcept {
   if (m_state == State::PropertyValue) {
-    m_stack.push_back(
-        StackEntry{m_state, std::move(m_dynamic), std::move(m_propertyName)});
+    m_stack.push_back(StackEntry{m_state, std::move(m_dynamic), std::move(m_propertyName)});
   } else if (m_state == State::Array) {
     m_stack.push_back(StackEntry{m_state, std::move(m_dynamic)});
   } else if (m_state != State::Start) {
@@ -88,8 +87,7 @@ bool DynamicWriter::WriteObjectEnd() noexcept {
 
 bool DynamicWriter::WriteArrayBegin() noexcept {
   if (m_state == State::PropertyValue) {
-    m_stack.push_back(
-        StackEntry{m_state, std::move(m_dynamic), std::move(m_propertyName)});
+    m_stack.push_back(StackEntry{m_state, std::move(m_dynamic), std::move(m_propertyName)});
   } else if (m_state == State::Array) {
     m_stack.push_back(StackEntry{m_state, std::move(m_dynamic)});
   } else if (m_state != State::Start) {

@@ -28,8 +28,7 @@ class ReactRootView : public IXamlRootView {
   void SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept;
   void AttachRoot() noexcept override;
   void DetachRoot() noexcept override;
-  std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl() const
-      noexcept override;
+  std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl() const noexcept override;
 
   // IReactRootView implementations
   virtual void ResetView() override;

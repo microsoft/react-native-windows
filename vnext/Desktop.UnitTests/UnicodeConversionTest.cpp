@@ -23,15 +23,11 @@ TEST_CLASS(UnicodeConversionTest) {
 
   TEST_METHOD(Utf8ToUtf16SimpleTestNoBom) {
     Assert::IsTrue(
-        Utf8ToUtf16(
-            SimpleTestStringNoBomUtf8, strlen(SimpleTestStringNoBomUtf8)) ==
-        SimpleTestStringNoBomUtf16);
+        Utf8ToUtf16(SimpleTestStringNoBomUtf8, strlen(SimpleTestStringNoBomUtf8)) == SimpleTestStringNoBomUtf16);
   }
 
   TEST_METHOD(Utf8ToUtf16SimpleTestBom) {
-    Assert::IsTrue(
-        Utf8ToUtf16(SimpleTestStringBomUtf8, strlen(SimpleTestStringBomUtf8)) ==
-        SimpleTestStringBomUtf16);
+    Assert::IsTrue(Utf8ToUtf16(SimpleTestStringBomUtf8, strlen(SimpleTestStringBomUtf8)) == SimpleTestStringBomUtf16);
   }
 
   TEST_METHOD(Utf8ToUtf16InvalidCharacterTest) {
@@ -42,8 +38,7 @@ TEST_CLASS(UnicodeConversionTest) {
     // information on overconsumption attacks, see
     // http://websec.github.io/unicode-security-guide/character-transformations/#overconsumption
     constexpr const char *const invalidUtf8 = "\xcc\x22\x3c";
-    Assert::IsTrue(
-        Utf8ToUtf16(invalidUtf8) == L"\xfffd" + Utf8ToUtf16(invalidUtf8 + 1));
+    Assert::IsTrue(Utf8ToUtf16(invalidUtf8) == L"\xfffd" + Utf8ToUtf16(invalidUtf8 + 1));
 
     // Although ed a3 a9 follows the correct binary format for a three byte
     // UTF-8 sequence, the Unicode code point it encodes is not valid. While
@@ -58,16 +53,11 @@ TEST_CLASS(UnicodeConversionTest) {
 
   TEST_METHOD(Utf16ToUtf8SimpleTestNoBom) {
     Assert::IsTrue(
-        Utf16ToUtf8(
-            SimpleTestStringNoBomUtf16, wcslen(SimpleTestStringNoBomUtf16)) ==
-        SimpleTestStringNoBomUtf8);
+        Utf16ToUtf8(SimpleTestStringNoBomUtf16, wcslen(SimpleTestStringNoBomUtf16)) == SimpleTestStringNoBomUtf8);
   }
 
   TEST_METHOD(Utf16ToUtf8SimpleTestBom) {
-    Assert::IsTrue(
-        Utf16ToUtf8(
-            SimpleTestStringBomUtf16, wcslen(SimpleTestStringBomUtf16)) ==
-        SimpleTestStringBomUtf8);
+    Assert::IsTrue(Utf16ToUtf8(SimpleTestStringBomUtf16, wcslen(SimpleTestStringBomUtf16)) == SimpleTestStringBomUtf8);
   }
 
   TEST_METHOD(Utf16ToUtf8InvalidCharacterTest) {
@@ -110,14 +100,10 @@ TEST_CLASS(UnicodeConversionTest) {
   }
 
  private:
-  constexpr static const char *SimpleTestStringNoBomUtf8 =
-      "\x61\x62\x63"; // abc
-  constexpr static const wchar_t *SimpleTestStringNoBomUtf16 =
-      L"\x0061\x0062\x0063"; // abc
-  constexpr static const char *SimpleTestStringBomUtf8 =
-      "\xef\xbb\xbf\x61\x62\x63"; // <UTF-8 BOM>abc
-  constexpr static const wchar_t *SimpleTestStringBomUtf16 =
-      L"\xfeff\x0061\x0062\x0063"; //<UTF-16BE BOM>abc
+  constexpr static const char *SimpleTestStringNoBomUtf8 = "\x61\x62\x63"; // abc
+  constexpr static const wchar_t *SimpleTestStringNoBomUtf16 = L"\x0061\x0062\x0063"; // abc
+  constexpr static const char *SimpleTestStringBomUtf8 = "\xef\xbb\xbf\x61\x62\x63"; // <UTF-8 BOM>abc
+  constexpr static const wchar_t *SimpleTestStringBomUtf16 = L"\xfeff\x0061\x0062\x0063"; //<UTF-16BE BOM>abc
 };
 
 } // namespace Microsoft::React::Test

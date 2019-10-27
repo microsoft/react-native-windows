@@ -20,10 +20,7 @@ std::string NodeRegistry::PrintTree() {
   return ss.str();
 }
 
-void NodeRegistry::PrintNode(
-    std::stringstream &ss,
-    int indent,
-    EmptyUINode *node) {
+void NodeRegistry::PrintNode(std::stringstream &ss, int indent, EmptyUINode *node) {
   for (int i = 0; i < indent; i++)
     ss << '\t';
 
@@ -32,19 +29,16 @@ void NodeRegistry::PrintNode(
     PrintNode(ss, indent + 1, m_allNodes[child].get());
 }
 
-EmptyUINode::EmptyUINode(int64_t tag, const std::string &className)
-    : m_tag(tag), m_className(className) {}
+EmptyUINode::EmptyUINode(int64_t tag, const std::string &className) : m_tag(tag), m_className(className) {}
 
 EmptyUIManager::EmptyUIManager(
     std::unique_ptr<std::vector<std::unique_ptr<IViewManager>>> viewManagers,
     std::shared_ptr<NodeRegistry> nodeRegistry)
     : m_viewManagers(std::move(viewManagers)), m_nodeRegistry(nodeRegistry) {}
 
-void EmptyUIManager::PopulateViewManagerConstants(
-    std::map<std::string, dynamic> &constants) {
+void EmptyUIManager::PopulateViewManagerConstants(std::map<std::string, dynamic> &constants) {
   for (auto &&vm : *m_viewManagers)
-    constants.emplace(
-        std::make_pair(std::string(vm->GetName()), vm->GetConstants()));
+    constants.emplace(std::make_pair(std::string(vm->GetName()), vm->GetConstants()));
 }
 
 std::shared_ptr<EmptyUINode> EmptyUIManager::addRootView(int64_t rootViewTag) {
@@ -69,21 +63,16 @@ void EmptyUIManager::createView(
     addRootView(rootViewTag);
   }
 
-  m_nodeRegistry->m_allNodes[tag] =
-      std::make_shared<EmptyUINode>(tag, className);
+  m_nodeRegistry->m_allNodes[tag] = std::make_shared<EmptyUINode>(tag, className);
 }
 
-void EmptyUIManager::setChildren(
-    int64_t viewTag,
-    folly::dynamic /*ReadableMap*/ childrenTags) {
+void EmptyUIManager::setChildren(int64_t viewTag, folly::dynamic /*ReadableMap*/ childrenTags) {
   auto &parent = m_nodeRegistry->m_allNodes[viewTag];
   for (auto &&childTag : childrenTags)
     parent->m_children.push_back(childTag.asInt());
 }
 
-EmptyUIManagerModule::EmptyUIManagerModule(
-    std::unique_ptr<EmptyUIManager> sample)
-    : m_manager(std::move(sample)) {}
+EmptyUIManagerModule::EmptyUIManagerModule(std::unique_ptr<EmptyUIManager> sample) : m_manager(std::move(sample)) {}
 
 std::string EmptyUIManagerModule::getName() {
   return "UIManager";
@@ -94,11 +83,9 @@ std::map<std::string, folly::dynamic> EmptyUIManagerModule::getConstants() {
       {"Dimensions",
        folly::dynamic::object(
            "windowPhysicalPixels",
-           folly::dynamic::object("width", 100)("height", 100)("scale", 1.0)(
-               "fontScale", 1.0)("densityDpi", 72))(
+           folly::dynamic::object("width", 100)("height", 100)("scale", 1.0)("fontScale", 1.0)("densityDpi", 72))(
            "screenPhysicalPixels",
-           folly::dynamic::object("width", 100)("height", 100)("scale", 1.0)(
-               "fontScale", 1.0)("densityDpi", 72))}};
+           folly::dynamic::object("width", 100)("height", 100)("scale", 1.0)("fontScale", 1.0)("densityDpi", 72))}};
 
   // TODO merge in customBubblingEventTypes and customDirectEventTypes from
   // ViewManagers
@@ -110,25 +97,15 @@ std::map<std::string, folly::dynamic> EmptyUIManagerModule::getConstants() {
 
 auto EmptyUIManagerModule::getMethods() -> std::vector<Method> {
   return {
-      Method(
-          "removeRootView",
-          [this](dynamic args) {
-            m_manager->removeRootView(jsArgAsInt(args, 0));
-          }),
+      Method("removeRootView", [this](dynamic args) { m_manager->removeRootView(jsArgAsInt(args, 0)); }),
       Method(
           "createView",
           [this](dynamic args) {
             m_manager->createView(
-                jsArgAsInt(args, 0),
-                jsArgAsString(args, 1),
-                jsArgAsInt(args, 2),
-                jsArgAsDynamic(args, 3));
+                jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), jsArgAsDynamic(args, 3));
           }),
       Method(
-          "setChildren",
-          [this](dynamic args) {
-            m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1));
-          }),
+          "setChildren", [this](dynamic args) { m_manager->setChildren(jsArgAsInt(args, 0), jsArgAsArray(args, 1)); }),
   };
 }
 

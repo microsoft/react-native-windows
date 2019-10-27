@@ -14,20 +14,16 @@ namespace react {
 
 class MemoryTrackerImpl : public MemoryTracker {
  public:
-  MemoryTrackerImpl(std::shared_ptr<MessageQueueThread>
-                        &&callbackMessageQueueThread) noexcept;
+  MemoryTrackerImpl(std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread) noexcept;
   size_t GetCurrentMemoryUsage() const noexcept override;
   size_t GetPeakMemoryUsage() const noexcept override;
-  std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread() const
-      noexcept override;
-  void SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread> &&
-                                         messageQueueThread) noexcept override;
+  std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread() const noexcept override;
+  void SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread> &&messageQueueThread) noexcept override;
   CallbackRegistrationCookie AddThresholdCallback(
       size_t threshold,
       std::chrono::milliseconds minCallbackInterval,
       MemoryThresholdCallback &&callback) noexcept override;
-  bool RemoveThresholdCallback(
-      CallbackRegistrationCookie cookie) noexcept override;
+  bool RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept override;
   void Initialize(size_t initialMemoryUsage) noexcept override;
   void OnAllocation(size_t size) noexcept override;
   void OnDeallocation(size_t size) noexcept override;
@@ -50,13 +46,11 @@ class MemoryTrackerImpl : public MemoryTracker {
   size_t m_currentMemoryUsage = 0;
   size_t m_peakMemoryUsage = 0;
   CallbackRegistrationCookie m_nextCookie = 0;
-  std::unordered_map<CallbackRegistrationCookie, ThresholdCallbackRecord>
-      m_thresholdCallbackRecords;
+  std::unordered_map<CallbackRegistrationCookie, ThresholdCallbackRecord> m_thresholdCallbackRecords;
   std::shared_ptr<MessageQueueThread> m_callbackMessageQueueThread;
 };
 
-MemoryTrackerImpl::MemoryTrackerImpl(
-    std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread) noexcept
+MemoryTrackerImpl::MemoryTrackerImpl(std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread) noexcept
     : m_callbackMessageQueueThread{std::move(callbackMessageQueueThread)} {}
 
 size_t MemoryTrackerImpl::GetCurrentMemoryUsage() const noexcept {
@@ -71,8 +65,7 @@ size_t MemoryTrackerImpl::GetPeakMemoryUsage() const noexcept {
   return m_peakMemoryUsage;
 }
 
-std::shared_ptr<MessageQueueThread>
-MemoryTrackerImpl::GetCallbackMessageQueueThread() const noexcept {
+std::shared_ptr<MessageQueueThread> MemoryTrackerImpl::GetCallbackMessageQueueThread() const noexcept {
   return m_callbackMessageQueueThread;
 }
 
@@ -95,17 +88,14 @@ CallbackRegistrationCookie MemoryTrackerImpl::AddThresholdCallback(
   std::tie(std::ignore, success) =
 #endif
       m_thresholdCallbackRecords.emplace(
-          cookie,
-          ThresholdCallbackRecord{
-              threshold, minCallbackInterval, std::move(callback)});
+          cookie, ThresholdCallbackRecord{threshold, minCallbackInterval, std::move(callback)});
 #if DEBUG
   assert(success);
 #endif
   return cookie;
 }
 
-bool MemoryTrackerImpl::RemoveThresholdCallback(
-    CallbackRegistrationCookie cookie) noexcept {
+bool MemoryTrackerImpl::RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept {
   std::lock_guard<std::recursive_mutex> lockGuard{m_mutex};
   return m_thresholdCallbackRecords.erase(cookie) == 1;
 }
@@ -120,10 +110,7 @@ void MemoryTrackerImpl::Initialize(size_t initialMemoryUsage) noexcept {
 void MemoryTrackerImpl::OnAllocation(size_t size) noexcept {
   std::lock_guard<std::recursive_mutex> lockGuard{m_mutex};
   // detect overflow
-  assert(
-      std::numeric_limits<decltype(m_currentMemoryUsage)>::max() -
-          m_currentMemoryUsage >=
-      size);
+  assert(std::numeric_limits<decltype(m_currentMemoryUsage)>::max() - m_currentMemoryUsage >= size);
 
   assert(m_isInitialized);
   assert(m_callbackMessageQueueThread);
@@ -134,16 +121,13 @@ void MemoryTrackerImpl::OnAllocation(size_t size) noexcept {
     m_peakMemoryUsage = m_currentMemoryUsage;
   }
 
-  std::chrono::steady_clock::time_point currentTime =
-      std::chrono::steady_clock::now();
+  std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
 
   for (auto &record : m_thresholdCallbackRecords) {
     if (m_currentMemoryUsage >= record.second.Threshold &&
-        currentTime > record.second.LastNotificationTime +
-                record.second.MinCallbackInterval) {
+        currentTime > record.second.LastNotificationTime + record.second.MinCallbackInterval) {
       m_callbackMessageQueueThread->runOnQueue(
-          [callback = record.second.Callback,
-           currentMemoryUsage = m_currentMemoryUsage] {
+          [callback = record.second.Callback, currentMemoryUsage = m_currentMemoryUsage] {
             callback(currentMemoryUsage);
           });
       record.second.LastNotificationTime = currentTime;
@@ -162,14 +146,11 @@ MemoryTrackerImpl::ThresholdCallbackRecord::ThresholdCallbackRecord(
     size_t threshold,
     std::chrono::milliseconds minCallbackInterval,
     MemoryThresholdCallback &&callback) noexcept
-    : Threshold{threshold},
-      MinCallbackInterval{minCallbackInterval},
-      Callback{std::move(callback)} {}
+    : Threshold{threshold}, MinCallbackInterval{minCallbackInterval}, Callback{std::move(callback)} {}
 
 std::shared_ptr<MemoryTracker> CreateMemoryTracker(
     std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread) noexcept {
-  return std::make_shared<MemoryTrackerImpl>(
-      std::move(callbackMessageQueueThread));
+  return std::make_shared<MemoryTrackerImpl>(std::move(callbackMessageQueueThread));
 }
 
 } // namespace react

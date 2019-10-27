@@ -30,17 +30,12 @@ std::vector<RuntimeFactory> runtimeGenerators() {
 
     args.jsQueue = std::make_shared<TestMessageQueueThread>();
 
-    std::shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue =
-        std::make_shared<TestMessageQueueThread>();
+    std::shared_ptr<MessageQueueThread> memoryTrackerCallbackQueue = std::make_shared<TestMessageQueueThread>();
 
-    args.memoryTracker =
-        CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
+    args.memoryTracker = CreateMemoryTracker(std::move(memoryTrackerCallbackQueue));
 
     return makeChakraRuntime(std::move(args));
   }};
 }
 
-INSTANTIATE_TEST_CASE_P(
-    ChakraRuntimeTest,
-    JsiRuntimeUnitTests,
-    ::testing::ValuesIn(runtimeGenerators()));
+INSTANTIATE_TEST_CASE_P(ChakraRuntimeTest, JsiRuntimeUnitTests, ::testing::ValuesIn(runtimeGenerators()));

@@ -98,9 +98,7 @@ struct IWebSocket {
   /// HTTP header fields passed by the remote endpoint, to be used in the
   /// handshake process.
   /// </param>
-  virtual void Connect(
-      const Protocols &protocols = {},
-      const Options &options = {}) = 0;
+  virtual void Connect(const Protocols &protocols = {}, const Options &options = {}) = 0;
 
   /// <summary>
   /// Sends a ping frame to the remote endpoint.
@@ -166,16 +164,14 @@ struct IWebSocket {
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnMessage(
-      std::function<void(std::size_t, const std::string &)> &&handler) = 0;
+  virtual void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior to run when this instance is closed.
   /// </summary>
   /// <param name="handler">
   /// </param>
-  virtual void SetOnClose(
-      std::function<void(CloseCode, const std::string &)> &&handler) = 0;
+  virtual void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) = 0;
 
   /// <summary>
   /// Sets the optional custom behavior on an error condition.

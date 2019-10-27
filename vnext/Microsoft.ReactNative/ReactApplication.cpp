@@ -3,10 +3,11 @@
 
 #include "pch.h"
 #include "ReactApplication.h"
-#if __has_include("ReactApplication.g.cpp")
 #include "ReactApplication.g.cpp"
-#endif
 #include "ReactNativeHost.h"
+
+#include <winrt/Windows.ApplicationModel.Activation.h>
+#include <winrt/Windows.UI.Core.h>
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
@@ -19,33 +20,52 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Navigation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
-ReactApplication::ReactApplication()
-    : m_delegate(CreateReactApplicationDelegate()) {
+
+ReactApplication::ReactApplication() noexcept {
   Suspending({this, &ReactApplication::OnSuspending});
 
-#if defined _DEBUG && \
-    !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
-  UnhandledException(
-      [this](IInspectable const &, UnhandledExceptionEventArgs const &e) {
-        if (IsDebuggerPresent()) {
-          auto errorMessage = e.Message();
-          __debugbreak();
-        }
-      });
+#if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
+  UnhandledException([this](IInspectable const &, UnhandledExceptionEventArgs const &e) {
+    if (IsDebuggerPresent()) {
+      auto errorMessage = e.Message();
+      __debugbreak();
+    }
+  });
 #endif
 }
 
-Microsoft::ReactNative::ReactNativeHost ReactApplication::Host() {
-  if (m_host == nullptr) {
-    m_host = overridable().HostCore();
+Microsoft::ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
+  if (!m_instanceSettings) {
+    m_instanceSettings = make<ReactInstanceSettings>();
+    m_instanceSettings.UseWebDebugger(false);
+    m_instanceSettings.UseLiveReload(true);
+    m_instanceSettings.UseJsi(true);
+    m_instanceSettings.EnableDeveloperMenu(REACT_DEFAULT_ENABLE_DEVELOPER_MENU);
+  }
+
+  return m_instanceSettings;
+}
+
+IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
+  if (!m_packageProviders) {
+    m_packageProviders = single_threaded_vector<IReactPackageProvider>();
+  }
+
+  return m_packageProviders;
+}
+
+Microsoft::ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
+  if (!m_host) {
+    m_host = make<ReactNativeHost>();
+    m_host.InstanceSettings(InstanceSettings());
+    m_host.PackageProviders(PackageProviders());
+    m_host.MainComponentName(MainComponentName());
+    m_host.UseDeveloperSupport(UseDeveloperSupport());
+    m_host.JavaScriptMainModuleName(JavaScriptMainModuleName());
+    m_host.JavaScriptBundleFile(JavaScriptBundleFile());
   }
 
   return m_host;
-}
-
-Microsoft::ReactNative::ReactNativeHost ReactApplication::HostCore() {
-  throw hresult_not_implemented(
-      L"You must implement ReactApplication.HostCore.");
 }
 
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
@@ -61,12 +81,15 @@ void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
 /// </summary>
 /// <param name="e">Details about the launch request and process.</param>
 void ReactApplication::OnCreate(LaunchActivatedEventArgs const &e) {
+  if (!m_delegate) {
+    m_delegate = CreateReactApplicationDelegate();
+  }
+
 #if defined _DEBUG
   if (IsDebuggerPresent()) {
     this->DebugSettings().EnableFrameRateCounter(TRUE);
 
-    SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(
-        AppViewBackButtonVisibility::Visible);
+    SystemNavigationManager::GetForCurrentView().AppViewBackButtonVisibility(AppViewBackButtonVisibility::Visible);
   }
 #endif
 
@@ -139,10 +162,12 @@ void ReactApplication::OnSuspending(
 /// </summary>
 /// <param name="sender">The Frame which failed navigation</param>
 /// <param name="e">Details about the navigation failure</param>
-void ReactApplication::OnNavigationFailed(
-    IInspectable const &,
-    NavigationFailedEventArgs const &e) {
-  throw hresult_error(
-      E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
+void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
+  throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
 }
+
+ReactApplicationDelegate __stdcall ReactApplication::CreateReactApplicationDelegate() {
+  return winrt::Microsoft::ReactNative::ReactApplicationDelegate(*this);
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

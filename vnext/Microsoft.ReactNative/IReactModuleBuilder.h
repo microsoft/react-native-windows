@@ -8,23 +8,15 @@
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-struct ReactModuleBuilder
-    : winrt::implements<ReactModuleBuilder, IReactModuleBuilder> {
+struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBuilder> {
   ReactModuleBuilder() noexcept;
 
  public: // IReactModuleBuilder
   void SetEventEmitterName(hstring const &name) noexcept;
-  void AddMethod(
-      hstring const &name,
-      MethodReturnType returnType,
-      MethodDelegate const &method) noexcept;
-  void AddSyncMethod(
-      hstring const &name,
-      SyncMethodDelegate const &method) noexcept;
+  void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
+  void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
   void AddConstantProvider(ConstantProvider const &constantProvider) noexcept;
-  void AddEventHandlerSetter(
-      hstring const &name,
-      ReactEventHandlerSetter const &eventHandlerSetter) noexcept;
+  void AddEventHandlerSetter(hstring const &name, ReactEventHandlerSetter const &eventHandlerSetter) noexcept;
 
  public:
   std::unique_ptr<facebook::xplat::module::CxxModule> MakeCxxModule(
@@ -32,8 +24,7 @@ struct ReactModuleBuilder
       IInspectable &nativeModule) noexcept;
 
  private:
-  static MethodResultCallback MakeMethodResultCallback(
-      facebook::xplat::module::CxxModule::Callback callback) noexcept;
+  static MethodResultCallback MakeMethodResultCallback(facebook::xplat::module::CxxModule::Callback callback) noexcept;
 
  private:
   std::string m_eventEmitterName;

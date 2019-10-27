@@ -14,8 +14,7 @@ HRESULT CreateAsyncWorkQueue(_Outptr_ IAsyncWorkQueue **ppAsyncWorkQueue) {
   return AsyncWorkQueue::CreateInstance(ppAsyncWorkQueue);
 }
 
-HRESULT AsyncWorkQueue::CreateInstance(
-    _Outptr_ IAsyncWorkQueue **ppAsyncWorkQueue) {
+HRESULT AsyncWorkQueue::CreateInstance(_Outptr_ IAsyncWorkQueue **ppAsyncWorkQueue) {
   Microsoft::WRL::ComPtr<AsyncWorkQueue> workQueue(new AsyncWorkQueue());
 
   // TODO: Are we using throwing new?
@@ -23,8 +22,7 @@ HRESULT AsyncWorkQueue::CreateInstance(
     return E_OUTOFMEMORY;
 
   // Create threadpool work callback
-  workQueue->m_tpWork.reset(::CreateThreadpoolWork(
-      AsyncWorkQueue::s_WorkCallBack, workQueue.Get(), NULL));
+  workQueue->m_tpWork.reset(::CreateThreadpoolWork(AsyncWorkQueue::s_WorkCallBack, workQueue.Get(), NULL));
   if (workQueue->m_tpWork.get() == nullptr)
     return GetLastError();
 
@@ -35,10 +33,7 @@ HRESULT AsyncWorkQueue::CreateInstance(
 }
 
 AsyncWorkQueue::AsyncWorkQueue()
-    : m_pProcessingWorkItem(NULL),
-      m_processingThreadId(0),
-      m_permanentlyShutDown(FALSE),
-      m_workSubmitted(FALSE) {}
+    : m_pProcessingWorkItem(NULL), m_processingThreadId(0), m_permanentlyShutDown(FALSE), m_workSubmitted(FALSE) {}
 
 // AsyncWorkQueue::~AsyncWorkQueue()
 //{
@@ -76,8 +71,7 @@ COM_DECLSPEC_NOTHROW STDMETHODIMP_(ULONG) AsyncWorkQueue::Release() {
   return cRef;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP
-AsyncWorkQueue::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
+COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncWorkQueue::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
   if (IsEqualIID(riid, __uuidof(IAsyncWorkQueue))) {
     *ppvObject = static_cast<IAsyncWorkQueue *>(this);
     ((IAsyncWorkQueue *)(*ppvObject))->AddRef();
@@ -92,10 +86,7 @@ AsyncWorkQueue::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
   return S_OK;
 }
 
-VOID AsyncWorkQueue::s_WorkCallBack(
-    _In_ PTP_CALLBACK_INSTANCE pInstance,
-    _In_ PVOID pContext,
-    _In_ PTP_WORK pWork) {
+VOID AsyncWorkQueue::s_WorkCallBack(_In_ PTP_CALLBACK_INSTANCE pInstance, _In_ PVOID pContext, _In_ PTP_WORK pWork) {
   UNREFERENCED_PARAMETER(pInstance);
   UNREFERENCED_PARAMETER(pWork);
 
@@ -141,8 +132,7 @@ VOID AsyncWorkQueue::s_WorkCallBack(
 
 VOID AsyncWorkQueue::_AsyncCallback() {
   // Crash if this is ever re-entered
-  ULONG res = InterlockedCompareExchange(
-      &m_processingThreadId, GetCurrentThreadId(), 0);
+  ULONG res = InterlockedCompareExchange(&m_processingThreadId, GetCurrentThreadId(), 0);
 
   // TODO: Asserts
   // ASSERT(res == 0);
@@ -178,17 +168,13 @@ VOID AsyncWorkQueue::_AsyncCallback() {
   }
 }
 
-HRESULT AsyncWorkQueue::QueueWorkItem(
-    _In_ IAsyncCallback *pCallback,
-    _In_opt_ IUnknown *pUserData) {
+HRESULT AsyncWorkQueue::QueueWorkItem(_In_ IAsyncCallback *pCallback, _In_opt_ IUnknown *pUserData) {
   HRESULT hr = _QueueWorkItemAt(pCallback, pUserData, InsertPosition::Back);
 
   return hr;
 }
 
-HRESULT AsyncWorkQueue::QueueWorkItemToFront(
-    _In_ IAsyncCallback *pCallback,
-    _In_opt_ IUnknown *pUserData) {
+HRESULT AsyncWorkQueue::QueueWorkItemToFront(_In_ IAsyncCallback *pCallback, _In_opt_ IUnknown *pUserData) {
   HRESULT hr = _QueueWorkItemAt(pCallback, pUserData, InsertPosition::Front);
 
   return hr;
@@ -285,8 +271,7 @@ VOID AsyncWorkQueue::_CancelAllAsync(_In_ BOOL permanentlyShutDown) {
 
     // Cancel currently running work item
     if (m_pProcessingWorkItem != NULL) {
-      HRESULT hr = m_pProcessingWorkItem->Callback->CancelWorkItem(
-          m_pProcessingWorkItem->UserData.Get());
+      HRESULT hr = m_pProcessingWorkItem->Callback->CancelWorkItem(m_pProcessingWorkItem->UserData.Get());
       if (FAILED(hr)) {
         // TODO: Log hr
       }

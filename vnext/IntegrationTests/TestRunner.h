@@ -23,18 +23,14 @@ class TestRunner {
 
   std::shared_ptr<ITestInstance> GetInstance(
       std::string &&jsBundleFile,
-      std::vector<
-          std::tuple<std::string, facebook::xplat::module::CxxModule::Provider>>
-          &&cxxModules,
+      std::vector<std::tuple<std::string, facebook::xplat::module::CxxModule::Provider>> &&cxxModules,
       std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
 
  public:
   TestRunner();
 
-  TestResult RunTest(
-      std::string &&bundlePath,
-      std::string &&appName,
-      facebook::react::NativeLoggingHook &&loggingCallback = {});
+  TestResult
+  RunTest(std::string &&bundlePath, std::string &&appName, facebook::react::NativeLoggingHook &&loggingCallback = {});
 };
 
 } // namespace Microsoft::React::Test

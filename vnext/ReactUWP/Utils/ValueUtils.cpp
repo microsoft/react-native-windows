@@ -43,30 +43,24 @@ struct ColorComp {
   bool operator()(const winrt::Color &lhs, const winrt::Color &rhs) const {
     return (
         lhs.A < rhs.A ||
-        lhs.A == rhs.A &&
-            (lhs.R < rhs.R ||
-             lhs.R == rhs.R &&
-                 (lhs.G < rhs.G || lhs.G == rhs.G && lhs.B < rhs.B)));
+        lhs.A == rhs.A && (lhs.R < rhs.R || lhs.R == rhs.R && (lhs.G < rhs.G || lhs.G == rhs.G && lhs.B < rhs.B)));
   }
 };
 
-winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(
-    const folly::dynamic &d) {
-  winrt::hstring resourceName{
-      winrt::to_hstring(d.find("windowsbrush")->second.asString())};
+winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d) {
+  winrt::hstring resourceName{winrt::to_hstring(d.find("windowsbrush")->second.asString())};
 
-  thread_local static std::
-      map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>>
-          accentColorMap = {{L"SystemAccentColor", {nullptr}},
-                            {L"SystemAccentColorLight1", {nullptr}},
-                            {L"SystemAccentColorLight2", {nullptr}},
-                            {L"SystemAccentColorLight3", {nullptr}},
-                            {L"SystemAccentColorDark1", {nullptr}},
-                            {L"SystemAccentColorDark2", {nullptr}},
-                            {L"SystemAccentColorDark3", {nullptr}},
-                            {L"SystemListAccentLowColor", {nullptr}},
-                            {L"SystemListAccentMediumColor", {nullptr}},
-                            {L"SystemListAccentHighColor", {nullptr}}};
+  thread_local static std::map<winrt::hstring, winrt::weak_ref<winrt::SolidColorBrush>> accentColorMap = {
+      {L"SystemAccentColor", {nullptr}},
+      {L"SystemAccentColorLight1", {nullptr}},
+      {L"SystemAccentColorLight2", {nullptr}},
+      {L"SystemAccentColorLight3", {nullptr}},
+      {L"SystemAccentColorDark1", {nullptr}},
+      {L"SystemAccentColorDark2", {nullptr}},
+      {L"SystemAccentColorDark3", {nullptr}},
+      {L"SystemListAccentLowColor", {nullptr}},
+      {L"SystemListAccentMediumColor", {nullptr}},
+      {L"SystemListAccentHighColor", {nullptr}}};
 
   if (accentColorMap.find(resourceName) != accentColorMap.end()) {
     if (auto brush = accentColorMap.at(resourceName).get()) {
@@ -86,30 +80,23 @@ winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(
         "}' />"
         L"</ResourceDictionary>";
 
-    auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(
-        winrt::Markup::XamlReader::Load(xamlString))};
+    auto dictionary{winrt::unbox_value<winrt::ResourceDictionary>(winrt::Markup::XamlReader::Load(xamlString))};
 
-    auto brush{winrt::unbox_value<winrt::SolidColorBrush>(
-        dictionary.Lookup(winrt::box_value(resourceName)))};
+    auto brush{winrt::unbox_value<winrt::SolidColorBrush>(dictionary.Lookup(winrt::box_value(resourceName)))};
 
     accentColorMap[resourceName] = winrt::make_weak(brush);
 
     return brush;
   }
 
-  winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(
-      winrt::box_value(resourceName))};
+  winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
 
   return winrt::unbox_value<winrt::Brush>(resource);
 }
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
   UINT argb = static_cast<UINT>(d.asInt());
-  return winrt::ColorHelper::FromArgb(
-      GetAFromArgb(argb),
-      GetRFromArgb(argb),
-      GetGFromArgb(argb),
-      GetBFromArgb(argb));
+  return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
 REACTWINDOWS_API_(winrt::SolidColorBrush)
@@ -118,9 +105,7 @@ SolidColorBrushFrom(const folly::dynamic &d) {
     return BrushFromColorObject(d).as<winrt::SolidColorBrush>();
   }
 
-  thread_local static std::
-      map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp>
-          solidColorBrushCache;
+  thread_local static std::map<winrt::Color, winrt::weak_ref<winrt::SolidColorBrush>, ColorComp> solidColorBrushCache;
 
   const auto color = d.isNumber() ? ColorFrom(d) : winrt::Colors::Transparent();
   if (solidColorBrushCache.count(color) != 0) {
@@ -179,8 +164,7 @@ VerticalAlignmentFrom(const folly::dynamic &d) {
 REACTWINDOWS_API_(winrt::DateTime)
 DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds) {
   auto timeInSeconds = (int64_t)timeInMilliSeconds / 1000;
-  time_t ttWithTimeZoneOffset =
-      (time_t)(timeInSeconds + timeZoneOffsetInSeconds);
+  time_t ttWithTimeZoneOffset = (time_t)(timeInSeconds + timeZoneOffsetInSeconds);
   winrt::DateTime dateTime = winrt::clock::from_time_t(ttWithTimeZoneOffset);
 
   return dateTime;
@@ -201,8 +185,7 @@ REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d) {
 }
 
 REACTWINDOWS_API_(folly::dynamic) HstringToDynamic(winrt::hstring hstr) {
-  return folly::dynamic(
-      Microsoft::Common::Unicode::Utf16ToUtf8(hstr.c_str(), hstr.size()));
+  return folly::dynamic(Microsoft::Common::Unicode::Utf16ToUtf8(hstr.c_str(), hstr.size()));
 }
 
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d) {
@@ -210,8 +193,7 @@ REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d) {
 }
 
 REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d) {
-  return d.isObject() ? (d.find("windowsbrush") != d.items().end())
-                      : d.isNumber();
+  return d.isObject() ? (d.find("windowsbrush") != d.items().end()) : d.isNumber();
 }
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {

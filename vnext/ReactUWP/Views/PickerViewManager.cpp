@@ -46,9 +46,8 @@ class PickerShadowNode : public ShadowNodeBase {
 };
 
 PickerShadowNode::PickerShadowNode() : Super() {
-  m_isEditableComboboxSupported =
-      winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
-          L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
+  m_isEditableComboboxSupported = winrt::Windows::Foundation::Metadata::ApiInformation::IsPropertyPresent(
+      L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
 }
 
 void PickerShadowNode::createView() {
@@ -58,30 +57,26 @@ void PickerShadowNode::createView() {
 
   combobox.AllowFocusOnInteraction(true);
 
-  m_comboBoxSelectionChangedRevoker =
-      combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto instance = wkinstance.lock();
-        if (!m_updating && instance != nullptr) {
-          int32_t index = combobox.SelectedIndex();
-          folly::dynamic value;
-          if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
-            value = m_items.at(index)["value"];
-          folly::dynamic text;
-          if (m_isEditableComboboxSupported && index == -1)
-            text = HstringToDynamic(combobox.Text());
-          OnSelectionChanged(
-              *instance, m_tag, std::move(value), index, std::move(text));
-        }
-      });
+  m_comboBoxSelectionChangedRevoker = combobox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto instance = wkinstance.lock();
+    if (!m_updating && instance != nullptr) {
+      int32_t index = combobox.SelectedIndex();
+      folly::dynamic value;
+      if (index >= 0 && index < static_cast<int32_t>(m_items.size()))
+        value = m_items.at(index)["value"];
+      folly::dynamic text;
+      if (m_isEditableComboboxSupported && index == -1)
+        text = HstringToDynamic(combobox.Text());
+      OnSelectionChanged(*instance, m_tag, std::move(value), index, std::move(text));
+    }
+  });
 
-  m_comboBoxDropDownClosedRevoker =
-      combobox.DropDownClosed(winrt::auto_revoke, [=](auto &&, auto &&) {
-        // When the drop down closes, attempt to move focus to its anchor
-        // textbox to prevent cases where focus can land on an outer flyout
-        // content and therefore trigger a unexpected flyout dismissal
-        winrt::FocusManager::TryFocusAsync(
-            combobox, winrt::FocusState::Programmatic);
-      });
+  m_comboBoxDropDownClosedRevoker = combobox.DropDownClosed(winrt::auto_revoke, [=](auto &&, auto &&) {
+    // When the drop down closes, attempt to move focus to its anchor
+    // textbox to prevent cases where focus can land on an outer flyout
+    // content and therefore trigger a unexpected flyout dismissal
+    winrt::FocusManager::TryFocusAsync(combobox, winrt::FocusState::Programmatic);
+  });
 }
 
 void PickerShadowNode::updateProperties(const folly::dynamic &&props) {
@@ -145,8 +140,7 @@ void PickerShadowNode::RepopulateItems() {
       std::string label = item["label"].asString();
       auto comboboxItem = winrt::ComboBoxItem();
 
-      comboboxItem.Content(
-          winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(label)));
+      comboboxItem.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(label)));
 
       if (item.count("textColor") && IsValidColorValue(item["textColor"]))
         comboboxItem.Foreground(BrushFrom(item["textColor"]));
@@ -164,9 +158,8 @@ void PickerShadowNode::RepopulateItems() {
     folly::dynamic &&value,
     int32_t selectedIndex,
     folly::dynamic &&text) {
-  folly::dynamic eventData =
-      folly::dynamic::object("target", tag)("value", std::move(value))(
-          "itemIndex", selectedIndex)("text", std::move(text));
+  folly::dynamic eventData = folly::dynamic::object("target", tag)("value", std::move(value))(
+      "itemIndex", selectedIndex)("text", std::move(text));
   instance.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
@@ -174,9 +167,7 @@ bool PickerShadowNode::NeedsForceLayout() {
   return true;
 }
 
-PickerViewManager::PickerViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+PickerViewManager::PickerViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *PickerViewManager::GetName() const {
   return "RCTPicker";
@@ -185,9 +176,8 @@ const char *PickerViewManager::GetName() const {
 folly::dynamic PickerViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(
-      folly::dynamic::object("editable", "boolean")("enabled", "boolean")(
-          "items", "array")("selectedIndex", "number")("text", "string"));
+  props.update(folly::dynamic::object("editable", "boolean")("enabled", "boolean")("items", "array")(
+      "selectedIndex", "number")("text", "string"));
 
   return props;
 }

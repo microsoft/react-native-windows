@@ -58,6 +58,11 @@ export default class Bootstrap extends React.Component<{}, any> {
         />
         <TextInput
           style={styles.input}
+          autoCapitalize="characters"
+          placeholder={'autoCapitalize characters'}
+        />
+        <TextInput
+          style={styles.input}
           placeholder={this.state.passwordHidden ? 'Password' : 'Text'}
           autoCapitalize="none"
           secureTextEntry={this.state.passwordHidden}

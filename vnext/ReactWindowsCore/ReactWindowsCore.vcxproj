@@ -104,6 +104,7 @@
     <ClInclude Include="BatchingMessageQueueThread.h" />
     <ClInclude Include="CreateModules.h" />
     <ClInclude Include="CxxMessageQueue.h" />
+    <ClInclude Include="DevServerHelper.h" />
     <ClInclude Include="DevSettings.h" />
     <ClInclude Include="etw\react_native_windows.h" />
     <ClInclude Include="IDevSupportManager.h" />

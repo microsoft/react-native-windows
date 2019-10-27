@@ -1,7 +1,49 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 15 Oct 2019 22:35:30 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Oct 2019 02:55:31 GMT and should not be manually modified.
 
+## 0.60.13
+Sat, 26 Oct 2019 02:55:31 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.13 (53619745+rnbot@users.noreply.github.com)
+## 0.60.12
+Fri, 25 Oct 2019 23:07:25 GMT
+
+### Patches
+
+- Fixed merge/clang (jthysell@microsoft.com)
+## 0.60.11
+Fri, 25 Oct 2019 20:56:10 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.12 (53619745+rnbot@users.noreply.github.com)
+## 0.60.10
+Wed, 23 Oct 2019 20:38:22 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.11 (53619745+rnbot@users.noreply.github.com)
+## 0.60.9
+Tue, 22 Oct 2019 03:28:58 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.9 (53619745+rnbot@users.noreply.github.com)
+## 0.60.8
+Thu, 17 Oct 2019 23:10:13 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.8 (53619745+rnbot@users.noreply.github.com)
+## 0.60.7
+Thu, 17 Oct 2019 20:58:22 GMT
+
+### Patches
+
+- Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag. (stpete@microsoft.com)
 ## 0.60.6
 Tue, 15 Oct 2019 22:35:30 GMT
 

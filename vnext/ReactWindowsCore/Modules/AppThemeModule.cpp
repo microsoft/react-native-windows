@@ -31,19 +31,15 @@ folly::dynamic AppTheme::getHighContrastColors() {
 // AppThemeModule
 //
 
-AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme)
-    : m_appTheme(std::move(appTheme)) {}
+AppThemeModule::AppThemeModule(std::shared_ptr<AppTheme> &&appTheme) : m_appTheme(std::move(appTheme)) {}
 
 auto AppThemeModule::getConstants() -> std::map<std::string, folly::dynamic> {
-  return {
-      {"initialAppTheme", folly::dynamic{m_appTheme->getCurrentTheme()}},
-      {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
-      {"initialHighContrastColors",
-       folly::dynamic{m_appTheme->getHighContrastColors()}}};
+  return {{"initialAppTheme", folly::dynamic{m_appTheme->getCurrentTheme()}},
+          {"initialHighContrast", folly::dynamic{m_appTheme->getIsHighContrast()}},
+          {"initialHighContrastColors", folly::dynamic{m_appTheme->getHighContrastColors()}}};
 }
 
-auto AppThemeModule::getMethods()
-    -> std::vector<facebook::xplat::module::CxxModule::Method> {
+auto AppThemeModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method> {
   return {};
 }
 

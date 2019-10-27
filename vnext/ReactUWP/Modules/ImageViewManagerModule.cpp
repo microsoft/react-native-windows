@@ -38,24 +38,16 @@ class ImageViewManagerModule::ImageViewManagerModuleImpl {
  public:
   ImageViewManagerModuleImpl(
       ImageViewManagerModule *parent,
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread)
+      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
       : m_parent(parent), m_queueThread(defaultQueueThread) {}
 
   void Disconnect() {
     m_parent = nullptr;
   }
 
-  void
-  getSize(std::string uri, Callback successCallback, Callback errorCallback);
-  void prefetchImage(
-      std::string uri,
-      Callback successCallback,
-      Callback errorCallback);
-  void queryCache(
-      const folly::dynamic &requests,
-      Callback successCallback,
-      Callback errorCallback);
+  void getSize(std::string uri, Callback successCallback, Callback errorCallback);
+  void prefetchImage(std::string uri, Callback successCallback, Callback errorCallback);
+  void queryCache(const folly::dynamic &requests, Callback successCallback, Callback errorCallback);
 
  private:
   ImageViewManagerModule *m_parent;
@@ -131,11 +123,8 @@ void ImageViewManagerModule::ImageViewManagerModuleImpl::queryCache(
 const char *ImageViewManagerModule::name = "ImageViewManager";
 
 ImageViewManagerModule::ImageViewManagerModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread>
-        &defaultQueueThread)
-    : m_imageViewManagerModule(std::make_shared<ImageViewManagerModuleImpl>(
-          this,
-          defaultQueueThread)) {}
+    const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
+    : m_imageViewManagerModule(std::make_shared<ImageViewManagerModuleImpl>(this, defaultQueueThread)) {}
 
 ImageViewManagerModule::~ImageViewManagerModule() {}
 
@@ -148,40 +137,23 @@ std::map<std::string, folly::dynamic> ImageViewManagerModule::getConstants() {
 }
 
 auto ImageViewManagerModule::getMethods() -> std::vector<Method> {
-  std::shared_ptr<ImageViewManagerModuleImpl> imageViewManager(
-      m_imageViewManagerModule);
+  std::shared_ptr<ImageViewManagerModuleImpl> imageViewManager(m_imageViewManagerModule);
   return {
       Method(
           "getSize",
-          [imageViewManager](
-              folly::dynamic args,
-              Callback successCallback,
-              Callback errorCallback) {
-            imageViewManager->getSize(
-                facebook::xplat::jsArgAsString(args, 0),
-                successCallback,
-                errorCallback);
+          [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback) {
+            imageViewManager->getSize(facebook::xplat::jsArgAsString(args, 0), successCallback, errorCallback);
           },
           AsyncTag),
       Method(
           "prefetchImage",
-          [imageViewManager](
-              folly::dynamic args,
-              Callback successCallback,
-              Callback errorCallback) {
-            imageViewManager->prefetchImage(
-                facebook::xplat::jsArgAsString(args, 0),
-                successCallback,
-                errorCallback);
+          [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback) {
+            imageViewManager->prefetchImage(facebook::xplat::jsArgAsString(args, 0), successCallback, errorCallback);
           }),
       Method(
           "queryCache",
-          [imageViewManager](
-              folly::dynamic args,
-              Callback successCallback,
-              Callback errorCallback) {
-            imageViewManager->queryCache(
-                args[0], successCallback, errorCallback);
+          [imageViewManager](folly::dynamic args, Callback successCallback, Callback errorCallback) {
+            imageViewManager->queryCache(args[0], successCallback, errorCallback);
           }),
   };
 }

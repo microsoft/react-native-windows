@@ -27,8 +27,7 @@ namespace react {
 
 JsValueRefUniquePtr MakeJsValueRefUniquePtr(JsValueRef value) {
   JsAddRef(value, nullptr);
-  return JsValueRefUniquePtr(
-      value, [](JsValueRef value) { JsRelease(value, nullptr); });
+  return JsValueRefUniquePtr(value, [](JsValueRef value) { JsRelease(value, nullptr); });
 }
 
 ChakraString jsStringFromBigString(const JSBigString &bigstr) {
@@ -39,8 +38,7 @@ ChakraString jsStringFromBigString(const JSBigString &bigstr) {
   }
 }
 
-JsValueRefUniquePtr jsArrayBufferFromBigString(
-    std::unique_ptr<const JSBigString> &&bigstr) {
+JsValueRefUniquePtr jsArrayBufferFromBigString(std::unique_ptr<const JSBigString> &&bigstr) {
   JsValueRef arrayBuffer = nullptr;
   auto size = bigstr->size();
   assert(size < UINT_MAX);
@@ -49,8 +47,7 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(
       static_cast<unsigned int>(size),
       [](void *bigstrToDestroy) {
         // Wrap bigstrToDestroy in unique_ptr to avoid calling delete explicitly
-        std::unique_ptr<JSBigString> wrapper{
-            static_cast<JSBigString *>(bigstrToDestroy)};
+        std::unique_ptr<JSBigString> wrapper{static_cast<JSBigString *>(bigstrToDestroy)};
       },
       const_cast<JSBigString *>(bigstr.get()),
       &arrayBuffer);
@@ -65,8 +62,7 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(
   return MakeJsValueRefUniquePtr(arrayBuffer);
 }
 
-JsValueRefUniquePtr jsArrayBufferFromBigString(
-    const std::shared_ptr<const JSBigString> &bigstr) {
+JsValueRefUniquePtr jsArrayBufferFromBigString(const std::shared_ptr<const JSBigString> &bigstr) {
   JsValueRef arrayBuffer = nullptr;
   auto size = bigstr->size();
   assert(size < UINT_MAX);
@@ -92,9 +88,7 @@ JsValueRefUniquePtr jsArrayBufferFromBigString(
   return MakeJsValueRefUniquePtr(arrayBuffer);
 }
 
-FileMappingBigString::FileMappingBigString(
-    const std::string &filenameUtf8,
-    uint32_t offset)
+FileMappingBigString::FileMappingBigString(const std::string &filenameUtf8, uint32_t offset)
     : JSBigString{},
       m_fileMapping{nullptr, &CloseHandle},
       m_fileData{nullptr, &fileDataDeleter},
@@ -144,11 +138,7 @@ FileMappingBigString::FileMappingBigString(
 
 #if (defined(WINRT))
   m_fileMapping.reset(CreateFileMappingFromApp(
-      fileHandle.get(),
-      nullptr /* SecurityAttributes */,
-      PAGE_READONLY,
-      m_fileSize,
-      nullptr /* Name */));
+      fileHandle.get(), nullptr /* SecurityAttributes */, PAGE_READONLY, m_fileSize, nullptr /* Name */));
 #else
   m_fileMapping.reset(CreateFileMapping(
       fileHandle.get(),
@@ -165,11 +155,8 @@ FileMappingBigString::FileMappingBigString(
   }
 
 #if (defined(WINRT))
-  m_fileData.reset(MapViewOfFileFromApp(
-      m_fileMapping.get(),
-      FILE_MAP_READ,
-      0 /* FileOffset */,
-      0 /* NumberOfBytesToMap */));
+  m_fileData.reset(
+      MapViewOfFileFromApp(m_fileMapping.get(), FILE_MAP_READ, 0 /* FileOffset */, 0 /* NumberOfBytesToMap */));
 #else
   m_fileData.reset(MapViewOfFile(
       m_fileMapping.get(),
@@ -189,23 +176,19 @@ FileMappingBigString::FileMappingBigString(
   static const uint32_t s_pageSize = getPageSize();
   if (m_fileSize % s_pageSize != 0) {
     // Data are owned by m_fileData, deleter is no-op
-    m_data = decltype(m_data){static_cast<char *>(m_fileData.get()) + offset,
-                              [](void *) {}};
+    m_data = decltype(m_data){static_cast<char *>(m_fileData.get()) + offset, [](void *) {}};
   } else {
     // Ensure m_data is null-terminated
-    m_data = decltype(m_data){
-        new char[m_size + 1],
-        [](void *pv) // Can't just say &opreator delete[] because of calling
-                     // convention mismatches
-        { delete[] static_cast<char *>(pv); }};
-    memcpy(
-        m_data.get(), static_cast<char *>(m_fileData.get()) + offset, m_size);
+    m_data = decltype(m_data){new char[m_size + 1],
+                              [](void *pv) // Can't just say &opreator delete[] because of calling
+                                           // convention mismatches
+                              { delete[] static_cast<char *>(pv); }};
+    memcpy(m_data.get(), static_cast<char *>(m_fileData.get()) + offset, m_size);
     m_data.get()[m_size] = '\0';
   }
 }
 
-std::unique_ptr<const FileMappingBigString> FileMappingBigString::fromPath(
-    const std::string &filenameUtf8) {
+std::unique_ptr<const FileMappingBigString> FileMappingBigString::fromPath(const std::string &filenameUtf8) {
   return std::make_unique<FileMappingBigString>(filenameUtf8);
 }
 

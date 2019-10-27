@@ -16,8 +16,8 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace react::uwp;
 
-TEST_CLASS(CreateViewManagers){TEST_METHOD(CreateViewManagers_Root){
-    auto viewManager = std::make_unique<RootViewManager>(nullptr);
+TEST_CLASS(CreateViewManagers){
+    TEST_METHOD(CreateViewManagers_Root){auto viewManager = std::make_unique<RootViewManager>(nullptr);
 
 Assert::IsFalse(viewManager == nullptr);
 }

@@ -12,11 +12,10 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 void InitReactNative() {
 #if _DEBUG
-  facebook::react::InitializeLogging(
-      [](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
-        std::string str = std::string("ReactNative:") + message;
-        OutputDebugStringA(str.c_str());
-      });
+  facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
+    std::string str = std::string("ReactNative:") + message;
+    OutputDebugStringA(str.c_str());
+  });
 #endif
 }
 
@@ -44,21 +43,20 @@ ReactInstanceCreator::ReactInstanceCreator(
   }
 }
 
-std::shared_ptr<react::uwp::IReactInstance>
-ReactInstanceCreator::getInstance() {
+std::shared_ptr<react::uwp::IReactInstance> ReactInstanceCreator::getInstance() {
   if (m_instance)
     return m_instance;
 
   std::shared_ptr<react::uwp::IReactInstance> reactInstance =
-      react::uwp::CreateReactInstance(
-          m_modulesProvider, m_viewManagersProvider);
+      react::uwp::CreateReactInstance(m_modulesProvider, m_viewManagersProvider);
 
   react::uwp::ReactInstanceSettings settings;
   settings.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
   settings.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   settings.DebugBundlePath = to_string(m_instanceSettings.DebugBundlePath());
   settings.DebugHost = to_string(m_instanceSettings.DebugHost());
-  settings.EnableByteCodeCacheing = m_instanceSettings.EnableByteCodeCaching();
+  settings.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
+  settings.EnableDeveloperMenu = m_instanceSettings.EnableDeveloperMenu();
   settings.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
   settings.UseDirectDebugger = m_instanceSettings.UseDirectDebugger();
   settings.UseJsi = m_instanceSettings.UseJsi();

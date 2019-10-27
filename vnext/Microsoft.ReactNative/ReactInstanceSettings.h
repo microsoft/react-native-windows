@@ -48,6 +48,13 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
     m_enableByteCodeCaching = value;
   }
 
+  bool EnableDeveloperMenu() {
+    return m_enableDeveloperMenu;
+  }
+  void EnableDeveloperMenu(bool value) {
+    m_enableDeveloperMenu = value;
+  }
+
   hstring ByteCodeFileUri() {
     return m_byteCodeFileUri;
   }
@@ -87,6 +94,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool m_useWebDebugger{FALSE};
   bool m_useLiveReload{FALSE};
 #endif
+  bool m_enableDeveloperMenu{FALSE};
   bool m_useDirectDebugger{FALSE};
   bool m_useJsi{TRUE};
   bool m_enableJITCompilation{TRUE};
@@ -100,7 +108,5 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct ReactInstanceSettings : ReactInstanceSettingsT<
-                                   ReactInstanceSettings,
-                                   implementation::ReactInstanceSettings> {};
+struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings, implementation::ReactInstanceSettings> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

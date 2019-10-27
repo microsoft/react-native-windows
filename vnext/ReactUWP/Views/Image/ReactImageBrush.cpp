@@ -96,12 +96,10 @@ void ReactImageBrush::UpdateCompositionBrush() {
 
 bool ReactImageBrush::IsImageSmallerThanView() {
   if (m_loadedImageSurface) {
-    auto surface{
-        GetOrCreateSurfaceBrush().Surface().as<winrt::LoadedImageSurface>()};
+    auto surface{GetOrCreateSurfaceBrush().Surface().as<winrt::LoadedImageSurface>()};
     winrt::Size dipsSize{surface.DecodedSize()};
 
-    return (dipsSize.Height < AvailableSize().Height) &&
-        (dipsSize.Width < AvailableSize().Width);
+    return (dipsSize.Height < AvailableSize().Height) && (dipsSize.Width < AvailableSize().Width);
   }
 
   return false;
@@ -125,8 +123,7 @@ winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 
     case ResizeMode::Center:
     case ResizeMode::Repeat:
-      stretch = IsImageSmallerThanView() ? winrt::CompositionStretch::None
-                                         : winrt::CompositionStretch::Uniform;
+      stretch = IsImageSmallerThanView() ? winrt::CompositionStretch::None : winrt::CompositionStretch::Uniform;
       break;
   }
 
@@ -136,15 +133,13 @@ winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
 winrt::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
   // If it doesn't exist, create it
   if (!CompositionBrush()) {
-    winrt::CompositionSurfaceBrush surfaceBrush{
-        winrt::Window::Current().Compositor().CreateSurfaceBrush()};
+    winrt::CompositionSurfaceBrush surfaceBrush{winrt::Window::Current().Compositor().CreateSurfaceBrush()};
     surfaceBrush.Surface(m_loadedImageSurface);
 
     return surfaceBrush;
   }
 
-  auto surfaceBrush{
-      CompositionBrush().try_as<winrt::CompositionSurfaceBrush>()};
+  auto surfaceBrush{CompositionBrush().try_as<winrt::CompositionSurfaceBrush>()};
 
   // If ResizeMode is set to Repeat, then we're using a CompositionEffectBrush.
   // Get the CompositionSurfaceBrush from its source.
@@ -152,8 +147,7 @@ winrt::CompositionSurfaceBrush ReactImageBrush::GetOrCreateSurfaceBrush() {
     auto effectBrush{CompositionBrush().as<winrt::CompositionEffectBrush>()};
     assert(effectBrush);
 
-    surfaceBrush = effectBrush.GetSourceParameter(L"source")
-                       .as<winrt::CompositionSurfaceBrush>();
+    surfaceBrush = effectBrush.GetSourceParameter(L"source").as<winrt::CompositionSurfaceBrush>();
   }
 
   return surfaceBrush;
@@ -166,13 +160,11 @@ winrt::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     borderEffect.ExtendX(winrt::CanvasEdgeBehavior::Wrap);
     borderEffect.ExtendY(winrt::CanvasEdgeBehavior::Wrap);
 
-    winrt::CompositionEffectSourceParameter borderEffectSourceParameter{
-        L"source"};
+    winrt::CompositionEffectSourceParameter borderEffectSourceParameter{L"source"};
     borderEffect.Source(borderEffectSourceParameter);
 
     winrt::CompositionEffectFactory effectFactory{
-        winrt::Window::Current().Compositor().CreateEffectFactory(
-            borderEffect)};
+        winrt::Window::Current().Compositor().CreateEffectFactory(borderEffect)};
     m_effectBrush = effectFactory.CreateBrush();
 
     m_effectBrush.SetSourceParameter(L"source", surfaceBrush);
