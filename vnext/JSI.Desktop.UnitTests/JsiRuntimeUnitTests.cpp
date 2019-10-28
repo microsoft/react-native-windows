@@ -79,7 +79,7 @@ TEST_P(JsiRuntimeUnitTests, StringTest) {
   EXPECT_EQ(movedQuux.utf8(rt), "quux2");
 }
 
-TEST_P(JsiRuntimeUnitTests, ObjectTest) {
+TEST_P(JsiRuntimeUnitTests, DISABLED_ObjectTest) {
   eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
   Object x = rt.global().getPropertyAsObject(rt, "x");
   EXPECT_EQ(x.getPropertyNames(rt).size(rt), 4);

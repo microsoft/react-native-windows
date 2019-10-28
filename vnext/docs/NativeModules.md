@@ -97,30 +97,32 @@ namespace NativeModuleSample
 
 Here we've implemented the `CreatePackage` method, which receives `packageBuilder` to build contents of the package. Since we use reflection to discover and bind native module, we call `AddAttributedModules` extension method to register all native modules in our assembly that have the `ReactModule` attribute.
 
-Now that we have the `ReactPackageProvider`, it's time to register it within our React Native host application's native code. To do that, we're going to look for the class which inherits from `Microsoft.ReactNative.ReactNativeHost`, the default of which (if you created your app using the React Native for Windows vNext CLI) is called `MainReactNativeHost`.
+Now that we have the `ReactPackageProvider`, it's time to register it within our `ReactApplication`. We do that by simply adding the proviver to the `PackageProviders` property.
 
-*MainReactNativeHost.cs*
+*App.xaml.cs*
 ```csharp
-using System.Collections.Generic;
-
 using Microsoft.ReactNative;
 
-namespace NativeModuleSample
+namespace SampleApp
 {
-  sealed class MainReactNativeHost : ReactNativeHost
-  {
-    /* ... Other Code ... */
-
-    protected override IReadOnlyList<IReactPackageProvider> PackageProviders
+    sealed partial class App : ReactApplication
     {
-      get
-      {
-        return new IReactPackageProvider[] { new FancyMathPackageProvider() };
-      }
+        public App()
+        {
+            /* Other Init Code */
+
+            PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            PackageProviders.Add(new NativeModuleSample.ReactPackageProvider());
+
+            /* Other Init Code */
+        }
     }
-  }
 }
 ```
+
+This example assumes that the `NativeModuleSample.ReactPackageProvider` we created above is in a different project (assembly) than our application. However you'll notice that by default we also added a `Microsoft.ReactNative.Managed.ReactPackageProvider`.
+
+The `Microsoft.ReactNative.Managed.ReactPackageProvider` is a convenience that makes sure that all native modules and view managers defined within the app project automatically get registered. So if you're creating your native modules directly within the app project, you won't actually want to define a separate `ReactPackageProvider`. 
 
 ### 3. Using your Native Module in JS
 
@@ -286,25 +288,32 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuil
 
 Here we've implemented the `CreatePackage` method, which receives `packageBuilder` to build contents of the package. Since we use macros and templates to discover and bind native module, we call `AddAttributedModules` function to register all native modules in our DLL that have the `REACT_MODULE` macro-attribute.
 
-Now that we have the `ReactPackageProvider`, it's time to register it within our React Native host application's native code. To do that, we're going to look for the class which inherits from `Microsoft.ReactNative.ReactNativeHost`, the default of which (if you created your app using the React Native for Windows vNext CLI) is called `MainReactNativeHost`.
+Now that we have the `ReactPackageProvider`, it's time to register it within our `ReactApplication`. We do that by simply adding the proviver to the `PackageProviders` property.
 
-*MainReactNativeHost.h*
-```cpp
-namespace NativeModuleSample
-{
-  struct MainReactNativeHost : MainReactNativeHostT<MainReactNativeHost>
-  {
-    /* ... Other Code ... */
+*App.cpp*
+```c++
+#include "pch.h"
 
-    IVectorView<IReactPackageProvider> PackageProviders()
-    {
-      auto packages = single_threaded_vector<IReactPackageProvider>({
-        make<ReactPackageProvider>()
-      });
-    return packages.GetView();
-  };
+#include "App.h"
+#include "ReactPackageProvider.h"
+
+namespace winrt::SampleApp::implementation {
+
+App::App() noexcept {
+  /* Other Init Code */
+
+  PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
+  PackageProviders().Append(winrt::NativeModuleSample::ReactPackageProvider());
+
+  /* Other Init Code */
 }
+
+} // namespace winrt::SampleApp::implementation
 ```
+
+This example assumes that the `NativeModuleSample::ReactPackageProvider` we created above is in a different project (assembly) than our application. However you'll notice that by default we also added a `SampleApp::ReactPackageProvider`.
+
+The `SampleApp::ReactPackageProvider` is a convenience that makes sure that all native modules and view managers defined within the app project automatically get registered. So if you're creating your native modules directly within the app project, you won't actually want to define a separate `ReactPackageProvider`. 
 
 ### 3. Using your Native Module in JS
 

@@ -15,8 +15,9 @@ const rnVersion = pkgJson.peerDependencies['react-native'].split(' ')[0];
 const rootPkgJsonPath = path.resolve(__dirname, '../../package.json');
 const rootPkgJson = require(rootPkgJsonPath);
 
-rootPkgJson.resolutions = {
-  '**/react-native': rnVersion,
-};
+if (!rootPkgJson.resolutions) {
+  rootPkgJson.resolutions = {};
+}
+rootPkgJson.resolutions['**/react-native'] = rnVersion;
 
 fs.writeFileSync(rootPkgJsonPath, JSON.stringify(rootPkgJson, null, 2) + '\n');

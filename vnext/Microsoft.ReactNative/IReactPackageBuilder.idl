@@ -2,14 +2,18 @@
 // Licensed under the MIT License.
 
 import "IReactModuleBuilder.idl";
+import "IViewManager.idl";
 
 namespace Microsoft.ReactNative.Bridge {
 
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
+  delegate IViewManager ReactViewManagerProvider();
 
   interface IReactPackageBuilder {
     // TODO: Add message thread argument
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
+    void AddViewManager(
+        String viewManagerName, ReactViewManagerProvider viewManagerProvider);
   };
 
 } // namespace Microsoft.ReactNative.Bridge

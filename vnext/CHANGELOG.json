@@ -2,6 +2,83 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2019 23:51:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.51",
+      "version": "0.60.0-vnext.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move closer to allowing JSI with OSS RN",
+            "author": "acoates@microsoft.com",
+            "commit": "80801ec6ff3272320e1d150483d3422ec9690b8f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2019 21:50:14 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.50",
+      "version": "0.60.0-vnext.50",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix remote debugger for Playground app. Now you can pass  the hostname:port of a running metro bundler instance and it will connect correctly",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3c510d99cb0db6b1fc371c589b6e97f94d85c8b5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2019 02:55:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.49",
+      "version": "0.60.0-vnext.49",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.42.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "fe65a1039840af846610bbc174a9772f3d4ca8e5"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.13",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "d4b0d7291715673659e8490ef5ba8c1d65f26e56"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 23:07:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.48",
+      "version": "0.60.0-vnext.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Custom View Managers E2E",
+            "author": "jthysell@microsoft.com",
+            "commit": "88cb2dc26682d9448ef07b15c94124ba07153594"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 21:43:48 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.47",
+      "version": "0.60.0-vnext.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "go back to native implementation for getPropertyNames",
+            "author": "stecrain@microsoft.com",
+            "commit": "b3e7a4d358874e8a6f693c8dc84c3022c7d4d087"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Oct 2019 20:56:10 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.46",
       "version": "0.60.0-vnext.46",

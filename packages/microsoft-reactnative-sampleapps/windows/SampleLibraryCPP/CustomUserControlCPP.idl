@@ -1,0 +1,13 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace SampleLibraryCPP {
+runtimeclass CustomUserControlCPP : Windows.UI.Xaml.Controls.Control {
+  CustomUserControlCPP();
+
+  static Windows.UI.Xaml.DependencyProperty LabelProperty {
+    get;
+  };
+  String Label;
+}
+} // namespace SampleLibraryCPP

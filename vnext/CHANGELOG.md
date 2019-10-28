@@ -1,7 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Oct 2019 20:56:10 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Oct 2019 23:51:07 GMT and should not be manually modified.
 
+## 0.60.0-vnext.51
+Mon, 28 Oct 2019 23:51:07 GMT
+
+### Changes
+
+- Move closer to allowing JSI with OSS RN (acoates@microsoft.com)
+## 0.60.0-vnext.50
+Sat, 26 Oct 2019 21:50:14 GMT
+
+### Changes
+
+- Fix remote debugger for Playground app. Now you can pass  the hostname:port of a running metro bundler instance and it will connect correctly (asklar@winse.microsoft.com)
+## 0.60.0-vnext.49
+Sat, 26 Oct 2019 02:55:31 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.13 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.48
+Fri, 25 Oct 2019 23:07:25 GMT
+
+### Changes
+
+- Custom View Managers E2E (jthysell@microsoft.com)
+## 0.60.0-vnext.47
+Fri, 25 Oct 2019 21:43:48 GMT
+
+### Changes
+
+- go back to native implementation for getPropertyNames (stecrain@microsoft.com)
 ## 0.60.0-vnext.46
 Fri, 25 Oct 2019 20:56:10 GMT
 
