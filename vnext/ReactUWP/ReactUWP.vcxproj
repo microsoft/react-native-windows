@@ -151,6 +151,7 @@
   </Target>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
+    <ClInclude Include="..\include\ReactUWP\Utils\RectUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h" />
     <ClInclude Include="..\include\ReactUWP\Views\ControlViewManager.h" />
@@ -252,6 +253,7 @@
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
+    <ClInclude Include="Views\SIPEventHandler.h" />
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\SliderViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
@@ -276,6 +278,7 @@
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
+    <ClCompile Include="Utils\RectUtils.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
@@ -353,6 +356,7 @@
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
+    <ClCompile Include="Views\SIPEventHandler.cpp" />
     <ClCompile Include="Views\SliderViewManager.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
     <ClCompile Include="Views\SwitchViewManager.cpp" />
