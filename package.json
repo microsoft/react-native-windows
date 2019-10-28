@@ -26,7 +26,6 @@
     "lerna": "^3.16.1"
   },
   "resolutions": {
-    "**/eslint-plugin-react": "^7.14.1",
-    "**/react-native": "^0.60.0"
+    "**/eslint-plugin-react": "^7.14.1"
   }
 }
