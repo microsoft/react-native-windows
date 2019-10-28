@@ -12,6 +12,7 @@
   "typings": "Libraries/react-native/typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
+    "change": "beachball change",
     "clean": "just-scripts clean",
     "start": "react-native start",
     "lint": "just-scripts eslint",
