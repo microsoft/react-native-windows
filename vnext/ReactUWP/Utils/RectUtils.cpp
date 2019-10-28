@@ -12,7 +12,7 @@ using namespace Windows::Foundation;
 namespace react {
 namespace uwp {
 
-  // Represents positive infinity.
+// Represents positive infinity.
 const float PositiveInfinity = std::numeric_limits<float>::infinity();
 
 // Represents negative infinity.
