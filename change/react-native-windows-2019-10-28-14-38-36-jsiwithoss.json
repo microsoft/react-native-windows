@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Move closer to allowing JSI with OSS RN",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "80801ec6ff3272320e1d150483d3422ec9690b8f",
+  "date": "2019-10-28T21:38:36.295Z"
+}
