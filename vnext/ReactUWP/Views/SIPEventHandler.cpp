@@ -23,7 +23,7 @@ SIPEventHandler::SIPEventHandler(const std::weak_ptr<IReactInstance> &reactInsta
     : m_wkReactInstance(reactInstance) {
   auto coreInputView = winrt::CoreInputView::GetForCurrentView();
   if (coreInputView) {
-    m_occlusionsChnaged_revoker = coreInputView.OcclusionsChanged(
+    m_occlusionsChanged_revoker = coreInputView.OcclusionsChanged(
         winrt::auto_revoke, [=](auto &&, const winrt::CoreInputViewOcclusionsChangedEventArgs &e) {
           if (!e.Handled()) {
             winrt::Rect finalRect = winrt::RectHelper::Empty();
@@ -51,7 +51,7 @@ SIPEventHandler::SIPEventHandler(const std::weak_ptr<IReactInstance> &reactInsta
 }
 
 SIPEventHandler::~SIPEventHandler() {
-  m_occlusionsChnaged_revoker = {};
+  m_occlusionsChanged_revoker = {};
 }
 
 void SIPEventHandler::SendEvent(std::string &&eventName, folly::dynamic &&parameters) {

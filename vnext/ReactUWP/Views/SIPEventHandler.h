@@ -23,7 +23,7 @@ class SIPEventHandler {
  private:
   void SendEvent(std::string &&eventName, folly::dynamic &&parameters);
   std::weak_ptr<IReactInstance> m_wkReactInstance;
-  winrt::CoreInputView::OcclusionsChanged_revoker m_occlusionsChnaged_revoker;
+  winrt::CoreInputView::OcclusionsChanged_revoker m_occlusionsChanged_revoker;
 };
 
 } // namespace uwp
