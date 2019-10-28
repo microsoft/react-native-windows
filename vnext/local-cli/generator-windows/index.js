@@ -75,8 +75,8 @@ function copyProjectTemplateAndReplace(
   const language = options.language;
   const ns = options.ns || newProjectName;
   const srcPath = path.join(srcRootPath, language);
-  const projectGuid = uuid.v4();
-  const packageGuid = uuid.v4();
+  const projectGuid = uuid.v4().toUpperCase();
+  const packageGuid = uuid.v4().toUpperCase();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
   const certificateThumbprint = generateCertificate(srcPath, destPath, newProjectName, currentUser);
 
