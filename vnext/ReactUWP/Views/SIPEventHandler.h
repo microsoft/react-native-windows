@@ -8,7 +8,6 @@
 #include <winrt/Windows.UI.ViewManagement.Core.h>
 
 namespace winrt {
-using namespace Windows::UI;
 using namespace Windows::Foundation;
 using namespace Windows::UI::ViewManagement::Core;
 } // namespace winrt
