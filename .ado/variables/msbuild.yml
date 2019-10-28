@@ -1,0 +1,6 @@
+variables:
+  MSBuildArchitecture: x64
+  MSBuildPreferredToolArchitecture: x64
+  MSBuildPlatformToolset: v141
+  TargetPlatformVersion: 10.0.18362.0
+  SDKVersion: 18362
