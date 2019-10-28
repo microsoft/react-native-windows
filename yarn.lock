@@ -2314,9 +2314,9 @@
   integrity sha512-CFzn9idOEpHrgdw8JsoTkaDDyRWk1jrzIV8djzcgpq0y9tG4B4lFT+Nxh52DVpDXV+n4+NPNv7M1Dj5uMp6XFg==
 
 "@types/react-native@~0.60.5":
-  version "0.60.5"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.5.tgz#24371cdc724f95381f9b309b08204827dd8de251"
-  integrity sha512-OWk8r2HzDKkas5WGFfin7CFuSgDsXvO9tDUqNemitbrlXhQ41Zk1R3lv8Vsc843X8NIb/+BO0IQKw72Pd84UNA==
+  version "0.60.22"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.22.tgz#ba199a441cb0612514244ffb1d0fe6f04c878575"
+  integrity sha512-LTXMKEyGA+x4kadmjujX6yAgpcaZutJ01lC7zLJWCULaZg7Qw5/3iOQpwIJRUcOc+a8A2RR7rSxplehVf9IuhA==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
@@ -9835,10 +9835,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.12.tar.gz":
-  version "0.60.0-microsoft.12"
-  uid ba06b9983085d636003dd3755ed295d0e28d5d11
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.12.tar.gz#ba06b9983085d636003dd3755ed295d0e28d5d11"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.13.tar.gz":
+  version "0.60.0-microsoft.13"
+  uid ed08bc48f6601a1ca854016767567fd30f9a6b2e
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.13.tar.gz#ed08bc48f6601a1ca854016767567fd30f9a6b2e"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
