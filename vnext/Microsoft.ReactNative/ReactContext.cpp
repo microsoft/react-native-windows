@@ -20,8 +20,7 @@ IReactInstance ReactContext::ReactInstance() {
   return m_reactInstance;
 }
 
-void ReactContext::InitializeWithInstance(
-    Bridge::ReactInstance const &instance) {
+void ReactContext::InitializeWithInstance(Bridge::ReactInstance const &instance) {
   if (instance == nullptr) {
     throw hresult_null_argument(L"instance");
   }

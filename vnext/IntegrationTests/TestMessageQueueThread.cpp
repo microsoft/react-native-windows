@@ -23,8 +23,7 @@ TestMessageQueueThread::Lock::~Lock() noexcept {
 TestMessageQueueThread::TestMessageQueueThread(
     VoidFunctor &&initializeThread,
     VoidFunctor &&uninitializeThread) noexcept
-    : m_initializeThread{move(initializeThread)},
-      m_uninitializeThread{move(uninitializeThread)} {
+    : m_initializeThread{move(initializeThread)}, m_uninitializeThread{move(uninitializeThread)} {
   m_creatorThreadId = GetCurrentThreadId();
 
   m_queueMutex = CreateMutex(
@@ -72,8 +71,7 @@ void TestMessageQueueThread::runOnQueue(VoidFunctor &&func) noexcept {
 
   Lock queueLock(m_queueMutex);
   m_queue.push(move(func));
-  SetEvent(
-      m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
+  SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
 }
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
@@ -91,8 +89,7 @@ void TestMessageQueueThread::runOnQueueSync(VoidFunctor &&func) noexcept {
       Lock queueLock(m_queueMutex);
       m_queue.push(move(func));
       m_queue.push([done]() { SetEvent(done); });
-      SetEvent(m_threadSignals[static_cast<int>(
-          ThreadSignalIndex::FunctorAvailable)]);
+      SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
     }
 
     DWORD waitResult = WaitForSingleObject(done, INFINITE);
@@ -111,8 +108,7 @@ void TestMessageQueueThread::quitInternal() noexcept {
   assert(GetCurrentThreadId() == m_creatorThreadId);
 
   if (m_state != State::WorkerThreadHasExited) {
-    SetEvent(
-        m_threadSignals[static_cast<int>(ThreadSignalIndex::QuitRequested)]);
+    SetEvent(m_threadSignals[static_cast<int>(ThreadSignalIndex::QuitRequested)]);
     DWORD waitResult = WaitForSingleObject(m_workerThread, INFINITE);
     assert(waitResult == WAIT_OBJECT_0);
     m_state = State::WorkerThreadHasExited;
@@ -122,10 +118,8 @@ void TestMessageQueueThread::quitInternal() noexcept {
   }
 }
 
-/*static*/ DWORD WINAPI
-TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
-  TestMessageQueueThread *instance =
-      static_cast<TestMessageQueueThread *>(lpParameter);
+/*static*/ DWORD WINAPI TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
+  TestMessageQueueThread *instance = static_cast<TestMessageQueueThread *>(lpParameter);
   assert(instance != nullptr);
 
   if (instance->m_initializeThread) {
@@ -148,8 +142,7 @@ TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
           func = instance->m_queue.front();
           instance->m_queue.pop();
           if (instance->m_queue.size() > 0) {
-            SetEvent(instance->m_threadSignals[static_cast<int>(
-                ThreadSignalIndex::FunctorAvailable)]);
+            SetEvent(instance->m_threadSignals[static_cast<int>(ThreadSignalIndex::FunctorAvailable)]);
           }
         }
         func();
@@ -173,8 +166,7 @@ TestMessageQueueThread::Dispatch(LPVOID lpParameter) noexcept {
 }
 
 bool TestMessageQueueThread::IsWorkerThread() {
-  return m_workerThread != NULL &&
-      GetCurrentThreadId() == GetThreadId(m_workerThread);
+  return m_workerThread != NULL && GetCurrentThreadId() == GetThreadId(m_workerThread);
 }
 
 #pragma endregion namespace TestMessageQueueThread members

@@ -38,9 +38,7 @@ void SliderShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-SliderViewManager::SliderViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+SliderViewManager::SliderViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *SliderViewManager::GetName() const {
   return "RCTSlider";
@@ -49,8 +47,7 @@ const char *SliderViewManager::GetName() const {
 folly::dynamic SliderViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(
-      folly::dynamic::object("value", "integer")("disabled", "boolean"));
+  props.update(folly::dynamic::object("value", "integer")("disabled", "boolean"));
 
   return props;
 }
@@ -64,9 +61,7 @@ XamlView SliderViewManager::CreateViewCore(int64_t tag) {
   return slider;
 }
 
-void SliderViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void SliderViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto slider = nodeToUpdate->GetView().as<winrt::Slider>();
   if (slider == nullptr)
     return;

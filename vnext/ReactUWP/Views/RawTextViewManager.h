@@ -17,9 +17,7 @@ class RawTextViewManager : public ViewManagerBase {
   RawTextViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
-  void UpdateProperties(
-      ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
 
   void SetLayoutProps(
       ShadowNodeBase &nodeToUpdate,
@@ -34,9 +32,7 @@ class RawTextViewManager : public ViewManagerBase {
   XamlView CreateViewCore(int64_t tag) override;
 
  private:
-  void NotifyAncestorsTextChanged(
-      IReactInstance *instance,
-      ShadowNodeBase *nodeToUpdate);
+  void NotifyAncestorsTextChanged(IReactInstance *instance, ShadowNodeBase *nodeToUpdate);
 };
 
 } // namespace uwp

@@ -221,6 +221,9 @@
     <ClInclude Include="ChakraRuntimeHolder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DevServerHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

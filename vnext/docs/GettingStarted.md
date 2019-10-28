@@ -3,7 +3,8 @@
 This is a summary of setup steps needed to install and work with React Native for Windows (vnext). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details and see [Getting Started Guide - current](https://github.com/microsoft/react-native-windows/blob/master/current/docs/GettingStarted.md) for working with the `current` React Native for Windows implementation.
 
 ## System requirements
-* You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.15063.0 or higher.
+* You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.15063.0 or higher. See [Windows 10 Compatability](./win10compat.md) for version support details.
+  * Ensure Developer Mode is turned ON in Windows Settings App. 
 * [Visual Studio 2019](https://www.visualstudio.com/downloads) with the following options:
   * Workloads
     * Universal Windows Platform development
@@ -19,7 +20,7 @@ This is a summary of setup steps needed to install and work with React Native fo
 ## Dependencies
 * Install the dependencies [specified by React Native](http://facebook.github.io/react-native/docs/getting-started.html#node-python2-jdk). Specifically, make sure a recent version of [Node.js](https://nodejs.org) is installed. [Chocolatey](https://chocolatey.org/) is the React Native recommended installation method. But you can also install Node directly from [NodeJs](https://nodejs.org/en/download/).  To use chocolately, from an elevated Command Prompt, run:
   ```
-  choco install nodejs
+  choco install nodejs.install --version=12.9.1
   ```
 * Install [Chrome](https://www.google.com/chrome/) (*optional*, but needed for JS debugging)
 * Install [Yarn](https://yarnpkg.com/en/docs/install) (*optional* if consuming react-native-windows, but required to work in the react-native-windows repo)

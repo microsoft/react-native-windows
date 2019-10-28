@@ -10,15 +10,12 @@ namespace react {
 namespace uwp {
 
 // Executes the function on the provided UI Dispatcher
-class BatchingUIMessageQueueThread
-    : public facebook::react::BatchingMessageQueueThread {
+class BatchingUIMessageQueueThread : public facebook::react::BatchingMessageQueueThread {
  public:
   BatchingUIMessageQueueThread() = delete;
-  BatchingUIMessageQueueThread(const BatchingUIMessageQueueThread &other) =
-      delete;
+  BatchingUIMessageQueueThread(const BatchingUIMessageQueueThread &other) = delete;
 
-  BatchingUIMessageQueueThread(
-      winrt::Windows::UI::Core::CoreDispatcher dispatcher);
+  BatchingUIMessageQueueThread(winrt::Windows::UI::Core::CoreDispatcher dispatcher);
   virtual ~BatchingUIMessageQueueThread();
 
   virtual void runOnQueue(std::function<void()> &&func);

@@ -27,43 +27,32 @@ StorageFileIO::StorageFileIO(const WCHAR *storageFileName) {
     throw std::exception("Storage File name is empty.");
 
 #ifdef WINRT
-  const std::wstring localFolder = std::wstring(
-      winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path());
+  const std::wstring localFolder =
+      std::wstring(winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path());
   const std::wstring strStorageFolderFullPath = localFolder + L"\\react-native";
-  const std::wstring strStorageFileFullPath =
-      strStorageFolderFullPath + L"\\" + storageFileName + L".txt";
+  const std::wstring strStorageFileFullPath = strStorageFolderFullPath + L"\\" + storageFileName + L".txt";
 #else
   WCHAR wzMyAppDataDirPathArr[MAX_PATH];
-  HRESULT hr = SHGetFolderPathW(
-      nullptr,
-      CSIDL_LOCAL_APPDATA,
-      nullptr,
-      SHGFP_TYPE_CURRENT,
-      wzMyAppDataDirPathArr);
+  HRESULT hr = SHGetFolderPathW(nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzMyAppDataDirPathArr);
   if (hr != S_OK)
     throwLastErrorMessage();
 
   const std::wstring strLocalAppDataPath{wzMyAppDataDirPathArr};
-  const std::wstring strMicrosoftFullPath =
-      strLocalAppDataPath + L"\\Microsoft";
+  const std::wstring strMicrosoftFullPath = strLocalAppDataPath + L"\\Microsoft";
   const std::wstring strOfficeFullPath = strMicrosoftFullPath + L"\\Office";
-  const std::wstring strStorageFolderFullPath =
-      strOfficeFullPath + L"\\SDXStorage";
+  const std::wstring strStorageFolderFullPath = strOfficeFullPath + L"\\SDXStorage";
   const std::wstring strStorageFileExtension = L".txt";
-  const std::wstring strStorageFileFullPath = strStorageFolderFullPath + L"\\" +
-      storageFileName + strStorageFileExtension;
+  const std::wstring strStorageFileFullPath =
+      strStorageFolderFullPath + L"\\" + storageFileName + strStorageFileExtension;
   // full path should be like -
   // C:\Users\<username>\AppData\Local\Microsoft\Office\SDXStorage\ReactNativeAsyncStorage.txt
 
-  if (!CreateDirectoryW(strMicrosoftFullPath.c_str(), nullptr) &&
-      GetLastError() != ERROR_ALREADY_EXISTS)
+  if (!CreateDirectoryW(strMicrosoftFullPath.c_str(), nullptr) && GetLastError() != ERROR_ALREADY_EXISTS)
     throwLastErrorMessage();
-  if (!CreateDirectoryW(strOfficeFullPath.c_str(), nullptr) &&
-      GetLastError() != ERROR_ALREADY_EXISTS)
+  if (!CreateDirectoryW(strOfficeFullPath.c_str(), nullptr) && GetLastError() != ERROR_ALREADY_EXISTS)
     throwLastErrorMessage();
 #endif
-  if (!CreateDirectoryW(strStorageFolderFullPath.c_str(), nullptr) &&
-      GetLastError() != ERROR_ALREADY_EXISTS)
+  if (!CreateDirectoryW(strStorageFolderFullPath.c_str(), nullptr) && GetLastError() != ERROR_ALREADY_EXISTS)
     throwLastErrorMessage();
 
     // The FILE_FLAG_WRITE_THROUGH can be specified to ensure any writes are
@@ -91,13 +80,12 @@ StorageFileIO::StorageFileIO(const WCHAR *storageFileName) {
   if (m_storageFileHandle == INVALID_HANDLE_VALUE)
     throwLastErrorMessage();
 
-  int fdFileDescriptor =
-      _open_osfhandle((intptr_t)m_storageFileHandle, _O_RDWR);
+  int fdFileDescriptor = _open_osfhandle((intptr_t)m_storageFileHandle, _O_RDWR);
   if (fdFileDescriptor == -1)
     throwLastErrorMessage();
 
-  m_storageFile = std::unique_ptr<FILE, std::function<void(FILE *)>>(
-      _fdopen(fdFileDescriptor, "r+"), [](FILE *f) { fclose(f); });
+  m_storageFile =
+      std::unique_ptr<FILE, std::function<void(FILE *)>>(_fdopen(fdFileDescriptor, "r+"), [](FILE *f) { fclose(f); });
   if (m_storageFile == nullptr)
     throwLastErrorMessage();
 }
@@ -111,8 +99,7 @@ bool StorageFileIO::getLine(std::string &line) {
   do {
     if (!m_fileBufferInited || (m_fileBufferIdx == IOHelperBufferSize)) {
       line.append(&m_fileBuffer[startingIdx], m_fileBufferIdx - startingIdx);
-      m_fileBufferSize = fread(
-          m_fileBuffer, sizeof(char), IOHelperBufferSize, m_storageFile.get());
+      m_fileBufferSize = fread(m_fileBuffer, sizeof(char), IOHelperBufferSize, m_storageFile.get());
       m_fileBufferInited = true;
       m_fileBufferIdx = 0;
       startingIdx = 0;
@@ -150,11 +137,7 @@ void StorageFileIO::clear() {
 
 // Append assumes the file seek pointer is at the end of the file.
 void StorageFileIO::append(const std::string &fileContent) {
-  fwrite(
-      fileContent.c_str(),
-      sizeof(char),
-      fileContent.size(),
-      m_storageFile.get());
+  fwrite(fileContent.c_str(), sizeof(char), fileContent.size(), m_storageFile.get());
 }
 
 void StorageFileIO::throwLastErrorMessage() {

@@ -52,8 +52,7 @@ class MemoryTracker {
    *
    * @returns Message queue thread to call event handlers on.
    */
-  virtual std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread()
-      const noexcept = 0;
+  virtual std::shared_ptr<MessageQueueThread> GetCallbackMessageQueueThread() const noexcept = 0;
 
   /**
    * @brief Sets the message queue thread on which event handlers are be being
@@ -61,8 +60,7 @@ class MemoryTracker {
    *
    * @param messageQueueThread Message queue thread to call event handlers on.
    */
-  virtual void SetCallbackMessageQueueThread(
-      std::shared_ptr<MessageQueueThread> &&messageQueueThread) noexcept = 0;
+  virtual void SetCallbackMessageQueueThread(std::shared_ptr<MessageQueueThread> &&messageQueueThread) noexcept = 0;
 
   /**
    * @brief Adds a memory threshold callback.
@@ -90,8 +88,7 @@ class MemoryTracker {
    * @returns True if the callback was removed, false if no callback is
    * registered under the given identifier.
    */
-  virtual bool RemoveThresholdCallback(
-      CallbackRegistrationCookie cookie) noexcept = 0;
+  virtual bool RemoveThresholdCallback(CallbackRegistrationCookie cookie) noexcept = 0;
 
   /**
    * @brief Initializes memory tracking.
@@ -138,8 +135,7 @@ class MemoryTracker {
  * are going to be invoked.
  */
 std::shared_ptr<MemoryTracker> CreateMemoryTracker(
-    std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread =
-        nullptr) noexcept;
+    std::shared_ptr<MessageQueueThread> &&callbackMessageQueueThread = nullptr) noexcept;
 
 } // namespace react
 } // namespace facebook

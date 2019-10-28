@@ -29,9 +29,7 @@ namespace react {
 namespace uwp {
 
 ReactControl::ReactControl(IXamlRootView *parent, XamlView rootView)
-    : m_pParent(parent),
-      m_rootView(rootView),
-      m_uiDispatcher(winrt::CoreWindow::GetForCurrentThread().Dispatcher()) {
+    : m_pParent(parent), m_rootView(rootView), m_uiDispatcher(winrt::CoreWindow::GetForCurrentThread().Dispatcher()) {
   PrepareXamlRootView(rootView);
 }
 
@@ -49,19 +47,17 @@ ReactControl::~ReactControl() {
   }
 }
 
-std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const
-    noexcept {
+std::shared_ptr<IReactInstance> ReactControl::GetReactInstance() const noexcept {
   return m_reactInstance;
 }
 
 void ReactControl::HandleInstanceError() {
   auto weakThis = weak_from_this();
-  m_uiDispatcher.RunAsync(
-      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
-        if (auto This = weakThis.lock()) {
-          This->HandleInstanceErrorOnUIThread();
-        }
-      });
+  m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+    if (auto This = weakThis.lock()) {
+      This->HandleInstanceErrorOnUIThread();
+    }
+  });
 }
 
 void ReactControl::HandleInstanceErrorOnUIThread() {
@@ -75,8 +71,7 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
     if (m_errorTextBlock == nullptr) {
       m_errorTextBlock = winrt::TextBlock();
       m_redBoxGrid = winrt::Grid();
-      m_redBoxGrid.Background(winrt::SolidColorBrush(
-          winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
+      m_redBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xee, 0xcc, 0, 0)));
       m_redBoxGrid.Children().Append(m_errorTextBlock);
     }
 
@@ -85,9 +80,7 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
 
     // Place error message into TextBlock
     std::wstring wstrErrorMessage(L"ERROR: Instance failed to start.\n\n");
-    wstrErrorMessage += Microsoft::Common::Unicode::Utf8ToUtf16(
-                            m_reactInstance->LastErrorMessage())
-                            .c_str();
+    wstrErrorMessage += Microsoft::Common::Unicode::Utf8ToUtf16(m_reactInstance->LastErrorMessage()).c_str();
     m_errorTextBlock.Text(wstrErrorMessage);
 
     // Format TextBlock
@@ -102,12 +95,11 @@ void ReactControl::HandleInstanceErrorOnUIThread() {
 
 void ReactControl::HandleInstanceWaiting() {
   auto weakThis = weak_from_this();
-  m_uiDispatcher.RunAsync(
-      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
-        if (auto This = weakThis.lock()) {
-          This->HandleInstanceWaitingOnUIThread();
-        }
-      });
+  m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+    if (auto This = weakThis.lock()) {
+      This->HandleInstanceWaitingOnUIThread();
+    }
+  });
 }
 
 void ReactControl::HandleInstanceWaitingOnUIThread() {
@@ -121,11 +113,9 @@ void ReactControl::HandleInstanceWaitingOnUIThread() {
     if (m_waitingTextBlock == nullptr) {
       m_waitingTextBlock = winrt::TextBlock();
       m_greenBoxGrid = winrt::Grid();
-      m_greenBoxGrid.Background(winrt::SolidColorBrush(
-          winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
       m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(
-          winrt::Windows::UI::Xaml::VerticalAlignment::Top);
+      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Top);
     }
 
     // Add box grid to root view
@@ -139,8 +129,7 @@ void ReactControl::HandleInstanceWaitingOnUIThread() {
     m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
     m_waitingTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
     m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
-    m_waitingTextBlock.Foreground(
-        winrt::SolidColorBrush(winrt::Colors::White()));
+    m_waitingTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
     winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
     m_waitingTextBlock.Margin(margin);
   }
@@ -148,17 +137,15 @@ void ReactControl::HandleInstanceWaitingOnUIThread() {
 
 void ReactControl::HandleDebuggerAttach() {
   auto weakThis = weak_from_this();
-  m_uiDispatcher.RunAsync(
-      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
-        if (auto This = weakThis.lock()) {
-          This->HandleDebuggerAttachOnUIThread();
-        }
-      });
+  m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+    if (auto This = weakThis.lock()) {
+      This->HandleDebuggerAttachOnUIThread();
+    }
+  });
 }
 
 void ReactControl::HandleDebuggerAttachOnUIThread() {
-  if (!m_reactInstance->IsWaitingForDebugger() &&
-      !m_reactInstance->IsInError()) {
+  if (!m_reactInstance->IsWaitingForDebugger() && !m_reactInstance->IsInError()) {
     auto xamlRootGrid(m_xamlRootView.as<winrt::Grid>());
 
     // Remove existing children from root view (from the hosted app)
@@ -185,30 +172,24 @@ void ReactControl::AttachRoot() noexcept {
   if (!m_touchEventHandler)
     m_touchEventHandler = std::make_shared<TouchEventHandler>(m_reactInstance);
 
-  m_previewKeyboardEventHandlerOnRoot =
-      std::make_shared<PreviewKeyboardEventHandlerOnRoot>(m_reactInstance);
+  m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(m_reactInstance);
 
   // Register callback from instance for errors
-  m_errorCallbackCookie = m_reactInstance->RegisterErrorCallback(
-      [this]() { HandleInstanceError(); });
+  m_errorCallbackCookie = m_reactInstance->RegisterErrorCallback([this]() { HandleInstanceError(); });
 
   // Register callback from instance for live reload
-  m_liveReloadCallbackCookie = m_reactInstance->RegisterLiveReloadCallback(
-      [this, uiDispatcher = m_uiDispatcher]() {
-        auto weakThis = weak_from_this();
-        uiDispatcher.RunAsync(
-            winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-            [weakThis]() {
-              if (auto This = weakThis.lock()) {
-                This->Reload(true);
-              }
-            });
-      });
+  m_liveReloadCallbackCookie = m_reactInstance->RegisterLiveReloadCallback([this, uiDispatcher = m_uiDispatcher]() {
+    auto weakThis = weak_from_this();
+    uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [weakThis]() {
+      if (auto This = weakThis.lock()) {
+        This->Reload(true);
+      }
+    });
+  });
 
   // Register callback from instance for degugger attaching
   m_debuggerAttachCallbackCookie =
-      m_reactInstance->RegisterDebuggerAttachCallback(
-          [this]() { HandleDebuggerAttach(); });
+      m_reactInstance->RegisterDebuggerAttachCallback([this]() { HandleDebuggerAttach(); });
 
   // We assume Attach has been called from the UI thread
 #ifdef DEBUG
@@ -223,11 +204,9 @@ void ReactControl::AttachRoot() noexcept {
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));
   m_isAttached = true;
 
-#ifdef DEBUG
-  // TODO:  Enable this in retail builds via a new API
-  // https://github.com/microsoft/react-native-windows/issues/2870
-  InitializeDeveloperMenu();
-#endif
+  if (m_reactInstance->GetReactInstanceSettings().EnableDeveloperMenu) {
+    InitializeDeveloperMenu();
+  }
 }
 
 void ReactControl::DetachRoot() noexcept {
@@ -267,8 +246,7 @@ void ReactControl::blur(XamlView const &xamlView) noexcept {
   EnsureFocusSafeHarbor();
   if (m_focusSafeHarbor) {
     m_focusSafeHarbor.IsTabStop(true);
-    winrt::FocusManager::TryFocusAsync(
-        m_focusSafeHarbor, winrt::FocusState::Pointer);
+    winrt::FocusManager::TryFocusAsync(m_focusSafeHarbor, winrt::FocusState::Pointer);
   } else
     winrt::FocusManager::TryFocusAsync(xamlView, winrt::FocusState::Pointer);
 }
@@ -286,9 +264,7 @@ void ReactControl::DetachInstance() {
     // pending calls in these queues.
     // TODO prevent or check if even more is queued while these drain.
     CreateWorkerMessageQueue()->runOnQueue([instance]() {});
-    m_uiDispatcher.RunAsync(
-        winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-        [instance]() {});
+    m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [instance]() {});
 
     // Clear members with a dependency on the reactInstance
     m_touchEventHandler.reset();
@@ -300,8 +276,7 @@ void ReactControl::Reload(bool shouldRetireCurrentInstance) {
   DetachRoot();
 
   m_uiDispatcher.RunAsync(
-      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal,
-      [this, shouldRetireCurrentInstance]() {
+      winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [this, shouldRetireCurrentInstance]() {
         if (shouldRetireCurrentInstance && m_reactInstance != nullptr)
           m_instanceCreator->markAsNeedsReload();
 
@@ -325,8 +300,7 @@ void ReactControl::SetJSComponentName(std::string &&jsComponentName) noexcept {
     m_reactInstance->SetAsNeedsReload();
 }
 
-void ReactControl::SetInstanceCreator(
-    const ReactInstanceCreator &instanceCreator) noexcept {
+void ReactControl::SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept {
   // TODO - Handle swapping this out after the control is running
   m_instanceCreator = instanceCreator;
 }
@@ -384,9 +358,7 @@ void ReactControl::EnsureFocusSafeHarbor() {
 
     m_focusSafeHarborLosingFocusRevoker = m_focusSafeHarbor.LosingFocus(
         winrt::auto_revoke,
-        [this](const auto &sender, const winrt::LosingFocusEventArgs &args) {
-          m_focusSafeHarbor.IsTabStop(false);
-        });
+        [this](const auto &sender, const winrt::LosingFocusEventArgs &args) { m_focusSafeHarbor.IsTabStop(false); });
   }
 }
 
@@ -394,15 +366,11 @@ void ReactControl::EnsureFocusSafeHarbor() {
 void ReactControl::InitializeDeveloperMenu() {
   auto coreWindow = winrt::CoreWindow::GetForCurrentThread();
   m_coreDispatcherAKARevoker = coreWindow.Dispatcher().AcceleratorKeyActivated(
-      winrt::auto_revoke,
-      [this](const auto &sender, const winrt::AcceleratorKeyEventArgs &args) {
+      winrt::auto_revoke, [this](const auto &sender, const winrt::AcceleratorKeyEventArgs &args) {
         if ((args.VirtualKey() == winrt::Windows::System::VirtualKey::D) &&
+            KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Shift) &&
             KeyboardHelper::IsModifiedKeyPressed(
-                winrt::CoreWindow::GetForCurrentThread(),
-                winrt::VirtualKey::Shift) &&
-            KeyboardHelper::IsModifiedKeyPressed(
-                winrt::CoreWindow::GetForCurrentThread(),
-                winrt::VirtualKey::Control)) {
+                winrt::CoreWindow::GetForCurrentThread(), winrt::VirtualKey::Control)) {
           if (!IsDeveloperMenuShowing()) {
             ShowDeveloperMenu();
           }
@@ -437,59 +405,40 @@ void ReactControl::ShowDeveloperMenu() {
       L"    <Button HorizontalAlignment='Stretch' x:Name='Cancel'>Cancel</Button>"
       L"  </StackPanel>"
       L"</Grid>";
-  m_developerMenuRoot = winrt::unbox_value<winrt::Grid>(
-      winrt::Markup::XamlReader::Load(xamlString));
-  auto remoteDebugJSButton =
-      m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
-  auto reloadJSButton =
-      m_developerMenuRoot.FindName(L"Reload").as<winrt::Button>();
-  auto cancelButton =
-      m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
-  auto toggleInspector =
-      m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
-  auto liveReloadButton =
-      m_developerMenuRoot.FindName(L"LiveReload").as<winrt::Button>();
+  m_developerMenuRoot = winrt::unbox_value<winrt::Grid>(winrt::Markup::XamlReader::Load(xamlString));
+  auto remoteDebugJSButton = m_developerMenuRoot.FindName(L"RemoteDebug").as<winrt::Button>();
+  auto reloadJSButton = m_developerMenuRoot.FindName(L"Reload").as<winrt::Button>();
+  auto cancelButton = m_developerMenuRoot.FindName(L"Cancel").as<winrt::Button>();
+  auto toggleInspector = m_developerMenuRoot.FindName(L"Inspector").as<winrt::Button>();
+  auto liveReloadButton = m_developerMenuRoot.FindName(L"LiveReload").as<winrt::Button>();
 
-  bool useWebDebugger =
-      m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
-  remoteDebugJSButton.Content(winrt::box_value(
-      useWebDebugger ? L"Disable Remote JS Debugging"
-                     : L"Enable Remote JS Debugging"));
+  bool useWebDebugger = m_reactInstance->GetReactInstanceSettings().UseWebDebugger;
+  remoteDebugJSButton.Content(
+      winrt::box_value(useWebDebugger ? L"Disable Remote JS Debugging" : L"Enable Remote JS Debugging"));
   m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
-      winrt::auto_revoke,
-      [this, useWebDebugger](
-          const auto &sender, const winrt::RoutedEventArgs &args) {
+      winrt::auto_revoke, [this, useWebDebugger](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
         m_instanceCreator->persistUseWebDebugger(!useWebDebugger);
         Reload(true);
       });
   m_cancelRevoker = cancelButton.Click(
-      winrt::auto_revoke,
-      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
-        DismissDeveloperMenu();
-      });
-  m_toggleInspectorRevoker = toggleInspector.Click(
-      winrt::auto_revoke,
-      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+      winrt::auto_revoke, [this](const auto &sender, const winrt::RoutedEventArgs &args) { DismissDeveloperMenu(); });
+  m_toggleInspectorRevoker =
+      toggleInspector.Click(winrt::auto_revoke, [this](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
         ToggleInspector();
       });
-  m_reloadJSRevoker = reloadJSButton.Click(
-      winrt::auto_revoke,
-      [this](const auto &sender, const winrt::RoutedEventArgs &args) {
+  m_reloadJSRevoker =
+      reloadJSButton.Click(winrt::auto_revoke, [this](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
         Reload(true);
       });
 
-  bool supportLiveReload =
-      m_reactInstance->GetReactInstanceSettings().UseLiveReload;
+  bool supportLiveReload = m_reactInstance->GetReactInstanceSettings().UseLiveReload;
 
-  liveReloadButton.Content(winrt::box_value(
-      supportLiveReload ? L"Disable Live Reload" : L"Enable Live Reload"));
+  liveReloadButton.Content(winrt::box_value(supportLiveReload ? L"Disable Live Reload" : L"Enable Live Reload"));
   m_liveReloadRevoker = liveReloadButton.Click(
-      winrt::auto_revoke,
-      [this, supportLiveReload](
-          const auto &sender, const winrt::RoutedEventArgs &args) {
+      winrt::auto_revoke, [this, supportLiveReload](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
         m_instanceCreator->persistUseLiveReload(!supportLiveReload);
         Reload(true);
@@ -515,9 +464,7 @@ bool ReactControl::IsDeveloperMenuShowing() const {
 void ReactControl::ToggleInspector() {
   if (m_reactInstance) {
     m_reactInstance->CallJsFunction(
-        "RCTDeviceEventEmitter",
-        "emit",
-        folly::dynamic::array("toggleElementInspector", nullptr));
+        "RCTDeviceEventEmitter", "emit", folly::dynamic::array("toggleElementInspector", nullptr));
   }
 }
 

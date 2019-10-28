@@ -76,15 +76,7 @@ class DoubleToStringConverter {
     UNIQUE_ZERO = 8
   };
 
-  DoubleToStringConverter(
-      int,
-      const char *,
-      const char *,
-      char,
-      int,
-      int,
-      int,
-      int) {
+  DoubleToStringConverter(int, const char *, const char *, char, int, int, int, int) {
     // nyi();
   }
 

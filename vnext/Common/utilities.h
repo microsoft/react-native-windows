@@ -21,10 +21,8 @@ inline TResultTypePtr CheckedReinterpretCast(TOriginalTypePtr p) noexcept {
   using TOriginalType = typename std::remove_pointer<TOriginalTypePtr>::type;
 
   static_assert(
-      std::is_pointer<TResultTypePtr>::value &&
-          std::is_pointer<TOriginalTypePtr>::value &&
-          std::is_integral<TResultType>::value &&
-          std::is_integral<TOriginalType>::value &&
+      std::is_pointer<TResultTypePtr>::value && std::is_pointer<TOriginalTypePtr>::value &&
+          std::is_integral<TResultType>::value && std::is_integral<TOriginalType>::value &&
           sizeof(TResultType) == sizeof(TOriginalType),
       "CheckedReinterpretCast can only be used to cast from T1* to T2*, where "
       "T1 and T2 are integral types of the same size.");

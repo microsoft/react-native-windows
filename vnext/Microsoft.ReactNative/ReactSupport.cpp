@@ -169,11 +169,7 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
     }
     default:
       wchar_t buf[512];
-      swprintf(
-          buf,
-          sizeof(buf),
-          L"Unrecognized argument value type: %d\n",
-          propType);
+      swprintf(buf, sizeof(buf), L"Unrecognized argument value type: %d\n", propType);
       throw hresult_invalid_argument(buf);
   }
 
@@ -203,8 +199,7 @@ IInspectable ConvertToIInspectable(folly::dynamic const &object) {
     case folly::dynamic::OBJECT: {
       auto objs = single_threaded_map<IInspectable, IInspectable>();
       for (auto it : object.items()) {
-        objs.Insert(
-            ConvertToIInspectable(it.first), ConvertToIInspectable(it.second));
+        objs.Insert(ConvertToIInspectable(it.first), ConvertToIInspectable(it.second));
       }
       return objs.GetView();
     }

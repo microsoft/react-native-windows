@@ -17,18 +17,7 @@ namespace uwp {
 
 class ViewManagerBase;
 
-enum ShadowEdges : uint8_t {
-  Left = 0,
-  Top,
-  Right,
-  Bottom,
-  Start,
-  End,
-  Horizontal,
-  Vertical,
-  AllEdges,
-  CountEdges
-};
+enum ShadowEdges : uint8_t { Left = 0, Top, Right, Bottom, Start, End, Horizontal, Vertical, AllEdges, CountEdges };
 
 enum ShadowCorners : uint8_t {
   TopLeft = 0,
@@ -44,17 +33,15 @@ enum ShadowCorners : uint8_t {
 };
 
 extern const DECLSPEC_SELECTANY double c_UndefinedEdge = -1;
-#define INIT_UNDEFINED_EDGES                                                \
-  {                                                                         \
-    c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge,     \
-        c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, \
-        c_UndefinedEdge                                                     \
+#define INIT_UNDEFINED_EDGES                                                                              \
+  {                                                                                                       \
+    c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, \
+        c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge                                                 \
   }
-#define INIT_UNDEFINED_CORNERS                                              \
-  {                                                                         \
-    c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge,     \
-        c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, \
-        c_UndefinedEdge                                                     \
+#define INIT_UNDEFINED_CORNERS                                                                            \
+  {                                                                                                       \
+    c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge, \
+        c_UndefinedEdge, c_UndefinedEdge, c_UndefinedEdge                                                 \
   }
 
 #pragma warning(push)
@@ -67,9 +54,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
   virtual ~ShadowNodeBase() {}
 
   virtual void onDropViewInstance() override;
-  virtual void dispatchCommand(
-      int64_t commandId,
-      const folly::dynamic &commandArgs) override;
+  virtual void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) override;
   virtual void removeAllChildren() override;
   virtual void AddView(ShadowNode &child, int64_t index) override;
   virtual void RemoveChildAt(int64_t indexToRemove) override;
@@ -113,8 +98,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
  protected:
   XamlView m_view;
   bool m_updating = false;
-  winrt::Windows::UI::Composition::CompositionPropertySet m_transformPS{
-      nullptr};
+  winrt::Windows::UI::Composition::CompositionPropertySet m_transformPS{nullptr};
 
  public:
   double m_padding[ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
@@ -129,9 +113,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public facebook::react::ShadowNode {
 
   // Support Keyboard
  public:
-  void UpdateHandledKeyboardEvents(
-      std::string const &propertyName,
-      folly::dynamic const &value);
+  void UpdateHandledKeyboardEvents(std::string const &propertyName, folly::dynamic const &value);
 
  private:
   void EnsureHandledKeyboardEventHandler();

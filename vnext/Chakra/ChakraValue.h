@@ -131,8 +131,7 @@ class ChakraObject {
     // TODO :: VEC is value is not object.
   }
 
-  ChakraObject(ChakraObject &&other)
-      : m_obj(other.m_obj), m_isProtected(other.m_isProtected) {
+  ChakraObject(ChakraObject &&other) : m_obj(other.m_obj), m_isProtected(other.m_isProtected) {
     other.m_obj = nullptr;
     other.m_isProtected = false;
   }
@@ -160,22 +159,16 @@ class ChakraObject {
   }
 
   ChakraValue callAsFunction(std::initializer_list<JsValueRef> args) const;
-  ChakraValue callAsFunction(
-      const ChakraObject &thisObj,
-      std::initializer_list<JsValueRef> args) const;
+  ChakraValue callAsFunction(const ChakraObject &thisObj, std::initializer_list<JsValueRef> args) const;
   ChakraValue callAsFunction(int nArgs, const JsValueRef args[]) const;
-  ChakraValue callAsFunction(
-      const ChakraObject &thisObj,
-      int nArgs,
-      const JsValueRef args[]) const;
+  ChakraValue callAsFunction(const ChakraObject &thisObj, int nArgs, const JsValueRef args[]) const;
 
   ChakraObject callAsConstructor(std::initializer_list<JsValueRef> args) const;
 
   ChakraValue getProperty(const ChakraString &propName) const;
   ChakraValue getProperty(const char *propName) const;
   ChakraValue getPropertyAtIndex(unsigned index) const;
-  void setProperty(const ChakraString &propName, const ChakraValue &value)
-      const;
+  void setProperty(const ChakraString &propName, const ChakraValue &value) const;
   void setProperty(const char *propName, const ChakraValue &value) const;
   std::unordered_map<std::string, std::string> toJSONMap() const;
 
@@ -203,8 +196,7 @@ class ChakraObject {
   JsValueRef m_obj;
   bool m_isProtected = false;
 
-  ChakraValue
-  callAsFunction(JsValueRef thisObj, int nArgs, const JsValueRef args[]) const;
+  ChakraValue callAsFunction(JsValueRef thisObj, int nArgs, const JsValueRef args[]) const;
 };
 
 class ChakraValue {

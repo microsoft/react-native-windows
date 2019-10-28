@@ -6,12 +6,10 @@
 #include <functional>
 
 namespace Playground {
-[Windows::Foundation::Metadata::WebHostHidden] public ref class RelayCommand
-    sealed : [Windows::Foundation::Metadata::Default] Windows::UI::Xaml::Input::
-                 ICommand {
+[Windows::Foundation::Metadata::WebHostHidden] public ref class RelayCommand sealed
+    : [Windows::Foundation::Metadata::Default] Windows::UI::Xaml::Input::ICommand {
  public:
-  virtual event Windows::Foundation::EventHandler<Platform::Object ^> ^
-      CanExecuteChanged;
+  virtual event Windows::Foundation::EventHandler<Platform::Object ^> ^ CanExecuteChanged;
   virtual bool CanExecute(Platform::Object ^ parameter);
   virtual void Execute(Platform::Object ^ parameter);
   virtual ~RelayCommand();

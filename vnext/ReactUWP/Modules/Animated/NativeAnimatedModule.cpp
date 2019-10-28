@@ -13,42 +13,29 @@
 namespace react {
 namespace uwp {
 const char *NativeAnimatedModule::name{"NativeAnimatedModule"};
-const char *NativeAnimatedModule::s_createAnimatedNodeName{
-    "createAnimatedNode"};
-const char *NativeAnimatedModule::s_connectAnimatedNodeToViewName{
-    "connectAnimatedNodeToView"};
-const char *NativeAnimatedModule::s_disconnectAnimatedNodeFromViewName{
-    "disconnectAnimatedNodeFromView"};
-const char *NativeAnimatedModule::s_connectAnimatedNodesName{
-    "connectAnimatedNodes"};
-const char *NativeAnimatedModule::s_disconnectAnimatedNodesName{
-    "disconnectAnimatedNodes"};
+const char *NativeAnimatedModule::s_createAnimatedNodeName{"createAnimatedNode"};
+const char *NativeAnimatedModule::s_connectAnimatedNodeToViewName{"connectAnimatedNodeToView"};
+const char *NativeAnimatedModule::s_disconnectAnimatedNodeFromViewName{"disconnectAnimatedNodeFromView"};
+const char *NativeAnimatedModule::s_connectAnimatedNodesName{"connectAnimatedNodes"};
+const char *NativeAnimatedModule::s_disconnectAnimatedNodesName{"disconnectAnimatedNodes"};
 const char *NativeAnimatedModule::s_stopAnimationName{"stopAnimation"};
-const char *NativeAnimatedModule::s_startAnimatingNodeName{
-    "startAnimatingNode"};
+const char *NativeAnimatedModule::s_startAnimatingNodeName{"startAnimatingNode"};
 const char *NativeAnimatedModule::s_dropAnimatedNodeName{"dropAnimatedNode"};
-const char *NativeAnimatedModule::s_setAnimatedNodeValueName{
-    "setAnimatedNodeValue"};
-const char *NativeAnimatedModule::s_setAnimatedNodeOffsetName{
-    "setAnimatedNodeOffset"};
-const char *NativeAnimatedModule::s_flattenAnimatedNodeOffsetName{
-    "flattenAnimatedNodeOffset"};
-const char *NativeAnimatedModule::s_extractAnimatedNodeOffsetName{
-    "extractAnimatedNodeOffset"};
-const char *NativeAnimatedModule::s_addAnimatedEventToViewName{
-    "addAnimatedEventToView"};
-const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{
-    "removeAnimatedEventFromView"};
+const char *NativeAnimatedModule::s_setAnimatedNodeValueName{"setAnimatedNodeValue"};
+const char *NativeAnimatedModule::s_setAnimatedNodeOffsetName{"setAnimatedNodeOffset"};
+const char *NativeAnimatedModule::s_flattenAnimatedNodeOffsetName{"flattenAnimatedNodeOffset"};
+const char *NativeAnimatedModule::s_extractAnimatedNodeOffsetName{"extractAnimatedNodeOffset"};
+const char *NativeAnimatedModule::s_addAnimatedEventToViewName{"addAnimatedEventToView"};
+const char *NativeAnimatedModule::s_removeAnimatedEventFromViewName{"removeAnimatedEventFromView"};
+const char *NativeAnimatedModule::s_startListeningToAnimatedNodeValueName{"startListeningToAnimatedNodeValue"};
+const char *NativeAnimatedModule::s_stopListeningToAnimatedNodeValueName{"stopListeningToAnimatedNodeValue"};
 
-NativeAnimatedModule::NativeAnimatedModule(
-    const std::weak_ptr<IReactInstance> &reactInstance)
+NativeAnimatedModule::NativeAnimatedModule(const std::weak_ptr<IReactInstance> &reactInstance)
     : m_wkReactInstance(reactInstance) {
-  m_nodesManager =
-      std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
+  m_nodesManager = std::make_shared<NativeAnimatedNodeManager>(NativeAnimatedNodeManager());
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method>
-NativeAnimatedModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> NativeAnimatedModule::getMethods() {
   return {
       Method(
           s_createAnimatedNodeName,
@@ -96,10 +83,8 @@ NativeAnimatedModule::getMethods() {
           [this](folly::dynamic args, Callback endCallback) {
             const auto animationId = facebook::xplat::jsArgAsInt(args, 0);
             const auto animatedNodeTag = facebook::xplat::jsArgAsInt(args, 1);
-            const auto animationConfig =
-                facebook::xplat::jsArgAsObject(args, 2);
-            NativeAnimatedModule::StartAnimatingNode(
-                animationId, animatedNodeTag, animationConfig, endCallback);
+            const auto animationConfig = facebook::xplat::jsArgAsObject(args, 2);
+            NativeAnimatedModule::StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback);
           }),
       Method(
           s_dropAnimatedNodeName,
@@ -139,8 +124,7 @@ NativeAnimatedModule::getMethods() {
             const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
             const auto eventName = facebook::xplat::jsArgAsString(args, 1);
             const auto eventMapping = facebook::xplat::jsArgAsObject(args, 2);
-            NativeAnimatedModule::AddAnimatedEventToView(
-                viewTag, eventName, eventMapping);
+            NativeAnimatedModule::AddAnimatedEventToView(viewTag, eventName, eventMapping);
           }),
       Method(
           s_removeAnimatedEventFromViewName,
@@ -148,40 +132,40 @@ NativeAnimatedModule::getMethods() {
             const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
             const auto eventName = facebook::xplat::jsArgAsString(args, 1);
             const auto animatedValueTag = facebook::xplat::jsArgAsInt(args, 2);
-            NativeAnimatedModule::RemoveAnimatedEventFromView(
-                viewTag, eventName, animatedValueTag);
+            NativeAnimatedModule::RemoveAnimatedEventFromView(viewTag, eventName, animatedValueTag);
+          }),
+      Method(
+          s_startListeningToAnimatedNodeValueName,
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StartListeningToAnimatedNodeValue(viewTag);
+          }),
+      Method(
+          s_stopListeningToAnimatedNodeValueName,
+          [this](folly::dynamic args) {
+            const auto viewTag = facebook::xplat::jsArgAsInt(args, 0);
+            NativeAnimatedModule::StopListeningToAnimatedNodeValue(viewTag);
           }),
   };
 }
 
-void NativeAnimatedModule::CreateAnimatedNode(
-    int64_t tag,
-    const folly::dynamic &config) {
-  m_nodesManager->CreateAnimatedNode(
-      tag, config, m_wkReactInstance, m_nodesManager);
+void NativeAnimatedModule::CreateAnimatedNode(int64_t tag, const folly::dynamic &config) {
+  m_nodesManager->CreateAnimatedNode(tag, config, m_wkReactInstance, m_nodesManager);
 }
 
-void NativeAnimatedModule::ConnectAnimatedNodeToView(
-    int64_t animatedNodeTag,
-    int64_t viewTag) {
+void NativeAnimatedModule::ConnectAnimatedNodeToView(int64_t animatedNodeTag, int64_t viewTag) {
   m_nodesManager->ConnectAnimatedNodeToView(animatedNodeTag, viewTag);
 }
 
-void NativeAnimatedModule::DisconnectAnimatedNodeFromView(
-    int64_t animatedNodeTag,
-    int64_t viewTag) {
+void NativeAnimatedModule::DisconnectAnimatedNodeFromView(int64_t animatedNodeTag, int64_t viewTag) {
   m_nodesManager->DisconnectAnimatedNodeToView(animatedNodeTag, viewTag);
 }
 
-void NativeAnimatedModule::ConnectAnimatedNodes(
-    int64_t parentNodeTag,
-    int64_t childNodeTag) {
+void NativeAnimatedModule::ConnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag) {
   m_nodesManager->ConnectAnimatedNode(parentNodeTag, childNodeTag);
 }
 
-void NativeAnimatedModule::DisconnectAnimatedNodes(
-    int64_t parentNodeTag,
-    int64_t childNodeTag) {
+void NativeAnimatedModule::DisconnectAnimatedNodes(int64_t parentNodeTag, int64_t childNodeTag) {
   m_nodesManager->DisconnectAnimatedNode(parentNodeTag, childNodeTag);
 }
 
@@ -190,12 +174,7 @@ void NativeAnimatedModule::StartAnimatingNode(
     int64_t animatedNodeTag,
     const folly::dynamic &animationConfig,
     const Callback &endCallback) {
-  m_nodesManager->StartAnimatingNode(
-      animationId,
-      animatedNodeTag,
-      animationConfig,
-      endCallback,
-      m_nodesManager);
+  m_nodesManager->StartAnimatingNode(animationId, animatedNodeTag, animationConfig, endCallback, m_nodesManager);
 }
 
 void NativeAnimatedModule::StopAnimation(int64_t animationId) {
@@ -226,8 +205,7 @@ void NativeAnimatedModule::AddAnimatedEventToView(
     int64_t tag,
     const std::string &eventName,
     const folly::dynamic &eventMapping) {
-  m_nodesManager->AddAnimatedEventToView(
-      tag, eventName, eventMapping, m_nodesManager);
+  m_nodesManager->AddAnimatedEventToView(tag, eventName, eventMapping, m_nodesManager);
 }
 
 void NativeAnimatedModule::RemoveAnimatedEventFromView(

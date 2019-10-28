@@ -6,17 +6,21 @@ import "ReactApplicationDelegate.idl";
 
 namespace Microsoft.ReactNative
 {
-	interface IReactApplication
-	{
-		ReactNativeHost Host{ get; };
-	};
+    [webhosthidden]
+    [default_interface]
+    unsealed runtimeclass ReactApplication : Windows.UI.Xaml.Application
+    {
+        ReactApplication();
+     
+        ReactInstanceSettings InstanceSettings { get; set; };
+     
+        IVector<Microsoft.ReactNative.Bridge.IReactPackageProvider> PackageProviders { get; set; };
+     
+        String MainComponentName { get; set; };
+        Boolean UseDeveloperSupport { get; set; };
+        String JavaScriptMainModuleName { get; set; };
+        String JavaScriptBundleFile { get; set; };
 
-	[webhosthidden]
-	[default_interface]
-	unsealed runtimeclass ReactApplication : Windows.UI.Xaml.Application, IReactApplication
-	{
-		ReactApplication();
-
-		overridable ReactNativeHost HostCore{ get; };
-	};
-}
+        ReactNativeHost Host { get; };
+    };
+} // namespace Microsoft.ReactNative

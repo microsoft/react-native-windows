@@ -31,11 +31,9 @@ class NamedPipeEndpoint final : public SandboxEndpoint {
       SendRequestCallback &&callback) override;
   void Send(std::string &&message) override;
 
-  void RegisterJSCallRequestHandler(
-      const JSCallRequestHandler &handler) override;
+  void RegisterJSCallRequestHandler(const JSCallRequestHandler &handler) override;
   void RegisterReplyHandler(const ReplyMessageHandler &handler) override;
-  void RegisterNativeModuleCallHandler(
-      const NativeModuleCallHandler &handler) override;
+  void RegisterNativeModuleCallHandler(const NativeModuleCallHandler &handler) override;
 
  private:
   struct Impl;

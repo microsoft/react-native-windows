@@ -95,9 +95,17 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging --force
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging
           workingDirectory: packages/E2ETest
 
+      - task: PublishBuildArtifacts@1
+        condition:  succeededOrFailed()
+        timeoutInMinutes: 10
+        inputs:    
+          pathtoPublish: packages/E2ETest/msbuild.binlog 
+          artifactName: 'ReactUWPTestApp build log' 
+          publishLocation: 'Container'
+                    
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
         displayName: Wait for app to launch

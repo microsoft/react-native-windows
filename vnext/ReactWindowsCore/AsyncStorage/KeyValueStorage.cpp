@@ -11,14 +11,9 @@ namespace facebook {
 namespace react {
 
 KeyValueStorage::KeyValueStorage(const WCHAR *storageFileName)
-    : m_fileIOHelper{make_unique<StorageFileIO>(storageFileName)},
-      m_kvMap{map<string, string>()} {
+    : m_fileIOHelper{make_unique<StorageFileIO>(storageFileName)}, m_kvMap{map<string, string>()} {
   // start the load procedure
-  m_storageFileLoaded = CreateEventEx(
-      nullptr,
-      nullptr,
-      CREATE_EVENT_MANUAL_RESET,
-      SYNCHRONIZE | EVENT_MODIFY_STATE);
+  m_storageFileLoaded = CreateEventEx(nullptr, nullptr, CREATE_EVENT_MANUAL_RESET, SYNCHRONIZE | EVENT_MODIFY_STATE);
   if (m_storageFileLoaded == NULL)
     StorageFileIO::throwLastErrorMessage();
 
@@ -60,8 +55,7 @@ void KeyValueStorage::load() {
           break;
 
         default:
-          throw std::exception(
-              "Corrupt storage file. Unexpected prefix on line.");
+          throw std::exception("Corrupt storage file. Unexpected prefix on line.");
           break;
       }
     }
@@ -94,8 +88,7 @@ void KeyValueStorage::waitForStorageLoadComplete() {
   using namespace std::chrono;
   using namespace std::chrono_literals;
 
-  const auto dwMilliseconds =
-      static_cast<DWORD>(duration_cast<milliseconds>(30s).count());
+  const auto dwMilliseconds = static_cast<DWORD>(duration_cast<milliseconds>(30s).count());
   if (WaitForSingleObject(m_storageFileLoaded, dwMilliseconds) != WAIT_OBJECT_0)
     StorageFileIO::throwLastErrorMessage();
 
@@ -103,8 +96,7 @@ void KeyValueStorage::waitForStorageLoadComplete() {
     m_storageFileLoader.get();
 }
 
-vector<tuple<string, string>> KeyValueStorage::multiGet(
-    const vector<string> &keys) {
+vector<tuple<string, string>> KeyValueStorage::multiGet(const vector<string> &keys) {
   waitForStorageLoadComplete();
 
   vector<tuple<string, string>> result;
@@ -117,8 +109,7 @@ vector<tuple<string, string>> KeyValueStorage::multiGet(
   return result;
 }
 
-void KeyValueStorage::multiSet(
-    const vector<tuple<string, string>> &keyValuePairs) {
+void KeyValueStorage::multiSet(const vector<tuple<string, string>> &keyValuePairs) {
   waitForStorageLoadComplete();
 
   stringstream appendEntry;
@@ -159,8 +150,7 @@ void KeyValueStorage::multiRemove(const vector<string> &keys) {
   m_fileIOHelper->append(ss.str());
 }
 
-void KeyValueStorage::multiMerge(
-    const vector<tuple<string, string>> &keyValuePairs) {
+void KeyValueStorage::multiMerge(const vector<tuple<string, string>> &keyValuePairs) {
   throw std::exception("Error: not implemented.");
 }
 
@@ -239,8 +229,7 @@ void KeyValueStorage::unescapeString(string &escapedString) {
         *write = '\n';
         break;
       default:
-        throw std::exception(
-            "Corrupt storage file. Found unexpected backslash.");
+        throw std::exception("Corrupt storage file. Found unexpected backslash.");
     }
   }
   *write = '\0';

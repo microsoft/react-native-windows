@@ -15,8 +15,7 @@ namespace uwp {
 
 // Expression for computing the center point of a UIElement, produces a vector3
 // with 2D translation to center.
-winrt::ExpressionAnimation
-ExpressionAnimationStore::GetElementCenterPointExpression() {
+winrt::ExpressionAnimation ExpressionAnimationStore::GetElementCenterPointExpression() {
   /*
 
   // Because of a bug in the Composition system, we cannot cache this
@@ -44,12 +43,10 @@ ExpressionAnimationStore::GetElementCenterPointExpression() {
 
 // Expression for applying a TransformMatrix about the centerpoint of a
 // UIElement, produces a Matrix4x4 with overall transform.
-winrt::ExpressionAnimation
-ExpressionAnimationStore::GetTransformCenteringExpression() {
+winrt::ExpressionAnimation ExpressionAnimationStore::GetTransformCenteringExpression() {
   if (m_transformCenteringExpression == nullptr) {
-    m_transformCenteringExpression =
-        winrt::Window::Current().Compositor().CreateExpressionAnimation(
-            L"Matrix4x4.CreateFromTranslation(-PS.center) * PS.transform * Matrix4x4.CreateFromTranslation(PS.center)");
+    m_transformCenteringExpression = winrt::Window::Current().Compositor().CreateExpressionAnimation(
+        L"Matrix4x4.CreateFromTranslation(-PS.center) * PS.transform * Matrix4x4.CreateFromTranslation(PS.center)");
   }
 
   return m_transformCenteringExpression;

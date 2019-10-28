@@ -24,9 +24,7 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
  public:
   using VoidFunctor = std::function<void()>;
 
-  TestMessageQueueThread(
-      VoidFunctor &&initializeThread = nullptr,
-      VoidFunctor &&uninitializeThread = nullptr) noexcept;
+  TestMessageQueueThread(VoidFunctor &&initializeThread = nullptr, VoidFunctor &&uninitializeThread = nullptr) noexcept;
 
 #pragma region MessageQueueThread members
 
@@ -44,11 +42,7 @@ class TestMessageQueueThread : public facebook::react::MessageQueueThread {
 #pragma endregion MessageQueueThread members
 
  private:
-  enum class State {
-    Running,
-    QuitSynchronousHasBeenCalled,
-    WorkerThreadHasExited
-  };
+  enum class State { Running, QuitSynchronousHasBeenCalled, WorkerThreadHasExited };
 
   enum class ThreadSignalIndex {
     FunctorAvailable = 0,

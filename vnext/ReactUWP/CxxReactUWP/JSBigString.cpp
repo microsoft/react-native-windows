@@ -26,8 +26,7 @@ const char *JSBigFileString::c_str() const {
   return m_data;
 }
 
-std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(
-    const std::string &sourceURL) {
+std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(const std::string &sourceURL) {
   std::unique_ptr<JSBigFileString> buffer;
   {
     std::ifstream file(sourceURL);
@@ -35,8 +34,7 @@ std::unique_ptr<const JSBigFileString> JSBigFileString::fromPath(
       file.seekg(0, std::ios::end);
       auto fileSize = file.tellg();
       if (0 <= fileSize) {
-        buffer = std::make_unique<JSBigFileString>(
-            -1 /*fd*/, static_cast<size_t>(fileSize));
+        buffer = std::make_unique<JSBigFileString>(-1 /*fd*/, static_cast<size_t>(fileSize));
         file.seekg(0, std::ios::beg);
         file.read(const_cast<char *>(buffer->m_data), buffer->m_size);
       }

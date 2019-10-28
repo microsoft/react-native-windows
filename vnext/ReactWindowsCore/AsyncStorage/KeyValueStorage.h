@@ -16,13 +16,10 @@ class KeyValueStorage {
  public:
   KeyValueStorage(const WCHAR *storageFileName);
 
-  std::vector<std::tuple<std::string, std::string>> multiGet(
-      const std::vector<std::string> &keys);
-  void multiSet(
-      const std::vector<std::tuple<std::string, std::string>> &keyValuePairs);
+  std::vector<std::tuple<std::string, std::string>> multiGet(const std::vector<std::string> &keys);
+  void multiSet(const std::vector<std::tuple<std::string, std::string>> &keyValuePairs);
   void multiRemove(const std::vector<std::string> &keys);
-  void multiMerge(
-      const std::vector<std::tuple<std::string, std::string>> &keyValuePairs);
+  void multiMerge(const std::vector<std::tuple<std::string, std::string>> &keyValuePairs);
   void clear();
   std::vector<std::string> getAllKeys();
 
