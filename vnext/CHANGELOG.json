@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2019 23:51:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.51",
+      "version": "0.60.0-vnext.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move closer to allowing JSI with OSS RN",
+            "author": "acoates@microsoft.com",
+            "commit": "80801ec6ff3272320e1d150483d3422ec9690b8f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Oct 2019 21:50:14 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.50",
       "version": "0.60.0-vnext.50",
