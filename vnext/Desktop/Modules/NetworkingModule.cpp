@@ -36,9 +36,7 @@ IHttpResource *NetworkingModule::GetResource(int64_t requestId) noexcept {
       OnRequestError(requestId, move(message), false /*isTimeOut*/);
     });
     rc->SetOnRequest([this, requestId]() { OnRequestSuccess(requestId); });
-    rc->SetOnResponse([this, requestId](const string &message) {
-      OnDataReceived(requestId, message);
-    });
+    rc->SetOnResponse([this, requestId](const string &message) { OnDataReceived(requestId, message); });
 
     ptr = rc.get();
     m_resources.emplace(requestId, move(rc));
@@ -49,19 +47,12 @@ IHttpResource *NetworkingModule::GetResource(int64_t requestId) noexcept {
   return ptr;
 }
 
-void NetworkingModule::OnDataReceived(
-    int64_t requestId,
-    const string &data) noexcept {
+void NetworkingModule::OnDataReceived(int64_t requestId, const string &data) noexcept {
   SendEvent("didReceiveNetworkData", dynamic::array(requestId, data));
 }
 
-void NetworkingModule::OnRequestError(
-    int64_t requestId,
-    const string &error,
-    bool isTimeOut) noexcept {
-  SendEvent(
-      "didCompleteNetworkResponse",
-      dynamic::array(requestId, error, isTimeOut));
+void NetworkingModule::OnRequestError(int64_t requestId, const string &error, bool isTimeOut) noexcept {
+  SendEvent("didCompleteNetworkResponse", dynamic::array(requestId, error, isTimeOut));
 }
 
 void NetworkingModule::OnRequestSuccess(int64_t requestId) noexcept {
@@ -73,18 +64,13 @@ void NetworkingModule::OnResponseReceived(
     int64_t statusCode,
     const dynamic &headers,
     const string &url) noexcept {
-  SendEvent(
-      "didReceiveNetworkResponse",
-      dynamic::array(requestId, statusCode, headers, url));
+  SendEvent("didReceiveNetworkResponse", dynamic::array(requestId, statusCode, headers, url));
 }
 
 void NetworkingModule::SendEvent(string &&eventName, dynamic &&parameters) {
   auto instance = this->getInstance().lock();
   if (instance)
-    instance->callJSFunction(
-        "RCTDeviceEventEmitter",
-        "emit",
-        dynamic::array(move(eventName), move(parameters)));
+    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(move(eventName), move(parameters)));
 }
 
 #pragma region CxxModule members
@@ -97,8 +83,7 @@ map<string, dynamic> NetworkingModule::getConstants() {
   return {};
 }
 
-vector<facebook::xplat::module::CxxModule::Method>
-NetworkingModule::getMethods() {
+vector<facebook::xplat::module::CxxModule::Method> NetworkingModule::getMethods() {
   return {Method(
               "sendRequest",
               [this](dynamic args, Callback cb) noexcept {
@@ -108,8 +93,7 @@ NetworkingModule::getMethods() {
                 auto follyHeaders = params["headers"];
                 if (!follyHeaders.empty()) {
                   for (auto &header : follyHeaders.items()) {
-                    headers[header.first.getString()] =
-                        header.second.getString();
+                    headers[header.first.getString()] = header.second.getString();
                   }
                 }
 

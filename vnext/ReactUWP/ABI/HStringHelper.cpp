@@ -23,8 +23,7 @@ HSTRING StringToHSTRING(const std::string &str) {
 
   std::wstring wString = Microsoft::Common::Unicode::Utf8ToUtf16(str);
 
-  HRESULT hr = WindowsCreateString(
-      wString.c_str(), static_cast<UINT32>(wString.length()), &hstring);
+  HRESULT hr = WindowsCreateString(wString.c_str(), static_cast<UINT32>(wString.length()), &hstring);
   return hstring;
 }
 

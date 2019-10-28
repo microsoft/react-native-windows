@@ -11,8 +11,7 @@
 namespace facebook {
 namespace react {
 
-ChakraNativeModules::ChakraNativeModules(
-    std::shared_ptr<ModuleRegistry> moduleRegistry)
+ChakraNativeModules::ChakraNativeModules(std::shared_ptr<ModuleRegistry> moduleRegistry)
     : m_moduleRegistry(std::move(moduleRegistry)) {}
 
 JsValueRef ChakraNativeModules::getModule(JsValueRef jsName) {
@@ -31,8 +30,7 @@ JsValueRef ChakraNativeModules::getModule(JsValueRef jsName) {
   // Protect since we'll be holding on to this value, even though JS may not
   module->makeProtected();
 
-  auto result =
-      m_objects.emplace(std::move(moduleName), std::move(*module)).first;
+  auto result = m_objects.emplace(std::move(moduleName), std::move(*module)).first;
   return static_cast<JsValueRef>(result->second);
 }
 
@@ -41,8 +39,7 @@ void ChakraNativeModules::reset() {
   m_objects.clear();
 }
 
-folly::Optional<ChakraObject> ChakraNativeModules::createModule(
-    const std::string &name) {
+folly::Optional<ChakraObject> ChakraNativeModules::createModule(const std::string &name) {
   if (!m_genNativeModuleJS) {
     auto global = ChakraObject::getGlobalObject();
     m_genNativeModuleJS = global.getProperty("__fbGenNativeModule").asObject();
@@ -59,8 +56,7 @@ folly::Optional<ChakraObject> ChakraNativeModules::createModule(
   }
 
   ChakraValue moduleInfo = m_genNativeModuleJS->callAsFunction(
-      {ChakraValue::fromDynamic(result->config),
-       ChakraValue::makeNumber(static_cast<double>(result->index))});
+      {ChakraValue::fromDynamic(result->config), ChakraValue::makeNumber(static_cast<double>(result->index))});
   CHECK(!moduleInfo.isNull()) << "Module returned from genNativeModule is null";
 
   return moduleInfo.asObject().getProperty("module").asObject();

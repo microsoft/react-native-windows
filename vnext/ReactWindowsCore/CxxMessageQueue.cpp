@@ -36,9 +36,7 @@ class Task {
     return new Task{std::move(func), true, time_point()};
   }
 
-  static Task *createDelayed(
-      std::function<void()> &&func,
-      time_point startTime) {
+  static Task *createDelayed(std::function<void()> &&func, time_point startTime) {
     return new Task{std::move(func), false, startTime};
   }
 
@@ -111,8 +109,7 @@ class CxxMessageQueue::QueueRunner {
 
   void enqueueDelayed(std::function<void()> &&func, uint64_t delayMs) {
     if (delayMs) {
-      enqueueTask(Task::createDelayed(
-          std::move(func), now() + std::chrono::milliseconds(delayMs)));
+      enqueueTask(Task::createDelayed(std::move(func), now() + std::chrono::milliseconds(delayMs)));
     } else {
       enqueue(std::move(func));
     }
@@ -237,9 +234,7 @@ void CxxMessageQueue::runOnQueue(std::function<void()> &&func) {
   qr_->enqueue(std::move(func));
 }
 
-void CxxMessageQueue::runOnQueueDelayed(
-    std::function<void()> &&func,
-    uint64_t delayMs) {
+void CxxMessageQueue::runOnQueueDelayed(std::function<void()> &&func, uint64_t delayMs) {
   qr_->enqueueDelayed(std::move(func), delayMs);
 }
 
@@ -299,8 +294,7 @@ std::weak_ptr<CxxMessageQueue> CxxMessageQueue::current() {
   return getMQRegistry().find(tid);
 }
 
-std::function<void()> CxxMessageQueue::getRunLoop(
-    std::shared_ptr<CxxMessageQueue> mq) {
+std::function<void()> CxxMessageQueue::getRunLoop(std::shared_ptr<CxxMessageQueue> mq) {
   return [capture = mq->qr_, weakMq = std::weak_ptr<CxxMessageQueue>(mq)] {
     capture->bindToThisThread();
     auto tid = std::this_thread::get_id();

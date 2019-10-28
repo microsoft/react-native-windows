@@ -31,9 +31,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession> {
   boost::asio::strand<boost::asio::io_context::executor_type> m_strand;
   boost::beast::flat_buffer m_buffer;
   boost::beast::http::request<boost::beast::http::string_body> m_request;
-  std::shared_ptr<
-      boost::beast::http::response<boost::beast::http::dynamic_body>>
-      m_response; // Generic response
+  std::shared_ptr<boost::beast::http::response<boost::beast::http::dynamic_body>> m_response; // Generic response
   HttpCallbacks &m_callbacks;
 
   void Read();
@@ -41,8 +39,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession> {
   void Close();
 
   void OnRead(boost::system::error_code ec, std::size_t transferred);
-  void
-  OnWrite(boost::system::error_code ec, std::size_t transferred, bool close);
+  void OnWrite(boost::system::error_code ec, std::size_t transferred, bool close);
 
  public:
   HttpSession(boost::asio::ip::tcp::socket &socket, HttpCallbacks &callbacks);
@@ -89,11 +86,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
   // Function that creates an HTTP response to send to the client on GET
   // requests.
   ///
-  void SetOnGet(
-      std::function<boost::beast::http::response<
-          boost::beast::http::dynamic_body>(
-          const boost::beast::http::request<boost::beast::http::string_body> &)>
-          &&onGet) noexcept;
+  void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
+                    const boost::beast::http::request<boost::beast::http::string_body> &)> &&onGet) noexcept;
 };
 
 } // namespace Microsoft::React::Test

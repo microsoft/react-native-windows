@@ -77,10 +77,7 @@ static JsValueRef __stdcall nativeTraceBeginSectionJNF(
       // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
 #if !defined(USE_EDGEMODE_JSRT)
       CHAKRA_ASSERTDO(JsCopyString(
-          arguments[3],
-          const_cast<char *>(argsStr.data()),
-          argsLength + 1 /* length */,
-          nullptr /* written */));
+          arguments[3], const_cast<char *>(argsStr.data()), argsLength + 1 /* length */, nullptr /* written */));
 #endif
     }
 #ifndef NDEBUG
@@ -127,10 +124,7 @@ static JsValueRef __stdcall nativeTraceEndSectionJNF(
   return returnValue;
 }
 
-static void beginOrEndAsync(
-    bool isEnd,
-    JsValueRef arguments[],
-    unsigned short argumentCount) {
+static void beginOrEndAsync(bool isEnd, JsValueRef arguments[], unsigned short argumentCount) {
   // arguments[0]: 'this'
   // arguments[1]: TRACE_TAG_REACT_APPS, constant int (1 << 17)
   // arguments[2]: profileName, string | undefined
@@ -288,10 +282,7 @@ void SystraceBeginSection(const char *name, const char *args) noexcept {
   }
 }
 
-void SystraceEndSection(
-    const char *name,
-    const char *args,
-    std::chrono::nanoseconds duration) noexcept {
+void SystraceEndSection(const char *name, const char *args, std::chrono::nanoseconds duration) noexcept {
   if (g_nativeTracingHook) {
     g_nativeTracingHook->NativeEndSection(name, args, duration);
   }
@@ -302,10 +293,8 @@ void SystraceEndSection(
 void addNativeTracingHooks() {
   installGlobalFunction("nativeTraceBeginSection", nativeTraceBeginSectionJNF);
   installGlobalFunction("nativeTraceEndSection", nativeTraceEndSectionJNF);
-  installGlobalFunction(
-      "nativeTraceBeginAsyncSection", nativeTraceBeginAsyncSectionJNF);
-  installGlobalFunction(
-      "nativeTraceEndAsyncSection", nativeTraceEndAsyncSectionJNF);
+  installGlobalFunction("nativeTraceBeginAsyncSection", nativeTraceBeginAsyncSectionJNF);
+  installGlobalFunction("nativeTraceEndAsyncSection", nativeTraceEndAsyncSectionJNF);
   installGlobalFunction("nativeTraceCounter", nativeTraceCounterJNF);
 }
 

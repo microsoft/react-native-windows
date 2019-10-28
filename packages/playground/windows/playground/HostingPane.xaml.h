@@ -16,8 +16,7 @@
 
 namespace Playground {
 
-[Windows::Foundation::Metadata::WebHostHidden] public ref class HostingPane
-    sealed {
+[Windows::Foundation::Metadata::WebHostHidden] public ref class HostingPane sealed {
  public:
   HostingPane();
 
@@ -33,10 +32,9 @@ namespace Playground {
         Windows::UI::Xaml::Input::ICommand ^ get();
       }
 
-      private
-      : void OnSelectionChanged_JavaScriptFilename(
-            Platform::Object ^ sender,
-            Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
+      private : void OnSelectionChanged_JavaScriptFilename(
+                    Platform::Object ^ sender,
+                    Windows::UI::Xaml::Controls::SelectionChangedEventArgs ^ args);
 
  private:
   void OnSelectionChanged_ReactAppName(

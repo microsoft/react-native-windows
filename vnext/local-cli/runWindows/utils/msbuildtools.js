@@ -68,6 +68,7 @@ class MSBuildTools {
     } else if (this.version === '16.0') {
       args.push('/p:VisualStudioVersion=16.0');
     }
+    args.push('/bl');
 
     if (config) {
       Object.keys(config).forEach(function(key) {
@@ -99,7 +100,7 @@ class MSBuildTools {
 function VSWhere(requires, version, property) {
   // This path is maintained and VS has promised to keep it valid.
   const vsWherePath = path.join(
-    process.env['ProgramFiles(x86)'],
+    process.env['ProgramFiles(x86)'] || process.env.ProgramFiles,
     '/Microsoft Visual Studio/Installer/vswhere.exe',
   );
 

@@ -1,7 +1,37 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 17 Oct 2019 23:10:13 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Oct 2019 02:55:31 GMT and should not be manually modified.
 
+## 0.60.13
+Sat, 26 Oct 2019 02:55:31 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.13 (53619745+rnbot@users.noreply.github.com)
+## 0.60.12
+Fri, 25 Oct 2019 23:07:25 GMT
+
+### Patches
+
+- Fixed merge/clang (jthysell@microsoft.com)
+## 0.60.11
+Fri, 25 Oct 2019 20:56:10 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.12 (53619745+rnbot@users.noreply.github.com)
+## 0.60.10
+Wed, 23 Oct 2019 20:38:22 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.11 (53619745+rnbot@users.noreply.github.com)
+## 0.60.9
+Tue, 22 Oct 2019 03:28:58 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.9 (53619745+rnbot@users.noreply.github.com)
 ## 0.60.8
 Thu, 17 Oct 2019 23:10:13 GMT
 

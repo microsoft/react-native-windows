@@ -40,9 +40,7 @@ void LogHook(RCTLogLevel logLevel, const char *message) {
 }
 
 static double nativePerformanceNow() {
-  return std::chrono::duration<double, std::milli>(
-             std::chrono::steady_clock::now().time_since_epoch())
-      .count();
+  return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
 #if !defined(OSS_RN)
@@ -67,22 +65,18 @@ void InitializeLogging(NativeLoggingHook &&hook) {
 
 namespace Test {
 
-class TestRunnerModuleProvider final
-    : public facebook::react::NativeModuleProvider {
+class TestRunnerModuleProvider final : public facebook::react::NativeModuleProvider {
   vector<tuple<string, CxxModule::Provider>> m_cxxModules;
 
  public:
-  TestRunnerModuleProvider(
-      vector<tuple<string, CxxModule::Provider>> &&cxxModules)
+  TestRunnerModuleProvider(vector<tuple<string, CxxModule::Provider>> &&cxxModules)
       : m_cxxModules{std::move(cxxModules)} {}
 
   vector<NativeModuleDescription> GetModules(
-      const shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread)
-      override {
+      const shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread) override {
     vector<NativeModuleDescription> result;
     for (auto &t : m_cxxModules) {
-      result.emplace_back(
-          make_tuple(std::get<0>(t), std::get<1>(t), defaultQueueThread));
+      result.emplace_back(make_tuple(std::get<0>(t), std::get<1>(t), defaultQueueThread));
     }
 
     return result;
@@ -111,16 +105,14 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   //  ref new Windows::UI::Core::DispatchedHandler([&completed, &instance,
   //  jsBundleFile=std::move(jsBundleFile), &cxxModules]()
   //{
-  instance = ::react::uwp::CreateReactInstance(
-      make_shared<TestRunnerModuleProvider>(std::move(cxxModules)));
+  instance = ::react::uwp::CreateReactInstance(make_shared<TestRunnerModuleProvider>(std::move(cxxModules)));
   instance->Start(instance, settings);
   instance->loadBundle(std::move(jsBundleFile));
   //  completed->set();
   //}));
   // completed->wait();
 
-  return shared_ptr<ITestInstance>(
-      new UniversalTestInstance(std::move(instance)));
+  return shared_ptr<ITestInstance>(new UniversalTestInstance(std::move(instance)));
 }
 
 } // namespace Test

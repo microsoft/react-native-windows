@@ -11,8 +11,7 @@
 namespace react {
 namespace uwp {
 
-ActivityIndicatorViewManager::ActivityIndicatorViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+ActivityIndicatorViewManager::ActivityIndicatorViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
 const char *ActivityIndicatorViewManager::GetName() const {
@@ -22,8 +21,7 @@ const char *ActivityIndicatorViewManager::GetName() const {
 folly::dynamic ActivityIndicatorViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(
-      folly::dynamic::object("animating", "boolean")("color", "Color"));
+  props.update(folly::dynamic::object("animating", "boolean")("color", "Color"));
 
   return props;
 }
@@ -33,9 +31,7 @@ XamlView ActivityIndicatorViewManager::CreateViewCore(int64_t tag) {
   return progressRing;
 }
 
-void ActivityIndicatorViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void ActivityIndicatorViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto progressRing = nodeToUpdate->GetView().as<winrt::ProgressRing>();
   if (progressRing == nullptr)
     return;

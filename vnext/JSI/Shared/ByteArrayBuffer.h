@@ -3,15 +3,15 @@
 
 #pragma once
 
-#include <memory>
 #include "jsi/jsi.h"
+
+#include <memory>
 
 namespace Microsoft::JSI {
 
 class ByteArrayBuffer final : public facebook::jsi::Buffer {
  public:
-  ByteArrayBuffer(size_t bufferSize)
-      : m_size(bufferSize), m_data(std::make_unique<uint8_t[]>(bufferSize)) {}
+  ByteArrayBuffer(size_t bufferSize) : m_size(bufferSize), m_data(std::make_unique<uint8_t[]>(bufferSize)) {}
 
   ByteArrayBuffer(const ByteArrayBuffer &) = delete;
   ByteArrayBuffer &operator=(const ByteArrayBuffer &) = delete;

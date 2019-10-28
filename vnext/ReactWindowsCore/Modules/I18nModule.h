@@ -22,8 +22,7 @@ class I18nModule : public facebook::xplat::module::CxxModule {
   std::unique_ptr<II18nModule> m_module;
 };
 
-std::unique_ptr<facebook::xplat::module::CxxModule> createI18nModule(
-    std::unique_ptr<II18nModule> module);
+std::unique_ptr<facebook::xplat::module::CxxModule> createI18nModule(std::unique_ptr<II18nModule> module);
 
 } // namespace windows
 } // namespace react

@@ -18,9 +18,7 @@ using namespace Windows::UI::Xaml::Controls;
 namespace react {
 namespace uwp {
 
-RootViewManager::RootViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+RootViewManager::RootViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *RootViewManager::GetName() const {
   return "ROOT";
@@ -35,8 +33,7 @@ XamlView RootViewManager::CreateViewCore(int64_t tag) {
 void RootViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   auto panel(parent.as<winrt::Panel>());
   if (panel != nullptr)
-    panel.Children().InsertAt(
-        static_cast<uint32_t>(index), child.as<winrt::UIElement>());
+    panel.Children().InsertAt(static_cast<uint32_t>(index), child.as<winrt::UIElement>());
 }
 
 void RootViewManager::RemoveAllChildren(XamlView parent) {

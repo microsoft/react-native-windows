@@ -32,25 +32,21 @@ namespace react {
 #define SANDBOX_REQUEST_METHOD_IDS 1
 #define SANDBOX_REQUEST_PARAMSS 2
 #define SANDBOX_REQUEST_CALLIDS 3
-#define SANDBOX_REQUEST_ISENDOFBATCH \
-  4 // This is only used by sandbox --(IPC)--> host native module calls.
+#define SANDBOX_REQUEST_ISENDOFBATCH 4 // This is only used by sandbox --(IPC)--> host native module calls.
 
 // Used by host process.
-static std::vector<MethodCall> sandboxHostParseMethodCalls(
-    folly::dynamic &&jsonData,
-    bool &isEndOfBatch) {
+static std::vector<MethodCall> sandboxHostParseMethodCalls(folly::dynamic &&jsonData, bool &isEndOfBatch) {
   if (jsonData.isNull()) {
     return {};
   }
 
   if (!jsonData.isArray()) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: ", jsonData.typeName()));
+    throw std::invalid_argument(folly::to<std::string>("Did not get valid calls back from JS: ", jsonData.typeName()));
   }
 
   if (jsonData.size() < SANDBOX_REQUEST_PARAMSS + 1) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: size == ", jsonData.size()));
+    throw std::invalid_argument(
+        folly::to<std::string>("Did not get valid calls back from JS: size == ", jsonData.size()));
   }
 
   auto &moduleIds = jsonData[SANDBOX_REQUEST_MODULE_IDS];
@@ -60,31 +56,28 @@ static std::vector<MethodCall> sandboxHostParseMethodCalls(
   isEndOfBatch = false;
 
   if (!moduleIds.isArray() || !methodIds.isArray() || !params.isArray()) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: ", folly::toJson(jsonData)));
+    throw std::invalid_argument(
+        folly::to<std::string>("Did not get valid calls back from JS: ", folly::toJson(jsonData)));
   }
 
-  if (moduleIds.size() != methodIds.size() ||
-      moduleIds.size() != params.size() || moduleIds.size() != callIds.size()) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: ", folly::toJson(jsonData)));
+  if (moduleIds.size() != methodIds.size() || moduleIds.size() != params.size() || moduleIds.size() != callIds.size()) {
+    throw std::invalid_argument(
+        folly::to<std::string>("Did not get valid calls back from JS: ", folly::toJson(jsonData)));
   }
 
   if (jsonData.size() > SANDBOX_REQUEST_ISENDOFBATCH) {
     if (!jsonData[SANDBOX_REQUEST_ISENDOFBATCH].isBool()) {
-      throw std::invalid_argument(folly::to<std::string>(
-          "Did not get valid calls back from JS: %s", folly::toJson(jsonData)));
+      throw std::invalid_argument(
+          folly::to<std::string>("Did not get valid calls back from JS: %s", folly::toJson(jsonData)));
     } else {
-      isEndOfBatch =
-          static_cast<bool>(jsonData[SANDBOX_REQUEST_ISENDOFBATCH].getBool());
+      isEndOfBatch = static_cast<bool>(jsonData[SANDBOX_REQUEST_ISENDOFBATCH].getBool());
     }
   }
 
   std::vector<MethodCall> methodCalls;
   for (size_t i = 0; i < moduleIds.size(); i++) {
     if (!params[i].isArray()) {
-      throw std::invalid_argument(
-          folly::to<std::string>("Call argument isn't an array"));
+      throw std::invalid_argument(folly::to<std::string>("Call argument isn't an array"));
     }
 
     methodCalls.emplace_back(
@@ -99,8 +92,7 @@ static std::vector<MethodCall> sandboxHostParseMethodCalls(
 
 // Return a pair of vectors: First is array of local calls and second is array
 // of remote calls. (Used by sandbox process)
-static std::pair<std::vector<MethodCall>, std::vector<MethodCall>>
-sandboxParseMethodCalls(
+static std::pair<std::vector<MethodCall>, std::vector<MethodCall>> sandboxParseMethodCalls(
     folly::dynamic &&jsonData,
     int64_t maxInprocModuleCount) {
   if (jsonData.isNull()) {
@@ -108,13 +100,12 @@ sandboxParseMethodCalls(
   }
 
   if (!jsonData.isArray()) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: ", jsonData.typeName()));
+    throw std::invalid_argument(folly::to<std::string>("Did not get valid calls back from JS: ", jsonData.typeName()));
   }
 
   if (jsonData.size() < REQUEST_PARAMSS + 1) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: size == ", jsonData.size()));
+    throw std::invalid_argument(
+        folly::to<std::string>("Did not get valid calls back from JS: size == ", jsonData.size()));
   }
 
   auto &moduleIds = jsonData[REQUEST_MODULE_IDS];
@@ -123,20 +114,19 @@ sandboxParseMethodCalls(
   int callId = -1;
 
   if (!moduleIds.isArray() || !methodIds.isArray() || !params.isArray()) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: ", folly::toJson(jsonData)));
+    throw std::invalid_argument(
+        folly::to<std::string>("Did not get valid calls back from JS: ", folly::toJson(jsonData)));
   }
 
-  if (moduleIds.size() != methodIds.size() ||
-      moduleIds.size() != params.size()) {
-    throw std::invalid_argument(folly::to<std::string>(
-        "Did not get valid calls back from JS: ", folly::toJson(jsonData)));
+  if (moduleIds.size() != methodIds.size() || moduleIds.size() != params.size()) {
+    throw std::invalid_argument(
+        folly::to<std::string>("Did not get valid calls back from JS: ", folly::toJson(jsonData)));
   }
 
   if (jsonData.size() > REQUEST_CALLID) {
     if (!jsonData[REQUEST_CALLID].isInt()) {
-      throw std::invalid_argument(folly::to<std::string>(
-          "Did not get valid calls back from JS: %s", folly::toJson(jsonData)));
+      throw std::invalid_argument(
+          folly::to<std::string>("Did not get valid calls back from JS: %s", folly::toJson(jsonData)));
     } else {
       callId = static_cast<int>(jsonData[REQUEST_CALLID].asInt());
     }
@@ -147,23 +137,16 @@ sandboxParseMethodCalls(
 
   for (size_t i = 0; i < moduleIds.size(); i++) {
     if (!params[i].isArray()) {
-      throw std::invalid_argument(
-          folly::to<std::string>("Call argument isn't an array"));
+      throw std::invalid_argument(folly::to<std::string>("Call argument isn't an array"));
     }
 
     auto moduleId = moduleIds[i].asInt();
     if (moduleId < maxInprocModuleCount) {
       inprocMethodCalls.emplace_back(
-          static_cast<int>(moduleId),
-          static_cast<int>(methodIds[i].asInt()),
-          std::move(params[i]),
-          callId);
+          static_cast<int>(moduleId), static_cast<int>(methodIds[i].asInt()), std::move(params[i]), callId);
     } else {
       remoteMethodCalls.emplace_back(
-          static_cast<int>(moduleId),
-          static_cast<int>(methodIds[i].asInt()),
-          std::move(params[i]),
-          callId);
+          static_cast<int>(moduleId), static_cast<int>(methodIds[i].asInt()), std::move(params[i]), callId);
     }
 
     // only increment callid if contains valid callid as callid is optional
@@ -174,8 +157,7 @@ sandboxParseMethodCalls(
     callId += (callId != -1) ? 1 : 0;
   }
 
-  return std::pair<std::vector<MethodCall>, std::vector<MethodCall>>(
-      inprocMethodCalls, remoteMethodCalls);
+  return std::pair<std::vector<MethodCall>, std::vector<MethodCall>>(inprocMethodCalls, remoteMethodCalls);
 }
 
 SandboxHostNativeBridge::SandboxHostNativeBridge(
@@ -187,21 +169,15 @@ std::shared_ptr<ModuleRegistry> SandboxHostNativeBridge::getModuleRegistry() {
   return m_registry;
 }
 
-void SandboxHostNativeBridge::callNativeModules(
-    JSExecutor &executor,
-    folly::dynamic &&calls,
-    bool isEndOfBatch) {
-  CHECK(m_registry || calls.empty())
-      << "native module calls cannot be completed with no native modules";
+void SandboxHostNativeBridge::callNativeModules(JSExecutor &executor, folly::dynamic &&calls, bool isEndOfBatch) {
+  CHECK(m_registry || calls.empty()) << "native module calls cannot be completed with no native modules";
   m_batchHadNativeModuleCalls = m_batchHadNativeModuleCalls || !calls.empty();
 
   // An exception anywhere in here stops processing of the batch.  This
   // was the behavior of the Android bridge, and since exception handling
   // terminates the whole bridge, there's not much point in continuing.
-  for (auto &call :
-       sandboxHostParseMethodCalls(std::move(calls), isEndOfBatch)) {
-    m_registry->callNativeMethod(
-        call.moduleId, call.methodId, std::move(call.arguments), call.callId);
+  for (auto &call : sandboxHostParseMethodCalls(std::move(calls), isEndOfBatch)) {
+    m_registry->callNativeMethod(call.moduleId, call.methodId, std::move(call.arguments), call.callId);
   }
   if (isEndOfBatch) {
     // onBatchComplete will be called on the native (module) queue, but
@@ -235,20 +211,14 @@ SandboxJsToNativeBridge::SandboxJsToNativeBridge(
     std::shared_ptr<ModuleRegistry> registry,
     std::shared_ptr<InstanceCallback> callback,
     std::function<void(std::string &&message)> remoteCallFunc)
-    : m_registry(registry),
-      m_callback(callback),
-      m_remoteCallFunc(remoteCallFunc) {}
+    : m_registry(registry), m_callback(callback), m_remoteCallFunc(remoteCallFunc) {}
 
 std::shared_ptr<ModuleRegistry> SandboxJsToNativeBridge::getModuleRegistry() {
   return m_registry;
 }
 
-void SandboxJsToNativeBridge::callNativeModules(
-    JSExecutor &executor,
-    folly::dynamic &&calls,
-    bool isEndOfBatch) {
-  CHECK(m_registry || calls.empty())
-      << "native module calls cannot be completed with no native modules";
+void SandboxJsToNativeBridge::callNativeModules(JSExecutor &executor, folly::dynamic &&calls, bool isEndOfBatch) {
+  CHECK(m_registry || calls.empty()) << "native module calls cannot be completed with no native modules";
   m_batchHadNativeModuleCalls = m_batchHadNativeModuleCalls || !calls.empty();
 
   // An exception anywhere in here stops processing of the batch.  This ^ was
@@ -258,11 +228,9 @@ void SandboxJsToNativeBridge::callNativeModules(
   // Process local (in-proc) NM calls.
   auto moduleSize = static_cast<int64_t>(m_registry->GetModuleSize());
   assert(moduleSize > 0);
-  auto callPair = sandboxParseMethodCalls(
-      std::move(calls), static_cast<int64_t>(moduleSize));
+  auto callPair = sandboxParseMethodCalls(std::move(calls), static_cast<int64_t>(moduleSize));
   for (auto &call : callPair.first) {
-    m_registry->callNativeMethod(
-        call.moduleId, call.methodId, std::move(call.arguments), call.callId);
+    m_registry->callNativeMethod(call.moduleId, call.methodId, std::move(call.arguments), call.callId);
   }
 
   // Process remote NM calls.
@@ -282,8 +250,7 @@ void SandboxJsToNativeBridge::callNativeModules(
     // Remote NativeModule calls JSON format
     // [[moduleIds], [methodIds], [arguments], [callIds], isEndOfBatch]
     // Example: [[8,3],[3,1],[["sending email...0"],[98,....]],[180,181],false]
-    folly::dynamic remoteCalls = folly::dynamic::array(
-        moduleIds, methodIds, arguments, callIds, isEndOfBatch);
+    folly::dynamic remoteCalls = folly::dynamic::array(moduleIds, methodIds, arguments, callIds, isEndOfBatch);
     m_remoteCallFunc(std::move(folly::toJson(remoteCalls)));
   }
 

@@ -45,9 +45,7 @@ struct AbiObjectDeleter {
 template <class T>
 using AbiPtr = std::unique_ptr<T, AbiObjectDeleter>;
 
-static_assert(
-    sizeof(AbiPtr<int>) == sizeof(void *),
-    "AbiPtr size must be the same as pointer size");
+static_assert(sizeof(AbiPtr<int>) == sizeof(void *), "AbiPtr size must be the same as pointer size");
 
 template <class T>
 struct AbiSpan {
@@ -93,9 +91,7 @@ struct IAbiFunctorThrow<TResult(TArgs...)> : IAbiObject {
 // std::unique_ptr.
 template <class TAbiInterface>
 struct AbiObject : TAbiInterface {
-  static_assert(
-      std::is_base_of<IAbiObject, TAbiInterface>::value,
-      "TAbiInterface must derive from IAbiObject");
+  static_assert(std::is_base_of<IAbiObject, TAbiInterface>::value, "TAbiInterface must derive from IAbiObject");
 
   AbiObject() = default;
   AbiObject(const AbiObject &) = delete;

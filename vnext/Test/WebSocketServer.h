@@ -42,13 +42,11 @@ class BaseWebSocketSession : public IWebSocketSession {
 
  protected:
   std::shared_ptr<boost::beast::websocket::stream<SocketLayer>> m_stream;
-  std::shared_ptr<boost::asio::strand<boost::asio::io_context::executor_type>>
-      m_strand;
+  std::shared_ptr<boost::asio::strand<boost::asio::io_context::executor_type>> m_strand;
 
   void Accept();
 
-  virtual std::shared_ptr<BaseWebSocketSession<SocketLayer>>
-  SharedFromThis() = 0;
+  virtual std::shared_ptr<BaseWebSocketSession<SocketLayer>> SharedFromThis() = 0;
 
  public:
   BaseWebSocketSession(WebSocketServiceCallbacks &callbacks);
@@ -57,31 +55,22 @@ class BaseWebSocketSession : public IWebSocketSession {
   virtual void Start() override;
 };
 
-class WebSocketSession
-    : public std::enable_shared_from_this<WebSocketSession>,
-      public BaseWebSocketSession<boost::asio::ip::tcp::socket> {
-  std::shared_ptr<BaseWebSocketSession<boost::asio::ip::tcp::socket>>
-  SharedFromThis() override;
+class WebSocketSession : public std::enable_shared_from_this<WebSocketSession>,
+                         public BaseWebSocketSession<boost::asio::ip::tcp::socket> {
+  std::shared_ptr<BaseWebSocketSession<boost::asio::ip::tcp::socket>> SharedFromThis() override;
 
  public:
-  WebSocketSession(
-      boost::asio::ip::tcp::socket socket,
-      WebSocketServiceCallbacks &callbacks);
+  WebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks &callbacks);
   ~WebSocketSession();
 };
 
-class SecureWebSocketSession
-    : public std::enable_shared_from_this<SecureWebSocketSession>,
-      public BaseWebSocketSession<
-          boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
-  std::shared_ptr<BaseWebSocketSession<
-      boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>>
-  SharedFromThis() override;
+class SecureWebSocketSession : public std::enable_shared_from_this<SecureWebSocketSession>,
+                               public BaseWebSocketSession<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>> {
+  std::shared_ptr<BaseWebSocketSession<boost::asio::ssl::stream<boost::asio::ip::tcp::socket>>> SharedFromThis()
+      override;
 
  public:
-  SecureWebSocketSession(
-      boost::asio::ip::tcp::socket socket,
-      WebSocketServiceCallbacks &callbacks);
+  SecureWebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks &callbacks);
   ~SecureWebSocketSession();
 
   void OnSslHandshake(boost::system::error_code ec);
@@ -114,8 +103,7 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer> {
   void Stop();
 
   void SetOnConnection(std::function<void()> &&func);
-  void SetOnHandshake(
-      std::function<void(boost::beast::websocket::response_type &)> &&func);
+  void SetOnHandshake(std::function<void(boost::beast::websocket::response_type &)> &&func);
   void SetOnMessage(std::function<void(std::string)> &&func);
   void SetMessageFactory(std::function<std::string(std::string &&)> &&func);
   void SetOnError(std::function<void(IWebSocket::Error &&)> &&func);

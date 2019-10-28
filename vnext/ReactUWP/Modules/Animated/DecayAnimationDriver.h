@@ -4,11 +4,11 @@
 #pragma once
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
-#include "AnimationDriver.h"
+#include "CalculatedAnimationDriver.h"
 
 namespace react {
 namespace uwp {
-class DecayAnimationDriver : public AnimationDriver {
+class DecayAnimationDriver : public CalculatedAnimationDriver {
  public:
   DecayAnimationDriver(
       int64_t id,
@@ -17,10 +17,11 @@ class DecayAnimationDriver : public AnimationDriver {
       const folly::dynamic &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
-  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-  MakeAnimation(const folly::dynamic &config) override;
-
   double ToValue() override;
+
+ protected:
+  std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
+  bool IsAnimationDone(double currentValue, double currentVelocity) override;
 
  private:
   double m_velocity{0};
@@ -30,8 +31,7 @@ class DecayAnimationDriver : public AnimationDriver {
   static constexpr std::string_view s_decelerationName{"deceleration"};
 
   static constexpr std::wstring_view s_velocityParameterName{L"velocity"};
-  static constexpr std::wstring_view s_decelerationParameterName{
-      L"deceleration"};
+  static constexpr std::wstring_view s_decelerationParameterName{L"deceleration"};
   static constexpr std::wstring_view s_durationName{L"duration"};
 };
 } // namespace uwp

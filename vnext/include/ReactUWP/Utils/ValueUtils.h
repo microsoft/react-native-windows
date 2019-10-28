@@ -18,8 +18,7 @@ struct dynamic;
 namespace react {
 namespace uwp {
 
-winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(
-    const folly::dynamic &d);
+winrt::Windows::UI::Xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 
 REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::Brush)
@@ -33,9 +32,7 @@ HorizontalAlignmentFrom(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::Windows::Foundation::DateTime)
 DateTimeFrom(int64_t timeInMilliSeconds, int64_t timeZoneOffsetInSeconds);
 REACTWINDOWS_API_(folly::dynamic)
-DateTimeToDynamic(
-    winrt::Windows::Foundation::DateTime dateTime,
-    int64_t timeZoneOffsetInSeconds);
+DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime, int64_t timeZoneOffsetInSeconds);
 
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d);

@@ -33,10 +33,8 @@ void ContentControlShadowNode::DoExtraLayoutPrep(YGNodeRef yogaNode) {
 
   YGNodeStyleSetPadding(yogaNode, YGEdgeLeft, static_cast<float>(padding.Left));
   YGNodeStyleSetPadding(yogaNode, YGEdgeTop, static_cast<float>(padding.Top));
-  YGNodeStyleSetPadding(
-      yogaNode, YGEdgeRight, static_cast<float>(padding.Right));
-  YGNodeStyleSetPadding(
-      yogaNode, YGEdgeBottom, static_cast<float>(padding.Bottom));
+  YGNodeStyleSetPadding(yogaNode, YGEdgeRight, static_cast<float>(padding.Right));
+  YGNodeStyleSetPadding(yogaNode, YGEdgeBottom, static_cast<float>(padding.Bottom));
 }
 
 void ContentControlShadowNode::createView() {
@@ -49,24 +47,18 @@ void ContentControlShadowNode::createView() {
         winrt::Windows::UI::Xaml::Controls::Control::PaddingProperty(),
         [this](
             winrt::Windows::UI::Xaml::DependencyObject const &sender,
-            winrt::Windows::UI::Xaml::DependencyProperty const &dp) {
-          m_paddingDirty = true;
-        });
+            winrt::Windows::UI::Xaml::DependencyProperty const &dp) { m_paddingDirty = true; });
   }
 }
 
-ContentControlViewManager::ContentControlViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+ContentControlViewManager::ContentControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
 facebook::react::ShadowNode *ContentControlViewManager::createShadow() const {
   return new ContentControlShadowNode();
 }
 
-void ContentControlViewManager::AddView(
-    XamlView parent,
-    XamlView child,
-    int64_t index) {
+void ContentControlViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   // ContentControl holds a single child, so should never insert after
   if (index != 0) {
     // ASSERT: Currently considering any index other than 0 as ignorable since

@@ -16,22 +16,18 @@
 namespace react {
 namespace uwp {
 
-std::future<std::string> LocalBundleReader::LoadBundleAsync(
-    const std::string &bundleUri) {
+std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
   winrt::hstring str(Microsoft::Common::Unicode::Utf8ToUtf16(bundleUri));
   winrt::Windows::Foundation::Uri uri(str);
 
   co_await winrt::resume_background();
 
-  auto file = co_await
-      winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
+  auto file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
 
   // Read the buffer manually to avoid a Utf8 -> Utf16 -> Utf8 encoding
   // roundtrip.
-  auto fileBuffer{
-      co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file)};
-  auto dataReader{
-      winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer)};
+  auto fileBuffer{co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file)};
+  auto dataReader{winrt::Windows::Storage::Streams::DataReader::FromBuffer(fileBuffer)};
 
   std::string script(fileBuffer.Length() + 1, '\0');
 
@@ -39,9 +35,8 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(
   // DataReader.ReadBytes will read as many bytes as are present in the
   // array_view. The backing string has fileBuffer.Length() + 1 bytes, without
   // an explicit end it will read 1 byte to many and throw.
-  dataReader.ReadBytes(winrt::array_view<uint8_t>{
-      reinterpret_cast<uint8_t *>(&script[0]),
-      reinterpret_cast<uint8_t *>(&script[script.length() - 1])});
+  dataReader.ReadBytes(winrt::array_view<uint8_t>{reinterpret_cast<uint8_t *>(&script[0]),
+                                                  reinterpret_cast<uint8_t *>(&script[script.length() - 1])});
   dataReader.Close();
 
   co_return script;

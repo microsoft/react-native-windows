@@ -1,4 +1,3 @@
-#pragma once
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
@@ -6,6 +5,8 @@
 // The ABICxxModule implements the CxxModule interface and wraps up the ABI-safe
 // NativeModule.
 //
+
+#pragma once
 
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
@@ -34,8 +35,7 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
  private:
-  void InitEvents(
-      std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept;
+  void InitEvents(std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept;
 
  private:
   winrt::Windows::Foundation::IInspectable m_nativeModule;

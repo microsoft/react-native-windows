@@ -11,26 +11,20 @@
 namespace react {
 namespace uwp {
 
-ControlViewManager::ControlViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+ControlViewManager::ControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 folly::dynamic ControlViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
   props.update(folly::dynamic::object("tabIndex", "number"));
   return props;
 }
-void ControlViewManager::TransferProperties(
-    XamlView oldView,
-    XamlView newView) {
+void ControlViewManager::TransferProperties(XamlView oldView, XamlView newView) {
   TransferProperty(oldView, newView, winrt::Control::FontSizeProperty());
   TransferProperty(oldView, newView, winrt::Control::FontFamilyProperty());
   TransferProperty(oldView, newView, winrt::Control::FontWeightProperty());
   TransferProperty(oldView, newView, winrt::Control::FontStyleProperty());
-  TransferProperty(
-      oldView, newView, winrt::Control::CharacterSpacingProperty());
-  TransferProperty(
-      oldView, newView, winrt::Control::IsTextScaleFactorEnabledProperty());
+  TransferProperty(oldView, newView, winrt::Control::CharacterSpacingProperty());
+  TransferProperty(oldView, newView, winrt::Control::IsTextScaleFactorEnabledProperty());
   TransferProperty(oldView, newView, winrt::Control::BackgroundProperty());
   TransferProperty(oldView, newView, winrt::Control::BorderBrushProperty());
   TransferProperty(oldView, newView, winrt::Control::BorderThicknessProperty());
@@ -40,9 +34,7 @@ void ControlViewManager::TransferProperties(
   Super::TransferProperties(oldView, newView);
 }
 
-void ControlViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
@@ -54,15 +46,11 @@ void ControlViewManager::UpdateProperties(
 
       if (TryUpdateBackgroundBrush(control, propertyName, propertyValue)) {
         continue;
-      } else if (TryUpdateBorderProperties(
-                     nodeToUpdate, control, propertyName, propertyValue)) {
+      } else if (TryUpdateBorderProperties(nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
         continue;
-      } else if (
-          implementsPadding &&
-          TryUpdatePadding(
-              nodeToUpdate, control, propertyName, propertyValue)) {
+      } else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
       } else if (propertyName == "tabIndex") {
         if (propertyValue.isNumber()) {

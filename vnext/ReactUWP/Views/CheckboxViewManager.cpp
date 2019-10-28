@@ -28,8 +28,7 @@ class CheckBoxShadowNode : public ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
 
  private:
-  static void
-  OnCheckedChanged(IReactInstance &instance, int64_t tag, bool newValue);
+  static void OnCheckedChanged(IReactInstance &instance, int64_t tag, bool newValue);
 
   winrt::CheckBox::Checked_revoker m_checkBoxCheckedRevoker{};
   winrt::CheckBox::Unchecked_revoker m_checkBoxUncheckedRevoker{};
@@ -40,18 +39,16 @@ void CheckBoxShadowNode::createView() {
 
   auto checkbox = GetView().as<winrt::CheckBox>();
   auto wkinstance = GetViewManager()->GetReactInstance();
-  m_checkBoxCheckedRevoker =
-      checkbox.Checked(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto instance = wkinstance.lock();
-        if (!m_updating && instance != nullptr)
-          OnCheckedChanged(*instance, m_tag, true);
-      });
-  m_checkBoxUncheckedRevoker =
-      checkbox.Unchecked(winrt::auto_revoke, [=](auto &&, auto &&) {
-        auto instance = wkinstance.lock();
-        if (!m_updating && instance != nullptr)
-          OnCheckedChanged(*instance, m_tag, false);
-      });
+  m_checkBoxCheckedRevoker = checkbox.Checked(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto instance = wkinstance.lock();
+    if (!m_updating && instance != nullptr)
+      OnCheckedChanged(*instance, m_tag, true);
+  });
+  m_checkBoxUncheckedRevoker = checkbox.Unchecked(winrt::auto_revoke, [=](auto &&, auto &&) {
+    auto instance = wkinstance.lock();
+    if (!m_updating && instance != nullptr)
+      OnCheckedChanged(*instance, m_tag, false);
+  });
 }
 
 void CheckBoxShadowNode::updateProperties(const folly::dynamic &&props) {
@@ -60,18 +57,12 @@ void CheckBoxShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = false;
 }
 
-/*static*/ void CheckBoxShadowNode::OnCheckedChanged(
-    IReactInstance &instance,
-    int64_t tag,
-    bool newValue) {
-  folly::dynamic eventData =
-      folly::dynamic::object("target", tag)("value", newValue);
+/*static*/ void CheckBoxShadowNode::OnCheckedChanged(IReactInstance &instance, int64_t tag, bool newValue) {
+  folly::dynamic eventData = folly::dynamic::object("target", tag)("value", newValue);
   instance.DispatchEvent(tag, "topChange", std::move(eventData));
 }
 
-CheckBoxViewManager::CheckBoxViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+CheckBoxViewManager::CheckBoxViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *CheckBoxViewManager::GetName() const {
   return "RCTCheckBox";
@@ -80,8 +71,7 @@ const char *CheckBoxViewManager::GetName() const {
 folly::dynamic CheckBoxViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(
-      folly::dynamic::object("value", "boolean")("disabled", "boolean"));
+  props.update(folly::dynamic::object("value", "boolean")("disabled", "boolean"));
 
   return props;
 }
@@ -95,9 +85,7 @@ XamlView CheckBoxViewManager::CreateViewCore(int64_t tag) {
   return checkbox;
 }
 
-void CheckBoxViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void CheckBoxViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto checkbox = nodeToUpdate->GetView().as<winrt::CheckBox>();
   if (checkbox == nullptr)
     return;

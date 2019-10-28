@@ -15,8 +15,7 @@ namespace winrt::SampleApp::implementation {
 // ReactPackageProvider implementation
 //===========================================================================
 
-void ReactPackageProvider::CreatePackage(
-    IReactPackageBuilder const &packageBuilder) noexcept {
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
 }
 

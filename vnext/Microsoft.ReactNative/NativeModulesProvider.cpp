@@ -16,10 +16,8 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 /*-------------------------------------------------------------------------------
   NativeModulesProvider::GetModules
 -------------------------------------------------------------------------------*/
-std::vector<facebook::react::NativeModuleDescription>
-NativeModulesProvider::GetModules(
-    std::shared_ptr<facebook::react::MessageQueueThread> const
-        & /*defaultQueueThread*/) {
+std::vector<facebook::react::NativeModuleDescription> NativeModulesProvider::GetModules(
+    std::shared_ptr<facebook::react::MessageQueueThread> const & /*defaultQueueThread*/) {
   // std::shared_ptr<facebook::react::MessageQueueThread>
   // queueThread(defaultQueueThread);
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -37,8 +35,7 @@ NativeModulesProvider::GetModules(
         [moduleName = entry.first, moduleProvider = entry.second]() {
           IReactModuleBuilder moduleBuilder = winrt::make<ReactModuleBuilder>();
           auto providedModule = moduleProvider(moduleBuilder);
-          return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(
-              moduleName, providedModule);
+          return moduleBuilder.as<ReactModuleBuilder>()->MakeCxxModule(moduleName, providedModule);
         },
         m_modulesWorkerQueue);
   }

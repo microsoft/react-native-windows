@@ -31,8 +31,7 @@ class AsyncCallback : public IAsyncCallback {
   std::function<void()> m_func;
 };
 
-AsyncCallback::AsyncCallback(std::function<void()> &&func)
-    : m_func(std::move(func)) {}
+AsyncCallback::AsyncCallback(std::function<void()> &&func) : m_func(std::move(func)) {}
 
 COM_DECLSPEC_NOTHROW STDMETHODIMP_(ULONG) AsyncCallback::AddRef() {
   return ++m_cRef;
@@ -48,8 +47,7 @@ COM_DECLSPEC_NOTHROW STDMETHODIMP_(ULONG) AsyncCallback::Release() {
   return cRef;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP
-AsyncCallback::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
+COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
   if (IsEqualIID(riid, __uuidof(IAsyncCallback))) {
     *ppvObject = static_cast<IAsyncCallback *>(this);
     ((IAsyncCallback *)(*ppvObject))->AddRef();
@@ -64,8 +62,7 @@ AsyncCallback::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
   return S_OK;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP
-AsyncCallback::ProcessWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
+COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::ProcessWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
   try {
     m_func();
   } catch (...) {
@@ -75,8 +72,7 @@ AsyncCallback::ProcessWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
   return S_OK;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP
-AsyncCallback::CancelWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
+COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::CancelWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
   return S_OK;
 }
 
@@ -107,18 +103,15 @@ void WorkerMessageQueueThread::Impl::runOnQueue(std::function<void()> &&func) {
   // TODO: Asserts
   // Assert(!stopped)
 
-  Microsoft::WRL::ComPtr<AsyncCallback> callback(
-      new AsyncCallback(std::move(func)));
+  Microsoft::WRL::ComPtr<AsyncCallback> callback(new AsyncCallback(std::move(func)));
   queue->QueueWorkItem(callback.Get(), nullptr /*pUserData*/);
 }
 
-void WorkerMessageQueueThread::Impl::runOnQueueSync(
-    std::function<void()> &&func) {
+void WorkerMessageQueueThread::Impl::runOnQueueSync(std::function<void()> &&func) {
   // TODO: Asserts
   // Assert(!stopped)
 
-  Microsoft::WRL::ComPtr<AsyncCallback> callback(
-      new AsyncCallback(std::move(func)));
+  Microsoft::WRL::ComPtr<AsyncCallback> callback(new AsyncCallback(std::move(func)));
   queue->QueueWorkItem(callback.Get(), nullptr /*pUserData*/);
   queue->WaitForCallbacksToComplete();
 }
