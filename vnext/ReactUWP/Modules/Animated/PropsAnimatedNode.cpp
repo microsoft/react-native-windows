@@ -228,6 +228,9 @@ void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeTyp
         case FacadeType::Perspective:
           // TODO: implement perspective animations, tracked by issue #2680
           return;
+        case FacadeType::Progress:
+          // TODO: implement progress animations
+          return;
         default:
           assert(false);
       }
