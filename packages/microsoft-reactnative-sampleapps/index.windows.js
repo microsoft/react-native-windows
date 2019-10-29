@@ -16,6 +16,9 @@ import {
 } from 'react-native';
 import { NativeModules } from 'react-native';
 
+const BatchedBridge = require('BatchedBridge');
+const NativeEventEmitter = require('NativeEventEmitter');
+
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
@@ -35,6 +38,28 @@ class SampleApp extends Component {
   constructor(props) {
     super(props);
     this._cuccsRef = React.createRef();
+
+    // Starting a timer to fire a timed event
+    NativeModules.SampleModuleCS.StartTimedEvent(5000, (timerId) =>
+    {
+      // Registering a handler for SampleModuleCS.TimedEvent event
+      BatchedBridge.registerLazyCallableModule('SampleModuleCS', () => {
+        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
+        myModuleEventEmitter.addListener('TimedEvent', getCallback(`SampleModuleCS.TimedEvent(${timerId}) => `), this);
+        return myModuleEventEmitter;
+      });
+    });
+
+    // Starting a timer to fire a timed event
+    NativeModules.SampleModuleCPP.StartTimedEvent(5000, (timerId) =>
+    {
+      // Registering a handler for SampleModuleCPP.TimedEvent event
+      BatchedBridge.registerLazyCallableModule('SampleModuleCPP', () => {
+        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.SampleModuleCPP);
+        myModuleEventEmitter.addListener('TimedEvent', getCallback(`SampleModuleCPP.TimedEvent(${timerId}) => `), this);
+        return myModuleEventEmitter;
+      });
+    });
   }
 
   _onPressHandlerSMCS() {

@@ -113,6 +113,34 @@ struct SampleModuleCPP {
   }
 
 #pragma endregion
+
+#pragma region Events
+
+  REACT_EVENT(TimedEvent);
+  std::function<void(int)> TimedEvent;
+
+  REACT_METHOD(StartTimedEvent);
+  int StartTimedEvent(int intervalMS) noexcept {
+    DebugWriteLine("StartTimedEvent", intervalMS);
+
+    int id = _timers.size();
+
+    _timers.push_back(winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
+        [this, id](const winrt::Windows::System::Threading::ThreadPoolTimer &timer) {
+          if (TimedEvent) {
+            TimedEvent(id);
+          }
+        },
+        std::chrono::milliseconds(intervalMS)));
+
+    return id;
+  }
+
+ private:
+  std::vector<winrt::Windows::System::Threading::ThreadPoolTimer> _timers =
+      std::vector<winrt::Windows::System::Threading::ThreadPoolTimer>();
+
+#pragma endregion
 };
 
 } // namespace SampleLibraryCPP

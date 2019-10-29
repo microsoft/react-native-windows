@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+
+using Windows.System.Threading;
 
 using Microsoft.ReactNative.Managed;
 
@@ -100,6 +104,31 @@ namespace SampleLibraryCS
                 reject(ex.Message);
             }
         }
+
+        #endregion
+
+        #region Events
+
+        [ReactEvent]
+        public ReactEvent<int> TimedEvent { get; set; }
+
+        [ReactMethod]
+        public int StartTimedEvent(int intervalMS)
+        {
+            Debug.WriteLine($"{Name}.{nameof(StartTimedEvent)}({intervalMS})");
+
+            int id = _timers.Count;
+
+            _timers.Add(ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
+            {
+                TimedEvent?.Invoke(id);
+            }),
+            TimeSpan.FromMilliseconds(intervalMS)));
+
+            return id;
+        }
+
+        private List<ThreadPoolTimer> _timers = new List<ThreadPoolTimer>();
 
         #endregion
     }
