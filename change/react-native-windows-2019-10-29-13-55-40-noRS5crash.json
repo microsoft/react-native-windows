@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix crash in RS5 due to missing facade property",
-  "packageName": "react-native-windows",
-  "email": "asklar@winse.microsoft.com",
-  "commit": "1cd1d5fe48d2f304c5b1b4597c7a9930c76183ff",
-  "date": "2019-10-29T20:55:40.104Z",
-  "file": "F:\\rnw\\change\\react-native-windows-2019-10-29-13-55-40-noRS5crash.json"
-}
