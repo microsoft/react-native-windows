@@ -26,7 +26,6 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
       Microsoft::ReactNative::ReactInstanceSettings instanceSettings,
       std::string jsBundleFile,
       std::string jsMainModuleName,
-      IVectorView<IReactPackage> &packages,
       IVectorView<IReactPackageProvider> &packageProviders,
       bool useDeveloperSupport,
       LifecycleState initialLifecycleState);
@@ -56,7 +55,6 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
   Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   std::string m_jsBundleFile{};
   std::string m_jsMainModuleName{};
-  Windows::Foundation::Collections::IVectorView<IReactPackage> m_packages;
   std::vector<IReactPackageProvider> m_packageProviders;
   bool m_useDeveloperSupport{false};
   std::shared_ptr<NativeModulesProvider> m_modulesProvider{nullptr};
@@ -66,15 +64,12 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
   //	There should be one react instance creator per instance, as it
   //	both holds the current instance and is responsible for creating new
   //	instances on live reload.
-  std::shared_ptr<react::uwp::IReactInstanceCreator> m_reactInstanceCreator{
-      nullptr};
+  std::shared_ptr<react::uwp::IReactInstanceCreator> m_reactInstanceCreator{nullptr};
 
   IAsyncOperation<ReactContext> CreateReactContextCoreAsync();
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct ReactInstanceManager : ReactInstanceManagerT<
-                                  ReactInstanceManager,
-                                  implementation::ReactInstanceManager> {};
+struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager, implementation::ReactInstanceManager> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

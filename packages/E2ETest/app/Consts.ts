@@ -12,7 +12,9 @@ export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
 export const TEXTINPUT_TESTPAGE = 'TextInputTestPage';
 
 export const TEXTINPUT_ON_TEXTINPUT = 'TextInput';
+export const PREVTEXT_ON_TEXTINPUT = 'PrevTextInput';
 export const ML_TEXTINPUT_ON_TEXTINPUT = 'TextInputMultiLine';
+export const CAP_TEXTINPUT_ON_TEXTINPUT = 'TextInputAutoCap';
 
 // LoginTestPage
 export const LOGIN_TESTPAGE = 'LoginTestPage';
@@ -24,3 +26,8 @@ export const SHOWPASSWORD_ON_LOGIN = 'ShowPassword';
 
 // Accessibility
 export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
+
+// Direct Manipulation Page
+export const DIRECT_MANIPULATION_TESTPAGE = 'DirectManipulationTestPage';
+export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
+export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';

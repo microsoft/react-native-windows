@@ -10,17 +10,14 @@ namespace uwp {
 
 struct ShadowNodeBase;
 
-class REACTWINDOWS_EXPORT ControlViewManager
-    : public FrameworkElementViewManager {
+class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
   ControlViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   folly::dynamic GetNativeProps() const override;
-  void UpdateProperties(
-      ShadowNodeBase *nodeToUpdate,
-      const folly::dynamic &reactDiffMap) override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) override;
   void TransferProperties(XamlView oldView, XamlView newView) override;
 };
 

@@ -17,8 +17,7 @@ enum class RCTLogLevel {
   Fatal = 4,
 };
 
-using NativeLoggingHook =
-    std::function<void(RCTLogLevel logLevel, const char *message)>;
+using NativeLoggingHook = std::function<void(RCTLogLevel logLevel, const char *message)>;
 void InitializeLogging(NativeLoggingHook &&hook);
 
 } // namespace react

@@ -23,8 +23,7 @@ namespace Microsoft::React {
 namespace Experimental {
 #pragma region HttpResource members
 
-HttpResource::HttpResource() noexcept
-    : m_resolver{m_context}, m_socket{m_context} {}
+HttpResource::HttpResource() noexcept : m_resolver{m_context}, m_socket{m_context} {}
 
 void HttpResource::SendRequest(
     const string &method,
@@ -74,67 +73,51 @@ void HttpResource::SendRequest(
   m_context.restart();
 
   // Send/Receive request.
-  m_resolver.async_resolve(
-      url->host,
-      url->port,
-      [this, &req](boostecr ec, tcp::resolver::results_type results) {
-        if (ec) {
-          if (m_errorHandler)
-            m_errorHandler(ec.message());
-        } else {
-          boost::asio::async_connect(
-              m_socket,
-              results.begin(),
-              results.end(),
-              [this, &req](boostecr ec, const basic_resolver_iterator<tcp> &) {
+  m_resolver.async_resolve(url->host, url->port, [this, &req](boostecr ec, tcp::resolver::results_type results) {
+    if (ec) {
+      if (m_errorHandler)
+        m_errorHandler(ec.message());
+    } else {
+      boost::asio::async_connect(
+          m_socket, results.begin(), results.end(), [this, &req](boostecr ec, const basic_resolver_iterator<tcp> &) {
+            if (ec) {
+              if (m_errorHandler)
+                m_errorHandler(ec.message());
+            } else {
+              async_write(m_socket, move(req), [this](boostecr ec, size_t size) {
                 if (ec) {
                   if (m_errorHandler)
                     m_errorHandler(ec.message());
                 } else {
-                  async_write(
-                      m_socket, move(req), [this](boostecr ec, size_t size) {
-                        if (ec) {
-                          if (m_errorHandler)
-                            m_errorHandler(ec.message());
-                        } else {
-                          if (m_requestHandler)
-                            m_requestHandler();
+                  if (m_requestHandler)
+                    m_requestHandler();
 
-                          async_read(
-                              m_socket,
-                              m_buffer,
-                              m_response,
-                              [this](boostecr ec, size_t size) {
-                                if (ec) {
-                                  if (m_errorHandler)
-                                    m_errorHandler(ec.message());
-                                } else {
-                                  if (m_responseHandler)
-                                    m_responseHandler(
-                                        boost::beast::buffers_to_string(
-                                            m_buffer.data()));
+                  async_read(m_socket, m_buffer, m_response, [this](boostecr ec, size_t size) {
+                    if (ec) {
+                      if (m_errorHandler)
+                        m_errorHandler(ec.message());
+                    } else {
+                      if (m_responseHandler)
+                        m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
 
-                                  boost::system::error_code bec;
-                                  m_socket.shutdown(
-                                      tcp::socket::shutdown_both, bec);
-                                  if (bec &&
-                                      boost::system::errc::not_connected !=
-                                          bec) // not_connected may happen. Not
-                                  // an actual error.
-                                  {
-                                    if (m_errorHandler)
-                                      m_errorHandler(bec.message());
+                      boost::system::error_code bec;
+                      m_socket.shutdown(tcp::socket::shutdown_both, bec);
+                      if (bec && boost::system::errc::not_connected != bec) // not_connected may happen. Not
+                      // an actual error.
+                      {
+                        if (m_errorHandler)
+                          m_errorHandler(bec.message());
 
-                                    // ISS:2306365 - Callback?
-                                  }
-                                }
-                              }); // async_read
-                        }
-                      }); // async_write
+                        // ISS:2306365 - Callback?
+                      }
+                    }
+                  }); // async_read
                 }
-              }); // async_connect
-        }
-      }); // async_resolve
+              }); // async_write
+            }
+          }); // async_connect
+    }
+  }); // async_resolve
 
   m_context.run();
 }
@@ -162,13 +145,11 @@ void HttpResource::SetOnRequest(std::function<void()> &&handler) noexcept {
   m_requestHandler = move(handler);
 }
 
-void HttpResource::SetOnResponse(
-    std::function<void(const std::string &)> &&handler) noexcept {
+void HttpResource::SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept {
   m_responseHandler = move(handler);
 }
 
-void HttpResource::SetOnError(
-    std::function<void(const std::string &)> &&handler) noexcept {
+void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler) noexcept {
   m_errorHandler = move(handler);
 }
 

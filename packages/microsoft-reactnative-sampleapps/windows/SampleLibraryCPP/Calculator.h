@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
+
+#include "pch.h"
+
 #include <functional>
+
 #include "NativeModules.h"
 
 namespace SampleLibraryCPP {
@@ -15,11 +19,7 @@ struct Calculator {
   }
 
   REACT_METHOD(Subtract);
-  void Subtract(
-      int x,
-      int y,
-      std::function<void(int)> &&resolve,
-      std::function<void(std::string)> &&reject) noexcept {
+  void Subtract(int x, int y, std::function<void(int)> &&resolve, std::function<void(std::string)> &&reject) noexcept {
     if (x > y) {
       resolve(x - y);
     } else {

@@ -8,9 +8,7 @@ namespace react {
 
 ShadowNode::~ShadowNode() {}
 
-void ShadowNode::dispatchCommand(
-    int64_t commandId,
-    const folly::dynamic &commandArgs) {}
+void ShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {}
 
 void ShadowNode::onDropViewInstance() {}
 

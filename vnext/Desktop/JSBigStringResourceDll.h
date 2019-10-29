@@ -11,9 +11,7 @@ namespace react {
 
 class JSBigStringResourceDll final : public JSBigString {
  public:
-  static std::unique_ptr<const JSBigStringResourceDll> Make(
-      HMODULE dll,
-      HRSRC resource);
+  static std::unique_ptr<const JSBigStringResourceDll> Make(HMODULE dll, HRSRC resource);
 
   JSBigStringResourceDll(HMODULE dll, HRSRC resource);
 

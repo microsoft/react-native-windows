@@ -27,9 +27,7 @@ void ReactModuleBuilder::AddMethod(
   CxxModule::Method cxxMethod(
       to_string(name),
       [method = std::move(method)](
-          folly::dynamic args,
-          CxxModule::Callback resolve,
-          CxxModule::Callback reject) mutable noexcept {
+          folly::dynamic args, CxxModule::Callback resolve, CxxModule::Callback reject) mutable noexcept {
         DynamicReader argReader{args};
         DynamicWriter resultWriter;
         auto resolveCallback = MakeMethodResultCallback(std::move(resolve));
@@ -58,9 +56,7 @@ void ReactModuleBuilder::AddMethod(
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void ReactModuleBuilder::AddSyncMethod(
-    hstring const &name,
-    SyncMethodDelegate const &method) noexcept {
+void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
   CxxModule::Method cxxMethod(
       to_string(name),
       [method = std::move(method)](folly::dynamic args) mutable noexcept {
@@ -74,23 +70,19 @@ void ReactModuleBuilder::AddSyncMethod(
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void ReactModuleBuilder::AddConstantProvider(
-    ConstantProvider const &constantProvider) noexcept {
+void ReactModuleBuilder::AddConstantProvider(ConstantProvider const &constantProvider) noexcept {
   m_constants.push_back(constantProvider);
 }
 
 void ReactModuleBuilder::AddEventHandlerSetter(
     hstring const &name,
     ReactEventHandlerSetter const &eventHandlerSetter) noexcept {
-  m_eventHandlerSetters.push_back(ABICxxModuleEventHandlerSetter{
-      winrt::to_string(name), eventHandlerSetter});
+  m_eventHandlerSetters.push_back(ABICxxModuleEventHandlerSetter{winrt::to_string(name), eventHandlerSetter});
 }
 
-/*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(
-    CxxModule::Callback callback) noexcept {
+/*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(CxxModule::Callback callback) noexcept {
   if (callback) {
-    return [callback = std::move(callback)](
-        const IJSValueWriter &outputWriter) mutable noexcept {
+    return [callback = std::move(callback)](const IJSValueWriter &outputWriter) mutable noexcept {
       if (outputWriter) {
         folly::dynamic argArray = outputWriter.as<DynamicWriter>()->TakeValue();
         callback(std::vector<folly::dynamic>(argArray.begin(), argArray.end()));
@@ -107,12 +99,7 @@ std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
     std::string const &name,
     IInspectable &nativeModule) noexcept {
   return std::make_unique<ABICxxModule>(
-      nativeModule,
-      name,
-      m_eventEmitterName,
-      m_methods,
-      m_constants,
-      m_eventHandlerSetters);
+      nativeModule, name, m_eventEmitterName, m_methods, m_constants, m_eventHandlerSetters);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

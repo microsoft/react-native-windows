@@ -25,8 +25,7 @@ const char *AppState::getState() {
 //
 const char *AppStateModule::name = "RCTAppState";
 
-AppStateModule::AppStateModule(std::shared_ptr<AppState> &&appState)
-    : m_appState(std::move(appState)) {}
+AppStateModule::AppStateModule(std::shared_ptr<AppState> &&appState) : m_appState(std::move(appState)) {}
 
 std::string AppStateModule::getName() {
   return name;
@@ -36,13 +35,11 @@ std::map<std::string, folly::dynamic> AppStateModule::getConstants() {
   return {{"initialAppState", m_appState->getState()}};
 }
 
-auto AppStateModule::getMethods()
-    -> std::vector<facebook::xplat::module::CxxModule::Method> {
+auto AppStateModule::getMethods() -> std::vector<facebook::xplat::module::CxxModule::Method> {
   return {Method(
       "getCurrentAppState",
       [this](folly::dynamic args, Callback cbSuccess, Callback /*cbFailure*/) {
-        cbSuccess(
-            {folly::dynamic::object("app_state", m_appState->getState())});
+        cbSuccess({folly::dynamic::object("app_state", m_appState->getState())});
       },
       AsyncTag)};
 }

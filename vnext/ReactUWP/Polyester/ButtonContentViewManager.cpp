@@ -21,18 +21,13 @@ namespace react {
 namespace uwp {
 namespace polyester {
 
-ButtonContentViewManager::ButtonContentViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+ButtonContentViewManager::ButtonContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
-void ButtonContentViewManager::AddView(
-    XamlView parent,
-    XamlView child,
-    int64_t index) {
+void ButtonContentViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
   auto stackPanel(parent.as<StackPanel>());
   if (stackPanel != nullptr) {
-    stackPanel.Children().InsertAt(
-        static_cast<uint32_t>(index), child.as<UIElement>());
+    stackPanel.Children().InsertAt(static_cast<uint32_t>(index), child.as<UIElement>());
   }
 }
 

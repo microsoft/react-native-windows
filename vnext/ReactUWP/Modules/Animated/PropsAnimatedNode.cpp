@@ -18,16 +18,30 @@ PropsAnimatedNode::PropsAnimatedNode(
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
     : AnimatedNode(tag, manager), m_instance(instance) {
   for (const auto &entry : config.find("props").dereference().second.items()) {
-    m_propMapping.insert({entry.first.getString(),
-                          static_cast<int64_t>(entry.second.asDouble())});
+    m_propMapping.insert({entry.first.getString(), static_cast<int64_t>(entry.second.asDouble())});
   }
+
+  m_subchannelPropertySet = winrt::Window::Current().Compositor().CreatePropertySet();
+  m_subchannelPropertySet.InsertScalar(L"TranslationX", 0.0f);
+  m_subchannelPropertySet.InsertScalar(L"TranslationY", 0.0f);
+  m_subchannelPropertySet.InsertScalar(L"ScaleX", 1.0f);
+  m_subchannelPropertySet.InsertScalar(L"ScaleY", 1.0f);
+
+  m_translationCombined = winrt::Window::Current().Compositor().CreateExpressionAnimation(
+      L"Vector3(subchannels.TranslationX, subchannels.TranslationY, 0.0)");
+  m_translationCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
+  m_translationCombined.Target(L"Translation");
+
+  m_scaleCombined = winrt::Window::Current().Compositor().CreateExpressionAnimation(
+      L"Vector3(subchannels.ScaleX, subchannels.ScaleY, 1.0)");
+  m_scaleCombined.SetReferenceParameter(L"subchannels", m_subchannelPropertySet);
+  m_scaleCombined.Target(L"Scale");
 }
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
   if (m_connectedViewTag != s_connectedViewTagUnset) {
     throw new std::invalid_argument(
-        "Animated node " + std::to_string(m_tag) +
-        " has already been attached to a view already exists.");
+        "Animated node " + std::to_string(m_tag) + " has already been attached to a view already exists.");
     return;
   }
   m_connectedViewTag = viewTag;
@@ -67,15 +81,13 @@ void PropsAnimatedNode::UpdateView() {
     return;
   }
 
-  if (const auto manager =
-          std::shared_ptr<NativeAnimatedNodeManager>(m_manager)) {
+  if (const auto manager = std::shared_ptr<NativeAnimatedNodeManager>(m_manager)) {
     for (const auto &entry : m_propMapping) {
       if (const auto &styleNode = manager->GetStyleAnimatedNode(entry.second)) {
         for (const auto &styleEntry : styleNode->GetMapping()) {
           MakeAnimation(styleEntry.second, styleEntry.first);
         }
-      } else if (
-          const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
+      } else if (const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
         MakeAnimation(entry.second, StringToFacadeType(entry.first));
       }
     }
@@ -89,16 +101,28 @@ void PropsAnimatedNode::StartAnimations() {
     if (const auto uiElement = GetUIElement()) {
       uiElement.RotationAxis(m_rotationAxis);
       for (const auto anim : m_expressionAnimations) {
-        uiElement.StartAnimation(anim.second);
+        if (anim.second.Target() == L"Translation.X") {
+          m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else if (anim.second.Target() == L"Translation.Y") {
+          m_subchannelPropertySet.StartAnimation(L"TranslationY", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else if (anim.second.Target() == L"Scale.X") {
+          m_subchannelPropertySet.StartAnimation(L"ScaleX", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else if (anim.second.Target() == L"Scale.Y") {
+          m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
+          uiElement.StartAnimation(m_translationCombined);
+        } else {
+          uiElement.StartAnimation(anim.second);
+        }
       }
       if (m_needsCenterPointAnimation) {
         if (!m_centerPointAnimation) {
-          m_centerPointAnimation =
-              winrt::Window::Current().Compositor().CreateExpressionAnimation();
+          m_centerPointAnimation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
           m_centerPointAnimation.Target(L"CenterPoint");
           m_centerPointAnimation.SetReferenceParameter(
-              L"centerPointPropertySet",
-              GetShadowNodeBase()->EnsureTransformPS());
+              L"centerPointPropertySet", GetShadowNodeBase()->EnsureTransformPS());
           m_centerPointAnimation.Expression(L"centerPointPropertySet.center");
         }
 
@@ -132,10 +156,8 @@ void PropsAnimatedNode::DisposeCompletedAnimation(int64_t valueTag) {
 }
 
 void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
-  const auto iterator = std::find(
-      m_suspendedExpressionAnimationTags.begin(),
-      m_suspendedExpressionAnimationTags.end(),
-      valueTag);
+  const auto iterator =
+      std::find(m_suspendedExpressionAnimationTags.begin(), m_suspendedExpressionAnimationTags.end(), valueTag);
   if (iterator != m_suspendedExpressionAnimationTags.end()) {
     if (const auto target = GetUIElement()) {
       // See comment above, tracked by issue #3280
@@ -145,18 +167,13 @@ void PropsAnimatedNode::ResumeSuspendedAnimations(int64_t valueTag) {
   }
 }
 
-void PropsAnimatedNode::MakeAnimation(
-    int64_t valueNodeTag,
-    FacadeType facadeType) {
+void PropsAnimatedNode::MakeAnimation(int64_t valueNodeTag, FacadeType facadeType) {
   if (const auto manager = m_manager.lock()) {
     if (const auto valueNode = manager->GetValueAnimatedNode(valueNodeTag)) {
-      const auto animation =
-          winrt::Window::Current().Compositor().CreateExpressionAnimation();
-      animation.SetReferenceParameter(
-          L"ValuePropSet", valueNode->PropertySet());
+      const auto animation = winrt::Window::Current().Compositor().CreateExpressionAnimation();
+      animation.SetReferenceParameter(L"ValuePropSet", valueNode->PropertySet());
       animation.Expression(
-          static_cast<winrt::hstring>(L"ValuePropSet.") +
-          ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+          static_cast<winrt::hstring>(L"ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
           ValueAnimatedNode::s_offsetName);
       switch (facadeType) {
         case FacadeType::Opacity:
@@ -165,16 +182,14 @@ void PropsAnimatedNode::MakeAnimation(
         case FacadeType::Rotation:
           m_rotationAxis = {0, 0, 1};
           animation.Expression(
-              static_cast<winrt::hstring>(L"(ValuePropSet.") +
-              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              static_cast<winrt::hstring>(L"(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
               ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           animation.Target(L"Rotation");
           m_needsCenterPointAnimation = true;
           break;
         case FacadeType::RotationX:
           animation.Expression(
-              static_cast<winrt::hstring>(L"(ValuePropSet.") +
-              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              static_cast<winrt::hstring>(L"(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
               ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           m_rotationAxis = {1, 0, 0};
           animation.Target(L"Rotation");
@@ -182,8 +197,7 @@ void PropsAnimatedNode::MakeAnimation(
           break;
         case FacadeType::RotationY:
           animation.Expression(
-              static_cast<winrt::hstring>(L"(ValuePropSet.") +
-              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
+              static_cast<winrt::hstring>(L"(ValuePropSet.") + ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
               ValueAnimatedNode::s_offsetName + L") * 180 / PI");
           m_rotationAxis = {0, 1, 0};
           animation.Target(L"Rotation");
@@ -191,11 +205,9 @@ void PropsAnimatedNode::MakeAnimation(
           break;
         case FacadeType::Scale:
           animation.Expression(
-              static_cast<winrt::hstring>(L"Vector3(ValuePropSet.") +
-              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
-              ValueAnimatedNode::s_offsetName + L", ValuePropSet." +
-              ValueAnimatedNode::s_valueName + L" + ValuePropSet." +
-              ValueAnimatedNode::s_offsetName + L", 0)");
+              static_cast<winrt::hstring>(L"Vector3(ValuePropSet.") + ValueAnimatedNode::s_valueName +
+              L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L", ValuePropSet." +
+              ValueAnimatedNode::s_valueName + L" + ValuePropSet." + ValueAnimatedNode::s_offsetName + L", 0)");
           animation.Target(L"Scale");
           m_needsCenterPointAnimation = true;
           break;
@@ -227,11 +239,8 @@ void PropsAnimatedNode::MakeAnimation(
 
 ShadowNodeBase *PropsAnimatedNode::GetShadowNodeBase() {
   if (const auto instance = m_instance.lock()) {
-    if (const auto nativeUIManagerHost =
-            static_cast<NativeUIManager *>(instance->NativeUIManager())
-                ->getHost()) {
-      return static_cast<ShadowNodeBase *>(
-          nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
+    if (const auto nativeUIManagerHost = static_cast<NativeUIManager *>(instance->NativeUIManager())->getHost()) {
+      return static_cast<ShadowNodeBase *>(nativeUIManagerHost->FindShadowNodeForTag(m_connectedViewTag));
     }
   }
   return nullptr;

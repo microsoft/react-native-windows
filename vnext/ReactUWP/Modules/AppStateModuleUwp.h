@@ -23,21 +23,17 @@ class AppState : public facebook::react::AppState {
  private:
   void EnteredBackground(
       winrt::Windows::Foundation::IInspectable const & /*sender*/,
-      winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs const
-          & /*e*/);
+      winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs const & /*e*/);
   void LeavingBackground(
       winrt::Windows::Foundation::IInspectable const & /*sender*/,
-      winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const
-          & /*e*/);
+      winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const & /*e*/);
 
   void fireEvent(const char *newState);
 
   const char *m_lastState;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
-  winrt::Windows::UI::Xaml::Application::EnteredBackground_revoker
-      m_enteredBackgroundRevoker;
-  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker
-      m_leavingBackgroundRevoker;
+  winrt::Windows::UI::Xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
+  winrt::Windows::UI::Xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
 };
 
 } // namespace uwp

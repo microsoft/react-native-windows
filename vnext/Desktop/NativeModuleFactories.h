@@ -10,15 +10,13 @@
 namespace facebook {
 namespace react {
 
-extern std::unique_ptr<facebook::xplat::module::CxxModule>
-CreateAsyncStorageModule(const WCHAR *storageFileName) noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateAsyncStorageModule(
+    const WCHAR *storageFileName) noexcept;
 
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread>
-        &nativeThread) noexcept;
+    const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept;
 
-extern std::unique_ptr<facebook::xplat::module::CxxModule>
-CreateWebSocketModule() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
 
 } // namespace react
 } // namespace facebook

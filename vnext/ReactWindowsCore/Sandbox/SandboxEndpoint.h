@@ -15,10 +15,8 @@ enum class EndpointType { Host, Sandbox };
 using SendRequestCallback = std::function<void(bool sent)>;
 
 // For sandbox to handle JS call "Native Host -> JS Sandbox"
-using JSCallRequestHandler = std::function<void(
-    int64_t requestId,
-    const std::string &method,
-    folly::dynamic &&arguments)>;
+using JSCallRequestHandler =
+    std::function<void(int64_t requestId, const std::string &method, folly::dynamic &&arguments)>;
 
 // Ack from JS Sandbox to Native Host
 using ReplyMessageHandler = std::function<void(int64_t replyid)>;
@@ -42,11 +40,9 @@ struct SandboxEndpoint {
   // Send message to host.
   virtual void Send(std::string &&message) = 0;
 
-  virtual void RegisterJSCallRequestHandler(
-      const JSCallRequestHandler &handler) = 0;
+  virtual void RegisterJSCallRequestHandler(const JSCallRequestHandler &handler) = 0;
   virtual void RegisterReplyHandler(const ReplyMessageHandler &handler) = 0;
-  virtual void RegisterNativeModuleCallHandler(
-      const NativeModuleCallHandler &handler) = 0;
+  virtual void RegisterNativeModuleCallHandler(const NativeModuleCallHandler &handler) = 0;
 };
 
 } // namespace react

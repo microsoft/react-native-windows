@@ -20,8 +20,7 @@ namespace Microsoft::React::Test {
 struct ITestInstance {
   virtual void AttachMeasuredRootView(std::string &&appName) noexcept = 0;
   virtual void DetachRootView() noexcept = 0;
-  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const
-      noexcept = 0;
+  virtual std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept = 0;
 };
 
 class TestViewManager : public facebook::react::IViewManager {
@@ -53,37 +52,30 @@ class TestNativeUIManager : public facebook::react::INativeUIManager {
       folly::dynamic &&config,
       facebook::xplat::module::CxxModule::Callback success,
       facebook::xplat::module::CxxModule::Callback error) override;
-  facebook::react::ShadowNode *createRootShadowNode(
-      facebook::react::IReactRootView *rootView) override;
+  facebook::react::ShadowNode *createRootShadowNode(facebook::react::IReactRootView *rootView) override;
   void destroyRootShadowNode(facebook::react::ShadowNode *) override;
   void removeRootView(facebook::react::ShadowNode &rootNode) override;
   void setHost(facebook::react::INativeUIManagerHost *host) override;
   facebook::react::INativeUIManagerHost *getHost() override {
     return nullptr;
   }
-  void AddRootView(
-      facebook::react::ShadowNode &shadowNode,
-      facebook::react::IReactRootView *pReactRootView) override;
-  void CreateView(
-      facebook::react::ShadowNode &shadowNode,
-      folly::dynamic /*ReadableMap*/ props) override;
+  void AddRootView(facebook::react::ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) override;
+  void CreateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) override;
   void AddView(
       facebook::react::ShadowNode &parentShadowNode,
       facebook::react::ShadowNode &childShadowNode,
       uint64_t index) override;
-  void RemoveView(
-      facebook::react::ShadowNode &shadowNode,
-      bool removeChildren = true) override;
+  void RemoveView(facebook::react::ShadowNode &shadowNode, bool removeChildren = true) override;
   void ReplaceView(facebook::react::ShadowNode &shadowNode) override;
-  void UpdateView(
-      facebook::react::ShadowNode &shadowNode,
-      folly::dynamic /*ReadableMap*/ props) override;
+  void UpdateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) override;
   void onBatchComplete() override;
   void ensureInBatch() override;
   void measure(
       facebook::react::ShadowNode &shadowNode,
       facebook::react::ShadowNode &shadowRoot,
       facebook::xplat::module::CxxModule::Callback callback) override;
+  void measureInWindow(facebook::react::ShadowNode &shadowNode, facebook::xplat::module::CxxModule::Callback callback)
+      override;
   void findSubviewIn(
       facebook::react::ShadowNode &shadowNode,
       float x,

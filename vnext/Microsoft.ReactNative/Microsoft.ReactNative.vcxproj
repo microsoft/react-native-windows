@@ -106,7 +106,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
-    <ClInclude Include="ABIModule.h" />
+    <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Crash.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -116,16 +116,8 @@
     </ClInclude>
     <ClInclude Include="HResult.h" />
     <ClInclude Include="LifecycleState.h" />
-    <ClInclude Include="MethodInfo.h">
-      <DependentUpon>MethodInfo.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="IReactModuleBuilder.h">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="NativeModuleRegistry.h">
-      <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
@@ -170,23 +162,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
-    <ClCompile Include="ABIModule.cpp" />
+    <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="DynamicReader.cpp">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="DynamicWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="MethodInfo.cpp">
-      <DependentUpon>MethodInfo.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="IReactModuleBuilder.cpp">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="NativeModuleRegistry.cpp">
-      <DependentUpon>NativeModuleRegistry.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="pch.cpp">
@@ -237,18 +221,10 @@
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
-    <Midl Include="INativeModule.idl" />
     <Midl Include="IReactModuleBuilder.idl" />
-    <Midl Include="IReactPackage.idl" />
     <Midl Include="IReactPackageBuilder.idl" />
     <Midl Include="IReactPackageProvider.idl" />
     <Midl Include="IViewManager.idl" />
-    <Midl Include="MethodInfo.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="NativeModuleRegistry.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="ReactApplication.idl" />
     <Midl Include="ReactApplicationDelegate.idl">
       <SubType>Designer</SubType>

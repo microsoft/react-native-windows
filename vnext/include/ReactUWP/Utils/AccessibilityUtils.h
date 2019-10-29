@@ -13,11 +13,9 @@ namespace react {
 namespace uwp {
 
 REACTWINDOWS_API_(void)
-AnnounceLiveRegionChangedIfNeeded(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element);
+AnnounceLiveRegionChangedIfNeeded(const winrt::Windows::UI::Xaml::FrameworkElement &element);
 
 REACTWINDOWS_API_(bool)
-HasDynamicAutomationProperties(
-    const winrt::Windows::UI::Xaml::UIElement &element);
+HasDynamicAutomationProperties(const winrt::Windows::UI::Xaml::UIElement &element);
 } // namespace uwp
 } // namespace react

@@ -5,19 +5,16 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl" />
-    <Midl Include="MainReactNativeHost.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="MainReactNativeHost.cpp" />
     <ClCompile Include="ReactPackageProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="MainReactNativeHost.h" />
     <ClInclude Include="DebugConsole.h" />
     <ClInclude Include="ReactPackageProvider.h" />
   </ItemGroup>

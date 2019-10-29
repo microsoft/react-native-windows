@@ -26,8 +26,7 @@ namespace react {
 namespace uwp {
 namespace polyester {
 
-HyperlinkViewManager::HyperlinkViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+HyperlinkViewManager::HyperlinkViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : ContentControlViewManager(reactInstance) {}
 
 const char *HyperlinkViewManager::GetName() const {
@@ -37,8 +36,7 @@ const char *HyperlinkViewManager::GetName() const {
 folly::dynamic HyperlinkViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(folly::dynamic::object("disabled", "boolean")("url", "string")(
-      "tooltip", "string"));
+  props.update(folly::dynamic::object("disabled", "boolean")("url", "string")("tooltip", "string"));
 
   return props;
 }
@@ -55,18 +53,14 @@ XamlView HyperlinkViewManager::CreateViewCore(int64_t tag) {
   return button;
 }
 
-folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic HyperlinkViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topClick"] =
-      folly::dynamic::object("registrationName", "onClick");
+  directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
 
   return directEvents;
 }
 
-void HyperlinkViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void HyperlinkViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto button = nodeToUpdate->GetView().as<winrt::HyperlinkButton>();
   if (button == nullptr)
     return;

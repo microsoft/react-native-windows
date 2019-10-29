@@ -6,8 +6,7 @@
 namespace facebook::react {
 class MessageQueueShim : public MessageQueueThread {
  public:
-  MessageQueueShim(
-      const ::winrt::facebook::react::IMessageQueue &abiMessageQueue);
+  MessageQueueShim(const ::winrt::facebook::react::IMessageQueue &abiMessageQueue);
   virtual void runOnQueue(std::function<void()> &&item) override;
   virtual void runOnQueueSync(std::function<void()> &&item) override;
   virtual void quitSynchronous() override;

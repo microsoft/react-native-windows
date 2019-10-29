@@ -17,8 +17,7 @@ void LazyDevSupportManager::EnsureDevSupportManager() noexcept {
 
 #pragma region LazyDevSupportManager
 
-JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(
-    const DevSettings &settings) /*override*/
+JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(const DevSettings &settings) /*override*/
 {
   EnsureDevSupportManager();
 
@@ -26,8 +25,7 @@ JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(
 }
 
 #if !defined(OSS_RN)
-JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(
-    const DevSettings &settings) /*override*/
+JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &settings) /*override*/
 {
   EnsureDevSupportManager();
 

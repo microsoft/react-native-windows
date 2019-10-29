@@ -1,3 +1,5 @@
+/* TODO: Update or remove this example to reflect the new ViewManager architecture provided by Microsoft.ReactNative. */
+
 #include "pch.h"
 
 #include <Views/ShadowNodeBase.h>
@@ -24,10 +26,7 @@ class CustomFrameworkElementShadowNode : public react::uwp::ShadowNodeBase {
   void updateProperties(const folly::dynamic &&props) override;
 
  private:
-  static void OnCheckedChanged(
-      react::uwp::IReactInstance &instance,
-      int64_t tag,
-      bool newValue);
+  static void OnCheckedChanged(react::uwp::IReactInstance &instance, int64_t tag, bool newValue);
 };
 
 void CustomFrameworkElementShadowNode::createView() {
@@ -46,19 +45,15 @@ void CustomFrameworkElementShadowNode::createView() {
   });
 }
 
-void CustomFrameworkElementShadowNode::updateProperties(
-    const folly::dynamic &&props) {
+void CustomFrameworkElementShadowNode::updateProperties(const folly::dynamic &&props) {
   m_updating = true;
   Super::updateProperties(std::move(props));
   m_updating = false;
 }
 
-/*static*/ void CustomFrameworkElementShadowNode::OnCheckedChanged(
-    react::uwp::IReactInstance &instance,
-    int64_t tag,
-    bool newValue) {
-  folly::dynamic eventData =
-      folly::dynamic::object("target", tag)("value", newValue);
+/*static*/ void
+CustomFrameworkElementShadowNode::OnCheckedChanged(react::uwp::IReactInstance &instance, int64_t tag, bool newValue) {
+  folly::dynamic eventData = folly::dynamic::object("target", tag)("value", newValue);
   instance.DispatchEvent(tag, "topCustomEvent", std::move(eventData));
 }
 
@@ -81,27 +76,21 @@ folly::dynamic CustomFrameworkElementViewManager::GetCommands() const {
 
 folly::dynamic CustomFrameworkElementViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
-  props.update(
-      folly::dynamic::object("disabled", "boolean")("test", "boolean"));
+  props.update(folly::dynamic::object("disabled", "boolean")("test", "boolean"));
   return props;
 }
 
-folly::dynamic
-CustomFrameworkElementViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic CustomFrameworkElementViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topCustomEvent"] =
-      folly::dynamic::object("registrationName", "onCustomEvent");
+  directEvents["topCustomEvent"] = folly::dynamic::object("registrationName", "onCustomEvent");
   return directEvents;
 }
 
-facebook::react::ShadowNode *CustomFrameworkElementViewManager::createShadow()
-    const {
+facebook::react::ShadowNode *CustomFrameworkElementViewManager::createShadow() const {
   return new CustomFrameworkElementShadowNode();
 }
 
-react::uwp::XamlView CustomFrameworkElementViewManager::CreateViewCore(
-    int64_t tag) {
+react::uwp::XamlView CustomFrameworkElementViewManager::CreateViewCore(int64_t tag) {
   auto checkbox = winrt::CheckBox();
   return checkbox;
 }

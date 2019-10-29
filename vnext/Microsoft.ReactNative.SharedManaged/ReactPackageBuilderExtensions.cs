@@ -1,6 +1,11 @@
-using Microsoft.ReactNative.Bridge;
-using Microsoft.ReactNative.Managed;
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Linq;
 using System.Reflection;
+
+using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -15,6 +20,17 @@ namespace Microsoft.ReactNative.Managed
         {
           ReactModuleInfo moduleInfo = ReactModuleInfo.GetOrAddModuleInfo(type, moduleAttribute);
           packageBuilder.AddModule(moduleInfo.ModuleName, moduleInfo.ModuleProvider);
+        }
+      }
+    }
+
+    internal static void AddViewManagers(this IReactPackageBuilder packageBuilder)
+    {
+      foreach (var typeInfo in typeof(ReactPackageBuilderExtensions).GetTypeInfo().Assembly.DefinedTypes)
+      {
+        if (!typeInfo.IsAbstract && typeInfo.ImplementedInterfaces.Contains(typeof(IViewManager)))
+        {
+          packageBuilder.AddViewManager(typeInfo.Name, () => (IViewManager)Activator.CreateInstance(typeInfo.AsType()));
         }
       }
     }

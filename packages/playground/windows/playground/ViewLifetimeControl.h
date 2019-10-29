@@ -10,18 +10,13 @@ namespace Playground {
 // You should clean up any state (including deregistering for events) then close
 // the window in this handler
 public
-delegate void ViewReleasedHandler(
-    Platform::Object ^ sender,
-    Platform::Object ^ e);
+delegate void ViewReleasedHandler(Platform::Object ^ sender, Platform::Object ^ e);
 
-[Windows::UI::Xaml::Data::Bindable]
-    [Windows::Foundation::Metadata::
-         WebHostHidden] public ref class ViewLifetimeControl sealed
-    : Windows::UI::Xaml::Data::INotifyPropertyChanged {
+[Windows::UI::Xaml::Data::Bindable][Windows::Foundation::Metadata::WebHostHidden] public ref class ViewLifetimeControl
+    sealed : Windows::UI::Xaml::Data::INotifyPropertyChanged {
  public:
   static ViewLifetimeControl ^ CreateForCurrentView();
-  property Windows::UI::Core::CoreDispatcher ^
-      Dispatcher { Windows::UI::Core::CoreDispatcher ^ get(); };
+  property Windows::UI::Core::CoreDispatcher ^ Dispatcher { Windows::UI::Core::CoreDispatcher ^ get(); };
 
   property int Id {
     int get();
@@ -37,8 +32,7 @@ delegate void ViewReleasedHandler(
 
   event ViewReleasedHandler ^
       Released {
-        Windows::Foundation::EventRegistrationToken add(
-            ViewReleasedHandler ^ handler);
+        Windows::Foundation::EventRegistrationToken add(ViewReleasedHandler ^ handler);
         void remove(Windows::Foundation::EventRegistrationToken token);
       } virtual event Windows::UI::Xaml::Data::PropertyChangedEventHandler ^
       PropertyChanged;
@@ -51,9 +45,7 @@ delegate void ViewReleasedHandler(
   void ViewConsolidated(
       Windows::UI::ViewManagement::ApplicationView ^ sender,
       Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs ^ e);
-  void VisibilityChanged(
-      Windows::UI::Core::CoreWindow ^ sender,
-      Windows::UI::Core::VisibilityChangedEventArgs ^ e);
+  void VisibilityChanged(Windows::UI::Core::CoreWindow ^ sender, Windows::UI::Core::VisibilityChangedEventArgs ^ e);
   event ViewReleasedHandler ^ InternalReleased;
 
   // Keeps track of if the consolidated event has fired yet. A view is
@@ -65,8 +57,7 @@ delegate void ViewReleasedHandler(
     bool get();
     void set(bool value);
   }
-  Windows::Foundation::EventRegistrationToken consolidatedToken,
-      visibilityToken;
+  Windows::Foundation::EventRegistrationToken consolidatedToken, visibilityToken;
 
   // Dispatcher for this view. Kept here for sending messages between this view
   // and the main view.

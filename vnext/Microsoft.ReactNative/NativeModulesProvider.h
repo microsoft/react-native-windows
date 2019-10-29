@@ -13,26 +13,18 @@ using namespace Windows::Foundation;
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
-class NativeModulesProvider final
-    : public facebook::react::NativeModuleProvider {
+class NativeModulesProvider final : public facebook::react::NativeModuleProvider {
  public:
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread) override;
+      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread) override;
 
  public:
   NativeModulesProvider() noexcept;
-  void RegisterModule(INativeModule const &module);
-  void AddModuleProvider(
-      winrt::hstring const &moduleName,
-      ReactModuleProvider const &moduleProvider) noexcept;
+  void AddModuleProvider(winrt::hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
  private:
-  std::vector<INativeModule> m_modules;
-  std::map<std::string, Microsoft::ReactNative::Bridge::ReactModuleProvider>
-      m_moduleProviders;
-  std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{
-      nullptr};
+  std::map<std::string, Microsoft::ReactNative::Bridge::ReactModuleProvider> m_moduleProviders;
+  std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{nullptr};
   Microsoft::ReactNative::Bridge::IReactPackageBuilder m_packageBuilder;
 };
 

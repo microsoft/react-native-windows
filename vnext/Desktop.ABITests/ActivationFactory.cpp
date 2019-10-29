@@ -4,38 +4,26 @@
 using namespace winrt;
 
 extern "C" {
-int32_t WINRT_CALL OS_RoGetActivationFactory(
-    void *classId,
-    guid const &iid,
-    void **factory) noexcept;
+int32_t WINRT_CALL OS_RoGetActivationFactory(void *classId, guid const &iid, void **factory) noexcept;
 }
 
 #ifdef _M_IX86
-#pragma comment( \
-    linker,      \
-    "/alternatename:_OS_RoGetActivationFactory@12=_RoGetActivationFactory@12")
+#pragma comment(linker, "/alternatename:_OS_RoGetActivationFactory@12=_RoGetActivationFactory@12")
 #else
-#pragma comment( \
-    linker, "/alternatename:OS_RoGetActivationFactory=RoGetActivationFactory")
+#pragma comment(linker, "/alternatename:OS_RoGetActivationFactory=RoGetActivationFactory")
 #endif
 
 bool starts_with(std::wstring_view value, std::wstring_view match) noexcept {
   return 0 == value.compare(0, match.size(), match);
 }
 
-int32_t WINRT_CALL WINRT_RoGetActivationFactory(
-    void *classId,
-    guid const &iid,
-    void **factory) noexcept {
+int32_t WINRT_CALL WINRT_RoGetActivationFactory(void *classId, guid const &iid, void **factory) noexcept {
   *factory = nullptr;
   std::wstring_view name{WINRT_WindowsGetStringRawBuffer(classId, nullptr)};
   HMODULE library{nullptr};
 
   if (starts_with(name, L"facebook.react.")) {
-    library = LoadLibraryExW(
-        RNDLLPATH,
-        NULL,
-        LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
+    library = LoadLibraryExW(RNDLLPATH, NULL, LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR | LOAD_LIBRARY_SEARCH_DEFAULT_DIRS);
   } else {
     return OS_RoGetActivationFactory(classId, iid, factory);
   }
@@ -44,10 +32,8 @@ int32_t WINRT_CALL WINRT_RoGetActivationFactory(
     return HRESULT_FROM_WIN32(GetLastError());
   }
 
-  using DllGetActivationFactory =
-      HRESULT __stdcall(void *classId, void **factory);
-  auto call = reinterpret_cast<DllGetActivationFactory *>(
-      GetProcAddress(library, "DllGetActivationFactory"));
+  using DllGetActivationFactory = HRESULT __stdcall(void *classId, void **factory);
+  auto call = reinterpret_cast<DllGetActivationFactory *>(GetProcAddress(library, "DllGetActivationFactory"));
 
   if (!call) {
     HRESULT const hr = HRESULT_FROM_WIN32(GetLastError());
@@ -55,8 +41,7 @@ int32_t WINRT_CALL WINRT_RoGetActivationFactory(
     return hr;
   }
 
-  winrt::com_ptr<winrt::Windows::Foundation::IActivationFactory>
-      activation_factory;
+  winrt::com_ptr<winrt::Windows::Foundation::IActivationFactory> activation_factory;
   HRESULT const hr = call(classId, activation_factory.put_void());
 
   if (FAILED(hr)) {

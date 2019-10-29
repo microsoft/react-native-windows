@@ -2,6 +2,118 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Sat, 26 Oct 2019 02:55:31 GMT",
+      "tag": "react-native-windows-extended_v0.60.13",
+      "version": "0.60.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.13",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "1198d7f7dc40aceca81fa7c75e44eb1107922ccb"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 23:07:25 GMT",
+      "tag": "react-native-windows-extended_v0.60.12",
+      "version": "0.60.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fixed merge/clang",
+            "author": "jthysell@microsoft.com",
+            "commit": "afaed3932e05b7d15cbbf8794f4600aacc2b38e7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 20:56:10 GMT",
+      "tag": "react-native-windows-extended_v0.60.11",
+      "version": "0.60.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.12",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "5e0084f19a518d04caf2568cba716ea881aea30d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Oct 2019 20:38:22 GMT",
+      "tag": "react-native-windows-extended_v0.60.10",
+      "version": "0.60.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.11",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "74e58fd265922fa0016bf2b6d416bb073ecc4230"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2019 03:28:58 GMT",
+      "tag": "react-native-windows-extended_v0.60.9",
+      "version": "0.60.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.9",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "b594deb952d846ded6ea0c70b35dab31d738dc4d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 23:10:13 GMT",
+      "tag": "react-native-windows-extended_v0.60.8",
+      "version": "0.60.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.8",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "2b9de0838622a57253f7cef8d4b15fdbd9bf3e1f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 20:58:22 GMT",
+      "tag": "react-native-windows-extended_v0.60.7",
+      "version": "0.60.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag.",
+            "author": "stpete@microsoft.com",
+            "commit": "62049fdbd667fc71ae09b09f074446d8593d826d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 22:35:30 GMT",
+      "tag": "react-native-windows-extended_v0.60.6",
+      "version": "0.60.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.7",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "e1e992197d676eceef95bb216d6116b1e5f9899e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Oct 2019 15:13:21 GMT",
       "tag": "react-native-windows-extended_v0.60.5",
       "version": "0.60.5",

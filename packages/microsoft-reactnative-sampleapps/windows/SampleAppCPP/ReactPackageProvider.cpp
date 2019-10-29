@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "ReactPackageProvider.h"
+
 #include "DebugConsole.h"
 
 using namespace Microsoft::ReactNative;
@@ -14,8 +15,7 @@ namespace winrt::SampleApp::implementation {
 // ReactPackageProvider implementation
 //===========================================================================
 
-void ReactPackageProvider::CreatePackage(
-    IReactPackageBuilder const &packageBuilder) noexcept {
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
 }
 

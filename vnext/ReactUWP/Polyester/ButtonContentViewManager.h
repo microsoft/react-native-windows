@@ -13,8 +13,7 @@ class ButtonContentViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
-  ButtonContentViewManager(
-      const std::shared_ptr<IReactInstance> &reactInstance);
+  ButtonContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance);
 
   const char *GetName() const override;
 

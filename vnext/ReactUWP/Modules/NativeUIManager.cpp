@@ -28,12 +28,7 @@ static YogaNodePtr make_yoga_node() {
   return result;
 }
 
-static int YogaLog(
-    const YGConfigRef config,
-    const YGNodeRef node,
-    YGLogLevel level,
-    const char *format,
-    va_list args) {
+static int YogaLog(const YGConfigRef config, const YGNodeRef node, YGLogLevel level, const char *format, va_list args) {
   int len = _scprintf(format, args);
   std::string buffer(len + 1, '\0');
   int c = vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
@@ -63,8 +58,7 @@ YGNodeRef NativeUIManager::GetYogaNode(int64_t tag) const {
 }
 
 void NativeUIManager::DirtyYogaNode(int64_t tag) {
-  ShadowNodeBase *pShadowNodeChild =
-      static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
+  ShadowNodeBase *pShadowNodeChild = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
   if (pShadowNodeChild != nullptr) {
     auto *pViewManager = pShadowNodeChild->GetViewManager();
     YGMeasureFunc func = pViewManager->GetYogaCustomMeasureFunc();
@@ -88,18 +82,15 @@ void NativeUIManager::DirtyYogaNode(int64_t tag) {
   }
 }
 
-void NativeUIManager::AddBatchCompletedCallback(
-    std::function<void()> callback) {
+void NativeUIManager::AddBatchCompletedCallback(std::function<void()> callback) {
   m_batchCompletedCallbacks.push_back(std::move(callback));
 }
 
 winrt::XamlRoot NativeUIManager::tryGetXamlRoot() {
   if (m_host) {
     for (auto const tag : m_host->GetAllRootTags()) {
-      if (auto shadowNode = static_cast<ShadowNodeBase *>(
-              m_host->FindShadowNodeForTag(tag))) {
-        if (auto uiElement10 =
-                shadowNode->GetView().try_as<winrt::IUIElement10>()) {
+      if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
+        if (auto uiElement10 = shadowNode->GetView().try_as<winrt::IUIElement10>()) {
           if (auto xamlRoot = uiElement10.XamlRoot())
             return xamlRoot;
         }
@@ -114,8 +105,7 @@ XamlView NativeUIManager::reactPeerOrContainerFrom(winrt::FrameworkElement fe) {
     while (fe) {
       if (auto value = GetTagAsPropertyValue(fe)) {
         auto tag = GetTag(value);
-        if (auto shadowNode = static_cast<ShadowNodeBase *>(
-                m_host->FindShadowNodeForTag(tag))) {
+        if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
           if (auto xamlView = shadowNode->GetView()) {
             if (xamlView == fe) {
               return xamlView;
@@ -146,9 +136,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   RootShadowNode &operator=(RootShadowNode const &) = delete;
   RootShadowNode() = delete;
 
-  RootShadowNode(
-      facebook::react::IReactRootView *rootView,
-      facebook::react::INativeUIManagerHost *host)
+  RootShadowNode(facebook::react::IReactRootView *rootView, facebook::react::INativeUIManagerHost *host)
       : m_host(host) {
     auto reactRootView = static_cast<react::uwp::ReactRootView *>(rootView);
     m_view = reactRootView->GetXamlView();
@@ -163,8 +151,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   void AddView(facebook::react::ShadowNode &child, int64_t index) override {
     auto panel(GetView().as<winrt::Panel>());
     if (panel != nullptr) {
-      auto childView =
-          static_cast<ShadowNodeBase &>(child).GetView().as<winrt::UIElement>();
+      auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<winrt::UIElement>();
       panel.Children().InsertAt(static_cast<uint32_t>(index), childView);
     }
   }
@@ -177,8 +164,7 @@ void NativeUIManager::setHost(facebook::react::INativeUIManagerHost *host) {
   m_host = host;
 }
 
-facebook::react::ShadowNode *NativeUIManager::createRootShadowNode(
-    facebook::react::IReactRootView *pReactRootView) {
+facebook::react::ShadowNode *NativeUIManager::createRootShadowNode(facebook::react::IReactRootView *pReactRootView) {
   return new RootShadowNode(pReactRootView, m_host);
 }
 
@@ -192,8 +178,7 @@ void NativeUIManager::AddRootView(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
-  m_tagsToXamlReactControl.emplace(
-      shadowNode.m_tag, xamlRootView->GetXamlReactControl());
+  m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
 
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node());
 
@@ -201,8 +186,8 @@ void NativeUIManager::AddRootView(
   element.Tag(winrt::PropertyValue::CreateInt64(shadowNode.m_tag));
 
   // Add listener to size change so we can redo the layout when that happens
-  m_sizeChangedVector.push_back(view.as<winrt::FrameworkElement>().SizeChanged(
-      winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
+  m_sizeChangedVector.push_back(
+      view.as<winrt::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
 }
 
 void NativeUIManager::destroy() {
@@ -247,9 +232,7 @@ static float NumberOrDefault(const folly::dynamic &value, float defaultValue) {
   return result;
 }
 
-static YGValue YGValueOrDefault(
-    const folly::dynamic &value,
-    YGValue defaultValue) {
+static YGValue YGValueOrDefault(const folly::dynamic &value, YGValue defaultValue) {
   YGValue result = defaultValue;
 
   if (value.isNumber())
@@ -274,10 +257,7 @@ static YGValue YGValueOrDefault(
   return defaultValue;
 }
 
-typedef void (*YogaSetterFunc)(
-    const YGNodeRef yogaNode,
-    const YGEdge edge,
-    const float value);
+typedef void (*YogaSetterFunc)(const YGNodeRef yogaNode, const YGEdge edge, const float value);
 static void SetYogaValueHelper(
     const YGNodeRef yogaNode,
     const YGEdge edge,
@@ -365,10 +345,7 @@ static void SetYogaValueAutoHelper(
   }
 }
 
-static void StyleYogaNode(
-    ShadowNodeBase &shadowNode,
-    const YGNodeRef yogaNode,
-    const folly::dynamic &props) {
+static void StyleYogaNode(ShadowNodeBase &shadowNode, const YGNodeRef yogaNode, const folly::dynamic &props) {
   if (props.empty())
     return;
 
@@ -443,7 +420,7 @@ static void StyleYogaNode(
 
       if (value == "auto" || value.isNull())
         align = YGAlignAuto;
-      if (value == "stretch")
+      else if (value == "stretch")
         align = YGAlignStretch;
       else if (value == "flex-start")
         align = YGAlignFlexStart;
@@ -489,15 +466,10 @@ static void StyleYogaNode(
 
       YGNodeStyleSetFlexShrink(yogaNode, result);
     } else if (key == "flexBasis") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaUnitValueAutoHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetFlexBasis,
-          YGNodeStyleSetFlexBasisPercent,
-          YGNodeStyleSetFlexBasisAuto);
+          yogaNode, result, YGNodeStyleSetFlexBasis, YGNodeStyleSetFlexBasisPercent, YGNodeStyleSetFlexBasisAuto);
     } else if (key == "position") {
       YGPositionType position = YGPositionTypeRelative;
 
@@ -542,201 +514,92 @@ static void StyleYogaNode(
 
       YGNodeStyleSetAspectRatio(yogaNode, result);
     } else if (key == "left") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeLeft,
-          result,
-          YGNodeStyleSetPosition,
-          YGNodeStyleSetPositionPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "top") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeTop,
-          result,
-          YGNodeStyleSetPosition,
-          YGNodeStyleSetPositionPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "right") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeRight,
-          result,
-          YGNodeStyleSetPosition,
-          YGNodeStyleSetPositionPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "bottom") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeBottom,
-          result,
-          YGNodeStyleSetPosition,
-          YGNodeStyleSetPositionPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "end") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeEnd,
-          result,
-          YGNodeStyleSetPosition,
-          YGNodeStyleSetPositionPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "start") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeStart,
-          result,
-          YGNodeStyleSetPosition,
-          YGNodeStyleSetPositionPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
     } else if (key == "width") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaUnitValueAutoHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetWidth,
-          YGNodeStyleSetWidthPercent,
-          YGNodeStyleSetWidthAuto);
+          yogaNode, result, YGNodeStyleSetWidth, YGNodeStyleSetWidthPercent, YGNodeStyleSetWidthAuto);
     } else if (key == "minWidth") {
-      YGValue result =
-          YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/);
 
-      SetYogaUnitValueHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetMinWidth,
-          YGNodeStyleSetMinWidthPercent);
+      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinWidth, YGNodeStyleSetMinWidthPercent);
     } else if (key == "maxWidth") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaUnitValueHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetMaxWidth,
-          YGNodeStyleSetMaxWidthPercent);
+      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxWidth, YGNodeStyleSetMaxWidthPercent);
     } else if (key == "height") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaUnitValueAutoHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetHeight,
-          YGNodeStyleSetHeightPercent,
-          YGNodeStyleSetHeightAuto);
+          yogaNode, result, YGNodeStyleSetHeight, YGNodeStyleSetHeightPercent, YGNodeStyleSetHeightAuto);
     } else if (key == "minHeight") {
-      YGValue result =
-          YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/);
 
-      SetYogaUnitValueHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetMinHeight,
-          YGNodeStyleSetMinHeightPercent);
+      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinHeight, YGNodeStyleSetMinHeightPercent);
     } else if (key == "maxHeight") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaUnitValueHelper(
-          yogaNode,
-          result,
-          YGNodeStyleSetMaxHeight,
-          YGNodeStyleSetMaxHeightPercent);
+      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxHeight, YGNodeStyleSetMaxHeightPercent);
     } else if (key == "margin") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeAll,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeAll, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginLeft") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeLeft,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeLeft, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginStart") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeStart,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeStart, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginTop") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeTop,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeTop, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginRight") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeRight,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeRight, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginEnd") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeEnd,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeEnd, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginBottom") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeBottom,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
+          yogaNode, YGEdgeBottom, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
     } else if (key == "marginHorizontal") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
           yogaNode,
@@ -746,8 +609,7 @@ static void StyleYogaNode(
           YGNodeStyleSetMarginPercent,
           YGNodeStyleSetMarginAuto);
     } else if (key == "marginVertical") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
       SetYogaValueAutoHelper(
           yogaNode,
@@ -758,109 +620,55 @@ static void StyleYogaNode(
           YGNodeStyleSetMarginAuto);
     } else if (key == "padding") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeAll,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeAll, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingLeft") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeLeft,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingStart") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeStart,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingTop") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeTop,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingRight") {
-      YGValue result = YGValueOrDefault(
-          value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-      SetYogaValueHelper(
-          yogaNode,
-          YGEdgeRight,
-          result,
-          YGNodeStyleSetPadding,
-          YGNodeStyleSetPaddingPercent);
+      SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
     } else if (key == "paddingEnd") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeEnd,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingBottom") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeBottom,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingHorizontal") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeHorizontal,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeHorizontal, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "paddingVertical") {
       if (!shadowNode.ImplementsPadding()) {
-        YGValue result = YGValueOrDefault(
-            value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/);
 
-        SetYogaValueHelper(
-            yogaNode,
-            YGEdgeVertical,
-            result,
-            YGNodeStyleSetPadding,
-            YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
       }
     } else if (key == "borderWidth") {
       float result = NumberOrDefault(value, 0.0f /*default*/);
@@ -894,9 +702,7 @@ static void StyleYogaNode(
   }
 }
 
-void NativeUIManager::CreateView(
-    facebook::react::ShadowNode &shadowNode,
-    folly::dynamic /*ReadableMap*/ props) {
+void NativeUIManager::CreateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -931,8 +737,7 @@ void NativeUIManager::AddView(
   ShadowNodeBase &parentNode = static_cast<ShadowNodeBase &>(parentShadowNode);
   auto *pViewManager = parentNode.GetViewManager();
 
-  if (pViewManager->RequiresYogaNode() &&
-      !pViewManager->IsNativeControlWithSelfLayout()) {
+  if (pViewManager->RequiresYogaNode() && !pViewManager->IsNativeControlWithSelfLayout()) {
     YGNodeRef yogaNodeToManage = GetYogaNode(parentNode.m_tag);
     ShadowNodeBase &childNode = static_cast<ShadowNodeBase &>(childShadowNode);
     YGNodeRef yogaNodeToAdd = GetYogaNode(childNode.m_tag);
@@ -943,21 +748,17 @@ void NativeUIManager::AddView(
       YGNodeRemoveChild(yogaOldParent, yogaNodeToAdd);
     }
 
-    YGNodeInsertChild(
-        yogaNodeToManage, yogaNodeToAdd, static_cast<uint32_t>(index));
+    YGNodeInsertChild(yogaNodeToManage, yogaNodeToAdd, static_cast<uint32_t>(index));
   }
 }
 
-void NativeUIManager::RemoveView(
-    facebook::react::ShadowNode &shadowNode,
-    bool removeChildren /*= true*/) {
+void NativeUIManager::RemoveView(facebook::react::ShadowNode &shadowNode, bool removeChildren /*= true*/) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
 
   if (removeChildren) {
     auto *pViewManager = node.GetViewManager();
 
-    YGNodeRef yogaNode =
-        pViewManager->RequiresYogaNode() ? GetYogaNode(node.m_tag) : nullptr;
+    YGNodeRef yogaNode = pViewManager->RequiresYogaNode() ? GetYogaNode(node.m_tag) : nullptr;
     if (yogaNode != nullptr && !pViewManager->IsNativeControlWithSelfLayout()) {
       uint32_t childCount = YGNodeGetChildCount(yogaNode);
       for (uint32_t i = childCount; i > 0; --i) {
@@ -994,9 +795,7 @@ void NativeUIManager::ReplaceView(facebook::react::ShadowNode &shadowNode) {
   }
 }
 
-void NativeUIManager::UpdateView(
-    facebook::react::ShadowNode &shadowNode,
-    folly::dynamic /*ReadableMap*/ props) {
+void NativeUIManager::UpdateView(facebook::react::ShadowNode &shadowNode, folly::dynamic /*ReadableMap*/ props) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -1011,8 +810,7 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
   // applying padding. Here we make sure Yoga knows about that padding so yoga
   // layout is aware of what rendering intends to do with it.  (net: buttons
   // with padding shouldn't have clipped content anymore)
-  ShadowNodeBase *shadowNode =
-      static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
+  ShadowNodeBase *shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
   if (shadowNode == nullptr)
     return;
 
@@ -1031,8 +829,7 @@ void NativeUIManager::DoLayout() {
   // Process vector of RN controls needing extra layout here.
   const auto extraLayoutNodes = m_extraLayoutNodes;
   for (const int64_t tag : extraLayoutNodes) {
-    ShadowNodeBase &node =
-        static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+    ShadowNodeBase &node = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
     auto element = node.GetView().as<winrt::FrameworkElement>();
     element.UpdateLayout();
   }
@@ -1042,8 +839,7 @@ void NativeUIManager::DoLayout() {
   for (int64_t rootTag : rootTags) {
     UpdateExtraLayout(rootTag);
 
-    ShadowNodeBase &rootShadowNode =
-        static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
+    ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
     YGNodeRef rootNode = GetYogaNode(rootTag);
     auto rootElement = rootShadowNode.GetView().as<winrt::FrameworkElement>();
 
@@ -1066,8 +862,7 @@ void NativeUIManager::DoLayout() {
       float width = YGNodeLayoutGetWidth(yogaNode);
       float height = YGNodeLayoutGetHeight(yogaNode);
 
-      ShadowNodeBase &shadowNode =
-          static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
       auto view = shadowNode.GetView();
       auto pViewManager = shadowNode.GetViewManager();
       pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
@@ -1122,8 +917,7 @@ void NativeUIManager::measure(
       break;
     ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
     if (rootNode.IsWindowed()) {
-      ShadowNodeBase &childNode =
-          static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
+      ShadowNodeBase &childNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
       feRootView = childNode.GetView().try_as<winrt::FrameworkElement>();
       break;
     }
@@ -1133,8 +927,7 @@ void NativeUIManager::measure(
 
   if (feRootView == nullptr) {
     // Retrieve the XAML element for the root view containing this view
-    if (auto xamlRootView =
-            static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
+    if (auto xamlRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
       feRootView = xamlRootView.as<winrt::FrameworkElement>();
     }
     if (feRootView == nullptr) {
@@ -1143,8 +936,7 @@ void NativeUIManager::measure(
     }
   }
 
-  winrt::Rect rectInParentCoords =
-      GetRectOfElementInParentCoords(feView, feRootView);
+  winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);
 
   // TODO: The first two params are for the local position. It's unclear what
   // this is exactly, but it is not used anyway.
@@ -1160,6 +952,28 @@ void NativeUIManager::measure(
   // Global Position
   args.push_back(rectInParentCoords.X);
   args.push_back(rectInParentCoords.Y);
+
+  callback(args);
+}
+
+void NativeUIManager::measureInWindow(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  std::vector<folly::dynamic> args;
+
+  ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
+  if (auto view = node.GetView().try_as<winrt::FrameworkElement>()) {
+    auto windowTransform = view.TransformToVisual(winrt::Window::Current().Content());
+    auto positionInWindow = windowTransform.TransformPoint({0, 0});
+
+    // x, y
+    args.push_back(positionInWindow.X);
+    args.push_back(positionInWindow.Y);
+
+    // Size
+    args.push_back(view.ActualWidth());
+    args.push_back(view.ActualHeight());
+  }
 
   callback(args);
 }
@@ -1187,8 +1001,7 @@ void NativeUIManager::findSubviewIn(
 
   // Perform hit test to find the top most z-index element that intersects with
   // the queried point
-  auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(
-      pointInAppWindow, rootUIView);
+  auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(pointInAppWindow, rootUIView);
 
   int64_t foundTag{};
   winrt::FrameworkElement foundElement = nullptr;
@@ -1221,22 +1034,17 @@ void NativeUIManager::findSubviewIn(
 }
 
 void NativeUIManager::focus(int64_t reactTag) {
-  if (auto shadowNode = static_cast<ShadowNodeBase *>(
-          m_host->FindShadowNodeForTag(reactTag))) {
-    winrt::FocusManager::TryFocusAsync(
-        shadowNode->GetView(), winrt::FocusState::Programmatic);
+  if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
+    winrt::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
   }
 }
 
 // Note: It's a known issue that blur on flyout/popup would dismiss them.
 void NativeUIManager::blur(int64_t reactTag) {
-  if (auto shadowNode = static_cast<ShadowNodeBase *>(
-          m_host->FindShadowNodeForTag(reactTag))) {
+  if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
     auto view = shadowNode->GetView();
     // Only blur if current UI is focused to avoid problem described in PR #2687
-    if (view ==
-        winrt::FocusManager::GetFocusedElement()
-            .try_as<winrt::DependencyObject>()) {
+    if (view == winrt::FocusManager::GetFocusedElement().try_as<winrt::DependencyObject>()) {
       if (auto reactControl = GetParentXamlReactControl(reactTag).lock()) {
         reactControl->blur(shadowNode->GetView());
       } else {
@@ -1251,10 +1059,8 @@ void NativeUIManager::blur(int64_t reactTag) {
 // ReactControl is used here. To get the IXamlReactControl for any node, we
 // first iterate its parent until reaching the root node. Then look up
 // m_tagsToXamlReactControl to get the IXamlReactControl
-std::weak_ptr<react::uwp::IXamlReactControl>
-NativeUIManager::GetParentXamlReactControl(int64_t tag) const {
-  if (auto shadowNode = static_cast<ShadowNodeBase *>(
-          m_host->FindParentRootShadowNode(tag))) {
+std::weak_ptr<react::uwp::IXamlReactControl> NativeUIManager::GetParentXamlReactControl(int64_t tag) const {
+  if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindParentRootShadowNode(tag))) {
     auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
     if (it != m_tagsToXamlReactControl.end()) {
       return it->second;

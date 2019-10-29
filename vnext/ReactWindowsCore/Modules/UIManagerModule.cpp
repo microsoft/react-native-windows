@@ -19,32 +19,26 @@ using namespace facebook::xplat;
 namespace facebook {
 namespace react {
 
-UIManager::UIManager(
-    std::vector<std::unique_ptr<IViewManager>> &&viewManagers,
-    INativeUIManager *nativeManager)
-    : m_viewManagers(std::move(viewManagers)),
-      m_nativeUIManager(nativeManager) {
+UIManager::UIManager(std::vector<std::unique_ptr<IViewManager>> &&viewManagers, INativeUIManager *nativeManager)
+    : m_viewManagers(std::move(viewManagers)), m_nativeUIManager(nativeManager) {
   m_nativeUIManager->setHost(this);
 }
 
 UIManager::~UIManager() {
-  m_nodeRegistry.removeAllRootViews(
-      [this](int64_t rootViewTag) { removeRootView(rootViewTag); });
+  m_nodeRegistry.removeAllRootViews([this](int64_t rootViewTag) { removeRootView(rootViewTag); });
 
   m_nativeUIManager->setHost(nullptr);
   m_nativeUIManager->destroy();
 }
 
-folly::dynamic UIManager::getConstantsForViewManager(
-    const std::string &className) {
+folly::dynamic UIManager::getConstantsForViewManager(const std::string &className) {
   const IViewManager *vm = GetViewManager(className);
   if (vm != nullptr)
     return vm->GetConstants();
   return nullptr;
 }
 
-void UIManager::populateViewManagerConstants(
-    std::map<std::string, dynamic> &constants) {
+void UIManager::populateViewManagerConstants(std::map<std::string, dynamic> &constants) {
   for (auto &&vm : m_viewManagers)
     constants.emplace(vm->GetName(), vm->GetConstants());
 }
@@ -57,11 +51,7 @@ IViewManager *UIManager::GetViewManager(const std::string &className) const {
   return nullptr;
 }
 
-void UIManager::RegisterRootView(
-    IReactRootView *rootView,
-    int64_t rootViewTag,
-    int64_t width,
-    int64_t height) {
+void UIManager::RegisterRootView(IReactRootView *rootView, int64_t rootViewTag, int64_t width, int64_t height) {
   static std::string rootClassName = "ROOT";
   auto viewManager = GetViewManager(rootClassName);
 
@@ -87,10 +77,7 @@ void UIManager::zombieView(int64_t tag) {
   DropView(tag, false, true);
 }
 
-void UIManager::DropView(
-    int64_t tag,
-    bool removeChildren /*= true*/,
-    bool zombieView /* = false */) {
+void UIManager::DropView(int64_t tag, bool removeChildren /*= true*/, bool zombieView /* = false */) {
   auto &node = m_nodeRegistry.getNode(tag);
 
   node.onDropViewInstance();
@@ -118,8 +105,7 @@ void UIManager::removeSubviewsFromContainerWithID(int64_t containerTag) {
   for (size_t i = 0; i < containerNode.m_children.size(); i++)
     indicesToRemove[static_cast<size_t>(i)] = static_cast<int64_t>(i);
   std::vector<int64_t> emptyVec;
-  manageChildren(
-      containerTag, emptyVec, emptyVec, emptyVec, emptyVec, indicesToRemove);
+  manageChildren(containerTag, emptyVec, emptyVec, emptyVec, emptyVec, indicesToRemove);
 }
 
 std::vector<int64_t> PopulateIntVecFromDynamicArray(const folly::dynamic &arr) {
@@ -148,13 +134,7 @@ void UIManager::manageChildren(
   auto vecAddChildTags = PopulateIntVecFromDynamicArray(addChildTags);
   auto vecAddAtIndices = PopulateIntVecFromDynamicArray(addAtIndices);
   auto vecRemoveFrom = PopulateIntVecFromDynamicArray(removeFrom);
-  manageChildren(
-      viewTag,
-      vecMoveFrom,
-      vecMoveTo,
-      vecAddChildTags,
-      vecAddAtIndices,
-      vecRemoveFrom);
+  manageChildren(viewTag, vecMoveFrom, vecMoveTo, vecAddChildTags, vecAddAtIndices, vecRemoveFrom);
 }
 
 struct ViewAtIndex {
@@ -188,22 +168,16 @@ void UIManager::manageChildren(
     for (size_t i = 0; i < numToMove; ++i) {
       auto moveFromIndex = moveFrom[i];
       auto tagToMove =
-          m_nodeRegistry
-              .getNode(static_cast<size_t>(
-                  shadowNodeToManage
-                      .m_children[static_cast<size_t>(moveFromIndex)]))
+          m_nodeRegistry.getNode(static_cast<size_t>(shadowNodeToManage.m_children[static_cast<size_t>(moveFromIndex)]))
               .m_tag;
-      viewsToAdd[i] =
-          make_shared<ViewAtIndex>(ViewAtIndex{tagToMove, moveTo[i]});
-      viewsToRemove[i] =
-          make_shared<ViewAtIndex>(ViewAtIndex{tagToMove, moveFromIndex});
+      viewsToAdd[i] = make_shared<ViewAtIndex>(ViewAtIndex{tagToMove, moveTo[i]});
+      viewsToRemove[i] = make_shared<ViewAtIndex>(ViewAtIndex{tagToMove, moveFromIndex});
     }
   }
 
   if (numToAdd > 0) {
     for (size_t i = 0; i < numToAdd; ++i) {
-      viewsToAdd[numToMove + i] = make_shared<ViewAtIndex>(
-          ViewAtIndex{addChildTags[i], addAtIndices[i]});
+      viewsToAdd[numToMove + i] = make_shared<ViewAtIndex>(ViewAtIndex{addChildTags[i], addAtIndices[i]});
     }
   }
 
@@ -211,13 +185,9 @@ void UIManager::manageChildren(
     for (size_t i = 0; i < numToRemove; ++i) {
       auto indexToRemove = removeFrom[i];
       auto tagToRemove =
-          m_nodeRegistry
-              .getNode(static_cast<size_t>(
-                  shadowNodeToManage
-                      .m_children[static_cast<size_t>(indexToRemove)]))
+          m_nodeRegistry.getNode(static_cast<size_t>(shadowNodeToManage.m_children[static_cast<size_t>(indexToRemove)]))
               .m_tag;
-      viewsToRemove[i] =
-          make_shared<ViewAtIndex>(ViewAtIndex{tagToRemove, indexToRemove});
+      viewsToRemove[i] = make_shared<ViewAtIndex>(ViewAtIndex{tagToRemove, indexToRemove});
       tagsToDelete[i] = tagToRemove;
     }
   }
@@ -233,12 +203,8 @@ void UIManager::manageChildren(
   //    them. Like the view removal, iteration direction is important
   //    to preserve the correct index.
 
-  std::sort(
-      viewsToAdd.begin(), viewsToAdd.end(), ViewAtIndex::ViewAtIndexCompare);
-  std::sort(
-      viewsToRemove.begin(),
-      viewsToRemove.end(),
-      ViewAtIndex::ViewAtIndexCompare);
+  std::sort(viewsToAdd.begin(), viewsToAdd.end(), ViewAtIndex::ViewAtIndexCompare);
+  std::sort(viewsToRemove.begin(), viewsToRemove.end(), ViewAtIndex::ViewAtIndexCompare);
 
   // Apply changes to the ReactShadowNode hierarchy.
   for (auto i = static_cast<int>(viewsToRemove.size()) - 1; i >= 0; --i) {
@@ -246,8 +212,7 @@ void UIManager::manageChildren(
     auto &shadowNodeToRemove = m_nodeRegistry.getNode(viewAtIndex->tag);
 
     shadowNodeToManage.m_children.erase(
-        shadowNodeToManage.m_children.begin() +
-        static_cast<size_t>(viewAtIndex->index));
+        shadowNodeToManage.m_children.begin() + static_cast<size_t>(viewAtIndex->index));
     shadowNodeToManage.RemoveChildAt(viewAtIndex->index);
   }
 
@@ -256,14 +221,11 @@ void UIManager::manageChildren(
     auto &shadowNodeToAdd = m_nodeRegistry.getNode(viewAtIndex->tag);
     shadowNodeToAdd.m_parent = shadowNodeToManage.m_tag;
     shadowNodeToManage.m_children.insert(
-        shadowNodeToManage.m_children.begin() +
-            static_cast<size_t>(viewAtIndex->index),
-        shadowNodeToAdd.m_tag);
+        shadowNodeToManage.m_children.begin() + static_cast<size_t>(viewAtIndex->index), shadowNodeToAdd.m_tag);
     if (!shadowNodeToManage.m_zombie)
       shadowNodeToManage.AddView(shadowNodeToAdd, viewAtIndex->index);
 
-    m_nativeUIManager->AddView(
-        shadowNodeToManage, shadowNodeToAdd, viewAtIndex->index);
+    m_nativeUIManager->AddView(shadowNodeToManage, shadowNodeToAdd, viewAtIndex->index);
   }
 
   for (auto tagToDelete : tagsToDelete)
@@ -274,8 +236,7 @@ void UIManager::configureNextLayoutAnimation(
     folly::dynamic &&config,
     facebook::xplat::module::CxxModule::Callback success,
     facebook::xplat::module::CxxModule::Callback error) {
-  m_nativeUIManager->configureNextLayoutAnimation(
-      std::move(config), success, error);
+  m_nativeUIManager->configureNextLayoutAnimation(std::move(config), success, error);
 }
 
 void UIManager::createView(
@@ -317,10 +278,7 @@ void UIManager::setChildren(int64_t viewTag, folly::dynamic &&childrenTags) {
   }
 }
 
-void UIManager::updateView(
-    int64_t tag,
-    const std::string &className,
-    folly::dynamic &&props) {
+void UIManager::updateView(int64_t tag, const std::string &className, folly::dynamic &&props) {
   m_nativeUIManager->ensureInBatch();
   ShadowNode *pShadowNode = FindShadowNodeForTag(tag);
   // Guard against setNative calls to removed views
@@ -336,8 +294,7 @@ void UIManager::updateView(
 void UIManager::RemoveShadowNode(ShadowNode &nodeToRemove) {
   nodeToRemove.m_parent = -1;
   m_nodeRegistry.removeNode(nodeToRemove.m_tag);
-  for (auto i = static_cast<int>(nodeToRemove.m_children.size()) - 1; i >= 0;
-       --i) {
+  for (auto i = static_cast<int>(nodeToRemove.m_children.size()) - 1; i >= 0; --i) {
     RemoveShadowNode(m_nodeRegistry.getNode(nodeToRemove.m_children[i]));
   }
 
@@ -351,37 +308,24 @@ void UIManager::replaceExistingNonRootView(int64_t oldTag, int64_t newTag) {
   std::vector<int64_t> tagToAdd(1);
   tagToAdd[0] = newTag;
 
-  CHECK(m_nodeRegistry.getNode(oldTag).m_parent != -1)
-      << "oldTag must have a parent";
-  auto &parent =
-      m_nodeRegistry.getNode(m_nodeRegistry.getNode(oldTag).m_parent);
+  CHECK(m_nodeRegistry.getNode(oldTag).m_parent != -1) << "oldTag must have a parent";
+  auto &parent = m_nodeRegistry.getNode(m_nodeRegistry.getNode(oldTag).m_parent);
   auto it = find(parent.m_children.begin(), parent.m_children.end(), oldTag);
   CHECK(it != parent.m_children.end());
   indicesToAdd[0] = indicesToRemove[0] = it - parent.m_children.begin();
 
   std::vector<int64_t> emptyVec;
-  manageChildren(
-      parent.m_tag,
-      emptyVec,
-      emptyVec,
-      tagToAdd,
-      indicesToAdd,
-      indicesToRemove);
+  manageChildren(parent.m_tag, emptyVec, emptyVec, tagToAdd, indicesToAdd, indicesToRemove);
 }
 
-void UIManager::dispatchViewManagerCommand(
-    int64_t reactTag,
-    int64_t commandId,
-    folly::dynamic &&commandArgs) {
+void UIManager::dispatchViewManagerCommand(int64_t reactTag, int64_t commandId, folly::dynamic &&commandArgs) {
   m_nativeUIManager->ensureInBatch();
   auto &node = m_nodeRegistry.getNode(reactTag);
   if (!node.m_zombie)
     node.dispatchCommand(commandId, std::move(commandArgs));
 }
 
-void UIManager::measure(
-    int64_t reactTag,
-    facebook::xplat::module::CxxModule::Callback callback) {
+void UIManager::measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) {
   auto &node = m_nodeRegistry.getNode(reactTag);
   int64_t rootTag = reactTag;
   while (true) {
@@ -393,6 +337,11 @@ void UIManager::measure(
   auto &rootNode = m_nodeRegistry.getNode(rootTag);
 
   m_nativeUIManager->measure(node, rootNode, callback);
+}
+
+void UIManager::measureInWindow(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) {
+  auto &node = m_nodeRegistry.getNode(reactTag);
+  m_nativeUIManager->measureInWindow(node, callback);
 }
 
 void UIManager::findSubviewIn(
@@ -464,8 +413,7 @@ ShadowNode &UIManager::GetShadowNodeForTag(int64_t tag) {
   return m_nodeRegistry.getNode(tag);
 }
 
-UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager> &&manager)
-    : m_manager(std::move(manager)) {}
+UIManagerModule::UIManagerModule(std::shared_ptr<IUIManager> &&manager) : m_manager(std::move(manager)) {}
 
 std::string UIManagerModule::getName() {
   return "UIManager";
@@ -479,8 +427,7 @@ std::map<std::string, folly::dynamic> UIManagerModule::getConstants() {
   return constants;
 }
 
-std::vector<facebook::xplat::module::CxxModule::Method>
-UIManagerModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMethods() {
   std::shared_ptr<IUIManager> manager(m_manager);
   return {
       Method(
@@ -497,46 +444,30 @@ UIManagerModule::getMethods() {
             return manager->getConstantsForViewManager(jsArgAsString(args, 0));
           },
           SyncTag),
-      Method(
-          "removeRootView",
-          [manager](dynamic args) {
-            manager->removeRootView(jsArgAsInt(args, 0));
-          }),
+      Method("removeRootView", [manager](dynamic args) { manager->removeRootView(jsArgAsInt(args, 0)); }),
       Method(
           "createView",
           [manager](dynamic args) {
             manager->createView(
-                jsArgAsInt(args, 0),
-                jsArgAsString(args, 1),
-                jsArgAsInt(args, 2),
-                std::move(jsArgAsDynamic(args, 3)));
+                jsArgAsInt(args, 0), jsArgAsString(args, 1), jsArgAsInt(args, 2), std::move(jsArgAsDynamic(args, 3)));
           }),
       Method(
           "configureNextLayoutAnimation",
           [manager](dynamic args, Callback cbSuccess, Callback cbError) {
-            manager->configureNextLayoutAnimation(
-                std::move(jsArgAsDynamic(args, 0)), cbSuccess, cbError);
+            manager->configureNextLayoutAnimation(std::move(jsArgAsDynamic(args, 0)), cbSuccess, cbError);
           },
           AsyncTag),
       Method(
           "setChildren",
-          [manager](dynamic args) {
-            manager->setChildren(
-                jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1)));
-          }),
+          [manager](dynamic args) { manager->setChildren(jsArgAsInt(args, 0), std::move(jsArgAsArray(args, 1))); }),
       Method(
           "updateView",
           [manager](dynamic args) {
-            manager->updateView(
-                jsArgAsInt(args, 0),
-                jsArgAsString(args, 1),
-                std::move(jsArgAsDynamic(args, 2)));
+            manager->updateView(jsArgAsInt(args, 0), jsArgAsString(args, 1), std::move(jsArgAsDynamic(args, 2)));
           }),
       Method(
           "removeSubviewsFromContainerWithID",
-          [manager](dynamic args) {
-            manager->removeSubviewsFromContainerWithID(jsArgAsInt(args, 0));
-          }),
+          [manager](dynamic args) { manager->removeSubviewsFromContainerWithID(jsArgAsInt(args, 0)); }),
       Method(
           "manageChildren",
           [manager](dynamic args) {
@@ -550,35 +481,24 @@ UIManagerModule::getMethods() {
           }),
       Method(
           "replaceExistingNonRootView",
-          [manager](dynamic args) {
-            manager->replaceExistingNonRootView(
-                jsArgAsInt(args, 0), jsArgAsInt(args, 1));
-          }),
+          [manager](dynamic args) { manager->replaceExistingNonRootView(jsArgAsInt(args, 0), jsArgAsInt(args, 1)); }),
       Method(
           "dispatchViewManagerCommand",
           [manager](dynamic args) {
             manager->dispatchViewManagerCommand(
-                jsArgAsInt(args, 0),
-                jsArgAsInt(args, 1),
-                std::move(jsArgAsDynamic(args, 2)));
+                jsArgAsInt(args, 0), jsArgAsInt(args, 1), std::move(jsArgAsDynamic(args, 2)));
           }),
+      Method("measure", [manager](dynamic args, Callback cb) { manager->measure(jsArgAsInt(args, 0), cb); }),
       Method(
-          "measure",
-          [manager](dynamic args, Callback cb) {
-            manager->measure(jsArgAsInt(args, 0), cb);
-          }),
+          "measureInWindow",
+          [manager](dynamic args, Callback cb) { manager->measureInWindow(jsArgAsInt(args, 0), cb); }),
       Method(
           "findSubviewIn",
           [manager](dynamic args, Callback cb) {
-            manager->findSubviewIn(
-                jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
+            manager->findSubviewIn(jsArgAsInt(args, 0), std::move(jsArgAsDynamic(args, 1)), cb);
           }),
-      Method(
-          "focus",
-          [manager](dynamic args) { manager->focus(jsArgAsInt(args, 0)); }),
-      Method(
-          "blur",
-          [manager](dynamic args) { manager->blur(jsArgAsInt(args, 0)); }),
+      Method("focus", [manager](dynamic args) { manager->focus(jsArgAsInt(args, 0)); }),
+      Method("blur", [manager](dynamic args) { manager->blur(jsArgAsInt(args, 0)); }),
       Method(
           "setJSResponder",
           [manager](dynamic args) {
@@ -601,8 +521,7 @@ shared_ptr<IUIManager> createIUIManager(
   return std::make_shared<UIManager>(std::move(viewManagers), nativeManager);
 }
 
-std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(
-    std::shared_ptr<IUIManager> uimanager) {
+std::unique_ptr<facebook::xplat::module::CxxModule> createUIManagerModule(std::shared_ptr<IUIManager> uimanager) {
   return std::make_unique<UIManagerModule>(std::move(uimanager));
 }
 

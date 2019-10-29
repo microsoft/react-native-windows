@@ -3,9 +3,10 @@
 
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
-#include "Unicode.h"
 
 #include <cxxreact/MessageQueueThread.h>
+#include "ByteArrayBuffer.h"
+#include "Unicode.h"
 
 // This file contains non-edge-mode (or win32) implementations.
 #if !defined(USE_EDGEMODE_JSRT)
@@ -35,40 +36,11 @@ struct FileVersionInfoResource {
 
 } // namespace
 
-JsWeakRef ChakraRuntime::newWeakObjectRef(const facebook::jsi::Object &obj) {
-  JsWeakRef weakRef;
-  JsCreateWeakReference(objectRef(obj), &weakRef);
-  return weakRef;
-}
-
-JsValueRef ChakraRuntime::strongObjectRef(
-    const facebook::jsi::WeakObject &obj) {
-  JsValueRef strongRef;
-  JsGetWeakReferenceValue(objectRef(obj), &strongRef);
-  return strongRef;
-}
-
-// Note :: ChakraCore header provides an API which takes 8-bit string .. which
-// is not available in edge mode.
-JsValueRef ChakraRuntime::createJSString(const char *data, size_t length) {
-  JsValueRef value;
-  JsCreateString(reinterpret_cast<const char *>(data), length, &value);
-  return value;
-}
-
-// Note :: ChakraCore header provides an API which takes 8-bit string .. which
-// is not available in edge mode.
-JsValueRef ChakraRuntime::createJSPropertyId(const char *data, size_t length) {
-  JsValueRef propIdRef;
-  if (JsNoError != JsCreatePropertyId(data, length, &propIdRef))
-    std::terminate();
-  return propIdRef;
-}
+// TODO (yicyao): We temporarily removed weak reference semantics from
+// ChakraCore based jsi::Runtime.
 
 // ES6 Promise callback
-void CALLBACK ChakraRuntime::PromiseContinuationCallback(
-    JsValueRef funcRef,
-    void *callbackState) noexcept {
+void CALLBACK ChakraRuntime::PromiseContinuationCallback(JsValueRef funcRef, void *callbackState) noexcept {
   ChakraRuntime *runtime = static_cast<ChakraRuntime *>(callbackState);
   runtime->PromiseContinuation(funcRef);
 }
@@ -88,16 +60,13 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
     runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
       JsValueRef undefinedValue;
       JsGetUndefinedValue(&undefinedValue);
-      checkException(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
+      VerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
       JsRelease(funcRef, nullptr);
     });
   }
 }
 
-void ChakraRuntime::PromiseRejectionTracker(
-    JsValueRef /*promise*/,
-    JsValueRef reason,
-    bool handled) {
+void ChakraRuntime::PromiseRejectionTracker(JsValueRef /*promise*/, JsValueRef reason, bool handled) {
   if (!handled) {
     std::ostringstream errorStream;
     errorStream << "ChakraCore uncaught promise rejection: ";
@@ -111,7 +80,7 @@ void ChakraRuntime::PromiseRejectionTracker(
         JsValueRef stackStrValue;
         error = JsConvertValueToString(stack, &stackStrValue);
         if (error == JsNoError) {
-          errorStream << JSStringToSTLString(stackStrValue);
+          errorStream << ToStdString(ChakraObjectRef(stackStrValue));
         }
       }
     }
@@ -121,14 +90,12 @@ void ChakraRuntime::PromiseRejectionTracker(
       JsValueRef strValue;
       error = JsConvertValueToString(reason, &strValue);
       if (error == JsNoError) {
-        errorStream << JSStringToSTLString(strValue);
+        errorStream << ToStdString(ChakraObjectRef(strValue));
       }
     }
 
     std::string errorString = errorStream.str();
-    throw facebook::jsi::JSError(
-        *this,
-        createStringFromAscii(errorString.c_str(), errorString.length()));
+    throw facebook::jsi::JSError(*this, createStringFromAscii(errorString.c_str(), errorString.length()));
   }
 }
 
@@ -142,11 +109,8 @@ void ChakraRuntime::setupNativePromiseContinuation() noexcept {
 void ChakraRuntime::startDebuggingIfNeeded() {
   auto &args = runtimeArgs();
   if (args.enableDebugging) {
-    auto port =
-        args.debuggerPort == 0 ? DebuggerDefaultPort : args.debuggerPort;
-    auto runtimeName = args.debuggerRuntimeName.empty()
-        ? DebuggerDefaultRuntimeName
-        : args.debuggerRuntimeName;
+    auto port = args.debuggerPort == 0 ? DebuggerDefaultPort : args.debuggerPort;
+    auto runtimeName = args.debuggerRuntimeName.empty() ? DebuggerDefaultRuntimeName : args.debuggerRuntimeName;
 
     JsErrorCode result = enableDebugging(
         m_runtime,
@@ -164,8 +128,7 @@ void ChakraRuntime::startDebuggingIfNeeded() {
 
   if (args.debuggerBreakOnNextLine && m_debugProtocolHandler) {
     if (args.loggingCallback)
-      args.loggingCallback(
-          "Waiting for debugger to connect...", LogLevel::Info);
+      args.loggingCallback("Waiting for debugger to connect...", LogLevel::Info);
 
     m_debugProtocolHandler->WaitForDebugger();
 
@@ -197,13 +160,11 @@ JsErrorCode ChakraRuntime::enableDebugging(
   auto protocolHandler = std::make_unique<DebugProtocolHandler>(runtime);
   auto service = std::make_unique<DebugService>(runtime);
 
-  result =
-      service->RegisterHandler(runtimeName, *protocolHandler, breakOnNextLine);
+  result = service->RegisterHandler(runtimeName, *protocolHandler, breakOnNextLine);
 
   if (result == JsNoError) {
     if (protocolHandler) {
-      result = protocolHandler->SetCommandQueueCallback(
-          ProcessDebuggerCommandQueueCallback, this);
+      result = protocolHandler->SetCommandQueueCallback(ProcessDebuggerCommandQueueCallback, this);
     }
   }
 
@@ -212,9 +173,7 @@ JsErrorCode ChakraRuntime::enableDebugging(
 
     if (runtimeArgs().loggingCallback)
       runtimeArgs().loggingCallback(
-          (std::string("Listening on ws://127.0.0.1:") + std::to_string(port) +
-           "/" + runtimeName)
-              .c_str(),
+          (std::string("Listening on ws://127.0.0.1:") + std::to_string(port) + "/" + runtimeName).c_str(),
           LogLevel::Info);
   }
 
@@ -236,8 +195,7 @@ void ChakraRuntime::ProcessDebuggerCommandQueue() {
   }
 }
 
-/* static */ void ChakraRuntime::ProcessDebuggerCommandQueueCallback(
-    void *callbackState) {
+/* static */ void ChakraRuntime::ProcessDebuggerCommandQueueCallback(void *callbackState) {
   ChakraRuntime *runtime = reinterpret_cast<ChakraRuntime *>(callbackState);
 
   if (runtime) {
@@ -260,26 +218,21 @@ void ChakraRuntime::ProcessDebuggerCommandQueue() {
   if (!GetModuleHandleExW(0, chakraDllName, &moduleHandle))
     return;
 
-  std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper{
-      moduleHandle, std::move(freeLibraryWrapper)};
+  std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper{moduleHandle, std::move(freeLibraryWrapper)};
 
-  HRSRC versionResourceHandle =
-      FindResourceW(moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
+  HRSRC versionResourceHandle = FindResourceW(moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
 
   if (!versionResourceHandle ||
-      SizeofResource(
-          static_cast<HMODULE>(moduleHandleWrapper.get()),
-          versionResourceHandle) < sizeof(FileVersionInfoResource))
+      SizeofResource(static_cast<HMODULE>(moduleHandleWrapper.get()), versionResourceHandle) <
+          sizeof(FileVersionInfoResource))
     return;
 
-  HGLOBAL versionResourcePtrHandle =
-      LoadResource(moduleHandle, versionResourceHandle);
+  HGLOBAL versionResourcePtrHandle = LoadResource(moduleHandle, versionResourceHandle);
   if (!versionResourcePtrHandle)
     return;
 
   FileVersionInfoResource *chakraVersionInfo =
-      static_cast<FileVersionInfoResource *>(
-          LockResource(versionResourcePtrHandle));
+      static_cast<FileVersionInfoResource *>(LockResource(versionResourcePtrHandle));
   if (!chakraVersionInfo)
     return;
 
@@ -289,21 +242,16 @@ void ChakraRuntime::ProcessDebuggerCommandQueue() {
 #endif
 }
 
-std::unique_ptr<const facebook::jsi::Buffer>
-ChakraRuntime::generatePreparedScript(
+std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScript(
     const std::string &sourceURL,
     const facebook::jsi::Buffer &sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(
-      reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
+  const std::wstring scriptUTF16 =
+      Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
 
   unsigned int bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) ==
-      JsNoError) {
-    std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(
-        std::make_unique<ByteArrayBuffer>(bytecodeSize));
-    if (JsSerializeScript(
-            scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) ==
-        JsNoError) {
+  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError) {
+    std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(std::make_unique<ByteArrayBuffer>(bytecodeSize));
+    if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) == JsNoError) {
       return bytecodeBuffer;
     }
   }
@@ -315,26 +263,16 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
     const facebook::jsi::Buffer &buffer,
     const std::string &sourceURL) {
   JsValueRef sourceRef;
-  JsCreateString(
-      reinterpret_cast<const char *>(buffer.data()), buffer.size(), &sourceRef);
+  JsCreateString(reinterpret_cast<const char *>(buffer.data()), buffer.size(), &sourceRef);
 
   JsValueRef sourceURLRef = nullptr;
-  JsCreateString(
-      reinterpret_cast<const char *>(sourceURL.c_str()),
-      sourceURL.size(),
-      &sourceURLRef);
+  JsCreateString(reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size(), &sourceURLRef);
 
   JsValueRef result;
-  checkException(
-      JsRun(
-          sourceRef,
-          0,
-          sourceURLRef,
-          JsParseScriptAttributes::JsParseScriptAttributeNone,
-          &result),
-      sourceURL.c_str());
+  VerifyJsErrorElseThrow(
+      JsRun(sourceRef, 0, sourceURLRef, JsParseScriptAttributes::JsParseScriptAttributeNone, &result));
 
-  return createValue(result);
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 // TODO :: Return result
@@ -351,18 +289,14 @@ bool ChakraRuntime::evaluateSerializedScript(
           &bytecodeArrayBuffer) == JsNoError) {
     JsValueRef sourceURLRef = nullptr;
     if (!sourceURL.empty()) {
-      sourceURLRef = createJSString(
-          reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size());
+      sourceURLRef = ToJsString(std::string_view{reinterpret_cast<const char *>(sourceURL.c_str()), sourceURL.size()});
     }
 
     JsValueRef value = nullptr;
     JsErrorCode result = JsRunSerialized(
         bytecodeArrayBuffer,
-        [](JsSourceContext sourceContext,
-           JsValueRef *value,
-           JsParseScriptAttributes *parseAttributes) {
-          const facebook::jsi::Buffer *scriptSource =
-              reinterpret_cast<const facebook::jsi::Buffer *>(sourceContext);
+        [](JsSourceContext sourceContext, JsValueRef *value, JsParseScriptAttributes *parseAttributes) {
+          const facebook::jsi::Buffer *scriptSource = reinterpret_cast<const facebook::jsi::Buffer *>(sourceContext);
           if (JsCreateExternalArrayBuffer(
                   const_cast<uint8_t *>(scriptSource->data()),
                   static_cast<unsigned int>(scriptSource->size()),
@@ -383,7 +317,7 @@ bool ChakraRuntime::evaluateSerializedScript(
     } else if (result == JsErrorBadSerializedScript) {
       return false;
     } else {
-      checkException(result);
+      VerifyChakraErrorElseThrow(result);
     }
   }
 

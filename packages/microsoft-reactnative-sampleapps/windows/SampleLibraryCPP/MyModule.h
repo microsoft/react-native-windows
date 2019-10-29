@@ -3,11 +3,14 @@
 
 #pragma once
 
+#include "pch.h"
+
 #include <functional>
 #include <sstream>
+
 #include "NativeModules.h"
 
-namespace TestApp {
+namespace SampleLibraryCPP {
 
 REACT_MODULE(MyModule);
 struct MyModule {
@@ -18,9 +21,7 @@ struct MyModule {
   const int m_fldConst = 43;
 
   REACT_CONSTANT_PROVIDER(SimpleConstants);
-  void SimpleConstants(
-      const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter
-          &writer) noexcept {
+  void SimpleConstants(const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter &writer) noexcept {
     ::Microsoft::ReactNative::WriteProperty(writer, "simpleConst1", 5);
     ::Microsoft::ReactNative::WriteProperty(writer, "simpleConst2", "World");
   }
@@ -83,4 +84,4 @@ struct MyModule {
   }
 };
 
-} // namespace TestApp
+} // namespace SampleLibraryCPP

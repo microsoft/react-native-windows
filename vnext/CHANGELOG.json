@@ -2,6 +2,411 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Oct 2019 01:31:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.52",
+      "version": "0.60.0-vnext.52",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update the CLI templates to use Microsoft.ReactNative",
+            "author": "jthysell@microsoft.com",
+            "commit": "45ae039458bf81794bd0b4d80fff18ffec4e347c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Oct 2019 23:51:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.51",
+      "version": "0.60.0-vnext.51",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Move closer to allowing JSI with OSS RN",
+            "author": "acoates@microsoft.com",
+            "commit": "80801ec6ff3272320e1d150483d3422ec9690b8f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2019 21:50:14 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.50",
+      "version": "0.60.0-vnext.50",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix remote debugger for Playground app. Now you can pass  the hostname:port of a running metro bundler instance and it will connect correctly",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3c510d99cb0db6b1fc371c589b6e97f94d85c8b5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2019 02:55:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.49",
+      "version": "0.60.0-vnext.49",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.42.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "fe65a1039840af846610bbc174a9772f3d4ca8e5"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.13",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "d4b0d7291715673659e8490ef5ba8c1d65f26e56"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 23:07:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.48",
+      "version": "0.60.0-vnext.48",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Custom View Managers E2E",
+            "author": "jthysell@microsoft.com",
+            "commit": "88cb2dc26682d9448ef07b15c94124ba07153594"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 21:43:48 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.47",
+      "version": "0.60.0-vnext.47",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "go back to native implementation for getPropertyNames",
+            "author": "stecrain@microsoft.com",
+            "commit": "b3e7a4d358874e8a6f693c8dc84c3022c7d4d087"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 20:56:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.46",
+      "version": "0.60.0-vnext.46",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.12",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "44da446020182a3f5ab3d0a499a909e61d11c52d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2019 01:44:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.45",
+      "version": "0.60.0-vnext.45",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update Docs with VS Code launch config",
+            "author": "brkeyonz@microsoft.com",
+            "commit": "1df519266ddf300e9f8fd8948d2fb96e4d068546"
+          },
+          {
+            "comment": "Upgrade to ChakraCore.Debugger 0.0.0.41.",
+            "author": "julio@rochsquadron.net",
+            "commit": "c6427453fb5ef753ad38b872f04990c4d4cca679"
+          },
+          {
+            "comment": "Fix remaining JSI unit tests and some code clean up.",
+            "author": "yicyao@microsoft.com",
+            "commit": "1413e2f189dd7d59511c6220823c37c251b5de89"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "make run-windows work on x86 machines",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "280c71dbe5b34e13bb5012d35446324e1df1b039"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Oct 2019 18:04:40 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.44",
+      "version": "0.60.0-vnext.44",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix assert/missing else when setting alignSelf to null",
+            "author": "adamgor@microsoft.com",
+            "commit": "8c9afe38a4c5b6e39fb42a5f0af7e3fbc1cfcbae"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Oct 2019 09:06:03 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.43",
+      "version": "0.60.0-vnext.43",
+      "comments": {
+        "none": [
+          {
+            "comment": "change clang format column count to 120",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "a1e10087ad39b3c4f26a806a50acdcf719056ba6"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Register 2x NYI stubs for NativeAnimatedModule",
+            "author": "adamgor@microsoft.com",
+            "commit": "7fe94c3453054779d8004da83f3e7efd1c433caa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Oct 2019 20:38:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.42",
+      "version": "0.60.0-vnext.42",
+      "comments": {
+        "none": [
+          {
+            "comment": "Create Calculated Animation which allows for animations that don't follow Bezier curves",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "3785eabdd6fad1417602b4ad78f4f46ab6b4a985"
+          },
+          {
+            "comment": "Add more logs to troubleshoot undefinedBuild and Pack NuGet randomly fails",
+            "author": "licanhua@live.com",
+            "commit": "b9f8626afe67dc7c9a006f4f44b3a1aa51fb0891"
+          },
+          {
+            "comment": "Removed MainReactNativeHost from samples and use ReactApplication properties instead.",
+            "author": "vmorozov@microsoft.com",
+            "commit": "4562d6f570094dd439e7d5be225ffc11141c14c0"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.11",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "34944a2fcc931369ea3b5524b2c2cb3e6ba58691"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2019 03:28:58 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.41",
+      "version": "0.60.0-vnext.41",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.9",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "399ac7d57bb75dc49a4a9c8acba14301d8cb7dfc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2019 01:01:42 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.40",
+      "version": "0.60.0-vnext.40",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix build issue with react-native run-windows",
+            "author": "kmelmon@microsoft.com",
+            "commit": "0faddb46f52a6409b802afa54df7ac33b6159681"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Introduce ChakraPointerValue and reimplement many Runtime functions with it.",
+            "author": "yicyao@microsoft.com",
+            "commit": "af2be74461b33fa6fdcafbb53d4f4388b16a98d6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Oct 2019 21:22:01 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.39",
+      "version": "0.60.0-vnext.39",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix run-windows app installation hang",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "6c1f607816162e9beb50f942a0babe9229ac7d68"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Oct 2019 20:36:35 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.38",
+      "version": "0.60.0-vnext.38",
+      "comments": {
+        "none": [
+          {
+            "comment": "Don't hardcode the path to v141 platform toolset",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "5259e65b49ff7d0131cc7d731ca7bd3438b03776"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "add developer menu property",
+            "author": "kmelmon@microsoft.com",
+            "commit": "5d42737bfacccb3f90dcde8af3b4a104d26f840d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 23:10:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.37",
+      "version": "0.60.0-vnext.37",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.8",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "35f748784744598ebea97c6b039a14a008547f50"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 20:58:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.36",
+      "version": "0.60.0-vnext.36",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix two issues: 1) you cannot animated 2 subchannels of the same property with different animations. to fix this we animated yet another property set for translation and scale owned by the props nodes and use one animation to animate all of the subchannels for the uiElement. 2) Reference parameter names which started with a multi digit number are unsupported so i added an n to the start of each name, which was previously just the node's tag.",
+            "author": "stpete@microsoft.com",
+            "commit": "62049fdbd667fc71ae09b09f074446d8593d826d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 16:18:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.35",
+      "version": "0.60.0-vnext.35",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support autoCapitalize Characters",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "ba8d6abb2b955bb89428fc717033cdb2af792837"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 02:48:28 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.34",
+      "version": "0.60.0-vnext.34",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support onSubmitEditing event",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "02aa39cf03c6b1b9e0d40e4b50fe463d864b8831"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2019 00:14:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.33",
+      "version": "0.60.0-vnext.33",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "exclude Generated Files",
+            "author": "kmelmon@microsoft.com",
+            "commit": "fc6d271706cbf6e4d58baef7dab2b1c02cd0fc1c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Oct 2019 02:19:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.32",
+      "version": "0.60.0-vnext.32",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Extend flyout shadow fix to Popups",
+            "author": "kenander@microsoft.com",
+            "commit": "2e896420694fe6b89d3a0a46450b9ea6c887b058"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 23:45:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.31",
+      "version": "0.60.0-vnext.31",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Reduced and simplified sample native modules",
+            "author": "jthysell@microsoft.com",
+            "commit": "59f5a4c1dcc8b084d2e6082425501d192011ae91"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 22:35:30 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.30",
+      "version": "0.60.0-vnext.30",
+      "comments": {
+        "none": [
+          {
+            "comment": "supports measureInWindow",
+            "author": "licanhua@live.com",
+            "commit": "137abefe6aaf33513000e3775b343f218ca8171d"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.7",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "4908a69f0b290e4292864c994bc72d24aebfd376"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2019 13:17:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.29",
+      "version": "0.60.0-vnext.29",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "dont new up exceptions",
+            "author": "adamgor@microsoft.com",
+            "commit": "c0e33187035ab6a2a9eebd43228333f2664f74aa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Oct 2019 23:02:23 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.28",
       "version": "0.60.0-vnext.28",

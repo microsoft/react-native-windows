@@ -13,15 +13,13 @@ class UniversalTestInstance : public ITestInstance {
   std::shared_ptr<::react::uwp::IXamlRootView> m_rootView;
 
  public:
-  UniversalTestInstance(
-      std::shared_ptr<::react::uwp::IReactInstance> instance) noexcept;
+  UniversalTestInstance(std::shared_ptr<::react::uwp::IReactInstance> instance) noexcept;
 
 #pragma region ITestInstance members
 
   void AttachMeasuredRootView(std::string &&appName) noexcept;
   void DetachRootView() noexcept;
-  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const
-      noexcept override;
+  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
 
 #pragma endregion ITestInstance members
  private:

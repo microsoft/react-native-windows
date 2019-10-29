@@ -15,8 +15,7 @@ class AppTheme : public react::windows::AppTheme {
  public:
   AppTheme(
       const std::shared_ptr<IReactInstance> &reactInstance,
-      const std::shared_ptr<facebook::react::MessageQueueThread>
-          &defaultQueueThread);
+      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread);
   virtual ~AppTheme();
 
   const std::string getCurrentTheme() override;
@@ -31,18 +30,14 @@ class AppTheme : public react::windows::AppTheme {
 
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   std::shared_ptr<facebook::react::MessageQueueThread> m_queueThread;
-  winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{
-      winrt::Windows::UI::Xaml::ApplicationTheme::Light};
+  winrt::Windows::UI::Xaml::ApplicationTheme m_currentTheme{winrt::Windows::UI::Xaml::ApplicationTheme::Light};
   bool m_isHighContrast;
   folly::dynamic m_highContrastColors;
 
-  winrt::Windows::UI::ViewManagement::AccessibilitySettings
-      m_accessibilitySettings{};
-  winrt::Windows::UI::ViewManagement::AccessibilitySettings::
-      HighContrastChanged_revoker m_highContrastChangedRevoker{};
+  winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
+  winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
-  winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker
-      m_colorValuesChangedRevoker{};
+  winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker m_colorValuesChangedRevoker{};
 };
 
 } // namespace uwp

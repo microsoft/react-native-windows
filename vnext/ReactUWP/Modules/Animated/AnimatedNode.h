@@ -10,9 +10,7 @@ namespace uwp {
 class NativeAnimatedNodeManager;
 class AnimatedNode {
  public:
-  AnimatedNode(
-      int64_t tag,
-      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  AnimatedNode(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   int64_t Tag();
   void AddChild(int64_t animatedNode);
   void RemoveChild(int64_t animatedNode);

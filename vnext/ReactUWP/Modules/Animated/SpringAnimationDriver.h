@@ -5,11 +5,11 @@
 #pragma once
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
-#include "AnimationDriver.h"
+#include "CalculatedAnimationDriver.h"
 
 namespace react {
 namespace uwp {
-class SpringAnimationDriver : public AnimationDriver {
+class SpringAnimationDriver : public CalculatedAnimationDriver {
  public:
   SpringAnimationDriver(
       int64_t id,
@@ -19,18 +19,15 @@ class SpringAnimationDriver : public AnimationDriver {
       const std::shared_ptr<NativeAnimatedNodeManager> &manager,
       const folly::dynamic &dynamicToValues = folly::dynamic::array());
 
-  std::tuple<winrt::CompositionAnimation, winrt::CompositionScopedBatch>
-  MakeAnimation(const folly::dynamic &config) override;
-
   double ToValue() override;
 
+ protected:
+  std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
+  bool IsAnimationDone(double currentValue, double currentVelocity) override;
+
  private:
-  std::tuple<float, double> GetValueAndVelocityForTime(
-      double time,
-      double startValue);
-  bool
-  IsAtRest(double currentVelocity, double currentPosition, double endValue);
-  bool IsOvershooting(double currentValue, double startValue);
+  bool IsAtRest(double currentVelocity, double currentPosition, double endValue);
+  bool IsOvershooting(double currentValue);
 
   double m_springStiffness{0};
   double m_springDamping{0};
@@ -46,15 +43,11 @@ class SpringAnimationDriver : public AnimationDriver {
   static constexpr std::string_view s_springStiffnessParameterName{"stiffness"};
   static constexpr std::string_view s_springDampingParameterName{"damping"};
   static constexpr std::string_view s_springMassParameterName{"mass"};
-  static constexpr std::string_view s_initialVelocityParameterName{
-      "initialVelocity"};
+  static constexpr std::string_view s_initialVelocityParameterName{"initialVelocity"};
   static constexpr std::string_view s_endValueParameterName{"toValue"};
-  static constexpr std::string_view s_restSpeedThresholdParameterName{
-      "restSpeedThreshold"};
-  static constexpr std::string_view
-      s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
-  static constexpr std::string_view s_overshootClampingEnabledParameterName{
-      "overshootClamping"};
+  static constexpr std::string_view s_restSpeedThresholdParameterName{"restSpeedThreshold"};
+  static constexpr std::string_view s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
+  static constexpr std::string_view s_overshootClampingEnabledParameterName{"overshootClamping"};
   static constexpr std::string_view s_iterationsParameterName{"iterations"};
 }; // namespace uwp
 } // namespace uwp

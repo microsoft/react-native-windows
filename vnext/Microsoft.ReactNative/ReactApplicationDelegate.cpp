@@ -14,9 +14,7 @@ using namespace Windows::UI::Xaml;
 
 namespace {
 
-static void ApplyArguments(
-    winrt::Microsoft::ReactNative::ReactNativeHost host,
-    std::wstring arguments) {
+static void ApplyArguments(winrt::Microsoft::ReactNative::ReactNativeHost host, std::wstring arguments) {
   // Microsoft::ReactNative::implementation::ReactNativeHost* hostImpl {
   // get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
   if (!arguments.empty() && host.HasInstance()) {
@@ -28,30 +26,24 @@ static void ApplyArguments(
 } // namespace
 
 namespace winrt::Microsoft::ReactNative::implementation {
-ReactApplicationDelegate::ReactApplicationDelegate(
-    Application const &application)
-    : m_application(application) {
+ReactApplicationDelegate::ReactApplicationDelegate(Application const &application) : m_application(application) {
   if (application == nullptr) {
     throw winrt::hresult_null_argument(); // ArgumentNullException
   }
 
   m_reactApplication = application.as<IReactApplication>();
   if (m_reactApplication == nullptr) {
-    throw winrt::hresult_invalid_argument(
-        L"Expected argument to implement 'IReactApplication' interface");
+    throw winrt::hresult_invalid_argument(L"Expected argument to implement 'IReactApplication' interface");
   }
 
   m_application.Resuming({this, &ReactApplicationDelegate::OnResuming});
   m_application.Suspending({this, &ReactApplicationDelegate::OnSuspending});
-  m_application.LeavingBackground(
-      {this, &ReactApplicationDelegate::OnLeavingBackground});
-  m_application.EnteredBackground(
-      {this, &ReactApplicationDelegate::OnEnteredBackground});
+  m_application.LeavingBackground({this, &ReactApplicationDelegate::OnLeavingBackground});
+  m_application.EnteredBackground({this, &ReactApplicationDelegate::OnEnteredBackground});
 }
 
 void ReactApplicationDelegate::OnActivated(
-    winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const
-        &args) {
+    winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &args) {
   switch (args.Kind()) {
     case ActivationKind::Protocol:
       auto protocolArgs = args.as<IProtocolActivatedEventArgs>();
@@ -82,17 +74,13 @@ UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) {
   return host.GetOrCreateRootView(nullptr);
 }
 
-void ReactApplicationDelegate::OnResuming(
-    IInspectable sender,
-    IInspectable args) {
+void ReactApplicationDelegate::OnResuming(IInspectable sender, IInspectable args) {
   m_reactApplication.Host().OnResume([=]() { m_application.Exit(); });
 
   OutputDebugStringW(L"ReactApplicationDelegate::OnResuming");
 }
 
-void ReactApplicationDelegate::OnSuspending(
-    IInspectable sender,
-    IInspectable args) {
+void ReactApplicationDelegate::OnSuspending(IInspectable sender, IInspectable args) {
   OutputDebugStringW(L"ReactApplicationDelegate::OnSuspending");
   m_reactApplication.Host().OnSuspend();
 }
