@@ -18,6 +18,7 @@ Below are a list of components and their status towards parity between the lean 
 |Switch|**Complete**|-|**Complete**|
 |Text|**Complete** *(Some properties not supported due to device platform differences, docs coming soon)*|-|**Complete**|
 |TextInput|Partial|[TextInput project board](https://github.com/microsoft/react-native-windows/projects/20)|Partial|
+|KeyboardAvoidingView|**Complete**|-|Not supported|
 |View|Partial (some Style props left)|[View Style props project board](https://github.com/microsoft/react-native-windows/projects/19)|**Complete**|
 |VirtualizedList|Partial|No Issues Logged|**Complete**|
 
@@ -32,7 +33,7 @@ Also tracked are NativeModules, as they are essential, even if not part of the c
 |LayoutProps|**Completed**|-|Partial|
 |Alert|**Completed**|-|**Complete**|
 |AppState|Partial|[2144](https://github.com/microsoft/react-native-windows/issues/2144)|**Complete**|
-|Keyboard|Partial|[2852](https://github.com/microsoft/react-native-windows/issues/2852)|Not Implemented|
+|Keyboard|**Complete** *(keyboardWillShow/WillHide, keyboardWillChangeFrame/DidChangeFrame will no-op in Windows)*|-|Not Implemented|
 |Linking|Partial|[2853](https://github.com/microsoft/react-native-windows/issues/2853)|Partial|
 |LayoutAnimation|Not Started|[2494](https://github.com/microsoft/react-native-windows/issues/2494)|Partial|
 |Networking|Partial|[2460](https://github.com/microsoft/react-native-windows/issues/2460), [3178](https://github.com/microsoft/react-native-windows/issues/3178)|**Complete**|
