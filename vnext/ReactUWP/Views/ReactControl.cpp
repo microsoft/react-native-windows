@@ -473,5 +473,6 @@ void ReactControl::ToggleInspector() {
   }
 }
 
+TriBit g_HasActualSizeProperty{TriBit::Undefined};
 } // namespace uwp
 } // namespace react
