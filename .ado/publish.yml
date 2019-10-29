@@ -58,12 +58,12 @@ jobs:
         inputs:
           script: node ./.ado/setVersionEnvVars.js
         env:
-          RUNNER_TEMP: $(Build.StagingDirectory)
+          RUNNER_TEMP: $(Build.ArtifactStagingDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: Publish VersionEnvVars
         inputs:
-          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
+          PathtoPublish: $(Build.ArtifactStagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
 
   - job: RnwNativeBuildDesktop
@@ -91,11 +91,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          downloadPath: $(Build.ArtifactStagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+          script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - template: templates/build-rnw.yml
         parameters:
@@ -143,11 +143,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          downloadPath: $(Build.ArtifactStagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
+          script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - template: templates/build-rnw.yml
         parameters:
@@ -183,11 +183,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.StagingDirectory)
+          downloadPath: $(Build.ArtifactStagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
+          script: node $(Build.ArtifactStagingDirectory)/VersionEnvVars/versionEnvVars.js
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0

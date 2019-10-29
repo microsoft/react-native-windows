@@ -9,18 +9,18 @@ steps:
     displayName: Copy NuGet header files
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-Headers.ps1
-      arguments: -TargetRoot $(Build.StagingDirectory)
+      arguments: -TargetRoot $(Build.ArtifactStagingDirectory)
     condition: ${{ parameters.layoutHeaders }}
 
   - task: CopyFiles@2
     displayName: Copy NuGet artifacts
     inputs:
       sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
-      targetFolder: $(Build.StagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
+      targetFolder: $(Build.ArtifactStagingDirectory)/$(BuildPlatform)/$(BuildConfiguration)
       contents: ${{parameters.contents}}
 
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
       artifactName: ${{parameters.artifactName}}
-      pathtoPublish: $(Build.StagingDirectory)
+      pathtoPublish: $(Build.ArtifactStagingDirectory)
