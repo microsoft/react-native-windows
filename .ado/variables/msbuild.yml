@@ -3,5 +3,4 @@ variables:
   MSBuildPreferredToolArchitecture: x64
   MSBuildPlatformToolset: v141
   TargetPlatformVersion: 10.0.18362.0
-  WindowsSdkPath: C:\Program Files (x86)\Windows Kits\10\
   Win10Version: 18362

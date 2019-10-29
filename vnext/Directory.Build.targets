@@ -47,34 +47,4 @@
     <Message Text="=> VCTargetsPath           [$(VCTargetsPath)]" />
   </Target>
 
-<Target Name="GH3548">
-	<Message Text="(DefaultLanguageSourceExtension)           [$(DefaultLanguageSourceExtension)]" />
-	<Message Text="(XamlLanguage)                             [$(XamlLanguage)]" />
-	<Message Text="(RootNamespace)                            [$(RootNamespace)]" />
-	<Message Text="(PriIndexName)                             [$(PriIndexName)]" />
-	<Message Text="(XamlProjectName)                          [$(XamlProjectName)]" />
-	<Message Text="(DisableXbfGeneration)                     [$(DisableXbfGeneration)]" />
-	<Message Text="(DisableXbfLineInfo)                       [$(DisableXbfLineInfo)]" />
-	<Message Text="(XamlCodeGenerationControlFlags)           [$(XamlCodeGenerationControlFlags)]" />
-	<Message Text="(XamlCppIncludeDirectories)                [$(XamlCppIncludeDirectories)]" />
-	<Message Text="(XamlLocalAssembly)                        [$(XamlLocalAssembly)]" />
-	<Message Text="(MSBuildProjectFullPath)                   [$(MSBuildProjectFullPath)]" />
-	<Message Text="(XamlGeneratedOutputPath)                  [$(XamlGeneratedOutputPath)]" />
-	<Message Text="(OutputType)                               [$(OutputType)]" />
-	<Message Text="(XAMLFingerprint)                          [$(XAMLFingerprint)]" />
-	<Message Text="(XAMLFingerprintIgnorePaths)               [$(XAMLFingerprintIgnorePaths)]" />
-	<Message Text="(VCInstallDir)                             [$(VCInstallDir)]" />
-	<Message Text="(WindowsSdkPath)                           [$(WindowsSdkPath)]" />
-	<Message Text="(XamlSavedStateFilePath)                   [$(XamlSavedStateFilePath)]" />
-	<Message Text="(XamlRootsLog)                             [$(XamlRootsLog)]" />
-	<Message Text="(SuppressXamlWarnings)                     [$(SuppressXamlWarnings)]" />
-	<Message Text="(TargetPlatformMinVersion)                 [$(TargetPlatformMinVersion)]" />
-	<Message Text="(XamlResourceMapName)                      [$(XamlResourceMapName)]" />
-	<Message Text="(XamlComponentResourceLocation)            [$(XamlComponentResourceLocation)]" />
-	<Message Text="(PlatformXmlDir)                           [$(PlatformXmlDir)]" />
-	<Message Text="(EnableTypeInfoReflection)                 [$(EnableTypeInfoReflection)]" />
-	<Message Text="(EnableXBindDiagnostics)                   [$(EnableXBindDiagnostics)]" />
-	<Message Text="(EnableDefaultValidationContextGeneration) [$(EnableDefaultValidationContextGeneration)]" />
-</Target>
-
 </Project>

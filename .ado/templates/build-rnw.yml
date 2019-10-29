@@ -70,16 +70,6 @@ steps:
         -Collect:$${{ parameters.debug }}
     condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
-  # - task: MSBuild@1
-  #   inputs:
-  #     solution: $(Build.SourcesDirectory)/vnext/Universal.UnitTests/React.Windows.Universal.UnitTests.vcxproj
-  #     msbuildVersion: latest
-  #     msbuildArchitecture: x64
-  #     platform: $(BuildPlatform)
-  #     configuration: $(BuildConfiguration)
-  #     msbuildArguments:
-  #       /t:GH3548
-
   - task: MSBuild@1
     displayName: MSBuild ${{parameters.project}}
     inputs:
