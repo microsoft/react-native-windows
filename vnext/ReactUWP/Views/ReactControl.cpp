@@ -23,6 +23,7 @@
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
+#include <winrt/Windows.UI.Xaml.Media.Media3D.h>
 #include <winrt/Windows.UI.Xaml.h>
 
 namespace react {
@@ -339,6 +340,10 @@ void ReactControl::PrepareXamlRootView(XamlView const &rootView) {
     children.Clear();
 
     auto newRootView = winrt::Grid();
+    auto perspectiveTransform3D = winrt::Windows::UI::Xaml::Media::Media3D::PerspectiveTransform3D();
+    perspectiveTransform3D.Depth(850);
+    winrt::Windows::UI::Xaml::Media::Media3D::Transform3D t3d(perspectiveTransform3D);
+    newRootView.Transform3D(t3d);
     children.Append(newRootView);
     m_xamlRootView = newRootView;
   } else
