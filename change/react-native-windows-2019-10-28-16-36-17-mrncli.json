@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update the CLI templates to use Microsoft.ReactNative",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "45ae039458bf81794bd0b4d80fff18ffec4e347c",
-  "date": "2019-10-28T23:36:17.603Z"
-}

@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Oct 2019 01:31:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.52",
+      "version": "0.60.0-vnext.52",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update the CLI templates to use Microsoft.ReactNative",
+            "author": "jthysell@microsoft.com",
+            "commit": "45ae039458bf81794bd0b4d80fff18ffec4e347c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Oct 2019 23:51:07 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.51",
       "version": "0.60.0-vnext.51",
