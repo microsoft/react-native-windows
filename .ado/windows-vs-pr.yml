@@ -428,7 +428,7 @@ jobs:
 
       - template: templates\install-SDK.yml
         parameters:
-          sdkVersion: $(SDKVersion)
+          sdkVersion: $(Win10Version)
 
       - task: PowerShell@2
         displayName: Install Visual Studio dependencies
