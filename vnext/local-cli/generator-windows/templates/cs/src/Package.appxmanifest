@@ -15,7 +15,7 @@
 
   <Properties>
     <DisplayName><%=name%></DisplayName>
-    <PublisherDisplayName>React Native for UWP</PublisherDisplayName>
+    <PublisherDisplayName><%=currentUser%></PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

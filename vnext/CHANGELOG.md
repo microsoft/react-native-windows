@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 26 Oct 2019 21:50:14 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Oct 2019 01:31:27 GMT and should not be manually modified.
 
+## 0.60.0-vnext.52
+Tue, 29 Oct 2019 01:31:27 GMT
+
+### Changes
+
+- Update the CLI templates to use Microsoft.ReactNative (jthysell@microsoft.com)
+## 0.60.0-vnext.51
+Mon, 28 Oct 2019 23:51:07 GMT
+
+### Changes
+
+- Move closer to allowing JSI with OSS RN (acoates@microsoft.com)
 ## 0.60.0-vnext.50
 Sat, 26 Oct 2019 21:50:14 GMT
 
