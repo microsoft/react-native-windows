@@ -81,7 +81,7 @@ steps:
     inputs:
       solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
       msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-      msbuildArchitecture: x86 # Optional. Options: x86, x64
+      msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
       platform: ${{ parameters.platform }} # Optional
       configuration: ${{ parameters.configuration }} # Optional
       restoreNugetPackages: true
