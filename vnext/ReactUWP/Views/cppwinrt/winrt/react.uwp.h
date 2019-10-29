@@ -197,6 +197,44 @@ template <typename D> react::uwp::AccessibilityInvokeEventHandler consume_react_
     return result;
 }
 
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::AccessibilityActionsProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)->get_AccessibilityActionsProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::SetAccessibilityActions(Windows::UI::Xaml::UIElement const& element, param::vector<react::uwp::AccessibilityAction> const& value) const
+{
+    check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)->SetAccessibilityActions(get_abi(element), get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::GetAccessibilityActions(Windows::UI::Xaml::UIElement const& element) const
+{
+    Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> result{ nullptr };
+    check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)->GetAccessibilityActions(get_abi(element), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::AccessibilityActionEventHandlerProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)->get_AccessibilityActionEventHandlerProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::SetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityActionEventHandler const& value) const
+{
+    check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)->SetAccessibilityActionEventHandler(get_abi(element), get_abi(value)));
+}
+
+template <typename D> react::uwp::AccessibilityActionEventHandler consume_react_uwp_IDynamicAutomationPropertiesStatics<D>::GetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element) const
+{
+    react::uwp::AccessibilityActionEventHandler result{ nullptr };
+    check_hresult(WINRT_SHIM(react::uwp::IDynamicAutomationPropertiesStatics)->GetAccessibilityActionEventHandler(get_abi(element), put_abi(result)));
+    return result;
+}
+
 template <typename D> react::uwp::ViewPanel consume_react_uwp_IViewControl<D>::GetPanel() const
 {
     react::uwp::ViewPanel result{ nullptr };
@@ -363,6 +401,28 @@ template <typename D> double consume_react_uwp_IViewPanelStatics<D>::GetLeft(Win
     check_hresult(WINRT_SHIM(react::uwp::IViewPanelStatics)->GetLeft(get_abi(element), &result));
     return result;
 }
+
+template <> struct delegate<react::uwp::AccessibilityActionEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<react::uwp::AccessibilityActionEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<react::uwp::AccessibilityActionEventHandler, H>(std::forward<H>(handler)) {}
+
+        int32_t WINRT_CALL Invoke(struct struct_react_uwp_AccessibilityAction action) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<react::uwp::AccessibilityAction const*>(&action));
+                return 0;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
 
 template <> struct delegate<react::uwp::AccessibilityInvokeEventHandler>
 {
@@ -743,6 +803,82 @@ struct produce<D, react::uwp::IDynamicAutomationPropertiesStatics> : produce_bas
             typename D::abi_guard guard(this->shim());
             WINRT_ASSERT_DECLARATION(GetAccessibilityInvokeEventHandler, WINRT_WRAP(react::uwp::AccessibilityInvokeEventHandler), Windows::UI::Xaml::UIElement const&);
             *result = detach_from<react::uwp::AccessibilityInvokeEventHandler>(this->shim().GetAccessibilityInvokeEventHandler(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&element)));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityActionsProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(AccessibilityActionsProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().AccessibilityActionsProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityActions(void* element, void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(SetAccessibilityActions, WINRT_WRAP(void), Windows::UI::Xaml::UIElement const&, Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> const&);
+            this->shim().SetAccessibilityActions(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&element), *reinterpret_cast<Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityActions(void* element, void** result) noexcept final
+    {
+        try
+        {
+            *result = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(GetAccessibilityActions, WINRT_WRAP(Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction>), Windows::UI::Xaml::UIElement const&);
+            *result = detach_from<Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction>>(this->shim().GetAccessibilityActions(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&element)));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL get_AccessibilityActionEventHandlerProperty(void** value) noexcept final
+    {
+        try
+        {
+            *value = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(AccessibilityActionEventHandlerProperty, WINRT_WRAP(Windows::UI::Xaml::DependencyProperty));
+            *value = detach_from<Windows::UI::Xaml::DependencyProperty>(this->shim().AccessibilityActionEventHandlerProperty());
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL SetAccessibilityActionEventHandler(void* element, void* value) noexcept final
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(SetAccessibilityActionEventHandler, WINRT_WRAP(void), Windows::UI::Xaml::UIElement const&, react::uwp::AccessibilityActionEventHandler const&);
+            this->shim().SetAccessibilityActionEventHandler(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&element), *reinterpret_cast<react::uwp::AccessibilityActionEventHandler const*>(&value));
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+    }
+
+    int32_t WINRT_CALL GetAccessibilityActionEventHandler(void* element, void** result) noexcept final
+    {
+        try
+        {
+            *result = nullptr;
+            typename D::abi_guard guard(this->shim());
+            WINRT_ASSERT_DECLARATION(GetAccessibilityActionEventHandler, WINRT_WRAP(react::uwp::AccessibilityActionEventHandler), Windows::UI::Xaml::UIElement const&);
+            *result = detach_from<react::uwp::AccessibilityActionEventHandler>(this->shim().GetAccessibilityActionEventHandler(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&element)));
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -1239,6 +1375,36 @@ inline react::uwp::AccessibilityInvokeEventHandler DynamicAutomationProperties::
     return impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.GetAccessibilityInvokeEventHandler(element); });
 }
 
+inline Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionsProperty()
+{
+    return impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.AccessibilityActionsProperty(); });
+}
+
+inline void DynamicAutomationProperties::SetAccessibilityActions(Windows::UI::Xaml::UIElement const& element, param::vector<react::uwp::AccessibilityAction> const& value)
+{
+    impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.SetAccessibilityActions(element, value); });
+}
+
+inline Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> DynamicAutomationProperties::GetAccessibilityActions(Windows::UI::Xaml::UIElement const& element)
+{
+    return impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.GetAccessibilityActions(element); });
+}
+
+inline Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionEventHandlerProperty()
+{
+    return impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.AccessibilityActionEventHandlerProperty(); });
+}
+
+inline void DynamicAutomationProperties::SetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityActionEventHandler const& value)
+{
+    impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.SetAccessibilityActionEventHandler(element, value); });
+}
+
+inline react::uwp::AccessibilityActionEventHandler DynamicAutomationProperties::GetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element)
+{
+    return impl::call_factory<DynamicAutomationProperties, react::uwp::IDynamicAutomationPropertiesStatics>([&](auto&& f) { return f.GetAccessibilityActionEventHandler(element); });
+}
+
 inline ViewControl::ViewControl() :
     ViewControl(impl::call_factory<ViewControl>([](auto&& f) { return f.template ActivateInstance<ViewControl>(); }))
 {}
@@ -1302,6 +1468,31 @@ inline double ViewPanel::GetLeft(Windows::UI::Xaml::UIElement const& element)
     return impl::call_factory<ViewPanel, react::uwp::IViewPanelStatics>([&](auto&& f) { return f.GetLeft(element); });
 }
 
+template <typename L> AccessibilityActionEventHandler::AccessibilityActionEventHandler(L handler) :
+    AccessibilityActionEventHandler(impl::make_delegate<AccessibilityActionEventHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> AccessibilityActionEventHandler::AccessibilityActionEventHandler(F* handler) :
+    AccessibilityActionEventHandler([=](auto&&... args) { return handler(args...); })
+{}
+
+template <typename O, typename M> AccessibilityActionEventHandler::AccessibilityActionEventHandler(O* object, M method) :
+    AccessibilityActionEventHandler([=](auto&&... args) { return ((*object).*(method))(args...); })
+{}
+
+template <typename O, typename M> AccessibilityActionEventHandler::AccessibilityActionEventHandler(com_ptr<O>&& object, M method) :
+    AccessibilityActionEventHandler([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
+{}
+
+template <typename O, typename M> AccessibilityActionEventHandler::AccessibilityActionEventHandler(weak_ref<O>&& object, M method) :
+    AccessibilityActionEventHandler([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
+{}
+
+inline void AccessibilityActionEventHandler::operator()(react::uwp::AccessibilityAction const& action) const
+{
+    check_hresult((*(impl::abi_t<AccessibilityActionEventHandler>**)this)->Invoke(get_abi(action)));
+}
+
 template <typename L> AccessibilityInvokeEventHandler::AccessibilityInvokeEventHandler(L handler) :
     AccessibilityInvokeEventHandler(impl::make_delegate<AccessibilityInvokeEventHandler>(std::forward<L>(handler)))
 {}
@@ -1333,6 +1524,40 @@ namespace winrt::impl {
 
 struct property_react_uwp_IDynamicAutomationPropertiesStatics
 { struct named {
+    struct AccessibilityActionEventHandlerProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"AccessibilityActionEventHandlerProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.AccessibilityActionEventHandlerProperty();
+            }
+        };
+    };
+    struct AccessibilityActionsProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"AccessibilityActionsProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::react::uwp::IDynamicAutomationPropertiesStatics;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::false_type;
+        struct getter
+        {
+            auto operator()(target_type const& target) const
+            {
+                return target.AccessibilityActionsProperty();
+            }
+        };
+    };
     struct AccessibilityInvokeEventHandlerProperty
     {
         struct name { static constexpr std::wstring_view value{ L"AccessibilityInvokeEventHandlerProperty"sv }; };
@@ -1486,7 +1711,7 @@ struct property_react_uwp_IDynamicAutomationPropertiesStatics
             }
         };
     };};
-    struct list { using type = impl::typelist<named::AccessibilityInvokeEventHandlerProperty, named::AccessibilityRoleProperty, named::AccessibilityStateBusyProperty, named::AccessibilityStateCheckedProperty, named::AccessibilityStateCollapsedProperty, named::AccessibilityStateDisabledProperty, named::AccessibilityStateExpandedProperty, named::AccessibilityStateSelectedProperty, named::AccessibilityStateUncheckedProperty>; };
+    struct list { using type = impl::typelist<named::AccessibilityActionEventHandlerProperty, named::AccessibilityActionsProperty, named::AccessibilityInvokeEventHandlerProperty, named::AccessibilityRoleProperty, named::AccessibilityStateBusyProperty, named::AccessibilityStateCheckedProperty, named::AccessibilityStateCollapsedProperty, named::AccessibilityStateDisabledProperty, named::AccessibilityStateExpandedProperty, named::AccessibilityStateSelectedProperty, named::AccessibilityStateUncheckedProperty>; };
 };
 
 struct property_react_uwp_IViewPanel
@@ -1852,6 +2077,40 @@ struct property_react_uwp_DynamicAutomationPeer
 
 struct property_react_uwp_DynamicAutomationProperties
 { struct named {
+    struct AccessibilityActionEventHandlerProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"AccessibilityActionEventHandlerProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::AccessibilityActionEventHandlerProperty();
+            }
+        };
+    };
+    struct AccessibilityActionsProperty
+    {
+        struct name { static constexpr std::wstring_view value{ L"AccessibilityActionsProperty"sv }; };
+        using property_type = winrt::Windows::UI::Xaml::DependencyProperty;
+        using target_type = winrt::react::uwp::DynamicAutomationProperties;
+
+        using is_readable = std::true_type;
+        using is_writable = std::false_type;
+        using is_static = std::true_type;
+        struct getter
+        {
+            auto operator()() const
+            {
+                return target_type::AccessibilityActionsProperty();
+            }
+        };
+    };
     struct AccessibilityInvokeEventHandlerProperty
     {
         struct name { static constexpr std::wstring_view value{ L"AccessibilityInvokeEventHandlerProperty"sv }; };
@@ -2005,7 +2264,7 @@ struct property_react_uwp_DynamicAutomationProperties
             }
         };
     };};
-    struct list { using type = impl::typelist<named::AccessibilityInvokeEventHandlerProperty, named::AccessibilityRoleProperty, named::AccessibilityStateBusyProperty, named::AccessibilityStateCheckedProperty, named::AccessibilityStateCollapsedProperty, named::AccessibilityStateDisabledProperty, named::AccessibilityStateExpandedProperty, named::AccessibilityStateSelectedProperty, named::AccessibilityStateUncheckedProperty>; };
+    struct list { using type = impl::typelist<named::AccessibilityActionEventHandlerProperty, named::AccessibilityActionsProperty, named::AccessibilityInvokeEventHandlerProperty, named::AccessibilityRoleProperty, named::AccessibilityStateBusyProperty, named::AccessibilityStateCheckedProperty, named::AccessibilityStateCollapsedProperty, named::AccessibilityStateDisabledProperty, named::AccessibilityStateExpandedProperty, named::AccessibilityStateSelectedProperty, named::AccessibilityStateUncheckedProperty>; };
 };
 
 struct property_react_uwp_ViewPanel

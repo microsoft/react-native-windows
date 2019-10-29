@@ -97,6 +97,8 @@ struct DynamicAutomationPeer;
 struct DynamicAutomationProperties;
 struct ViewControl;
 struct ViewPanel;
+struct AccessibilityAction;
+struct AccessibilityActionEventHandler;
 struct AccessibilityInvokeEventHandler;
 
 }
@@ -116,6 +118,8 @@ template <> struct category<react::uwp::ViewControl>{ using type = class_categor
 template <> struct category<react::uwp::ViewPanel>{ using type = class_category; };
 template <> struct category<react::uwp::AccessibilityRoles>{ using type = enum_category; };
 template <> struct category<react::uwp::AccessibilityStates>{ using type = enum_category; };
+template <> struct category<react::uwp::AccessibilityAction>{ using type = struct_category<hstring,hstring>; };
+template <> struct category<react::uwp::AccessibilityActionEventHandler>{ using type = delegate_category; };
 template <> struct category<react::uwp::AccessibilityInvokeEventHandler>{ using type = delegate_category; };
 template <> struct name<react::uwp::IDynamicAutomationPeer>{ static constexpr auto & value{ L"react.uwp.IDynamicAutomationPeer" }; };
 template <> struct name<react::uwp::IDynamicAutomationPeerFactory>{ static constexpr auto & value{ L"react.uwp.IDynamicAutomationPeerFactory" }; };
@@ -130,14 +134,17 @@ template <> struct name<react::uwp::ViewControl>{ static constexpr auto & value{
 template <> struct name<react::uwp::ViewPanel>{ static constexpr auto & value{ L"react.uwp.ViewPanel" }; };
 template <> struct name<react::uwp::AccessibilityRoles>{ static constexpr auto & value{ L"react.uwp.AccessibilityRoles" }; };
 template <> struct name<react::uwp::AccessibilityStates>{ static constexpr auto & value{ L"react.uwp.AccessibilityStates" }; };
+template <> struct name<react::uwp::AccessibilityAction>{ static constexpr auto & value{ L"react.uwp.AccessibilityAction" }; };
+template <> struct name<react::uwp::AccessibilityActionEventHandler>{ static constexpr auto & value{ L"react.uwp.AccessibilityActionEventHandler" }; };
 template <> struct name<react::uwp::AccessibilityInvokeEventHandler>{ static constexpr auto & value{ L"react.uwp.AccessibilityInvokeEventHandler" }; };
 template <> struct guid_storage<react::uwp::IDynamicAutomationPeer>{ static constexpr guid value{ 0x96D2FA46,0xD93B,0x5EB4,{ 0x9E,0xD8,0xFC,0x60,0x2C,0xB5,0xB7,0x8F } }; };
 template <> struct guid_storage<react::uwp::IDynamicAutomationPeerFactory>{ static constexpr guid value{ 0x0F0A64B1,0xCCEF,0x54F1,{ 0xB9,0x05,0x0C,0x58,0x26,0xCB,0x6C,0xC4 } }; };
 template <> struct guid_storage<react::uwp::IDynamicAutomationProperties>{ static constexpr guid value{ 0xB70AAC96,0x549C,0x52C1,{ 0xA1,0x24,0xAE,0x0C,0xA4,0x96,0xC8,0x05 } }; };
-template <> struct guid_storage<react::uwp::IDynamicAutomationPropertiesStatics>{ static constexpr guid value{ 0x12D63F8E,0xB2E6,0x577F,{ 0x9A,0x87,0xE3,0xB5,0x46,0x03,0xFA,0x0F } }; };
+template <> struct guid_storage<react::uwp::IDynamicAutomationPropertiesStatics>{ static constexpr guid value{ 0x8BECBDA4,0xC633,0x55B5,{ 0xA8,0x1F,0x4D,0x4B,0x03,0xFA,0x89,0xF8 } }; };
 template <> struct guid_storage<react::uwp::IViewControl>{ static constexpr guid value{ 0xDD899021,0xA952,0x5F5A,{ 0xA5,0xC1,0xAC,0x9E,0x85,0x08,0x09,0xBD } }; };
 template <> struct guid_storage<react::uwp::IViewPanel>{ static constexpr guid value{ 0x46487875,0x5C11,0x5EBE,{ 0xAA,0x1A,0xC7,0xC9,0x70,0xCF,0x46,0x02 } }; };
 template <> struct guid_storage<react::uwp::IViewPanelStatics>{ static constexpr guid value{ 0xF820A53A,0x6DFD,0x53F9,{ 0xA1,0x96,0x40,0xA4,0xED,0x81,0x8B,0x80 } }; };
+template <> struct guid_storage<react::uwp::AccessibilityActionEventHandler>{ static constexpr guid value{ 0x0989B119,0x9348,0x5B3A,{ 0xA7,0x29,0x8C,0xF2,0xE5,0x01,0x6F,0x19 } }; };
 template <> struct guid_storage<react::uwp::AccessibilityInvokeEventHandler>{ static constexpr guid value{ 0xCF396F1D,0x7B41,0x5E44,{ 0xB2,0xD5,0xBA,0xB5,0x86,0xC7,0xEE,0x33 } }; };
 template <> struct default_interface<react::uwp::DynamicAutomationPeer>{ using type = react::uwp::IDynamicAutomationPeer; };
 template <> struct default_interface<react::uwp::DynamicAutomationProperties>{ using type = react::uwp::IDynamicAutomationProperties; };
@@ -186,6 +193,12 @@ template <> struct abi<react::uwp::IDynamicAutomationPropertiesStatics>{ struct 
     virtual int32_t WINRT_CALL get_AccessibilityInvokeEventHandlerProperty(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL SetAccessibilityInvokeEventHandler(void* element, void* value) noexcept = 0;
     virtual int32_t WINRT_CALL GetAccessibilityInvokeEventHandler(void* element, void** result) noexcept = 0;
+    virtual int32_t WINRT_CALL get_AccessibilityActionsProperty(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL SetAccessibilityActions(void* element, void* value) noexcept = 0;
+    virtual int32_t WINRT_CALL GetAccessibilityActions(void* element, void** result) noexcept = 0;
+    virtual int32_t WINRT_CALL get_AccessibilityActionEventHandlerProperty(void** value) noexcept = 0;
+    virtual int32_t WINRT_CALL SetAccessibilityActionEventHandler(void* element, void* value) noexcept = 0;
+    virtual int32_t WINRT_CALL GetAccessibilityActionEventHandler(void* element, void** result) noexcept = 0;
 };};
 
 template <> struct abi<react::uwp::IViewControl>{ struct type : IInspectable
@@ -225,6 +238,11 @@ template <> struct abi<react::uwp::IViewPanelStatics>{ struct type : IInspectabl
     virtual int32_t WINRT_CALL get_LeftProperty(void** value) noexcept = 0;
     virtual int32_t WINRT_CALL SetLeft(void* element, double value) noexcept = 0;
     virtual int32_t WINRT_CALL GetLeft(void* element, double* result) noexcept = 0;
+};};
+
+template <> struct abi<react::uwp::AccessibilityActionEventHandler>{ struct type : IUnknown
+{
+    virtual int32_t WINRT_CALL Invoke(struct struct_react_uwp_AccessibilityAction action) noexcept = 0;
 };};
 
 template <> struct abi<react::uwp::AccessibilityInvokeEventHandler>{ struct type : IUnknown
@@ -281,6 +299,12 @@ struct consume_react_uwp_IDynamicAutomationPropertiesStatics
     Windows::UI::Xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty() const;
     void SetAccessibilityInvokeEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityInvokeEventHandler const& value) const;
     react::uwp::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows::UI::Xaml::UIElement const& element) const;
+    Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty() const;
+    void SetAccessibilityActions(Windows::UI::Xaml::UIElement const& element, param::vector<react::uwp::AccessibilityAction> const& value) const;
+    Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> GetAccessibilityActions(Windows::UI::Xaml::UIElement const& element) const;
+    Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty() const;
+    void SetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element, react::uwp::AccessibilityActionEventHandler const& value) const;
+    react::uwp::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(Windows::UI::Xaml::UIElement const& element) const;
 };
 template <> struct consume<react::uwp::IDynamicAutomationPropertiesStatics> { template <typename D> using type = consume_react_uwp_IDynamicAutomationPropertiesStatics<D>; };
 
@@ -328,5 +352,13 @@ struct consume_react_uwp_IViewPanelStatics
     double GetLeft(Windows::UI::Xaml::UIElement const& element) const;
 };
 template <> struct consume<react::uwp::IViewPanelStatics> { template <typename D> using type = consume_react_uwp_IViewPanelStatics<D>; };
+
+struct struct_react_uwp_AccessibilityAction
+{
+    void* Name;
+    void* Label;
+};
+template <> struct abi<react::uwp::AccessibilityAction>{ using type = struct_react_uwp_AccessibilityAction; };
+
 
 }
