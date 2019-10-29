@@ -24,6 +24,13 @@ Object.defineProperty(ReactNativeImplementation, 'DatePicker', {
   },
 });
 
+Object.defineProperty(ReactNativeImplementation, 'ColorPicker', {
+  get: () => {
+    return require('../Components/ColorPicker/ColorPicker')
+      .ColorPicker as ReactNativeWindows.ColorPicker;
+  },
+});
+
 Object.defineProperty(ReactNativeImplementation, 'Flyout', {
   get: () => {
     return require('../Components/Flyout/Flyout')

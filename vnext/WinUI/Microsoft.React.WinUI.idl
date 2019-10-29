@@ -1,0 +1,7 @@
+namespace Microsoft.React {
+  [bindable][default_interface] runtimeclass WinUI {
+    WinUI();
+    Int32 MyProperty;
+
+  }
+} // namespace Microsoft.React

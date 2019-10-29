@@ -38,6 +38,7 @@
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 #include <Views/WebViewManager.h>
+#include <Views/ColorPickerViewManager.h>
 
 // Polyester View Managers // TODO: Move Polyester implementations out of this
 // library and depot
@@ -120,6 +121,7 @@ CreateUIManager(
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(instance));
   viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
   viewManagers.push_back(std::make_unique<PickerViewManager>(instance));
+  viewManagers.push_back(std::make_unique<ColorPickerViewManager>(instance));
   viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
   viewManagers.push_back(std::make_unique<RootViewManager>(instance));

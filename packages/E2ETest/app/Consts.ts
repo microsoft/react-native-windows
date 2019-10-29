@@ -31,3 +31,6 @@ export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
 export const DIRECT_MANIPULATION_TESTPAGE = 'DirectManipulationTestPage';
 export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
 export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
+
+// WinUITestPage
+export const WINUI_TESTPAGE = 'WinUITestPage';

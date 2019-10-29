@@ -23,6 +23,12 @@ export type AppTheme = AppThemeModule;
 export type AppThemeTypes = 'light' | 'dark';
 
 // @public (undocumented)
+export class ColorPicker extends React.Component<IColorPickerProps> {
+    // (undocumented)
+    render(): JSX.Element | null;
+}
+
+// @public (undocumented)
 export class DatePicker extends React.Component<IDatePickerProps> {
     // (undocumented)
     render(): JSX.Element | null;
@@ -84,6 +90,10 @@ export enum HandledEventPhase {
 export interface IAppThemeChangedEvent {
     // (undocumented)
     currentTheme: AppThemeTypes;
+}
+
+// @public (undocumented)
+export interface IColorPickerProps extends ViewProps {
 }
 
 // @public (undocumented)

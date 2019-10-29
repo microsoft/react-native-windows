@@ -38,6 +38,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Universal", "..\..\..\v
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\vnext\Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinUI2", "..\..\..\vnext\WinUI2\WinUI2.vcxproj", "{FD29FC40-F3B7-416A-A15E-C6F930E4617E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\Chakra\Chakra.vcxitems*{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}*SharedItemsImports = 4
@@ -239,6 +241,30 @@ Global
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.ReleaseBundle|x64.Build.0 = Release|x64
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.ReleaseBundle|x86.ActiveCfg = Release|Win32
 		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.ReleaseBundle|x86.Build.0 = Release|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|ARM.Build.0 = Debug|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x64.ActiveCfg = Debug|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x64.Build.0 = Debug|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x86.ActiveCfg = Debug|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x86.Build.0 = Debug|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.DebugBundle|ARM.ActiveCfg = Debug|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.DebugBundle|ARM.Build.0 = Debug|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.DebugBundle|x64.ActiveCfg = Debug|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.DebugBundle|x64.Build.0 = Debug|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.DebugBundle|x86.ActiveCfg = Debug|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.DebugBundle|x86.Build.0 = Debug|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|ARM.ActiveCfg = Release|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|ARM.Build.0 = Release|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x64.ActiveCfg = Release|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x64.Build.0 = Release|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x86.ActiveCfg = Release|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x86.Build.0 = Release|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.ReleaseBundle|ARM.ActiveCfg = Release|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.ReleaseBundle|ARM.Build.0 = Release|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.ReleaseBundle|x64.ActiveCfg = Release|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.ReleaseBundle|x64.Build.0 = Release|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.ReleaseBundle|x86.ActiveCfg = Release|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.ReleaseBundle|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

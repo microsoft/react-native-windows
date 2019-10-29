@@ -92,7 +92,7 @@
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
       <AdditionalDependencies Condition="'$(CHAKRACOREUWP)'=='true'">ChakraCore.Debugger.Protocol.lib;ChakraCore.Debugger.ProtocolHandler.lib;ChakraCore.Debugger.Service.lib;ChakraCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreLibDir);$(ChakraCoreDebugLibDir)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dxguid.lib;%(AdditionalDependencies);F:\repo\react-native-windows\vnext\target\x86\Debug\WinUI2\WinUI2\winui2.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>
@@ -115,6 +115,8 @@
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -226,6 +228,7 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
+    <ClInclude Include="Views\ColorPickerViewManager.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
     <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h" />
     <ClInclude Include="Views\cppwinrt\ViewControl.g.h" />
@@ -335,6 +338,7 @@
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\CheckboxViewManager.cpp" />
+    <ClCompile Include="Views\ColorPickerViewManager.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
     <ClCompile Include="Views\DatePickerViewManager.cpp" />
     <ClCompile Include="Views\ExpressionAnimationStore.cpp" />
@@ -415,6 +419,9 @@
     </ProjectReference>
     <ProjectReference Include="..\ReactWindowsCore\ReactWindowsCore.vcxproj">
       <Project>{11c084a3-a57c-4296-a679-cac17b603144}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\WinUI2\WinUI2.vcxproj">
+      <Project>{fd29fc40-f3b7-416a-a15e-c6f930e4617e}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

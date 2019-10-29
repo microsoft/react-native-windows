@@ -301,6 +301,10 @@
     <ClCompile Include="Views\SliderViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
+    <ClCompile Include="Views\ColorPickerViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -641,6 +645,10 @@
     </ClInclude>
     <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
+    <ClInclude Include="Views\ColorPickerViewManager.h">
+      <Filter>Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -89,6 +89,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx",
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Microsoft.ReactNative.SharedManaged", "Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj", "{67A1076F-7790-4203-86EA-4402CCB5E782}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinUI2", "WinUI2\WinUI2.vcxproj", "{FD29FC40-F3B7-416A-A15E-C6F930E4617E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		JSI\Shared\JSI.Shared.vcxitems*{0cc28589-39e4-4288-b162-97b959f8b843}*SharedItemsImports = 9
@@ -236,6 +238,18 @@ Global
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x64.Build.0 = Release|x64
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.ActiveCfg = Release|Win32
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.Build.0 = Release|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|ARM.ActiveCfg = Debug|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|ARM.Build.0 = Debug|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x64.ActiveCfg = Debug|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x64.Build.0 = Debug|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x86.ActiveCfg = Debug|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Debug|x86.Build.0 = Debug|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|ARM.ActiveCfg = Release|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|ARM.Build.0 = Release|ARM
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x64.ActiveCfg = Release|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x64.Build.0 = Release|x64
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x86.ActiveCfg = Release|Win32
+		{FD29FC40-F3B7-416A-A15E-C6F930E4617E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

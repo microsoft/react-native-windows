@@ -10,6 +10,7 @@ This package provides Windows specific components and provides JS implementation
 
 |  Class | Description |
 |  --- | --- |
+|  [ColorPicker](./react-native-windows.colorpicker.md) |  |
 |  [DatePicker](./react-native-windows.datepicker.md) |  |
 |  [Flyout](./react-native-windows.flyout.md) |  |
 |  [Glyph](./react-native-windows.glyph.md) |  |
@@ -29,6 +30,7 @@ This package provides Windows specific components and provides JS implementation
 |  Interface | Description |
 |  --- | --- |
 |  [IAppThemeChangedEvent](./react-native-windows.iappthemechangedevent.md) |  |
+|  [IColorPickerProps](./react-native-windows.icolorpickerprops.md) |  |
 |  [IDatePickerChangeEvent](./react-native-windows.idatepickerchangeevent.md) |  |
 |  [IDatePickerProps](./react-native-windows.idatepickerprops.md) |  |
 |  [IFlyoutProps](./react-native-windows.iflyoutprops.md) |  |
