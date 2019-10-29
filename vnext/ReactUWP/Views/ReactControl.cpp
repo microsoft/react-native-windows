@@ -172,6 +172,9 @@ void ReactControl::AttachRoot() noexcept {
   if (!m_touchEventHandler)
     m_touchEventHandler = std::make_shared<TouchEventHandler>(m_reactInstance);
 
+  if (!m_SIPEventHandler)
+    m_SIPEventHandler = std::make_shared<SIPEventHandler>(m_reactInstance);
+
   m_previewKeyboardEventHandlerOnRoot = std::make_shared<PreviewKeyboardEventHandlerOnRoot>(m_reactInstance);
 
   // Register callback from instance for errors
@@ -268,6 +271,8 @@ void ReactControl::DetachInstance() {
 
     // Clear members with a dependency on the reactInstance
     m_touchEventHandler.reset();
+
+    m_SIPEventHandler.reset();
   }
 }
 
