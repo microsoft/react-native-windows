@@ -86,6 +86,7 @@ function copyProjectTemplateAndReplace(
     '<%=ns%>': ns,
     '<%=name%>': newProjectName,
     '<%=projectGuid%>': projectGuid,
+    '<%=projectGuidUpper%>': projectGuid.toUpperCase(),
     '<%=packageGuid%>': packageGuid,
     '<%=currentUser%>': currentUser,
     '<%=certificateThumbprint%>': certificateThumbprint ? `<PackageCertificateThumbprint>${certificateThumbprint}</PackageCertificateThumbprint>` : '',
