@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Oct 2019 19:36:34 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.53",
+      "version": "0.60.0-vnext.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support Keyboard events",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "45a2fb84e8cbe53ad7ea190efab3919124ffb90b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Oct 2019 01:31:27 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.52",
       "version": "0.60.0-vnext.52",
