@@ -84,7 +84,6 @@ steps:
       msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
       platform: ${{ parameters.platform }} # Optional
       configuration: ${{ parameters.configuration }} # Optional
-      restoreNugetPackages: true
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArguments:
