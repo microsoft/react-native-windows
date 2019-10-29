@@ -71,6 +71,26 @@ steps:
     condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
   - task: MSBuild@1
+    inputs:
+      solution: ${{parameters.project}}
+      msbuildVersion: latest
+      msbuildArchitecture: x64
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      msbuildArguments:
+        /t:Vars
+
+  - task: MSBuild@1
+    inputs:
+      solution: $(Build.SourcesDirectory)/vnext/Universal.IntegrationTests/React.Windows.Universal.IntegrationTests.vcxproj
+      msbuildVersion: latest
+      msbuildArchitecture: x64
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      msbuildArguments:
+        /t:GH3548
+
+  - task: MSBuild@1
     displayName: MSBuild ${{parameters.project}}
     inputs:
       solution: ${{parameters.project }}
@@ -89,6 +109,6 @@ steps:
     condition:  succeededOrFailed()
     timeoutInMinutes: 10
     inputs:
-      pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log 
+      pathtoPublish: $(Build.SourcesDirectory)/${{parameters.project}}.log
       artifactName: Detailed Logs for ${{parameters.project}} $(BuildConfiguration) $(BuildPlatform)
       publishLocation: 'Container'

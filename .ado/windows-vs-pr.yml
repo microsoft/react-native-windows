@@ -65,10 +65,6 @@ jobs:
         clean: false
         submodules: false
 
-      # #TODO: Remove
-      # - powershell: |
-      #     ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
-
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
