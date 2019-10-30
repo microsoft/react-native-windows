@@ -39,10 +39,19 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <!--
+        BOOST_ALL_NO_LIB              - Don't require prebuilt Boost DateTime LIB.
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         BOOST_ERROR_CODE_HEADER_ONLY  - Compile Boost error_code members inline. Requires BOOST_SYSTEM_SOURCE.
+        WIN32_LEAN_AND_MEAN           - Reduces the Windows API included surface.
       -->
-      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;BOOST_SYSTEM_SOURCE;BOOST_ERROR_CODE_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        BOOST_ALL_NO_LIB=1;
+        WIN32_LEAN_AND_MEAN;
+        _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;
+        BOOST_SYSTEM_SOURCE;
+        BOOST_ERROR_CODE_HEADER_ONLY;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ControlFlowGuard Condition="'$(Configuration)' != 'Debug'">Guard</ControlFlowGuard>
