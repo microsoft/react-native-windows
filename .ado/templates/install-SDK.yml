@@ -1,5 +1,5 @@
 parameters:
-  sdkVersion: 18362
+  sdkVersion: ''
 
 steps:
   - task: powershell@2
@@ -8,3 +8,4 @@ steps:
       filePath: vnext\Scripts\Install-WindowsSdkISO.ps1
       arguments: ${{ parameters.sdkVersion }}
     displayName: 'Install Insider SDK (${{ parameters.sdkVersion }})'
+    condition: ne('', '${{ parameters.sdkVersion }}')

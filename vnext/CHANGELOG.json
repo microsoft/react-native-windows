@@ -2,6 +2,70 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Oct 2019 17:12:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.55",
+      "version": "0.60.0-vnext.55",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "fix build error",
+            "author": "enm10k@gmail.com",
+            "commit": "5d1b3c19e41fddac081dfa33d70785d80f20ddbc"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Implement accessibilityAction",
+            "author": "licanhua@live.com",
+            "commit": "e931062bbaef57538e8e7ea06c6f1fb929f7b024"
+          },
+          {
+            "comment": "Enable IntegrationTestHarness",
+            "author": "licanhua@live.com",
+            "commit": "33e3543d4a36785b14a855fe748f4577e41dc0ad"
+          },
+          {
+            "comment": "Rename back to Build.ArtifactStagingDirectory.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "71aa1961c0c19d6b1bd6aade54011f5d9224a9d4"
+          },
+          {
+            "comment": "Removed boost_date_time from remaining projects.",
+            "author": "julio@rochsquadron.net",
+            "commit": "bedf8c8b9df6fb749a56bbb03968e7f92794bab7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Oct 2019 23:29:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.54",
+      "version": "0.60.0-vnext.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix crash in RS5 due to missing facade property",
+            "author": "asklar@winse.microsoft.com",
+            "commit": "1cd1d5fe48d2f304c5b1b4597c7a9930c76183ff"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Oct 2019 19:36:34 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.53",
+      "version": "0.60.0-vnext.53",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Support Keyboard events",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "45a2fb84e8cbe53ad7ea190efab3919124ffb90b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Oct 2019 01:31:27 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.52",
       "version": "0.60.0-vnext.52",

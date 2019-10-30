@@ -21,6 +21,8 @@
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Xaml.h>
 
+#include "Utils/PropertyHandlerUtils.h"
+
 #include "DynamicAutomationProperties.h"
 
 namespace winrt {
@@ -28,10 +30,44 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml::Automation;
 using namespace Windows::UI::Xaml::Automation::Peers;
+using namespace Windows::Foundation::Collections;
 } // namespace winrt
 
 namespace react {
 namespace uwp {
+
+template <>
+struct json_type_traits<winrt::react::uwp::AccessibilityAction> {
+  static winrt::react::uwp::AccessibilityAction parseJson(const folly::dynamic &json) {
+    auto action = winrt::react::uwp::AccessibilityAction();
+
+    for (auto &item : json.items()) {
+      if (item.first == "name") {
+        action.Name = react::uwp::asHstring(item.second);
+      } else if (item.first == "label") {
+        action.Label = react::uwp::asHstring(item.second);
+      }
+    }
+    return action;
+  }
+};
+
+template <>
+struct json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>> {
+  static winrt::IVector<winrt::react::uwp::AccessibilityAction> parseJson(const folly::dynamic &json) {
+    auto vector = winrt::single_threaded_vector<winrt::react::uwp::AccessibilityAction>();
+
+    if (json.isArray()) {
+      for (const auto &action : json) {
+        if (!action.isObject())
+          continue;
+
+        vector.Append(json_type_traits<winrt::react::uwp::AccessibilityAction>::parseJson(action));
+      }
+    }
+    return vector;
+  }
+};
 
 FrameworkElementViewManager::FrameworkElementViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
@@ -87,6 +123,8 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateExpandedProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
   TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityInvokeEventHandlerProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityActionEventHandlerProperty());
+  TransferProperty(oldView, newView, DynamicAutomationProperties::AccessibilityActionsProperty());
 
   auto tooltip = winrt::ToolTipService::GetToolTip(oldView);
   oldView.ClearValue(winrt::ToolTipService::ToolTipProperty());
@@ -103,9 +141,10 @@ void FrameworkElementViewManager::TransferProperties(XamlView oldView, XamlView 
 
 folly::dynamic FrameworkElementViewManager::GetNativeProps() const {
   folly::dynamic props = Super::GetNativeProps();
-  props.update(folly::dynamic::object("accessible", "boolean")("accessibilityRole", "string")(
-      "accessibilityStates", "array")("accessibilityHint", "string")("accessibilityLabel", "string")(
-      "accessibilityPosInSet", "number")("accessibilitySetSize", "number")("testID", "string")("tooltip", "string"));
+  props.update(
+      folly::dynamic::object("accessible", "boolean")("accessibilityRole", "string")("accessibilityStates", "array")(
+          "accessibilityHint", "string")("accessibilityLabel", "string")("accessibilityPosInSet", "number")(
+          "accessibilitySetSize", "number")("testID", "string")("tooltip", "string")("accessibilityActions", "array"));
   return props;
 }
 
@@ -421,6 +460,9 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate,
         }
       } else if (TryUpdateFlowDirection(element, propertyName, propertyValue)) {
         continue;
+      } else if (propertyName == "accessibilityActions") {
+        auto value = json_type_traits<winrt::IVector<winrt::react::uwp::AccessibilityAction>>::parseJson(propertyValue);
+        DynamicAutomationProperties::SetAccessibilityActions(element, value);
       }
     }
   }

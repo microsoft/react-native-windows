@@ -9,6 +9,7 @@
 #include <IReactInstance.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include "IXamlRootView.h"
+#include "SIPEventHandler.h"
 #include "TouchEventHandler.h"
 #include "Views/KeyboardEventHandler.h"
 
@@ -23,6 +24,9 @@ using namespace Windows::UI::Xaml::Media;
 
 namespace react {
 namespace uwp {
+
+enum class TriBit { Undefined = -1, NotSet = 0, Set = 1 };
+extern TriBit g_HasActualSizeProperty;
 
 class ReactControl : public std::enable_shared_from_this<ReactControl>, public IXamlReactControl {
  public:
@@ -75,6 +79,7 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
   std::shared_ptr<facebook::react::NativeModuleProvider> m_moduleProvider;
   folly::dynamic m_initialProps;
   std::shared_ptr<TouchEventHandler> m_touchEventHandler;
+  std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
   std::shared_ptr<PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
 
   int64_t m_rootTag = -1;

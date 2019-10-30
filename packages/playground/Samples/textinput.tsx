@@ -5,9 +5,37 @@
  */
 
 import * as React from 'react';
-import {AppRegistry, Button, StyleSheet, TextInput, View} from 'react-native';
+import {
+  AppRegistry,
+  Button,
+  StyleSheet,
+  TextInput,
+  Keyboard,
+  View,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 export default class Bootstrap extends React.Component<{}, any> {
+  componentDidMount() {
+    Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+
+    Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
+  }
+
+  keyboardDidShow = () => {
+    console.log('keyboardDidShow');
+  };
+
+  keyboardDidHide = () => {
+    console.log('keyboardDidHide');
+  };
+
+  componentWillUnmount() {
+    Keyboard.removeListener('keyboardDidShow', this.keyboardDidShow);
+
+    Keyboard.removeListener('keyboardDidHide', this.keyboardDidHide);
+  }
+
   state = {
     passwordHidden: true,
     text: '',
@@ -82,6 +110,15 @@ export default class Bootstrap extends React.Component<{}, any> {
           }
           onPress={this.onPressShowPassword}
         />
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior="padding"
+          enabled>
+          <TextInput
+            style={styles.input}
+            placeholder={'KeyboardAvoidingView padding'}
+          />
+        </KeyboardAvoidingView>
       </View>
     );
   }

@@ -65,6 +65,8 @@ steps:
       restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
   - template: install-SDK.yml
+    parameters:
+      sdkVersion: $(Win10Version)
 
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
@@ -93,7 +95,7 @@ steps:
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
     timeoutInMinutes: 10
-    inputs:    
+    inputs:
       pathtoPublish: $(Agent.BuildDirectory)/testcli/windows/testcli.sln.log
       artifactName: Detailed Logs for testcli.sln ${{ parameters.platform }} ${{ parameters.configuration }}
       publishLocation: 'Container'

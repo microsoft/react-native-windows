@@ -1,7 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Oct 2019 01:31:27 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Oct 2019 17:12:12 GMT and should not be manually modified.
 
+## 0.60.0-vnext.55
+Wed, 30 Oct 2019 17:12:12 GMT
+
+### Changes
+
+- fix build error (enm10k@gmail.com)
+## 0.60.0-vnext.54
+Tue, 29 Oct 2019 23:29:07 GMT
+
+### Changes
+
+- Fix crash in RS5 due to missing facade property (asklar@winse.microsoft.com)
+## 0.60.0-vnext.53
+Tue, 29 Oct 2019 19:36:34 GMT
+
+### Changes
+
+- Support Keyboard events (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.52
 Tue, 29 Oct 2019 01:31:27 GMT
 
