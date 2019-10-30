@@ -154,18 +154,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   }
 
  private:
-  ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
-  ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name);
-
-  // Since the function
-  //   Object::getProperty(Runtime& runtime, const char* name)
-  // causes mulitple copies of name, we do not want to use it when implementing
-  // ChakraRuntime methods. This function does the same thing as
-  // Object::getProperty, but without the extra overhead. This function is
-  // declared as const so that it can be used when implementing
-  // isHostFunction and isHostObject.
-  facebook::jsi::Value GetProperty(const facebook::jsi::Object &obj, const char *const name) const;
-
   void VerifyJsErrorElseThrow(JsErrorCode error);
 
   // ChakraPointerValue is needed for working with Facebook's jsi::Pointer class
@@ -251,7 +239,27 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   ChakraObjectRef ToChakraObjectRef(const facebook::jsi::Value &value);
   std::vector<ChakraObjectRef> ToChakraObjectRefs(const facebook::jsi::Value *value, size_t count);
 
-  // Host function and host object helpers
+  // Convenience functions for property access.
+  ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
+  inline ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name) {
+    return GetProperty(obj, GetChakraObjectRef(createPropNameIDFromAscii(name, strlen(name))));
+  }
+
+  // Since the function
+  //   Object::getProperty(Runtime& runtime, const char* name)
+  // causes mulitple copies of name, we do not want to use it when implementing
+  // ChakraRuntime methods. This function does the same thing as
+  // Object::getProperty, but without the extra overhead. This function is
+  // declared as const so that it can be used when implementing
+  // isHostFunction and isHostObject.
+  inline facebook::jsi::Value GetProperty(const facebook::jsi::Object &obj, const char *const name) const {
+    // We have to use const_casts here because ToJsiValue and GetProperty cannnot
+    // be marked as const.
+    return const_cast<ChakraRuntime *>(this)->ToJsiValue(
+        const_cast<ChakraRuntime *>(this)->GetProperty(GetChakraObjectRef(obj), name));
+  }
+
+  // Host function helper
   static JsValueRef CALLBACK HostFunctionCall(
       JsValueRef callee,
       bool isConstructCall,
@@ -259,7 +267,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       unsigned short argumentCountIncThis,
       void *callbackState);
 
-  // For the following functions, runtime must be referring to a ChakraRuntime.
+  // Host object helpers; runtime must be referring to a ChakraRuntime.
   static facebook::jsi::Value HostObjectGetTrap(
       Runtime &runtime,
       const facebook::jsi::Value & /*thisVal*/,
@@ -275,7 +283,6 @@ class ChakraRuntime : public facebook::jsi::Runtime {
       const facebook::jsi::Value & /*thisVal*/,
       const facebook::jsi::Value *args,
       size_t count);
-
   facebook::jsi::Object createHostObjectProxyHandler() noexcept;
 
   // Promise Helpers

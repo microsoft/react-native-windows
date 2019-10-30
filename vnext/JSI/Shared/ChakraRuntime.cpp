@@ -372,6 +372,9 @@ bool ChakraRuntime::isHostFunction(const facebook::jsi::Function &obj) const {
 }
 
 facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object &object) {
+  // Handle to the null JS value.
+  ChakraObjectRef jsNull = ToChakraObjectRef(facebook::jsi::Value::null());
+
   // Handle to the Object constructor.
   ChakraObjectRef objectConstructor = GetProperty(GetChakraObjectRef(global()), "Object");
 
@@ -382,35 +385,33 @@ facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object
   ChakraObjectRef objectPrototypePropertyIsEnumerable = GetProperty(objectPrototype, "propertyIsEnumerable");
 
   std::vector<ChakraObjectRef> enumerablePropNames{};
-
   ChakraObjectRef currentObject = GetChakraObjectRef(object);
-  while (!CompareJsValues(objectPrototype, currentObject)) {
-    JsValueRef propNames = JS_INVALID_REFERENCE;
-    VerifyJsErrorElseThrow(JsGetOwnPropertyNames(currentObject, &propNames));
-    ChakraObjectRef propNamesRef(propNames);
 
-    int numPropNames = ToInteger(GetProperty(propNamesRef, "length"));
+  // We have a small optimization here where we stop traversing the prototype
+  // chain as soon as we hit Object.prototype. However, we still need to check
+  // for null here, as one can create an Object with no prototype through
+  // Object.create(null).
+  while (!CompareJsValues(currentObject, objectPrototype) && !CompareJsValues(currentObject, jsNull)) {
+    JsValueRef propNamesRef = JS_INVALID_REFERENCE;
+    VerifyJsErrorElseThrow(JsGetOwnPropertyNames(currentObject, &propNamesRef));
+    ChakraObjectRef propNames(propNamesRef);
+
+    int numPropNames = ToInteger(GetProperty(propNames, "length"));
 
     for (int i = 0; i < numPropNames; ++i) {
-      JsValueRef propName = JS_INVALID_REFERENCE;
-      VerifyJsErrorElseThrow(JsGetIndexedProperty(propNamesRef, ToJsNumber(i), &propName));
+      JsValueRef propNameRef = JS_INVALID_REFERENCE;
+      VerifyJsErrorElseThrow(JsGetIndexedProperty(propNames, ToJsNumber(i), &propNameRef));
+      ChakraObjectRef propName(propNameRef);
 
-      std::vector<ChakraObjectRef> args{};
-      args.emplace_back(propName);
-
-      // TODO (yicyao): There is some duplicater code here (see call()).
-      // Consider refactoring.
-      std::vector<JsValueRef> argsWithThis = ConstructJsFunctionArguments(currentObject, args);
-      assert(argsWithThis.size() <= USHRT_MAX);
+      std::vector<JsValueRef> args = {currentObject, propName};
 
       JsValueRef result;
       VerifyJsErrorElseThrow(JsCallFunction(
           objectPrototypePropertyIsEnumerable,
-          argsWithThis.data(),
-          static_cast<unsigned short>(argsWithThis.size()),
+          args.data(),
+          static_cast<unsigned short>(args.size()),
           &result));
 
-      // TODO (yicyao): Evaluate the efficiency of this.
       bool propIsEnumerable = ToJsiValue(ChakraObjectRef(result)).getBool();
 
       if (propIsEnumerable) {
@@ -431,29 +432,6 @@ facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object
   }
 
   return result;
-
-  // JsValueRef propertyNamesArrayRef;
-  // VerifyJsErrorElseThrow(JsGetOwnPropertyNames(GetChakraObjectRef(object), &propertyNamesArrayRef));
-
-  // JsPropertyIdRef propertyId;
-  // VerifyJsErrorElseThrow(JsGetPropertyIdFromName(L"length", &propertyId));
-  // JsValueRef countRef;
-  // VerifyJsErrorElseThrow(JsGetProperty(propertyNamesArrayRef, propertyId, &countRef));
-  // int count;
-
-  // VerifyJsErrorElseThrow(JsNumberToInt(countRef, &count));
-
-  // auto result = createArray(count);
-  // for (int i = 0; i < count; i++) {
-  //  JsValueRef index;
-  //  VerifyJsErrorElseThrow(JsIntToNumber(i, &index));
-  //  JsValueRef propertyName;
-  //  VerifyJsErrorElseThrow(JsGetIndexedProperty(propertyNamesArrayRef, index, &propertyName));
-
-  //  result.setValueAtIndex(*this, i, MakePointer<facebook::jsi::String>(propertyName));
-  //}
-
-  // return result;
 }
 
 // Only ChakraCore supports weak reference semantics, so ChakraRuntime
@@ -636,23 +614,6 @@ bool ChakraRuntime::instanceOf(const facebook::jsi::Object &obj, const facebook:
 
 #pragma endregion Functions_inherited_from_Runtime
 
-ChakraObjectRef ChakraRuntime::GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id) {
-  JsValueRef result = JS_INVALID_REFERENCE;
-  VerifyJsErrorElseThrow(JsGetProperty(obj, id, &result));
-  return ChakraObjectRef(result);
-}
-
-ChakraObjectRef ChakraRuntime::GetProperty(const ChakraObjectRef &obj, const char *const name) {
-  return GetProperty(obj, GetChakraObjectRef(createPropNameIDFromAscii(name, strlen(name))));
-}
-
-facebook::jsi::Value ChakraRuntime::GetProperty(const facebook::jsi::Object &obj, const char *const name) const {
-  // We have to use const_casts here because ToJsiValue and GetProperty cannnot
-  // be marked as const.
-  return const_cast<ChakraRuntime *>(this)->ToJsiValue(
-      const_cast<ChakraRuntime *>(this)->GetProperty(GetChakraObjectRef(obj), name));
-}
-
 void ChakraRuntime::VerifyJsErrorElseThrow(JsErrorCode error) {
   switch (error) {
     case JsNoError: {
@@ -775,6 +736,12 @@ std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(const facebook::j
   }
 
   return result;
+}
+
+ChakraObjectRef ChakraRuntime::GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id) {
+  JsValueRef result = JS_INVALID_REFERENCE;
+  VerifyJsErrorElseThrow(JsGetProperty(obj, id, &result));
+  return ChakraObjectRef(result);
 }
 
 JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
