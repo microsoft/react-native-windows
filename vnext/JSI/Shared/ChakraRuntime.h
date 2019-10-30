@@ -154,6 +154,9 @@ class ChakraRuntime : public facebook::jsi::Runtime {
   }
 
  private:
+  ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
+  ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name);
+
   // Since the function
   //   Object::getProperty(Runtime& runtime, const char* name)
   // causes mulitple copies of name, we do not want to use it when implementing

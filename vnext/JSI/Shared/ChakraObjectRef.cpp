@@ -220,6 +220,12 @@ ChakraObjectRef ToJsString(const ChakraObjectRef &ref) {
   return ChakraObjectRef(str);
 }
 
+int ToInteger(const ChakraObjectRef& jsNumber) {
+  int result = 0;
+  VerifyChakraErrorElseThrow(JsNumberToInt(jsNumber, &result));
+  return result;
+}
+
 ChakraObjectRef ToJsNumber(int num) {
   JsValueRef result = JS_INVALID_REFERENCE;
   VerifyChakraErrorElseThrow(JsIntToNumber(num, &result));
