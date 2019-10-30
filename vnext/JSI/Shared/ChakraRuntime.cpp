@@ -407,10 +407,7 @@ facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object
 
       JsValueRef result;
       VerifyJsErrorElseThrow(JsCallFunction(
-          objectPrototypePropertyIsEnumerable,
-          args.data(),
-          static_cast<unsigned short>(args.size()),
-          &result));
+          objectPrototypePropertyIsEnumerable, args.data(), static_cast<unsigned short>(args.size()), &result));
 
       bool propIsEnumerable = ToJsiValue(ChakraObjectRef(result)).getBool();
 
