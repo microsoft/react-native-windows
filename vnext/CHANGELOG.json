@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 30 Oct 2019 22:56:11 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.56",
+      "version": "0.60.0-vnext.56",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set a default 3D perspective",
+            "author": "asklar@microsoft.com",
+            "commit": "8090b808b6696fe6d2323b260c88ec90ceedf2c8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Oct 2019 17:12:12 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.55",
       "version": "0.60.0-vnext.55",
