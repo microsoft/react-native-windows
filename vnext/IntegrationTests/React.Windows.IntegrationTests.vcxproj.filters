@@ -55,12 +55,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="DummyTest.js">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="XHRTest.js">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
