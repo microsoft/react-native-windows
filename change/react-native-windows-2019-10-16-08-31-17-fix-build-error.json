@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "fix build error",
+  "packageName": "react-native-windows",
+  "email": "enm10k@gmail.com",
+  "commit": "5d1b3c19e41fddac081dfa33d70785d80f20ddbc",
+  "date": "2019-10-15T23:31:17.943Z",
+  "file": "/mnt/c/Users/enm10k/react-native-windows/change/react-native-windows-2019-10-16-08-31-17-fix-build-error.json"
+}
