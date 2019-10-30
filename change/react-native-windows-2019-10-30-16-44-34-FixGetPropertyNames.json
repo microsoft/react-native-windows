@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Implement ChakraRuntime::getPropertyNames() properly in native.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "7c96aa9beae65248b1b4c4c668b08ea56e4b4392",
+  "date": "2019-10-30T23:44:34.909Z",
+  "file": "D:\\Git\\hansenyy-react-native-windows-3\\change\\react-native-windows-2019-10-30-16-44-34-FixGetPropertyNames.json"
+}
