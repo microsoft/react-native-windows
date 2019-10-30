@@ -96,7 +96,7 @@ TEST_CLASS(RNTesterIntegrationTests) {
 #pragma endregion
 
   TEST_METHOD(IntegrationTestHarness) {
-    // TestComponent("IntegrationTestHarnessTest");
+    TestComponent("IntegrationTestHarnessTest");
   }
 
   // Timer tests have been disabled in RN. (See RNTesterIntegrationTests.m)
