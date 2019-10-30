@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 29 Oct 2019 23:29:07 GMT and should not be manually modified.
+This log was last generated on Wed, 30 Oct 2019 17:12:12 GMT and should not be manually modified.
 
+## 0.60.0-vnext.55
+Wed, 30 Oct 2019 17:12:12 GMT
+
+### Changes
+
+- fix build error (enm10k@gmail.com)
 ## 0.60.0-vnext.54
 Tue, 29 Oct 2019 23:29:07 GMT
 
