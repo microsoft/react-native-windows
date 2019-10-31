@@ -1,8 +1,8 @@
 #pragma once
 
 #include <boost/asio/ip/tcp.hpp>
-#include <boost/asio/strand.hpp>
 #include <boost/beast/core/flat_buffer.hpp>
+#include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/http.hpp>
 
 #include <thread>
@@ -27,8 +27,7 @@ struct HttpCallbacks {
 // Generates and submits the appropriate HTTP response.
 ///
 class HttpSession : public std::enable_shared_from_this<HttpSession> {
-  boost::asio::ip::tcp::socket &m_socket;
-  boost::asio::strand<boost::asio::io_context::executor_type> m_strand;
+  boost::beast::tcp_stream m_stream;
   boost::beast::flat_buffer m_buffer;
   boost::beast::http::request<boost::beast::http::string_body> m_request;
   std::shared_ptr<boost::beast::http::response<boost::beast::http::dynamic_body>> m_response; // Generic response
@@ -39,10 +38,10 @@ class HttpSession : public std::enable_shared_from_this<HttpSession> {
   void Close();
 
   void OnRead(boost::system::error_code ec, std::size_t transferred);
-  void OnWrite(boost::system::error_code ec, std::size_t transferred, bool close);
+  void OnWrite(bool close, boost::system::error_code ec, std::size_t transferred);
 
  public:
-  HttpSession(boost::asio::ip::tcp::socket &socket, HttpCallbacks &callbacks);
+  HttpSession(boost::asio::ip::tcp::socket &&socket, HttpCallbacks &callbacks);
 
   ~HttpSession();
 
@@ -58,11 +57,10 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
   std::thread m_contextThread;
   boost::asio::io_context m_context;
   boost::asio::ip::tcp::acceptor m_acceptor;
-  boost::asio::ip::tcp::socket m_socket;
   HttpCallbacks m_callbacks;
   std::vector<std::shared_ptr<HttpSession>> m_sessions;
 
-  void OnAccept(boost::system::error_code ec);
+  void OnAccept(boost::system::error_code ec, boost::asio::ip::tcp::socket socket);
 
  public:
   ///

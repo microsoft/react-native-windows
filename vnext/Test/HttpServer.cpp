@@ -1,7 +1,7 @@
 #include "HttpServer.h"
 
-#include <boost/asio/bind_executor.hpp>
 #include <boost/beast/version.hpp>
+#include <boost/asio/strand.hpp>
 
 // Include to prevent 'incomplete type' errors.
 #include <boost/utility/in_place_factory.hpp>
@@ -11,8 +11,9 @@ using namespace boost::asio::ip;
 
 namespace http = boost::beast::http;
 
-using boost::asio::bind_executor;
 using boost::asio::io_context;
+using boost::asio::make_strand;
+using boost::beast::bind_front_handler;
 using boost::system::error_code;
 using std::function;
 using std::make_shared;
@@ -37,8 +38,8 @@ boost::beast::multi_buffer CreateStringResponseBody(string &&content) {
 
 #pragma region HttpSession
 
-HttpSession::HttpSession(tcp::socket &socket, HttpCallbacks &callbacks)
-    : m_socket{socket}, m_strand{m_socket.get_executor()}, m_callbacks{callbacks} {}
+HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks)
+  : m_stream{ std::move(socket) }, m_callbacks{ callbacks } {}
 
 HttpSession::~HttpSession() {}
 
@@ -47,17 +48,11 @@ void HttpSession::Read() {
   m_request = {};
 
   http::async_read(
-      m_socket,
-      m_buffer,
-      m_request,
-      bind_executor(
-          m_strand,
-          std::bind(
-              &HttpSession::OnRead,
-              shared_from_this(),
-              _1, // error code
-              _2 // transferred
-              )));
+    m_stream,
+    m_buffer,
+    m_request,
+    bind_front_handler(&HttpSession::OnRead, shared_from_this())
+  );
 }
 
 void HttpSession::OnRead(error_code ec, size_t /*transferred*/) {
@@ -82,17 +77,14 @@ void HttpSession::Respond() {
       m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnGet(m_request));
 
       http::async_write(
-          m_socket,
-          *m_response,
-          bind_executor(
-              m_strand,
-              std::bind(
-                  &HttpSession::OnWrite,
-                  shared_from_this(),
-                  _1, // error code
-                  _2, // transferred
-                  m_response->need_eof() // close
-                  )));
+        m_stream,
+        *m_response,
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          shared_from_this(),
+          m_response->need_eof() // close
+        )
+      );
 
       break;
 
@@ -106,17 +98,14 @@ void HttpSession::Respond() {
       m_response->result(http::status::ok);
 
       http::async_write(
-          m_socket,
-          *m_response,
-          bind_executor(
-              m_strand,
-              std::bind(
-                  &HttpSession::OnWrite,
-                  shared_from_this(),
-                  _1, // error code
-                  _2, // transferred
-                  m_response->need_eof() // close
-                  )));
+        m_stream,
+        *m_response,
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          shared_from_this(),
+          m_response->need_eof() // close
+        )
+      );
 
       break;
 
@@ -133,7 +122,7 @@ void HttpSession::Respond() {
   }
 }
 
-void HttpSession::OnWrite(error_code ec, size_t /*transferred*/, bool /*close*/) {
+void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/) {
   if (ec) {
     m_response = nullptr;
     return;
@@ -154,7 +143,7 @@ void HttpSession::OnWrite(error_code ec, size_t /*transferred*/, bool /*close*/)
 }
 
 void HttpSession::Close() {
-  m_socket.shutdown(tcp::socket::shutdown_send);
+  m_stream.socket().shutdown(tcp::socket::shutdown_send);
 }
 
 void HttpSession::Start() {
@@ -167,7 +156,7 @@ void HttpSession::Start() {
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, m_socket{m_context}, m_sessions{} {
+HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, /*m_socket{m_context},*/ m_sessions{} {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
   m_acceptor.open(endpoint.protocol(), ec);
@@ -201,14 +190,22 @@ void HttpServer::Accept() {
   if (!m_acceptor.is_open())
     return;
 
-  m_acceptor.async_accept(m_socket, std::bind(&HttpServer::OnAccept, shared_from_this(), _1));
+  m_acceptor.async_accept(
+    make_strand(m_context),
+    bind_front_handler(
+      &HttpServer::OnAccept,
+      shared_from_this()
+    )
+  );
 }
 
-void HttpServer::OnAccept(error_code ec) {
+void HttpServer::OnAccept(error_code ec, tcp::socket socket)
+{
   if (ec) {
     // ISS:2735328 - Implement failure propagation mechanism
-  } else {
-    auto session = make_shared<HttpSession>(m_socket, m_callbacks);
+  }
+  else {
+    auto session = make_shared<HttpSession>(std::move(socket), m_callbacks);
     m_sessions.push_back(session);
     session->Start();
   }
