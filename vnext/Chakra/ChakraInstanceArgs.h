@@ -9,8 +9,7 @@
 #include <ChakraCore.h>
 #endif
 
-#include <Logging.h>
-#include <MemoryTracker.h>
+#include "DevSettings.h"
 
 namespace facebook {
 namespace react {
@@ -72,9 +71,9 @@ struct ChakraInstanceArgs {
   std::shared_ptr<MemoryTracker> MemoryTracker;
 
   /**
-   * @brief Where to cache and load bytecode
+   * @brief Determines the mapping between script url and cached bytecode files
    */
-  std::string BytecodeFileName;
+  std::shared_ptr<ScriptBytecodeResolver> BytecodeResolver;
 };
 
 } // namespace react
