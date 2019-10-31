@@ -495,12 +495,7 @@ void ChakraExecutor::loadApplicationScript(
 #if !defined(OSS_RN)
     uint64_t scriptVersion,
 #endif
-    std::string sourceURL
-#if !defined(OSS_RN)
-    ,
-    std::string &&bytecodeFileName
-#endif
-) {
+    std::string sourceURL) {
   SystraceSection s("ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
 
   JSContextHolder ctx(m_context);
@@ -515,14 +510,15 @@ void ChakraExecutor::loadApplicationScript(
   // when debugging is enabled, don't use bytecode caching because ChakraCore
   // doesn't support it.
 #if !defined(OSS_RN)
-  if (bytecodeFileName.empty() || m_instanceArgs.EnableDebugging)
+  if (m_instanceArgs.BytecodeFileName.empty() || m_instanceArgs.EnableDebugging)
 #endif
   {
     evaluateScript(std::move(script), jsSourceURL);
   }
 #if !defined(OSS_RN)
   else {
-    evaluateScriptWithBytecode(std::move(script), scriptVersion, jsSourceURL, std::move(bytecodeFileName));
+    evaluateScriptWithBytecode(
+        std::move(script), scriptVersion, jsSourceURL, std::string(m_instanceArgs.BytecodeFileName));
   }
 #endif
 

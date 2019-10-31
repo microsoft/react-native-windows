@@ -72,12 +72,7 @@ class ChakraExecutor : public JSExecutor {
 #if !defined(OSS_RN)
       uint64_t scriptVersion,
 #endif
-      std::string sourceURL
-#if !defined(OSS_RN)
-      ,
-      std::string &&bytecodeFileName
-#endif
-      ) override;
+      std::string sourceURL) override;
 
   virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
 

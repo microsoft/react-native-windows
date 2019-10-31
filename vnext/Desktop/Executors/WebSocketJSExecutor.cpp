@@ -41,12 +41,7 @@ void WebSocketJSExecutor::loadApplicationScript(
 #if !defined(OSS_RN)
     uint64_t /*scriptVersion*/,
 #endif
-    string /*sourceURL*/
-#if !defined(OSS_RN)
-    ,
-    string && /*bytecodeFileName*/
-#endif
-) {
+    string /*sourceURL*/) {
   int requestId = ++m_requestId;
   promise<string> requestPromise;
   {
