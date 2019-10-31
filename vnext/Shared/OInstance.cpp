@@ -495,6 +495,12 @@ InstanceImpl::InstanceImpl(
       instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
       instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
 
+      // Disable bytecode caching with live reload as we don't make guarantees
+      // that the the bundle version will change with edits
+      if (devSettings->liveReloadCallback == nullptr) {
+        instanceArgs.BytecodeFileName = m_devSettings->bytecodeFileName;
+      }
+
       if (!m_devSettings->useJITCompilation) {
 #if (defined(_MSC_VER) && !defined(WINRT))
         instanceArgs.RuntimeAttributes = static_cast<JsRuntimeAttributes>(
@@ -551,8 +557,6 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
 }
 
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
-  std::string bytecodeFileNameCopy{m_devSettings->bytecodeFileName};
-
   // load JS
   if (m_devSettings->useWebDebugger) {
     // First attempt to get download the Js locally, to catch any bundling
@@ -581,12 +585,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           0 /*bundleVersion*/,
 #endif
           bundleUrl,
-          synchronously
-#if !defined(OSS_RN)
-          ,
-          std::move(bytecodeFileNameCopy)
-#endif
-      );
+          synchronously);
     } catch (std::exception &e) {
       m_devSettings->errorCallback(e.what());
       return;
@@ -604,12 +603,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           0 /*bundleVersion*/,
 #endif
           jsBundleRelativePath,
-          synchronously
-#if !defined(OSS_RN)
-          ,
-          "" /*bytecodeFileName*/ // No bytecode is used during Live Reload
-#endif
-      );
+          synchronously);
     }
   } else {
     try {
@@ -625,35 +619,20 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
 #endif
+        // We can fail this and leave the timestamp at zero. This ends up being
+        // fine, since we will not use cached bytecode if we cannot read the
+        // file or if timestamps don't match. We should move this logic to live
+        // with the rest of the bytecode caching logic.
         uint64_t bundleTimestamp = 0;
-        if (GetLastWriteTime(fullBundleFilePath, bundleTimestamp)) {
-          m_innerInstance->loadScriptFromString(
-              std::move(bundleString),
+        GetLastWriteTime(fullBundleFilePath, bundleTimestamp);
+
+        m_innerInstance->loadScriptFromString(
+            std::move(bundleString),
 #if !defined(OSS_RN)
-              bundleTimestamp,
+            bundleTimestamp,
 #endif
-              std::move(fullBundleFilePath),
-              synchronously
-#if !defined(OSS_RN)
-              ,
-              std::move(bytecodeFileNameCopy)
-#endif
-          );
-        } else {
-          // Opt out of bytecode if we cannot get bundle timestamp.
-          m_innerInstance->loadScriptFromString(
-              std::move(bundleString),
-#if !defined(OSS_RN)
-              /*jsBundleVersion*/ 0,
-#endif
-              std::move(fullBundleFilePath),
-              synchronously
-#if !defined(OSS_RN)
-              ,
-              "" /*bytecodeFileName*/
-#endif
-          );
-        }
+            std::move(fullBundleFilePath),
+            synchronously);
       }
 
 #else
@@ -730,11 +709,16 @@ InstanceImpl::InstanceImpl(
   instanceArgs.RuntimeAttributes =
       m_devSettings->useJITCompilation ? JsRuntimeAttributeNone : JsRuntimeAttributeDisableNativeCodeGeneration;
 
+  // Disable bytecode caching with live reload as we don't make guarantees that
+  // the bundle version will change with edits
+  if (devSettings->liveReloadCallback == nullptr) {
+    instanceArgs.BytecodeFileName = m_devSettings->bytecodeFileName;
+  }
+
   auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
   m_innerInstance->initializeBridge(
       std::make_unique<BridgeTestInstanceCallback>(), edf, jsef, m_jsThread, m_moduleRegistry);
 
-  std::string bytecodeFileNameCopy = m_devSettings->bytecodeFileName;
   m_innerInstance->setGlobalVariable(
       "__fbBatchedBridgeConfig", std::make_unique<JSBigStdString>(std::move(configsString)));
 
@@ -745,8 +729,7 @@ InstanceImpl::InstanceImpl(
         std::make_unique<const JSBigStdString>(std::move(fullBundleFilePath)),
         0 /*bundleVersion*/,
         sourceUrl,
-        false /*synchronously*/,
-        std::move(bytecodeFileNameCopy));
+        false /*synchronously*/);
   } catch (std::exception &e) {
     m_devSettings->errorCallback(e.what());
   }

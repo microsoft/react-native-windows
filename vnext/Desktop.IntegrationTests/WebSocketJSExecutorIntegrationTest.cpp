@@ -71,12 +71,7 @@ TEST_METHOD(LoadApplicationScriptSucceeds) {
 #if !defined(OSS_RN)
       0,
 #endif
-      ""
-#if !defined(OSS_RN)
-      ,
-      ""
-#endif
-  );
+      "");
 
   jsQueue->quitSynchronous();
 
@@ -102,12 +97,7 @@ TEST_METHOD(LoadApplicationScriptHandles404) {
 #if !defined(OSS_RN)
       0,
 #endif
-      ""
-#if !defined(OSS_RN)
-      ,
-      ""
-#endif
-  );
+      "");
 
   jsThread->quitSynchronous();
 
@@ -133,12 +123,7 @@ TEST_METHOD(LoadApplicationScriptHandlesNonExistingBundle) {
 #if !defined(OSS_RN)
       0,
 #endif
-      ""
-#if !defined(OSS_RN)
-      ,
-      ""
-#endif
-  );
+      "");
 
   jsThread->quitSynchronous();
 

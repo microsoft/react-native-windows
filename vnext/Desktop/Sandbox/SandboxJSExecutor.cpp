@@ -84,8 +84,7 @@ SandboxJSExecutor::~SandboxJSExecutor() {}
 void SandboxJSExecutor::loadApplicationScript(
     std::unique_ptr<const JSBigString> script,
     uint64_t /*scriptVersion*/,
-    std::string sourceURL,
-    std::string && /*bytecodeFileName*/) {
+    std::string sourceURL) {
   auto requestId = GetNextRequestId();
   task_completion_event<void> callback;
   m_callbacks.emplace(requestId, callback);

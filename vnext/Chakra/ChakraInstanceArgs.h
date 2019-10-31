@@ -70,6 +70,11 @@ struct ChakraInstanceArgs {
    * @brief Dispatcher for notifications about JS engine memory consumption.
    */
   std::shared_ptr<MemoryTracker> MemoryTracker;
+
+  /**
+   * @brief Where to cache and load bytecode
+   */
+  std::string BytecodeFileName;
 };
 
 } // namespace react
