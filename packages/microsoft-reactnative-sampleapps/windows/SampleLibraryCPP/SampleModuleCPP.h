@@ -158,19 +158,18 @@ struct SampleModuleCPP {
     return timerId;
   }
 
-private:
+ private:
   std::vector<winrt::Windows::System::Threading::ThreadPoolTimer> _timers =
       std::vector<winrt::Windows::System::Threading::ThreadPoolTimer>();
 
 #pragma endregion
 
-public:
-      ~SampleModuleCPP() {
-     for (auto timer : _timers) {
-          timer.Cancel();
-     }
+ public:
+  ~SampleModuleCPP() {
+    for (auto timer : _timers) {
+      timer.Cancel();
+    }
   }
-
 };
 
 } // namespace SampleLibraryCPP
