@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2019 16:59:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.57",
+      "version": "0.60.0-vnext.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add todo stub for FacadeType::Progress in AnimatedNode",
+            "author": "adamgor@microsoft.com",
+            "commit": "ce0f4a3a91e31207d2aa1691cfb55d159457e5d0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Oct 2019 22:56:11 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.56",
       "version": "0.60.0-vnext.56",

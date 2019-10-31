@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 30 Oct 2019 22:56:11 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Oct 2019 16:59:45 GMT and should not be manually modified.
 
+## 0.60.0-vnext.57
+Thu, 31 Oct 2019 16:59:45 GMT
+
+### Changes
+
+- Add todo stub for FacadeType::Progress in AnimatedNode (adamgor@microsoft.com)
 ## 0.60.0-vnext.56
 Wed, 30 Oct 2019 22:56:11 GMT
 
