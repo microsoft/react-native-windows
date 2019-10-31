@@ -45,10 +45,16 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
+/// Determines the bytecode file to try to use for a given script url The file
+/// is not guaranteed to exist.
+struct ScriptBytecodeResolver {
+  virtual std::string BytecodeFileNameFromScriptUrl(const std::string &scriptUrl) = 0;
+};
+
 struct DevSettings {
   bool useSandbox{false};
   bool useJITCompilation{true};
-  std::string bytecodeFileName;
+  std::shared_ptr<ScriptBytecodeResolver> bytecodeResolver;
   std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;
@@ -102,6 +108,7 @@ struct DevSettings {
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
+
 };
 
 } // namespace react
