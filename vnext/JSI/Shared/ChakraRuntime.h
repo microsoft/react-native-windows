@@ -241,6 +241,7 @@ class ChakraRuntime : public facebook::jsi::Runtime {
 
   // Convenience functions for property access.
   ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
+
   inline ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name) {
     return GetProperty(obj, GetChakraObjectRef(createPropNameIDFromAscii(name, strlen(name))));
   }
