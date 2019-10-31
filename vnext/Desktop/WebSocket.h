@@ -236,9 +236,9 @@ class MockStream {
 
   bool got_text() const;
 
-  void write_buffer_size(std::size_t amount);
+  void write_buffer_bytes(std::size_t amount);
 
-  std::size_t write_buffer_size() const;
+  std::size_t write_buffer_bytes() const;
 
 #pragma region boost::beast::websocket::stream mocks
 

@@ -98,7 +98,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformRead() {
 
   // Check if there are more bytes available than a header length (2).
   m_stream->async_read(m_bufferIn, [this](boostecr ec, size_t size) {
-    if (error::operation_aborted == ec) {
+    if (boost::asio::error::operation_aborted == ec) {
       // Nothing to do.
     } else if (ec) {
       if (m_errorHandler)
@@ -144,8 +144,8 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::PerformWrite() {
 
   // Auto-fragment disabled. Adjust write buffer to the largest message length
   // processed.
-  if (request.first.length() > m_stream->write_buffer_size())
-    m_stream->write_buffer_size(request.first.length());
+  if (request.first.length() > m_stream->write_buffer_bytes())
+    m_stream->write_buffer_bytes(request.first.length());
 
   m_stream->async_write(buffer(request.first), [this](boostecr ec, size_t size) {
     if (ec) {
@@ -526,9 +526,9 @@ bool MockStream::got_text() const {
   return !got_binary();
 }
 
-void MockStream::write_buffer_size(size_t amount) {}
+void MockStream::write_buffer_bytes(size_t amount) {}
 
-size_t MockStream::write_buffer_size() const {
+size_t MockStream::write_buffer_bytes() const {
   return 8;
 }
 
