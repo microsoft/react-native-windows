@@ -324,7 +324,7 @@ void BaseWebSocket<Protocol, SocketLayer, Stream, Resolver>::Connect(
 
         // Connect
         async_connect(
-            m_stream->lowest_layer(),
+            get_lowest_layer(*m_stream),
             results.begin(),
             results.end(),
             [this, options = std::move(options)](boostecr ec, const basic_resolver_iterator<Protocol> &) {
@@ -616,7 +616,9 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 } // namespace Microsoft::React
 
-namespace boost::asio {
+namespace boost {
+
+namespace asio {
 
 // See <boost/asio/connect.hpp>(776)
 template <typename Iterator, typename IteratorConnectHandler>
@@ -630,5 +632,17 @@ async_connect(
 }
 
 } // namespace boost::asio
+
+namespace beast {
+
+Microsoft::React::Test::MockStream::lowest_layer_type&
+get_lowest_layer(Microsoft::React::Test::MockStream& s) noexcept
+{
+  return s.lowest_layer();
+}
+
+} // namespace boost::beast
+
+} // namespace boost
 
 #pragma warning(pop)
