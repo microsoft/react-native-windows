@@ -148,12 +148,19 @@ ChakraObjectRef ToJsString(const std::string_view &utf8);
 ChakraObjectRef ToJsString(const std::wstring_view &utf16);
 
 /**
- * @param jsValue A ChakraObjectRef mananing a JsValueRef.
+ * @param jsValue A ChakraObjectRef managing a JsValueRef.
  *
  * @returns A ChakraObjectRef managing the return value of the JS .toString
  * function.
  */
 ChakraObjectRef ToJsString(const ChakraObjectRef &jsValue);
+
+/**
+ * @param jsNumber A ChakraObjectRef managing a JS number.
+ *
+ * @returns The value of jsNumber converted to an integer.
+ */
+int ToInteger(const ChakraObjectRef &jsNumber);
 
 /**
  * @returns A ChakraObjectRef managing a JS number.
