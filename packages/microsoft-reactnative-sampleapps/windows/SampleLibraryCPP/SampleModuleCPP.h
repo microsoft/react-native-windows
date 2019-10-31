@@ -45,6 +45,12 @@ struct SampleModuleCPP {
   REACT_CONSTANT(StringConstant);
   const std::string StringConstant = "Hello World";
 
+  REACT_CONSTANT_PROVIDER(ConstantsViaConstantsProvider)
+  void ConstantsViaConstantsProvider(const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter &writer) noexcept {
+    ::Microsoft::ReactNative::WriteProperty(writer, "NumberConstantViaProvider", M_PI);
+    ::Microsoft::ReactNative::WriteProperty(writer, "StringConstantViaProvider", "Hello World");
+  }
+
 #pragma endregion
 
 #pragma region Methods
@@ -114,6 +120,22 @@ struct SampleModuleCPP {
 
 #pragma endregion
 
+#pragma region Synchronous Methods
+
+  REACT_SYNC_METHOD(SyncReturnMethod);
+  double SyncReturnMethod() noexcept {
+    DebugWriteLine("SyncReturnMethod");
+    return M_PI;
+  }
+
+  REACT_SYNC_METHOD(SyncReturnMethodWithArgs);
+  double SyncReturnMethodWithArgs(double arg) noexcept {
+    DebugWriteLine("SyncReturnMethodWithArgs", arg);
+    return M_PI;
+  }
+
+#pragma endregion
+
 #pragma region Events
 
   REACT_EVENT(TimedEvent);
@@ -123,24 +145,32 @@ struct SampleModuleCPP {
   int StartTimedEvent(int intervalMS) noexcept {
     DebugWriteLine("StartTimedEvent", intervalMS);
 
-    int id = _timers.size();
+    int timerId = _timers.size();
 
     _timers.push_back(winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
-        [this, id](const winrt::Windows::System::Threading::ThreadPoolTimer &timer) {
+        [ this, timerId ](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           if (TimedEvent) {
-            TimedEvent(id);
+            TimedEvent(timerId);
           }
         },
         std::chrono::milliseconds(intervalMS)));
 
-    return id;
+    return timerId;
   }
 
- private:
+private:
   std::vector<winrt::Windows::System::Threading::ThreadPoolTimer> _timers =
       std::vector<winrt::Windows::System::Threading::ThreadPoolTimer>();
 
 #pragma endregion
+
+public:
+      ~SampleModuleCPP() {
+     for (auto timer : _timers) {
+          timer.Cancel();
+     }
+  }
+
 };
 
 } // namespace SampleLibraryCPP

@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 
 using Windows.System.Threading;
 
+using Microsoft.ReactNative.Bridge;
 using Microsoft.ReactNative.Managed;
 
 namespace SampleLibraryCS
@@ -26,6 +26,13 @@ namespace SampleLibraryCS
 
         [ReactConstant]
         public string StringConstant => "Hello World";
+
+        [ReactConstantProvider]
+        public void ConstantsViaConstantsProvider(ReactConstantProvider provider)
+        {
+            provider.Add("NumberConstantViaProvider", Math.PI);
+            provider.Add("StringConstantViaProvider", "Hello World");
+        }
 
         #endregion
 
@@ -107,6 +114,24 @@ namespace SampleLibraryCS
 
         #endregion
 
+        #region Synchronous Methods
+
+        [ReactSyncMethod]
+        public double SyncReturnMethod()
+        {
+            Debug.WriteLine($"{Name}.{nameof(SyncReturnMethod)}()");
+            return Math.PI;
+        }
+
+        [ReactSyncMethod]
+        public double SyncReturnMethodWithArgs(double arg)
+        {
+            Debug.WriteLine($"{Name}.{nameof(SyncReturnMethodWithArgs)}({arg})");
+            return Math.PI;
+        }
+
+        #endregion
+
         #region Events
 
         [ReactEvent]
@@ -131,5 +156,13 @@ namespace SampleLibraryCS
         private List<ThreadPoolTimer> _timers = new List<ThreadPoolTimer>();
 
         #endregion
+
+        ~SampleModuleCS()
+        {
+            foreach(var timer in _timers)
+            {
+                timer.Cancel();
+            }
+        }
     }
 }
