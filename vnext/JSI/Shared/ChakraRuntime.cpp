@@ -461,7 +461,7 @@ size_t ChakraRuntime::size(const facebook::jsi::Array &arr) {
 
   int result = ToInteger(GetProperty(GetChakraObjectRef(arr), "length"));
 
-  if (result < 0 || result > (std::numeric_limits<size_t>::max)()) {
+  if (result < 0) {
     throw facebook::jsi::JSINativeException("Invalid JS array length detected.");
   }
 
@@ -473,7 +473,7 @@ size_t ChakraRuntime::size(const facebook::jsi::ArrayBuffer &arrBuf) {
 
   int result = ToInteger(GetProperty(GetChakraObjectRef(arrBuf), "bytelength"));
 
-  if (result < 0 || result > (std::numeric_limits<size_t>::max)()) {
+  if (result < 0) {
     throw facebook::jsi::JSINativeException("Invalid JS array buffer bytelength detected.");
   }
 
@@ -493,7 +493,7 @@ uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer &arrBuf) {
 
 facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &arr, size_t index) {
   assert(isArray(arr));
-  assert(index <= (std::numeric_limits<int>::max)());
+  assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
 
   JsValueRef result = JS_INVALID_REFERENCE;
   VerifyJsErrorElseThrow(JsGetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), &result));
@@ -502,7 +502,7 @@ facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &
 
 void ChakraRuntime::setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) {
   assert(isArray(arr));
-  assert(index <= (std::numeric_limits<int>::max)());
+  assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
 
   VerifyJsErrorElseThrow(
       JsSetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), ToChakraObjectRef(value)));
