@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updating react-native to version: 0.60.0-microsoft.14",
-  "packageName": "react-native-windows",
-  "email": "53619745+rnbot@users.noreply.github.com",
-  "commit": "2ed89834a468e9c4cb1643e497661e7b70317c98",
-  "date": "2019-10-31T17:50:34.979Z"
-}
