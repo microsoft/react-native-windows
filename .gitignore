@@ -74,7 +74,7 @@ ipch/
 [Rr]elease*/
 *.tlog/
 Ankh.NoLoad
-UpgradeLog.htm
+UpgradeLog*.htm
 
 #MonoDevelop
 *.pidb
