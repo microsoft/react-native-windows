@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Nov 2019 18:09:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.59",
+      "version": "0.60.0-vnext.59",
+      "comments": {
+        "none": [
+          {
+            "comment": "Implement ChakraRuntime::getPropertyNames() properly in native.",
+            "author": "yicyao@microsoft.com",
+            "commit": "7c96aa9beae65248b1b4c4c668b08ea56e4b4392"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Call native animation callbacks only once",
+            "author": "asklar@microsoft.com",
+            "commit": "141e2654c5b5ed958591c4933a82d85213b56e40"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Oct 2019 18:11:20 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.58",
       "version": "0.60.0-vnext.58",

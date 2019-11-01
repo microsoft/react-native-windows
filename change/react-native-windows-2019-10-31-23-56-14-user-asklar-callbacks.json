@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Call native animation callbacks only once",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "commit": "141e2654c5b5ed958591c4933a82d85213b56e40",
-  "date": "2019-11-01T06:56:14.460Z"
-}
