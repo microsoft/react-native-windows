@@ -88,7 +88,7 @@ class NativeAnimatedNodeManager {
   StyleAnimatedNode *GetStyleAnimatedNode(int64_t tag);
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
-  void RevmoveActiveAnimation(int64_t tag);
+  void RemoveActiveAnimation(int64_t tag);
 
  private:
   std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>> m_valueNodes{};
