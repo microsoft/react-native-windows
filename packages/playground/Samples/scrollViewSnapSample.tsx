@@ -44,7 +44,7 @@ export default class Bootstrap extends React.Component<{}, any> {
     this.setState({alignToStartValue: value});
   };
 
-  makeItems = (nItems: number, styles): Array<any> => {
+  makeItems = (nItems: number, styles: Object): Array<any> => {
     const items = [];
     for (let i = 0; i < nItems; i++) {
       items[i] = (
