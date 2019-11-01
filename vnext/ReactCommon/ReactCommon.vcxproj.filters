@@ -111,7 +111,9 @@
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
