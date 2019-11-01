@@ -416,8 +416,8 @@ void HostingPane::InitComboBoxes() {
   m_jsFileNames->Append(L"Samples\\image");
   m_jsFileNames->Append(L"Samples\\index");
   m_jsFileNames->Append(L"Samples\\mouse");
-  m_jsFileNames->Append(L"Samples\\simple");
   m_jsFileNames->Append(L"Samples\\scrollViewSnapSample");
+  m_jsFileNames->Append(L"Samples\\simple");
   m_jsFileNames->Append(L"Samples\\text");
   m_jsFileNames->Append(L"Samples\\textinput");
   m_jsFileNames->Append(L"Samples\\ticTacToe");
