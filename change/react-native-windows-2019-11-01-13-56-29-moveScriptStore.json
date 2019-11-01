@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Move ScriptStore and RuntimeHolder to RNW.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "6a2c28a3e05f5026ef7c07f756a6393102cbd169",
+  "date": "2019-11-01T20:56:29.167Z"
+}
