@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Nov 2019 23:40:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.61",
+      "version": "0.60.0-vnext.61",
+      "comments": {
+        "none": [
+          {
+            "comment": "Move ScriptStore and RuntimeHolder to RNW.",
+            "author": "yicyao@microsoft.com",
+            "commit": "6a2c28a3e05f5026ef7c07f756a6393102cbd169"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.15",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "4988e4a8effa4b9d760410f6bead68e9f3f7555a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Nov 2019 21:25:27 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.60",
       "version": "0.60.0-vnext.60",
