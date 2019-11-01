@@ -46,7 +46,7 @@
 #include <cxxreact/JSExecutor.h>
 
 #if !defined(OSS_RN)
-#include <jsi/RuntimeHolder.h>
+#include <JSI/Shared/RuntimeHolder.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
 #if defined(USE_HERMES)

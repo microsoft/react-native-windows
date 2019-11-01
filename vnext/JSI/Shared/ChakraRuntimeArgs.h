@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <jsi/ScriptStore.h>
+#include "ScriptStore.h"
 #include <jsi/jsi.h>
 
 namespace facebook::react {

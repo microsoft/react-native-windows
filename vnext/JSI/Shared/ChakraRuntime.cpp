@@ -8,7 +8,7 @@
 
 #include <MemoryTracker.h>
 #include <cxxreact/MessageQueueThread.h>
-#include <jsi/ScriptStore.h>
+#include <ScriptStore.h>
 
 #include <cstring>
 #include <limits>
