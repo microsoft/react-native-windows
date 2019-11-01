@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Nov 2019 21:25:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.60",
+      "version": "0.60.0-vnext.60",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix some nit suggestions from PR #3568.",
+            "author": "yicyao@microsoft.com",
+            "commit": "09b426a5bbf575ad23a721c50d0b374c84364b72"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support snapToStart and snapToEnd for ScrollView",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "37662c94ca8556f3e63aeafbd474fabab71e40b4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Nov 2019 18:09:07 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.59",
       "version": "0.60.0-vnext.59",

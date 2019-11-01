@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support snapToStart and snapToEnd for ScrollView",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "37662c94ca8556f3e63aeafbd474fabab71e40b4",
-  "date": "2019-11-01T17:18:00.032Z"
-}
