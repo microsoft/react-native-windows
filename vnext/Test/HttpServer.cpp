@@ -19,8 +19,6 @@ using std::function;
 using std::make_shared;
 using std::shared_ptr;
 using std::string;
-using std::placeholders::_1;
-using std::placeholders::_2;
 
 namespace Microsoft::React::Test {
 
