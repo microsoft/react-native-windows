@@ -16,6 +16,8 @@
 #include <boost/beast/core/buffers_to_string.hpp>
 #include "Unicode.h"
 
+#include <boost/beast/_experimental/test/stream.hpp>
+
 using namespace boost::archive::iterators;
 using namespace boost::asio;
 using namespace boost::beast;
@@ -633,9 +635,14 @@ MockStream::async_handshake(
   //return init.result.get();
 
   return async_initiate<HandshakeHandler, void(error_code)>(
-    [](auto&& /*completion_handler*/) {},
-    //HandshakeResult(host.to_string(), target.to_string())
-    handler
+    [](HandshakeHandler&&, MockStream* ms, string h, string t)
+    {
+      ms->HandshakeResult(h, t);
+    },
+    handler,
+    this,
+    host.to_string(),
+    target.to_string()
     );
 }
 
@@ -704,6 +711,16 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 }
 
 #pragma endregion TestWebSocket
+
+//class TestWebSocket2 : public BaseWebSocket<std::nullptr_t, test::stream> {
+//public:
+//  TestWebSocket2(facebook::react::Url&& url);
+//
+//  void SetConnectResult(function<error_code()>&& resultFunc);
+//  void SetHandshakeResult(function<error_code(string, string)>&& resultFunc);
+//  void SetCloseResult(function<error_code()>&& resultFunc);
+//};
+
 } // namespace Test
 
 } // namespace Microsoft::React
