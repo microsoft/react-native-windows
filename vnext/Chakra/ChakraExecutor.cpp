@@ -492,9 +492,6 @@ static std::string simpleBasename(const std::string &path) {
 
 void ChakraExecutor::loadApplicationScript(
     std::unique_ptr<const JSBigString> script,
-#if !defined(OSS_RN)
-    uint64_t scriptVersion,
-#endif
     std::string sourceURL) {
   SystraceSection s("ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
 

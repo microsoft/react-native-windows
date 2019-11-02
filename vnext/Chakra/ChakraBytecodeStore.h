@@ -11,21 +11,21 @@
 namespace facebook {
 namespace react {
 
-//!
-//! Used to store and retrive bytecode. Superseded in JSI by PreparedScriptStore.
-//!
+///
+/// Used to store and retrive bytecode. Superseded in JSI by PreparedScriptStore.
+///
 class ChakraBytecodeStore {
  public:
   ChakraBytecodeStore(const std::filesystem::path &executorScratchDirectory);
 
-  //!
-  //! Wil return bytecode for the Url if it exists may be reused
-  //!
+  ///
+  /// Wil return bytecode for the Url if it exists may be reused
+  ///
   std::unique_ptr<JSBigString> tryObtainCachedBytecode(const std::string &scriptUrl);
 
-  //!
-  //! Attempt to store bytecode for the given script (not guranteed to succeed)
-  //!
+  ///
+  /// Attempt to store bytecode for the given script (not guranteed to succeed)
+  ///
   void persistBytecode(const std::string &scriptUrl, const JSBigString &bytecode);
 
  private:

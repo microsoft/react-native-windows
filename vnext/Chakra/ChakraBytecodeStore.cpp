@@ -17,9 +17,9 @@
 
 namespace facebook::react {
 
-//!
-//! Metadata about a bytecode file that is persisted on disk
-//!
+///
+/// Metadata about a bytecode file that is persisted on disk
+///
 #pragma pack(push, 1)
 struct BytecodeFileHeader {
   uint64_t fileFormatVersion;

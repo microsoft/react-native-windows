@@ -69,9 +69,6 @@ class ChakraExecutor : public JSExecutor {
 
   virtual void loadApplicationScript(
       std::unique_ptr<const JSBigString> script,
-#if !defined(OSS_RN)
-      uint64_t scriptVersion,
-#endif
       std::string sourceURL) override;
 
   virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;

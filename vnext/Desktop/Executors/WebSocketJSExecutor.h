@@ -32,9 +32,6 @@ class WebSocketJSExecutor : public JSExecutor {
 
   void loadApplicationScript(
       std::unique_ptr<const JSBigString> script,
-#if !defined(OSS_RN)
-      uint64_t scriptVersion,
-#endif
       std::string sourceURL) override;
   void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
   virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;

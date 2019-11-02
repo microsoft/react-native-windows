@@ -68,9 +68,6 @@ TEST_METHOD(LoadApplicationScriptSucceeds) {
       new JSBigStdString("http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=ios&dev=true"));
   jse->loadApplicationScript(
       std::move(bigString),
-#if !defined(OSS_RN)
-      0,
-#endif
       "");
 
   jsQueue->quitSynchronous();
@@ -94,9 +91,6 @@ TEST_METHOD(LoadApplicationScriptHandles404) {
   auto bigString = unique_ptr<JSBigString>(new JSBigStdString("http://localhost:8081/showme404"));
   jse->loadApplicationScript(
       std::move(bigString),
-#if !defined(OSS_RN)
-      0,
-#endif
       "");
 
   jsThread->quitSynchronous();
@@ -120,9 +114,6 @@ TEST_METHOD(LoadApplicationScriptHandlesNonExistingBundle) {
   auto bigString = unique_ptr<JSBigString>(new JSBigStdString("http://localhost:8081/nonexisting.bundle"));
   jse->loadApplicationScript(
       std::move(bigString),
-#if !defined(OSS_RN)
-      0,
-#endif
       "");
 
   jsThread->quitSynchronous();

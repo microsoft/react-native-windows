@@ -38,9 +38,6 @@ WebSocketJSExecutor::~WebSocketJSExecutor() {}
 
 void WebSocketJSExecutor::loadApplicationScript(
     unique_ptr<const JSBigString> script,
-#if !defined(OSS_RN)
-    uint64_t /*scriptVersion*/,
-#endif
     string /*sourceURL*/) {
   int requestId = ++m_requestId;
   promise<string> requestPromise;

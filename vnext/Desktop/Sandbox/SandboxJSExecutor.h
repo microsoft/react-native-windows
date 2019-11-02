@@ -72,7 +72,6 @@ class SandboxJSExecutor : public JSExecutor {
 
   virtual void loadApplicationScript(
       std::unique_ptr<const JSBigString> script,
-      uint64_t scriptVersion,
       std::string sourceURL) override;
   virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
   virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
