@@ -22,6 +22,7 @@ using namespace boost::beast;
 
 using boost::asio::ip::basic_resolver_iterator;
 using boost::asio::ip::tcp;
+using boost::asio::async_initiate;
 
 using std::function;
 using std::make_unique;
@@ -606,20 +607,16 @@ void MockStream::get_option(websocket::permessage_deflate& o) {}
 
 
 template<class RangeConnectHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, typename tcp::resolver::results_type::endpoint_type))
+BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type))
 MockStream::async_connect(
-  tcp::resolver::results_type/*::endpoint_type*/ const& endpoints,
+  tcp::resolver::results_type const& endpoints,
   RangeConnectHandler&& handler)
 {
-  //return net::async_initiate<
-  //  RangeConnectHandler,
-  //  void(error_code, typename Protocol::endpoint)>(
-  //    typename ops::run_connect_range_op{},
-  //    handler,
-  //    this,
-  //    endpoints,
-  //    detail::any_endpoint{});
-  throw;
+  return async_initiate<RangeConnectHandler,
+    void(error_code, typename tcp::resolver::results_type::endpoint_type)>(
+      [](auto&&) {},
+      handler
+    );
 }
 
 template <class HandshakeHandler>
@@ -634,6 +631,12 @@ MockStream::async_handshake(
   //    bind_handler(std::move(init.completion_handler), HandshakeResult(host.to_string(), target.to_string())));
 
   //return init.result.get();
+
+  return async_initiate<HandshakeHandler, void(error_code)>(
+    [](auto&& /*completion_handler*/) {},
+    //HandshakeResult(host.to_string(), target.to_string())
+    handler
+    );
 }
 
 template <class DynamicBuffer, class ReadHandler>
