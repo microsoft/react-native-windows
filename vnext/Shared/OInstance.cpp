@@ -146,33 +146,6 @@ std::string GetJSBundleFilePath(const std::string &jsBundleBasePath, const std::
 
   return jsBundleFilePath;
 }
-
-bool GetLastWriteTime(const std::string &fileName, uint64_t &result) noexcept {
-  std::wstring fileNameUtf16 = Microsoft::Common::Unicode::Utf8ToUtf16(fileName);
-
-  std::unique_ptr<void, decltype(&CloseHandle)> handle{CreateFileW(
-                                                           static_cast<LPCWSTR>(fileNameUtf16.c_str()),
-                                                           GENERIC_READ,
-                                                           FILE_SHARE_READ,
-                                                           nullptr /* lpSecurityAttributes */,
-                                                           OPEN_EXISTING,
-                                                           FILE_ATTRIBUTE_NORMAL,
-                                                           nullptr /* hTemplateFile */),
-                                                       &CloseHandle};
-
-  if (handle.get() == INVALID_HANDLE_VALUE) {
-    return false;
-  }
-
-  FILETIME lastWriteTime;
-  if (!GetFileTime(handle.get(), nullptr, nullptr, &lastWriteTime)) {
-    return false;
-  }
-
-  result =
-      static_cast<uint64_t>(lastWriteTime.dwHighDateTime) << 32 | static_cast<uint64_t>(lastWriteTime.dwLowDateTime);
-  return true;
-}
 #endif
 
 } // namespace
@@ -578,9 +551,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 
       m_innerInstance->loadScriptFromString(
           std::make_unique<const JSBigStdString>(bundleUrl),
-#if !defined(OSS_RN)
-          0 /*bundleVersion*/,
-#endif
           bundleUrl,
           synchronously);
     } catch (std::exception &e) {
@@ -596,9 +566,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
     } else {
       m_innerInstance->loadScriptFromString(
           std::make_unique<const JSBigStdString>(jsBundleString),
-#if !defined(OSS_RN)
-          0 /*bundleVersion*/,
-#endif
           jsBundleRelativePath,
           synchronously);
     }
@@ -616,18 +583,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
 #endif
-        // We can fail this and leave the timestamp at zero. This ends up being
-        // fine, since we will not use cached bytecode if we cannot read the
-        // file or if timestamps don't match. We should move this logic to live
-        // with the rest of the bytecode caching logic.
-        uint64_t bundleTimestamp = 0;
-        GetLastWriteTime(fullBundleFilePath, bundleTimestamp);
-
         m_innerInstance->loadScriptFromString(
             std::move(bundleString),
-#if !defined(OSS_RN)
-            bundleTimestamp,
-#endif
             std::move(fullBundleFilePath),
             synchronously);
       }
@@ -638,15 +595,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
       m_innerInstance->loadScriptFromString(
           std::move(bundleString),
-#if !defined(OSS_RN)
-          0 /*bundleVersion*/,
-#endif
           jsBundleRelativePath,
           synchronously
-#if !defined(OSS_RN)
-          ,
-          "" /*bytecodeFileName*/
-#endif
       );
 #endif
 
@@ -720,7 +670,6 @@ InstanceImpl::InstanceImpl(
   try {
     m_innerInstance->loadScriptFromString(
         std::make_unique<const JSBigStdString>(std::move(fullBundleFilePath)),
-        0 /*bundleVersion*/,
         sourceUrl,
         false /*synchronously*/);
   } catch (std::exception &e) {
