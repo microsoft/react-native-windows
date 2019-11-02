@@ -498,7 +498,7 @@ InstanceImpl::InstanceImpl(
       // Disable bytecode caching with live reload as we don't make guarantees
       // that the the bundle version will change with edits
       if (devSettings->liveReloadCallback == nullptr) {
-        instanceArgs.BytecodeResolver = m_devSettings->bytecodeResolver;
+        instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->scriptPropResolver);
       }
 
       if (!m_devSettings->useJITCompilation) {
@@ -712,7 +712,7 @@ InstanceImpl::InstanceImpl(
   // Disable bytecode caching with live reload as we don't make guarantees that
   // the bundle version will change with edits
   if (devSettings->liveReloadCallback == nullptr) {
-    instanceArgs.BytecodeResolver = m_devSettings->bytecodeResolver;
+    instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->scriptPropResolver);
   }
 
   auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));

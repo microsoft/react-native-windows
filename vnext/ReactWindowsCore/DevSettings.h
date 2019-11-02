@@ -45,16 +45,18 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
-/// Determines the bytecode file to try to use for a given script url The file
-/// is not guaranteed to exist.
-struct ScriptBytecodeResolver {
-  virtual std::string BytecodeFileNameFromScriptUrl(const std::string &scriptUrl) = 0;
+// Allows the instance to query information about a given script
+struct ScriptPropertyResolver {
+  virtual ~ScriptPropertyResolver() = default;
+
+  virtual uint64_t resolveScriptVersion(const std::string &scriptUrl) = 0;
+  virtual std::string resolveBytecodeFilename(const std::string &scriptUrl) = 0;
 };
 
 struct DevSettings {
   bool useSandbox{false};
   bool useJITCompilation{true};
-  std::shared_ptr<ScriptBytecodeResolver> bytecodeResolver;
+  std::shared_ptr<ScriptPropertyResolver> scriptPropResolver;
   std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "ChakraBytecodeStore.h"
 #include "ChakraUtils.h"
 #include "ChakraValue.h"
 
@@ -49,6 +50,22 @@ class ChakraJSException : public std::exception {
   void buildMessage(JsValueRef exn, JsValueRef sourceURL, const char *errorMsg);
 };
 
+#pragma pack(push, 1)
+class ChakraVersionInfo {
+ public:
+  bool initialize() noexcept;
+
+  bool operator==(const ChakraVersionInfo &rhs) const noexcept;
+  bool operator!=(const ChakraVersionInfo &rhs) const noexcept;
+
+ private:
+  uint32_t m_fileVersionMS = 0;
+  uint32_t m_fileVersionLS = 0;
+  uint32_t m_productVersionMS = 0;
+  uint32_t m_productVersionLS = 0;
+};
+#pragma pack(pop)
+
 JsValueRef functionCaller(
     JsContextRef ctx,
     JsValueRef function,
@@ -91,15 +108,14 @@ void removeGlobal(const char *name);
 
 static JsSourceContext getNextSourceContext();
 
-JsValueRef evaluateScript(JsValueRef script, JsValueRef sourceURL);
+JsValueRef evaluateScript(JsValueRef script, JsValueRef scriptUrl);
 
-JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRef sourceURL);
+JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, const std::string &scriptUrl);
 
 JsValueRef evaluateScriptWithBytecode(
     std::unique_ptr<const JSBigString> &&script,
-    uint64_t scriptVersion,
-    JsValueRef scriptFileName,
-    std::string &&bytecodeFileName,
+    const std::string &scriptUrl,
+    const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore,
     bool asyncBytecodeGeneration = true);
 
 #if WITH_FBJSCEXTENSIONS

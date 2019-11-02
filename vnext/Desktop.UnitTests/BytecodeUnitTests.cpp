@@ -93,7 +93,6 @@ TEST_CLASS(BytecodeUnitTests) {
   void ExecuteBytecodeWithFallback() {
     JsValueRef result = evaluateScriptWithBytecode(
         std::make_unique<const JSBigStdString>(testScript),
-        scirptVersion,
         testScriptFriendlyName(),
         testScriptBytecodeFilename,
         false /* asyncBytecodeGeneration */);

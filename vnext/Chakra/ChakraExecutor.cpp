@@ -505,24 +505,13 @@ void ChakraExecutor::loadApplicationScript(
   ReactMarker::logTaggedMarker(ReactMarker::RUN_JS_BUNDLE_START, scriptName.c_str());
 #endif
 
-  ChakraString jsSourceURL(sourceURL.c_str());
-
-#if defined(OSS_RN)
-  evaluateScript(std::move(script), jsSourceURL);
-#else
-  std::string bytecodeFileName;
-  if (m_instanceArgs.BytecodeResolver) {
-    bytecodeFileName = m_instanceArgs.BytecodeResolver->BytecodeFileNameFromScriptUrl(sourceURL);
-  }
-
   // when debugging is enabled, don't use bytecode caching because ChakraCore
   // doesn't support it.
-  if (bytecodeFileName.empty() || m_instanceArgs.EnableDebugging) {
-    evaluateScript(std::move(script), jsSourceURL);
+  if (m_instanceArgs.EnableDebugging || !m_instanceArgs.BytecodeStore) {
+    evaluateScript(std::move(script), sourceURL);
   } else {
-    evaluateScriptWithBytecode(std::move(script), scriptVersion, jsSourceURL, std::move(bytecodeFileName));
+    evaluateScriptWithBytecode(std::move(script), sourceURL, m_instanceArgs.BytecodeStore);
   }
-#endif
 
 #if !defined(USE_EDGEMODE_JSRT)
   if (needToRedirectConsoleToDebugger) {

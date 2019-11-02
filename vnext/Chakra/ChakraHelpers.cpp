@@ -60,108 +60,11 @@ struct FileVersionInfoResource {
   uint32_t padding2;
 };
 #endif
-class ChakraVersionInfo {
- public:
-  ChakraVersionInfo() noexcept : m_fileVersionMS{0}, m_fileVersionLS{0}, m_productVersionMS{0}, m_productVersionLS{0} {}
-
-  bool initialize() noexcept {
-#if !defined(CHAKRACORE_UWP)
-    // This code is win32 only at the moment. We will need to change this
-    // line if we want to support UWP.
-    constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
-
-    auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
-    HMODULE moduleHandle;
-    if (!GetModuleHandleExW(0, chakraDllName, &moduleHandle)) {
-      return false;
-    }
-    std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper(
-        moduleHandle, std::move(freeLibraryWrapper));
-
-    HRSRC versionResourceHandle = FindResourceW(moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
-    if (!versionResourceHandle ||
-        SizeofResource(static_cast<HMODULE>(moduleHandleWrapper.get()), versionResourceHandle) <
-            sizeof(FileVersionInfoResource)) {
-      return false;
-    }
-
-    HGLOBAL versionResourcePtrHandle = LoadResource(moduleHandle, versionResourceHandle);
-    if (!versionResourcePtrHandle) {
-      return false;
-    }
-
-    FileVersionInfoResource *chakraVersionInfo =
-        static_cast<FileVersionInfoResource *>(LockResource(versionResourcePtrHandle));
-    if (!chakraVersionInfo) {
-      return false;
-    }
-
-    m_fileVersionMS = chakraVersionInfo->fixedFileInfo.dwFileVersionMS;
-    m_fileVersionLS = chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
-    m_productVersionMS = chakraVersionInfo->fixedFileInfo.dwProductVersionMS;
-    m_productVersionLS = chakraVersionInfo->fixedFileInfo.dwProductVersionLS;
-#endif
-    return true;
-  }
-
-  bool operator==(const ChakraVersionInfo &rhs) const noexcept {
-    return (m_fileVersionMS == rhs.m_fileVersionMS) && (m_fileVersionLS == rhs.m_fileVersionLS) &&
-        (m_productVersionMS == rhs.m_productVersionMS) && (m_productVersionLS == rhs.m_productVersionLS);
-  }
-
-  bool operator!=(const ChakraVersionInfo &rhs) const noexcept {
-    return !(*this == rhs);
-  }
-
- private:
-  uint32_t m_fileVersionMS;
-  uint32_t m_fileVersionLS;
-  uint32_t m_productVersionMS;
-  uint32_t m_productVersionLS;
-};
-
-class BytecodePrefix {
- public:
-  static std::pair<bool, BytecodePrefix> getBytecodePrefix(uint64_t bundleVersion) noexcept {
-    std::pair<bool, BytecodePrefix> result{false, BytecodePrefix{bundleVersion}};
-    result.first = result.second.m_chakraVersionInfo.initialize();
-    return result;
-  }
-
-  bool operator==(const BytecodePrefix &rhs) const noexcept {
-    return (m_bytecodeFileFormatVersion == rhs.m_bytecodeFileFormatVersion) &&
-        (m_bundleVersion == rhs.m_bundleVersion) && (m_chakraVersionInfo == rhs.m_chakraVersionInfo);
-  }
-
-  bool operator!=(const BytecodePrefix &rhs) const noexcept {
-    return !(*this == rhs);
-  }
-
- private:
-  uint64_t m_bytecodeFileFormatVersion;
-  uint64_t m_bundleVersion;
-  ChakraVersionInfo m_chakraVersionInfo;
-
-  static constexpr uint32_t s_bytecodeFileFormatVersion = 2;
-
-  BytecodePrefix(uint64_t bundleVersion) noexcept
-      : m_bytecodeFileFormatVersion{s_bytecodeFileFormatVersion},
-        m_bundleVersion{bundleVersion},
-        m_chakraVersionInfo{} {}
-};
 
 void serializeBytecodeToFileCore(
     const std::shared_ptr<const JSBigString> &script,
-    const BytecodePrefix &bytecodePrefix,
-    const std::string &bytecodeFileName) {
-  FILE *bytecodeFilePtr;
-  // bytecode is a binary representation, so we need to pass in the "b" flag to
-  // fopen_s
-  if (_wfopen_s(&bytecodeFilePtr, Microsoft::Common::Unicode::Utf8ToUtf16(bytecodeFileName).c_str(), L"wb")) {
-    return;
-  }
-  std::unique_ptr<FILE, decltype(&fclose)> bytecodeFilePtrWrapper(bytecodeFilePtr, fclose);
-
+    const std::string scriptUrl,
+    ChakraBytecodeStore &bytecodeStore) {
   const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
 
   unsigned int bytecodeSize = 0;
@@ -169,54 +72,33 @@ void serializeBytecodeToFileCore(
     return;
   }
 
-  std::unique_ptr<uint8_t[]> bytecode(std::make_unique<uint8_t[]>(bytecodeSize));
-  if (JsSerializeScript(scriptUTF16.c_str(), bytecode.get(), &bytecodeSize) != JsNoError) {
+  JSBigBufferString bytecode(bytecodeSize);
+  auto byteBuffer = reinterpret_cast<BYTE *>(bytecode.data());
+  if (JsSerializeScript(scriptUTF16.c_str(), byteBuffer, &bytecodeSize) != JsNoError) {
     return;
   }
 
-  constexpr size_t bytecodePrefixSize = sizeof(bytecodePrefix);
-  uint8_t zeroArray[sizeof(bytecodePrefix)]{};
+ 
 
-  if (fwrite(zeroArray, bytecodePrefixSize, bytecodeFilePtrWrapper.get()) != bytecodePrefixSize ||
-      fwrite(bytecode.get(), bytecodeSize, bytecodeFilePtrWrapper.get()) != bytecodeSize ||
-      fflush(bytecodeFilePtrWrapper.get())) {
-    return;
-  }
-
-  fseek(bytecodeFilePtrWrapper.get(), 0, SEEK_SET);
-  if (!fwrite(bytecodePrefix, bytecodeFilePtrWrapper.get()) || fflush(bytecodeFilePtrWrapper.get())) {
-    return;
-  }
-}
-
-std::unique_ptr<JSBigString> tryGetBytecode(const BytecodePrefix &bytecodePrefix, const std::string &bytecodeFileName) {
-  auto bytecodeBigStringPtr =
-      std::make_unique<FileMappingBigString>(bytecodeFileName, static_cast<uint32_t>(sizeof(BytecodePrefix)));
-
-  if (!bytecodeBigStringPtr->file_data() || bytecodeBigStringPtr->file_size() < sizeof(bytecodePrefix) ||
-      *reinterpret_cast<const BytecodePrefix *>(bytecodeBigStringPtr->file_data()) != bytecodePrefix) {
-    return nullptr;
-  }
-
-  return bytecodeBigStringPtr;
+  bytecodeStore.persistBytecode(scriptUrl, bytecode);
 }
 
 void serializeBytecodeToFile(
     const std::shared_ptr<const JSBigString> &script,
-    const BytecodePrefix &bytecodePrefix,
-    std::string &&bytecodeFileName,
+    const std::string scriptUrl,
+    const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore,
     bool async) {
   std::future<void> bytecodeSerializationFuture = std::async(
       std::launch::async,
       [](const std::shared_ptr<const JSBigString> &script,
-         const BytecodePrefix &bytecodePrefix,
-         const std::string &bytecodeFileName) {
+         const std::string &scriptUrl,
+         const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore) {
         MinimalChakraRuntime chakraRuntime(false /* multithreaded */);
-        serializeBytecodeToFileCore(script, bytecodePrefix, bytecodeFileName);
+        serializeBytecodeToFileCore(script, scriptUrl, *bytecodeStore);
       },
       script,
-      bytecodePrefix,
-      std::move(bytecodeFileName));
+      scriptUrl,
+      std::move(bytecodeStore));
 
   if (!async) {
     bytecodeSerializationFuture.wait();
@@ -319,6 +201,57 @@ void ChakraJSException::buildMessage(JsValueRef exn, JsValueRef sourceURL, const
   }
 }
 
+bool ChakraVersionInfo::initialize() noexcept {
+#if defined(CHAKRACORE_UWP)
+  // This code is win32 only at the moment. We will need to change this
+  // line if we want to support UWP.
+  return false;
+#else
+  constexpr wchar_t chakraDllName[] = L"ChakraCore.dll";
+
+  auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
+  HMODULE moduleHandle;
+  if (!GetModuleHandleExW(0, chakraDllName, &moduleHandle)) {
+    return false;
+  }
+  std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper(moduleHandle, std::move(freeLibraryWrapper));
+
+  HRSRC versionResourceHandle = FindResourceW(moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
+  if (!versionResourceHandle ||
+      SizeofResource(static_cast<HMODULE>(moduleHandleWrapper.get()), versionResourceHandle) <
+          sizeof(FileVersionInfoResource)) {
+    return false;
+  }
+
+  HGLOBAL versionResourcePtrHandle = LoadResource(moduleHandle, versionResourceHandle);
+  if (!versionResourcePtrHandle) {
+    return false;
+  }
+
+  FileVersionInfoResource *chakraVersionInfo =
+      static_cast<FileVersionInfoResource *>(LockResource(versionResourcePtrHandle));
+  if (!chakraVersionInfo) {
+    return false;
+  }
+
+  m_fileVersionMS = chakraVersionInfo->fixedFileInfo.dwFileVersionMS;
+  m_fileVersionLS = chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
+  m_productVersionMS = chakraVersionInfo->fixedFileInfo.dwProductVersionMS;
+  m_productVersionLS = chakraVersionInfo->fixedFileInfo.dwProductVersionLS;
+
+  return true;
+#endif
+}
+
+bool ChakraVersionInfo::operator==(const ChakraVersionInfo &rhs) const noexcept {
+  return (m_fileVersionMS == rhs.m_fileVersionMS) && (m_fileVersionLS == rhs.m_fileVersionLS) &&
+      (m_productVersionMS == rhs.m_productVersionMS) && (m_productVersionLS == rhs.m_productVersionLS);
+}
+
+bool ChakraVersionInfo::operator!=(const ChakraVersionInfo &rhs) const noexcept {
+  return !(*this == rhs);
+}
+
 JsValueRef makeFunction(const char *name, ChakraJSFunction function) {
   return makeFunction(ChakraString(name), std::move(function));
 }
@@ -353,7 +286,7 @@ JsSourceContext getNextSourceContext() {
   return nextSourceContext++;
 }
 
-JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
+JsValueRef evaluateScript(JsValueRef script, JsValueRef scriptUrl) {
   JsValueRef exn = nullptr;
   JsValueRef value = nullptr;
 
@@ -369,23 +302,23 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
   auto result = JsRunScript(scriptRaw, JS_SOURCE_CONTEXT_NONE /*sourceContext*/, sourceRaw, &value);
 #else
   JsSourceContext sourceContext = getNextSourceContext();
-  auto result = JsRun(script, sourceContext, source, JsParseScriptAttributeNone, &value);
+  auto result = JsRun(script, sourceContext, scriptUrl, JsParseScriptAttributeNone, &value);
 #endif
 
   bool hasException = false;
   if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
     JsGetAndClearException(&exn);
-    throw ChakraJSException(exn, source);
+    throw ChakraJSException(exn, scriptUrl);
   }
 
   if (value == nullptr) {
-    formatAndThrowJSException(exn, source);
+    formatAndThrowJSException(exn, scriptUrl);
   }
 
   return value;
 }
 
-JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRef sourceURL) {
+JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, const std::string &scriptUrl) {
 #if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
 #endif
@@ -401,38 +334,34 @@ JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRe
 #if defined(USE_EDGEMODE_JSRT)
   return evaluateScript(jsScript, sourceURL);
 #else
-  return evaluateScript(jsScript.get(), sourceURL);
+  return evaluateScript(jsScript.get(), ChakraString(scriptUrl.c_str()));
 #endif
 }
 
 JsValueRef evaluateScriptWithBytecode(
     std::unique_ptr<const JSBigString> &&script,
-    uint64_t scriptVersion,
-    JsValueRef scriptFileName,
-    std::string &&bytecodeFileName,
+    const std::string &scriptUrl,
+    const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore,
     bool asyncBytecodeGeneration) {
 #if defined(WINRT)
   // TODO: yicyao
   // ChakraRT does not support the JsRunSerialized() API.
   // Hence for UWP implementation, we fall back to using the original source
   // code right now.
-  return evaluateScript(std::move(script), scriptFileName);
+  return evaluateScript(std::move(script), scriptUrl);
 #else
-  auto bytecodePrefixOptional = BytecodePrefix::getBytecodePrefix(scriptVersion);
-  if (!bytecodePrefixOptional.first) {
-    return evaluateScript(std::move(script), scriptFileName);
-  }
 
-  auto &bytecodePrefix = bytecodePrefixOptional.second;
-  std::unique_ptr<const JSBigString> bytecode = tryGetBytecode(bytecodePrefix, bytecodeFileName);
+  std::unique_ptr<JSBigString> bytecode = bytecodeStore->tryReadExistingBytecode(scriptUrl);
   if (!bytecode) {
     std::shared_ptr<const JSBigString> sharedScript(script.release());
-    serializeBytecodeToFile(sharedScript, bytecodePrefix, std::move(bytecodeFileName), asyncBytecodeGeneration);
+    serializeBytecodeToFile(sharedScript, scriptUrl, bytecodeStore, asyncBytecodeGeneration);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
     JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(sharedScript);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
-    return evaluateScript(jsScript.get(), scriptFileName);
+    return evaluateScript(jsScript.get(), ChakraString(scriptUrl.c_str()));
   }
+
+  ChakraString jsScriptUrl(scriptUrl.c_str());
 
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
   JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(std::move(script));
@@ -447,7 +376,7 @@ JsValueRef evaluateScriptWithBytecode(
         return true;
       },
       reinterpret_cast<JsSourceContext>(jsScript.get()),
-      scriptFileName,
+      jsScriptUrl,
       &value);
 
   // Currently, when the existing bundle.bytecode is incompatible with the
@@ -458,7 +387,7 @@ JsValueRef evaluateScriptWithBytecode(
   // JsExternalArrayBuffer.
   if (result == JsErrorBadSerializedScript) {
     JsGetAndClearException(&exn);
-    return evaluateScript(jsScript.get(), scriptFileName);
+    return evaluateScript(jsScript.get(), jsScriptUrl);
   }
 
   // This code is duplicated from evaluateScript.
@@ -466,13 +395,13 @@ JsValueRef evaluateScriptWithBytecode(
   bool hasException = false;
   if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
     JsGetAndClearException(&exn);
-    std::string exceptionDescription = "JavaScriptException in " + ChakraValue(scriptFileName).toString().str();
+    std::string exceptionDescription = "JavaScriptException in " + ChakraValue(jsScriptUrl).toString().str();
 
     throw ChakraJSException(exn, exceptionDescription.c_str());
   }
 
   if (value == nullptr) {
-    formatAndThrowJSException(exn, scriptFileName);
+    formatAndThrowJSException(exn, jsScriptUrl);
   }
 
   return value;
