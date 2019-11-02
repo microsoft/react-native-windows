@@ -2,6 +2,111 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Nov 2019 23:40:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.61",
+      "version": "0.60.0-vnext.61",
+      "comments": {
+        "none": [
+          {
+            "comment": "Move ScriptStore and RuntimeHolder to RNW.",
+            "author": "yicyao@microsoft.com",
+            "commit": "6a2c28a3e05f5026ef7c07f756a6393102cbd169"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.15",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "4988e4a8effa4b9d760410f6bead68e9f3f7555a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Nov 2019 21:25:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.60",
+      "version": "0.60.0-vnext.60",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix some nit suggestions from PR #3568.",
+            "author": "yicyao@microsoft.com",
+            "commit": "09b426a5bbf575ad23a721c50d0b374c84364b72"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Support snapToStart and snapToEnd for ScrollView",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "37662c94ca8556f3e63aeafbd474fabab71e40b4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Nov 2019 18:09:07 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.59",
+      "version": "0.60.0-vnext.59",
+      "comments": {
+        "none": [
+          {
+            "comment": "Implement ChakraRuntime::getPropertyNames() properly in native.",
+            "author": "yicyao@microsoft.com",
+            "commit": "7c96aa9beae65248b1b4c4c668b08ea56e4b4392"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Call native animation callbacks only once",
+            "author": "asklar@microsoft.com",
+            "commit": "141e2654c5b5ed958591c4933a82d85213b56e40"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 31 Oct 2019 18:11:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.58",
+      "version": "0.60.0-vnext.58",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.14",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "2ed89834a468e9c4cb1643e497661e7b70317c98"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 31 Oct 2019 16:59:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.57",
+      "version": "0.60.0-vnext.57",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add todo stub for FacadeType::Progress in AnimatedNode",
+            "author": "adamgor@microsoft.com",
+            "commit": "ce0f4a3a91e31207d2aa1691cfb55d159457e5d0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 30 Oct 2019 22:56:11 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.56",
+      "version": "0.60.0-vnext.56",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set a default 3D perspective",
+            "author": "asklar@microsoft.com",
+            "commit": "8090b808b6696fe6d2323b260c88ec90ceedf2c8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 30 Oct 2019 17:12:12 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.55",
       "version": "0.60.0-vnext.55",

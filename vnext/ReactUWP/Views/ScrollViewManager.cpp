@@ -36,12 +36,14 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   template <typename T>
   std::tuple<bool, T> getPropertyAndValidity(folly::dynamic propertyValue, T defaultValue);
   void SetScrollMode(const winrt::ScrollViewer &scrollViewer);
+  void UpdateZoomMode(const winrt::ScrollViewer &scrollViewer);
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
   bool m_isScrolling = false;
   bool m_isHorizontal = false;
   bool m_isScrollingEnabled = true;
+  bool m_changeViewAfterLoaded = false;
 
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
@@ -49,6 +51,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   winrt::ScrollViewer::ViewChanging_revoker m_scrollViewerViewChangingRevoker{};
   winrt::ScrollViewer::DirectManipulationCompleted_revoker m_scrollViewerDirectManipulationCompletedRevoker{};
   winrt::ScrollViewer::DirectManipulationStarted_revoker m_scrollViewerDirectManipulationStartedRevoker{};
+  winrt::Control::Loaded_revoker m_controlLoadedRevoker{};
 };
 
 ScrollViewShadowNode::ScrollViewShadowNode() {}
@@ -149,16 +152,19 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       const auto [valid, minimumZoomScale] = getPropertyAndValidity(propertyValue, 1.0);
       if (valid) {
         scrollViewer.MinZoomFactor(static_cast<float>(minimumZoomScale));
+        UpdateZoomMode(scrollViewer);
       }
     } else if (propertyName == "maximumZoomScale") {
       const auto [valid, maximumZoomScale] = getPropertyAndValidity(propertyValue, 1.0);
       if (valid) {
         scrollViewer.MaxZoomFactor(static_cast<float>(maximumZoomScale));
+        UpdateZoomMode(scrollViewer);
       }
     } else if (propertyName == "zoomScale") {
       const auto [valid, zoomScale] = getPropertyAndValidity(propertyValue, 1.0);
       if (valid) {
-        scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(zoomScale));
+        m_zoomFactor = static_cast<float>(zoomScale);
+        m_changeViewAfterLoaded = !scrollViewer.ChangeView(nullptr, nullptr, m_zoomFactor);
       }
     } else if (propertyName == "snapToInterval") {
       const auto [valid, snapToInterval] = getPropertyAndValidity(propertyValue, 0.0);
@@ -170,11 +176,20 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       if (valid) {
         ScrollViewUWPImplementation(scrollViewer).SnapToOffsets(snapToOffsets.GetView());
       }
+    } else if (propertyName == "snapToStart") {
+      const auto [valid, snaptoStart] = getPropertyAndValidity(propertyValue, true);
+      if (valid) {
+        ScrollViewUWPImplementation(scrollViewer).SnapToStart(snaptoStart);
+      }
+    } else if (propertyName == "snapToEnd") {
+      const auto [valid, snapToEnd] = getPropertyAndValidity(propertyValue, true);
+      if (valid) {
+        ScrollViewUWPImplementation(scrollViewer).SnapToEnd(snapToEnd);
+      }
     } else if (propertyName == "snapToAlignment") {
       const auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
       if (valid) {
-        scrollViewer.HorizontalSnapPointsAlignment(snapToAlignment);
-        scrollViewer.VerticalSnapPointsAlignment(snapToAlignment);
+        ScrollViewUWPImplementation(scrollViewer).SnapPointAlignment(snapToAlignment);
       }
     }
   }
@@ -255,6 +270,13 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         m_isScrolling = false;
         m_isScrollingFromInertia = false;
       });
+  m_controlLoadedRevoker = scrollViewer.Loaded(winrt::auto_revoke, [this](const auto &sender, const auto &) {
+    if (m_changeViewAfterLoaded) {
+      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(m_zoomFactor));
+      m_changeViewAfterLoaded = false;
+    }
+  });
 }
 
 void ScrollViewShadowNode::EmitScrollEvent(
@@ -348,6 +370,12 @@ void ScrollViewShadowNode::SetScrollMode(const winrt::ScrollViewer &scrollViewer
   scrollViewer.VerticalScrollMode(verticalScrollingEnabled ? winrt::ScrollMode::Auto : winrt::ScrollMode::Disabled);
 }
 
+void ScrollViewShadowNode::UpdateZoomMode(const winrt::ScrollViewer &scrollViewer) {
+  scrollViewer.ZoomMode(
+      scrollViewer.MinZoomFactor() != scrollViewer.MaxZoomFactor() ? winrt::ZoomMode::Enabled
+                                                                   : winrt::ZoomMode::Disabled);
+}
+
 ScrollViewManager::ScrollViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *ScrollViewManager::GetName() const {
@@ -368,7 +396,7 @@ folly::dynamic ScrollViewManager::GetNativeProps() const {
   props.update(folly::dynamic::object("horizontal", "boolean")("scrollEnabled", "boolean")(
       "showsHorizontalScrollIndicator", "boolean")("showsVerticalScrollIndicator", "boolean")(
       "minimumZoomScale", "float")("maximumZoomScale", "float")("zoomScale", "float")("snapToInterval", "float")(
-      "snapToOffsets", "array")("snapToAlignment", "number"));
+      "snapToOffsets", "array")("snapToAlignment", "number")("snapToStart", "boolean")("snapToEnd", "boolean"));
 
   return props;
 }

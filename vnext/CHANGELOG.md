@@ -1,7 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 30 Oct 2019 17:12:12 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Nov 2019 23:40:12 GMT and should not be manually modified.
 
+## 0.60.0-vnext.61
+Fri, 01 Nov 2019 23:40:12 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.15 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.60
+Fri, 01 Nov 2019 21:25:27 GMT
+
+### Changes
+
+- Support snapToStart and snapToEnd for ScrollView (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.59
+Fri, 01 Nov 2019 18:09:07 GMT
+
+### Changes
+
+- Call native animation callbacks only once (asklar@microsoft.com)
+## 0.60.0-vnext.58
+Thu, 31 Oct 2019 18:11:20 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.14 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.57
+Thu, 31 Oct 2019 16:59:45 GMT
+
+### Changes
+
+- Add todo stub for FacadeType::Progress in AnimatedNode (adamgor@microsoft.com)
+## 0.60.0-vnext.56
+Wed, 30 Oct 2019 22:56:11 GMT
+
+### Changes
+
+- Set a default 3D perspective (asklar@microsoft.com)
 ## 0.60.0-vnext.55
 Wed, 30 Oct 2019 17:12:12 GMT
 

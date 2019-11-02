@@ -23,6 +23,19 @@ AnimationDriver::AnimationDriver(
   }();
 }
 
+void AnimationDriver::DoCallback(bool value) {
+  if (m_endCallback) {
+    m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", value)});
+  }
+#ifdef DEBUG
+  m_debug_callbackAttempts++;
+  if (m_debug_callbackAttempts > 1) {
+    throw std::string("The \"finished\" callback for a native animation was called more than once.");
+  }
+#endif //  DEBUG
+  m_endCallback = {};
+}
+
 AnimationDriver::~AnimationDriver() {
   if (m_scopedBatch)
     m_scopedBatch.Completed(m_scopedBatchCompletedToken);
@@ -41,20 +54,16 @@ void AnimationDriver::StartAnimation() {
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed(
-      [EndCallback = m_endCallback, weakManager = m_manager, valueTag = m_animatedValueTag, id = m_id](
-          auto sender, auto) {
-        if (EndCallback) {
-          EndCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", true)});
-        }
-        if (auto manager = weakManager.lock()) {
-          if (auto const animatedValue = manager->GetValueAnimatedNode(valueTag)) {
-            animatedValue->RemoveActiveAnimation(id);
-            animatedValue->FlattenOffset();
-          }
-          manager->RevmoveActiveAnimation(id);
-        }
-      });
+  m_scopedBatchCompletedToken = scopedBatch.Completed([&](auto sender, auto) {
+    DoCallback(true);
+    if (auto manager = m_manager.lock()) {
+      if (auto const animatedValue = manager->GetValueAnimatedNode(m_animatedValueTag)) {
+        animatedValue->RemoveActiveAnimation(m_id);
+        animatedValue->FlattenOffset();
+      }
+      manager->RemoveActiveAnimation(m_id);
+    }
+  });
 
   m_animation = animation;
   m_scopedBatch = scopedBatch;
@@ -67,8 +76,7 @@ void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
       animatedValue->RemoveActiveAnimation(m_id);
 
       if (m_scopedBatch) {
-        if (m_endCallback)
-          m_endCallback(std::vector<folly::dynamic>{folly::dynamic::object("finished", false)});
+        DoCallback(false);
         m_scopedBatch.Completed(m_scopedBatchCompletedToken);
         m_scopedBatch = nullptr;
       }

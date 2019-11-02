@@ -91,8 +91,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\RuntimeHolder.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\threadsafe.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
