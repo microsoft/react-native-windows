@@ -3,27 +3,36 @@
 
 #pragma once
 
-#include "DevSettings.h"
-
 #include <cxxreact/JSBigString.h>
+#include <folly/Optional.h>
+#include <filesystem>
 #include <string>
 
 namespace facebook {
 namespace react {
 
-// Used to store and retrive bytecode. Superseded in JSI by PreparedScriptStore.
+//!
+//! Used to store and retrive bytecode. Superseded in JSI by PreparedScriptStore.
+//!
 class ChakraBytecodeStore {
  public:
-  ChakraBytecodeStore(const std::shared_ptr<ScriptPropertyResolver> &resolver);
+  ChakraBytecodeStore(const std::filesystem::path &executorScratchDirectory);
 
-  // Wil return bytecode for the Url if it exists may be reused
-  std::unique_ptr<JSBigString> tryReadExistingBytecode(const std::string &scriptUrl);
+  //!
+  //! Wil return bytecode for the Url if it exists may be reused
+  //!
+  std::unique_ptr<JSBigString> tryObtainCachedBytecode(const std::string &scriptUrl);
 
-  // Attempt to store bytecode for the given script (not guranteed to succeed)
+  //!
+  //! Attempt to store bytecode for the given script (not guranteed to succeed)
+  //!
   void persistBytecode(const std::string &scriptUrl, const JSBigString &bytecode);
 
  private:
-  std::shared_ptr<ScriptPropertyResolver> m_resolver;
+  folly::Optional<std::filesystem::path> bytecodePathFromScriptUrl(const std::string &scriptUrl);
+  folly::Optional<uint64_t> calculateScriptChecksum(const std::string &scriptUrl);
+
+  std::filesystem::path m_bytecodeDirectory;
 };
 
 } // namespace react

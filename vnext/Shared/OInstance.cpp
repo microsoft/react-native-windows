@@ -495,11 +495,8 @@ InstanceImpl::InstanceImpl(
       instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
       instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
 
-      // Disable bytecode caching with live reload as we don't make guarantees
-      // that the the bundle version will change with edits
-      if (devSettings->liveReloadCallback == nullptr) {
-        instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->scriptPropResolver);
-      }
+      instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->executorScratchDirectory);
+
 
       if (!m_devSettings->useJITCompilation) {
 #if (defined(_MSC_VER) && !defined(WINRT))
@@ -706,14 +703,10 @@ InstanceImpl::InstanceImpl(
   auto edf = std::make_shared<SandboxDelegateFactory>(std::move(sendNativeModuleCall));
 
   ChakraInstanceArgs instanceArgs;
+  instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->executorScratchDirectory);
   instanceArgs.RuntimeAttributes =
       m_devSettings->useJITCompilation ? JsRuntimeAttributeNone : JsRuntimeAttributeDisableNativeCodeGeneration;
 
-  // Disable bytecode caching with live reload as we don't make guarantees that
-  // the bundle version will change with edits
-  if (devSettings->liveReloadCallback == nullptr) {
-    instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->scriptPropResolver);
-  }
 
   auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
   m_innerInstance->initializeBridge(

@@ -5,6 +5,7 @@
 #include "Logging.h"
 #include "MemoryTracker.h"
 
+#include <filesystem>
 #include <functional>
 #include <memory>
 #include <string>
@@ -45,18 +46,9 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
-// Allows the instance to query information about a given script
-struct ScriptPropertyResolver {
-  virtual ~ScriptPropertyResolver() = default;
-
-  virtual uint64_t resolveScriptVersion(const std::string &scriptUrl) = 0;
-  virtual std::string resolveBytecodeFilename(const std::string &scriptUrl) = 0;
-};
-
 struct DevSettings {
   bool useSandbox{false};
   bool useJITCompilation{true};
-  std::shared_ptr<ScriptPropertyResolver> scriptPropResolver;
   std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;
@@ -111,6 +103,9 @@ struct DevSettings {
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
 
+  /// A directory which the executor may read or write to in order to perform
+  /// its needed functions (e.g. bytecode caching)
+  std::filesystem::path executorScratchDirectory;
 };
 
 } // namespace react

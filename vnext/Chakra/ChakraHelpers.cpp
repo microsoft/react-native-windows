@@ -61,7 +61,7 @@ struct FileVersionInfoResource {
 };
 #endif
 
-void serializeBytecodeToFileCore(
+void persistBytecodeCore(
     const std::shared_ptr<const JSBigString> &script,
     const std::string scriptUrl,
     ChakraBytecodeStore &bytecodeStore) {
@@ -78,12 +78,10 @@ void serializeBytecodeToFileCore(
     return;
   }
 
- 
-
   bytecodeStore.persistBytecode(scriptUrl, bytecode);
 }
 
-void serializeBytecodeToFile(
+void persistBytecode(
     const std::shared_ptr<const JSBigString> &script,
     const std::string scriptUrl,
     const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore,
@@ -94,7 +92,7 @@ void serializeBytecodeToFile(
          const std::string &scriptUrl,
          const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore) {
         MinimalChakraRuntime chakraRuntime(false /* multithreaded */);
-        serializeBytecodeToFileCore(script, scriptUrl, *bytecodeStore);
+        persistBytecodeCore(script, scriptUrl, *bytecodeStore);
       },
       script,
       scriptUrl,
@@ -351,10 +349,10 @@ JsValueRef evaluateScriptWithBytecode(
   return evaluateScript(std::move(script), scriptUrl);
 #else
 
-  std::unique_ptr<JSBigString> bytecode = bytecodeStore->tryReadExistingBytecode(scriptUrl);
+  std::unique_ptr<JSBigString> bytecode = bytecodeStore->tryObtainCachedBytecode(scriptUrl);
   if (!bytecode) {
     std::shared_ptr<const JSBigString> sharedScript(script.release());
-    serializeBytecodeToFile(sharedScript, scriptUrl, bytecodeStore, asyncBytecodeGeneration);
+    persistBytecode(sharedScript, scriptUrl, bytecodeStore, asyncBytecodeGeneration);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
     JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(sharedScript);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
