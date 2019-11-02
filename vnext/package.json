@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.60.0-vnext.50",
+  "version": "0.60.0-vnext.59",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
   "typings": "Libraries/react-native/typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
+    "change": "beachball change",
     "clean": "just-scripts clean",
     "start": "react-native start",
     "lint": "just-scripts eslint",
@@ -46,13 +47,13 @@
     "eslint": "5.1.0",
     "just-scripts": "^0.24.2",
     "prettier": "1.17.0",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.13.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.14.tar.gz",
     "react": "16.8.6",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft.13 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.13.tar.gz"
+    "react-native": "^0.60.0 || 0.60.0-microsoft.14 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.14.tar.gz"
   },
   "beachball": {
     "defaultNpmTag": "vnext",

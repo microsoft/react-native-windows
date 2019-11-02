@@ -100,12 +100,12 @@ Global
 		Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
+		Debug|ARM = Debug|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Release|ARM = Release|ARM
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM.ActiveCfg = Debug|ARM

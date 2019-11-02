@@ -57,7 +57,6 @@ class AnimationDriver {
 
   int64_t m_id{0};
   int64_t m_animatedValueTag{};
-  Callback m_endCallback{};
   int64_t m_iterations{0};
   folly::dynamic m_config{};
   std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
@@ -67,6 +66,13 @@ class AnimationDriver {
   // auto revoker for scopedBatch.Completed is broken, tracked by internal bug
   // #22399779
   winrt::event_token m_scopedBatchCompletedToken{};
+
+ private:
+  Callback m_endCallback{};
+  void DoCallback(bool value);
+#ifdef DEBUG
+  int m_debug_callbackAttempts{0};
+#endif // DEBUG
 };
 } // namespace uwp
 } // namespace react

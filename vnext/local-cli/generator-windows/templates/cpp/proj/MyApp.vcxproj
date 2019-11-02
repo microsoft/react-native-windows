@@ -9,7 +9,7 @@
     <ProjectName><%=ns%></ProjectName>
     <RootNamespace><%=ns%></RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -96,6 +96,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="Shared">
+    <Import Project="..\..\node_modules\react-native-windows\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -141,21 +144,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.h">
       <DependentUpon>App.xaml</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="MainPage.h">
-      <DependentUpon>MainPage.xaml</DependentUpon>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -172,23 +170,18 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="App.cpp">
       <DependentUpon>App.xaml</DependentUpon>
     </ClCompile>
-    <ClCompile Include="MainPage.cpp">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="App.idl">
       <DependentUpon>App.xaml</DependentUpon>
-    </Midl>
-    <Midl Include="MainPage.idl">
-      <DependentUpon>MainPage.xaml</DependentUpon>
     </Midl>
   </ItemGroup>
   <ItemGroup>
@@ -199,8 +192,8 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\node_modules\react-native-windows\ReactUWP\ReactUWP.vcxproj">
-      <Project>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</Project>
+    <ProjectReference Include="..\..\node_modules\react-native-windows\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)' == 'ReleaseBundle' or '$(Configuration)' == 'DebugBundle'">

@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include <hstring.h>
 #include <restrictederrorinfo.h>
 #include <unknwn.h>
@@ -13,4 +14,6 @@
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 #include <winrt/Windows.UI.Xaml.h>
-#include <winrt/react.uwp.h>
+
+#include <winrt/Microsoft.ReactNative.Bridge.h>
+#include <winrt/Microsoft.ReactNative.h>
