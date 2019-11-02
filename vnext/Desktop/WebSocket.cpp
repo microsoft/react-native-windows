@@ -628,12 +628,12 @@ MockStream::async_handshake(
     boost::string_view host,
     boost::string_view target,
     HandshakeHandler &&handler) {
-  BOOST_BEAST_HANDLER_INIT(HandshakeHandler, void(error_code));
-  post(
-      get_executor(),
-      bind_handler(std::move(init.completion_handler), HandshakeResult(host.to_string(), target.to_string())));
+  //BOOST_BEAST_HANDLER_INIT(HandshakeHandler, void(error_code));
+  //post(
+  //    get_executor(),
+  //    bind_handler(std::move(init.completion_handler), HandshakeResult(host.to_string(), target.to_string())));
 
-  return init.result.get();
+  //return init.result.get();
 }
 
 template <class DynamicBuffer, class ReadHandler>
@@ -643,10 +643,10 @@ MockStream::async_read(DynamicBuffer &buffer, ReadHandler &&handler) {
   size_t size;
   std::tie(ec, size) = ReadResult();
 
-  BOOST_BEAST_HANDLER_INIT(ReadHandler, void(error_code, size_t));
-  post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
+  //BOOST_BEAST_HANDLER_INIT(ReadHandler, void(error_code, size_t));
+  //post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
 
-  return init.result.get();
+  //return init.result.get();
 }
 
 template <class ConstBufferSequence, class WriteHandler>
@@ -656,28 +656,28 @@ MockStream::async_write(ConstBufferSequence const &buffers, WriteHandler &&handl
   size_t size;
   std::tie(ec, size) = ReadResult();
 
-  BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code, size_t));
-  post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
+  //BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code, size_t));
+  //post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
 
-  return init.result.get();
+  //return init.result.get();
 }
 
 template <class WriteHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
 MockStream::async_ping(websocket::ping_data const &payload, WriteHandler &&handler) {
-  BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code));
-  post(get_executor(), bind_handler(std::move(init.completion_handler), PingResult()));
+  //BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code));
+  //post(get_executor(), bind_handler(std::move(init.completion_handler), PingResult()));
 
-  return init.result.get();
+  //return init.result.get();
 }
 
 template <class CloseHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
 MockStream::async_close(websocket::close_reason const &cr, CloseHandler &&handler) {
-  BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
-  post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
+  //BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
+  //post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
 
-  return init.result.get();
+  //return init.result.get();
 }
 
 #pragma endregion MockStream
@@ -709,6 +709,7 @@ namespace boost {
 
 namespace asio {
 
+//TODO: Remove
 // See <boost/asio/connect.hpp>(776)
 template <typename Iterator, typename IteratorConnectHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(error_code, Iterator))
