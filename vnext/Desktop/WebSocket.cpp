@@ -383,7 +383,6 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::Connect(
         //        Handshake(std::move(options));
         //      }
         //    }); // async_connect
-
         get_lowest_layer(*m_stream).async_connect(
           results,
           [this, options = std::move(options)](boostecr ec, tcp::resolver::results_type::endpoint_type)
@@ -605,32 +604,23 @@ void MockStream::set_option(websocket::permessage_deflate const& o) {}
 
 void MockStream::get_option(websocket::permessage_deflate& o) {}
 
-template<class EndpointSequence, class RangeConnectHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type))
+
+template<class RangeConnectHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, typename tcp::resolver::results_type::endpoint_type))
 MockStream::async_connect(
-  EndpointSequence const& endpoints,
+  tcp::resolver::results_type/*::endpoint_type*/ const& endpoints,
   RangeConnectHandler&& handler)
 {
-  BOOST_BEAST_HANDLER_INIT(RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type));
-  //TODO: post
-
-  return init.result.get();
+  //return net::async_initiate<
+  //  RangeConnectHandler,
+  //  void(error_code, typename Protocol::endpoint)>(
+  //    typename ops::run_connect_range_op{},
+  //    handler,
+  //    this,
+  //    endpoints,
+  //    detail::any_endpoint{});
+  throw;
 }
-
-//template <class RequestDecorator, class HandshakeHandler>
-//BOOST_BEAST_ASYNC_RESULT1(HandshakeHandler)
-//MockStream::async_handshake_ex(
-//  boost::beast::string_view host,
-//  boost::beast::string_view target,
-//  RequestDecorator const& decorator,
-//  HandshakeHandler&& handler
-//)
-//{
-//  get_executor(),
-//    HandshakeResult(host.to_string(), target.to_string())
-//  
-//  return boost::asio::async_initiate<HandshakeHandler, void(error_code)>()
-//}
 
 template <class HandshakeHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(error_code))

@@ -253,35 +253,15 @@ class MockStream {
 
 #pragma region boost::beast::basic_stream mocks
 
-template<
-  class EndpointSequence,
-  class RangeConnectHandler/*,
-  class*/>
-  BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::resolver::results_type::endpoint_type))
-  async_connect(
-    EndpointSequence const& endpoints,
-    RangeConnectHandler&& handler);
+template<class RangeConnectHandler>
+BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::resolver::results_type::endpoint_type))
+async_connect(
+  boost::asio::ip::tcp::resolver::results_type const& endpoints,
+  RangeConnectHandler&& handler);
 
-#pragma endregion // boost::beast::basic_stream mocks
+#pragma endregion boost::beast::basic_stream mocks
 
 #pragma region boost::beast::websocket::stream mocks
-
-  //template <class RequestDecorator, class HandshakeHandler>
-  //BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
-  //async_handshake_ex(
-  //    boost::beast::string_view host,
-  //    boost::beast::string_view target,
-  //    RequestDecorator const &decorator,
-  //    HandshakeHandler &&handler);
-
-  //template <class RequestDecorator, class HandshakeHandler>
-  //BOOST_BEAST_ASYNC_RESULT1(HandshakeHandler)
-  //async_handshake_ex(
-  //  boost::beast::string_view host,
-  //  boost::beast::string_view target,
-  //  RequestDecorator const& decorator,
-  //  HandshakeHandler&& handler
-  //);
 
   template <class HandshakeHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(HandshakeHandler, void(boost::system::error_code))
