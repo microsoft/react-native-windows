@@ -65,6 +65,8 @@ steps:
       restoreSolution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
 
   - template: install-SDK.yml
+    parameters:
+      sdkVersion: $(Win10Version)
 
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
@@ -81,16 +83,22 @@ steps:
     inputs:
       solution: $(Agent.BuildDirectory)\testcli\windows\testcli.sln
       msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-      msbuildArchitecture: x86 # Optional. Options: x86, x64
+      msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
       platform: ${{ parameters.platform }} # Optional
       configuration: ${{ parameters.configuration }} # Optional
-      restoreNugetPackages: true
+      createLogFile: true
+      logFileVerbosity: detailed
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-#        /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150"
 
-      clean: true # Optional
+  - task: PublishBuildArtifacts@1
+    condition:  succeededOrFailed()
+    timeoutInMinutes: 10
+    inputs:
+      pathtoPublish: $(Agent.BuildDirectory)/testcli/windows/testcli.sln.log
+      artifactName: Detailed Logs for testcli.sln ${{ parameters.platform }} ${{ parameters.configuration }}
+      publishLocation: 'Container'
 
   - task: CmdLine@2
     displayName: Create bundle testcli

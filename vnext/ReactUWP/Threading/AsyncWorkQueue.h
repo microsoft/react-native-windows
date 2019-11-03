@@ -18,8 +18,7 @@ namespace uwp {
 /// Calls to ProcessWorkItem() will come on a thread that is owned by the work
 /// queue, and it is the implementer's job to ensure its own thread safety.
 /// </summary>
-interface DECLSPEC_UUID("75E41B6E-935D-49b6-A8C7-71FC123EE91D") IAsyncCallback
-    : IUnknown {
+interface DECLSPEC_UUID("75E41B6E-935D-49b6-A8C7-71FC123EE91D") IAsyncCallback : IUnknown {
   /// <summary>
   /// Invoked from AsyncWorkQueue to ask the client to process the work item.
   /// </summary>
@@ -62,8 +61,7 @@ interface DECLSPEC_UUID("75E41B6E-935D-49b6-A8C7-71FC123EE91D") IAsyncCallback
 /// work in this callback - preferably just signaling or making note of the fact
 /// that the work item was never run.
 /// </summary>
-interface DECLSPEC_UUID("16f7789f-46bb-4124-aba3-266a56d464c2")
-    IAsyncCallbackCancelExtension : public IUnknown {
+interface DECLSPEC_UUID("16f7789f-46bb-4124-aba3-266a56d464c2") IAsyncCallbackCancelExtension : public IUnknown {
   /// <summary>
   /// Called by the work queue if a work item is canceled without every being
   /// executed.
@@ -78,8 +76,7 @@ interface DECLSPEC_UUID("16f7789f-46bb-4124-aba3-266a56d464c2")
 /// consist of a callback object that implements IAsyncCallback and user data
 /// typed as IUnknown since only the client will understand its details.
 /// </summary>
-interface DECLSPEC_UUID("51AB52B1-F754-44bb-8F84-368313D9500F") IAsyncWorkQueue
-    : IUnknown {
+interface DECLSPEC_UUID("51AB52B1-F754-44bb-8F84-368313D9500F") IAsyncWorkQueue : IUnknown {
   /// <summary>
   /// Cancel all work items. This function returns after clearing the list of
   /// work items and requesting any processing work item to cancel. It does not
@@ -148,8 +145,7 @@ interface DECLSPEC_UUID("51AB52B1-F754-44bb-8F84-368313D9500F") IAsyncWorkQueue
   /// item</param> <param name="pUserData">[in] Data to pass to the callback
   /// when processing the work item</param> <returns> HRESULT.
   /// </returns>
-  virtual HRESULT QueueWorkItem(
-      _In_ IAsyncCallback * pCallback, _In_opt_ IUnknown * pUserData) = 0;
+  virtual HRESULT QueueWorkItem(_In_ IAsyncCallback * pCallback, _In_opt_ IUnknown * pUserData) = 0;
 };
 
 /// <summary>

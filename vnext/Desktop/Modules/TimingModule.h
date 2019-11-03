@@ -16,8 +16,7 @@
 namespace facebook {
 namespace react {
 
-using DateTime = std::chrono::
-    time_point<std::chrono::system_clock, std::chrono::milliseconds>;
+using DateTime = std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>;
 using TimeSpan = std::chrono::milliseconds;
 
 // Timer struct which holds timer id, target time, period between target time
@@ -69,9 +68,7 @@ class TimerQueue {
 //           timing.delete(id);
 class Timing : public std::enable_shared_from_this<Timing> {
  public:
-  Timing(
-      const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread)
-      : m_nativeThread(nativeThread) {}
+  Timing(const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) : m_nativeThread(nativeThread) {}
   ~Timing();
   void createTimer(
       std::weak_ptr<facebook::react::Instance> instance,
@@ -83,10 +80,8 @@ class Timing : public std::enable_shared_from_this<Timing> {
   void setSendIdleEvents(bool sendIdleEvents) noexcept;
 
  private:
-  static VOID CALLBACK ThreadpoolTimerCallback(
-      PTP_CALLBACK_INSTANCE Instance,
-      PVOID Parameter,
-      PTP_TIMER Timer) noexcept;
+  static VOID CALLBACK
+  ThreadpoolTimerCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Parameter, PTP_TIMER Timer) noexcept;
   void OnTimerRaised() noexcept;
   void SetInstance(std::weak_ptr<facebook::react::Instance> instance) noexcept;
   void SetKernelTimer(DateTime dueTime) noexcept;
@@ -112,8 +107,7 @@ class TimingModule : public facebook::xplat::module::CxxModule {
  public:
   TimingModule(std::shared_ptr<Timing> &&timing);
   std::string getName() override;
-  virtual std::map<std::string, folly::dynamic>
-  getConstants() noexcept override;
+  virtual std::map<std::string, folly::dynamic> getConstants() noexcept override;
   virtual std::vector<Method> getMethods() noexcept override;
 
  private:

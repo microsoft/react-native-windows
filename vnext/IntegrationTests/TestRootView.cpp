@@ -5,10 +5,7 @@
 
 namespace Microsoft::React::Test {
 
-TestRootView::TestRootView(
-    const std::string &name,
-    int64_t width,
-    int64_t height)
+TestRootView::TestRootView(const std::string &name, int64_t width, int64_t height)
     : m_name{name}, m_width{width}, m_height{height} {}
 
 void TestRootView::ResetView() {}

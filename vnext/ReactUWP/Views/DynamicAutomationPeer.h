@@ -23,17 +23,14 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   using Super = DynamicAutomationPeerT<DynamicAutomationPeer>;
 
   DynamicAutomationPeer() = delete;
-  DynamicAutomationPeer(
-      winrt::Windows::UI::Xaml::FrameworkElement const &owner);
+  DynamicAutomationPeer(winrt::Windows::UI::Xaml::FrameworkElement const &owner);
 
   winrt::hstring GetClassNameCore() const;
   winrt::hstring GetNameCore() const;
 
-  winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType
-  GetAutomationControlTypeCore() const;
+  winrt::Windows::UI::Xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeCore() const;
   winrt::Windows::Foundation::IInspectable GetPatternCore(
-      winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const
-          &patternInterface) const;
+      winrt::Windows::UI::Xaml::Automation::Peers::PatternInterface const &patternInterface) const;
 
   bool IsEnabledCore() const;
 
@@ -49,14 +46,11 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   bool IsSelectionRequired() const {
     return false;
   }
-  winrt::com_array<
-      winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple>
-  GetSelection() const;
+  winrt::com_array<winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple> GetSelection() const;
 
   // ISelectionItemProvider
   bool IsSelected() const;
-  winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple
-  SelectionContainer() const;
+  winrt::Windows::UI::Xaml::Automation::Provider::IRawElementProviderSimple SelectionContainer() const;
   void AddToSelection() const;
   void RemoveFromSelection() const;
   void Select() const;
@@ -66,25 +60,35 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
   void Toggle() const;
 
   // IExpandCollapseProvider
-  winrt::Windows::UI::Xaml::Automation::ExpandCollapseState
-  ExpandCollapseState() const;
+  winrt::Windows::UI::Xaml::Automation::ExpandCollapseState ExpandCollapseState() const;
   void Expand() const;
   void Collapse() const;
 
  private:
   winrt::hstring GetContentName() const;
   winrt::react::uwp::AccessibilityRoles GetAccessibilityRole() const;
-  bool HasAccessibilityState(
-      winrt::react::uwp::AccessibilityStates state) const;
-  bool GetAccessibilityState(
-      winrt::react::uwp::AccessibilityStates state) const;
-  winrt::react::uwp::AccessibilityInvokeEventHandler
-  GetAccessibilityInvokeEventHandler() const;
+  bool HasAccessibilityState(winrt::react::uwp::AccessibilityStates state) const;
+  bool GetAccessibilityState(winrt::react::uwp::AccessibilityStates state) const;
+  winrt::react::uwp::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler() const;
+
+  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty();
+  static void SetAccessibilityActions(
+      Windows::UI::Xaml::UIElement const &element,
+      Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> const &value);
+  static Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> GetAccessibilityActions(
+      Windows::UI::Xaml::UIElement const &element);
+  static void DispatchAccessibilityAction(
+      Windows::UI::Xaml::UIElement const &element,
+      std::wstring_view const &actionName);
+  static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
+  static void SetAccessibilityActionEventHandler(
+      Windows::UI::Xaml::UIElement const &element,
+      winrt::react::uwp::AccessibilityActionEventHandler const &value);
+  static winrt::react::uwp::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
+      winrt::Windows::UI::Xaml::UIElement const &element);
 };
 } // namespace winrt::react::uwp::implementation
 
 namespace winrt::react::uwp::factory_implementation {
-struct DynamicAutomationPeer : DynamicAutomationPeerT<
-                                   DynamicAutomationPeer,
-                                   implementation::DynamicAutomationPeer> {};
+struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer, implementation::DynamicAutomationPeer> {};
 } // namespace winrt::react::uwp::factory_implementation

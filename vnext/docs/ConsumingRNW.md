@@ -57,6 +57,26 @@
    - Run `yarn start` from your project directory, and wait for the React Native packager to report success.
    - Click the `Run` button to the right of the platform combo box control in VS, or select the `Debug`->`Start without Debugging` menu item. You now see your new app and Chrome should have loaded `http://localhost:8081/debugger-ui/` in a new tab. Press `F12` or `Ctrl+Shift+I` in Chrome to open its Developer Tools. :tada:
 
+- With VS Code
+  - Open your applications folder in VS Code.
+  - Install the [React Native Tools](https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native) plugin for VS Code.
+  - Create a new file in the applications root directory, `.vscode/launch.json` and paste the following configuration:
+  ```
+  {
+      "version": "0.2.0",
+      "configurations": [
+          {
+              "name": "Debug Windows",
+              "cwd": "${workspaceFolder}",
+              "type": "reactnative",
+              "request": "launch",
+              "platform": "windows"
+          }
+      ]
+  }
+  ```
+  - Press `F5` or navigate to the debug menu (alternatively press `Ctrl+Shift+D`) and in the Debug dropdown select "Debug Windows" and press the green arrow to run the application.
+
 ## Authoring Native Modules (vnext)
 
 See [Native Modules and React Native Windows](NativeModules.md).

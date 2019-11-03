@@ -8,8 +8,7 @@
 namespace react {
 namespace uwp {
 
-ScrollContentViewManager::ScrollContentViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
+ScrollContentViewManager::ScrollContentViewManager(const std::shared_ptr<IReactInstance> &reactInstance)
     : Super(reactInstance) {}
 
 const char *ScrollContentViewManager::GetName() const {

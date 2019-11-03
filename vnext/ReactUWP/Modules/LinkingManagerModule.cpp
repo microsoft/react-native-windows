@@ -28,24 +28,17 @@ namespace uwp {
 // LinkingManagerModule helpers
 //
 
-static winrt::fire_and_forget openURLAsync(
-    winrt::Windows::Foundation::Uri uri,
-    Callback success,
-    Callback error) {
+static winrt::fire_and_forget openURLAsync(winrt::Windows::Foundation::Uri uri, Callback success, Callback error) {
   if (co_await winrt::Windows::System::Launcher::LaunchUriAsync(uri)) {
     success({true});
   } else {
     error({folly::dynamic::object("code", 1)(
-        "message",
-        "Unable to open URL:" +
-            Microsoft::Common::Unicode::Utf16ToUtf8(uri.DisplayUri()))});
+        "message", "Unable to open URL:" + Microsoft::Common::Unicode::Utf16ToUtf8(uri.DisplayUri()))});
   }
 }
 
-static winrt::fire_and_forget canOpenURLAsync(
-    winrt::Windows::Foundation::Uri uri,
-    Callback success,
-    Callback /*error*/) {
+static winrt::fire_and_forget
+canOpenURLAsync(winrt::Windows::Foundation::Uri uri, Callback success, Callback /*error*/) {
   winrt::Windows::System::LaunchQuerySupportStatus status =
       co_await winrt::Windows::System::Launcher::QueryUriSupportAsync(
           uri, winrt::Windows::System::LaunchQuerySupportType::Uri);
@@ -77,29 +70,23 @@ auto LinkingManagerModule::getMethods() -> std::vector<Method> {
   return {
       Method(
           "openURL",
-          [](folly::dynamic args,
-             Callback successCallback,
-             Callback errorCallback) {
+          [](folly::dynamic args, Callback successCallback, Callback errorCallback) {
             winrt::Windows::Foundation::Uri uri(
-                Microsoft::Common::Unicode::Utf8ToUtf16(
-                    facebook::xplat::jsArgAsString(args, 0)));
+                Microsoft::Common::Unicode::Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
             openURLAsync(uri, successCallback, errorCallback);
           }),
       Method(
           "canOpenURL",
-          [](folly::dynamic args,
-             Callback successCallback,
-             Callback errorCallback) {
+          [](folly::dynamic args, Callback successCallback, Callback errorCallback) {
             winrt::Windows::Foundation::Uri uri(
-                Microsoft::Common::Unicode::Utf8ToUtf16(
-                    facebook::xplat::jsArgAsString(args, 0)));
+                Microsoft::Common::Unicode::Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
             canOpenURLAsync(uri, successCallback, errorCallback);
           }),
       Method(
           "getInitialURL",
-          [](folly::dynamic /*args*/,
-             Callback successCallback,
-             Callback /*errorCallback*/) { successCallback({nullptr}); }),
+          [](folly::dynamic /*args*/, Callback successCallback, Callback /*errorCallback*/) {
+            successCallback({nullptr});
+          }),
   };
 }
 

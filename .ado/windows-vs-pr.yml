@@ -7,14 +7,8 @@ pr:
   - master
 
 variables:
-  # General / Default
-  VmImage: vs2017-win2016
-  MSBuildVersion: 16.0
-  MSBuildArchitecture: x64
-  MSBuildPreferredToolArchitecture: x64
-  MSBuildPlatformToolset: v141
-  TargetPlatformVersion: 10.0.18362.0
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
+  - template: variables/msbuild.yml
+  - template: variables/vs2017.yml
 
 jobs:
   - job: Setup
@@ -71,18 +65,12 @@ jobs:
         clean: false
         submodules: false
 
-      # #TODO: Remove
-      # - powershell: |
-      #     ls 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\' -Name -Recurse -Include '*GoogleTest*'
-
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
           yarnBuildCmd: buildci
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
-          msbuildArguments:
-#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -179,9 +167,7 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     variables:
-      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&(FullyQualifiedName!~WebSocket)
-      GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
-      # VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
+      Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
 
     steps:
       - checkout: self
@@ -196,12 +182,9 @@ jobs:
         parameters:
           yarnBuildCmd: buildci
           project: vnext/ReactWindows-Desktop.sln
-          platformToolset: v141
-          vsComponents: $(VsComponents)
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="Private Build"
             /p:RNW_PKG_VERSION="1000,0,0,0"
-#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -227,7 +210,7 @@ jobs:
         inputs:
           targetType: filePath # filePath | inline
           filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 30
+          arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
 
       - task: VSTest@2
         displayName: Run Desktop Integration Tests
@@ -242,6 +225,47 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
+          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
+
+      - task: VSTest@2
+        displayName: List Desktop Integration Tests
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+          runTestsInIsolation: false
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: false
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+          otherConsoleOptions: '/ListTests'
+        condition: failed()
+
+      - task: VSTest@2
+        displayName: Re-Run Desktop Integration Tests
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+          searchFolder: $(Build.SourcesDirectory)\vnext\target\$(BuildPlatform)\$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+          otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+        condition: failed()
+
+      - task: PowerShell@2
+        displayName: Check the metro bundle server
+        inputs:
+          targetType: 'inline'
+          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
+        condition: failed()
 
       - template: templates/stop-packagers.yml
 
@@ -403,6 +427,8 @@ jobs:
           workingDirectory: current
 
       - template: templates\install-SDK.yml
+        parameters:
+          sdkVersion: $(Win10Version)
 
       - task: PowerShell@2
         displayName: Install Visual Studio dependencies
@@ -429,7 +455,6 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:TargetPlatformVersion=$(TargetPlatformVersion)
             /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
-#            /p:VCTargetsPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v150"
           #clean: true # Optional
           #maximumCpuCount: false # Optional
           #restoreNugetPackages: false # Optional
@@ -475,7 +500,7 @@ jobs:
         vmImage: windows-2019
       BuildPlatform: x64
       UseRNFork: true
-      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
+      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64, Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

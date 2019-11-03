@@ -39,15 +39,21 @@ class ViewShadowNode : public ShadowNodeBase {
 
     auto panel = GetViewPanel();
 
-    DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(
-        panel, [=]() {
-          if (OnClick())
-            DispatchEvent(
-                "topClick", std::move(folly::dynamic::object("target", m_tag)));
-          else
-            DispatchEvent(
-                "topAccessibilityTap",
-                std::move(folly::dynamic::object("target", m_tag)));
+    DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(panel, [=]() {
+      if (OnClick())
+        DispatchEvent("topClick", std::move(folly::dynamic::object("target", m_tag)));
+      else
+        DispatchEvent("topAccessibilityTap", std::move(folly::dynamic::object("target", m_tag)));
+    });
+
+    DynamicAutomationProperties::SetAccessibilityActionEventHandler(
+        panel, [=](winrt::react::uwp::AccessibilityAction const &action) {
+          folly::dynamic eventData = folly::dynamic::object("target", m_tag);
+
+          eventData.insert(
+              "actionName", action.Label.empty() ? HstringToDynamic(action.Name) : HstringToDynamic(action.Label));
+
+          DispatchEvent("topAccessibilityAction", std::move(eventData));
         });
   }
 
@@ -94,8 +100,7 @@ class ViewShadowNode : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     GetViewPanel().InsertAt(
-        static_cast<uint32_t>(index),
-        static_cast<ShadowNodeBase &>(child).GetView().as<winrt::UIElement>());
+        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<winrt::UIElement>());
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
@@ -126,8 +131,7 @@ class ViewShadowNode : public ShadowNodeBase {
     auto pPanel = GetViewPanel();
     if (pPanel != nullptr) {
       uint32_t index;
-      if (pPanel.Children().IndexOf(
-              oldChildView.as<winrt::UIElement>(), index)) {
+      if (pPanel.Children().IndexOf(oldChildView.as<winrt::UIElement>(), index)) {
         pPanel.RemoveAt(index);
         pPanel.InsertAt(index, newChildView.as<winrt::UIElement>());
       } else {
@@ -141,8 +145,7 @@ class ViewShadowNode : public ShadowNodeBase {
     // shadow node to the view
     EnableFocusRing(EnableFocusRing());
     TabIndex(TabIndex());
-    static_cast<FrameworkElementViewManager *>(GetViewManager())
-        ->RefreshTransformMatrix(this);
+    static_cast<FrameworkElementViewManager *>(GetViewManager())->RefreshTransformMatrix(this);
   }
 
   winrt::react::uwp::ViewPanel GetViewPanel() {
@@ -169,28 +172,21 @@ class ViewShadowNode : public ShadowNodeBase {
   }
 
   XamlView CreateViewControl() {
-    auto contentControl =
-        winrt::make<winrt::react::uwp::implementation::ViewControl>();
+    auto contentControl = winrt::make<winrt::react::uwp::implementation::ViewControl>();
 
-    m_contentControlGotFocusRevoker =
-        contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-          if (args.OriginalSource().try_as<winrt::UIElement>() ==
-              contentControl.as<winrt::UIElement>()) {
-            auto tag = m_tag;
-            DispatchEvent(
-                "topFocus", std::move(folly::dynamic::object("target", tag)));
-          }
-        });
+    m_contentControlGotFocusRevoker = contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
+      if (args.OriginalSource().try_as<winrt::UIElement>() == contentControl.as<winrt::UIElement>()) {
+        auto tag = m_tag;
+        DispatchEvent("topFocus", std::move(folly::dynamic::object("target", tag)));
+      }
+    });
 
-    m_contentControlLostFocusRevoker =
-        contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-          if (args.OriginalSource().try_as<winrt::UIElement>() ==
-              contentControl.as<winrt::UIElement>()) {
-            auto tag = m_tag;
-            DispatchEvent(
-                "topBlur", std::move(folly::dynamic::object("target", tag)));
-          }
-        });
+    m_contentControlLostFocusRevoker = contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
+      if (args.OriginalSource().try_as<winrt::UIElement>() == contentControl.as<winrt::UIElement>()) {
+        auto tag = m_tag;
+        DispatchEvent("topBlur", std::move(folly::dynamic::object("target", tag)));
+      }
+    });
 
     return contentControl.try_as<XamlView>();
   }
@@ -259,32 +255,25 @@ bool TryUpdateBorderProperties(
       element.ClearValue(ViewPanel::BorderBrushProperty());
   } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::Left, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
   } else if (propertyName == "borderTopWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::Top, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.asDouble());
   } else if (propertyName == "borderRightWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::Right, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.asDouble());
   } else if (propertyName == "borderBottomWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
   } else if (propertyName == "borderStartWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::Start, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.asDouble());
   } else if (propertyName == "borderEndWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::End, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.asDouble());
   } else if (propertyName == "borderWidth") {
     if (propertyValue.isNumber())
-      SetBorderThickness(
-          node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::BorderThicknessProperty());
   } else {
@@ -296,21 +285,16 @@ bool TryUpdateBorderProperties(
 
 // ViewViewManager
 
-ViewViewManager::ViewViewManager(
-    const std::shared_ptr<IReactInstance> &reactInstance)
-    : Super(reactInstance) {}
+ViewViewManager::ViewViewManager(const std::shared_ptr<IReactInstance> &reactInstance) : Super(reactInstance) {}
 
 const char *ViewViewManager::GetName() const {
   return "RCTView";
 }
 
-folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants()
-    const {
+folly::dynamic ViewViewManager::GetExportedCustomDirectEventTypeConstants() const {
   auto directEvents = Super::GetExportedCustomDirectEventTypeConstants();
-  directEvents["topClick"] =
-      folly::dynamic::object("registrationName", "onClick");
-  directEvents["topAccessibilityTap"] =
-      folly::dynamic::object("registrationName", "onAccessibilityTap");
+  directEvents["topClick"] = folly::dynamic::object("registrationName", "onClick");
+  directEvents["topAccessibilityTap"] = folly::dynamic::object("registrationName", "onAccessibilityTap");
 
   return directEvents;
 }
@@ -330,19 +314,15 @@ XamlView ViewViewManager::CreateViewCore(int64_t tag) {
 folly::dynamic ViewViewManager::GetNativeProps() const {
   auto props = Super::GetNativeProps();
 
-  props.update(
-      folly::dynamic::object("pointerEvents", "string")("onClick", "function")(
-          "onMouseEnter", "function")("onMouseLeave", "function")
-      //("onMouseMove", "function")
-      ("acceptsKeyboardFocus", "boolean")("enableFocusRing", "boolean")(
-          "tabIndex", "number"));
+  props.update(folly::dynamic::object("pointerEvents", "string")("onClick", "function")("onMouseEnter", "function")(
+      "onMouseLeave", "function")
+               //("onMouseMove", "function")
+               ("acceptsKeyboardFocus", "boolean")("enableFocusRing", "boolean")("tabIndex", "number"));
 
   return props;
 }
 
-void ViewViewManager::UpdateProperties(
-    ShadowNodeBase *nodeToUpdate,
-    const folly::dynamic &reactDiffMap) {
+void ViewViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(nodeToUpdate);
   bool shouldBeControl = pViewShadowNode->IsControl();
   bool finalizeBorderRadius{false};
@@ -356,19 +336,15 @@ void ViewViewManager::UpdateProperties(
 
       if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
         continue;
-      } else if (TryUpdateBorderProperties(
-                     nodeToUpdate, pPanel, propertyName, propertyValue)) {
+      } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
         continue;
-      } else if (TryUpdateCornerRadiusOnNode(
-                     nodeToUpdate, pPanel, propertyName, propertyValue)) {
+      } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
         finalizeBorderRadius = true;
         continue;
-      } else if (TryUpdateMouseEvents(
-                     nodeToUpdate, propertyName, propertyValue)) {
+      } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
         continue;
       } else if (propertyName == "onClick") {
-        pViewShadowNode->OnClick(
-            !propertyValue.isNull() && propertyValue.asBool());
+        pViewShadowNode->OnClick(!propertyValue.isNull() && propertyValue.asBool());
       } else if (propertyName == "overflow") {
         if (propertyValue.isString()) {
           bool clipChildren = propertyValue.getString() == "hidden";
@@ -461,8 +437,7 @@ void ViewViewManager::TryUpdateView(
   // If don't need a control, then set Outer Border or the Panel as the view
   // root
   if (!useControl) {
-    newXamlView = hasOuterBorder ? pPanel.GetOuterBorder().try_as<XamlView>()
-                                 : pPanel.try_as<XamlView>();
+    newXamlView = hasOuterBorder ? pPanel.GetOuterBorder().try_as<XamlView>() : pPanel.try_as<XamlView>();
   }
 
   // Clean up child of Border if needed
@@ -497,15 +472,13 @@ void ViewViewManager::TryUpdateView(
     if (instance == nullptr)
       return;
 
-    auto pNativeUiManager =
-        static_cast<NativeUIManager *>(instance->NativeUIManager());
+    auto pNativeUiManager = static_cast<NativeUIManager *>(instance->NativeUIManager());
 
     // Inform the parent ShadowNode of this change so the hierarchy can be
     // updated
     int64_t parentTag = pViewShadowNode->GetParent();
     auto host = pNativeUiManager->getHost();
-    auto *pParentNode =
-        static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
+    auto *pParentNode = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parentTag));
     if (pParentNode != nullptr)
       pParentNode->ReplaceChild(oldXamlView, newXamlView);
 

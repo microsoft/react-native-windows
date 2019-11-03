@@ -2,8 +2,8 @@
 
 #include <DevSettings.h>
 
-#include <jsi/RuntimeHolder.h>
-#include <jsi/ScriptStore.h>
+#include <JSI/Shared/RuntimeHolder.h>
+#include <JSI/Shared/ScriptStore.h>
 
 #include <JSI/Shared/ChakraRuntimeArgs.h>
 
@@ -19,8 +19,7 @@ class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
       std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
-      std::unique_ptr<facebook::jsi::PreparedScriptStore>
-          &&preparedScriptStore) noexcept
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept
       : args_(RuntimeArgsFromDevSettings(devSettings)) {
     args_.jsQueue = std::move(jsQueue);
     args_.scriptStore = std::move(scriptStore);

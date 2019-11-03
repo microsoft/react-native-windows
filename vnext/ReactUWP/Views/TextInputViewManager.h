@@ -27,10 +27,7 @@ class TextInputViewManager : public ControlViewManager {
   friend class TextInputShadowNode;
 
  private:
-  void TransferInputScope(
-      XamlView oldView,
-      XamlView newView,
-      const bool copyToPasswordBox);
+  void TransferInputScope(XamlView oldView, XamlView newView, const bool copyToPasswordBox);
 };
 
 } // namespace uwp

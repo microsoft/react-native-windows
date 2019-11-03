@@ -23,8 +23,7 @@ using namespace react::uwp;
 
 template <>
 struct json_type_traits<react::uwp::HandledKeyboardEvent> {
-  static react::uwp::HandledKeyboardEvent parseJson(
-      const folly::dynamic &json) {
+  static react::uwp::HandledKeyboardEvent parseJson(const folly::dynamic &json) {
     react::uwp::HandledKeyboardEvent event;
 
     for (auto const &pair : json.items()) {
@@ -52,37 +51,28 @@ struct json_type_traits<react::uwp::HandledKeyboardEvent> {
 namespace react {
 namespace uwp {
 
-std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(
-    folly::dynamic const &obj) {
+std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const &obj) {
   return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
 }
 
 static folly::dynamic ToEventData(ReactKeyboardEvent event) {
-  return folly::dynamic::object(TARGET, event.target)(ALT_KEY, event.altKey)(
-      CTRL_KEY, event.ctrlKey)(KEY, event.key)(META_KEY, event.metaKey)(
-      SHIFT_KEY, event.shiftKey)(CODE, event.code);
+  return folly::dynamic::object(TARGET, event.target)(ALT_KEY, event.altKey)(CTRL_KEY, event.ctrlKey)(KEY, event.key)(
+      META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code);
 }
 
-KeyboardEventBaseHandler::KeyboardEventBaseHandler(
-    KeyboardEventCallback &&keyDown,
-    KeyboardEventCallback &&keyUp)
-    : m_keyDownCallback(std::move(keyDown)),
-      m_keyUpCallback(std::move(keyUp)) {}
+KeyboardEventBaseHandler::KeyboardEventBaseHandler(KeyboardEventCallback &&keyDown, KeyboardEventCallback &&keyUp)
+    : m_keyDownCallback(std::move(keyDown)), m_keyUpCallback(std::move(keyUp)) {}
 
-PreviewKeyboardEventHandler::PreviewKeyboardEventHandler(
-    KeyboardEventCallback &&keyDown,
-    KeyboardEventCallback &&keyUp)
+PreviewKeyboardEventHandler::PreviewKeyboardEventHandler(KeyboardEventCallback &&keyDown, KeyboardEventCallback &&keyUp)
     : KeyboardEventBaseHandler(std::move(keyDown), std::move(keyUp)) {}
 
 void PreviewKeyboardEventHandler::hook(XamlView xamlView) {
   auto uiElement = xamlView.as<winrt::UIElement>();
   if (m_keyDownCallback)
-    m_previewKeyDownRevoker =
-        uiElement.PreviewKeyDown(winrt::auto_revoke, m_keyDownCallback);
+    m_previewKeyDownRevoker = uiElement.PreviewKeyDown(winrt::auto_revoke, m_keyDownCallback);
 
   if (m_keyUpCallback)
-    m_previewKeyUpRevoker =
-        uiElement.PreviewKeyUp(winrt::auto_revoke, m_keyUpCallback);
+    m_previewKeyUpRevoker = uiElement.PreviewKeyUp(winrt::auto_revoke, m_keyUpCallback);
 }
 
 void PreviewKeyboardEventHandler::unhook() {
@@ -90,9 +80,7 @@ void PreviewKeyboardEventHandler::unhook() {
   m_previewKeyUpRevoker.revoke();
 }
 
-KeyboardEventHandler::KeyboardEventHandler(
-    KeyboardEventCallback &&keyDown,
-    KeyboardEventCallback &&keyUp)
+KeyboardEventHandler::KeyboardEventHandler(KeyboardEventCallback &&keyDown, KeyboardEventCallback &&keyUp)
     : KeyboardEventBaseHandler(std::move(keyDown), std::move(keyUp)) {}
 
 void KeyboardEventHandler::hook(XamlView xamlView) {
@@ -109,19 +97,10 @@ void KeyboardEventHandler::unhook() {
   m_keyUpRevoker.revoke();
 }
 
-PreviewKeyboardEventHandlerOnRoot::PreviewKeyboardEventHandlerOnRoot(
-    const std::weak_ptr<IReactInstance> &reactInstance)
+PreviewKeyboardEventHandlerOnRoot::PreviewKeyboardEventHandlerOnRoot(const std::weak_ptr<IReactInstance> &reactInstance)
     : PreviewKeyboardEventHandler(
-          std::bind(
-              &PreviewKeyboardEventHandlerOnRoot::OnPreKeyDown,
-              this,
-              _1,
-              _2),
-          std::bind(
-              &PreviewKeyboardEventHandlerOnRoot::OnPreKeyUp,
-              this,
-              _1,
-              _2)),
+          std::bind(&PreviewKeyboardEventHandlerOnRoot::OnPreKeyDown, this, _1, _2),
+          std::bind(&PreviewKeyboardEventHandlerOnRoot::OnPreKeyUp, this, _1, _2)),
       m_wkReactInstance(reactInstance) {}
 
 void PreviewKeyboardEventHandlerOnRoot::OnPreKeyDown(
@@ -172,27 +151,13 @@ void HandledKeyboardEventHandler::EnsureKeyboardEventHandler() {
             _1,
             _2),
         std::bind(
-            &HandledKeyboardEventHandler::KeyboardEventHandledHandler,
-            this,
-            KeyboardEventPhase::PreviewKeyUp,
-            _1,
-            _2));
+            &HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::PreviewKeyUp, _1, _2));
   }
 
   if (!m_keyboardEventHandler) {
     m_keyboardEventHandler = make_unique<KeyboardEventHandler>(
-        std::bind(
-            &HandledKeyboardEventHandler::KeyboardEventHandledHandler,
-            this,
-            KeyboardEventPhase::KeyDown,
-            _1,
-            _2),
-        std::bind(
-            &HandledKeyboardEventHandler::KeyboardEventHandledHandler,
-            this,
-            KeyboardEventPhase::KeyUp,
-            _1,
-            _2));
+        std::bind(&HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::KeyDown, _1, _2),
+        std::bind(&HandledKeyboardEventHandler::KeyboardEventHandledHandler, this, KeyboardEventPhase::KeyUp, _1, _2));
   }
 }
 
@@ -201,21 +166,17 @@ void HandledKeyboardEventHandler::KeyboardEventHandledHandler(
     winrt::IInspectable const &sender,
     winrt::KeyRoutedEventArgs const &args) {
   HandledEventPhase currentEventPhase =
-      (phase == KeyboardEventPhase::PreviewKeyUp ||
-       phase == KeyboardEventPhase::PreviewKeyDown)
+      (phase == KeyboardEventPhase::PreviewKeyUp || phase == KeyboardEventPhase::PreviewKeyDown)
       ? HandledEventPhase::Capturing
       : HandledEventPhase::Bubbling;
 
   auto event = KeyboardHelper::CreateKeyboardEvent(currentEventPhase, args);
 
   bool shouldMarkHandled = false;
-  if (phase == KeyboardEventPhase::PreviewKeyDown ||
-      phase == KeyboardEventPhase::KeyDown)
-    shouldMarkHandled =
-        ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
+  if (phase == KeyboardEventPhase::PreviewKeyDown || phase == KeyboardEventPhase::KeyDown)
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyDownKeyboardEvents, event);
   else
-    shouldMarkHandled =
-        ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, event);
+    shouldMarkHandled = ShouldMarkKeyboardHandled(m_handledKeyUpKeyboardEvents, event);
 
   if (shouldMarkHandled)
     args.Handled(true);
@@ -225,12 +186,9 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(
     std::vector<HandledKeyboardEvent> const &handledEvents,
     HandledKeyboardEvent currentEvent) {
   for (auto const &event : handledEvents) {
-    if (event.code == currentEvent.code &&
-        (event.altKey == currentEvent.altKey) &&
-        (event.ctrlKey == currentEvent.ctrlKey) &&
-        (event.shiftKey == currentEvent.shiftKey) &&
-        (event.metaKey == currentEvent.metaKey) &&
-        event.handledEventPhase == currentEvent.handledEventPhase)
+    if (event.code == currentEvent.code && (event.altKey == currentEvent.altKey) &&
+        (event.ctrlKey == currentEvent.ctrlKey) && (event.shiftKey == currentEvent.shiftKey) &&
+        (event.metaKey == currentEvent.metaKey) && event.handledEventPhase == currentEvent.handledEventPhase)
       return true;
   }
   return false;
@@ -239,18 +197,12 @@ bool HandledKeyboardEventHandler::ShouldMarkKeyboardHandled(
 template <typename T>
 void UpdateModifiedKeyStatusTo(T &event) {
   auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
-  event.altKey =
-      KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Menu);
-  event.shiftKey = KeyboardHelper::IsModifiedKeyPressed(
-      coreWindow, winrt::VirtualKey::Shift);
-  event.metaKey = KeyboardHelper::IsModifiedKeyPressed(
-                      coreWindow, winrt::VirtualKey::LeftWindows) ||
-      KeyboardHelper::IsModifiedKeyPressed(
-                      coreWindow, winrt::VirtualKey::RightWindows);
-  event.ctrlKey = KeyboardHelper::IsModifiedKeyPressed(
-      coreWindow, winrt::VirtualKey::Control);
-  event.capLocked = KeyboardHelper::IsModifiedKeyLocked(
-      coreWindow, winrt::VirtualKey::CapitalLock);
+  event.altKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Menu);
+  event.shiftKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Shift);
+  event.metaKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::LeftWindows) ||
+      KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::RightWindows);
+  event.ctrlKey = KeyboardHelper::IsModifiedKeyPressed(coreWindow, winrt::VirtualKey::Control);
+  event.capLocked = KeyboardHelper::IsModifiedKeyLocked(coreWindow, winrt::VirtualKey::CapitalLock);
 };
 
 void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
@@ -263,8 +215,7 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
         ReactKeyboardEvent event;
         event.target = reactId.tag;
         UpdateModifiedKeyStatusTo(event);
-        event.key = KeyboardHelper::FromVirtualKey(
-            args.Key(), event.shiftKey, event.capLocked);
+        event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
         event.code = KeyboardHelper::CodeFromVirtualKey(args.OriginalKey());
 
         instance->DispatchEvent(event.target, eventName, ToEventData(event));
@@ -286,115 +237,114 @@ HandledKeyboardEvent KeyboardHelper::CreateKeyboardEvent(
 
 // Should align to
 // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values
-static const std::vector<std::pair<winrt::VirtualKey, std::string>>
-    g_virtualKeyToKey{
-        // Modifier keys
-        {winrt::VirtualKey::LeftMenu, "Alt"},
-        {winrt::VirtualKey::RightMenu, "Alt"},
-        {winrt::VirtualKey::Menu, "Alt"},
-        {winrt::VirtualKey::CapitalLock, "CapsLock"},
-        {winrt::VirtualKey::LeftControl, "Control"},
-        {winrt::VirtualKey::RightControl, "Control"},
-        {winrt::VirtualKey::Control, "Control"},
-        {winrt::VirtualKey::LeftWindows, "Meta"},
-        {winrt::VirtualKey::RightWindows, "Meta"},
-        {winrt::VirtualKey::NumberKeyLock, "NumLock"},
-        {winrt::VirtualKey::Scroll, "ScrollLock"},
-        {winrt::VirtualKey::LeftShift, "Shift"},
-        {winrt::VirtualKey::RightShift, "Shift"},
-        {winrt::VirtualKey::Shift, "Shift"},
+static const std::vector<std::pair<winrt::VirtualKey, std::string>> g_virtualKeyToKey{
+    // Modifier keys
+    {winrt::VirtualKey::LeftMenu, "Alt"},
+    {winrt::VirtualKey::RightMenu, "Alt"},
+    {winrt::VirtualKey::Menu, "Alt"},
+    {winrt::VirtualKey::CapitalLock, "CapsLock"},
+    {winrt::VirtualKey::LeftControl, "Control"},
+    {winrt::VirtualKey::RightControl, "Control"},
+    {winrt::VirtualKey::Control, "Control"},
+    {winrt::VirtualKey::LeftWindows, "Meta"},
+    {winrt::VirtualKey::RightWindows, "Meta"},
+    {winrt::VirtualKey::NumberKeyLock, "NumLock"},
+    {winrt::VirtualKey::Scroll, "ScrollLock"},
+    {winrt::VirtualKey::LeftShift, "Shift"},
+    {winrt::VirtualKey::RightShift, "Shift"},
+    {winrt::VirtualKey::Shift, "Shift"},
 
-        // Whitespace keys
-        {winrt::VirtualKey::Enter, "Enter"},
-        {winrt::VirtualKey::Tab, "Tab"},
-        {winrt::VirtualKey::Space, " "},
+    // Whitespace keys
+    {winrt::VirtualKey::Enter, "Enter"},
+    {winrt::VirtualKey::Tab, "Tab"},
+    {winrt::VirtualKey::Space, " "},
 
-        // Navigation keys
-        {winrt::VirtualKey::Down, "ArrowDown"},
-        {winrt::VirtualKey::Left, "ArrowLeft"},
-        {winrt::VirtualKey::Right, "ArrowRight"},
-        {winrt::VirtualKey::Up, "ArrowUp"},
-        {winrt::VirtualKey::End, "End"},
-        {winrt::VirtualKey::Home, "Home"},
-        {winrt::VirtualKey::PageDown, "PageDown"},
-        {winrt::VirtualKey::PageUp, "PageUp"},
+    // Navigation keys
+    {winrt::VirtualKey::Down, "ArrowDown"},
+    {winrt::VirtualKey::Left, "ArrowLeft"},
+    {winrt::VirtualKey::Right, "ArrowRight"},
+    {winrt::VirtualKey::Up, "ArrowUp"},
+    {winrt::VirtualKey::End, "End"},
+    {winrt::VirtualKey::Home, "Home"},
+    {winrt::VirtualKey::PageDown, "PageDown"},
+    {winrt::VirtualKey::PageUp, "PageUp"},
 
-        // Editing keys
-        {winrt::VirtualKey::Back, "Backspace"},
-        {winrt::VirtualKey::Clear, "Clear"},
-        {winrt::VirtualKey::Delete, "Delete"},
-        {winrt::VirtualKey::Insert, "Insert"},
+    // Editing keys
+    {winrt::VirtualKey::Back, "Backspace"},
+    {winrt::VirtualKey::Clear, "Clear"},
+    {winrt::VirtualKey::Delete, "Delete"},
+    {winrt::VirtualKey::Insert, "Insert"},
 
-        // UI keys
-        {winrt::VirtualKey::Accept, "Accept"},
-        {winrt::VirtualKey::Application, "ContextMenu"},
-        {winrt::VirtualKey::Escape, "Escape"},
-        {winrt::VirtualKey::Execute, "Execute"},
-        {winrt::VirtualKey::Help, "Help"},
-        {winrt::VirtualKey::Pause, "Pause"},
-        {winrt::VirtualKey::Select, "Select"},
+    // UI keys
+    {winrt::VirtualKey::Accept, "Accept"},
+    {winrt::VirtualKey::Application, "ContextMenu"},
+    {winrt::VirtualKey::Escape, "Escape"},
+    {winrt::VirtualKey::Execute, "Execute"},
+    {winrt::VirtualKey::Help, "Help"},
+    {winrt::VirtualKey::Pause, "Pause"},
+    {winrt::VirtualKey::Select, "Select"},
 
-        // Device keys
-        {winrt::VirtualKey::Snapshot, "PrintScreen"},
-        {winrt::VirtualKey::Sleep, "Standby"},
+    // Device keys
+    {winrt::VirtualKey::Snapshot, "PrintScreen"},
+    {winrt::VirtualKey::Sleep, "Standby"},
 
-        // Common IME keys
-        {winrt::VirtualKey::Convert, "Convert"},
-        {winrt::VirtualKey::Final, "FinalMode"},
-        {winrt::VirtualKey::ModeChange, "ModeChange"},
-        {winrt::VirtualKey::NonConvert, "NonConvert"},
+    // Common IME keys
+    {winrt::VirtualKey::Convert, "Convert"},
+    {winrt::VirtualKey::Final, "FinalMode"},
+    {winrt::VirtualKey::ModeChange, "ModeChange"},
+    {winrt::VirtualKey::NonConvert, "NonConvert"},
 
-        // Korean keyboards only
-        {winrt::VirtualKey::Hangul, "HangulMode"},
-        {winrt::VirtualKey::Hanja, "HanjaMode"},
-        {winrt::VirtualKey::Junja, "JunjaMode"},
+    // Korean keyboards only
+    {winrt::VirtualKey::Hangul, "HangulMode"},
+    {winrt::VirtualKey::Hanja, "HanjaMode"},
+    {winrt::VirtualKey::Junja, "JunjaMode"},
 
-        // Japanese keyboards only
-        {winrt::VirtualKey::Kana, "KanaMode"},
-        {winrt::VirtualKey::Kanji, "KanjiMode"},
+    // Japanese keyboards only
+    {winrt::VirtualKey::Kana, "KanaMode"},
+    {winrt::VirtualKey::Kanji, "KanjiMode"},
 
-        // Function keys
-        {winrt::VirtualKey::F1, "F1"},
-        {winrt::VirtualKey::F2, "F2"},
-        {winrt::VirtualKey::F3, "F3"},
-        {winrt::VirtualKey::F4, "F4"},
-        {winrt::VirtualKey::F5, "F5"},
-        {winrt::VirtualKey::F6, "F6"},
-        {winrt::VirtualKey::F7, "F7"},
-        {winrt::VirtualKey::F8, "F8"},
-        {winrt::VirtualKey::F9, "F9"},
-        {winrt::VirtualKey::F10, "F10"},
-        {winrt::VirtualKey::F11, "F11"},
-        {winrt::VirtualKey::F12, "F12"},
-        {winrt::VirtualKey::F13, "F13"},
-        {winrt::VirtualKey::F14, "F14"},
-        {winrt::VirtualKey::F15, "F15"},
-        {winrt::VirtualKey::F16, "F16"},
-        {winrt::VirtualKey::F17, "F17"},
-        {winrt::VirtualKey::F18, "F18"},
-        {winrt::VirtualKey::F19, "F19"},
-        {winrt::VirtualKey::F20, "F20"},
+    // Function keys
+    {winrt::VirtualKey::F1, "F1"},
+    {winrt::VirtualKey::F2, "F2"},
+    {winrt::VirtualKey::F3, "F3"},
+    {winrt::VirtualKey::F4, "F4"},
+    {winrt::VirtualKey::F5, "F5"},
+    {winrt::VirtualKey::F6, "F6"},
+    {winrt::VirtualKey::F7, "F7"},
+    {winrt::VirtualKey::F8, "F8"},
+    {winrt::VirtualKey::F9, "F9"},
+    {winrt::VirtualKey::F10, "F10"},
+    {winrt::VirtualKey::F11, "F11"},
+    {winrt::VirtualKey::F12, "F12"},
+    {winrt::VirtualKey::F13, "F13"},
+    {winrt::VirtualKey::F14, "F14"},
+    {winrt::VirtualKey::F15, "F15"},
+    {winrt::VirtualKey::F16, "F16"},
+    {winrt::VirtualKey::F17, "F17"},
+    {winrt::VirtualKey::F18, "F18"},
+    {winrt::VirtualKey::F19, "F19"},
+    {winrt::VirtualKey::F20, "F20"},
 
-        // Numeric keypad keys
-        {winrt::VirtualKey::Decimal, "Decimal"},
-        {winrt::VirtualKey::Multiply, "Multiply"},
-        {winrt::VirtualKey::Add, "Add"},
-        {winrt::VirtualKey::Divide, "Divide"},
-        {winrt::VirtualKey::Subtract, "Subtract"},
-        {winrt::VirtualKey::Separator, "Separator"},
+    // Numeric keypad keys
+    {winrt::VirtualKey::Decimal, "Decimal"},
+    {winrt::VirtualKey::Multiply, "Multiply"},
+    {winrt::VirtualKey::Add, "Add"},
+    {winrt::VirtualKey::Divide, "Divide"},
+    {winrt::VirtualKey::Subtract, "Subtract"},
+    {winrt::VirtualKey::Separator, "Separator"},
 
-        {winrt::VirtualKey::NumberPad0, "0"},
-        {winrt::VirtualKey::NumberPad1, "1"},
-        {winrt::VirtualKey::NumberPad2, "2"},
-        {winrt::VirtualKey::NumberPad3, "3"},
-        {winrt::VirtualKey::NumberPad4, "4"},
-        {winrt::VirtualKey::NumberPad5, "5"},
-        {winrt::VirtualKey::NumberPad6, "6"},
-        {winrt::VirtualKey::NumberPad7, "7"},
-        {winrt::VirtualKey::NumberPad8, "8"},
-        {winrt::VirtualKey::NumberPad9, "9"},
-        //
-    };
+    {winrt::VirtualKey::NumberPad0, "0"},
+    {winrt::VirtualKey::NumberPad1, "1"},
+    {winrt::VirtualKey::NumberPad2, "2"},
+    {winrt::VirtualKey::NumberPad3, "3"},
+    {winrt::VirtualKey::NumberPad4, "4"},
+    {winrt::VirtualKey::NumberPad5, "5"},
+    {winrt::VirtualKey::NumberPad6, "6"},
+    {winrt::VirtualKey::NumberPad7, "7"},
+    {winrt::VirtualKey::NumberPad8, "8"},
+    {winrt::VirtualKey::NumberPad9, "9"},
+    //
+};
 
 // Convert enum to its underlying type
 template <typename E>
@@ -591,40 +541,26 @@ static const std::vector<std::pair<int, std::string>> g_virtualKeyToCode{
     {to_underlying(winrt::VirtualKey::GamepadB), "GamepadB"},
     {to_underlying(winrt::VirtualKey::GamepadX), "GamepadX"},
     {to_underlying(winrt::VirtualKey::GamepadY), "GamepadY"},
-    {to_underlying(winrt::VirtualKey::GamepadRightShoulder),
-     "GamepadRightShoulder"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftShoulder),
-     "GamepadLeftShoulder"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftTrigger),
-     "GamepadLeftTrigger"},
-    {to_underlying(winrt::VirtualKey::GamepadRightTrigger),
-     "GamepadRightTrigger"},
+    {to_underlying(winrt::VirtualKey::GamepadRightShoulder), "GamepadRightShoulder"},
+    {to_underlying(winrt::VirtualKey::GamepadLeftShoulder), "GamepadLeftShoulder"},
+    {to_underlying(winrt::VirtualKey::GamepadLeftTrigger), "GamepadLeftTrigger"},
+    {to_underlying(winrt::VirtualKey::GamepadRightTrigger), "GamepadRightTrigger"},
     {to_underlying(winrt::VirtualKey::GamepadDPadUp), "GamepadDPadUp"},
     {to_underlying(winrt::VirtualKey::GamepadDPadDown), "GamepadDPadDown"},
     {to_underlying(winrt::VirtualKey::GamepadDPadLeft), "GamepadDPadLeft"},
     {to_underlying(winrt::VirtualKey::GamepadDPadRight), "GamepadDPadRight"},
     {to_underlying(winrt::VirtualKey::GamepadMenu), "GamepadMenu"},
     {to_underlying(winrt::VirtualKey::GamepadView), "GamepadView"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickButton),
-     "GamepadLeftThumbstickButton"},
-    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickButton),
-     "GamepadRightThumbstickButton"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickUp),
-     "GamepadLeftThumbstickUp"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickDown),
-     "GamepadLeftThumbstickDown"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickRight),
-     "GamepadLeftThumbstickRight"},
-    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickLeft),
-     "GamepadLeftThumbstickLeft"},
-    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickUp),
-     "GamepadRightThumbstickUp"},
-    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickDown),
-     "GamepadRightThumbstickDown"},
-    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickRight),
-     "GamepadRightThumbstickRight"},
-    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickLeft),
-     "GamepadRightThumbstickLeft"}};
+    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickButton), "GamepadLeftThumbstickButton"},
+    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickButton), "GamepadRightThumbstickButton"},
+    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickUp), "GamepadLeftThumbstickUp"},
+    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickDown), "GamepadLeftThumbstickDown"},
+    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickRight), "GamepadLeftThumbstickRight"},
+    {to_underlying(winrt::VirtualKey::GamepadLeftThumbstickLeft), "GamepadLeftThumbstickLeft"},
+    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickUp), "GamepadRightThumbstickUp"},
+    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickDown), "GamepadRightThumbstickDown"},
+    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickRight), "GamepadRightThumbstickRight"},
+    {to_underlying(winrt::VirtualKey::GamepadRightThumbstickLeft), "GamepadRightThumbstickLeft"}};
 
 template <typename T>
 static const std::string GetOrUnidentified(
@@ -637,10 +573,7 @@ static const std::string GetOrUnidentified(
   return "Unidentified";
 }
 
-std::string KeyboardHelper::FromVirtualKey(
-    winrt::VirtualKey virtualKey,
-    bool shiftDown,
-    bool capLocked) {
+std::string KeyboardHelper::FromVirtualKey(winrt::VirtualKey virtualKey, bool shiftDown, bool capLocked) {
   int key = static_cast<int>(virtualKey);
 
   if (!isupper(key) && !isdigit(key)) {
@@ -654,12 +587,9 @@ std::string KeyboardHelper::FromVirtualKey(
   return std::string(1, static_cast<char>(key));
 }
 
-inline winrt::VirtualKey GetLeftOrRightModifiedKey(
-    winrt::CoreWindow const &coreWindow,
-    winrt::VirtualKey leftKey,
-    winrt::VirtualKey rightKey) {
-  return KeyboardHelper::IsModifiedKeyPressed(coreWindow, leftKey) ? leftKey
-                                                                   : rightKey;
+inline winrt::VirtualKey
+GetLeftOrRightModifiedKey(winrt::CoreWindow const &coreWindow, winrt::VirtualKey leftKey, winrt::VirtualKey rightKey) {
+  return KeyboardHelper::IsModifiedKeyPressed(coreWindow, leftKey) ? leftKey : rightKey;
 }
 
 std::string KeyboardHelper::CodeFromVirtualKey(winrt::VirtualKey virtualKey) {
@@ -673,39 +603,24 @@ std::string KeyboardHelper::CodeFromVirtualKey(winrt::VirtualKey virtualKey) {
     // Override the virtual key if it's modified key of Control, Shift or Menu
     auto const &coreWindow = winrt::CoreWindow::GetForCurrentThread();
     if (virtualKey == winrt::VirtualKey::Control) {
-      virtualKey = GetLeftOrRightModifiedKey(
-          coreWindow,
-          winrt::VirtualKey::LeftControl,
-          winrt::VirtualKey::RightControl);
+      virtualKey =
+          GetLeftOrRightModifiedKey(coreWindow, winrt::VirtualKey::LeftControl, winrt::VirtualKey::RightControl);
     } else if (virtualKey == winrt::VirtualKey::Shift) {
-      virtualKey = GetLeftOrRightModifiedKey(
-          coreWindow,
-          winrt::VirtualKey::LeftShift,
-          winrt::VirtualKey::RightShift);
+      virtualKey = GetLeftOrRightModifiedKey(coreWindow, winrt::VirtualKey::LeftShift, winrt::VirtualKey::RightShift);
     } else if (virtualKey == winrt::VirtualKey::Menu) {
-      virtualKey = GetLeftOrRightModifiedKey(
-          coreWindow,
-          winrt::VirtualKey::LeftMenu,
-          winrt::VirtualKey::RightMenu);
+      virtualKey = GetLeftOrRightModifiedKey(coreWindow, winrt::VirtualKey::LeftMenu, winrt::VirtualKey::RightMenu);
     }
   }
 
   return GetOrUnidentified(virtualKey, g_virtualKeyToCode);
 }
 
-bool KeyboardHelper::IsModifiedKeyPressed(
-    winrt::CoreWindow const &coreWindow,
-    winrt::VirtualKey virtualKey) {
-  return (coreWindow.GetKeyState(virtualKey) &
-          winrt::CoreVirtualKeyStates::Down) ==
-      winrt::CoreVirtualKeyStates::Down;
+bool KeyboardHelper::IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::VirtualKey virtualKey) {
+  return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Down) == winrt::CoreVirtualKeyStates::Down;
 }
 
-bool KeyboardHelper::IsModifiedKeyLocked(
-    winrt::CoreWindow const &coreWindow,
-    winrt::VirtualKey virtualKey) {
-  return (coreWindow.GetKeyState(virtualKey) &
-          winrt::CoreVirtualKeyStates::Locked) ==
+bool KeyboardHelper::IsModifiedKeyLocked(winrt::CoreWindow const &coreWindow, winrt::VirtualKey virtualKey) {
+  return (coreWindow.GetKeyState(virtualKey) & winrt::CoreVirtualKeyStates::Locked) ==
       winrt::CoreVirtualKeyStates::Locked;
 }
 

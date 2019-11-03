@@ -40,8 +40,7 @@ namespace Playground {
 // view (about to show it to the user, etc.) When the reference count drops to
 // zero, the secondary view is closed. Instantiate views using
 // "CreateForCurrentView".
-ViewLifetimeControl::ViewLifetimeControl(CoreWindow ^ newWindow)
-    : consolidated(true) {
+ViewLifetimeControl::ViewLifetimeControl(CoreWindow ^ newWindow) : consolidated(true) {
   dispatcher = newWindow->Dispatcher;
   window = newWindow;
   viewId = ApplicationView::GetApplicationViewIdForWindow(window.Get());
@@ -60,13 +59,10 @@ void ViewLifetimeControl::RegisterForEvents() {
   // It's generally a good idea to close a view after it has been consolidated,
   // but keep it open while it's visible.
   consolidatedToken = ApplicationView::GetForCurrentView()->Consolidated +=
-      ref new TypedEventHandler<
-          ApplicationView ^
-          , ApplicationViewConsolidatedEventArgs ^>(
+      ref new TypedEventHandler<ApplicationView ^, ApplicationViewConsolidatedEventArgs ^>(
           this, &ViewLifetimeControl::ViewConsolidated);
-  visibilityToken = window->VisibilityChanged +=
-      ref new TypedEventHandler<CoreWindow ^, VisibilityChangedEventArgs ^>(
-          this, &ViewLifetimeControl::VisibilityChanged);
+  visibilityToken = window->VisibilityChanged += ref new TypedEventHandler<CoreWindow ^, VisibilityChangedEventArgs ^>(
+      this, &ViewLifetimeControl::VisibilityChanged);
 }
 
 // Unregister for events. Call this method before closing the view to prevent
@@ -76,9 +72,7 @@ void ViewLifetimeControl::UnregisterForEvents() {
   window->VisibilityChanged -= visibilityToken;
 }
 
-void ViewLifetimeControl::VisibilityChanged(
-    CoreWindow ^ sender,
-    VisibilityChangedEventArgs ^ e) {
+void ViewLifetimeControl::VisibilityChanged(CoreWindow ^ sender, VisibilityChangedEventArgs ^ e) {
   if (e->Visible) {
     // A view is consolidated with other views when there's no way for the user
     // to get to it (it's not in the list of recently used apps, cannot be
@@ -90,9 +84,7 @@ void ViewLifetimeControl::VisibilityChanged(
   }
 }
 
-void ViewLifetimeControl::ViewConsolidated(
-    ApplicationView ^ sender,
-    ApplicationViewConsolidatedEventArgs ^ e) {
+void ViewLifetimeControl::ViewConsolidated(ApplicationView ^ sender, ApplicationViewConsolidatedEventArgs ^ e) {
   // A view is consolidated with other views hen there's no way for the user to
   // get to it (it's not in the list of recently used apps, cannot be launched
   // from Start, etc.) A view stops being consolidated when it's visible--at
@@ -225,9 +217,7 @@ int ViewLifetimeControl::StopViewInUse() {
       // other important events waiting in the queue (this low-priority item
       // will run after other events)
       dispatcher->RunAsync(
-          CoreDispatcherPriority::Low,
-          ref new DispatchedHandler(
-              this, &ViewLifetimeControl::FinalizeRelease));
+          CoreDispatcherPriority::Low, ref new DispatchedHandler(this, &ViewLifetimeControl::FinalizeRelease));
     }
   }
   globalMutex.unlock();
@@ -237,9 +227,7 @@ int ViewLifetimeControl::StopViewInUse() {
   }
 
   if (refCountCopy < 0) {
-    throw ref new Exception(
-        HRESULT_FROM_WIN32(ERROR_INVALID_STATE),
-        "Object was released too many times");
+    throw ref new Exception(HRESULT_FROM_WIN32(ERROR_INVALID_STATE), "Object was released too many times");
   }
 
   return refCountCopy;
@@ -247,8 +235,7 @@ int ViewLifetimeControl::StopViewInUse() {
 
 // Signals to consumers that its time to close the view so that
 // they can clean up (including calling Window.Close() when finished)
-EventRegistrationToken ViewLifetimeControl::Released::add(
-    ViewReleasedHandler ^ handler) {
+EventRegistrationToken ViewLifetimeControl::Released::add(ViewReleasedHandler ^ handler) {
   bool releasedCopy = false;
   EventRegistrationToken eventToken;
   globalMutex.lock();

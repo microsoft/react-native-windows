@@ -32,6 +32,5 @@ struct MemoryTracker : MemoryTrackerT<MemoryTracker> {
 };
 } // namespace winrt::facebook::react::implementation
 namespace winrt::facebook::react::factory_implementation {
-struct MemoryTracker
-    : MemoryTrackerT<MemoryTracker, implementation::MemoryTracker> {};
+struct MemoryTracker : MemoryTrackerT<MemoryTracker, implementation::MemoryTracker> {};
 } // namespace winrt::facebook::react::factory_implementation

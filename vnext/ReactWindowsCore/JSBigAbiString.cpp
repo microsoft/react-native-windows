@@ -6,13 +6,11 @@
 namespace facebook {
 namespace react {
 
-/*static*/ std::unique_ptr<const JSBigAbiString> JSBigAbiString::Make(
-    AbiSafe::AbiStringPtr &&abiString) noexcept {
+/*static*/ std::unique_ptr<const JSBigAbiString> JSBigAbiString::Make(AbiSafe::AbiStringPtr &&abiString) noexcept {
   return std::make_unique<const JSBigAbiString>(std::move(abiString));
 }
 
-JSBigAbiString::JSBigAbiString(AbiSafe::AbiStringPtr &&abiString) noexcept
-    : m_abiString{std::move(abiString)} {}
+JSBigAbiString::JSBigAbiString(AbiSafe::AbiStringPtr &&abiString) noexcept : m_abiString{std::move(abiString)} {}
 
 bool JSBigAbiString::isAscii() const {
   return false;

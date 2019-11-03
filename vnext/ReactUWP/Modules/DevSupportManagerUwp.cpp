@@ -39,29 +39,21 @@ using namespace facebook::react;
 namespace react {
 namespace uwp {
 
-std::future<std::pair<std::string, bool>> DownloadFromAsync(
-    const std::string &url) {
+std::future<std::pair<std::string, bool>> DownloadFromAsync(const std::string &url) {
   winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
-  filter.CacheControl().ReadBehavior(
-      winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
+  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
   winrt::Windows::Web::Http::HttpClient httpClient(filter);
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
   co_await winrt::resume_background();
 
-  winrt::Windows::Web::Http::HttpRequestMessage request(
-      winrt::Windows::Web::Http::HttpMethod::Get(), uri);
-  winrt::Windows::Web::Http::HttpResponseMessage response =
-      co_await httpClient.SendRequestAsync(request);
+  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
+  winrt::Windows::Web::Http::HttpResponseMessage response = co_await httpClient.SendRequestAsync(request);
 
-  winrt::Windows::Storage::Streams::IBuffer buffer =
-      co_await response.Content().ReadAsBufferAsync();
-  auto reader =
-      winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+  winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
+  auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
 
-  reader.UnicodeEncoding(
-      winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
+  reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
   uint32_t len = reader.UnconsumedBufferLength();
   std::string result;
   if (len > 0 || response.IsSuccessStatusCode()) {
@@ -70,24 +62,18 @@ std::future<std::pair<std::string, bool>> DownloadFromAsync(
     result = std::string(reinterpret_cast<char *>(data.data()), data.size());
   } else {
     std::ostringstream sstream;
-    sstream << "HTTP Error " << static_cast<int>(response.StatusCode())
-            << " downloading " << url;
+    sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
     result = sstream.str();
   }
 
   co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
 }
 
-void DevSupportManager::LaunchDevTools(
-    const facebook::react::DevSettings &settings) {
-  DownloadFromAsync(
-      facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(
-          settings.debugHost))
-      .get();
+void DevSupportManager::LaunchDevTools(const facebook::react::DevSettings &settings) {
+  DownloadFromAsync(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(settings.debugHost)).get();
 }
 
-facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
-    const facebook::react::DevSettings &settings) {
+facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) {
   // Reset exception state since client is requesting new service
   m_exceptionCaught = false;
 
@@ -97,13 +83,11 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
     return [this, settings](
                std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
                std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
-      auto websocketJSE =
-          std::make_unique<WebSocketJSExecutor>(delegate, jsQueue);
+      auto websocketJSE = std::make_unique<WebSocketJSExecutor>(delegate, jsQueue);
       try {
         websocketJSE
             ->ConnectAsync(
-                facebook::react::DevServerHelper::get_WebsocketProxyUrl(
-                    settings.debugHost),
+                facebook::react::DevServerHelper::get_WebsocketProxyUrl(settings.debugHost),
                 settings.errorCallback,
                 settings.waitingForDebuggerCallback,
                 settings.debuggerAttachCallback)
@@ -116,9 +100,7 @@ facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
     };
   } catch (winrt::hresult_error const &e) {
     m_exceptionCaught = true;
-    throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(
-                             e.message().c_str(), e.message().size())
-                             .c_str());
+    throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
   }
 }
 
@@ -129,16 +111,14 @@ DevSupportManager::~DevSupportManager() {
 // helper function to check if failure is due to timeout.
 bool is_timeout(const std::wstring &msg) {
   if (msg.find(L"The operation timed out") != std::string::npos /* WinHTTP */ ||
-      msg.find(L"The operation was timed out") !=
-          std::string::npos /* IXmlHttpRequest2 */) {
+      msg.find(L"The operation was timed out") != std::string::npos /* IXmlHttpRequest2 */) {
     return true;
   }
   return false;
 }
 
 bool is_cancelled(const std::wstring &msg) {
-  if (msg.find(L"operation canceled") !=
-      std::string::npos /* task cancelled */) {
+  if (msg.find(L"operation canceled") != std::string::npos /* task cancelled */) {
     return true;
   }
   return false;
@@ -150,27 +130,22 @@ bool IsIgnorablePollHResult(HRESULT hr) {
   return hr == WININET_E_INVALID_SERVER_RESPONSE;
 }
 
-std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
-    const std::string &url) {
+std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string &url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(url));
+  winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
   httpClient.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
 
   winrt::Windows::Web::Http::HttpResponseMessage responseMessage;
-  auto async = httpClient.GetAsync(
-      uri,
-      winrt::Windows::Web::Http::HttpCompletionOption::ResponseHeadersRead);
+  auto async = httpClient.GetAsync(uri, winrt::Windows::Web::Http::HttpCompletionOption::ResponseHeadersRead);
 
 #ifdef DEFAULT_CPPWINRT_EXCEPTIONS
   responseMessage = co_await async;
 #else
   // Avoid CppWinrt exception when the Polling, we'll
   // specifically check some HRESULTs to not throw on
-  co_await lessthrow_await_adapter<
-      winrt::Windows::Foundation::IAsyncOperationWithProgress<
-          winrt::Windows::Web::Http::HttpResponseMessage,
-          winrt::Windows::Web::Http::HttpProgress>>{async};
+  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperationWithProgress<
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>>{async};
 
   HRESULT hr = async.ErrorCode();
   if (IsIgnorablePollHResult(hr))
@@ -183,21 +158,15 @@ std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
   co_return responseMessage.StatusCode();
 }
 
-void DevSupportManager::StartPollingLiveReload(
-    const std::string &debugHost,
-    std::function<void()> onChangeCallback) {
+void DevSupportManager::StartPollingLiveReload(const std::string &debugHost, std::function<void()> onChangeCallback) {
   m_cancellation_token = false;
 
-  std::string refreshUrl =
-      facebook::react::DevServerHelper::get_OnChangeEndpointUrl(debugHost);
-  auto task = [refreshUrl, onChangeCallback = move(onChangeCallback), this](
-                  const std::atomic_bool &cancelled) {
+  std::string refreshUrl = facebook::react::DevServerHelper::get_OnChangeEndpointUrl(debugHost);
+  auto task = [refreshUrl, onChangeCallback = move(onChangeCallback), this](const std::atomic_bool &cancelled) {
     while (!cancelled) {
       try {
         auto statusCode = PollForLiveReload(refreshUrl).get();
-        if (statusCode ==
-                winrt::Windows::Web::Http::HttpStatusCode::ResetContent &&
-            !cancelled) {
+        if (statusCode == winrt::Windows::Web::Http::HttpStatusCode::ResetContent && !cancelled) {
           onChangeCallback();
         }
       } catch (winrt::hresult_error const &e) {
@@ -208,9 +177,8 @@ void DevSupportManager::StartPollingLiveReload(
 
         // Just let the live reload stop working when the connection fails,
         // rather than bringing down the app.
-        std::string errorMessage = "Live Reload Stopped:" +
-            Microsoft::Common::Unicode::Utf16ToUtf8(
-                                       e.message().c_str(), e.message().size());
+        std::string errorMessage =
+            "Live Reload Stopped:" + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
         OutputDebugStringA(errorMessage.c_str());
         m_exceptionCaught = true;
         break;
@@ -246,9 +214,7 @@ std::string DevSupportManager::GetJavaScriptFromServer(
     return s;
   } catch (winrt::hresult_error const &e) {
     m_exceptionCaught = true;
-    return "Error:" +
-        Microsoft::Common::Unicode::Utf16ToUtf8(
-               e.message().c_str(), e.message().size());
+    return "Error:" + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size());
   }
 }
 

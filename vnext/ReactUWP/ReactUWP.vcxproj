@@ -79,10 +79,21 @@
       <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_TRACE_POSTPROCESSING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACE_POSTPROCESSING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>OLD_CPPWINRT;REACTWINDOWS_BUILD;RN_PLATFORM=windows;NOMINMAX;FOLLY_NO_CONFIG;RN_EXPORT=;JSI_EXPORT=;WIN32=0;WINRT=1;_HAS_AUTO_PTR_ETC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>
+        OLD_CPPWINRT;
+        REACTWINDOWS_BUILD;
+        RN_PLATFORM=windows;
+        NOMINMAX;
+        FOLLY_NO_CONFIG;
+        RN_EXPORT=;
+        JSI_EXPORT=;
+        WIN32=0;
+        WINRT=1;
+        _HAS_AUTO_PTR_ETC;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Pch;$(ReactNativeWindowsDir)ReactUWP\GeneratedWinmdHeader;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)include\ReactUWP;$(YogaDir);$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(FollyDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(CHAKRACOREUWP)'=='true'">$(ChakraCoreInclude);$(ChakraCoreDebugInclude);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalOptions>/await %(AdditionalOptions)</AdditionalOptions>
       <ShowIncludes>false</ShowIncludes>
     </ClCompile>
@@ -164,6 +175,7 @@
     <ClInclude Include="ABI\Instance_rt.h" />
     <ClInclude Include="ABI\ReactControl_rt.h" />
     <ClInclude Include="Base\UwpReactInstance.h" />
+    <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
@@ -251,7 +263,9 @@
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
+    <ClInclude Include="Views\SIPEventHandler.h" />
     <ClInclude Include="Views\SwitchViewManager.h" />
+    <ClInclude Include="Views\SliderViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
@@ -270,6 +284,7 @@
     <ClCompile Include="ABI\ReactControl_rt.cpp" />
     <ClCompile Include="Base\InstanceFactory.cpp" />
     <ClCompile Include="Base\UwpReactInstance.cpp" />
+    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
@@ -350,6 +365,8 @@
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
+    <ClCompile Include="Views\SIPEventHandler.cpp" />
+    <ClCompile Include="Views\SliderViewManager.cpp" />
     <ClCompile Include="Views\ShadowNodeBase.cpp" />
     <ClCompile Include="Views\SwitchViewManager.cpp" />
     <ClCompile Include="Views\TextInputViewManager.cpp" />
@@ -403,7 +420,7 @@
     <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'!='true'">
       <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
     </ProjectReference>
-	<ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'=='true'">
+    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'=='true'">
       <Project>{17DD1B17-3094-40DD-9373-AC2497932ECA}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
@@ -417,6 +434,7 @@
     <MidlRT Include="ABI\idl\Module.idl" />
     <MidlRT Include="ABI\idl\Instance.idl" />
     <MidlRT Include="ABI\idl\ReactControl.idl" />
+    <MidlRT Include="ABI\idl\AccessibilityAction.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
@@ -426,7 +444,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets" Condition="Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" />
     <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <Import Project="$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ImportGroup>
@@ -435,7 +452,6 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost_date_time-vc141.1.68.0.0\build\boost_date_time-vc141.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets'))" />
   </Target>

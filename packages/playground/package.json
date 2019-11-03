@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.7.tar.gz",
-    "react-native-windows": "0.60.0-vnext.32",
-    "react-native-windows-extended": "0.60.6",
-    "rnpm-plugin-windows": "^0.3.6"
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.15.tar.gz",
+    "react-native-windows": "0.60.0-vnext.61",
+    "react-native-windows-extended": "0.60.15",
+    "rnpm-plugin-windows": "^0.3.7"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

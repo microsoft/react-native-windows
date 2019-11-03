@@ -15,8 +15,7 @@ using RuntimeFactory = std::function<std::unique_ptr<Runtime>()>;
 
 class JsiRuntimeUnitTests : public ::testing::TestWithParam<RuntimeFactory> {
  public:
-  JsiRuntimeUnitTests()
-      : factory(GetParam()), runtime(factory()), rt(*runtime) {}
+  JsiRuntimeUnitTests() : factory(GetParam()), runtime(factory()), rt(*runtime) {}
 
   Value eval(const char *code) {
     return rt.global().getPropertyAsFunction(rt, "eval").call(rt, code);
@@ -28,9 +27,7 @@ class JsiRuntimeUnitTests : public ::testing::TestWithParam<RuntimeFactory> {
 
   bool checkValue(const Value &value, const std::string &jsValue) {
     // TODO (yicyao): Should we use === instead of == here?
-    return function("function(value) { return value == " + jsValue + "; }")
-        .call(rt, std::move(value))
-        .getBool();
+    return function("function(value) { return value == " + jsValue + "; }").call(rt, std::move(value)).getBool();
   }
 
   // The order of these member variable declarations is important because they

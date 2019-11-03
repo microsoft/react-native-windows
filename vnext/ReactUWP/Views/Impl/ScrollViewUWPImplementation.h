@@ -30,13 +30,15 @@ class ScrollViewUWPImplementation {
 
   void SetHorizontal(bool isHorizontal);
   void SnapToInterval(float interval);
+  void SnapToStart(bool snapToStart);
+  void SnapToEnd(bool snapToEnd);
   void SnapToOffsets(const winrt::IVectorView<float> &offsets);
+  void SnapPointAlignment(const winrt::SnapPointsAlignment alignment);
 
   void UpdateScrollableSize() const;
 
   winrt::ScrollViewer ScrollViewer() const;
-  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager()
-      const;
+  winrt::com_ptr<SnapPointManagingContentControl> ScrollViewerSnapPointManager() const;
 
  private:
   winrt::weak_ref<winrt::ScrollViewer> m_scrollViewer{};

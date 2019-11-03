@@ -8,11 +8,16 @@
     <Filter Include="Generated Files">
       <UniqueIdentifier>{926ab91d-31b4-48c3-b9a4-e681349f27f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Themes">
+      <UniqueIdentifier>{24be31e2-7856-4284-88ed-1fe19aabb66f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="ReactPackageProvider.cpp" />
+    <ClCompile Include="CustomUserControlCPP.cpp" />
+    <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -20,6 +25,8 @@
     <ClInclude Include="ReactPackageProvider.h" />
     <ClInclude Include="MyModule.h" />
     <ClInclude Include="SampleModuleCPP.h" />
+    <ClInclude Include="CustomUserControlCPP.h" />
+    <ClInclude Include="CustomUserControlViewManagerCPP.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SampleLibraryCPP.def" />
@@ -33,5 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="ReactPackageProvider.idl" />
+    <Midl Include="CustomUserControlCPP.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Filter>Themes</Filter>
+    </Page>
   </ItemGroup>
 </Project>

@@ -13,15 +13,10 @@ using namespace winrt;
 namespace ABITests {
 
 TEST_CLASS(NativeTraceEventTests) {
-  struct TestTraceHandler : public winrt::implements<
-                                TestTraceHandler,
-                                ::winrt::facebook::react::INativeTraceHandler> {
-    void JSBeginSection(
-        param::hstring const &profileName,
-        param::hstring const &args) const {
+  struct TestTraceHandler : public winrt::implements<TestTraceHandler, ::winrt::facebook::react::INativeTraceHandler> {
+    void JSBeginSection(param::hstring const &profileName, param::hstring const &args) const {
       if (this->OnJSBeginSection) {
-        this->OnJSBeginSection(
-            ((hstring)profileName).c_str(), ((hstring)args).c_str());
+        this->OnJSBeginSection(((hstring)profileName).c_str(), ((hstring)args).c_str());
       }
     }
 
@@ -31,15 +26,13 @@ TEST_CLASS(NativeTraceEventTests) {
       }
     };
 
-    void JSBeginAsyncSection(param::hstring const &profileName, uint32_t cookie)
-        const {
+    void JSBeginAsyncSection(param::hstring const &profileName, uint32_t cookie) const {
       if (this->OnJSBeginAsyncSection) {
         this->OnJSBeginAsyncSection(((hstring)profileName).c_str(), cookie);
       }
     }
 
-    void JSEndAsyncSection(param::hstring const &profileName, uint32_t cookie)
-        const {
+    void JSEndAsyncSection(param::hstring const &profileName, uint32_t cookie) const {
       if (this->OnJSEndAsyncSection) {
         this->OnJSEndAsyncSection(((hstring)profileName).c_str(), cookie);
       }
@@ -51,24 +44,16 @@ TEST_CLASS(NativeTraceEventTests) {
       }
     }
 
-    void NativeBeginSection(
-        param::hstring const &profileName,
-        param::hstring const &args) const {
+    void NativeBeginSection(param::hstring const &profileName, param::hstring const &args) const {
       if (this->OnNativeBeginSection) {
-        this->OnNativeBeginSection(
-            ((hstring)profileName).c_str(), ((hstring)args).c_str());
+        this->OnNativeBeginSection(((hstring)profileName).c_str(), ((hstring)args).c_str());
       }
     }
 
-    void NativeEndSection(
-        param::hstring const &profileName,
-        param::hstring const &args,
-        int64_t durationInNanoseconds) const {
+    void NativeEndSection(param::hstring const &profileName, param::hstring const &args, int64_t durationInNanoseconds)
+        const {
       if (this->OnNativeEndSection) {
-        this->OnNativeEndSection(
-            ((hstring)profileName).c_str(),
-            ((hstring)args).c_str(),
-            durationInNanoseconds);
+        this->OnNativeEndSection(((hstring)profileName).c_str(), ((hstring)args).c_str(), durationInNanoseconds);
       }
     }
 
@@ -78,14 +63,12 @@ TEST_CLASS(NativeTraceEventTests) {
     std::function<void(const wchar_t *, uint32_t)> OnJSEndAsyncSection;
     std::function<void(const wchar_t *, uint32_t)> OnJSCounter;
     std::function<void(const wchar_t *, const wchar_t *)> OnNativeBeginSection;
-    std::function<void(const wchar_t *, const wchar_t *, int64_t)>
-        OnNativeEndSection;
+    std::function<void(const wchar_t *, const wchar_t *, int64_t)> OnNativeEndSection;
   };
 
   // RAII helper to ensure trace handlers get unregistered
   struct NativeTraceInitializationGuard {
-    NativeTraceInitializationGuard(
-        const ::winrt::facebook::react::INativeTraceHandler &handler) noexcept {
+    NativeTraceInitializationGuard(const ::winrt::facebook::react::INativeTraceHandler &handler) noexcept {
       m_registrationCookie = NativeTraceEventSource::InitializeTracing(handler);
     }
 
@@ -100,15 +83,13 @@ TEST_CLASS(NativeTraceEventTests) {
   TEST_METHOD(NativeTraceEventHandler_Registered) {
     init_apartment(winrt::apartment_type::single_threaded);
 
-    ::winrt::facebook::react::INativeTraceHandler handler =
-        winrt::make<TestTraceHandler>();
+    ::winrt::facebook::react::INativeTraceHandler handler = winrt::make<TestTraceHandler>();
 
     // anticipatory, see TODO below
     std::stack<std::pair<std::wstring, std::wstring>> jsSections;
-    handler.as<TestTraceHandler>()->OnJSBeginSection =
-        [&jsSections](const wchar_t *pn, const wchar_t *a) {
-          jsSections.emplace(pn, a);
-        };
+    handler.as<TestTraceHandler>()->OnJSBeginSection = [&jsSections](const wchar_t *pn, const wchar_t *a) {
+      jsSections.emplace(pn, a);
+    };
 
     NativeTraceInitializationGuard initializationGuard(handler);
 

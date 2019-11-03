@@ -1,6 +1,6 @@
 #pragma once
 
-#include <jsi/ScriptStore.h>
+#include <JSI/Shared/ScriptStore.h>
 #include <jsi/jsi.h>
 
 #include <algorithm>
@@ -12,37 +12,28 @@ namespace facebook {
 namespace react {
 
 struct BufferStore {
-  virtual std::unique_ptr<const facebook::jsi::Buffer> getBuffer(
-      const std::string &bufferId) noexcept = 0;
-  virtual bool persistBuffer(
-      const std::string &bufferId,
-      std::unique_ptr<const facebook::jsi::Buffer>) noexcept = 0;
+  virtual std::unique_ptr<const facebook::jsi::Buffer> getBuffer(const std::string &bufferId) noexcept = 0;
+  virtual bool persistBuffer(const std::string &bufferId, std::unique_ptr<const facebook::jsi::Buffer>) noexcept = 0;
 };
 
 class LocalFileSimpleBufferStore : public BufferStore {
  public:
-  LocalFileSimpleBufferStore(const std::string &storeDirectory)
-      : storeDirectory_(storeDirectory) {}
+  LocalFileSimpleBufferStore(const std::string &storeDirectory) : storeDirectory_(storeDirectory) {}
 
-  std::unique_ptr<const facebook::jsi::Buffer> getBuffer(
-      const std::string &bufferId) noexcept override;
-  bool persistBuffer(
-      const std::string &bufferId,
-      std::unique_ptr<const facebook::jsi::Buffer>) noexcept override;
+  std::unique_ptr<const facebook::jsi::Buffer> getBuffer(const std::string &bufferId) noexcept override;
+  bool persistBuffer(const std::string &bufferId, std::unique_ptr<const facebook::jsi::Buffer>) noexcept override;
 
  private:
   std::string storeDirectory_;
 };
 
 struct ScriptVersionProvider {
-  virtual facebook::jsi::ScriptVersion_t getVersion(
-      const std::string &url) noexcept = 0;
+  virtual facebook::jsi::ScriptVersion_t getVersion(const std::string &url) noexcept = 0;
 };
 
 class LocalFileSimpleScriptVersionProvider : public ScriptVersionProvider {
  public:
-  facebook::jsi::ScriptVersion_t getVersion(
-      const std::string &url) noexcept override;
+  facebook::jsi::ScriptVersion_t getVersion(const std::string &url) noexcept override;
 };
 
 struct PreparedScriptStoreNameGenerator {
@@ -65,11 +56,9 @@ class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
       const char *prepareTag) noexcept override;
 
   BasePreparedScriptStoreImpl(const std::string &storeDirectory)
-      : bufferStore_(
-            std::make_shared<LocalFileSimpleBufferStore>(storeDirectory)) {}
+      : bufferStore_(std::make_shared<LocalFileSimpleBufferStore>(storeDirectory)) {}
 
-  BasePreparedScriptStoreImpl(std::shared_ptr<BufferStore> bufferStore)
-      : bufferStore_(std::move(bufferStore)) {}
+  BasePreparedScriptStoreImpl(std::shared_ptr<BufferStore> bufferStore) : bufferStore_(std::move(bufferStore)) {}
 
  private:
   std::string getPreparedScriptFileName(
@@ -85,10 +74,8 @@ class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
 // with extension point to provide custom version provider.
 class BaseScriptStoreImpl : public facebook::jsi::ScriptStore {
  public:
-  facebook::jsi::VersionedBuffer getVersionedScript(
-      const std::string &url) noexcept override;
-  facebook::jsi::ScriptVersion_t getScriptVersion(
-      const std::string &url) noexcept override;
+  facebook::jsi::VersionedBuffer getVersionedScript(const std::string &url) noexcept override;
+  facebook::jsi::ScriptVersion_t getScriptVersion(const std::string &url) noexcept override;
 
   BaseScriptStoreImpl(std::shared_ptr<ScriptVersionProvider> versionProvider)
       : versionProvider_{std::move(versionProvider)} {}

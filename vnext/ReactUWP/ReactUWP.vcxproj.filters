@@ -298,6 +298,11 @@
     <ClCompile Include="Modules\StatusBarModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Views\SliderViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
+    <ClCompile Include="Views\SIPEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -633,9 +638,14 @@
     <ClInclude Include="Utils\CppWinrtLessExceptions.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Views\SliderViewManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
     <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
+    <ClInclude Include="Views\SIPEventHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -775,6 +785,7 @@
     <MidlRT Include="ABI\idl\ReactControl.idl">
       <Filter>ABI\idl</Filter>
     </MidlRT>
+    <MidlRT Include="ABI\idl\AccessibilityAction.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />

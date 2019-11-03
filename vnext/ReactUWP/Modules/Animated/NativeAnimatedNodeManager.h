@@ -78,14 +78,9 @@ class NativeAnimatedNodeManager {
       const std::string &eventName,
       const folly::dynamic &eventMapping,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
-  void RemoveAnimatedEventFromView(
-      int64_t viewTag,
-      const std::string &eventName,
-      int64_t animatedValueTag);
+  void RemoveAnimatedEventFromView(int64_t viewTag, const std::string &eventName, int64_t animatedValueTag);
   void ProcessDelayedPropsNodes();
-  void AddDelayedPropsNode(
-      int64_t propsNodeTag,
-      const std::shared_ptr<IReactInstance> &instance);
+  void AddDelayedPropsNode(int64_t propsNodeTag, const std::shared_ptr<IReactInstance> &instance);
 
   AnimatedNode *GetAnimatedNode(int64_t tag);
   ValueAnimatedNode *GetValueAnimatedNode(int64_t tag);
@@ -93,25 +88,17 @@ class NativeAnimatedNodeManager {
   StyleAnimatedNode *GetStyleAnimatedNode(int64_t tag);
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
-  void RevmoveActiveAnimation(int64_t tag);
+  void RemoveActiveAnimation(int64_t tag);
 
  private:
-  std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>>
-      m_valueNodes{};
-  std::unordered_map<int64_t, std::unique_ptr<PropsAnimatedNode>>
-      m_propsNodes{};
-  std::unordered_map<int64_t, std::unique_ptr<StyleAnimatedNode>>
-      m_styleNodes{};
-  std::unordered_map<int64_t, std::unique_ptr<TransformAnimatedNode>>
-      m_transformNodes{};
-  std::unordered_map<int64_t, std::unique_ptr<TrackingAnimatedNode>>
-      m_trackingNodes{};
-  std::unordered_map<
-      std::tuple<int64_t, std::string>,
-      std::vector<std::unique_ptr<EventAnimationDriver>>>
+  std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>> m_valueNodes{};
+  std::unordered_map<int64_t, std::unique_ptr<PropsAnimatedNode>> m_propsNodes{};
+  std::unordered_map<int64_t, std::unique_ptr<StyleAnimatedNode>> m_styleNodes{};
+  std::unordered_map<int64_t, std::unique_ptr<TransformAnimatedNode>> m_transformNodes{};
+  std::unordered_map<int64_t, std::unique_ptr<TrackingAnimatedNode>> m_trackingNodes{};
+  std::unordered_map<std::tuple<int64_t, std::string>, std::vector<std::unique_ptr<EventAnimationDriver>>>
       m_eventDrivers{};
-  std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>>
-      m_activeAnimations{};
+  std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>> m_activeAnimations{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
 

@@ -18,8 +18,7 @@ namespace uwp {
 
 REACTWINDOWS_API_(void)
 AnnounceLiveRegionChangedIfNeeded(const winrt::FrameworkElement &element) {
-  if (winrt::AutomationProperties::GetLiveSetting(element) !=
-          winrt::AutomationLiveSetting::Off &&
+  if (winrt::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
       !winrt::AutomationProperties::GetName(element).empty()) {
     auto peer = winrt::FrameworkElementAutomationPeer::FromElement(element);
     if (nullptr != peer) {
@@ -29,15 +28,11 @@ AnnounceLiveRegionChangedIfNeeded(const winrt::FrameworkElement &element) {
 }
 
 REACTWINDOWS_API_(bool)
-HasDynamicAutomationProperties(
-    const winrt::Windows::UI::Xaml::UIElement &element) {
+HasDynamicAutomationProperties(const winrt::Windows::UI::Xaml::UIElement &element) {
   static auto unsetValue = winrt::DependencyProperty::UnsetValue();
 
   if (element) {
-    return (
-        unsetValue !=
-        element.ReadLocalValue(
-            DynamicAutomationProperties::AccessibilityRoleProperty()));
+    return (unsetValue != element.ReadLocalValue(DynamicAutomationProperties::AccessibilityRoleProperty()));
   }
 
   return false;
