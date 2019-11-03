@@ -1,5 +1,5 @@
 #pragma once
-#include <jsi/ScriptStore.h>
+#include <JSI/Shared/ScriptStore.h>
 #include <future>
 
 namespace react {

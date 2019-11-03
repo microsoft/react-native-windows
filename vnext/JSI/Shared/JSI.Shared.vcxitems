@@ -23,5 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ScriptStore.h" />
   </ItemGroup>
 </Project>

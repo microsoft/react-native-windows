@@ -1,6 +1,6 @@
 #pragma once
+#include <JSI/Shared/ScriptStore.h>
 #include <cxxreact/JSBigString.h>
-#include <jsi/ScriptStore.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.h>
 #include <future>
