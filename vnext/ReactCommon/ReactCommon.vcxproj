@@ -65,7 +65,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(JSI_Source)executor;$(FollyDir);$(ReactNativeWindowsDir)stubs;;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_TRACE_POSTPROCESSING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACE_POSTPROCESSING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -85,15 +85,15 @@
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
   </ImportGroup>
   <ItemGroup>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\RuntimeHolder.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\threadsafe.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\decorator.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\instrumentation.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\jsi-inl.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\jsi.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\JSIDynamic.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\jsilib.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\RuntimeHolder.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\ScriptStore.h" />
+    <ClInclude Include="$(JSI_Source)\jsi\threadsafe.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
@@ -119,7 +119,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
@@ -140,12 +139,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp"/>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp"/>
+    <ClCompile Include="$(JSI_Source)\jsi\jsi.cpp"/>
+    <ClCompile Include="$(JSI_Source)\jsi\JSIDynamic.cpp"/>
+    <ClCompile Include="$(JSI_Source)\jsi\jsilib-windows.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp"/>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">

@@ -90,16 +90,13 @@
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.cpp">
-      <Filter>jsi</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
+    <ClCompile Include="$(JSI_Source)\jsi\jsi.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp">
+    <ClCompile Include="$(JSI_Source)\jsi\JSIDynamic.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib-windows.cpp">
+    <ClCompile Include="$(JSI_Source)\jsi\jsilib-windows.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
@@ -206,34 +203,31 @@
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
       <Filter>yoga</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\JSCRuntime.h">
-      <Filter>jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\decorator.h">
+    <ClInclude Include="$(JSI_Source)\jsi\decorator.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h">
+    <ClInclude Include="$(JSI_Source)\jsi\instrumentation.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.h">
+    <ClInclude Include="$(JSI_Source)\jsi\jsi.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.h">
+    <ClInclude Include="$(JSI_Source)\jsi\JSIDynamic.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
+    <ClInclude Include="$(JSI_Source)\jsi\jsi-inl.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsilib.h">
+    <ClInclude Include="$(JSI_Source)\jsi\jsilib.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\RuntimeHolder.h">
+    <ClInclude Include="$(JSI_Source)\jsi\RuntimeHolder.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\ScriptStore.h">
+    <ClInclude Include="$(JSI_Source)\jsi\ScriptStore.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\threadsafe.h">
+    <ClInclude Include="$(JSI_Source)\jsi\threadsafe.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">

@@ -17,13 +17,24 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
+    <USE_HERMES Condition="'$(USE_HERMES)' == ''">true</USE_HERMES>
+    <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.1.4</HERMES_Version>
+    <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
+    
     <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
+    <V8_Version Condition="'$(V8_Version)' == ''">0.1.4</V8_Version>
+    <V8_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.V8JSI.Windows.$(HERMES_Version)</V8_Package>
     
     <ENABLE_TRACING Condition="'$(ENABLE_TRACING)' == ''">true</ENABLE_TRACING>
     <ENABLE_NATIVE_SYSTRACE Condition="'$(ENABLE_NATIVE_SYSTRACE)' == ''">true</ENABLE_NATIVE_SYSTRACE>
     <ENABLE_JS_SYSTRACE Condition="'$(ENABLE_JS_SYSTRACE)' == ''">true</ENABLE_JS_SYSTRACE>
     <ENABLE_TRACE_POSTPROCESSING Condition="'$(ENABLE_TRACE_POSTPROCESSING)' == ''">false</ENABLE_TRACE_POSTPROCESSING>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
+    <JSI_Source Condition="'$(USE_HERMES)' == 'true'">$(HERMES_Package)\installed\x64-windows\include\jsi_ref</JSI_Source>
+    <JSI_Source Condition="'$(USE_V8)' == 'true'">$(V8_Package)\installed\x64-windows\include\jsi_ref</JSI_Source>
   </PropertyGroup>
 
   <ImportGroup Label="Defaults">
