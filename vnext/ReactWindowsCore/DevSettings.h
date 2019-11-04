@@ -63,6 +63,10 @@ struct DevSettings {
   /// Enables the user to set a custom root path for bundle resolution
   std::string bundleRootPath;
 
+  /// A writeable directory which may be used for instance-internal data. The
+  /// instance is not responsible for cleaning the path.
+  std::filesystem::path scratchPath;
+
   /// Enables debugging directly in the JavaScript engine.
   bool useDirectDebugger{false};
 
@@ -102,10 +106,6 @@ struct DevSettings {
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
-
-  /// A directory which the executor may read or write to in order to perform
-  /// its needed functions (e.g. bytecode caching)
-  std::filesystem::path executorScratchDirectory;
 };
 
 } // namespace react

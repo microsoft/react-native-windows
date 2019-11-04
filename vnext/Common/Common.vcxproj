@@ -78,11 +78,13 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Unicode.cpp"/>
+    <ClCompile Include="Crypto.cpp" />
+    <ClCompile Include="Unicode.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Unicode.h"/>
-    <ClInclude Include="Utilities.h"/>
+    <ClInclude Include="Crypto.h" />
+    <ClInclude Include="Unicode.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

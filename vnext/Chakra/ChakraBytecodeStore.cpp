@@ -5,7 +5,7 @@
 #include "ChakraBytecodeStore.h"
 #include "ChakraHelpers.h"
 #include "ChakraUtils.h"
-#include "Unicode.h"
+#include "Crypto.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -13,6 +13,7 @@
 #include <boost/crc.hpp>
 #pragma warning(pop)
 
+#include <boost/algorithm/hex.hpp>
 #include <cstdio>
 
 namespace facebook::react {
@@ -23,28 +24,24 @@ namespace facebook::react {
 #pragma pack(push, 1)
 struct BytecodeFileHeader {
   uint64_t fileFormatVersion;
-  uint64_t scriptChecksum;
+  HashedScript::Sha256Hash scriptHash;
   ChakraVersionInfo chakraVersion;
 };
-
-constexpr uint32_t CurrentBytecodeFileFormatVersion = 3;
-static_assert(sizeof(BytecodeFileHeader) == 32, "CurrentBytecodeFileFormatVersion out of date");
 #pragma pack(pop)
 
-const wchar_t *BytecodeScratchSubdirectory = L"Bytecode";
+constexpr uint32_t CurrentBytecodeFileFormatVersion = 3;
+static_assert(sizeof(BytecodeFileHeader) == 56, "CurrentBytecodeFileFormatVersion out of date");
+
+const wchar_t *BytecodeScratchSubdirectory = L"ChakraBytecode";
 const wchar_t *BytecodeFileExtension = L".bytecode";
 
-ChakraBytecodeStore::ChakraBytecodeStore(const std::filesystem::path &executorScratchDirectory) {
-  m_bytecodeDirectory = executorScratchDirectory / BytecodeScratchSubdirectory;
+ChakraBytecodeStore::ChakraBytecodeStore(const std::filesystem::path &instanceScratchPath) {
+  m_bytecodeDirectory = instanceScratchPath / BytecodeScratchSubdirectory;
 }
 
-std::unique_ptr<JSBigString> ChakraBytecodeStore::tryObtainCachedBytecode(const std::string &scriptUrl) {
-  auto bytecodePath = bytecodePathFromScriptUrl(scriptUrl);
-  if (!bytecodePath) {
-    return nullptr;
-  }
-
-  auto bytecodeBodyStr = std::make_unique<FileMappingBigString>(bytecodePath->string(), sizeof(BytecodeFileHeader));
+std::unique_ptr<JSBigString> ChakraBytecodeStore::tryObtainCachedBytecode(const HashedScript &script) {
+  auto bytecodePath = bytecodePathForScript(script);
+  auto bytecodeBodyStr = std::make_unique<FileMappingBigString>(bytecodePath.string(), sizeof(BytecodeFileHeader));
   if (!bytecodeBodyStr->file_data()) {
     return nullptr;
   }
@@ -57,33 +54,24 @@ std::unique_ptr<JSBigString> ChakraBytecodeStore::tryObtainCachedBytecode(const 
     return nullptr;
   }
 
-  folly::Optional<uint64_t> scriptChecksum = calculateScriptChecksum(scriptUrl);
-  if (!scriptChecksum || header->scriptChecksum != scriptChecksum) {
+  if (header->scriptHash != script.GetHash()) {
     return nullptr;
   }
 
   return bytecodeBodyStr;
 }
 
-void ChakraBytecodeStore::persistBytecode(const std::string &scriptUrl, const JSBigString &bytecode) {
+void ChakraBytecodeStore::persistBytecode(const HashedScript &script, const JSBigString &bytecode) {
   ChakraVersionInfo versionInfo;
   if (!versionInfo.initialize()) {
     return;
   }
 
-  auto bytecodePath = bytecodePathFromScriptUrl(scriptUrl);
-  if (!bytecodePath) {
-    return;
-  }
-
-  folly::Optional<uint64_t> scriptChecksum = calculateScriptChecksum(scriptUrl);
-  if (!scriptChecksum) {
-    return;
-  }
+  auto bytecodePath = bytecodePathForScript(script);
 
   // bytecode is a binary representation, so we need to pass in the "b" flag to fopen_s
   FILE *bytecodeFilePtr;
-  if (_wfopen_s(&bytecodeFilePtr, bytecodePath->c_str(), L"wb")) {
+  if (_wfopen_s(&bytecodeFilePtr, bytecodePath.c_str(), L"wb")) {
     return;
   }
   std::unique_ptr<FILE, decltype(&fclose)> bytecodeFilePtrWrapper(bytecodeFilePtr, fclose);
@@ -98,7 +86,7 @@ void ChakraBytecodeStore::persistBytecode(const std::string &scriptUrl, const JS
   }
 
   // Write the real header now
-  BytecodeFileHeader header{CurrentBytecodeFileFormatVersion, *scriptChecksum, versionInfo};
+  BytecodeFileHeader header{CurrentBytecodeFileFormatVersion, script.GetHash(), versionInfo};
 
   fseek(bytecodeFilePtrWrapper.get(), 0, SEEK_SET);
   if (!fwrite(&header, sizeof(BytecodeFileHeader), 1, bytecodeFilePtrWrapper.get()) ||
@@ -107,24 +95,11 @@ void ChakraBytecodeStore::persistBytecode(const std::string &scriptUrl, const JS
   }
 }
 
-folly::Optional<std::filesystem::path> ChakraBytecodeStore::bytecodePathFromScriptUrl(const std::string &scriptUrl) {
-  std::filesystem::path filename = std::filesystem::path(scriptUrl).filename();
-  if (filename.empty()) {
-    return folly::none;
-  }
+std::filesystem::path ChakraBytecodeStore::bytecodePathForScript(const HashedScript &script) {
+  std::string filename;
+  boost::algorithm::hex_lower(script.GetHash().begin(), script.GetHash().end(), std::back_inserter(filename));
 
-  return m_bytecodeDirectory / filename.concat(BytecodeFileExtension);
-}
-
-folly::Optional<uint64_t> ChakraBytecodeStore::calculateScriptChecksum(const std::string &scriptUrl) {
-  FileMappingBigString scriptBuffer(scriptUrl);
-  if (!scriptBuffer.file_data()) {
-    return folly::none;
-  }
-
-  boost::crc_32_type crc32;
-  crc32.process_bytes(scriptBuffer.file_data(), scriptBuffer.file_size());
-  return crc32.checksum();
+  return (m_bytecodeDirectory / filename).concat(BytecodeFileExtension);
 }
 
 } // namespace facebook::react

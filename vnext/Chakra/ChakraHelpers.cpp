@@ -62,10 +62,11 @@ struct FileVersionInfoResource {
 #endif
 
 void persistBytecodeCore(
-    const std::shared_ptr<const JSBigString> &script,
-    const std::string scriptUrl,
+    HashedScript &&script,
+    const std::string &scriptUrl,
     ChakraBytecodeStore &bytecodeStore) {
-  const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
+  const std::wstring scriptUTF16 =
+      Microsoft::Common::Unicode::Utf8ToUtf16(script.GetString()->c_str(), script.GetString()->size());
 
   unsigned int bytecodeSize = 0;
   if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) != JsNoError) {
@@ -78,25 +79,25 @@ void persistBytecodeCore(
     return;
   }
 
-  bytecodeStore.persistBytecode(scriptUrl, bytecode);
+  bytecodeStore.persistBytecode(script, bytecode);
 }
 
 void persistBytecode(
-    const std::shared_ptr<const JSBigString> &script,
+    HashedScript &&script,
     const std::string scriptUrl,
     const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore,
     bool async) {
   std::future<void> bytecodeSerializationFuture = std::async(
       std::launch::async,
-      [](const std::shared_ptr<const JSBigString> &script,
+      [](HashedScript &&script,
          const std::string &scriptUrl,
          const std::shared_ptr<ChakraBytecodeStore> &bytecodeStore) {
         MinimalChakraRuntime chakraRuntime(false /* multithreaded */);
-        persistBytecodeCore(script, scriptUrl, *bytecodeStore);
+        persistBytecodeCore(std::move(script), scriptUrl, *bytecodeStore);
       },
-      script,
+      std::move(script),
       scriptUrl,
-      std::move(bytecodeStore));
+      bytecodeStore);
 
   if (!async) {
     bytecodeSerializationFuture.wait();
@@ -348,11 +349,13 @@ JsValueRef evaluateScriptWithBytecode(
   // code right now.
   return evaluateScript(std::move(script), scriptUrl);
 #else
+  std::shared_ptr<const JSBigString> sharedScript(script.release());
+  HashedScript hashedScript(HashedScript::compute(sharedScript));
 
-  std::unique_ptr<JSBigString> bytecode = bytecodeStore->tryObtainCachedBytecode(scriptUrl);
+  std::unique_ptr<JSBigString> bytecode = bytecodeStore->tryObtainCachedBytecode(hashedScript);
+
   if (!bytecode) {
-    std::shared_ptr<const JSBigString> sharedScript(script.release());
-    persistBytecode(sharedScript, scriptUrl, bytecodeStore, asyncBytecodeGeneration);
+    persistBytecode(std::move(hashedScript), scriptUrl, bytecodeStore, asyncBytecodeGeneration);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
     JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(sharedScript);
     ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);

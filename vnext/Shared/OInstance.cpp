@@ -468,8 +468,7 @@ InstanceImpl::InstanceImpl(
       instanceArgs.EnableNativePerformanceNow = m_devSettings->enableNativePerformanceNow;
       instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
 
-      instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->executorScratchDirectory);
-
+      instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->scratchPath);
 
       if (!m_devSettings->useJITCompilation) {
 #if (defined(_MSC_VER) && !defined(WINRT))
@@ -653,10 +652,9 @@ InstanceImpl::InstanceImpl(
   auto edf = std::make_shared<SandboxDelegateFactory>(std::move(sendNativeModuleCall));
 
   ChakraInstanceArgs instanceArgs;
-  instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->executorScratchDirectory);
+  instanceArgs.BytecodeStore = std::make_shared<ChakraBytecodeStore>(m_devSettings->scratchPath);
   instanceArgs.RuntimeAttributes =
       m_devSettings->useJITCompilation ? JsRuntimeAttributeNone : JsRuntimeAttributeDisableNativeCodeGeneration;
-
 
   auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
   m_innerInstance->initializeBridge(
