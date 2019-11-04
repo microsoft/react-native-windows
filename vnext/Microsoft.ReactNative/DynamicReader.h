@@ -12,7 +12,7 @@ struct DynamicReader : winrt::implements<DynamicReader, winrt::Microsoft::ReactN
 
  public: // IJSValueReader
   winrt::Microsoft::ReactNative::Bridge::JSValueReaderState ReadNext() noexcept;
-  _Success_(return ) bool TryGetBoolen(_Out_ bool &value) noexcept;
+  _Success_(return ) bool TryGetBoolean(_Out_ bool &value) noexcept;
   _Success_(return ) bool TryGetInt64(_Out_ int64_t &value) noexcept;
   _Success_(return ) bool TryGetDouble(_Out_ double &value) noexcept;
   _Success_(return ) bool TryGetString(winrt::hstring &value) noexcept;

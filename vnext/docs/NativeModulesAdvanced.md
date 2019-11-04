@@ -1,4 +1,8 @@
-# Writing Native Modules without using Attributes 
+# Native Modules and React Native Windows (Advanced Topics)
+
+*Both this documentation and the underlying code is a work in progress. You can see the current state of working code here: [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)*
+
+## Writing Native Modules without using Attributes (C#)
 
 The [Native Modules](./NativeModules.md) page describes how you can author Native Modules in both C# and C++ using an attribute-based approach. The attribute-based approach makes it easy for you to author your native modules because it uses reflection to help React Native understand your native module. 
 
@@ -7,11 +11,11 @@ In rare cases, you may need to write a native module against the ABI directly wi
 2. Register your native module
 3. Use your native module
 
-However, your app will be responsible for handling the code that the attributes would have otherwise provided. This guide will walk through those steps. 
+However, your app will be responsible for handling the code that the attributes would have otherwise provided. This guide will walk through those steps.
 
-## 1. Authoring your Native Module
+### 1. Authoring your Native Module
 
-Here is the same `FancyMath` native module, but we do not use custom attributes and going to implement registration of its members ourselves without using reflection.
+Here is the same `FancyMath` native module, but we do not use custom attributes and we're instead going to implement registration of its members ourselves without using reflection.
 
 *FancyMath.cs*
 ```csharp
@@ -34,9 +38,9 @@ namespace NativeModuleSample
 }
 ```
 
-## 2. Registering your Native Module
+### 2. Registering your Native Module
 
-Here's our `FancyMathPackageProvider` where we do not use Reflection to register native module members.
+Here's our `FancyMathPackageProvider` where we manually register our native module's members.
 
 *FancyMathPackageProvider.cs*
 ```csharp
@@ -78,7 +82,7 @@ namespace NativeModuleSample
 }
 ```
 
-As you can see, it is possible to use the API directly, but the code looks a little bit more complicated. The most complexity is related to the value serialization and deserialization. We can choose using helper methods for that and then the code would look a little bit simpler:
+As you can see, it is possible to use the API directly, but the code looks a little bit more complicated. You are responsible for creating your own constant provider, serializing each constant into the `IJSValueWriter`. For methods, you are also responsible for deserializing args, calling your code, and then serializing any return values. There are some (de)serialization helper methods to make that a little bit simpler:
 
 *FancyMathPackageProvider.cs*
 ```csharp
@@ -145,7 +149,7 @@ From the maintenance point of view, the attributed code is much simple to suppor
 
 And as for the rest of the code, once we have the `IReactPackageProvider`, registering that package is the same as in the example above that uses custom attributes.
 
-## 3. Using your Native Module in JS
+### 3. Using your Native Module in JS
 
 Using your native module in JS is the exact same as if the native module was defined using attributes. 
 

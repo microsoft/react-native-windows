@@ -121,7 +121,7 @@ JSValueReaderState DynamicReader::ReadValue(const folly::dynamic *value) noexcep
   }
 }
 
-_Success_(return ) bool DynamicReader::TryGetBoolen(_Out_ bool &value) noexcept {
+_Success_(return ) bool DynamicReader::TryGetBoolean(_Out_ bool &value) noexcept {
   if (m_state == JSValueReaderState::BooleanValue) {
     VerifyElseCrash(!m_stack.empty());
     value = m_stack.back().Value->asBool();
