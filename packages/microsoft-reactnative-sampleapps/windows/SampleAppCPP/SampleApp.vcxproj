@@ -24,6 +24,18 @@
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugBundle|ARM">
+      <Configuration>DebugBundle</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugBundle|Win32">
+      <Configuration>DebugBundle</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugBundle|x64">
+      <Configuration>DebugBundle</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
       <Platform>ARM</Platform>
@@ -34,6 +46,18 @@
     </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBundle|ARM">
+      <Configuration>ReleaseBundle</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBundle|Win32">
+      <Configuration>ReleaseBundle</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBundle|x64">
+      <Configuration>ReleaseBundle</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|ARM">
@@ -58,7 +82,16 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='DebugBundle'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='ReleaseBundle'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <LinkIncremental>false</LinkIncremental>
@@ -99,10 +132,40 @@
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='DebugBundle'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='DebugBundle|Win32'">cd $(SolutionDir)..
+react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='DebugBundle|Win32'">$(ProjectDir)Bundle\index.windows.bundle;%(Outputs)</Outputs>
+      <Inputs Condition="'$(Configuration)|$(Platform)'=='DebugBundle|Win32'">$(SolutionDir)..\index.windows.js</Inputs>
+      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='DebugBundle|Win32'">true</TreatOutputAsContent>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='ReleaseBundle'">
+    <ClCompile>
+      <PreprocessorDefinitions>NDEBUG;BUNDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <CustomBuildStep>
+      <Command Condition="'$(Configuration)|$(Platform)'=='ReleaseBundle|Win32'">cd $(SolutionDir)..
+react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='ReleaseBundle|Win32'">$(ProjectDir)Bundle\index.windows.bundle;%(Outputs)</Outputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs Condition="'$(Configuration)|$(Platform)'=='ReleaseBundle|Win32'">$(SolutionDir)..\index.windows.js</Inputs>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <TreatOutputAsContent Condition="'$(Configuration)|$(Platform)'=='ReleaseBundle|Win32'">true</TreatOutputAsContent>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DebugConsole.h" />
@@ -162,9 +225,6 @@
     </ProjectReference>
     <ProjectReference Include="..\SampleLibraryCPP\SampleLibraryCPP.vcxproj">
       <Project>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\SampleLibraryCS\SampleLibraryCS.csproj">
-      <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

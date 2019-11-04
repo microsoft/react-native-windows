@@ -6,7 +6,7 @@
 #include "App.h"
 #include "ReactPackageProvider.h"
 #include "winrt/SampleLibraryCPP.h"
-#include "winrt/SampleLibraryCS.h"
+//#include "winrt/SampleLibraryCS.h"
 
 namespace winrt::SampleApp::implementation {
 
@@ -19,9 +19,15 @@ App::App() noexcept {
   MainComponentName(L"SampleApp");
   JavaScriptMainModuleName(L"index.windows");
 
+#ifdef BUNDLE
+  JavaScriptBundleFile(L"index.windows");
+  InstanceSettings().UseWebDebugger(false);
+  InstanceSettings().UseLiveReload(false);
+#endif
+
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
   PackageProviders().Append(winrt::SampleLibraryCPP::ReactPackageProvider());
-  PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());
+//  PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());
 
   InitializeComponent();
 
