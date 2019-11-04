@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import { NativeModules } from 'react-native';
 
-//const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
+const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
@@ -45,7 +45,6 @@ class SampleApp extends Component {
     // SampleModuleCS constants
 
     log(`SampleModuleCS.NumberConstant: ${NativeModules.SampleModuleCS.NumberConstant}`);
-/*    
     log(`SampleModuleCS.StringConstant: ${NativeModules.SampleModuleCS.StringConstant}`);
 
     // SampleModuleCS method calls
@@ -67,7 +66,6 @@ class SampleApp extends Component {
 
     var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
-*/    
   }
 
   _onPressHandlerSMCPP() {
@@ -122,8 +120,11 @@ class SampleApp extends Component {
           This app consumes custom Native Modules and View Managers.
         </Text>
 
+        <Button onPress={() => { this._onPressHandlerSMCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={() => { this._onPressHandlerSMCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
 
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._cuccsRef = ref; }} />
+        <Button onPress={() => { this._onPressHandlerCUCCS(); }} title="Call CustomUserControlCS Commands!" />
 
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
         <Text style={styles.instructions}>
