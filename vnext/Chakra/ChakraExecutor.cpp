@@ -492,9 +492,6 @@ static std::string simpleBasename(const std::string &path) {
 
 void ChakraExecutor::loadApplicationScript(
     std::unique_ptr<const JSBigString> script,
-#if !defined(OSS_RN)
-    uint64_t scriptVersion,
-#endif
     std::string sourceURL) {
   SystraceSection s("ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
 
@@ -510,17 +507,17 @@ void ChakraExecutor::loadApplicationScript(
 #if defined(OSS_RN)
   evaluateScript(std::move(script), jsSourceURL);
 #else
-  std::string bytecodeFileName;
-  if (m_instanceArgs.BytecodeResolver) {
-    bytecodeFileName = m_instanceArgs.BytecodeResolver->BytecodeFileNameFromScriptUrl(sourceURL);
+  const ScriptMetadata *scriptMetadata = nullptr;
+  if (m_instanceArgs.ScriptMetadata) {
+    scriptMetadata = &m_instanceArgs.ScriptMetadata->at(sourceURL);
   }
 
   // when debugging is enabled, don't use bytecode caching because ChakraCore
   // doesn't support it.
-  if (bytecodeFileName.empty() || m_instanceArgs.EnableDebugging) {
+  if (!scriptMetadata || m_instanceArgs.EnableDebugging) {
     evaluateScript(std::move(script), jsSourceURL);
   } else {
-    evaluateScriptWithBytecode(std::move(script), scriptVersion, jsSourceURL, std::move(bytecodeFileName));
+    evaluateScriptWithBytecode(std::move(script), scriptMetadata->scriptVersion, jsSourceURL, std::string(scriptMetadata->bytecodeFilename));
   }
 #endif
 

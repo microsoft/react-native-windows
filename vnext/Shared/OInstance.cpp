@@ -498,7 +498,7 @@ InstanceImpl::InstanceImpl(
       // Disable bytecode caching with live reload as we don't make guarantees
       // that the the bundle version will change with edits
       if (devSettings->liveReloadCallback == nullptr) {
-        instanceArgs.BytecodeResolver = m_devSettings->bytecodeResolver;
+        instanceArgs.ScriptMetadata = m_devSettings->chakraScriptMetadata;
       }
 
       if (!m_devSettings->useJITCompilation) {
@@ -581,9 +581,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 
       m_innerInstance->loadScriptFromString(
           std::make_unique<const JSBigStdString>(bundleUrl),
-#if !defined(OSS_RN)
-          0 /*bundleVersion*/,
-#endif
           bundleUrl,
           synchronously);
     } catch (std::exception &e) {
@@ -599,9 +596,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
     } else {
       m_innerInstance->loadScriptFromString(
           std::make_unique<const JSBigStdString>(jsBundleString),
-#if !defined(OSS_RN)
-          0 /*bundleVersion*/,
-#endif
           jsBundleRelativePath,
           synchronously);
     }
@@ -619,18 +613,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
 #endif
-        // We can fail this and leave the timestamp at zero. This ends up being
-        // fine, since we will not use cached bytecode if we cannot read the
-        // file or if timestamps don't match. We should move this logic to live
-        // with the rest of the bytecode caching logic.
-        uint64_t bundleTimestamp = 0;
-        GetLastWriteTime(fullBundleFilePath, bundleTimestamp);
-
         m_innerInstance->loadScriptFromString(
             std::move(bundleString),
-#if !defined(OSS_RN)
-            bundleTimestamp,
-#endif
             std::move(fullBundleFilePath),
             synchronously);
       }
@@ -712,7 +696,7 @@ InstanceImpl::InstanceImpl(
   // Disable bytecode caching with live reload as we don't make guarantees that
   // the bundle version will change with edits
   if (devSettings->liveReloadCallback == nullptr) {
-    instanceArgs.BytecodeResolver = m_devSettings->bytecodeResolver;
+    instanceArgs.ScriptMetadata = m_devSettings->chakraScriptMetadata;
   }
 
   auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
@@ -727,7 +711,6 @@ InstanceImpl::InstanceImpl(
   try {
     m_innerInstance->loadScriptFromString(
         std::make_unique<const JSBigStdString>(std::move(fullBundleFilePath)),
-        0 /*bundleVersion*/,
         sourceUrl,
         false /*synchronously*/);
   } catch (std::exception &e) {

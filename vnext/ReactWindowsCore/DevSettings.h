@@ -6,6 +6,7 @@
 #include "MemoryTracker.h"
 
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -45,16 +46,16 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
-/// Determines the bytecode file to try to use for a given script url The file
-/// is not guaranteed to exist.
-struct ScriptBytecodeResolver {
-  virtual std::string BytecodeFileNameFromScriptUrl(const std::string &scriptUrl) = 0;
+struct ScriptMetadata {
+  uint64_t scriptVersion;
+  std::string bytecodeFilename;
 };
+
+using ScriptUrlMetadataMap = std::map<std::string, ScriptMetadata>;
 
 struct DevSettings {
   bool useSandbox{false};
   bool useJITCompilation{true};
-  std::shared_ptr<ScriptBytecodeResolver> bytecodeResolver;
   std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;
@@ -109,6 +110,10 @@ struct DevSettings {
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
 
+  /// Used to allow ChakraExecutor to query the instance creator for
+  /// bytecode/versioning information from scriptURL. Superseded by
+  /// PreparedScriptStore on the JSI stack, and will be removed soon.
+  std::shared_ptr<ScriptUrlMetadataMap> chakraScriptMetadata;
 };
 
 } // namespace react
