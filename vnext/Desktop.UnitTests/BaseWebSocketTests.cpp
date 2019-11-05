@@ -32,7 +32,8 @@ TEST_CLASS(BaseWebSocketTest)
   BEGIN_TEST_CLASS_ATTRIBUTE()
   END_TEST_CLASS_ATTRIBUTE()
 
-  TEST_METHOD(CreateAndSetHandlers){
+  TEST_METHOD(CreateAndSetHandlers)
+  {
     auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
 
     Assert::IsFalse(nullptr == ws);
@@ -44,7 +45,8 @@ TEST_CLASS(BaseWebSocketTest)
     ws->SetOnError([](const Error &error) {});
   }
 
-  TEST_METHOD(ConnectSucceeds) {
+  TEST_METHOD(ConnectSucceeds)
+  {
     string errorMessage;
     bool connected = false;
     auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
@@ -58,7 +60,8 @@ TEST_CLASS(BaseWebSocketTest)
     Assert::IsTrue(connected);
   }
 
-  TEST_METHOD(ConnectFails) {
+  TEST_METHOD(ConnectFails)
+  {
     string errorMessage;
     bool connected = false;
     auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
@@ -78,7 +81,8 @@ TEST_CLASS(BaseWebSocketTest)
   BEGIN_TEST_METHOD_ATTRIBUTE(HandshakeFails)
   TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(HandshakeFails) {
+  TEST_METHOD(HandshakeFails)
+  {
     string errorMessage;
     bool connected = false;
     auto ws = make_unique<TestWebSocket>(Url("ws://localhost"));
@@ -98,7 +102,8 @@ TEST_CLASS(BaseWebSocketTest)
   BEGIN_TEST_METHOD_ATTRIBUTE(CloseSucceeds)
   TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(CloseSucceeds) {
+  TEST_METHOD(CloseSucceeds)
+  {
     string errorMessage;
     promise<void> connected;
     bool closed = false;
