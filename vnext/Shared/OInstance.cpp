@@ -470,7 +470,7 @@ InstanceImpl::InstanceImpl(
 
       // Disable bytecode caching with live reload as we don't make guarantees
       // that the the bundle version will change with edits
-      if (devSettings->liveReloadCallback == nullptr) {
+      if (m_devSettings->liveReloadCallback == nullptr) {
         instanceArgs.ScriptMetadata = m_devSettings->chakraScriptMetadata;
       }
 
@@ -668,7 +668,7 @@ InstanceImpl::InstanceImpl(
 
   // Disable bytecode caching with live reload as we don't make guarantees that
   // the bundle version will change with edits
-  if (devSettings->liveReloadCallback == nullptr) {
+  if (m_devSettings->liveReloadCallback == nullptr) {
     instanceArgs.ScriptMetadata = m_devSettings->chakraScriptMetadata;
   }
 
