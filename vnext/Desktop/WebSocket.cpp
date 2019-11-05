@@ -598,7 +598,6 @@ size_t MockStream::write_buffer_bytes() const {
 
 void MockStream::set_option(websocket::stream_base::decorator opt) {}
 
-
 void MockStream::get_option(websocket::stream_base::timeout& opt) {}
 
 void MockStream::set_option(websocket::stream_base::timeout const& opt) {}
@@ -607,18 +606,28 @@ void MockStream::set_option(websocket::permessage_deflate const& o) {}
 
 void MockStream::get_option(websocket::permessage_deflate& o) {}
 
-
 template<class RangeConnectHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type))
 MockStream::async_connect(
   tcp::resolver::results_type const& endpoints,
   RangeConnectHandler&& handler)
 {
-  return async_initiate<RangeConnectHandler,
-    void(error_code, typename tcp::resolver::results_type::endpoint_type)>(
-      [](auto&&) {},
-      handler
-    );
+   //async_initiate<RangeConnectHandler,
+   // void(error_code, typename tcp::resolver::results_type::endpoint_type)>(
+   //   [](auto&&) {},
+   //   handler
+   // );
+
+  //return async_initiate<RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type)>(
+  //  [](RangeConnectHandler&& handler, MockStream* ms, tcp::resolver::results_type::endpoint_type eps)
+  //  {
+  //    //post(ms->get_executor(), bind_handler(std::move(handler), ms->ConnectResult(), {} /*endpoint_type*/ ));
+  //    post(ms->get_executor(), bind_handler(std::move(handler), ms->ConnectResult(), {}));
+  //  },
+  //  handler,
+  //  this,
+  //  {}
+  //  );
 }
 
 template <class HandshakeHandler>
@@ -635,9 +644,9 @@ MockStream::async_handshake(
   //return init.result.get();
 
   return async_initiate<HandshakeHandler, void(error_code)>(
-    [](HandshakeHandler&&, MockStream* ms, string h, string t)
+    [](HandshakeHandler&& handler, MockStream* ms, string h, string t)
     {
-      ms->HandshakeResult(h, t);
+      post(ms->get_executor(), bind_handler(std::move(handler), ms->HandshakeResult(h, t)));
     },
     handler,
     this,
@@ -657,6 +666,15 @@ MockStream::async_read(DynamicBuffer &buffer, ReadHandler &&handler) {
   //post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
 
   //return init.result.get();
+
+  return async_initiate<ReadHandler, void(error_code, size_t)>(
+      [ec, size](ReadHandler&& handler, MockStream* ms)
+      {
+        post(ms->get_executor(), bind_handler(std::move(handler), ec, size));
+      },
+      handler,
+      this
+    );
 }
 
 template <class ConstBufferSequence, class WriteHandler>
@@ -664,12 +682,21 @@ BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code, size_t))
 MockStream::async_write(ConstBufferSequence const &buffers, WriteHandler &&handler) {
   error_code ec;
   size_t size;
-  std::tie(ec, size) = ReadResult();
+  std::tie(ec, size) = ReadResult();//TODO: Why in async_write?
 
   //BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code, size_t));
   //post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
 
   //return init.result.get();
+
+  return async_initiate<WriteHandler, void(error_code, size_t)>(
+      [ec, size](WriteHandler&& handler, MockStream* ms)
+      {
+        post(ms->get_executor(), bind_handler(std::move(handler), ec, size));
+      },
+      handler,
+      this
+    );
 }
 
 template <class WriteHandler>
@@ -679,6 +706,15 @@ MockStream::async_ping(websocket::ping_data const &payload, WriteHandler &&handl
   //post(get_executor(), bind_handler(std::move(init.completion_handler), PingResult()));
 
   //return init.result.get();
+
+  return async_initiate<WriteHandler, void(error_code)>(
+    [](WriteHandler&& handler, MockStream* ms)
+    {
+      post(ms->get_executor(), bind_handler(std::move(handler), ms->PingResult()));
+    },
+    handler,
+    this
+    );
 }
 
 template <class CloseHandler>
@@ -688,6 +724,15 @@ MockStream::async_close(websocket::close_reason const &cr, CloseHandler &&handle
   //post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
 
   //return init.result.get();
+
+  return async_initiate<CloseHandler, void(error_code)>(
+    [](CloseHandler&& handler, MockStream* ms)
+    {
+      post(ms->get_executor(), bind_handler(std::move(handler), ms->CloseResult()));
+    },
+    handler,
+    this
+    );
 }
 
 #pragma endregion MockStream
@@ -711,15 +756,6 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 }
 
 #pragma endregion TestWebSocket
-
-//class TestWebSocket2 : public BaseWebSocket<std::nullptr_t, test::stream> {
-//public:
-//  TestWebSocket2(facebook::react::Url&& url);
-//
-//  void SetConnectResult(function<error_code()>&& resultFunc);
-//  void SetHandshakeResult(function<error_code(string, string)>&& resultFunc);
-//  void SetCloseResult(function<error_code()>&& resultFunc);
-//};
 
 } // namespace Test
 
