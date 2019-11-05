@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <ReactUWPABI.h>
 #include <NativeModuleProvider.h>
+#include <ReactUWPABI.h>
 #include <combaseapi.h>
 #include <cxxreact/CxxModule.h>
 #include <wrl.h>
