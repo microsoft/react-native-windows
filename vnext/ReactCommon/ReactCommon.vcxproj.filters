@@ -108,6 +108,9 @@
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -219,12 +222,6 @@
       <Filter>jsi\jsi</Filter>
     </ClInclude>
     <ClInclude Include="$(JSI_Source)\jsi\jsilib.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(JSI_Source)\jsi\RuntimeHolder.h">
-      <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(JSI_Source)\jsi\ScriptStore.h">
       <Filter>jsi\jsi</Filter>
     </ClInclude>
     <ClInclude Include="$(JSI_Source)\jsi\threadsafe.h">
