@@ -14,11 +14,14 @@
 
 namespace Microsoft::React {
 
-template <
+template
+<
     typename SocketLayer = boost::beast::tcp_stream,
     typename Stream      = boost::beast::websocket::stream<SocketLayer>,
-    typename Resolver    = boost::asio::ip::tcp::resolver>
-class BaseWebSocket : public IWebSocket {
+    typename Resolver    = boost::asio::ip::tcp::resolver
+>
+class BaseWebSocket : public IWebSocket
+{
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
@@ -193,13 +196,14 @@ class BaseWebSocket : public IWebSocket {
 #pragma endregion IWebSocket
 };
 
-class WebSocket : public BaseWebSocket<> {
+class WebSocket : public BaseWebSocket<>
+{
  public:
   WebSocket(Url &&url);
 };
 
-class SecureWebSocket
-    : public BaseWebSocket<boost::beast::ssl_stream<boost::beast::tcp_stream>> {
+class SecureWebSocket : public BaseWebSocket<boost::beast::ssl_stream<boost::beast::tcp_stream>>
+{
 #pragma region BaseWebSocket overrides
 
   void Handshake(const IWebSocket::Options &options) override;
@@ -210,12 +214,14 @@ class SecureWebSocket
   SecureWebSocket(Url &&url);
 };
 
-namespace Test {
+namespace Test
+{
 
 /// <summary>
 /// See <boost/beast/experimental/test/stream.hpp>.
 /// </summary>
-class MockStream {
+class MockStream
+{
   boost::asio::io_context &m_context;
 
  public:
@@ -292,10 +298,12 @@ async_connect(
   std::function<boost::system::error_code()> CloseResult;
 };
 
-class TestWebSocket : public BaseWebSocket<
-                               std::nullptr_t, // Unused. MockStream works as its own
-                               MockStream      // next/lowest layer.
-                             > {
+class TestWebSocket : public  BaseWebSocket
+                              <
+                                std::nullptr_t, // Unused. MockStream works as its own next/lowest layer.
+                                MockStream
+                              >
+{
  public:
   TestWebSocket(facebook::react::Url &&url);
 
