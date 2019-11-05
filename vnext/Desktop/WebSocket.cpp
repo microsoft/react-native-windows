@@ -16,8 +16,6 @@
 #include <boost/beast/core/buffers_to_string.hpp>
 #include "Unicode.h"
 
-#include <boost/beast/_experimental/test/stream.hpp>
-
 using namespace boost::archive::iterators;
 using namespace boost::asio;
 using namespace boost::beast;
@@ -99,46 +97,6 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::Handshake(const IWebSocket::O
       }
     }
   );
-
-  //TODO: Remove
-  //m_stream->async_handshake_ex(
-  //    m_url.host,
-  //    m_url.Target(),
-  //    // Header handler
-  //    [options = std::move(options)](websocket::request_type &req) {
-  //      // Collect headers
-  //      for (const auto &header : options) {
-  //        req.insert(Microsoft::Common::Unicode::Utf16ToUtf8(header.first), header.second);
-  //      }
-  //    },
-  //    // Handshake handler
-  //    [this](boostecr ec) {
-  //      if (ec) {
-  //        if (m_errorHandler)
-  //          m_errorHandler({ec.message(), ErrorType::Handshake});
-  //      } else {
-  //        m_handshakePerformed = true;
-  //        m_readyState = ReadyState::Open;
-
-  //        if (m_connectHandler)
-  //          m_connectHandler();
-
-  //        // Start read cycle.
-  //        PerformRead();
-
-  //        // Perform writes, if enqueued.
-  //        if (!m_writeRequests.empty())
-  //          PerformWrite();
-
-  //        // Perform pings, if enqueued.
-  //        if (m_pingRequests > 0)
-  //          PerformPing();
-
-  //        // Perform close, if requested.
-  //        if (m_closeRequested && !m_closeInProgress)
-  //          PerformClose();
-  //      }
-  //    }); // async_handshake_ex
 }
 
 template <typename SocketLayer, typename Stream, typename Resolver>
@@ -374,18 +332,6 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::Connect(
         }
 
         // Connect
-        //async_connect(
-        //    get_lowest_layer(*m_stream),
-        //    results.begin(),
-        //    results.end(),
-        //    [this, options = std::move(options)](boostecr ec, const basic_resolver_iterator<Protocol> &) {
-        //      if (ec) {
-        //        if (m_errorHandler)
-        //          m_errorHandler({ec.message(), ErrorType::Connection});
-        //      } else {
-        //        Handshake(std::move(options));
-        //      }
-        //    }); // async_connect
         get_lowest_layer(*m_stream).async_connect(
           results,
           [this, options = std::move(options)](boostecr ec, tcp::resolver::results_type::endpoint_type)
