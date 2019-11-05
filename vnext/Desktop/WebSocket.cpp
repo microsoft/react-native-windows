@@ -56,38 +56,41 @@ void BaseWebSocket<SocketLayer, Stream>::Handshake()
   m_stream->async_handshake(
     m_url.host,
     m_url.Target(),
-    [this](error_code ec)
-    {
-      if (ec)
-      {
-        if (m_errorHandler)
-          m_errorHandler({ ec.message(), ErrorType::Handshake });
-      }
-      else
-      {
-        m_handshakePerformed = true;
-        m_readyState = ReadyState::Open;
-
-        if (m_connectHandler)
-          m_connectHandler();
-
-        // Start read cycle.
-        PerformRead();
-
-        // Perform writes, if enqueued.
-        if (!m_writeRequests.empty())
-          PerformWrite();
-
-        // Perform pings, if enqueued.
-        if (m_pingRequests > 0)
-          PerformPing();
-
-        // Perform close, if requested.
-        if (m_closeRequested && !m_closeInProgress)
-          PerformClose();
-      }
-    }
+    bind_front_handler(&BaseWebSocket<SocketLayer, Stream>::OnHandshake, this)
   );
+}
+
+template <typename SocketLayer, typename Stream>
+void BaseWebSocket<SocketLayer, Stream>::OnHandshake(error_code ec)
+{
+  if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler({ ec.message(), ErrorType::Handshake });
+  }
+  else
+  {
+    m_handshakePerformed = true;
+    m_readyState = ReadyState::Open;
+
+    if (m_connectHandler)
+      m_connectHandler();
+
+    // Start read cycle.
+    PerformRead();
+
+    // Perform writes, if enqueued.
+    if (!m_writeRequests.empty())
+      PerformWrite();
+
+    // Perform pings, if enqueued.
+    if (m_pingRequests > 0)
+      PerformPing();
+
+    // Perform close, if requested.
+    if (m_closeRequested && !m_closeInProgress)
+      PerformClose();
+  }
 }
 
 template <typename SocketLayer, typename Stream>
@@ -99,45 +102,51 @@ void BaseWebSocket<SocketLayer, Stream>::PerformRead()
   }
 
   // Check if there are more bytes available than a header length (2).
-  m_stream->async_read(m_bufferIn, [this](error_code ec, size_t size)
+  m_stream->async_read(
+    m_bufferIn,
+    bind_front_handler(&BaseWebSocket<SocketLayer, Stream>::OnRead, this)
+  );
+}
+
+template <typename SocketLayer, typename Stream>
+void BaseWebSocket<SocketLayer, Stream>::OnRead(error_code ec, size_t size)
+{
+  if (boost::asio::error::operation_aborted == ec)
   {
-    if (boost::asio::error::operation_aborted == ec)
+    // Nothing to do.
+  }
+  else if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler({ ec.message(), ErrorType::Receive });
+  }
+  else
+  {
+    string message{ buffers_to_string(m_bufferIn.data()) };
+
+    if (m_stream->got_binary())
     {
-      // Nothing to do.
+      // ISS:2906983
+      typedef base64_from_binary<transform_width<const char*, 6, 8>> encode_base64;
+
+      // NOTE: Encoding the base64 string makes the message's length different
+      // from the 'size' argument.
+      std::ostringstream os;
+      std::copy(encode_base64(message.c_str()), encode_base64(message.c_str() + size), ostream_iterator<char>(os));
+      message = os.str();
+
+      auto padSize = ((4 - message.length()) % 4) % 4;
+      message.append(padSize, '=');
     }
-    else if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ec.message(), ErrorType::Receive});
-    }
-    else
-    {
-      string message{buffers_to_string(m_bufferIn.data())};
 
-      if (m_stream->got_binary())
-      {
-        // ISS:2906983
-        typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
+    if (m_readHandler)
+      m_readHandler(size, std::move(message));
 
-        // NOTE: Encoding the base64 string makes the message's length different
-        // from the 'size' argument.
-        std::ostringstream os;
-        std::copy(encode_base64(message.c_str()), encode_base64(message.c_str() + size), ostream_iterator<char>(os));
-        message = os.str();
+    m_bufferIn.consume(size);
+  } // if (ec)
 
-        auto padSize = ((4 - message.length()) % 4) % 4;
-        message.append(padSize, '=');
-      }
-
-      if (m_readHandler)
-        m_readHandler(size, std::move(message));
-
-      m_bufferIn.consume(size);
-    } // if (ec)
-
-    // Enqueue another read.
-    PerformRead();
-  }); // async_read
+  // Enqueue another read.
+  PerformRead();
 }
 
 template <typename SocketLayer, typename Stream>
@@ -157,24 +166,30 @@ void BaseWebSocket<SocketLayer, Stream>::PerformWrite()
   if (request.first.length() > m_stream->write_buffer_bytes())
     m_stream->write_buffer_bytes(request.first.length());
 
-  m_stream->async_write(buffer(request.first), [this](error_code ec, size_t size)
+  m_stream->async_write(
+    buffer(request.first),
+    bind_front_handler(&BaseWebSocket<SocketLayer, Stream>::OnWrite, this)
+  );
+}
+
+template <typename SocketLayer, typename Stream>
+void BaseWebSocket<SocketLayer, Stream>::OnWrite(error_code ec, size_t size)
+{
+  if (ec)
   {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ec.message(), ErrorType::Send});
-    }
-    else
-    {
-      if (m_writeHandler)
-        m_writeHandler(size);
-    }
+    if (m_errorHandler)
+      m_errorHandler({ ec.message(), ErrorType::Send });
+  }
+  else
+  {
+    if (m_writeHandler)
+      m_writeHandler(size);
+  }
 
-    m_writeInProgress = false;
+  m_writeInProgress = false;
 
-    if (!m_writeRequests.empty())
-      PerformWrite();
-  });
+  if (!m_writeRequests.empty())
+    PerformWrite();
 }
 
 template <typename SocketLayer, typename Stream>
@@ -186,21 +201,27 @@ void BaseWebSocket<SocketLayer, Stream>::PerformPing()
 
   --m_pingRequests;
 
-  m_stream->async_ping(websocket::ping_data(), [this](error_code ec)
+  m_stream->async_ping(
+    websocket::ping_data(),
+    bind_front_handler(&BaseWebSocket<SocketLayer, Stream>::OnPing, this)
+  );
+}
+
+template <typename SocketLayer, typename Stream>
+void BaseWebSocket<SocketLayer, Stream>::OnPing(error_code ec)
+{
+  if (ec)
   {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ec.message(), ErrorType::Ping});
-    }
-    else if (m_pingHandler)
-      m_pingHandler();
+    if (m_errorHandler)
+      m_errorHandler({ ec.message(), ErrorType::Ping });
+  }
+  else if (m_pingHandler)
+    m_pingHandler();
 
-    m_pingInProgress = false;
+  m_pingInProgress = false;
 
-    if (m_pingRequests > 0)
-      PerformPing();
-  });
+  if (m_pingRequests > 0)
+    PerformPing();
 }
 
 template <typename SocketLayer, typename Stream>
@@ -209,24 +230,30 @@ void BaseWebSocket<SocketLayer, Stream>::PerformClose()
   m_closeInProgress = true;
   m_readyState = ReadyState::Closing;
 
-  m_stream->async_close(ToBeastCloseCode(m_closeCodeRequest), [this](error_code ec)
-  {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ec.message(), ErrorType::Close});
-    }
-    else
-    {
-      m_readyState = ReadyState::Closed;
-
-      if (m_closeHandler)
-        m_closeHandler(m_closeCodeRequest, m_closeReasonRequest);
-    }
-  });
+  m_stream->async_close(
+    ToBeastCloseCode(m_closeCodeRequest),
+    bind_front_handler(&BaseWebSocket<SocketLayer, Stream>::OnClose, this)
+  );
 
   // Synchronize context thread.
   Stop();
+}
+
+template <typename SocketLayer, typename Stream>
+void BaseWebSocket<SocketLayer, Stream>::OnClose(error_code ec)
+{
+  if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler({ ec.message(), ErrorType::Close });
+  }
+  else
+  {
+    m_readyState = ReadyState::Closed;
+
+    if (m_closeHandler)
+      m_closeHandler(m_closeCodeRequest, m_closeReasonRequest);
+  }
 }
 
 template <typename SocketLayer, typename Stream>
@@ -377,18 +404,22 @@ void BaseWebSocket<SocketLayer, Stream>::OnResolve(error_code ec, typename tcp::
   // Connect
   get_lowest_layer(*m_stream).async_connect(
     results,
-    [this](error_code ec, tcp::resolver::results_type::endpoint_type)
+    bind_front_handler(&BaseWebSocket<SocketLayer, Stream>::OnConnect, this)
+  );
+}
+
+template<typename SocketLayer, typename Stream>
+void BaseWebSocket<SocketLayer, Stream>::OnConnect(error_code ec, tcp::resolver::results_type::endpoint_type endpoints)
+{
+  if (ec)
   {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler({ ec.message(), ErrorType::Connection });
-    }
-    else
-    {
-      Handshake();
-    }
-  });
+    if (m_errorHandler)
+      m_errorHandler({ ec.message(), ErrorType::Connection });
+  }
+  else
+  {
+    Handshake();
+  }
 }
 
 template <typename SocketLayer, typename Stream>

@@ -99,6 +99,18 @@ class BaseWebSocket : public IWebSocket
 
   void OnResolve(boost::beast::error_code ec, typename boost::asio::ip::tcp::resolver::results_type results);
 
+  void OnConnect(boost::beast::error_code ec, boost::asio::ip::tcp::resolver::results_type::endpoint_type endpoints);
+
+  void OnHandshake(boost::beast::error_code ec);
+
+  void OnClose(boost::beast::error_code ec);
+
+  void OnRead(boost::beast::error_code ec, std::size_t size);
+
+  void OnWrite(boost::beast::error_code ec, std::size_t size);
+
+  void OnPing(boost::beast::error_code ec);
+
   #pragma endregion Async handlers
 
  protected:
