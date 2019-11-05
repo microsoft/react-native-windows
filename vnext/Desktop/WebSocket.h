@@ -17,8 +17,7 @@ namespace Microsoft::React
 template
 <
     typename SocketLayer = boost::beast::tcp_stream,
-    typename Stream      = boost::beast::websocket::stream<SocketLayer>,
-    typename Resolver    = boost::asio::ip::tcp::resolver
+    typename Stream      = boost::beast::websocket::stream<SocketLayer>
 >
 class BaseWebSocket : public IWebSocket
 {
@@ -96,6 +95,12 @@ class BaseWebSocket : public IWebSocket
 
   boost::beast::websocket::close_code ToBeastCloseCode(IWebSocket::CloseCode closeCode);
 
+  #pragma region Async handlers
+
+  void OnResolve(boost::beast::error_code ec, typename boost::asio::ip::tcp::resolver::results_type results);
+
+  #pragma endregion Async handlers
+
  protected:
   /// <summary>
   /// See
@@ -131,7 +136,7 @@ class BaseWebSocket : public IWebSocket
   /// <param name="options">
   /// Map of HTTP header fields sent by the remote endpoint.
   /// </param>
-  virtual void Handshake(const IWebSocket::Options &options);
+  virtual void Handshake();
 
  public:
 #pragma region IWebSocket
@@ -206,7 +211,7 @@ class SecureWebSocket : public BaseWebSocket<boost::beast::ssl_stream<boost::bea
 {
 #pragma region BaseWebSocket overrides
 
-  void Handshake(const IWebSocket::Options &options) override;
+  void Handshake() override;
 
 #pragma endregion
 
