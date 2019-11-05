@@ -19,13 +19,25 @@ namespace Microsoft.ReactNative.Bridge
     String Name { get; };
 
     Windows.UI.Xaml.FrameworkElement CreateView();
+  };
 
+  [webhosthidden]
+  interface IViewManagerWithExportedViewConstants
+  {
     Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedViewConstants { get; };
+  }
 
+  [webhosthidden]
+  interface IViewManagerWithNativeProperties
+  {
     Windows.Foundation.Collections.IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
     void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
+  };
 
+  [webhosthidden]
+  interface IViewManagerWithCommands
+  {
     Windows.Foundation.Collections.IMapView<String, Int64> Commands { get; };
 
     void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, Windows.Foundation.Collections.IVectorView<IInspectable> commandArgs);
