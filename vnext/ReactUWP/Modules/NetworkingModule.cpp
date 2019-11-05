@@ -7,6 +7,7 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
+
 #include "NetworkingModule.h"
 
 #include <future>

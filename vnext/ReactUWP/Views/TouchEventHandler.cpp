@@ -200,9 +200,12 @@ void TouchEventHandler::UpdateReactPointer(
   pointer.timestamp = point.Timestamp() / 1000; // us -> ms
   pointer.pressure = point.Properties().Pressure();
   pointer.isBarrelButton = point.Properties().IsBarrelButtonPressed();
-  pointer.shiftKey = !!static_cast<uint32_t>(args.KeyModifiers() & winrt::Windows::System::VirtualKeyModifiers::Shift);
-  pointer.ctrlKey = !!static_cast<uint32_t>(args.KeyModifiers() & winrt::Windows::System::VirtualKeyModifiers::Control);
-  pointer.altKey = !!static_cast<uint32_t>(args.KeyModifiers() & winrt::Windows::System::VirtualKeyModifiers::Menu);
+  pointer.shiftKey = !!static_cast<uint32_t>(
+      static_cast<uint32_t>(args.KeyModifiers()) & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Shift));
+  pointer.ctrlKey = !!static_cast<uint32_t>(
+      static_cast<uint32_t>(args.KeyModifiers()) & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Control));
+  pointer.altKey = !!static_cast<uint32_t>(
+      static_cast<uint32_t>(args.KeyModifiers()) & static_cast<uint32_t>(winrt::Windows::System::VirtualKeyModifiers::Menu));
 }
 
 std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId) {

@@ -7,9 +7,9 @@
 
 #include <wrl\module.h>
 
-extern int32_t WINRT_CALL WINRT_CanUnloadNow() noexcept;
+//extern int32_t WINRT_CALL WINRT_CanUnloadNow() noexcept;
 
-extern int32_t WINRT_CALL WINRT_GetActivationFactory(void *classId, void **factory) noexcept;
+//extern int32_t WINRT_CALL WINRT_GetActivationFactory(void *classId, void **factory) noexcept;
 
 extern "C" HRESULT WINAPI DllCanUnloadNow();
 
