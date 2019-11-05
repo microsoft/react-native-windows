@@ -254,9 +254,9 @@ class MockStream {
 #pragma region boost::beast::basic_stream mocks
 
 template<class RangeConnectHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::resolver::results_type::endpoint_type))
+BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(boost::system::error_code, boost::asio::ip::tcp::endpoint))
 async_connect(
-  boost::asio::ip::tcp::resolver::results_type const& endpoints,
+  boost::asio::ip::tcp::resolver::iterator const& endpoints,
   RangeConnectHandler&& handler);
 
 #pragma endregion boost::beast::basic_stream mocks

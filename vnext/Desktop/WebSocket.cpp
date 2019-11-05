@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #include "pch.h"
 
 #pragma warning(push)
@@ -553,27 +554,21 @@ void MockStream::set_option(websocket::permessage_deflate const& o) {}
 void MockStream::get_option(websocket::permessage_deflate& o) {}
 
 template<class RangeConnectHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type))
+BOOST_ASIO_INITFN_RESULT_TYPE(RangeConnectHandler, void(error_code, tcp::endpoint))
 MockStream::async_connect(
-  tcp::resolver::results_type const& endpoints,
+  tcp::resolver::iterator const& endpoints,
   RangeConnectHandler&& handler)
 {
-   //async_initiate<RangeConnectHandler,
-   // void(error_code, typename tcp::resolver::results_type::endpoint_type)>(
-   //   [](auto&&) {},
-   //   handler
-   // );
-
-  //return async_initiate<RangeConnectHandler, void(error_code, tcp::resolver::results_type::endpoint_type)>(
-  //  [](RangeConnectHandler&& handler, MockStream* ms, tcp::resolver::results_type::endpoint_type eps)
-  //  {
-  //    //post(ms->get_executor(), bind_handler(std::move(handler), ms->ConnectResult(), {} /*endpoint_type*/ ));
-  //    post(ms->get_executor(), bind_handler(std::move(handler), ms->ConnectResult(), {}));
-  //  },
-  //  handler,
-  //  this,
-  //  {}
-  //  );
+  return async_initiate<RangeConnectHandler, void(error_code, tcp::endpoint)>(
+    [](RangeConnectHandler&& handler, MockStream* ms, tcp::resolver::iterator it)
+    {
+      tcp::endpoint ep;//TODO: make modifiable.
+      post(ms->get_executor(), bind_handler(std::move(handler), ms->ConnectResult(), ep));
+    },
+    handler,
+    this,
+    endpoints
+    );
 }
 
 template <class HandshakeHandler>

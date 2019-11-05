@@ -27,7 +27,7 @@ using Error = IWebSocket::Error;
 
 TEST_CLASS(BaseWebSocketTest){
   BEGIN_TEST_CLASS_ATTRIBUTE()
-  TEST_CLASS_ATTRIBUTE(L"Ignore", L"true")
+  //TEST_CLASS_ATTRIBUTE(L"Ignore", L"true")
   END_TEST_CLASS_ATTRIBUTE()
 
   TEST_METHOD(CreateAndSetHandlers){
