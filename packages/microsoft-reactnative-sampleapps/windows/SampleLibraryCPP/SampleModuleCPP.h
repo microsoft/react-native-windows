@@ -138,38 +138,32 @@ struct SampleModuleCPP {
 
 #pragma region Events
 
-  REACT_EVENT(TimedEvent);
+  REACT_EVENT(TimedEvent, "TimedEventCPP");
   std::function<void(int)> TimedEvent;
-
-  REACT_METHOD(StartTimedEvent);
-  int StartTimedEvent(int intervalMS) noexcept {
-    DebugWriteLine("StartTimedEvent", intervalMS);
-
-    int timerId = _timers.size();
-
-    _timers.push_back(winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
-        [ this, timerId ](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
-          if (TimedEvent) {
-            TimedEvent(timerId);
-          }
-        },
-        std::chrono::milliseconds(intervalMS)));
-
-    return timerId;
-  }
-
- private:
-  std::vector<winrt::Windows::System::Threading::ThreadPoolTimer> _timers =
-      std::vector<winrt::Windows::System::Threading::ThreadPoolTimer>();
 
 #pragma endregion
 
  public:
+  SampleModuleCPP() {
+    _timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
+        [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+          if (TimedEvent) {
+            TimedEvent(++m_timerCount);
+          }
+        },
+        std::chrono::milliseconds(TimedEventIntervalMS));
+  }
+
   ~SampleModuleCPP() {
-    for (auto timer : _timers) {
-      timer.Cancel();
+    if (_timer) {
+      _timer.Cancel();
     }
   }
+
+ private:
+  winrt::Windows::System::Threading::ThreadPoolTimer _timer = nullptr;
+  int m_timerCount = 0;
+  const int TimedEventIntervalMS = 5000;
 };
 
 } // namespace SampleLibraryCPP

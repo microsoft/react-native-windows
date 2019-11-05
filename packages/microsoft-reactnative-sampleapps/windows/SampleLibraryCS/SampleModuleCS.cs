@@ -134,35 +134,27 @@ namespace SampleLibraryCS
 
         #region Events
 
-        [ReactEvent]
+        [ReactEvent("TimedEventCS")]
         public ReactEvent<int> TimedEvent { get; set; }
-
-        [ReactMethod]
-        public int StartTimedEvent(int intervalMS)
-        {
-            Debug.WriteLine($"{Name}.{nameof(StartTimedEvent)}({intervalMS})");
-
-            int id = _timers.Count;
-
-            _timers.Add(ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
-            {
-                TimedEvent?.Invoke(id);
-            }),
-            TimeSpan.FromMilliseconds(intervalMS)));
-
-            return id;
-        }
-
-        private List<ThreadPoolTimer> _timers = new List<ThreadPoolTimer>();
 
         #endregion
 
+        public SampleModuleCS()
+        {
+            _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
+            {
+                TimedEvent?.Invoke(++_timerCount);
+            }),
+            TimeSpan.FromMilliseconds(TimedEventIntervalMS));
+        }
+
         ~SampleModuleCS()
         {
-            foreach(var timer in _timers)
-            {
-                timer.Cancel();
-            }
+            _timer?.Cancel();
         }
+
+        private ThreadPoolTimer _timer;
+        private int _timerCount = 0;
+        private const int TimedEventIntervalMS = 5000;
     }
 }

@@ -45,4 +45,6 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::vector<ConstantProvider> m_constants;
 };
 
+constexpr auto DefaultEventEmitterName = "RCTDeviceEventEmitter";
+
 } // namespace winrt::Microsoft::ReactNative::Bridge

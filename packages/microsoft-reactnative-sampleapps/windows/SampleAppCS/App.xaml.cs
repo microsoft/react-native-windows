@@ -21,6 +21,12 @@ namespace SampleApp
             MainComponentName = "SampleApp";
             JavaScriptMainModuleName = "index.windows";
 
+#if DEBUG
+            InstanceSettings.UseWebDebugger = true;
+#else
+            InstanceSettings.UseWebDebugger = false;
+#endif
+
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
             PackageProviders.Add(new SampleLibraryCS.ReactPackageProvider());
             PackageProviders.Add(new SampleLibraryCPP.ReactPackageProvider());

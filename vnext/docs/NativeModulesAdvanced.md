@@ -190,3 +190,57 @@ class NativeModuleSample extends Component {
 
 AppRegistry.registerComponent('NativeModuleSample', () => NativeModuleSample);
 ```
+
+## Native Modules with Custom Event Emitters
+
+By default, native modules share a common `RCTDeviceEventEmitter` which emits the actual events into JavaScript. However, that comes with the limitation that all of the native modules must have globally unique event names. If you wanted to ensure that your event names didn't collide with other events from other native modules, you could create your own `EventEmitter`.
+
+So say we have our FancyMath module, where we've specified `"MathEmitter"` as the name of the `EventEmitter`:
+
+*FancyMath.cs*
+```csharp
+using System;
+using Microsoft.ReactNative.Managed;
+
+namespace NativeModuleSample
+{
+  [ReactModule(EventEmitterName = "MathEmitter")]
+  class FancyMath
+  {
+    [ReactConstant]
+    public double E = Math.E;
+
+    [ReactConstant("Pi")]
+    public double PI = Math.PI;
+
+    [ReactMethod("add")]
+    public double Add(double a, double b)
+    {
+        double result = a + b;
+        AddEvent(result);
+        return result;
+    }
+
+    [ReactEvent]
+    public ReactEvent<double> AddEvent { get; set; }
+  }
+}
+```
+
+Now, when the native code calls `AddEvent`, that will be essentially translated into a JS call of `MathEmitter.emit("AddEvent", result)`.
+
+So in order for this to work, you will need to create and register a `MathEmitter` module. You can create the module by and you can use the existing `EventEmitter` class.
+
+*MathEmitter.js*
+```js
+
+const EventEmitter = require('EventEmitter');
+const BatchedBridge = require('BatchedBridge');
+
+BatchedBridge.registerLazyCallableModule('MathEmitter', () => {
+  return new EventEmitter();
+});
+
+```
+
+*TODO:* We should have a better E2E example here, however in practice naitve module developers don't bother to do this, so it's impossible to find any existing examples to reference.

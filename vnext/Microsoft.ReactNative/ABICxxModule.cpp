@@ -61,7 +61,7 @@ void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> eventH
         argWriter(writer);
         writer.WriteArrayEnd();
 
-        std::string emitterName = m_eventEmitterName.empty() ? m_name : m_eventEmitterName;
+        std::string emitterName = m_eventEmitterName.empty() ? DefaultEventEmitterName : m_eventEmitterName;
         instance->callJSFunction(std::move(emitterName), "emit", writer.TakeValue());
       }
     });

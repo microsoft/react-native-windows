@@ -14,13 +14,14 @@ import {
   UIManager,
   View,
 } from 'react-native';
-import { NativeModules } from 'react-native';
 
-const BatchedBridge = require('BatchedBridge');
-const NativeEventEmitter = require('NativeEventEmitter');
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+// Creating event emitters
+const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
+const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModuleCPP);
 
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
-
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
 var log = function(result) {
@@ -37,33 +38,21 @@ var getCallback = function(prefix) {
 class SampleApp extends Component {
   constructor(props) {
     super(props);
-    this._cuccsRef = React.createRef();
-
-    // Starting a timer to fire a timed event
-    NativeModules.SampleModuleCS.StartTimedEvent(5000, (timerId) =>
-    {
-      // Registering a handler for SampleModuleCS.TimedEvent event
-      BatchedBridge.registerLazyCallableModule('SampleModuleCS', () => {
-        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
-        myModuleEventEmitter.addListener('TimedEvent', getCallback(`SampleModuleCS.TimedEvent(${timerId}) => `), this);
-        return myModuleEventEmitter;
-      });
-    });
-
-    // Starting a timer to fire a timed event
-    NativeModules.SampleModuleCPP.StartTimedEvent(5000, (timerId) =>
-    {
-      // Registering a handler for SampleModuleCPP.TimedEvent event
-      BatchedBridge.registerLazyCallableModule('SampleModuleCPP', () => {
-        const myModuleEventEmitter = new NativeEventEmitter(NativeModules.SampleModuleCPP);
-        myModuleEventEmitter.addListener('TimedEvent', getCallback(`SampleModuleCPP.TimedEvent(${timerId}) => `), this);
-        return myModuleEventEmitter;
-      });
-    });
+    this._CustomUserControlCSRef = React.createRef();
   }
 
-  _onPressHandlerSMCS() {
-    log('SampleApp._onPressHandlerSMCS()');
+  componentDidMount() {
+    this._TimedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
+    this._TimedEventCPPSub = SampleModuleCPPEmitter.addListener('TimedEventCPP', getCallback('SampleModuleCPP.TimedEventCPP() => '));
+  }
+
+  componentWillUnmount() {
+    this._TimedEventCSSub.remove();
+    this._TimedEventCPPSub.remove();
+  }
+
+  onPressSampleModuleCS() {
+    log('SampleApp.onPressSampleModuleCS()');
 
     var numberArg = 42;
 
@@ -100,8 +89,8 @@ class SampleApp extends Component {
     log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
   }
 
-  _onPressHandlerSMCPP() {
-    log('SampleApp._onPressHandlerSMCPP()');
+  onPressSampleModuleCPP() {
+    log('SampleApp.onPressSampleModuleCPP()');
 
     var numberArg = 42;
 
@@ -138,14 +127,14 @@ class SampleApp extends Component {
     log('SampleModuleCPP.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCPP.SyncReturnMethodWithArgs(numberArg));
   }
 
-  _onPressHandlerCUCCS() {
-    log('SampleApp._onPressHandlerCUCCS()');
+  onPressCustomUserControlCS() {
+    log('SampleApp.onPressCustomUserControlCS()');
 
-    if (this._cuccsRef)
+    if (this._CustomUserControlCSRef)
     {
-      const cuccsTag = findNodeHandle(this._cuccsRef);
-      log(`tag: ${cuccsTag}`);
-      UIManager.dispatchViewManagerCommand(cuccsTag, UIManager.CustomUserControlCS.Commands.CustomCommand, ['Hello World!']);
+      const tag = findNodeHandle(this._CustomUserControlCSRef);
+      log(`tag: ${tag}`);
+      UIManager.dispatchViewManagerCommand(tag, UIManager.CustomUserControlCS.Commands.CustomCommand, ['Hello World!']);
     }
   }
 
@@ -159,11 +148,11 @@ class SampleApp extends Component {
           This app consumes custom Native Modules and View Managers.
         </Text>
 
-        <Button onPress={() => { this._onPressHandlerSMCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
-        <Button onPress={() => { this._onPressHandlerSMCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
+        <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
+        <Button onPress={() => { this.onPressSampleModuleCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
 
-        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._cuccsRef = ref; }} />
-        <Button onPress={() => { this._onPressHandlerCUCCS(); }} title="Call CustomUserControlCS Commands!" />
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} />
+        <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
 
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
         <Text style={styles.instructions}>
