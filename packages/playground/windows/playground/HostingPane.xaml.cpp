@@ -428,6 +428,12 @@ void HostingPane::InitComboBoxes() {
   m_ReactAppNames = ref new Platform::Collections::Vector<String ^>();
 
   x_ReactAppName->ItemsSource = m_ReactAppNames;
+
+  try {
+    x_ReactAppName->IsEditable = true;
+    x_JavaScriptFilename->IsEditable = true;
+  } catch (...) {
+  }
 }
 
 void HostingPane::LoadKnownApps() {
