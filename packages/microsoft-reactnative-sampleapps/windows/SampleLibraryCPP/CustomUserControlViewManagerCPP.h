@@ -7,8 +7,10 @@
 
 namespace winrt::SampleLibraryCPP::implementation {
 
-struct CustomUserControlViewManagerCPP
-    : winrt::implements<CustomUserControlViewManagerCPP, winrt::Microsoft::ReactNative::Bridge::IViewManager> {
+struct CustomUserControlViewManagerCPP : winrt::implements<
+                                             CustomUserControlViewManagerCPP,
+                                             winrt::Microsoft::ReactNative::Bridge::IViewManager,
+                                             winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties> {
  public:
   CustomUserControlViewManagerCPP() = default;
 
@@ -17,9 +19,7 @@ struct CustomUserControlViewManagerCPP
 
   winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
 
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-  ExportedViewConstants() noexcept;
-
+  // IViewManagerWithNativeProperties
   winrt::Windows::Foundation::Collections::
       IMapView<winrt::hstring, winrt::Microsoft::ReactNative::Bridge::ViewManagerPropertyType>
       NativeProps() noexcept;
@@ -28,14 +28,6 @@ struct CustomUserControlViewManagerCPP
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
       winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable> const
           &propertyMap);
-
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, int64_t> Commands() noexcept;
-
-  void DispatchCommand(
-      winrt::Windows::UI::Xaml::FrameworkElement const &view,
-      int64_t commandId,
-      winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Foundation::IInspectable>
-          commandArgs) noexcept;
 };
 
 } // namespace winrt::SampleLibraryCPP::implementation
