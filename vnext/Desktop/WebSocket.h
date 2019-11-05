@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #pragma once
 
 #include <boost/beast/core/tcp_stream.hpp>
@@ -24,8 +25,8 @@ class BaseWebSocket : public IWebSocket
   std::function<void()> m_connectHandler;
   std::function<void()> m_pingHandler;
   std::function<void(std::size_t)> m_writeHandler;
-  std::function<void(std::size_t, const std::string &)> m_readHandler;
-  std::function<void(CloseCode, const std::string &)> m_closeHandler;
+  std::function<void(std::size_t, const std::string&)> m_readHandler;
+  std::function<void(CloseCode, const std::string&)> m_closeHandler;
 
   Url m_url;
   ReadyState m_readyState{ReadyState::Connecting};
@@ -57,7 +58,7 @@ class BaseWebSocket : public IWebSocket
   /// <param name="binary">
   /// Indicates whether the payload should be treated as binary data, or text.
   /// </param>
-  void EnqueueWrite(const std::string &message, bool binary);
+  void EnqueueWrite(const std::string& message, bool binary);
 
   /// <summary>
   /// Dequeues a message from <c>m_writeRequests</c> and sends it
@@ -129,9 +130,9 @@ class BaseWebSocket : public IWebSocket
 
   std::unique_ptr<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> m_workGuard;
   std::unique_ptr<Stream> m_stream;
-  std::function<void(Error &&)> m_errorHandler;
+  std::function<void(Error&&)> m_errorHandler;
 
-  BaseWebSocket(Url &&url);
+  BaseWebSocket(Url&& url);
 
   ~BaseWebSocket() override;
 
@@ -156,7 +157,7 @@ class BaseWebSocket : public IWebSocket
   /// <summary>
   /// <see cref="IWebSocket::Connect" />
   /// </summary>
-  void Connect(const Protocols &protocols, const Options &options) override;
+  void Connect(const Protocols& protocols, const Options& options) override;
 
   /// <summary>
   /// <see cref="IWebSocket::Ping" />
@@ -166,49 +167,49 @@ class BaseWebSocket : public IWebSocket
   /// <summary>
   /// <see cref="IWebSocket::Send" />
   /// </summary>
-  void Send(const std::string &message) override;
+  void Send(const std::string& message) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SendBinary" />
   /// </summary>
-  void SendBinary(const std::string &base64String) override;
+  void SendBinary(const std::string& base64String) override;
 
   /// <summary>
   /// <see cref="IWebSocket::Close" />
   /// </summary>
-  void Close(CloseCode code, const std::string &reason) override;
+  void Close(CloseCode code, const std::string& reason) override;
 
   ReadyState GetReadyState() const override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnConnect" />
   /// </summary>
-  void SetOnConnect(std::function<void()> &&handler) override;
+  void SetOnConnect(std::function<void()>&& handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnPing" />
   /// </summary>
-  void SetOnPing(std::function<void()> &&handler) override;
+  void SetOnPing(std::function<void()>&& handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnSend" />
   /// </summary>
-  void SetOnSend(std::function<void(std::size_t)> &&handler) override;
+  void SetOnSend(std::function<void(std::size_t)>&& handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnMessage" />
   /// </summary>
-  void SetOnMessage(std::function<void(std::size_t, const std::string &)> &&handler) override;
+  void SetOnMessage(std::function<void(std::size_t, const std::string&)>&& handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnClose" />
   /// </summary>
-  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) override;
+  void SetOnClose(std::function<void(CloseCode, const std::string&)>&& handler) override;
 
   /// <summary>
   /// <see cref="IWebSocket::SetOnError" />
   /// </summary>
-  void SetOnError(std::function<void(Error &&)> &&handler) override;
+  void SetOnError(std::function<void(Error&&)>&& handler) override;
 
 #pragma endregion IWebSocket
 };
@@ -216,7 +217,7 @@ class BaseWebSocket : public IWebSocket
 class WebSocket : public BaseWebSocket<>
 {
  public:
-  WebSocket(Url &&url);
+  WebSocket(Url&& url);
 };
 
 class SecureWebSocket : public BaseWebSocket<boost::beast::ssl_stream<boost::beast::tcp_stream>>
@@ -228,7 +229,7 @@ class SecureWebSocket : public BaseWebSocket<boost::beast::ssl_stream<boost::bea
 #pragma endregion
 
  public:
-  SecureWebSocket(Url &&url);
+  SecureWebSocket(Url&& url);
 };
 
 namespace Test
@@ -239,14 +240,14 @@ namespace Test
 /// </summary>
 class MockStream
 {
-  boost::asio::io_context &m_context;
+  boost::asio::io_context& m_context;
 
  public:
   using next_layer_type = MockStream;
   using lowest_layer_type = MockStream;
   using executor_type = boost::asio::io_context::executor_type;
 
-  MockStream(boost::asio::io_context &context);
+  MockStream(boost::asio::io_context& context);
 
   boost::asio::io_context::executor_type get_executor() noexcept;
 
@@ -287,23 +288,23 @@ async_connect(
   async_handshake(
       boost::beast::string_view host,
       boost::beast::string_view target,
-      HandshakeHandler &&handler);
+      HandshakeHandler&& handler);
 
   template <class DynamicBuffer, class ReadHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(ReadHandler, void(boost::system::error_code, std::size_t))
-  async_read(DynamicBuffer &buffer, ReadHandler &&handler);
+  async_read(DynamicBuffer& buffer, ReadHandler&& handler);
 
   template <class ConstBufferSequence, class WriteHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code, std::size_t))
-  async_write(ConstBufferSequence const &buffers, WriteHandler &&handler);
+  async_write(ConstBufferSequence const& buffers, WriteHandler&& handler);
 
   template <class WriteHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(boost::system::error_code))
-  async_ping(boost::beast::websocket::ping_data const &payload, WriteHandler &&handler);
+  async_ping(boost::beast::websocket::ping_data const& payload, WriteHandler&& handler);
 
   template <class CloseHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(boost::system::error_code))
-  async_close(boost::beast::websocket::close_reason const &cr, CloseHandler &&handler);
+  async_close(boost::beast::websocket::close_reason const& cr, CloseHandler&& handler);
 
 #pragma endregion boost::beast::websocket::stream mocks
 
@@ -322,11 +323,11 @@ class TestWebSocket : public  BaseWebSocket
                               >
 {
  public:
-  TestWebSocket(facebook::react::Url &&url);
+  TestWebSocket(facebook::react::Url&& url);
 
-  void SetConnectResult(std::function<boost::system::error_code()> &&resultFunc);
-  void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)> &&resultFunc);
-  void SetCloseResult(std::function<boost::system::error_code()> &&resultFunc);
+  void SetConnectResult(std::function<boost::system::error_code()>&& resultFunc);
+  void SetHandshakeResult(std::function<boost::system::error_code(std::string, std::string)>&& resultFunc);
+  void SetCloseResult(std::function<boost::system::error_code()>&& resultFunc);
 };
 
 } // namespace Test
