@@ -4,9 +4,6 @@
 // clang-format off
 #include "pch.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4996) // std::copy::_Unchecked_iterators::_Deprecate
-
 #include "WebSocket.h"
 
 #include <boost/archive/iterators/base64_from_binary.hpp>
@@ -752,5 +749,3 @@ get_lowest_layer(Microsoft::React::Test::MockStream& s) noexcept
 }
 
 } // namespace boost::beast
-
-#pragma warning(pop)
