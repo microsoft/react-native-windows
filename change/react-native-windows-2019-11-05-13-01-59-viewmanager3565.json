@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "VM: Split up IViewManager into optional interfaces #3565",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "e83fc2a2902ac5656667c720c8cbf90cea331cb6",
+  "date": "2019-11-05T21:01:59.857Z"
+}
