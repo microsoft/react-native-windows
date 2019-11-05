@@ -1,9 +1,8 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
-  VmImage: vs2017-win2016
-  VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64
-  # VCTargetsPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\Microsoft\VC\v150'
+  - template: variables/msbuild.yml
+  - template: variables/vs2017.yml
 
 trigger:
   batch: true
@@ -59,12 +58,12 @@ jobs:
         inputs:
           script: node ./.ado/setVersionEnvVars.js
         env:
-          RUNNER_TEMP: $(Build.ArtifactStagingDirectory)
+          RUNNER_TEMP: $(Build.StagingDirectory)
 
       - task: PublishBuildArtifacts@1
         displayName: Publish VersionEnvVars
         inputs:
-          PathtoPublish: $(Build.ArtifactStagingDirectory)/versionEnvVars
+          PathtoPublish: $(Build.StagingDirectory)/versionEnvVars
           ArtifactName: VersionEnvVars
 
   - job: RnwNativeBuildDesktop
@@ -92,21 +91,18 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.ArtifactStagingDirectory)
+          downloadPath: $(Build.StagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
+          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Desktop.sln
-          platformToolset: v141
-          vsComponents: $(VsComponents)
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
             /p:RNW_PKG_VERSION="$(RNW_PKG_VERSION)"
-#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -147,18 +143,16 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.ArtifactStagingDirectory)
+          downloadPath: $(Build.StagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.ArtifactStagingDirectory)/versionEnvVars/versionEnvVars.js
+          script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
 
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
-          msbuildArguments:
-#            /p:VCTargetsPath="$(VCTargetsPath)"
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -189,11 +183,11 @@ jobs:
         displayName: Download VersionEnvVars
         inputs:
           artifactName: VersionEnvVars
-          downloadPath: $(Build.ArtifactStagingDirectory)
+          downloadPath: $(Build.StagingDirectory)
 
       - task: CmdLine@2
         inputs:
-          script: node $(Build.ArtifactStagingDirectory)/VersionEnvVars/versionEnvVars.js
+          script: node $(Build.StagingDirectory)/VersionEnvVars/versionEnvVars.js
 
       # The commit tag in the nuspec requires that we use at least nuget 4.6
       - task: NuGetToolInstaller@0

@@ -45,6 +45,16 @@ class ViewShadowNode : public ShadowNodeBase {
       else
         DispatchEvent("topAccessibilityTap", std::move(folly::dynamic::object("target", m_tag)));
     });
+
+    DynamicAutomationProperties::SetAccessibilityActionEventHandler(
+        panel, [=](winrt::react::uwp::AccessibilityAction const &action) {
+          folly::dynamic eventData = folly::dynamic::object("target", m_tag);
+
+          eventData.insert(
+              "actionName", action.Label.empty() ? HstringToDynamic(action.Name) : HstringToDynamic(action.Label));
+
+          DispatchEvent("topAccessibilityAction", std::move(eventData));
+        });
   }
 
   bool IsControl() {

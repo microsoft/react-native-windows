@@ -396,7 +396,7 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t
   return nullptr;
 }
 
-void NativeAnimatedNodeManager::RevmoveActiveAnimation(int64_t tag) {
+void NativeAnimatedNodeManager::RemoveActiveAnimation(int64_t tag) {
   m_activeAnimations.erase(tag);
 }
 } // namespace uwp

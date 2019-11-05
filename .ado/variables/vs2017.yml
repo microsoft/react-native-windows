@@ -1,0 +1,4 @@
+variables:
+  VmImage: vs2017-win2016
+  MSBuildVersion: 15.0
+  GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
