@@ -238,66 +238,66 @@ template <typename SocketLayer, typename Stream, typename Resolver>
 websocket::close_code BaseWebSocket<SocketLayer, Stream, Resolver>::ToBeastCloseCode(
     IWebSocket::CloseCode closeCode) {
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal),
+      static_cast<uint16_t>(CloseCode::Abnormal) == static_cast<uint16_t>(websocket::close_code::abnormal),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::BadPayload) ==
+      static_cast<uint16_t>(CloseCode::BadPayload) ==
           static_cast<uint16_t>(websocket::close_code::bad_payload),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::GoingAway) ==
+      static_cast<uint16_t>(CloseCode::GoingAway) ==
           static_cast<uint16_t>(websocket::close_code::going_away),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::InternalError) ==
+      static_cast<uint16_t>(CloseCode::InternalError) ==
           static_cast<uint16_t>(websocket::close_code::internal_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::NeedsExtension) ==
+      static_cast<uint16_t>(CloseCode::NeedsExtension) ==
           static_cast<uint16_t>(websocket::close_code::needs_extension),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
+      static_cast<uint16_t>(CloseCode::None) == static_cast<uint16_t>(websocket::close_code::none),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Normal) == static_cast<uint16_t>(websocket::close_code::normal),
+      static_cast<uint16_t>(CloseCode::Normal) == static_cast<uint16_t>(websocket::close_code::normal),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::NoStatus) == static_cast<uint16_t>(websocket::close_code::no_status),
+      static_cast<uint16_t>(CloseCode::NoStatus) == static_cast<uint16_t>(websocket::close_code::no_status),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::PolicyError) ==
+      static_cast<uint16_t>(CloseCode::PolicyError) ==
           static_cast<uint16_t>(websocket::close_code::policy_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::ProtocolError) ==
+      static_cast<uint16_t>(CloseCode::ProtocolError) ==
           static_cast<uint16_t>(websocket::close_code::protocol_error),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved1) ==
+      static_cast<uint16_t>(CloseCode::Reserved1) ==
           static_cast<uint16_t>(websocket::close_code::reserved1),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved2) ==
+      static_cast<uint16_t>(CloseCode::Reserved2) ==
           static_cast<uint16_t>(websocket::close_code::reserved2),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::Reserved3) ==
+      static_cast<uint16_t>(CloseCode::Reserved3) ==
           static_cast<uint16_t>(websocket::close_code::reserved3),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::ServiceRestart) ==
+      static_cast<uint16_t>(CloseCode::ServiceRestart) ==
           static_cast<uint16_t>(websocket::close_code::service_restart),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::TooBig) == static_cast<uint16_t>(websocket::close_code::too_big),
+      static_cast<uint16_t>(CloseCode::TooBig) == static_cast<uint16_t>(websocket::close_code::too_big),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::TryAgainLater) ==
+      static_cast<uint16_t>(CloseCode::TryAgainLater) ==
           static_cast<uint16_t>(websocket::close_code::try_again_later),
       "Exception type enums don't match");
   static_assert(
-      static_cast<uint16_t>(IWebSocket::CloseCode::UnknownData) ==
+      static_cast<uint16_t>(CloseCode::UnknownData) ==
           static_cast<uint16_t>(websocket::close_code::unknown_data),
       "Exception type enums don't match");
 
