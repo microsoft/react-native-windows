@@ -227,10 +227,6 @@ class MockStream {
 
   boost::asio::io_context::executor_type get_executor() noexcept;
 
-  lowest_layer_type &lowest_layer();
-
-  lowest_layer_type const &lowest_layer() const;
-
   void binary(bool value);
 
   bool got_binary() const;

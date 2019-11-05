@@ -25,9 +25,11 @@ using Error = IWebSocket::Error;
 // test macros.
 // clang-format off
 
-TEST_CLASS(BaseWebSocketTest){
+TEST_CLASS(BaseWebSocketTest)
+{
+  // Add any needed class-level attributes here.
+  // See https://docs.microsoft.com/en-us/visualstudio/test/microsoft-visualstudio-testtools-cppunittestframework-api-reference?view=vs-2019#test_class_attributes
   BEGIN_TEST_CLASS_ATTRIBUTE()
-  //TEST_CLASS_ATTRIBUTE(L"Ignore", L"true")
   END_TEST_CLASS_ATTRIBUTE()
 
   TEST_METHOD(CreateAndSetHandlers){

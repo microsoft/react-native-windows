@@ -53,7 +53,7 @@ BaseWebSocket<SocketLayer, Stream, Resolver>::~BaseWebSocket() {
 template <typename SocketLayer, typename Stream, typename Resolver>
 void BaseWebSocket<SocketLayer, Stream, Resolver>::Handshake(const IWebSocket::Options &options) {
 
-  //TODO: 
+  //TODO: Enable?
   //m_stream->set_option(websocket::stream_base::timeout::suggested(role_type::client));
   m_stream->set_option(websocket::stream_base::decorator(
     [options = std::move(options)](websocket::request_type& req)
@@ -519,14 +519,6 @@ io_context::executor_type MockStream::get_executor() noexcept {
   return m_context.get_executor();
 }
 
-MockStream::lowest_layer_type &MockStream::lowest_layer() {
-  return *this;
-}
-
-MockStream::lowest_layer_type const &MockStream::lowest_layer() const {
-  return *this;
-}
-
 void MockStream::binary(bool value) {}
 
 bool MockStream::got_binary() const {
@@ -577,12 +569,6 @@ MockStream::async_handshake(
     boost::string_view host,
     boost::string_view target,
     HandshakeHandler &&handler) {
-  //BOOST_BEAST_HANDLER_INIT(HandshakeHandler, void(error_code));
-  //post(
-  //    get_executor(),
-  //    bind_handler(std::move(init.completion_handler), HandshakeResult(host.to_string(), target.to_string())));
-
-  //return init.result.get();
 
   return async_initiate<HandshakeHandler, void(error_code)>(
     [](HandshakeHandler&& handler, MockStream* ms, string h, string t)
@@ -603,11 +589,6 @@ MockStream::async_read(DynamicBuffer &buffer, ReadHandler &&handler) {
   size_t size;
   std::tie(ec, size) = ReadResult();
 
-  //BOOST_BEAST_HANDLER_INIT(ReadHandler, void(error_code, size_t));
-  //post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
-
-  //return init.result.get();
-
   return async_initiate<ReadHandler, void(error_code, size_t)>(
       [ec, size](ReadHandler&& handler, MockStream* ms)
       {
@@ -625,11 +606,6 @@ MockStream::async_write(ConstBufferSequence const &buffers, WriteHandler &&handl
   size_t size;
   std::tie(ec, size) = ReadResult();//TODO: Why in async_write?
 
-  //BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code, size_t));
-  //post(get_executor(), bind_handler(std::move(init.completion_handler), ec, size));
-
-  //return init.result.get();
-
   return async_initiate<WriteHandler, void(error_code, size_t)>(
       [ec, size](WriteHandler&& handler, MockStream* ms)
       {
@@ -643,10 +619,6 @@ MockStream::async_write(ConstBufferSequence const &buffers, WriteHandler &&handl
 template <class WriteHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
 MockStream::async_ping(websocket::ping_data const &payload, WriteHandler &&handler) {
-  //BOOST_BEAST_HANDLER_INIT(WriteHandler, void(error_code));
-  //post(get_executor(), bind_handler(std::move(init.completion_handler), PingResult()));
-
-  //return init.result.get();
 
   return async_initiate<WriteHandler, void(error_code)>(
     [](WriteHandler&& handler, MockStream* ms)
@@ -661,10 +633,6 @@ MockStream::async_ping(websocket::ping_data const &payload, WriteHandler &&handl
 template <class CloseHandler>
 BOOST_ASIO_INITFN_RESULT_TYPE(CloseHandler, void(error_code))
 MockStream::async_close(websocket::close_reason const &cr, CloseHandler &&handler) {
-  //BOOST_BEAST_HANDLER_INIT(CloseHandler, void(error_code));
-  //post(get_executor(), bind_handler(std::move(init.completion_handler), CloseResult()));
-
-  //return init.result.get();
 
   return async_initiate<CloseHandler, void(error_code)>(
     [](CloseHandler&& handler, MockStream* ms)
@@ -702,34 +670,14 @@ void TestWebSocket::SetCloseResult(function<error_code()> &&resultFunc) {
 
 } // namespace Microsoft::React
 
-namespace boost {
-
-namespace asio {
-
-//TODO: Remove
-// See <boost/asio/connect.hpp>(776)
-template <typename Iterator, typename IteratorConnectHandler>
-BOOST_ASIO_INITFN_RESULT_TYPE(IteratorConnectHandler, void(error_code, Iterator))
-async_connect(
-    Microsoft::React::Test::MockStream &s,
-    Iterator begin,
-    Iterator end,
-    BOOST_ASIO_MOVE_ARG(IteratorConnectHandler) handler) {
-  handler(s.ConnectResult(), {});
-}
-
-} // namespace boost::asio
-
-namespace beast {
+namespace boost::beast {
 
 Microsoft::React::Test::MockStream::lowest_layer_type&
 get_lowest_layer(Microsoft::React::Test::MockStream& s) noexcept
 {
-  return s.lowest_layer();
+  return s;
 }
 
 } // namespace boost::beast
-
-} // namespace boost
 
 #pragma warning(pop)
