@@ -19,8 +19,6 @@ struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBa
 
  public:
   static winrt::com_ptr<ReactImageBrush> Create();
-//  template <typename D, typename... Args>
-//  friend winrt::com_ptr<D> winrt::make_self(Args &&... args);
 
   // XamlCompositionBaseBrush Overrides
   void OnConnected();
