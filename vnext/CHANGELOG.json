@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 Nov 2019 23:11:52 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.62",
+      "version": "0.60.0-vnext.62",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "VM: Split up IViewManager into optional interfaces #3565",
+            "author": "jthysell@microsoft.com",
+            "commit": "e83fc2a2902ac5656667c720c8cbf90cea331cb6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Nov 2019 23:40:12 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.61",
       "version": "0.60.0-vnext.61",

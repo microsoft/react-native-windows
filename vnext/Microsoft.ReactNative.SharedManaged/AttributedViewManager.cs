@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 
@@ -12,7 +11,12 @@ using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
-  internal abstract class AttributedViewManager<T> : IViewManager where T : FrameworkElement, new()
+  internal abstract class AttributedViewManager<T> :
+    IViewManager,
+    IViewManagerWithExportedViewConstants,
+    IViewManagerWithNativeProperties,
+    IViewManagerWithCommands
+    where T : FrameworkElement, new()
   {
     public virtual string Name => typeof(T).Name;
 

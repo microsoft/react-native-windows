@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Nov 2019 23:40:12 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Nov 2019 23:11:52 GMT and should not be manually modified.
 
+## 0.60.0-vnext.62
+Tue, 05 Nov 2019 23:11:52 GMT
+
+### Changes
+
+- VM: Split up IViewManager into optional interfaces #3565 (jthysell@microsoft.com)
 ## 0.60.0-vnext.61
 Fri, 01 Nov 2019 23:40:12 GMT
 

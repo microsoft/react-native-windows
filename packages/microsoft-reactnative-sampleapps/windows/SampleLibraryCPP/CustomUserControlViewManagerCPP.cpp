@@ -17,6 +17,7 @@ using namespace Windows::UI::Xaml::Controls;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
+// IViewManager
 hstring CustomUserControlViewManagerCPP::Name() noexcept {
   return L"CustomUserControlCPP";
 }
@@ -26,11 +27,7 @@ FrameworkElement CustomUserControlViewManagerCPP::CreateView() noexcept {
   return view;
 }
 
-IMapView<hstring, IInspectable> CustomUserControlViewManagerCPP::ExportedViewConstants() noexcept {
-  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
-  return constants.GetView();
-}
-
+// IViewManagerWithNativeProperties
 IMapView<hstring, ViewManagerPropertyType> CustomUserControlViewManagerCPP::NativeProps() noexcept {
   auto nativeProps = winrt::single_threaded_map<hstring, ViewManagerPropertyType>();
 
@@ -72,15 +69,5 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
     }
   }
 }
-
-IMapView<hstring, int64_t> CustomUserControlViewManagerCPP::Commands() noexcept {
-  auto commands = winrt::single_threaded_map<hstring, int64_t>();
-  return commands.GetView();
-}
-
-void CustomUserControlViewManagerCPP::DispatchCommand(
-    FrameworkElement const &view,
-    int64_t commandId,
-    IVectorView<IInspectable> commandArgs) noexcept {}
 
 } // namespace winrt::SampleLibraryCPP::implementation
