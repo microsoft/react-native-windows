@@ -12,8 +12,8 @@
 #include "IWebSocket.h"
 #include "Utils.h"
 
-namespace Microsoft::React {
-
+namespace Microsoft::React
+{
 template
 <
     typename SocketLayer = boost::beast::tcp_stream,

@@ -28,8 +28,6 @@ using std::size_t;
 using std::string;
 using std::unique_ptr;
 
-using boostecr = boost::system::error_code const &;
-
 namespace Microsoft::React
 {
 #pragma region BaseWebSocket members
@@ -68,7 +66,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::Handshake(const IWebSocket::O
   m_stream->async_handshake(
     m_url.host,
     m_url.Target(),
-    [this](boostecr ec)
+    [this](error_code ec)
     {
       if (ec)
       {
@@ -111,7 +109,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::PerformRead()
   }
 
   // Check if there are more bytes available than a header length (2).
-  m_stream->async_read(m_bufferIn, [this](boostecr ec, size_t size)
+  m_stream->async_read(m_bufferIn, [this](error_code ec, size_t size)
   {
     if (boost::asio::error::operation_aborted == ec)
     {
@@ -169,7 +167,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::PerformWrite()
   if (request.first.length() > m_stream->write_buffer_bytes())
     m_stream->write_buffer_bytes(request.first.length());
 
-  m_stream->async_write(buffer(request.first), [this](boostecr ec, size_t size)
+  m_stream->async_write(buffer(request.first), [this](error_code ec, size_t size)
   {
     if (ec)
     {
@@ -198,7 +196,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::PerformPing()
 
   --m_pingRequests;
 
-  m_stream->async_ping(websocket::ping_data(), [this](boostecr ec)
+  m_stream->async_ping(websocket::ping_data(), [this](error_code ec)
   {
     if (ec)
     {
@@ -221,7 +219,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::PerformClose()
   m_closeInProgress = true;
   m_readyState = ReadyState::Closing;
 
-  m_stream->async_close(ToBeastCloseCode(m_closeCodeRequest), [this](boostecr ec)
+  m_stream->async_close(ToBeastCloseCode(m_closeCodeRequest), [this](error_code ec)
   {
     if (ec)
     {
@@ -353,7 +351,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::Connect(const Protocols &prot
   resolver.async_resolve(
       m_url.host,
       m_url.port,
-      [this, options = std::move(options)](boostecr ec, typename Resolver::results_type results)
+      [this, options = std::move(options)](error_code ec, typename Resolver::results_type results)
       {
         if (ec)
         {
@@ -366,7 +364,7 @@ void BaseWebSocket<SocketLayer, Stream, Resolver>::Connect(const Protocols &prot
         // Connect
         get_lowest_layer(*m_stream).async_connect(
           results,
-          [this, options = std::move(options)](boostecr ec, tcp::resolver::results_type::endpoint_type)
+          [this, options = std::move(options)](error_code ec, tcp::resolver::results_type::endpoint_type)
           {
             if (ec)
             {
@@ -524,7 +522,7 @@ void SecureWebSocket::Handshake(const IWebSocket::Options &options)
 {
   this->m_stream->next_layer().async_handshake(
     ssl::stream_base::client,
-    [this, options = std::move(options)](boostecr ec)
+    [this, options = std::move(options)](error_code ec)
     {
       if (ec && this->m_errorHandler)
       {
