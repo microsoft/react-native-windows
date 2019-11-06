@@ -2003,14 +2003,6 @@
     js-yaml "~3.13.1"
     resolve "1.8.1"
 
-"@microsoft/api-extractor-model@7.5.1":
-  version "7.5.1"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.1.tgz#54732ab60cc0761784a54fc00eaaf96145724160"
-  integrity sha512-qzgmJeoqpJqYDS1yj9YTPdd/+9OWGFwfzGFyr6kVarexomdPSltcoQYIS5JnrB/RFNeUgTNUlwn5mYdyp2Xv6A==
-  dependencies:
-    "@microsoft/node-core-library" "3.15.1"
-    "@microsoft/tsdoc" "0.12.14"
-
 "@microsoft/api-extractor-model@7.5.2":
   version "7.5.2"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.2.tgz#39a3c015ca01a3435b5f161b8fce07117e6039be"
@@ -2019,31 +2011,28 @@
     "@microsoft/node-core-library" "3.16.0"
     "@microsoft/tsdoc" "0.12.14"
 
-"@microsoft/api-extractor@^7.3.8":
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.5.0.tgz#5dd0f50bb7a30f8512b65ed9aba94a2b76c68a21"
-  integrity sha512-CxKNZFD9TRo/y8MQzlk4z/Z5jPCaQsDq7ON9baE544CKnmF4sNlmoS9ydkt0As3v6OYKjp50d2N4NAmZoOVXzg==
+"@microsoft/api-extractor-model@7.5.4":
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.4.tgz#c5ad3823a59ee9c81b685e4f1a6f55e0e64218be"
+  integrity sha512-pzY1EVHw8dMCRBba8PDEV71vnsmvhOSgLUIXxB45Ts0Po69tz2H7YZQ4DsAetyv0aSLHG5QVXmGEn65A1DDvDQ==
   dependencies:
-    "@microsoft/api-extractor-model" "7.5.1"
-    "@microsoft/node-core-library" "3.15.1"
-    "@microsoft/ts-command-line" "4.3.2"
+    "@microsoft/node-core-library" "3.17.0"
+    "@microsoft/tsdoc" "0.12.14"
+
+"@microsoft/api-extractor@^7.3.8":
+  version "7.5.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.5.4.tgz#f841c66740f804d81ace185c1974044e9f559abb"
+  integrity sha512-zt+1WAQ1VRMBltpmaRiycDphWvdOt2dQ9u5B1gG8hHL9kR07DHbAws5p3eUcTI3QBqtBVGGuhK8Kt8IRnKZGOw==
+  dependencies:
+    "@microsoft/api-extractor-model" "7.5.4"
+    "@microsoft/node-core-library" "3.17.0"
+    "@microsoft/ts-command-line" "4.3.4"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
     lodash "~4.17.15"
     resolve "1.8.1"
     source-map "~0.6.1"
     typescript "~3.5.3"
-
-"@microsoft/node-core-library@3.15.1":
-  version "3.15.1"
-  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.15.1.tgz#78f6249493b09e9a5c39df9e55c5401d69f23f19"
-  integrity sha512-fUrcgu+w40k2GW8fiOUFby7jaKAAuDKaTrQuFQ3j+0Pg3ANnJ2uKtVf3bgFiNu+uVKpwVtLo4CPS8TwFduJRow==
-  dependencies:
-    "@types/node" "8.10.54"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    z-schema "~3.18.3"
 
 "@microsoft/node-core-library@3.16.0":
   version "3.16.0"
@@ -2056,19 +2045,23 @@
     jju "~1.4.0"
     z-schema "~3.18.3"
 
+"@microsoft/node-core-library@3.17.0":
+  version "3.17.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.17.0.tgz#3576431711b65951b5059d564ac9dc0897f75743"
+  integrity sha512-i49LbZxPU35Vq50lV1oN331WPp+BmmhGs0Ee2PT/OAZR7qOm/UdQ3vpG70zhkLHymJNUyb0vUh0UU3ZHU6mgsg==
+  dependencies:
+    "@types/node" "8.10.54"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    semver "~5.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
 "@microsoft/package-deps-hash@^2.2.153":
   version "2.2.170"
   resolved "https://registry.yarnpkg.com/@microsoft/package-deps-hash/-/package-deps-hash-2.2.170.tgz#32c6e9268c2e129e98b4452b530c6fc152044f4a"
   integrity sha512-dUkeTu0t4L4i9An96E5iPgvYhhqdtdx3dQP9qlpqb+suCFfvdoftDD4lC0euk3yCwoAQB6LVGdPkE4Y6vSQgkg==
-
-"@microsoft/ts-command-line@4.3.2":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.2.tgz#87341de2e24f279259297ebd38530300a9f97bc3"
-  integrity sha512-2QeyilabCe6IpBylPXuY6dCA1S9ym3Ii0zakXVPpyfjSj1NesnyuUeuh6e8kyIqzqJ+3LYjfPG63XzUBtwGqqw==
-  dependencies:
-    "@types/argparse" "1.0.33"
-    argparse "~1.0.9"
-    colors "~1.2.1"
 
 "@microsoft/ts-command-line@4.3.4":
   version "4.3.4"
@@ -11388,6 +11381,11 @@ timm@^1.6.1:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/timm/-/timm-1.6.2.tgz#dfd8c6719f7ba1fcfc6295a32670a1c6d166c0bd"
   integrity sha512-IH3DYDL1wMUwmIlVmMrmesw5lZD6N+ZOAFWEyLrtpoL9Bcrs9u7M/vyOnHzDD2SMs4irLkVjqxZbHrXStS/Nmw==
+
+timsort@~0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
+  integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
 tinycolor2@^1.4.1:
   version "1.4.1"
