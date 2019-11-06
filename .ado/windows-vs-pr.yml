@@ -79,6 +79,18 @@ jobs:
           contents: |
             ReactUWP\**
 
+      - task: DeleteFiles@1
+        DisplayName: delete build
+        inputs:
+          SourceFolder: vnext/build
+          Contents: '**/*'
+
+      - task: DeleteFiles@1
+        DisplayName: target
+        inputs:
+          SourceFolder: vnext/target
+          Contents: '**/*'
+
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
         inputs:
