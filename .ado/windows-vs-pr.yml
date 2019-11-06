@@ -80,13 +80,13 @@ jobs:
             ReactUWP\**
 
       - task: DeleteFiles@1
-        DisplayName: delete build
+        displayName: delete build
         inputs:
           SourceFolder: vnext/build
           Contents: '**/*'
 
       - task: DeleteFiles@1
-        DisplayName: target
+        displayName: target
         inputs:
           SourceFolder: vnext/target
           Contents: '**/*'
