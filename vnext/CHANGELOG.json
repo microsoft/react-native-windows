@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Nov 2019 13:58:14 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.65",
+      "version": "0.60.0-vnext.65",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Merging upstream changes",
+            "author": "anandrag@microsoft.com",
+            "commit": "4cc4f7fb88247740a117adcc4b3a0e094089e7a6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Nov 2019 06:59:22 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.64",
       "version": "0.60.0-vnext.64",

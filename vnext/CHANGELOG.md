@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Nov 2019 06:59:22 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
 
+## 0.60.0-vnext.65
+Wed, 06 Nov 2019 13:58:14 GMT
+
+### Changes
+
+- Merging upstream changes (anandrag@microsoft.com)
 ## 0.60.0-vnext.64
 Wed, 06 Nov 2019 06:59:22 GMT
 
