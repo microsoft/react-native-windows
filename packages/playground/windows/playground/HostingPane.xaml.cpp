@@ -429,10 +429,11 @@ void HostingPane::InitComboBoxes() {
 
   x_ReactAppName->ItemsSource = m_ReactAppNames;
 
-  try {
+  // IsEditable is only supported on RS4 or higher
+  if (Windows::Foundation::Metadata::ApiInformation::IsApiContractPresent(
+          L"Windows.Foundation.UniversalApiContract", 6)) {
     x_ReactAppName->IsEditable = true;
     x_JavaScriptFilename->IsEditable = true;
-  } catch (...) {
   }
 }
 

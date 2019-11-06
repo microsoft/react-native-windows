@@ -8,6 +8,7 @@
 #include <winrt/Windows.UI.Xaml.Shapes.h>
 
 #include <Views/ShadowNodeBase.h>
+#include <ReactUWP\Utils\Helpers.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;
@@ -33,7 +34,7 @@ class RefreshControlShadowNode : public ShadowNodeBase {
 
 void RefreshControlShadowNode::createView() {
   Super::createView();
-  if (auto refreshContainer = GetView().try_as<winrt::RefreshContainer>()){
+  if (auto refreshContainer = GetView().try_as<winrt::RefreshContainer>()) {
     m_refreshRequestedRevoker =
         refreshContainer.RefreshRequested(winrt::auto_revoke, [this](auto &&, winrt::RefreshRequestedEventArgs args) {
           auto wkinstance = GetViewManager()->GetReactInstance();
@@ -85,18 +86,17 @@ const char *RefreshControlViewManager::GetName() const {
 }
 
 XamlView RefreshControlViewManager::CreateViewCore(int64_t tag) {
-  try {
+  if (IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
-    auto refreshContainer = winrt::RefreshContainer();
-    return refreshContainer;
-  } catch (...) {
+    return winrt::RefreshContainer();
+  }else{
     // just return a grid if refreshContainer is not supported
     return winrt::Grid();
   }
 }
 
 void RefreshControlViewManager::AddView(XamlView parent, XamlView child, int64_t index) {
-  if (auto refreshContainer = parent.try_as<winrt::RefreshContainer>()){
+  if (auto refreshContainer = parent.try_as<winrt::RefreshContainer>()) {
     refreshContainer.Content(child.as<winrt::ScrollViewer>());
   } else if (auto grid = parent.try_as<winrt::Grid>()) {
     grid.Children().Append(child.as<winrt::ScrollViewer>());
