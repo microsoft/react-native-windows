@@ -19,15 +19,25 @@ class HttpResource : public IHttpResource
   boost::asio::io_context m_context;
   boost::asio::ip::tcp::resolver m_resolver;
   boost::asio::ip::tcp::socket m_socket;
+  boost::beast::http::request<boost::beast::http::string_body> m_request;
 
   // TODO: Remove?
   boost::beast::flat_buffer m_buffer;
-  boost::beast::http::request<boost::beast::http::empty_body> m_request;
+  //boost::beast::http::request<boost::beast::http::empty_body> m_request;
   boost::beast::http::response<boost::beast::http::string_body> m_response;
 
   std::function<void()> m_requestHandler;
   std::function<void(const std::string &)> m_responseHandler;
   std::function<void(const std::string &)> m_errorHandler;
+
+  #pragma region Async handlers
+
+  void OnResolve(boost::beast::error_code ec, typename boost::asio::ip::tcp::resolver::results_type results);
+  void OnConnect(boost::beast::error_code ec, const boost::asio::ip::basic_resolver_iterator<boost::asio::ip::tcp>&);
+  void OnWrite(boost::beast::error_code ec, std::size_t size);
+  void OnRead(boost::beast::error_code ec, std::size_t size);
+
+  #pragma endregion Async handlers
 
  public:
   HttpResource() noexcept;

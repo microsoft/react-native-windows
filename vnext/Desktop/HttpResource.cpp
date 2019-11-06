@@ -30,14 +30,14 @@ namespace Experimental
 HttpResource::HttpResource() noexcept : m_resolver{m_context}, m_socket{m_context} {}
 
 void HttpResource::SendRequest(
-    const string &method,
-    const string &urlString,
-    const Headers &headers,
+    const string& method,
+    const string& urlString,
+    const Headers& headers,
     dynamic bodyData,
-    const string &responseType,
+    const string& responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
-    function<void(int64_t)> &&callback) noexcept
+    function<void(int64_t)>&& callback) noexcept
 {
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
@@ -56,17 +56,16 @@ void HttpResource::SendRequest(
     m_errorHandler("Malformed URL");
     return;
   }
-  http::request<http::string_body> req;
-  req.version(11 /*HTTP 1.1*/);
-  req.method(http::string_to_verb(method));
-  req.target(url->Target());
-  req.set(http::field::host, url->host); // ISS:2306365 - Determine/append port.
-  req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+  m_request.version(11 /*HTTP 1.1*/);
+  m_request.method(http::string_to_verb(method));
+  m_request.target(url->Target());
+  m_request.set(http::field::host, url->host); // ISS:2306365 - Determine/append port.
+  m_request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
   for (const auto &header : headers)
   {
     // ISS:2306365 - Deal with content-type, content-encoding?
-    req.set(header.first, header.second);
+    m_request.set(header.first, header.second);
   }
 
   if (!bodyData.empty())
@@ -90,68 +89,93 @@ void HttpResource::SendRequest(
   m_context.restart();
 
   // Send/Receive request.
-  m_resolver.async_resolve(url->host, url->port, [this, &req](error_code ec, tcp::resolver::results_type results)
-  {
-    if (ec)
-    {
-      if (m_errorHandler)
-        m_errorHandler(ec.message());
-    }
-    else
-    {
-      boost::asio::async_connect(
-        m_socket, results.begin(), results.end(), [this, &req](error_code ec, const basic_resolver_iterator<tcp> &)
-        {
-          if (ec)
-          {
-            if (m_errorHandler)
-              m_errorHandler(ec.message());
-          }
-          else
-          {
-            async_write(m_socket, move(req), [this](error_code ec, size_t size)
-            {
-              if (ec)
-              {
-                if (m_errorHandler)
-                  m_errorHandler(ec.message());
-              }
-              else
-              {
-                if (m_requestHandler)
-                  m_requestHandler();
-
-                async_read(m_socket, m_buffer, m_response, [this](error_code ec, size_t size)
-                {
-                  if (ec)
-                  {
-                    if (m_errorHandler)
-                      m_errorHandler(ec.message());
-                  }
-                  else
-                  {
-                    if (m_responseHandler)
-                      m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
-
-                    boost::system::error_code bec;
-                    m_socket.shutdown(tcp::socket::shutdown_both, bec);
-                    if (bec && boost::system::errc::not_connected != bec) // not_connected may happen. Not an actual error.
-                    {
-                      if (m_errorHandler)
-                        m_errorHandler(bec.message());
-
-                      // ISS:2306365 - Callback?
-                    }
-                  }
-                }); // async_read
-              }
-            }); // async_write
-          }
-        }); // async_connect
-    }
-  }); // async_resolve
+  m_resolver.async_resolve(
+    url->host,
+    url->port,
+    bind_front_handler(&HttpResource::OnResolve, this)
+  );
 
   m_context.run();
+}
+
+void HttpResource::OnResolve(error_code ec, tcp::resolver::results_type results)
+{
+  if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler(ec.message());
+  }
+  else
+  {
+    boost::asio::async_connect(
+      m_socket,
+      results.begin(),
+      results.end(),
+      bind_front_handler(&HttpResource::OnConnect, this)
+    );
+  }
+}
+
+void HttpResource::OnConnect(error_code ec, const basic_resolver_iterator<tcp>&)
+{
+  if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler(ec.message());
+  }
+  else
+  {
+    async_write(
+      m_socket,
+      move(m_request),
+      bind_front_handler(&HttpResource::OnWrite, this)
+    );
+  }
+}
+
+void HttpResource::OnWrite(error_code ec, size_t size)
+{
+  if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler(ec.message());
+  }
+  else
+  {
+    if (m_requestHandler)
+      m_requestHandler();
+
+    async_read(
+      m_socket,
+      m_buffer,
+      m_response,
+      bind_front_handler(&HttpResource::OnRead, this)
+    );
+  }
+}
+
+void HttpResource::OnRead(error_code ec, size_t size)
+{
+  if (ec)
+  {
+    if (m_errorHandler)
+      m_errorHandler(ec.message());
+  }
+  else
+  {
+    if (m_responseHandler)
+      m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
+
+    boost::system::error_code bec;
+    m_socket.shutdown(tcp::socket::shutdown_both, bec);
+    if (bec && boost::system::errc::not_connected != bec) // not_connected may happen. Not an actual error.
+    {
+      if (m_errorHandler)
+        m_errorHandler(bec.message());
+
+      // ISS:2306365 - Callback?
+    }
+  }
 }
 
 void HttpResource::AbortRequest() noexcept
