@@ -6,7 +6,6 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 
 using Microsoft.ReactNative.Managed;
-using System.Collections.Generic;
 
 namespace SampleLibraryCS
 {
@@ -52,9 +51,9 @@ namespace SampleLibraryCS
         }
 
         [ViewManagerCommand]
-        public void CustomCommand(CustomUserControlCS view, IReadOnlyList<object> args)
+        public void CustomCommand(CustomUserControlCS view, string arg)
         {
-            Debug.WriteLine($"{Name}.{nameof(CustomCommand)}({args[0].ToString()})");
+            Debug.WriteLine($"{Name}.{nameof(CustomCommand)}({view.Tag}, \"{arg}\")");
         }
     }
 }
