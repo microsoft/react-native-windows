@@ -19,7 +19,7 @@ inline bool ReadValue(winrt::Microsoft::ReactNative::Bridge::IJSValueReader cons
 }
 
 inline bool ReadValue(winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader, bool &value) noexcept {
-  return reader.TryGetBoolen(value);
+  return reader.TryGetBoolean(value);
 }
 
 inline bool ReadValue(winrt::Microsoft::ReactNative::Bridge::IJSValueReader const &reader, int8_t &value) noexcept {

@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Native Modules: Updated samples and docs to show how to use events",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "59da9ac5a77c1b25463093602b4f283d16f0f787",
+  "date": "2019-10-30T18:50:12.839Z"
+}

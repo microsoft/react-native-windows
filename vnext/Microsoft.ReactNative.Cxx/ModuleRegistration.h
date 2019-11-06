@@ -14,7 +14,7 @@
         : ::Microsoft::ReactNative::ModuleRegistration(moduleName, eventEmitterName) {}                       \
                                                                                                               \
     winrt::Microsoft::ReactNative::Bridge::ReactModuleProvider MakeModuleProvider() const noexcept override { \
-      return ::Microsoft::ReactNative::MakeModuleProvider<moduleClass>();                                     \
+      return ::Microsoft::ReactNative::MakeModuleProvider<moduleClass>(ModuleName(), EventEmitterName());     \
     }                                                                                                         \
                                                                                                               \
     static const moduleClass##_ModuleRegistration Registration;                                               \
@@ -24,8 +24,7 @@
   const moduleClass##_ModuleRegistration<TDummy> moduleClass##_ModuleRegistration<TDummy>::Registration;      \
   template struct moduleClass##_ModuleRegistration<int>;
 
-#define INTERNAL_REACT_MODULE_2_ARGS(moduleClass, moduleName) \
-  INTERNAL_REACT_MODULE_3_ARGS(moduleClass, moduleName, moduleName)
+#define INTERNAL_REACT_MODULE_2_ARGS(moduleClass, moduleName) INTERNAL_REACT_MODULE_3_ARGS(moduleClass, moduleName, "")
 
 #define INTERNAL_REACT_MODULE_1_ARGS(moduleClass) INTERNAL_REACT_MODULE_2_ARGS(moduleClass, #moduleClass)
 
@@ -54,6 +53,10 @@ struct ModuleRegistration {
 
   const char *ModuleName() const noexcept {
     return m_moduleName;
+  }
+
+  const char *EventEmitterName() const noexcept {
+    return m_eventEmitterName;
   }
 
  private:
