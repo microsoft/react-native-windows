@@ -168,6 +168,7 @@ jobs:
 
     variables:
       Desktop.IntegrationTests.Filter: (FullyQualifiedName!~WebSocketJSExecutorIntegrationTest)&(FullyQualifiedName!~WebSocket)
+      Desktop.UnitTests.Filter: (FullyQualifiedName!~BaseWebSocketTest::)
 
     steps:
       - checkout: self
@@ -196,6 +197,7 @@ jobs:
             JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
           pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
           searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          testFiltercriteria: $(Desktop.UnitTests.Filter)
           runTestsInIsolation: true
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
