@@ -52,7 +52,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(VCInstallDir)UnitTest\include;$(ReactNativeDir)\ReactCommon;$(JSI_Source);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
