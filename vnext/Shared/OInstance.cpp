@@ -553,9 +553,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
           /*hot*/ "false");
 
       m_innerInstance->loadScriptFromString(
-          std::make_unique<const JSBigStdString>(bundleUrl),
-          bundleUrl,
-          synchronously);
+          std::make_unique<const JSBigStdString>(bundleUrl), bundleUrl, synchronously);
     } catch (std::exception &e) {
       m_devSettings->errorCallback(e.what());
       return;
@@ -568,9 +566,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_devSettings->errorCallback(jsBundleString);
     } else {
       m_innerInstance->loadScriptFromString(
-          std::make_unique<const JSBigStdString>(jsBundleString),
-          jsBundleRelativePath,
-          synchronously);
+          std::make_unique<const JSBigStdString>(jsBundleString), jsBundleRelativePath, synchronously);
     }
   } else {
     try {
@@ -586,10 +582,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
 #endif
-        m_innerInstance->loadScriptFromString(
-            std::move(bundleString),
-            std::move(fullBundleFilePath),
-            synchronously);
+        m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(fullBundleFilePath), synchronously);
       }
 
 #else
@@ -683,9 +676,7 @@ InstanceImpl::InstanceImpl(
 
   try {
     m_innerInstance->loadScriptFromString(
-        std::make_unique<const JSBigStdString>(std::move(fullBundleFilePath)),
-        sourceUrl,
-        false /*synchronously*/);
+        std::make_unique<const JSBigStdString>(std::move(fullBundleFilePath)), sourceUrl, false /*synchronously*/);
   } catch (std::exception &e) {
     m_devSettings->errorCallback(e.what());
   }

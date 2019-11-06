@@ -36,9 +36,7 @@ WebSocketJSExecutor::~WebSocketJSExecutor() {}
 
 #pragma region JSExecutor members
 
-void WebSocketJSExecutor::loadApplicationScript(
-    unique_ptr<const JSBigString> script,
-    string /*sourceURL*/) {
+void WebSocketJSExecutor::loadApplicationScript(unique_ptr<const JSBigString> script, string /*sourceURL*/) {
   int requestId = ++m_requestId;
   promise<string> requestPromise;
   {

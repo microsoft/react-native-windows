@@ -30,9 +30,7 @@ class WebSocketJSExecutor : public JSExecutor {
 
 #pragma region JSExecutor members
 
-  void loadApplicationScript(
-      std::unique_ptr<const JSBigString> script,
-      std::string sourceURL) override;
+  void loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) override;
   void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
   virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
   void callFunction(const std::string &moduleId, const std::string &methodId, const folly::dynamic &arguments) override;
