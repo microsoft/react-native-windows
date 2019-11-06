@@ -145,7 +145,7 @@ struct SampleModuleCPP {
 
  public:
   SampleModuleCPP() {
-    _timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
+    m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
         [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           if (TimedEvent) {
             TimedEvent(++m_timerCount);
@@ -155,13 +155,13 @@ struct SampleModuleCPP {
   }
 
   ~SampleModuleCPP() {
-    if (_timer) {
-      _timer.Cancel();
+    if (m_timer) {
+      m_timer.Cancel();
     }
   }
 
  private:
-  winrt::Windows::System::Threading::ThreadPoolTimer _timer = nullptr;
+  winrt::Windows::System::Threading::ThreadPoolTimer m_timer = nullptr;
   int m_timerCount = 0;
   const int TimedEventIntervalMS = 5000;
 };

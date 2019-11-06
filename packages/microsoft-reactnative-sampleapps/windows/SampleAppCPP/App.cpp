@@ -19,10 +19,12 @@ App::App() noexcept {
   MainComponentName(L"SampleApp");
   JavaScriptMainModuleName(L"index.windows");
 
-#if DEBUG
+#if _DEBUG
   InstanceSettings().UseWebDebugger(true);
+  InstanceSettings().EnableDeveloperMenu(true);
 #else
   InstanceSettings().UseWebDebugger(false);
+  InstanceSettings().EnableDeveloperMenu(false);
 #endif
 
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project

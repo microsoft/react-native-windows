@@ -23,8 +23,10 @@ namespace SampleApp
 
 #if DEBUG
             InstanceSettings.UseWebDebugger = true;
+            InstanceSettings.EnableDeveloperMenu = true;
 #else
             InstanceSettings.UseWebDebugger = false;
+            InstanceSettings.EnableDeveloperMenu = false;
 #endif
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project

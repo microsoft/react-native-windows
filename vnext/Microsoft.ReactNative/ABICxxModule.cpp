@@ -10,6 +10,8 @@ using namespace facebook::xplat::module;
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
+constexpr auto DefaultEventEmitterName = "RCTDeviceEventEmitter";
+
 ABICxxModule::ABICxxModule(
     winrt::Windows::Foundation::IInspectable &nativeModule,
     std::string name,
