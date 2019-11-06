@@ -66,15 +66,7 @@ WebSocketJSExecutor::~WebSocketJSExecutor() {
 
 void WebSocketJSExecutor::loadApplicationScript(
     std::unique_ptr<const facebook::react::JSBigString> script,
-#if !defined(OSS_RN)
-    uint64_t /*scriptVersion*/,
-#endif
-    std::string sourceURL
-#if !defined(OSS_RN)
-    ,
-    std::string && /*bytecodeFileName*/
-#endif
-) {
+    std::string sourceURL) {
   int requestId = ++m_requestId;
 
   if (!IsRunning()) {

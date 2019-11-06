@@ -21,9 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Calculator.h" />
     <ClInclude Include="ReactPackageProvider.h" />
-    <ClInclude Include="MyModule.h" />
     <ClInclude Include="SampleModuleCPP.h" />
     <ClInclude Include="CustomUserControlCPP.h" />
     <ClInclude Include="CustomUserControlViewManagerCPP.h" />

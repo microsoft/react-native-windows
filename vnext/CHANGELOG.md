@@ -1,7 +1,31 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Nov 2019 23:40:12 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
 
+## 0.60.0-vnext.65
+Wed, 06 Nov 2019 13:58:14 GMT
+
+### Changes
+
+- Merging upstream changes (anandrag@microsoft.com)
+## 0.60.0-vnext.64
+Wed, 06 Nov 2019 06:59:22 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.16 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.63
+Wed, 06 Nov 2019 01:56:47 GMT
+
+### Changes
+
+- Native Modules: Updated samples and docs to show how to use events (jthysell@microsoft.com)
+## 0.60.0-vnext.62
+Tue, 05 Nov 2019 23:11:52 GMT
+
+### Changes
+
+- VM: Split up IViewManager into optional interfaces #3565 (jthysell@microsoft.com)
 ## 0.60.0-vnext.61
 Fri, 01 Nov 2019 23:40:12 GMT
 

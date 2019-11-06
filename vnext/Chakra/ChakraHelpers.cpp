@@ -122,7 +122,7 @@ class ChakraVersionInfo {
 
 class BytecodePrefix {
  public:
-  static std::pair<bool, BytecodePrefix> getBytecodePrefix(JsValueRef scriptFileName, uint64_t bundleVersion) noexcept {
+  static std::pair<bool, BytecodePrefix> getBytecodePrefix(uint64_t bundleVersion) noexcept {
     std::pair<bool, BytecodePrefix> result{false, BytecodePrefix{bundleVersion}};
     result.first = result.second.m_chakraVersionInfo.initialize();
     return result;
@@ -418,7 +418,7 @@ JsValueRef evaluateScriptWithBytecode(
   // code right now.
   return evaluateScript(std::move(script), scriptFileName);
 #else
-  auto bytecodePrefixOptional = BytecodePrefix::getBytecodePrefix(scriptFileName, scriptVersion);
+  auto bytecodePrefixOptional = BytecodePrefix::getBytecodePrefix(scriptVersion);
   if (!bytecodePrefixOptional.first) {
     return evaluateScript(std::move(script), scriptFileName);
   }
