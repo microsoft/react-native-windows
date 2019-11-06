@@ -1,3 +1,4 @@
+// clang-format off
 #include "HttpServer.h"
 
 #include <boost/beast/version.hpp>
@@ -20,11 +21,13 @@ using std::make_shared;
 using std::shared_ptr;
 using std::string;
 
-namespace Microsoft::React::Test {
+namespace Microsoft::React::Test
+{
 
 #pragma region Utility functions
 
-boost::beast::multi_buffer CreateStringResponseBody(string &&content) {
+boost::beast::multi_buffer CreateStringResponseBody(string&& content)
+{
   auto result = boost::beast::multi_buffer();
   auto n = boost::asio::buffer_copy(result.prepare(content.size()), boost::asio::buffer(content));
   result.commit(n);
@@ -41,7 +44,8 @@ HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks)
 
 HttpSession::~HttpSession() {}
 
-void HttpSession::Read() {
+void HttpSession::Read()
+{
   // Clear request.
   m_request = {};
 
@@ -53,11 +57,13 @@ void HttpSession::Read() {
   );
 }
 
-void HttpSession::OnRead(error_code ec, size_t /*transferred*/) {
+void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
+{
   if (http::error::end_of_stream == ec)
     return Close();
 
-  if (ec) {
+  if (ec)
+  {
     // ISS:2735328 - Implement failure propagation mechanism.
     return;
   }
@@ -69,8 +75,10 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/) {
 #pragma warning(push)
 #pragma warning(disable : 25001)
 
-void HttpSession::Respond() {
-  switch (m_request.method()) {
+void HttpSession::Respond()
+{
+  switch (m_request.method())
+  {
     case http::verb::get:
       m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnGet(m_request));
 
@@ -120,8 +128,10 @@ void HttpSession::Respond() {
   }
 }
 
-void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/) {
-  if (ec) {
+void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
+{
+  if (ec)
+  {
     m_response = nullptr;
     return;
   }
@@ -140,11 +150,13 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
   // Read();
 }
 
-void HttpSession::Close() {
+void HttpSession::Close()
+{
   m_stream.socket().shutdown(tcp::socket::shutdown_send);
 }
 
-void HttpSession::Start() {
+void HttpSession::Start()
+{
   Read();
 }
 
@@ -154,29 +166,34 @@ void HttpSession::Start() {
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, /*m_socket{m_context},*/ m_sessions{} {
+HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, /*m_socket{m_context},*/ m_sessions{}
+{
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
   m_acceptor.open(endpoint.protocol(), ec);
-  if (ec) {
+  if (ec)
+  {
     // ISS:2735328 - Implement failure propagation mechanism
     return;
   }
 
   m_acceptor.set_option(boost::asio::socket_base::reuse_address(true), ec);
-  if (ec) {
+  if (ec)
+  {
     // ISS:2735328 - Implement failure propagation mechanism
     return;
   }
 
   m_acceptor.bind(endpoint, ec);
-  if (ec) {
+  if (ec)
+  {
     // ISS:2735328 - Implement failure propagation mechanism
     return;
   }
 
   m_acceptor.listen(boost::asio::socket_base::max_listen_connections, ec);
-  if (ec) {
+  if (ec)
+  {
     // ISS:2735328 - Implement failure propagation mechanism
     return;
   }
@@ -184,7 +201,8 @@ HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context},
 
 HttpServer::~HttpServer() {}
 
-void HttpServer::Accept() {
+void HttpServer::Accept()
+{
   if (!m_acceptor.is_open())
     return;
 
@@ -199,10 +217,12 @@ void HttpServer::Accept() {
 
 void HttpServer::OnAccept(error_code ec, tcp::socket socket)
 {
-  if (ec) {
+  if (ec)
+  {
     // ISS:2735328 - Implement failure propagation mechanism
   }
-  else {
+  else
+  {
     auto session = make_shared<HttpSession>(std::move(socket), m_callbacks);
     m_sessions.push_back(session);
     session->Start();
@@ -213,10 +233,12 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   // threading.
 }
 
-void HttpServer::Start() {
+void HttpServer::Start()
+{
   Accept();
 
-  m_contextThread = std::thread([self = shared_from_this()]() {
+  m_contextThread = std::thread([self = shared_from_this()]()
+  {
     // See
     // https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio/reference/io_context/run/overload1.html
     // The run() function blocks until all work has finished and there are no
@@ -225,19 +247,22 @@ void HttpServer::Start() {
   });
 }
 
-void HttpServer::Stop() {
+void HttpServer::Stop()
+{
   m_contextThread.join();
 
   if (m_acceptor.is_open())
     m_acceptor.close();
 }
 
-void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept {
+void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
+{
   m_callbacks.OnResponseSent = std::move(handler);
 }
 
 void HttpServer::SetOnGet(
-    function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept {
+  function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept
+{
   m_callbacks.OnGet = std::move(handler);
 }
 

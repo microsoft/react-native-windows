@@ -59,7 +59,7 @@ string DevSupportManager::GetJavaScriptFromServer(
   try {
     Url url(bundleUrl);
     auto const resolveResult = m_resolver.resolve(url.host, url.port);
-    boost::beast::tcp_stream stream{ m_context };
+    boost::beast::tcp_stream stream{m_context};
 
     stream.connect(resolveResult);
 
@@ -100,7 +100,7 @@ void DevSupportManager::StartPollingLiveReload(const string &debugHost, std::fun
         Url url(DevServerHelper::get_OnChangeEndpointUrl(debugHost));
         auto const resolveResult = m_resolver.resolve(url.host, url.port);
 
-        boost::beast::tcp_stream stream{ m_context };
+        boost::beast::tcp_stream stream{m_context};
         stream.connect(resolveResult);
 
         request<string_body> request{verb::get, url.Target(), 11 /*HTTP 1.1*/};
@@ -134,7 +134,7 @@ task<void> DevSupportManager::LaunchDevToolsAsync(const string &debugHost, const
   return t.then([=]() {
     Url url(DevServerHelper::get_LaunchDevToolsCommandUrl(debugHost));
     auto const resolveResult = m_resolver.resolve(url.host, url.port);
-    boost::beast::tcp_stream stream{ m_context };
+    boost::beast::tcp_stream stream{m_context};
     stream.connect(resolveResult);
 
     request<string_body> request{verb::get, url.Target(), 11};
