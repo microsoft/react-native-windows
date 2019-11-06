@@ -51,7 +51,8 @@ bool IsAPIContractVxAvailable() {
   static bool isAPIContractVxAvailable = false;
   if (!isAPIContractVxAvailableInitialized) {
     isAPIContractVxAvailableInitialized = true;
-    isAPIContractVxAvailable = winrt::ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", APIVersion);
+    isAPIContractVxAvailable =
+        winrt::ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", APIVersion);
   }
 
   return isAPIContractVxAvailable;

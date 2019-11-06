@@ -7,8 +7,8 @@
 
 #include <winrt/Windows.UI.Xaml.Shapes.h>
 
-#include <Views/ShadowNodeBase.h>
 #include <ReactUWP\Utils\Helpers.h>
+#include <Views/ShadowNodeBase.h>
 
 namespace winrt {
 using namespace Windows::UI::Xaml;
@@ -89,7 +89,7 @@ XamlView RefreshControlViewManager::CreateViewCore(int64_t tag) {
   if (IsRS4OrHigher()) {
     // refreshContainer is supported >= RS4
     return winrt::RefreshContainer();
-  }else{
+  } else {
     // just return a grid if refreshContainer is not supported
     return winrt::Grid();
   }
