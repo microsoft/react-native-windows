@@ -15,13 +15,10 @@ namespace uwp {
 
 class SnapPointManagingContentControl
     : public winrt::ContentControlT<SnapPointManagingContentControl, winrt::IScrollSnapPointsInfo> {
- private:
+ public:
   SnapPointManagingContentControl();
 
- public:
   static winrt::com_ptr<SnapPointManagingContentControl> Create();
-  template <typename D, typename... Args>
-  friend auto winrt::make_self(Args &&... args);
 
   // ScrollView Implementation
   void SnapToInterval(float interval);
