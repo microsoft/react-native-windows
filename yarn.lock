@@ -2318,9 +2318,9 @@
   integrity sha512-kaYyLYf6ICn6/isAyD4K1MyWWd5Q3JgH6bnMN089LUx88+s4W8GvK9Q6JMBVu5vsFFp7pMdSxdKmlBXwH/VFRg==
 
 "@types/node@^10.12.18", "@types/node@^10.14.8":
-  version "10.17.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.2.tgz#41b5afbcde1a5a805302a4da3cf399499f1bbf64"
-  integrity sha512-sAh60KDol+MpwOr1RTK0+HgBEYejKsxdpmrOS1Wts5bI03dLzq8F7T0sRXDKeaEK8iWDlGfdzxrzg6vx/c5pNA==
+  version "10.17.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.4.tgz#8993a4fe3c4022fda66bf4ea660d615fc5659c6f"
+  integrity sha512-F2pgg+LcIr/elguz+x+fdBX5KeZXGUOp7TV8M0TVIrDezYLFRNt8oMTyps0VQ1kj5WGGoR18RdxnRDHXrIFHMQ==
 
 "@types/ora@^3.2.0":
   version "3.2.0"
@@ -10393,10 +10393,10 @@ rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rnpm-plugin-windows@^0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.7.tgz#0c76e8d7e34e7c24e6bc30a21a90463792ba6964"
-  integrity sha512-RsY1rEggkFGUggL+gIoSvdcnbPoG+47zVLf9mWCoD1uMz1y8brCE4Lfvg+HDsBkBMS3s1xG6Lni66Zp5D5/nUw==
+rnpm-plugin-windows@^0.3.8:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/rnpm-plugin-windows/-/rnpm-plugin-windows-0.3.8.tgz#7d87cf15a955039b5d609fa54756531e943e05e4"
+  integrity sha512-he/ZRaSkiYP+89F69fKnDzvYG7MHS97rX1Bzdk/Bjv4/jiMime4BOj40HRKZBLel6N+TalY9AHQFr2AVrnvEdQ==
   dependencies:
     chalk "^1.1.3"
     extract-zip "^1.6.7"
