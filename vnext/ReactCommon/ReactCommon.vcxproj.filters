@@ -28,6 +28,18 @@
     <Filter Include="jsi\jsi">
       <UniqueIdentifier>{9c8e7a7a-c77d-479d-8611-1ece3cdacad7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="turbomodule">
+      <UniqueIdentifier>{23b0c36f-4a4b-4380-9e4c-f8cb0c2f2714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="turbomodule\core">
+      <UniqueIdentifier>{c4d010df-7391-4171-8658-9048078a5523}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jscallinvoker">
+      <UniqueIdentifier>{d52a2ed0-f060-446c-a049-1dae4aca1194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jscallinvoker\jsireact">
+      <UniqueIdentifier>{5bf47134-bd38-4ada-a2bb-9438240d70cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.cpp">
@@ -110,6 +122,24 @@
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\log.cpp">
       <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleBinding.cpp">
+      <Filter>turbomodule\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleUtils.cpp">
+      <Filter>turbomodule\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\LongLivedObject.cpp">
+      <Filter>turbomodule\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboCxxModule.cpp">
+      <Filter>turbomodule\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModule.cpp">
+      <Filter>turbomodule\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp">
+      <Filter>jscallinvoker\jsireact</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +259,27 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
       <Filter>privatedata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleBinding.h">
+      <Filter>turbomodule\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleUtils.h">
+      <Filter>turbomodule\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\LongLivedObject.h">
+      <Filter>turbomodule\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboCxxModule.h">
+      <Filter>turbomodule\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModule.h">
+      <Filter>turbomodule\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h">
+      <Filter>jscallinvoker\jsireact</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h">
+      <Filter>jscallinvoker\jsireact</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
