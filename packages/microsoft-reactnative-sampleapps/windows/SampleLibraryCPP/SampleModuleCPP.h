@@ -45,6 +45,12 @@ struct SampleModuleCPP {
   REACT_CONSTANT(StringConstant);
   const std::string StringConstant = "Hello World";
 
+  REACT_CONSTANT_PROVIDER(ConstantsViaConstantsProvider)
+  void ConstantsViaConstantsProvider(const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter &writer) noexcept {
+    ::Microsoft::ReactNative::WriteProperty(writer, "NumberConstantViaProvider", M_PI);
+    ::Microsoft::ReactNative::WriteProperty(writer, "StringConstantViaProvider", "Hello World");
+  }
+
 #pragma endregion
 
 #pragma region Methods
@@ -113,6 +119,51 @@ struct SampleModuleCPP {
   }
 
 #pragma endregion
+
+#pragma region Synchronous Methods
+
+  REACT_SYNC_METHOD(SyncReturnMethod);
+  double SyncReturnMethod() noexcept {
+    DebugWriteLine("SyncReturnMethod");
+    return M_PI;
+  }
+
+  REACT_SYNC_METHOD(SyncReturnMethodWithArgs);
+  double SyncReturnMethodWithArgs(double arg) noexcept {
+    DebugWriteLine("SyncReturnMethodWithArgs", arg);
+    return M_PI;
+  }
+
+#pragma endregion
+
+#pragma region Events
+
+  REACT_EVENT(TimedEvent, "TimedEventCPP");
+  std::function<void(int)> TimedEvent;
+
+#pragma endregion
+
+ public:
+  SampleModuleCPP() {
+    m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
+        [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
+          if (TimedEvent) {
+            TimedEvent(++m_timerCount);
+          }
+        },
+        std::chrono::milliseconds(TimedEventIntervalMS));
+  }
+
+  ~SampleModuleCPP() {
+    if (m_timer) {
+      m_timer.Cancel();
+    }
+  }
+
+ private:
+  winrt::Windows::System::Threading::ThreadPoolTimer m_timer = nullptr;
+  int m_timerCount = 0;
+  const int TimedEventIntervalMS = 5000;
 };
 
 } // namespace SampleLibraryCPP

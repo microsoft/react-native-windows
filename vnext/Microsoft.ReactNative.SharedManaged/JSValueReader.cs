@@ -4,6 +4,7 @@
 using Microsoft.ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -42,7 +43,7 @@ namespace Microsoft.ReactNative.Managed
 
     public static bool TryReadValue(this IJSValueReader reader, out bool value)
     {
-      return reader.TryGetBoolen(out value);
+      return reader.TryGetBoolean(out value);
     }
 
     public static bool TryReadValue(this IJSValueReader reader, out sbyte value)

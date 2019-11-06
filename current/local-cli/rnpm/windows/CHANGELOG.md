@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Thu, 17 Oct 2019 20:58:22 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
 
+## 0.3.8
+Wed, 06 Nov 2019 13:58:14 GMT
+
+### Patches
+
+- This change enables consuming JSI implementations where the referenced JSI headers differs from the JSI headers in react-native. (anandrag@microsoft.com)
 ## 0.3.7
 Thu, 17 Oct 2019 20:58:22 GMT
 

@@ -104,12 +104,10 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Calculator.h" />
     <ClInclude Include="CustomUserControlCPP.h">
       <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="CustomUserControlViewManagerCPP.h" />
-    <ClInclude Include="MyModule.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>

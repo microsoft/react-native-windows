@@ -6,6 +6,7 @@
 #include "MemoryTracker.h"
 
 #include <functional>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -45,10 +46,16 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
+struct ChakraBundleMetadata {
+  uint64_t version;
+  std::string bytecodeFilename;
+};
+
+using ChakraBundleUrlMetadataMap = std::map<std::string, ChakraBundleMetadata>;
+
 struct DevSettings {
   bool useSandbox{false};
   bool useJITCompilation{true};
-  std::string bytecodeFileName;
   std::string sandboxPipeName;
   std::string debugHost;
   std::string debugBundlePath;
@@ -102,6 +109,11 @@ struct DevSettings {
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
+
+  /// Optionally used by ChakraExecutor to allow bundle bytecode caching.
+  /// Superseded by PreparedScriptStore on the JSI stack, and will be removed
+  /// soon. (See #3603)
+  ChakraBundleUrlMetadataMap chakraBundleUrlMetadataMap;
 };
 
 } // namespace react
