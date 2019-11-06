@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Build fixes",
+  "packageName": "rnpm-plugin-wpf",
+  "email": "anandrag@microsoft.com",
+  "commit": "04b58d679ba04baca23348928fad5250a34d31b9",
+  "date": "2019-11-06T01:48:13.737Z"
+}

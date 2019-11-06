@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "This change enables consuming JSI implementations where the referenced JSI headers differs from the JSI headers in react-native.",
+  "packageName": "rnpm-plugin-windows",
+  "email": "anandrag@microsoft.com",
+  "commit": "04b58d679ba04baca23348928fad5250a34d31b9",
+  "date": "2019-11-06T01:48:04.125Z"
+}
