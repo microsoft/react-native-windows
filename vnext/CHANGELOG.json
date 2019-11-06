@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Nov 2019 01:56:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.63",
+      "version": "0.60.0-vnext.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Native Modules: Updated samples and docs to show how to use events",
+            "author": "jthysell@microsoft.com",
+            "commit": "59da9ac5a77c1b25463093602b4f283d16f0f787"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Nov 2019 23:11:52 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.62",
       "version": "0.60.0-vnext.62",

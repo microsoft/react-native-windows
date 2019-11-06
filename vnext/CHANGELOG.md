@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 Nov 2019 23:11:52 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Nov 2019 01:56:47 GMT and should not be manually modified.
 
+## 0.60.0-vnext.63
+Wed, 06 Nov 2019 01:56:47 GMT
+
+### Changes
+
+- Native Modules: Updated samples and docs to show how to use events (jthysell@microsoft.com)
 ## 0.60.0-vnext.62
 Tue, 05 Nov 2019 23:11:52 GMT
 
