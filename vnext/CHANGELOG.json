@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Nov 2019 23:32:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.65",
+      "version": "0.60.0-vnext.65",
+      "comments": {
+        "none": [
+          {
+            "comment": "use  Microsoft.Windows.CppWinRT",
+            "author": "licanhua@live.com",
+            "commit": "1a49fbedd193735f47b6b6ad8359c901bd91a2bd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Nov 2019 13:58:14 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.65",
       "version": "0.60.0-vnext.65",
