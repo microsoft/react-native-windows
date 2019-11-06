@@ -13,7 +13,6 @@
 using namespace boost::asio;
 using namespace boost::beast;
 
-using boost::asio::ip::basic_resolver_iterator;//TODO:remove
 using boost::asio::ip::tcp;
 using folly::dynamic;
 using std::function;
@@ -27,7 +26,11 @@ namespace Experimental
 {
 #pragma region HttpResource members
 
-HttpResource::HttpResource() noexcept : m_resolver{m_context}, m_socket{m_context} {}
+HttpResource::HttpResource() noexcept
+  : m_resolver{m_context}
+  , m_stream{m_context}
+{
+}
 
 void HttpResource::SendRequest(
     const string& method,
@@ -104,33 +107,35 @@ void HttpResource::OnResolve(error_code ec, tcp::resolver::results_type results)
   {
     if (m_errorHandler)
       m_errorHandler(ec.message());
+
+    return;
   }
-  else
-  {
-    boost::asio::async_connect(
-      m_socket,
-      results.begin(),
-      results.end(),
-      bind_front_handler(&HttpResource::OnConnect, this)
-    );
-  }
+
+  //m_stream.expires_after(std::chrono::seconds(30));//TODO
+
+  m_stream.async_connect(
+    results,
+    bind_front_handler(&HttpResource::OnConnect, this)
+  );
 }
 
-void HttpResource::OnConnect(error_code ec, const basic_resolver_iterator<tcp>&)
+void HttpResource::OnConnect(error_code ec, tcp::resolver::results_type::endpoint_type endpoints)
 {
   if (ec)
   {
     if (m_errorHandler)
       m_errorHandler(ec.message());
+
+    return;
   }
-  else
-  {
-    async_write(
-      m_socket,
-      move(m_request),
-      bind_front_handler(&HttpResource::OnWrite, this)
-    );
-  }
+
+  //m_stream.expires_after(std::chrono::seconds(30));//TODO
+
+  async_write(
+    m_stream,
+    m_request,
+    bind_front_handler(&HttpResource::OnWrite, this)
+  );
 }
 
 void HttpResource::OnWrite(error_code ec, size_t size)
@@ -139,19 +144,19 @@ void HttpResource::OnWrite(error_code ec, size_t size)
   {
     if (m_errorHandler)
       m_errorHandler(ec.message());
-  }
-  else
-  {
-    if (m_requestHandler)
-      m_requestHandler();
 
-    async_read(
-      m_socket,
-      m_buffer,
-      m_response,
-      bind_front_handler(&HttpResource::OnRead, this)
-    );
+    return;
   }
+
+  if (m_requestHandler)
+    m_requestHandler();
+
+  async_read(
+    m_stream,
+    m_buffer,
+    m_response,
+    bind_front_handler(&HttpResource::OnRead, this)
+  );
 }
 
 void HttpResource::OnRead(error_code ec, size_t size)
@@ -160,21 +165,20 @@ void HttpResource::OnRead(error_code ec, size_t size)
   {
     if (m_errorHandler)
       m_errorHandler(ec.message());
+
+    return;
   }
-  else
+
+  if (m_responseHandler)
+    m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
+
+  m_stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+  if (ec && errc::not_connected != ec) // not_connected may happen. Not an actual error.
   {
-    if (m_responseHandler)
-      m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
+    if (m_errorHandler)
+      m_errorHandler(ec.message());
 
-    boost::system::error_code bec;
-    m_socket.shutdown(tcp::socket::shutdown_both, bec);
-    if (bec && boost::system::errc::not_connected != bec) // not_connected may happen. Not an actual error.
-    {
-      if (m_errorHandler)
-        m_errorHandler(bec.message());
-
-      // ISS:2306365 - Callback?
-    }
+    // ISS:2306365 - Callback?
   }
 }
 
@@ -182,14 +186,16 @@ void HttpResource::AbortRequest() noexcept
 {
   m_context.stop();
 
-  if (m_socket.is_open())
+  if (m_stream.socket().is_open())
   {
-    boost::system::error_code bec;
-    m_socket.shutdown(tcp::socket::shutdown_both, bec);
-    if (bec && boost::system::errc::not_connected != bec)
+    error_code ec;
+    m_stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+    if (ec && errc::not_connected != ec) // not_connected may happen. Not an actual error.
     {
       if (m_errorHandler)
-        m_errorHandler(bec.message());
+        m_errorHandler(ec.message());
+
+      // ISS:2306365 - Callback?
     }
   }
 }
@@ -201,19 +207,19 @@ void HttpResource::ClearCookies() noexcept
 
 #pragma region Handler setters
 
-void HttpResource::SetOnRequest(function<void()> &&handler) noexcept
+void HttpResource::SetOnRequest(function<void()>&& handler) noexcept
 {
-  m_requestHandler = move(handler);
+  m_requestHandler = std::move(handler);
 }
 
-void HttpResource::SetOnResponse(function<void(const std::string &)> &&handler) noexcept
+void HttpResource::SetOnResponse(function<void(const std::string&)>&& handler) noexcept
 {
-  m_responseHandler = move(handler);
+  m_responseHandler = std::move(handler);
 }
 
-void HttpResource::SetOnError(function<void(const std::string &)> &&handler) noexcept
+void HttpResource::SetOnError(function<void(const std::string&)>&& handler) noexcept
 {
-  m_errorHandler = move(handler);
+  m_errorHandler = std::move(handler);
 }
 
 #pragma endregion Handler setters
