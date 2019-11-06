@@ -14,10 +14,14 @@ import {
   UIManager,
   View,
 } from 'react-native';
-import { NativeModules } from 'react-native';
+
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+// Creating event emitters
+const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
+const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModuleCPP);
 
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
-
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
 var log = function(result) {
@@ -34,11 +38,21 @@ var getCallback = function(prefix) {
 class SampleApp extends Component {
   constructor(props) {
     super(props);
-    this._cuccsRef = React.createRef();
+    this._CustomUserControlCSRef = React.createRef();
   }
 
-  _onPressHandlerSMCS() {
-    log('SampleApp._onPressHandlerSMCS()');
+  componentDidMount() {
+    this._TimedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
+    this._TimedEventCPPSub = SampleModuleCPPEmitter.addListener('TimedEventCPP', getCallback('SampleModuleCPP.TimedEventCPP() => '));
+  }
+
+  componentWillUnmount() {
+    this._TimedEventCSSub.remove();
+    this._TimedEventCPPSub.remove();
+  }
+
+  onPressSampleModuleCS() {
+    log('SampleApp.onPressSampleModuleCS()');
 
     var numberArg = 42;
 
@@ -46,6 +60,9 @@ class SampleApp extends Component {
 
     log(`SampleModuleCS.NumberConstant: ${NativeModules.SampleModuleCS.NumberConstant}`);
     log(`SampleModuleCS.StringConstant: ${NativeModules.SampleModuleCS.StringConstant}`);
+
+    log(`SampleModuleCS.NumberConstantViaProvider: ${NativeModules.SampleModuleCS.NumberConstantViaProvider}`);
+    log(`SampleModuleCS.StringConstantViaProvider: ${NativeModules.SampleModuleCS.StringConstantViaProvider}`);
 
     // SampleModuleCS method calls
 
@@ -66,10 +83,14 @@ class SampleApp extends Component {
 
     var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
+
+    log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
+
+    log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
   }
 
-  _onPressHandlerSMCPP() {
-    log('SampleApp._onPressHandlerSMCPP()');
+  onPressSampleModuleCPP() {
+    log('SampleApp.onPressSampleModuleCPP()');
 
     var numberArg = 42;
 
@@ -77,6 +98,9 @@ class SampleApp extends Component {
 
     log(`SampleModuleCPP.NumberConstant: ${NativeModules.SampleModuleCPP.NumberConstant}`);
     log(`SampleModuleCPP.StringConstant: ${NativeModules.SampleModuleCPP.StringConstant}`);
+
+    log(`SampleModuleCPP.NumberConstantViaProvider: ${NativeModules.SampleModuleCPP.NumberConstantViaProvider}`);
+    log(`SampleModuleCPP.StringConstantViaProvider: ${NativeModules.SampleModuleCPP.StringConstantViaProvider}`);
 
     // SampleModuleCPP method calls
 
@@ -97,16 +121,20 @@ class SampleApp extends Component {
 
     var promise2 = NativeModules.SampleModuleCPP.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
+
+    log('SampleModuleCPP.SyncReturnMethod => ' + NativeModules.SampleModuleCPP.SyncReturnMethod());
+
+    log('SampleModuleCPP.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCPP.SyncReturnMethodWithArgs(numberArg));
   }
 
-  _onPressHandlerCUCCS() {
-    log('SampleApp._onPressHandlerCUCCS()');
+  onPressCustomUserControlCS() {
+    log('SampleApp.onPressCustomUserControlCS()');
 
-    if (this._cuccsRef)
+    if (this._CustomUserControlCSRef)
     {
-      const cuccsTag = findNodeHandle(this._cuccsRef);
-      log(`tag: ${cuccsTag}`);
-      UIManager.dispatchViewManagerCommand(cuccsTag, UIManager.CustomUserControlCS.Commands.CustomCommand, ['Hello World!']);
+      const tag = findNodeHandle(this._CustomUserControlCSRef);
+      log(`tag: ${tag}`);
+      UIManager.dispatchViewManagerCommand(tag, UIManager.CustomUserControlCS.Commands.CustomCommand, ['Hello World!']);
     }
   }
 
@@ -120,11 +148,11 @@ class SampleApp extends Component {
           This app consumes custom Native Modules and View Managers.
         </Text>
 
-        <Button onPress={() => { this._onPressHandlerSMCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
-        <Button onPress={() => { this._onPressHandlerSMCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
+        <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
+        <Button onPress={() => { this.onPressSampleModuleCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
 
-        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._cuccsRef = ref; }} />
-        <Button onPress={() => { this._onPressHandlerCUCCS(); }} title="Call CustomUserControlCS Commands!" />
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} />
+        <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
 
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
         <Text style={styles.instructions}>

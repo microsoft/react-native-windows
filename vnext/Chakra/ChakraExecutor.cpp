@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <folly/Conv.h>
 #include <folly/Exception.h>
+#include <folly/MapUtil.h>
 #include <folly/Memory.h>
 #include <folly/String.h>
 #include <folly/json.h>
@@ -490,17 +491,7 @@ static std::string simpleBasename(const std::string &path) {
   return (pos != std::string::npos) ? path.substr(pos) : path;
 }
 
-void ChakraExecutor::loadApplicationScript(
-    std::unique_ptr<const JSBigString> script,
-#if !defined(OSS_RN)
-    uint64_t scriptVersion,
-#endif
-    std::string sourceURL
-#if !defined(OSS_RN)
-    ,
-    std::string &&bytecodeFileName
-#endif
-) {
+void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) {
   SystraceSection s("ChakraExecutor::loadApplicationScript", "sourceURL", sourceURL);
 
   JSContextHolder ctx(m_context);
@@ -512,17 +503,18 @@ void ChakraExecutor::loadApplicationScript(
 
   ChakraString jsSourceURL(sourceURL.c_str());
 
+#if defined(OSS_RN)
+  evaluateScript(std::move(script), jsSourceURL);
+#else
+  auto bundleMetadata = folly::get_ptr(m_instanceArgs.BundleUrlMetadataMap, sourceURL);
+
   // when debugging is enabled, don't use bytecode caching because ChakraCore
   // doesn't support it.
-#if !defined(OSS_RN)
-  if (bytecodeFileName.empty() || m_instanceArgs.EnableDebugging)
-#endif
-  {
+  if (!bundleMetadata || m_instanceArgs.EnableDebugging) {
     evaluateScript(std::move(script), jsSourceURL);
-  }
-#if !defined(OSS_RN)
-  else {
-    evaluateScriptWithBytecode(std::move(script), scriptVersion, jsSourceURL, std::move(bytecodeFileName));
+  } else {
+    evaluateScriptWithBytecode(
+        std::move(script), bundleMetadata->version, jsSourceURL, std::string(bundleMetadata->bytecodeFilename));
   }
 #endif
 

@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-wpf",
   "entries": [
     {
+      "date": "Wed, 06 Nov 2019 13:58:14 GMT",
+      "tag": "rnpm-plugin-wpf_v0.2.15",
+      "version": "0.2.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Build fixes",
+            "author": "anandrag@microsoft.com",
+            "commit": "04b58d679ba04baca23348928fad5250a34d31b9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Oct 2019 20:58:22 GMT",
       "tag": "rnpm-plugin-wpf_v0.2.14",
       "version": "0.2.14",

@@ -75,7 +75,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(ReactNativeDir)\ReactCommon\jsi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(JSI_Source);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>BOOST_ASIO_DISABLE_BOOST_REGEX;BOOST_ERROR_CODE_HEADER_ONLY;BOOST_ASIO_HAS_IOCP;_WIN32_WINNT=_WIN32_WINNT_WIN7;WIN32;_WINDOWS;_WIN32;JSI_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <PreprocessToFile>false</PreprocessToFile>

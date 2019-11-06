@@ -2,8 +2,8 @@
 
 #include <DevSettings.h>
 
-#include <jsi/RuntimeHolder.h>
-#include <jsi/ScriptStore.h>
+#include <JSI/Shared/RuntimeHolder.h>
+#include <JSI/Shared/ScriptStore.h>
 
 #include <Logging.h>
 

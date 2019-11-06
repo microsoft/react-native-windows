@@ -27,7 +27,7 @@ App::App() noexcept
     InstanceSettings().UseLiveReload(true);
 #endif
 
-#if DEBUG
+#if _DEBUG
     InstanceSettings().EnableDeveloperMenu(true);
 #else
     InstanceSettings().EnableDeveloperMenu(false);

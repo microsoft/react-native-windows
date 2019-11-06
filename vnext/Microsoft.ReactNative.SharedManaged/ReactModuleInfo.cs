@@ -17,7 +17,10 @@ namespace Microsoft.ReactNative.Managed
       ModuleType = moduleType;
       ModuleProvider = (IReactModuleBuilder moduleBuilder) =>
       {
-        moduleBuilder.SetEventEmitterName(eventEmitterName);
+        if (!string.IsNullOrEmpty(eventEmitterName))
+        {
+          moduleBuilder.SetEventEmitterName(eventEmitterName);
+        }
         object module = Activator.CreateInstance(moduleType);
         AddModuleMembers(moduleBuilder, module);
         return module;
@@ -48,7 +51,7 @@ namespace Microsoft.ReactNative.Managed
         moduleInfo = new ReactModuleInfo(
             moduleType,
             moduleAttribute.ModuleName ?? moduleType.Name,
-            moduleAttribute.EventEmitterName ?? moduleType.Name);
+            moduleAttribute.EventEmitterName);
         s_moduleInfos.Add(moduleType, moduleInfo);
         return moduleInfo;
       }

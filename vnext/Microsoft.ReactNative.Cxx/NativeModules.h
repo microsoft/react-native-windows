@@ -18,7 +18,7 @@
 // - moduleName (optional) - the module name visible to JavaScript. Default is
 //     the moduleClass name.
 // - eventEmitterName (optional) - the event emitter name used in JavaScript.
-//     Default is the moduleName.
+//     Default is the RCTDeviceEventEmitter.
 #define REACT_MODULE(/* moduleClass, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
 
@@ -132,11 +132,22 @@ using CurrentNativeModuleBuilder =
 //==============================================================================
 
 template <class TModule>
-inline winrt::Microsoft::ReactNative::Bridge::ReactModuleProvider MakeModuleProvider() noexcept {
+inline winrt::Microsoft::ReactNative::Bridge::ReactModuleProvider MakeModuleProvider(
+    const char *moduleName,
+    const char *eventEmitterName) noexcept {
   using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
 
-  return [module = std::shared_ptr<TModule>{nullptr}](IReactModuleBuilder const &moduleBuilder) mutable noexcept {
+  return [
+    module = std::shared_ptr<TModule>{nullptr},
+    moduleName = std::string(moduleName),
+    eventEmitterName = std::string(eventEmitterName)
+  ](IReactModuleBuilder const &moduleBuilder) mutable noexcept {
     CurrentNativeModuleBuilder currentModuleBuilder{&moduleBuilder};
+
+    if (!eventEmitterName.empty()) {
+      currentModuleBuilder.Get()->SetEventEmitterName(winrt::to_hstring(eventEmitterName));
+    }
+
     module = std::make_shared<TModule>();
     return winrt::Windows::Foundation::IInspectable{nullptr};
   };

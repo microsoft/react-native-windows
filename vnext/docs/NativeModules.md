@@ -20,7 +20,7 @@ Native modules contain (or wrap) native code which can then be exposed to JS. To
 
 React Native for Windows supports authoring native modules in both C# and C++. Examples of both are provided below. 
 
-> NOTE: If you are unable to use the reflection-based annotation approach, you can define native modules directly using the ABI. This is outlined in the [Writing Native Modules without using Attributes](./NativeModulesAdvanced.md) document. 
+> NOTE: If you are unable to use the reflection-based annotation approach, you can define native modules directly using the ABI. This is outlined in the [Native Modules and React Native Windows (Advanced Topics)](./NativeModulesAdvanced.md) document. 
 
 ## Sample Native Module (C#)
 
@@ -58,24 +58,36 @@ namespace NativeModuleSample
     [ReactMethod("add")]
     public double Add(double a, double b)
     {
-        return a + b;
+        double result = a + b;
+        AddEvent(result);
+        return result;
     }
+
+    [ReactEvent]
+    public ReactEvent<double> AddEvent { get; set; }
   }
 }
 ```
 
 First off, you see that we're making use of the `Microsoft.ReactNative.Managed` shared library, which provides the easiest (and recommended) experience for authoring native modules. `Microsoft.ReactNative.Managed` provides the mechanism that discovers the native module annotations to build bindings at runtime.
 
-The `ReactModule` attribute says that the class is a ReactNative native module. It has an optional parameter for the name visible to JavaScript and the name of the event emitter. By default both these names are the same as the class name. You can overwrite the name that JavaScript references or overwrite the event emitter name like this: `[ReactModule("math", EventEmitterName = "mathEmitter")]`.
+The `[ReactModule]` attribute says that the class is a ReactNative native module. It has an optional parameter for the module name visible to JavaScript and optionally the name of a registered event emitter. By default, the name visible to JavaScript is the same as the class name, and the default event emitter is `RCTDeviceEventEmitter`.
+
+You can overwrite the JavaScript module name like this: `[ReactModule("math")]`.
+
+You can specify a different event emitter like this: `[ReactModule(EventEmitter = "mathEmitter")]`.
+
+> NOTE: Using the default event emitter, `RCTDeviceEventEmitter`, all native event names must be **globally unique across all native modules** (even the ones built-in to RN). However, specifying your own event emitter means you'll need to create and register that too. This process is outlined in the [Native Modules and React Native Windows (Advanced Topics)](./NativeModulesAdvanced.md) document.
 
 The `[ReactConstant]` attribute is how you can define constants. Here FancyMath has defined two constants: `E` and `Pi`. By default, the name exposed to JS will be the same name as the field (`E` for `E`), but you can override the name like this: `[ReactConstant("Pi")]`.
 
 The `[ReactMethod]` attribute is how you define methods. In FancyMath we have one method, `add`, which takes two doubles and returns their sum. As before, you can optionally customize the name like this: `[ReactMethod("add")]`.
 
+The `[ReactEvent]` attribute is how you define events. In FancyMath we have one event, `AddEvent`, which uses the `ReactEvent<double>` delegate, where the double represents the type of the event data. Now whenever we invoke the `AddEvent` delegate in our native code (as we do above), an event named `"AddEvent"` will be raised in JavaScript. As before, you could have optionally customized the name in JS like this: `[ReactEvent("addEvent")]`. 
 
 ### 2. Registering your Native Module
 
-> IMPORTANT NOTE: When you create a new project via the CLI, the generated `ReactNativeHost` class will automatically register all native modules defined within the app. **You will not need to manually register native modules that are defined within your app's scope, as they will be registered automatically.**
+> IMPORTANT NOTE: When you create a new project via the CLI, the generated `ReactApplication` class will automatically register all native modules defined within the app. **You will not need to manually register native modules that are defined within your app's scope, as they will be registered automatically.**
 
 Now, we want to register our new `FancyMath` module with React Native so we can use it from JavaScript code. To do this, first we're going to create a `ReactPackageProvider` which implements [Microsoft.ReactNative.IReactPackageProvider](../Microsoft.ReactNative/IReactPackageProvider.idl).
 
@@ -134,13 +146,32 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Alert,
-  NativeModules,
   Text,
   View,
 } from 'react-native';
 
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+const FancyMathEventEmitter = new NativeEventEmitter(NativeModules.FancyMath);
+
 class NativeModuleSample extends Component {
+
+  componentDidMount() {
+    // Subscribing to FancyMath.AddEvent
+    FancyMathEventEmitter.addListener('AddEvent', eventHandler, this);
+  }
+
+  componentWillUnmount() {
+    // Unsubscribing from FancyMath.AddEvent
+    FancyMathEventEmitter.removeListener('AddEvent', eventHandler, this);
+  }
+
+  eventHandler(result) {
+    console.log("Event was fired with: " + result);
+  }
+
   _onPressHandler() {
+    // Calling FancyMath.add method
     NativeModules.FancyMath.add(
       /* arg a */ NativeModules.FancyMath.Pi,
       /* arg b */ NativeModules.FancyMath.E,
@@ -166,11 +197,13 @@ class NativeModuleSample extends Component {
 AppRegistry.registerComponent('NativeModuleSample', () => NativeModuleSample);
 ```
 
-To access your native modules, you need to import `NativeModules` from `react-native`. All of the native modules registered with your host application (including both the built-in ones that come with React Native for Windows vNext in addition to the ones you've added) are available as members of `NativeModules`.
+To access your native modules, you need to import `NativeModules` from `react-native`. All of the native modules registered with your host application (including both the built-in ones that come with React Native for Windows vNext in addition to the ones you've added) are available as members of `NativeModules`. Since our native modules fires events, we're also bringing in `NativeEventEmitter`.
 
 To access our `FancyMath` constants, we can simply call `NativeModules.FancyMath.E` and `NativeModules.FancyMath.Pi`.
 
 Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case `FancyMath.add()` returns a value, so in addition to the two necessary parameters we also include a callback function which will be called with the result of `FancyMath.add()`. In the example above, we can see that the callback raises an Alert dialog with the result value.
+
+For events, you'll see that we created an instance of `NativeEventEmitter` passing in our `NativeModules.FancyMath` module, and called it `FancyMathEventEmitter`. We can then use the `FancyMathEventEmitter.addListener()` and `FancyMathEventEmitter.removeListener()` methods to subscribe to our `FancyMath.AddEvent`. In this case, when `AddEvent` is fired in the native code, `eventHandler` will get called, which logs the result to the console log.
 
 ## Sample Native Module (C++)
 
@@ -208,24 +241,36 @@ namespace NativeModuleSample
     REACT_METHOD(Add, "add");
     public double Add(double a, double b)
     {
-        return a + b;
+      double result = a + b;
+      AddEvent(result);
+      return result;
     }
+
+    REACT_EVENT(AddEvent);
+    std::function<void(double)> AddEvent;
   }
 }
 ```
 
-The `REACT_MODULE` macro-attribute says that the class is a ReactNative native module. It receives the class name as a first parameter. All other macro-attributes also receive their target as a first parameter. The `REACT_MODULE` has an optional parameter for the name visible to JavaScript and the name of the event emitter. By default both these names are the same as the class name. They can be provided explicitly as the following: `REACT_MODULE(FancyMath, "math", "mathEmitter")`.
+The `REACT_MODULE` macro-attribute says that the class is a ReactNative native module. It receives the class name as a first parameter. All other macro-attributes also receive their target as a first parameter. `REACT_MODULE` has an optional parameter for the module name visible to JavaScript and optionally the name of a registered event emitter. By default, the name visible to JavaScript is the same as the class name, and the default event emitter is `RCTDeviceEventEmitter`.
+
+You can overwrite the JavaScript module name like this: `REACT_MODULE(FancyMath, "math")`.
+
+You can specify a different event emitter like this: `REACT_MODULE(FancyMath, "math", "mathEmitter")`.
+
+> NOTE: Using the default event emitter, `RCTDeviceEventEmitter`, all native event names must be **globally unique across all native modules** (even the ones built-in to RN). However, specifying your own event emitter means you'll need to create and register that too. This process is outlined in the [Native Modules and React Native Windows (Advanced Topics)](./NativeModulesAdvanced.md) document.
 
 Then we define constants, and it's as easy as creating a public field and giving it a `REACT_CONSTANT` macro-attribute. Here FancyMath has defined two constants: `E` and `Pi`. By default, the name exposed to JS will be the same name as the field (`E` for `E`), but you can override this by specifying an argument in the `REACT_CONSTANT` attribute (hence `Pi` instead of `PI`).
 
 It's just as easy to add custom methods, by attributing a public method with `REACT_METHOD`. In FancyMath we have one method, `add`, which takes two doubles and returns their sum. Again, we've specified the optional `name` argument in the `REACT_METHOD` macro-attribute so in JS we call `add` instead of `Add`.
 
+To add custom events, we attribute a `std::function<void(double)>` delegate with `REACT_EVENT`, where the double represents the type of the event data. Now whenever we invoke the `AddEvent` delegate in our native code (as we do above), an event named `"AddEvent"` will be raised in JavaScript. As before, you could have optionally customized the name in JS like this: `REACT_EVENT(AddEvent, "addEvent")`.
+
 #### 2. Registering your Native Module
 
-> IMPORTANT NOTE: **NYI** When you create a new project via the CLI, the generated `ReactNativeHost` class will automatically register all native modules defined within the app. **You will not need to manually register native modules that are defined within your app's scope, as they will be registered automatically.**
+> IMPORTANT NOTE: When you create a new project via the CLI, the generated `ReactApplication` class will automatically register all native modules defined within the app. **You will not need to manually register native modules that are defined within your app's scope, as they will be registered automatically.**
 
-Now, we want to register our new `FancyMath` module with React Native so we can use it from JavaScript code. To do this, first we're going to create a `ReactPackageProvider` which implements [Microsoft.ReactNative.IReactPackageProvider](../Microsoft.ReactNative/IReactPackageProvider.idl).
-It starts with defining an .idl file:
+Now, we want to register our new `FancyMath` module with React Native so we can use it from JavaScript code. To do this, first we're going to create a `ReactPackageProvider` which implements [Microsoft.ReactNative.IReactPackageProvider](../Microsoft.ReactNative/IReactPackageProvider.idl). It starts with defining an .idl file:
 
 *ReactPackageProvider.idl*
 ```csharp
@@ -270,7 +315,10 @@ struct ReactPackageProvider : ReactPackageProviderT<
 #include "pch.h"
 #include "ReactPackageProvider.h"
 #include "ReactPackageProvider.g.cpp"
-#include "FancyMath.h"
+
+// NOTE: You must include the headers of your native modules here in
+// order for the AddAttributedModules call below to find them.
+#include "FancyMath.h" 
 
 using namespace winrt::Microsoft::ReactNative;
 using namespace Microsoft::ReactNative;
@@ -325,13 +373,32 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   Alert,
-  NativeModules,
   Text,
   View,
 } from 'react-native';
 
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+const FancyMathEventEmitter = new NativeEventEmitter(NativeModules.FancyMath);
+
 class NativeModuleSample extends Component {
+
+  componentDidMount() {
+    // Subscribing to FancyMath.AddEvent
+    FancyMathEventEmitter.addListener('AddEvent', eventHandler, this);
+  }
+
+  componentWillUnmount() {
+    // Unsubscribing from FancyMath.AddEvent
+    FancyMathEventEmitter.removeListener('AddEvent', eventHandler, this);
+  }
+
+  eventHandler(result) {
+    console.log("Event was fired with: " + result);
+  }
+
   _onPressHandler() {
+    // Calling FancyMath.add method
     NativeModules.FancyMath.add(
       /* arg a */ NativeModules.FancyMath.Pi,
       /* arg b */ NativeModules.FancyMath.E,
@@ -357,8 +424,11 @@ class NativeModuleSample extends Component {
 AppRegistry.registerComponent('NativeModuleSample', () => NativeModuleSample);
 ```
 
-As you can see, to access your native modules, you need to import `NativeModules` from `react-native`. All of the native modules registered with your host application (including both the built-in ones that come with React Native for Windows vNext in addition to the ones you've added) are available as members of `NativeModules`.
+To access your native modules, you need to import `NativeModules` from `react-native`. All of the native modules registered with your host application (including both the built-in ones that come with React Native for Windows vNext in addition to the ones you've added) are available as members of `NativeModules`. Since our native modules fires events, we're also bringing in `NativeEventEmitter`.
 
 To access our `FancyMath` constants, we can simply call `NativeModules.FancyMath.E` and `NativeModules.FancyMath.Pi`.
 
 Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case `FancyMath.add()` returns a value, so in addition to the two necessary parameters we also include a callback function which will be called with the result of `FancyMath.add()`. In the example above, we can see that the callback raises an Alert dialog with the result value.
+
+For events, you'll see that we created an instance of `NativeEventEmitter` passing in our `NativeModules.FancyMath` module, and called it `FancyMathEventEmitter`. We can then use the `FancyMathEventEmitter.addListener()` and `FancyMathEventEmitter.removeListener()` methods to subscribe to our `FancyMath::AddEvent`. In this case, when `AddEvent` is fired in the native code, `eventHandler` will get called, which logs the result to the console log.
+
