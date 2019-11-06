@@ -46,12 +46,12 @@ enum class JSIEngineOverride : int32_t {
   Last = V8Lite
 };
 
-struct ScriptMetadata {
-  uint64_t scriptVersion;
+struct ChakraBundleMetadata {
+  uint64_t version;
   std::string bytecodeFilename;
 };
 
-using ScriptUrlMetadataMap = std::map<std::string, ScriptMetadata>;
+using ChakraBundleUrlMetadataMap = std::map<std::string, ChakraBundleMetadata>;
 
 struct DevSettings {
   bool useSandbox{false};
@@ -110,10 +110,10 @@ struct DevSettings {
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
 
-  /// Used to allow ChakraExecutor to query the instance creator for
-  /// bytecode/versioning information from scriptURL. Superseded by
-  /// PreparedScriptStore on the JSI stack, and will be removed soon.
-  std::shared_ptr<ScriptUrlMetadataMap> chakraScriptMetadata;
+  /// Optionally used by ChakraExecutor to allow bundle bytecode caching.
+  /// Superseded by PreparedScriptStore on the JSI stack, and will be removed
+  /// soon. (See #3603)
+  ChakraBundleUrlMetadataMap chakraBundleUrlMetadataMap;
 };
 
 } // namespace react

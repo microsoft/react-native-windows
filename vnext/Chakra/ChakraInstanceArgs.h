@@ -71,10 +71,10 @@ struct ChakraInstanceArgs {
   std::shared_ptr<MemoryTracker> MemoryTracker;
 
   /**
-   * @brief Maps script URL to metadata needed for bytecode caching. Should be
-   * removed once we're on the JSI stack and using PreparedScriptStore.
+   * @brief Maps bundle URL to metadata needed for bytecode caching. Should be
+   * removed once we're on the JSI stack and using PreparedScriptStore (#3603).
    */
-  std::shared_ptr<ScriptUrlMetadataMap> ScriptMetadata;
+  ChakraBundleUrlMetadataMap BundleUrlMetadataMap;
 };
 
 } // namespace react

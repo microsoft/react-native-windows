@@ -469,9 +469,9 @@ InstanceImpl::InstanceImpl(
       instanceArgs.DebuggerConsoleRedirection = m_devSettings->debuggerConsoleRedirection;
 
       // Disable bytecode caching with live reload as we don't make guarantees
-      // that the the bundle version will change with edits
+      // that the bundle version will change with edits
       if (m_devSettings->liveReloadCallback == nullptr) {
-        instanceArgs.ScriptMetadata = m_devSettings->chakraScriptMetadata;
+        instanceArgs.BundleUrlMetadataMap = m_devSettings->chakraBundleUrlMetadataMap;
       }
 
       if (!m_devSettings->useJITCompilation) {
@@ -662,17 +662,17 @@ InstanceImpl::InstanceImpl(
   // Load ChakraExecutor for sandbox process
   auto edf = std::make_shared<SandboxDelegateFactory>(std::move(sendNativeModuleCall));
 
-  ChakraInstanceArgs instanceArgs;
-  instanceArgs.RuntimeAttributes =
+  ChakraInstanceArgs chakraInstanceArgs;
+  chakraInstanceArgs.RuntimeAttributes =
       m_devSettings->useJITCompilation ? JsRuntimeAttributeNone : JsRuntimeAttributeDisableNativeCodeGeneration;
 
   // Disable bytecode caching with live reload as we don't make guarantees that
   // the bundle version will change with edits
   if (m_devSettings->liveReloadCallback == nullptr) {
-    instanceArgs.ScriptMetadata = m_devSettings->chakraScriptMetadata;
+    chakraInstanceArgs.BundleUrlMetadataMap = m_devSettings->chakraBundleUrlMetadataMap;
   }
 
-  auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(instanceArgs));
+  auto jsef = std::make_shared<ChakraExecutorFactory>(std::move(chakraInstanceArgs));
   m_innerInstance->initializeBridge(
       std::make_unique<BridgeTestInstanceCallback>(), edf, jsef, m_jsThread, m_moduleRegistry);
 
