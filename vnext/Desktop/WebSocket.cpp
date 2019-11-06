@@ -19,7 +19,6 @@ using namespace boost::archive::iterators;
 using namespace boost::asio;
 using namespace boost::beast;
 
-using boost::asio::ip::basic_resolver_iterator;
 using boost::asio::ip::tcp;
 using boost::asio::async_initiate;
 

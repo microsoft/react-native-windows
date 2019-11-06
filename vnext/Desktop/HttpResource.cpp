@@ -10,15 +10,16 @@
 #include <boost/beast/version.hpp>
 #include <Utils.h>
 
-using namespace boost::asio::ip;
-using namespace boost::beast::http;
+using namespace boost::asio;
+using namespace boost::beast;
 
+using boost::asio::ip::basic_resolver_iterator;//TODO:remove
+using boost::asio::ip::tcp;
 using folly::dynamic;
+using std::function;
 using std::make_unique;
 using std::string;
 using std::unique_ptr;
-
-using boostecr = boost::system::error_code const &;
 
 namespace Microsoft::React
 {
@@ -36,7 +37,7 @@ void HttpResource::SendRequest(
     const string &responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
-    std::function<void(int64_t)> &&callback) noexcept
+    function<void(int64_t)> &&callback) noexcept
 {
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
@@ -49,17 +50,18 @@ void HttpResource::SendRequest(
   try
   {
     url = make_unique<Url>(urlString);
-  } catch (...)
+  }
+  catch (...)
   {
     m_errorHandler("Malformed URL");
     return;
   }
-  request<string_body> req;
+  http::request<http::string_body> req;
   req.version(11 /*HTTP 1.1*/);
-  req.method(string_to_verb(method));
+  req.method(http::string_to_verb(method));
   req.target(url->Target());
-  req.set(field::host, url->host); // ISS:2306365 - Determine/append port.
-  req.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
+  req.set(http::field::host, url->host); // ISS:2306365 - Determine/append port.
+  req.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
   for (const auto &header : headers)
   {
@@ -88,7 +90,7 @@ void HttpResource::SendRequest(
   m_context.restart();
 
   // Send/Receive request.
-  m_resolver.async_resolve(url->host, url->port, [this, &req](boostecr ec, tcp::resolver::results_type results)
+  m_resolver.async_resolve(url->host, url->port, [this, &req](error_code ec, tcp::resolver::results_type results)
   {
     if (ec)
     {
@@ -98,7 +100,7 @@ void HttpResource::SendRequest(
     else
     {
       boost::asio::async_connect(
-        m_socket, results.begin(), results.end(), [this, &req](boostecr ec, const basic_resolver_iterator<tcp> &)
+        m_socket, results.begin(), results.end(), [this, &req](error_code ec, const basic_resolver_iterator<tcp> &)
         {
           if (ec)
           {
@@ -107,7 +109,7 @@ void HttpResource::SendRequest(
           }
           else
           {
-            async_write(m_socket, move(req), [this](boostecr ec, size_t size)
+            async_write(m_socket, move(req), [this](error_code ec, size_t size)
             {
               if (ec)
               {
@@ -119,7 +121,7 @@ void HttpResource::SendRequest(
                 if (m_requestHandler)
                   m_requestHandler();
 
-                async_read(m_socket, m_buffer, m_response, [this](boostecr ec, size_t size)
+                async_read(m_socket, m_buffer, m_response, [this](error_code ec, size_t size)
                 {
                   if (ec)
                   {
@@ -175,17 +177,17 @@ void HttpResource::ClearCookies() noexcept
 
 #pragma region Handler setters
 
-void HttpResource::SetOnRequest(std::function<void()> &&handler) noexcept
+void HttpResource::SetOnRequest(function<void()> &&handler) noexcept
 {
   m_requestHandler = move(handler);
 }
 
-void HttpResource::SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept
+void HttpResource::SetOnResponse(function<void(const std::string &)> &&handler) noexcept
 {
   m_responseHandler = move(handler);
 }
 
-void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler) noexcept
+void HttpResource::SetOnError(function<void(const std::string &)> &&handler) noexcept
 {
   m_errorHandler = move(handler);
 }
