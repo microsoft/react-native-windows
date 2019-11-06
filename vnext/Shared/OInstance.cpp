@@ -589,18 +589,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       std::string bundlePath = m_devSettings->bundleRootPath + jsBundleRelativePath + ".bundle";
 
       auto bundleString = std::make_unique<::react::uwp::StorageFileBigString>(bundlePath);
-      m_innerInstance->loadScriptFromString(
-          std::move(bundleString),
-#if !defined(OSS_RN)
-          0 /*bundleVersion*/,
-#endif
-          jsBundleRelativePath,
-          synchronously
-#if !defined(OSS_RN)
-          ,
-          "" /*bytecodeFileName*/
-#endif
-      );
+      m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
 
     } catch (std::exception &e) {
