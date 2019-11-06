@@ -524,18 +524,6 @@
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\ViewControl.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -559,21 +547,6 @@
     </ClInclude>
     <ClInclude Include="Views\Image\ImageViewManager.h">
       <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
-      <Filter>Views\cppwinrt\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
-      <Filter>Views\cppwinrt</Filter>
     </ClInclude>
     <ClInclude Include="Views\Image\ReactImageBrush.h">
       <Filter>Views\Image</Filter>
@@ -768,26 +741,25 @@
     <Filter Include="Views\Image">
       <UniqueIdentifier>{6d877886-1c5c-45b8-8eae-2e1354cf673e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Views\cppwinrt\winrt">
-      <UniqueIdentifier>{e5234a36-e9ee-4ba3-9b11-02e7bd2ca6f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Views\cppwinrt\winrt\impl">
-      <UniqueIdentifier>{24ea7245-f460-4176-82b1-3cac4cd54621}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <MidlRT Include="ABI\idl\Module.idl">
-      <Filter>ABI\idl</Filter>
-    </MidlRT>
-    <MidlRT Include="ABI\idl\Instance.idl">
-      <Filter>ABI\idl</Filter>
-    </MidlRT>
-    <MidlRT Include="ABI\idl\ReactControl.idl">
-      <Filter>ABI\idl</Filter>
-    </MidlRT>
-    <MidlRT Include="ABI\idl\AccessibilityAction.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="ABI\idl\ReactUWPABI.idl">
+      <Filter>ABI\idl</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/ViewPanel.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/BorderEffect.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/AccessibilityAction.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/DynamicAutomationPeer.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
   </ItemGroup>
 </Project>
