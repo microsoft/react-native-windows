@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #include "pch.h"
 
 #include "HttpResource.h"
 
-#include <Utils.h>
 #include <boost/beast/core/buffers_to_string.hpp>
 #include <boost/beast/version.hpp>
+#include <Utils.h>
 
 using namespace boost::asio::ip;
 using namespace boost::beast::http;
@@ -19,8 +20,10 @@ using std::unique_ptr;
 
 using boostecr = boost::system::error_code const &;
 
-namespace Microsoft::React {
-namespace Experimental {
+namespace Microsoft::React
+{
+namespace Experimental
+{
 #pragma region HttpResource members
 
 HttpResource::HttpResource() noexcept : m_resolver{m_context}, m_socket{m_context} {}
@@ -33,7 +36,8 @@ void HttpResource::SendRequest(
     const string &responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
-    std::function<void(int64_t)> &&callback) noexcept {
+    std::function<void(int64_t)> &&callback) noexcept
+{
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
   assert(!useIncrementalUpdates);
@@ -42,9 +46,11 @@ void HttpResource::SendRequest(
 
   // Validate verb.
   unique_ptr<Url> url;
-  try {
+  try
+  {
     url = make_unique<Url>(urlString);
-  } catch (...) {
+  } catch (...)
+  {
     m_errorHandler("Malformed URL");
     return;
   }
@@ -55,17 +61,26 @@ void HttpResource::SendRequest(
   req.set(field::host, url->host); // ISS:2306365 - Determine/append port.
   req.set(field::user_agent, BOOST_BEAST_VERSION_STRING);
 
-  for (const auto &header : headers) {
+  for (const auto &header : headers)
+  {
     // ISS:2306365 - Deal with content-type, content-encoding?
     req.set(header.first, header.second);
   }
 
-  if (!bodyData.empty()) {
-    if (!bodyData["string"].empty()) {
-    } else if (!bodyData["base64"].empty()) {
-    } else if (!bodyData["uri"].empty()) {
+  if (!bodyData.empty())
+  {
+    if (!bodyData["string"].empty())
+    {
+    }
+    else if (!bodyData["base64"].empty())
+    {
+    }
+    else if (!bodyData["uri"].empty())
+    {
       assert(false); // Not implemented.
-    } else {
+    }
+    else
+    {
       // Empty request
     }
   }
@@ -73,83 +88,105 @@ void HttpResource::SendRequest(
   m_context.restart();
 
   // Send/Receive request.
-  m_resolver.async_resolve(url->host, url->port, [this, &req](boostecr ec, tcp::resolver::results_type results) {
-    if (ec) {
+  m_resolver.async_resolve(url->host, url->port, [this, &req](boostecr ec, tcp::resolver::results_type results)
+  {
+    if (ec)
+    {
       if (m_errorHandler)
         m_errorHandler(ec.message());
-    } else {
+    }
+    else
+    {
       boost::asio::async_connect(
-          m_socket, results.begin(), results.end(), [this, &req](boostecr ec, const basic_resolver_iterator<tcp> &) {
-            if (ec) {
-              if (m_errorHandler)
-                m_errorHandler(ec.message());
-            } else {
-              async_write(m_socket, move(req), [this](boostecr ec, size_t size) {
-                if (ec) {
-                  if (m_errorHandler)
-                    m_errorHandler(ec.message());
-                } else {
-                  if (m_requestHandler)
-                    m_requestHandler();
+        m_socket, results.begin(), results.end(), [this, &req](boostecr ec, const basic_resolver_iterator<tcp> &)
+        {
+          if (ec)
+          {
+            if (m_errorHandler)
+              m_errorHandler(ec.message());
+          }
+          else
+          {
+            async_write(m_socket, move(req), [this](boostecr ec, size_t size)
+            {
+              if (ec)
+              {
+                if (m_errorHandler)
+                  m_errorHandler(ec.message());
+              }
+              else
+              {
+                if (m_requestHandler)
+                  m_requestHandler();
 
-                  async_read(m_socket, m_buffer, m_response, [this](boostecr ec, size_t size) {
-                    if (ec) {
+                async_read(m_socket, m_buffer, m_response, [this](boostecr ec, size_t size)
+                {
+                  if (ec)
+                  {
+                    if (m_errorHandler)
+                      m_errorHandler(ec.message());
+                  }
+                  else
+                  {
+                    if (m_responseHandler)
+                      m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
+
+                    boost::system::error_code bec;
+                    m_socket.shutdown(tcp::socket::shutdown_both, bec);
+                    if (bec && boost::system::errc::not_connected != bec) // not_connected may happen. Not an actual error.
+                    {
                       if (m_errorHandler)
-                        m_errorHandler(ec.message());
-                    } else {
-                      if (m_responseHandler)
-                        m_responseHandler(boost::beast::buffers_to_string(m_buffer.data()));
+                        m_errorHandler(bec.message());
 
-                      boost::system::error_code bec;
-                      m_socket.shutdown(tcp::socket::shutdown_both, bec);
-                      if (bec && boost::system::errc::not_connected != bec) // not_connected may happen. Not
-                      // an actual error.
-                      {
-                        if (m_errorHandler)
-                          m_errorHandler(bec.message());
-
-                        // ISS:2306365 - Callback?
-                      }
+                      // ISS:2306365 - Callback?
                     }
-                  }); // async_read
-                }
-              }); // async_write
-            }
-          }); // async_connect
+                  }
+                }); // async_read
+              }
+            }); // async_write
+          }
+        }); // async_connect
     }
   }); // async_resolve
 
   m_context.run();
 }
 
-void HttpResource::AbortRequest() noexcept {
+void HttpResource::AbortRequest() noexcept
+{
   m_context.stop();
 
-  if (m_socket.is_open()) {
+  if (m_socket.is_open())
+  {
     boost::system::error_code bec;
     m_socket.shutdown(tcp::socket::shutdown_both, bec);
-    if (bec && boost::system::errc::not_connected != bec) {
+    if (bec && boost::system::errc::not_connected != bec)
+    {
       if (m_errorHandler)
         m_errorHandler(bec.message());
     }
   }
 }
 
-void HttpResource::ClearCookies() noexcept {
+void HttpResource::ClearCookies() noexcept
+{
   assert(false); // Not yet implemented.
 }
 
 #pragma region Handler setters
 
-void HttpResource::SetOnRequest(std::function<void()> &&handler) noexcept {
+void HttpResource::SetOnRequest(std::function<void()> &&handler) noexcept
+{
   m_requestHandler = move(handler);
 }
 
-void HttpResource::SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept {
+void HttpResource::SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept
+{
   m_responseHandler = move(handler);
 }
 
-void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler) noexcept {
+void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler) noexcept
+{
   m_errorHandler = move(handler);
 }
 
@@ -161,7 +198,8 @@ void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler
 
 #pragma region IHttpResource static members
 
-/*static*/ unique_ptr<IHttpResource> IHttpResource::Make() noexcept {
+/*static*/ unique_ptr<IHttpResource> IHttpResource::Make() noexcept
+{
   return unique_ptr<IHttpResource>(new Experimental::HttpResource());
 }
 

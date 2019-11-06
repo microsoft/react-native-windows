@@ -10,8 +10,8 @@
 #include <boost/beast/websocket.hpp>
 #include <queue>
 #include <thread>
+#include <Utils.h>
 #include "IWebSocket.h"
-#include "Utils.h"
 
 namespace Microsoft::React
 {

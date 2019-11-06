@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// clang-format off
 #pragma once
 
 #include <IHttpResource.h>
@@ -10,9 +11,11 @@
 #include <boost/beast/core/flat_buffer.hpp>
 #include <boost/beast/http.hpp>
 
-namespace Microsoft::React::Experimental {
+namespace Microsoft::React::Experimental
+{
 
-class HttpResource : public IHttpResource {
+class HttpResource : public IHttpResource
+{
   boost::asio::io_context m_context;
   boost::asio::ip::tcp::resolver m_resolver;
   boost::asio::ip::tcp::socket m_socket;
@@ -29,7 +32,7 @@ class HttpResource : public IHttpResource {
  public:
   HttpResource() noexcept;
 
-#pragma region IHttpResource members
+  #pragma region IHttpResource members
 
   void SendRequest(
       const std::string &method,
@@ -47,7 +50,7 @@ class HttpResource : public IHttpResource {
   void SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept override;
   void SetOnError(std::function<void(const std::string &)> &&handler) noexcept override;
 
-#pragma endregion
+  #pragma endregion
 };
 
 } // namespace Microsoft::React::Experimental
