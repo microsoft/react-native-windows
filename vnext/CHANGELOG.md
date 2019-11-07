@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Nov 2019 17:37:11 GMT and should not be manually modified.
 
+## 0.60.0-vnext.66
+Thu, 07 Nov 2019 17:37:11 GMT
+
+### Changes
+
+- Support refreshControl (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.65
 Wed, 06 Nov 2019 13:58:14 GMT
 

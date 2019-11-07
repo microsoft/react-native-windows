@@ -239,6 +239,7 @@
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
     <ClInclude Include="Views\ReactControl.h" />
+    <ClInclude Include="Views\RefreshControlManager.h" />
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="Views\RawTextViewManager.cpp" />
     <ClCompile Include="Views\ReactControl.cpp" />
     <ClCompile Include="Views\ReactRootView.cpp" />
+    <ClCompile Include="Views\RefreshControlManager.cpp" />
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
