@@ -7,12 +7,7 @@
 namespace SampleLibraryCPP {
 
 void DebugWriteLine(const std::string &name, const std::string &methodName, const std::string &arg) {
-  std::string output = name;
-  output.append("::");
-  output.append(methodName);
-  output.append("(");
-  output.append(arg);
-  output.append(")\n");
+  std::string output = name + "::" + methodName + "(" + arg +")\n";
   OutputDebugStringA(output.c_str());
 }
 

@@ -141,7 +141,7 @@ void ABIViewManager::DispatchCommand(
     auto listArgs =
         iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::IVectorView<winrt::IInspectable>>();
 
-    if (listArgs == nullptr) {
+    if (!listArgs) {
       auto args = single_threaded_vector<winrt::IInspectable>();
       args.Append(iinspectableArgs);
       listArgs = args.GetView();
