@@ -13,7 +13,14 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
+
+function wait(timeout: number) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
 
 export default class Bootstrap extends React.Component<{}, any> {
   state = {
@@ -22,6 +29,7 @@ export default class Bootstrap extends React.Component<{}, any> {
     snapToEndValue: false,
     zoomValue: false,
     alignToStartValue: true,
+    refreshing: false,
   };
 
   toggleSwitch1 = (value: boolean) => {
@@ -42,6 +50,11 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   toggleSwitch5 = (value: boolean) => {
     this.setState({alignToStartValue: value});
+  };
+
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    wait(2000).then(() => this.setState({refreshing: false}));
   };
 
   makeItems = (nItems: number, styles: Object): Array<any> => {
@@ -152,6 +165,12 @@ export default class Bootstrap extends React.Component<{}, any> {
                 this.state.horizontalValue
                   ? styles.horizontalScrollViewStyle
                   : styles.verticalScrollViewStyle
+              }
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onRefresh}
+                />
               }
               snapToOffsets={[100.0, 500.0]}
               minimumZoomScale={0.1}
