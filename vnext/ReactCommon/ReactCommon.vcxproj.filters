@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="stubs">
@@ -123,22 +123,22 @@
     <ClCompile Include="$(YogaDir)\yoga\log.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleBinding.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleUtils.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\LongLivedObject.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboCxxModule.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModule.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.cpp">
       <Filter>turbomodule\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\node_modules\react-native\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp">
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp">
       <Filter>jscallinvoker\jsireact</Filter>
     </ClCompile>
   </ItemGroup>
@@ -260,25 +260,25 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
       <Filter>privatedata</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleBinding.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModuleUtils.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\LongLivedObject.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboCxxModule.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\turbomodule\core\TurboModule.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h">
       <Filter>jscallinvoker\jsireact</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\node_modules\react-native\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h">
       <Filter>jscallinvoker\jsireact</Filter>
     </ClInclude>
   </ItemGroup>
