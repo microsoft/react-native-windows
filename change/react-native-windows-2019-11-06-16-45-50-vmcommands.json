@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "ViewManager Command Updates * Added command to CustomUserControlViewManagerCPP, #3600 * Added support for simpler C# view manager commands signatures * Added support for object properties for view managers, #3613 * Added documentation for C++ view manager * Added documentation for ViewManager commands, #3599",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "529a95bf145b1f25511874776724082ab8032caa",
-  "date": "2019-11-07T00:45:50.666Z"
-}
