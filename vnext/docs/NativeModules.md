@@ -273,13 +273,15 @@ To add custom events, we attribute a `std::function<void(double)>` delegate with
 Now, we want to register our new `FancyMath` module with React Native so we can use it from JavaScript code. To do this, first we're going to create a `ReactPackageProvider` which implements [Microsoft.ReactNative.IReactPackageProvider](../Microsoft.ReactNative/IReactPackageProvider.idl). It starts with defining an .idl file:
 
 *ReactPackageProvider.idl*
-```csharp
+```c++
 namespace NativeModuleSample {
 
 runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
 {
   ReactPackageProvider();
 };
+
+}
 ```
 
 After that we add the .h and.cpp files:
@@ -344,6 +346,8 @@ Now that we have the `ReactPackageProvider`, it's time to register it within our
 
 #include "App.h"
 #include "ReactPackageProvider.h"
+
+#include "winrt/NativeModuleSample.h"
 
 namespace winrt::SampleApp::implementation {
 

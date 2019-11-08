@@ -36,11 +36,6 @@ var getCallback = function(prefix) {
 };
 
 class SampleApp extends Component {
-  constructor(props) {
-    super(props);
-    this._CustomUserControlCSRef = React.createRef();
-  }
-
   componentDidMount() {
     this._TimedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
     this._TimedEventCPPSub = SampleModuleCPPEmitter.addListener('TimedEventCPP', getCallback('SampleModuleCPP.TimedEventCPP() => '));
@@ -130,11 +125,26 @@ class SampleApp extends Component {
   onPressCustomUserControlCS() {
     log('SampleApp.onPressCustomUserControlCS()');
 
+    var strArg = 'Hello World!';
+
     if (this._CustomUserControlCSRef)
     {
       const tag = findNodeHandle(this._CustomUserControlCSRef);
-      log(`tag: ${tag}`);
-      UIManager.dispatchViewManagerCommand(tag, UIManager.CustomUserControlCS.Commands.CustomCommand, ['Hello World!']);
+      log(`UIManager.dispatchViewManagerCommand(${tag}, CustomUserControlCS.CustomCommand, "${strArg}")`);
+      UIManager.dispatchViewManagerCommand(tag, UIManager.getViewManagerConfig('CustomUserControlCS').Commands.CustomCommand, strArg);
+    }
+  }
+
+  onPressCustomUserControlCPP() {
+    log('SampleApp.onPressCustomUserControlCPP()');
+
+    var strArg = 'Hello World!';
+
+    if (this._CustomUserControlCPPRef)
+    {
+      const tag = findNodeHandle(this._CustomUserControlCPPRef);
+      log(`UIManager.dispatchViewManagerCommand(${tag}, CustomUserControlCPP.CustomCommand, "${strArg}")`);
+      UIManager.dispatchViewManagerCommand(tag, UIManager.getViewManagerConfig('CustomUserControlCPP').Commands.CustomCommand, strArg);
     }
   }
 
@@ -154,7 +164,9 @@ class SampleApp extends Component {
         <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} />
         <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
 
-        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" />
+        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} />
+        <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
+
         <Text style={styles.instructions}>
           Hello from Microsoft!
         </Text>

@@ -5,6 +5,7 @@
 #include "CustomUserControlViewManagerCPP.h"
 
 #include "CustomUserControlCPP.h"
+#include "DebugHelpers.h"
 
 using namespace winrt;
 using namespace Microsoft::ReactNative::Bridge;
@@ -23,8 +24,7 @@ hstring CustomUserControlViewManagerCPP::Name() noexcept {
 }
 
 FrameworkElement CustomUserControlViewManagerCPP::CreateView() noexcept {
-  auto view = winrt::SampleLibraryCPP::CustomUserControlCPP();
-  return view;
+  return winrt::SampleLibraryCPP::CustomUserControlCPP();
 }
 
 // IViewManagerWithNativeProperties
@@ -66,6 +66,28 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
           control.ClearValue(Control::BackgroundProperty());
         }
       }
+    }
+  }
+}
+
+// IViewManagerWithCommands
+IMapView<hstring, int64_t> CustomUserControlViewManagerCPP::Commands() noexcept {
+  auto commands = winrt::single_threaded_map<hstring, int64_t>();
+  commands.Insert(L"CustomCommand", 0);
+  return commands.GetView();
+}
+
+void CustomUserControlViewManagerCPP::DispatchCommand(
+    FrameworkElement const &view,
+    int64_t commandId,
+    IVectorView<IInspectable> commandArgs) noexcept {
+  if (auto control = view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
+    if (commandId == 0) {
+      std::string arg = std::to_string(winrt::unbox_value<int64_t>(view.Tag()));
+      arg.append(", \"");
+      arg.append(winrt::to_string(winrt::unbox_value<hstring>(commandArgs.GetAt(0))));
+      arg.append("\"");
+      ::SampleLibraryCPP::DebugWriteLine(to_string(Name()), "CustomCommand", arg);
     }
   }
 }

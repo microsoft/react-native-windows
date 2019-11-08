@@ -12,8 +12,7 @@ REACT_MODULE(DebugConsole);
 struct DebugConsole {
   REACT_METHOD(Log);
   void Log(std::string message) noexcept {
-    std::string output = message;
-    output.append("\n");
+    std::string output = message + "\n";
     OutputDebugStringA(output.c_str());
   }
 };
