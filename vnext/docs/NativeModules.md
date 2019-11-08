@@ -1,6 +1,6 @@
 # Native Modules and React Native Windows
 
-*Both this documentation and the underlying code is a work in progress. You can see the current state of working code here: [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)*
+>**This documentation and the underlying platform code is a work in progress. You can see the current state of working code here: [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)**
 
 Sometimes an app needs access to a platform API that React Native doesn't have a corresponding module for yet. Maybe you want to reuse some existing .NET code without having to reimplement it in JavaScript, or write some high performance, multi-threaded code for image processing, a database, or any number of advanced extensions.
 
@@ -22,6 +22,20 @@ React Native for Windows supports authoring native modules in both C# and C++. E
 
 > NOTE: If you are unable to use the reflection-based annotation approach, you can define native modules directly using the ABI. This is outlined in the [Native Modules and React Native Windows (Advanced Topics)](./NativeModulesAdvanced.md) document. 
 
+## Initial Setup
+
+This guide assumes you already have the development environment and project structure set up for authoring native modules and are ready to write code.
+
+If you are only planning on adding a native module to your existing React Native Windows app, ie:
+
+1. You followed [Consuming react native windows](./ConsumingRNW.md), where
+1. You ran `react-native windows --template vnext` to add Windows to your project, and
+1. You are just adding your native code to the app project under the `windows` folder.
+
+Then you can simply open the Visual Studio solution in the `windows` folder and in the add the new files directly to the app project.
+
+If you are instead creating a standalone native module, or adding Windows support to an existing native module, check out the [Native Modules Setup](./NativeModulesSetup.md) guide first.
+
 ## Sample Native Module (C#)
 
 ### Attributes
@@ -33,7 +47,6 @@ React Native for Windows supports authoring native modules in both C# and C++. E
 | `ReactConstant` | Specifies a field or property that represents a constant. |
 | `ReactConstantProvider` | Specifies a method that provides a set of constants. |
 | `ReactEvent` | Specifies a field or property that represents an event. |
-
 
 ### 1. Authoring your Native Module
 
