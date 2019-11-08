@@ -68,6 +68,9 @@ folly::dynamic ABIViewManager::GetNativeProps() const {
         case ViewManagerPropertyType::Array:
           value = folly::dynamic("array");
           break;
+        case ViewManagerPropertyType::Map:
+          value = folly::dynamic("Map");
+          break;
         case ViewManagerPropertyType::Color:
           value = folly::dynamic("Color");
           break;
@@ -137,6 +140,12 @@ void ABIViewManager::DispatchCommand(
 
     auto listArgs =
         iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::IVectorView<winrt::IInspectable>>();
+
+    if (!listArgs) {
+      auto args = single_threaded_vector<winrt::IInspectable>();
+      args.Append(iinspectableArgs);
+      listArgs = args.GetView();
+    }
 
     m_viewManagerWithCommands.DispatchCommand(view, commandId, listArgs);
   }

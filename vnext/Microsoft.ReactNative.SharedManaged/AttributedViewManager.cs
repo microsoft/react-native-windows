@@ -63,10 +63,8 @@ namespace Microsoft.ReactNative.Managed
               var setter = new ViewManagerProperty<T>();
               setter.Name = propertyAttribute.Name ?? methodInfo.Name;
               setter.Type = propertyAttribute.Type ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
-              setter.Setter = (view, propertyValue) =>
-              {
-                methodInfo.Invoke(this, new object[] { view, propertyValue });
-              };
+              setter.Setter = MakePropertySetterMethod(methodInfo);
+
               properties.Add(setter.Name, setter);
             }
           }
@@ -119,9 +117,13 @@ namespace Microsoft.ReactNative.Managed
       {
         return ViewManagerPropertyType.Number;
       }
-      else if (t == typeof(object[]))
+      else if (t == typeof(IReadOnlyList<object>))
       {
         return ViewManagerPropertyType.Array;
+      }
+      else if (t == typeof(IReadOnlyDictionary<string, object>))
+      {
+        return ViewManagerPropertyType.Map;
       }
       else if (t == typeof(Brush))
       {
@@ -171,10 +173,7 @@ namespace Microsoft.ReactNative.Managed
               var command = new ViewManagerCommand<T>();
               command.CommandName = commandAttribute.Name ?? methodInfo.Name;
               command.CommandId = commandAttribute.CommandId ?? viewManagerCommands.Count;
-              command.CommandMethod = (view, commandArgs) =>
-              {
-                methodInfo.Invoke(this, new object[] { view, commandArgs });
-              };
+              command.CommandMethod = MakeCommandMethod(methodInfo);
               viewManagerCommands.Add(command.CommandId, command);
             }
           }
@@ -211,6 +210,50 @@ namespace Microsoft.ReactNative.Managed
     #endregion
 
     #region Reflection Helpers
+
+    private Action<T, object> MakePropertySetterMethod(MethodInfo methodInfo)
+    {
+      var parameters = methodInfo.GetParameters();
+
+      if (parameters.Length == 2
+        && parameters[0].ParameterType == typeof(T))
+      {
+        return (view, propertyValue) =>
+        {
+          methodInfo.Invoke(this, new object[] { view, propertyValue });
+        };
+      }
+
+      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
+    }
+
+    private Action<T, IReadOnlyList<object>> MakeCommandMethod(MethodInfo methodInfo)
+    {
+      var parameters = methodInfo.GetParameters();
+      if (parameters.Length == 2
+        && parameters[0].ParameterType == typeof(T)
+        && parameters[1].ParameterType == typeof(IReadOnlyList<object>))
+      {
+        return (view, commandArgs) =>
+        {
+          methodInfo.Invoke(this, new object[] { view, commandArgs });
+        };
+      }
+      else if (parameters.Length >= 2
+        && parameters[0].ParameterType == typeof(T))
+      {
+        return (view, commandArgs) =>
+        {
+          var invokeArgs = new List<object>(parameters.Length);
+          invokeArgs.Add(view);
+          invokeArgs.AddRange(commandArgs);
+
+          methodInfo.Invoke(this, invokeArgs.ToArray());
+        };
+      }
+
+      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
+    }
 
     private IReadOnlyDictionary<string, object> GetConstantsByAttribute<U>() where U : ViewManagerNamedAttribute
     {
