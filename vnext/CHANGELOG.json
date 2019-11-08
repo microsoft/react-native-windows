@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Nov 2019 00:30:50 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.67",
+      "version": "0.60.0-vnext.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "ViewManager Command Updates * Added command to CustomUserControlViewManagerCPP, #3600 * Added support for simpler C# view manager commands signatures * Added support for object properties for view managers, #3613 * Added documentation for C++ view manager * Added documentation for ViewManager commands, #3599",
+            "author": "jthysell@microsoft.com",
+            "commit": "529a95bf145b1f25511874776724082ab8032caa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Nov 2019 17:37:11 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.66",
       "version": "0.60.0-vnext.66",
