@@ -25,7 +25,7 @@ Now you'll have a new native module project under `react-native-my-library`. Be 
 
 ## Manually Adding Windows Support
 
->**The plan is to automate this process as part of a CLI new library project template, see issues https://github.com/microsoft/react-native-windows/issues/3201 and https://github.com/microsoft/react-native-windows/issues/3203. However we are also documenting the manual process here for developers who are unable to use the CLI.**
+>**The plan is to automate this process as part of a CLI new library project template, see issues [3201](https://github.com/microsoft/react-native-windows/issues/3201) and [3203](https://github.com/microsoft/react-native-windows/issues/3203). However we are also documenting the manual process here for developers who are unable to use the CLI.**
 
 ### Updating your package.json
 

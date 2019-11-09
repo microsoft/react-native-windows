@@ -24,7 +24,7 @@ If you are only planning on adding a native module to your existing React Native
 1. You ran `react-native windows --template vnext` to add Windows to your project, and
 1. You are just adding your native code to the app project under the `windows` folder.
 
-Then you can simply open the Visual Studio solution in the `windows` folder and in the add the new files directly to the app project.
+Then you can simply open the Visual Studio solution in the `windows` folder and add the new files directly to the app project.
 
 If you are instead creating a standalone native module, or adding Windows support to an existing native module, check out the [Native Modules Setup](./NativeModulesSetup.md) guide first.
 
