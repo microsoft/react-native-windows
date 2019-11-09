@@ -14,6 +14,20 @@ Similarly to authoring native modules, at a high level you must:
 2. Register your new ViewManager within the native code of your React Native host application.
 3. Reference the new Component within your React Native JSX code.
 
+## Initial Setup
+
+This guide assumes you already have the development environment and project structure set up for authoring native modules and are ready to write code.
+
+If you are only planning on adding a native module to your existing React Native Windows app, ie:
+
+1. You followed [Consuming react native windows](./ConsumingRNW.md), where
+1. You ran `react-native windows --template vnext` to add Windows to your project, and
+1. You are just adding your native code to the app project under the `windows` folder.
+
+Then you can simply open the Visual Studio solution in the `windows` folder and add the new files directly to the app project.
+
+If you are instead creating a standalone native module, or adding Windows support to an existing native module, check out the [Native Modules Setup](./NativeModulesSetup.md) guide first.
+
 ## Sample ViewManager (C#)
 
 ### Attributes
