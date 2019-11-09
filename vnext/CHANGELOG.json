@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 Nov 2019 01:27:15 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.68",
+      "version": "0.60.0-vnext.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Native Module Setup Guide * Added NativeModuleSetup.md, #3623 * Added link to new guide in NativeModules.md, ViewManagers.md * Updated ProjectStructure.md with Microsoft.ReactNative projects * Removed PropertySheets in SampleApps and CLI solutions",
+            "author": "jthysell@microsoft.com",
+            "commit": "91fc720c9220848107206d8a881ea269d444021f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Nov 2019 00:30:50 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.67",
       "version": "0.60.0-vnext.67",
