@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Nov 2019 00:30:50 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Nov 2019 01:27:15 GMT and should not be manually modified.
 
+## 0.60.0-vnext.68
+Sat, 09 Nov 2019 01:27:15 GMT
+
+### Changes
+
+- Native Module Setup Guide * Added NativeModuleSetup.md, #3623 * Added link to new guide in NativeModules.md, ViewManagers.md * Updated ProjectStructure.md with Microsoft.ReactNative projects * Removed PropertySheets in SampleApps and CLI solutions (jthysell@microsoft.com)
 ## 0.60.0-vnext.67
 Fri, 08 Nov 2019 00:30:50 GMT
 
