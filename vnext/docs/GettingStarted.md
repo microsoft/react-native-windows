@@ -2,7 +2,7 @@
 
 This is a summary of setup steps needed to install and work with React Native for Windows (vnext). See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for React Native details and see [Getting Started Guide - current](https://github.com/microsoft/react-native-windows/blob/master/current/docs/GettingStarted.md) for working with the `current` React Native for Windows implementation.
 
-## System requirements
+## System Requirements
 * You can run React-Native for Windows10 apps only on Windows 10 devices and Windows version: 10.0.15063.0 or higher. See [Windows 10 Compatability](./win10compat.md) for version support details.
   * Ensure Developer Mode is turned ON in Windows Settings App. 
 * [Visual Studio 2019](https://www.visualstudio.com/downloads) with the following options:

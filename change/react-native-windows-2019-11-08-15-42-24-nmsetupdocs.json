@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Native Module Setup Guide * Added NativeModuleSetup.md, #3623 * Added link to new guide in NativeModules.md, ViewManagers.md * Updated ProjectStructure.md with Microsoft.ReactNative projects * Removed PropertySheets in SampleApps and CLI solutions",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "91fc720c9220848107206d8a881ea269d444021f",
+  "date": "2019-11-08T23:42:24.452Z"
+}
