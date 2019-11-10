@@ -104,13 +104,63 @@ void SetBorderBrush(const T &element, const winrt::Windows::UI::Xaml::Media::Bru
   element.BorderBrush(brush);
 }
 
+static void UpdateResourceBrush(
+    const winrt::FrameworkElement &element,
+    const std::wstring &resourceName,
+    const winrt::Media::Brush brush) {
+  const auto resources = element.Resources();
+  if (resources != nullptr) {
+    if (brush != nullptr) {
+      resources.Insert(winrt::box_value(resourceName), brush);
+    } else {
+      resources.Remove(winrt::box_value(resourceName));
+    }
+  }
+}
+
+template <class T>
+void TryUpdateResourceBrush(
+    const T &element,
+    const std::wstring &resourceName,
+    const winrt::Media::Brush brush) {
+  const auto frameworkElement = element.try_as<winrt::FrameworkElement>();
+  if (frameworkElement != nullptr) {
+    UpdateResourceBrush(frameworkElement, resourceName, brush);
+  }
+}
+
+// Some XAML controls use additional resource-brushes that need to be
+// kept in sync with Background. RN clients (windows-included) that
+// want different backgroundColor depending on interactive states
+// such as PointerOver, Focused, and Disabled, expect to handle
+// these state changes in js, and re-render with different
+// backgroundColor to accomplish their desired visuals.
+template <class T>
+void UpdateTextControlBackgroundResourceBrushes(const T &element, const winrt::Media::Brush brush) {
+  if (element.try_as<winrt::Controls::TextBox>() != nullptr ||
+      element.try_as<winrt::Controls::PasswordBox>() != nullptr ||
+      element.try_as<winrt::Controls::RichEditBox>() != nullptr ||
+      element.try_as<winrt::Controls::AutoSuggestBox>() != nullptr) {
+    UpdateResourceBrush(element, L"TextControlBackground", brush);
+    UpdateResourceBrush(element, L"TextControlBackgroundPointerOver", brush);
+    UpdateResourceBrush(element, L"TextControlBackgroundFocused", brush);
+    UpdateResourceBrush(element, L"TextControlBackgroundDisabled", brush);
+
+    UpdateResourceBrush(element, L"TextControlButtonForegroundPressed", brush);
+  }
+}
+
 template <class T>
 bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue))
-      element.Background(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
+      element.Background(brush);
+      UpdateTextControlBackgroundResourceBrushes(element, brush);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::BackgroundProperty());
+      UpdateTextControlBackgroundResourceBrushes(element, nullptr);
+    }
 
     return true;
   }
@@ -133,18 +183,64 @@ void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
   element.CornerRadius(cornerRadius);
 }
 
+// Some XAML controls use additional resource-brushes that need to be
+// kept in sync with BorderBrush. RN clients (windows-included) that
+// want different borderColor depending on interactive states
+// such as PointerOver, Focused, and Disabled, expect to handle
+// these state changes in js, and re-render with different
+// backgroundColor to accomplish their desired visuals.
+template <class T>
+void UpdateTextControlForegroundResourceBrushes(const T &element, const winrt::Media::Brush brush) {
+  if (element.try_as<winrt::Controls::TextBox>() != nullptr ||
+      element.try_as<winrt::Controls::PasswordBox>() != nullptr ||
+      element.try_as<winrt::Controls::RichEditBox>() != nullptr ||
+      element.try_as<winrt::Controls::AutoSuggestBox>() != nullptr) {
+    TryUpdateResourceBrush(element, L"TextControlForeground", brush);
+    TryUpdateResourceBrush(element, L"TextControlForegroundPointerOver", brush);
+    TryUpdateResourceBrush(element, L"TextControlForegroundFocused", brush);
+    TryUpdateResourceBrush(element, L"TextControlForegroundDisabled", brush);
+
+    TryUpdateResourceBrush(element, L"TextControlButtonForeground", brush);
+    TryUpdateResourceBrush(element, L"TextControlButtonForegroundPointerOver", brush);
+    TryUpdateResourceBrush(element, L"TextControlButtonBackgroundPressed", brush);
+  }
+}
+
 template <class T>
 bool TryUpdateForeground(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
   if (propertyName == "color") {
-    if (IsValidColorValue(propertyValue))
-      element.Foreground(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
+      element.Foreground(brush);
+      UpdateTextControlForegroundResourceBrushes(element, brush);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::ForegroundProperty());
+      UpdateTextControlForegroundResourceBrushes(element, nullptr);
+    }
 
     return true;
   }
 
   return false;
+}
+
+// Some XAML controls use additional resource-brushes that need to be
+// kept in sync with BorderBrush. RN clients (windows-included) that
+// want different borderColor depending on interactive states
+// such as PointerOver, Focused, and Disabled, expect to handle
+// these state changes in js, and re-render with different
+// backgroundColor to accomplish their desired visuals.
+template <class T>
+void UpdateTextControlBorderResourceBrushes(const T &element, const winrt::Media::Brush brush) {
+  if (element.try_as<winrt::Controls::TextBox>() != nullptr ||
+      element.try_as<winrt::Controls::PasswordBox>() != nullptr ||
+      element.try_as<winrt::Controls::RichEditBox>() != nullptr ||
+      element.try_as<winrt::Controls::AutoSuggestBox>() != nullptr) {
+    UpdateResourceBrush(element, L"TextControlBorderBrush", brush);
+    UpdateResourceBrush(element, L"TextControlBorderBrushPointerOver", brush);
+    UpdateResourceBrush(element, L"TextControlBorderBrushFocused", brush);
+    UpdateResourceBrush(element, L"TextControlBorderBrushDisabled", brush);
+  }
 }
 
 template <class T>
@@ -156,10 +252,14 @@ bool TryUpdateBorderProperties(
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (IsValidColorValue(propertyValue))
-      element.BorderBrush(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
+      element.BorderBrush(brush);
+      UpdateTextControlBorderResourceBrushes(element, brush);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::BorderBrushProperty());
+      UpdateTextControlBorderResourceBrushes(element, nullptr);
+    }
   } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
