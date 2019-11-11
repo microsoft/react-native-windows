@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Nov 2019 22:01:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Workaround for flyout centering problem",
+            "author": "kenander@microsoft.com",
+            "commit": "b0defe86c05d88310fb66663be45dd925d3b3207"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Nov 2019 01:27:15 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.68",
       "version": "0.60.0-vnext.68",

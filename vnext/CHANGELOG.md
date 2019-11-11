@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 09 Nov 2019 01:27:15 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Nov 2019 22:01:18 GMT and should not be manually modified.
 
+## 0.60.0-vnext.69
+Mon, 11 Nov 2019 22:01:18 GMT
+
+### Changes
+
+- Workaround for flyout centering problem (kenander@microsoft.com)
 ## 0.60.0-vnext.68
 Sat, 09 Nov 2019 01:27:15 GMT
 
