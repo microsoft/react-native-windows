@@ -50,7 +50,7 @@ If you're planning on writing your native module in C#, you'll want to choose `W
 If you're planning on writing your native module in C++, you'll want to choose `Windows Runtime Component (C++/WinRT)`. Note, if you don't see that project type, make sure you installed the *C++/WinRT Visual Studio Extension* linked to above under [Development Environment](#development-environment).
 
 1. Set the `Project Name` to `MyLibrary`.
-1. Set the `Location` to the native module directory of the you created earlier.
+1. Set the `Location` to the native module directory you created earlier.
 1. Set the `Solution Name` to `MyLibrary`.
 1. Click `Create`.
 
