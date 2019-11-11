@@ -238,30 +238,38 @@ Here is a sample native module written in C++ called `FancyMath`. It is a simple
 
 *FancyMath.h*
 ```cpp
-#include "NativeModules.h";
+#pragma once
+
+#include "pch.h"
+
+#include <functional>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+#include "NativeModules.h"
 
 namespace NativeModuleSample
 {
-  REACT_MODULE(FancyMath);
-  class FancyMath
-  {
-    REACT_CONSTANT(E);
-    public double E = Math.E;
-
-    REACT_CONSTANT(PI, "Pi");
-    public double PI = Math.PI;
-
-    REACT_METHOD(Add, "add");
-    public double Add(double a, double b)
+    REACT_MODULE(FancyMath);
+    struct FancyMath
     {
-      double result = a + b;
-      AddEvent(result);
-      return result;
-    }
+        REACT_CONSTANT(E);
+        const double E = M_E;
 
-    REACT_EVENT(AddEvent);
-    std::function<void(double)> AddEvent;
-  }
+        REACT_CONSTANT(PI, "Pi");
+        const double PI = M_PI;
+
+        REACT_METHOD(Add, "add");
+        double Add(double a, double b) noexcept
+        {
+            double result = a + b;
+            AddEvent(result);
+            return result;
+        }
+
+        REACT_EVENT(AddEvent);
+        std::function<void(double)> AddEvent;
+    };
 }
 ```
 
@@ -287,13 +295,14 @@ Now, we want to register our new `FancyMath` module with React Native so we can 
 
 *ReactPackageProvider.idl*
 ```c++
-namespace NativeModuleSample {
-
-runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+namespace NativeModuleSample
 {
-  ReactPackageProvider();
-};
-
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider : Microsoft.ReactNative.Bridge.IReactPackageProvider
+    {
+        ReactPackageProvider();
+    };
 }
 ```
 
@@ -302,27 +311,26 @@ After that we add the .h and.cpp files:
 *ReactPackageProvider.h*
 ```cpp
 #pragma once
+
 #include "ReactPackageProvider.g.h"
 
-namespace winrt::NativeModuleSample::implementation {
+using namespace winrt::Microsoft::ReactNative::Bridge;
 
-struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
+namespace winrt::NativeModuleSample::implementation
 {
-  ReactPackageProvider() = default;
-  void CreatePackage(Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder);
-};
+    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
+    {
+        ReactPackageProvider() = default;
 
-} // namespace winrt::NativeModuleSample::implementation
+        void CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept;
+    };
+}
 
-namespace winrt::NativeModuleSample::factory_implementation {
-
-struct ReactPackageProvider : ReactPackageProviderT<
-                                     ReactPackageProvider,
-                                     implementation::ReactPackageProvider>
+namespace winrt::NativeModuleSample::factory_implementation
 {
-};
+    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
+}
 
-} // namespace winrt::NativeModuleSample::factory_implementation
 ```
 
 *ReactPackageProvider.cpp*
@@ -333,20 +341,18 @@ struct ReactPackageProvider : ReactPackageProviderT<
 
 // NOTE: You must include the headers of your native modules here in
 // order for the AddAttributedModules call below to find them.
-#include "FancyMath.h" 
+#include "FancyMath.h"
 
-using namespace winrt::Microsoft::ReactNative;
+using namespace winrt::Microsoft::ReactNative::Bridge;
 using namespace Microsoft::ReactNative;
 
-namespace winrt::NativeModuleSample::implementation {
-
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuilder)
+namespace winrt::NativeModuleSample::implementation
 {
-  AddAttributedModules(packageBuilder);
+    void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept
+    {
+        AddAttributedModules(packageBuilder);
+    }
 }
-
-} // namespace winrt::NativeModuleSample::implementation
-
 ```
 
 Here we've implemented the `CreatePackage` method, which receives `packageBuilder` to build contents of the package. Since we use macros and templates to discover and bind native module, we call `AddAttributedModules` function to register all native modules in our DLL that have the `REACT_MODULE` macro-attribute.
