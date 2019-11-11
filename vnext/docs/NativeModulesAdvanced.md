@@ -1,6 +1,9 @@
 # Native Modules and React Native Windows (Advanced Topics)
 
->**This documentation and the underlying platform code is a work in progress. You can see the current state of working code here: [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)**
+>**This documentation and the underlying platform code is a work in progress.**
+>**Examples (C# and C+/WinRT):**
+>- [Native Module Sample in microsoft/react-native-windows-samples](https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample)
+>- [Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)
 
 ## Writing Native Modules without using Attributes (C#)
 

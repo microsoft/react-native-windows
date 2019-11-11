@@ -1,6 +1,9 @@
 # Native Module Setup
 
->**This documentation and the underlying platform code is a work in progress. You can see the current state of working code here: [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)**
+>**This documentation and the underlying platform code is a work in progress.**
+>**Examples (C# and C+/WinRT):**
+>- [Native Module Sample in microsoft/react-native-windows-samples](https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample)
+>- [Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)
 
 This guide will help set you up with the Visual Studio infrastructure to author your own stand-alone native module for React Native Windows. In this document we'll be creating the scaffolding for a `MyLibrary` native module.
 
@@ -36,12 +39,6 @@ yarn add react-native@0.60 --dev
 yarn add react-native-windows@vnext --peer
 ```
 
-Next you'll want to create a `windows` subdirectory to hold the windows code:
-
-```cmd
-mkdir windows
-```
-
 Now it's time to switch into Visual Studio and create a new project.
 
 ### Creating the Visual Studio Project / Solution
@@ -53,7 +50,7 @@ If you're planning on writing your native module in C#, you'll want to choose `W
 If you're planning on writing your native module in C++, you'll want to choose `Windows Runtime Component (C++/WinRT)`. Note, if you don't see that project type, make sure you installed the *C++/WinRT Visual Studio Extension* linked to above under [Development Environment](#development-environment).
 
 1. Set the `Project Name` to `MyLibrary`.
-1. Set the `Location` to the path of the `windows` subdirectory you created earlier.
+1. Set the `Location` to the native module directory of the you created earlier.
 1. Set the `Solution Name` to `MyLibrary`.
 1. Click `Create`.
 
@@ -62,7 +59,15 @@ Next you'll be prompted to select the versions of Windows you'll support. This s
 1. Set the `Target version` to `Windows 10, version 1903 (10.0; Build 18362)`.
 1. Set the `Minimum version` to `Windows 10 Creators Update (10.0; Build 15063)`.
 
-You'll now have a new `MyLibrary` solution file at `windows\MyLibrary.sln` and a `MyLibrary` project under `windows\MyLibrary\`. Now it's time to add React Native Windows into the solution.
+You should now have a new `MyLibrary` solution file at `.\MyLibrary\MyLibrary.sln` and a `MyLibrary` project at `.\MyLibrary\MyLibrary\MyLibrary.csproj` for C# or `.\MyLibrary\MyLibrary\MyLibrary.vcxproj` for C++.
+
+Now, we want to rename the root directory of the Windows native code to `windows` to match the peer `android` and `ios` directories:
+
+1. Close the solution with `File` > `Close Solution`.
+1. Rename that top `MyLibrary` directory `windows`.
+1. Re-open the solution file at `windows\MyLibrary.sln`.
+
+Now it's time to add React Native Windows into the solution.
 
 ### Adding React Native Windows to the Visual Studio Solution
 
@@ -102,7 +107,7 @@ You now have all of the React Native Windows projects to your solution. Next we'
 
 ### Referencing React Native Windows in your Project
 
-The only project reference you **must** add is `Micrsoft.ReactNative`. To add the reference:
+The only project reference you **must** add is `Microsoft.ReactNative`. To add the reference:
 
 1. Open the Solution Explorer sidebar.
 1. Right-click on your `MyLibrary` project.
