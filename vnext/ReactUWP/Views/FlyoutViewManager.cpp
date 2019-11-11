@@ -122,6 +122,11 @@ void FlyoutShadowNode::AddView(ShadowNode &child, int64_t index) {
 
   if (m_flyout != nullptr) {
     m_flyout.Content(childView.as<winrt::UIElement>());
+    if (winrt::FlyoutPlacementMode::Full == m_flyout.Placement()) {
+      if (auto fe = m_flyout.Content().try_as<winrt::FrameworkElement>()) {
+        AdjustDefaultFlyoutStyle((float)fe.Width(), (float)fe.Height());
+      }
+    }
   }
 }
 
