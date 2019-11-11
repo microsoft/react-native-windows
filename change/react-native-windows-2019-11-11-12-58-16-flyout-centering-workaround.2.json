@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Workaround for flyout centering problem",
+  "packageName": "react-native-windows",
+  "email": "kenander@microsoft.com",
+  "commit": "b0defe86c05d88310fb66663be45dd925d3b3207",
+  "date": "2019-11-11T20:58:16.583Z"
+}
