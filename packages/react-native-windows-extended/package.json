@@ -39,7 +39,7 @@
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft.16 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz"
+    "react-native": "^0.60.6 || 0.60.0-microsoft.16 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [

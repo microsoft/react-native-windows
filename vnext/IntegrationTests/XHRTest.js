@@ -68,10 +68,6 @@ class XHRTest extends React.Component<{}, Object> {
     }
     xhr.onload = () => {
       this.setState({downloading: false});
-      if (this.cancelled) {
-        this.cancelled = false;
-        return;
-      }
       if (xhr.status === 200) {
         let responseType = `Response is a string, ${
           xhr.response.length

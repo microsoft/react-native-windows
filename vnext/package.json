@@ -14,6 +14,7 @@
     "build": "just-scripts build",
     "change": "beachball change",
     "clean": "just-scripts clean",
+    "flow-check": "flow check",
     "start": "react-native start",
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
@@ -45,6 +46,7 @@
     "@types/react": "16.8.15",
     "eslint-plugin-prettier": "2.6.2",
     "eslint": "5.1.0",
+    "flow-bin": "^0.98.0",
     "just-scripts": "^0.24.2",
     "prettier": "1.17.0",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz",
@@ -53,7 +55,7 @@
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft.16 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz"
+    "react-native": "^0.60.6 || 0.60.0-microsoft.16 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz"
   },
   "beachball": {
     "defaultNpmTag": "vnext",

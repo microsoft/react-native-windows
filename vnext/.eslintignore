@@ -1,4 +1,5 @@
 /dist
+/flow
 /lib
 /Libraries
 /local-cli/generator-windows/templates/index.windows.js

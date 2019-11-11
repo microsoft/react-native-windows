@@ -1,0 +1,140 @@
+[ignore]
+; We fork some components by platform - ignore all platforms except windows
+.*/*[.]android.js
+.*/*[.]ios.js
+.*/*[.]macos.js
+.*/*[.]windesktop.js
+
+; These modules have base components and windows versions.
+; I dont know how to ignore base components only when there is a windows override
+; so manually ignoring the duplicates for now
+<PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
+<PROJECT_ROOT>/Libraries/Components/Button.js
+<PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
+<PROJECT_ROOT>/Libraries/Components/Flyout/Flyout.js
+<PROJECT_ROOT>/Libraries/Components/Glyph/Glyph.js
+<PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
+<PROJECT_ROOT>/Libraries/Components/Picker/PickerWindows.js
+<PROJECT_ROOT>/Libraries/Components/Popup/Popup.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
+<PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
+<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
+
+
+
+; Ignore react-native files in node_modules since they are copied into project root
+.*/node_modules/react-native/.*
+
+; Ignore templates for 'react-native init'
+<PROJECT_ROOT>/template/.*
+
+; Ignore the Dangerfile
+<PROJECT_ROOT>/bots/dangerfile.js
+
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/\.buckd/
+
+; Ignore unexpected extra "@providesModule"
+.*/node_modules/.*/node_modules/fbjs/.*
+
+; Ignore duplicate module providers
+; For RN Apps installed via npm, "Libraries" folder is inside
+; "node_modules/react-native" but in the source repo it is in the root
+.*/Libraries/react-native/React.js
+
+; Ignore polyfills
+.*/Libraries/polyfills/.*
+
+; These should not be required directly
+; require from fbjs/lib instead: require('fbjs/lib/warning')
+.*/node_modules/warning/.*
+
+; Flow doesn't support platforms
+.*/Libraries/Utilities/HMRLoadingView.js
+
+; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
+.*/vnext/src/.*
+
+[untyped]
+.*/node_modules/@react-native-community/cli/.*/.*
+
+[include]
+; Need to include hoisted modules
+../node_modules/
+
+[libs]
+Libraries/react-native/react-native-interface.js
+flow/
+
+[options]
+emoji=true
+
+esproposal.optional_chaining=enable
+esproposal.nullish_coalescing=enable
+
+module.file_ext=.js
+module.file_ext=.json
+module.file_ext=.windows.js
+
+module.system=haste
+module.system.haste.use_name_reducers=true
+# keep the following in sync with server/haste/hasteImpl.js
+# get basename
+module.system.haste.name_reducers='^.*/\([a-zA-Z0-9$_.-]+\.js\(\.flow\)?\)$' -> '\1'
+# strip .js or .js.flow suffix
+module.system.haste.name_reducers='^\(.*\)\.js\(\.flow\)?$' -> '\1'
+# strip .ios suffix
+module.system.haste.name_reducers='^\(.*\)\.ios$' -> '\1'
+module.system.haste.name_reducers='^\(.*\)\.macos$' -> '\1'
+module.system.haste.name_reducers='^\(.*\)\.android$' -> '\1'
+module.system.haste.name_reducers='^\(.*\)\.windows$' -> '\1'
+module.system.haste.name_reducers='^\(.*\)\.windesktop$' -> '\1'
+module.system.haste.name_reducers='^\(.*\)\.native$' -> '\1'
+module.system.haste.paths.blacklist=<PROJECT_ROOT>/src/.*
+module.system.haste.paths.blacklist=.*/__tests__/.*
+module.system.haste.paths.blacklist=.*/__mocks__/.*
+module.system.haste.paths.whitelist=<PROJECT_ROOT>/Libraries/.*
+module.system.haste.paths.whitelist=<PROJECT_ROOT>/RNTester/.*
+module.system.haste.paths.whitelist=<PROJECT_ROOT>/IntegrationTests/.*
+module.system.haste.paths.blacklist=<PROJECT_ROOT>/Libraries/react-native/react-native-implementation.js
+module.system.haste.paths.blacklist=<PROJECT_ROOT>/Libraries/Animated/src/polyfills/.*
+
+munge_underscores=true
+
+module.name_mapper='^[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> 'RelativeImageStub'
+module.name_mapper='react-native$' -> '<PROJECT_ROOT>/Libraries/react-native/react-native-implementation.js'
+module.name_mapper='react-native/\(.*\)' -> '<PROJECT_ROOT>/\1'
+
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FlowFixMeProps
+suppress_type=$FlowFixMeState
+
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
+
+[lints]
+sketchy-null-number=warn
+sketchy-null-mixed=warn
+sketchy-number=warn
+untyped-type-import=warn
+nonstrict-import=warn
+deprecated-type=warn
+unsafe-getters-setters=warn
+inexact-spread=warn
+unnecessary-invariant=warn
+signature-verification-failure=warn
+deprecated-utility=error
+
+[strict]
+deprecated-type
+nonstrict-import
+sketchy-null
+unclear-type
+unsafe-getters-setters
+untyped-import
+untyped-type-import
+
+[version]
+^0.98.0

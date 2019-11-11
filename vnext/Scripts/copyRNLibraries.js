@@ -51,6 +51,13 @@ function copyJSFolderRecursiveSync(source, target) {
 exports.copyRNLibraries = () => {
   const rnPath = path.dirname(require.resolve('react-native/package.json'));
 
+  const rnCodeGenDest = path.resolve(
+    __dirname,
+    '../packages/react-native-codegen',
+  );
+  if (fs.existsSync(rnCodeGenDest)) {
+    rimraf.sync(rnCodeGenDest);
+  }
   const integrationTestsDest = path.resolve(__dirname, '../IntegrationTests');
   if (fs.existsSync(integrationTestsDest)) {
     rimraf.sync(integrationTestsDest + path.sep + '*.js');
@@ -58,6 +65,10 @@ exports.copyRNLibraries = () => {
   const librariesDest = path.resolve(__dirname, '../Libraries');
   if (fs.existsSync(librariesDest)) {
     rimraf.sync(librariesDest);
+  }
+  const flowDest = path.resolve(__dirname, '../flow');
+  if (fs.existsSync(flowDest)) {
+    rimraf.sync(flowDest);
   }
   const jestDest = path.resolve(__dirname, '../jest');
   if (fs.existsSync(jestDest)) {
@@ -74,6 +85,21 @@ exports.copyRNLibraries = () => {
       baseDir,
     );
   }
+
+  if (!fs.existsSync(path.resolve(__dirname, '../packages'))) {
+    fs.mkdirSync(path.resolve(__dirname, '../packages'));
+  }
+  if (
+    !fs.existsSync(path.resolve(__dirname, '../packages/react-native-codegen'))
+  ) {
+    fs.mkdirSync(path.resolve(__dirname, '../packages/react-native-codegen'));
+  }
+
+  copyJSFolderRecursiveSync(
+    path.resolve(rnPath, 'packages/react-native-codegen/src'),
+    path.resolve(baseDir, 'packages/react-native-codegen'),
+  );
+  copyJSFolderRecursiveSync(path.resolve(rnPath, 'flow'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'Libraries'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'jest'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(baseDir, 'src/jest'), baseDir); // Copy js files from src/jest to jest
