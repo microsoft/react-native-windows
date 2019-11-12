@@ -10,6 +10,7 @@
 
 namespace winrt {
   using namespace Windows::UI::Xaml;
+  using namespace Windows::UI::Xaml::Controls;
 }
 
 namespace react {
@@ -17,8 +18,8 @@ namespace uwp {
 
 
 void UpdateTextControlBackgroundResourceBrushes(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element,
-    const winrt::Media::Brush brush) {
+    const winrt::FrameworkElement &element,
+    const winrt::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateResourceBrush(element, L"TextControlBackground", brush);
     UpdateResourceBrush(element, L"TextControlBackgroundPointerOver", brush);
@@ -30,8 +31,8 @@ void UpdateTextControlBackgroundResourceBrushes(
 }
 
 void UpdateTextControlForegroundResourceBrushes(
-    const winrt::Windows::UI::Xaml::DependencyObject object,
-    const winrt::Media::Brush brush) {
+    const winrt::DependencyObject object,
+    const winrt::Brush brush) {
   if (IsObjectATextControl(object)) {
     TryUpdateResourceBrush(object, L"TextControlForeground", brush);
     TryUpdateResourceBrush(object, L"TextControlForegroundPointerOver", brush);
@@ -45,8 +46,8 @@ void UpdateTextControlForegroundResourceBrushes(
 }
 
 void UpdateTextControlBorderResourceBrushes(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element,
-    const winrt::Media::Brush brush) {
+    const winrt::FrameworkElement &element,
+    const winrt::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateResourceBrush(element, L"TextControlBorderBrush", brush);
     UpdateResourceBrush(element, L"TextControlBorderBrushPointerOver", brush);
@@ -56,9 +57,9 @@ void UpdateTextControlBorderResourceBrushes(
 }
 
 void TryUpdateResourceBrush(
-    const winrt::Windows::UI::Xaml::DependencyObject &object,
+    const winrt::DependencyObject &object,
     const std::wstring &resourceName,
-    const winrt::Windows::UI::Xaml::Media::Brush brush) {
+    const winrt::Brush brush) {
   const auto element = object.try_as<winrt::Windows::UI::Xaml::FrameworkElement>();
   if (element != nullptr) {
     UpdateResourceBrush(element, resourceName, brush);
@@ -66,9 +67,9 @@ void TryUpdateResourceBrush(
 }
 
 void UpdateResourceBrush(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element,
+    const winrt::FrameworkElement &element,
     const std::wstring &resourceName,
-    const winrt::Windows::UI::Xaml::Media::Brush brush) {
+    const winrt::Brush brush) {
   const auto resources = element.Resources();
   if (resources != nullptr) {
     if (brush != nullptr) {
@@ -79,11 +80,11 @@ void UpdateResourceBrush(
   }
 }
 
-bool IsObjectATextControl(const winrt::Windows::UI::Xaml::DependencyObject &object) {
-  return object.try_as<winrt::Controls::TextBox>() != nullptr ||
-      object.try_as<winrt::Controls::PasswordBox>() != nullptr ||
-      object.try_as<winrt::Controls::RichEditBox>() != nullptr ||
-      object.try_as<winrt::Controls::AutoSuggestBox>() != nullptr;
+bool IsObjectATextControl(const winrt::DependencyObject &object) {
+  return object.try_as<winrt::TextBox>() != nullptr ||
+      object.try_as<winrt::PasswordBox>() != nullptr ||
+      object.try_as<winrt::RichEditBox>() != nullptr ||
+      object.try_as<winrt::AutoSuggestBox>() != nullptr;
 }
 
 } // namespace uwp
