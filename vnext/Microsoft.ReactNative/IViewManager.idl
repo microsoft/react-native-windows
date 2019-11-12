@@ -43,4 +43,12 @@ namespace Microsoft.ReactNative.Bridge
 
     void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, Windows.Foundation.Collections.IVectorView<IInspectable> commandArgs);
   };
+
+  [webhosthidden]
+  interface IViewManagerWithExportedEventTypeConstants
+  {
+    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomBubblingEventTypeConstants { get; };
+
+    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomDirectEventTypeConstants { get; };
+  };
 }
