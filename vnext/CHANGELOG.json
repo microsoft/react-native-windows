@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2019 01:59:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
+      "comments": {
+        "none": [
+          {
+            "comment": "Native Mdoule documentation fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "35bfb6ede4d63b326b5b754642ac924217705327"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Nov 2019 22:01:18 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.69",
       "version": "0.60.0-vnext.69",
