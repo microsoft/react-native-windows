@@ -6,13 +6,13 @@
 #include "Unicode.h"
 #include "Utilities.h"
 
-#include "jsi//jsi.h"
-
-#include <memory>
 #include <sstream>
 #include <utility>
 
 namespace Microsoft::JSI {
+
+// TODO (yicyao): There are still some #ifdef CHAKRACORE in this file. Consider
+// refactoring and removing them.
 
 void VerifyChakraErrorElseThrow(JsErrorCode error) {
   if (error != JsNoError) {
@@ -149,6 +149,12 @@ ChakraObjectRef GetPropertyId(const std::wstring &utf16) {
   return ChakraObjectRef(id);
 }
 
+ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id) {
+  JsValueRef result = JS_INVALID_REFERENCE;
+  VerifyChakraErrorElseThrow(JsGetProperty(obj, id, &result));
+  return ChakraObjectRef(result);
+}
+
 std::string ToStdString(const ChakraObjectRef &jsString) {
   if (GetValueType(jsString) != JsString) {
     throw facebook::jsi::JSINativeException("Cannot convert a non JS string ChakraObjectRef to a std::string.");
@@ -267,6 +273,32 @@ ChakraObjectRef ToJsArrayBuffer(const std::shared_ptr<const facebook::jsi::Buffe
   // the shared_ptr that bufferWrapper used to own will be leaked.
   bufferWrapper.release();
   return ChakraObjectRef(arrayBuffer);
+}
+
+uint8_t *GetArrayBufferData(const ChakraObjectRef &arrBuf) {
+  if (GetValueType(arrBuf) != JsString) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot call GetArrayBufferData() on a ChakraObjectRef that is not managing a JS ArrayBuffer.");
+  }
+
+  uint8_t *buffer = nullptr;
+  unsigned int size = 0;
+  VerifyChakraErrorElseThrow(JsGetArrayBufferStorage(arrBuf, &buffer, &size));
+
+  return buffer;
+}
+
+size_t GetArrayBufferLength(const ChakraObjectRef &arrBuf) {
+  if (GetValueType(arrBuf) != JsString) {
+    throw facebook::jsi::JSINativeException(
+        "Cannot call GetArrayBufferLength() on a ChakraObjectRef that is not managing a JS ArrayBuffer.");
+  }
+
+  int result = ToInteger(GetProperty(arrBuf, "bytelength"));
+  if (result < 0) {
+    throw facebook::jsi::JSINativeException("Invalid JS array buffer bytelength detected.");
+  }
+  return static_cast<size_t>(result);
 }
 
 bool CompareJsValues(const ChakraObjectRef &jsValue1, const ChakraObjectRef &jsValue2) {

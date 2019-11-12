@@ -14,16 +14,20 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraCoreRuntimeFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)ByteArrayBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntimeArgs.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PreparedJavaScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreRuntimeFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraObjectRef.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" Condition="'$(OSS_RN)' != 'true'" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeFactory.h" Condition="'$(OSS_RN)' != 'true'" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntime.h"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeHolder.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ScriptStore.h" />
   </ItemGroup>
 </Project>

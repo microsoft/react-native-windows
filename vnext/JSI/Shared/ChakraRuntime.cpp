@@ -3,35 +3,25 @@
 
 #include "ChakraRuntime.h"
 
+#include "ByteArrayBuffer.h"
+#include "ChakraRuntimeArgs.h"
+#include "PreparedJavaScriptStore.h"
+
+// TODO (yicyao): MemoryTracker is a defined in facebook::react. We ought to
+// refactor and move it into Microsoft::JSI.
+#include "MemoryTracker.h"
 #include "Unicode.h"
 #include "Utilities.h"
 
-#include <MemoryTracker.h>
-#include <ScriptStore.h>
-#include <cxxreact/MessageQueueThread.h>
-
 #include <cstring>
+#include <exception>
 #include <limits>
-#include <mutex>
 #include <set>
-#include <sstream>
+#include <string_view>
 
 namespace Microsoft::JSI {
 
 namespace {
-
-constexpr const char *const g_bootstrapBundleSource =
-    "function $$ChakraRuntimeProxyConstructor$$(target, handler)\n"
-    "{\n"
-    "  return new Proxy(target, handler)\n"
-    "}";
-
-constexpr const char *const g_proxyConstructorBootstrapFuncName = "$$ChakraRuntimeProxyConstructor$$";
-
-constexpr const char *const g_proxyGetHostObjectTargetPropName = "$$ProxyGetHostObjectTarget$$";
-constexpr const char *const g_proxyIsHostObjectPropName = "$$ProxyIsHostObject$$";
-
-constexpr const char *const g_functionIsHostFunctionPropName = "$$FunctionIsHostFunction$$";
 
 class HostFunctionProxy {
  public:
@@ -51,6 +41,19 @@ class HostFunctionProxy {
   ChakraRuntime &m_runtime;
 };
 
+constexpr const char *const g_bootstrapBundleSource =
+    "function $$ChakraRuntimeProxyConstructor$$(target, handler)\n"
+    "{\n"
+    "  return new Proxy(target, handler)\n"
+    "}";
+
+constexpr const char *const g_proxyConstructorBootstrapFuncName = "$$ChakraRuntimeProxyConstructor$$";
+
+constexpr const char *const g_proxyGetHostObjectTargetPropName = "$$ProxyGetHostObjectTarget$$";
+constexpr const char *const g_proxyIsHostObjectPropName = "$$ProxyIsHostObject$$";
+
+constexpr const char *const g_functionIsHostFunctionPropName = "$$FunctionIsHostFunction$$";
+
 // Callers of this functions must make sure that jsThis and args are alive when
 // using the return value of this function.
 std::vector<JsValueRef> ConstructJsFunctionArguments(
@@ -64,142 +67,138 @@ std::vector<JsValueRef> ConstructJsFunctionArguments(
   return result;
 }
 
-} // namespace
+bool CALLBACK
+MemoryAllocationCallback(void *memoryTrackerAsCookie, JsMemoryEventType allocationEvent, size_t allocationSize) {
+  facebook::react::MemoryTracker *memoryTracker = static_cast<facebook::react::MemoryTracker *>(memoryTrackerAsCookie);
 
-ChakraRuntime::ChakraRuntime(ChakraRuntimeArgs &&args) noexcept : m_args{std::move(args)} {
-  JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
-
-  if (!m_args.enableJITCompilation) {
-    runtimeAttributes = static_cast<JsRuntimeAttributes>(
-        runtimeAttributes | JsRuntimeAttributeDisableNativeCodeGeneration |
-        JsRuntimeAttributeDisableExecutablePageAllocation);
+  switch (allocationEvent) {
+    case JsMemoryAllocate: {
+      memoryTracker->OnAllocation(allocationSize);
+      break;
+    }
+    case JsMemoryFree: {
+      memoryTracker->OnDeallocation(allocationSize);
+      break;
+    }
+    case JsMemoryFailure:
+    default: {
+      break;
+    }
   }
 
+  return true;
+}
+
+} // namespace
+
+ChakraRuntime::ChakraRuntime(const std::shared_ptr<ChakraRuntimeArgs> &args) noexcept : m_args{args} {}
+
+void ChakraRuntime::Initialize() {
+  JsRuntimeAttributes runtimeAttributes = JsRuntimeAttributeNone;
+
+  switch (m_args->m_executablePageAllocationPolicy) {
+    case ChakraRuntimeArgs::ExecutablePageAllocationPolicy::DisableAll: {
+      runtimeAttributes = JsRuntimeAttributeDisableExecutablePageAllocation;
+      break;
+    }
+    case ChakraRuntimeArgs::ExecutablePageAllocationPolicy::DisableNativeCodeGeneration: {
+      runtimeAttributes = JsRuntimeAttributeDisableNativeCodeGeneration;
+      break;
+    }
+    case ChakraRuntimeArgs::ExecutablePageAllocationPolicy::EnableAll: {
+      break;
+    }
+    default: {
+      // Control flow should never reach here.
+      std::terminate();
+    }
+  }
+
+  // Note: The second argument to JsCreateRuntime is a JsThreadServiceCallback,
+  // which allows the host to specify a background thread service for the
+  // created runtime. If specified, then background work items will be passed to
+  // the host using the provided JsThreadServiceCallback. We might explore this
+  // option in the future.
   VerifyChakraErrorElseThrow(JsCreateRuntime(runtimeAttributes, nullptr, &m_runtime));
 
-  setupMemoryTracker();
+  SetUpMemoryTracker();
 
   JsContextRef context = JS_INVALID_REFERENCE;
   VerifyChakraErrorElseThrow(JsCreateContext(m_runtime, &context));
+  // Even though initialize() can throw, we do not expect it to do so here.
+  // Hence we can mark this constructor as noexcept.
   m_context.Initialize(context);
 
-  // Note :: We currently assume that the runtime will be created and
-  // exclusively used in a single thread.
+  // Note: The documentation for JsSetCurrentContext says that it "sets the
+  // current script context on the thread." This suggests that ChakraCore is
+  // using thread local storage for context data. This is OK for now since we
+  // currently assume that ChakraRuntime will be created and used exclusively in
+  // a single thread, but we need to revisit this if our assumption is wrong.
   VerifyChakraErrorElseThrow(JsSetCurrentContext(m_context));
 
-  startDebuggingIfNeeded();
+  EvaluateJavaScriptSimple(
+      std::make_shared<facebook::jsi::StringBuffer>(g_bootstrapBundleSource), "ChakraRuntime_bootstrap.bundle");
 
-  setupNativePromiseContinuation();
+  if (m_args->m_enableDebugging) {
+    StartDebugging();
+  }
 
-  std::call_once(s_runtimeVersionInitFlag, initRuntimeVersion);
-
-  static facebook::jsi::StringBuffer bootstrapBundleSourceBuffer{g_bootstrapBundleSource};
-  evaluateJavaScriptSimple(bootstrapBundleSourceBuffer, "ChakraRuntime_bootstrap.bundle");
+  InitializeAdditionalFeatures();
 }
 
 ChakraRuntime::~ChakraRuntime() noexcept {
-  stopDebuggingIfNeeded();
+  VerifyChakraErrorElseCrash(JsSetCurrentContext(JS_INVALID_REFERENCE));
 
-  VerifyChakraErrorElseThrow(JsSetCurrentContext(JS_INVALID_REFERENCE));
+  // Note: We invalidate m_context explicitly here to avoid calling JsRelease
+  // after the m_runtime has been disposed. Invalidate() can throw, but since we
+  // marked this destructor as noexcept, std::terminate() will be invoked.
   m_context.Invalidate();
 
-  JsSetRuntimeMemoryAllocationCallback(m_runtime, nullptr, nullptr);
+  VerifyChakraErrorElseCrash(JsSetRuntimeMemoryAllocationCallback(m_runtime, nullptr, nullptr));
 
-  VerifyChakraErrorElseThrow(JsDisposeRuntime(m_runtime));
+  VerifyChakraErrorElseCrash(JsDisposeRuntime(m_runtime));
 }
 
 #pragma region Functions_inherited_from_Runtime
 
 facebook::jsi::Value ChakraRuntime::evaluateJavaScript(
     const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
-    const std::string &sourceURL) {
-  // Simple evaluate if scriptStore not available as it's risky to utilize the
-  // byte codes without checking the script version.
-  if (!runtimeArgs().scriptStore) {
-    if (!buffer)
-      throw facebook::jsi::JSINativeException("Script buffer is empty!");
-    return evaluateJavaScriptSimple(*buffer, sourceURL);
+    const std::string &sourceUrl) {
+  if (!buffer) {
+    throw facebook::jsi::JSINativeException("Error in ChakraRuntime::evaluateJavaScript() - buffer cannot be null.");
   }
 
-  uint64_t scriptVersion = 0;
-  std::shared_ptr<const facebook::jsi::Buffer> scriptBuffer;
+  // PreparedJavaScript optimization is disabled when debugging.
+  if (m_args->m_preparedJsStore && !m_args->m_enableDebugging) {
+    std::unique_ptr<PreparedJavaScriptStore> &preparedJsStore = m_args->m_preparedJsStore;
+    std::shared_ptr<const facebook::jsi::PreparedJavaScript> preparedJs =
+        preparedJsStore->getPreparedJavaScript(sourceUrl);
 
-  if (buffer) {
-    scriptBuffer = std::move(buffer);
-    scriptVersion = runtimeArgs().scriptStore->getScriptVersion(sourceURL);
-  } else {
-    auto versionedScript = runtimeArgs().scriptStore->getVersionedScript(sourceURL);
-    scriptBuffer = std::move(versionedScript.buffer);
-    scriptVersion = versionedScript.version;
+    if (preparedJs) {
+      return evaluatePreparedJavaScript(preparedJs);
+    } else {
+      preparedJsStore->persistPreparedJavaScript(sourceUrl);
+    }
   }
 
-  if (!scriptBuffer) {
-    throw facebook::jsi::JSINativeException("Script buffer is empty!");
-  }
-
-  // Simple evaluate if script version can't be computed.
-  if (scriptVersion == 0) {
-    return evaluateJavaScriptSimple(*scriptBuffer, sourceURL);
-  }
-
-  auto sharedScriptBuffer = std::shared_ptr<const facebook::jsi::Buffer>(std::move(scriptBuffer));
-
-  facebook::jsi::ScriptSignature scriptSignature = {sourceURL, scriptVersion};
-  facebook::jsi::JSRuntimeSignature runtimeSignature = {description().c_str(), getRuntimeVersion()};
-
-  auto preparedScript =
-      runtimeArgs().preparedScriptStore->tryGetPreparedScript(scriptSignature, runtimeSignature, nullptr);
-
-  std::shared_ptr<const facebook::jsi::Buffer> sharedPreparedScript;
-  if (preparedScript) {
-    sharedPreparedScript = std::shared_ptr<const facebook::jsi::Buffer>(std::move(preparedScript));
-  } else {
-    auto genPreparedScript = generatePreparedScript(sourceURL, *sharedScriptBuffer);
-    if (!genPreparedScript)
-      std::terminate(); // Cache generation can't fail unless something really
-                        // wrong. but we should get rid of this abort before
-                        // shipping.
-
-    sharedPreparedScript = std::shared_ptr<const facebook::jsi::Buffer>(std::move(genPreparedScript));
-    runtimeArgs().preparedScriptStore->persistPreparedScript(
-        sharedPreparedScript, scriptSignature, runtimeSignature, nullptr);
-  }
-
-  // We are pinning the buffers which are backing the external array buffers to
-  // the duration of this. This is not good if the external array buffers have a
-  // reduced liftime compared to the runtime itself. But, it's ok for the script
-  // and prepared script buffer as their lifetime is expected to be same as the
-  // JSI runtime.
-  m_pinnedPreparedScripts.push_back(sharedPreparedScript);
-  m_pinnedScripts.push_back(sharedScriptBuffer);
-
-  if (evaluateSerializedScript(*sharedScriptBuffer, *sharedPreparedScript, sourceURL)) {
-    return facebook::jsi::Value::undefined();
-  }
-
-  // If we reach here, fall back to simple evaluation.
-  return evaluateJavaScriptSimple(*sharedScriptBuffer, sourceURL);
+  return EvaluateJavaScriptSimple(buffer, sourceUrl);
 }
 
 std::shared_ptr<const facebook::jsi::PreparedJavaScript> ChakraRuntime::prepareJavaScript(
-    const std::shared_ptr<const facebook::jsi::Buffer> &,
-    std::string) {
-  throw facebook::jsi::JSINativeException("Not implemented!");
-}
+    const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
+    std::string sourceUrl) {
+  if (!buffer) {
+    throw facebook::jsi::JSINativeException("Error in ChakraRuntime::prepareJavaScript() - buffer cannot be null.");
+  }
 
-facebook::jsi::Value ChakraRuntime::evaluatePreparedJavaScript(
-    const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &) {
-  throw facebook::jsi::JSINativeException("Not implemented!");
+  return std::make_shared<const ChakraPreparedJavaScript>(
+      std::string{sourceUrl}, buffer, SerializeScript(buffer));
 }
 
 facebook::jsi::Object ChakraRuntime::global() {
   JsValueRef global;
   VerifyJsErrorElseThrow(JsGetGlobalObject(&global));
   return MakePointer<facebook::jsi::Object>(global);
-}
-
-std::string ChakraRuntime::description() {
-  return "ChakraRuntime";
 }
 
 bool ChakraRuntime::isInspectable() {
@@ -352,7 +351,7 @@ bool ChakraRuntime::isFunction(const facebook::jsi::Object &obj) const {
 }
 
 bool ChakraRuntime::isHostObject(const facebook::jsi::Object &obj) const {
-  facebook::jsi::Value val = GetProperty(obj, g_proxyIsHostObjectPropName);
+  facebook::jsi::Value val = GetObjectProperty(obj, g_proxyIsHostObjectPropName);
 
   if (val.isBool()) {
     return val.getBool();
@@ -362,7 +361,7 @@ bool ChakraRuntime::isHostObject(const facebook::jsi::Object &obj) const {
 }
 
 bool ChakraRuntime::isHostFunction(const facebook::jsi::Function &obj) const {
-  facebook::jsi::Value val = GetProperty(obj, g_functionIsHostFunctionPropName);
+  facebook::jsi::Value val = GetObjectProperty(obj, g_functionIsHostFunctionPropName);
 
   if (val.isBool()) {
     return val.getBool();
@@ -434,22 +433,10 @@ facebook::jsi::Array ChakraRuntime::getPropertyNames(const facebook::jsi::Object
   return result;
 }
 
-// Only ChakraCore supports weak reference semantics, so ChakraRuntime
-// WeakObjects are in fact strong references.
-
-facebook::jsi::WeakObject ChakraRuntime::createWeakObject(const facebook::jsi::Object &object) {
-  return make<facebook::jsi::WeakObject>(CloneChakraPointerValue(getPointerValue(object)));
-}
-
-facebook::jsi::Value ChakraRuntime::lockWeakObject(const facebook::jsi::WeakObject &weakObject) {
-  // We need to make a copy of the ChakraObjectRef held within weakObj's
-  // member PointerValue for the returned jsi::Value here.
-  ChakraObjectRef ref = GetChakraObjectRef(weakObject);
-  return ToJsiValue(std::move(ref));
-}
-
 facebook::jsi::Array ChakraRuntime::createArray(size_t length) {
-  assert(length <= (std::numeric_limits<unsigned int>::max)());
+  assert(
+      static_cast<unsigned long long>(length) <=
+      static_cast<unsigned long long>((std::numeric_limits<unsigned int>::max)()));
 
   JsValueRef result = JS_INVALID_REFERENCE;
   VerifyJsErrorElseThrow(JsCreateArray(static_cast<unsigned int>(length), &result));
@@ -470,30 +457,17 @@ size_t ChakraRuntime::size(const facebook::jsi::Array &arr) {
 
 size_t ChakraRuntime::size(const facebook::jsi::ArrayBuffer &arrBuf) {
   assert(isArrayBuffer(arrBuf));
-
-  int result = ToInteger(GetProperty(GetChakraObjectRef(arrBuf), "bytelength"));
-
-  if (result < 0) {
-    throw facebook::jsi::JSINativeException("Invalid JS array buffer bytelength detected.");
-  }
-
-  return static_cast<size_t>(result);
+  return GetArrayBufferLength(GetChakraObjectRef(arrBuf));
 }
 
 uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer &arrBuf) {
   assert(isArrayBuffer(arrBuf));
-
-  uint8_t *buffer = nullptr;
-  unsigned int size = 0;
-
-  VerifyJsErrorElseThrow(JsGetArrayBufferStorage(GetChakraObjectRef(arrBuf), &buffer, &size));
-
-  return buffer;
+  return GetArrayBufferData(GetChakraObjectRef(arrBuf));
 }
 
 facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &arr, size_t index) {
   assert(isArray(arr));
-  assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
+  assert(static_cast<unsigned long long>(index) <= static_cast<unsigned long long>((std::numeric_limits<int>::max)()));
 
   JsValueRef result = JS_INVALID_REFERENCE;
   VerifyJsErrorElseThrow(JsGetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), &result));
@@ -502,7 +476,7 @@ facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &
 
 void ChakraRuntime::setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) {
   assert(isArray(arr));
-  assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
+  assert(static_cast<unsigned long long>(index) <= static_cast<unsigned long long>((std::numeric_limits<int>::max)()));
 
   VerifyJsErrorElseThrow(
       JsSetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), ToChakraObjectRef(value)));
@@ -560,7 +534,9 @@ facebook::jsi::Value ChakraRuntime::call(
   std::vector<ChakraObjectRef> argRefs = ToChakraObjectRefs(args, count);
 
   std::vector<JsValueRef> argsWithThis = ConstructJsFunctionArguments(thisRef, argRefs);
-  assert(argsWithThis.size() <= (std::numeric_limits<unsigned short>::max)());
+  assert(
+      static_cast<unsigned long long>(argsWithThis.size()) <=
+      static_cast<unsigned long long>((std::numeric_limits<unsigned short>::max)()));
 
   JsValueRef result;
   VerifyJsErrorElseThrow(JsCallFunction(
@@ -576,7 +552,9 @@ ChakraRuntime::callAsConstructor(const facebook::jsi::Function &func, const face
   std::vector<ChakraObjectRef> argRefs = ToChakraObjectRefs(args, count);
 
   std::vector<JsValueRef> argsWithThis = ConstructJsFunctionArguments(undefinedRef, argRefs);
-  assert(argsWithThis.size() <= (std::numeric_limits<unsigned short>::max)());
+  assert(
+      static_cast<unsigned long long>(argsWithThis.size()) <=
+      static_cast<unsigned long long>((std::numeric_limits<unsigned short>::max)()));
 
   JsValueRef result;
   VerifyJsErrorElseThrow(JsConstructObject(
@@ -737,10 +715,28 @@ std::vector<ChakraObjectRef> ChakraRuntime::ToChakraObjectRefs(const facebook::j
   return result;
 }
 
-ChakraObjectRef ChakraRuntime::GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id) {
-  JsValueRef result = JS_INVALID_REFERENCE;
-  VerifyJsErrorElseThrow(JsGetProperty(obj, id, &result));
-  return ChakraObjectRef(result);
+void ChakraRuntime::SetUpMemoryTracker() {
+  // Note: We must not use VerifyJsErrorElseThrow here because this function is
+  // called in ChakraRuntime's constructor.
+
+  if (m_args->m_memoryLimit) {
+    size_t memoryLimit = *(m_args->m_memoryLimit);
+    if (memoryLimit == 0) {
+      throw facebook::jsi::JSINativeException("ChakraRuntime cannot have a memory limit of zero bytes.");
+    }
+    VerifyChakraErrorElseThrow(JsSetRuntimeMemoryLimit(m_runtime, memoryLimit));
+  }
+
+  if (m_args->m_memoryTracker) {
+    std::shared_ptr<facebook::react::MemoryTracker> &memoryTracker = m_args->m_memoryTracker;
+
+    size_t initialMemoryUsage = 0;
+    VerifyChakraErrorElseThrow(JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage));
+    memoryTracker->Initialize(initialMemoryUsage);
+
+    VerifyChakraErrorElseThrow(
+        JsSetRuntimeMemoryAllocationCallback(m_runtime, memoryTracker.get(), MemoryAllocationCallback));
+  }
 }
 
 JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
@@ -935,46 +931,6 @@ facebook::jsi::Object ChakraRuntime::createHostObjectProxyHandler() noexcept {
   handler.setProperty(*this, ownKeysPropName, createFunctionFromHostFunction(ownKeysPropId, 1, HostObjectOwnKeysTrap));
 
   return handler;
-}
-
-void ChakraRuntime::setupMemoryTracker() noexcept {
-  if (runtimeArgs().memoryTracker) {
-    size_t initialMemoryUsage = 0;
-    JsGetRuntimeMemoryUsage(m_runtime, &initialMemoryUsage);
-    runtimeArgs().memoryTracker->Initialize(initialMemoryUsage);
-
-    if (runtimeArgs().runtimeMemoryLimit > 0)
-      JsSetRuntimeMemoryLimit(m_runtime, runtimeArgs().runtimeMemoryLimit);
-
-    JsSetRuntimeMemoryAllocationCallback(
-        m_runtime,
-        runtimeArgs().memoryTracker.get(),
-        [](void *callbackState, JsMemoryEventType allocationEvent, size_t allocationSize) -> bool {
-          auto memoryTrackerPtr = static_cast<facebook::react::MemoryTracker *>(callbackState);
-          switch (allocationEvent) {
-            case JsMemoryAllocate:
-              memoryTrackerPtr->OnAllocation(allocationSize);
-              break;
-
-            case JsMemoryFree:
-              memoryTrackerPtr->OnDeallocation(allocationSize);
-              break;
-
-            case JsMemoryFailure:
-            default:
-              break;
-          }
-
-          return true;
-        });
-  }
-}
-
-std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
-uint64_t ChakraRuntime::s_runtimeVersion = 0;
-
-std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-  return std::make_unique<ChakraRuntime>(std::move(args));
 }
 
 } // namespace Microsoft::JSI

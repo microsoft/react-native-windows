@@ -15,6 +15,7 @@
 #endif
 
 #include <exception>
+#include <memory>
 #include <string>
 #include <string_view>
 
@@ -107,6 +108,18 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8);
 ChakraObjectRef GetPropertyId(const std::wstring &utf16);
 
 /**
+ * TODO (yicyao)
+ */
+ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
+
+/**
+ * TODO (yicyao)
+ */
+inline ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name) {
+  return Microsoft::JSI::GetProperty(obj, GetPropertyId(std::string_view{name}));
+}
+
+/**
  * @param jsString A ChakraObjectRef managing a JS string.
  *
  * @returns A std::string that is UTF-8 encoded.
@@ -174,6 +187,16 @@ ChakraObjectRef ToJsNumber(int num);
  * till the garbage collector finalizes it.
  */
 ChakraObjectRef ToJsArrayBuffer(const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
+
+/**
+ * TODO (yicyao)
+ */
+uint8_t *GetArrayBufferData(const ChakraObjectRef &arrBuf);
+
+/**
+ * TODO (yicyao)
+ */
+size_t GetArrayBufferLength(const ChakraObjectRef &arrBuf);
 
 /**
  * @returns A ChakraObjectRef managing a JS Object.
