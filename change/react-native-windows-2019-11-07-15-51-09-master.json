@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Do not eat exceptions in DevSupportManager::GetJavaScriptFromServer",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "3a2b9ba1261a52af4bd192a2d1121cd5962c2077",
+  "date": "2019-11-07T23:51:09.763Z"
+}
