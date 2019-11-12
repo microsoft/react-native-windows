@@ -20,7 +20,7 @@ namespace uwp {
 // want different backgroundColor depending on interactive states
 // such as PointerOver, Focused, and Disabled, expect to handle
 // these state changes in js, and re-render with different
-// backgroundColor to accomplish their desired visuals.
+// ViewStyle.backgroundColor to accomplish their desired visuals.
 void UpdateTextControlBackgroundResourceBrushes(
     const winrt::Windows::UI::Xaml::FrameworkElement &element,
     const winrt::Media::Brush brush);
@@ -30,7 +30,7 @@ void UpdateTextControlBackgroundResourceBrushes(
 // want different borderColor depending on interactive states
 // such as PointerOver, Focused, and Disabled, expect to handle
 // these state changes in js, and re-render with different
-// backgroundColor to accomplish their desired visuals.
+// ViewStyle.color to accomplish their desired visuals.
 void UpdateTextControlForegroundResourceBrushes(
     const winrt::Windows::UI::Xaml::DependencyObject object,
     const winrt::Media::Brush brush);
@@ -40,7 +40,7 @@ void UpdateTextControlForegroundResourceBrushes(
 // want different borderColor depending on interactive states
 // such as PointerOver, Focused, and Disabled, expect to handle
 // these state changes in js, and re-render with different
-// backgroundColor to accomplish their desired visuals.
+// ViewStyle.borderColor to accomplish their desired visuals.
 void UpdateTextControlBorderResourceBrushes(
     const winrt::Windows::UI::Xaml::FrameworkElement &element,
     const winrt::Media::Brush brush);
