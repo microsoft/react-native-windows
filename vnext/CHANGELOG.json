@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2019 19:25:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do not eat exceptions in DevSupportManager::GetJavaScriptFromServer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3a2b9ba1261a52af4bd192a2d1121cd5962c2077"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2019 04:50:06 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.70",
       "version": "0.60.0-vnext.70",
