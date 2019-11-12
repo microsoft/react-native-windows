@@ -305,6 +305,10 @@
     <ClCompile Include="Views\RefreshControlManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\SIPEventHandler.cpp" />
+    <ClCompile Include="Utils\ResourceBrushUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -622,6 +626,10 @@
     <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
     <ClInclude Include="Views\RefreshControlManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SIPEventHandler.h" />
+    <ClInclude Include="Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
