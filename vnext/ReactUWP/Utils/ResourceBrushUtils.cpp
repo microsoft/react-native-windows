@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "ResourceBrushUtils.h"
+#include "StandardControlResourceKeyNames.h"
 
 #include <winrt/Windows.UI.Xaml.h>
 
@@ -21,12 +22,12 @@ void UpdateTextControlBackgroundResourceBrushes(
     const winrt::FrameworkElement &element,
     const winrt::Brush brush) {
   if (IsObjectATextControl(element)) {
-    UpdateResourceBrush(element, L"TextControlBackground", brush);
-    UpdateResourceBrush(element, L"TextControlBackgroundPointerOver", brush);
-    UpdateResourceBrush(element, L"TextControlBackgroundFocused", brush);
-    UpdateResourceBrush(element, L"TextControlBackgroundDisabled", brush);
+    UpdateResourceBrush(element, c_textControlBackground, brush);
+    UpdateResourceBrush(element, c_textControlBackgroundPointerOver, brush);
+    UpdateResourceBrush(element, c_textControlBackgroundFocused, brush);
+    UpdateResourceBrush(element, c_textControlBackgroundDisabled, brush);
 
-    UpdateResourceBrush(element, L"TextControlButtonForegroundPressed", brush);
+    UpdateResourceBrush(element, c_textControlButtonForegroundPressed, brush);
   }
 }
 
@@ -34,14 +35,14 @@ void UpdateTextControlForegroundResourceBrushes(
     const winrt::DependencyObject object,
     const winrt::Brush brush) {
   if (IsObjectATextControl(object)) {
-    TryUpdateResourceBrush(object, L"TextControlForeground", brush);
-    TryUpdateResourceBrush(object, L"TextControlForegroundPointerOver", brush);
-    TryUpdateResourceBrush(object, L"TextControlForegroundFocused", brush);
-    TryUpdateResourceBrush(object, L"TextControlForegroundDisabled", brush);
+    TryUpdateResourceBrush(object, c_textControlForeground, brush);
+    TryUpdateResourceBrush(object, c_textControlForegroundPointerOver, brush);
+    TryUpdateResourceBrush(object, c_textControlForegroundFocused, brush);
+    TryUpdateResourceBrush(object, c_textControlForegroundDisabled, brush);
 
-    TryUpdateResourceBrush(object, L"TextControlButtonForeground", brush);
-    TryUpdateResourceBrush(object, L"TextControlButtonForegroundPointerOver", brush);
-    TryUpdateResourceBrush(object, L"TextControlButtonBackgroundPressed", brush);
+    TryUpdateResourceBrush(object, c_textControlButtonForeground, brush);
+    TryUpdateResourceBrush(object, c_textControlButtonForegroundPointerOver, brush);
+    TryUpdateResourceBrush(object, c_textControlButtonBackgroundPressed, brush);
   }
 }
 
@@ -49,10 +50,10 @@ void UpdateTextControlBorderResourceBrushes(
     const winrt::FrameworkElement &element,
     const winrt::Brush brush) {
   if (IsObjectATextControl(element)) {
-    UpdateResourceBrush(element, L"TextControlBorderBrush", brush);
-    UpdateResourceBrush(element, L"TextControlBorderBrushPointerOver", brush);
-    UpdateResourceBrush(element, L"TextControlBorderBrushFocused", brush);
-    UpdateResourceBrush(element, L"TextControlBorderBrushDisabled", brush);
+    UpdateResourceBrush(element, c_textControlBorderBrush, brush);
+    UpdateResourceBrush(element, c_textControlBorderBrushPointerOver, brush);
+    UpdateResourceBrush(element, c_textControlBorderBrushFocused, brush);
+    UpdateResourceBrush(element, c_textControlBorderBrushDisabled, brush);
   }
 }
 

@@ -631,6 +631,7 @@
     <ClInclude Include="Utils\ResourceBrushUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
