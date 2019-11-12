@@ -60,7 +60,7 @@ void TryUpdateResourceBrush(
     const winrt::DependencyObject &object,
     const std::wstring &resourceName,
     const winrt::Brush brush) {
-  const auto element = object.try_as<winrt::Windows::UI::Xaml::FrameworkElement>();
+  const auto element = object.try_as<winrt::FrameworkElement>();
   if (element != nullptr) {
     UpdateResourceBrush(element, resourceName, brush);
   }
