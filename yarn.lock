@@ -1991,13 +1991,13 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.5.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.5.6.tgz#b6f7688c6314347dc2dbcd63ea261d42dd8972a1"
-  integrity sha512-iyjjEipXJfshByE/wBJGdokGsdtOvUxC0/wd1efSByC5bkdcwXMu6+PvQxcSozYTXP7YK5FM8C5DeXe88mJDaw==
+  version "7.5.8"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.5.8.tgz#33717bc46e41497f39c34d16fd8e51fd29551924"
+  integrity sha512-DiT35wkO46FN/aXPWxcPcfMvQYlDEtTmqXXe274obMMKpZai8QElpticatji4lwkVzv1/nFPaaZWEICe/DXDgw==
   dependencies:
-    "@microsoft/api-extractor-model" "7.5.4"
-    "@microsoft/node-core-library" "3.17.0"
-    "@microsoft/ts-command-line" "4.3.4"
+    "@microsoft/api-extractor-model" "7.5.5"
+    "@microsoft/node-core-library" "3.17.1"
+    "@microsoft/ts-command-line" "4.3.5"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
     js-yaml "~3.13.1"
@@ -2009,6 +2009,14 @@
   integrity sha512-pzY1EVHw8dMCRBba8PDEV71vnsmvhOSgLUIXxB45Ts0Po69tz2H7YZQ4DsAetyv0aSLHG5QVXmGEn65A1DDvDQ==
   dependencies:
     "@microsoft/node-core-library" "3.17.0"
+    "@microsoft/tsdoc" "0.12.14"
+
+"@microsoft/api-extractor-model@7.5.5":
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.5.tgz#562f420f3a32d65a09984534f0af205e9e3d606f"
+  integrity sha512-OovDAQWxGChGDBH10Pf4Y7eJlVhbkCDv37RrKyuMyXurB8MEvZtHABjgknYsZD9MrfRUUvs5X80MIDcM2kSiYw==
+  dependencies:
+    "@microsoft/node-core-library" "3.17.1"
     "@microsoft/tsdoc" "0.12.14"
 
 "@microsoft/api-extractor@^7.3.8":
@@ -2039,6 +2047,19 @@
     timsort "~0.3.0"
     z-schema "~3.18.3"
 
+"@microsoft/node-core-library@3.17.1":
+  version "3.17.1"
+  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.17.1.tgz#c82087fefdda3a16c1eb5a70a55c892c6c79612b"
+  integrity sha512-SwsOJGefU8Ue5tRePEPq+ukuc7bURhTikuARsTGK8i/m2eVnKLZvUxFWdPxV5ntFqxYQcHr8UEh8EXSu3CiXVQ==
+  dependencies:
+    "@types/node" "8.10.54"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    semver "~5.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
 "@microsoft/package-deps-hash@^2.2.153":
   version "2.2.170"
   resolved "https://registry.yarnpkg.com/@microsoft/package-deps-hash/-/package-deps-hash-2.2.170.tgz#32c6e9268c2e129e98b4452b530c6fc152044f4a"
@@ -2048,6 +2069,15 @@
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.4.tgz#a52214bd86f6d65c8975f46e6b12fad68545058a"
   integrity sha512-PNqh7tACiOaM3znLX2EjECbabk0PfChEn6lMzrC62+xtV2Xr0N0dj1PtvDX125cxxF4FNcWoZqCODzJI/cB0GA==
+  dependencies:
+    "@types/argparse" "1.0.33"
+    argparse "~1.0.9"
+    colors "~1.2.1"
+
+"@microsoft/ts-command-line@4.3.5":
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/@microsoft/ts-command-line/-/ts-command-line-4.3.5.tgz#78026d20244f39978d3397849ac8c40c0c2d4079"
+  integrity sha512-CN3j86apNOmllUmeJ0AyRfTYA2BP2xlnfgmnyp1HWLqcJmR/zLe/fk/+gohGnNt7o5/qHta3681LQhO2Yy3GFw==
   dependencies:
     "@types/argparse" "1.0.33"
     argparse "~1.0.9"
@@ -9837,9 +9867,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz":
-  version "0.60.0-microsoft.16"
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.16.tar.gz#388e9033f6ce8e5863c410e73de9b51a7709274c"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.20.tar.gz":
+  version "0.60.0-microsoft.20"
+  uid add23567716f520259c2b70602e1defb0329e087
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.20.tar.gz#add23567716f520259c2b70602e1defb0329e087"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
