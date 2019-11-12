@@ -1,7 +1,7 @@
 # Native UI Components
 
 >**This documentation and the underlying platform code is a work in progress.**
->**Examples (C# and C+/WinRT):**
+>**Examples (C# and C++/WinRT):**
 >- [Native Module Sample in microsoft/react-native-windows-samples](https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample)
 >- [Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)
 

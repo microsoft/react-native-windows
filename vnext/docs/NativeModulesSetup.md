@@ -1,7 +1,7 @@
 # Native Module Setup
 
 >**This documentation and the underlying platform code is a work in progress.**
->**Examples (C# and C+/WinRT):**
+>**Examples (C# and C++/WinRT):**
 >- [Native Module Sample in microsoft/react-native-windows-samples](https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample)
 >- [Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)
 
@@ -11,7 +11,7 @@ This guide will help set you up with the Visual Studio infrastructure to author 
 
 Install the tools specified in the *System Requirements* and *Dependencies* sections of [Getting Started Guide for React Native Windows (vnext)](./GettingStarted.md).
 
-If you're planning on writing in C++, you'll also want to download and install the [C++/WinRT Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=CppWinRTTeam.cppwinrt101804264).
+If you're planning on writing in C++, you'll need to download and install the [C++/WinRT Visual Studio Extension](https://marketplace.visualstudio.com/items?itemName=CppWinRTTeam.cppwinrt101804264).
 
 ## New Project (optional)
 
@@ -47,7 +47,7 @@ Open Visual Studio and select `Create a new project`. You're going to create a n
 
 If you're planning on writing your native module in C#, you'll want to choose `Windows Runtime Component (Universal Windows)`.
 
-If you're planning on writing your native module in C++, you'll want to choose `Windows Runtime Component (C++/WinRT)`. Note, if you don't see that project type, make sure you installed the *C++/WinRT Visual Studio Extension* linked to above under [Development Environment](#development-environment).
+If you're planning on writing your native module in C++, you'll want to choose `Windows Runtime Component (C++/WinRT)`. **Important:** You want **C++/WinRT**, not **C++/CX**. Do not choose `Windows Runtime Component (C++/CX)`. If you don't see the **C++/WinRT** project type, make sure you installed the *C++/WinRT Visual Studio Extension* linked to above under [Development Environment](#development-environment).
 
 1. Set the `Project Name` to `MyLibrary`.
 1. Set the `Location` to the native module directory of the you created earlier.
