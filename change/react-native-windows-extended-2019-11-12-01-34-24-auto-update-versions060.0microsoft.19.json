@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Updating react-native to version: 0.60.0-microsoft.19",
+  "packageName": "react-native-windows-extended",
+  "email": "53619745+rnbot@users.noreply.github.com",
+  "commit": "933b1fc15732d9363e2f213b83d256f5c6f4f797",
+  "date": "2019-11-12T01:34:24.070Z"
+}
