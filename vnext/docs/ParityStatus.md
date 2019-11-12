@@ -16,7 +16,7 @@ Below are a list of components and their status towards parity between the lean 
 |Image|Partial|[Image project board](https://github.com/microsoft/react-native-windows/projects/18)|Partial|
 |ScrollView|Partial|[ScrollView project board](https://github.com/microsoft/react-native-windows/projects/17)|Partial|
 |Switch|**Complete**|-|**Complete**|
-|Text|**Complete** *(Some properties not supported due to device platform differences, docs coming soon)*|-|**Complete**|
+|Text|**Complete** *(Some properties not supported due to device platform differences, docs coming soon)*|**Complete**|**Complete**|
 |TextInput|Partial|[TextInput project board](https://github.com/microsoft/react-native-windows/projects/20)|Partial|
 |View|Partial (some Style props left)|[View Style props project board](https://github.com/microsoft/react-native-windows/projects/19)|**Complete**|
 |VirtualizedList|Partial|No Issues Logged|**Complete**|
