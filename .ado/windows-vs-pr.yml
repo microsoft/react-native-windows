@@ -65,6 +65,10 @@ jobs:
         clean: false
         submodules: false
 
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
+
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -78,6 +82,18 @@ jobs:
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             ReactUWP\**
+
+      - task: DeleteFiles@1
+        displayName: delete build
+        inputs:
+          SourceFolder: vnext/build
+          Contents: '**/*'
+
+      - task: DeleteFiles@1
+        displayName: target
+        inputs:
+          SourceFolder: vnext/target
+          Contents: '**/*'
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -173,6 +189,10 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
+
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
@@ -300,6 +320,10 @@ jobs:
     pool:
       vmImage: $(VmImage)
     steps:
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
+
       - template: templates/react-native-init.yml
         parameters:
           version: 0.60.6
@@ -383,6 +407,10 @@ jobs:
         lfs: false # whether to download Git-LFS files
         submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
 
       - task: PowerShell@2
         displayName: Download Winium

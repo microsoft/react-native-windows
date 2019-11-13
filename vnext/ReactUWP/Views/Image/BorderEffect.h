@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Views/cppwinrt/BorderEffect.g.h>
+#include <Microsoft.UI.Composition.Effects.BorderEffect.g.h>
 #include "Microsoft.UI.Composition.Effects_Impl.h"
 
 namespace winrt::Microsoft::UI::Composition::Effects::implementation {

@@ -1,5 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM">
       <Configuration>Debug</Configuration>
@@ -43,12 +44,12 @@
     <!-- MDMERGE.EXE fails if output dir has trailing slash. -->
     <MergedWinmdDirectory>$(OutDir.TrimEnd("/\"))</MergedWinmdDirectory>
     <IdlHeaderDirectory>$(MSBuildThisFileDirectory)GeneratedWinmdHeader</IdlHeaderDirectory>
+    <GenerateTypeLibrary>false</GenerateTypeLibrary>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\MIDL\midlrt.targets" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -69,7 +70,6 @@
       <SDLCheck>true</SDLCheck>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
-        OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -80,7 +80,6 @@
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_TRACE_POSTPROCESSING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_TRACE_POSTPROCESSING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
-        OLD_CPPWINRT;
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
         NOMINMAX;
@@ -106,7 +105,7 @@
       <AdditionalDependencies>dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Midl>
-      <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ABI\idl;$(ProjectDir)Views\cppwinrt</AdditionalIncludeDirectories>
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
@@ -149,17 +148,6 @@
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.arm.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <Target Name="mdmerge" AfterTargets="Midl" Inputs="@(Midl -> '%(MetadataFileName)')" Outputs="$(MergedWinmdDirectory)\$(RootNamespace).winmd">
-    <PropertyGroup>
-      <MdMergeExe>"$(WindowsSdkDir)bin\$(WindowsTargetPlatformVersion)\$(PreferredToolArchitecture)\mdmerge.exe"</MdMergeExe>
-    </PropertyGroup>
-    <ItemGroup Condition="'$(ApplicationTypeRevision)' == '10.0'">
-      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.FoundationContract\3.0.0.0" />
-      <MetaDataDir Include="$(WindowsSDK_MetadataPath)\$(WindowsTargetPlatformVersion)\Windows.Foundation.UniversalApiContract\8.0.0.0" />
-    </ItemGroup>
-    <Message Text="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
-    <Exec Command="$(MdMergeExe) -v @(MetaDataDir -> '-metadata_dir &quot;%(Identity)&quot;', ' ') -o &quot;$(MergedWinmdDirectory)&quot; -i &quot;$(UnmergedWinmdDirectory)&quot; -partial -n:-1" />
-  </Target>
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
@@ -237,15 +225,6 @@
     <ClInclude Include="Utils\PropertyUtils.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\CheckboxViewManager.h" />
-    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h" />
-    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h" />
-    <ClInclude Include="Views\cppwinrt\ViewControl.g.h" />
-    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h" />
-    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h" />
-    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h" />
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
@@ -260,6 +239,7 @@
     <ClInclude Include="Views\PopupViewManager.h" />
     <ClInclude Include="Views\RawTextViewManager.h" />
     <ClInclude Include="Views\ReactControl.h" />
+    <ClInclude Include="Views\RefreshControlManager.h" />
     <ClInclude Include="Views\RootViewManager.h" />
     <ClInclude Include="Views\ScrollContentViewManager.h" />
     <ClInclude Include="Views\ScrollViewManager.h" />
@@ -362,6 +342,7 @@
     <ClCompile Include="Views\RawTextViewManager.cpp" />
     <ClCompile Include="Views\ReactControl.cpp" />
     <ClCompile Include="Views\ReactRootView.cpp" />
+    <ClCompile Include="Views\RefreshControlManager.cpp" />
     <ClCompile Include="Views\RootViewManager.cpp" />
     <ClCompile Include="Views\ScrollContentViewManager.cpp" />
     <ClCompile Include="Views\ScrollViewManager.cpp" />
@@ -431,10 +412,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <MidlRT Include="ABI\idl\Module.idl" />
-    <MidlRT Include="ABI\idl\Instance.idl" />
-    <MidlRT Include="ABI\idl\ReactControl.idl" />
-    <MidlRT Include="ABI\idl\AccessibilityAction.idl" />
+    <Midl Include="ABI\idl\ReactUWPABI.idl">
+      <!-- Enable Windows Runtime ABI header files. when /reference is passed to midl.exe, the ABI head includes headers like Windows.AI.MachineLearning.MachineLearningContract.h 
+      which doesn't exist actually in SDK. To workaround the problem, DisableReferences is enabled to disable /reference.      
+       -->
+      <DisableReferences>true</DisableReferences>
+      <HeaderFileName>$(IdlHeaderDirectory)\%(Filename).h</HeaderFileName>
+      <MetadataFileName>$(UnmergedWinmdDirectory)\%(Filename).winmd</MetadataFileName>
+      <AdditionalOptions></AdditionalOptions>
+    </Midl>
+    <Midl Include="Views/cppwinrt/BorderEffect.idl" />
+    <Midl Include="Views/cppwinrt/AccessibilityAction.idl" />
+    <Midl Include="Views/cppwinrt/DynamicAutomationPeer.idl" />
+    <Midl Include="Views/cppwinrt/ViewPanel.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
@@ -444,12 +434,19 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
+    <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
+    <Import Project="$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
+    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

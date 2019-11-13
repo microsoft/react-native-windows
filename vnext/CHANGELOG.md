@@ -1,7 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Nov 2019 04:50:06 GMT and should not be manually modified.
 
+## 0.60.0-vnext.70
+Tue, 12 Nov 2019 04:50:06 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.20 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.69
+Mon, 11 Nov 2019 22:01:18 GMT
+
+### Changes
+
+- Workaround for flyout centering problem (kenander@microsoft.com)
+## 0.60.0-vnext.68
+Sat, 09 Nov 2019 01:27:15 GMT
+
+### Changes
+
+- Native Module Setup Guide * Added NativeModuleSetup.md, #3623 * Added link to new guide in NativeModules.md, ViewManagers.md * Updated ProjectStructure.md with Microsoft.ReactNative projects * Removed PropertySheets in SampleApps and CLI solutions (jthysell@microsoft.com)
+## 0.60.0-vnext.67
+Fri, 08 Nov 2019 00:30:50 GMT
+
+### Changes
+
+- ViewManager Command Updates * Added command to CustomUserControlViewManagerCPP, #3600 * Added support for simpler C# view manager commands signatures * Added support for object properties for view managers, #3613 * Added documentation for C++ view manager * Added documentation for ViewManager commands, #3599 (jthysell@microsoft.com)
+## 0.60.0-vnext.66
+Thu, 07 Nov 2019 17:37:11 GMT
+
+### Changes
+
+- Support refreshControl (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.65
 Wed, 06 Nov 2019 13:58:14 GMT
 
