@@ -219,6 +219,13 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+
+  <PropertyGroup>
+    <BundleCommand>yarn run bundle</BundleCommand>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\vnext\RNW.props" />
+  <Import Project="..\..\..\..\vnext\RNW.targets" />
+
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
