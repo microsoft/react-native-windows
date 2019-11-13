@@ -5,6 +5,7 @@
 
 #include <IReactInstance.h>
 #include <Utils/ValueUtils.h>
+#include <Utils/ResourceBrushUtils.h>
 #include <Views/ShadowNodeBase.h>
 #include <winrt/Windows.UI.Xaml.Shapes.h>
 #include "SwitchViewManager.h"
@@ -64,16 +65,8 @@ void SwitchShadowNode::UpdateThumbColor() {
   if (toggleSwitch == nullptr)
     return;
 
-  if (IsValidColorValue(m_thumbColor)) {
-    // apply template if it has not done so
-    toggleSwitch.ApplyTemplate();
-    winrt::Ellipse knobOn = toggleSwitch.GetTemplateChild(asHstring("SwitchKnobOn")).as<winrt::Ellipse>();
-    if (knobOn)
-      knobOn.Fill(SolidColorBrushFrom(m_thumbColor));
-    winrt::Ellipse knobOff = toggleSwitch.GetTemplateChild(asHstring("SwitchKnobOff")).as<winrt::Ellipse>();
-    if (knobOff)
-      knobOff.Fill(SolidColorBrushFrom(m_thumbColor));
-  }
+  const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
+  UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
 }
 
 void SwitchShadowNode::UpdateTrackColor() {
@@ -81,19 +74,9 @@ void SwitchShadowNode::UpdateTrackColor() {
   if (toggleSwitch == nullptr)
     return;
 
-  folly::dynamic trackColor = toggleSwitch.IsOn() ? m_onTrackColor : m_offTrackColor;
-  if (IsValidColorValue(trackColor)) {
-    toggleSwitch.ApplyTemplate();
-    winrt::Rectangle knob = toggleSwitch.GetTemplateChild(asHstring("SwitchKnobBounds")).as<winrt::Rectangle>();
-    if (knob) {
-      knob.Fill(SolidColorBrushFrom(trackColor));
-      knob.Opacity(1);
-    }
-    winrt::Rectangle knobBorder = toggleSwitch.GetTemplateChild(asHstring("OuterBorder")).as<winrt::Rectangle>();
-    if (knobBorder) {
-      knobBorder.Stroke(SolidColorBrushFrom(trackColor));
-    }
-  }
+  const auto onTrackBrush = IsValidColorValue(m_onTrackColor) ? BrushFrom(m_onTrackColor) : nullptr;
+  const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
+  UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
 }
 
 void SwitchShadowNode::updateProperties(const folly::dynamic &&props) {

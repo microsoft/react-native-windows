@@ -36,17 +36,14 @@ void UpdateControlBorderResourceBrushes(
     const winrt::Windows::UI::Xaml::FrameworkElement &element,
     const winrt::Media::Brush brush);
 
-void TryUpdateResourceBrush(
-    const winrt::Windows::UI::Xaml::DependencyObject &object,
-    const std::wstring &resourceName,
-    const winrt::Windows::UI::Xaml::Media::Brush brush);
+void UpdateToggleSwitchThumbResourceBrushes(
+  const winrt::Windows::UI::Xaml::Controls::ToggleSwitch &toggleSwitch,
+  const winrt::Windows::UI::Xaml::Media::Brush thumbBrush);
 
-void UpdateResourceBrush(
-    const winrt::Windows::UI::Xaml::FrameworkElement &element,
-    const std::wstring &resourceName,
-    const winrt::Windows::UI::Xaml::Media::Brush brush);
-
-bool IsObjectATextControl(const winrt::Windows::UI::Xaml::DependencyObject &object);
+void UpdateToggleSwitchTrackResourceBrushes(
+    const winrt::Windows::UI::Xaml::Controls::ToggleSwitch &toggleSwitch,
+    const winrt::Windows::UI::Xaml::Media::Brush onTrackBrush,
+    const winrt::Windows::UI::Xaml::Media::Brush offTrackBrush);
 
 }
 } // namespace react

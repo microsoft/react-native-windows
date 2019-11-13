@@ -16,6 +16,30 @@ using namespace Windows::UI::Xaml::Controls;
 namespace react {
 namespace uwp {
 
+void UpdateResourceBrush(
+    const winrt::FrameworkElement &element,
+    const std::wstring &resourceName,
+    const winrt::Brush brush) {
+  const auto resources = element.Resources();
+  if (resources != nullptr) {
+    if (brush != nullptr) {
+      resources.Insert(winrt::box_value(resourceName), brush);
+    } else {
+      resources.Remove(winrt::box_value(resourceName));
+    }
+  }
+}
+
+void TryUpdateResourceBrush(
+    const winrt::DependencyObject &object,
+    const std::wstring &resourceName,
+    const winrt::Brush brush) {
+  const auto element = object.try_as<winrt::FrameworkElement>();
+  if (element != nullptr) {
+    UpdateResourceBrush(element, resourceName, brush);
+  }
+}
+
 void UpdateTextControlBackgroundResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
   UpdateResourceBrush(element, c_textControlBackground, brush);
   UpdateResourceBrush(element, c_textControlBackgroundPointerOver, brush);
@@ -43,6 +67,50 @@ void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &eleme
   UpdateResourceBrush(element, c_textControlBorderBrushDisabled, brush);
 }
 
+void UpdateToggleSwitchBorderResourceBrushes(const winrt::ToggleSwitch &toggleSwitch, const winrt::Brush brush) {
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffDisabled, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOn, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPointerOver, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPressed, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
+}
+
+void UpdateToggleSwitchThumbResourceBrushes(
+    const winrt::ToggleSwitch &toggleSwitch,
+    const winrt::Brush thumbBrush) {
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffDisabled, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOn, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPointerOver, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPressed, thumbBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnDisabled, thumbBrush);
+}
+
+void UpdateToggleSwitchTrackResourceBrushes(
+  const winrt::ToggleSwitch& toggleSwitch,
+  const winrt::Brush onTrackBrush,
+  const winrt::Brush offTrackBrush) {
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnDisabled, onTrackBrush);
+
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOff, offTrackBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPointerOver, offTrackBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPressed, offTrackBrush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffDisabled, offTrackBrush);
+}
+
+bool IsObjectATextControl(const winrt::DependencyObject &object) {
+  return object.try_as<winrt::TextBox>() != nullptr || object.try_as<winrt::PasswordBox>() != nullptr ||
+      object.try_as<winrt::RichEditBox>() != nullptr || object.try_as<winrt::AutoSuggestBox>() != nullptr;
+}
+
 void UpdateControlBackgroundResourceBrushes(
     const winrt::Windows::UI::Xaml::FrameworkElement &element,
     const winrt::Media::Brush brush) {
@@ -64,36 +132,9 @@ void UpdateControlBorderResourceBrushes(
     const winrt::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
     UpdateTextControlBorderResourceBrushes(element, brush);
+  } else if (const auto toggleSwitch = element.try_as<winrt::ToggleSwitch>()) {
+    UpdateToggleSwitchBorderResourceBrushes(toggleSwitch, brush);
   }
-}
-
-void TryUpdateResourceBrush(
-    const winrt::DependencyObject &object,
-    const std::wstring &resourceName,
-    const winrt::Brush brush) {
-  const auto element = object.try_as<winrt::FrameworkElement>();
-  if (element != nullptr) {
-    UpdateResourceBrush(element, resourceName, brush);
-  }
-}
-
-void UpdateResourceBrush(
-    const winrt::FrameworkElement &element,
-    const std::wstring &resourceName,
-    const winrt::Brush brush) {
-  const auto resources = element.Resources();
-  if (resources != nullptr) {
-    if (brush != nullptr) {
-      resources.Insert(winrt::box_value(resourceName), brush);
-    } else {
-      resources.Remove(winrt::box_value(resourceName));
-    }
-  }
-}
-
-bool IsObjectATextControl(const winrt::DependencyObject &object) {
-  return object.try_as<winrt::TextBox>() != nullptr || object.try_as<winrt::PasswordBox>() != nullptr ||
-      object.try_as<winrt::RichEditBox>() != nullptr || object.try_as<winrt::AutoSuggestBox>() != nullptr;
 }
 
 } // namespace uwp
