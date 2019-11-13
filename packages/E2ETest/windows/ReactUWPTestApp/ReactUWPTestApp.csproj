@@ -221,10 +221,13 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
 
   <PropertyGroup>
-    <BundleCommand>yarn run bundle</BundleCommand>
+    <BundleCommand>
+    cd
+    yarn run bundle
+    </BundleCommand>
   </PropertyGroup>
-  <Import Project="..\..\..\..\vnext\RNW.props" />
-  <Import Project="..\..\..\..\vnext\RNW.targets" />
+  <Import Project="..\..\..\..\vnext\ReactNativeWindows.props" />
+  <Import Project="..\..\..\..\vnext\ReactNativeWindows.targets" />
 
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

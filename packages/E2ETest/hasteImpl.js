@@ -20,6 +20,7 @@ const rnwPath = fs.realpathSync(
 const ROOTS = [rnwPath + path.sep, rnPath + path.sep];
 
 const BLACKLISTED_PATTERNS /*: Array<RegExp> */ = [
+  /msbuild.*/,
   /.*[\\\/]__(mocks|tests)__[\\\/].*/,
   /^Libraries[\\\/]Animated[\\\/]src[\\\/]polyfills[\\\/].*/,
   /^lib[\\/]Libraries[\\\/]Animated[\\\/]src[\\\/]polyfills[\\\/].*/,
