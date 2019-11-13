@@ -30,16 +30,6 @@ void UpdateResourceBrush(
   }
 }
 
-void TryUpdateResourceBrush(
-    const winrt::DependencyObject &object,
-    const std::wstring &resourceName,
-    const winrt::Brush brush) {
-  const auto element = object.try_as<winrt::FrameworkElement>();
-  if (element != nullptr) {
-    UpdateResourceBrush(element, resourceName, brush);
-  }
-}
-
 void UpdateTextControlBackgroundResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
   UpdateResourceBrush(element, c_textControlBackground, brush);
   UpdateResourceBrush(element, c_textControlBackgroundPointerOver, brush);
@@ -49,15 +39,15 @@ void UpdateTextControlBackgroundResourceBrushes(const winrt::FrameworkElement &e
   UpdateResourceBrush(element, c_textControlButtonForegroundPressed, brush);
 }
 
-void UpdateTextControlForegroundResourceBrushes(const winrt::DependencyObject object, const winrt::Brush brush) {
-  TryUpdateResourceBrush(object, c_textControlForeground, brush);
-  TryUpdateResourceBrush(object, c_textControlForegroundPointerOver, brush);
-  TryUpdateResourceBrush(object, c_textControlForegroundFocused, brush);
-  TryUpdateResourceBrush(object, c_textControlForegroundDisabled, brush);
+void UpdateTextControlForegroundResourceBrushes(const winrt::FrameworkElement element, const winrt::Brush brush) {
+  UpdateResourceBrush(element, c_textControlForeground, brush);
+  UpdateResourceBrush(element, c_textControlForegroundPointerOver, brush);
+  UpdateResourceBrush(element, c_textControlForegroundFocused, brush);
+  UpdateResourceBrush(element, c_textControlForegroundDisabled, brush);
 
-  TryUpdateResourceBrush(object, c_textControlButtonForeground, brush);
-  TryUpdateResourceBrush(object, c_textControlButtonForegroundPointerOver, brush);
-  TryUpdateResourceBrush(object, c_textControlButtonBackgroundPressed, brush);
+  UpdateResourceBrush(element, c_textControlButtonForeground, brush);
+  UpdateResourceBrush(element, c_textControlButtonForegroundPointerOver, brush);
+  UpdateResourceBrush(element, c_textControlButtonBackgroundPressed, brush);
 }
 
 void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
@@ -123,7 +113,8 @@ void UpdateControlForegroundResourceBrushes(
     const winrt::Windows::UI::Xaml::DependencyObject object,
     const winrt::Media::Brush brush) {
   if (IsObjectATextControl(object)) {
-    UpdateTextControlForegroundResourceBrushes(object, brush);
+    const auto element = object.try_as<winrt::FrameworkElement>();
+    UpdateTextControlForegroundResourceBrushes(element, brush);
   }
 }
 
