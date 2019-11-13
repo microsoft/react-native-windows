@@ -1,6 +1,9 @@
 # Native Modules and React Native Windows
 
-*Both this documentation and the underlying code is a work in progress. You can see the current state of working code here: [packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)*
+>**This documentation and the underlying platform code is a work in progress.**
+>**Examples (C# and C++/WinRT):**
+>- [Native Module Sample in microsoft/react-native-windows-samples](https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample)
+>- [Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps](../../packages/microsoft-reactnative-sampleapps)
 
 Sometimes an app needs access to a platform API that React Native doesn't have a corresponding module for yet. Maybe you want to reuse some existing .NET code without having to reimplement it in JavaScript, or write some high performance, multi-threaded code for image processing, a database, or any number of advanced extensions.
 
@@ -22,6 +25,20 @@ React Native for Windows supports authoring native modules in both C# and C++. E
 
 > NOTE: If you are unable to use the reflection-based annotation approach, you can define native modules directly using the ABI. This is outlined in the [Native Modules and React Native Windows (Advanced Topics)](./NativeModulesAdvanced.md) document. 
 
+## Initial Setup
+
+This guide assumes you already have the development environment and project structure set up for authoring native modules and are ready to write code.
+
+If you are only planning on adding a native module to your existing React Native Windows app, ie:
+
+1. You followed [Consuming react native windows](./ConsumingRNW.md), where
+1. You ran `react-native windows --template vnext` to add Windows to your project, and
+1. You are just adding your native code to the app project under the `windows` folder.
+
+Then you can simply open the Visual Studio solution in the `windows` folder and add the new files directly to the app project.
+
+If you are instead creating a standalone native module, or adding Windows support to an existing native module, check out the [Native Modules Setup](./NativeModulesSetup.md) guide first.
+
 ## Sample Native Module (C#)
 
 ### Attributes
@@ -33,7 +50,6 @@ React Native for Windows supports authoring native modules in both C# and C++. E
 | `ReactConstant` | Specifies a field or property that represents a constant. |
 | `ReactConstantProvider` | Specifies a method that provides a set of constants. |
 | `ReactEvent` | Specifies a field or property that represents an event. |
-
 
 ### 1. Authoring your Native Module
 
@@ -225,30 +241,38 @@ Here is a sample native module written in C++ called `FancyMath`. It is a simple
 
 *FancyMath.h*
 ```cpp
-#include "NativeModules.h";
+#pragma once
+
+#include "pch.h"
+
+#include <functional>
+#define _USE_MATH_DEFINES
+#include <math.h>
+
+#include "NativeModules.h"
 
 namespace NativeModuleSample
 {
-  REACT_MODULE(FancyMath);
-  class FancyMath
-  {
-    REACT_CONSTANT(E);
-    public double E = Math.E;
-
-    REACT_CONSTANT(PI, "Pi");
-    public double PI = Math.PI;
-
-    REACT_METHOD(Add, "add");
-    public double Add(double a, double b)
+    REACT_MODULE(FancyMath);
+    struct FancyMath
     {
-      double result = a + b;
-      AddEvent(result);
-      return result;
-    }
+        REACT_CONSTANT(E);
+        const double E = M_E;
 
-    REACT_EVENT(AddEvent);
-    std::function<void(double)> AddEvent;
-  }
+        REACT_CONSTANT(PI, "Pi");
+        const double PI = M_PI;
+
+        REACT_METHOD(Add, "add");
+        double Add(double a, double b) noexcept
+        {
+            double result = a + b;
+            AddEvent(result);
+            return result;
+        }
+
+        REACT_EVENT(AddEvent);
+        std::function<void(double)> AddEvent;
+    };
 }
 ```
 
@@ -273,13 +297,16 @@ To add custom events, we attribute a `std::function<void(double)>` delegate with
 Now, we want to register our new `FancyMath` module with React Native so we can use it from JavaScript code. To do this, first we're going to create a `ReactPackageProvider` which implements [Microsoft.ReactNative.IReactPackageProvider](../Microsoft.ReactNative/IReactPackageProvider.idl). It starts with defining an .idl file:
 
 *ReactPackageProvider.idl*
-```csharp
-namespace NativeModuleSample {
-
-runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+```c++
+namespace NativeModuleSample
 {
-  ReactPackageProvider();
-};
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider : Microsoft.ReactNative.Bridge.IReactPackageProvider
+    {
+        ReactPackageProvider();
+    };
+}
 ```
 
 After that we add the .h and.cpp files:
@@ -287,27 +314,26 @@ After that we add the .h and.cpp files:
 *ReactPackageProvider.h*
 ```cpp
 #pragma once
+
 #include "ReactPackageProvider.g.h"
 
-namespace winrt::NativeModuleSample::implementation {
+using namespace winrt::Microsoft::ReactNative::Bridge;
 
-struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
+namespace winrt::NativeModuleSample::implementation
 {
-  ReactPackageProvider() = default;
-  void CreatePackage(Microsoft::ReactNative::IReactPackageBuilder const& packageBuilder);
-};
+    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
+    {
+        ReactPackageProvider() = default;
 
-} // namespace winrt::NativeModuleSample::implementation
+        void CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept;
+    };
+}
 
-namespace winrt::NativeModuleSample::factory_implementation {
-
-struct ReactPackageProvider : ReactPackageProviderT<
-                                     ReactPackageProvider,
-                                     implementation::ReactPackageProvider>
+namespace winrt::NativeModuleSample::factory_implementation
 {
-};
+    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
+}
 
-} // namespace winrt::NativeModuleSample::factory_implementation
 ```
 
 *ReactPackageProvider.cpp*
@@ -318,20 +344,18 @@ struct ReactPackageProvider : ReactPackageProviderT<
 
 // NOTE: You must include the headers of your native modules here in
 // order for the AddAttributedModules call below to find them.
-#include "FancyMath.h" 
+#include "FancyMath.h"
 
-using namespace winrt::Microsoft::ReactNative;
+using namespace winrt::Microsoft::ReactNative::Bridge;
 using namespace Microsoft::ReactNative;
 
-namespace winrt::NativeModuleSample::implementation {
-
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuilder)
+namespace winrt::NativeModuleSample::implementation
 {
-  AddAttributedModules(packageBuilder);
+    void ReactPackageProvider::CreatePackage(IReactPackageBuilder const& packageBuilder) noexcept
+    {
+        AddAttributedModules(packageBuilder);
+    }
 }
-
-} // namespace winrt::NativeModuleSample::implementation
-
 ```
 
 Here we've implemented the `CreatePackage` method, which receives `packageBuilder` to build contents of the package. Since we use macros and templates to discover and bind native module, we call `AddAttributedModules` function to register all native modules in our DLL that have the `REACT_MODULE` macro-attribute.
@@ -344,6 +368,8 @@ Now that we have the `ReactPackageProvider`, it's time to register it within our
 
 #include "App.h"
 #include "ReactPackageProvider.h"
+
+#include "winrt/NativeModuleSample.h"
 
 namespace winrt::SampleApp::implementation {
 

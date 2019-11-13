@@ -56,40 +56,36 @@ string DevSupportManager::GetJavaScriptFromServer(
   auto bundleUrl =
       DevServerHelper::get_BundleUrl(debugHost, jsBundleName, platform /*platform*/, "true" /*dev*/, "false" /*hot*/);
 
-  try {
-    Url url(bundleUrl);
-    auto const resolveResult = m_resolver.resolve(url.host, url.port);
-    tcp_stream stream{m_context};
+  Url url(bundleUrl);
+  auto const resolveResult = m_resolver.resolve(url.host, url.port);
+  tcp_stream stream{m_context};
 
-    stream.connect(resolveResult);
+  stream.connect(resolveResult);
 
-    http::request<http::string_body> request{http::verb::get, url.Target(), 11};
-    request.set(http::field::host, url.host);
-    request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
+  http::request<http::string_body> request{http::verb::get, url.Target(), 11};
+  request.set(http::field::host, url.host);
+  request.set(http::field::user_agent, BOOST_BEAST_VERSION_STRING);
 
-    http::write(stream, request);
+  http::write(stream, request);
 
-    flat_buffer buffer;
-    http::response<http::string_body> response;
+  flat_buffer buffer;
+  http::response<http::string_body> response;
 
-    http::parser<false, http::string_body> p{std::move(response)};
-    p.body_limit(25 * 1024 * 1024); // 25MB (boost default of 1MB is too small for dev bundles)
+  http::parser<false, http::string_body> p{std::move(response)};
+  p.body_limit(25 * 1024 * 1024); // 25MB (boost default of 1MB is too small for dev bundles)
 
-    http::read(stream, buffer, p);
-    response = p.release();
-    std::stringstream jsStringStream;
-    jsStringStream << response.body();
-    // TODO: Check if UTF-8 processing is required.
+  http::read(stream, buffer, p);
+  response = p.release();
+  std::stringstream jsStringStream;
+  jsStringStream << response.body();
+  // TODO: Check if UTF-8 processing is required.
 
-    error_code ec;
-    stream.socket().shutdown(tcp::socket::shutdown_both, ec);
-    if (ec && ec != errc::not_connected)
-      throw system_error(ec);
+  error_code ec;
+  stream.socket().shutdown(tcp::socket::shutdown_both, ec);
+  if (ec && ec != errc::not_connected)
+    throw system_error(ec);
 
-    return jsStringStream.str();
-  } catch (const std::exception &e) {
-    return e.what();
-  }
+  return jsStringStream.str();
 }
 
 void DevSupportManager::StartPollingLiveReload(const string &debugHost, std::function<void()> onChangeCallback) {

@@ -197,9 +197,9 @@ IInspectable ConvertToIInspectable(folly::dynamic const &object) {
     case folly::dynamic::INT64:
       return box_value(object.asInt());
     case folly::dynamic::OBJECT: {
-      auto objs = single_threaded_map<IInspectable, IInspectable>();
+      auto objs = single_threaded_map<hstring, IInspectable>();
       for (auto it : object.items()) {
-        objs.Insert(ConvertToIInspectable(it.first), ConvertToIInspectable(it.second));
+        objs.Insert(winrt::to_hstring(it.first.getString()), ConvertToIInspectable(it.second));
       }
       return objs.GetView();
     }

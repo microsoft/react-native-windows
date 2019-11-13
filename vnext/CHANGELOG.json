@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2019 19:25:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do not eat exceptions in DevSupportManager::GetJavaScriptFromServer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3a2b9ba1261a52af4bd192a2d1121cd5962c2077"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2019 04:50:06 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.20",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "1799d42f737fc5fb31978c60a22a8dfd8c390719"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2019 01:59:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
+      "comments": {
+        "none": [
+          {
+            "comment": "Native Mdoule documentation fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "35bfb6ede4d63b326b5b754642ac924217705327"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Nov 2019 22:01:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Workaround for flyout centering problem",
+            "author": "kenander@microsoft.com",
+            "commit": "b0defe86c05d88310fb66663be45dd925d3b3207"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Nov 2019 01:27:15 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.68",
+      "version": "0.60.0-vnext.68",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Native Module Setup Guide * Added NativeModuleSetup.md, #3623 * Added link to new guide in NativeModules.md, ViewManagers.md * Updated ProjectStructure.md with Microsoft.ReactNative projects * Removed PropertySheets in SampleApps and CLI solutions",
+            "author": "jthysell@microsoft.com",
+            "commit": "91fc720c9220848107206d8a881ea269d444021f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Nov 2019 00:30:50 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.67",
+      "version": "0.60.0-vnext.67",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "ViewManager Command Updates * Added command to CustomUserControlViewManagerCPP, #3600 * Added support for simpler C# view manager commands signatures * Added support for object properties for view managers, #3613 * Added documentation for C++ view manager * Added documentation for ViewManager commands, #3599",
+            "author": "jthysell@microsoft.com",
+            "commit": "529a95bf145b1f25511874776724082ab8032caa"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Nov 2019 17:37:11 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.66",
       "version": "0.60.0-vnext.66",
