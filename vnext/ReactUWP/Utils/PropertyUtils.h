@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <Utils/ValueUtils.h>
 #include <Utils/ResourceBrushUtils.h>
+#include <Utils/ValueUtils.h>
 
 #include <folly/dynamic.h>
 #include <stdint.h>

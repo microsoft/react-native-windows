@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include <IReactInstance.h>
-#include <Utils/ValueUtils.h>
 #include <Utils/ResourceBrushUtils.h>
+#include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
 #include <winrt/Windows.UI.Xaml.Shapes.h>
 #include "SwitchViewManager.h"

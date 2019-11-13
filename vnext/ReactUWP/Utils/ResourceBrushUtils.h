@@ -8,9 +8,9 @@
 #include <winrt/Windows.UI.h>
 
 namespace winrt {
-  using namespace Windows::UI::Xaml;
-  using namespace Windows::UI::Xaml::Media;
-}
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Media;
+} // namespace winrt
 
 namespace react {
 namespace uwp {
@@ -37,13 +37,13 @@ void UpdateControlBorderResourceBrushes(
     const winrt::Media::Brush brush);
 
 void UpdateToggleSwitchThumbResourceBrushes(
-  const winrt::Windows::UI::Xaml::Controls::ToggleSwitch &toggleSwitch,
-  const winrt::Windows::UI::Xaml::Media::Brush thumbBrush);
+    const winrt::Windows::UI::Xaml::Controls::ToggleSwitch &toggleSwitch,
+    const winrt::Windows::UI::Xaml::Media::Brush thumbBrush);
 
 void UpdateToggleSwitchTrackResourceBrushes(
     const winrt::Windows::UI::Xaml::Controls::ToggleSwitch &toggleSwitch,
     const winrt::Windows::UI::Xaml::Media::Brush onTrackBrush,
     const winrt::Windows::UI::Xaml::Media::Brush offTrackBrush);
 
-}
+} // namespace uwp
 } // namespace react

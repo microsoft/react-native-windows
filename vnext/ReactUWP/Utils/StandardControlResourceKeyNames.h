@@ -107,38 +107,56 @@ static const wchar_t *c_checkBoxBorderBrushIndeterminatePointerOver = L"CheckBox
 static const wchar_t *c_checkBoxBorderBrushIndeterminatePressed = L"CheckBoxBorderBrushIndeterminatePressed";
 static const wchar_t *c_checkBoxBorderBrushIndeterminateDisabled = L"CheckBoxBorderBrushIndeterminateDisabled";
 static const wchar_t *c_checkBoxCheckBackgroundStrokeUnchecked = L"CheckBoxCheckBackgroundStrokeUnchecked";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeUncheckedPointerOver = L"CheckBoxCheckBackgroundStrokeUncheckedPointerOver";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeUncheckedPressed = L"CheckBoxCheckBackgroundStrokeUncheckedPressed";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeUncheckedDisabled = L"CheckBoxCheckBackgroundStrokeUncheckedDisabled";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeUncheckedPointerOver =
+    L"CheckBoxCheckBackgroundStrokeUncheckedPointerOver";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeUncheckedPressed =
+    L"CheckBoxCheckBackgroundStrokeUncheckedPressed";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeUncheckedDisabled =
+    L"CheckBoxCheckBackgroundStrokeUncheckedDisabled";
 static const wchar_t *c_checkBoxCheckBackgroundStrokeChecked = L"CheckBoxCheckBackgroundStrokeChecked";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeCheckedPointerOver = L"CheckBoxCheckBackgroundStrokeCheckedPointerOver";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeCheckedPointerOver =
+    L"CheckBoxCheckBackgroundStrokeCheckedPointerOver";
 static const wchar_t *c_checkBoxCheckBackgroundStrokeCheckedPressed = L"CheckBoxCheckBackgroundStrokeCheckedPressed";
 static const wchar_t *c_checkBoxCheckBackgroundStrokeCheckedDisabled = L"CheckBoxCheckBackgroundStrokeCheckedDisabled";
 static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminate = L"CheckBoxCheckBackgroundStrokeIndeterminate";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminatePointerOver = L"CheckBoxCheckBackgroundStrokeIndeterminatePointerOver";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminatePressed = L"CheckBoxCheckBackgroundStrokeIndeterminatePressed";
-static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminateDisabled = L"CheckBoxCheckBackgroundStrokeIndeterminateDisabled";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminatePointerOver =
+    L"CheckBoxCheckBackgroundStrokeIndeterminatePointerOver";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminatePressed =
+    L"CheckBoxCheckBackgroundStrokeIndeterminatePressed";
+static const wchar_t *c_checkBoxCheckBackgroundStrokeIndeterminateDisabled =
+    L"CheckBoxCheckBackgroundStrokeIndeterminateDisabled";
 static const wchar_t *c_checkBoxCheckBackgroundFillUnchecked = L"CheckBoxCheckBackgroundFillUnchecked";
-static const wchar_t *c_checkBoxCheckBackgroundFillUncheckedPointerOver = L"CheckBoxCheckBackgroundFillUncheckedPointerOver";
+static const wchar_t *c_checkBoxCheckBackgroundFillUncheckedPointerOver =
+    L"CheckBoxCheckBackgroundFillUncheckedPointerOver";
 static const wchar_t *c_checkBoxCheckBackgroundFillUncheckedPressed = L"CheckBoxCheckBackgroundFillUncheckedPressed";
 static const wchar_t *c_checkBoxCheckBackgroundFillUncheckedDisabled = L"CheckBoxCheckBackgroundFillUncheckedDisabled";
 static const wchar_t *c_checkBoxCheckBackgroundFillChecked = L"CheckBoxCheckBackgroundFillChecked";
-static const wchar_t *c_checkBoxCheckBackgroundFillCheckedPointerOver = L"CheckBoxCheckBackgroundFillCheckedPointerOver";
+static const wchar_t *c_checkBoxCheckBackgroundFillCheckedPointerOver =
+    L"CheckBoxCheckBackgroundFillCheckedPointerOver";
 static const wchar_t *c_checkBoxCheckBackgroundFillCheckedPressed = L"CheckBoxCheckBackgroundFillCheckedPressed";
 static const wchar_t *c_checkBoxCheckBackgroundFillCheckedDisabled = L"CheckBoxCheckBackgroundFillCheckedDisabled";
 static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminate = L"CheckBoxCheckBackgroundFillIndeterminate";
-static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminatePointerOver = L"CheckBoxCheckBackgroundFillIndeterminatePointerOver";
-static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminatePressed = L"CheckBoxCheckBackgroundFillIndeterminatePressed";
-static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminateDisabled = L"CheckBoxCheckBackgroundFillIndeterminateDisabled";
+static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminatePointerOver =
+    L"CheckBoxCheckBackgroundFillIndeterminatePointerOver";
+static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminatePressed =
+    L"CheckBoxCheckBackgroundFillIndeterminatePressed";
+static const wchar_t *c_checkBoxCheckBackgroundFillIndeterminateDisabled =
+    L"CheckBoxCheckBackgroundFillIndeterminateDisabled";
 static const wchar_t *c_checkBoxCheckGlyphForegroundUnchecked = L"CheckBoxCheckGlyphForegroundUnchecked";
-static const wchar_t *c_checkBoxCheckGlyphForegroundUncheckedPointerOver = L"CheckBoxCheckGlyphForegroundUncheckedPointerOver";
+static const wchar_t *c_checkBoxCheckGlyphForegroundUncheckedPointerOver =
+    L"CheckBoxCheckGlyphForegroundUncheckedPointerOver";
 static const wchar_t *c_checkBoxCheckGlyphForegroundUncheckedPressed = L"CheckBoxCheckGlyphForegroundUncheckedPressed";
-static const wchar_t *c_checkBoxCheckGlyphForegroundUncheckedDisabled = L"CheckBoxCheckGlyphForegroundUncheckedDisabled";
+static const wchar_t *c_checkBoxCheckGlyphForegroundUncheckedDisabled =
+    L"CheckBoxCheckGlyphForegroundUncheckedDisabled";
 static const wchar_t *c_checkBoxCheckGlyphForegroundChecked = L"CheckBoxCheckGlyphForegroundChecked";
-static const wchar_t *c_checkBoxCheckGlyphForegroundCheckedPointerOver = L"CheckBoxCheckGlyphForegroundCheckedPointerOver";
+static const wchar_t *c_checkBoxCheckGlyphForegroundCheckedPointerOver =
+    L"CheckBoxCheckGlyphForegroundCheckedPointerOver";
 static const wchar_t *c_checkBoxCheckGlyphForegroundCheckedPressed = L"CheckBoxCheckGlyphForegroundCheckedPressed";
 static const wchar_t *c_checkBoxCheckGlyphForegroundCheckedDisabled = L"CheckBoxCheckGlyphForegroundCheckedDisabled";
 static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminate = L"CheckBoxCheckGlyphForegroundIndeterminate";
-static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminatePointerOver = L"CheckBoxCheckGlyphForegroundIndeterminatePointerOver";
-static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminatePressed = L"CheckBoxCheckGlyphForegroundIndeterminatePressed";
-static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminateDisabled = L"CheckBoxCheckGlyphForegroundIndeterminateDisabled";
+static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminatePointerOver =
+    L"CheckBoxCheckGlyphForegroundIndeterminatePointerOver";
+static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminatePressed =
+    L"CheckBoxCheckGlyphForegroundIndeterminatePressed";
+static const wchar_t *c_checkBoxCheckGlyphForegroundIndeterminateDisabled =
+    L"CheckBoxCheckGlyphForegroundIndeterminateDisabled";

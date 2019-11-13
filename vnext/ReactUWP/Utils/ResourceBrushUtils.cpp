@@ -68,9 +68,7 @@ void UpdateToggleSwitchBorderResourceBrushes(const winrt::ToggleSwitch &toggleSw
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
 }
 
-void UpdateToggleSwitchThumbResourceBrushes(
-    const winrt::ToggleSwitch &toggleSwitch,
-    const winrt::Brush thumbBrush) {
+void UpdateToggleSwitchThumbResourceBrushes(const winrt::ToggleSwitch &toggleSwitch, const winrt::Brush thumbBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
@@ -82,9 +80,9 @@ void UpdateToggleSwitchThumbResourceBrushes(
 }
 
 void UpdateToggleSwitchTrackResourceBrushes(
-  const winrt::ToggleSwitch& toggleSwitch,
-  const winrt::Brush onTrackBrush,
-  const winrt::Brush offTrackBrush) {
+    const winrt::ToggleSwitch &toggleSwitch,
+    const winrt::Brush onTrackBrush,
+    const winrt::Brush offTrackBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
