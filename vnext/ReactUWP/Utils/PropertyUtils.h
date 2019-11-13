@@ -111,10 +111,10 @@ bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName,
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.Background(brush);
-      UpdateTextControlBackgroundResourceBrushes(element, brush);
+      UpdateControlBackgroundResourceBrushes(element, brush);
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::BackgroundProperty());
-      UpdateTextControlBackgroundResourceBrushes(element, nullptr);
+      UpdateControlBackgroundResourceBrushes(element, nullptr);
     }
 
     return true;
@@ -144,10 +144,10 @@ bool TryUpdateForeground(const T &element, const std::string &propertyName, cons
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
-      UpdateTextControlForegroundResourceBrushes(element, brush);
+      UpdateControlForegroundResourceBrushes(element, brush);
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::ForegroundProperty());
-      UpdateTextControlForegroundResourceBrushes(element, nullptr);
+      UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 
     return true;
@@ -168,10 +168,10 @@ bool TryUpdateBorderProperties(
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.BorderBrush(brush);
-      UpdateTextControlBorderResourceBrushes(element, brush);
+      UpdateControlBorderResourceBrushes(element, brush);
     } else if (propertyValue.isNull()) {
       element.ClearValue(T::BorderBrushProperty());
-      UpdateTextControlBorderResourceBrushes(element, nullptr);
+      UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())

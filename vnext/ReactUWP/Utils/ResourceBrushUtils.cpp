@@ -8,52 +8,62 @@
 
 #include <winrt/Windows.UI.Xaml.h>
 
-
 namespace winrt {
-  using namespace Windows::UI::Xaml;
-  using namespace Windows::UI::Xaml::Controls;
-}
+using namespace Windows::UI::Xaml;
+using namespace Windows::UI::Xaml::Controls;
+} // namespace winrt
 
 namespace react {
 namespace uwp {
 
+void UpdateTextControlBackgroundResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
+  UpdateResourceBrush(element, c_textControlBackground, brush);
+  UpdateResourceBrush(element, c_textControlBackgroundPointerOver, brush);
+  UpdateResourceBrush(element, c_textControlBackgroundFocused, brush);
+  UpdateResourceBrush(element, c_textControlBackgroundDisabled, brush);
 
-void UpdateTextControlBackgroundResourceBrushes(
-    const winrt::FrameworkElement &element,
-    const winrt::Brush brush) {
+  UpdateResourceBrush(element, c_textControlButtonForegroundPressed, brush);
+}
+
+void UpdateTextControlForegroundResourceBrushes(const winrt::DependencyObject object, const winrt::Brush brush) {
+  TryUpdateResourceBrush(object, c_textControlForeground, brush);
+  TryUpdateResourceBrush(object, c_textControlForegroundPointerOver, brush);
+  TryUpdateResourceBrush(object, c_textControlForegroundFocused, brush);
+  TryUpdateResourceBrush(object, c_textControlForegroundDisabled, brush);
+
+  TryUpdateResourceBrush(object, c_textControlButtonForeground, brush);
+  TryUpdateResourceBrush(object, c_textControlButtonForegroundPointerOver, brush);
+  TryUpdateResourceBrush(object, c_textControlButtonBackgroundPressed, brush);
+}
+
+void UpdateTextControlBorderResourceBrushes(const winrt::FrameworkElement &element, const winrt::Brush brush) {
+  UpdateResourceBrush(element, c_textControlBorderBrush, brush);
+  UpdateResourceBrush(element, c_textControlBorderBrushPointerOver, brush);
+  UpdateResourceBrush(element, c_textControlBorderBrushFocused, brush);
+  UpdateResourceBrush(element, c_textControlBorderBrushDisabled, brush);
+}
+
+void UpdateControlBackgroundResourceBrushes(
+    const winrt::Windows::UI::Xaml::FrameworkElement &element,
+    const winrt::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
-    UpdateResourceBrush(element, c_textControlBackground, brush);
-    UpdateResourceBrush(element, c_textControlBackgroundPointerOver, brush);
-    UpdateResourceBrush(element, c_textControlBackgroundFocused, brush);
-    UpdateResourceBrush(element, c_textControlBackgroundDisabled, brush);
-
-    UpdateResourceBrush(element, c_textControlButtonForegroundPressed, brush);
+    UpdateTextControlBackgroundResourceBrushes(element, brush);
   }
 }
 
-void UpdateTextControlForegroundResourceBrushes(
-    const winrt::DependencyObject object,
-    const winrt::Brush brush) {
+void UpdateControlForegroundResourceBrushes(
+    const winrt::Windows::UI::Xaml::DependencyObject object,
+    const winrt::Media::Brush brush) {
   if (IsObjectATextControl(object)) {
-    TryUpdateResourceBrush(object, c_textControlForeground, brush);
-    TryUpdateResourceBrush(object, c_textControlForegroundPointerOver, brush);
-    TryUpdateResourceBrush(object, c_textControlForegroundFocused, brush);
-    TryUpdateResourceBrush(object, c_textControlForegroundDisabled, brush);
-
-    TryUpdateResourceBrush(object, c_textControlButtonForeground, brush);
-    TryUpdateResourceBrush(object, c_textControlButtonForegroundPointerOver, brush);
-    TryUpdateResourceBrush(object, c_textControlButtonBackgroundPressed, brush);
+    UpdateTextControlForegroundResourceBrushes(object, brush);
   }
 }
 
-void UpdateTextControlBorderResourceBrushes(
-    const winrt::FrameworkElement &element,
-    const winrt::Brush brush) {
+void UpdateControlBorderResourceBrushes(
+    const winrt::Windows::UI::Xaml::FrameworkElement &element,
+    const winrt::Media::Brush brush) {
   if (IsObjectATextControl(element)) {
-    UpdateResourceBrush(element, c_textControlBorderBrush, brush);
-    UpdateResourceBrush(element, c_textControlBorderBrushPointerOver, brush);
-    UpdateResourceBrush(element, c_textControlBorderBrushFocused, brush);
-    UpdateResourceBrush(element, c_textControlBorderBrushDisabled, brush);
+    UpdateTextControlBorderResourceBrushes(element, brush);
   }
 }
 
@@ -82,10 +92,8 @@ void UpdateResourceBrush(
 }
 
 bool IsObjectATextControl(const winrt::DependencyObject &object) {
-  return object.try_as<winrt::TextBox>() != nullptr ||
-      object.try_as<winrt::PasswordBox>() != nullptr ||
-      object.try_as<winrt::RichEditBox>() != nullptr ||
-      object.try_as<winrt::AutoSuggestBox>() != nullptr;
+  return object.try_as<winrt::TextBox>() != nullptr || object.try_as<winrt::PasswordBox>() != nullptr ||
+      object.try_as<winrt::RichEditBox>() != nullptr || object.try_as<winrt::AutoSuggestBox>() != nullptr;
 }
 
 } // namespace uwp

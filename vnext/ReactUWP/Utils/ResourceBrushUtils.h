@@ -16,32 +16,23 @@ namespace react {
 namespace uwp {
 
 // Some XAML controls use additional resource-brushes that need to be
-// kept in sync with Background. RN clients (windows-included) that
-// want different backgroundColor depending on interactive states
-// such as PointerOver, Focused, and Disabled, expect to handle
-// these state changes in js, and re-render with different
-// ViewStyle.backgroundColor to accomplish their desired visuals.
-void UpdateTextControlBackgroundResourceBrushes(
+// kept in sync with the Background, Foreground, and BorderBrush
+// DependencyProperties. RN clients (windows-included) that
+// want different backgroundColor, color, or borderColor
+// depending on interactive states (e.g. PointerOver, Focused,
+// and Disabled), expect to handle these state changes in js by
+// re-rendering with different props in response to state
+// change events (onFocus, onBlur, onMouseEnter, onMouseLeave)
+// or when changing enabled/disabled props.
+void UpdateControlBackgroundResourceBrushes(
     const winrt::Windows::UI::Xaml::FrameworkElement &element,
     const winrt::Media::Brush brush);
 
-// Some XAML controls use additional resource-brushes that need to be
-// kept in sync with BorderBrush. RN clients (windows-included) that
-// want different borderColor depending on interactive states
-// such as PointerOver, Focused, and Disabled, expect to handle
-// these state changes in js, and re-render with different
-// ViewStyle.color to accomplish their desired visuals.
-void UpdateTextControlForegroundResourceBrushes(
+void UpdateControlForegroundResourceBrushes(
     const winrt::Windows::UI::Xaml::DependencyObject object,
     const winrt::Media::Brush brush);
 
-// Some XAML controls use additional resource-brushes that need to be
-// kept in sync with BorderBrush. RN clients (windows-included) that
-// want different borderColor depending on interactive states
-// such as PointerOver, Focused, and Disabled, expect to handle
-// these state changes in js, and re-render with different
-// ViewStyle.borderColor to accomplish their desired visuals.
-void UpdateTextControlBorderResourceBrushes(
+void UpdateControlBorderResourceBrushes(
     const winrt::Windows::UI::Xaml::FrameworkElement &element,
     const winrt::Media::Brush brush);
 
