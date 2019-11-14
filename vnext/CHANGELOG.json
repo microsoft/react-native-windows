@@ -10,7 +10,7 @@
           {
             "comment": "fix TextInput and Switch component colors",
             "author": "robmeyer@microsoft.com",
-            "commit": "ab50b2508092d9faa2b796821dfbbf0f0847ed7b"
+            "commit": "ab50b2508092d9faa2b796821dfbbf0f0847ed
           }
         ]
       }
