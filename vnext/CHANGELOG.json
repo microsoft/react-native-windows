@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 14 Nov 2019 01:13:19 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "none": [
+          {
+            "comment": "fix TextInput and Switch component colors",
+            "author": "robmeyer@microsoft.com",
+            "commit": "ab50b2508092d9faa2b796821dfbbf0f0847ed7b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2019 19:25:32 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.70",
       "version": "0.60.0-vnext.70",

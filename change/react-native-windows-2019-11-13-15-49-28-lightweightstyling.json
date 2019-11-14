@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "fix TextInput and Switch component colors",
-  "packageName": "react-native-windows",
-  "email": "robmeyer@microsoft.com",
-  "commit": "ab50b2508092d9faa2b796821dfbbf0f0847ed7b",
-  "date": "2019-11-13T23:49:28.167Z"
-}
