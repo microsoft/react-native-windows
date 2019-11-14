@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native",
+  "packageName": "react-native-windows",
+  "email": "zihanc@microsoft.com",
+  "commit": "8a97fed007dbf4516a2b414723a6dc908ad357bf",
+  "date": "2019-11-14T19:22:09.917Z"
+}
