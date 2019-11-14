@@ -11,12 +11,6 @@
     <BundledContent>Bundle\**\*</BundledContent>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundledContent)' != ''">
-    <Content Include="$(BundledContent)">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
   <PropertyGroup>
     <DefineConstants Condition=" '$(DefineConstants)' != ''  and '$(UseBundle)' == 'true' ">$(DefineConstants);BUNDLE</DefineConstants>
   </PropertyGroup>
