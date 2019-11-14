@@ -139,6 +139,16 @@ winrt::Size ViewPanel::MeasureOverride(winrt::Size availableSize) {
 }
 
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
+  // Sometimes we create outerBorder(i.e. when CornerRadius is true) instead of innerBorder,
+  // Yoga has no notion of outerBorder when calculating the child's position, so we
+  // need to make adujustments in arrange for outerborder's thickness.
+  float outerBorderLeft = 0;
+  float outerBorderTop = 0;
+  if (auto outerBorder = GetOuterBorder()) {
+    auto borderThickness = outerBorder.BorderThickness();
+    outerBorderLeft = static_cast<float>(borderThickness.Left);
+    outerBorderTop = static_cast<float>(borderThickness.Top);
+  }
   for (winrt::UIElement child : Children()) {
     double childHeight = 0.0;
     double childWidth = 0.0;
@@ -166,8 +176,10 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
     childWidth = std::max<double>(0.0f, childWidth);
     childHeight = std::max<double>(0.0f, childHeight);
 
-    child.Arrange(winrt::Rect(
-        (float)ViewPanel::GetLeft(child), (float)ViewPanel::GetTop(child), (float)childWidth, (float)childHeight));
+    float adjustedLeft = (float)ViewPanel::GetLeft(child) - outerBorderLeft;
+    float adjustedTop = (float)ViewPanel::GetTop(child) - outerBorderTop;
+
+    child.Arrange(winrt::Rect(adjustedLeft, adjustedTop, (float)childWidth, (float)childHeight));
   }
 
   UpdateClip(finalSize);
