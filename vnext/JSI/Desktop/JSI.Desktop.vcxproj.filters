@@ -11,9 +11,4 @@
       <UniqueIdentifier>{ade98a5d-cda0-4794-a7e9-9b60b83966f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
 </Project>

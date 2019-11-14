@@ -35,6 +35,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraCoreRuntime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraObjectRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
