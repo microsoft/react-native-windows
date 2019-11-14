@@ -339,9 +339,7 @@ winrt::Border ViewPanel::GetOuterBorder() {
 }
 
 void ViewPanel::UpdateClip(winrt::Size &finalSize) {
-  // When an outer Border is used it will handle the clipping, otherwise this
-  // panel must do so
-  if (!m_hasOuterBorder && ClipChildren()) {
+  if (ClipChildren()) {
     winrt::RectangleGeometry clipGeometry;
     clipGeometry.Rect(winrt::Rect(0, 0, static_cast<float>(finalSize.Width), static_cast<float>(finalSize.Height)));
 
