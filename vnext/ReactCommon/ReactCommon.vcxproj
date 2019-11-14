@@ -92,13 +92,6 @@
     <ClInclude Include="$(JSI_Source)\jsi\JSIDynamic.h" />
     <ClInclude Include="$(JSI_Source)\jsi\jsilib.h" />
     <ClInclude Include="$(JSI_Source)\jsi\threadsafe.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
     <ClInclude Include="..\stubs\sys\mman.h" />
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
@@ -162,6 +155,17 @@
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(OSS_RN)'!='true'">
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(OSS_RN)'!='true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
