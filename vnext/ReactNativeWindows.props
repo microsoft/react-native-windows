@@ -6,8 +6,8 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <UseBundle Condition=" '$(Configuration)' == 'Debug' ">false</UseBundle>
-    <UseBundle Condition=" '$(Configuration)' == 'Release' ">true</UseBundle>
+    <UseBundle Condition=" '$(Configuration)' == 'Debug' and '$(UseBundle)' == '' ">false</UseBundle>
+    <UseBundle Condition=" '$(Configuration)' == 'Release' and '$(UseBundle)' == '' ">true</UseBundle>
     <BundledContent>Bundle\**\*</BundledContent>
   </PropertyGroup>
 
