@@ -90,9 +90,6 @@
     <ClCompile Include="tracing\tracing.cpp">
       <Filter>tracing</Filter>
     </ClCompile>
-    <ClCompile Include="ChakraRuntimeHolder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\UIManagerModule.h">
