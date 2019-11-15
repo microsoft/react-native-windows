@@ -5,19 +5,19 @@
 namespace react {
 namespace uwp {
 
-class UwpScriptStore : public facebook::jsi::ScriptStore {
+class UwpScriptStore : public Microsoft::JSI::ScriptStore {
  public:
-  facebook::jsi::VersionedBuffer getVersionedScript(const std::string &url) noexcept override;
-  facebook::jsi::ScriptVersion_t getScriptVersion(const std::string &url) noexcept override;
+  Microsoft::JSI::VersionedBuffer getVersionedScript(const std::string &url) noexcept override;
+  Microsoft::JSI::ScriptVersion_t getScriptVersion(const std::string &url) noexcept override;
   UwpScriptStore();
   UwpScriptStore(const UwpScriptStore &) = delete;
   void operator=(const UwpScriptStore &) = delete;
 
  public:
-  static facebook::jsi::ScriptVersion_t GetFileVersion(const std::wstring &filePath);
+  static Microsoft::JSI::ScriptVersion_t GetFileVersion(const std::wstring &filePath);
 
  private:
-  std::future<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(const std::string &bundleUri);
+  std::future<Microsoft::JSI::ScriptVersion_t> getScriptVersionAsync(const std::string &bundleUri);
 };
 
 } // namespace uwp

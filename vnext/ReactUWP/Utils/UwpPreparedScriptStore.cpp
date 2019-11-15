@@ -26,8 +26,8 @@ UwpPreparedScriptStore::UwpPreparedScriptStore(winrt::hstring uri) {
 }
 
 std::shared_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPreparedScript(
-    const facebook::jsi::ScriptSignature &scriptSignature,
-    const facebook::jsi::JSRuntimeSignature &runtimeSignature,
+    const Microsoft::JSI::ScriptSignature &scriptSignature,
+    const Microsoft::JSI::JSRuntimeSignature &runtimeSignature,
     const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept {
   try {
@@ -54,8 +54,8 @@ std::shared_ptr<const facebook::jsi::Buffer> UwpPreparedScriptStore::tryGetPrepa
 
 void UwpPreparedScriptStore::persistPreparedScript(
     std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
-    const facebook::jsi::ScriptSignature &scriptMetadata,
-    const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
+    const Microsoft::JSI::ScriptSignature &scriptMetadata,
+    const Microsoft::JSI::JSRuntimeSignature &runtimeMetadata,
     const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
     ) noexcept {
   persistPreparedScriptAsync(preparedScript, scriptMetadata, runtimeMetadata, prepareTag);
@@ -63,8 +63,8 @@ void UwpPreparedScriptStore::persistPreparedScript(
 
 winrt::fire_and_forget UwpPreparedScriptStore::persistPreparedScriptAsync(
     std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
-    const facebook::jsi::ScriptSignature &scriptMetadata,
-    const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
+    const Microsoft::JSI::ScriptSignature &scriptMetadata,
+    const Microsoft::JSI::JSRuntimeSignature &runtimeMetadata,
     const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
 ) {
   try {
@@ -80,7 +80,7 @@ winrt::fire_and_forget UwpPreparedScriptStore::persistPreparedScriptAsync(
 }
 
 winrt::StorageFile UwpPreparedScriptStore::TryGetByteCodeFileSync(
-    const facebook::jsi::ScriptSignature &scriptSignature) {
+    const Microsoft::JSI::ScriptSignature &scriptSignature) {
   try {
     if (m_byteCodeFileAsync != nullptr) {
       auto file = m_byteCodeFileAsync.get();

@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #pragma once
 
 #include <DevSettings.h>
@@ -5,11 +8,12 @@
 #include <JSI/Shared/RuntimeHolder.h>
 #include <jsi/Shared/ScriptStore.h>
 
-#include <JSI/Shared/ChakraRuntimeArgs.h>
-
-#include <Logging.h>
+#include <mutex>
+#include <thread>
 
 namespace Microsoft::JSI {
+
+struct ChakraRuntimeArgs;
 
 class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
  public:
@@ -18,27 +22,17 @@ class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   ChakraRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
       std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
-      std::unique_ptr<facebook::jsi::ScriptStore> &&scriptStore,
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept
-      : args_(RuntimeArgsFromDevSettings(devSettings)) {
-    args_.jsQueue = std::move(jsQueue);
-    args_.scriptStore = std::move(scriptStore);
-    args_.preparedScriptStore = std::move(preparedScriptStore);
-  }
+      std::unique_ptr<ScriptStore> &&scriptStore,
+      std::unique_ptr<PreparedScriptStore> &&preparedScriptStore) noexcept;
 
  private:
-  Microsoft::JSI::ChakraRuntimeArgs RuntimeArgsFromDevSettings(
-      std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
-  Microsoft::JSI::Logger ChakraRuntimeLoggerFromReactLogger(
-      facebook::react::NativeLoggingHook loggingCallback) noexcept;
+  void InitRuntime() noexcept;
 
-  void initRuntime() noexcept;
+  std::shared_ptr<ChakraRuntimeArgs> m_args;
+  std::shared_ptr<facebook::jsi::Runtime> m_runtime;
 
-  Microsoft::JSI::ChakraRuntimeArgs args_;
-  std::shared_ptr<facebook::jsi::Runtime> runtime_;
-
-  std::once_flag once_flag_;
-  std::thread::id own_thread_id_;
+  std::once_flag m_init_runtime_flag;
+  std::thread::id m_own_thread_id;
 };
 
 } // namespace Microsoft::JSI

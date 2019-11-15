@@ -2,49 +2,75 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <jsi/jsi.h>
+
 #include "ScriptStore.h"
+
+#include <cstddef>
+#include <memory>
+#include <optional>
+#include <utility>
 
 namespace facebook::react {
 class MemoryTracker;
-class MessageQueueThread;
-} // namespace facebook::react
+}
 
 namespace Microsoft::JSI {
 
-enum class LogLevel {
-  Trace = 0,
-  Info = 1,
-  Warning = 2,
-  Error = 3,
-  Fatal = 4,
-};
-
-using Logger = std::function<void(const char *message, LogLevel logLevel)>;
-
 struct ChakraRuntimeArgs {
-  bool enableJITCompilation{true};
+  /**
+   * @enum ExecutablePageAllocationPolicy Indicates whether a ChakraRuntime
+   * is allowed to allocate executatble pages.
+   */
+  enum class ExecutablePageAllocationPolicy {
+    /**
+     * @var ChakraRuntime will not allocate any executable code pages. This
+     * also implies that Native Code generation will be turned off. Note that
+     * this will break JavaScript stack decoding in tools like WPA, since
+     * they rely on allocation of unique thunks to interpret each function and
+     * allocation of those thunks will be disabled as well
+     */
+    DisableAll,
+    /**
+     * @var ChakraRuntime will not generate native code.
+     */
+    DisableNativeCodeGeneration,
+    /**
+     * @var ChakraRuntime is free to generate executable pages.
+     */
+    EnableAll
+  };
 
-  Logger loggingCallback{};
+  /**
+   * @brief ChakraRuntime's policy for allocating executable pages.
+   */
+  ExecutablePageAllocationPolicy executablePageAllocationPolicy{ExecutablePageAllocationPolicy::EnableAll};
 
-  // Debugger configuration.
+  /**
+   * @brief Enable debugging support if available.
+   */
   bool enableDebugging{false};
-  bool debuggerBreakOnNextLine{false};
-  bool enableNativePerformanceNow{true};
-  bool enableNativePromiseSupport{false};
-  uint16_t debuggerPort{9229};
-  std::string debuggerRuntimeName;
 
-  // Memory governance.
-  size_t runtimeMemoryLimit{0};
+  /**
+   * @brief The maximum amount of memory the JavaScript engine may allocate,
+   * in bytes. Its value must be greater than zero.
+   */
+  std::optional<size_t> memoryLimit;
+
+  /**
+   * @brief The memory tracker that monitors ChakraRuntime's memory consumption.
+   * This argument is optional and can be nullptr.
+   */
   std::shared_ptr<facebook::react::MemoryTracker> memoryTracker;
 
-  std::shared_ptr<facebook::react::MessageQueueThread> jsQueue;
+  /**
+   * @brief A store through which we can query for bundle version and content.
+   */
+  std::unique_ptr<ScriptStore> scriptStore;
 
-  // Script store which manages script and prepared script storage and
-  // versioning.
-  std::unique_ptr<facebook::jsi::ScriptStore> scriptStore;
-  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
+  /**
+   * @brief A store through which we can query for bytecode.
+   */
+  std::unique_ptr<PreparedScriptStore> preparedScriptStore;
 };
 
 } // namespace Microsoft::JSI

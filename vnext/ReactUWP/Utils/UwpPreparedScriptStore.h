@@ -9,19 +9,19 @@
 
 namespace react {
 namespace uwp {
-class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
+class UwpPreparedScriptStore : public Microsoft::JSI::PreparedScriptStore {
  public:
   UwpPreparedScriptStore(winrt::hstring uri);
   std::shared_ptr<const facebook::jsi::Buffer> tryGetPreparedScript(
-      const facebook::jsi::ScriptSignature &scriptSignature,
-      const facebook::jsi::JSRuntimeSignature &runtimeSignature,
+      const Microsoft::JSI::ScriptSignature &scriptSignature,
+      const Microsoft::JSI::JSRuntimeSignature &runtimeSignature,
       const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
       ) noexcept override;
 
   void persistPreparedScript(
       std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
-      const facebook::jsi::ScriptSignature &scriptMetadata,
-      const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
+      const Microsoft::JSI::ScriptSignature &scriptMetadata,
+      const Microsoft::JSI::JSRuntimeSignature &runtimeMetadata,
       const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
       ) noexcept override;
 
@@ -31,11 +31,11 @@ class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
  private:
   winrt::fire_and_forget persistPreparedScriptAsync(
       std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
-      const facebook::jsi::ScriptSignature &scriptMetadata,
-      const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
+      const Microsoft::JSI::ScriptSignature &scriptMetadata,
+      const Microsoft::JSI::JSRuntimeSignature &runtimeMetadata,
       const char *prepareTag // Optional tag. For e.g. eagerly evaluated vs lazy cache.
   );
-  winrt::Windows::Storage::StorageFile TryGetByteCodeFileSync(const facebook::jsi::ScriptSignature &scriptSignature);
+  winrt::Windows::Storage::StorageFile TryGetByteCodeFileSync(const Microsoft::JSI::ScriptSignature &scriptSignature);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> m_byteCodeFileAsync;
 };
 

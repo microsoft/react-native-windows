@@ -426,8 +426,8 @@ InstanceImpl::InstanceImpl(
 #endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
-          std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-          std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+          std::unique_ptr<Microsoft::JSI::ScriptStore> scriptStore = nullptr;
+          std::unique_ptr<Microsoft::JSI::PreparedScriptStore> preparedScriptStore = nullptr;
           if (!m_devSettings->bytecodeFileName.empty()) {
             // Take the root path of the bytecode location if provided
             auto lastSepPosition = m_devSettings->bytecodeFileName.find_last_of("/\\");

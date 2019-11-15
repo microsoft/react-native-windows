@@ -3,8 +3,7 @@
 #include <jsi/jsi.h>
 #include <memory>
 
-namespace facebook {
-namespace jsi {
+namespace Microsoft::JSI {
 
 // Integer type as it's persist friently.
 using ScriptVersion_t = uint64_t; // It shouldbe std::optional<uint64_t> once we have c++17 available everywhere. Until
@@ -69,5 +68,4 @@ struct ScriptStore {
   virtual ScriptVersion_t getScriptVersion(const std::string &url) noexcept = 0;
 };
 
-} // namespace jsi
-} // namespace facebook
+} // namespace Microsoft::JSI

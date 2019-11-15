@@ -79,8 +79,8 @@ int constexpr length__(const char *str) {
 struct PreparedScriptPrefix {
   // TODO :: constexpr initialize the array.
   char magic[length__(PERSIST_MAGIC)];
-  jsi::ScriptVersion_t scriptVersion;
-  jsi::JSRuntimeVersion_t runtimeVersion;
+  Microsoft::JSI::ScriptVersion_t scriptVersion;
+  Microsoft::JSI::JSRuntimeVersion_t runtimeVersion;
   uint64_t sizeInBytes;
 };
 
@@ -90,7 +90,7 @@ struct PreparedScriptSuffix {
 
 } // namespace
 
-jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(const std::string &url) noexcept {
+Microsoft::JSI::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(const std::string &url) noexcept {
   std::ifstream file(url, std::ios::binary | std::ios::ate);
 
   if (!file) {
@@ -110,7 +110,7 @@ jsi::VersionedBuffer BaseScriptStoreImpl::getVersionedScript(const std::string &
   return {std::move(buffer), versionProvider_ ? versionProvider_->getVersion(url) : static_cast<uint64_t>(size)};
 }
 
-jsi::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(const std::string &url) noexcept {
+Microsoft::JSI::ScriptVersion_t BaseScriptStoreImpl::getScriptVersion(const std::string &url) noexcept {
   if (versionProvider_) {
     return versionProvider_->getVersion(url);
   } else {
@@ -173,8 +173,8 @@ bool LocalFileSimpleBufferStore::persistBuffer(
 }
 
 std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
-    const jsi::ScriptSignature &scriptSignature,
-    const jsi::JSRuntimeSignature &runtimeSignature,
+    const Microsoft::JSI::ScriptSignature &scriptSignature,
+    const Microsoft::JSI::JSRuntimeSignature &runtimeSignature,
     const char *prepareTag) {
   // Essentially, we are trying to construct,
   // prep_<source_url>_<runtime_id>_<preparation_tag>.cache
@@ -216,8 +216,8 @@ std::string BasePreparedScriptStoreImpl::getPreparedScriptFileName(
 }
 
 std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedScript(
-    const jsi::ScriptSignature &scriptSignature,
-    const jsi::JSRuntimeSignature &runtimeSignature,
+    const Microsoft::JSI::ScriptSignature &scriptSignature,
+    const Microsoft::JSI::JSRuntimeSignature &runtimeSignature,
     const char *prepareTag) noexcept {
   std::string preparedScriptFilePath = getPreparedScriptFileName(scriptSignature, runtimeSignature, prepareTag);
 
@@ -265,8 +265,8 @@ std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedSc
 
 void BasePreparedScriptStoreImpl::persistPreparedScript(
     std::shared_ptr<const jsi::Buffer> preparedScript,
-    const jsi::ScriptSignature &scriptMetadata,
-    const jsi::JSRuntimeSignature &runtimeMetadata,
+    const Microsoft::JSI::ScriptSignature &scriptMetadata,
+    const Microsoft::JSI::JSRuntimeSignature &runtimeMetadata,
     const char *prepareTag) noexcept {
   // TODO :: Unfortunately, The current abstraction is forcing us to make a
   // copy. Need to re-evaluate.

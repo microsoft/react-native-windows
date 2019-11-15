@@ -28,12 +28,12 @@ class LocalFileSimpleBufferStore : public BufferStore {
 };
 
 struct ScriptVersionProvider {
-  virtual facebook::jsi::ScriptVersion_t getVersion(const std::string &url) noexcept = 0;
+  virtual Microsoft::JSI::ScriptVersion_t getVersion(const std::string &url) noexcept = 0;
 };
 
 class LocalFileSimpleScriptVersionProvider : public ScriptVersionProvider {
  public:
-  facebook::jsi::ScriptVersion_t getVersion(const std::string &url) noexcept override;
+  Microsoft::JSI::ScriptVersion_t getVersion(const std::string &url) noexcept override;
 };
 
 struct PreparedScriptStoreNameGenerator {
@@ -42,17 +42,17 @@ struct PreparedScriptStoreNameGenerator {
 
 // Dead simple implementation with local filesystem storage using standard c++
 // fileio but with optional extension point with custom bufferStore.
-class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
+class BasePreparedScriptStoreImpl : public Microsoft::JSI::PreparedScriptStore {
  public:
   std::shared_ptr<const facebook::jsi::Buffer> tryGetPreparedScript(
-      const facebook::jsi::ScriptSignature &scriptSignature,
-      const facebook::jsi::JSRuntimeSignature &runtimeSignature,
+      const Microsoft::JSI::ScriptSignature &scriptSignature,
+      const Microsoft::JSI::JSRuntimeSignature &runtimeSignature,
       const char *prepareTag) noexcept override;
 
   void persistPreparedScript(
       std::shared_ptr<const facebook::jsi::Buffer> preparedScript,
-      const facebook::jsi::ScriptSignature &scriptSignature,
-      const facebook::jsi::JSRuntimeSignature &runtimeSignature,
+      const Microsoft::JSI::ScriptSignature &scriptSignature,
+      const Microsoft::JSI::JSRuntimeSignature &runtimeSignature,
       const char *prepareTag) noexcept override;
 
   BasePreparedScriptStoreImpl(const std::string &storeDirectory)
@@ -62,8 +62,8 @@ class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
 
  private:
   std::string getPreparedScriptFileName(
-      const facebook::jsi::ScriptSignature &scriptMetadata,
-      const facebook::jsi::JSRuntimeSignature &runtimeMetadata,
+      const Microsoft::JSI::ScriptSignature &scriptMetadata,
+      const Microsoft::JSI::JSRuntimeSignature &runtimeMetadata,
       const char *prepareTag);
 
   std::shared_ptr<BufferStore> bufferStore_;
@@ -72,10 +72,10 @@ class BasePreparedScriptStoreImpl : public facebook::jsi::PreparedScriptStore {
 // Dead simple script store implementation assuming that the script url is a
 // local filesystam path and assuming the script version is the script size, but
 // with extension point to provide custom version provider.
-class BaseScriptStoreImpl : public facebook::jsi::ScriptStore {
+class BaseScriptStoreImpl : public Microsoft::JSI::ScriptStore {
  public:
-  facebook::jsi::VersionedBuffer getVersionedScript(const std::string &url) noexcept override;
-  facebook::jsi::ScriptVersion_t getScriptVersion(const std::string &url) noexcept override;
+  Microsoft::JSI::VersionedBuffer getVersionedScript(const std::string &url) noexcept override;
+  Microsoft::JSI::ScriptVersion_t getScriptVersion(const std::string &url) noexcept override;
 
   BaseScriptStoreImpl(std::shared_ptr<ScriptVersionProvider> versionProvider)
       : versionProvider_{std::move(versionProvider)} {}

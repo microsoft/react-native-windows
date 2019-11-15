@@ -44,7 +44,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = make_shared<TestMessageQueueThread>();
   auto jsQueue = make_shared<TestMessageQueueThread>();
 
-  devSettings->jsiRuntimeHolder = std::make_shared<ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
+  devSettings->jsiRuntimeHolder = std::make_shared<JSI::ChakraRuntimeHolder>(devSettings, jsQueue, nullptr, nullptr);
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       make_tuple(

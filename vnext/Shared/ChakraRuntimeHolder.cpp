@@ -1,57 +1,87 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 #include "pch.h"
 
 #include "ChakraRuntimeHolder.h"
 
-#include <JSI/Shared/ChakraRuntimeFactory.h>
+// TODO (yicyao): Due to the current structure of our msbuild projects, we can't
+// move ChakraRuntimeHolder into a platform specific project. For now, we use
+// conditional compilation in this file. We ought to clean this up.
+#ifdef CHAKRACORE
+#include "JSI/Shared/ChakraCoreRuntimeFactory.h"
+#include "JSI/Shared/ChakraCoreRuntimeArgs.h"
+#else
+#include "JSI/Universal/ChakraRtRuntimeFactory.h"
+#include "JSI/Shared/ChakraRuntimeArgs.h"
+#endif
 
 namespace Microsoft::JSI {
 
 std::shared_ptr<facebook::jsi::Runtime> ChakraRuntimeHolder::getRuntime() noexcept {
-  std::call_once(once_flag_, [this]() { initRuntime(); });
+  std::call_once(m_init_runtime_flag, [this]() { InitRuntime(); });
 
-  if (!runtime_)
+  if (!m_runtime) {
     std::terminate();
-
-  // ChakraRuntime is not thread safe as of now.
-  if (own_thread_id_ != std::this_thread::get_id())
-    std::terminate();
-
-  return runtime_;
-}
-
-void ChakraRuntimeHolder::initRuntime() noexcept {
-  runtime_ = Microsoft::JSI::makeChakraRuntime(std::move(args_));
-  own_thread_id_ = std::this_thread::get_id();
-}
-
-Logger ChakraRuntimeHolder::ChakraRuntimeLoggerFromReactLogger(
-    facebook::react::NativeLoggingHook loggingCallback) noexcept {
-  return [loggingCallback = std::move(loggingCallback)](const char *message, LogLevel logLevel) -> void {
-    loggingCallback(static_cast<facebook::react::RCTLogLevel>(logLevel), message);
-  };
-}
-
-ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
-    std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
-  ChakraRuntimeArgs runtimeArgs;
-
-  runtimeArgs.debuggerBreakOnNextLine = devSettings->debuggerBreakOnNextLine;
-  runtimeArgs.debuggerPort = devSettings->debuggerPort;
-  runtimeArgs.debuggerRuntimeName = devSettings->debuggerRuntimeName;
-
-  runtimeArgs.enableDebugging = devSettings->useDirectDebugger;
-
-  if (devSettings->loggingCallback) {
-    runtimeArgs.loggingCallback = ChakraRuntimeLoggerFromReactLogger(devSettings->loggingCallback);
   }
 
-  runtimeArgs.enableNativePerformanceNow = devSettings->enableNativePerformanceNow;
+  // ChakraCoreRuntime and ChakraRtRuntime are not thread safe as of right now.
+  if (m_own_thread_id != std::this_thread::get_id()) {
+    std::terminate();
+  }
 
-  runtimeArgs.enableJITCompilation = devSettings->useJITCompilation;
+  return m_runtime;
+}
 
-  runtimeArgs.memoryTracker = devSettings->memoryTracker;
+ChakraRuntimeHolder::ChakraRuntimeHolder(
+    std::shared_ptr<facebook::react::DevSettings> devSettings,
+    std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
+    std::unique_ptr<Microsoft::JSI::ScriptStore> &&scriptStore,
+    std::unique_ptr<Microsoft::JSI::PreparedScriptStore> &&preparedScriptStore) noexcept {
+#ifdef CHAKRACORE
+  auto args = std::make_shared<ChakraCoreRuntimeArgs>();
+#else
+  auto args = std::make_shared<ChakraRtRuntimeArgs>();
+#endif
 
-  return runtimeArgs;
+  if (!devSettings->useJITCompilation) {
+    args->executablePageAllocationPolicy = ChakraRuntimeArgs::ExecutablePageAllocationPolicy::DisableAll;
+  }
+
+  if (devSettings->useDirectDebugger) {
+    args->enableDebugging = true;
+  }
+
+  args->memoryTracker = devSettings->memoryTracker;
+
+  args->scriptStore = std::move(scriptStore);
+  args->preparedScriptStore = std::move(preparedScriptStore);
+
+#ifdef CHAKRACORE
+  args->jsQueue = std::move(jsQueue);
+
+  args->debuggerBreakOnNextLine = devSettings->debuggerBreakOnNextLine;
+  args->debuggerPort = devSettings->debuggerPort;
+  args->debuggerRuntimeName = devSettings->debuggerRuntimeName;
+
+  // clang-format off
+  args->debuggerLoggingCallback =
+    [loggingCallback = std::move(devSettings->loggingCallback)](const char *message, LogLevel logLevel) {
+      loggingCallback(static_cast<facebook::react::RCTLogLevel>(logLevel), message);
+    };
+  // clange-format on
+#endif
+
+  m_args = std::move(args);
+}
+
+void ChakraRuntimeHolder::InitRuntime() noexcept {
+#ifdef CHAKRACORE
+  m_runtime = makeChakraCoreRuntime(std::static_pointer_cast<ChakraCoreRuntimeArgs>(m_args));
+#else
+  m_runtime = makeChakraRtRuntime(std::shared_ptr<ChakraRtRuntimeArgs>(m_args));
+#endif
+  m_own_thread_id = std::this_thread::get_id();
 }
 
 } // namespace Microsoft::JSI

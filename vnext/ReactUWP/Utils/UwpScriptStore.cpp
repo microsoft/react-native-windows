@@ -17,20 +17,20 @@ namespace uwp {
 
 UwpScriptStore::UwpScriptStore() {}
 
-/* static */ facebook::jsi::ScriptVersion_t UwpScriptStore::GetFileVersion(const std::wstring &filePath) {
+/* static */ Microsoft::JSI::ScriptVersion_t UwpScriptStore::GetFileVersion(const std::wstring &filePath) {
   // append prefix to allow long file paths.
   auto longFilePath = L"\\\\?\\" + filePath;
   WIN32_FILE_ATTRIBUTE_DATA fileData;
   if (GetFileAttributesEx(longFilePath.c_str(), GetFileExInfoStandard, &fileData)) {
-    return ((facebook::jsi::ScriptVersion_t)fileData.ftLastWriteTime.dwHighDateTime << 32) |
+    return ((Microsoft::JSI::ScriptVersion_t)fileData.ftLastWriteTime.dwHighDateTime << 32) |
         fileData.ftLastWriteTime.dwLowDateTime;
   }
 
   return 0;
 }
 
-facebook::jsi::VersionedBuffer UwpScriptStore::getVersionedScript(const std::string &url) noexcept {
-  facebook::jsi::VersionedBuffer versionedBuffer_;
+Microsoft::JSI::VersionedBuffer UwpScriptStore::getVersionedScript(const std::string &url) noexcept {
+  Microsoft::JSI::VersionedBuffer versionedBuffer_;
   versionedBuffer_.buffer = nullptr;
   versionedBuffer_.version = 0;
 
@@ -38,13 +38,13 @@ facebook::jsi::VersionedBuffer UwpScriptStore::getVersionedScript(const std::str
 }
 
 // Script version = timestamp of bundle file last created
-facebook::jsi::ScriptVersion_t UwpScriptStore::getScriptVersion(const std::string &url) noexcept {
+Microsoft::JSI::ScriptVersion_t UwpScriptStore::getScriptVersion(const std::string &url) noexcept {
   auto version = getScriptVersionAsync(url).get();
 
   return version;
 }
 
-std::future<facebook::jsi::ScriptVersion_t> UwpScriptStore::getScriptVersionAsync(const std::string &bundleUri) {
+std::future<Microsoft::JSI::ScriptVersion_t> UwpScriptStore::getScriptVersionAsync(const std::string &bundleUri) {
   co_await winrt::resume_background();
 
   const winrt::hstring fileUrl(Microsoft::Common::Unicode::Utf8ToUtf16("ms-appx:///Bundle/" + bundleUri + ".bundle"));

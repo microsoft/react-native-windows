@@ -353,8 +353,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 
 #if !defined(OSS_RN)
     if (settings.UseJsi) {
-      std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
-      std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+      std::unique_ptr<Microsoft::JSI::ScriptStore> scriptStore = nullptr;
+      std::unique_ptr<Microsoft::JSI::PreparedScriptStore> preparedScriptStore = nullptr;
 
 #if defined(USE_HERMES)
       devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::HermesRuntimeHolder>();
