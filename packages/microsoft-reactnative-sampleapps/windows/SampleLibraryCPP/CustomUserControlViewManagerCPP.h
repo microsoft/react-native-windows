@@ -13,10 +13,12 @@ struct CustomUserControlViewManagerCPP : winrt::implements<
                                              winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties,
                                              winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands> {
  public:
-  CustomUserControlViewManagerCPP() = default;
+  CustomUserControlViewManagerCPP(winrt::Microsoft::ReactNative::Bridge::IReactContext const &reactContext);
 
   // IViewManager
   winrt::hstring Name() noexcept;
+
+  winrt::Microsoft::ReactNative::Bridge::IReactContext ReactContext() noexcept;
 
   winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
 
@@ -38,6 +40,9 @@ struct CustomUserControlViewManagerCPP : winrt::implements<
       int64_t commandId,
       winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Foundation::IInspectable>
           commandArgs) noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::Bridge::IReactContext m_reactContext{nullptr};
 };
 
 } // namespace winrt::SampleLibraryCPP::implementation

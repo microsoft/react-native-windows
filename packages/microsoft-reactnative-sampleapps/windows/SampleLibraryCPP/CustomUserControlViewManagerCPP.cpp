@@ -18,6 +18,13 @@ using namespace Windows::UI::Xaml::Controls;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
+CustomUserControlViewManagerCPP::CustomUserControlViewManagerCPP(IReactContext const &reactContext)
+    : m_reactContext{reactContext} {}
+
+IReactContext CustomUserControlViewManagerCPP::ReactContext() noexcept {
+  return m_reactContext;
+}
+
 // IViewManager
 hstring CustomUserControlViewManagerCPP::Name() noexcept {
   return L"CustomUserControlCPP";

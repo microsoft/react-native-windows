@@ -17,6 +17,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithExportedViewConstants{viewManager.try_as<IViewManagerWithExportedViewConstants>()},
       m_viewManagerWithNativeProperties{viewManager.try_as<IViewManagerWithNativeProperties>()},
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
+      m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_name{to_string(viewManager.Name())} {
   if (m_viewManagerWithNativeProperties) {
     m_nativeProps = m_viewManagerWithNativeProperties.NativeProps();
@@ -149,6 +150,36 @@ void ABIViewManager::DispatchCommand(
 
     m_viewManagerWithCommands.DispatchCommand(view, commandId, listArgs);
   }
+}
+
+folly::dynamic ABIViewManager::GetExportedCustomBubblingEventTypeConstants() const {
+  folly::dynamic parent = Super::GetExportedCustomBubblingEventTypeConstants();
+
+  if (m_viewManagerWithExportedEventTypeConstants) {
+    auto outerChild = m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants();
+    for (const auto &pair : outerChild) {
+      std::string key = to_string(pair.Key());
+      folly::dynamic value = ConvertToDynamic(pair.Value());
+      parent.insert(key, value);
+    }
+  }
+
+  return parent;
+}
+
+folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const {
+  folly::dynamic parent = Super::GetExportedCustomDirectEventTypeConstants();
+
+  if (m_viewManagerWithExportedEventTypeConstants) {
+    auto outerChild = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants();
+    for (const auto &pair : outerChild) {
+      std::string key = to_string(pair.Key());
+      folly::dynamic value = ConvertToDynamic(pair.Value());
+      parent.insert(key, value);
+    }
+  }
+
+  return parent;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge
