@@ -160,7 +160,6 @@
     <ClCompile Include="tracing\tracing.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="ViewManager.cpp" />
-    <ClCompile Include="ChakraRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="HermesRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <ClCompile Include="V8JSIRuntimeHolder.cpp" Condition="'$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
   </ItemGroup>
