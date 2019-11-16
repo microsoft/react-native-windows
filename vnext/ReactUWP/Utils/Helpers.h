@@ -31,5 +31,6 @@ ReactId getViewId(_In_ IReactInstance *instance, winrt::FrameworkElement const &
 std::int32_t CountOpenPopups();
 
 bool IsRS4OrHigher();
+bool Is19H1OrHigher();
 } // namespace uwp
 } // namespace react

@@ -62,8 +62,17 @@ bool IsAPIContractV6Available() {
   return IsAPIContractVxAvailable<6>();
 }
 
+bool IsAPIContractV8Available() {
+  return IsAPIContractVxAvailable<8>();
+}
+
 bool IsRS4OrHigher() {
   return IsAPIContractV6Available();
 }
+
+bool Is19H1OrHigher() {
+  return IsAPIContractV8Available();
+}
+
 } // namespace uwp
 }; // namespace react
