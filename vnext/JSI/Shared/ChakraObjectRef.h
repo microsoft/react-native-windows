@@ -15,6 +15,7 @@
 #endif
 
 #include <exception>
+#include <memory>
 #include <string>
 #include <string_view>
 
@@ -107,6 +108,24 @@ ChakraObjectRef GetPropertyId(const std::string_view &utf8);
 ChakraObjectRef GetPropertyId(const std::wstring &utf16);
 
 /**
+ * @param obj A ChakraObjectRef referencing a JavaScript object.
+ * @param id A ChakraObjectRef referencing a JsPropertyIdRef.
+ *
+ * @returns A ChakraObjectRef managing the property of obj indexed by id.
+ */
+ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const ChakraObjectRef &id);
+
+/**
+ * @param obj A ChakraObjectRef referencing a JavaScript object.
+ * @param id A UTF8-8 encoded, null terminated property name.
+ *
+ * @returns A ChakraObjectRef managing the property of obj indexed by name.
+ */
+inline ChakraObjectRef GetProperty(const ChakraObjectRef &obj, const char *const name) {
+  return Microsoft::JSI::GetProperty(obj, GetPropertyId(std::string_view{name}));
+}
+
+/**
  * @param jsString A ChakraObjectRef managing a JS string.
  *
  * @returns A std::string that is UTF-8 encoded.
@@ -174,6 +193,24 @@ ChakraObjectRef ToJsNumber(int num);
  * till the garbage collector finalizes it.
  */
 ChakraObjectRef ToJsArrayBuffer(const std::shared_ptr<const facebook::jsi::Buffer> &buffer);
+
+/**
+ * @param arrBuf A ChakraObjectRef managing a JS ArrayBuffer.
+ *
+ * @returns arrBuf's backing buffer.
+ *
+ * @remarks The lifetime of the buffer returned is the same as the lifetime of
+ * the ArrayBuffer managed. The buffer pointer does not count as a reference to
+ * the ArrayBuffer for the purpose of garbage collection.
+ */
+uint8_t *GetArrayBufferData(const ChakraObjectRef &arrBuf);
+
+/**
+ * @param arrBuf A ChakraObjectRef managing a JS ArrayBuffer.
+ *
+ * @returns The bytelenght of arrBuf.
+ */
+size_t GetArrayBufferLength(const ChakraObjectRef &arrBuf);
 
 /**
  * @returns A ChakraObjectRef managing a JS Object.

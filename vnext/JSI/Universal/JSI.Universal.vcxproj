@@ -82,7 +82,12 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRtRuntime.cpp" Condition="'$(OSS_RN)' != 'true'"/>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRtRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRtRuntimeFactory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRtRuntime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraRtRuntimeFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.vcxproj">

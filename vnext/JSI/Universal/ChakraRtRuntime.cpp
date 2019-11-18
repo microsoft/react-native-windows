@@ -1,89 +1,127 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include "ChakraRuntime.h"
+#ifndef CHAKRACORE
+
+#include "ChakraRtRuntime.h"
 
 #include "ByteArrayBuffer.h"
+#include "ChakraPreparedJavaScript.h"
 #include "Unicode.h"
+#include "Utilities.h"
 
-#if !defined(CHAKRACORE)
 #include <jsrt.h>
 
 namespace Microsoft::JSI {
 
-void ChakraRuntime::setupNativePromiseContinuation() noexcept {
-  // NOP
-}
+facebook::jsi::Value ChakraRtRuntime::evaluatePreparedJavaScript(
+    const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &preparedJs) {
+  assert(preparedJs);
 
-void ChakraRuntime::startDebuggingIfNeeded() {
-  if (runtimeArgs().enableDebugging)
-    JsStartDebugging();
-}
+  std::shared_ptr<const ChakraPreparedJavaScript> chakraPreparedJs =
+      std::static_pointer_cast<const ChakraPreparedJavaScript>(preparedJs);
 
-void ChakraRuntime::stopDebuggingIfNeeded() {
-  // NOP AFAIK
-}
+  JsValueRef result = nullptr;
 
-void ChakraRuntime::initRuntimeVersion() noexcept {
-  // NOP
-}
+  std::wstring sourceCodeUtf16 = Common::Unicode::Utf8ToUtf16(
+      Common::Utilities::CheckedReinterpretCast<const char *>(chakraPreparedJs->SourceCode()->data()),
+      chakraPreparedJs->SourceCode()->size());
 
-std::unique_ptr<const facebook::jsi::Buffer> ChakraRuntime::generatePreparedScript(
-    const std::string &sourceURL,
-    const facebook::jsi::Buffer &sourceBuffer) noexcept {
-  const std::wstring scriptUTF16 =
-      Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(sourceBuffer.data()), sourceBuffer.size());
+  std::wstring sourceUrlUtf16 = Common::Unicode::Utf8ToUtf16(chakraPreparedJs->SourceUrl());
 
-  unsigned long bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) == JsNoError) {
-    std::unique_ptr<ByteArrayBuffer> bytecodeBuffer(std::make_unique<ByteArrayBuffer>(bytecodeSize));
-    if (JsSerializeScript(scriptUTF16.c_str(), bytecodeBuffer->data(), &bytecodeSize) == JsNoError) {
-      return bytecodeBuffer;
-    }
+  // We have to use a const_cast here due to JsRunSerializedScript taking in a
+  // BYTE* instead of a const BYTE*.
+  JsErrorCode error = JsRunSerializedScript(
+      sourceCodeUtf16.c_str(),
+      static_cast<BYTE *>(const_cast<uint8_t *>(chakraPreparedJs->Bytecode()->data())),
+      JS_SOURCE_CONTEXT_NONE /*sourceContext*/,
+      sourceUrlUtf16.c_str(),
+      &result);
+
+  // Fall back to evaluating source code if bytecode evaluation fails.
+  if (error == JsErrorBadSerializedScript) {
+    JsValueRef exception = nullptr;
+    VerifyJsErrorElseThrow(JsGetAndClearException(&exception));
+    return EvaluateJavaScriptImpl(sourceCodeUtf16.c_str(), sourceUrlUtf16.c_str());
   }
 
-  return nullptr;
-}
-
-facebook::jsi::Value ChakraRuntime::evaluateJavaScriptSimple(
-    const facebook::jsi::Buffer &buffer,
-    const std::string &sourceURL) {
-  const std::wstring script16 =
-      Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(buffer.data()), buffer.size());
-  if (script16.empty())
-    throw facebook::jsi::JSINativeException("Script can't be empty.");
-
-  const std::wstring url16 = Microsoft::Common::Unicode::Utf8ToUtf16(sourceURL);
-
-  JsValueRef result;
-  VerifyJsErrorElseThrow(
-      JsRunScript(script16.c_str(), JS_SOURCE_CONTEXT_NONE /*sourceContext*/, url16.c_str(), &result));
-
+  VerifyJsErrorElseThrow(error);
   return ToJsiValue(ChakraObjectRef(result));
 }
 
-// TODO :: Return result
-bool ChakraRuntime::evaluateSerializedScript(
-    const facebook::jsi::Buffer &scriptBuffer,
-    const facebook::jsi::Buffer &serializedScriptBuffer,
-    const std::string &sourceURL) {
-  std::wstring script16 =
-      Microsoft::Common::Unicode::Utf8ToUtf16(reinterpret_cast<const char *>(scriptBuffer.data()), scriptBuffer.size());
-  std::wstring url16 = Microsoft::Common::Unicode::Utf8ToUtf16(sourceURL);
+std::string ChakraRtRuntime::description() {
+  return "ChakraRtRuntime";
+}
 
-  // Note:: Bytecode caching on UWP is untested yet.
-  JsValueRef result;
-  JsErrorCode ret = JsRunSerializedScript(
-      script16.c_str(), const_cast<uint8_t *>(serializedScriptBuffer.data()), 0, url16.c_str(), &result);
+// TODO (yicyao): Chakra does not support weak reference semantics. We should
+// implement weak reference through std::shared_ptr<ChakraObjectRef>. For now,
+// we throw exceptions in createWeakObject and lockWeakObject to prevent
+// possible memory leaks.
 
-  if (ret == JsNoError) {
-    return true;
-  } else if (ret == JsErrorBadSerializedScript) {
-    return false;
-  } else {
-    VerifyChakraErrorElseThrow(ret);
-    return true;
+facebook::jsi::WeakObject ChakraRtRuntime::createWeakObject(const facebook::jsi::Object &object) {
+  throw facebook::jsi::JSINativeException("ChakraRtRuntime does not support createWeakObject().");
+}
+
+facebook::jsi::Value ChakraRtRuntime::lockWeakObject(const facebook::jsi::WeakObject &weakObject) {
+  throw facebook::jsi::JSINativeException("ChakraRtRuntime does not support lockWeakObject().");
+}
+
+facebook::jsi::JSRuntimeVersion_t ChakraRtRuntime::Version() {
+  // TODO (yicyao): Implement this function.
+  return 0;
+}
+
+facebook::jsi::Value ChakraRtRuntime::EvaluateJavaScriptSimple(
+    const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
+    const std::string &sourceUrl) {
+  assert(buffer);
+
+  const std::wstring sourceCodeUtf16 = Common::Unicode::Utf8ToUtf16(
+      Common::Utilities::CheckedReinterpretCast<const char *>(buffer->data()), buffer->size());
+
+  const std::wstring sourceUrlUtf16 = Common::Unicode::Utf8ToUtf16(sourceUrl);
+
+  return EvaluateJavaScriptImpl(sourceCodeUtf16.c_str(), sourceUrlUtf16.c_str());
+}
+
+std::shared_ptr<const facebook::jsi::Buffer> ChakraRtRuntime::SerializeScript(
+    const std::shared_ptr<const facebook::jsi::Buffer> &buffer) {
+  assert(buffer);
+
+  std::wstring sourceCodeUtf16 = Common::Unicode::Utf8ToUtf16(
+      Common::Utilities::CheckedReinterpretCast<const char *>(buffer->data()), buffer->size());
+
+  unsigned long bytecodeSize = 0;
+  VerifyJsErrorElseThrow(JsSerializeScript(sourceCodeUtf16.c_str(), nullptr, &bytecodeSize));
+
+  assert(
+      static_cast<unsigned long long>(bytecodeSize) <=
+      static_cast<unsigned long long>((std::numeric_limits<size_t>::max)()));
+
+  std::shared_ptr<ByteArrayBuffer> bytecode = std::make_shared<ByteArrayBuffer>(static_cast<size_t>(bytecodeSize));
+
+  VerifyJsErrorElseThrow(
+      JsSerializeScript(sourceCodeUtf16.c_str(), static_cast<BYTE *>(bytecode->data()), &bytecodeSize));
+
+  assert(
+      static_cast<unsigned long long>(bytecodeSize) <=
+      static_cast<unsigned long long>((std::numeric_limits<size_t>::max)()));
+
+  if (static_cast<size_t>(bytecodeSize) != bytecode->size()) {
+    throw facebook::jsi::JSINativeException("Unknown error occurred when calling JsSerializeScript.");
   }
+
+  return bytecode;
+}
+
+void ChakraRtRuntime::StartDebugging() {
+  VerifyJsErrorElseThrow(JsStartDebugging());
+}
+
+facebook::jsi::Value ChakraRtRuntime::EvaluateJavaScriptImpl(const wchar_t *sourceCode, const wchar_t *sourceUrl) {
+  JsValueRef result;
+  VerifyJsErrorElseThrow(JsRunScript(sourceCode, JS_SOURCE_CONTEXT_NONE /*sourceContext*/, sourceUrl, &result));
+  return ToJsiValue(ChakraObjectRef(result));
 }
 
 } // namespace Microsoft::JSI
