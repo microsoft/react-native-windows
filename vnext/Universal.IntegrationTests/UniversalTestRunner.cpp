@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 #include "pch.h"
 
-#if !defined(OSS_RN)
-#include <cxxreact/Platform.h>
-#endif
 #include <InstanceFactory.h>
 #include <Logging.h>
 #include <TestRunner.h>
 #include <XamlView.h> //Remove?
+#include <cxxreact/ReactMarker.h>
 #include "UniversalTestInstance.h"
 
 #include <Windows.UI.Xaml.h>
