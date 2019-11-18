@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <ReactCommon/Platform.h>
+#include <cxxreact/ReactMarker.h>
 #include "ChakraPlatform.h"
 
 namespace facebook {

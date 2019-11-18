@@ -4,12 +4,12 @@
 #include "pch.h"
 
 #include <OInstance.h>
-#include <ReactCommon/Platform.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
+#include <cxxreact/ReactMarker.h>
 #include "Unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"

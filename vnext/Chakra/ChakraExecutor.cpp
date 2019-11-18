@@ -23,8 +23,8 @@
 #include <cxxreact/RAMBundleRegistry.h>
 #include <cxxreact/SystraceSection.h>
 
-#include <ReactCommon/Platform.h>
 #include <cxxreact/ModuleRegistry.h>
+#include <cxxreact/ReactMarker.h>
 
 #include "ChakraNativeModules.h"
 #include "ChakraPlatform.h"

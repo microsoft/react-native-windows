@@ -5,7 +5,7 @@
 
 #include "Logging.h"
 
-#include <ReactCommon/Platform.h>
+#include <cxxreact/ReactMarker.h>
 #include <chrono>
 #include "../Chakra/ChakraPlatform.h"
 

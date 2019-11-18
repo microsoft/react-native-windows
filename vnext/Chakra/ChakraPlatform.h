@@ -9,8 +9,7 @@
 
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
-
-#include <ReactCommon/Platform.h>
+#include <cxxreact/ReactMarker.h>
 
 #include "Logging.h"
 

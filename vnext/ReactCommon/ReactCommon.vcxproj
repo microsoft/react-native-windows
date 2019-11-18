@@ -154,7 +154,6 @@
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
-    <ClCompile Include=".\Platform.cpp" />
   </ItemGroup>
   <ItemGroup Condition="'$(OSS_RN)'!='true'">
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h" />

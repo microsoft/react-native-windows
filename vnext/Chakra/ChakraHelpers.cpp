@@ -16,7 +16,6 @@
 #include <folly/String.h>
 #include <glog/logging.h>
 
-#include <ReactCommon/Platform.h>
 #include <cxxreact/ReactMarker.h>
 
 #include <windows.h>
