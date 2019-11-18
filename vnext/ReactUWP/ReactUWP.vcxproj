@@ -166,8 +166,10 @@
     <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
+    <ClInclude Include="Utils\ResourceBrushUtils.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
@@ -267,6 +269,7 @@
     <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
+    <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
@@ -419,7 +422,8 @@
       <DisableReferences>true</DisableReferences>
       <HeaderFileName>$(IdlHeaderDirectory)\%(Filename).h</HeaderFileName>
       <MetadataFileName>$(UnmergedWinmdDirectory)\%(Filename).winmd</MetadataFileName>
-      <AdditionalOptions></AdditionalOptions>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </Midl>
     <Midl Include="Views/cppwinrt/BorderEffect.idl" />
     <Midl Include="Views/cppwinrt/AccessibilityAction.idl" />
