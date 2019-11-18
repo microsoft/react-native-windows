@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Use boost::numeric_cast.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "75f8da4c6b63d2d4dc432ac1d555cb8e140d3a20",
+  "date": "2019-11-18T22:25:18.395Z"
+}
