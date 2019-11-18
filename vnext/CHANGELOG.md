@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 15 Nov 2019 18:17:47 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Nov 2019 22:41:41 GMT and should not be manually modified.
 
+## 0.60.0-vnext.72
+Mon, 18 Nov 2019 22:41:41 GMT
+
+### Changes
+
+- Stop requiring Platform.cpp from MS/RN (acoates@microsoft.com)
 ## 0.60.0-vnext.71
 Fri, 15 Nov 2019 18:17:47 GMT
 

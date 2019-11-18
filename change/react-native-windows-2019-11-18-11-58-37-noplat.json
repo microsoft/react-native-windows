@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Stop requiring Platform.cpp from MS/RN",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "99ba691abd01e31860ffa2979b4d40326f16455e",
-  "date": "2019-11-18T19:58:37.153Z"
-}
