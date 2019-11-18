@@ -3,9 +3,7 @@
 
 #include "pch.h"
 
-#if !defined(OSS_RN)
-#include <cxxreact/Platform.h>
-#endif
+#include <cxxreact/ReactMarker.h>
 #include "ChakraPlatform.h"
 
 namespace facebook {

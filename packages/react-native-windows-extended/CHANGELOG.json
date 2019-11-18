@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 15 Nov 2019 18:17:47 GMT",
+      "tag": "react-native-windows-extended_v0.60.19",
+      "version": "0.60.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native",
+            "author": "zihanc@microsoft.com",
+            "commit": "8a97fed007dbf4516a2b414723a6dc908ad357bf"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2019 04:50:06 GMT",
       "tag": "react-native-windows-extended_v0.60.18",
       "version": "0.60.18",

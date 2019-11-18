@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Tue, 12 Nov 2019 04:50:06 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Nov 2019 18:17:47 GMT and should not be manually modified.
 
+## 0.60.19
+Fri, 15 Nov 2019 18:17:47 GMT
+
+### Patches
+
+- Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native (zihanc@microsoft.com)
 ## 0.60.18
 Tue, 12 Nov 2019 04:50:06 GMT
 

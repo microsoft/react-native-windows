@@ -1,0 +1,6 @@
+{
+  "!(*.g).{h,cpp}": [
+    "npx clang-format -i -style=file -assume-filename=../.clang-format",
+    "git add"
+  ]
+}
