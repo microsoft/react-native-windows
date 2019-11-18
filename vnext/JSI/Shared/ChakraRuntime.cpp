@@ -10,6 +10,8 @@
 #include <ScriptStore.h>
 #include <cxxreact/MessageQueueThread.h>
 
+#include <boost/numeric/conversion/cast.hpp>
+
 #include <cstring>
 #include <limits>
 #include <mutex>
@@ -449,10 +451,8 @@ facebook::jsi::Value ChakraRuntime::lockWeakObject(const facebook::jsi::WeakObje
 }
 
 facebook::jsi::Array ChakraRuntime::createArray(size_t length) {
-  assert(length <= (std::numeric_limits<unsigned int>::max)());
-
   JsValueRef result = JS_INVALID_REFERENCE;
-  VerifyJsErrorElseThrow(JsCreateArray(static_cast<unsigned int>(length), &result));
+  VerifyJsErrorElseThrow(JsCreateArray(boost::numeric_cast<unsigned int>(length), &result));
   return MakePointer<facebook::jsi::Object>(result).asArray(*this);
 }
 
@@ -493,19 +493,16 @@ uint8_t *ChakraRuntime::data(const facebook::jsi::ArrayBuffer &arrBuf) {
 
 facebook::jsi::Value ChakraRuntime::getValueAtIndex(const facebook::jsi::Array &arr, size_t index) {
   assert(isArray(arr));
-  assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
-
   JsValueRef result = JS_INVALID_REFERENCE;
-  VerifyJsErrorElseThrow(JsGetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), &result));
+  VerifyJsErrorElseThrow(
+      JsGetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(boost::numeric_cast<int>(index)), &result));
   return ToJsiValue(ChakraObjectRef(result));
 }
 
 void ChakraRuntime::setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) {
   assert(isArray(arr));
-  assert(index <= static_cast<size_t>((std::numeric_limits<int>::max)()));
-
-  VerifyJsErrorElseThrow(
-      JsSetIndexedProperty(GetChakraObjectRef(arr), ToJsNumber(static_cast<int>(index)), ToChakraObjectRef(value)));
+  VerifyJsErrorElseThrow(JsSetIndexedProperty(
+      GetChakraObjectRef(arr), ToJsNumber(boost::numeric_cast<int>(index)), ToChakraObjectRef(value)));
 }
 
 facebook::jsi::Function ChakraRuntime::createFunctionFromHostFunction(
@@ -560,11 +557,13 @@ facebook::jsi::Value ChakraRuntime::call(
   std::vector<ChakraObjectRef> argRefs = ToChakraObjectRefs(args, count);
 
   std::vector<JsValueRef> argsWithThis = ConstructJsFunctionArguments(thisRef, argRefs);
-  assert(argsWithThis.size() <= (std::numeric_limits<unsigned short>::max)());
 
   JsValueRef result;
   VerifyJsErrorElseThrow(JsCallFunction(
-      GetChakraObjectRef(func), argsWithThis.data(), static_cast<unsigned short>(argsWithThis.size()), &result));
+      GetChakraObjectRef(func),
+      argsWithThis.data(),
+      boost::numeric_cast<unsigned short>(argsWithThis.size()),
+      &result));
   return ToJsiValue(ChakraObjectRef(result));
 }
 
@@ -576,11 +575,13 @@ ChakraRuntime::callAsConstructor(const facebook::jsi::Function &func, const face
   std::vector<ChakraObjectRef> argRefs = ToChakraObjectRefs(args, count);
 
   std::vector<JsValueRef> argsWithThis = ConstructJsFunctionArguments(undefinedRef, argRefs);
-  assert(argsWithThis.size() <= (std::numeric_limits<unsigned short>::max)());
 
   JsValueRef result;
   VerifyJsErrorElseThrow(JsConstructObject(
-      GetChakraObjectRef(func), argsWithThis.data(), static_cast<unsigned short>(argsWithThis.size()), &result));
+      GetChakraObjectRef(func),
+      argsWithThis.data(),
+      boost::numeric_cast<unsigned short>(argsWithThis.size()),
+      &result));
   return ToJsiValue(ChakraObjectRef(result));
 }
 

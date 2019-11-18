@@ -8,6 +8,8 @@
 
 #include "stringapiset.h"
 
+#include <boost/numeric/conversion/cast.hpp>
+
 #include <cassert>
 #include <cstring>
 #include <exception>
@@ -26,13 +28,7 @@ std::wstring Utf8ToUtf16(const char *utf8, size_t utf8Len) {
     return utf16;
   }
 
-  // Extra parentheses needed here to prevent expanding max as a
-  // Windows-specific preprocessor macro.
-  if (utf8Len > static_cast<size_t>((std::numeric_limits<int>::max)())) {
-    throw std::overflow_error("Length of input string to Utf8ToUtf16() must fit into an int.");
-  }
-
-  const int utf8Length = static_cast<int>(utf8Len);
+  const int utf8Length = boost::numeric_cast<int>(utf8Len);
 
   // We do not specify MB_ERR_INVALID_CHARS here, which means that invalid UTF-8
   // characters are replaced with U+FFFD.
@@ -107,13 +103,7 @@ std::string Utf16ToUtf8(const wchar_t *utf16, size_t utf16Len) {
     return utf8;
   }
 
-  // Extra parentheses needed here to prevent expanding max as a
-  // Windows-specific preprocessor macro.
-  if (utf16Len > static_cast<size_t>((std::numeric_limits<int>::max)())) {
-    throw std::overflow_error("Length of input string to Utf16ToUtf8() must fit into an int.");
-  }
-
-  const int utf16Length = static_cast<int>(utf16Len);
+  const int utf16Length = boost::numeric_cast<int>(utf16Len);
 
   // We do not specify WC_ERR_INVALID_CHARS here, which means that invalid
   // UTF-16 characters are replaced with U+FFFD.
