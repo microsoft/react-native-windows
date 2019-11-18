@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "lerna run build --stream",
+    "build": "lerna run build --stream -- --color",
     "buildci": "lerna run build --stream -- --ci",
     "change": "beachball change",
     "clean": "lerna run clean --stream",

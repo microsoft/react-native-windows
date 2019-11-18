@@ -23,10 +23,8 @@
 #include <cxxreact/RAMBundleRegistry.h>
 #include <cxxreact/SystraceSection.h>
 
+#include <ReactCommon/Platform.h>
 #include <cxxreact/ModuleRegistry.h>
-#if !defined(OSS_RN)
-#include <cxxreact/Platform.h>
-#endif
 
 #include "ChakraNativeModules.h"
 #include "ChakraPlatform.h"
@@ -497,9 +495,7 @@ void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> sc
   JSContextHolder ctx(m_context);
 
   std::string scriptName = simpleBasename(sourceURL);
-#if !defined(OSS_RN)
   ReactMarker::logTaggedMarker(ReactMarker::RUN_JS_BUNDLE_START, scriptName.c_str());
-#endif
 
   ChakraString jsSourceURL(sourceURL.c_str());
 
@@ -537,10 +533,8 @@ void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> sc
     flush();
   }
 
-#if !defined(OSS_RN)
   ReactMarker::logMarker(ReactMarker::CREATE_REACT_CONTEXT_STOP);
   ReactMarker::logTaggedMarker(ReactMarker::RUN_JS_BUNDLE_STOP, scriptName.c_str());
-#endif
 }
 
 void ChakraExecutor::setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) {
