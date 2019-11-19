@@ -175,11 +175,10 @@
   <PropertyGroup>
     <BundleCommand>
       cd $(SolutionDir)..
-      mkdir windows\SampleAppCpp\Bundle
       react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle
     </BundleCommand>
   </PropertyGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
 
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

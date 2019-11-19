@@ -8,7 +8,8 @@
   <PropertyGroup>
     <UseBundle Condition=" '$(Configuration)' == 'Debug' and '$(UseBundle)' == '' ">false</UseBundle>
     <UseBundle Condition=" '$(Configuration)' == 'Release' and '$(UseBundle)' == '' ">true</UseBundle>
-    <BundledContent>Bundle\**\*</BundledContent>
+    <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">Bundle</BundleContentRoot>
+    <BundleContent Condition = " '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)\**\*</BundleContent>
   </PropertyGroup>
 
   <PropertyGroup>

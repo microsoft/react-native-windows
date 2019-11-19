@@ -4,17 +4,11 @@
  Licensed under the MIT License.. 
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildThisFileDirectory)\Bundle.props"/>
+  <Import Project="$(MSBuildThisFileDirectory)\Bundle.Common.targets"/>
 
-  <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundledContent)' != ''">
-    <Content Include="$(BundledContent)">
+  <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != ''">
+    <Content Include="$(BundleContent)">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
-  <Target Name="ReactNativeWindowsMakeBundle" BeforeTargets="PrepareForBuild" 
-      Condition="'$(UseBundle)' == 'true'">
-        <Warning Text="BundleCommand is not defined, and you should execute 'react-native bundle' by yourself" Condition="'$(BundleCommand)' == ''" />
-        <Exec Condition="'$(BundleCommand)' != ''" Command="$(BundleCommand)" ConsoleToMSBuild="true" WorkingDirectory="$(SolutionDir).."/>
-  </Target>
 </Project>
