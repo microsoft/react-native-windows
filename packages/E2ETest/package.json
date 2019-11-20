@@ -1,6 +1,6 @@
 {
   "name": "e2etest",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "private": true,
   "scripts": {
     "build": "just-scripts build",
@@ -11,8 +11,8 @@
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
-    "e2e": "react-native run-windows --no-launch --force --logging && npm run test",
-    "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle --force --logging && npm run test",
+    "e2e": "react-native run-windows --no-launch --logging && npm run test",
+    "e2ebundle": "npm run bundle && react-native run-windows --no-launch --no-packager --bundle --logging && npm run test",
     "test": "rimraf reports/* && npm run prettier && wdio",
     "testspec": "npm run prettier && wdio --spec",
     "bundle": "just-scripts prepareBundle && react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/ReactUWPTestApp/Bundle/index.windows.bundle --assets-dest windows/ReactUWPTestApp/Bundle",
@@ -23,10 +23,10 @@
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.14.tar.gz",
-    "react-native-windows": "0.60.0-vnext.59",
-    "react-native-windows-extended": "0.60.14",
-    "rnpm-plugin-windows": "^0.3.7"
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.22.tar.gz",
+    "react-native-windows": "0.60.0-vnext.74",
+    "react-native-windows-extended": "0.60.22",
+    "rnpm-plugin-windows": "^0.3.8"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

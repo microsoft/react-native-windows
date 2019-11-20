@@ -1,7 +1,49 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 31 Oct 2019 18:11:20 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Nov 2019 18:56:27 GMT and should not be manually modified.
 
+## 0.60.22
+Wed, 20 Nov 2019 18:56:27 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.22 (53619745+rnbot@users.noreply.github.com)
+## 0.60.21
+Tue, 19 Nov 2019 22:36:29 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.21 (53619745+rnbot@users.noreply.github.com)
+## 0.60.19
+Fri, 15 Nov 2019 18:17:47 GMT
+
+### Patches
+
+- Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native (zihanc@microsoft.com)
+## 0.60.18
+Tue, 12 Nov 2019 04:50:06 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.20 (53619745+rnbot@users.noreply.github.com)
+## 0.60.17
+Wed, 06 Nov 2019 13:58:14 GMT
+
+### Patches
+
+- Build fixes (anandrag@microsoft.com)
+## 0.60.16
+Wed, 06 Nov 2019 06:59:22 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.16 (53619745+rnbot@users.noreply.github.com)
+## 0.60.15
+Fri, 01 Nov 2019 23:40:12 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.15 (53619745+rnbot@users.noreply.github.com)
 ## 0.60.14
 Thu, 31 Oct 2019 18:11:20 GMT
 

@@ -16,24 +16,37 @@ SnapPointManagingContentControl::SnapPointManagingContentControl() {
 void SnapPointManagingContentControl::SnapToInterval(float interval) {
   if (interval != m_interval) {
     m_interval = interval;
-    m_horizontalSnapPointsChangedEventSource(*this, nullptr);
-    m_verticalSnapPointsChangedEventSource(*this, nullptr);
+    NotifySnapPointsUpdated();
   }
+}
+
+void SnapPointManagingContentControl::SnapToStart(bool snapToStart) {
+  m_snapToStart = snapToStart;
+  NotifySnapPointsUpdated();
+}
+
+void SnapPointManagingContentControl::SnapToEnd(bool snapToEnd) {
+  m_snapToEnd = snapToEnd;
+  NotifySnapPointsUpdated();
 }
 
 void SnapPointManagingContentControl::SnapToOffsets(const winrt::IVectorView<float> &offsets) {
   m_offsets = offsets;
-  m_interval = 0;
+  m_interval = 0.0f;
+  NotifySnapPointsUpdated();
+}
+
+void SnapPointManagingContentControl::NotifySnapPointsUpdated() {
   m_horizontalSnapPointsChangedEventSource(*this, nullptr);
   m_verticalSnapPointsChangedEventSource(*this, nullptr);
 }
 
 bool SnapPointManagingContentControl::AreHorizontalSnapPointsRegular() {
-  return m_interval;
+  return m_interval != 0.0f;
 }
 
 bool SnapPointManagingContentControl::AreVerticalSnapPointsRegular() {
-  return m_interval;
+  return m_interval != 0.0f;
 }
 
 winrt::event_token SnapPointManagingContentControl::HorizontalSnapPointsChanged(

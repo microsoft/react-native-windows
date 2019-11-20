@@ -48,6 +48,9 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
   std::string m_name;
   winrt::Microsoft::ReactNative::Bridge::IViewManager m_viewManager;
+  winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedViewConstants m_viewManagerWithExportedViewConstants;
+  winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties m_viewManagerWithNativeProperties;
+  winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands m_viewManagerWithCommands;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };

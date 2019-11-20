@@ -416,6 +416,7 @@ void HostingPane::InitComboBoxes() {
   m_jsFileNames->Append(L"Samples\\image");
   m_jsFileNames->Append(L"Samples\\index");
   m_jsFileNames->Append(L"Samples\\mouse");
+  m_jsFileNames->Append(L"Samples\\scrollViewSnapSample");
   m_jsFileNames->Append(L"Samples\\simple");
   m_jsFileNames->Append(L"Samples\\text");
   m_jsFileNames->Append(L"Samples\\textinput");
@@ -427,6 +428,13 @@ void HostingPane::InitComboBoxes() {
   m_ReactAppNames = ref new Platform::Collections::Vector<String ^>();
 
   x_ReactAppName->ItemsSource = m_ReactAppNames;
+
+  // IsEditable is only supported on RS4 or higher
+  if (Windows::Foundation::Metadata::ApiInformation::IsApiContractPresent(
+          L"Windows.Foundation.UniversalApiContract", 6)) {
+    x_ReactAppName->IsEditable = true;
+    x_JavaScriptFilename->IsEditable = true;
+  }
 }
 
 void HostingPane::LoadKnownApps() {

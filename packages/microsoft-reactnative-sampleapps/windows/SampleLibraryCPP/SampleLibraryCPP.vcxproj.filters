@@ -18,15 +18,15 @@
     <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="CustomUserControlCPP.cpp" />
     <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
+    <ClCompile Include="DebugHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Calculator.h" />
     <ClInclude Include="ReactPackageProvider.h" />
-    <ClInclude Include="MyModule.h" />
     <ClInclude Include="SampleModuleCPP.h" />
     <ClInclude Include="CustomUserControlCPP.h" />
     <ClInclude Include="CustomUserControlViewManagerCPP.h" />
+    <ClInclude Include="DebugHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SampleLibraryCPP.def" />

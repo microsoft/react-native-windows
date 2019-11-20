@@ -7,8 +7,8 @@
 #include "Utilities.h"
 
 #include <MemoryTracker.h>
+#include <ScriptStore.h>
 #include <cxxreact/MessageQueueThread.h>
-#include <jsi/ScriptStore.h>
 
 #include <cstring>
 #include <limits>

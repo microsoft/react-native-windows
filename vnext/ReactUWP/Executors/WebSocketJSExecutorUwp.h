@@ -37,17 +37,8 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor {
       std::shared_ptr<facebook::react::MessageQueueThread> messageQueueThread);
   ~WebSocketJSExecutor() override;
 
-  virtual void loadApplicationScript(
-      std::unique_ptr<const facebook::react::JSBigString> script,
-#if !defined(OSS_RN)
-      uint64_t scriptVersion,
-#endif
-      std::string sourceURL
-#if !defined(OSS_RN)
-      ,
-      std::string &&bytecodeFileName
-#endif
-      ) override;
+  virtual void loadApplicationScript(std::unique_ptr<const facebook::react::JSBigString> script, std::string sourceURL)
+      override;
   virtual void setBundleRegistry(std::unique_ptr<facebook::react::RAMBundleRegistry> bundleRegistry) override;
   virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
   virtual void callFunction(const std::string &moduleId, const std::string &methodId, const folly::dynamic &arguments)

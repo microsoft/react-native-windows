@@ -9,10 +9,7 @@
 
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
-
-#if !defined(OSS_RN)
-#include <cxxreact/Platform.h>
-#endif
+#include <cxxreact/ReactMarker.h>
 
 #include "Logging.h"
 

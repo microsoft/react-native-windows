@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix some nit suggestions from PR #3568.",
-  "packageName": "react-native-windows",
-  "email": "yicyao@microsoft.com",
-  "commit": "09b426a5bbf575ad23a721c50d0b374c84364b72",
-  "date": "2019-10-31T21:49:39.312Z",
-  "file": "D:\\Git\\hansenyy-react-native-windows-3\\change\\react-native-windows-2019-10-31-14-49-39-nitFixes.json"
-}

@@ -2,8 +2,8 @@
 
 #include <DevSettings.h>
 
-#include <jsi/RuntimeHolder.h>
-#include <jsi/ScriptStore.h>
+#include <JSI/Shared/RuntimeHolder.h>
+#include <jsi/Shared/ScriptStore.h>
 
 #include <JSI/Shared/ChakraRuntimeArgs.h>
 

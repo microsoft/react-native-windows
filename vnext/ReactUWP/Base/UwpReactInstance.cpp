@@ -28,6 +28,7 @@
 #include <Views/PickerViewManager.h>
 #include <Views/PopupViewManager.h>
 #include <Views/RawTextViewManager.h>
+#include <Views/RefreshControlManager.h>
 #include <Views/RootViewManager.h>
 #include <Views/ScrollContentViewManager.h>
 #include <Views/ScrollViewManager.h>
@@ -132,6 +133,7 @@ CreateUIManager(
   viewManagers.push_back(std::make_unique<ViewViewManager>(instance));
   viewManagers.push_back(std::make_unique<VirtualTextViewManager>(instance));
   viewManagers.push_back(std::make_unique<WebViewManager>(instance));
+  viewManagers.push_back(std::make_unique<RefreshControlViewManager>(instance));
 
   // Polyester view managers
   viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(instance));

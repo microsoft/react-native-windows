@@ -104,12 +104,11 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Calculator.h" />
     <ClInclude Include="CustomUserControlCPP.h">
       <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="CustomUserControlViewManagerCPP.h" />
-    <ClInclude Include="MyModule.h" />
+    <ClInclude Include="DebugHelpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
@@ -121,6 +120,7 @@
       <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
+    <ClCompile Include="DebugHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

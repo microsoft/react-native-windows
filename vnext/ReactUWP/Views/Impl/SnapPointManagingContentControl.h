@@ -15,17 +15,17 @@ namespace uwp {
 
 class SnapPointManagingContentControl
     : public winrt::ContentControlT<SnapPointManagingContentControl, winrt::IScrollSnapPointsInfo> {
- private:
+ public:
   SnapPointManagingContentControl();
 
- public:
   static winrt::com_ptr<SnapPointManagingContentControl> Create();
-  template <typename D, typename... Args>
-  friend auto winrt::make_self(Args &&... args);
 
   // ScrollView Implementation
   void SnapToInterval(float interval);
   void SnapToOffsets(const winrt::IVectorView<float> &offsets);
+  void SnapToStart(bool snapToStart);
+  void SnapToEnd(bool snapToEnd);
+  void NotifySnapPointsUpdated();
 
   // IScrollSnapPointsInfo Implementation
   bool AreHorizontalSnapPointsRegular();
@@ -49,7 +49,7 @@ class SnapPointManagingContentControl
   void SetWidthBounds(float startWidth, float endWidth);
 
  private:
-  float m_interval{0};
+  float m_interval{0.0f};
   winrt::IVectorView<float> m_offsets{};
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
