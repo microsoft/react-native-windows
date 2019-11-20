@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix layout children position issue when outer border exists",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "b7c19aa75cefb535fe5f9a9f4000995ede1354e8",
+  "date": "2019-11-14T17:55:26.783Z"
+}
