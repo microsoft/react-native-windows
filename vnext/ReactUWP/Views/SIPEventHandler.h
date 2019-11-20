@@ -34,8 +34,8 @@ class SIPEventHandler {
   std::weak_ptr<IReactInstance> m_wkReactInstance;
   winrt::CoreInputView::OcclusionsChanged_revoker m_occlusionsChanged_revoker;
   winrt::Rect m_finalRect;
-  winrt::CoreInputView m_coreInputView = nullptr;
-  bool m_isShowing = false;
+  winrt::CoreInputView m_coreInputView{nullptr};
+  bool m_isShowing{false};
   bool m_fireKeyboradEvents;
 };
 
