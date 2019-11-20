@@ -1,0 +1,169 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "winres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""winres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDC_PLAYGROUND_WIN32 MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open Javascript File...\tCtrl+O", IDM_OPENJSFILE
+        MENUITEM "&Refresh\tF5",                IDM_REFRESH
+        MENUITEM SEPARATOR
+        MENUITEM "&Settings...\tAlt+S",         IDM_SETTINGS
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       IDM_EXIT
+    END
+    POPUP "Help"
+    BEGIN
+        MENUITEM "&About...",                   IDM_ABOUT
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDC_PLAYGROUND_WIN32 ACCELERATORS
+BEGIN
+    "?",            IDM_ABOUT,              ASCII,  ALT
+    "/",            IDM_ABOUT,              ASCII,  ALT
+    "O",            IDM_OPENJSFILE,         VIRTKEY, CONTROL
+    "S",            IDM_SETTINGS,           VIRTKEY, ALT
+    VK_F5,          IDM_REFRESH,            VIRTKEY 
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 310, 117
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About Playground-Win32"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Playground for ReactNativeWindows",IDC_STATIC,42,14,260,8,SS_NOPREFIX
+    LTEXT           "Copyright (c) 2019",IDC_STATIC,42,26,260,8
+    DEFPUSHBUTTON   "OK",IDOK,201,96,50,14,WS_GROUP
+END
+
+IDD_SETTINGSBOX DIALOGEX 0, 0, 192, 90
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "&Web Debugger",IDC_WEBDEBUGGER,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,8,104,10
+    CONTROL         "&Live Reload",IDC_LIVERELOAD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,26,104,10
+    CONTROL         "&Reuse Instance",IDC_REUSEINSTANCE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,44,104,10
+    DEFPUSHBUTTON   "OK",IDOK,75,69,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,130,68,50,14
+END
+
+IDD_OPENJSBUNDLEBOX DIALOGEX 0, 0, 256, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Pick a bundle file to open",IDC_STATIC,8,8,240,10
+    LISTBOX         IDC_JSBUNDLELIST,8,26,240,122, LBS_HASSTRINGS | WS_VSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,143,156,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,199,156,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 251
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 110
+    END
+
+    IDD_SETTINGSBOX, DIALOG
+    BEGIN
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 249
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

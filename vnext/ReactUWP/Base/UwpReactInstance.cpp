@@ -306,8 +306,8 @@ const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::JS
   return m_jsThread;
 }
 
-const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread() const
-    noexcept {
+const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread()
+    const noexcept {
   return m_defaultNativeThread;
 }
 
