@@ -161,16 +161,13 @@ namespace ReactNative.Modules.DeviceInfo
                     break;
             }
 
-            if (name != null)
-            {
-                Context.GetJavaScriptModule<RCTDeviceEventEmitter>()
-                    .emit("namedOrientationDidChange", new JObject
-                    {
-                        { "name", name },
-                        { "rotationDegrees", degrees },
-                        { "isLandscape", isLandscape },
-                    });
-            }
+            WritableMap map = Arguments.createMap();
+            map.putString("name", name);
+            map.putDouble("rotationDegrees", degrees);
+            map.putBoolean("isLandscape", isLandscape);
+
+            displayInformation = new TypedEventHandler<DisplayInformation, object>(this, map::OrientationChanged);
+
         }
 
         private void SendUpdateDimensionsEvent()
