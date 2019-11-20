@@ -17,7 +17,6 @@ export default class Bootstrap extends React.Component<
     alignSelfCenter: boolean;
     largeBorder: boolean;
     largePadding: boolean;
-
   }
 > {
   constructor(props: {}) {
@@ -38,41 +37,41 @@ export default class Bootstrap extends React.Component<
       noBorder: {
         width: 200,
         margin: 20,
-        padding: this.state.largePadding? 15 : 0,
+        padding: this.state.largePadding ? 15 : 0,
         backgroundColor: 'orange',
       },
       innerBorder: {
         width: 200,
         margin: 20,
-        padding: this.state.largePadding? 15 : 0,
+        padding: this.state.largePadding ? 15 : 0,
         backgroundColor: 'lime',
         borderColor: 'navy',
-        borderWidth: this.state.largeBorder? 20 : 1,
+        borderWidth: this.state.largeBorder ? 20 : 1,
       },
       outerBorder: {
         width: 200,
         margin: 20,
-        padding: this.state.largePadding? 15 : 0,
+        padding: this.state.largePadding ? 15 : 0,
         backgroundColor: 'pink',
         borderColor: 'crimson',
-        borderWidth: this.state.largeBorder? 20 : 1,
+        borderWidth: this.state.largeBorder ? 20 : 1,
         borderRadius: 10,
       },
       radial: {
         width: 200,
         margin: 20,
-        padding: this.state.largePadding? 15 : 0,
+        padding: this.state.largePadding ? 15 : 0,
         backgroundColor: 'magenta',
         borderRadius: 10,
-        borderWidth: this.state.largeBorder? 20 : 1,
+        borderWidth: this.state.largeBorder ? 20 : 1,
       },
       child: {
         backgroundColor: 'yellow',
-        alignSelf: this.state.alignSelfCenter? 'center' : 'flex-start',
+        alignSelf: this.state.alignSelfCenter ? 'center' : 'flex-start',
         width: 100,
         height: 50,
-        fontSize:20,
-      }
+        fontSize: 20,
+      },
     });
 
     return (
@@ -127,7 +126,8 @@ export default class Bootstrap extends React.Component<
           <Text>largeBorder</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:100}}>
+        <View
+          style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
           <CheckBox
             onValueChange={value => this.setState({alignSelfCenter: value})}
             value={this.state.alignSelfCenter}
@@ -135,7 +135,8 @@ export default class Bootstrap extends React.Component<
           <Text>alignCenter</Text>
         </View>
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start', width:100}}>
+        <View
+          style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
           <CheckBox
             onValueChange={value => this.setState({largePadding: value})}
             value={this.state.largePadding}
