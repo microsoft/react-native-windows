@@ -32,7 +32,8 @@
     "shelljs": "^0.7.8",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
-    "xml-parser": "^1.2.1"
+    "xml-parser": "^1.2.1",
+    "envinfo": "^7.5.0"
   },
   "devDependencies": {
     "@microsoft/api-documenter": "^7.3.8",

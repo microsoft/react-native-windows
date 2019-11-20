@@ -5306,6 +5306,11 @@ envinfo@^7.1.0:
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.3.1.tgz#892e42f7bf858b3446d9414ad240dbaf8da52f09"
   integrity sha512-GvXiDTqLYrORVSCuJCsWHPXF5BFvoWMQA9xX4YVjPT1jyS3aZEHUBwjzxU/6LTPF9ReHgVEbX7IEN5UvSXHw/A==
 
+envinfo@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.5.0.tgz#91410bb6db262fb4f1409bd506e9ff57e91023f4"
+  integrity sha512-jDgnJaF/Btomk+m3PZDTTCb5XIIIX3zYItnCRfF73zVgvinLoRomuhi75Y4su0PtQxWz4v66XnLLckyvyJTOIQ==
+
 err-code@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/err-code/-/err-code-1.1.2.tgz#06e0116d3028f6aef4806849eb0ea6a748ae6960"
@@ -10280,10 +10285,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.21.tar.gz":
-  version "0.60.0-microsoft.21"
-  uid "08ec61902c31c0396b9b39b798673160d15f74d6"
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.21.tar.gz#08ec61902c31c0396b9b39b798673160d15f74d6"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.22.tar.gz":
+  version "0.60.0-microsoft.22"
+  uid "74d34861836e817a2795a6ea76d462e1748d21f3"
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.22.tar.gz#74d34861836e817a2795a6ea76d462e1748d21f3"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
