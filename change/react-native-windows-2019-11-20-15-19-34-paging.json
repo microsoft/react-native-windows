@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Support ScrollView pagingEnabled",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "47c8ac63778ebf80d75cb2e45aa9dc7052cbb2fa",
+  "date": "2019-11-20T23:19:34.781Z"
+}
