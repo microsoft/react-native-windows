@@ -10,7 +10,7 @@
 namespace winrt::Microsoft::ReactNative::Bridge {
 
 struct ReactContext : winrt::implements<ReactContext, IReactContext> {
-  ReactContext(std::shared_ptr<react::uwp::IReactInstance> instance) noexcept : m_instance(instance) {}
+  ReactContext(std::weak_ptr<react::uwp::IReactInstance> instance) noexcept : m_instance(instance) {}
 
  public: // IReactContext
   void DispatchEvent(
@@ -20,7 +20,7 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   void CallJsFunction(hstring const &moduleName, hstring const &method, IInspectable const &params) noexcept;
 
  private:
-  std::shared_ptr<react::uwp::IReactInstance> m_instance{nullptr};
+  std::weak_ptr<react::uwp::IReactInstance> m_instance;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

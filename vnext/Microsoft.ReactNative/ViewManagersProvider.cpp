@@ -16,11 +16,10 @@ std::vector<react::uwp::NativeViewManager> ViewManagersProvider::GetViewManagers
     const std::shared_ptr<react::uwp::IReactInstance> &instance) {
   std::vector<react::uwp::NativeViewManager> viewManagers;
 
-  auto reactContext = winrt::make<ReactContext>(instance).as<IReactContext>();
-
   for (auto &entry : m_viewManagerProviders) {
     auto viewManagerProvider = entry.second;
 
+    auto reactContext = winrt::make<ReactContext>(instance).as<IReactContext>();
     auto viewManager = std::make_unique<ABIViewManager>(instance, viewManagerProvider(reactContext));
 
     viewManagers.emplace_back(std::move(viewManager));
