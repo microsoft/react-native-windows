@@ -68,32 +68,24 @@ void SIPEventHandler::AttachView(XamlView xamlView, bool fireKeyboardEvents) {
         });
   }
 }
-
-bool SIPEventHandler::TryShow() {
-  if (IsRS5OrHigher() && m_coreInputView) {
-    if (!m_isShowing) { // CoreInputView.TryShow is only avaliable after RS5
-      return m_coreInputView.TryShow();
+/*
+void SIPEventHandler::TryShow() {
+  if (IsRS5OrHigher() && m_coreInputView && !m_isShowing) { // CoreInputView.TryShow is only avaliable after RS5
+      m_coreInputView.TryShow();
     }
-    return true;
-  }
-  return false;
 }
+*/
 
-bool SIPEventHandler::TryHide() {
-  if (IsRS5OrHigher() && m_coreInputView) {
-    if (m_isShowing) { // CoreInputView.TryHide is only avaliable after RS5
-      return m_coreInputView.TryHide();
-    }
-    return true;
+void SIPEventHandler::TryHide() {
+  if (IsRS5OrHigher() && m_coreInputView && m_isShowing) { // CoreInputView.TryHide is only avaliable after RS5
+    m_coreInputView.TryHide();
   }
-  return false;
 }
 
 bool SIPEventHandler::IsOcclusionsEmpty(winrt::IVectorView<winrt::CoreInputViewOcclusion> occlusions) {
   m_finalRect = winrt::RectHelper::Empty();
   if (occlusions) {
-    for (uint32_t i = 0; i < occlusions.Size(); i++) {
-      winrt::CoreInputViewOcclusion occlusion = occlusions.GetAt(i);
+    for (const auto &occlusion : occlusions) {
       if (occlusion.OcclusionKind() == winrt::CoreInputViewOcclusionKind::Docked) {
         m_finalRect = winrt::RectHelper::Union(m_finalRect, occlusion.OccludingRect());
       }

@@ -253,10 +253,8 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
       scrollViewer.DirectManipulationStarted(winrt::auto_revoke, [this](const auto &sender, const auto &) {
         m_isScrolling = true;
 
-        if (m_dismissKeyboardOnDrag) {
-          if (m_SIPEventHandler) {
-            m_SIPEventHandler->TryHide();
-          }
+        if (m_dismissKeyboardOnDrag && m_SIPEventHandler) {
+          m_SIPEventHandler->TryHide();
         }
 
         const auto scrollViewer = sender.as<winrt::ScrollViewer>();
@@ -307,7 +305,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
 void ScrollViewShadowNode::RegisterSIPEventsWhenNeeded() {
   if (m_dismissKeyboardOnDrag) {
     auto view = GetView();
-    if (winrt::VisualTreeHelper::GetParent(view) != nullptr) {
+    if (winrt::VisualTreeHelper::GetParent(view)) {
       auto wkinstance = GetViewManager()->GetReactInstance();
       m_SIPEventHandler = std::make_unique<SIPEventHandler>(wkinstance);
       m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);

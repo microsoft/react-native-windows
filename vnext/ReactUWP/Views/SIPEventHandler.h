@@ -25,8 +25,8 @@ class SIPEventHandler {
   }
 
   void AttachView(XamlView xamlView, bool fireKeyboardEvents);
-  bool TryShow();
-  bool TryHide();
+  // void TryShow();
+  void TryHide();
 
  private:
   bool IsOcclusionsEmpty(winrt::IVectorView<winrt::CoreInputViewOcclusion> occlusions);
