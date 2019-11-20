@@ -1991,25 +1991,17 @@
     write-file-atomic "^2.3.0"
 
 "@microsoft/api-documenter@^7.3.8":
-  version "7.5.8"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.5.8.tgz#33717bc46e41497f39c34d16fd8e51fd29551924"
-  integrity sha512-DiT35wkO46FN/aXPWxcPcfMvQYlDEtTmqXXe274obMMKpZai8QElpticatji4lwkVzv1/nFPaaZWEICe/DXDgw==
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-documenter/-/api-documenter-7.6.0.tgz#c04bc6aa3a7e69ea04b12144208e8c2136b23d43"
+  integrity sha512-wzyY/a/NpQvP+iyldIr+NcKDyXzD+sD7JPdm0YbdoUup8rj1+0HrJzBXU1X2LSoNed2kZ21NGechObiURlKzHA==
   dependencies:
-    "@microsoft/api-extractor-model" "7.5.5"
-    "@microsoft/node-core-library" "3.17.1"
+    "@microsoft/api-extractor-model" "7.5.6"
+    "@microsoft/node-core-library" "3.18.0"
     "@microsoft/ts-command-line" "4.3.5"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
     js-yaml "~3.13.1"
     resolve "1.8.1"
-
-"@microsoft/api-extractor-model@7.5.5":
-  version "7.5.5"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.5.tgz#562f420f3a32d65a09984534f0af205e9e3d606f"
-  integrity sha512-OovDAQWxGChGDBH10Pf4Y7eJlVhbkCDv37RrKyuMyXurB8MEvZtHABjgknYsZD9MrfRUUvs5X80MIDcM2kSiYw==
-  dependencies:
-    "@microsoft/node-core-library" "3.17.1"
-    "@microsoft/tsdoc" "0.12.14"
 
 "@microsoft/api-extractor-model@7.5.6":
   version "7.5.6"
@@ -2033,19 +2025,6 @@
     resolve "1.8.1"
     source-map "~0.6.1"
     typescript "~3.7.2"
-
-"@microsoft/node-core-library@3.17.1":
-  version "3.17.1"
-  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.17.1.tgz#c82087fefdda3a16c1eb5a70a55c892c6c79612b"
-  integrity sha512-SwsOJGefU8Ue5tRePEPq+ukuc7bURhTikuARsTGK8i/m2eVnKLZvUxFWdPxV5ntFqxYQcHr8UEh8EXSu3CiXVQ==
-  dependencies:
-    "@types/node" "8.10.54"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~5.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
 
 "@microsoft/node-core-library@3.18.0":
   version "3.18.0"
