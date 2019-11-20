@@ -7,11 +7,13 @@
 
 namespace winrt::SampleLibraryCPP::implementation {
 
-struct CustomUserControlViewManagerCPP : winrt::implements<
-                                             CustomUserControlViewManagerCPP,
-                                             winrt::Microsoft::ReactNative::Bridge::IViewManager,
-                                             winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties,
-                                             winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands> {
+struct CustomUserControlViewManagerCPP
+    : winrt::implements<
+          CustomUserControlViewManagerCPP,
+          winrt::Microsoft::ReactNative::Bridge::IViewManager,
+          winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties,
+          winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands,
+          winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedEventTypeConstants> {
  public:
   CustomUserControlViewManagerCPP(winrt::Microsoft::ReactNative::Bridge::IReactContext const &reactContext);
 
@@ -40,6 +42,13 @@ struct CustomUserControlViewManagerCPP : winrt::implements<
       int64_t commandId,
       winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Foundation::IInspectable>
           commandArgs) noexcept;
+
+  // IViewManagerWithExportedEventTypeConstants
+  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
+  ExportedCustomBubblingEventTypeConstants() noexcept;
+
+  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
+  ExportedCustomDirectEventTypeConstants() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::Bridge::IReactContext m_reactContext{nullptr};

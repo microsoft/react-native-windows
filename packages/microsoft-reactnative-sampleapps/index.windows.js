@@ -148,8 +148,14 @@ class SampleApp extends Component {
     }
   }
 
-  onLabelChangedCustomUserControlCS(label) {
+  onLabelChangedCustomUserControlCS(evt) {
+    var label = evt.nativeEvent;
     log(`SampleApp.onLabelChangedCustomUserControlCS("${label}")`);
+  }
+
+  onLabelChangedCustomUserControlCPP(evt) {
+    var label = evt.nativeEvent;
+    log(`SampleApp.onLabelChangedCustomUserControlCPP("${label}")`);
   }
 
   render() {
@@ -165,10 +171,10 @@ class SampleApp extends Component {
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={() => { this.onPressSampleModuleCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
 
-        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} onLabelChanged={(label) => { this.onLabelChangedCustomUserControlCS(label); }} />
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCS(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
 
-        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} />
+        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCPP(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
 
         <Text style={styles.instructions}>
