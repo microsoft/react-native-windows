@@ -1,6 +1,0 @@
-# Global Catch-All
-* @microsoft/react-native-windows-write
-
-# API Review for DEF/IDL file changes
-/vnext/**/*.def @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
-/vnext/**/*.idl @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write

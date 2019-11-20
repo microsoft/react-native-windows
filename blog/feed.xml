@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>React Native for Windows Blog</title>
+        <link>https://microsoft.github.io/react-native-windows/blog</link>
+        <description>The best place to stay up-to-date with the latest React Native for Windows news and events.</description>
+        <lastBuildDate>Mon, 22 Jul 2019 06:00:00 GMT</lastBuildDate>
+        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <generator>Feed for Node.js</generator>
+        <image>
+            <title>React Native for Windows Blog</title>
+            <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
+            <link>https://microsoft.github.io/react-native-windows/blog</link>
+        </image>
+        <item>
+            <title><![CDATA[Roadmap for vnext]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2019/07/22/roadmap.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2019/07/22/roadmap.html</guid>
+            <pubDate>Mon, 22 Jul 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>This document outlines some context and prospective roadmap for React Native for Windows. This project is under active development by the Microsoft Developer Platform team in collaboration with Office, Xbox and other partners as well as the wider React Native community. This roadmap is not meant to be exhaustive or guaranteed since we are also keeping up with the evolving <a href="http://facebook.github.io/react-native/">facebook\react-native</a> project and the needs of the React Native community.</p>
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[July 2019 Updates]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2019/07/21/updates.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2019/07/21/updates.html</guid>
+            <pubDate>Sun, 21 Jul 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>Over the past couple of months and spread across several contributors from Microsoft, we have completed <a href="https://github.com/microsoft/react-native-windows/milestone/16">Milestone 2</a> for React Native for Windows. This blog post covers the highlights of the release.</p>
+]]></description>
+        </item>
+    </channel>
+</rss>

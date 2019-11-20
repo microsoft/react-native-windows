@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Roadmap for vnext · React Native for Windows</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="This document outlines some context and prospective roadmap for React Native for Windows. This project is under active development by the Microsoft Developer Platform team in collaboration with Office, Xbox and other partners as well as the wider React Native community. This roadmap is not meant to be exhaustive or guaranteed since we are also keeping up with the evolving [facebook\react-native](http://facebook.github.io/react-native/) project and the needs of the React Native community."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Roadmap for vnext · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/blog/2019/07/22/roadmap"/><meta property="og:description" content="This document outlines some context and prospective roadmap for React Native for Windows. This project is under active development by the Microsoft Developer Platform team in collaboration with Office, Xbox and other partners as well as the wider React Native community. This roadmap is not meant to be exhaustive or guaranteed since we are also keeping up with the evolving [facebook\react-native](http://facebook.github.io/react-native/) project and the needs of the React Native community."/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-native-windows/docs/getting-started" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/blog/2019/07/22/roadmap">Roadmap for vnext</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/blog/2019/07/21/updates">July 2019 Updates</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/react-native-windows/blog/2019/07/22/roadmap">Roadmap for vnext</a></h1><p class="post-meta">July 22, 2019</p><div class="authorBlock"></div></header><div><span><p>This document outlines some context and prospective roadmap for React Native for Windows. This project is under active development by the Microsoft Developer Platform team in collaboration with Office, Xbox and other partners as well as the wider React Native community. This roadmap is not meant to be exhaustive or guaranteed since we are also keeping up with the evolving <a href="http://facebook.github.io/react-native/">facebook\react-native</a> project and the needs of the React Native community.</p>
+<!--truncate-->
+<p>This repo contains 2 parallel implementations of React Native for Windows:</p>
+<h2><a class="anchor" aria-hidden="true" id="current"></a><a href="#current" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>current</h2>
+<p>The <a href="https://github.com/microsoft/react-native-windows/tree/master/current">&quot;current&quot;</a> subdirectory holds an earlier C# implementation for <code>react-native-windows</code> that has existed since 2016. This architecture is strictly in maintenance mode and investments here are limited to upgrading of versions to support latest react-native versions and addressing any blocking issues/bugs to make sure existing customers of this implementation can upgrade their apps.</p>
+<p>Please continue to report issues as you encounter them, but be sure to use the <a href="https://github.com/microsoft/react-native-windows/issues/new?assignees=rozele&amp;labels=.NET&amp;template=DOTNET.md">correct template</a> for issues related to the existing <code>react-native-windows</code> package.</p>
+<h2><a class="anchor" aria-hidden="true" id="vnext"></a><a href="#vnext" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>vnext</h2>
+<p>The <a href="https://github.com/microsoft/react-native-windows/tree/master/vnext">&quot;vnext&quot;</a> subdirectory holds the newer, high performance implementation for <code>react-native-windows</code> written in C++ to better align with the shared C++ react-native core as it evolves. This is the new architecture where all the ongoing feature investments are being made at this time. You can read more about this effort <a href="/vnext/README.md">here</a>.</p>
+<p>Our intent is to provide a compatibility layer for vnext that will support existing apps, view managers, and native modules written in C# with minimal breaking changes.</p>
+<p>We are tracking progress across several workstreams on this vnext effort through <a href="https://github.com/microsoft/react-native-windows/projects">Projects</a>, <a href="https://github.com/microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3Avnext">Issues</a> and <a href="https://github.com/microsoft/react-native-windows/milestones">Milestones</a>.</p>
+<p>The below picture captures the high level roadmap for investments through 2019 and into early 2020.</p>
+<p><img src="/react-native-windows/blog/assets/roadmap.png" alt="Roadmap"></p>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/react-native-windows/blog">Recent Posts</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#current">current</a></li><li><a href="#vnext">vnext</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Native Module Setup · React Native for Windows</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt; **This documentation and the underlying platform code is a work in progress.** &gt;**Examples (C# and C++/WinRT):**"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Native Module Setup · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="&gt; **This documentation and the underlying platform code is a work in progress.** &gt;**Examples (C# and C++/WinRT):**"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-native-windows/docs/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/native-modules-setup.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Native Module Setup</h1></header><article><div><span><blockquote>
+<p><strong>This documentation and the underlying platform code is a work in progress.</strong> &gt;<strong>Examples (C# and C++/WinRT):</strong></p>
+<ul>
+<li><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample">Native Module Sample in microsoft/react-native-windows-samples</a></li>
+<li><a href="../../packages/microsoft-reactnative-sampleapps">Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps</a></li>
+</ul>
+</blockquote>
+<p>This guide will help set you up with the Visual Studio infrastructure to author your own stand-alone native module for React Native Windows. In this document we'll be creating the scaffolding for a <code>MyLibrary</code> native module.</p>
+<h2><a class="anchor" aria-hidden="true" id="development-environment"></a><a href="#development-environment" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Development Environment</h2>
+<p>Install the tools specified in the <em>System Requirements</em> and <em>Dependencies</em> sections of <a href="/react-native-windows/docs/getting-started">Getting Started Guide for React Native Windows (vnext)</a>.</p>
+<p>If you're planning on writing in C++, you'll need to download and install the <a href="https://marketplace.visualstudio.com/items?itemName=CppWinRTTeam.cppwinrt101804264">C++/WinRT Visual Studio Extension</a>.</p>
+<h2><a class="anchor" aria-hidden="true" id="new-project-optional"></a><a href="#new-project-optional" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>New Project (optional)</h2>
+<p>If you already have an existing native module project for iOS/Android, you can skip straight to <a href="#manually-adding-windows-support">Manually Adding Windows Support</a>.</p>
+<p>Otherwise, if you're creating a new project from scratch, the quickest way is to follow the official React Native instructions at <a href="https://facebook.github.io/react-native/docs/native-modules-setup">https://facebook.github.io/react-native/docs/native-modules-setup</a>.</p>
+<pre><code class="hljs css language-cmd">yarn global add create-react-native-module
+create-react-native-module MyLibrary
+</code></pre>
+<p>Now you'll have a new native module project under <code>react-native-my-library</code>. Be sure to look at the command output for further steps you'll want to do before publishing the project.</p>
+<h2><a class="anchor" aria-hidden="true" id="manually-adding-windows-support"></a><a href="#manually-adding-windows-support" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Manually Adding Windows Support</h2>
+<blockquote>
+<p><strong>The plan is to automate this process as part of a CLI new library project template, see issues <a href="https://github.com/microsoft/react-native-windows/issues/3201">3201</a> and <a href="https://github.com/microsoft/react-native-windows/issues/3203">3203</a>. However we are also documenting the manual process here for developers who are unable to use the CLI.</strong></p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="updating-your-packagejson"></a><a href="#updating-your-packagejson" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Updating your package.json</h3>
+<p>In the directory for your native module project, you first need to update to <code>react-native</code> 0.60 and get the latest <code>react-native-windows</code>:</p>
+<pre><code class="hljs css language-cmd">yarn add react-native@<span class="hljs-number">0</span>.<span class="hljs-number">60</span> --dev
+yarn add react-native-windows@vnext --peer
+</code></pre>
+<p>Now it's time to switch into Visual Studio and create a new project.</p>
+<h3><a class="anchor" aria-hidden="true" id="creating-the-visual-studio-project-solution"></a><a href="#creating-the-visual-studio-project-solution" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating the Visual Studio Project / Solution</h3>
+<p>Open Visual Studio and select <code>Create a new project</code>. You're going to create a new <code>Windows Runtime Component</code> project, which produce a library that is compatible with Windows UWP apps.</p>
+<p>If you're planning on writing your native module in C#, you'll want to choose <code>Windows Runtime Component (Universal Windows)</code>.</p>
+<p>If you're planning on writing your native module in C++, you'll want to choose <code>Windows Runtime Component (C++/WinRT)</code>. <strong>Important:</strong> You want <strong>C++/WinRT</strong>, not <strong>C++/CX</strong>. Do not choose <code>Windows Runtime Component (C++/CX)</code>. If you don't see the <strong>C++/WinRT</strong> project type, make sure you installed the <em>C++/WinRT Visual Studio Extension</em> linked to above under <a href="#development-environment">Development Environment</a>.</p>
+<ol>
+<li>Set the <code>Project Name</code> to <code>MyLibrary</code>.</li>
+<li>Set the <code>Location</code> to the native module directory you created earlier.</li>
+<li>Set the <code>Solution Name</code> to <code>MyLibrary</code>.</li>
+<li>Click <code>Create</code>.</li>
+</ol>
+<p>Next you'll be prompted to select the versions of Windows you'll support. This should match the values for React Native Windows:</p>
+<ol>
+<li>Set the <code>Target version</code> to <code>Windows 10, version 1903 (10.0; Build 18362)</code>.</li>
+<li>Set the <code>Minimum version</code> to <code>Windows 10 Creators Update (10.0; Build 15063)</code>.</li>
+</ol>
+<p>You should now have a new <code>MyLibrary</code> solution file at <code>.\MyLibrary\MyLibrary.sln</code> and a <code>MyLibrary</code> project at <code>.\MyLibrary\MyLibrary\MyLibrary.csproj</code> for C# or <code>.\MyLibrary\MyLibrary\MyLibrary.vcxproj</code> for C++.</p>
+<p>Now, we want to rename the root directory of the Windows native code to <code>windows</code> to match the peer <code>android</code> and <code>ios</code> directories:</p>
+<ol>
+<li>Close the solution with <code>File</code> &gt; <code>Close Solution</code>.</li>
+<li>Rename that top <code>MyLibrary</code> directory <code>windows</code>.</li>
+<li>Re-open the solution file at <code>windows\MyLibrary.sln</code>.</li>
+</ol>
+<p>Now it's time to add React Native Windows into the solution.</p>
+<h3><a class="anchor" aria-hidden="true" id="adding-react-native-windows-to-the-visual-studio-solution"></a><a href="#adding-react-native-windows-to-the-visual-studio-solution" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding React Native Windows to the Visual Studio Solution</h3>
+<p>We're going to add several React Native Windows projects to your solution. So to avoid confusing them with your own code, we're first going to create a solution folder called <code>ReactNative</code>:</p>
+<ol>
+<li>Open the Solution Explorer sidebar.</li>
+<li>Right-click on <code>Solution 'MyLibrary'</code> at the top.</li>
+<li>Select <code>Add</code> &gt; <code>New Solution Folder</code>.</li>
+<li>Name the folder <code>ReactNative</code>.</li>
+</ol>
+<p>Now we're going to add all of the following React Native Windows projects to that <code>ReactNative</code> folder. All of these projects are located under the <code>node_modules\react-native-windows</code> directory in the root of your <code>react-native-my-library</code> project directory.</p>
+<blockquote>
+<p><em>For more details about what these projects do, see <a href="/react-native-windows/docs/project-structure">Project Structure</a>.</em></p>
+</blockquote>
+<table>
+<thead>
+<tr><th style="text-align:left">VS Project</th><th style="text-align:left">Project File</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Chakra</td><td style="text-align:left"><code>Chakra\Chakra.vcxitems</code></td></tr>
+<tr><td style="text-align:left">Common</td><td style="text-align:left"><code>Common\Common.vcxproj</code></td></tr>
+<tr><td style="text-align:left">Folly</td><td style="text-align:left"><code>Folly\Folly.vcxproj</code></td></tr>
+<tr><td style="text-align:left">JSI.Shared</td><td style="text-align:left"><code>JSI\Shared\JSI.Shared.vcxitems</code></td></tr>
+<tr><td style="text-align:left">JSI.Universal</td><td style="text-align:left"><code>JSI\Universal\JSI.Universal.vcxproj</code></td></tr>
+<tr><td style="text-align:left">Microsoft.ReactNative</td><td style="text-align:left"><code>Microsoft.ReactNative\Microsoft.ReactNative.vcxproj</code></td></tr>
+<tr><td style="text-align:left">Microsoft.ReactNative.Cxx</td><td style="text-align:left"><code>Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems</code></td></tr>
+<tr><td style="text-align:left">Microsoft.ReactNative.SharedManaged</td><td style="text-align:left"><code>Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.shproj</code></td></tr>
+<tr><td style="text-align:left">ReactCommon</td><td style="text-align:left"><code>ReactCommon\ReactCommon.vcxproj</code></td></tr>
+<tr><td style="text-align:left">ReactUWP</td><td style="text-align:left"><code>ReactUWP\ReactUWP.vcxproj</code></td></tr>
+<tr><td style="text-align:left">ReactWindowsCore</td><td style="text-align:left"><code>ReactWindowsCore\ReactWindowsCore.vcxproj</code></td></tr>
+</tbody>
+</table>
+<p>For each project, you'll do the following:</p>
+<ol>
+<li>Open the Solution Explorer sidebar.</li>
+<li>Right-click on the <code>ReactNative</code> folder.</li>
+<li>Select <code>Add</code> &gt; <code>Existing Project...</code>.</li>
+<li>Select the project file and click <code>Open</code>.</li>
+</ol>
+<p>You now have all of the React Native Windows projects to your solution. Next we're going to reference them in our <code>MyLibrary</code> project.</p>
+<h3><a class="anchor" aria-hidden="true" id="referencing-react-native-windows-in-your-project"></a><a href="#referencing-react-native-windows-in-your-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Referencing React Native Windows in your Project</h3>
+<p>The only project reference you <strong>must</strong> add is <code>Microsoft.ReactNative</code>. To add the reference:</p>
+<ol>
+<li>Open the Solution Explorer sidebar.</li>
+<li>Right-click on your <code>MyLibrary</code> project.</li>
+<li>Select <code>Add</code> &gt; <code>Reference</code>.</li>
+<li>Select <code>Projects</code> on the left-hand side.</li>
+<li>Check the box next to <code>Microsoft.ReactNative</code>.</li>
+<li>Click <code>OK</code>.</li>
+</ol>
+<p>After you've added the reference, you need to make sure it doesn't copy itself into your build (otherwise it'll cause build conflicts down the line when you're trying on consume your library):</p>
+<ol>
+<li>Open the Solution Explorer sidebar.</li>
+<li>Under your <code>MyLibrary</code> project, expand the <code>References</code>.</li>
+<li>Right-click on <code>Microsoft.ReactNative</code>.</li>
+<li>Select <code>Properties</code>.</li>
+<li>Under <code>Build</code>, Change <code>Copy Local</code> to <code>False</code>.</li>
+</ol>
+<p>Now, you're technically ready to go, but in order to improve the developer experience, it's also <strong>highly recommended</strong> to also add a reference to the appropriate helper shared project. These projects contain the attributes (C#) and macros (C++) as described in the <a href="/react-native-windows/docs/native-modules">Native Modules</a> and <a href="/react-native-windows/docs/view-managers">View Managers</a>.</p>
+<p>If you're writing in C#, you'll want to add <code>Microsoft.ReactNative.SharedManaged</code>:</p>
+<ol>
+<li>Open the Solution Explorer sidebar.</li>
+<li>Right-click on your <code>MyLibrary</code> project.</li>
+<li>Select <code>Add</code> &gt; <code>Reference</code>.</li>
+<li>Select <code>Shared Projects</code> on the left-hand side.</li>
+<li>Check the box next to <code>Microsoft.ReactNative.SharedManaged</code>.</li>
+<li>Click <code>OK</code>.</li>
+</ol>
+<p>If you're writing in C++, you'll want to add <code>Microsoft.ReactNative.Cxx</code>:</p>
+<ol>
+<li>Open the Solution Explorer sidebar.</li>
+<li>Right-click on your <code>MyLibrary</code> project.</li>
+<li>Select <code>Add</code> &gt; <code>Reference</code>.</li>
+<li>Select <code>Shared Projects</code> on the left-hand side.</li>
+<li>Check the box next to <code>Microsoft.ReactNative.Cxx</code>.</li>
+<li>Click <code>OK</code>.</li>
+</ol>
+<h3><a class="anchor" aria-hidden="true" id="testing-your-build"></a><a href="#testing-your-build" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Testing your Build</h3>
+<p>To make sure that everything is working, you'll want to try building <code>MyLibrary</code>. First you'll want to make sure you've chosen a supported platform:</p>
+<ol>
+<li>At the top, change the <code>Solution Platform</code> to <code>x86</code>, <code>x64</code> or <code>ARM</code>.</li>
+<li>In the <code>Build</code> menu, select <code>Build Solution</code>.</li>
+</ol>
+</span></div></article></div><div class="docs-prevnext"></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#development-environment">Development Environment</a></li><li><a href="#new-project-optional">New Project (optional)</a></li><li><a href="#manually-adding-windows-support">Manually Adding Windows Support</a><ul class="toc-headings"><li><a href="#updating-your-packagejson">Updating your package.json</a></li><li><a href="#creating-the-visual-studio-project-solution">Creating the Visual Studio Project / Solution</a></li><li><a href="#adding-react-native-windows-to-the-visual-studio-solution">Adding React Native Windows to the Visual Studio Solution</a></li><li><a href="#referencing-react-native-windows-in-your-project">Referencing React Native Windows in your Project</a></li><li><a href="#testing-your-build">Testing your Build</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

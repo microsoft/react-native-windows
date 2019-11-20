@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>More about E2E test · React Native for Windows</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="# Overview"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="More about E2E test · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="# Overview"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Testing</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/getting-started">Getting Started (vnext)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/contributing">Contributing to microsoft/react-native-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/parity-status">Component and Module API Parity Status</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Testing<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/e2e-test">Author and Run E2E Test for React Native Windows</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/e2e-test-more-about">More about E2E test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Modules<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/native-modules">Native Modules and React-Native-Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/native-modules-advanced">Native Modules and React Native Windows (Advanced Topics)</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/e2e-test-more-about.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">More about E2E test</h1></header><article><div><span><h1><a class="anchor" aria-hidden="true" id="overview"></a><a href="#overview" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Overview</h1>
+<h2><a class="anchor" aria-hidden="true" id="technical-decisions"></a><a href="#technical-decisions" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Technical Decisions</h2>
+<h3><a class="anchor" aria-hidden="true" id="mstest-vs-node-test-runner"></a><a href="#mstest-vs-node-test-runner" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>MSTest vs node test runner</h3>
+<p>A <code>node</code> test runner is the first choice since we started the investigation for E2E test. React Native apps are written in JavaScript and it's a good choose to select a JavaScript framework to author the test case. It would be more friendly to the community, so MSTest with C# is excluded in our option.</p>
+<h3><a class="anchor" aria-hidden="true" id="winappdriver-webdriverio-jasmine"></a><a href="#winappdriver-webdriverio-jasmine" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>WinAppDriver + WebDriverIO + Jasmine</h3>
+<p>There is not existing example we can follow to setup E2E testing on Windows for React Native, and I spent weeks to investigate, test and prototype for our E2E. Hereafter I explain what kind of decisions I made and why I made these decisions</p>
+<p><img src="/react-native-windows/docs/assets/technical-decision.png" alt="Technical Decision"></p>
+<h4><a class="anchor" aria-hidden="true" id="why-winappdriver"></a><a href="#why-winappdriver" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why WinAppDriver</h4>
+<ol>
+<li>Detox or Cavy require a significant, ongoing investment from us.</li>
+<li>WinAppDriver is owned by us.</li>
+</ol>
+<h4><a class="anchor" aria-hidden="true" id="why-webdriverio"></a><a href="#why-webdriverio" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why WebDriverIO</h4>
+<ol>
+<li>Be released more frequently.</li>
+<li><a href="https://github.com/webdriverio/webdriverio/tree/master/packages/wdio-sync">wdio-sync</a> makes you write test case without using await.</li>
+<li>wdio test runner makes the integration as quickly as possible.</li>
+</ol>
+<p>Personally, I think WebDriverIO also introduced some difficulties:</p>
+<ol>
+<li>Don't support Jest.</li>
+<li>Another set of APIs different from selenium community.</li>
+<li>wdio test runner simplified the steps for user to do the integration, but it also complexed the system. It have a lot of processes which makes debugging very hard.</li>
+</ol>
+<h4><a class="anchor" aria-hidden="true" id="why-jasmine"></a><a href="#why-jasmine" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Why Jasmine</h4>
+<ol>
+<li>wdio doesn't support Jest.</li>
+<li>Mocha is used in my prototype, but it doesn't report test failure if exception is thrown in 'before' function.</li>
+<li>It's a piece of cake to switch from Mocha to Jasmine, and I finished this job in 10 minutes. See PR <a href="https://github.com/microsoft/react-native-windows/pull/3107">3197</a></li>
+</ol>
+<h2><a class="anchor" aria-hidden="true" id="wdio-test-runner"></a><a href="#wdio-test-runner" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>wdio Test Runner</h2>
+<p>WebdriverIO comes with its own test runner @wdio/cli. It simplified the steps for the integration, but it make it hard to be understood and be troubleshooted.</p>
+<p>Below chart explains how different libraries are linked together when wdio command is launched. Appium or WinAppDriver are running in separate processes, and WebDriverIo talks to them by <a href="https://w3c.github.io/webdriver/">W3C WebDriver protocol</a>.</p>
+<p><img src="/react-native-windows/docs/assets/wdio-internal-dependencies.png" alt="wdioInternalDependencies"></p>
+<h2><a class="anchor" aria-hidden="true" id="winappdriver"></a><a href="#winappdriver" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>WinAppDriver</h2>
+<p>WinAppDriver talks to TestApp by <a href="https://docs.microsoft.com/en-us/windows/uwp/design/accessibility/accessibility-testing">UIA</a>, and WinAppDriver implements part the W3C WebDriver protocol which allows WebDriver to talk to him. So WinAppDriver could talk directly with WebDriverIO, and whole test framework could be either with or without Appium.</p>
+<p>There are two possible setup in dev environment based on with/without appium:</p>
+<ul>
+<li>Option 1
+<img src="/react-native-windows/docs/assets/setup-options-1.png" alt="SetupOptions1"></li>
+<li>Option 2
+<img src="/react-native-windows/docs/assets/setup-options-2.png" alt="SetupOptions1"></li>
+</ul>
+<p>Option 1 is recommended and implemented by default. Appium and WinAppDriver are launched before spec is executed and they are killed after the spec is finished.</p>
+<p>Option 2 is for advance user only. Each time we release a new WinAppDriver, we also need to update code on Appium. Before Appium has a new release, option 2 is the only way to verify the new features provides by WinAppDriver.</p>
+<p>If <code>yarn install</code> is run as admin privilege, WinAppDriver would be installed automatically, otherwise you need to install WinAppDriver manually.</p>
+<p>For the Azure pipeline, WinAppDriver is already installed on <a href="https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2019-Server2019-Readme.md">HostedVS2019</a> and <a href="https://github.com/Microsoft/azure-pipelines-image-generation/blob/master/images/win/Vs2017-Server2016-Readme.md">HostedVS2017</a></p>
+<h2><a class="anchor" aria-hidden="true" id="bundle"></a><a href="#bundle" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Bundle</h2>
+<p>Generally speaking, you don't need to care about it until you setup Azure pipeline, or the app is ready for production.</p>
+<p>In E2E project, bundle has two meanings:</p>
+<ol>
+<li>Just like <code>react-native bundle</code> helps to generate an offline bundle file, then the app can run without the Metro Bundler.</li>
+<li>A macro to build the native project. ReactUWPTestApp provides six bundle configurations: ReleaseBundle|x86, ReleaseBundle|x64, ReleaseBundle|ARM, DebugBundle|x86, DebugBundle|x64, DebugBundle|ARM</li>
+</ol>
+<p><code>Bundle</code> is very close to the production enviroment.
+Here are commands to support <code>Bundle</code> in the E2E test:</p>
+<table>
+<thead>
+<tr><th>Command</th><th>Description</th><th>Example</th></tr>
+</thead>
+<tbody>
+<tr><td>bundle</td><td>Create a bundle file which then be packaged to the native app</td><td>yarn run bundle</td></tr>
+<tr><td>buildbundleapp</td><td>build the native app with BUNDLE macro. <BR/> <code>--release</code> specify if it's a release version. <BR/> <code>--arch [string]</code> The build architecture (ARM, x86, x64) (default: &quot;x86&quot;)</td><td><code>yarn run buildbundleapp</code> <BR/> <code>yarn run buildbundleapp --release</code> <BR/> <code>yarn run buildbundleapp --arch x64</code></td></tr>
+<tr><td>deploybundleapp</td><td>Deploy the built test app, you can pair it with <code>--release</code> and <code>--arch</code></td><td><code>yarn run deploybundleapp</code> <BR/> <code>yarn run deploybundleapp --release</code> <BR/> <code>yarn run deploybundleapp --arch x64</code></td></tr>
+<tr><td>e2ebundle</td><td>Make a bundle, Build and deploy the solution, and run the testing</td><td><code>Yarn run e2ebundle</code></td></tr>
+</tbody>
+</table>
+<h2><a class="anchor" aria-hidden="true" id="locators-to-find-ui-element"></a><a href="#locators-to-find-ui-element" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Locators to find UI Element</h2>
+<p>No matter what JavaScript framework you choose for native app testing, you have to use one of the locators which is described in <a href="https://github.com/SeleniumHQ/mobile-spec/blob/master/spec-draft.md#locator-strategies">mobile JSON wire protocol</a>. Since locators are implemented significant different on iOS, Android and Windows, as below I only talk about the locators for Windows.</p>
+<h3><a class="anchor" aria-hidden="true" id="locators-winappdriver-supports-https-githubcom-microsoft-winappdriver-blob-master-docs-authoringtestscriptsmd-supported-locators-to-find-ui-elements"></a><a href="#locators-winappdriver-supports-https-githubcom-microsoft-winappdriver-blob-master-docs-authoringtestscriptsmd-supported-locators-to-find-ui-elements" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="https://github.com/microsoft/WinAppDriver/blob/master/Docs/AuthoringTestScripts.md#supported-locators-to-find-ui-elements">Locators WinAppDriver supports</a></h3>
+<p>WinAppDriver provides rich API to help locate the UI element. If <a href="https://facebook.github.io/react-native/docs/picker-item#testid">testID</a> is specified in React Native app for Windows, the locator strategy should choose <code>accessibility id</code>.</p>
+<p>A unique <code>accessiblity id</code>/<code>testID</code> per Window is recommended for React Native Windows E2E testing when authoring the test app and test cases. To ease the maintain effort, all testIDs are defined in <a href="https://github.com/microsoft/react-native-windows/blob/master/packages/E2ETest/app/Consts.ts">Consts.ts</a>, then be imported by test app and test page objects or test cases.</p>
+<table>
+<thead>
+<tr><th><strong>Client API</strong></th><th><strong>Locator Strategy</strong></th><th><strong>Matched Attribute in inspect.exe</strong></th><th><strong>Example</strong></th></tr>
+</thead>
+<tbody>
+<tr><td>FindElementByAccessibilityId</td><td>accessibility id</td><td>AutomationId</td><td>AppNameTitle</td></tr>
+<tr><td>FindElementByClassName</td><td>class name</td><td>ClassName</td><td>TextBlock</td></tr>
+<tr><td>FindElementById</td><td>Id</td><td>RuntimeId (decimal)</td><td>42.333896.3.1</td></tr>
+<tr><td>FindElementByName</td><td>Name</td><td>Name</td><td>Calculator</td></tr>
+<tr><td>FindElementByTagName</td><td>tag name</td><td>LocalizedControlType (upper camel case)</td><td>Text</td></tr>
+<tr><td>FindElementByXPath</td><td>Xpath</td><td>Any</td><td>//Button[0]</td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="locators-webdriverio-supports-https-webdriverio-docs-selectorshtml-mobile-selectors"></a><a href="#locators-webdriverio-supports-https-webdriverio-docs-selectorshtml-mobile-selectors" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="https://webdriver.io/docs/selectors.html#mobile-selectors">Locators WebDriverIO supports</a></h3>
+<table>
+<thead>
+<tr><th><strong>Client API by Example</strong></th><th><strong>Locator Strategy</strong></th></tr>
+</thead>
+<tbody>
+<tr><td>$('~AppNameTitle')</td><td>accessibility id</td></tr>
+<tr><td>$('TextBlock')</td><td>class name</td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="locators-selenium-appium-supports-https-githubcom-react-native-windows-selenium-appium-blob-master-src-by2ts-for-selenium-webdriver"></a><a href="#locators-selenium-appium-supports-https-githubcom-react-native-windows-selenium-appium-blob-master-src-by2ts-for-selenium-webdriver" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><a href="https://github.com/react-native-windows/selenium-appium/blob/master/src/by2.ts">Locators selenium-appium supports</a> for selenium-webdriver</h3>
+<table>
+<thead>
+<tr><th><strong>Client API by Example</strong></th><th><strong>Locator Strategy</strong></th></tr>
+</thead>
+<tbody>
+<tr><td>By2.nativeAccessibilityId('AppNameTitle')</td><td>accessibility id</td></tr>
+<tr><td>By2.nativeClassName('TextBlock')</td><td>class name</td></tr>
+<tr><td>By2.nativeXpath('//Button[0]')</td><td>xpath</td></tr>
+<tr><td>By2.nativeName('Calculator')</td><td>name</td></tr>
+<tr><td>By2.nativeId('42.333896.3.1')</td><td>id</td></tr>
+</tbody>
+</table>
+<h2><a class="anchor" aria-hidden="true" id="timers"></a><a href="#timers" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Timers</h2>
+<ol>
+<li>wdio.conf.js (see <a href="https://webdriver.io/docs/timeouts.html">https://webdriver.io/docs/timeouts.html</a> )</li>
+</ol>
+<pre><code class="hljs"><span class="hljs-comment">// Default timeout for all waitFor\* commands.</span>
+<span class="hljs-symbol">waitforTimeout:</span><span class="hljs-number">10000</span>,
+<span class="hljs-symbol">
+jasmineNodeOpts:</span> {
+<span class="hljs-symbol">        defaultTimeoutInterval:</span> <span class="hljs-number">60000</span>,
+    }
+</code></pre>
+<ol start="2">
+<li>Session Implicit Wait Timeout</li>
+</ol>
+<p>A session has an associated session implicit wait timeout that specifies a time to wait for the implicit element location strategy when locating elements using the <a href="https://webdriver.io/docs/api/webdriver.html#findelement">findElement</a> or <a href="https://webdriver.io/docs/api/webdriver.html#findelements">findElements</a> commands. Unless stated otherwise it is zero milliseconds. You can set this timeout via:</p>
+<pre><code class="hljs">browser.set<span class="hljs-constructor">Timeout({ '<span class="hljs-params">implicit</span>': 5000 })</span>;
+</code></pre>
+<ol start="3">
+<li>waitForPageTimeout.</li>
+</ol>
+<p>This timer is provided by BasePage object.</p>
+<pre><code class="hljs">  <span class="hljs-comment">// Default timeout for waitForPageLoaded command in PageObject</span>
+  privatewaitforPageTimeout: number = <span class="hljs-number">10000</span>;
+</code></pre>
+<p>You can override the setting in test case by passing a timeout parameter when call <code>waitForPageLoaded</code>, for example:</p>
+<pre><code class="hljs"><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">LoginPage</span>.</span></span>wait<span class="hljs-constructor">ForPageLoaded(15000)</span>
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="wdioconfjs"></a><a href="#wdioconfjs" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>wdio.conf.js</h2>
+<h3><a class="anchor" aria-hidden="true" id="capabilities"></a><a href="#capabilities" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Capabilities</h3>
+<p>capabilities are the configuration which appium/WinAppDriver used to identify the app and launch the app. Below configurations supports both with and without appium in the setup.</p>
+<p><strong>'appium:app'</strong> is used by appium when the setup is WebDriverIO &lt;-&gt; Appium &lt;-&gt; WinAppDriver,</p>
+<p><strong>'app'</strong> is used for directly connection between WebDriverIO &lt;-&gt; WinAppDriver.</p>
+<pre><code class="hljs">  capabilities: [
+  {
+      maxInstances: <span class="hljs-number">1</span>,
+      platformName: <span class="hljs-symbol">'windows'</span>,
+      <span class="hljs-symbol">'appium</span>:deviceName': <span class="hljs-symbol">'WindowsPC'</span>,
+      <span class="hljs-symbol">'appium</span>:app': <span class="hljs-symbol">'ReactUWPTestApp_kc2bncckyf4ap</span>!<span class="hljs-type">App'</span>,
+      <span class="hljs-symbol">'deviceName'</span>: <span class="hljs-symbol">'WindowsPC'</span>,
+      <span class="hljs-symbol">'app'</span>: <span class="hljs-symbol">'ReactUWPTestApp_kc2bncckyf4ap</span>!<span class="hljs-type">App'</span>,
+      <span class="hljs-symbol">'winAppDriver</span>:experimental-w3c': <span class="hljs-literal">true</span>,
+  },
+
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="loglevel"></a><a href="#loglevel" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>LogLevel</h3>
+<pre><code class="hljs">    <span class="hljs-attribute">logLevel</span>: <span class="hljs-string">'trace'</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="timeout"></a><a href="#timeout" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Timeout</h3>
+<pre><code class="hljs">    <span class="hljs-comment">// Default timeout for all waitFor* commands.</span>
+    waitforTimeout: <span class="hljs-number">10000</span>,
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="appium-service"></a><a href="#appium-service" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>appium service</h3>
+<p>Below configuration lets the framework launch/kill appium automatically during the testing, and logs are saved as <code>reports\appium.txt</code>.</p>
+<pre><code class="hljs">    <span class="hljs-attribute">port</span>: <span class="hljs-number">4723</span>,
+    <span class="hljs-attribute">services</span>: [<span class="hljs-string">'appium'</span>],
+    <span class="hljs-attribute">appium</span>: {
+        <span class="hljs-attribute">logPath</span>: <span class="hljs-string">'./reports/'</span>,
+        <span class="hljs-attribute">args</span>: {
+            <span class="hljs-attribute">port</span>: <span class="hljs-string">'4723'</span>,
+        }
+    },
+
+</code></pre>
+<p>But the log like below is not that readable because it has a lot of control characters which is used by terminal.</p>
+<p><img src="/react-native-windows/docs/assets/bad-readability.png" alt="Bad Readability"></p>
+<p>You could get nice output if you launch the appium by yourself:</p>
+<ol>
+<li>Modify the configuration and remove <code>appium</code> from services</li>
+</ol>
+<pre><code class="hljs"><span class="hljs-symbol">services:</span> [],
+</code></pre>
+<ol start="2">
+<li>Start appium by yourself</li>
+</ol>
+<pre><code class="hljs">.\<span class="hljs-keyword">node</span><span class="hljs-title">\_modules</span>\.bin\appium
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="test-framework"></a><a href="#test-framework" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Test framework</h3>
+<pre><code class="hljs"><span class="hljs-string">framework:</span> <span class="hljs-string">'jasmine'</span>
+</code></pre>
+<h3><a class="anchor" aria-hidden="true" id="reports"></a><a href="#reports" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Reports</h3>
+<pre><code class="hljs"><span class="hljs-string">reporters:</span> [<span class="hljs-string">'dot'</span>, [<span class="hljs-string">'junit'</span>, { <span class="hljs-string">outputDir :</span> <span class="hljs-string">'.\\reports'</span> }]],
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="pageobject-pattern"></a><a href="#pageobject-pattern" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>PageObject Pattern</h2>
+<p>PageObject Pattern is recommended in the E2E test, and you can get more information from these links:</p>
+<p><a href="https://github.com/SeleniumHQ/selenium/wiki/PageObjects">https://github.com/SeleniumHQ/selenium/wiki/PageObjects</a></p>
+<p><a href="https://webdriver.io/docs/pageobjects.html">https://webdriver.io/docs/pageobjects.html</a></p>
+<h2><a class="anchor" aria-hidden="true" id="element-locator-by"></a><a href="#element-locator-by" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Element Locator <code>By</code></h2>
+<pre><code class="hljs"><span class="hljs-keyword">private</span> <span class="hljs-keyword">get</span> submitButton() {
+    <span class="hljs-keyword">return</span> By(<span class="hljs-string">'Submit'</span>);
+}
+
+<span class="hljs-keyword">this</span>.submitButton.click();
+</code></pre>
+<p>You can easily to use By(string) to locate a element which associated with testID in the app.</p>
+<p>It's recommended to define a <code>get</code> for each locator like above.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/e2e-test"><span class="arrow-prev">← </span><span>Author and Run E2E Test for React Native Windows</span></a><a class="docs-next button" href="/react-native-windows/docs/native-modules"><span>Native Modules and React-Native-Windows</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#technical-decisions">Technical Decisions</a><ul class="toc-headings"><li><a href="#mstest-vs-node-test-runner">MSTest vs node test runner</a></li><li><a href="#winappdriver-webdriverio-jasmine">WinAppDriver + WebDriverIO + Jasmine</a></li></ul></li><li><a href="#wdio-test-runner">wdio Test Runner</a></li><li><a href="#winappdriver">WinAppDriver</a></li><li><a href="#bundle">Bundle</a></li><li><a href="#locators-to-find-ui-element">Locators to find UI Element</a><ul class="toc-headings"><li><a href="#locators-winappdriver-supports"><a href="https://github.com/microsoft/WinAppDriver/blob/master/Docs/AuthoringTestScripts.md#supported-locators-to-find-ui-elements">Locators WinAppDriver supports</a></a></li><li><a href="#locators-webdriverio-supports"><a href="https://webdriver.io/docs/selectors.html#mobile-selectors">Locators WebDriverIO supports</a></a></li><li><a href="#locators-selenium-appium-supports-for-selenium-webdriver"><a href="https://github.com/react-native-windows/selenium-appium/blob/master/src/by2.ts">Locators selenium-appium supports</a> for selenium-webdriver</a></li></ul></li><li><a href="#timers">Timers</a></li><li><a href="#wdioconfjs">wdio.conf.js</a><ul class="toc-headings"><li><a href="#capabilities">Capabilities</a></li><li><a href="#loglevel">LogLevel</a></li><li><a href="#timeout">Timeout</a></li><li><a href="#appium-service">appium service</a></li><li><a href="#test-framework">Test framework</a></li><li><a href="#reports">Reports</a></li></ul></li><li><a href="#pageobject-pattern">PageObject Pattern</a></li><li><a href="#element-locator-by">Element Locator <code>By</code></a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

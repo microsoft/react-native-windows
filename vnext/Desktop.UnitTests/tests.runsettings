@@ -1,8 +1,0 @@
-<RunSettings>
-  <!-- Configurations that affect the Test Framework -->
-  <RunConfiguration>
-    <!-- TestSessionTimeout was introduced in Visual Studio 2017 version 15.5 -->
-    <!-- Specify timeout in milliseconds. A valid value should be greater than 0 -->
-    <TestSessionTimeout>10000</TestSessionTimeout>
-  </RunConfiguration>
-</RunSettings>

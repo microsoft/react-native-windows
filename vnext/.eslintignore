@@ -1,9 +1,0 @@
-/dist
-/lib
-/Libraries
-/local-cli/generator-windows/templates/index.windows.js
-**/node_modules
-/packages
-/RNTester
-/index.*
-/RNTester.*

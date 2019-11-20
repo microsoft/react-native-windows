@@ -1,0 +1,464 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Native Modules and React-Native-Windows · React Native for Windows</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt; **This documentation and the underlying platform code is a work in progress.** &gt;**Examples (C# and C++/WinRT):**"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Native Modules and React-Native-Windows · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="&gt; **This documentation and the underlying platform code is a work in progress.** &gt;**Examples (C# and C++/WinRT):**"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Native Modules</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/getting-started">Getting Started (vnext)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/contributing">Contributing to microsoft/react-native-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/parity-status">Component and Module API Parity Status</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Testing<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/e2e-test">Author and Run E2E Test for React Native Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/e2e-test-more-about">More about E2E test</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Modules<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/native-modules">Native Modules and React-Native-Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/native-modules-advanced">Native Modules and React Native Windows (Advanced Topics)</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/master/docs/native-modules.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 class="postHeaderTitle">Native Modules and React-Native-Windows</h1></header><article><div><span><blockquote>
+<p><strong>This documentation and the underlying platform code is a work in progress.</strong> &gt;<strong>Examples (C# and C++/WinRT):</strong></p>
+<ul>
+<li><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples/NativeModuleSample">Native Module Sample in microsoft/react-native-windows-samples</a></li>
+<li><a href="../../packages/microsoft-reactnative-sampleapps">Sample App in microsoft/react-native-windows/packages/microsoft-reactnative-sampleapps</a></li>
+</ul>
+</blockquote>
+<p>Sometimes an app needs access to a platform API that React Native doesn't have a corresponding module for yet. Maybe you want to reuse some existing .NET code without having to reimplement it in JavaScript, or write some high performance, multi-threaded code for image processing, a database, or any number of advanced extensions.</p>
+<p>React Native was designed such that it is possible for you to write real native code and have access to the full power of the platform. This is a more advanced feature and we don't expect it to be part of the usual development process, however it is essential that it exists. If React Native doesn't support a native feature that you need, you should be able to build it yourself.</p>
+<blockquote>
+<p>NOTE: If you are building a widget that has a UI component, check out the <a href="/react-native-windows/docs/view-managers">Native UI Component guide</a>.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="overview"></a><a href="#overview" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Overview</h2>
+<p>Native modules contain (or wrap) native code which can then be exposed to JS. To accomplish this in React Native for Windows vNext, at a high level you must:</p>
+<ol>
+<li>Author your native module, which is the class that calls your native code.
+<ol>
+<li>Add custom attributes to the class. These attributes allow you to define methods, properties, constants, and events that can be referenced from JavaScript.</li>
+</ol></li>
+<li>Register your native module. Note that native modules defined within your app are automatically registered.
+<ol>
+<li>Add the package to your React Native application.</li>
+</ol></li>
+<li>Use your native module from your JavaScript code.</li>
+</ol>
+<p>React Native for Windows supports authoring native modules in both C# and C++. Examples of both are provided below.</p>
+<blockquote>
+<p>NOTE: If you are unable to use the reflection-based annotation approach, you can define native modules directly using the ABI. This is outlined in the <a href="/react-native-windows/docs/native-modules-advanced">Native Modules and React Native Windows (Advanced Topics)</a> document.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="initial-setup"></a><a href="#initial-setup" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Initial Setup</h2>
+<p>This guide assumes you already have the development environment and project structure set up for authoring native modules and are ready to write code.</p>
+<p>If you are only planning on adding a native module to your existing React Native Windows app, ie:</p>
+<ol>
+<li>You followed <a href="/react-native-windows/docs/consuming-rnw">Consuming react native windows</a>, where</li>
+<li>You ran <code>react-native windows --template vnext</code> to add Windows to your project, and</li>
+<li>You are just adding your native code to the app project under the <code>windows</code> folder.</li>
+</ol>
+<p>Then you can simply open the Visual Studio solution in the <code>windows</code> folder and add the new files directly to the app project.</p>
+<p>If you are instead creating a standalone native module, or adding Windows support to an existing native module, check out the <a href="/react-native-windows/docs/native-modules-setup">Native Modules Setup</a> guide first.</p>
+<h2><a class="anchor" aria-hidden="true" id="sample-native-module-c"></a><a href="#sample-native-module-c" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sample Native Module (C#)</h2>
+<h3><a class="anchor" aria-hidden="true" id="attributes"></a><a href="#attributes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Attributes</h3>
+<table>
+<thead>
+<tr><th>Attribute</th><th>Use</th></tr>
+</thead>
+<tbody>
+<tr><td><code>ReactModule</code></td><td>Specifies the class is a native module.</td></tr>
+<tr><td><code>ReactMethod</code></td><td>Specifies an asynchronous method.</td></tr>
+<tr><td><code>ReactSyncMethod</code></td><td>Specifies a synchronous method.</td></tr>
+<tr><td><code>ReactConstant</code></td><td>Specifies a field or property that represents a constant.</td></tr>
+<tr><td><code>ReactConstantProvider</code></td><td>Specifies a method that provides a set of constants.</td></tr>
+<tr><td><code>ReactEvent</code></td><td>Specifies a field or property that represents an event.</td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="1-authoring-your-native-module"></a><a href="#1-authoring-your-native-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. Authoring your Native Module</h3>
+<p>Here is a sample native module written in C# called <code>FancyMath</code>. It is a simple class that defines two numerical constants and a method 'add'.</p>
+<p><em>FancyMath.cs</em></p>
+<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> System<span class="token punctuation">;</span>
+<span class="token keyword">using</span> Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> NativeModuleSample
+<span class="token punctuation">{</span>
+  <span class="token punctuation">[</span><span class="token class-name">ReactModule</span><span class="token punctuation">]</span>
+  <span class="token keyword">class</span> <span class="token class-name">FancyMath</span>
+  <span class="token punctuation">{</span>
+    <span class="token punctuation">[</span><span class="token class-name">ReactConstant</span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> E <span class="token operator">=</span> Math<span class="token punctuation">.</span>E<span class="token punctuation">;</span>
+
+    <span class="token punctuation">[</span><span class="token class-name">ReactConstant</span><span class="token punctuation">(</span><span class="token string">"Pi"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> PI <span class="token operator">=</span> Math<span class="token punctuation">.</span>PI<span class="token punctuation">;</span>
+
+    <span class="token punctuation">[</span><span class="token class-name">ReactMethod</span><span class="token punctuation">(</span><span class="token string">"add"</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">double</span> a<span class="token punctuation">,</span> <span class="token keyword">double</span> b<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">double</span> result <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+        <span class="token function">AddEvent</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token punctuation">[</span><span class="token class-name">ReactEvent</span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> ReactEvent<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token operator">></span> AddEvent <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>First off, you see that we're making use of the <code>Microsoft.ReactNative.Managed</code> shared library, which provides the easiest (and recommended) experience for authoring native modules. <code>Microsoft.ReactNative.Managed</code> provides the mechanism that discovers the native module annotations to build bindings at runtime.</p>
+<p>The <code>[ReactModule]</code> attribute says that the class is a ReactNative native module. It has an optional parameter for the module name visible to JavaScript and optionally the name of a registered event emitter. By default, the name visible to JavaScript is the same as the class name, and the default event emitter is <code>RCTDeviceEventEmitter</code>.</p>
+<p>You can overwrite the JavaScript module name like this: <code>[ReactModule(&quot;math&quot;)]</code>.</p>
+<p>You can specify a different event emitter like this: <code>[ReactModule(EventEmitter = &quot;mathEmitter&quot;)]</code>.</p>
+<blockquote>
+<p>NOTE: Using the default event emitter, <code>RCTDeviceEventEmitter</code>, all native event names must be <strong>globally unique across all native modules</strong> (even the ones built-in to RN). However, specifying your own event emitter means you'll need to create and register that too. This process is outlined in the <a href="/react-native-windows/docs/native-modules-advanced">Native Modules and React Native Windows (Advanced Topics)</a> document.</p>
+</blockquote>
+<p>The <code>[ReactConstant]</code> attribute is how you can define constants. Here FancyMath has defined two constants: <code>E</code> and <code>Pi</code>. By default, the name exposed to JS will be the same name as the field (<code>E</code> for <code>E</code>), but you can override the name like this: <code>[ReactConstant(&quot;Pi&quot;)]</code>.</p>
+<p>The <code>[ReactMethod]</code> attribute is how you define methods. In FancyMath we have one method, <code>add</code>, which takes two doubles and returns their sum. As before, you can optionally customize the name like this: <code>[ReactMethod(&quot;add&quot;)]</code>.</p>
+<p>The <code>[ReactEvent]</code> attribute is how you define events. In FancyMath we have one event, <code>AddEvent</code>, which uses the <code>ReactEvent&lt;double&gt;</code> delegate, where the double represents the type of the event data. Now whenever we invoke the <code>AddEvent</code> delegate in our native code (as we do above), an event named <code>&quot;AddEvent&quot;</code> will be raised in JavaScript. As before, you could have optionally customized the name in JS like this: <code>[ReactEvent(&quot;addEvent&quot;)]</code>.</p>
+<h3><a class="anchor" aria-hidden="true" id="2-registering-your-native-module"></a><a href="#2-registering-your-native-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Registering your Native Module</h3>
+<blockquote>
+<p>IMPORTANT NOTE: When you create a new project via the CLI, the generated <code>ReactApplication</code> class will automatically register all native modules defined within the app. <strong>You will not need to manually register native modules that are defined within your app's scope, as they will be registered automatically.</strong></p>
+</blockquote>
+<p>Now, we want to register our new <code>FancyMath</code> module with React Native so we can use it from JavaScript code. To do this, first we're going to create a <code>ReactPackageProvider</code> which implements <a href="../Microsoft.ReactNative/IReactPackageProvider.idl">Microsoft.ReactNative.IReactPackageProvider</a>.</p>
+<p><em>ReactPackageProvider.cs</em></p>
+<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> NativeModuleSample
+<span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">sealed</span> <span class="token keyword">class</span> <span class="token class-name">ReactPackageProvider</span> <span class="token punctuation">:</span> <span class="token class-name">IReactPackageProvider</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">CreatePackage</span><span class="token punctuation">(</span><span class="token class-name">IReactPackageBuilder</span> packageBuilder<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      packageBuilder<span class="token punctuation">.</span><span class="token function">AddAttributedModules</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Here we've implemented the <code>CreatePackage</code> method, which receives <code>packageBuilder</code> to build contents of the package. Since we use reflection to discover and bind native module, we call <code>AddAttributedModules</code> extension method to register all native modules in our assembly that have the <code>ReactModule</code> attribute.</p>
+<p>Now that we have the <code>ReactPackageProvider</code>, it's time to register it within our <code>ReactApplication</code>. We do that by simply adding the proviver to the <code>PackageProviders</code> property.</p>
+<p><em>App.xaml.cs</em></p>
+<pre><code class="hljs css language-csharp"><span class="token keyword">using</span> Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> SampleApp
+<span class="token punctuation">{</span>
+    <span class="token keyword">sealed</span> <span class="token keyword">partial</span> <span class="token keyword">class</span> <span class="token class-name">App</span> <span class="token punctuation">:</span> <span class="token class-name">ReactApplication</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">public</span> <span class="token function">App</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">/* Other Init Code */</span>
+
+            PackageProviders<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Microsoft<span class="token punctuation">.</span>ReactNative<span class="token punctuation">.</span>Managed<span class="token punctuation">.</span>ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// Includes any modules in this project</span>
+            PackageProviders<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NativeModuleSample<span class="token punctuation">.</span>ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment">/* Other Init Code */</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>This example assumes that the <code>NativeModuleSample.ReactPackageProvider</code> we created above is in a different project (assembly) than our application. However you'll notice that by default we also added a <code>Microsoft.ReactNative.Managed.ReactPackageProvider</code>.</p>
+<p>The <code>Microsoft.ReactNative.Managed.ReactPackageProvider</code> is a convenience that makes sure that all native modules and view managers defined within the app project automatically get registered. So if you're creating your native modules directly within the app project, you won't actually want to define a separate <code>ReactPackageProvider</code>.</p>
+<h3><a class="anchor" aria-hidden="true" id="3-using-your-native-module-in-js"></a><a href="#3-using-your-native-module-in-js" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3. Using your Native Module in JS</h3>
+<p>Now we have a Native Module which is registered with React Native Windows. How do we access it in JS? Here's a simple RN app:</p>
+<p><em>NativeModuleSample.js</em></p>
+<pre><code class="hljs css language-js"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> AppRegistry<span class="token punctuation">,</span> Alert<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> View <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react-native"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> NativeModules<span class="token punctuation">,</span> NativeEventEmitter <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react-native"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> FancyMathEventEmitter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NativeEventEmitter</span><span class="token punctuation">(</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">NativeModuleSample</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Subscribing to FancyMath.AddEvent</span>
+    FancyMathEventEmitter<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token string">"AddEvent"</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">componentWillUnmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Unsubscribing from FancyMath.AddEvent</span>
+    FancyMathEventEmitter<span class="token punctuation">.</span><span class="token function">removeListener</span><span class="token punctuation">(</span><span class="token string">"AddEvent"</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">eventHandler</span><span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Event was fired with: "</span> <span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">_onPressHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Calling FancyMath.add method</span>
+    NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>
+      <span class="token comment">/* arg a */</span> NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span>Pi<span class="token punctuation">,</span>
+      <span class="token comment">/* arg b */</span> NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token constant">E</span><span class="token punctuation">,</span>
+      <span class="token comment">/* callback */</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Alert<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>
+          <span class="token string">"FancyMath"</span><span class="token punctuation">,</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">FancyMath says </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span>Pi<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> + </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token constant">E</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>result<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token punctuation">{</span> text<span class="token punctuation">:</span> <span class="token string">"OK"</span> <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span> cancelable<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">View</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>FancyMath says <span class="token constant">PI</span> <span class="token operator">=</span> <span class="token punctuation">{</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span>Pi<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>FancyMath says <span class="token constant">E</span> <span class="token operator">=</span> <span class="token punctuation">{</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token constant">E</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">onPress</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>_onPressHandler<span class="token punctuation">}</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Click me!<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">View</span></span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+AppRegistry<span class="token punctuation">.</span><span class="token function">registerComponent</span><span class="token punctuation">(</span><span class="token string">"NativeModuleSample"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> NativeModuleSample<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>To access your native modules, you need to import <code>NativeModules</code> from <code>react-native</code>. All of the native modules registered with your host application (including both the built-in ones that come with React Native for Windows vNext in addition to the ones you've added) are available as members of <code>NativeModules</code>. Since our native modules fires events, we're also bringing in <code>NativeEventEmitter</code>.</p>
+<p>To access our <code>FancyMath</code> constants, we can simply call <code>NativeModules.FancyMath.E</code> and <code>NativeModules.FancyMath.Pi</code>.</p>
+<p>Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case <code>FancyMath.add()</code> returns a value, so in addition to the two necessary parameters we also include a callback function which will be called with the result of <code>FancyMath.add()</code>. In the example above, we can see that the callback raises an Alert dialog with the result value.</p>
+<p>For events, you'll see that we created an instance of <code>NativeEventEmitter</code> passing in our <code>NativeModules.FancyMath</code> module, and called it <code>FancyMathEventEmitter</code>. We can then use the <code>FancyMathEventEmitter.addListener()</code> and <code>FancyMathEventEmitter.removeListener()</code> methods to subscribe to our <code>FancyMath.AddEvent</code>. In this case, when <code>AddEvent</code> is fired in the native code, <code>eventHandler</code> will get called, which logs the result to the console log.</p>
+<h2><a class="anchor" aria-hidden="true" id="sample-native-module-c-1"></a><a href="#sample-native-module-c-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Sample Native Module (C++)</h2>
+<blockquote>
+<p>NOTE: C++ does not have custom attributes and reflection as C#. Instead we use macros to simulate use of custom attributes and C++ templates to implement the binding. The binding is done during compilation time and there is virtually no overhead at runtime.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="attributes-1"></a><a href="#attributes-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Attributes</h3>
+<table>
+<thead>
+<tr><th>Attribute</th><th>Use</th></tr>
+</thead>
+<tbody>
+<tr><td><code>REACT_MODULE</code></td><td>Specifies the class is a native module.</td></tr>
+<tr><td><code>REACT_METHOD</code></td><td>Specifies an asynchronous method.</td></tr>
+<tr><td><code>REACT_SYNCMETHOD</code></td><td>Specifies a synchronous method.</td></tr>
+<tr><td><code>REACT_CONSTANT</code></td><td>Specifies a field or property that represents a constant.</td></tr>
+<tr><td><code>REACT_CONSTANTPROVIDER</code></td><td>Specifies a method that provides a set of constants.</td></tr>
+<tr><td><code>REACT_EVENT</code></td><td>Specifies a field or property that represents an event.</td></tr>
+</tbody>
+</table>
+<h3><a class="anchor" aria-hidden="true" id="1-authoring-your-native-module-1"></a><a href="#1-authoring-your-native-module-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1. Authoring your Native Module</h3>
+<p>Here is a sample native module written in C++ called <code>FancyMath</code>. It is a simple class that defines two numerical constants and a method 'add'.</p>
+<p><em>FancyMath.h</em></p>
+<pre><code class="hljs css language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"pch.h"</span></span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;functional></span></span>
+<span class="token macro property">#<span class="token directive keyword">define</span> _USE_MATH_DEFINES</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">&lt;math.h></span></span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"NativeModules.h"</span></span>
+
+<span class="token keyword">namespace</span> NativeModuleSample
+<span class="token punctuation">{</span>
+    <span class="token function">REACT_MODULE</span><span class="token punctuation">(</span>FancyMath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">FancyMath</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">REACT_CONSTANT</span><span class="token punctuation">(</span>E<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">const</span> <span class="token keyword">double</span> E <span class="token operator">=</span> M_E<span class="token punctuation">;</span>
+
+        <span class="token function">REACT_CONSTANT</span><span class="token punctuation">(</span>PI<span class="token punctuation">,</span> <span class="token string">"Pi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">const</span> <span class="token keyword">double</span> PI <span class="token operator">=</span> M_PI<span class="token punctuation">;</span>
+
+        <span class="token function">REACT_METHOD</span><span class="token punctuation">(</span>Add<span class="token punctuation">,</span> <span class="token string">"add"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">double</span> <span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">double</span> a<span class="token punctuation">,</span> <span class="token keyword">double</span> b<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">double</span> result <span class="token operator">=</span> a <span class="token operator">+</span> b<span class="token punctuation">;</span>
+            <span class="token function">AddEvent</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token function">REACT_EVENT</span><span class="token punctuation">(</span>AddEvent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span><span class="token operator">></span> AddEvent<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>The <code>REACT_MODULE</code> macro-attribute says that the class is a ReactNative native module. It receives the class name as a first parameter. All other macro-attributes also receive their target as a first parameter. <code>REACT_MODULE</code> has an optional parameter for the module name visible to JavaScript and optionally the name of a registered event emitter. By default, the name visible to JavaScript is the same as the class name, and the default event emitter is <code>RCTDeviceEventEmitter</code>.</p>
+<p>You can overwrite the JavaScript module name like this: <code>REACT_MODULE(FancyMath, &quot;math&quot;)</code>.</p>
+<p>You can specify a different event emitter like this: <code>REACT_MODULE(FancyMath, &quot;math&quot;, &quot;mathEmitter&quot;)</code>.</p>
+<blockquote>
+<p>NOTE: Using the default event emitter, <code>RCTDeviceEventEmitter</code>, all native event names must be <strong>globally unique across all native modules</strong> (even the ones built-in to RN). However, specifying your own event emitter means you'll need to create and register that too. This process is outlined in the <a href="/react-native-windows/docs/native-modules-advanced">Native Modules and React Native Windows (Advanced Topics)</a> document.</p>
+</blockquote>
+<p>Then we define constants, and it's as easy as creating a public field and giving it a <code>REACT_CONSTANT</code> macro-attribute. Here FancyMath has defined two constants: <code>E</code> and <code>Pi</code>. By default, the name exposed to JS will be the same name as the field (<code>E</code> for <code>E</code>), but you can override this by specifying an argument in the <code>REACT_CONSTANT</code> attribute (hence <code>Pi</code> instead of <code>PI</code>).</p>
+<p>It's just as easy to add custom methods, by attributing a public method with <code>REACT_METHOD</code>. In FancyMath we have one method, <code>add</code>, which takes two doubles and returns their sum. Again, we've specified the optional <code>name</code> argument in the <code>REACT_METHOD</code> macro-attribute so in JS we call <code>add</code> instead of <code>Add</code>.</p>
+<p>To add custom events, we attribute a <code>std::function&lt;void(double)&gt;</code> delegate with <code>REACT_EVENT</code>, where the double represents the type of the event data. Now whenever we invoke the <code>AddEvent</code> delegate in our native code (as we do above), an event named <code>&quot;AddEvent&quot;</code> will be raised in JavaScript. As before, you could have optionally customized the name in JS like this: <code>REACT_EVENT(AddEvent, &quot;addEvent&quot;)</code>.</p>
+<h4><a class="anchor" aria-hidden="true" id="2-registering-your-native-module-1"></a><a href="#2-registering-your-native-module-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2. Registering your Native Module</h4>
+<blockquote>
+<p>IMPORTANT NOTE: When you create a new project via the CLI, the generated <code>ReactApplication</code> class will automatically register all native modules defined within the app. <strong>You will not need to manually register native modules that are defined within your app's scope, as they will be registered automatically.</strong></p>
+</blockquote>
+<p>Now, we want to register our new <code>FancyMath</code> module with React Native so we can use it from JavaScript code. To do this, first we're going to create a <code>ReactPackageProvider</code> which implements <a href="../Microsoft.ReactNative/IReactPackageProvider.idl">Microsoft.ReactNative.IReactPackageProvider</a>. It starts with defining an .idl file:</p>
+<p><em>ReactPackageProvider.idl</em></p>
+<pre><code class="hljs css language-c++"><span class="hljs-keyword">namespace</span> NativeModuleSample
+{
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider : Microsoft.ReactNative.<span class="hljs-built_in">Bridge</span>.IReactPackageProvider
+    {
+        ReactPackageProvider();
+    };
+}
+</code></pre>
+<p>After that we add the .h and.cpp files:</p>
+<p><em>ReactPackageProvider.h</em></p>
+<pre><code class="hljs css language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.h"</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token operator">::</span>Bridge<span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>ReactPackageProvider<span class="token operator">></span>
+    <span class="token punctuation">{</span>
+        <span class="token function">ReactPackageProvider</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">void</span> <span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>factory_implementation
+<span class="token punctuation">{</span>
+    <span class="token keyword">struct</span> <span class="token class-name">ReactPackageProvider</span> <span class="token operator">:</span> ReactPackageProviderT<span class="token operator">&lt;</span>ReactPackageProvider<span class="token punctuation">,</span> implementation<span class="token operator">::</span>ReactPackageProvider<span class="token operator">></span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+</code></pre>
+<p><em>ReactPackageProvider.cpp</em></p>
+<pre><code class="hljs css language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"pch.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"ReactPackageProvider.g.cpp"</span></span>
+
+<span class="token comment">// NOTE: You must include the headers of your native modules here in</span>
+<span class="token comment">// order for the AddAttributedModules call below to find them.</span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"FancyMath.h"</span></span>
+
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> winrt<span class="token operator">::</span>Microsoft<span class="token operator">::</span>ReactNative<span class="token operator">::</span>Bridge<span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> Microsoft<span class="token operator">::</span>ReactNative<span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> winrt<span class="token operator">::</span>NativeModuleSample<span class="token operator">::</span>implementation
+<span class="token punctuation">{</span>
+    <span class="token keyword">void</span> ReactPackageProvider<span class="token operator">::</span><span class="token function">CreatePackage</span><span class="token punctuation">(</span>IReactPackageBuilder <span class="token keyword">const</span><span class="token operator">&amp;</span> packageBuilder<span class="token punctuation">)</span> <span class="token keyword">noexcept</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">AddAttributedModules</span><span class="token punctuation">(</span>packageBuilder<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Here we've implemented the <code>CreatePackage</code> method, which receives <code>packageBuilder</code> to build contents of the package. Since we use macros and templates to discover and bind native module, we call <code>AddAttributedModules</code> function to register all native modules in our DLL that have the <code>REACT_MODULE</code> macro-attribute.</p>
+<p>Now that we have the <code>ReactPackageProvider</code>, it's time to register it within our <code>ReactApplication</code>. We do that by simply adding the proviver to the <code>PackageProviders</code> property.</p>
+<p><em>App.cpp</em></p>
+<pre><code class="hljs css language-c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"pch.h"</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"App.h"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"ReactPackageProvider.h"</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"winrt/NativeModuleSample.h"</span></span>
+
+<span class="hljs-keyword">namespace</span> winrt::SampleApp::implementation {
+
+App::App() <span class="hljs-keyword">noexcept</span> {
+  <span class="hljs-comment">/* Other Init Code */</span>
+
+  PackageProviders().Append(make&lt;ReactPackageProvider&gt;()); <span class="hljs-comment">// Includes all modules in this project</span>
+  PackageProviders().Append(winrt::NativeModuleSample::ReactPackageProvider());
+
+  <span class="hljs-comment">/* Other Init Code */</span>
+}
+
+} <span class="hljs-comment">// namespace winrt::SampleApp::implementation</span>
+</code></pre>
+<p>This example assumes that the <code>NativeModuleSample::ReactPackageProvider</code> we created above is in a different project (assembly) than our application. However you'll notice that by default we also added a <code>SampleApp::ReactPackageProvider</code>.</p>
+<p>The <code>SampleApp::ReactPackageProvider</code> is a convenience that makes sure that all native modules and view managers defined within the app project automatically get registered. So if you're creating your native modules directly within the app project, you won't actually want to define a separate <code>ReactPackageProvider</code>.</p>
+<h3><a class="anchor" aria-hidden="true" id="3-using-your-native-module-in-js-1"></a><a href="#3-using-your-native-module-in-js-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3. Using your Native Module in JS</h3>
+<p>Now we have a Native Module which is registered with React Native Windows. How do we access it in JS? Here's a simple RN app:</p>
+<p><em>NativeModuleSample.js</em></p>
+<pre><code class="hljs css language-js"><span class="token keyword">import</span> React<span class="token punctuation">,</span> <span class="token punctuation">{</span> Component <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react"</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> AppRegistry<span class="token punctuation">,</span> Alert<span class="token punctuation">,</span> Text<span class="token punctuation">,</span> View <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react-native"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token punctuation">{</span> NativeModules<span class="token punctuation">,</span> NativeEventEmitter <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"react-native"</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> FancyMathEventEmitter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">NativeEventEmitter</span><span class="token punctuation">(</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">NativeModuleSample</span> <span class="token keyword">extends</span> <span class="token class-name">Component</span> <span class="token punctuation">{</span>
+  <span class="token function">componentDidMount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Subscribing to FancyMath.AddEvent</span>
+    FancyMathEventEmitter<span class="token punctuation">.</span><span class="token function">addListener</span><span class="token punctuation">(</span><span class="token string">"AddEvent"</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">componentWillUnmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Unsubscribing from FancyMath.AddEvent</span>
+    FancyMathEventEmitter<span class="token punctuation">.</span><span class="token function">removeListener</span><span class="token punctuation">(</span><span class="token string">"AddEvent"</span><span class="token punctuation">,</span> eventHandler<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">eventHandler</span><span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Event was fired with: "</span> <span class="token operator">+</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">_onPressHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Calling FancyMath.add method</span>
+    NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>
+      <span class="token comment">/* arg a */</span> NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span>Pi<span class="token punctuation">,</span>
+      <span class="token comment">/* arg b */</span> NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token constant">E</span><span class="token punctuation">,</span>
+      <span class="token comment">/* callback */</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">result</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        Alert<span class="token punctuation">.</span><span class="token function">alert</span><span class="token punctuation">(</span>
+          <span class="token string">"FancyMath"</span><span class="token punctuation">,</span>
+          <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">FancyMath says </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span>Pi<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> + </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token constant">E</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> = </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>result<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">,</span>
+          <span class="token punctuation">[</span><span class="token punctuation">{</span> text<span class="token punctuation">:</span> <span class="token string">"OK"</span> <span class="token punctuation">}</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+          <span class="token punctuation">{</span> cancelable<span class="token punctuation">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">render</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">View</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>FancyMath says <span class="token constant">PI</span> <span class="token operator">=</span> <span class="token punctuation">{</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span>Pi<span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>FancyMath says <span class="token constant">E</span> <span class="token operator">=</span> <span class="token punctuation">{</span>NativeModules<span class="token punctuation">.</span>FancyMath<span class="token punctuation">.</span><span class="token constant">E</span><span class="token punctuation">}</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">Text</span></span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token class-name">Button</span></span> <span class="token attr-name">onPress</span><span class="token script language-javascript"><span class="token script-punctuation punctuation">=</span><span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span>_onPressHandler<span class="token punctuation">}</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Click me!<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span><span class="token class-name">View</span></span><span class="token punctuation">></span></span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+AppRegistry<span class="token punctuation">.</span><span class="token function">registerComponent</span><span class="token punctuation">(</span><span class="token string">"NativeModuleSample"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> NativeModuleSample<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>To access your native modules, you need to import <code>NativeModules</code> from <code>react-native</code>. All of the native modules registered with your host application (including both the built-in ones that come with React Native for Windows vNext in addition to the ones you've added) are available as members of <code>NativeModules</code>. Since our native modules fires events, we're also bringing in <code>NativeEventEmitter</code>.</p>
+<p>To access our <code>FancyMath</code> constants, we can simply call <code>NativeModules.FancyMath.E</code> and <code>NativeModules.FancyMath.Pi</code>.</p>
+<p>Calls to methods are a little different due to the asynchronous nature of the JS engine. If the native method returns nothing, we can simply call the method. However, in this case <code>FancyMath.add()</code> returns a value, so in addition to the two necessary parameters we also include a callback function which will be called with the result of <code>FancyMath.add()</code>. In the example above, we can see that the callback raises an Alert dialog with the result value.</p>
+<p>For events, you'll see that we created an instance of <code>NativeEventEmitter</code> passing in our <code>NativeModules.FancyMath</code> module, and called it <code>FancyMathEventEmitter</code>. We can then use the <code>FancyMathEventEmitter.addListener()</code> and <code>FancyMathEventEmitter.removeListener()</code> methods to subscribe to our <code>FancyMath::AddEvent</code>. In this case, when <code>AddEvent</code> is fired in the native code, <code>eventHandler</code> will get called, which logs the result to the console log.</p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/e2e-test-more-about"><span class="arrow-prev">← </span><span>More about E2E test</span></a><a class="docs-next button" href="/react-native-windows/docs/native-modules-advanced"><span>Native Modules and React Native Windows (Advanced Topics)</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#overview">Overview</a></li><li><a href="#initial-setup">Initial Setup</a></li><li><a href="#sample-native-module-c">Sample Native Module (C#)</a><ul class="toc-headings"><li><a href="#attributes">Attributes</a></li><li><a href="#1-authoring-your-native-module">1. Authoring your Native Module</a></li><li><a href="#2-registering-your-native-module">2. Registering your Native Module</a></li><li><a href="#3-using-your-native-module-in-js">3. Using your Native Module in JS</a></li></ul></li><li><a href="#sample-native-module-c-1">Sample Native Module (C++)</a><ul class="toc-headings"><li><a href="#attributes-1">Attributes</a></li><li><a href="#1-authoring-your-native-module-1">1. Authoring your Native Module</a></li><li><a href="#3-using-your-native-module-in-js-1">3. Using your Native Module in JS</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
