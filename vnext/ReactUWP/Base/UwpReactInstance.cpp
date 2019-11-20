@@ -71,6 +71,8 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#include <winrt/Windows.ApplicationModel.h>
+
 #if !defined(OSS_RN)
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -97,6 +99,23 @@
 
 namespace react {
 namespace uwp {
+
+namespace {
+
+bool HasPackageIdentity() noexcept {
+  static const bool hasPackageIdentity = []() noexcept {
+    try {
+      auto package = winrt::Windows::ApplicationModel::Package::Current();
+      return true;
+    } catch (...) {
+      return false;
+    }
+  }();
+
+  return hasPackageIdentity;
+}
+
+} // namespace
 
 // TODO: This function is just a stand-in for a system that allows an individual
 // host to provide a
@@ -211,11 +230,14 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       },
       messageQueue);
 
-  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
+  modules.emplace_back(
+      AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
 
-  modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
+  modules.emplace_back(
+      ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
 
-  modules.emplace_back(StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
+  modules.emplace_back(
+      StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,
@@ -231,10 +253,12 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       },
       messageQueue);
 
-  modules.emplace_back(
-      "AsyncLocalStorage",
-      []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
-      std::make_shared<WorkerMessageQueueThread>());
+  if (HasPackageIdentity()) {
+    modules.emplace_back(
+        "AsyncLocalStorage",
+        []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
+        std::make_shared<WorkerMessageQueueThread>());
+  }
 
   return modules;
 }
@@ -481,8 +505,8 @@ const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::JS
   return m_jsThread;
 }
 
-const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread() const
-    noexcept {
+const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread()
+    const noexcept {
   return m_defaultNativeThread;
 }
 
