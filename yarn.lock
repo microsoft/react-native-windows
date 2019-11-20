@@ -2011,13 +2011,21 @@
     "@microsoft/node-core-library" "3.17.1"
     "@microsoft/tsdoc" "0.12.14"
 
-"@microsoft/api-extractor@^7.3.8":
+"@microsoft/api-extractor-model@7.5.6":
   version "7.5.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.5.6.tgz#3327c60724bb94df8ca159e21010caf5ae28c24d"
-  integrity sha512-SH2BOGef9dWERGIrd10sG2Rtoh5xnmh9xbwsXtQgGvjShwJWOlOEdxpRoARIsVxE6tyuQYtW60E/1YwwuigDQw==
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.5.6.tgz#49336bd77e4a6e9e2dfb5dc10ed2f52b110a9d3d"
+  integrity sha512-eQ0PKmk2cUVSL+0GjbpjPhep13IbWByFwZxz6TKAqSb+FCHNWmj6F2t+KZw8bG4CXcAdlmxGHEUTOLnK5b5N9Q==
   dependencies:
-    "@microsoft/api-extractor-model" "7.5.5"
-    "@microsoft/node-core-library" "3.17.1"
+    "@microsoft/node-core-library" "3.18.0"
+    "@microsoft/tsdoc" "0.12.14"
+
+"@microsoft/api-extractor@^7.3.8":
+  version "7.6.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.6.0.tgz#1d2a94f3bf1b2bf35bb8fd18cfda37621986e50a"
+  integrity sha512-CWWARagbgvbegE74oeGCbjvQn13nTiVjTE8DjTB2tvGE2yvB5HxorhWaff+Dvu7kUnQ5Jf44FLibdq8QJssoaw==
+  dependencies:
+    "@microsoft/api-extractor-model" "7.5.6"
+    "@microsoft/node-core-library" "3.18.0"
     "@microsoft/ts-command-line" "4.3.5"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
@@ -2030,6 +2038,19 @@
   version "3.17.1"
   resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.17.1.tgz#c82087fefdda3a16c1eb5a70a55c892c6c79612b"
   integrity sha512-SwsOJGefU8Ue5tRePEPq+ukuc7bURhTikuARsTGK8i/m2eVnKLZvUxFWdPxV5ntFqxYQcHr8UEh8EXSu3CiXVQ==
+  dependencies:
+    "@types/node" "8.10.54"
+    colors "~1.2.1"
+    fs-extra "~7.0.1"
+    jju "~1.4.0"
+    semver "~5.3.0"
+    timsort "~0.3.0"
+    z-schema "~3.18.3"
+
+"@microsoft/node-core-library@3.18.0":
+  version "3.18.0"
+  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.18.0.tgz#9a9123354b3e067bb8a975ba791959ffee1322ed"
+  integrity sha512-VzzSHtcwgHVW1xbHqpngfn+OS1trAZ1Tw3XXBlMsEKe7Wz7FF2gLr0hZa6x9Pemk5pkd4tu4+GTSOJjCKGjrgg==
   dependencies:
     "@types/node" "8.10.54"
     colors "~1.2.1"
@@ -3814,9 +3835,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^1.13.4:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.15.0.tgz#c581aa21eb41fc366bf9a26db52474310f8f4284"
-  integrity sha512-Sj+CDZFYTDnmb96bGANcP0w9s2avEbQhydAQQmb5N6u19kJJa+CTPlT0bB3blo3T+9WgGeV0Tjm3U5qwI93uzw==
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-1.15.1.tgz#5ab573350c92dec4d804ed09af90a8a2542dee71"
+  integrity sha512-IDV3yA5Lm6xr5b2RwqcVX6dqmYk5WLyStnBOFrSiKBISiIf4FSTsqPN1EneF5z4ZkwH5cuKpwSoW2n9+c2CeXA==
   dependencies:
     fs-extra "^8.0.1"
     git-url-parse "^11.1.2"
@@ -10272,10 +10293,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.20.tar.gz":
-  version "0.60.0-microsoft.20"
-  uid add23567716f520259c2b70602e1defb0329e087
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.20.tar.gz#add23567716f520259c2b70602e1defb0329e087"
+"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.21.tar.gz":
+  version "0.60.0-microsoft.21"
+  uid "08ec61902c31c0396b9b39b798673160d15f74d6"
+  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.21.tar.gz#08ec61902c31c0396b9b39b798673160d15f74d6"
   dependencies:
     "@babel/core" "^7.4.0"
     "@babel/generator" "^7.4.0"
