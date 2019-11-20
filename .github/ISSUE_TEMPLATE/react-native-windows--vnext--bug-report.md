@@ -16,7 +16,7 @@ If you are using latest version:
 1. `react-native -v`:
 2. `react-native run-windows --info`:
 
-Othwise if `--info` doesn't exist:
+Otherwise if `--info` doesn't exist:
 1. `react-native -v`:
 2. `npm ls rnpm-plugin-windows`:
 3. `npm ls react-native-windows`:
