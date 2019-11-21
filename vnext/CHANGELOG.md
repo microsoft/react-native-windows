@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 21 Nov 2019 01:46:31 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Nov 2019 21:53:08 GMT and should not be manually modified.
 
+## 0.60.0-vnext.76
+Thu, 21 Nov 2019 21:53:08 GMT
+
+### Changes
+
+- Merge remote-tracking branch 'upstream/master' (hpratt@microsoft.com)
 ## 0.60.0-vnext.75
 Thu, 21 Nov 2019 01:46:31 GMT
 
