@@ -112,7 +112,8 @@ bool HasPackageIdentity() noexcept {
     winrt::com_ptr<ABI::Windows::ApplicationModel::IPackage> dummy;
     return abiPackageStatics->get_Current(reinterpret_cast<ABI::Windows::ApplicationModel::IPackage **>(
                winrt::put_abi(dummy))) != APPMODEL_ERROR_NO_PACKAGE;
-  }();
+  }
+  ();
 
   return hasPackageIdentity;
 }
@@ -232,14 +233,11 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       },
       messageQueue);
 
-  modules.emplace_back(
-      AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
+  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
 
-  modules.emplace_back(
-      ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
+  modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
 
-  modules.emplace_back(
-      StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
+  modules.emplace_back(StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,
@@ -509,8 +507,8 @@ const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::JS
   return m_jsThread;
 }
 
-const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread()
-    const noexcept {
+const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::DefaultNativeMessageQueueThread() const
+    noexcept {
   return m_defaultNativeThread;
 }
 
