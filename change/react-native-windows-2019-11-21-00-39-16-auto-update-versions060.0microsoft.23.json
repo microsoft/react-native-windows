@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updating react-native to version: 0.60.0-microsoft.23",
-  "packageName": "react-native-windows",
-  "email": "53619745+rnbot@users.noreply.github.com",
-  "commit": "d8bf979e514d4f546e740c979c816d311a7d896f",
-  "date": "2019-11-21T00:39:16.825Z"
-}
