@@ -11,9 +11,7 @@
     "format:verify": "node packages/scripts/formatFiles.js -i -style=file -assume-filename=../.clang-format -verify"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "hooks": {}
   },
   "repository": {
     "type": "git",
