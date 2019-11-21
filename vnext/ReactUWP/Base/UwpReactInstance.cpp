@@ -105,6 +105,7 @@ namespace {
 bool HasPackageIdentity() noexcept {
   static const bool hasPackageIdentity = []() noexcept {
     try {
+      winrt::check_hresult(E_FAIL);
       auto package = winrt::Windows::ApplicationModel::Package::Current();
       return true;
     } catch (...) {
@@ -253,6 +254,8 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       },
       messageQueue);
 
+  // AsyncStorageModule doesn't work without package identity (it indirectly depends on
+  // Windows.Storage.StorageFile), so check for package identity before adding it.
   if (HasPackageIdentity()) {
     modules.emplace_back(
         "AsyncLocalStorage",
