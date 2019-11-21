@@ -11,5 +11,10 @@
       <Link>$(BundleContentRoot)\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <DeploymentContent>true</DeploymentContent>
     </None>
-  </ItemGroup>  
+  </ItemGroup>
+  <ItemDefinitionGroup Condition=" '$(UseBundle)' == 'true' ">
+    <ClCompile>
+      <PreprocessorDefinitions>BUNDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
 </Project>
