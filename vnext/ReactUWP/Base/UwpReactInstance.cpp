@@ -105,11 +105,10 @@ namespace {
 bool HasPackageIdentity() noexcept {
   static const bool hasPackageIdentity = []() noexcept {
     try {
-      winrt::check_hresult(E_FAIL);
       auto package = winrt::Windows::ApplicationModel::Package::Current();
       return true;
-    } catch (...) {
-      return false;
+    } catch (const winrt::hresult_error &hresultError) {
+      return hresultError.code() != APPMODEL_ERROR_NO_PACKAGE;
     }
   }();
 
