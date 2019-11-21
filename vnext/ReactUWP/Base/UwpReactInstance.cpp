@@ -71,6 +71,7 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#include <Windows.ApplicationModel.h>
 #include <winrt/Windows.ApplicationModel.h>
 
 #if !defined(OSS_RN)
@@ -104,12 +105,13 @@ namespace {
 
 bool HasPackageIdentity() noexcept {
   static const bool hasPackageIdentity = []() noexcept {
-    try {
-      auto package = winrt::Windows::ApplicationModel::Package::Current();
-      return true;
-    } catch (const winrt::hresult_error &hresultError) {
-      return hresultError.code() != APPMODEL_ERROR_NO_PACKAGE;
-    }
+    auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
+        winrt::name_of<winrt::Windows::ApplicationModel::Package>());
+    auto abiPackageStatics =
+        static_cast<ABI::Windows::ApplicationModel::IPackageStatics *>(winrt::get_abi(packageStatics));
+    winrt::com_ptr<ABI::Windows::ApplicationModel::IPackage> dummy;
+    return abiPackageStatics->get_Current(reinterpret_cast<ABI::Windows::ApplicationModel::IPackage **>(
+               winrt::put_abi(dummy))) != APPMODEL_ERROR_NO_PACKAGE;
   }();
 
   return hasPackageIdentity;
