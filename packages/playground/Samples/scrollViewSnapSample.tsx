@@ -30,6 +30,7 @@ export default class Bootstrap extends React.Component<{}, any> {
     zoomValue: false,
     alignToStartValue: true,
     refreshing: false,
+    keyboardDismiss: false,
   };
 
   toggleSwitch1 = (value: boolean) => {
@@ -50,6 +51,10 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   toggleSwitch5 = (value: boolean) => {
     this.setState({alignToStartValue: value});
+  };
+
+  toggleSwitch6 = (value: boolean) => {
+    this.setState({keyboardDismiss: value});
   };
 
   onRefresh = () => {
@@ -152,10 +157,26 @@ export default class Bootstrap extends React.Component<{}, any> {
               {this.state.alignToStartValue ? 'AlignToStart' : 'AlignToEnd'}
             </Text>
             <Switch
-              onValueChange={this.toggleSwitch5}
+              onValueChange={this.toggleSwitch6}
               value={this.state.alignToStartValue}
             />
           </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
+              {'KeyboardDismiss: '.concat(this.state.keyboardDismiss ? 'on-drag' : 'none')}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch6}
+              value={this.state.keyboardDismiss}
+            />
+          </View>
+
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
           <Text>SnapToOffsets[100, 500]</Text>
@@ -172,6 +193,7 @@ export default class Bootstrap extends React.Component<{}, any> {
                   onRefresh={this.onRefresh}
                 />
               }
+              keyboardDismissMode={this.state.keyboardDismiss ? 'on-drag' : 'none'}
               snapToOffsets={[100.0, 500.0]}
               minimumZoomScale={0.1}
               maximumZoomScale={2.0}

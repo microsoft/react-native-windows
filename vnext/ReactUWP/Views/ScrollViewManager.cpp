@@ -49,7 +49,6 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   bool m_dismissKeyboardOnDrag = false;
 
   std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
-  void RegisterSIPEventsWhenNeeded();
 
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
@@ -200,7 +199,11 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       m_dismissKeyboardOnDrag = false;
       if (propertyValue.isString()) {
         m_dismissKeyboardOnDrag = (propertyValue.getString() == "on-drag");
-        RegisterSIPEventsWhenNeeded();
+        if (m_dismissKeyboardOnDrag) {
+          auto wkinstance = GetViewManager()->GetReactInstance();
+          m_SIPEventHandler = std::make_unique<SIPEventHandler>(wkinstance);
+          m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);
+        }
       }
     } else if (propertyName == "snapToAlignment") {
       const auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
@@ -292,8 +295,6 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         m_isScrollingFromInertia = false;
       });
   m_controlLoadedRevoker = scrollViewer.Loaded(winrt::auto_revoke, [this](const auto &sender, const auto &) {
-    RegisterSIPEventsWhenNeeded();
-
     if (m_changeViewAfterLoaded) {
       const auto scrollViewer = sender.as<winrt::ScrollViewer>();
       scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(m_zoomFactor));
@@ -301,17 +302,6 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
     }
   });
 }
-
-void ScrollViewShadowNode::RegisterSIPEventsWhenNeeded() {
-  if (m_dismissKeyboardOnDrag) {
-    auto view = GetView();
-    if (winrt::VisualTreeHelper::GetParent(view)) {
-      auto wkinstance = GetViewManager()->GetReactInstance();
-      m_SIPEventHandler = std::make_unique<SIPEventHandler>(wkinstance);
-      m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);
-    }
-  }
-} // namespace uwp
 
 void ScrollViewShadowNode::EmitScrollEvent(
     const winrt::ScrollViewer &scrollViewer,

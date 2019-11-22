@@ -35,8 +35,12 @@ class SIPEventHandler {
   winrt::CoreInputView::OcclusionsChanged_revoker m_occlusionsChanged_revoker;
   winrt::Rect m_finalRect;
   winrt::CoreInputView m_coreInputView{nullptr};
+  winrt::weak_ref<XamlView> m_view{};
+  winrt::Windows::UI::Xaml::FrameworkElement::Loaded_revoker m_loadedRevoker{};
   bool m_isShowing{false};
   bool m_fireKeyboradEvents;
+
+  void InitializeCoreInputView();
 };
 
 } // namespace uwp
