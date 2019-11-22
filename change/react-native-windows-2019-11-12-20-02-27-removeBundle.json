@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "remove ReleaseBundle and DebugBundle",
-  "packageName": "react-native-windows",
-  "email": "licanhua@live.com",
-  "commit": "dc83d356b1a6e1ce605e6b453b7ae8adbbb8cd19",
-  "date": "2019-11-13T04:02:27.923Z"
-}
