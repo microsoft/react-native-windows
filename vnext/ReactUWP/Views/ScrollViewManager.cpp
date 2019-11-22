@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <ReactUWP\Views\SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
@@ -20,6 +21,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
 
  public:
   ScrollViewShadowNode();
+  ~ScrollViewShadowNode();
   void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) override;
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
@@ -44,6 +46,10 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   bool m_isHorizontal = false;
   bool m_isScrollingEnabled = true;
   bool m_changeViewAfterLoaded = false;
+  bool m_dismissKeyboardOnDrag = false;
+
+  std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
+  void RegisterSIPEventsWhenNeeded();
 
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
@@ -55,6 +61,10 @@ class ScrollViewShadowNode : public ShadowNodeBase {
 };
 
 ScrollViewShadowNode::ScrollViewShadowNode() {}
+
+ScrollViewShadowNode::~ScrollViewShadowNode() {
+  m_SIPEventHandler.reset();
+}
 
 void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
@@ -186,6 +196,12 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       if (valid) {
         ScrollViewUWPImplementation(scrollViewer).SnapToEnd(snapToEnd);
       }
+    } else if (propertyName == "keyboardDismissMode") {
+      m_dismissKeyboardOnDrag = false;
+      if (propertyValue.isString()) {
+        m_dismissKeyboardOnDrag = (propertyValue.getString() == "on-drag");
+        RegisterSIPEventsWhenNeeded();
+      }
     } else if (propertyName == "snapToAlignment") {
       const auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
       if (valid) {
@@ -236,6 +252,11 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
   m_scrollViewerDirectManipulationStartedRevoker =
       scrollViewer.DirectManipulationStarted(winrt::auto_revoke, [this](const auto &sender, const auto &) {
         m_isScrolling = true;
+
+        if (m_dismissKeyboardOnDrag && m_SIPEventHandler) {
+          m_SIPEventHandler->TryHide();
+        }
+
         const auto scrollViewer = sender.as<winrt::ScrollViewer>();
         EmitScrollEvent(
             scrollViewer,
@@ -271,6 +292,8 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         m_isScrollingFromInertia = false;
       });
   m_controlLoadedRevoker = scrollViewer.Loaded(winrt::auto_revoke, [this](const auto &sender, const auto &) {
+    RegisterSIPEventsWhenNeeded();
+
     if (m_changeViewAfterLoaded) {
       const auto scrollViewer = sender.as<winrt::ScrollViewer>();
       scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(m_zoomFactor));
@@ -278,6 +301,17 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
     }
   });
 }
+
+void ScrollViewShadowNode::RegisterSIPEventsWhenNeeded() {
+  if (m_dismissKeyboardOnDrag) {
+    auto view = GetView();
+    if (winrt::VisualTreeHelper::GetParent(view)) {
+      auto wkinstance = GetViewManager()->GetReactInstance();
+      m_SIPEventHandler = std::make_unique<SIPEventHandler>(wkinstance);
+      m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);
+    }
+  }
+} // namespace uwp
 
 void ScrollViewShadowNode::EmitScrollEvent(
     const winrt::ScrollViewer &scrollViewer,
@@ -396,7 +430,8 @@ folly::dynamic ScrollViewManager::GetNativeProps() const {
   props.update(folly::dynamic::object("horizontal", "boolean")("scrollEnabled", "boolean")(
       "showsHorizontalScrollIndicator", "boolean")("showsVerticalScrollIndicator", "boolean")(
       "minimumZoomScale", "float")("maximumZoomScale", "float")("zoomScale", "float")("snapToInterval", "float")(
-      "snapToOffsets", "array")("snapToAlignment", "number")("snapToStart", "boolean")("snapToEnd", "boolean"));
+      "snapToOffsets", "array")("snapToAlignment", "number")("snapToStart", "boolean")("snapToEnd", "boolean")(
+      "keyboardDismissMode", "string"));
 
   return props;
 }
