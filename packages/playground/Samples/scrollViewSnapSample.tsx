@@ -169,14 +169,15 @@ export default class Bootstrap extends React.Component<{}, any> {
               padding: 20,
             }}>
             <Text>
-              {'KeyboardDismiss: '.concat(this.state.keyboardDismiss ? 'on-drag' : 'none')}
+              {'KeyboardDismiss: '.concat(
+                this.state.keyboardDismiss ? 'on-drag' : 'none',
+              )}
             </Text>
             <Switch
               onValueChange={this.toggleSwitch6}
               value={this.state.keyboardDismiss}
             />
           </View>
-
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
           <Text>SnapToOffsets[100, 500]</Text>
@@ -193,7 +194,9 @@ export default class Bootstrap extends React.Component<{}, any> {
                   onRefresh={this.onRefresh}
                 />
               }
-              keyboardDismissMode={this.state.keyboardDismiss ? 'on-drag' : 'none'}
+              keyboardDismissMode={
+                this.state.keyboardDismiss ? 'on-drag' : 'none'
+              }
               snapToOffsets={[100.0, 500.0]}
               minimumZoomScale={0.1}
               maximumZoomScale={2.0}
