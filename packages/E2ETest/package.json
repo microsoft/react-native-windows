@@ -1,6 +1,6 @@
 {
   "name": "e2etest",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": true,
   "scripts": {
     "build": "just-scripts build",
@@ -25,7 +25,7 @@
     "react": "16.8.6",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.23.tar.gz",
     "react-native-windows": "0.60.0-vnext.78",
-    "react-native-windows-extended": "0.60.26",
+    "react-native-windows-extended": "0.60.27",
     "rnpm-plugin-windows": "^0.3.8"
   },
   "devDependencies": {
