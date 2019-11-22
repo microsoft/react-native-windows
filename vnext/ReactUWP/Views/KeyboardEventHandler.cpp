@@ -68,13 +68,11 @@ PreviewKeyboardEventHandler::PreviewKeyboardEventHandler(KeyboardEventCallback &
 
 void PreviewKeyboardEventHandler::hook(XamlView xamlView) {
   auto uiElement = xamlView.as<winrt::UIElement>();
-  if (uiElement.try_as<winrt::IUIElement7>()) {
-    if (m_keyDownCallback)
-      m_previewKeyDownRevoker = uiElement.PreviewKeyDown(winrt::auto_revoke, m_keyDownCallback);
+  if (m_keyDownCallback)
+    m_previewKeyDownRevoker = uiElement.PreviewKeyDown(winrt::auto_revoke, m_keyDownCallback);
 
-    if (m_keyUpCallback)
-      m_previewKeyUpRevoker = uiElement.PreviewKeyUp(winrt::auto_revoke, m_keyUpCallback);
-  }
+  if (m_keyUpCallback)
+    m_previewKeyUpRevoker = uiElement.PreviewKeyUp(winrt::auto_revoke, m_keyUpCallback);
 }
 
 void PreviewKeyboardEventHandler::unhook() {

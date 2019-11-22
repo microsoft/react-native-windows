@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Revert \"Support ScrollView keyboardDismissMode (#3665)\"",
+  "packageName": "react-native-windows",
+  "email": "licanhua@live.com",
+  "commit": "29b555d211354f308d9d93319669552d56a46ad2",
+  "date": "2019-11-22T19:19:50.910Z"
+}
