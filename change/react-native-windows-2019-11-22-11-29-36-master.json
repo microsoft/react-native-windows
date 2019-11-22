@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Commit ecd4456c... was wrong. `ABI::Windows::ApplicationModel::IPackage::get_Current` will, when called without package identity, return `HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE)`, not just `APPMODEL_ERROR_NO_PACKAGE` (which is a win32 error code, not an hresult). 🤦‍♂️",
-  "packageName": "react-native-windows",
-  "email": "hpratt@microsoft.com",
-  "commit": "bbca099563776e34fde85763e28bae4e2309fbc4",
-  "date": "2019-11-22T19:29:36.520Z"
-}
