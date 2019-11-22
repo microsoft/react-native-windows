@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 21 Nov 2019 21:53:08 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Nov 2019 00:48:20 GMT and should not be manually modified.
 
+## 0.60.0-vnext.77
+Fri, 22 Nov 2019 00:48:20 GMT
+
+### Changes
+
+- Support keyboardDismissMode on-drag for ScrollView (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.76
 Thu, 21 Nov 2019 21:53:08 GMT
 
