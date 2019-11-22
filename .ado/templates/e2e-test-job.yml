@@ -99,7 +99,7 @@ jobs:
       - task: CmdLine@2
         displayName: run-windows
         inputs:
-          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --bundle --logging
+          script: react-native run-windows --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging
           workingDirectory: packages/E2ETest
 
       - task: PublishBuildArtifacts@1
