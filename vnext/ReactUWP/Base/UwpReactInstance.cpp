@@ -111,7 +111,7 @@ bool HasPackageIdentity() noexcept {
         static_cast<ABI::Windows::ApplicationModel::IPackageStatics *>(winrt::get_abi(packageStatics));
     winrt::com_ptr<ABI::Windows::ApplicationModel::IPackage> dummy;
     return abiPackageStatics->get_Current(reinterpret_cast<ABI::Windows::ApplicationModel::IPackage **>(
-               winrt::put_abi(dummy))) != APPMODEL_ERROR_NO_PACKAGE;
+               winrt::put_abi(dummy))) != HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE);
   }
   ();
 
