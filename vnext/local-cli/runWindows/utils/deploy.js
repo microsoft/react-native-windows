@@ -50,7 +50,7 @@ function getAppPackage(options) {
   if (!appPackage && options.release) {
     // in the latest vs, Release is removed
     newWarn(
-      'No find package in *_Release_* folder, remove _Release_ and check again',
+      'No package found in *_Release_* folder, remove _Release_ and check again',
     );
     appPackage = glob.sync(
       `windows/{*/AppPackages,AppPackages/*}/*_${options.arch}_*`,
