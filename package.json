@@ -12,7 +12,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "yarn format"
     }
   },
   "repository": {
@@ -28,10 +28,8 @@
   },
   "devDependencies": {
     "beachball": "^1.13.4",
-    "clang-format": "^1.3.0",
     "husky": "^3.0.9",
-    "lerna": "^3.16.1",
-    "lint-staged": "^9.4.2"
+    "lerna": "^3.16.1"
   },
   "resolutions": {
     "**/eslint-plugin-react": "^7.14.1"
