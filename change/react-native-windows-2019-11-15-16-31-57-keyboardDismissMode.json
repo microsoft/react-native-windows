@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Support keyboardDismissMode on-drag for ScrollView",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "bfbf63cc3293f15622d069778fd0283c6f84b12b",
+  "date": "2019-11-16T00:31:57.734Z"
+}
