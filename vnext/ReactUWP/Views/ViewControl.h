@@ -8,7 +8,7 @@
 #include <winrt/Windows.UI.Xaml.Automation.Peers.h>
 #include <winrt/Windows.UI.Xaml.Automation.h>
 
-#include "react.uwp.ViewControl.g.h"
+#include "ViewControl.g.h"
 namespace winrt::react::uwp::implementation {
 
 //

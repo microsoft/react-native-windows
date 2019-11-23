@@ -203,7 +203,6 @@ void ReactControl::AttachRoot() noexcept {
 
   m_touchEventHandler->AddTouchHandlers(m_xamlRootView);
   m_previewKeyboardEventHandlerOnRoot->hook(m_xamlRootView);
-  m_SIPEventHandler->AttachView(m_xamlRootView, true /*fireKeyboradEvents*/);
 
   auto initialProps = m_initialProps;
   m_reactInstance->AttachMeasuredRootView(m_pParent, std::move(initialProps));

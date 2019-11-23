@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Nov 2019 04:47:41 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Nov 2019 20:45:17 GMT and should not be manually modified.
 
+## 0.60.0-vnext.79
+Fri, 22 Nov 2019 20:45:17 GMT
+
+### Changes
+
+- Commit ecd4456c... was wrong. `ABI::Windows::ApplicationModel::IPackage::get_Current` will, when called without package identity, return `HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE)`, not just `APPMODEL_ERROR_NO_PACKAGE` (which is a win32 error code, not an hresult). 🤦‍♂️ (hpratt@microsoft.com)
 ## 0.60.0-vnext.78
 Fri, 22 Nov 2019 04:47:41 GMT
 
