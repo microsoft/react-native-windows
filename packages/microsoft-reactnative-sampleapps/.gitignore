@@ -4,3 +4,4 @@
 /windows/SampleLibraryCPP/Generated Files/
 /windows/SampleLibraryCS/Generated Files/
 /build
+/msbuild*

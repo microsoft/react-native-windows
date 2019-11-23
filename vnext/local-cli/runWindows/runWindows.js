@@ -9,11 +9,29 @@
 const build = require('./utils/build');
 const deploy = require('./utils/deploy');
 const {newError, newInfo} = require('./utils/commandWithProgress');
+const info = require('./utils/info');
+const msbuildtools = require('./utils/msbuildtools');
 
 async function runWindows(config, args, options) {
   const verbose = options.logging;
   if (verbose) {
     newInfo('Verbose: ON');
+  }
+
+  if (options.info) {
+    try {
+      const output = await info.getEnvironmentInfo();
+      console.log(output.trimEnd());
+      console.log('  Installed UWP SDKs:');
+      const sdks = msbuildtools.getAllAvailableUAPVersions();
+      if (sdks) {
+        sdks.forEach(version => console.log('    ' + version));
+      }
+      return;
+    } catch (e) {
+      newError('Unable to print environment info.\n' + e.toString());
+      process.exit(1);
+    }
   }
 
   // Fix up options
@@ -158,6 +176,11 @@ module.exports = {
     {
       command: '--no-deploy',
       description: 'Do not deploy the app',
+      default: false,
+    },
+    {
+      command: '--info',
+      description: 'Dump enviroment information',
       default: false,
     },
   ],

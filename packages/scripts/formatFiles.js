@@ -4,8 +4,7 @@
  */
 'use strict';
 
-/// These constants control which files are formatted. Be sure to add updates
-/// to ".lintstagedrc.json" in the project root.
+/// These constants control which files are formatted
 const includeEndsWith = ['.h', '.cpp'];
 const excludePathContains = [];
 const excludePathEndsWith = ['.g.h', '.g.cpp'];
