@@ -34,6 +34,7 @@ class ScrollViewUWPImplementation {
   void SnapToEnd(bool snapToEnd);
   void SnapToOffsets(const winrt::IVectorView<float> &offsets);
   void SnapPointAlignment(const winrt::SnapPointsAlignment alignment);
+  void PagingEnabled(bool pagingEnabled);
 
   void UpdateScrollableSize() const;
 

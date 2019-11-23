@@ -1194,6 +1194,11 @@ class ScrollView extends React.Component<Props, State> {
           this.props.pagingEnabled === true ||
           this.props.snapToInterval != null ||
           this.props.snapToOffsets != null,
+        // on Windows, pagingEnabled must be set to false to have snapToInterval / snapToOffsets work
+        windows:
+          this.props.pagingEnabled === true &&
+          this.props.snapToInterval == null &&
+          this.props.snapToOffsets == null,
       }),
     };
 
