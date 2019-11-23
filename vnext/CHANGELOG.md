@@ -1,7 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Nov 2019 20:45:17 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Nov 2019 08:02:20 GMT and should not be manually modified.
 
+## 0.60.0-vnext.81
+Sat, 23 Nov 2019 08:02:20 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+- Support ScrollView pagingEnabled (dida@ntdev.microsoft.com)
+- Add react-native run-windows --info (licanhua@live.com)
+- manually bump to vnext.80 (kmelmon@microsoft.com)
 ## 0.60.0-vnext.79
 Fri, 22 Nov 2019 20:45:17 GMT
 

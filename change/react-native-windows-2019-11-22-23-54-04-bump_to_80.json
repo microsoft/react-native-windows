@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "manually bump to vnext.80",
-  "packageName": "react-native-windows",
-  "email": "kmelmon@microsoft.com",
-  "commit": "6d53a985e2fa7238fa273d0fe65150da7160640b",
-  "date": "2019-11-23T07:54:04.769Z"
-}
