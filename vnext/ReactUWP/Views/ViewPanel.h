@@ -8,7 +8,7 @@
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 
-#include "react.uwp.ViewPanel.g.h"
+#include "ViewPanel.g.h"
 
 namespace winrt::react::uwp::implementation {
 

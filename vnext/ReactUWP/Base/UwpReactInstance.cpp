@@ -71,6 +71,9 @@
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
+#include <Windows.ApplicationModel.h>
+#include <winrt/Windows.ApplicationModel.h>
+
 #if !defined(OSS_RN)
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
@@ -97,6 +100,25 @@
 
 namespace react {
 namespace uwp {
+
+namespace {
+
+bool HasPackageIdentity() noexcept {
+  static const bool hasPackageIdentity = []() noexcept {
+    auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
+        winrt::name_of<winrt::Windows::ApplicationModel::Package>());
+    auto abiPackageStatics =
+        static_cast<ABI::Windows::ApplicationModel::IPackageStatics *>(winrt::get_abi(packageStatics));
+    winrt::com_ptr<ABI::Windows::ApplicationModel::IPackage> dummy;
+    return abiPackageStatics->get_Current(reinterpret_cast<ABI::Windows::ApplicationModel::IPackage **>(
+               winrt::put_abi(dummy))) != HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE);
+  }
+  ();
+
+  return hasPackageIdentity;
+}
+
+} // namespace
 
 // TODO: This function is just a stand-in for a system that allows an individual
 // host to provide a
@@ -231,10 +253,14 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       },
       messageQueue);
 
-  modules.emplace_back(
-      "AsyncLocalStorage",
-      []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
-      std::make_shared<WorkerMessageQueueThread>());
+  // AsyncStorageModule doesn't work without package identity (it indirectly depends on
+  // Windows.Storage.StorageFile), so check for package identity before adding it.
+  if (HasPackageIdentity()) {
+    modules.emplace_back(
+        "AsyncLocalStorage",
+        []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
+        std::make_shared<WorkerMessageQueueThread>());
+  }
 
   return modules;
 }
