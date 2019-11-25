@@ -566,6 +566,12 @@
     <ClInclude Include="Modules\ImageViewManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Image\BorderEffect.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
     <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -759,13 +765,13 @@
     <Midl Include="Views/cppwinrt/ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
+    <Midl Include="Views/cppwinrt/BorderEffect.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
     <Midl Include="Views/cppwinrt/AccessibilityAction.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
     <Midl Include="Views/cppwinrt/DynamicAutomationPeer.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
-    <Midl Include="Views\cppwinrt\BorderEffect.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
   </ItemGroup>
