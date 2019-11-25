@@ -66,7 +66,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   toggleSwitch8 = (value: boolean) => {
     this.setState({keyboardDismiss: value});
   };
-  
+
   onRefresh = () => {
     this.setState({refreshing: true});
     wait(2000).then(() => this.setState({refreshing: false}));
@@ -167,7 +167,7 @@ export default class Bootstrap extends React.Component<{}, any> {
               {this.state.alignToStartValue ? 'AlignToStart' : 'AlignToEnd'}
             </Text>
             <Switch
-              onValueChange={this.toggleSwitch6}
+              onValueChange={this.toggleSwitch5}
               value={this.state.alignToStartValue}
             />
           </View>
@@ -195,13 +195,26 @@ export default class Bootstrap extends React.Component<{}, any> {
               justifyContent: 'center',
               padding: 20,
             }}>
+            <Text>{'PagingEnabled'}</Text>
+            <Switch
+              onValueChange={this.toggleSwitch7}
+              value={this.state.pagingEnabled}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
             <Text>
               {'KeyboardDismiss: '.concat(
                 this.state.keyboardDismiss ? 'on-drag' : 'none',
               )}
             </Text>
             <Switch
-              onValueChange={this.toggleSwitch6}
+              onValueChange={this.toggleSwitch8}
               value={this.state.keyboardDismiss}
             />
           </View>
