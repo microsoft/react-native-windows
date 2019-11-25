@@ -133,7 +133,6 @@ auto ReactInstanceManager::GetOrCreateReactContextAsync() -> IAsyncOperation<IRe
 // TODO: Should we make this method async?  On first run when getInstance
 // is called it starts things up. Does this need to block?
 auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<IReactContext> {
-
   /* TODO hook up an exception handler if UseDeveloperSupport is set
   if (m_useDeveloperSupport) {
     if (m_nativeModuleCallExceptionHandler) {
@@ -176,7 +175,8 @@ auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<IRea
 
   auto reactInstance = InstanceCreator()->getInstance();
 
-  auto reactContext = winrt::make<winrt::Microsoft::ReactNative::Bridge::ReactContext>(reactInstance).as<IReactContext>();
+  auto reactContext =
+      winrt::make<winrt::Microsoft::ReactNative::Bridge::ReactContext>(reactInstance).as<IReactContext>();
 
   // TODO: Investigate whether we need the equivalent of the
   // LimitedConcurrencyActionQueue from the C# implementation that is used to

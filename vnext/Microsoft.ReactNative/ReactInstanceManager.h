@@ -4,9 +4,9 @@
 
 #include "ReactInstanceManager.g.h"
 
+#include "IReactContext.h"
 #include "LifecycleState.h"
 #include "NativeModulesProvider.h"
-#include "IReactContext.h"
 #include "ReactInstanceSettings.h"
 #include "ViewManagersProvider.h"
 

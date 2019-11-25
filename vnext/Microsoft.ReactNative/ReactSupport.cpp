@@ -12,9 +12,9 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
   if (object == nullptr)
     return nullptr;
 
-  if (auto const& map = object.try_as<IMapView<hstring, IInspectable>>()) {
+  if (auto const &map = object.try_as<IMapView<hstring, IInspectable>>()) {
     folly::dynamic obj = folly::dynamic::object;
-    for (auto const& kvp : map) {
+    for (auto const &kvp : map) {
       obj[to_string(kvp.Key())] = ConvertToDynamic(kvp.Value());
     }
     return obj;
