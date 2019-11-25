@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Properly support ScrollView KeyboardDismissMode",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "6b4df0e13a371763a12ecee273011ad762bd9322",
-  "date": "2019-11-22T22:27:58.216Z"
-}
