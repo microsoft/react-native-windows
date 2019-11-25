@@ -90,6 +90,12 @@ jobs:
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
+      - task: PowerShell@2
+        displayName: Install MUX framework package
+        inputs:
+          targetType: "inline"
+          script:  Add-AppPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.2.190917002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.2.appx
+
       - task: CmdLine@2
         displayName: Create bundle
         inputs:

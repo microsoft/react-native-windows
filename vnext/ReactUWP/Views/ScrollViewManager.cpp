@@ -210,6 +210,11 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       if (valid) {
         ScrollViewUWPImplementation(scrollViewer).SnapPointAlignment(snapToAlignment);
       }
+    } else if (propertyName == "pagingEnabled") {
+      const auto [valid, pagingEnabled] = getPropertyAndValidity(propertyValue, false);
+      if (valid) {
+        ScrollViewUWPImplementation(scrollViewer).PagingEnabled(pagingEnabled);
+      }
     }
   }
 
@@ -421,7 +426,7 @@ folly::dynamic ScrollViewManager::GetNativeProps() const {
       "showsHorizontalScrollIndicator", "boolean")("showsVerticalScrollIndicator", "boolean")(
       "minimumZoomScale", "float")("maximumZoomScale", "float")("zoomScale", "float")("snapToInterval", "float")(
       "snapToOffsets", "array")("snapToAlignment", "number")("snapToStart", "boolean")("snapToEnd", "boolean")(
-      "keyboardDismissMode", "string"));
+      "pagingEnabled", "boolean")("keyboardDismissMode", "string"));
 
   return props;
 }

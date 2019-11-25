@@ -26,6 +26,7 @@ class SnapPointManagingContentControl
   void SnapToStart(bool snapToStart);
   void SnapToEnd(bool snapToEnd);
   void NotifySnapPointsUpdated();
+  void PagingEnabled(bool pagingEnabled);
 
   // IScrollSnapPointsInfo Implementation
   bool AreHorizontalSnapPointsRegular();
@@ -47,12 +48,18 @@ class SnapPointManagingContentControl
   void SetHorizontal(bool horizontal);
   void SetHeightBounds(float startHeight, float endHeight);
   void SetWidthBounds(float startWidth, float endWidth);
+  void SetViewportSize(float scaledViewportWidth, float scaledviewportHeight);
+
+  bool IsHorizontal() {
+    return m_horizontal;
+  }
 
  private:
   float m_interval{0.0f};
   winrt::IVectorView<float> m_offsets{};
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
+  bool m_pagingEnabled{false};
   winrt::event<winrt::EventHandler<winrt::IInspectable>> m_horizontalSnapPointsChangedEventSource;
   winrt::event<winrt::EventHandler<winrt::IInspectable>> m_verticalSnapPointsChangedEventSource;
 
@@ -61,6 +68,8 @@ class SnapPointManagingContentControl
   float m_startWidth{0};
   float m_endHeight{INFINITY};
   float m_endWidth{INFINITY};
+  float m_viewportHeight{0};
+  float m_viewportWidth{0};
 };
 } // namespace uwp
 } // namespace react

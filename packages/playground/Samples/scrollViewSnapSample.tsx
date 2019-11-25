@@ -31,6 +31,8 @@ export default class Bootstrap extends React.Component<{}, any> {
     alignToStartValue: true,
     refreshing: false,
     keyboardDismiss: false,
+    snapToOffsets: true,
+    pagingEnabled: false,
   };
 
   toggleSwitch1 = (value: boolean) => {
@@ -54,9 +56,17 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   toggleSwitch6 = (value: boolean) => {
-    this.setState({keyboardDismiss: value});
+    this.setState({snapToOffsets: value});
   };
 
+  toggleSwitch7 = (value: boolean) => {
+    this.setState({pagingEnabled: value});
+  };
+
+  toggleSwitch8 = (value: boolean) => {
+    this.setState({keyboardDismiss: value});
+  };
+  
   onRefresh = () => {
     this.setState({refreshing: true});
     wait(2000).then(() => this.setState({refreshing: false}));
@@ -169,6 +179,23 @@ export default class Bootstrap extends React.Component<{}, any> {
               padding: 20,
             }}>
             <Text>
+              {this.state.snapToOffsets
+                ? 'SnapToOffsets[100,500]'
+                : 'SnapToOffsets[null]'}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch6}
+              value={this.state.snapToOffsets}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
               {'KeyboardDismiss: '.concat(
                 this.state.keyboardDismiss ? 'on-drag' : 'none',
               )}
@@ -180,34 +207,34 @@ export default class Bootstrap extends React.Component<{}, any> {
           </View>
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
-          <Text>SnapToOffsets[100, 500]</Text>
-          <View>
-            <ScrollView
-              style={
-                this.state.horizontalValue
-                  ? styles.horizontalScrollViewStyle
-                  : styles.verticalScrollViewStyle
-              }
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.onRefresh}
-                />
-              }
-              keyboardDismissMode={
-                this.state.keyboardDismiss ? 'on-drag' : 'none'
-              }
-              snapToOffsets={[100.0, 500.0]}
-              minimumZoomScale={0.1}
-              maximumZoomScale={2.0}
-              zoomScale={this.state.zoomValue ? 2.0 : 1.0}
-              snapToStart={this.state.snapToStartValue}
-              snapToEnd={this.state.snapToEndValue}
-              snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
-              horizontal={this.state.horizontalValue}>
-              {this.makeItems(20, [styles.itemWrapper])}
-            </ScrollView>
-          </View>
+          <ScrollView
+            style={
+              this.state.horizontalValue
+                ? styles.horizontalScrollViewStyle
+                : styles.verticalScrollViewStyle
+            }
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
+            keyboardDismissMode={
+              this.state.keyboardDismiss ? 'on-drag' : 'none'
+            }
+            snapToOffsets={
+              this.state.snapToOffsets ? [100.0, 500.0] : undefined
+            }
+            pagingEnabled={this.state.pagingEnabled}
+            minimumZoomScale={0.1}
+            maximumZoomScale={2.0}
+            zoomScale={this.state.zoomValue ? 2.0 : 1.0}
+            snapToStart={this.state.snapToStartValue}
+            snapToEnd={this.state.snapToEndValue}
+            snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
+            horizontal={this.state.horizontalValue}>
+            {this.makeItems(20, [styles.itemWrapper])}
+          </ScrollView>
         </View>
       </View>
     );
