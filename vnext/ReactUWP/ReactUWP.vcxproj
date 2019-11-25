@@ -31,8 +31,7 @@
     <ProjectGuid>{2d5d43d9-cffc-4c40-b4cd-02efb4e2742b}</ProjectGuid>
     <TargetName>React.UWP</TargetName>
     <Keyword>DynamicLibrary</Keyword>
-    <RootNamespace>react.uwp</RootNamespace>
-    <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <RootNamespace>React.UWP</RootNamespace>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -231,6 +230,8 @@
     <ClInclude Include="Views\DatePickerViewManager.h" />
     <ClInclude Include="Views\ExpressionAnimationStore.h" />
     <ClInclude Include="Views\FlyoutViewManager.h" />
+    <ClInclude Include="Views\Image\BorderEffect.h" />
+    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h" />
     <ClInclude Include="Views\Image\ImageViewManager.h" />
     <ClInclude Include="Views\Image\ReactImage.h" />
     <ClInclude Include="Views\Image\ReactImageBrush.h" />
@@ -424,10 +425,10 @@
       <AdditionalOptions>
       </AdditionalOptions>
     </Midl>
+    <Midl Include="Views/cppwinrt/BorderEffect.idl" />
     <Midl Include="Views/cppwinrt/AccessibilityAction.idl" />
     <Midl Include="Views/cppwinrt/DynamicAutomationPeer.idl" />
     <Midl Include="Views/cppwinrt/ViewPanel.idl" />
-    <Midl Include="Views\cppwinrt\BorderEffect.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
@@ -440,7 +441,6 @@
     <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <Import Project="$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -451,16 +451,6 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets'))" />
-  </Target>
-  <Target Name="_WinUIWorkaround" AfterTargets="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <!-- This is a workaround before https://github.com/microsoft/microsoft-ui-xaml/issues/1512 is resolved and the new WinUI framework package is released -->
-    <ItemGroup>
-      <XamlCompactPageToBeRemoved Include="@(Page)" Condition="'%(Page.TargetPath)' == 'Microsoft.UI.Xaml\DensityStyles\Compact.xbf'" />
-    </ItemGroup>
-    <ItemGroup Condition="'@(XamlCompactPageToBeRemoved)' != ''">
-      <Page Remove="@(XamlCompactPageToBeRemoved)" />
-    </ItemGroup>
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

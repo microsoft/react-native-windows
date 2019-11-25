@@ -5,7 +5,7 @@
 
 #include <winrt/Windows.UI.Xaml.h>
 
-#include "DynamicAutomationProperties.g.h"
+#include "react.uwp.DynamicAutomationProperties.g.h"
 
 namespace winrt::react::uwp::implementation {
 
