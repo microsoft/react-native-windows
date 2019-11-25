@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 Nov 2019 08:02:20 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Nov 2019 21:23:52 GMT and should not be manually modified.
 
+## 0.60.0-vnext.82
+Mon, 25 Nov 2019 21:23:52 GMT
+
+### Changes
+
+- Revert "Add Winui 2.2 framework package (#3622)" (licanhua@live.com)
 ## 0.60.0-vnext.81
 Sat, 23 Nov 2019 08:02:20 GMT
 

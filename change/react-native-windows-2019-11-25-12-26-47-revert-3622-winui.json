@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Revert \"Add Winui 2.2 framework package (#3622)\"",
-  "packageName": "react-native-windows",
-  "email": "licanhua@live.com",
-  "commit": "05b4247de1309cf162f4097ccd501db970b46cd1",
-  "date": "2019-11-25T20:26:47.081Z"
-}
