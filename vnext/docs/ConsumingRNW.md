@@ -85,6 +85,58 @@ See [Native Modules and React Native Windows](NativeModules.md).
 Follow these steps to build a version of your app that you can install or publish to the store.  This version will package your bundle and assets into the appx package so you don't need to run Metro.
 
 - Open the solution in Visual Studio
+- Select the Release configuration from the Configuration Manager dropdown.
+- Build the solution.  You can now launch without first launching Metro.
+- If you want to build an appx package to share or publish, use the Project => Publish => Create App Packages... option.
+
+You may hit [error Unable to resolve module `warnOnce`](https://github.com/microsoft/react-native-windows/issues/3670) if you compile the project from Visual Studio IDE. You can workaround the problem by using lower driver-letter in `BundleCommand`. For example, if your solution directory is `C:\repo\myproj\windows`, then modify `BundleCommand` in your project from
+
+```
+    <BundleCommand>
+      cd $(SolutionDir)..
+      ...
+    </BundleCommand>  
+```
+to
+```
+    <BundleCommand>
+      cd c:\repo\myproj
+      ...
+    </BundleCommand>  
+```
+
+## Migrating your project from old React Native Windows template
+If your application is created from old React Native template, you have to remove DebugBundle and ReleaseBundle configurations manually, then make Release configuration to support Bundle. You can find examples in [PR 3654](https://github.com/microsoft/react-native-windows/pull/3654). Here is the steps to migrate your project manually:
+- Remove DebugBundle and ReleaseBundle from the solution.
+
+- Provide BundleCommand in the project file
+```
+<PropertyGroup>
+    <BundleCommand>
+      cd $(SolutionDir)..
+      react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle
+    </BundleCommand>
+  </PropertyGroup>
+```
+
+- Import Bundle.targets or Bundle.Cpp.targets.
+
+For CS project
+```
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
+```
+
+For Cpp project
+```
+ <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.Cpp.targets" />
+```
+
+## Building a standalone React Native Windows App which is created from old React Native Windows template
+Note: DebugBundle and ReleaseBundle are not supported anymore because of [issue 3657](https://github.com/microsoft/react-native-windows/issues/3657). Please follow the migrate steps above to migrate your project if you want to use newer version of React Native Windows.
+
+Follow these steps to build a version of your app that you can install or publish to the store.  This version will package your bundle and assets into the appx package so you don't need to run Metro.
+
+- Open the solution in Visual Studio
 - Select the DebugBundle or ReleaseBundle configuration from the Configuration Manager dropdown.  DebugBundle is similar to Debug in that it adds more debugging info to the native code.  Use this if you want to debug the native code.  ReleaseBundle is similar to Release, you'll typically use this when producing a final package to publish to the store.
 - Build the solution.  You can now launch without first launching Metro.
 - If you want to build an appx package to share or publish, use the Project => Publish => Create App Packages... option.
