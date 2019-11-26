@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
 import "IViewManager.idl";
 
 namespace Microsoft.ReactNative.Bridge {
 
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
-  delegate IViewManager ReactViewManagerProvider();
+  delegate IViewManager ReactViewManagerProvider(IReactContext reactContext);
 
   interface IReactPackageBuilder {
     // TODO: Add message thread argument
