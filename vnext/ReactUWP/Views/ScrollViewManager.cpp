@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <ReactUWP\Views\SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
@@ -20,6 +21,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
 
  public:
   ScrollViewShadowNode();
+  ~ScrollViewShadowNode();
   void dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) override;
   void createView() override;
   void updateProperties(const folly::dynamic &&props) override;
@@ -44,6 +46,9 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   bool m_isHorizontal = false;
   bool m_isScrollingEnabled = true;
   bool m_changeViewAfterLoaded = false;
+  bool m_dismissKeyboardOnDrag = false;
+
+  std::shared_ptr<SIPEventHandler> m_SIPEventHandler;
 
   winrt::FrameworkElement::SizeChanged_revoker m_scrollViewerSizeChangedRevoker{};
   winrt::FrameworkElement::SizeChanged_revoker m_contentSizeChangedRevoker{};
@@ -55,6 +60,10 @@ class ScrollViewShadowNode : public ShadowNodeBase {
 };
 
 ScrollViewShadowNode::ScrollViewShadowNode() {}
+
+ScrollViewShadowNode::~ScrollViewShadowNode() {
+  m_SIPEventHandler.reset();
+}
 
 void ScrollViewShadowNode::dispatchCommand(int64_t commandId, const folly::dynamic &commandArgs) {
   const auto scrollViewer = GetView().as<winrt::ScrollViewer>();
@@ -186,6 +195,16 @@ void ScrollViewShadowNode::updateProperties(const folly::dynamic &&reactDiffMap)
       if (valid) {
         ScrollViewUWPImplementation(scrollViewer).SnapToEnd(snapToEnd);
       }
+    } else if (propertyName == "keyboardDismissMode") {
+      m_dismissKeyboardOnDrag = false;
+      if (propertyValue.isString()) {
+        m_dismissKeyboardOnDrag = (propertyValue.getString() == "on-drag");
+        if (m_dismissKeyboardOnDrag) {
+          auto wkinstance = GetViewManager()->GetReactInstance();
+          m_SIPEventHandler = std::make_unique<SIPEventHandler>(wkinstance);
+          m_SIPEventHandler->AttachView(GetView(), false /*fireKeyboardEvents*/);
+        }
+      }
     } else if (propertyName == "snapToAlignment") {
       const auto [valid, snapToAlignment] = getPropertyAndValidity(propertyValue, winrt::SnapPointsAlignment::Near);
       if (valid) {
@@ -241,6 +260,11 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
   m_scrollViewerDirectManipulationStartedRevoker =
       scrollViewer.DirectManipulationStarted(winrt::auto_revoke, [this](const auto &sender, const auto &) {
         m_isScrolling = true;
+
+        if (m_dismissKeyboardOnDrag && m_SIPEventHandler) {
+          m_SIPEventHandler->TryHide();
+        }
+
         const auto scrollViewer = sender.as<winrt::ScrollViewer>();
         EmitScrollEvent(
             scrollViewer,
@@ -402,7 +426,7 @@ folly::dynamic ScrollViewManager::GetNativeProps() const {
       "showsHorizontalScrollIndicator", "boolean")("showsVerticalScrollIndicator", "boolean")(
       "minimumZoomScale", "float")("maximumZoomScale", "float")("zoomScale", "float")("snapToInterval", "float")(
       "snapToOffsets", "array")("snapToAlignment", "number")("snapToStart", "boolean")("snapToEnd", "boolean")(
-      "pagingEnabled", "boolean"));
+      "pagingEnabled", "boolean")("keyboardDismissMode", "string"));
 
   return props;
 }
