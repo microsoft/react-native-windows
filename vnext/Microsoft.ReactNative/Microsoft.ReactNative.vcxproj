@@ -128,8 +128,8 @@
       <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ReactContext.h">
-      <DependentUpon>ReactContext.idl</DependentUpon>
+    <ClInclude Include="IReactContext.h">
+      <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactInstanceCreator.h" />
@@ -184,8 +184,8 @@
       <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ReactContext.cpp">
-      <DependentUpon>ReactContext.idl</DependentUpon>
+    <ClCompile Include="IReactContext.cpp">
+      <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactInstanceCreator.cpp" />
@@ -229,7 +229,7 @@
     <Midl Include="ReactApplicationDelegate.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ReactContext.idl">
+    <Midl Include="IReactContext.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstance.idl">

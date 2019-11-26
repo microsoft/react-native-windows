@@ -7,54 +7,87 @@ using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
-
-  internal abstract class ViewManagerNamedAttribute : Attribute
+  [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+  internal class ViewManagerExportedViewConstantAttribute : Attribute
   {
-    public string Name { get; set; }
+    public string ConstantName { get; set; }
 
-    public ViewManagerNamedAttribute() : base() { }
+    public ViewManagerExportedViewConstantAttribute() : base() { }
 
-    public ViewManagerNamedAttribute(string name)
+    public ViewManagerExportedViewConstantAttribute(string constantName)
     {
-      Name = name ?? throw new ArgumentNullException(nameof(name));
+      ConstantName = constantName ?? throw new ArgumentNullException(nameof(constantName));
+    }
+  }
+
+  [AttributeUsage(AttributeTargets.Method)]
+  internal class ViewManagerPropertyAttribute : Attribute
+  {
+    public string PropertyName { get; set; }
+
+    public ViewManagerPropertyType? PropertyType { get; set; } = null;
+
+    public ViewManagerPropertyAttribute() : base() { }
+
+    public ViewManagerPropertyAttribute(string propertyName)
+    {
+      PropertyName = propertyName ?? throw new ArgumentNullException(nameof(propertyName));
+    }
+
+    public ViewManagerPropertyAttribute(string propertyName, ViewManagerPropertyType type) : this(propertyName)
+    {
+      PropertyType = type;
+    }
+  }
+
+  [AttributeUsage(AttributeTargets.Method)]
+  internal class ViewManagerCommandAttribute : Attribute
+  {
+    public string CommandName { get; set; }
+
+    public ViewManagerCommandAttribute() : base() { }
+
+    public ViewManagerCommandAttribute(string commandName)
+    {
+      CommandName = commandName ?? throw new ArgumentNullException(nameof(commandName));
+    }
+  }
+
+  internal class ViewManagerExportedDirectEventTypeConstantAttribute : Attribute
+  {
+    public string EventName { get; private set; }
+
+    public string CallbackName { get; private set; }
+
+    public ViewManagerExportedDirectEventTypeConstantAttribute() : base() { }
+
+    public ViewManagerExportedDirectEventTypeConstantAttribute(string eventName, string callbackName)
+    {
+      EventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
+      CallbackName = callbackName ?? throw new ArgumentNullException(nameof(callbackName));
     }
   }
 
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-  internal class ViewManagerExportedViewConstantAttribute : ViewManagerNamedAttribute
+  internal class ViewManagerExportedBubblingEventTypeConstantAttribute : Attribute
   {
-    public ViewManagerExportedViewConstantAttribute() : base() { }
+    public string EventName { get; private set; }
 
-    public ViewManagerExportedViewConstantAttribute(string name) : base(name) { }
-  }
+    public string BubbleCallbackName { get; private set; }
 
-  [AttributeUsage(AttributeTargets.Method)]
-  internal class ViewManagerPropertyAttribute : ViewManagerNamedAttribute
-  {
-    public ViewManagerPropertyType? Type { get; set; } = null;
+    public string CaptureCallbackName { get; private set; }
 
-    public ViewManagerPropertyAttribute() : base() { }
+    public ViewManagerExportedBubblingEventTypeConstantAttribute() : base() { }
 
-    public ViewManagerPropertyAttribute(string name) : base(name) { }
-
-    public ViewManagerPropertyAttribute(string name, ViewManagerPropertyType type) : this(name)
+    public ViewManagerExportedBubblingEventTypeConstantAttribute(string eventName, string bubbleCallbackName)
     {
-      Type = type;
+      EventName = eventName ?? throw new ArgumentNullException(nameof(eventName));
+      BubbleCallbackName = bubbleCallbackName ?? throw new ArgumentNullException(nameof(bubbleCallbackName));
     }
-  }
 
-  [AttributeUsage(AttributeTargets.Method)]
-  internal class ViewManagerCommandAttribute : ViewManagerNamedAttribute
-  {
-    public long? CommandId { get; set; }
-
-    public ViewManagerCommandAttribute() : base() { }
-
-    public ViewManagerCommandAttribute(string name) : base(name) { }
-
-    public ViewManagerCommandAttribute(string name, long commandId) : this(name)
+    public ViewManagerExportedBubblingEventTypeConstantAttribute(string eventName, string bubbleCallbackName, string captureCallbackName) : this(eventName, bubbleCallbackName)
     {
-      CommandId = commandId;
+      CaptureCallbackName = captureCallbackName ?? throw new ArgumentNullException(nameof(captureCallbackName));
     }
   }
 }
