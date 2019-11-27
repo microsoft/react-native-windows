@@ -71,15 +71,13 @@ void ReactImageBrush::UpdateCompositionBrush() {
 
     auto compositionBrush{surfaceBrush.as<winrt::CompositionBrush>()};
     if (m_resizeMode == ResizeMode::Repeat) {
-      // If ResizeMode is set to Repeat, then we need to use a
-      // CompositionEffectBrush. The CompositionSurfaceBrush holding the image
-      // is used as its source.
+      // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
+      // The CompositionSurfaceBrush holding the image is used as its source.
       compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
     }
 
-    // The CompositionBrush is only set after the image is first loaded,
-    // and anytime we switch between Surface and Effect brushes (to/from
-    // ResizeMode::Repeat)
+    // The CompositionBrush is only set after the image is first loaded and anytime
+    // we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
     if (CompositionBrush() != compositionBrush) {
       if (m_resizeMode == ResizeMode::Repeat) {
         surfaceBrush.HorizontalAlignmentRatio(0.0f);
