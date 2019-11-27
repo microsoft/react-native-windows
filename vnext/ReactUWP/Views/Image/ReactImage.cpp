@@ -37,24 +37,6 @@ ReactImage::ReactImage() {
   } else {
     m_bitmapBrush.Stretch(winrt::Stretch::Uniform);
     this->Background(m_bitmapBrush);
-
-    // auto weak_this{get_weak()};
-
-    //// ImageOpened and ImageFailed are mutually exclusive. One event of the other will
-    //// always fire whenever an ImageBrush has the ImageSource value set or reset.
-    // m_imageOpenedRevoker =
-    //  m_bitmapBrush.ImageOpened(winrt::auto_revoke, [weak_this](const auto &, const auto &) {
-    //    if (auto strong_this{weak_this.get()}) {
-    //      strong_this->m_onLoadEndEvent(*strong_this, true);
-    //    }
-    //  });
-
-    // m_imageFailedRevoker =
-    //  m_bitmapBrush.ImageFailed(winrt::auto_revoke, [weak_this](const auto &, const auto &) {
-    //    if (auto strong_this{weak_this.get()}) {
-    //      strong_this->m_onLoadEndEvent(*strong_this, false);
-    //    }
-    //  });
   }
 }
 
@@ -66,6 +48,8 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
   if (m_useCompositionBrush) {
     auto brush{Background().as<ReactImageBrush>()};
     brush->AvailableSize(finalSize);
+  } else {
+    m_availableSize = finalSize;
   }
 
   return finalSize;
@@ -79,7 +63,7 @@ void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
 }
 
-void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
+winrt::Windows::Foundation::IAsyncAction ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
@@ -87,7 +71,7 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
     if (m_useCompositionBrush != ShouldUseCompositionBrush()) {
       switchBrushes = true;
       m_useCompositionBrush = ShouldUseCompositionBrush();
-    } 
+    }
 
     if (!m_useCompositionBrush) {
       switch (m_resizeMode) {
@@ -104,19 +88,33 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
     } else {
       if (!m_brush) {
         m_brush = ReactImageBrush::Create();
+        m_brush->AvailableSize(m_availableSize);
       }
+    }
 
+    if (m_brush) {
       m_brush->ResizeMode(value);
     }
 
     if (switchBrushes) {
-      Source(m_imageSource);
+      // get weak reference before any co_await calls
+      auto weak_this{get_weak()};
 
-      if (m_useCompositionBrush) {
-        this->Background(m_brush.as<winrt::XamlCompositionBrushBase>());
-      } else {
-        this->Background(m_bitmapBrush);
-      }      
+      try {
+        co_await Source(m_imageSource, m_memoryStream != nullptr);
+
+        if (auto strong_this{weak_this.get()}) {
+          if (strong_this->m_useCompositionBrush) {
+            strong_this->Background(strong_this->m_brush.as<winrt::XamlCompositionBrushBase>());
+          } else {
+            strong_this->Background(strong_this->m_bitmapBrush);
+          }
+        }
+      } catch (winrt::hresult_error const &e) {
+        if (auto strong_this{weak_this.get()}) {
+          strong_this->m_onLoadEndEvent(*strong_this, false);
+        }
+      }
     }
   }
 }
@@ -131,7 +129,7 @@ bool ReactImage::ShouldUseCompositionBrush() {
   }
 }
 
-winrt::fire_and_forget ReactImage::Source(ImageSource source) {
+winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, bool useMemoryStreamCache) {
   std::string uriString{source.uri};
   if (uriString.length() == 0) {
     m_onLoadEndEvent(*this, false);
@@ -144,7 +142,8 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
 
   winrt::Uri uri{Utf8ToUtf16(uriString)};
   winrt::hstring scheme{uri.SchemeName()};
-  bool needsDownload = (scheme == L"http") || (scheme == L"https");
+  bool needsDownload =
+      ((scheme == L"http") || (scheme == L"https")) && (m_useCompositionBrush || !source.headers.empty());
   bool inlineData = scheme == L"data";
   // get weak reference before any co_await calls
   auto weak_this{get_weak()};
@@ -152,72 +151,73 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
   try {
     m_imageSource = source;
 
-    winrt::InMemoryRandomAccessStream memoryStream;
-    if (needsDownload) {
-      memoryStream = co_await GetImageStreamAsync(source);
-    } else if (inlineData) {
-      memoryStream = co_await GetImageInlineDataAsync(source);
+    if (!useMemoryStreamCache) {
+      if (needsDownload) {
+        m_memoryStream = co_await GetImageStreamAsync(source);
+      } else if (inlineData) {
+        m_memoryStream = co_await GetImageInlineDataAsync(source);
+      }
     }
 
     if (auto strong_this{weak_this.get()}) {
-      if ((needsDownload || inlineData) && !memoryStream) {
+      if ((needsDownload || inlineData) && !m_memoryStream) {
         strong_this->m_onLoadEndEvent(*strong_this, false);
       }
 
-      if (!needsDownload || memoryStream) {
-        if (m_useCompositionBrush) {
-          auto surface = needsDownload || inlineData ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
-                                                     :
-      winrt::LoadedImageSurface::StartLoadFromUri(uri);
+      if (!needsDownload || m_memoryStream) {
+        if (strong_this->m_useCompositionBrush) {
+          auto surface = needsDownload || inlineData ? winrt::LoadedImageSurface::StartLoadFromStream(m_memoryStream)
+                                                     : winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
-      strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
-          winrt::auto_revoke,
-          [weak_this, surface](
-              winrt::LoadedImageSurface const & /*sender*/,
-              winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
-            if (auto strong_this{weak_this.get()}) {
-              bool succeeded{false};
-              if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
-                strong_this->m_brush->Source(surface);
-                succeeded = true;
-              }
-              strong_this->m_onLoadEndEvent(*strong_this, succeeded);
-            }
-          });
-  }
-  else {
-    winrt::BitmapImage bitmap;
+          strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
+              winrt::auto_revoke,
+              [weak_this, surface](
+                  winrt::LoadedImageSurface const & /*sender*/,
+                  winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
+                if (auto strong_this{weak_this.get()}) {
+                  bool succeeded{false};
+                  if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
+                    strong_this->m_brush->Source(surface);
+                    succeeded = true;
+                  }
+                  strong_this->m_onLoadEndEvent(*strong_this, succeeded);
+                }
+              });
+        } else {
+          winrt::BitmapImage bitmap;
 
-    // ImageOpened and ImageFailed are mutually exclusive. One event of the other will
-    // always fire whenever an ImageBrush has the ImageSource value set or reset.
-    strong_this->m_imageOpenedRevoker =
-        bitmap.ImageOpened(winrt::auto_revoke, [weak_this, bitmap](const auto &, const auto &) {
-          if (auto strong_this{weak_this.get()}) {
-            strong_this->m_bitmapBrush.ImageSource(bitmap);
-            strong_this->m_onLoadEndEvent(*strong_this, true);
+          // ImageOpened and ImageFailed are mutually exclusive. One event of the other will
+          // always fire whenever an ImageBrush has the ImageSource value set or reset.
+          strong_this->m_imageOpenedRevoker =
+              bitmap.ImageOpened(winrt::auto_revoke, [weak_this, bitmap](const auto &, const auto &) {
+                if (auto strong_this{weak_this.get()}) {
+                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                }
+              });
+
+          strong_this->m_imageFailedRevoker =
+              bitmap.ImageFailed(winrt::auto_revoke, [weak_this](const auto &, const auto &) {
+                if (auto strong_this{weak_this.get()}) {
+                  strong_this->m_onLoadEndEvent(*strong_this, false);
+                }
+              });
+
+          if (needsDownload || inlineData) {
+            bitmap.SetSourceAsync(strong_this->m_memoryStream);
+          } else {
+            bitmap.UriSource(uri);
           }
-        });
 
-    strong_this->m_imageFailedRevoker = bitmap.ImageFailed(winrt::auto_revoke, [weak_this](const auto &, const auto &) {
-      if (auto strong_this{weak_this.get()}) {
-        strong_this->m_onLoadEndEvent(*strong_this, false);
+          strong_this->m_bitmapBrush.ImageSource(bitmap);
+        }
       }
-    });
-
-    if (needsDownload || inlineData) {
-      co_await bitmap.SetSourceAsync(memoryStream);
-    } else {
-      bitmap = {uri};
+    } // namespace uwp
+  } catch (winrt::hresult_error const &) {
+    if (auto strong_this{weak_this.get()}) {
+      strong_this->m_onLoadEndEvent(*strong_this, false);
     }
   }
 }
-} // namespace uwp
-} // namespace react
-catch (winrt::hresult_error const &) {
-  if (auto strong_this{weak_this.get()})
-    strong_this->m_onLoadEndEvent(*strong_this, false);
-}
-} // namespace uwp
 
 winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source) {
   try {
