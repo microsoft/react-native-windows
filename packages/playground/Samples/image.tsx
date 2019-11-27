@@ -27,9 +27,10 @@ export default class Bootstrap extends React.Component<
   }
 > {
   state = {
-    selectedResizeMode: 'center' as 'center',
-    useLargeImage: false,
-    imageUrl: 'http://facebook.github.io/react-native/img/header_logo.png',
+    selectedResizeMode: 'contain' as 'contain',
+    useLargeImage: true,
+    imageUrl:
+      'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png',
   };
 
   switchImageUrl = () => {

@@ -8,6 +8,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 
@@ -49,17 +50,22 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   winrt::fire_and_forget Source(ImageSource source);
 
   react::uwp::ResizeMode ResizeMode() {
-    return m_brush->ResizeMode();
+    return m_resizeMode;
   }
-  void ResizeMode(react::uwp::ResizeMode value) {
-    m_brush->ResizeMode(value);
-  }
+  void ResizeMode(react::uwp::ResizeMode value);
 
  private:
+  bool ShouldUseCompositionBrush();
+
+  bool m_useCompositionBrush = false;
   ImageSource m_imageSource;
+  winrt::Windows::UI::Xaml::Media::ImageBrush m_bitmapBrush{};
   winrt::com_ptr<ReactImageBrush> m_brush;
+  react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
+  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_imageOpenedRevoker;
+  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageFailed_revoker m_imageFailedRevoker;
 };
 
 // Helper functions
