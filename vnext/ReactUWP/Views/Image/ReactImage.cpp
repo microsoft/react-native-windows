@@ -31,13 +31,13 @@ namespace react {
 namespace uwp {
 
 ReactImage::ReactImage() {
-  if (m_useCompositionBrush) {
-    m_brush = ReactImageBrush::Create();
-    this->Background(m_brush.as<winrt::XamlCompositionBrushBase>());
-  } else {
-    m_bitmapBrush.Stretch(winrt::Stretch::Uniform);
-    this->Background(m_bitmapBrush);
-  }
+  // if (m_useCompositionBrush) {
+  //  m_compositionBrush = ReactImageBrush::Create();
+  //  this->Background(m_compositionBrush.as<winrt::XamlCompositionBrushBase>());
+  //} else {
+  //  m_bitmapBrush.Stretch(winrt::Stretch::Uniform);
+  //  this->Background(m_bitmapBrush);
+  //}
 }
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
@@ -63,57 +63,25 @@ void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
 }
 
-winrt::Windows::Foundation::IAsyncAction ReactImage::ResizeMode(react::uwp::ResizeMode value) {
+winrt::fire_and_forget ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
     bool switchBrushes{false};
+
     if (m_useCompositionBrush != ShouldUseCompositionBrush()) {
       switchBrushes = true;
       m_useCompositionBrush = ShouldUseCompositionBrush();
     }
 
-    if (!m_useCompositionBrush) {
-      switch (m_resizeMode) {
-        case ResizeMode::Cover:
-          m_bitmapBrush.Stretch(winrt::Stretch::UniformToFill);
-          break;
-        case ResizeMode::Stretch:
-          m_bitmapBrush.Stretch(winrt::Stretch::Fill);
-          break;
-        default:
-          m_bitmapBrush.Stretch(winrt::Stretch::Uniform);
-          break;
-      }
-    } else {
-      if (!m_brush) {
-        m_brush = ReactImageBrush::Create();
-        m_brush->AvailableSize(m_availableSize);
-      }
-    }
-
-    if (m_brush) {
-      m_brush->ResizeMode(value);
-    }
-
     if (switchBrushes) {
-      // get weak reference before any co_await calls
-      auto weak_this{get_weak()};
-
-      try {
-        co_await Source(m_imageSource, m_memoryStream != nullptr);
-
-        if (auto strong_this{weak_this.get()}) {
-          if (strong_this->m_useCompositionBrush) {
-            strong_this->Background(strong_this->m_brush.as<winrt::XamlCompositionBrushBase>());
-          } else {
-            strong_this->Background(strong_this->m_bitmapBrush);
-          }
-        }
-      } catch (winrt::hresult_error const &e) {
-        if (auto strong_this{weak_this.get()}) {
-          strong_this->m_onLoadEndEvent(*strong_this, false);
-        }
+      co_await Source(m_imageSource, m_memoryStream != nullptr);
+    } else {
+      if (m_useCompositionBrush) {
+        Background().as<ReactImageBrush>()->ResizeMode(m_resizeMode);
+      } else {
+        const auto bitmapBrush{Background().as<winrt::ImageBrush>()};
+        bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
       }
     }
   }
@@ -126,6 +94,17 @@ bool ReactImage::ShouldUseCompositionBrush() {
       return true;
     default:
       return false;
+  }
+}
+
+winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
+  switch (value) {
+    case ResizeMode::Cover:
+      return winrt::Stretch::UniformToFill;
+    case ResizeMode::Stretch:
+      return winrt::Stretch::Fill;
+    default:
+      return winrt::Stretch::Uniform;
   }
 }
 
@@ -160,55 +139,70 @@ winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, 
     }
 
     if (auto strong_this{weak_this.get()}) {
-      if ((needsDownload || inlineData) && !m_memoryStream) {
+      if ((needsDownload || inlineData) && !strong_this->m_memoryStream) {
         strong_this->m_onLoadEndEvent(*strong_this, false);
       }
 
-      if (!needsDownload || m_memoryStream) {
+      if (!needsDownload || strong_this->m_memoryStream) {
         if (strong_this->m_useCompositionBrush) {
-          auto surface = needsDownload || inlineData ? winrt::LoadedImageSurface::StartLoadFromStream(m_memoryStream)
-                                                     : winrt::LoadedImageSurface::StartLoadFromUri(uri);
+          const auto compositionBrush = ReactImageBrush::Create();
+          compositionBrush->AvailableSize(strong_this->m_availableSize);
+          compositionBrush->ResizeMode(strong_this->m_resizeMode);
+
+          auto surface = (needsDownload || inlineData)
+            ? winrt::LoadedImageSurface::StartLoadFromStream(strong_this->m_memoryStream)
+            : winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
           strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
               winrt::auto_revoke,
-              [weak_this, surface](
+              [weak_this, compositionBrush, surface](
                   winrt::LoadedImageSurface const & /*sender*/,
                   winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
                 if (auto strong_this{weak_this.get()}) {
                   bool succeeded{false};
                   if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
-                    strong_this->m_brush->Source(surface);
+                    compositionBrush->Source(surface);
                     succeeded = true;
                   }
                   strong_this->m_onLoadEndEvent(*strong_this, succeeded);
                 }
               });
+
+          strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
+
         } else {
-          winrt::BitmapImage bitmap;
+          winrt::ImageBrush bitmapBrush{};
 
           // ImageOpened and ImageFailed are mutually exclusive. One event of the other will
           // always fire whenever an ImageBrush has the ImageSource value set or reset.
           strong_this->m_imageOpenedRevoker =
-              bitmap.ImageOpened(winrt::auto_revoke, [weak_this, bitmap](const auto &, const auto &) {
+              bitmapBrush.ImageOpened(winrt::auto_revoke, [weak_this, bitmapBrush](const auto &, const auto &) {
                 if (auto strong_this{weak_this.get()}) {
+                  const auto bitmap{bitmapBrush.ImageSource().as<winrt::BitmapImage>()};
+                  strong_this->m_imageSource.height = bitmap.PixelHeight();
+                  strong_this->m_imageSource.width = bitmap.PixelWidth();
                   strong_this->m_onLoadEndEvent(*strong_this, true);
                 }
               });
 
           strong_this->m_imageFailedRevoker =
-              bitmap.ImageFailed(winrt::auto_revoke, [weak_this](const auto &, const auto &) {
+              bitmapBrush.ImageFailed(winrt::auto_revoke, [weak_this](const auto &, const auto &) {
                 if (auto strong_this{weak_this.get()}) {
                   strong_this->m_onLoadEndEvent(*strong_this, false);
                 }
               });
 
+          winrt::BitmapImage bitmap{};
+
           if (needsDownload || inlineData) {
-            bitmap.SetSourceAsync(strong_this->m_memoryStream);
+            co_await bitmap.SetSourceAsync(strong_this->m_memoryStream);
           } else {
             bitmap.UriSource(uri);
           }
 
-          strong_this->m_bitmapBrush.ImageSource(bitmap);
+          bitmapBrush.Stretch(ResizeModeToStretch(strong_this->m_resizeMode));
+          bitmapBrush.ImageSource(bitmap);
+          strong_this->Background(bitmapBrush);
         }
       }
     } // namespace uwp

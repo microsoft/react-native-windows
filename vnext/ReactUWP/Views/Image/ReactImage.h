@@ -52,23 +52,28 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   react::uwp::ResizeMode ResizeMode() {
     return m_resizeMode;
   }
-  winrt::Windows::Foundation::IAsyncAction ResizeMode(react::uwp::ResizeMode value);
+  winrt::fire_and_forget ResizeMode(react::uwp::ResizeMode value);
 
  private:
   bool ShouldUseCompositionBrush();
+  winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
+  //winrt::Windows::UI::Xaml::Media::ImageBrush GetBackgroundAsImageBrush();
+  //winrt::com_ptr<ReactImageBrush> GetBackgroundAsCompositionBrush();
 
   bool m_useCompositionBrush{false};
   ImageSource m_imageSource;
-  winrt::Windows::UI::Xaml::Media::ImageBrush m_bitmapBrush{};
-  winrt::com_ptr<ReactImageBrush> m_brush;
-  winrt::Windows::Foundation::Size m_availableSize;
+  //winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_bitmapImage{nullptr};
+  //winrt::Windows::UI::Xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
+  //winrt::Windows::UI::Xaml::Media::ImageBrush m_bitmapBrush{};
+  //winrt::com_ptr<ReactImageBrush> m_compositionBrush{nullptr};
+  winrt::Windows::Foundation::Size m_availableSize{};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::Storage::Streams::InMemoryRandomAccessStream m_memoryStream{nullptr};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
-  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_imageOpenedRevoker;
-  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageFailed_revoker m_imageFailedRevoker;
+  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageOpenedRevoker;
+  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageFailed_revoker m_imageFailedRevoker;
 };
 
 // Helper functions
