@@ -25,9 +25,6 @@ struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBa
   void OnDisconnected();
 
   // Public Properties
-  // react::uwp::ResizeMode ResizeMode() {
-  //  return m_resizeMode;
-  //}
   void ResizeMode(react::uwp::ResizeMode value);
 
   winrt::Windows::Foundation::Size AvailableSize() {

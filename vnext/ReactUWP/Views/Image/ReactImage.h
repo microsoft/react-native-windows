@@ -47,16 +47,17 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   ImageSource Source() {
     return m_imageSource;
   }
-  winrt::Windows::Foundation::IAsyncAction Source(ImageSource source, bool useMemoryStreamCache = false);
+  winrt::fire_and_forget Source(ImageSource source);
 
   react::uwp::ResizeMode ResizeMode() {
     return m_resizeMode;
   }
-  winrt::fire_and_forget ResizeMode(react::uwp::ResizeMode value);
+  void ResizeMode(react::uwp::ResizeMode value);
 
  private:
   bool ShouldUseCompositionBrush();
   winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
+  void SetBackground(bool fromStream, bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
   ImageSource m_imageSource;
