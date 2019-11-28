@@ -30,16 +30,6 @@ using Microsoft::Common::Unicode::Utf8ToUtf16;
 namespace react {
 namespace uwp {
 
-ReactImage::ReactImage() {
-  // if (m_useCompositionBrush) {
-  //  m_compositionBrush = ReactImageBrush::Create();
-  //  this->Background(m_compositionBrush.as<winrt::XamlCompositionBrushBase>());
-  //} else {
-  //  m_bitmapBrush.Stretch(winrt::Stretch::Uniform);
-  //  this->Background(m_bitmapBrush);
-  //}
-}
-
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
   return winrt::make_self<ReactImage>();
 }
@@ -88,13 +78,7 @@ winrt::fire_and_forget ReactImage::ResizeMode(react::uwp::ResizeMode value) {
 }
 
 bool ReactImage::ShouldUseCompositionBrush() {
-  switch (m_resizeMode) {
-    case ResizeMode::Repeat:
-    case ResizeMode::Center:
-      return true;
-    default:
-      return false;
-  }
+  return m_resizeMode == ResizeMode::Repeat;
 }
 
 winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
@@ -103,8 +87,15 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
       return winrt::Stretch::UniformToFill;
     case ResizeMode::Stretch:
       return winrt::Stretch::Fill;
-    default:
+    case ResizeMode::Contain:
       return winrt::Stretch::Uniform;
+    default:
+      const auto bitmap{Background().as<winrt::ImageBrush>().ImageSource().as<winrt::BitmapImage>()};
+      if (bitmap.PixelHeight() < m_availableSize.Height && bitmap.PixelWidth() < m_availableSize.Width) {
+        return winrt::Stretch::None;
+      } else {
+        return winrt::Stretch::Uniform;
+      }
   }
 }
 
@@ -124,6 +115,7 @@ winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, 
   bool needsDownload =
       ((scheme == L"http") || (scheme == L"https")) && (m_useCompositionBrush || !source.headers.empty());
   bool inlineData = scheme == L"data";
+
   // get weak reference before any co_await calls
   auto weak_this{get_weak()};
 
@@ -150,8 +142,8 @@ winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, 
           compositionBrush->ResizeMode(strong_this->m_resizeMode);
 
           auto surface = (needsDownload || inlineData)
-            ? winrt::LoadedImageSurface::StartLoadFromStream(strong_this->m_memoryStream)
-            : winrt::LoadedImageSurface::StartLoadFromUri(uri);
+              ? winrt::LoadedImageSurface::StartLoadFromStream(strong_this->m_memoryStream)
+              : winrt::LoadedImageSurface::StartLoadFromUri(uri);
 
           strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
               winrt::auto_revoke,
@@ -162,13 +154,12 @@ winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, 
                   bool succeeded{false};
                   if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
                     compositionBrush->Source(surface);
+                    strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
                     succeeded = true;
                   }
                   strong_this->m_onLoadEndEvent(*strong_this, succeeded);
                 }
               });
-
-          strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
 
         } else {
           winrt::ImageBrush bitmapBrush{};
@@ -181,6 +172,9 @@ winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, 
                   const auto bitmap{bitmapBrush.ImageSource().as<winrt::BitmapImage>()};
                   strong_this->m_imageSource.height = bitmap.PixelHeight();
                   strong_this->m_imageSource.width = bitmap.PixelWidth();
+
+                  bitmapBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
+
                   strong_this->m_onLoadEndEvent(*strong_this, true);
                 }
               });
@@ -200,7 +194,6 @@ winrt::Windows::Foundation::IAsyncAction ReactImage::Source(ImageSource source, 
             bitmap.UriSource(uri);
           }
 
-          bitmapBrush.Stretch(ResizeModeToStretch(strong_this->m_resizeMode));
           bitmapBrush.ImageSource(bitmap);
           strong_this->Background(bitmapBrush);
         }

@@ -31,7 +31,7 @@ struct ImageSource {
 struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   using Super = winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage>;
 
-  ReactImage();
+  ReactImage() = default;
 
  public:
   static winrt::com_ptr<ReactImage> Create();
@@ -57,15 +57,9 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
  private:
   bool ShouldUseCompositionBrush();
   winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
-  //winrt::Windows::UI::Xaml::Media::ImageBrush GetBackgroundAsImageBrush();
-  //winrt::com_ptr<ReactImageBrush> GetBackgroundAsCompositionBrush();
 
   bool m_useCompositionBrush{false};
   ImageSource m_imageSource;
-  //winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage m_bitmapImage{nullptr};
-  //winrt::Windows::UI::Xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
-  //winrt::Windows::UI::Xaml::Media::ImageBrush m_bitmapBrush{};
-  //winrt::com_ptr<ReactImageBrush> m_compositionBrush{nullptr};
   winrt::Windows::Foundation::Size m_availableSize{};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::Storage::Streams::InMemoryRandomAccessStream m_memoryStream{nullptr};
