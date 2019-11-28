@@ -35,12 +35,12 @@ namespace uwp {
 }
 
 winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
+  m_availableSize = finalSize;
+
   if (m_useCompositionBrush) {
     auto brush{Background().as<ReactImageBrush>()};
     brush->AvailableSize(finalSize);
-  } else {
-    m_availableSize = finalSize;
-  }
+  } 
 
   return finalSize;
 }
@@ -67,12 +67,8 @@ winrt::fire_and_forget ReactImage::ResizeMode(react::uwp::ResizeMode value) {
     if (switchBrushes) {
       co_await Source(m_imageSource, m_memoryStream != nullptr);
     } else {
-      if (m_useCompositionBrush) {
-        Background().as<ReactImageBrush>()->ResizeMode(m_resizeMode);
-      } else {
-        const auto bitmapBrush{Background().as<winrt::ImageBrush>()};
-        bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
-      }
+      const auto bitmapBrush{Background().as<winrt::ImageBrush>()};
+      bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
     }
   }
 }
