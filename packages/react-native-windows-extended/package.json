@@ -34,12 +34,12 @@
     "just-scripts": "^0.24.2",
     "prettier": "1.13.6",
     "react": "16.8.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.23.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.24.tar.gz",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft.23 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.23.tar.gz"
+    "react-native": "^0.60.0 || 0.60.0-microsoft.24 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.24.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [
