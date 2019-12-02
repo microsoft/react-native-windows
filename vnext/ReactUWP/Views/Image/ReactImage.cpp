@@ -132,7 +132,7 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
       if (!needsDownload || strong_this->m_memoryStream) {
         strong_this->SetBackground(needsDownload || inlineData, true);
       }
-    } // namespace uwp
+    }
   } catch (winrt::hresult_error const &) {
     if (auto strong_this{weak_this.get()}) {
       strong_this->m_onLoadEndEvent(*strong_this, false);

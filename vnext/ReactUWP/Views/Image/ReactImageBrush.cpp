@@ -70,7 +70,7 @@ void ReactImageBrush::UpdateCompositionBrush() {
     surfaceBrush.Stretch(ResizeModeToStretch());
 
     auto compositionBrush{surfaceBrush.as<winrt::CompositionBrush>()};
-    if (m_resizeMode == ResizeMode::Repeat) {
+    if (ResizeMode() == ResizeMode::Repeat) {
       // If ResizeMode is set to Repeat, then we need to use a CompositionEffectBrush.
       // The CompositionSurfaceBrush holding the image is used as its source.
       compositionBrush = GetOrCreateEffectBrush(surfaceBrush);
@@ -79,7 +79,7 @@ void ReactImageBrush::UpdateCompositionBrush() {
     // The CompositionBrush is only set after the image is first loaded and anytime
     // we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
     if (CompositionBrush() != compositionBrush) {
-      if (m_resizeMode == ResizeMode::Repeat) {
+      if (ResizeMode() == ResizeMode::Repeat) {
         surfaceBrush.HorizontalAlignmentRatio(0.0f);
         surfaceBrush.VerticalAlignmentRatio(0.0f);
       } else {
@@ -106,7 +106,7 @@ bool ReactImageBrush::IsImageSmallerThanView() {
 winrt::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
   auto stretch{winrt::CompositionStretch::None};
 
-  switch (m_resizeMode) {
+  switch (ResizeMode()) {
     case ResizeMode::Contain:
       stretch = winrt::CompositionStretch::Uniform;
       break;
