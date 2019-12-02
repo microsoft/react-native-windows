@@ -4,71 +4,9 @@ on:
     branches:
       - none # Disable GitHub Actions CI
 jobs:
-  # This job is much the same as UWPPR, but runs after replacing the version of react-native
-  # we are using with facebook/react-native instead of microsoft/react-native
-  UWPPublicRN:
-    name: vnext with facebook/react-native
-    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
-    runs-on: windows-2016
-    timeout-minutes: 45
-    steps:
-      - name: Skip NO CI
-        if: contains( github.event.head_commit.message, '***NO_CI***')
-        run: exit 78
 
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Switch to facebook/react-native
-        run: cd vnext && node scripts/useUnForkedRN.js
-
-        # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-        # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
-        # using the non fork version.
-      - run: yarn install
-
-      - run: yarn buildci
-
-      - name: Install SDK
-        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
-        shell: powershell
-
-      - name: Setup Nuget.exe
-        uses: warrenbuckley/Setup-Nuget@v1
-
-      - name: Setup MSBuild.exe
-        uses: warrenbuckley/Setup-MSBuild@v1
-
-      - name: NuGet restore ReactWindows-UWP.sln
-        run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
-
-      - name: Build ReactWindows-UWP.sln
-        run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
-
-      - name: NuGet restore Playground.sln
-        run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
-
-      - name: Build Playground.sln
-        run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
-
-      # todo work out how to specify working-directory for run command
-      - name: Create Playground bundle
-        run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
-
-      # todo Switch to VS2019 so we can build this
-      # - name: NuGet restore SampleApps.sln
-      #  run: nuget.exe restore packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln -Verbosity Detailed -NonInteractive
-
-      #- name: Build SampleApps.sln
-      #  run: msbuild packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
-
-      # todo work out how to specify working-directory for run command
-      - name: Create SampleApp bundle
-        run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
-
-  # This job verifies the basic UWP projects
-  UWPPR:
-    name: vnext ReactWindows-UWP.sln
+  RNWUniversalPR:
+    name: Universal PR
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 45
@@ -78,67 +16,217 @@ jobs:
     # it was easier to just duplicate the job logic somewhat
     strategy:
       matrix:
-        BuildConfiguration: [Debug, Release]
-        BuildPlatform: [x64, x86, arm]
+        name: [X64Debug, X86Debug, ArmDebug, X64Release, X86Release, ArmRelease, PublicRNX86Debug]
+        include:
+        - X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+          UseRNFork: 'true'
+          LayoutHeaders: 'true'
+        - X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: 'true'
+        - ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm
+          UseRNFork: 'true'
+        - X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          UseRNFork: 'true'
+        - X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+          UseRNFork: 'true'
+        - ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: arm
+          UseRNFork: 'true'
+        - PublicRNX86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: 'false'
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Switch to facebook/react-native
+        run: cd vnext && node scripts/useUnForkedRN.js
+        if: ${{ matrix.UseRNFork }} == 'true'
+
+      - name: yarn install
+        run: yarn install
+        if: ${{ matrix.UseRNFork }} == 'true'
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+        if: ${{ matrix.UseRNFork }} != 'true'
+
+      - run: yarn buildci
+
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: NuGet restore ReactWindows-Universal.sln
+        run: nuget.exe restore vnext\ReactWindows-Universal.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
+
+      - name: Install SDK
+        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+        shell: powershell
+
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: Build ReactWindows-Universal.sln
+        run: msbuild vnext\ReactWindows-Universal.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
+        env:
+          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+          BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifacts
+        with:
+          name: Detailed Logs for ${{parameters.project}} ${{matrix.BuildConfiguration}} ${{matrix.BuildPlatform}}
+          path: vnext/ReactWindows-Universal.sln.log
+
+      - name: Copy NuGet header files
+        run: .\vnext\Scripts\Tfs\Layout-Headers.ps1 -TargetRoot ${{ runner.temp }}\artifacts
+        if: ${{matrix.LayoutHeaders}} == 'true'
+
+      - name: Copy NuGet artifacts
+        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifact ReactWindows
+        with:
+          name: ReactWindows
+          path: ${{ runner.temp }}\artifacts
+
+      - name: Delete vnext/build and vnext/target
+        run: rmdir /S /Q vnext/build vnext/target
+
+      - name: NuGet restore Playground.sln
+        run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
+
+      # - name: Build Playground.sln
+      #   run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /p:PlatformToolset=v141
+      #   env:
+      #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+      #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+      #   if: ${{ matrix.UseRNFork }} == 'true'
+
+      # todo work out how to specify working-directory for run command
+      - name: Create Playground bundle
+        run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+
+      # - name: NuGet restore - SampleApps
+      #   run: nuget.exe restore packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln -Verbosity Detailed -NonInteractive
+
+      # - name: Build SampleApps
+      #   run: msbuild packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /p:PlatformToolset=v141
+      #   env:
+      #     BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+      #     BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+
+      # - name: Create SampleApp bundle
+      #  run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+
+      # todo work out how to specify working-directory for run command
+      - name: Create RNTester bundle
+        #  if: ${{ matrix.UseRNFork }} == 'true'
+        run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+
+
+  RNWDesktopPR:
+    name: Desktop PR
+    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
+    runs-on: windows-2016
+    timeout-minutes: 45
+    # Can't appear to enable matrix right now:
+    # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
+    # Ideally we'd share more of the build def between UWPPublicRN and this job, but due to the issues with matrix right now
+    # it was easier to just duplicate the job logic somewhat
+    strategy:
+      matrix:
+        name: [X64Debug, X86Debug,X64Release, X86Release]
+        include:
+        - X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        - X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        - X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+        - X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
 
       - name: yarn install
         run: yarn install --frozen-lockfile
 
       - run: yarn buildci
 
-      - name: Install SDK
-        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
-        shell: powershell
-
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: NuGet restore ReactWindows-Universal.sln
+        run: nuget.exe restore vnext\ReactWindows-Desktop.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: NuGet restore ReactWindows-UWP.sln
-        run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
-
-      - name: Build ReactWindows-UWP.sln
-        run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
+      - name: Build ReactWindows-Desktop.sln
+        run: msbuild vnext\ReactWindows-Desktop.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
         env:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
           BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
 
-      - name: NuGet restore Playground.sln
-        run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
+      - name: Run Desktop Unit Tests
+        run: |
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}\${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
 
-      - name: Build Playground.sln
-        run: msbuild packages/playground/windows/Playground.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
-        env:
-          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-          BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+      - name: Run JSI Unit Tests
+        run: |
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
 
-      # todo work out how to specify working-directory for run command
-      - name: Create Playground bundle
-        run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+      - name: Setup test servers
+        run: .\vnext\Scripts\Tfs\Start-TestServers.ps1 -SourcesDirectory .\vnext -Preload -SleepSeconds 120
 
-      # todo Switch to VS2019 so we can build this
-      #- name: NuGet restore SampleApps.sln
-      #  run: nuget.exe restore packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln -Verbosity Detailed -NonInteractive
+      - name: Run Desktop Integration Tests
+        run: |
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
+        if: ${{matrix.BuildConfiguration}} == 'Debug'
 
-      #- name: Build SampleApps.sln
-      #  run: msbuild packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%"
-      #  env:
-      #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-      #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+      - name: Check the metro bundle server
+        run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
 
-      # todo work out how to specify working-directory for run command
-      - name: Create SampleApp bundle
-        run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+      - name: Cleanup any packagers left over from other builds
+        run: |
+          Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+          Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
-      # todo work out how to specify working-directory for run command
-      - name: Create RNTester bundle
-        #  if: ${{ matrix.UseRNFork }} == 'true'
-        run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+      - name: Copy NuGet artifacts
+        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\**
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifact ReactWindows
+        with:
+          name: ReactWindows
+          path: ${{ runner.temp }}\artifacts
 
   # This job verifies creating a new react-native app, installing react-native-windows, applying the vnext template, and building it
   CliInit:
@@ -146,9 +234,29 @@ jobs:
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 30
+        strategy:
+    matrix:
+      name: [DebugCpp, DebugCs, ReleaseCpp, ReleaseCs]
+      include:
+      - DebugCpp:
+        configuration: Debug
+        language: cpp
+      - DebugCs:
+        configuration: Debug
+        language: cs
+      - ReleaseCpp:
+        configuration: Release
+        language: cpp
+      - ReleaseCs:
+        configuration: Release
+        language: cs
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+        
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
 
       - name: yarn install
         run: yarn install --frozen-lockfile
@@ -172,7 +280,7 @@ jobs:
         run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
 
       - name: Apply windows template
-        run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext
+        run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext --overwrite --language ${{matrix.language}}
 
       - name: Install SDK
         run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
@@ -188,10 +296,16 @@ jobs:
         run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
       - name: Build testcli.sln
-        run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x86 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
+        run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
         env:
           BUILDPLATFORM: x64
-          BUILDCONFIGURATION: Debug
+          BUILDCONFIGURATION: ${{matrix.configuration}}
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifacts
+        with:
+          name: Detailed Logs for testcli.sln ${{matrix.configuration}} ${{matrix.language}}
+          path: ${{ runner.temp }}/testcli/windows/testcli.sln.log
 
       - name: Create bundle testcli.sln
         run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
@@ -285,79 +399,10 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-  RnwNativePRBuild:
-    name: vnext Windows.sln
-    # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
-    runs-on: windows-2016
-    timeout-minutes: 45
-    strategy:
-      matrix:
-        BuildConfiguration: [Debug, Release]
-        BuildPlatform: [x64, x86, arm]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+  # TODO add E2E build
+  # E2ETest:
+  #  name: E2E Test
 
-      - name: yarn install
-        run: yarn install --frozen-lockfile
-
-      - run: yarn build
-
-      - name: Install SDK
-        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
-        shell: powershell
-
-      - name: Setup Nuget.exe
-        uses: warrenbuckley/Setup-Nuget@v1
-
-      - name: NuGet restore ReactWindows.sln
-        run: nuget.exe restore vnext\ReactWindows.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
-
-      - name: Setup MSBuild.exe
-        uses: warrenbuckley/Setup-MSBuild@v1
-
-      - name: Build ReactWindows.sln
-        run: msbuild vnext\ReactWindows.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{ matrix.BuildPlatform }}" /p:configuration="${{ matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
-        env:
-          RNW_PKG_VERSION_STR: Private Build
-          RNW_PKG_VERSION: 1000,0,0,0
-
-      - name: Run Desktop Unit Tests
-        if: matrix.BuildPlatform != 'arm'
-        run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll --InIsolation
-        env:
-          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-
-      - name: Run Desktop Unit Tests (Google Test)
-        if: matrix.BuildPlatform == 'x64'
-        run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}/JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe /TestAdapterPath:"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq" --InIsolation
-
-      - name: "Copy Nuget source files"
-        if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
-        run: vnext\layoutFilesForNuget.bat ${{ runner.temp }}\artifacts
-
-      - uses: actions/upload-artifact@master
-        if: matrix.BuildConfiguration == 'Debug'
-        name: Publish Artifacts (Debug)
-        with:
-          name: ReactWindows-debug-${{ matrix.BuildPlatform }}
-          path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-
-      - uses: actions/upload-artifact@master
-        if: matrix.BuildConfiguration == 'Release'
-        name: Publish Artifacts (Release)
-        with:
-          name: ReactWindows-ship-${{ matrix.BuildPlatform }}
-          path: vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-
-      - uses: actions/upload-artifact@master
-        name: Publish Artifacts - Nuget Source files
-        if: matrix.BuildConfiguration == 'Debug' && matrix.BuildPlatform == 'x86'
-        with:
-          name: ReactWindows-source
-          path: ${{ runner.temp }}\artifacts
 
   RNWNugetPR:
     name: React-Native-Windows Build and Pack Nuget
@@ -371,53 +416,11 @@ jobs:
 
       - uses: actions/download-artifact@master
         with:
-          name: ReactWindows-debug-arm
-          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-arm
+          name: ReactWindows
+          path: ${{ runner.temp }}\artifacts\ReactWindows
 
-      - uses: actions/download-artifact@master
-        with:
-          name: ReactWindows-ship-arm
-          path: ${{ runner.temp }}\artifacts\ReactWindows-ship-arm
-
-      - uses: actions/download-artifact@master
-        with:
-          name: ReactWindows-debug-x86
-          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-x86
-
-      - uses: actions/download-artifact@master
-        with:
-          name: ReactWindows-ship-x86
-          path: ${{ runner.temp }}\artifacts\ReactWindows-ship-x86
-
-      - uses: actions/download-artifact@master
-        with:
-          name: ReactWindows-debug-x64
-          path: ${{ runner.temp }}\artifacts\ReactWindows-debug-x64
-
-      - uses: actions/download-artifact@master
-        with:
-          name: ReactWindows-ship-x64
-          path: ${{ runner.temp }}\artifacts\ReactWindows-ship-x64
-
-      - uses: actions/download-artifact@master
-        with:
-          name: ReactWindows-source
-          path: ${{ runner.temp }}\artifacts\ReactWindows-source
-
-      - name: Copy files from build artifacts to nuget root
-        run: |
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-source ${{ runner.temp }}\NugetRoot /E /MOVE /NP
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x64 ${{ runner.temp }}\NugetRoot\target\x64\Debug /E /MOVE /NP
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-x86 ${{ runner.temp }}\NugetRoot\target\x86\Debug /E /MOVE /NP
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-x64 ${{ runner.temp }}\NugetRoot\target\x64\ship /E /MOVE /NP
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-x86 ${{ runner.temp }}\NugetRoot\target\x86\ship /E /MOVE /NP
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-debug-arm ${{ runner.temp }}\NugetRoot\target\arm\debug /E /MOVE /NP
-          robocopy ${{ runner.temp }}\artifacts\ReactWindows-ship-arm ${{ runner.temp }}\NugetRoot\target\arm\ship /E /MOVE /NP
-          echo This makes errorlevel 0
-          dir c:\
-
-      - name: NuGet Pack ReactUwp
-        run: nuget pack ${{ runner.temp }}\NugetRoot\ReactUwp.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
+      - name: NuGet Pack Desktop
+        run: nuget pack ${{ runner.temp }}\ReactWindows\ReactWin32.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=${{github.sha}};version=0.0.1=pr;id=OfficeReact.Win32;nugetroot=${{runner.temp}}\NugetRootFinal
 
       - name: NuGet Pack ReactWin32
-        run: nuget pack ${{ runner.temp }}\NugetRoot\ReactWin32.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=0;npmVersion=0.0.1-pr
+        run: nuget pack ${{ runner.temp }}\ReactWindows\ReactUWP.nuspec -OutputDirectory ${{ runner.temp }}\NugetRootFinal -Properties CommitId=${{github.sha}};version=0.0.1=pr;id=OfficeReact.UWP;nugetroot=${{runner.temp}}\NugetRootFinal
