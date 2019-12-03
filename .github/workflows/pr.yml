@@ -82,9 +82,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-Universal.sln
-        run: msbuild vnext/ReactWindows-Universal.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=$env:pkgVer
-        env:
-          pkgVer: 1000,0,0,0
+        run: msbuild vnext/ReactWindows-Universal.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=1000`,0`,0`,0
 
       - uses: actions/upload-artifact@master
         name: Publish Artifacts
@@ -187,9 +185,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-Desktop.sln
-        run: msbuild vnext/ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=$env:pkgVer
-        env:
-          pkgVer: 1000,0,0,0
+        run: msbuild vnext/ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=1000`,0`,0`,0
 
       - name: Run Desktop Unit Tests
         run: |
@@ -266,7 +262,7 @@ jobs:
     # yarn ends up copying the whole node_modules folder when doing an install of a file package
     # Delete node_modules, so that resolution is more like when installing from a published npm package
     - name: Remove node_modules
-      run: rmdir /S /Q node_modules
+      run: run: remove-item node_modules -Recurse
       working-directory: vnext
 
     - name: Install react-native cli
@@ -298,7 +294,7 @@ jobs:
       run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
     - name: Build testcli.sln
-      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
+      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /clp:NoSummary;Verbosity=normal
 
     - uses: actions/upload-artifact@master
       name: Publish Artifacts
@@ -378,7 +374,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactNative.sln
-        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="Debug" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
+        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="Debug" /clp:NoSummary;Verbosity=normal
 
       - name: Start Winium
         run: |
