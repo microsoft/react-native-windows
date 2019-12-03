@@ -151,16 +151,16 @@ jobs:
       matrix:
         name: [X64Debug, X86Debug,X64Release, X86Release]
         include:
-        - X64Debug:
+        - name: X64Debug
           BuildConfiguration: Debug
           BuildPlatform: x64
-        - X86Debug:
+        - name: X86Debug
           BuildConfiguration: Debug
           BuildPlatform: x86
-        - X64Release:
+        - name: X64Release
           BuildConfiguration: Release
           BuildPlatform: x64
-        - X86Release:
+        - name: X86Release
           BuildConfiguration: Release
           BuildPlatform: x86
     steps:
@@ -234,16 +234,16 @@ jobs:
       matrix:
         name: [DebugCpp, DebugCs, ReleaseCpp, ReleaseCs]
         include:
-        - DebugCpp:
+        - name: DebugCpp
           configuration: Debug
           language: cpp
-        - DebugCs:
+        - name: DebugCs
           configuration: Debug
           language: cs
-        - ReleaseCpp:
+        - name: ReleaseCpp
           configuration: Release
           language: cpp
-        - ReleaseCs:
+        - name: ReleaseCs
           configuration: Release
           language: cs
     steps:
