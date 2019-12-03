@@ -47,6 +47,18 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
 
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
 
+  void AddView(
+      winrt::Windows::UI::Xaml::DependencyObject parent,
+      winrt::Windows::UI::Xaml::DependencyObject child,
+      int64_t index) override;
+  void RemoveAllChildren(winrt::Windows::UI::Xaml::DependencyObject parent) override;
+  void RemoveChildAt(winrt::Windows::UI::Xaml::DependencyObject parent, int64_t index) override;
+  void ReplaceChild(
+      winrt::Windows::UI::Xaml::DependencyObject parent,
+      winrt::Windows::UI::Xaml::DependencyObject oldChild,
+      winrt::Windows::UI::Xaml::DependencyObject newChild)
+      override;
+
  protected:
   winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;
 
@@ -57,6 +69,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands m_viewManagerWithCommands;
   winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedEventTypeConstants
       m_viewManagerWithExportedEventTypeConstants;
+  winrt::Microsoft::ReactNative::Bridge::IViewManagerWithChildren m_viewManagerWithChildren;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };

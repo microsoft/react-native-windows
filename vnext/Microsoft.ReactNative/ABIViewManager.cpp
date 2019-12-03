@@ -18,6 +18,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithNativeProperties{viewManager.try_as<IViewManagerWithNativeProperties>()},
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
+      m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_name{to_string(viewManager.Name())} {
   if (m_viewManagerWithNativeProperties) {
     m_nativeProps = m_viewManagerWithNativeProperties.NativeProps();
@@ -180,6 +181,47 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
   }
 
   return parent;
+}
+
+void ABIViewManager::AddView(
+    winrt::Windows::UI::Xaml::DependencyObject parent,
+    winrt::Windows::UI::Xaml::DependencyObject child,
+    int64_t index) {
+  if (m_viewManagerWithChildren) {
+    m_viewManagerWithChildren.AddView(parent.as<winrt::FrameworkElement>(), child.as<winrt::UIElement>(), index);
+  } else {
+    Super::AddView(parent, child, index);
+  }
+}
+
+void ABIViewManager::RemoveAllChildren(winrt::Windows::UI::Xaml::DependencyObject parent) {
+  if (m_viewManagerWithChildren) {
+    m_viewManagerWithChildren.RemoveAllChildren(parent.as<winrt::FrameworkElement>());
+  } else {
+    Super::RemoveAllChildren(parent);
+  }
+}
+
+void ABIViewManager::RemoveChildAt(winrt::Windows::UI::Xaml::DependencyObject parent, int64_t index) {
+  if (m_viewManagerWithChildren) {
+    m_viewManagerWithChildren.RemoveChildAt(parent.as<winrt::FrameworkElement>(), index);
+  } else {
+    Super::RemoveChildAt(parent, index);
+  }
+}
+
+void ABIViewManager::ReplaceChild(
+    winrt::Windows::UI::Xaml::DependencyObject parent,
+    winrt::Windows::UI::Xaml::DependencyObject oldChild,
+    winrt::Windows::UI::Xaml::DependencyObject newChild) {
+  if (m_viewManagerWithChildren) {
+    m_viewManagerWithChildren.ReplaceChild(
+        parent.as<winrt::FrameworkElement>(),
+        oldChild.as<winrt::UIElement>(),
+        newChild.as<winrt::UIElement>());
+  } else {
+    Super::ReplaceChild(parent, oldChild, newChild);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

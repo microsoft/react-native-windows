@@ -17,7 +17,8 @@ namespace Microsoft.ReactNative.Managed
     IViewManagerWithExportedViewConstants,
     IViewManagerWithNativeProperties,
     IViewManagerWithCommands,
-    IViewManagerWithExportedEventTypeConstants
+    IViewManagerWithExportedEventTypeConstants,
+    IViewManagerWithChildren
     where TFrameworkElement : FrameworkElement, new()
   {
     public IReactContext ReactContext { get; private set; }
@@ -456,6 +457,67 @@ namespace Microsoft.ReactNative.Managed
       MethodCallExpression body = Expression.Call(thisReactContext, typeof(IReactContext).GetMethod("DispatchEvent"), viewParameter, Expression.Constant(eventName, typeof(string)), eventDataParameter);
 
       return Expression.Lambda(memberType, body, viewParameter, eventDataParameter).Compile();
+    }
+
+    #endregion
+
+    #region Children
+
+    public virtual IList<UIElement> GetChildren(TFrameworkElement parent) => throw new NotImplementedException();
+
+    public virtual void AddView(FrameworkElement parent, UIElement child, long index)
+    {
+      if (parent is TFrameworkElement parentAsT)
+      {
+        GetChildren(parentAsT).Insert((int)index, child);
+      }
+      else
+      {
+        throw new ArgumentOutOfRangeException(nameof(parent));
+      }
+    }
+
+    public virtual void RemoveAllChildren(FrameworkElement parent)
+    {
+      if (parent is TFrameworkElement parentAsT)
+      {
+        GetChildren(parentAsT).Clear();
+      }
+      else
+      {
+        throw new ArgumentOutOfRangeException(nameof(parent));
+      }
+    }
+
+    public virtual void RemoveChildAt(FrameworkElement parent, long index)
+    {
+      if (parent is TFrameworkElement parentAsT)
+      {
+        GetChildren(parentAsT).RemoveAt((int)index);
+      }
+      else
+      {
+        throw new ArgumentOutOfRangeException(nameof(parent));
+      }
+    }
+
+    public virtual void ReplaceChild(FrameworkElement parent, UIElement oldChild, UIElement newChild)
+    {
+      if (parent is TFrameworkElement parentAsT)
+      {
+        IList<UIElement> children = GetChildren(parentAsT);
+
+        if (null != children)
+        {
+          int index = children.IndexOf(oldChild);
+          children.RemoveAt(index);
+          children.Insert(index, newChild);
+        }
+      }
+      else
+      {
+        throw new ArgumentOutOfRangeException(nameof(parent));
+      }
     }
 
     #endregion
