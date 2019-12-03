@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - master # Disable GitHub Actions CI
+      - master
 jobs:
 
   RNWUniversalPR:
@@ -10,10 +10,6 @@ jobs:
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 45
-    # Can't appear to enable matrix right now:
-    # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
-    # Ideally we'd share more of the build def between UWPPublicRN and this job, but due to the issues with matrix right now
-    # it was easier to just duplicate the job logic somewhat
     strategy:
       matrix:
         name: [X64Debug, X86Debug, ArmDebug, X64Release, X86Release, ArmRelease, PublicRNX86Debug]
