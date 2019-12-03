@@ -5,6 +5,8 @@ on:
       - master
 jobs:
 
+# TODO add setup job to bypass for docs changes
+
   RNWUniversalPR:
     name: Universal PR
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
@@ -53,15 +55,15 @@ jobs:
 
       - name: Switch to facebook/react-native
         run: cd vnext && node scripts/useUnForkedRN.js
-        if: ${{ matrix.UseRNFork }} == 'true'
+        if: matrix.UseRNFork == 'true'
 
       - name: yarn install
         run: yarn install
-        if: ${{ matrix.UseRNFork }} == 'true'
+        if: matrix.UseRNFork == 'true'
 
       - name: yarn install
         run: yarn install --frozen-lockfile
-        if: ${{ matrix.UseRNFork }} != 'true'
+        if: matrix.UseRNFork != 'true'
 
       - run: yarn buildci
 
