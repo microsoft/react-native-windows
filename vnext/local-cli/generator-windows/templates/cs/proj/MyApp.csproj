@@ -135,7 +135,7 @@
       <Name>Microsoft.ReactNative</Name>
     </ProjectReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.2.190917002</Version>
+      <Version>2.3.191129002</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="..\..\node_modules\react-native-windows\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems" Label="Shared" />
