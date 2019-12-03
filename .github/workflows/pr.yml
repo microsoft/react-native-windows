@@ -56,15 +56,15 @@ jobs:
       - name: Switch to facebook/react-native
         run: node scripts/useUnForkedRN.js
         working-directory: vnext
-        if: matrix.UseRNFork == 'true'
+        if: matrix.UseRNFork == 'false'
 
       - name: yarn install
         run: yarn install
-        if: matrix.UseRNFork == 'true'
+        if: matrix.UseRNFork == 'false'
 
       - name: yarn install
         run: yarn install --frozen-lockfile
-        if: matrix.UseRNFork != 'true'
+        if: matrix.UseRNFork == 'true'
 
       - run: yarn buildci
 
@@ -95,7 +95,7 @@ jobs:
         if: matrix.LayoutHeaders == 'true'
 
       - name: Copy NuGet artifacts
-        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP
+        run: robocopy vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} /E /NP
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -169,6 +169,10 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '10.x'
+
+      - name: Install SDK
+        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+        shell: powershell
 
       - name: yarn install
         run: yarn install --frozen-lockfile
@@ -294,7 +298,7 @@ jobs:
       run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
     - name: Build testcli.sln
-      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="${{matrix.configuration}}" /clp:NoSummary;Verbosity=normal
+      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}" /p:PlatformToolset=v141 /clp:NoSummary;Verbosity=normal
 
     - uses: actions/upload-artifact@master
       name: Publish Artifacts
@@ -436,9 +440,10 @@ jobs:
         working-directory: packages/E2ETest
 
       - name: run-windows
-        run: react-native run-windows --no-packager --arch x86 --release --logging
+        run: |
+          cd packages/E2ETest
+          react-native run-windows --no-packager --arch x86 --release --logging
         shell: cmd
-        working-directory: packages/E2ETest
 
       - name: Wait for app to launch
         run: Start-Sleep -Seconds 30
