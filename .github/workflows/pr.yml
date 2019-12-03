@@ -230,81 +230,81 @@ jobs:
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 30
-        strategy:
-    matrix:
-      name: [DebugCpp, DebugCs, ReleaseCpp, ReleaseCs]
-      include:
-      - DebugCpp:
-        configuration: Debug
-        language: cpp
-      - DebugCs:
-        configuration: Debug
-        language: cs
-      - ReleaseCpp:
-        configuration: Release
-        language: cpp
-      - ReleaseCs:
-        configuration: Release
-        language: cs
+    strategy:
+      matrix:
+        name: [DebugCpp, DebugCs, ReleaseCpp, ReleaseCs]
+        include:
+        - DebugCpp:
+          configuration: Debug
+          language: cpp
+        - DebugCs:
+          configuration: Debug
+          language: cs
+        - ReleaseCpp:
+          configuration: Release
+          language: cpp
+        - ReleaseCs:
+          configuration: Release
+          language: cs
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-        
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '10.x'
+    - name: Checkout
+      uses: actions/checkout@v1
+      
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
 
-      - name: yarn install
-        run: yarn install --frozen-lockfile
+    - name: yarn install
+      run: yarn install --frozen-lockfile
 
-      # todo work out how to specify working-directory for run command
-      - name: yarn build (local react-native-windows)
-        run: cd vnext && yarn build
+    # todo work out how to specify working-directory for run command
+    - name: yarn build (local react-native-windows)
+      run: cd vnext && yarn build
 
-      # yarn ends up copying the whole node_modules folder when doing an install of a file package
-      # Delete node_modules, so that resolution is more like when installing from a published npm package
-      - name: Remove node_modules
-        run: cd vnext && rd /S /Q node_modules
+    # yarn ends up copying the whole node_modules folder when doing an install of a file package
+    # Delete node_modules, so that resolution is more like when installing from a published npm package
+    - name: Remove node_modules
+      run: cd vnext && rd /S /Q node_modules
 
-      - name: Install react-native cli
-        run: npm install -g react-native-cli
+    - name: Install react-native cli
+      run: npm install -g react-native-cli
 
-      - name: Init new project
-        run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
+    - name: Init new project
+      run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
 
-      - name: Install rnpm-plugin-windows
-        run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
+    - name: Install rnpm-plugin-windows
+      run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
 
-      - name: Apply windows template
-        run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext --overwrite --language ${{matrix.language}}
+    - name: Apply windows template
+      run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext --overwrite --language ${{matrix.language}}
 
-      - name: Install SDK
-        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
-        shell: powershell
+    - name: Install SDK
+      run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+      shell: powershell
 
-      - name: Setup Nuget.exe
-        uses: warrenbuckley/Setup-Nuget@v1
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
 
-      - name: Setup MSBuild.exe
-        uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
 
-      - name: NuGet restore testcli.sln
-        run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
+    - name: NuGet restore testcli.sln
+      run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
-      - name: Build testcli.sln
-        run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
-        env:
-          BUILDPLATFORM: x64
-          BUILDCONFIGURATION: ${{matrix.configuration}}
+    - name: Build testcli.sln
+      run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
+      env:
+        BUILDPLATFORM: x64
+        BUILDCONFIGURATION: ${{matrix.configuration}}
 
-      - uses: actions/upload-artifact@master
-        name: Publish Artifacts
-        with:
-          name: Detailed Logs for testcli.sln ${{matrix.configuration}} ${{matrix.language}}
-          path: ${{ runner.temp }}/testcli/windows/testcli.sln.log
+    - uses: actions/upload-artifact@master
+      name: Publish Artifacts
+      with:
+        name: Detailed Logs for testcli.sln ${{matrix.configuration}} ${{matrix.language}}
+        path: ${{ runner.temp }}/testcli/windows/testcli.sln.log
 
-      - name: Create bundle testcli.sln
-        run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+    - name: Create bundle testcli.sln
+      run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
 
   RNWFormatting:
     name: Verify change files + formatting
