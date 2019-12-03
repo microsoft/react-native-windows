@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 Dec 2019 17:34:30 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Dec 2019 23:21:34 GMT and should not be manually modified.
 
+## 0.60.0-vnext.86
+Tue, 03 Dec 2019 23:21:34 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
 ## 0.60.0-vnext.85
 Mon, 02 Dec 2019 17:34:30 GMT
 
