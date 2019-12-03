@@ -82,7 +82,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-Universal.sln
-        run: msbuild vnext/ReactWindows-Universal.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=1000`,0`,0`,0
+        run: msbuild vnext/ReactWindows-Universal.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=`"1000,0,0,0`"
 
       - uses: actions/upload-artifact@master
         name: Publish Artifacts
@@ -185,7 +185,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-Desktop.sln
-        run: msbuild vnext/ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=1000`,0`,0`,0
+        run: msbuild vnext/ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=`"1000,0,0,0`"
 
       - name: Run Desktop Unit Tests
         run: |
@@ -294,7 +294,7 @@ jobs:
       run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
     - name: Build testcli.sln
-      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /clp:NoSummary;Verbosity=normal
+      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="${{matrix.configuration}}" /clp:NoSummary;Verbosity=normal
 
     - uses: actions/upload-artifact@master
       name: Publish Artifacts
