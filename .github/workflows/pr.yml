@@ -72,7 +72,7 @@ jobs:
         uses: warrenbuckley/Setup-Nuget@v1
 
       - name: NuGet restore ReactWindows-Universal.sln
-        run: nuget.exe restore vnext\ReactWindows-Universal.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore vnext/ReactWindows-Universal.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Install SDK
         run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
@@ -82,7 +82,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-Universal.sln
-        run: msbuild vnext\ReactWindows-Universal.sln /nologo /nr:false fl /flp:"logfile=vnext\ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
+        run: msbuild vnext/ReactWindows-Universal.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
         env:
           BUILDPLATFORM: ${{ matrix.BuildPlatform }}
           BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
@@ -179,13 +179,13 @@ jobs:
         uses: warrenbuckley/Setup-Nuget@v1
 
       - name: NuGet restore ReactWindows-Universal.sln
-        run: nuget.exe restore vnext\ReactWindows-Desktop.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
+        run: nuget.exe restore vnext/ReactWindows-Desktop.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactWindows-Desktop.sln
-        run: msbuild vnext\ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext\ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
+        run: msbuild vnext/ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
 
       - name: Run Desktop Unit Tests
         run: |
@@ -262,7 +262,7 @@ jobs:
     # yarn ends up copying the whole node_modules folder when doing an install of a file package
     # Delete node_modules, so that resolution is more like when installing from a published npm package
     - name: Remove node_modules
-      run: rd /S /Q node_modules
+      run: rmdir /S /Q node_modules
       working-directory: vnext
 
     - name: Install react-native cli
@@ -294,7 +294,7 @@ jobs:
       run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
     - name: Build testcli.sln
-      run: msbuild ${{ runner.temp }}\testcli\windows\testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
+      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /clp:NoSummary;NoItemAndPropertyList;Verbosity=normal
 
     - uses: actions/upload-artifact@master
       name: Publish Artifacts
@@ -337,6 +337,10 @@ jobs:
         uses: actions/checkout@v1
         with:
           submodules: true
+
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
 
       - name: Download/Extract Winium
         run: |
@@ -405,6 +409,10 @@ jobs:
         with:
           node-version: '10.x'
 
+      - name: Install SDK
+        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+        shell: powershell
+
       - name: Remove WebDriverIO Workaround
         run: ((Get-Content -path packages/E2ETest/package.json -Raw) -replace ".*webdriver.git.*","") | Set-Content -Path packages/E2ETest/package.json
 
@@ -433,52 +441,13 @@ jobs:
         run: react-native run-windows --no-packager --arch x86 --release --logging
         working-directory: packages/E2ETest
 
-      - name: Setup MSBuild.exe
-        uses: warrenbuckley/Setup-MSBuild@v1
-
-      - name: Build ReactWindows-Desktop.sln
-        run: msbuild vnext\ReactWindows-Desktop.sln /nologo /nr:false /fl /flp:"logfile=vnext\ReactWindows-Desktop.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
-        env:
-          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
-          BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
-
-      - name: Run Desktop Unit Tests
-        run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
-
-      - name: Run JSI Unit Tests
-        run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
-
-      - name: Setup test servers
-        run: .\vnext\Scripts\Tfs\Start-TestServers.ps1 -SourcesDirectory .\vnext -Preload -SleepSeconds 120
-
-      - name: Run Desktop Integration Tests
-        run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
-        if: matrix.BuildConfiguration == 'Debug'
-
-      - name: Check the metro bundle server
-        run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
-
-      - name: Cleanup any packagers left over from other builds
-        run: |
-          Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-          Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-
-      - name: Copy NuGet artifacts
-        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\**
-
-      - uses: actions/upload-artifact@master
-        name: Publish Artifact ReactWindows
-        with:
-          name: ReactWindows
-          path: ${{ runner.temp }}\artifacts
+      # TODO - Finish E2E test
 
   RNWNugetPR:
     name: React-Native-Windows Build and Pack Nuget
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
+    needs:['RNWUniversalPR', 'RNWDesktopPR']
     timeout-minutes: 15
     steps:
       - name: Setup Nuget.exe
