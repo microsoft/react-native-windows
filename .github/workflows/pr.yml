@@ -338,9 +338,9 @@ jobs:
         with:
           submodules: true
 
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
 
       - name: Download/Extract Winium
         run: |
