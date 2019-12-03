@@ -262,7 +262,7 @@ jobs:
     # yarn ends up copying the whole node_modules folder when doing an install of a file package
     # Delete node_modules, so that resolution is more like when installing from a published npm package
     - name: Remove node_modules
-      run: run: remove-item node_modules -Recurse
+      run: remove-item node_modules -Recurse
       working-directory: vnext
 
     - name: Install react-native cli
