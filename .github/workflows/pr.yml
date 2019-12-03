@@ -195,7 +195,7 @@ jobs:
 
       - name: Run Desktop Unit Tests
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}\${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
 
       - name: Run JSI Unit Tests
         run: |
