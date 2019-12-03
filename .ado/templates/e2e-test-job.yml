@@ -94,7 +94,7 @@ jobs:
         displayName: Install MUX framework package
         inputs:
           targetType: "inline"
-          script:  Add-AppPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.2.appx
+          script:  Add-AppPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
 
       - task: CmdLine@2
         displayName: Create bundle
