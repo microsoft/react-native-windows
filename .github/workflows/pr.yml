@@ -54,7 +54,8 @@ jobs:
           node-version: '10.x'
 
       - name: Switch to facebook/react-native
-        run: cd vnext && node scripts/useUnForkedRN.js
+        run: node scripts/useUnForkedRN.js
+        working-directory: vnext
         if: matrix.UseRNFork == 'true'
 
       - name: yarn install
@@ -120,7 +121,8 @@ jobs:
 
       # todo work out how to specify working-directory for run command
       - name: Create Playground bundle
-        run: cd packages\playground && node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+        run: node node_modules/react-native/local-cli/cli.js bundle --entry-file Samples\index.tsx --bundle-output Playground.bundle
+        working-directory: packages/playground
 
       # - name: NuGet restore - SampleApps
       #   run: nuget.exe restore packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln -Verbosity Detailed -NonInteractive
@@ -132,13 +134,14 @@ jobs:
       #     BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
 
       # - name: Create SampleApp bundle
-      #  run: cd packages\microsoft-reactnative-sampleapps && node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+      #  run: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
+      #  working-directory: packages/microsoft-reactnative-sampleapps
 
       # todo work out how to specify working-directory for run command
       - name: Create RNTester bundle
         #  if: matrix.UseRNFork == 'true'
-        run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
-
+        run: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
+        working-directory: vnext
 
   RNWDesktopPR:
     name: Desktop PR
@@ -261,24 +264,30 @@ jobs:
 
     # todo work out how to specify working-directory for run command
     - name: yarn build (local react-native-windows)
-      run: cd vnext && yarn build
+      run: yarn build
+      working-directory: vnext
+
 
     # yarn ends up copying the whole node_modules folder when doing an install of a file package
     # Delete node_modules, so that resolution is more like when installing from a published npm package
     - name: Remove node_modules
-      run: cd vnext && rd /S /Q node_modules
+      run: rd /S /Q node_modules
+      working-directory: vnext
 
     - name: Install react-native cli
       run: npm install -g react-native-cli
 
     - name: Init new project
-      run: cd ${{ runner.temp }} && react-native init testcli --version 0.60.6
+      run: react-native init testcli --version 0.60.6
+      working-directory: ${{ runner.temp }}
 
     - name: Install rnpm-plugin-windows
-      run: cd ${{ runner.temp }}\testcli && yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
+      run: yarn add rnpm-plugin-windows@file:${{ runner.workspace }}\react-native-windows\current\local-cli\rnpm\windows
+      working-directory: ${{ runner.temp }}/testcli
 
     - name: Apply windows template
-      run: cd ${{ runner.temp }}\testcli && react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext --overwrite --language ${{matrix.language}}
+      run: react-native windows --template vnext --windowsVersion file:${{ runner.workspace }}\react-native-windows\vnext --overwrite --language ${{matrix.language}}
+      working-directory: ${{ runner.temp }}/testcli
 
     - name: Install SDK
       run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
@@ -306,7 +315,8 @@ jobs:
         path: ${{ runner.temp }}/testcli/windows/testcli.sln.log
 
     - name: Create bundle testcli.sln
-      run: cd ${{ runner.temp }}\testcli && react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+      run: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+      working-directory: ${{ runner.temp }}/testcli
 
   RNWFormatting:
     name: Verify change files + formatting
@@ -358,13 +368,15 @@ jobs:
         run: npm install -g react-native-cli
 
       - name: npm install
-        run: cd current && npm install
+        run: npm install
+        working-directory: current
 
       - name: Make Bundle Dir
         run: mkdir current\ReactWindows\Playground.Net46\ReactAssets
 
       - name: Make Bundle
-        run: cd current && react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
+        run: react-native bundle --platform windows --entry-file ./ReactWindows/Playground.Net46/index.windows.js --bundle-output ./ReactWindows/Playground.Net46/ReactAssets/index.windows.bundle --assets-dest ./ReactWindows/Playground.Net46/ReactAssets --dev false
+        working-directory: current
 
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
@@ -429,10 +441,12 @@ jobs:
         run: nuget.exe restore packages/E2ETest/windows/ReactUWPTestApp.sln -Verbosity Detailed -NonInteractive
 
       - name: Create Bundle
-        run: cd packages/E2ETest && yarn bundle
+        run: yarn bundle
+        working-directory: packages/E2ETest
 
       - name: run-windows
-        run: cd packages/E2ETest && react-native run-windows --no-packager --arch x86 --release --logging
+        run: react-native run-windows --no-packager --arch x86 --release --logging
+        working-directory: packages/E2ETest
 
       - name: Setup MSBuild.exe
         uses: warrenbuckley/Setup-MSBuild@v1
