@@ -95,7 +95,7 @@ jobs:
         if: matrix.LayoutHeaders == 'true'
 
       - name: Copy NuGet artifacts
-        run: robocopy vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} /E /NP
+        run: robocopy vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} /E /NP || echo make pass
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -193,7 +193,7 @@ jobs:
 
       - name: Run Desktop Unit Tests
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
 
       - name: Run JSI Unit Tests
         run: |
@@ -204,7 +204,7 @@ jobs:
 
       - name: Run Desktop Integration Tests
         run: |
-          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests/React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
         if: matrix.BuildConfiguration == 'Debug'
 
       - name: Check the metro bundle server
@@ -216,7 +216,7 @@ jobs:
           Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
       - name: Copy NuGet artifacts
-        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\**
+        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\** || echo make pass
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -298,7 +298,7 @@ jobs:
       run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
     - name: Build testcli.sln
-      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}" /p:PlatformToolset=v141 /clp:NoSummary;Verbosity=normal
+      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}" /p:PlatformToolset=v141
 
     - uses: actions/upload-artifact@master
       name: Publish Artifacts
@@ -378,7 +378,7 @@ jobs:
         uses: warrenbuckley/Setup-MSBuild@v1
 
       - name: Build ReactNative.sln
-        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="Debug" /clp:NoSummary;Verbosity=normal
+        run: msbuild current/ReactWindows/ReactNative.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="Debug" /p:TargetPlatformVersion=10.0.18362.0 /p:WindowsTargetPlatformVersion=10.0.18362.0
 
       - name: Start Winium
         run: |
