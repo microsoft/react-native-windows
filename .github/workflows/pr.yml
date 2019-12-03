@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
     branches:
-      - none # Disable GitHub Actions CI
+      - master # Disable GitHub Actions CI
 jobs:
 
   RNWUniversalPR:
@@ -399,10 +399,84 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-  # TODO add E2E build
-  # E2ETest:
-  #  name: E2E Test
+  E2ETest:
+    name: E2E Test
+    runs-on: windows-2016
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
 
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+
+      - name: Remove WebDriverIO Workaround
+        run: ((Get-Content -path packages/E2ETest/package.json -Raw) -replace ".*webdriver.git.*","") | Set-Content -Path packages/E2ETest/package.json
+
+      - name: Install react-native-cli
+        run: npm install -g react-native-cli
+
+      - name: yarn install
+        run: yarn install --frozen-lockfile
+
+      - name: Patch WebDriverIO
+        run: ((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js
+
+      - run: yarn build
+
+      - name: Setup Nuget.exe
+        uses: warrenbuckley/Setup-Nuget@v1
+
+      - name: NuGet restore packages/E2ETest/windows/ReactUWPTestApp.sln
+        run: nuget.exe restore packages/E2ETest/windows/ReactUWPTestApp.sln -Verbosity Detailed -NonInteractive
+
+      - name: Create Bundle
+        run: cd packages/E2ETest && yarn bundle
+
+      - name: run-windows
+        run: cd packages/E2ETest && react-native run-windows --no-packager --arch x86 --release --logging
+
+      - name: Setup MSBuild.exe
+        uses: warrenbuckley/Setup-MSBuild@v1
+
+      - name: Build ReactWindows-Desktop.sln
+        run: msbuild vnext\ReactWindows-Desktop.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="%BUILDPLATFORM%" /p:configuration="%BUILDCONFIGURATION%" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION="1000,0,0,0"
+        env:
+          BUILDPLATFORM: ${{ matrix.BuildPlatform }}
+          BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
+
+      - name: Run Desktop Unit Tests
+        run: |
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}\${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+
+      - name: Run JSI Unit Tests
+        run: |
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
+
+      - name: Setup test servers
+        run: .\vnext\Scripts\Tfs\Start-TestServers.ps1 -SourcesDirectory .\vnext -Preload -SleepSeconds 120
+
+      - name: Run Desktop Integration Tests
+        run: |
+          "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
+        if: ${{matrix.BuildConfiguration}} == 'Debug'
+
+      - name: Check the metro bundle server
+        run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
+
+      - name: Cleanup any packagers left over from other builds
+        run: |
+          Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+          Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
+
+      - name: Copy NuGet artifacts
+        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\**
+
+      - uses: actions/upload-artifact@master
+        name: Publish Artifact ReactWindows
+        with:
+          name: ReactWindows
+          path: ${{ runner.temp }}\artifacts
 
   RNWNugetPR:
     name: React-Native-Windows Build and Pack Nuget
