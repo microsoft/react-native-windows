@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Enable CFG for release builds by default.",
+  "packageName": "react-native-windows",
+  "email": "yicyao@microsoft.com",
+  "commit": "9c1a5ae479f500b4039e50ce82c32a6003ba983c",
+  "date": "2019-12-03T21:48:52.291Z"
+}
