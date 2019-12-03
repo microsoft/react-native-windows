@@ -79,6 +79,10 @@ stages:
             clean: false
             submodules: false
 
+          - task: UseNode@1
+            inputs:
+              version: "10.x"
+
           - template: templates/build-rnw.yml
             parameters:
               useRnFork: $(UseRNFork)
@@ -186,6 +190,10 @@ stages:
             clean: false
             submodules: false
 
+          - task: UseNode@1
+            inputs:
+              version: "10.x"
+
           - task: VisualStudioTestPlatformInstaller@1
             inputs:
               testPlatformVersion: 16.3.0
@@ -196,8 +204,7 @@ stages:
               project: vnext/ReactWindows-Desktop.sln
               platformToolset: v141
               vsComponents: $(VsComponents)
-              msbuildArguments:
-                /p:RNW_PKG_VERSION_STR="Private Build"
+              msbuildArguments: /p:RNW_PKG_VERSION_STR="Private Build"
                 /p:RNW_PKG_VERSION="1000,0,0,0"
 
           - task: VSTest@2
@@ -262,6 +269,10 @@ stages:
             lfs: false # whether to download Git-LFS files
             submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
             persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+          - task: UseNode@1
+            inputs:
+              version: "10.x"
 
           # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
           - task: CmdLine@2
@@ -413,6 +424,10 @@ stages:
             lfs: false # whether to download Git-LFS files
             submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
             persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+          - task: UseNode@1
+            inputs:
+              version: "10.x"
 
           - task: PowerShell@2
             displayName: Download Winium
