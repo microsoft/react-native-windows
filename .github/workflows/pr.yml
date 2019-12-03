@@ -89,12 +89,12 @@ jobs:
       - uses: actions/upload-artifact@master
         name: Publish Artifacts
         with:
-          name: Detailed Logs for ${{parameters.project}} ${{matrix.BuildConfiguration}} ${{matrix.BuildPlatform}}
+          name: Detailed Logs for ReactWindows-Universal.sln ${{matrix.BuildConfiguration}} ${{matrix.BuildPlatform}}
           path: vnext/ReactWindows-Universal.sln.log
 
       - name: Copy NuGet header files
         run: .\vnext\Scripts\Tfs\Layout-Headers.ps1 -TargetRoot ${{ runner.temp }}\artifacts
-        if: ${{matrix.LayoutHeaders}} == 'true'
+        if: matrix.LayoutHeaders == 'true'
 
       - name: Copy NuGet artifacts
         run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP
@@ -116,7 +116,7 @@ jobs:
       #   env:
       #    BUILDPLATFORM: ${{ matrix.BuildPlatform }}
       #    BUILDCONFIGURATION: ${{ matrix.BuildConfiguration }}
-      #   if: ${{ matrix.UseRNFork }} == 'true'
+      #   if: matrix.UseRNFork == 'true'
 
       # todo work out how to specify working-directory for run command
       - name: Create Playground bundle
@@ -136,7 +136,7 @@ jobs:
 
       # todo work out how to specify working-directory for run command
       - name: Create RNTester bundle
-        #  if: ${{ matrix.UseRNFork }} == 'true'
+        #  if: matrix.UseRNFork == 'true'
         run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
 
 
@@ -207,7 +207,7 @@ jobs:
       - name: Run Desktop Integration Tests
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
-        if: ${{matrix.BuildConfiguration}} == 'Debug'
+        if: matrix.BuildConfiguration == 'Debug'
 
       - name: Check the metro bundle server
         run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
@@ -457,7 +457,7 @@ jobs:
       - name: Run Desktop Integration Tests
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
-        if: ${{matrix.BuildConfiguration}} == 'Debug'
+        if: matrix.BuildConfiguration == 'Debug'
 
       - name: Check the metro bundle server
         run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
