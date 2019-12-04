@@ -200,6 +200,7 @@ jobs:
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
         shell: cmd
+        if: matrix.BuildPlatform == 'x64'
 
       - name: Setup test servers
         run: .\vnext\Scripts\Tfs\Start-TestServers.ps1 -SourcesDirectory .\vnext -Preload -SleepSeconds 120
@@ -220,8 +221,8 @@ jobs:
 
       - name: Copy NuGet artifacts
         run: |
-          xcopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/React.Windows.Desktop.DLL ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/React.Windows.Desktop.DLL /E
-          xcopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/React.Windows.Desktop.Test.DLL ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/React.Windows.Desktop.Test.DLL /E
+          xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL /E
+          xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.Test.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.Test.DLL /E
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
