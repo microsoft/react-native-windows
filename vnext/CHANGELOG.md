@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 11 Oct 2019 17:23:14 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Dec 2019 01:30:50 GMT and should not be manually modified.
 
+## 0.59.0-vnext.202
+Wed, 04 Dec 2019 01:30:50 GMT
+
+### Changes
+
+- Enable CFG for release builds by default. (yicyao@microsoft.com)
 ## 0.59.0-vnext.201
 Fri, 11 Oct 2019 17:23:14 GMT
 
