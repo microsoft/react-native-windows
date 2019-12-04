@@ -7,6 +7,7 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
+#include "CircleViewManagerCPP.h"
 #include "CustomUserControlViewManagerCPP.h"
 #include "SampleModuleCPP.h"
 
@@ -20,6 +21,8 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   packageBuilder.AddViewManager(L"CustomUserControlViewManagerCPP", [](IReactContext const &reactContext) {
     return winrt::make<CustomUserControlViewManagerCPP>(reactContext);
   });
+  packageBuilder.AddViewManager(
+      L"CircleViewManagerCPP", [](IReactContext const &reactContext) { return winrt::make<CircleViewManagerCPP>(); });
 }
 
 } // namespace winrt::SampleLibraryCPP::implementation

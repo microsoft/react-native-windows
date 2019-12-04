@@ -24,7 +24,8 @@ const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModule
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
-const StackPanel = requireNativeComponent('StackPanel');
+const CircleCS = requireNativeComponent('CircleCS');
+const CircleCPP = requireNativeComponent('CircleCPP');
 
 var log = function(result) {
   console.log(result);
@@ -179,7 +180,17 @@ class SampleApp extends Component {
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCPP(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
 
-        <StackPanel orientation={1} />
+        <CircleCS style={styles.circle}>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>CircleCS!</Text>
+          </View>
+        </CircleCS>
+
+        <CircleCPP style={styles.circle}>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>CircleCPP!</Text>
+          </View>
+        </CircleCPP>
 
         <Text style={styles.instructions}>
           Hello from Microsoft!
@@ -212,6 +223,19 @@ const styles = StyleSheet.create({
     width: 200,
     height: 20,
     margin: 10,
+  },
+  circle: {
+    margin: 10,
+  },
+  box: {
+    backgroundColor: '#006666',
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxText: {
+    fontSize: 20,
   },
 });
 

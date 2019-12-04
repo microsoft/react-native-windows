@@ -85,7 +85,7 @@
   <ItemGroup>
     <Compile Include="CustomUserControlCS.cs" />
     <Compile Include="CustomUserControlViewManagerCS.cs" />
-    <Compile Include="StackPanelViewManager.cs" />
+    <Compile Include="CircleViewManagerCS.cs" />
     <Compile Include="ReactPackageProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleModuleCS.cs" />
