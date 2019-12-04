@@ -95,7 +95,10 @@ jobs:
         if: matrix.LayoutHeaders == 'true'
 
       - name: Copy NuGet artifacts
-        run: robocopy vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} /E /NP || echo make pass
+        run: |
+          $ErrorActionPreference = 'Continue'
+          robocopy vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}/artifacts/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} /E /NP
+          echo make pass
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -194,10 +197,12 @@ jobs:
       - name: Run Desktop Unit Tests
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" vnext/target/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}}/React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+        shell: cmd
 
       - name: Run JSI Unit Tests
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" JSI.Desktop.UnitTests/JSI.Desktop.UnitTests.exe
+        shell: cmd
 
       - name: Setup test servers
         run: .\vnext\Scripts\Tfs\Start-TestServers.ps1 -SourcesDirectory .\vnext -Preload -SleepSeconds 120
@@ -205,6 +210,7 @@ jobs:
       - name: Run Desktop Integration Tests
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" React.Windows.Desktop.IntegrationTests/React.Windows.Desktop.IntegrationTests.dll /blame -- RunConfiguration.TestSessionTimeout=300000
+        shell: cmd
         if: matrix.BuildConfiguration == 'Debug'
 
       - name: Check the metro bundle server
@@ -216,7 +222,10 @@ jobs:
           Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
 
       - name: Copy NuGet artifacts
-        run: robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\** || echo make pass
+        run: |
+          $ErrorActionPreference = 'Continue'
+          robocopy vnext/${{matrix.BuildPlatform}}/${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /NP React.Windows.Desktop.DLL\** React.Windows.Desktop.Test.DLL\** || echo make pass
+          echo make pass
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -354,6 +363,10 @@ jobs:
           [IO.Compression.ZipFile]::ExtractToDirectory("${{ runner.temp }}\winium.zip", "${{ runner.temp }}\winium")
         shell: powershell
 
+      - name: Install SDK
+        run: .\vnext\Scripts\Install-WindowsSdkISO.ps1 18362
+        shell: powershell
+
       - name: Setup Nuget.exe
         uses: warrenbuckley/Setup-Nuget@v1
 
@@ -390,6 +403,7 @@ jobs:
         if: matrix.BuildPlatform != 'ARM'
         run: |
           "c:/Program Files (x86)/Microsoft Visual Studio/2017/Enterprise/Common7/IDE/Extensions/TestPlatform/vstest.console.exe" current/ReactWindows/ReactNative.Net46.Tests/bin/${{ matrix.BuildPlatform }}/Debug/ReactNative.Net46.Tests.dll
+        shell: cmd
 
       # Previous AppVeyor definition had code to trigger this, but due to a bug in the AppVeyor build def it was never triggering
       # It currently fails, so commenting this out for now

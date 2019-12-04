@@ -151,8 +151,8 @@
 
   <PropertyGroup>
     <BundleCommand>
-    echo WorkingDir %CD%
-    yarn run bundle
+    cd
+    yarn bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
