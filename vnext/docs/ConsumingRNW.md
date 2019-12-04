@@ -81,6 +81,10 @@
 
 See [Native Modules and React Native Windows](NativeModules.md).
 
+## Migrate project from old template
+- Add Microsoft.UI.Xaml nuget
+You need to manually add the nuget Microsoft.UI.Xaml 2.3.191129002 to your project
+
 ## Building a standalone React Native Windows App
 Follow these steps to build a version of your app that you can install or publish to the store.  This version will package your bundle and assets into the appx package so you don't need to run Metro.
 
