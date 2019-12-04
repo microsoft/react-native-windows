@@ -43,6 +43,7 @@
       <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;_SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;BOOST_SYSTEM_SOURCE;BOOST_ERROR_CODE_HEADER_ONLY;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ControlFlowGuard Condition="'$(Configuration)' != 'Debug'">Guard</ControlFlowGuard>
     </ClCompile>
   </ItemDefinitionGroup>
 
