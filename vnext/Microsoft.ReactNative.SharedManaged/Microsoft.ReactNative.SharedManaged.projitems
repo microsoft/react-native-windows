@@ -9,6 +9,7 @@
     <Import_RootNamespace>Microsoft.ReactNative.SharedManaged</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AttributedParentViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)AttributedViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JSValueReader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JSValueWriter.cs" />

@@ -56,8 +56,7 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   void ReplaceChild(
       winrt::Windows::UI::Xaml::DependencyObject parent,
       winrt::Windows::UI::Xaml::DependencyObject oldChild,
-      winrt::Windows::UI::Xaml::DependencyObject newChild)
-      override;
+      winrt::Windows::UI::Xaml::DependencyObject newChild) override;
 
  protected:
   winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;

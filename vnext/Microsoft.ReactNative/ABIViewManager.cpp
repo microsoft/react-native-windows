@@ -216,9 +216,7 @@ void ABIViewManager::ReplaceChild(
     winrt::Windows::UI::Xaml::DependencyObject newChild) {
   if (m_viewManagerWithChildren) {
     m_viewManagerWithChildren.ReplaceChild(
-        parent.as<winrt::FrameworkElement>(),
-        oldChild.as<winrt::UIElement>(),
-        newChild.as<winrt::UIElement>());
+        parent.as<winrt::FrameworkElement>(), oldChild.as<winrt::UIElement>(), newChild.as<winrt::UIElement>());
   } else {
     Super::ReplaceChild(parent, oldChild, newChild);
   }

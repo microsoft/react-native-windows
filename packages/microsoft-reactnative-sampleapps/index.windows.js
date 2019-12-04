@@ -24,6 +24,8 @@ const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModule
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
+const StackPanel = requireNativeComponent('StackPanel');
+
 var log = function(result) {
   console.log(result);
   NativeModules.DebugConsole.Log('' + result);
@@ -176,6 +178,8 @@ class SampleApp extends Component {
 
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCPP(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
+
+        <StackPanel orientation={1} />
 
         <Text style={styles.instructions}>
           Hello from Microsoft!
