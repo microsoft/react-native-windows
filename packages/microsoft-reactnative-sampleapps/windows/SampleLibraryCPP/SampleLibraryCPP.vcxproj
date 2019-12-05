@@ -108,6 +108,7 @@
       <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="CustomUserControlViewManagerCPP.h" />
+    <ClInclude Include="CircleViewManagerCPP.h" />
     <ClInclude Include="DebugHelpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactPackageProvider.h">
@@ -120,6 +121,7 @@
       <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
+    <ClCompile Include="CircleViewManagerCPP.cpp" />
     <ClCompile Include="DebugHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add support for custom ViewManagers with children",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "85cdd2f1a582a31e4e22f29c6fb90342a31d1251",
+  "date": "2019-12-04T22:34:40.541Z"
+}
