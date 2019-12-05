@@ -1,7 +1,113 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 09 Nov 2019 01:27:15 GMT and should not be manually modified.
+This log was last generated on Tue, 03 Dec 2019 23:21:34 GMT and should not be manually modified.
 
+## 0.60.0-vnext.86
+Tue, 03 Dec 2019 23:21:34 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+## 0.60.0-vnext.85
+Mon, 02 Dec 2019 17:34:30 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.24 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.84
+Tue, 26 Nov 2019 00:13:20 GMT
+
+### Changes
+
+- View Manager Event Support (jthysell@microsoft.com)
+## 0.60.0-vnext.83
+Mon, 25 Nov 2019 21:54:38 GMT
+
+### Changes
+
+- Properly support ScrollView KeyboardDismissMode (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.82
+Mon, 25 Nov 2019 21:23:52 GMT
+
+### Changes
+
+- Revert "Add Winui 2.2 framework package (#3622)" (licanhua@live.com)
+## 0.60.0-vnext.81
+Sat, 23 Nov 2019 08:02:20 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+- Support ScrollView pagingEnabled (dida@ntdev.microsoft.com)
+- Add react-native run-windows --info (licanhua@live.com)
+- manually bump to vnext.80 (kmelmon@microsoft.com)
+## 0.60.0-vnext.79
+Fri, 22 Nov 2019 20:45:17 GMT
+
+### Changes
+
+- Commit ecd4456c... was wrong. `ABI::Windows::ApplicationModel::IPackage::get_Current` will, when called without package identity, return `HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE)`, not just `APPMODEL_ERROR_NO_PACKAGE` (which is a win32 error code, not an hresult). 🤦‍♂️ (hpratt@microsoft.com)
+## 0.60.0-vnext.78
+Fri, 22 Nov 2019 04:47:41 GMT
+
+### Changes
+
+- remove ReleaseBundle and DebugBundle (licanhua@live.com)
+## 0.60.0-vnext.77
+Fri, 22 Nov 2019 00:48:20 GMT
+
+### Changes
+
+- Support keyboardDismissMode on-drag for ScrollView (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.76
+Thu, 21 Nov 2019 21:53:08 GMT
+
+### Changes
+
+- Merge remote-tracking branch 'upstream/master' (hpratt@microsoft.com)
+## 0.60.0-vnext.75
+Thu, 21 Nov 2019 01:46:31 GMT
+
+### Changes
+
+- Fix layout children position issue when outer border exists (dida@ntdev.microsoft.com)
+- Updating react-native to version: 0.60.0-microsoft.23 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.74
+Wed, 20 Nov 2019 18:56:27 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.22 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.73
+Tue, 19 Nov 2019 22:36:29 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.21 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.72
+Mon, 18 Nov 2019 22:41:41 GMT
+
+### Changes
+
+- Stop requiring Platform.cpp from MS/RN (acoates@microsoft.com)
+## 0.60.0-vnext.71
+Fri, 15 Nov 2019 18:17:47 GMT
+
+### Changes
+
+- Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native (zihanc@microsoft.com)
+## 0.60.0-vnext.70
+Tue, 12 Nov 2019 04:50:06 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.20 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.69
+Mon, 11 Nov 2019 22:01:18 GMT
+
+### Changes
+
+- Workaround for flyout centering problem (kenander@microsoft.com)
 ## 0.60.0-vnext.68
 Sat, 09 Nov 2019 01:27:15 GMT
 

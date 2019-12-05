@@ -9,9 +9,7 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
-#if !defined(OSS_RN)
-#include <cxxreact/Platform.h>
-#endif
+#include <cxxreact/ReactMarker.h>
 #include "Unicode.h"
 
 #include "../Chakra/ChakraExecutor.h"
@@ -195,9 +193,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
 } // namespace
 #endif
 
-#if !defined(OSS_RN)
 void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char * /*tag*/) {}
-#endif
 
 struct BridgeUIBatchInstanceCallback : public InstanceCallback {
   BridgeUIBatchInstanceCallback(
@@ -364,9 +360,7 @@ InstanceImpl::InstanceImpl(
       m_devManager(std::move(devManager)),
       m_innerInstance(std::make_shared<Instance>()) {
   // Temp set the logmarker here
-#if !defined(OSS_RN)
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
-#endif
 
 #ifdef ENABLE_TRACING
   // TODO :: Find a better place to initialize ETW once per process.

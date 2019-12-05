@@ -49,3 +49,9 @@ rallocxWeak
 sallocxWeak
 sdallocxWeak
 xallocxWeak
+?set@HostObject@jsi@facebook@@UAAXAAVRuntime@23@ABVPropNameID@23@ABVValue@23@@Z
+?getPropertyNames@HostObject@jsi@facebook@@UAA?AV?$vector@VPropNameID@jsi@facebook@@V?$allocator@VPropNameID@jsi@facebook@@@std@@@std@@AAVRuntime@23@@Z
+??1Value@jsi@facebook@@QAA@XZ
+??0TurboModule@react@facebook@@QAA@ABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$shared_ptr@VJSCallInvoker@react@facebook@@@4@@Z
+??1TurboModule@react@facebook@@UAA@XZ
+?get@TurboModule@react@facebook@@UAA?AVValue@jsi@3@AAVRuntime@53@ABVPropNameID@53@@Z

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
@@ -11,23 +12,66 @@ using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
-  internal abstract class AttributedViewManager<T> :
+  internal abstract class AttributedViewManager<TFrameworkElement> :
     IViewManager,
     IViewManagerWithExportedViewConstants,
     IViewManagerWithNativeProperties,
-    IViewManagerWithCommands
-    where T : FrameworkElement, new()
+    IViewManagerWithCommands,
+    IViewManagerWithExportedEventTypeConstants
+    where TFrameworkElement : FrameworkElement, new()
   {
-    public virtual string Name => typeof(T).Name;
+    public IReactContext ReactContext { get; private set; }
 
-    public virtual FrameworkElement CreateView() => new T();
+    protected AttributedViewManager(IReactContext reactContext)
+    {
+      ReactContext = reactContext;
+    }
 
-    public IReadOnlyDictionary<string, object> ExportedViewConstants => _exportedViewConstants ?? (_exportedViewConstants = GetConstantsByAttribute<ViewManagerExportedViewConstantAttribute>());
+    #region IViewManager
+
+    public virtual string Name => typeof(TFrameworkElement).Name;
+
+    public virtual FrameworkElement CreateView() => new TFrameworkElement();
+
+    #endregion
+
+    #region Constants
+
+    public virtual IReadOnlyDictionary<string, object> ExportedViewConstants => _exportedViewConstants ?? (_exportedViewConstants = GetExportedViewConstants());
     private IReadOnlyDictionary<string, object> _exportedViewConstants;
+
+    private IReadOnlyDictionary<string, object> GetExportedViewConstants()
+    {
+      var typeInfo = GetType().GetTypeInfo();
+
+      var constants = new Dictionary<string, object>();
+
+      foreach (var fieldInfo in typeInfo.DeclaredFields)
+      {
+        var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
+        if (null != attribute)
+        {
+          constants.Add(attribute.ConstantName ?? fieldInfo.Name, fieldInfo.GetValue(this));
+        }
+      }
+
+      foreach (var propertyInfo in typeInfo.DeclaredProperties)
+      {
+        var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
+        if (null != attribute)
+        {
+          constants.Add(attribute.ConstantName ?? propertyInfo.Name, propertyInfo.GetMethod.Invoke(this, null));
+        }
+      }
+
+      return constants;
+    }
+
+    #endregion
 
     #region Properties
 
-    public IReadOnlyDictionary<string, ViewManagerPropertyType> NativeProps
+    public virtual IReadOnlyDictionary<string, ViewManagerPropertyType> NativeProps
     {
       get
       {
@@ -47,22 +91,40 @@ namespace Microsoft.ReactNative.Managed
     }
     private IReadOnlyDictionary<string, ViewManagerPropertyType> _nativeProps;
 
-    internal Dictionary<string, ViewManagerProperty<T>> ViewManagerProperties
+    public virtual void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
+    {
+      if (view is TFrameworkElement viewAsT)
+      {
+        foreach (var property in propertyMap)
+        {
+          if (ViewManagerProperties.TryGetValue(property.Key, out ViewManagerProperty<TFrameworkElement> setter))
+          {
+            setter.Setter(viewAsT, property.Value);
+          }
+        }
+      }
+      else
+      {
+        throw new ArgumentOutOfRangeException(nameof(view));
+      }
+    }
+
+    internal Dictionary<string, ViewManagerProperty<TFrameworkElement>> ViewManagerProperties
     {
       get
       {
         if (null == _properties)
         {
-          var properties = new Dictionary<string, ViewManagerProperty<T>>();
+          var properties = new Dictionary<string, ViewManagerProperty<TFrameworkElement>>();
 
           foreach (var methodInfo in GetType().GetTypeInfo().DeclaredMethods)
           {
             var propertyAttribute = methodInfo.GetCustomAttribute<ViewManagerPropertyAttribute>();
             if (null != propertyAttribute)
             {
-              var setter = new ViewManagerProperty<T>();
-              setter.Name = propertyAttribute.Name ?? methodInfo.Name;
-              setter.Type = propertyAttribute.Type ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
+              var setter = new ViewManagerProperty<TFrameworkElement>();
+              setter.Name = propertyAttribute.PropertyName ?? methodInfo.Name;
+              setter.Type = propertyAttribute.PropertyType ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
               setter.Setter = MakePropertySetterMethod(methodInfo);
 
               properties.Add(setter.Name, setter);
@@ -75,31 +137,29 @@ namespace Microsoft.ReactNative.Managed
         return _properties;
       }
     }
-    private Dictionary<string, ViewManagerProperty<T>> _properties;
+    private Dictionary<string, ViewManagerProperty<TFrameworkElement>> _properties;
 
-    public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
-    {
-      if (view is T viewAsT)
-      {
-        foreach (var property in propertyMap)
-        {
-          if (ViewManagerProperties.TryGetValue(property.Key, out ViewManagerProperty<T> setter))
-          {
-            setter.Setter(viewAsT, property.Value);
-          }
-        }
-      }
-      else
-      {
-        throw new ArgumentOutOfRangeException(nameof(view));
-      }
-    }
-
-    internal struct ViewManagerProperty<U> where U : T
+    internal struct ViewManagerProperty<U> where U : TFrameworkElement
     {
       public string Name;
       public ViewManagerPropertyType Type;
       public Action<U, object> Setter;
+    }
+
+    private Action<TFrameworkElement, object> MakePropertySetterMethod(MethodInfo methodInfo)
+    {
+      var parameters = methodInfo.GetParameters();
+
+      if (parameters.Length == 2
+        && parameters[0].ParameterType == typeof(TFrameworkElement))
+      {
+        return (view, propertyValue) =>
+        {
+          methodInfo.Invoke(this, new object[] { view, propertyValue });
+        };
+      }
+
+      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
     }
 
     private static ViewManagerPropertyType TypeToViewManagerPropertyType(Type t)
@@ -112,7 +172,7 @@ namespace Microsoft.ReactNative.Managed
       {
         return ViewManagerPropertyType.String;
       }
-      else if (t == typeof(decimal) || t == typeof(double) || t == typeof(float) || t == typeof(long) || t == typeof(int) || t== typeof(short) || t == typeof(sbyte) || t == typeof(ulong) || t == typeof(uint) || t == typeof(ushort) || t == typeof(byte) ||
+      else if (t == typeof(decimal) || t == typeof(double) || t == typeof(float) || t == typeof(long) || t == typeof(int) || t == typeof(short) || t == typeof(sbyte) || t == typeof(ulong) || t == typeof(uint) || t == typeof(ushort) || t == typeof(byte) ||
                t == typeof(decimal?) || t == typeof(double?) || t == typeof(float?) || t == typeof(long?) || t == typeof(int?) || t == typeof(sbyte?) || t == typeof(ulong?) || t == typeof(uint?) || t == typeof(ushort?) || t == typeof(byte?))
       {
         return ViewManagerPropertyType.Number;
@@ -137,7 +197,7 @@ namespace Microsoft.ReactNative.Managed
 
     #region Commands
 
-    public IReadOnlyDictionary<string, long> Commands
+    public virtual IReadOnlyDictionary<string, long> Commands
     {
       get
       {
@@ -157,39 +217,11 @@ namespace Microsoft.ReactNative.Managed
     }
     private IReadOnlyDictionary<string, long> _commands;
 
-    internal Dictionary<long, ViewManagerCommand<T>> ViewManagerCommands
+    public virtual void DispatchCommand(FrameworkElement view, long commandId, IReadOnlyList<object> commandArgs)
     {
-      get
+      if (view is TFrameworkElement viewAsT)
       {
-        if (null == _viewManagerCommands)
-        {
-          var viewManagerCommands = new Dictionary<long, ViewManagerCommand<T>>();
-
-          foreach (var methodInfo in GetType().GetTypeInfo().DeclaredMethods)
-          {
-            var commandAttribute = methodInfo.GetCustomAttribute<ViewManagerCommandAttribute>();
-            if (null != commandAttribute)
-            {
-              var command = new ViewManagerCommand<T>();
-              command.CommandName = commandAttribute.Name ?? methodInfo.Name;
-              command.CommandId = commandAttribute.CommandId ?? viewManagerCommands.Count;
-              command.CommandMethod = MakeCommandMethod(methodInfo);
-              viewManagerCommands.Add(command.CommandId, command);
-            }
-          }
-
-          _viewManagerCommands = viewManagerCommands;
-        }
-        return _viewManagerCommands;
-      }
-    }
-    private Dictionary<long, ViewManagerCommand<T>> _viewManagerCommands;
-
-    public void DispatchCommand(FrameworkElement view, long commandId, IReadOnlyList<object> commandArgs)
-    {
-      if (view is T viewAsT)
-      {
-        if (ViewManagerCommands.TryGetValue(commandId, out ViewManagerCommand<T> command))
+        if (ViewManagerCommands.TryGetValue(commandId, out ViewManagerCommand<TFrameworkElement> command))
         {
           command.CommandMethod(viewAsT, commandArgs);
         }
@@ -200,38 +232,46 @@ namespace Microsoft.ReactNative.Managed
       }
     }
 
-    internal struct ViewManagerCommand<U> where U : T
+    internal Dictionary<long, ViewManagerCommand<TFrameworkElement>> ViewManagerCommands
+    {
+      get
+      {
+        if (null == _viewManagerCommands)
+        {
+          var viewManagerCommands = new Dictionary<long, ViewManagerCommand<TFrameworkElement>>();
+
+          foreach (var methodInfo in GetType().GetTypeInfo().DeclaredMethods)
+          {
+            var commandAttribute = methodInfo.GetCustomAttribute<ViewManagerCommandAttribute>();
+            if (null != commandAttribute)
+            {
+              var command = new ViewManagerCommand<TFrameworkElement>();
+              command.CommandName = commandAttribute.CommandName ?? methodInfo.Name;
+              command.CommandId = viewManagerCommands.Count;
+              command.CommandMethod = MakeCommandMethod(methodInfo);
+              viewManagerCommands.Add(command.CommandId, command);
+            }
+          }
+
+          _viewManagerCommands = viewManagerCommands;
+        }
+        return _viewManagerCommands;
+      }
+    }
+    private Dictionary<long, ViewManagerCommand<TFrameworkElement>> _viewManagerCommands;
+
+    internal struct ViewManagerCommand<U> where U : TFrameworkElement
     {
       public string CommandName;
       public long CommandId;
       public Action<U, IReadOnlyList<object>> CommandMethod;
     }
 
-    #endregion
-
-    #region Reflection Helpers
-
-    private Action<T, object> MakePropertySetterMethod(MethodInfo methodInfo)
-    {
-      var parameters = methodInfo.GetParameters();
-
-      if (parameters.Length == 2
-        && parameters[0].ParameterType == typeof(T))
-      {
-        return (view, propertyValue) =>
-        {
-          methodInfo.Invoke(this, new object[] { view, propertyValue });
-        };
-      }
-
-      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
-    }
-
-    private Action<T, IReadOnlyList<object>> MakeCommandMethod(MethodInfo methodInfo)
+    private Action<TFrameworkElement, IReadOnlyList<object>> MakeCommandMethod(MethodInfo methodInfo)
     {
       var parameters = methodInfo.GetParameters();
       if (parameters.Length == 2
-        && parameters[0].ParameterType == typeof(T)
+        && parameters[0].ParameterType == typeof(TFrameworkElement)
         && parameters[1].ParameterType == typeof(IReadOnlyList<object>))
       {
         return (view, commandArgs) =>
@@ -240,7 +280,7 @@ namespace Microsoft.ReactNative.Managed
         };
       }
       else if (parameters.Length >= 2
-        && parameters[0].ParameterType == typeof(T))
+        && parameters[0].ParameterType == typeof(TFrameworkElement))
       {
         return (view, commandArgs) =>
         {
@@ -255,7 +295,17 @@ namespace Microsoft.ReactNative.Managed
       throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
     }
 
-    private IReadOnlyDictionary<string, object> GetConstantsByAttribute<U>() where U : ViewManagerNamedAttribute
+    #endregion
+
+    #region Events
+
+    public virtual IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants => _exportedCustomBubblingEventTypeConstants ?? (_exportedCustomBubblingEventTypeConstants = GetExportedCustomBubblingEventTypeConstants());
+    private IReadOnlyDictionary<string, object> _exportedCustomBubblingEventTypeConstants;
+
+    public virtual IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants => _exportedCustomDirectEventTypeConstants ?? (_exportedCustomDirectEventTypeConstants = GetExportedDirectEventTypeConstants());
+    private IReadOnlyDictionary<string, object> _exportedCustomDirectEventTypeConstants;
+
+    private IReadOnlyDictionary<string, object> GetExportedCustomBubblingEventTypeConstants()
     {
       var typeInfo = GetType().GetTypeInfo();
 
@@ -263,23 +313,149 @@ namespace Microsoft.ReactNative.Managed
 
       foreach (var fieldInfo in typeInfo.DeclaredFields)
       {
-        var attribute = fieldInfo.GetCustomAttribute<U>();
-        if (null != attribute)
+        var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
+        if (TryMakeBubblingEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
         {
-          constants.Add(attribute.Name ?? fieldInfo.Name, fieldInfo.GetValue(this));
+          constants.Add(key, value);
+          fieldInfo.SetValue(this, memberValue);
         }
       }
 
       foreach (var propertyInfo in typeInfo.DeclaredProperties)
       {
-        var attribute = propertyInfo.GetCustomAttribute<U>();
-        if (null != attribute)
+        var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
+        if (TryMakeBubblingEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
         {
-          constants.Add(attribute.Name ?? propertyInfo.Name, propertyInfo.GetMethod.Invoke(this, null));
+          constants.Add(key, value);
+          propertyInfo.SetValue(this, memberValue);
         }
       }
 
       return constants;
+    }
+
+    private bool TryMakeBubblingEvent(ViewManagerExportedBubblingEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, out string constantKey, out object constantValue, out Delegate memberValue)
+    {
+      if (null != attribute && null != memberInfo && TryGetEventDataType(memberType, out Type eventDataType))
+      {
+        var eventName = attribute.EventName ?? "top" + memberInfo.Name;
+        var bubbleName = attribute.BubbleCallbackName ?? "on" + memberInfo.Name;
+        var captureName = attribute.CaptureCallbackName ?? bubbleName + "Capture";
+
+        var registration = new Dictionary<string, object>
+        {
+          { "phasedRegistrationNames", new Dictionary<string, object>()
+            {
+              { "bubbled", bubbleName },
+              { "captured", captureName },
+            }
+          }
+        };
+
+        constantKey = eventName;
+        constantValue = registration;
+        memberValue = MakeEventDelegate(eventName, memberType, eventDataType);
+
+        return true;
+      }
+
+      constantKey = default;
+      constantValue = default;
+      memberValue = default;
+
+      return false;
+    }
+
+    private IReadOnlyDictionary<string, object> GetExportedDirectEventTypeConstants()
+    {
+      var typeInfo = GetType().GetTypeInfo();
+
+      var constants = new Dictionary<string, object>();
+
+      foreach (var fieldInfo in typeInfo.DeclaredFields)
+      {
+        var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
+        if (TryMakeDirectEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
+        {
+          constants.Add(key, value);
+          fieldInfo.SetValue(this, memberValue);
+        }
+      }
+
+      foreach (var propertyInfo in typeInfo.DeclaredProperties)
+      {
+        var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
+        if (TryMakeDirectEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
+        {
+          constants.Add(key, value);
+          propertyInfo.SetValue(this, memberValue);
+        }
+      }
+
+      return constants;
+    }
+
+    private bool TryMakeDirectEvent(ViewManagerExportedDirectEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, out string constantKey, out object constantValue, out Delegate memberValue)
+    {
+      if (null != attribute && null != memberInfo && TryGetEventDataType(memberType, out Type eventDataType))
+      {
+        var eventName = attribute.EventName ?? "top" + memberInfo.Name;
+        var callbackName = attribute.CallbackName ?? "on" + memberInfo.Name;
+
+        var registration = new Dictionary<string, object>
+        {
+          { "registrationName", callbackName }
+        };
+
+        constantKey = eventName;
+        constantValue = registration;
+        memberValue = MakeEventDelegate(eventName, memberType, eventDataType);
+
+        return true;
+      }
+
+      constantKey = default;
+      constantValue = default;
+      memberValue = default;
+
+      return false;
+    }
+
+    private bool TryGetEventDataType(Type eventType, out Type eventDataType)
+    {
+      if (null != eventType && typeof(Delegate).IsAssignableFrom(eventType))
+      {
+        var eventDelegateMethod = eventType.GetMethod("Invoke");
+        ParameterInfo[] parameters = eventDelegateMethod.GetParameters();
+
+        if (parameters.Length == 2 && parameters[0].ParameterType == typeof(TFrameworkElement))
+        {
+          eventDataType = parameters[1].ParameterType;
+          return true;
+        }
+      }
+
+      eventDataType = default;
+      return false;
+    }
+
+    private Delegate MakeEventDelegate(string eventName, Type memberType, Type eventDataType)
+    {
+      //
+      // (TFrameworkElement view, TEventData eventData) =>
+      // {
+      //   ReactContext.DispatchEvent(view, eventName, eventData);
+      // };
+      //
+
+      ParameterExpression viewParameter = Expression.Parameter(typeof(TFrameworkElement), "view");
+      ParameterExpression eventDataParameter = Expression.Parameter(eventDataType, "eventData");
+
+      MemberExpression thisReactContext = Expression.Property(Expression.Constant(this), "ReactContext");
+
+      MethodCallExpression body = Expression.Call(thisReactContext, typeof(IReactContext).GetMethod("DispatchEvent"), viewParameter, Expression.Constant(eventName, typeof(string)), eventDataParameter);
+
+      return Expression.Lambda(memberType, body, viewParameter, eventDataParameter).Compile();
     }
 
     #endregion

@@ -6,7 +6,7 @@
 
 /// These constants control which files are formatted
 const includeEndsWith = ['.h', '.cpp'];
-const excludePathContains = ['cppwinrt/winrt'];
+const excludePathContains = [];
 const excludePathEndsWith = ['.g.h', '.g.cpp'];
 
 const path = require('path');

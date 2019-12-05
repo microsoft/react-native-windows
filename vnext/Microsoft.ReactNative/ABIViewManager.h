@@ -43,6 +43,10 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
       int64_t commandId,
       const folly::dynamic &commandArgs) override;
 
+  folly::dynamic GetExportedCustomBubblingEventTypeConstants() const override;
+
+  folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+
  protected:
   winrt::Windows::UI::Xaml::DependencyObject CreateViewCore(int64_t) override;
 
@@ -51,6 +55,8 @@ class ABIViewManager : public react::uwp::FrameworkElementViewManager {
   winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedViewConstants m_viewManagerWithExportedViewConstants;
   winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties m_viewManagerWithNativeProperties;
   winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands m_viewManagerWithCommands;
+  winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedEventTypeConstants
+      m_viewManagerWithExportedEventTypeConstants;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };

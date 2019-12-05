@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 14 Nov 2019 01:13:19 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "none": [
+          {
+            "comment": "fix TextInput and Switch component colors",
+            "author": "robmeyer@microsoft.com",
+            "commit": "ab50b2508092d9faa2b796821dfbbf0f0847ed
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2019 19:25:32 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do not eat exceptions in DevSupportManager::GetJavaScriptFromServer",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3a2b9ba1261a52af4bd192a2d1121cd5962c2077"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2019 04:50:06 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.70",
+      "version": "0.60.0-vnext.70",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.20",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "1799d42f737fc5fb31978c60a22a8dfd8c390719"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2019 01:59:08 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
+      "comments": {
+        "none": [
+          {
+            "comment": "Native Mdoule documentation fixes",
+            "author": "jthysell@microsoft.com",
+            "commit": "35bfb6ede4d63b326b5b754642ac924217705327"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Nov 2019 22:01:18 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.69",
+      "version": "0.60.0-vnext.69",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Workaround for flyout centering problem",
+            "author": "kenander@microsoft.com",
+            "commit": "b0defe86c05d88310fb66663be45dd925d3b3207"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Nov 2019 01:27:15 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.68",
       "version": "0.60.0-vnext.68",

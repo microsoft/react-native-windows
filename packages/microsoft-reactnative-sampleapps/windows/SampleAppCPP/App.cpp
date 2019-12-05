@@ -19,11 +19,19 @@ App::App() noexcept {
   MainComponentName(L"SampleApp");
   JavaScriptMainModuleName(L"index.windows");
 
-#if _DEBUG
+#if BUNDLE
+  JavaScriptBundleFile(L"index.windows");
+  InstanceSettings().UseWebDebugger(false);
+  InstanceSettings().UseLiveReload(false);
+#else
+  JavaScriptMainModuleName(L"index");
   InstanceSettings().UseWebDebugger(true);
+  InstanceSettings().UseLiveReload(true);
+#endif
+
+#if _DEBUG
   InstanceSettings().EnableDeveloperMenu(true);
 #else
-  InstanceSettings().UseWebDebugger(false);
   InstanceSettings().EnableDeveloperMenu(false);
 #endif
 

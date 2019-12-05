@@ -30,6 +30,9 @@ export default class Bootstrap extends React.Component<{}, any> {
     zoomValue: false,
     alignToStartValue: true,
     refreshing: false,
+    keyboardDismiss: false,
+    snapToOffsets: true,
+    pagingEnabled: false,
   };
 
   toggleSwitch1 = (value: boolean) => {
@@ -50,6 +53,18 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   toggleSwitch5 = (value: boolean) => {
     this.setState({alignToStartValue: value});
+  };
+
+  toggleSwitch6 = (value: boolean) => {
+    this.setState({snapToOffsets: value});
+  };
+
+  toggleSwitch7 = (value: boolean) => {
+    this.setState({pagingEnabled: value});
+  };
+
+  toggleSwitch8 = (value: boolean) => {
+    this.setState({keyboardDismiss: value});
   };
 
   onRefresh = () => {
@@ -156,33 +171,83 @@ export default class Bootstrap extends React.Component<{}, any> {
               value={this.state.alignToStartValue}
             />
           </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
+              {this.state.snapToOffsets
+                ? 'SnapToOffsets[100,500]'
+                : 'SnapToOffsets[null]'}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch6}
+              value={this.state.snapToOffsets}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>{'PagingEnabled'}</Text>
+            <Switch
+              onValueChange={this.toggleSwitch7}
+              value={this.state.pagingEnabled}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
+              {'KeyboardDismiss: '.concat(
+                this.state.keyboardDismiss ? 'on-drag' : 'none',
+              )}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch8}
+              value={this.state.keyboardDismiss}
+            />
+          </View>
         </View>
         <View style={{flex: 0.8, alignSelf: 'center', flexDirection: 'column'}}>
-          <Text>SnapToOffsets[100, 500]</Text>
-          <View>
-            <ScrollView
-              style={
-                this.state.horizontalValue
-                  ? styles.horizontalScrollViewStyle
-                  : styles.verticalScrollViewStyle
-              }
-              refreshControl={
-                <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this.onRefresh}
-                />
-              }
-              snapToOffsets={[100.0, 500.0]}
-              minimumZoomScale={0.1}
-              maximumZoomScale={2.0}
-              zoomScale={this.state.zoomValue ? 2.0 : 1.0}
-              snapToStart={this.state.snapToStartValue}
-              snapToEnd={this.state.snapToEndValue}
-              snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
-              horizontal={this.state.horizontalValue}>
-              {this.makeItems(20, [styles.itemWrapper])}
-            </ScrollView>
-          </View>
+          <ScrollView
+            style={
+              this.state.horizontalValue
+                ? styles.horizontalScrollViewStyle
+                : styles.verticalScrollViewStyle
+            }
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
+            keyboardDismissMode={
+              this.state.keyboardDismiss ? 'on-drag' : 'none'
+            }
+            snapToOffsets={
+              this.state.snapToOffsets ? [100.0, 500.0] : undefined
+            }
+            pagingEnabled={this.state.pagingEnabled}
+            minimumZoomScale={0.1}
+            maximumZoomScale={2.0}
+            zoomScale={this.state.zoomValue ? 2.0 : 1.0}
+            snapToStart={this.state.snapToStartValue}
+            snapToEnd={this.state.snapToEndValue}
+            snapToAlignment={this.state.alignToStartValue ? 'start' : 'end'}
+            horizontal={this.state.horizontalValue}>
+            {this.makeItems(20, [styles.itemWrapper])}
+          </ScrollView>
         </View>
       </View>
     );

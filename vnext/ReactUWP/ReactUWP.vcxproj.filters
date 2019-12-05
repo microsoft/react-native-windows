@@ -305,6 +305,10 @@
     <ClCompile Include="Views\RefreshControlManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\SIPEventHandler.cpp" />
+    <ClCompile Include="Utils\ResourceBrushUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -562,12 +566,6 @@
     <ClInclude Include="Modules\ImageViewManagerModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\Image\BorderEffect.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -623,6 +621,11 @@
     <ClInclude Include="Views\RefreshControlManager.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="Views\SIPEventHandler.h" />
+    <ClInclude Include="Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -756,13 +759,13 @@
     <Midl Include="Views/cppwinrt/ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
-    <Midl Include="Views/cppwinrt/BorderEffect.idl">
-      <Filter>Views\cppwinrt</Filter>
-    </Midl>
     <Midl Include="Views/cppwinrt/AccessibilityAction.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
     <Midl Include="Views/cppwinrt/DynamicAutomationPeer.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views\cppwinrt\BorderEffect.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
   </ItemGroup>

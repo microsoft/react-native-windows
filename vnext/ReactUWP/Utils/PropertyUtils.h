@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 
 #include <folly/dynamic.h>
@@ -107,10 +108,14 @@ void SetBorderBrush(const T &element, const winrt::Windows::UI::Xaml::Media::Bru
 template <class T>
 bool TryUpdateBackgroundBrush(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (IsValidColorValue(propertyValue))
-      element.Background(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
+      element.Background(brush);
+      UpdateControlBackgroundResourceBrushes(element, brush);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::BackgroundProperty());
+      UpdateControlBackgroundResourceBrushes(element, nullptr);
+    }
 
     return true;
   }
@@ -136,10 +141,14 @@ void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
 template <class T>
 bool TryUpdateForeground(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
   if (propertyName == "color") {
-    if (IsValidColorValue(propertyValue))
-      element.Foreground(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
+      element.Foreground(brush);
+      UpdateControlForegroundResourceBrushes(element, brush);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::ForegroundProperty());
+      UpdateControlForegroundResourceBrushes(element, nullptr);
+    }
 
     return true;
   }
@@ -156,10 +165,14 @@ bool TryUpdateBorderProperties(
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (IsValidColorValue(propertyValue))
-      element.BorderBrush(BrushFrom(propertyValue));
-    else if (propertyValue.isNull())
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
+      element.BorderBrush(brush);
+      UpdateControlBorderResourceBrushes(element, brush);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::BorderBrushProperty());
+      UpdateControlBorderResourceBrushes(element, nullptr);
+    }
   } else if (propertyName == "borderLeftWidth") {
     if (propertyValue.isNumber())
       SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());

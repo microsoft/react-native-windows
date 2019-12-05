@@ -17,8 +17,9 @@ namespace winrt::SampleLibraryCPP::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
-  packageBuilder.AddViewManager(
-      L"CustomUserControlViewManagerCPP", []() { return winrt::make<CustomUserControlViewManagerCPP>(); });
+  packageBuilder.AddViewManager(L"CustomUserControlViewManagerCPP", [](IReactContext const &reactContext) {
+    return winrt::make<CustomUserControlViewManagerCPP>(reactContext);
+  });
 }
 
 } // namespace winrt::SampleLibraryCPP::implementation
