@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "1000.0.0",
+  "version": "0.59.0-legacy.2",
   "description": "React Native platform extensions for the Universal Windows Platform.",
   "license": "MIT",
   "repository": {
