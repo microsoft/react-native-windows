@@ -95,7 +95,7 @@ jobs:
         if: matrix.LayoutHeaders == 'true'
 
       - name: Copy NuGet artifacts
-        run: xcopy vnext\target\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E
+        run: xcopy vnext\target\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}} /E /I
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -221,8 +221,8 @@ jobs:
 
       - name: Copy NuGet artifacts
         run: |
-          xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL /E
-          xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.Test.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.Test.DLL /E
+          xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL /E /I
+          xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.Test.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.Test.DLL /E /I
 
       - uses: actions/upload-artifact@master
         name: Publish Artifact ReactWindows
@@ -304,7 +304,7 @@ jobs:
       run: nuget restore ${{ runner.temp }}\testcli\windows\testcli.sln
 
     - name: Build testcli.sln
-      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}"
+      run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}" /p:PlatformToolset=v142
 
     - uses: actions/upload-artifact@master
       name: Publish Artifacts
