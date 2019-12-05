@@ -84,12 +84,6 @@ jobs:
       - name: Build ReactWindows-Universal.sln
         run: msbuild vnext/ReactWindows-Universal.sln /nologo /nr:false /fl /flp:"logfile=vnext/ReactWindows-Universal.sln.log;verbosity=detailed" /p:PreferredToolArchitecture=x64 /p:platform="${{matrix.BuildPlatform}}" /p:configuration="${{matrix.BuildConfiguration}}" /p:PlatformToolset=v141 /p:RNW_PKG_VERSION_STR="Private Build" /p:RNW_PKG_VERSION=`"1000,0,0,0`"
 
-      - uses: actions/upload-artifact@master
-        name: Publish Artifacts
-        with:
-          name: Detailed Logs for ReactWindows-Universal.sln ${{matrix.BuildConfiguration}} ${{matrix.BuildPlatform}}
-          path: vnext/ReactWindows-Universal.sln.log
-
       - name: Copy NuGet header files
         run: .\vnext\Scripts\Tfs\Layout-Headers.ps1 -TargetRoot ${{ runner.temp }}\artifacts
         if: matrix.LayoutHeaders == 'true'
@@ -133,7 +127,7 @@ jobs:
 
       # todo work out how to specify working-directory for run command
       - name: Create RNTester bundle
-        #  if: matrix.UseRNFork == 'true'
+        if: matrix.UseRNFork == 'true'
         run: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
         working-directory: vnext
 
@@ -305,12 +299,6 @@ jobs:
 
     - name: Build testcli.sln
       run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}" /p:PlatformToolset=v142
-
-    - uses: actions/upload-artifact@master
-      name: Publish Artifacts
-      with:
-        name: Detailed Logs for testcli.sln ${{matrix.configuration}} ${{matrix.language}}
-        path: ${{ runner.temp }}/testcli/windows/testcli.sln.log
 
     - name: Create bundle testcli.sln
       run: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
