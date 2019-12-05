@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 03 Dec 2019 23:21:34 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Dec 2019 19:54:18 GMT and should not be manually modified.
 
+## 0.60.0-vnext.87
+Thu, 05 Dec 2019 19:54:18 GMT
+
+### Changes
+
+- Add support for custom ViewManagers with children (jthysell@microsoft.com)
 ## 0.60.0-vnext.86
 Tue, 03 Dec 2019 23:21:34 GMT
 
