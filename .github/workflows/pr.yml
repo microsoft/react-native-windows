@@ -198,7 +198,10 @@ jobs:
         if: matrix.BuildPlatform == 'x64'
 
       - name: Setup test servers
-        run: cmd /c "node vnext\Scripts\start-test-servers.js"
+        run: cmd  /c start cmd /c "node vnext\Scripts\start-test-servers.js"
+
+      - name: Wait for test server
+        run: Start-Sleep -Seconds 120
 
       - name: Check the metro bundle server
         run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
@@ -325,7 +328,7 @@ jobs:
     name: Current (C#) PR
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
-    timeout-minutes: 10
+    timeout-minutes: 30
     strategy:
       matrix:
         #TODO add DebugBundle
