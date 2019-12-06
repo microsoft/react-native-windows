@@ -2,7 +2,7 @@
 parameters:
   name: ''
   pool:
-  BuildPlatform: x86 # ARM, x86, x64
+  BuildPlatform: x64 # ARM, x86, x64
   UseRNFork: true
   vsComponents: ''
   vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
@@ -89,18 +89,6 @@ jobs:
           command: restore
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: PowerShell@2
-        displayName: Install MUX framework package
-        inputs:
-          targetType: "inline"
-          script:  Add-AppPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
-
-      - task: CmdLine@2
-        displayName: Create bundle
-        inputs:
-          script: yarn run bundle
-          workingDirectory: packages/E2ETest
 
       - task: CmdLine@2
         displayName: run-windows
