@@ -4,6 +4,7 @@ parameters:
   useRnFork: true
   yarnBuildCmd: build
   debug: false
+  forceVSDependencies: false
 
   # Visual Studio Installer
   vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
@@ -54,7 +55,7 @@ steps:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
+    condition: or('${{ forceVSDependencies }}', and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019')))
 
   - task: PowerShell@2
     displayName: List disksize by Get-WmiObject Win32_LogicalDisk
