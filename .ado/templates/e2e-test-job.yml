@@ -2,7 +2,7 @@
 parameters:
   name: ''
   pool:
-  BuildPlatform: x64 # ARM, x86, x64
+  BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
   vsComponents: ''
   vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
@@ -16,49 +16,12 @@ jobs:
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-          
-      - task: PowerShell@2
-        displayName: "Remove WebDriverIO Workaround"
-        inputs:
-          targetType: "inline"
-          script: '((Get-Content -path packages/E2ETest/package.json -Raw) -replace ".*webdriver.git.*","") | Set-Content -Path packages/E2ETest/package.json'
-
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
-
-      - task: CmdLine@2
-        displayName: Modify package.json to use unforked RN
-        inputs:
-          script: node scripts/useUnForkedRN.js
-          workingDirectory: vnext
-        condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'false'))
-
-      - task: CmdLine@2
-        displayName: yarn install (Using microsoft/react-native)
-        inputs:
-          script: yarn install --frozen-lockfile
-        condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'true'))
-
-        # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-        # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
-        # using the non fork version.
-      - task: CmdLine@2
-        displayName: yarn install (Using facebook/react-native)
-        inputs:
-          script: yarn install
-        condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'false'))
+      - template: prepare-env.yml
+        parameters:
+          useRnFork: ${{ UseRNFork }}
+          vsComponents: ${{ vsComponents }}
+          yarnBuildCmd: buildci
+          vsInstallerUri: ${{ vsInstallerUri }}
 
       - task: PowerShell@2
         displayName: "Patch WebDriverIO"
@@ -67,21 +30,6 @@ jobs:
           script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
 
       - template: stop-packagers.yml
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: yarn build
-
-      - task: PowerShell@2
-        displayName: Install Visual Studio dependencies
-        inputs:
-          targetType: filePath
-          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-          arguments:
-            -InstallerUri ${{ parameters.vsInstallerUri }}
-            -Components ${{ parameters.vsComponents }}
-        condition: ne('${{parameters.vsComponents}}', '')
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp

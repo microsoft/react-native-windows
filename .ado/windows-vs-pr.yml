@@ -53,14 +53,6 @@ jobs:
     cancelTimeoutInMinutes: 5
 
     steps:
-      - checkout: self
-        clean: false
-        submodules: false
-
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -95,13 +87,11 @@ jobs:
     cancelTimeoutInMinutes: 5
 
     steps:
-      - checkout: self
-        clean: false
-        submodules: false
-
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
+      - template: templates/prepare-env.yml
+        parameters:
+          useRnFork: $(UseRNFork)
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          yarnBuildCmd: buildci
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
