@@ -358,7 +358,7 @@ void ReactControl::PrepareXamlRootView(XamlView const &rootView) {
   } else
     m_xamlRootView = rootView;
 
-  if (m_xamlRootView.as<winrt::FrameworkElement>().Name().empty()){
+  if (m_xamlRootView.as<winrt::FrameworkElement>().Name().empty()) {
     m_xamlRootView.as<winrt::FrameworkElement>().Name(L"RNRootView");
   }
 }
