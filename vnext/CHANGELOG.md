@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Dec 2019 19:14:55 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Dec 2019 21:56:22 GMT and should not be manually modified.
 
+## 0.60.0-vnext.90
+Fri, 06 Dec 2019 21:56:22 GMT
+
+### Changes
+
+- Update E2ETest to use ReactApplication (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.89
 Fri, 06 Dec 2019 19:14:55 GMT
 
