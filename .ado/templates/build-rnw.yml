@@ -20,11 +20,21 @@ parameters:
 steps:
   - template: prepare-env.yml
     parameters:
-      useRnFork: ${{ useRnFork }}
+      useRnFork: ${{ parameters.useRnFork }}
       vsInstallerUri: ${{ parameters.vsInstallerUri }}
       vsComponents: ${{ parameters.vsComponents }}
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
+
+  - task: NuGetCommand@2
+    displayName: NuGet restore
+    inputs:
+      command: restore
+      restoreSolution: ${{parameters.project }}
+      feedsToUse: config
+      nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
+      restoreDirectory: packages/
+      verbosityRestore: Detailed # Options: quiet, normal, detailed
 
   - task: MSBuild@1
     displayName: MSBuild ${{parameters.project}}

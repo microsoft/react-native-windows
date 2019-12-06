@@ -53,6 +53,10 @@ jobs:
     cancelTimeoutInMinutes: 5
 
     steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -87,6 +91,10 @@ jobs:
     cancelTimeoutInMinutes: 5
 
     steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
       - template: templates/prepare-env.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -188,10 +196,6 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:

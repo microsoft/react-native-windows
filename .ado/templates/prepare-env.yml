@@ -10,10 +10,6 @@ parameters:
   vsComponents: ''
 
 steps:
-  - checkout: self
-    clean: false
-    submodules: false
-
   - task: UseNode@1
     inputs:
       version: '10.x'

@@ -18,18 +18,15 @@ jobs:
     steps:
       - template: prepare-env.yml
         parameters:
-          useRnFork: ${{ UseRNFork }}
-          vsComponents: ${{ vsComponents }}
-          yarnBuildCmd: buildci
-          vsInstallerUri: ${{ vsInstallerUri }}
+          useRnFork: ${{ parameters.UseRNFork }}
+          vsComponents: ${{ parameters.vsComponents }}
+          yarnBuildCmd: build
+          vsInstallerUri: ${{ parameters.vsInstallerUri }}
 
-      - task: PowerShell@2
-        displayName: "Patch WebDriverIO"
+      - task: CmdLine@2
+        displayName: Install react-native-cli
         inputs:
-          targetType: "inline"
-          script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
-
-      - template: stop-packagers.yml
+          script: npm install -g react-native-cli
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
@@ -38,6 +35,12 @@ jobs:
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
+      - task: PowerShell@2
+        displayName: Install MUX framework package
+        inputs:
+          targetType: "inline"
+          script:  Add-AppPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
+          
       - task: CmdLine@2
         displayName: run-windows
         inputs:
@@ -77,20 +80,6 @@ jobs:
           testResultsFormat: "JUnit"
           testResultsFiles: "packages/E2ETest/reports/*.log"
         condition: succeededOrFailed()
-
-      - task: PowerShell@2
-        displayName: "Show package.json"
-        inputs:
-          targetType: "inline"
-          script: "Get-Content packages/E2ETest/package.json | foreach {Write-Output $_}"
-        condition: failed()
-
-      - task: PowerShell@2
-        displayName: "Show node_modules/webdriver/build/utils.js"
-        inputs:
-          targetType: "inline"
-          script: "Get-Content node_modules/webdriver/build/utils.js | foreach {Write-Output $_}"
-        condition: failed()
 
       - task: PowerShell@2
         displayName: "Show appium log"
