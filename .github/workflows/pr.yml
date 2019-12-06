@@ -198,7 +198,7 @@ jobs:
         if: matrix.BuildPlatform == 'x64'
 
       - name: Setup test servers
-        run: cmd /c "node vnext\Scripts\start-test-servers.js
+        run: cmd /c "node vnext\Scripts\start-test-servers.js"
 
       - name: Check the metro bundle server
         run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
