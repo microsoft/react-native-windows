@@ -318,7 +318,7 @@ jobs:
           language: cs
           configuration: Release
 
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
       vmImage: $(VmImage)
