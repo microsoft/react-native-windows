@@ -31,3 +31,8 @@ export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
 export const DIRECT_MANIPULATION_TESTPAGE = 'DirectManipulationTestPage';
 export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
 export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
+
+// Image Test Page
+export const IMAGE_TESTPAGE = 'ImageTestPage';
+export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
+export const IMAGE_TREE_DUMP_RESULT = 'TreeDump';
