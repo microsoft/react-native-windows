@@ -3,5 +3,7 @@
 // Licensed under the MIT License.
 
 #include <hstring.h>
+#include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
+#include "HResult.h"
