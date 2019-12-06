@@ -17,7 +17,7 @@ import {
 const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
-import RNTesterList from './js/RNTesterList.windows';
+import RNTesterList from './RNTesterList.windows';
 const RNTesterNavigationReducer = require('react-native/RNTester/js/RNTesterNavigationReducer');
 
 const styles = StyleSheet.create({

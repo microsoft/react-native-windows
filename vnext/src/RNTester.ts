@@ -3,4 +3,4 @@
  * Licensed under the MIT License.
  * @format
  */
-import './RNTester/RNTesterApp';
+import './RNTester/js/RNTesterApp';
