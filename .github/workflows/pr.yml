@@ -212,11 +212,6 @@ jobs:
         shell: cmd
         if: matrix.BuildConfiguration == 'Debug'
 
-      - name: Cleanup any packagers left over from other builds
-        run: |
-          Get-NetTCPConnection -LocalPort 8081 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-          Get-NetTCPConnection -LocalPort 5555 -ErrorAction Ignore | ForEach-Object { Stop-Process $_.OwningProcess -ErrorAction Ignore }
-
       - name: Copy NuGet artifacts
         run: |
           xcopy vnext\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL ${{ runner.temp }}\artifacts\${{matrix.BuildPlatform}}\${{matrix.BuildConfiguration}}\React.Windows.Desktop.DLL /E /I
@@ -436,6 +431,9 @@ jobs:
 
       - name: NuGet restore packages/E2ETest/windows/ReactUWPTestApp.sln
         run: nuget.exe restore packages/E2ETest/windows/ReactUWPTestApp.sln -Verbosity Detailed -NonInteractive
+
+      - name: Install MUX framework package
+        run: Add-AppPackage -path ./packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/x86/Release/Microsoft.UI.Xaml.2.3.appx
 
       - name: Create Bundle
         run: yarn bundle
