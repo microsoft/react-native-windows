@@ -55,3 +55,10 @@ steps:
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
     condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
+
+  - task: PowerShell@2
+    displayName: List disksize by Get-WmiObject Win32_LogicalDisk
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        Get-WmiObject Win32_LogicalDisk
