@@ -164,6 +164,9 @@
       <Project>{c0a6bd9c-3ee5-4b12-8ce4-cee95178539c}</Project>
       <Name>SampleLibraryCS</Name>
     </ProjectReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.3.191129002</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems" Label="Shared" />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0' ">

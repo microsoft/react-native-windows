@@ -4,5 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:<%=ns%>"
     xmlns:react="using:Microsoft.ReactNative">
-
+    <Application.Resources>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+    </Application.Resources>
 </react:ReactApplication>

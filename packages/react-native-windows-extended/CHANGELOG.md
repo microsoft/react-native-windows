@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 21 Nov 2019 01:46:31 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Dec 2019 17:34:30 GMT and should not be manually modified.
 
+## 0.60.33
+Mon, 02 Dec 2019 17:34:30 GMT
+
+### Patches
+
+- Updating react-native to version: 0.60.0-microsoft.24 (53619745+rnbot@users.noreply.github.com)
 ## 0.60.23
 Thu, 21 Nov 2019 01:46:31 GMT
 
