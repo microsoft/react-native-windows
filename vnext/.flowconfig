@@ -6,19 +6,37 @@
 .*/*[.]windesktop.js
 
 ; These modules have base components and windows versions.
-; I dont know how to ignore base components only when there is a windows override
-; so manually ignoring the duplicates for now
+; Ideally we'd delete the base versions of files that had .windows overrides as part of the
+; initRNLibraries build step
+<PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
 <PROJECT_ROOT>/Libraries/Components/Flyout/Flyout.js
 <PROJECT_ROOT>/Libraries/Components/Glyph/Glyph.js
 <PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
+<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/Picker/PickerWindows.js
 <PROJECT_ROOT>/Libraries/Components/Popup/Popup.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
+<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
+<PROJECT_ROOT>/Libraries/Components/Switch/Switch.js
+<PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
+<PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
+<PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
+<PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
+<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
+<PROJECT_ROOT>/Libraries/Image/Image.js
+<PROJECT_ROOT>/Libraries/Linking/NativeLinking.js
+<PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
+<PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
+<PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 
 
 

@@ -70,6 +70,10 @@ exports.copyRNLibraries = () => {
   if (fs.existsSync(flowDest)) {
     rimraf.sync(flowDest);
   }
+  const flowTypedDest = path.resolve(__dirname, '../flow-typed');
+  if (fs.existsSync(flowTypedDest)) {
+    rimraf.sync(flowTypedDest);
+  }
   const jestDest = path.resolve(__dirname, '../jest');
   if (fs.existsSync(jestDest)) {
     rimraf.sync(jestDest);
@@ -100,6 +104,7 @@ exports.copyRNLibraries = () => {
     path.resolve(baseDir, 'packages/react-native-codegen'),
   );
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'flow'), baseDir);
+  copyJSFolderRecursiveSync(path.resolve(rnPath, 'flow-typed'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'Libraries'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(rnPath, 'jest'), baseDir);
   copyJSFolderRecursiveSync(path.resolve(baseDir, 'src/jest'), baseDir); // Copy js files from src/jest to jest

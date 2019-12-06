@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type {SyntheticEvent} from '../../Types/CoreEventTypes';
+
 export type AccessibilityTrait =
   | 'none'
   | 'button'
@@ -160,3 +162,16 @@ module.exports = {
     'collapsed',
   ],
 };
+
+// the info associated with an accessibility action
+export type AccessibilityActionInfo = $ReadOnly<{
+  name: string,
+  label?: string,
+}>;
+
+// The info included in the event sent to onAccessibilityAction
+export type AccessibilityActionEvent = SyntheticEvent<
+  $ReadOnly<{
+    actionName: string,
+  }>,
+>;

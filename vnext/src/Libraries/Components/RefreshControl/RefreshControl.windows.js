@@ -180,7 +180,14 @@ class RefreshControl extends React.Component<RefreshControlProps> {
         />
       );
     } else if (Platform.OS === 'windows') {
-      const {...props} = this.props;
+      const {
+        colors,
+        enabled,
+        progressBackgroundColor,
+        progressViewOffset,
+        size,
+        ...props
+      } = this.props;
       return (
         <RCTRefreshControlNativeComponent
           {...props}
