@@ -96,6 +96,7 @@ jobs:
         with:
           name: ReactWindows
           path: ${{ runner.temp }}\artifacts
+        if: matrix.UseRNFork == 'true'
 
       - name: Delete vnext/build and vnext/target
         run: remove-item vnext/build -Recurse
@@ -197,7 +198,7 @@ jobs:
         if: matrix.BuildPlatform == 'x64'
 
       - name: Setup test servers
-        run: .\vnext\Scripts\Tfs\Start-TestServers.ps1 -SourcesDirectory .\vnext -Preload -SleepSeconds 120
+        run: cmd /c "node vnext\Scripts\start-test-servers.js
 
       - name: Check the metro bundle server
         run: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
@@ -262,7 +263,6 @@ jobs:
       run: yarn build
       working-directory: vnext
 
-
     # yarn ends up copying the whole node_modules folder when doing an install of a file package
     # Delete node_modules, so that resolution is more like when installing from a published npm package
     - name: Remove node_modules
@@ -301,7 +301,7 @@ jobs:
       run: msbuild ${{ runner.temp }}/testcli/windows/testcli.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x64" /p:configuration="${{matrix.configuration}}" /p:PlatformToolset=v142
 
     - name: Create bundle testcli.sln
-      run: react-native bundle --entry-file index.windows.js platform uwp --bundle-output test.bundle
+      run: react-native bundle --entry-file index.js platform windows --bundle-output test.bundle
       working-directory: ${{ runner.temp }}/testcli
 
   RNWFormatting:
