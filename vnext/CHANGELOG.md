@@ -1,7 +1,70 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Nov 2019 20:45:17 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Dec 2019 21:56:22 GMT and should not be manually modified.
 
+## 0.60.0-vnext.90
+Fri, 06 Dec 2019 21:56:22 GMT
+
+### Changes
+
+- Update E2ETest to use ReactApplication (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.89
+Fri, 06 Dec 2019 19:14:55 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.28 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.88
+Fri, 06 Dec 2019 17:14:06 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.26 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.87
+Thu, 05 Dec 2019 19:54:18 GMT
+
+### Changes
+
+- Add support for custom ViewManagers with children (jthysell@microsoft.com)
+## 0.60.0-vnext.86
+Tue, 03 Dec 2019 23:21:34 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+## 0.60.0-vnext.85
+Mon, 02 Dec 2019 17:34:30 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.24 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.84
+Tue, 26 Nov 2019 00:13:20 GMT
+
+### Changes
+
+- View Manager Event Support (jthysell@microsoft.com)
+## 0.60.0-vnext.83
+Mon, 25 Nov 2019 21:54:38 GMT
+
+### Changes
+
+- Properly support ScrollView KeyboardDismissMode (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.82
+Mon, 25 Nov 2019 21:23:52 GMT
+
+### Changes
+
+- Revert "Add Winui 2.2 framework package (#3622)" (licanhua@live.com)
+## 0.60.0-vnext.81
+Sat, 23 Nov 2019 08:02:20 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+- Support ScrollView pagingEnabled (dida@ntdev.microsoft.com)
+- Add react-native run-windows --info (licanhua@live.com)
+- manually bump to vnext.80 (kmelmon@microsoft.com)
 ## 0.60.0-vnext.79
 Fri, 22 Nov 2019 20:45:17 GMT
 

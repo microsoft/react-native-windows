@@ -24,6 +24,9 @@ const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModule
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
+const CircleCS = requireNativeComponent('CircleCS');
+const CircleCPP = requireNativeComponent('CircleCPP');
+
 var log = function(result) {
   console.log(result);
   NativeModules.DebugConsole.Log('' + result);
@@ -148,6 +151,16 @@ class SampleApp extends Component {
     }
   }
 
+  onLabelChangedCustomUserControlCS(evt) {
+    var label = evt.nativeEvent;
+    log(`SampleApp.onLabelChangedCustomUserControlCS("${label}")`);
+  }
+
+  onLabelChangedCustomUserControlCPP(evt) {
+    var label = evt.nativeEvent;
+    log(`SampleApp.onLabelChangedCustomUserControlCPP("${label}")`);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -161,11 +174,23 @@ class SampleApp extends Component {
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
         <Button onPress={() => { this.onPressSampleModuleCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
 
-        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} />
+        <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCS(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
 
-        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} />
+        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCPP(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
+
+        <CircleCS style={styles.circle}>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>CircleCS!</Text>
+          </View>
+        </CircleCS>
+
+        <CircleCPP style={styles.circle}>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>CircleCPP!</Text>
+          </View>
+        </CircleCPP>
 
         <Text style={styles.instructions}>
           Hello from Microsoft!
@@ -198,6 +223,19 @@ const styles = StyleSheet.create({
     width: 200,
     height: 20,
     margin: 10,
+  },
+  circle: {
+    margin: 10,
+  },
+  box: {
+    backgroundColor: '#006666',
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxText: {
+    fontSize: 20,
   },
 });
 

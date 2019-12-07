@@ -440,7 +440,7 @@
     <Import Project="$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.Hermes.Windows.0.1.3\build\native\ReactNative.Hermes.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_HERMES)' == 'true'" />
     <Import Project="$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets" Condition="Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets')" />
+    <Import Project="$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -451,16 +451,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets') AND '$(OSS_RN)' != 'true' AND '$(USE_V8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactNative.V8JSI.Windows.0.1.4\build\native\ReactNative.V8JSI.Windows.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190530.8\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.2.190917002\build\native\Microsoft.UI.Xaml.targets'))" />
-  </Target>
-  <Target Name="_WinUIWorkaround" AfterTargets="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <!-- This is a workaround before https://github.com/microsoft/microsoft-ui-xaml/issues/1512 is resolved and the new WinUI framework package is released -->
-    <ItemGroup>
-      <XamlCompactPageToBeRemoved Include="@(Page)" Condition="'%(Page.TargetPath)' == 'Microsoft.UI.Xaml\DensityStyles\Compact.xbf'" />
-    </ItemGroup>
-    <ItemGroup Condition="'@(XamlCompactPageToBeRemoved)' != ''">
-      <Page Remove="@(XamlCompactPageToBeRemoved)" />
-    </ItemGroup>
+    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.UI.Xaml.2.3.191129002\build\native\Microsoft.UI.Xaml.targets'))" />
   </Target>
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />

@@ -30,6 +30,7 @@ export default class Bootstrap extends React.Component<{}, any> {
     zoomValue: false,
     alignToStartValue: true,
     refreshing: false,
+    keyboardDismiss: false,
     snapToOffsets: true,
     pagingEnabled: false,
   };
@@ -60,6 +61,10 @@ export default class Bootstrap extends React.Component<{}, any> {
 
   toggleSwitch7 = (value: boolean) => {
     this.setState({pagingEnabled: value});
+  };
+
+  toggleSwitch8 = (value: boolean) => {
+    this.setState({keyboardDismiss: value});
   };
 
   onRefresh = () => {
@@ -190,14 +195,27 @@ export default class Bootstrap extends React.Component<{}, any> {
               justifyContent: 'center',
               padding: 20,
             }}>
-            <Text>
-              {this.state.pagingEnabled
-                ? 'pagingEnabled on'
-                : 'pagingEnabled off'}
-            </Text>
+            <Text>{'PagingEnabled'}</Text>
             <Switch
               onValueChange={this.toggleSwitch7}
               value={this.state.pagingEnabled}
+            />
+          </View>
+          <View
+            style={{
+              flexDirection: 'column',
+              alignSelf: 'stretch',
+              justifyContent: 'center',
+              padding: 20,
+            }}>
+            <Text>
+              {'KeyboardDismiss: '.concat(
+                this.state.keyboardDismiss ? 'on-drag' : 'none',
+              )}
+            </Text>
+            <Switch
+              onValueChange={this.toggleSwitch8}
+              value={this.state.keyboardDismiss}
             />
           </View>
         </View>
@@ -213,6 +231,9 @@ export default class Bootstrap extends React.Component<{}, any> {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onRefresh}
               />
+            }
+            keyboardDismissMode={
+              this.state.keyboardDismiss ? 'on-drag' : 'none'
             }
             snapToOffsets={
               this.state.snapToOffsets ? [100.0, 500.0] : undefined

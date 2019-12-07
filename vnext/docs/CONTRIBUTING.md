@@ -40,13 +40,13 @@ In SourceTree click Push.
 **Git Command Line**
 Run `git push`. 
 
-This will push any staged files your have in your branch.
+This will push any staged files you have in your branch.
  
 Now go back to your fork on github. You should see a yellow bar at the top with your change and a button that says "Compare & Pull Request". Click that button. 
 
 Click "Create Pull Request".
 
-A bunch of tests will automatically kick off to verify your PR.  The tests marked as `required` must pass before a PR can be merged.  Currently the Azure Dev Ops tests will not kick off automatically.  -- These have to be kicked of by a team member.
+A bunch of tests will automatically kick off to verify your PR.  The tests marked as `required` must pass before a PR can be merged.  Currently the Azure Dev Ops tests will not kick off automatically.  -- These have to be kicked off by a team member.
 
 Someone will also have to review your change before the change is allowed to be merged in. They may ask questions for more information or ask you to change things. Be sure to respond to their comments and push additional changes to the branch if they ask you to modify things before they sign off.
  

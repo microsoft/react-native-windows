@@ -121,7 +121,7 @@ std::shared_ptr<react::uwp::IReactInstanceCreator> ReactInstanceManager::Instanc
   return m_reactInstanceCreator;
 }
 
-auto ReactInstanceManager::GetOrCreateReactContextAsync() -> IAsyncOperation<ReactContext> {
+auto ReactInstanceManager::GetOrCreateReactContextAsync() -> IAsyncOperation<IReactContext> {
   if (m_currentReactContext != nullptr)
     co_return m_currentReactContext;
 
@@ -132,9 +132,7 @@ auto ReactInstanceManager::GetOrCreateReactContextAsync() -> IAsyncOperation<Rea
 
 // TODO: Should we make this method async?  On first run when getInstance
 // is called it starts things up. Does this need to block?
-auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<ReactContext> {
-  auto reactContext = ReactContext();
-
+auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<IReactContext> {
   /* TODO hook up an exception handler if UseDeveloperSupport is set
   if (m_useDeveloperSupport) {
     if (m_nativeModuleCallExceptionHandler) {
@@ -175,11 +173,10 @@ auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<Reac
   // TODO: Could access to the module registry be easier if the ReactInstance
   // implementation were lifted up into this project.
 
-  auto instancePtr = InstanceCreator()->getInstance();
-  auto reactInstance = winrt::make<Bridge::implementation::ReactInstance>(instancePtr);
+  auto reactInstance = InstanceCreator()->getInstance();
 
-  Bridge::implementation::ReactContext *contextImpl{get_self<Bridge::implementation::ReactContext>(reactContext)};
-  contextImpl->InitializeWithInstance(reactInstance);
+  auto reactContext =
+      winrt::make<winrt::Microsoft::ReactNative::Bridge::ReactContext>(reactInstance).as<IReactContext>();
 
   // TODO: Investigate whether we need the equivalent of the
   // LimitedConcurrencyActionQueue from the C# implementation that is used to
