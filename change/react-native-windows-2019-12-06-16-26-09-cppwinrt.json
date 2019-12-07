@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Aligning Microsoft.Windows.CppWinRT Versions",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "92dd27dbe29042bd9b64d7fb1f2559ce05c2861d",
+  "date": "2019-12-07T00:26:09.540Z"
+}
