@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Dec 2019 21:56:22 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Dec 2019 18:40:45 GMT and should not be manually modified.
 
+## 0.60.0-vnext.91
+Mon, 09 Dec 2019 18:40:45 GMT
+
+### Changes
+
+- Aligning Microsoft.Windows.CppWinRT Versions (jthysell@microsoft.com)
 ## 0.60.0-vnext.90
 Fri, 06 Dec 2019 21:56:22 GMT
 
