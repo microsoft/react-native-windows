@@ -16,6 +16,10 @@ jobs:
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
       - template: prepare-env.yml
         parameters:
           useRnFork: ${{ parameters.UseRNFork }}
@@ -55,7 +59,22 @@ jobs:
           pathtoPublish: packages/E2ETest/msbuild.binlog 
           artifactName: 'ReactUWPTestApp build log' 
           publishLocation: 'Container'
-                    
+
+      - task: CopyFiles@2
+        displayName: Copy ReactUWPTestApp artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp/AppPackages
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp/AppPackages
+          contents: *
+        condition: failed()
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact:ReactUWPTestApp"
+        inputs:
+          artifactName: ReactUWPTestApp
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp/AppPackages
+        condition: failed()
+
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
         displayName: Wait for app to launch
