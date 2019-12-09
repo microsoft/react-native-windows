@@ -433,7 +433,7 @@ jobs:
         run: nuget.exe restore packages/E2ETest/windows/ReactUWPTestApp.sln -Verbosity Detailed -NonInteractive
 
       - name: Install MUX framework package
-        run: Add-AppPackage -path ./packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/x86/Release/Microsoft.UI.Xaml.2.3.appx
+        run: Add-AppxPackage -path ./packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/x86/Release/Microsoft.UI.Xaml.2.3.appx
 
       - name: Create Bundle
         run: yarn bundle
