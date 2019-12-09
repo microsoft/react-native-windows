@@ -51,7 +51,7 @@ namespace Microsoft.ReactNative.Managed
         var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
         if (null != attribute)
         {
-          constants.Add(attribute.ConstantName ?? fieldInfo.Name, fieldInfo.GetValue(this));
+          constants.Add(attribute.ConstantName ?? fieldInfo.Name, IsEnum(fieldInfo.FieldType) ? Convert.ChangeType(fieldInfo.GetValue(this), typeof(long)) : fieldInfo.GetValue(this));
         }
       }
 
@@ -60,7 +60,7 @@ namespace Microsoft.ReactNative.Managed
         var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
         if (null != attribute)
         {
-          constants.Add(attribute.ConstantName ?? propertyInfo.Name, propertyInfo.GetMethod.Invoke(this, null));
+          constants.Add(attribute.ConstantName ?? propertyInfo.Name, IsEnum(propertyInfo.PropertyType) ? Convert.ChangeType(propertyInfo.GetMethod.Invoke(this, null), typeof(long)) : propertyInfo.GetMethod.Invoke(this, null));
         }
       }
 
@@ -153,10 +153,29 @@ namespace Microsoft.ReactNative.Managed
       if (parameters.Length == 2
         && parameters[0].ParameterType == typeof(TFrameworkElement))
       {
-        return (view, propertyValue) =>
+        Type typeOfPropertyValue = parameters[1].ParameterType;
+
+        if (IsNullableEnum(typeOfPropertyValue, out Type enumType))
         {
-          methodInfo.Invoke(this, new object[] { view, propertyValue });
-        };
+          return (view, propertyValue) =>
+          {
+            methodInfo.Invoke(this, new object[] { view, propertyValue != null ? Enum.Parse(enumType, propertyValue.ToString()) : null });
+          };
+        }
+        else if (IsEnum(typeOfPropertyValue))
+        {
+          return (view, propertyValue) =>
+          {
+            methodInfo.Invoke(this, new object[] { view, Enum.Parse(typeOfPropertyValue, propertyValue.ToString()) });
+          };
+        }
+        else
+        {
+          return (view, propertyValue) =>
+          {
+            methodInfo.Invoke(this, new object[] { view, propertyValue });
+          };
+        }
       }
 
       throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
@@ -164,7 +183,9 @@ namespace Microsoft.ReactNative.Managed
 
     private static ViewManagerPropertyType TypeToViewManagerPropertyType(Type t)
     {
-      if (t == typeof(bool) || t == typeof(bool?))
+      t = Nullable.GetUnderlyingType(t) ?? t;
+
+      if (t == typeof(bool))
       {
         return ViewManagerPropertyType.Boolean;
       }
@@ -172,8 +193,7 @@ namespace Microsoft.ReactNative.Managed
       {
         return ViewManagerPropertyType.String;
       }
-      else if (t == typeof(decimal) || t == typeof(double) || t == typeof(float) || t == typeof(long) || t == typeof(int) || t == typeof(short) || t == typeof(sbyte) || t == typeof(ulong) || t == typeof(uint) || t == typeof(ushort) || t == typeof(byte) ||
-               t == typeof(decimal?) || t == typeof(double?) || t == typeof(float?) || t == typeof(long?) || t == typeof(int?) || t == typeof(sbyte?) || t == typeof(ulong?) || t == typeof(uint?) || t == typeof(ushort?) || t == typeof(byte?))
+      else if (t == typeof(decimal) || t == typeof(double) || t == typeof(float) || t == typeof(long) || t == typeof(int) || t == typeof(short) || t == typeof(sbyte) || t == typeof(ulong) || t == typeof(uint) || t == typeof(ushort) || t == typeof(byte) || t.GetTypeInfo().IsEnum)
       {
         return ViewManagerPropertyType.Number;
       }
@@ -191,6 +211,17 @@ namespace Microsoft.ReactNative.Managed
       }
 
       throw new ArgumentOutOfRangeException(nameof(t));
+    }
+
+    private static bool IsNullableEnum(Type t, out Type enumType)
+    {
+      enumType = Nullable.GetUnderlyingType(t);
+      return null != enumType && enumType.GetTypeInfo().IsEnum;
+    }
+
+    private static bool IsEnum(Type t)
+    {
+      return IsNullableEnum(t, out Type underlyingType) || t.GetTypeInfo().IsEnum;
     }
 
     #endregion

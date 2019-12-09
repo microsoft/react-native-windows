@@ -18,6 +18,7 @@
     <ClCompile Include="ReactPackageProvider.cpp" />
     <ClCompile Include="CustomUserControlCPP.cpp" />
     <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
+    <ClCompile Include="CircleViewManagerCPP.cpp" />
     <ClCompile Include="DebugHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -26,6 +27,7 @@
     <ClInclude Include="SampleModuleCPP.h" />
     <ClInclude Include="CustomUserControlCPP.h" />
     <ClInclude Include="CustomUserControlViewManagerCPP.h" />
+    <ClInclude Include="CircleViewManagerCPP.h" />
     <ClInclude Include="DebugHelpers.h" />
   </ItemGroup>
   <ItemGroup>
