@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "This change correctly handles a failed WebSocket connection",
+  "packageName": "react-native-windows",
+  "email": "acampbell2@officeworks.com.au",
+  "commit": "cba52ff91293ce401c7b5db64addca9e8f859d3d",
+  "date": "2019-12-09T01:51:32.983Z"
+}
