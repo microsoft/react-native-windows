@@ -139,10 +139,10 @@ void WebSocketModule::WebSocket::connect(
 
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
 
-  HRESULT hr = S_OK;
+  winrt::hresult hr = S_OK;
   try {
     auto async = Connect(socket, uri);
-    winrt::hresult hr = async.get();
+    hr = async.get();
     if (SUCCEEDED(hr)) {
       folly::dynamic params = folly::dynamic::object("id", id);
       sendEvent("websocketOpen", std::move(params));
