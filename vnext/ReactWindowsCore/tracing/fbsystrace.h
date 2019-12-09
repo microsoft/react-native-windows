@@ -97,7 +97,7 @@ class FbSystraceSection {
 
   std::string profile_name_;
   uint8_t index_{0};
-  
+
   std::chrono::high_resolution_clock::time_point start_{std::chrono::high_resolution_clock::now()};
 };
 
