@@ -74,17 +74,16 @@ export default class Bootstrap extends React.Component<
             <Text style={{marginRight: 5}}>No Border</Text>
             <Switch
               value={this.state.inlcudeBorder}
-              onValueChange={value =>
-                this.setState({inlcudeBorder: value})
-              }
+              onValueChange={value => this.setState({inlcudeBorder: value})}
             />
             <Text style={{marginRight: 5}}>Round Border</Text>
           </View>
-
         </View>
         <View style={styles.imageContainer}>
           <Image
-            style={this.state.inlcudeBorder?styles.imageWithBorder:styles.image}
+            style={
+              this.state.inlcudeBorder ? styles.imageWithBorder : styles.image
+            }
             source={{uri: this.state.imageUrl}}
             resizeMode={this.state.selectedResizeMode}
           />
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     borderRadius: 10.0,
-    borderWidth:10,
+    borderWidth: 10,
     borderColor: 'green',
     backgroundColor: 'red',
   },
