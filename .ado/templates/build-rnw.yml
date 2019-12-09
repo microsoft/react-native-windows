@@ -25,6 +25,7 @@ steps:
       vsComponents: ${{ parameters.vsComponents }}
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
+      forceVSDependencies: false
 
   - task: NuGetCommand@2
     displayName: NuGet restore
