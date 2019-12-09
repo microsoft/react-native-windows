@@ -22,6 +22,7 @@ jobs:
           vsComponents: ${{ parameters.vsComponents }}
           yarnBuildCmd: build
           vsInstallerUri: ${{ parameters.vsInstallerUri }}
+          forceVSDependencies: true
 
       - task: CmdLine@2
         displayName: Install react-native-cli
