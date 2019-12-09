@@ -91,23 +91,11 @@
     <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
       <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
     </ProjectReference>
+    <Reference Include="facebook.react">
+      <HintPath>$(OutputPath)..\React.Windows.Desktop.DLL\facebook.react.winmd</HintPath>
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
   </ItemGroup>
-  <PropertyGroup>
-    <CppWinRTMakeReferenceProjectionDependsOn>$(CppWinRTMakeReferenceProjectionDependsOn);SetCppWinRTReferences</CppWinRTMakeReferenceProjectionDependsOn>
-  </PropertyGroup>
-  <Target Name="SetCppWinRTReferences">
-    <ItemGroup>
-      <!--
-      To increase resilience against build configuration changes, we could try to obtain the .winmd
-      path below from the Desktop.DLL project reference. The respective task should look similar to
-      'GetTargetFileName' MSBuild task in the 'GetRNDllPath' target below (and potentially share
-      build logic with it).
-      -->
-      <CppWinRTDynamicWinMDReferences Include="$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd">
-        <WinMDPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</WinMDPath>
-      </CppWinRTDynamicWinMDReferences>
-    </ItemGroup>
-  </Target>
   <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
     <!--
     During test execution, we need to find react-native-win32.dll which has been built into a
@@ -145,6 +133,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.191018.6\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.191018.6\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Windows.CppWinRT.2.0.191018.6\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Windows.CppWinRT.2.0.191018.6\build\native\Microsoft.Windows.CppWinRT.targets'))" />
   </Target>
 </Project>
