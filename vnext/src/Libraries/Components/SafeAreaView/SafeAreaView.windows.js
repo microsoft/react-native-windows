@@ -30,7 +30,9 @@ let exported;
  * limitation of the screen, such as rounded corners or camera notches (aka
  * sensor housing area on iPhone X).
  */
+// [Windows - Added windows to if
 if (Platform.OS === 'android' || Platform.OS === 'windows') {
+  // windows]
   const SafeAreaView = (
     props: Props,
     forwardedRef?: ?React.Ref<typeof View>,
