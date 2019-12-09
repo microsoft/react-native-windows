@@ -20,4 +20,13 @@ describe('ImageWithoutBorderTest', () => {
       'Dump comparison passed for image without border!'
     );
   });
+
+  it('ImageWithBorderTest', () => {
+    ImageTestPage.toggleImageBorder();
+    const result = ImageTestPage.getTreeDumpResult();
+    assert.ok(
+      result.includes('TreeDump:Passed'),
+      'Dump comparison passed for image with border!'
+    );
+  });
 });

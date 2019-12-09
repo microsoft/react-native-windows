@@ -4,6 +4,7 @@ export const APP_NAME = 'ReactUWPTestApp';
 export const SEARCH_BUTTON = 'SearchButton';
 export const HOME_BUTTON = '_HomeButton';
 export const REACT_CONTROL_ERROR_TEST_ID = 'ReactControlErrorMessage';
+export const TREE_DUMP_RESULT = 'TreeDump';
 
 // UnknownTestPage
 export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
@@ -35,4 +36,4 @@ export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
 // Image Test Page
 export const IMAGE_TESTPAGE = 'ImageTestPage';
 export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
-export const IMAGE_TREE_DUMP_RESULT = 'TreeDump';
+export const SHOW_IMAGE_BORDER = 'BorderButton';

@@ -18,7 +18,6 @@ namespace TreeDumpLibrary
 {
     internal class TreeDumpControlViewManager : AttributedViewManager<TextBlock>
     {
-        enum TreeDumpMatchResult { Disabled, Passed, Failed};
         public override string Name => "TreeDumpControl";
         public TreeDumpControlViewManager(IReactContext reactContext) : base(reactContext) { }
 
@@ -26,13 +25,14 @@ namespace TreeDumpLibrary
         {
             m_textBlock = new TextBlock();
             m_textBlock.TextWrapping = TextWrapping.Wrap;
+            m_textBlock.IsTextSelectionEnabled = false;
             m_textBlock.LayoutUpdated += async (source, e) =>
             {
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 1024 || bounds.Height != 768)
                 {
                     // Dump disabled when window size is not 1024x768!
-                    UpdateResult(TreeDumpMatchResult.Disabled, "Window has been resized, dump comparison is only valid at default launch size: 1024x768!");
+                    UpdateResult(false /*matchDump*/, "Window has been resized, dump comparison is only valid at default launch size: 1024x768!");
                 }
                 else
                 {
@@ -42,9 +42,10 @@ namespace TreeDumpLibrary
 
             m_textBlock.PointerPressed += (soruce, e) =>
             {
-                if (m_matchResult != TreeDumpMatchResult.Passed)
+                if (!m_matchDump)
                 {
-                    m_textBlock.Text = m_matchHelpString;
+                    m_errStringShowing = true;
+                    m_textBlock.Text = m_errString;
                     m_textBlock.IsTextSelectionEnabled = true;
                 }
             };
@@ -56,6 +57,14 @@ namespace TreeDumpLibrary
         public void SetDumpID(TextBlock view, string value)
         {
             m_dumpID = value;
+            m_matchDump = false;
+            m_dumpExpectedText = null;
+            m_errString = "";
+            m_errStringShowing = false;
+            if (m_textBlock != null)
+            {
+                m_textBlock.IsTextSelectionEnabled = false;
+            }
         }
 
         private async Task MatchTreeDumpFromLayoutUpdateAsync()
@@ -87,7 +96,7 @@ namespace TreeDumpLibrary
                 }
                 catch (IOException)
                 {
-                    UpdateResult(TreeDumpMatchResult.Failed, "Tree dump master file not found in testapp package!");
+                    UpdateResult(false /*matchDump*/, "Tree dump master file not found in testapp package!");
                 }
             }
 
@@ -99,44 +108,46 @@ namespace TreeDumpLibrary
                 {
                     StorageFile outFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
                     await Windows.Storage.FileIO.WriteTextAsync(outFile, dumpText);
-                    UpdateResult(TreeDumpMatchResult.Failed, "Tree dump file does not match master! See output at " + outFile.Path);
+                    UpdateResult(false /*matchDump*/, "Tree dump file does not match master! See output at " + outFile.Path);
                 }
                 catch (IOException)
                 {
-                    UpdateResult(TreeDumpMatchResult.Failed, "Can't write dump output file:" + fileName);
+                    UpdateResult(false /*matchDump*/, "Can't write dump output file:" + fileName);
                 }
             }
             else
             {
-                UpdateResult(TreeDumpMatchResult.Passed, "");
+                UpdateResult(true /*matchDump*/, "");
             }
         }
 
-        private void UpdateResult(TreeDumpMatchResult result, string helpText)
+        private void UpdateResult(bool matchDump, string helpText)
         {
-            if (m_matchResult != result)
+            if (matchDump)
             {
-                switch (result)
-                {
-                    case TreeDumpMatchResult.Disabled:
-                        m_textBlock.Text = "TreeDump:Disabled, click to see more!";
-                        break;
-                    case TreeDumpMatchResult.Failed:
-                        m_textBlock.Text = "TreeDump:Failed, click to see more!";
-                        break;
-                    case TreeDumpMatchResult.Passed:
-                        m_textBlock.Text = "TreeDump:Passed";
-                        break;
-                }
-                m_matchResult = result;
-                m_matchHelpString = helpText;
+                UpdateTextBlockText("TreeDump:Passed");
             }
+            else
+            {
+                UpdateTextBlockText("TreeDump:Failed, click to see more!");
+                m_errString += "\r\n" + helpText;
+            }
+
+            m_matchDump = matchDump;
         }
 
+        private void UpdateTextBlockText(string text)
+        {
+            if (!m_errStringShowing && m_textBlock.Text != text)
+            {
+                m_textBlock.Text = text;
+            }
+        }
         private TextBlock m_textBlock = null;
         private string m_dumpID = "UnknownTest";
         private string m_dumpExpectedText;
-        private TreeDumpMatchResult m_matchResult = TreeDumpMatchResult.Disabled;
-        private string m_matchHelpString = "No help text";
+        private bool m_matchDump = false;
+        private bool m_errStringShowing = false;
+        private string m_errString = "";
     }
 }

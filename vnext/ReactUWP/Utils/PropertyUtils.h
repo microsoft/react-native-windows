@@ -174,26 +174,47 @@ bool TryUpdateBorderProperties(
       UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else if (propertyName == "borderLeftWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::Left, 0);
+    }
   } else if (propertyName == "borderTopWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::Top, 0);
+    }
   } else if (propertyName == "borderRightWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::Right, 0);
+    }
   } else if (propertyName == "borderBottomWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::Bottom, 0);
+    }
   } else if (propertyName == "borderStartWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::Start, 0);
+    }
   } else if (propertyName == "borderEndWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::End, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::End, 0);
+    }
   } else if (propertyName == "borderWidth") {
-    if (propertyValue.isNumber())
+    if (propertyValue.isNumber()) {
       SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+    } else if (propertyValue.isNull()) {
+      SetBorderThickness(node, element, ShadowEdges::AllEdges, 0);
+    }
   } else {
     isBorderProperty = false;
   }

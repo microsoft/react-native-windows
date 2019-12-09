@@ -105,9 +105,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Assets\TreeDump\ImageWithoutBorder.treedump">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Content Include="Assets\TreeDump\ImageWithBorder.treedump" />
+    <Content Include="Assets\TreeDump\ImageWithoutBorder.treedump" />
     <None Include="ReactUWPTestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

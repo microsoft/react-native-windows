@@ -13,6 +13,7 @@
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
+#include <Utils/PropertyUtils.h>
 #include <Views/ShadowNodeBase.h>
 #include "ReactImage.h"
 
@@ -76,15 +77,18 @@ class ImageShadowNode : public ShadowNodeBase {
 
   void createView() override {
     ShadowNodeBase::createView();
-    auto reactImage{m_view.as<ReactImage>()};
+    auto border{m_view.as<winrt::Border>()};
+    auto reactImage{border.Child().as<ReactImage>()};
+    int64_t tag = border.Tag().as<winrt::IPropertyValue>().GetInt64();
 
-    m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
-                                              reactImage](const auto &, const bool &succeeded) {
-      ImageSource source{reactImage->Source()};
+    m_onLoadEndToken =
+        reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())}, reactImage, tag](
+                                  const auto &, const bool &succeeded) {
+          ImageSource source{reactImage->Source()};
 
-      imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
-      imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
-    });
+          imageViewManager->EmitImageEvent(tag, succeeded ? "topLoad" : "topError", source);
+          imageViewManager->EmitImageEvent(tag, "topLoadEnd", source);
+        });
   }
 
   void onDropViewInstance() override {
@@ -103,7 +107,10 @@ const char *ImageViewManager::GetName() const {
 }
 
 XamlView ImageViewManager::CreateViewCore(int64_t tag) {
-  return ReactImage::Create().as<winrt::Canvas>();
+  auto image = ReactImage::Create().as<winrt::Canvas>();
+  auto border = winrt::Border();
+  border.Child(image);
+  return border;
 }
 
 facebook::react::ShadowNode *ImageViewManager::createShadow() const {
@@ -111,7 +118,8 @@ facebook::react::ShadowNode *ImageViewManager::createShadow() const {
 }
 
 void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly::dynamic &reactDiffMap) {
-  auto canvas{nodeToUpdate->GetView().as<winrt::Canvas>()};
+  auto border{nodeToUpdate->GetView().as<winrt::Border>()};
+  auto canvas = border.Child().as<winrt::Canvas>();
 
   if (canvas == nullptr)
     return;
@@ -121,25 +129,30 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
     const folly::dynamic &propertyValue{pair.second};
 
     if (propertyName == "source") {
-      setSource(canvas, propertyValue);
+      setSource(border, propertyValue);
     } else if (propertyName == "resizeMode") {
       auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
       auto reactImage{canvas.as<ReactImage>()};
       reactImage->ResizeMode(resizeMode);
+    } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, border, propertyName, propertyValue)) {
+      continue;
+    } else if (TryUpdateBorderProperties(nodeToUpdate, border, propertyName, propertyValue)) {
+      UpdateCornerRadiusOnElement(nodeToUpdate, border);
+      continue;
+    } else if (TryUpdateBackgroundBrush(border, propertyName, propertyValue)) {
+      continue;
     }
-
     // TODO: overflow
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Canvas canvas, const char *eventName, ImageSource &source) {
+void ImageViewManager::EmitImageEvent(int64_t tag, const char *eventName, ImageSource &source) {
   auto reactInstance{m_wkReactInstance.lock()};
   if (reactInstance == nullptr)
     return;
 
-  int64_t tag = canvas.Tag().as<winrt::IPropertyValue>().GetInt64();
   folly::dynamic imageSource =
       folly::dynamic::object()("url", source.uri)("width", source.width)("height", source.height);
 
@@ -147,7 +160,7 @@ void ImageViewManager::EmitImageEvent(winrt::Canvas canvas, const char *eventNam
   reactInstance->DispatchEvent(tag, eventName, std::move(eventData));
 }
 
-void ImageViewManager::setSource(winrt::Canvas canvas, const folly::dynamic &data) {
+void ImageViewManager::setSource(winrt::Border border, const folly::dynamic &data) {
   auto instance{m_wkReactInstance.lock()};
   if (instance == nullptr)
     return;
@@ -155,9 +168,12 @@ void ImageViewManager::setSource(winrt::Canvas canvas, const folly::dynamic &dat
   auto sources{json_type_traits<std::vector<ImageSource>>::parseJson(data)};
   sources[0].bundleRootPath = instance->GetBundleRootPath();
 
+  auto canvas = border.Child();
   auto reactImage{canvas.as<ReactImage>()};
 
-  EmitImageEvent(canvas, "topLoadStart", sources[0]);
+  int64_t tag = border.Tag().as<winrt::IPropertyValue>().GetInt64();
+
+  EmitImageEvent(tag, "topLoadStart", sources[0]);
   reactImage->Source(sources[0]);
 }
 

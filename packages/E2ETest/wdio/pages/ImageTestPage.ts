@@ -4,7 +4,7 @@
  */
 
 import { BasePage, By } from './BasePage';
-import { IMAGE_TREE_DUMP_RESULT } from '../../app/Consts';
+import { TREE_DUMP_RESULT, SHOW_IMAGE_BORDER } from '../../app/Consts';
 
 class ImageTestPage extends BasePage {
   backToHomePage() {
@@ -20,8 +20,16 @@ class ImageTestPage extends BasePage {
     return this.treeDumpResult.getText();
   }
 
+  toggleImageBorder() {
+    this._imageBorder.click();
+  }
+
   private get treeDumpResult() {
-    return By(IMAGE_TREE_DUMP_RESULT);
+    return By(TREE_DUMP_RESULT);
+  }
+
+  private get _imageBorder() {
+    return By(SHOW_IMAGE_BORDER);
   }
 }
 
