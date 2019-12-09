@@ -17,7 +17,7 @@ namespace {
 
 INativeTraceHandler *g_nativeTracingHook = nullptr;
 
-#ifdef ENABLE_JS_SYSTRACE
+#ifdef ENABLE_JS_SYSTRACE_TO_ETW
 
 static JsValueRef __stdcall nativeTraceBeginSectionJNF(
     JsValueRef /*function*/,
@@ -307,7 +307,7 @@ void SystraceEndSection(
   }
 }
 
-#ifdef ENABLE_JS_SYSTRACE
+#ifdef ENABLE_JS_SYSTRACE_TO_ETW
 
 void addNativeTracingHooks() {
   installGlobalFunction("nativeTraceBeginSection", nativeTraceBeginSectionJNF);

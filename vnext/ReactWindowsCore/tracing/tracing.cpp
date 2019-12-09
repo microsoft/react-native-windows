@@ -17,14 +17,13 @@ using namespace facebook;
 
 namespace fbsystrace {
 
-/*static */ std::
-    unordered_map<int, std::chrono::high_resolution_clock::time_point>
-        FbSystraceAsyncFlow::s_tracker_;
+/*static */ uint64_t FbSystraceSection::s_id_counter = 0;
+
+/*static */ std::unordered_map<int, std::chrono::high_resolution_clock::time_point> FbSystraceAsyncFlow::s_tracker_;
 /*static */ std::mutex FbSystraceAsyncFlow::s_tracker_mutex_;
 
 std::mutex g_pages_mutex;
-/*static*/ void
-FbSystraceAsyncFlow::begin(uint64_t tag, const char *name, int cookie) {
+/*static*/ void FbSystraceAsyncFlow::begin(uint64_t tag, const char *name, int cookie) {
   {
     std::lock_guard<std::mutex> guard(s_tracker_mutex_);
     s_tracker_[cookie] = std::chrono::high_resolution_clock::now();
@@ -33,8 +32,7 @@ FbSystraceAsyncFlow::begin(uint64_t tag, const char *name, int cookie) {
   EventWriteNATIVE_ASYNC_BEGIN_FLOW(tag, name, cookie, 0);
 }
 
-/*static */ void
-FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
+/*static */ void FbSystraceAsyncFlow::end(uint64_t tag, const char *name, int cookie) {
   auto search = s_tracker_.find(cookie);
   double duration = -1;
 
@@ -62,142 +60,51 @@ namespace react {
 namespace tracing {
 
 void trace_begin_section(
+    uint64_t id,
     uint64_t tag,
     const std::string &profile_name,
     std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> &&args,
-    uint8_t size,
-    TraceTask task) {
-  switch (task) {
-    case TraceTask::EvaluateScript:
-      EventWriteEVALUATE_SCRIPT_BEGIN(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-
-    case TraceTask::CallJSFunction:
-      EventWriteCALL_JSFUNCTION_BEGIN(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-
-    case TraceTask::CallNativeModules:
-      EventWriteCALL_NATIVEMODULES_BEGIN(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-
-    case TraceTask::Unknown:
-    default:
-      EventWriteNATIVE_BEGIN_SECTION(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-  }
-}
-
-void trace_end_section(
-    uint64_t tag,
-    const std::string &profile_name,
-    double duration,
-    TraceTask task) {
-  switch (task) {
-    case TraceTask::EvaluateScript:
-      EventWriteEVALUATE_SCRIPT_END(tag, profile_name.c_str(), duration);
-      break;
-
-    case TraceTask::CallJSFunction:
-      EventWriteCALL_JSFUNCTION_END(tag, profile_name.c_str(), duration);
-      break;
-
-    case TraceTask::CallNativeModules:
-      EventWriteCALL_NATIVEMODULES_END(tag, profile_name.c_str(), duration);
-      break;
-
-    case TraceTask::Unknown:
-    default:
-      EventWriteNATIVE_END_SECTION(tag, profile_name.c_str(), duration);
-      break;
-  }
-}
-
-void syncSectionBeginJSHook(
-    uint64_t tag,
-    const std::string &profile_name,
-    const std::string &args) {
-  EventWriteJS_BEGIN_SECTION(
+    uint8_t size) {
+  EventWriteNATIVE_BEGIN_SECTION(
+      id,
       tag,
       profile_name.c_str(),
-      args.c_str(),
-      nullptr,
-      nullptr,
-      nullptr,
-      nullptr,
-      nullptr,
-      nullptr,
-      nullptr);
+      args[0].c_str(),
+      args[1].c_str(),
+      args[2].c_str(),
+      args[3].c_str(),
+      args[4].c_str(),
+      args[5].c_str(),
+      args[6].c_str(),
+      args[7].c_str());
+}
+
+void trace_end_section(uint64_t id, uint64_t tag, const std::string &profile_name, double duration) {
+  EventWriteNATIVE_END_SECTION(id, tag, profile_name.c_str(), duration);
+}
+
+void syncSectionBeginJSHook(uint64_t tag, const std::string &profile_name, const std::string &args) {
+  EventWriteJS_BEGIN_SECTION(
+      0, tag, profile_name.c_str(), args.c_str(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 }
 
 void syncSectionEndJSHook(uint64_t tag) {
-  EventWriteJS_END_SECTION(tag, "", 0);
+  EventWriteJS_END_SECTION(0, tag, "", 0);
 }
 
-void asyncSectionBeginJSHook(
-    uint64_t tag,
-    const std::string &profile_name,
-    int cookie) {
+void asyncSectionBeginJSHook(uint64_t tag, const std::string &profile_name, int cookie) {
   EventWriteJS_ASYNC_BEGIN_SECTION(tag, profile_name.c_str(), cookie, 0);
 }
 
-void asyncSectionEndJSHook(
-    uint64_t tag,
-    const std::string &profile_name,
-    int cookie) {
+void asyncSectionEndJSHook(uint64_t tag, const std::string &profile_name, int cookie) {
   EventWriteJS_ASYNC_END_SECTION(tag, profile_name.c_str(), cookie, 0);
 }
 
-void asyncFlowBeginJSHook(
-    uint64_t tag,
-    const std::string &profile_name,
-    int cookie) {
+void asyncFlowBeginJSHook(uint64_t tag, const std::string &profile_name, int cookie) {
   EventWriteJS_ASYNC_BEGIN_FLOW(tag, profile_name.c_str(), cookie, 0);
 }
 
-void asyncFlowEndJSHook(
-    uint64_t tag,
-    const std::string &profile_name,
-    int cookie) {
+void asyncFlowEndJSHook(uint64_t tag, const std::string &profile_name, int cookie) {
   EventWriteJS_ASYNC_END_FLOW(tag, profile_name.c_str(), cookie, 0);
 }
 
@@ -206,6 +113,10 @@ void counterJSHook(uint64_t tag, const std::string &profile_name, int value) {
 }
 
 void initializeJSHooks(jsi::Runtime &runtime) {
+  // Don't hook up unless the provider is enabled.
+  if (!EventEnabledJS_ASYNC_BEGIN_FLOW())
+    return;
+
   runtime.global().setProperty(runtime, "__RCTProfileIsProfiling", true);
 
   runtime.global().setProperty(
@@ -215,10 +126,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceBeginSection"),
           3,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *jsargs,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *jsargs, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(jsargs[0].getNumber());
 
@@ -240,8 +148,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
               syncSectionBeginJSHook(tag, profile_name, args);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceBeginSection called without any arguments.");
+              throw std::runtime_error("nativeTraceBeginSection called without any arguments.");
             }
             return jsi::Value::undefined();
           }));
@@ -253,16 +160,12 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceEndSection"),
           2,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *args,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
               syncSectionEndJSHook(tag);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceEndSection called without any arguments.");
+              throw std::runtime_error("nativeTraceEndSection called without any arguments.");
             }
             return jsi::Value::undefined();
           }));
@@ -274,10 +177,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceBeginAsyncSection"),
           2,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *args,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
 
@@ -293,8 +193,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
               asyncSectionBeginJSHook(tag, profile_name, cookie);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceBeginAsyncSection called without any arguments.");
+              throw std::runtime_error("nativeTraceBeginAsyncSection called without any arguments.");
             }
 
             return jsi::Value::undefined();
@@ -307,10 +206,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceEndAsyncSection"),
           2,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *args,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
 
@@ -326,8 +222,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
               asyncSectionEndJSHook(tag, profile_name, cookie);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceEndAsyncSection called without any arguments.");
+              throw std::runtime_error("nativeTraceEndAsyncSection called without any arguments.");
             }
 
             return jsi::Value::undefined();
@@ -339,10 +234,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceBeginAsyncFlow"),
           2,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *args,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
 
@@ -358,8 +250,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
               asyncFlowBeginJSHook(tag, profile_name, cookie);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceBeginAsyncFlow called without any arguments.");
+              throw std::runtime_error("nativeTraceBeginAsyncFlow called without any arguments.");
             }
 
             return jsi::Value::undefined();
@@ -371,10 +262,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceEndAsyncFlow"),
           2,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *args,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
 
@@ -390,8 +278,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
               asyncFlowEndJSHook(tag, profile_name, cookie);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceEndAsyncFlow called without any arguments.");
+              throw std::runtime_error("nativeTraceEndAsyncFlow called without any arguments.");
             }
 
             return jsi::Value::undefined();
@@ -404,10 +291,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
           runtime,
           jsi::PropNameID::forAscii(runtime, "nativeTraceCounter"),
           2,
-          [](jsi::Runtime &runtime,
-             const jsi::Value &,
-             const jsi::Value *args,
-             size_t count) -> jsi::Value {
+          [](jsi::Runtime &runtime, const jsi::Value &, const jsi::Value *args, size_t count) -> jsi::Value {
             if (count >= 1) {
               uint64_t tag = static_cast<uint64_t>(args[0].getNumber());
 
@@ -423,8 +307,7 @@ void initializeJSHooks(jsi::Runtime &runtime) {
 
               counterJSHook(tag, profile_name, value);
             } else {
-              throw std::runtime_error(
-                  "nativeTraceEndAsyncFlow called without any arguments.");
+              throw std::runtime_error("nativeTraceEndAsyncFlow called without any arguments.");
             }
 
             return jsi::Value::undefined();
