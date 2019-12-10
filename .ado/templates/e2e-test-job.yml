@@ -16,12 +16,17 @@ jobs:
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
+      - checkout: self
+        clean: false
+        submodules: false
+
       - template: prepare-env.yml
         parameters:
           useRnFork: ${{ parameters.UseRNFork }}
           vsComponents: ${{ parameters.vsComponents }}
           yarnBuildCmd: build
           vsInstallerUri: ${{ parameters.vsInstallerUri }}
+          forceVSDependencies: true
 
       - task: CmdLine@2
         displayName: Install react-native-cli
@@ -40,6 +45,12 @@ jobs:
         inputs:
           targetType: "inline"
           script:  Add-AppxPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
+
+      - task: CmdLine@2
+        displayName: Create bundle
+        inputs:
+          script: yarn run bundle
+          workingDirectory: packages/E2ETest
           
       - task: CmdLine@2
         displayName: run-windows
@@ -54,7 +65,22 @@ jobs:
           pathtoPublish: packages/E2ETest/msbuild.binlog 
           artifactName: 'ReactUWPTestApp build log' 
           publishLocation: 'Container'
-                    
+
+      - task: CopyFiles@2
+        displayName: Copy ReactUWPTestApp artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
+          contents: AppPackages\**
+        condition: succeededOrFailed()
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact:ReactUWPTestApp"
+        inputs:
+          artifactName: ReactUWPTestApp
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp
+        condition: succeededOrFailed()
+
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
         displayName: Wait for app to launch

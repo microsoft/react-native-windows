@@ -31,9 +31,17 @@ jobs:
           BuildPlatform: x64
           UseRNFork: true
           LayoutHeaders: true
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          UseRNFork: true
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
+          UseRNFork: true
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
           UseRNFork: true
         X86Release:
           BuildConfiguration: Release
@@ -532,7 +540,6 @@ jobs:
       BuildPlatform: x64
       UseRNFork: true
       vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64, Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
-      forceVSDependencies: true
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

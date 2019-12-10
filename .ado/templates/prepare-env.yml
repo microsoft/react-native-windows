@@ -55,7 +55,7 @@ steps:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: or('${{ parameters.forceVSDependencies }}', and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019')))
+    condition: and(ne('${{parameters.vsComponents}}', ''), or(eq(variables['VmImage'], 'windows-2019'), ${{ parameters.forceVSDependencies }}))
 
   - task: PowerShell@2
     displayName: List disksize by Get-WmiObject Win32_LogicalDisk
