@@ -357,10 +357,6 @@ void ReactControl::PrepareXamlRootView(XamlView const &rootView) {
     m_xamlRootView = newRootView;
   } else
     m_xamlRootView = rootView;
-
-  if (m_xamlRootView.as<winrt::FrameworkElement>().Name().empty()) {
-    m_xamlRootView.as<winrt::FrameworkElement>().Name(L"RNRootView");
-  }
 }
 
 void ReactControl::EnsureFocusSafeHarbor() {
