@@ -57,24 +57,17 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool switchBrushes{false};
-
-    if (m_useCompositionBrush != ShouldUseCompositionBrush()) {
-      switchBrushes = true;
-      m_useCompositionBrush = ShouldUseCompositionBrush();
-    }
+    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat};
+    bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
+      m_useCompositionBrush = shouldUseCompositionBrush;
       SetBackground(m_memoryStream != nullptr, false);
     } else {
       const auto bitmapBrush{Background().as<winrt::ImageBrush>()};
       bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
     }
   }
-}
-
-bool ReactImage::ShouldUseCompositionBrush() {
-  return m_resizeMode == ResizeMode::Repeat;
 }
 
 winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
@@ -86,6 +79,10 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
     case ResizeMode::Contain:
       return winrt::Stretch::Uniform;
     default: // ResizeMode::Center
+      // This function should never be called for the 'repeat' resizeMode case.
+      // That is handled by the shouldUseCompositionBrush/switchBrushes code path.
+      assert(value != ResizeMode::Repeat);
+
       const auto bitmap{Background().as<winrt::ImageBrush>().ImageSource().as<winrt::BitmapImage>()};
       if (bitmap.PixelHeight() < m_availableSize.Height && bitmap.PixelWidth() < m_availableSize.Width) {
         return winrt::Stretch::None;
@@ -95,12 +92,15 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
   }
 }
 
-winrt::fire_and_forget ReactImage::Source(ImageSource source) {
+winrt::fire_and_forget ReactImage::Source(ReactImageSource source) {
   std::string uriString{source.uri};
   if (uriString.length() == 0) {
     m_onLoadEndEvent(*this, false);
     return;
   }
+
+  m_imageSource = source;
+  m_memoryStream = nullptr;
 
   if (source.packagerAsset && uriString.find("file://") == 0) {
     uriString.replace(0, 7, source.bundleRootPath);
@@ -116,8 +116,6 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
   auto weak_this{get_weak()};
 
   try {
-    m_imageSource = source;
-
     if (needsDownload) {
       m_memoryStream = co_await GetImageStreamAsync(source);
     } else if (inlineData) {
@@ -125,12 +123,17 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
     }
 
     if (auto strong_this{weak_this.get()}) {
-      if ((needsDownload || inlineData) && !strong_this->m_memoryStream) {
+      bool fromStream{needsDownload || inlineData};
+
+      // Fire failed load event if we're not loading from URI and the memory stream is null.
+      if (fromStream && !strong_this->m_memoryStream) {
         strong_this->m_onLoadEndEvent(*strong_this, false);
+        return;
       }
 
-      if (!needsDownload || strong_this->m_memoryStream) {
-        strong_this->SetBackground(needsDownload || inlineData, true);
+      // Verify we're loading from URI or we have a valid memory stream before calling SetBackground.
+      if (!fromStream || strong_this->m_memoryStream) {
+        strong_this->SetBackground(fromStream, true);
       }
     }
   } catch (winrt::hresult_error const &) {
@@ -140,7 +143,7 @@ winrt::fire_and_forget ReactImage::Source(ImageSource source) {
   }
 }
 
-void ReactImage::SetBackground(bool fromStream, bool fireLoadEndEvent) {
+winrt::fire_and_forget ReactImage::SetBackground(bool fromStream, bool fireLoadEndEvent) {
   const winrt::Uri uri{Utf8ToUtf16(m_imageSource.uri)};
 
   if (m_useCompositionBrush) {
@@ -201,20 +204,30 @@ void ReactImage::SetBackground(bool fromStream, bool fireLoadEndEvent) {
           }
         });
 
-    winrt::BitmapImage bitmap{};
+    // get weak reference before any co_await calls
+    auto weak_this{get_weak()};
 
-    if (fromStream) {
-      bitmap.SetSourceAsync(m_memoryStream);
-    } else {
-      bitmap.UriSource(uri);
+    try {
+      winrt::BitmapImage bitmap{};
+
+      if (fromStream) {
+        co_await bitmap.SetSourceAsync(m_memoryStream);
+      } else {
+        bitmap.UriSource(uri);
+      }
+
+      bitmapBrush.ImageSource(bitmap);
+      Background(bitmapBrush);
+    } catch (winrt::hresult_error const &) {
+      const auto strong_this{weak_this.get()};
+      if (strong_this && fireLoadEndEvent) {
+        strong_this->m_onLoadEndEvent(*strong_this, false);
+      }
     }
-
-    bitmapBrush.ImageSource(bitmap);
-    Background(bitmapBrush);
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ImageSource source) {
+winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
   try {
     co_await winrt::resume_background();
 
@@ -253,7 +266,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Im
   return nullptr;
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ImageSource source) {
+winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
   size_t start = source.uri.find(',');
   if (start == std::string::npos || start + 1 > source.uri.length())
     return nullptr;

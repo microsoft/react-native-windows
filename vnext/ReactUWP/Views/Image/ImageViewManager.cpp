@@ -23,9 +23,9 @@ using namespace Windows::UI::Xaml::Controls;
 
 // Such code is better to move to a seperate parser layer
 template <>
-struct json_type_traits<react::uwp::ImageSource> {
-  static react::uwp::ImageSource parseJson(const folly::dynamic &json) {
-    react::uwp::ImageSource source;
+struct json_type_traits<react::uwp::ReactImageSource> {
+  static react::uwp::ReactImageSource parseJson(const folly::dynamic &json) {
+    react::uwp::ReactImageSource source;
     for (auto &item : json.items()) {
       if (item.first == "uri")
         source.uri = item.second.asString();
@@ -80,7 +80,7 @@ class ImageShadowNode : public ShadowNodeBase {
 
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
                                               reactImage](const auto &, const bool &succeeded) {
-      ImageSource source{reactImage->Source()};
+      ReactImageSource source{reactImage->Source()};
 
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), succeeded ? "topLoad" : "topError", source);
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Canvas>(), "topLoadEnd", source);
@@ -134,7 +134,7 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Canvas canvas, const char *eventName, ImageSource &source) {
+void ImageViewManager::EmitImageEvent(winrt::Canvas canvas, const char *eventName, ReactImageSource &source) {
   auto reactInstance{m_wkReactInstance.lock()};
   if (reactInstance == nullptr)
     return;
@@ -152,7 +152,7 @@ void ImageViewManager::setSource(winrt::Canvas canvas, const folly::dynamic &dat
   if (instance == nullptr)
     return;
 
-  auto sources{json_type_traits<std::vector<ImageSource>>::parseJson(data)};
+  auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
   sources[0].bundleRootPath = instance->GetBundleRootPath();
 
   auto reactImage{canvas.as<ReactImage>()};

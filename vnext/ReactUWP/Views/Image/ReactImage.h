@@ -17,7 +17,7 @@
 namespace react {
 namespace uwp {
 
-struct ImageSource {
+struct ReactImageSource {
   std::string uri;
   std::string method;
   std::string bundleRootPath;
@@ -44,10 +44,10 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
-  ImageSource Source() {
+  ReactImageSource Source() {
     return m_imageSource;
   }
-  winrt::fire_and_forget Source(ImageSource source);
+  winrt::fire_and_forget Source(ReactImageSource source);
 
   react::uwp::ResizeMode ResizeMode() {
     return m_resizeMode;
@@ -55,12 +55,11 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   void ResizeMode(react::uwp::ResizeMode value);
 
  private:
-  bool ShouldUseCompositionBrush();
   winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
-  void SetBackground(bool fromStream, bool fireLoadEndEvent);
+  winrt::fire_and_forget SetBackground(bool fromStream, bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
-  ImageSource m_imageSource;
+  ReactImageSource m_imageSource;
   winrt::Windows::Foundation::Size m_availableSize{};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
   winrt::Windows::Storage::Streams::InMemoryRandomAccessStream m_memoryStream{nullptr};
@@ -73,8 +72,8 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
 
 // Helper functions
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageStreamAsync(ImageSource source);
+GetImageStreamAsync(ReactImageSource source);
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageInlineDataAsync(ImageSource source);
+GetImageInlineDataAsync(ReactImageSource source);
 } // namespace uwp
 } // namespace react
