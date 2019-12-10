@@ -31,17 +31,17 @@ jobs:
           BuildPlatform: x64
           UseRNFork: true
           LayoutHeaders: true
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
           UseRNFork: true
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
           UseRNFork: true
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
           UseRNFork: true
         X86Release:
           BuildConfiguration: Release
@@ -65,10 +65,6 @@ jobs:
         clean: false
         submodules: false
 
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -83,17 +79,35 @@ jobs:
           contents: |
             ReactUWP\**
 
-      - task: DeleteFiles@1
-        displayName: Delete vnext/build folder
-        inputs:
-          SourceFolder: vnext/build
-          Contents: '**/*'
+  - job: RNWUniversalOtherProjectsPR
+    displayName: Universal Other Projects PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix:
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: true
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          UseRNFork: true
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
 
-      - task: DeleteFiles@1
-        displayName: Delete vnext/target folder
-        inputs:
-          SourceFolder: vnext/target
-          Contents: '**/*'
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+        parameters:
+          useRnFork: $(UseRNFork)
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          yarnBuildCmd: buildci
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -158,6 +172,7 @@ jobs:
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
+
   - job: RNWDesktopPR
     displayName: Desktop PR
     dependsOn: Setup
@@ -189,10 +204,6 @@ jobs:
       - checkout: self
         clean: false
         submodules: false
-
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
