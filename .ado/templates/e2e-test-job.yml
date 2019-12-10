@@ -63,16 +63,16 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy ReactUWPTestApp artifacts
         inputs:
-          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp/AppPackages
-          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp/AppPackages
-          contents: *
+          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
+          contents: AppPackages\**
         condition: failed()
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
           artifactName: ReactUWPTestApp
-          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp/AppPackages
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp
         condition: failed()
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
