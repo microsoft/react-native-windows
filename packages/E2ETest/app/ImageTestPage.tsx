@@ -5,7 +5,7 @@
 
 import {StyleSheet, View, Image, Button, requireNativeComponent} from 'react-native'
 import React, { useState } from 'react';
-import { TREE_DUMP_RESULT, SHOW_IMAGE_BORDER } from './Consts';
+import { TREE_DUMP_RESULT, SHOW_IMAGE_BORDER, IMAGE_ELEMENT } from './Consts';
 const TreeDumpControl = requireNativeComponent('TreeDumpControl');
 
 const styles = StyleSheet.create({
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
   image: {
     height: '100%',
     width: '100%',
+    backgroundColor: 'red',
   },  
   buttonContainer: {
     backgroundColor: '#2980b6',
@@ -34,12 +35,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700'
   },  
-  imageContainer: {
-    marginTop: 5,
-    height:200,
-    width:450,
-    backgroundColor: 'orange',
-  },
   treeDumpControl: {
     height: 150,
     width: 450,
@@ -55,16 +50,15 @@ export function ImageTestPage() {
  }
   return(
   <View style={styles.container}>
-    <View style={styles.imageContainer}>
-      <Image
-        style={imageWithBorder?styles.imageWithBorder:styles.image}
-        resizeMode={'center'}
-        source={{uri: 'http://facebook.github.io/react-native/img/header_logo.png'}}
-      />      
-    </View>   
+    <Image
+      testID={IMAGE_ELEMENT}
+      style={imageWithBorder?styles.imageWithBorder:styles.image}
+      resizeMode={'center'}
+      source={{uri: 'http://facebook.github.io/react-native/img/header_logo.png'}}
+    />      
     <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
         onPress={onOressBorder} 
         testID={SHOW_IMAGE_BORDER}/> 
-    <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':'ImageWithoutBorder'} testID={TREE_DUMP_RESULT} />
+    <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':'ImageWithoutBorder'} uiaID={IMAGE_ELEMENT} testID={TREE_DUMP_RESULT} />
   </View >);
 }

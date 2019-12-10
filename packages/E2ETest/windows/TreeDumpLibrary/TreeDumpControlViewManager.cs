@@ -67,21 +67,58 @@ namespace TreeDumpLibrary
             }
         }
 
+        [ViewManagerProperty("uiaID")]
+        public void SetUIAID(TextBlock view, string value)
+        {
+            m_uiaID = value;
+        }
+
+        private DependencyObject FindChildWithMatchingUIAID(DependencyObject element)
+        {
+            string automationId = (string)element.GetValue(Windows.UI.Xaml.Automation.AutomationProperties.AutomationIdProperty);
+            if (automationId == m_uiaID)
+            {
+                return element;
+            }
+            int childrenCount = VisualTreeHelper.GetChildrenCount(element);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var result = FindChildWithMatchingUIAID(VisualTreeHelper.GetChild(element, i));
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            return null;
+        }
+
         private async Task MatchTreeDumpFromLayoutUpdateAsync()
         {
-            DependencyObject parent = VisualTreeHelper.GetParent(m_textBlock);
+            // First find root
+            DependencyObject current = m_textBlock;
+            DependencyObject parent = VisualTreeHelper.GetParent(current);
             while (parent != null)
             {
-                var name = ((FrameworkElement)parent).Name;
-                if (name == "RNRootView")
+                current = parent;
+                parent = VisualTreeHelper.GetParent(current);
+            }
+
+            DependencyObject dumpRoot = current;
+            // if UIAID is passed in from test, find the matching child as the root to dump
+            if (m_uiaID != null)
+            {
+                var matchingNode = FindChildWithMatchingUIAID(current);
+                if (matchingNode != null)
                 {
-                    String dumpText = VisualTreeDumper.DumpToXML(parent, m_textBlock /* exclude */);
-                    if (dumpText != m_dumpExpectedText)
-                    {
-                        await MatchDump(dumpText);
-                    }
+                    dumpRoot = matchingNode;
                 }
-                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            String dumpText = VisualTreeDumper.DumpToXML(dumpRoot, m_textBlock /* exclude */);
+            if (dumpText != m_dumpExpectedText)
+            {
+                await MatchDump(dumpText);
             }
         }
 
@@ -149,5 +186,6 @@ namespace TreeDumpLibrary
         private bool m_matchDump = false;
         private bool m_errStringShowing = false;
         private string m_errString = "";
+        private string m_uiaID = null;
     }
 }

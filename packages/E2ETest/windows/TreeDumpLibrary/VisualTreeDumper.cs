@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
 namespace TreeDumpLibrary
@@ -118,7 +119,7 @@ namespace TreeDumpLibrary
     }
     public sealed class DefaultFilter
     {
-        private List<string> _propertyNameWhiteList = new List<string> {"Foreground", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
+        private List<string> _propertyNameWhiteList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
             "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip", "ActualOffset"};
 
         public bool ShouldVisitPropertyValue(string propertyValue)

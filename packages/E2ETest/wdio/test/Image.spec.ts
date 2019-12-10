@@ -29,4 +29,13 @@ describe('ImageWithoutBorderTest', () => {
       'Dump comparison passed for image with border!'
     );
   });
+
+  // toggle back to no border and verify border properties are reset
+  it('ImageWithoutBorderTest Success', () => {
+    const result = ImageTestPage.getTreeDumpResult();
+    assert.ok(
+      result.includes('TreeDump:Passed'),
+      'Second dump comparison passed for image without border!'
+    );
+  });
 });

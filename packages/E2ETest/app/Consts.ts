@@ -37,3 +37,4 @@ export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
 export const IMAGE_TESTPAGE = 'ImageTestPage';
 export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
 export const SHOW_IMAGE_BORDER = 'BorderButton';
+export const IMAGE_ELEMENT = 'ImageElement';
