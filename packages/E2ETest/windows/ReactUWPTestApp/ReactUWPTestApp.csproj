@@ -154,8 +154,7 @@
 
   <PropertyGroup>
     <BundleCommand>
-    echo WorkingDir %CD%
-    yarn run bundle
+      react-native bundle --platform windows --entry-file dist/app/index.js --bundle-output windows/$(SolutionName)/Bundle/index.windows.bundle --assets-dest windows/$(SolutionName)/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
