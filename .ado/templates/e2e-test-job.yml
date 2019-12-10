@@ -45,6 +45,12 @@ jobs:
         inputs:
           targetType: "inline"
           script:  Add-AppxPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
+
+      - task: CmdLine@2
+        displayName: Create bundle
+        inputs:
+          script: yarn run bundle
+          workingDirectory: packages/E2ETest
           
       - task: CmdLine@2
         displayName: run-windows
@@ -66,14 +72,14 @@ jobs:
           sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
           contents: AppPackages\**
-        condition: failed()
+        condition: succeededOrFailed()
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact:ReactUWPTestApp"
         inputs:
           artifactName: ReactUWPTestApp
           pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp
-        condition: failed()
+        condition: succeededOrFailed()
 
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
