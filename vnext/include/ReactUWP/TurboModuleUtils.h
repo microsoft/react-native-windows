@@ -10,5 +10,6 @@ class Instance;
 }
 
 namespace react::uwp {
-extern std::shared_ptr<facebook::react::Instance> GetFacebookReactInstance(const winrt::react::uwp::Instance &uwpInstance);
+extern std::shared_ptr<facebook::react::Instance> GetFacebookReactInstance(
+    const winrt::react::uwp::Instance &uwpInstance);
 }
