@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrading CppWinRT",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "e4870d5b36f17f87d7d5e4136d29c8228217df49",
+  "date": "2019-12-10T18:46:45.284Z"
+}
