@@ -8,7 +8,8 @@
 
 namespace react::uwp {
 
-std::shared_ptr<facebook::react::Instance> GetFacebookReactInstance(const winrt::react::uwp::Instance &uwpInstance) {
+std::shared_ptr<facebook::react::Instance> __cdecl GetFacebookReactInstance(
+    const winrt::react::uwp::Instance &uwpInstance) {
   winrt::com_ptr<ABI::react::uwp::IInstance> abiIInstance;
   winrt::copy_to_abi(uwpInstance, *abiIInstance.put_void());
   assert(abiIInstance);
