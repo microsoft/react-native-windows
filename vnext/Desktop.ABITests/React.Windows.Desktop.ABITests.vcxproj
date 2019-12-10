@@ -92,8 +92,10 @@
       <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
     </ProjectReference>
     <Reference Include="facebook.react">
-      <HintPath>$(OutputPath)..\React.Windows.Desktop.DLL\facebook.react.winmd</HintPath>
+      <HintPath>$(OutputPath)..\React.Windows.Desktop\facebook.react.winmd</HintPath>
       <IsWinMDFile>true</IsWinMDFile>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
     </Reference>
   </ItemGroup>
   <Target Name="GetRNDllPath" BeforeTargets="ClCompile">
