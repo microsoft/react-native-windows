@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Add react-native-win32 package",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "commit": "b1533aa378318967229aad3c6709ac12960ba141",
+  "date": "2019-12-11T21:32:55.988Z"
+}
