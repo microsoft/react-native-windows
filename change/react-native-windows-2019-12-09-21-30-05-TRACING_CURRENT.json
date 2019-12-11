@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Submitting the ETW schema resouce dll and the register script",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "commit": "cc3682e642cb6ee446d6183dd60f126767d4e936",
-  "date": "2019-12-10T05:30:05.029Z"
-}
