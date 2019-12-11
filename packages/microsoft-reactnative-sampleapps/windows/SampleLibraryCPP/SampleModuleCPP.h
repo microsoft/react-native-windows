@@ -29,9 +29,9 @@ struct SampleModuleCPP {
   const std::string StringConstant = "Hello World";
 
   REACT_CONSTANT_PROVIDER(ConstantsViaConstantsProvider)
-  void ConstantsViaConstantsProvider(const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter &writer) noexcept {
-    ::Microsoft::ReactNative::WriteProperty(writer, "NumberConstantViaProvider", M_PI);
-    ::Microsoft::ReactNative::WriteProperty(writer, "StringConstantViaProvider", "Hello World");
+  void ConstantsViaConstantsProvider(ReactConstantProvider &constants) noexcept {
+    constants.Add(L"NumberConstantViaProvider", M_PI);
+    constants.Add(L"StringConstantViaProvider", "Hello World");
   }
 
 #pragma endregion
@@ -77,27 +77,24 @@ struct SampleModuleCPP {
   }
 
   REACT_METHOD(ExplicitPromiseMethod);
-  void ExplicitPromiseMethod(
-      std::function<void(double)> &&resolve,
-      std::function<void(std::string)> &&reject) noexcept {
+  void ExplicitPromiseMethod(winrt::Microsoft::ReactNative::Bridge::ReactPromise<double> &&result) noexcept {
     DebugWriteLine(Name, "ExplicitPromiseMethod");
     try {
-      resolve(M_PI);
+      result.Resolve(M_PI);
     } catch (const std::exception &ex) {
-      reject(ex.what());
+      result.Reject(ex.what());
     }
   }
 
   REACT_METHOD(ExplicitPromiseMethodWithArgs);
   void ExplicitPromiseMethodWithArgs(
       double arg,
-      std::function<void(double)> &&resolve,
-      std::function<void(std::string)> &&reject) noexcept {
+      winrt::Microsoft::ReactNative::Bridge::ReactPromise<double> &&result) noexcept {
     DebugWriteLine(Name, "ExplicitPromiseMethodWithArgs", arg);
     try {
-      resolve(M_PI);
+      result.Resolve(M_PI);
     } catch (const std::exception &ex) {
-      reject(ex.what());
+      result.Reject(ex.what());
     }
   }
 
@@ -121,7 +118,7 @@ struct SampleModuleCPP {
 
 #pragma region Events
 
-  REACT_EVENT(TimedEvent, "TimedEventCPP");
+  REACT_EVENT(TimedEvent, L"TimedEventCPP");
   std::function<void(int)> TimedEvent;
 
 #pragma endregion
