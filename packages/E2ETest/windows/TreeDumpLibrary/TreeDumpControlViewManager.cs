@@ -13,15 +13,15 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using Windows.Storage;
+using System.Collections.Generic;
 
 namespace TreeDumpLibrary
 {
-    internal class TreeDumpControlViewManager : AttributedViewManager<TextBlock>
+    internal class TreeDumpControlViewManager : IViewManager, IViewManagerWithNativeProperties
     {
-        public override string Name => "TreeDumpControl";
-        public TreeDumpControlViewManager(IReactContext reactContext) : base(reactContext) { }
+        public string Name => "TreeDumpControl";
 
-        public override FrameworkElement CreateView()
+        public FrameworkElement CreateView()
         {
             m_textBlock = new TextBlock();
             m_textBlock.TextWrapping = TextWrapping.Wrap;
@@ -53,7 +53,33 @@ namespace TreeDumpLibrary
             return m_textBlock;
         }
 
-        [ViewManagerProperty("dumpID")]
+        public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
+        {
+            foreach (KeyValuePair<string, object> kvp in propertyMap)
+            {
+                if (kvp.Key == "dumpID")
+                {
+                    SetDumpID((TextBlock)view, (string)kvp.Value);
+                }
+                else if (kvp.Key == "uiaID")
+                {
+                    SetUIAID((TextBlock)view, (string)kvp.Value);
+                }
+            }
+        }
+
+        IReadOnlyDictionary<string, ViewManagerPropertyType> IViewManagerWithNativeProperties.NativeProps
+        {
+            get
+            {
+                return new Dictionary<string, ViewManagerPropertyType>
+                {
+                    { "dumpID", ViewManagerPropertyType.String },
+                    { "uiaID", ViewManagerPropertyType.String }
+                };
+            }
+        }
+
         public void SetDumpID(TextBlock view, string value)
         {
             m_dumpID = value;
@@ -67,7 +93,6 @@ namespace TreeDumpLibrary
             }
         }
 
-        [ViewManagerProperty("uiaID")]
         public void SetUIAID(TextBlock view, string value)
         {
             m_uiaID = value;
@@ -187,5 +212,6 @@ namespace TreeDumpLibrary
         private bool m_errStringShowing = false;
         private string m_errString = "";
         private string m_uiaID = null;
+
     }
 }

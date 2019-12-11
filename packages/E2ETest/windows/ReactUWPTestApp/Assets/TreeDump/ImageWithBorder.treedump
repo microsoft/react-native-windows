@@ -1,16 +1,16 @@
 [Windows.UI.Xaml.Controls.Border]
-    Padding=0,0,0,0
-    CornerRadius=10,10,10,10
-    BorderThickness=10,10,10,10
-    BorderBrush=#FF008000
-    Background=#FFFF0000
-    Width=450
-    VerticalAlignment=Stretch
-    Margin=0,0,0,0
-    HorizontalAlignment=Stretch
-    Height=220
-    Clip=[NULL]
-    Visibility=Visible
-    RenderSize=450,220
     ActualOffset=<0, 0, 0>
+    Background=#FFFF0000
+    BorderBrush=#FF008000
+    BorderThickness=10,10,10,10
+    Clip=[NULL]
+    CornerRadius=10,10,10,10
+    Height=220
+    HorizontalAlignment=Stretch
+    Margin=0,0,0,0
+    Padding=0,0,0,0
+    RenderSize=450,220
+    VerticalAlignment=Stretch
+    Visibility=Visible
+    Width=450
   [Windows.UI.Xaml.DependencyObject]
