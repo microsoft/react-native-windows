@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sun, 08 Dec 2019 03:57:02 GMT and should not be manually modified.
+This log was last generated on Wed, 11 Dec 2019 22:51:44 GMT and should not be manually modified.
 
+## 0.25.7
+Wed, 11 Dec 2019 22:51:44 GMT
+
+### Patches
+
+- Add react-native-win32 package (acoates@microsoft.com)
 ## 0.25.5
 Sun, 08 Dec 2019 03:57:02 GMT
 
