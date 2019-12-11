@@ -104,8 +104,7 @@ extern "C" {
 // or more provider in a manifest has provider traits.
 //
 #ifndef MCGEN_HAVE_EVENTSETINFORMATION
-#ifdef MCGEN_EVENTSETINFORMATION // if MCGEN_EVENTSETINFORMATION has been
-                                 // customized,
+#ifdef MCGEN_EVENTSETINFORMATION // if MCGEN_EVENTSETINFORMATION has been customized,
 #define MCGEN_HAVE_EVENTSETINFORMATION 1 //   directly invoke MCGEN_EVENTSETINFORMATION(...).
 #elif MCGEN_USE_KERNEL_MODE_APIS // else if using kernel-mode APIs,
 #if NTDDI_VERSION >= 0x06040000 //   if target OS is Windows 10 or later,
@@ -330,8 +329,8 @@ Arguments:
 
     FilterData - The provider-defined data.
 
-    CallbackContext - The context of the callback that is defined when the
-provider called EtwRegister to register itself.
+    CallbackContext - The context of the callback that is defined when the provider
+                      called EtwRegister to register itself.
 
 Remarks:
 
@@ -670,35 +669,37 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_BEGIN_SECTION
 //
-#define EventWriteJS_BEGIN_SECTION(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  MCGEN_EVENT_ENABLED(JS_BEGIN_SECTION)                                                              \
-  ? McTemplateU0xsssssssss(                                                                          \
-        &REACT_NATIVE_WINDOWS_Context,                                                               \
-        &JS_BEGIN_SECTION,                                                                           \
-        tag,                                                                                         \
-        profileName,                                                                                 \
-        arg0,                                                                                        \
-        arg1,                                                                                        \
-        arg2,                                                                                        \
-        arg3,                                                                                        \
-        arg4,                                                                                        \
-        arg5,                                                                                        \
-        arg6,                                                                                        \
-        arg7)                                                                                        \
+#define EventWriteJS_BEGIN_SECTION(id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  MCGEN_EVENT_ENABLED(JS_BEGIN_SECTION)                                                                  \
+  ? McTemplateU0xxsssssssss(                                                                             \
+        &REACT_NATIVE_WINDOWS_Context,                                                                   \
+        &JS_BEGIN_SECTION,                                                                               \
+        id,                                                                                              \
+        tag,                                                                                             \
+        profileName,                                                                                     \
+        arg0,                                                                                            \
+        arg1,                                                                                            \
+        arg2,                                                                                            \
+        arg3,                                                                                            \
+        arg4,                                                                                            \
+        arg5,                                                                                            \
+        arg6,                                                                                            \
+        arg7)                                                                                            \
   : 0
-#define EventWriteJS_BEGIN_SECTION_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  McTemplateU0xsssssssss(                                                                                          \
-      &REACT_NATIVE_WINDOWS_Context,                                                                               \
-      &JS_BEGIN_SECTION,                                                                                           \
-      tag,                                                                                                         \
-      profileName,                                                                                                 \
-      arg0,                                                                                                        \
-      arg1,                                                                                                        \
-      arg2,                                                                                                        \
-      arg3,                                                                                                        \
-      arg4,                                                                                                        \
-      arg5,                                                                                                        \
-      arg6,                                                                                                        \
+#define EventWriteJS_BEGIN_SECTION_AssumeEnabled(id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  McTemplateU0xxsssssssss(                                                                                             \
+      &REACT_NATIVE_WINDOWS_Context,                                                                                   \
+      &JS_BEGIN_SECTION,                                                                                               \
+      id,                                                                                                              \
+      tag,                                                                                                             \
+      profileName,                                                                                                     \
+      arg0,                                                                                                            \
+      arg1,                                                                                                            \
+      arg2,                                                                                                            \
+      arg3,                                                                                                            \
+      arg4,                                                                                                            \
+      arg5,                                                                                                            \
+      arg6,                                                                                                            \
       arg7)
 
 //
@@ -709,11 +710,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for JS_END_SECTION
 //
-#define EventWriteJS_END_SECTION(tag, profileName, duration) \
-  MCGEN_EVENT_ENABLED(JS_END_SECTION)                        \
-  ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, tag, profileName, duration) : 0
-#define EventWriteJS_END_SECTION_AssumeEnabled(tag, profileName, duration) \
-  McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, tag, profileName, duration)
+#define EventWriteJS_END_SECTION(id, tag, profileName, duration) \
+  MCGEN_EVENT_ENABLED(JS_END_SECTION)                            \
+  ? McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, id, tag, profileName, duration) : 0
+#define EventWriteJS_END_SECTION_AssumeEnabled(id, tag, profileName, duration) \
+  McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &JS_END_SECTION, id, tag, profileName, duration)
 
 //
 // Enablement check macro for JS_ASYNC_BEGIN_SECTION
@@ -793,36 +794,38 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for EVALUATE_SCRIPT_BEGIN
 //
-#define EventWriteEVALUATE_SCRIPT_BEGIN(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  MCGEN_EVENT_ENABLED(EVALUATE_SCRIPT_BEGIN)                                                              \
-  ? McTemplateU0xsssssssss(                                                                               \
-        &REACT_NATIVE_WINDOWS_Context,                                                                    \
-        &EVALUATE_SCRIPT_BEGIN,                                                                           \
-        tag,                                                                                              \
-        profileName,                                                                                      \
-        arg0,                                                                                             \
-        arg1,                                                                                             \
-        arg2,                                                                                             \
-        arg3,                                                                                             \
-        arg4,                                                                                             \
-        arg5,                                                                                             \
-        arg6,                                                                                             \
-        arg7)                                                                                             \
+#define EventWriteEVALUATE_SCRIPT_BEGIN(id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  MCGEN_EVENT_ENABLED(EVALUATE_SCRIPT_BEGIN)                                                                  \
+  ? McTemplateU0xxsssssssss(                                                                                  \
+        &REACT_NATIVE_WINDOWS_Context,                                                                        \
+        &EVALUATE_SCRIPT_BEGIN,                                                                               \
+        id,                                                                                                   \
+        tag,                                                                                                  \
+        profileName,                                                                                          \
+        arg0,                                                                                                 \
+        arg1,                                                                                                 \
+        arg2,                                                                                                 \
+        arg3,                                                                                                 \
+        arg4,                                                                                                 \
+        arg5,                                                                                                 \
+        arg6,                                                                                                 \
+        arg7)                                                                                                 \
   : 0
-#define EventWriteEVALUATE_SCRIPT_BEGIN_AssumeEnabled(                \
-    tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  McTemplateU0xsssssssss(                                             \
-      &REACT_NATIVE_WINDOWS_Context,                                  \
-      &EVALUATE_SCRIPT_BEGIN,                                         \
-      tag,                                                            \
-      profileName,                                                    \
-      arg0,                                                           \
-      arg1,                                                           \
-      arg2,                                                           \
-      arg3,                                                           \
-      arg4,                                                           \
-      arg5,                                                           \
-      arg6,                                                           \
+#define EventWriteEVALUATE_SCRIPT_BEGIN_AssumeEnabled(                    \
+    id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  McTemplateU0xxsssssssss(                                                \
+      &REACT_NATIVE_WINDOWS_Context,                                      \
+      &EVALUATE_SCRIPT_BEGIN,                                             \
+      id,                                                                 \
+      tag,                                                                \
+      profileName,                                                        \
+      arg0,                                                               \
+      arg1,                                                               \
+      arg2,                                                               \
+      arg3,                                                               \
+      arg4,                                                               \
+      arg5,                                                               \
+      arg6,                                                               \
       arg7)
 
 //
@@ -833,11 +836,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for EVALUATE_SCRIPT_END
 //
-#define EventWriteEVALUATE_SCRIPT_END(tag, profileName, duration) \
-  MCGEN_EVENT_ENABLED(EVALUATE_SCRIPT_END)                        \
-  ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_END, tag, profileName, duration) : 0
-#define EventWriteEVALUATE_SCRIPT_END_AssumeEnabled(tag, profileName, duration) \
-  McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_END, tag, profileName, duration)
+#define EventWriteEVALUATE_SCRIPT_END(id, tag, profileName, duration) \
+  MCGEN_EVENT_ENABLED(EVALUATE_SCRIPT_END)                            \
+  ? McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_END, id, tag, profileName, duration) : 0
+#define EventWriteEVALUATE_SCRIPT_END_AssumeEnabled(id, tag, profileName, duration) \
+  McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &EVALUATE_SCRIPT_END, id, tag, profileName, duration)
 
 //
 // Enablement check macro for CALL_JSFUNCTION_BEGIN
@@ -847,36 +850,38 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for CALL_JSFUNCTION_BEGIN
 //
-#define EventWriteCALL_JSFUNCTION_BEGIN(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  MCGEN_EVENT_ENABLED(CALL_JSFUNCTION_BEGIN)                                                              \
-  ? McTemplateU0xsssssssss(                                                                               \
-        &REACT_NATIVE_WINDOWS_Context,                                                                    \
-        &CALL_JSFUNCTION_BEGIN,                                                                           \
-        tag,                                                                                              \
-        profileName,                                                                                      \
-        arg0,                                                                                             \
-        arg1,                                                                                             \
-        arg2,                                                                                             \
-        arg3,                                                                                             \
-        arg4,                                                                                             \
-        arg5,                                                                                             \
-        arg6,                                                                                             \
-        arg7)                                                                                             \
+#define EventWriteCALL_JSFUNCTION_BEGIN(id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  MCGEN_EVENT_ENABLED(CALL_JSFUNCTION_BEGIN)                                                                  \
+  ? McTemplateU0xxsssssssss(                                                                                  \
+        &REACT_NATIVE_WINDOWS_Context,                                                                        \
+        &CALL_JSFUNCTION_BEGIN,                                                                               \
+        id,                                                                                                   \
+        tag,                                                                                                  \
+        profileName,                                                                                          \
+        arg0,                                                                                                 \
+        arg1,                                                                                                 \
+        arg2,                                                                                                 \
+        arg3,                                                                                                 \
+        arg4,                                                                                                 \
+        arg5,                                                                                                 \
+        arg6,                                                                                                 \
+        arg7)                                                                                                 \
   : 0
-#define EventWriteCALL_JSFUNCTION_BEGIN_AssumeEnabled(                \
-    tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  McTemplateU0xsssssssss(                                             \
-      &REACT_NATIVE_WINDOWS_Context,                                  \
-      &CALL_JSFUNCTION_BEGIN,                                         \
-      tag,                                                            \
-      profileName,                                                    \
-      arg0,                                                           \
-      arg1,                                                           \
-      arg2,                                                           \
-      arg3,                                                           \
-      arg4,                                                           \
-      arg5,                                                           \
-      arg6,                                                           \
+#define EventWriteCALL_JSFUNCTION_BEGIN_AssumeEnabled(                    \
+    id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  McTemplateU0xxsssssssss(                                                \
+      &REACT_NATIVE_WINDOWS_Context,                                      \
+      &CALL_JSFUNCTION_BEGIN,                                             \
+      id,                                                                 \
+      tag,                                                                \
+      profileName,                                                        \
+      arg0,                                                               \
+      arg1,                                                               \
+      arg2,                                                               \
+      arg3,                                                               \
+      arg4,                                                               \
+      arg5,                                                               \
+      arg6,                                                               \
       arg7)
 
 //
@@ -887,11 +892,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for CALL_JSFUNCTION_END
 //
-#define EventWriteCALL_JSFUNCTION_END(tag, profileName, duration) \
-  MCGEN_EVENT_ENABLED(CALL_JSFUNCTION_END)                        \
-  ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_END, tag, profileName, duration) : 0
-#define EventWriteCALL_JSFUNCTION_END_AssumeEnabled(tag, profileName, duration) \
-  McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_END, tag, profileName, duration)
+#define EventWriteCALL_JSFUNCTION_END(id, tag, profileName, duration) \
+  MCGEN_EVENT_ENABLED(CALL_JSFUNCTION_END)                            \
+  ? McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_END, id, tag, profileName, duration) : 0
+#define EventWriteCALL_JSFUNCTION_END_AssumeEnabled(id, tag, profileName, duration) \
+  McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &CALL_JSFUNCTION_END, id, tag, profileName, duration)
 
 //
 // Enablement check macro for CALL_NATIVEMODULES_BEGIN
@@ -901,11 +906,68 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for CALL_NATIVEMODULES_BEGIN
 //
-#define EventWriteCALL_NATIVEMODULES_BEGIN(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  MCGEN_EVENT_ENABLED(CALL_NATIVEMODULES_BEGIN)                                                              \
-  ? McTemplateU0xsssssssss(                                                                                  \
+#define EventWriteCALL_NATIVEMODULES_BEGIN(id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  MCGEN_EVENT_ENABLED(CALL_NATIVEMODULES_BEGIN)                                                                  \
+  ? McTemplateU0xxsssssssss(                                                                                     \
+        &REACT_NATIVE_WINDOWS_Context,                                                                           \
+        &CALL_NATIVEMODULES_BEGIN,                                                                               \
+        id,                                                                                                      \
+        tag,                                                                                                     \
+        profileName,                                                                                             \
+        arg0,                                                                                                    \
+        arg1,                                                                                                    \
+        arg2,                                                                                                    \
+        arg3,                                                                                                    \
+        arg4,                                                                                                    \
+        arg5,                                                                                                    \
+        arg6,                                                                                                    \
+        arg7)                                                                                                    \
+  : 0
+#define EventWriteCALL_NATIVEMODULES_BEGIN_AssumeEnabled(                 \
+    id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  McTemplateU0xxsssssssss(                                                \
+      &REACT_NATIVE_WINDOWS_Context,                                      \
+      &CALL_NATIVEMODULES_BEGIN,                                          \
+      id,                                                                 \
+      tag,                                                                \
+      profileName,                                                        \
+      arg0,                                                               \
+      arg1,                                                               \
+      arg2,                                                               \
+      arg3,                                                               \
+      arg4,                                                               \
+      arg5,                                                               \
+      arg6,                                                               \
+      arg7)
+
+//
+// Enablement check macro for CALL_NATIVEMODULES_END
+//
+#define EventEnabledCALL_NATIVEMODULES_END() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for CALL_NATIVEMODULES_END
+//
+#define EventWriteCALL_NATIVEMODULES_END(id, tag, profileName, duration) \
+  MCGEN_EVENT_ENABLED(CALL_NATIVEMODULES_END)                            \
+  ? McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_END, id, tag, profileName, duration) : 0
+#define EventWriteCALL_NATIVEMODULES_END_AssumeEnabled(id, tag, profileName, duration) \
+  McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_END, id, tag, profileName, duration)
+
+//
+// Enablement check macro for NATIVE_BEGIN_SECTION
+//
+#define EventEnabledNATIVE_BEGIN_SECTION() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
+
+//
+// Event write macros for NATIVE_BEGIN_SECTION
+//
+#define EventWriteNATIVE_BEGIN_SECTION(id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  MCGEN_EVENT_ENABLED(NATIVE_BEGIN_SECTION)                                                                  \
+  ? McTemplateU0xxsssssssss(                                                                                 \
         &REACT_NATIVE_WINDOWS_Context,                                                                       \
-        &CALL_NATIVEMODULES_BEGIN,                                                                           \
+        &NATIVE_BEGIN_SECTION,                                                                               \
+        id,                                                                                                  \
         tag,                                                                                                 \
         profileName,                                                                                         \
         arg0,                                                                                                \
@@ -917,73 +979,21 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
         arg6,                                                                                                \
         arg7)                                                                                                \
   : 0
-#define EventWriteCALL_NATIVEMODULES_BEGIN_AssumeEnabled(             \
-    tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  McTemplateU0xsssssssss(                                             \
-      &REACT_NATIVE_WINDOWS_Context,                                  \
-      &CALL_NATIVEMODULES_BEGIN,                                      \
-      tag,                                                            \
-      profileName,                                                    \
-      arg0,                                                           \
-      arg1,                                                           \
-      arg2,                                                           \
-      arg3,                                                           \
-      arg4,                                                           \
-      arg5,                                                           \
-      arg6,                                                           \
-      arg7)
-
-//
-// Enablement check macro for CALL_NATIVEMODULES_END
-//
-#define EventEnabledCALL_NATIVEMODULES_END() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
-
-//
-// Event write macros for CALL_NATIVEMODULES_END
-//
-#define EventWriteCALL_NATIVEMODULES_END(tag, profileName, duration) \
-  MCGEN_EVENT_ENABLED(CALL_NATIVEMODULES_END)                        \
-  ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_END, tag, profileName, duration) : 0
-#define EventWriteCALL_NATIVEMODULES_END_AssumeEnabled(tag, profileName, duration) \
-  McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &CALL_NATIVEMODULES_END, tag, profileName, duration)
-
-//
-// Enablement check macro for NATIVE_BEGIN_SECTION
-//
-#define EventEnabledNATIVE_BEGIN_SECTION() MCGEN_EVENT_BIT_SET(React_Native_Windows_ProviderEnableBits, 0)
-
-//
-// Event write macros for NATIVE_BEGIN_SECTION
-//
-#define EventWriteNATIVE_BEGIN_SECTION(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  MCGEN_EVENT_ENABLED(NATIVE_BEGIN_SECTION)                                                              \
-  ? McTemplateU0xsssssssss(                                                                              \
-        &REACT_NATIVE_WINDOWS_Context,                                                                   \
-        &NATIVE_BEGIN_SECTION,                                                                           \
-        tag,                                                                                             \
-        profileName,                                                                                     \
-        arg0,                                                                                            \
-        arg1,                                                                                            \
-        arg2,                                                                                            \
-        arg3,                                                                                            \
-        arg4,                                                                                            \
-        arg5,                                                                                            \
-        arg6,                                                                                            \
-        arg7)                                                                                            \
-  : 0
-#define EventWriteNATIVE_BEGIN_SECTION_AssumeEnabled(tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
-  McTemplateU0xsssssssss(                                                                                              \
-      &REACT_NATIVE_WINDOWS_Context,                                                                                   \
-      &NATIVE_BEGIN_SECTION,                                                                                           \
-      tag,                                                                                                             \
-      profileName,                                                                                                     \
-      arg0,                                                                                                            \
-      arg1,                                                                                                            \
-      arg2,                                                                                                            \
-      arg3,                                                                                                            \
-      arg4,                                                                                                            \
-      arg5,                                                                                                            \
-      arg6,                                                                                                            \
+#define EventWriteNATIVE_BEGIN_SECTION_AssumeEnabled(                     \
+    id, tag, profileName, arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7) \
+  McTemplateU0xxsssssssss(                                                \
+      &REACT_NATIVE_WINDOWS_Context,                                      \
+      &NATIVE_BEGIN_SECTION,                                              \
+      id,                                                                 \
+      tag,                                                                \
+      profileName,                                                        \
+      arg0,                                                               \
+      arg1,                                                               \
+      arg2,                                                               \
+      arg3,                                                               \
+      arg4,                                                               \
+      arg5,                                                               \
+      arg6,                                                               \
       arg7)
 
 //
@@ -994,11 +1004,11 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT REACT_NATIVE_WINDOWS_Context 
 //
 // Event write macros for NATIVE_END_SECTION
 //
-#define EventWriteNATIVE_END_SECTION(tag, profileName, duration) \
-  MCGEN_EVENT_ENABLED(NATIVE_END_SECTION)                        \
-  ? McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, tag, profileName, duration) : 0
-#define EventWriteNATIVE_END_SECTION_AssumeEnabled(tag, profileName, duration) \
-  McTemplateU0xsg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, tag, profileName, duration)
+#define EventWriteNATIVE_END_SECTION(id, tag, profileName, duration) \
+  MCGEN_EVENT_ENABLED(NATIVE_END_SECTION)                            \
+  ? McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, id, tag, profileName, duration) : 0
+#define EventWriteNATIVE_END_SECTION_AssumeEnabled(id, tag, profileName, duration) \
+  McTemplateU0xxsg(&REACT_NATIVE_WINDOWS_Context, &NATIVE_END_SECTION, id, tag, profileName, duration)
 
 //
 // Enablement check macro for NATIVE_ASYNC_BEGIN_SECTION
@@ -1148,45 +1158,48 @@ McTemplateU0xsdg(
 //
 // Template from manifest : tidEndSection
 //
-#ifndef McTemplateU0xsg_def
-#define McTemplateU0xsg_def
+#ifndef McTemplateU0xxsg_def
+#define McTemplateU0xxsg_def
 ETW_INLINE
 ULONG
-McTemplateU0xsg(
+McTemplateU0xxsg(
     _In_ PMCGEN_TRACE_CONTEXT Context,
     _In_ PCEVENT_DESCRIPTOR Descriptor,
     _In_ const unsigned __int64 _Arg0,
-    _In_opt_ PCSTR _Arg1,
-    _In_ const double _Arg2) {
-#define McTemplateU0xsg_ARGCOUNT 3
+    _In_ const unsigned __int64 _Arg1,
+    _In_opt_ PCSTR _Arg2,
+    _In_ const double _Arg3) {
+#define McTemplateU0xxsg_ARGCOUNT 4
 
-  EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xsg_ARGCOUNT + 1];
+  EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xxsg_ARGCOUNT + 1];
 
   EventDataDescCreate(&EventData[1], &_Arg0, sizeof(const unsigned __int64));
 
+  EventDataDescCreate(&EventData[2], &_Arg1, sizeof(const unsigned __int64));
+
   EventDataDescCreate(
-      &EventData[2],
-      (_Arg1 != NULL) ? _Arg1 : "NULL",
-      (_Arg1 != NULL) ? (ULONG)((strlen(_Arg1) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+      &EventData[3],
+      (_Arg2 != NULL) ? _Arg2 : "NULL",
+      (_Arg2 != NULL) ? (ULONG)((strlen(_Arg2) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
 
-  EventDataDescCreate(&EventData[3], &_Arg2, sizeof(const double));
+  EventDataDescCreate(&EventData[4], &_Arg3, sizeof(const double));
 
-  return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xsg_ARGCOUNT + 1, EventData);
+  return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xxsg_ARGCOUNT + 1, EventData);
 }
-#endif // McTemplateU0xsg_def
+#endif // McTemplateU0xxsg_def
 
 //
 // Template from manifest : tidBeginSection
 //
-#ifndef McTemplateU0xsssssssss_def
-#define McTemplateU0xsssssssss_def
+#ifndef McTemplateU0xxsssssssss_def
+#define McTemplateU0xxsssssssss_def
 ETW_INLINE
 ULONG
-McTemplateU0xsssssssss(
+McTemplateU0xxsssssssss(
     _In_ PMCGEN_TRACE_CONTEXT Context,
     _In_ PCEVENT_DESCRIPTOR Descriptor,
     _In_ const unsigned __int64 _Arg0,
-    _In_opt_ PCSTR _Arg1,
+    _In_ const unsigned __int64 _Arg1,
     _In_opt_ PCSTR _Arg2,
     _In_opt_ PCSTR _Arg3,
     _In_opt_ PCSTR _Arg4,
@@ -1194,17 +1207,15 @@ McTemplateU0xsssssssss(
     _In_opt_ PCSTR _Arg6,
     _In_opt_ PCSTR _Arg7,
     _In_opt_ PCSTR _Arg8,
-    _In_opt_ PCSTR _Arg9) {
-#define McTemplateU0xsssssssss_ARGCOUNT 10
+    _In_opt_ PCSTR _Arg9,
+    _In_opt_ PCSTR _Arg10) {
+#define McTemplateU0xxsssssssss_ARGCOUNT 11
 
-  EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xsssssssss_ARGCOUNT + 1];
+  EVENT_DATA_DESCRIPTOR EventData[McTemplateU0xxsssssssss_ARGCOUNT + 1];
 
   EventDataDescCreate(&EventData[1], &_Arg0, sizeof(const unsigned __int64));
 
-  EventDataDescCreate(
-      &EventData[2],
-      (_Arg1 != NULL) ? _Arg1 : "NULL",
-      (_Arg1 != NULL) ? (ULONG)((strlen(_Arg1) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+  EventDataDescCreate(&EventData[2], &_Arg1, sizeof(const unsigned __int64));
 
   EventDataDescCreate(
       &EventData[3],
@@ -1246,9 +1257,14 @@ McTemplateU0xsssssssss(
       (_Arg9 != NULL) ? _Arg9 : "NULL",
       (_Arg9 != NULL) ? (ULONG)((strlen(_Arg9) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
 
-  return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xsssssssss_ARGCOUNT + 1, EventData);
+  EventDataDescCreate(
+      &EventData[11],
+      (_Arg10 != NULL) ? _Arg10 : "NULL",
+      (_Arg10 != NULL) ? (ULONG)((strlen(_Arg10) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+  return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0xxsssssssss_ARGCOUNT + 1, EventData);
 }
-#endif // McTemplateU0xsssssssss_def
+#endif // McTemplateU0xxsssssssss_def
 
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
