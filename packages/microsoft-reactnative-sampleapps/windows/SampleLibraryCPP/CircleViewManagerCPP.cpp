@@ -38,7 +38,7 @@ FrameworkElement CircleViewManagerCPP::CreateView() noexcept {
 
 // IViewManagerWithChildren
 
-void CircleViewManagerCPP::AddView(FrameworkElement const &parent, UIElement const &child, int64_t index) noexcept {
+void CircleViewManagerCPP::AddView(FrameworkElement const &parent, UIElement const &child, int64_t /*index*/) noexcept {
   if (auto const &border = parent.try_as<Border>()) {
     border.Child(child);
   }
@@ -50,7 +50,7 @@ void CircleViewManagerCPP::RemoveAllChildren(FrameworkElement const &parent) noe
   }
 }
 
-void CircleViewManagerCPP::RemoveChildAt(FrameworkElement const &parent, int64_t index) noexcept {
+void CircleViewManagerCPP::RemoveChildAt(FrameworkElement const &parent, int64_t /*index*/) noexcept {
   if (auto const &border = parent.try_as<Border>()) {
     border.Child(nullptr);
   }
@@ -58,7 +58,7 @@ void CircleViewManagerCPP::RemoveChildAt(FrameworkElement const &parent, int64_t
 
 void CircleViewManagerCPP::ReplaceChild(
     FrameworkElement const &parent,
-    UIElement const &oldChild,
+    UIElement const & /*oldChild*/,
     UIElement const &newChild) noexcept {
   if (auto const &border = parent.try_as<Border>()) {
     border.Child(newChild);

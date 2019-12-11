@@ -14,7 +14,7 @@ namespace Microsoft.ReactNative.Managed
 
     public void Add<T>(string constantName, T value)
     {
-      m_writer.WriteProperty(constantName, value);
+      m_writer.WriteObjectProperty(constantName, value);
     }
 
     private IJSValueWriter m_writer;

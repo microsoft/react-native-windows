@@ -3,13 +3,13 @@
 
 #pragma once
 #include "winrt/Microsoft.ReactNative.Bridge.h"
-#include "winrt/Microsoft.ReactNative.h"
 
 #include <type_traits>
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
 #include "ModuleMemberRegistration.h"
 #include "ModuleRegistration.h"
+#include "ReactPromise.h"
 
 // The macro to annotate a C++ class as a ReactNative module.
 //
@@ -20,15 +20,16 @@
 // - eventEmitterName (optional) - the event emitter name used in JavaScript.
 //     Default is the RCTDeviceEventEmitter.
 #define REACT_MODULE(/* moduleClass, [opt] moduleName, [opt] eventEmitterName */...) \
-  INTERNAL_REACT_MODULE_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
+  INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
-// The macro to annotate a method to export to JavaScript.
+// REACT_METHOD annotates a method to export to JavaScript.
 // It declares an asynchronous method. To return a value:
 // - Return void and have a Callback as a last parameter. The Callback type can
 // be any std::function like type. I.e. Func<void(Args...)>.
-// - Return void and have two callbacks as last parameters. In JavaScript the
-// method returns Promise. To keep it as two callbacks use the
-// REACT_ASYNC_METHOD macro.
+// - Return void and have two callbacks as last parameters. One is used to return
+// value and another an error.
+// - Return void and have a ReactPromise as a last parameter. In JavaScript the
+// method returns Promise.
 // - Return non-void value. In JavaScript it is treated as a method with one
 // Callback. Return std::pair<Error, Value> to be able to communicate error
 // condition.
@@ -37,34 +38,22 @@
 // - method (required) - the method name the macro is attached to.
 // - methodName (optional) - the method name visible to JavaScript. Default is
 //     the method name.
-#define REACT_METHOD(/* method, [opt] methodName */...) \
-  INTERNAL_REACT_METHOD_MACRO_CHOOSER(__VA_ARGS__)(, false, __VA_ARGS__)
-
-// The same as REACT_METHOD, but two callbacks are exposed as callbacks, and not
-// as a Promise.
-#define REACT_ASYNC_METHOD(/* method, [opt] methodName */...) \
-  INTERNAL_REACT_METHOD_MACRO_CHOOSER(__VA_ARGS__)            \
-  (, true, __VA_ARGS__)
+#define REACT_METHOD(/* method, [opt] methodName */...) INTERNAL_REACT_METHOD(__VA_ARGS__)(, __VA_ARGS__)
 
 // A method that is called synchronously. It must be used rarely because it may
 // cause out-of-order execution when used along with asynchronous methods.
-#define REACT_SYNC_METHOD(/* method, [opt] methodName */...) \
-  INTERNAL_REACT_METHOD_MACRO_CHOOSER(__VA_ARGS__)           \
-  (Sync, false, __VA_ARGS__)
+#define REACT_SYNC_METHOD(/* method, [opt] methodName */...) INTERNAL_REACT_METHOD(__VA_ARGS__)(Sync, __VA_ARGS__)
 
 // A method where we can define constants.
-// Constant definition relies on a TLS context that is setup when object is
-// created.
-#define REACT_CONSTANT_PROVIDER(method) INTERNAL_REACT_METHOD_4_ARGS(Const, false, method, "")
+#define REACT_CONSTANT_PROVIDER(method) INTERNAL_REACT_METHOD_3_ARGS(Const, method, L"")
 
 // Use with a field to provide a constant
-#define REACT_CONSTANT(/* field, [opt] constantName */...) \
-  INTERNAL_REACT_CONSTANT_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
+#define REACT_CONSTANT(/* field, [opt] constantName */...) INTERNAL_REACT_CONSTANT(__VA_ARGS__)(__VA_ARGS__)
 
 // Use with a field for events
-#define REACT_EVENT(/* field, [opt] eventName */...) INTERNAL_REACT_EVENT_MACRO_CHOOSER(__VA_ARGS__)(__VA_ARGS__)
+#define REACT_EVENT(/* field, [opt] eventName */...) INTERNAL_REACT_EVENT(__VA_ARGS__)(__VA_ARGS__)
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Bridge {
 
 namespace Internal {
 
@@ -89,85 +78,51 @@ struct GetCallbackCount<std::tuple<>> {
 
 template <class TArg>
 struct GetCallbackCount<std::tuple<TArg>> {
-  constexpr static size_t Value = IsCallback<TArg>::value ? 1 : 0;
+  constexpr static size_t Value = IsCallback<std::remove_const_t<std::remove_reference_t<TArg>>>::value ? 1 : 0;
 };
 
 template <class TArg0, class TArg1, class... TArgs>
 struct GetCallbackCount<std::tuple<TArg0, TArg1, TArgs...>> {
   using TupleType = std::tuple<TArg0, TArg1, TArgs...>;
   constexpr static size_t TupleSize = std::tuple_size_v<TupleType>;
-  constexpr static size_t Value = (IsCallback<std::tuple_element_t<TupleSize - 2, TupleType>>::value ? 1 : 0) +
-      (IsCallback<std::tuple_element_t<TupleSize - 1, TupleType>>::value ? 1 : 0);
+  constexpr static size_t Value =
+      (IsCallback<std::remove_const_t<std::remove_reference_t<std::tuple_element_t<TupleSize - 2, TupleType>>>>::value
+           ? 1
+           : 0) +
+      (IsCallback<std::remove_const_t<std::remove_reference_t<std::tuple_element_t<TupleSize - 1, TupleType>>>>::value
+           ? 1
+           : 0);
 };
 
 template <class T>
-struct ThreadLocalHolder {
-  ThreadLocalHolder(T *value) noexcept : m_savedValue{tl_value} {
-    tl_value = value;
-  }
-
-  ~ThreadLocalHolder() noexcept {
-    tl_value = m_savedValue;
-  }
-
-  static T *Get() noexcept {
-    return tl_value;
-  }
-
- private:
-  T *m_savedValue{nullptr};
-  static thread_local T *tl_value;
-};
-
+struct IsPromise : std::false_type {};
 template <class T>
-/*static*/ thread_local T *ThreadLocalHolder<T>::tl_value{nullptr};
+struct IsPromise<ReactPromise<T>> : std::true_type {};
 
 } // namespace Internal
-
-using CurrentNativeModuleBuilder =
-    Internal::ThreadLocalHolder<const winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder>;
 
 //==============================================================================
 // Module registration helpers
 //==============================================================================
-
-template <class TModule>
-inline winrt::Microsoft::ReactNative::Bridge::ReactModuleProvider MakeModuleProvider(
-    const char *moduleName,
-    const char *eventEmitterName) noexcept {
-  using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
-
-  return [
-    module = std::shared_ptr<TModule>{nullptr},
-    moduleName = std::string(moduleName),
-    eventEmitterName = std::string(eventEmitterName)
-  ](IReactModuleBuilder const &moduleBuilder) mutable noexcept {
-    CurrentNativeModuleBuilder currentModuleBuilder{&moduleBuilder};
-
-    if (!eventEmitterName.empty()) {
-      currentModuleBuilder.Get()->SetEventEmitterName(winrt::to_hstring(eventEmitterName));
-    }
-
-    module = std::make_shared<TModule>();
-    return winrt::Windows::Foundation::IInspectable{nullptr};
-  };
-}
 
 template <class TFunc>
 struct ModuleMethodInfo;
 
 template <class TModule, class... TArgs>
 struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
+  constexpr static bool HasPromise() noexcept {
+    if constexpr (sizeof...(TArgs) > 0) {
+      return Internal::IsPromise<std::remove_const_t<std::remove_reference_t<
+          std::tuple_element_t<sizeof...(TArgs) - 1, std::tuple<std::remove_reference_t<TArgs>...>>>>>::value;
+    }
+    return false;
+  }
+
   constexpr static size_t CallbackCount =
       Internal::GetCallbackCount<std::tuple<std::remove_reference_t<TArgs>...>>::Value;
   using ModuleType = TModule;
   using MethodType = void (TModule::*)(TArgs...) noexcept;
-  using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - CallbackCount>;
-
-  using IJSValueReader = winrt::Microsoft::ReactNative::Bridge::IJSValueReader;
-  using IJSValueWriter = winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
-  using MethodDelegate = winrt::Microsoft::ReactNative::Bridge::MethodDelegate;
-  using MethodResultCallback = winrt::Microsoft::ReactNative::Bridge::MethodResultCallback;
+  using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - (HasPromise() ? 1 : CallbackCount)>;
 
   template <class>
   struct Invoker;
@@ -177,10 +132,10 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
     // Fire and forget method
     static MethodDelegate GetFunc(ModuleType *module, MethodType method, std::integral_constant<size_t, 0>) noexcept {
       return [ module, method ](
-          const IJSValueReader &argReader,
-          const IJSValueWriter & /*argWriter*/,
-          const MethodResultCallback &,
-          const MethodResultCallback &) mutable noexcept {
+          IJSValueReader const &argReader,
+          IJSValueWriter const & /*argWriter*/,
+          MethodResultCallback const &,
+          MethodResultCallback const &) mutable noexcept {
         std::tuple<std::remove_reference_t<TArgs>...> typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
         (module->*method)(std::get<I>(std::move(typedArgs))...);
@@ -202,7 +157,7 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
       }
     };
 
-    template <class T, class = void>
+    template <class T, class TDummy>
     struct RejectCallbackCreator;
 
     template <template <class...> class TCallback, class TArg>
@@ -237,64 +192,86 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
     struct RejectCallbackCreator<TCallback<void(TArg0, TArg1, TArgs...)>, void>
         : CallbackCreator<TCallback<void(TArg0, TArg1, TArgs...)>> {};
 
+    template <class T>
+    struct PromiseCreator;
+
+    template <class T>
+    struct PromiseCreator<ReactPromise<T>> {
+      static ReactPromise<T> Create(
+          const IJSValueWriter &argWriter,
+          const MethodResultCallback &resolve,
+          const MethodResultCallback &reject) noexcept {
+        return ReactPromise<T>(argWriter, resolve, reject);
+      }
+    };
+
     // Method with one callback
     static MethodDelegate GetFunc(ModuleType *module, MethodType method, std::integral_constant<size_t, 1>) noexcept {
       return [ module, method ](
-          const IJSValueReader &argReader,
-          const IJSValueWriter &argWriter,
-          const MethodResultCallback &callback,
-          const MethodResultCallback &) mutable noexcept {
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &callback,
+          MethodResultCallback const &) mutable noexcept {
         using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
         ArgTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
-        (module->*method)(
-            std::get<I>(std::move(typedArgs))...,
-            CallbackCreator<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>::Create(
-                argWriter, std::move(callback)));
+        auto cb = CallbackCreator<std::remove_const_t<std::remove_reference_t<
+            std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>>::Create(argWriter, callback);
+        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(cb));
       };
     }
 
     // Method with two callbacks
     static MethodDelegate GetFunc(ModuleType *module, MethodType method, std::integral_constant<size_t, 2>) noexcept {
       return [ module, method ](
-          const IJSValueReader &argReader,
-          const IJSValueWriter &argWriter,
-          const MethodResultCallback &callback1,
-          const MethodResultCallback &callback2) mutable noexcept {
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &resolve,
+          MethodResultCallback const &reject) mutable noexcept {
         using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
         ArgTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
-        (module->*method)(
-            std::get<I>(std::move(typedArgs))...,
-            CallbackCreator<std::tuple_element_t<sizeof...(TArgs) - 2, ArgTuple>>::Create(
-                argWriter, std::move(callback1)),
-            RejectCallbackCreator<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>::Create(
-                argWriter, std::move(callback2)));
+        auto resolveCallback = CallbackCreator<std::remove_const_t<
+            std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 2, ArgTuple>>>>::Create(argWriter, resolve);
+        auto rejectCallback = RejectCallbackCreator<
+            std::remove_const_t<std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>,
+            void>::Create(argWriter, reject);
+        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(resolveCallback), std::move(rejectCallback));
+      };
+    }
+
+    // Method with Promise
+    static MethodDelegate GetFunc(ModuleType *module, MethodType method, std::integral_constant<size_t, 3>) noexcept {
+      return [ module, method ](
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &resolve,
+          MethodResultCallback const &reject) mutable noexcept {
+        using AllArgsTuple = std::tuple<std::remove_reference_t<TArgs>...>;
+        using ArgsTuple = std::tuple<std::tuple_element_t<I, AllArgsTuple>...>;
+        using PromiseArg = std::remove_const_t<std::tuple_element_t<sizeof...(TArgs) - 1, AllArgsTuple>>;
+        ArgsTuple typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        auto promise = PromiseCreator<PromiseArg>::Create(argWriter, resolve, reject);
+        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
       };
     }
   };
 
-  static bool Register(void *module, const char *jsName, MethodType method, [[maybe_unused]] bool isAsync) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
-    using winrt::Microsoft::ReactNative::Bridge::MethodReturnType;
-
-    if (auto m = static_cast<ModuleType *>(module)) {
-      MethodReturnType returnType{MethodReturnType::Void};
-      if constexpr (CallbackCount == 1) {
-        returnType = MethodReturnType::Callback;
-      } else if constexpr (CallbackCount == 2) {
-        if (isAsync) {
-          returnType = MethodReturnType::TwoCallbacks;
-        } else {
-          returnType = MethodReturnType::Promise;
-        }
-      }
-
-      MethodDelegate methodDelegate =
-          Invoker<IndexSequence>::GetFunc(m, method, std::integral_constant<size_t, CallbackCount>{});
-      CurrentNativeModuleBuilder::Get()->AddMethod(winrt::to_hstring(jsName), returnType, methodDelegate);
+  static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
+    if constexpr (HasPromise()) {
+      returnType = MethodReturnType::Promise;
+    } else if constexpr (CallbackCount == 2) {
+      returnType = MethodReturnType::TwoCallbacks;
+    } else if constexpr (CallbackCount == 1) {
+      returnType = MethodReturnType::Callback;
+    } else {
+      returnType = MethodReturnType::Void;
     }
-    return false;
+
+    constexpr int selector = HasPromise() ? 3 : CallbackCount;
+    return Invoker<IndexSequence>::GetFunc(
+        static_cast<ModuleType *>(module), method, std::integral_constant<size_t, selector>{});
   }
 };
 
@@ -304,11 +281,6 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   using MethodType = TResult (TModule::*)(TArgs...) noexcept;
   using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
 
-  using IJSValueReader = winrt::Microsoft::ReactNative::Bridge::IJSValueReader;
-  using IJSValueWriter = winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
-  using MethodDelegate = winrt::Microsoft::ReactNative::Bridge::MethodDelegate;
-  using MethodResultCallback = winrt::Microsoft::ReactNative::Bridge::MethodResultCallback;
-
   template <class>
   struct Invoker;
 
@@ -317,30 +289,221 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
     // Async method with return value
     static MethodDelegate GetFunc(ModuleType *module, MethodType method) noexcept {
       return [ module, method ](
-          const IJSValueReader &argReader,
-          const IJSValueWriter &argWriter,
-          const MethodResultCallback &callback,
-          const MethodResultCallback &) mutable noexcept {
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &callback,
+          MethodResultCallback const &) mutable noexcept {
         using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
         ArgTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
         TResult result = (module->*method)(std::get<I>(std::move(typedArgs))...);
-        WriteArgs(argWriter, std::move(result));
+        WriteArgs(argWriter, result);
         callback(argWriter);
       };
     }
   };
 
-  static bool Register(void *module, const char *jsName, MethodType method, bool /*isAsync*/) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
-    using winrt::Microsoft::ReactNative::Bridge::MethodReturnType;
+  static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
+    returnType = MethodReturnType::Callback;
+    return Invoker<IndexSequence>::GetFunc(static_cast<ModuleType *>(module), method);
+  }
+};
 
-    if (auto m = static_cast<ModuleType *>(module)) {
-      MethodDelegate methodDelegate = Invoker<IndexSequence>::GetFunc(m, method);
-      CurrentNativeModuleBuilder::Get()->AddMethod(
-          winrt::to_hstring(jsName), MethodReturnType::Callback, methodDelegate);
+template <class... TArgs>
+struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
+  constexpr static bool HasPromise() noexcept {
+    if constexpr (sizeof...(TArgs) > 0) {
+      return Internal::IsPromise<std::remove_const_t<std::remove_reference_t<
+          std::tuple_element_t<sizeof...(TArgs) - 1, std::tuple<std::remove_reference_t<TArgs>...>>>>>::value;
     }
     return false;
+  }
+
+  constexpr static size_t CallbackCount =
+      Internal::GetCallbackCount<std::tuple<std::remove_reference_t<TArgs>...>>::Value;
+  using MethodType = void (*)(TArgs...) noexcept;
+  using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - (HasPromise() ? 1 : CallbackCount)>;
+
+  template <class>
+  struct Invoker;
+
+  template <size_t... I>
+  struct Invoker<std::index_sequence<I...>> {
+    // Fire and forget method
+    static MethodDelegate GetFunc(MethodType method, std::integral_constant<size_t, 0>) noexcept {
+      return [method](
+          IJSValueReader const &argReader,
+          IJSValueWriter const & /*argWriter*/,
+          MethodResultCallback const &,
+          MethodResultCallback const &) mutable noexcept {
+        std::tuple<std::remove_reference_t<TArgs>...> typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        (*method)(std::get<I>(std::move(typedArgs))...);
+      };
+    }
+
+    template <class T>
+    struct CallbackCreator;
+
+    template <template <class...> class TCallback, class... TArgs>
+    struct CallbackCreator<TCallback<void(TArgs...)>> {
+      static TCallback<void(TArgs...)> Create(
+          const IJSValueWriter &argWriter,
+          const MethodResultCallback &callback) noexcept {
+        return TCallback([ callback = std::move(callback), argWriter ](TArgs... args) noexcept {
+          WriteArgs(argWriter, std::move(args)...);
+          callback(argWriter);
+        });
+      }
+    };
+
+    template <class T, class TDummy>
+    struct RejectCallbackCreator;
+
+    template <template <class...> class TCallback, class TArg>
+    struct RejectCallbackCreator<
+        TCallback<void(TArg)>,
+        std::enable_if_t<std::is_assignable_v<std::string, TArg> || std::is_assignable_v<std::wstring, TArg>>> {
+      static TCallback<void(TArg)> Create(
+          const IJSValueWriter &argWriter,
+          const MethodResultCallback &callback) noexcept {
+        return TCallback([ callback = std::move(callback), argWriter ](TArg arg) noexcept {
+          argWriter.WriteArrayBegin();
+          argWriter.WriteObjectBegin();
+          argWriter.WritePropertyName(L"message");
+          WriteValue(argWriter, arg);
+          argWriter.WriteObjectEnd();
+          argWriter.WriteArrayEnd();
+          callback(argWriter);
+        });
+      }
+    };
+
+    template <template <class...> class TCallback>
+    struct RejectCallbackCreator<TCallback<void()>, void> : CallbackCreator<TCallback<void()>> {};
+
+    template <template <class...> class TCallback, class TArg>
+    struct RejectCallbackCreator<
+        TCallback<void(TArg)>,
+        std::enable_if_t<!std::is_assignable_v<std::string, TArg> && !std::is_assignable_v<std::wstring, TArg>>>
+        : CallbackCreator<TCallback<void(TArg)>> {};
+
+    template <template <class...> class TCallback, class TArg0, class TArg1, class... TArgs>
+    struct RejectCallbackCreator<TCallback<void(TArg0, TArg1, TArgs...)>, void>
+        : CallbackCreator<TCallback<void(TArg0, TArg1, TArgs...)>> {};
+
+    template <class T>
+    struct PromiseCreator;
+
+    template <class T>
+    struct PromiseCreator<ReactPromise<T>> {
+      static ReactPromise<T> Create(
+          const IJSValueWriter &argWriter,
+          const MethodResultCallback &resolve,
+          const MethodResultCallback &reject) noexcept {
+        return ReactPromise<T>(argWriter, resolve, reject);
+      }
+    };
+
+    // Method with one callback
+    static MethodDelegate GetFunc(MethodType method, std::integral_constant<size_t, 1>) noexcept {
+      return [method](
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &callback,
+          MethodResultCallback const &) mutable noexcept {
+        using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
+        ArgTuple typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        auto cb = CallbackCreator<std::remove_const_t<std::remove_reference_t<
+            std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>>::Create(argWriter, callback);
+        (*method)(std::get<I>(std::move(typedArgs))..., std::move(cb));
+      };
+    }
+
+    // Method with two callbacks
+    static MethodDelegate GetFunc(MethodType method, std::integral_constant<size_t, 2>) noexcept {
+      return [method](
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &resolve,
+          MethodResultCallback const &reject) mutable noexcept {
+        using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
+        ArgTuple typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        auto resolveCallback = CallbackCreator<std::remove_const_t<
+            std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 2, ArgTuple>>>>::Create(argWriter, resolve);
+        auto rejectCallback = RejectCallbackCreator<
+            std::remove_const_t<std::remove_reference_t<std::tuple_element_t<sizeof...(TArgs) - 1, ArgTuple>>>,
+            void>::Create(argWriter, reject);
+        (*method)(std::get<I>(std::move(typedArgs))..., std::move(resolveCallback), std::move(rejectCallback));
+      };
+    }
+
+    // Method with Promise
+    static MethodDelegate GetFunc(MethodType method, std::integral_constant<size_t, 3>) noexcept {
+      return [method](
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &resolve,
+          MethodResultCallback const &reject) mutable noexcept {
+        using AllArgsTuple = std::tuple<std::remove_reference_t<TArgs>...>;
+        using ArgsTuple = std::tuple<std::tuple_element_t<I, AllArgsTuple>...>;
+        using PromiseArg = std::remove_const_t<std::tuple_element_t<sizeof...(TArgs) - 1, AllArgsTuple>>;
+        ArgsTuple typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        auto promise = PromiseCreator<PromiseArg>::Create(argWriter, resolve, reject);
+        (*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
+      };
+    }
+  };
+
+  static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
+    if constexpr (HasPromise()) {
+      returnType = MethodReturnType::Promise;
+    } else if constexpr (CallbackCount == 2) {
+      returnType = MethodReturnType::TwoCallbacks;
+    } else if constexpr (CallbackCount == 1) {
+      returnType = MethodReturnType::Callback;
+    } else {
+      returnType = MethodReturnType::Void;
+    }
+
+    constexpr int selector = HasPromise() ? 3 : CallbackCount;
+    return Invoker<IndexSequence>::GetFunc(method, std::integral_constant<size_t, selector>{});
+  }
+};
+
+template <class TResult, class... TArgs>
+struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
+  using MethodType = TResult (*)(TArgs...) noexcept;
+  using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
+
+  template <class>
+  struct Invoker;
+
+  template <size_t... I>
+  struct Invoker<std::index_sequence<I...>> {
+    // Async method with return value
+    static MethodDelegate GetFunc(MethodType method) noexcept {
+      return [method](
+          IJSValueReader const &argReader,
+          IJSValueWriter const &argWriter,
+          MethodResultCallback const &callback,
+          MethodResultCallback const &) mutable noexcept {
+        using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
+        ArgTuple typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        TResult result = (*method)(std::get<I>(typedArgs)...);
+        WriteArgs(argWriter, result);
+        callback(argWriter);
+      };
+    }
+  };
+
+  static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
+    returnType = MethodReturnType::Callback;
+    return Invoker<IndexSequence>::GetFunc(method);
   }
 };
 
@@ -353,10 +516,6 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   using MethodType = TResult (TModule::*)(TArgs...) noexcept;
   using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
 
-  using IJSValueReader = winrt::Microsoft::ReactNative::Bridge::IJSValueReader;
-  using IJSValueWriter = winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
-  using SyncMethodDelegate = winrt::Microsoft::ReactNative::Bridge::SyncMethodDelegate;
-
   template <class>
   struct Invoker;
 
@@ -368,44 +527,43 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
         ArgTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
         TResult result = (module->*method)(std::get<I>(std::move(typedArgs))...);
-        WriteArgs(argWriter, std::move(result));
+        WriteArgs(argWriter, result);
       };
     }
   };
 
-  static bool Register(void *module, const char *jsName, MethodType method, bool /*isAsync*/) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
-
-    if (auto m = static_cast<ModuleType *>(module)) {
-      SyncMethodDelegate syncMethodDelegate = Invoker<IndexSequence>::GetFunc(m, method);
-      CurrentNativeModuleBuilder::Get()->AddSyncMethod(winrt::to_hstring(jsName), syncMethodDelegate);
-    }
-    return false;
+  static SyncMethodDelegate GetMethodDelegate(void *module, MethodType method) noexcept {
+    return Invoker<IndexSequence>::GetFunc(static_cast<ModuleType *>(module), method);
   }
 };
 
-template <class TFunc>
-struct ModuleConstMethodInfo;
+template <class TResult, class... TArgs>
+struct ModuleSyncMethodInfo<TResult (*)(TArgs...) noexcept> {
+  using MethodType = TResult (*)(TArgs...) noexcept;
+  using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
 
-template <class TModule>
-struct ModuleConstMethodInfo<void (TModule::*)(
-    const winrt::Microsoft::ReactNative::Bridge::IJSValueWriter &) noexcept> {
-  using ModuleType = TModule;
-  using IJSValueWriter = winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
-  using MethodType = void (TModule::*)(const IJSValueWriter &) noexcept;
+  template <class>
+  struct Invoker;
 
-  static bool Register(void *module, const char * /*jsName*/, MethodType method, bool /*isAsync*/) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
-
-    if (auto m = static_cast<ModuleType *>(module)) {
-      CurrentNativeModuleBuilder::Get()->AddConstantProvider(
-          [ m, method ](const IJSValueWriter &argWriter) mutable noexcept { (m->*method)(argWriter); });
+  template <size_t... I>
+  struct Invoker<std::index_sequence<I...>> {
+    static SyncMethodDelegate GetFunc(MethodType method) noexcept {
+      return [method](IJSValueReader const &argReader, IJSValueWriter const &argWriter) mutable noexcept {
+        using ArgTuple = std::tuple<std::remove_reference_t<TArgs>...>;
+        ArgTuple typedArgs{};
+        ReadArgs(argReader, std::get<I>(typedArgs)...);
+        TResult result = (*method)(std::get<I>(std::move(typedArgs))...);
+        WriteArgs(argWriter, result);
+      };
     }
-    return false;
+  };
+
+  static SyncMethodDelegate GetMethodDelegate(void * /*module*/, MethodType method) noexcept {
+    return Invoker<IndexSequence>::GetFunc(method);
   }
 };
 
-template <class TFunc>
+template <class TField>
 struct ModuleConstFieldInfo;
 
 template <class TModule, class TValue>
@@ -413,34 +571,62 @@ struct ModuleConstFieldInfo<TValue TModule::*> {
   using ModuleType = TModule;
   using FieldType = TValue TModule::*;
 
-  static bool Register(void *module, const char *jsName, FieldType field) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::IReactModuleBuilder;
-    using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
-
-    if (auto m = static_cast<ModuleType *>(module)) {
-      CurrentNativeModuleBuilder::Get()->AddConstantProvider(
-          [ m, name = std::string(jsName), field ](const IJSValueWriter &argWriter) mutable noexcept {
-            ::Microsoft::ReactNative::WriteProperty(argWriter, name, m->*field);
-          });
-    }
-    return false;
+  static ConstantProvider GetConstantProvider(void *module, wchar_t const *name, FieldType field) noexcept {
+    return [ module = static_cast<ModuleType *>(module), name = std::wstring{name}, field ](
+        IJSValueWriter const &argWriter) mutable noexcept {
+      WriteProperty(argWriter, name, module->*field);
+    };
   }
 };
 
-struct ModuleConstantInfo {
-  template <class TValue>
-  static bool Register(void *module, const char *jsName, TValue &&value) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
+template <class TValue>
+struct ModuleConstFieldInfo<TValue *> {
+  using FieldType = TValue *;
 
-    if (module) {
-      CurrentNativeModuleBuilder::Get()->AddConstantProvider(
-          [ name = std::string(jsName),
-            value = std::forward<TValue>(value) ](const IJSValueWriter &argWriter) mutable noexcept {
-            ::Microsoft::ReactNative::WriteProperty(argWriter, name, value);
-          });
-    }
+  static ConstantProvider GetConstantProvider(void * /*module*/, wchar_t const *name, FieldType field) noexcept {
+    return [ name = std::wstring{name}, field ](IJSValueWriter const &argWriter) mutable noexcept {
+      WriteProperty(argWriter, name, *field);
+    };
+  }
+};
 
-    return false;
+struct ReactConstantProvider {
+  ReactConstantProvider(IJSValueWriter const &writer) noexcept : m_writer{writer} {}
+
+  template <class T>
+  void Add(const wchar_t *name, const T &value) noexcept {
+    WriteProperty(m_writer, name, value);
+  }
+
+ private:
+  IJSValueWriter m_writer;
+};
+
+template <class TMethod>
+struct ModuleConstantInfo;
+
+template <class TModule>
+struct ModuleConstantInfo<void (TModule::*)(ReactConstantProvider &) noexcept> {
+  using ModuleType = TModule;
+  using MethodType = void (TModule::*)(ReactConstantProvider &) noexcept;
+
+  static ConstantProvider GetConstantProvider(void *module, MethodType method) noexcept {
+    return [ module = static_cast<ModuleType *>(module), method ](IJSValueWriter const &argWriter) mutable noexcept {
+      ReactConstantProvider constantProvider{argWriter};
+      (module->*method)(constantProvider);
+    };
+  }
+};
+
+template <>
+struct ModuleConstantInfo<void (*)(ReactConstantProvider &) noexcept> {
+  using MethodType = void (*)(ReactConstantProvider &) noexcept;
+
+  static ConstantProvider GetConstantProvider(void * /*module*/, MethodType method) noexcept {
+    return [method](IJSValueWriter const &argWriter) mutable noexcept {
+      ReactConstantProvider constantProvider{argWriter};
+      (*method)(constantProvider);
+    };
   }
 };
 
@@ -453,19 +639,103 @@ struct ModuleEventFieldInfo<TFunc<void(TArg)> TModule::*> {
   using EventType = TFunc<void(TArg)>;
   using FieldType = EventType TModule::*;
 
-  static bool Register(TModule *module, const char *jsName, FieldType field) noexcept {
-    using winrt::Microsoft::ReactNative::Bridge::ReactEventHandler;
-    using winrt::Microsoft::ReactNative::Bridge::IJSValueWriter;
-
-    CurrentNativeModuleBuilder::Get()->AddEventHandlerSetter(
-        winrt::to_hstring(jsName), [ module, field ](const ReactEventHandler &eventHandler) noexcept {
-          module->*field = [eventHandler](TArg arg) noexcept {
-            eventHandler([&](const IJSValueWriter &argWriter) noexcept { WriteValue(argWriter, arg); });
-          };
-        });
-
-    return false;
+  static ReactEventHandlerSetter GetEventHandlerSetter(void *module, FieldType field) noexcept {
+    return [ module = static_cast<ModuleType *>(module), field ](const ReactEventHandler &eventHandler) noexcept {
+      module->*field = [eventHandler](TArg arg) noexcept {
+        eventHandler([&](const IJSValueWriter &argWriter) noexcept { WriteValue(argWriter, arg); });
+      };
+    };
   }
 };
 
-} // namespace Microsoft::ReactNative
+struct ReactModuleBuilder {
+  ReactModuleBuilder(void *module, IReactModuleBuilder const &moduleBuilder) noexcept
+      : m_module{module}, m_moduleBuilder{moduleBuilder} {}
+
+  template <class TModule, int I>
+  void RegisterModule(
+      const wchar_t * /*moduleName*/,
+      const wchar_t *eventEmitterName,
+      winrt::Microsoft::ReactNative::Bridge::ReactMemberId<I>) noexcept {
+    m_moduleBuilder.SetEventEmitterName(eventEmitterName);
+    RegisterMembers<TModule, I>();
+  }
+
+  template <class TClass, int I>
+  auto HasRegisterMember(ReactModuleBuilder &builder, ReactMemberId<I> id)
+      -> decltype(TClass::template RegisterMember<TClass>(builder, id), std::true_type{});
+  template <class TClass>
+  auto HasRegisterMember(...) -> std::false_type;
+
+  template <class TModule, int I>
+  void RegisterMembers() noexcept {
+    if constexpr (decltype(HasRegisterMember<TModule>(*this, ReactMemberId<I + 1>{}))::value) {
+      TModule::template RegisterMember<TModule>(*this, ReactMemberId<I + 1>{});
+      RegisterMembers<TModule, I + 1>();
+    }
+  }
+
+  template <class TClass, class TMethod>
+  void RegisterMethod(TMethod method, wchar_t const *name) noexcept {
+    MethodReturnType returnType;
+    auto methodDelegate = ModuleMethodInfo<TMethod>::GetMethodDelegate(m_module, method, /*out*/ returnType);
+    m_moduleBuilder.AddMethod(name, returnType, methodDelegate);
+  }
+
+  template <class TClass, class TMethod>
+  void RegisterSyncMethod(TMethod method, wchar_t const *name) noexcept {
+    auto syncMethodDelegate = ModuleSyncMethodInfo<TMethod>::GetMethodDelegate(m_module, method);
+    m_moduleBuilder.AddSyncMethod(name, syncMethodDelegate);
+  }
+
+  template <class TClass, class TMethod>
+  void RegisterConstMethod(TMethod method, wchar_t const * /*name*/) noexcept {
+    auto constantProvider = ModuleConstantInfo<TMethod>::GetConstantProvider(m_module, method);
+    m_moduleBuilder.AddConstantProvider(constantProvider);
+  }
+
+  template <class TClass, class TField>
+  void RegisterConstant(TField field, wchar_t const *name) noexcept {
+    auto constantProvider = ModuleConstFieldInfo<TField>::GetConstantProvider(m_module, name, field);
+    m_moduleBuilder.AddConstantProvider(constantProvider);
+  }
+
+  template <class TClass, class TField>
+  void RegisterEvent(TField field, wchar_t const *name) noexcept {
+    auto eventHandlerSetter = ModuleEventFieldInfo<TField>::GetEventHandlerSetter(m_module, field);
+    m_moduleBuilder.AddEventHandlerSetter(name, eventHandlerSetter);
+  }
+
+ private:
+  void *m_module;
+  IReactModuleBuilder m_moduleBuilder;
+};
+
+template <class T>
+struct BoxedValue : implements<BoxedValue<T>, IBoxedValue> {
+  BoxedValue() noexcept {}
+
+  int64_t GetPtr() noexcept {
+    return reinterpret_cast<int64_t>(&m_value);
+  }
+
+  static T &GetImpl(IBoxedValue &module) noexcept {
+    return *reinterpret_cast<T *>(module.GetPtr());
+  }
+
+ private:
+  T m_value{};
+};
+
+template <class TModule>
+inline ReactModuleProvider MakeModuleProvider() noexcept {
+  return [](IReactModuleBuilder const &moduleBuilder) noexcept {
+    auto moduleObject = make<BoxedValue<TModule>>();
+    auto module = &BoxedValue<TModule>::GetImpl(moduleObject);
+    ReactModuleBuilder builder{module, moduleBuilder};
+    RegisterModule(builder, module);
+    return moduleObject;
+  };
+}
+
+} // namespace winrt::Microsoft::ReactNative::Bridge

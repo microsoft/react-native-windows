@@ -14,13 +14,26 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueWriter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleMemberRegistration.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistration.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ModuleRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NativeModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactError.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactMemberInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReactPromise.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StructInfo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
   </ItemGroup>
 </Project>
