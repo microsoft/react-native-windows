@@ -63,8 +63,7 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
     if (switchBrushes) {
       m_useCompositionBrush = shouldUseCompositionBrush;
       SetBackground(m_memoryStream != nullptr, false);
-    } else {
-      const auto bitmapBrush{Background().as<winrt::ImageBrush>()};
+    } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
       bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
     }
   }
@@ -177,38 +176,48 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fromStream, bool fireLoadE
         });
 
   } else {
-    winrt::ImageBrush bitmapBrush{};
+    bool setBackground{false};
+    winrt::ImageBrush bitmapBrush{Background().try_as<winrt::ImageBrush>()};
+    if (!bitmapBrush) {
+      bitmapBrush = winrt::ImageBrush{};
+      setBackground = true;
 
-    // ImageOpened and ImageFailed are mutually exclusive. One event of the other will
-    // always fire whenever an ImageBrush has the ImageSource value set or reset.
-    m_imageOpenedRevoker = bitmapBrush.ImageOpened(
-        winrt::auto_revoke, [weak_this{get_weak()}, bitmapBrush, fireLoadEndEvent](const auto &, const auto &) {
-          if (auto strong_this{weak_this.get()}) {
-            const auto bitmap{bitmapBrush.ImageSource().as<winrt::BitmapImage>()};
-            strong_this->m_imageSource.height = bitmap.PixelHeight();
-            strong_this->m_imageSource.width = bitmap.PixelWidth();
+      // ImageOpened and ImageFailed are mutually exclusive. One event of the other will
+      // always fire whenever an ImageBrush has the ImageSource value set or reset.
+      m_imageOpenedRevoker = bitmapBrush.ImageOpened(
+          winrt::auto_revoke, [weak_this{get_weak()}, bitmapBrush, fireLoadEndEvent](const auto &, const auto &) {
+            if (auto strong_this{weak_this.get()}) {
+              const auto bitmap{bitmapBrush.ImageSource().as<winrt::BitmapImage>()};
+              strong_this->m_imageSource.height = bitmap.PixelHeight();
+              strong_this->m_imageSource.width = bitmap.PixelWidth();
 
-            bitmapBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
+              bitmapBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
 
-            if (fireLoadEndEvent) {
-              strong_this->m_onLoadEndEvent(*strong_this, true);
+              if (fireLoadEndEvent) {
+                strong_this->m_onLoadEndEvent(*strong_this, true);
+              }
             }
-          }
-        });
+          });
 
-    m_imageFailedRevoker = bitmapBrush.ImageFailed(
-        winrt::auto_revoke, [weak_this{get_weak()}, fireLoadEndEvent](const auto &, const auto &) {
-          const auto strong_this{weak_this.get()};
-          if (strong_this && fireLoadEndEvent) {
-            strong_this->m_onLoadEndEvent(*strong_this, false);
-          }
-        });
+      m_imageFailedRevoker = bitmapBrush.ImageFailed(
+          winrt::auto_revoke, [weak_this{get_weak()}, fireLoadEndEvent](const auto &, const auto &) {
+            const auto strong_this{weak_this.get()};
+            if (strong_this && fireLoadEndEvent) {
+              strong_this->m_onLoadEndEvent(*strong_this, false);
+            }
+          });
+    }
 
     // get weak reference before any co_await calls
     auto weak_this{get_weak()};
 
     try {
-      winrt::BitmapImage bitmap{};
+      winrt::BitmapImage bitmap{bitmapBrush.ImageSource().try_as<winrt::BitmapImage>()};
+      bool setImageSource{false};
+      if (!bitmap) {
+        bitmap = winrt::BitmapImage{};
+        setImageSource = true;
+      }
 
       if (fromStream) {
         co_await bitmap.SetSourceAsync(m_memoryStream);
@@ -216,8 +225,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fromStream, bool fireLoadE
         bitmap.UriSource(uri);
       }
 
-      bitmapBrush.ImageSource(bitmap);
-      Background(bitmapBrush);
+      if (setImageSource) {
+        bitmapBrush.ImageSource(bitmap);
+
+        auto strong_this{weak_this.get()};
+        if (setBackground && strong_this) {
+          strong_this->Background(bitmapBrush);
+        }
+      }
+
     } catch (winrt::hresult_error const &) {
       const auto strong_this{weak_this.get()};
       if (strong_this && fireLoadEndEvent) {
