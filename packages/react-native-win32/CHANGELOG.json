@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 11 Dec 2019 22:51:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.25.7",
+      "version": "0.25.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add react-native-win32 package",
+            "author": "acoates@microsoft.com",
+            "commit": "b1533aa378318967229aad3c6709ac12960ba141"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 08 Dec 2019 03:57:02 GMT",
       "tag": "@office-iss/react-native-win32_v0.25.5",
       "version": "0.25.5",
