@@ -155,6 +155,10 @@ void ImageViewManager::setSource(winrt::Canvas canvas, const folly::dynamic &dat
   auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
   sources[0].bundleRootPath = instance->GetBundleRootPath();
 
+  if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {
+    sources[0].uri.replace(0, 7, sources[0].bundleRootPath);
+  }
+
   auto reactImage{canvas.as<ReactImage>()};
 
   EmitImageEvent(canvas, "topLoadStart", sources[0]);

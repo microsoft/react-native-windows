@@ -17,6 +17,8 @@
 namespace react {
 namespace uwp {
 
+enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
+
 struct ReactImageSource {
   std::string uri;
   std::string method;
@@ -26,6 +28,7 @@ struct ReactImageSource {
   double height = 0;
   double scale = 1.0;
   bool packagerAsset = false;
+  ImageSourceType sourceType = ImageSourceType::Uri;
 };
 
 struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
@@ -47,7 +50,7 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   ReactImageSource Source() {
     return m_imageSource;
   }
-  winrt::fire_and_forget Source(ReactImageSource source);
+  void Source(ReactImageSource source);
 
   react::uwp::ResizeMode ResizeMode() {
     return m_resizeMode;
@@ -56,18 +59,20 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
 
  private:
   winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
-  winrt::fire_and_forget SetBackground(bool fromStream, bool fireLoadEndEvent);
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+  GetImageMemoryStreamAsync(ReactImageSource source);
+  winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
   ReactImageSource m_imageSource;
   winrt::Windows::Foundation::Size m_availableSize{};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
-  winrt::Windows::Storage::Streams::InMemoryRandomAccessStream m_memoryStream{nullptr};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
-  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageOpenedRevoker;
-  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageFailed_revoker m_imageFailedRevoker;
+  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
+  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;
+  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageFailed_revoker m_imageBrushFailedRevoker;
 };
 
 // Helper functions
