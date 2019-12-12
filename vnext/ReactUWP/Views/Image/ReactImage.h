@@ -65,7 +65,6 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
 
   bool m_useCompositionBrush{false};
   ReactImageSource m_imageSource;
-  winrt::Windows::Foundation::Size m_availableSize{};
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
