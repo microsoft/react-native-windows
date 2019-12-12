@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 09 Dec 2019 18:40:45 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Dec 2019 00:17:06 GMT and should not be manually modified.
 
+## 0.60.0-vnext.93
+Thu, 12 Dec 2019 00:17:06 GMT
+
+### Changes
+
+- Strongly typed value serialization and deserialization using IJSValueReader, JSValue, and IJSValueWriter (vmorozov@microsoft.com)
+## 0.60.0-vnext.92
+Wed, 11 Dec 2019 23:31:47 GMT
+
+### Changes
+
+- Submitting the ETW schema resouce dll and the register script (anandrag@microsoft.com)
 ## 0.60.0-vnext.91
 Mon, 09 Dec 2019 18:40:45 GMT
 
