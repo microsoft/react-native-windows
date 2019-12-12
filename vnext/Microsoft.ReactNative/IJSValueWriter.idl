@@ -3,15 +3,15 @@
 
 namespace Microsoft.ReactNative.Bridge {
   interface IJSValueWriter {
-    Boolean WriteNull();
-    Boolean WriteBoolean(Boolean value);
-    Boolean WriteInt64(Int64 value);
-    Boolean WriteDouble(Double value);
-    Boolean WriteString(String value);
-    Boolean WriteObjectBegin();
-    Boolean WritePropertyName(String name);
-    Boolean WriteObjectEnd();
-    Boolean WriteArrayBegin();
-    Boolean WriteArrayEnd();
+    void WriteNull();
+    void WriteBoolean(Boolean value);
+    void WriteInt64(Int64 value);
+    void WriteDouble(Double value);
+    void WriteString(String value);
+    void WriteObjectBegin();
+    void WritePropertyName(String name);
+    void WriteObjectEnd();
+    void WriteArrayBegin();
+    void WriteArrayEnd();
   };
 } // namespace Microsoft.ReactNative.Bridge

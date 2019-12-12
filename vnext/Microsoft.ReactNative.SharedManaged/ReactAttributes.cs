@@ -57,7 +57,7 @@ namespace Microsoft.ReactNative.Managed
     public string MethodName { get; private set; }
   }
 
-  [AttributeUsage(AttributeTargets.Property)]
+  [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
   class ReactEventAttribute : Attribute
   {
     public ReactEventAttribute(string eventName = null)

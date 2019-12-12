@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update E2ETest to use ReactApplication",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "39286c82c6393e68725d202f121825a00d1865b2",
-  "date": "2019-12-06T17:47:37.097Z"
-}
