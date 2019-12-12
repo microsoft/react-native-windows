@@ -127,6 +127,7 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:ReactNativeWindowsBuildDir=$(ReactNativeWindowsBuildDir)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -142,7 +143,7 @@ jobs:
           command: restore
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), false) # Disabled, out of space issues on CI machines
 
       - task: MSBuild@1
         displayName: MSBuild - SampleApps
@@ -155,15 +156,16 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:ReactNativeWindowsBuildDir=$(ReactNativeWindowsBuildDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), false) # Disabled, out of space issues on CI machines
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
           workingDirectory: packages\microsoft-reactnative-sampleapps
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), false) # Disabled, out of space issues on CI machines
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
@@ -494,6 +496,8 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:TargetPlatformVersion=$(TargetPlatformVersion)
             /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
+            /p:ReactNativeWindowsBuildDir=$(ReactNativeWindowsBuildDir)
+
           #clean: true # Optional
           #maximumCpuCount: false # Optional
           #restoreNugetPackages: false # Optional
@@ -535,11 +539,8 @@ jobs:
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
       name: E2ETest
-      pool:
-        vmImage: windows-2019
       BuildPlatform: x64
       UseRNFork: true
-      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64, Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

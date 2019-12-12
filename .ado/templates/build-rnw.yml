@@ -14,7 +14,7 @@ parameters:
   yarnBuildCmd: build
 
   # Visual Studio Installer
-  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
+  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
 
 steps:
@@ -25,7 +25,6 @@ steps:
       vsComponents: ${{ parameters.vsComponents }}
       yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
       debug: ${{ parameters.debug }}
-      forceVSDependencies: false
 
   - task: NuGetCommand@2
     displayName: NuGet restore
@@ -51,6 +50,7 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         ${{parameters.msbuildArguments}}
+        /p:ReactNativeWindowsBuildDir=$(ReactNativeWindowsBuildDir)
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()
