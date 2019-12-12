@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Strongly typed value serialization and deserialization using IJSValueReader, JSValue, and IJSValueWriter",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "d7599a1fbbb88300ccd2b3e280b74fda9f41f061",
-  "date": "2019-12-11T20:44:46.143Z"
-}
