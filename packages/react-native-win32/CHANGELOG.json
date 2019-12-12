@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 12 Dec 2019 22:18:13 GMT",
+      "tag": "@office-iss/react-native-win32_v0.25.8",
+      "version": "0.25.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.31",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "9b66731f5ee90d2ca6f4dc7d7a7692f9b6eef225"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Dec 2019 22:51:44 GMT",
       "tag": "@office-iss/react-native-win32_v0.25.7",
       "version": "0.25.7",
