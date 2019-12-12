@@ -105,11 +105,12 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Content Include="Assets\TreeDump\ImageWithBorder.treedump" />
-    <Content Include="Assets\TreeDump\ImageWithoutBorder.treedump" />
     <None Include="ReactUWPTestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\TreeDump\ImageWithBorder.txt" />
+    <Content Include="Assets\TreeDump\ImageWithoutBorder0.txt" />
+    <Content Include="Assets\TreeDump\ImageWithoutBorder2.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

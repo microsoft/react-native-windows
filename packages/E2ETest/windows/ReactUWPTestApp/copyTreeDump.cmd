@@ -1,1 +1,1 @@
-copy %LocalAppData%\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState\TreeDump\*.out Assets\TreeDump\*.treedump
+copy %LocalAppData%\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState\TreeDump\*.out Assets\TreeDump\*.txt

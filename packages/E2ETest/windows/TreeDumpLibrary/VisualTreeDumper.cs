@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +65,7 @@ namespace TreeDumpLibrary
             }
         }
 
-        public static string DumpToXML(DependencyObject root, DependencyObject excludedNode)
+        public static string DumpTree(DependencyObject root, DependencyObject excludedNode)
         {
 
             Visitor visitor = new Visitor(new DefaultFilter(),

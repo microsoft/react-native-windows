@@ -140,7 +140,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            String dumpText = VisualTreeDumper.DumpToXML(dumpRoot, m_textBlock /* exclude */);
+            String dumpText = VisualTreeDumper.DumpTree(dumpRoot, m_textBlock /* exclude */);
             if (dumpText != m_dumpExpectedText)
             {
                 await MatchDump(dumpText);
@@ -153,7 +153,7 @@ namespace TreeDumpLibrary
             {
                 try
                 {
-                    var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(@"Assets\TreeDump\" + m_dumpID + ".treedump");
+                    var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(@"Assets\TreeDump\" + m_dumpID + ".txt");
                     m_dumpExpectedText = await Windows.Storage.FileIO.ReadTextAsync(file);
                 }
                 catch (IOException)
