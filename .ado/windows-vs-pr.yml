@@ -567,6 +567,6 @@ jobs:
         inputs:
           targetType: inline # filePath | inline
           script: |
-            ((Get-Content -path vnext\Scripts\ReactUwp.nuspec -Raw) -replace ".*ReactUWP\React.UWP.*","") | Set-Content -Path vnext\Scripts\ReactUwp.nuspec
+            ((Get-Content -path vnext\Scripts\ReactUwp.nuspec -Raw) -replace ".*ReactUWP\\React.UWP.*","") | Set-Content -Path vnext\Scripts\ReactUwp.nuspec
 
       - template: templates/prep-and-pack-nuget.yml
