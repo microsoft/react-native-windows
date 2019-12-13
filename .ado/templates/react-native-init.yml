@@ -91,7 +91,7 @@ steps:
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-        /p:ReactNativeWindowsBuildDir=$(ReactNativeWindowsBuildDir)
+        /p:BaseIntDir=$(BaseIntDir)
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()

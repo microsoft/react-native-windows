@@ -390,9 +390,9 @@ namespace Microsoft.ReactNative.Managed
         return true;
       }
 
-      constantKey = default;
-      constantValue = default;
-      memberValue = default;
+      constantKey = default(string);
+      constantValue = default(string);
+      memberValue = default(Delegate);
 
       return false;
     }
@@ -445,9 +445,9 @@ namespace Microsoft.ReactNative.Managed
         return true;
       }
 
-      constantKey = default;
-      constantValue = default;
-      memberValue = default;
+      constantKey = default(string);
+      constantValue = default(object);
+      memberValue = default(Delegate);
 
       return false;
     }
@@ -466,7 +466,7 @@ namespace Microsoft.ReactNative.Managed
         }
       }
 
-      eventDataType = default;
+      eventDataType = default(Type);
       return false;
     }
 
