@@ -47,4 +47,26 @@
     <Message Text="=> VCTargetsPath           [$(VCTargetsPath)]" />
   </Target>
 
+  <Target Name="_ComputePrecompToCleanUp">
+    <ItemGroup>
+      <PCHFileToClean Include="$(IntDir)\**\*.pch" />
+      <_PCHFileToCleanWithTimestamp Include="@(PCHFileToClean)" Condition="'%(Identity)' != ''">
+        <LastWriteTime>$([System.IO.File]::GetLastWriteTime('%(Identity)'))</LastWriteTime>
+      </_PCHFileToCleanWithTimestamp>
+    </ItemGroup>
+  </Target>
+  <!-- 
+    As a cppwinrt project, .pch is very big, and delete it in pipeline after build
+    Instead of outright deleting the PCHs, we want to trick the "project freshness detector" by
+    emitting empty files that look suspiciously like the PCHs it's expecting.
+    It's of utmost importance that their timestamps match up. -->
+  <Target Name="CleanUpPrecompHeaders"
+          DependsOnTargets="_ComputePrecompToCleanUp"
+          AfterTargets="AfterBuild"
+          Condition="'$(AGENT_ID)' != ''">
+    <!-- We just need to keep *ReactNativeWindows*'s PCHs because they get rebuilt more often. -->
+    <Delete Files="@(_PCHFileToCleanWithTimestamp)"/>
+    <Touch Files="@(_PCHFileToCleanWithTimestamp)" Time="%(LastWriteTime)" AlwaysCreate="true" />
+    <Message Text="PCH and Precomp object @(_PCHFileToCleanWithTimestamp) has been deleted for $(ProjectName)." />
+  </Target>
 </Project>
