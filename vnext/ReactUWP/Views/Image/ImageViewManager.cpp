@@ -132,7 +132,7 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
     } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
       UpdateCornerRadiusOnElement(nodeToUpdate, grid);
       continue;
-    } 
+    }
     // TODO: overflow
   }
 
