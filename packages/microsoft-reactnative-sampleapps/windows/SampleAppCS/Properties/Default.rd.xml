@@ -25,7 +25,8 @@
     
     
     <!-- Add your application specific runtime directives here. -->
-
+    <Namespace Name="Microsoft.ReactNative" Dynamic="Required All" MarshalObject="Required All" />
+    <Namespace Name="Microsoft.ReactNative.Managed" Dynamic="Required All" MarshalObject="Required All" />
 
   </Application>
 </Directives>

@@ -4,6 +4,8 @@
 #include "pch.h"
 #include "ABIViewManager.h"
 
+#include "IReactContext.h"
+
 #include <ReactUWP/Utils/ValueUtils.h>
 #include "ReactSupport.h"
 
@@ -14,12 +16,16 @@ ABIViewManager::ABIViewManager(
     const ReactNative::IViewManager &viewManager)
     : Super(reactInstance),
       m_viewManager{viewManager},
+      m_viewManagerWithReactContext{viewManager.try_as<IViewManagerWithReactContext>()},
       m_viewManagerWithExportedViewConstants{viewManager.try_as<IViewManagerWithExportedViewConstants>()},
       m_viewManagerWithNativeProperties{viewManager.try_as<IViewManagerWithNativeProperties>()},
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_name{to_string(viewManager.Name())} {
+  if (m_viewManagerWithReactContext) {
+    m_viewManagerWithReactContext.ReactContext(winrt::make<ReactContext>(reactInstance).as<IReactContext>());
+  }
   if (m_viewManagerWithNativeProperties) {
     m_nativeProps = m_viewManagerWithNativeProperties.NativeProps();
   }

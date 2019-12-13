@@ -17,12 +17,9 @@ namespace winrt::SampleLibraryCpp::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
   AddAttributedModules(packageBuilder);
-  packageBuilder.AddViewManager(L"CustomUserControlViewManagerCpp", [](IReactContext const &reactContext) {
-    return winrt::make<CustomUserControlViewManagerCpp>(reactContext);
-  });
-  packageBuilder.AddViewManager(L"CircleViewManagerCpp", [](IReactContext const & /*reactContext*/) {
-    return winrt::make<CircleViewManagerCpp>();
-  });
+  packageBuilder.AddViewManager(
+      L"CustomUserControlViewManagerCpp", []() { return winrt::make<CustomUserControlViewManagerCpp>(); });
+  packageBuilder.AddViewManager(L"CircleViewManagerCpp", []() { return winrt::make<CircleViewManagerCpp>(); });
 }
 
 } // namespace winrt::SampleLibraryCpp::implementation
