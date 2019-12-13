@@ -34,11 +34,6 @@ jobs:
           vsComponents: $(VsComponents)
           yarnBuildCmd: build
 
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
-
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
