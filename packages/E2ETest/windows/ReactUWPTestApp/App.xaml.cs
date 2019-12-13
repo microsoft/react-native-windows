@@ -58,7 +58,7 @@ namespace ReactUWPTestApp
         {
             base.OnLaunched(e);
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            ApplicationView.GetForCurrentView().TryResizeView(new Size(1024, 768));
+            ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
         }
     }
 }

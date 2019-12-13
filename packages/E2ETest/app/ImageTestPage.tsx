@@ -25,16 +25,16 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   imageWithBorder: {
-    height: 200,
-    width: 300,
+    height: '100%',
+    width: '100%',
     borderRadius: 10.0,
     borderWidth:10,
     borderColor: '#0000ff55',
     backgroundColor: 'red',
   },
   image: {
-    height: 200,
-    width: 300,
+    height: '100%',
+    width: '100%',
     backgroundColor: 'red',
   },  
   treeDumpControl: {

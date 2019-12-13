@@ -29,10 +29,10 @@ namespace TreeDumpLibrary
             m_textBlock.LayoutUpdated += async (source, e) =>
             {
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
-                if (bounds.Width != 1024 || bounds.Height != 768)
+                if (bounds.Width != 800 || bounds.Height != 600)
                 {
                     // Dump disabled when window size is not 1024x768!
-                    UpdateResult(false /*matchDump*/, "Window has been resized, dump comparison is only valid at default launch size: 1024x768!");
+                    UpdateResult(false /*matchDump*/, "Window has been resized, dump comparison is only valid at default launch size: 800x600!, current size:" + bounds.ToString());
                 }
                 else
                 {
@@ -171,9 +171,6 @@ namespace TreeDumpLibrary
                     StorageFile outFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
                     await Windows.Storage.FileIO.WriteTextAsync(outFile, dumpText);
                     UpdateResult(false /*matchDump*/, "Tree dump file does not match master! See output at " + outFile.Path);
-                    string fileNameError = "TreeDump\\" + m_dumpID + ".err";
-                    StorageFile errFile = await storageFolder.CreateFileAsync(fileNameError, CreationCollisionOption.ReplaceExisting);
-                    await Windows.Storage.FileIO.WriteTextAsync(errFile, m_errString);
                 }
                 catch (IOException)
                 {
@@ -186,7 +183,7 @@ namespace TreeDumpLibrary
             }
         }
 
-        private void UpdateResult(bool matchDump, string helpText)
+        private async void UpdateResult(bool matchDump, string helpText)
         {
             if (matchDump)
             {
@@ -196,6 +193,17 @@ namespace TreeDumpLibrary
             {
                 UpdateTextBlockText("TreeDump:Failed, click to see more!");
                 m_errString += "\r\n" + helpText;
+
+                StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                string fileNameError = "TreeDump\\" + m_dumpID + ".err";
+                try
+                {
+                    StorageFile errFile = await storageFolder.CreateFileAsync(fileNameError, CreationCollisionOption.ReplaceExisting);
+                    await Windows.Storage.FileIO.WriteTextAsync(errFile, m_errString);
+                }
+                catch (IOException)
+                {
+                }
             }
 
             m_matchDump = matchDump;

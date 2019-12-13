@@ -25,19 +25,4 @@
       RenderSize=500,300
       VerticalAlignment=Stretch
       Visibility=Visible
-    [Windows.UI.Xaml.Controls.Border]
-        ActualOffset=<100, 0, 0>
-        Background=#FFFF0000
-        BorderBrush=[NULL]
-        BorderThickness=0,0,0,0
-        Clip=[NULL]
-        CornerRadius=0,0,0,0
-        Height=200
-        HorizontalAlignment=Stretch
-        Margin=0,0,0,0
-        Padding=0,0,0,0
-        RenderSize=300,200
-        VerticalAlignment=Stretch
-        Visibility=Visible
-        Width=300
-      [Windows.UI.Xaml.DependencyObject]
+    [Windows.UI.Xaml.DependencyObject]
