@@ -1,6 +1,6 @@
 {
   "name": "playground",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "private": true,
   "scripts": {
     "build": "just-scripts build",
@@ -15,7 +15,7 @@
     "react": "16.8.6",
     "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
     "react-native-windows": "0.60.0-vnext.95",
-    "react-native-windows-extended": "0.60.44",
+    "react-native-windows-extended": "0.60.45",
     "rnpm-plugin-windows": "^0.3.8"
   },
   "devDependencies": {
