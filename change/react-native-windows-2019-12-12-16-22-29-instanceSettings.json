@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix toggle debugger setting issue with ReactApplication",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "76228b95ceccaa87cc75563083415308805f914d",
-  "date": "2019-12-13T00:22:29.280Z"
-}
