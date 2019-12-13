@@ -123,7 +123,7 @@ namespace TreeDumpLibrary
     public sealed class DefaultFilter
     {
         private List<string> _propertyNameWhiteList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
-            "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip", "ActualOffset"};
+            "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip", /*"ActualOffset" 19h1*/};
 
         public bool ShouldVisitPropertyValue(string propertyValue)
         {

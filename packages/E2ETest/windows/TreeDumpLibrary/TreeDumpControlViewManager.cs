@@ -155,6 +155,11 @@ namespace TreeDumpLibrary
                 {
                     var file = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFileAsync(@"Assets\TreeDump\" + m_dumpID + ".txt");
                     m_dumpExpectedText = await Windows.Storage.FileIO.ReadTextAsync(file);
+
+                    StorageFolder storageFolder = ApplicationData.Current.LocalFolder;
+                    string copyFileName = "TreeDump\\" + m_dumpID + ".txt";
+                    var copyDumpFile = await storageFolder.CreateFileAsync(copyFileName, CreationCollisionOption.ReplaceExisting);
+                    await Windows.Storage.FileIO.WriteTextAsync(copyDumpFile, m_dumpExpectedText);
                 }
                 catch (IOException)
                 {

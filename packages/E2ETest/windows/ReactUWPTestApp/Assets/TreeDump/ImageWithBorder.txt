@@ -1,5 +1,4 @@
 [Windows.UI.Xaml.Controls.Border]
-    ActualOffset=<0, 0, 0>
     Background=#FFFFFF00
     BorderBrush=#5500FF00
     BorderThickness=10,10,10,10
@@ -14,7 +13,6 @@
     Visibility=Visible
     Width=500
   [react.uwp.ViewPanel]
-      ActualOffset=<10, 10, 0>
       Background=[NULL]
       BorderBrush=#5500FF00
       BorderThickness=10,10,10,10

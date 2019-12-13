@@ -1,5 +1,4 @@
 [react.uwp.ViewPanel]
-    ActualOffset=<0, 0, 0>
     Background=#FFFFFF00
     BorderBrush=#00000000
     BorderThickness=0,0,0,0
