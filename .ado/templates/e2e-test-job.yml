@@ -101,6 +101,21 @@ jobs:
           script: yarn run test
           workingDirectory: packages/E2ETest
 
+      - task: CopyFiles@2
+        displayName: Copy tree dump output files
+        inputs:
+          sourceFolder: $%LocalAppData%\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+          contents: TreeDump\**
+        condition: succeededOrFailed()   
+        
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
+        inputs:
+          artifactName: ReactUWPTestAppTreeDump
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+        condition: succeededOrFailed()       
+
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: "JUnit"
