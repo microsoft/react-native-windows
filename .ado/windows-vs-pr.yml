@@ -182,12 +182,12 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
-        #X86Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x86
-        #X64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
