@@ -23,6 +23,10 @@ void ScrollViewUWPImplementation::SnapToInterval(float interval) {
   ScrollViewerSnapPointManager()->SnapToInterval(interval);
 }
 
+void ScrollViewUWPImplementation::PagingEnabled(bool pagingEnabled) {
+  ScrollViewerSnapPointManager()->PagingEnabled(pagingEnabled);
+}
+
 void ScrollViewUWPImplementation::SnapToStart(bool snapToStart) {
   ScrollViewerSnapPointManager()->SnapToStart(snapToStart);
 }
@@ -47,35 +51,34 @@ void ScrollViewUWPImplementation::SnapPointAlignment(const winrt::SnapPointsAlig
 void ScrollViewUWPImplementation::UpdateScrollableSize() const {
   if (const auto scrollViewer = m_scrollViewer.get()) {
     const auto zoomFactor = scrollViewer.ZoomFactor();
-    const auto scaledViewportWidth = scrollViewer.ViewportWidth() / zoomFactor;
-    const auto scaledviewportHeight = scrollViewer.ViewportHeight() / zoomFactor;
+    const auto scaledViewportWidth = static_cast<float>(scrollViewer.ViewportWidth() / zoomFactor);
+    const auto scaledviewportHeight = static_cast<float>(scrollViewer.ViewportHeight() / zoomFactor);
     const auto scrollViewContent = scrollViewer.Content().as<winrt::ContentControl>();
     const auto contentWidth = scrollViewContent.ActualWidth();
     const auto contentHeight = scrollViewContent.ActualHeight();
 
+    ScrollViewerSnapPointManager()->SetViewportSize(scaledViewportWidth, scaledviewportHeight);
+
     switch (scrollViewer.HorizontalSnapPointsAlignment()) {
       case winrt::SnapPointsAlignment::Near:
-        ScrollViewerSnapPointManager()->SetWidthBounds(0.0f, static_cast<float>(contentWidth - scaledViewportWidth));
+        ScrollViewerSnapPointManager()->SetWidthBounds(0.0f, static_cast<float>(contentWidth) - scaledViewportWidth);
         break;
       case winrt::SnapPointsAlignment::Center:
         ScrollViewerSnapPointManager()->SetWidthBounds(
-            static_cast<float>(scaledViewportWidth / 2.0f),
-            static_cast<float>(contentWidth - (scaledViewportWidth / 2.0f)));
+            scaledViewportWidth / 2.0f, static_cast<float>(contentWidth) - scaledViewportWidth / 2.0f);
         break;
       case winrt::SnapPointsAlignment::Far:
-        ScrollViewerSnapPointManager()->SetWidthBounds(
-            static_cast<float>(scaledViewportWidth), static_cast<float>(contentWidth));
+        ScrollViewerSnapPointManager()->SetWidthBounds(scaledViewportWidth, static_cast<float>(contentWidth));
         break;
     }
 
     switch (scrollViewer.VerticalSnapPointsAlignment()) {
       case winrt::SnapPointsAlignment::Near:
-        ScrollViewerSnapPointManager()->SetHeightBounds(0.0f, static_cast<float>(contentHeight - scaledviewportHeight));
+        ScrollViewerSnapPointManager()->SetHeightBounds(0.0f, static_cast<float>(contentHeight) - scaledviewportHeight);
         break;
       case winrt::SnapPointsAlignment::Center:
         ScrollViewerSnapPointManager()->SetHeightBounds(
-            static_cast<float>(scaledviewportHeight / 2.0f),
-            static_cast<float>(contentHeight - (scaledviewportHeight / 2.0f)));
+            scaledviewportHeight / 2.0f, static_cast<float>(contentHeight) - scaledviewportHeight / 2.0f);
         break;
       case winrt::SnapPointsAlignment::Far:
         ScrollViewerSnapPointManager()->SetHeightBounds(

@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import "ReactNativeHost.idl";
-import "ReactContext.idl";
+import "IReactContext.idl";
 
 namespace Microsoft.ReactNative
 {
@@ -10,7 +10,7 @@ namespace Microsoft.ReactNative
     runtimeclass ReactInstanceManager
     {
         ReactInstanceManager();
-        Microsoft.ReactNative.Bridge.ReactContext CurrentReactContext();
+        Microsoft.ReactNative.Bridge.IReactContext CurrentReactContext();
         void OnSuspend();
         void OnEnteredBackground();
         void OnLeavingBackground();

@@ -19,6 +19,22 @@ App::App() noexcept {
   MainComponentName(L"SampleApp");
   JavaScriptMainModuleName(L"index.windows");
 
+#if BUNDLE
+  JavaScriptBundleFile(L"index.windows");
+  InstanceSettings().UseWebDebugger(false);
+  InstanceSettings().UseLiveReload(false);
+#else
+  JavaScriptMainModuleName(L"index");
+  InstanceSettings().UseWebDebugger(true);
+  InstanceSettings().UseLiveReload(true);
+#endif
+
+#if _DEBUG
+  InstanceSettings().EnableDeveloperMenu(true);
+#else
+  InstanceSettings().EnableDeveloperMenu(false);
+#endif
+
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
   PackageProviders().Append(winrt::SampleLibraryCPP::ReactPackageProvider());
   PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());

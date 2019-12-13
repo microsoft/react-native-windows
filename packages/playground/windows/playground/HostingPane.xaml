@@ -33,7 +33,6 @@
       <ComboBox x:Name="x_JavaScriptFilename"
         Grid.Column="1"
         Margin="2,2,2,2"
-        IsEditable="True"
         MinWidth="250"
         VerticalAlignment="Center"
         HorizontalAlignment="Stretch"
@@ -47,7 +46,6 @@
       <ComboBox
         x:Name="x_ReactAppName"
         Grid.Column="3"
-        IsEditable="True"
         Margin="2,2,2,2"
         MinWidth="150"
         HorizontalAlignment="Stretch"

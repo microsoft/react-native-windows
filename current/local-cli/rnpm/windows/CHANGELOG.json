@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Wed, 06 Nov 2019 13:58:14 GMT",
+      "tag": "rnpm-plugin-windows_v0.3.8",
+      "version": "0.3.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "This change enables consuming JSI implementations where the referenced JSI headers differs from the JSI headers in react-native.",
+            "author": "anandrag@microsoft.com",
+            "commit": "04b58d679ba04baca23348928fad5250a34d31b9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Oct 2019 20:58:22 GMT",
       "tag": "rnpm-plugin-windows_v0.3.7",
       "version": "0.3.7",

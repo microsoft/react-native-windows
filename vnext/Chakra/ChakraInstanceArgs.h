@@ -9,8 +9,7 @@
 #include <ChakraCore.h>
 #endif
 
-#include <Logging.h>
-#include <MemoryTracker.h>
+#include "DevSettings.h"
 
 namespace facebook {
 namespace react {
@@ -70,6 +69,12 @@ struct ChakraInstanceArgs {
    * @brief Dispatcher for notifications about JS engine memory consumption.
    */
   std::shared_ptr<MemoryTracker> MemoryTracker;
+
+  /**
+   * @brief Maps bundle URL to metadata needed for bytecode caching. Should be
+   * removed once we're on the JSI stack and using PreparedScriptStore (#3603).
+   */
+  ChakraBundleUrlMetadataMap BundleUrlMetadataMap;
 };
 
 } // namespace react

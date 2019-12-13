@@ -31,17 +31,17 @@ jobs:
           BuildPlatform: x64
           UseRNFork: true
           LayoutHeaders: true
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
           UseRNFork: true
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
           UseRNFork: true
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
           UseRNFork: true
         X86Release:
           BuildConfiguration: Release
@@ -78,6 +78,36 @@ jobs:
           layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             ReactUWP\**
+
+  - job: RNWUniversalOtherProjectsPR
+    displayName: Universal Other Projects PR
+    dependsOn: Setup
+    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
+    strategy:
+      matrix:
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+          UseRNFork: true
+        X64Release:
+          BuildConfiguration: Release
+          BuildPlatform: x64
+          UseRNFork: true
+    pool:
+      vmImage: $(VmImage)
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 5
+
+    steps:
+      - checkout: self
+        clean: false
+        submodules: false
+        
+      - template: templates/prepare-env.yml
+        parameters:
+          useRnFork: $(UseRNFork)
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          yarnBuildCmd: buildci
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -141,6 +171,7 @@ jobs:
           script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -288,18 +319,22 @@ jobs:
         DebugCs:
           language: cs
           configuration: Debug
-        DebugBundleCpp:
+        ReleaseCpp:
           language: cpp
-          configuration: DebugBundle
-        DebugBundleCs:
+          configuration: Release
+        ReleaseCs:
           language: cs
-          configuration: DebugBundle
+          configuration: Release
 
-    timeoutInMinutes: 30 # how long to run the job before automatically cancelling
+    timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
       vmImage: $(VmImage)
     steps:
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
+
       - template: templates/react-native-init.yml
         parameters:
           version: 0.60.6
@@ -383,6 +418,10 @@ jobs:
         lfs: false # whether to download Git-LFS files
         submodules: recursive # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+      - task: UseNode@1
+        inputs:
+          version: '10.x'
 
       - task: PowerShell@2
         displayName: Download Winium

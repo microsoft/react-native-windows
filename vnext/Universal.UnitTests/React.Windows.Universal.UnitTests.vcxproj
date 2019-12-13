@@ -63,7 +63,7 @@
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
   </ItemDefinitionGroup>
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="App.xaml.h">
@@ -109,7 +109,6 @@
     </ClCompile>
     <ClCompile Include="Tests\AppStateModuleTests.cpp" />
     <ClCompile Include="Tests\CreateModulesTests.cpp" />
-    <ClCompile Include="Tests\CreateViewManagersTests.cpp" />
     <ClCompile Include="Tests\StringConversionTests_Universal.cpp" />
   </ItemGroup>
   <ItemGroup>

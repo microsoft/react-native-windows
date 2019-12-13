@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-wpf
 
-This log was last generated on Tue, 01 Oct 2019 18:17:42 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
 
+## 0.2.15
+Wed, 06 Nov 2019 13:58:14 GMT
+
+### Patches
+
+- Build fixes (anandrag@microsoft.com)
 ## 0.2.14
 Tue, 01 Oct 2019 18:17:42 GMT
 

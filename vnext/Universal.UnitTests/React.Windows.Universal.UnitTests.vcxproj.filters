@@ -16,9 +16,6 @@
     <ClCompile Include="App.xaml.cpp" />
     <ClCompile Include="MainPage.xaml.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Tests\CreateViewManagersTests.cpp">
-      <Filter>Tests</Filter>
-    </ClCompile>
     <ClCompile Include="Tests\CreateModulesTests.cpp">
       <Filter>Tests</Filter>
     </ClCompile>

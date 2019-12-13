@@ -12,7 +12,7 @@
 
 #include "DynamicAutomationProperties.h"
 
-#include "cppwinrt/DynamicAutomationPeer.g.h"
+#include "DynamicAutomationPeer.g.h"
 namespace winrt::react::uwp::implementation {
 
 //

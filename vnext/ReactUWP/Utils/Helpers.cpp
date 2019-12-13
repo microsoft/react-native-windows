@@ -4,11 +4,13 @@
 #include "pch.h"
 
 #include <Modules/NativeUIManager.h>
+#include <winrt\Windows.Foundation.Metadata.h>
 #include "Helpers.h"
 
 namespace winrt {
 using namespace Windows::UI::Xaml::Controls::Primitives;
 using namespace Windows::UI::Xaml::Media;
+using namespace Windows::Foundation::Metadata;
 } // namespace winrt
 
 namespace react {
@@ -41,6 +43,51 @@ std::int32_t CountOpenPopups() {
   winrt::Windows::Foundation::Collections::IVectorView<winrt::Popup> popups =
       winrt::VisualTreeHelper::GetOpenPopups(winrt::Window::Current());
   return (int32_t)popups.Size();
+}
+
+template <uint16_t APIVersion>
+bool IsAPIContractVxAvailable() {
+  static bool isAPIContractVxAvailableInitialized = false;
+  static bool isAPIContractVxAvailable = false;
+  if (!isAPIContractVxAvailableInitialized) {
+    isAPIContractVxAvailableInitialized = true;
+    isAPIContractVxAvailable =
+        winrt::ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", APIVersion);
+  }
+
+  return isAPIContractVxAvailable;
+}
+
+bool IsAPIContractV5Available() {
+  return IsAPIContractVxAvailable<5>();
+}
+
+bool IsAPIContractV6Available() {
+  return IsAPIContractVxAvailable<6>();
+}
+
+bool IsAPIContractV7Available() {
+  return IsAPIContractVxAvailable<7>();
+}
+
+bool IsAPIContractV8Available() {
+  return IsAPIContractVxAvailable<8>();
+}
+
+bool IsRS3OrHigher() {
+  return IsAPIContractV5Available();
+}
+
+bool IsRS4OrHigher() {
+  return IsAPIContractV6Available();
+}
+
+bool IsRS5OrHigher() {
+  return IsAPIContractV7Available();
+}
+
+bool Is19H1OrHigher() {
+  return IsAPIContractV8Available();
 }
 
 } // namespace uwp

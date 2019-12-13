@@ -17,6 +17,8 @@ using namespace facebook;
 
 namespace fbsystrace {
 
+/*static */ uint64_t FbSystraceSection::s_id_counter = 0;
+
 /*static */ std::unordered_map<int, std::chrono::high_resolution_clock::time_point> FbSystraceAsyncFlow::s_tracker_;
 /*static */ std::mutex FbSystraceAsyncFlow::s_tracker_mutex_;
 
@@ -58,99 +60,36 @@ namespace react {
 namespace tracing {
 
 void trace_begin_section(
+    uint64_t id,
     uint64_t tag,
     const std::string &profile_name,
     std::array<std::string, SYSTRACE_SECTION_MAX_ARGS> &&args,
-    uint8_t size,
-    TraceTask task) {
-  switch (task) {
-    case TraceTask::EvaluateScript:
-      EventWriteEVALUATE_SCRIPT_BEGIN(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-
-    case TraceTask::CallJSFunction:
-      EventWriteCALL_JSFUNCTION_BEGIN(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-
-    case TraceTask::CallNativeModules:
-      EventWriteCALL_NATIVEMODULES_BEGIN(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-
-    case TraceTask::Unknown:
-    default:
-      EventWriteNATIVE_BEGIN_SECTION(
-          tag,
-          profile_name.c_str(),
-          args[0].c_str(),
-          args[1].c_str(),
-          args[2].c_str(),
-          args[3].c_str(),
-          args[4].c_str(),
-          args[5].c_str(),
-          args[6].c_str(),
-          args[7].c_str());
-      break;
-  }
+    uint8_t size) {
+  EventWriteNATIVE_BEGIN_SECTION(
+      id,
+      tag,
+      profile_name.c_str(),
+      args[0].c_str(),
+      args[1].c_str(),
+      args[2].c_str(),
+      args[3].c_str(),
+      args[4].c_str(),
+      args[5].c_str(),
+      args[6].c_str(),
+      args[7].c_str());
 }
 
-void trace_end_section(uint64_t tag, const std::string &profile_name, double duration, TraceTask task) {
-  switch (task) {
-    case TraceTask::EvaluateScript:
-      EventWriteEVALUATE_SCRIPT_END(tag, profile_name.c_str(), duration);
-      break;
-
-    case TraceTask::CallJSFunction:
-      EventWriteCALL_JSFUNCTION_END(tag, profile_name.c_str(), duration);
-      break;
-
-    case TraceTask::CallNativeModules:
-      EventWriteCALL_NATIVEMODULES_END(tag, profile_name.c_str(), duration);
-      break;
-
-    case TraceTask::Unknown:
-    default:
-      EventWriteNATIVE_END_SECTION(tag, profile_name.c_str(), duration);
-      break;
-  }
+void trace_end_section(uint64_t id, uint64_t tag, const std::string &profile_name, double duration) {
+  EventWriteNATIVE_END_SECTION(id, tag, profile_name.c_str(), duration);
 }
 
 void syncSectionBeginJSHook(uint64_t tag, const std::string &profile_name, const std::string &args) {
   EventWriteJS_BEGIN_SECTION(
-      tag, profile_name.c_str(), args.c_str(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
+      0, tag, profile_name.c_str(), args.c_str(), nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr);
 }
 
 void syncSectionEndJSHook(uint64_t tag) {
-  EventWriteJS_END_SECTION(tag, "", 0);
+  EventWriteJS_END_SECTION(0, tag, "", 0);
 }
 
 void asyncSectionBeginJSHook(uint64_t tag, const std::string &profile_name, int cookie) {

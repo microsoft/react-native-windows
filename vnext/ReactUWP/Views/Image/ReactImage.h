@@ -30,17 +30,13 @@ struct ImageSource {
 struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   using Super = winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage>;
 
- private:
-  // Constructors
   ReactImage();
 
  public:
   static winrt::com_ptr<ReactImage> Create();
-  template <typename D, typename... Args>
-  friend auto winrt::make_self(Args &&... args);
 
   // Overrides
-  virtual winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
+  winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
 
   // Events
   winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<bool> const &handler);

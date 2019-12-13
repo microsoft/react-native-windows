@@ -1,7 +1,203 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Nov 2019 23:40:12 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Dec 2019 22:18:13 GMT and should not be manually modified.
 
+## 0.60.0-vnext.94
+Thu, 12 Dec 2019 22:18:13 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.31 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.93
+Thu, 12 Dec 2019 00:17:06 GMT
+
+### Changes
+
+- Strongly typed value serialization and deserialization using IJSValueReader, JSValue, and IJSValueWriter (vmorozov@microsoft.com)
+## 0.60.0-vnext.92
+Wed, 11 Dec 2019 23:31:47 GMT
+
+### Changes
+
+- Submitting the ETW schema resouce dll and the register script (anandrag@microsoft.com)
+## 0.60.0-vnext.91
+Mon, 09 Dec 2019 18:40:45 GMT
+
+### Changes
+
+- Aligning Microsoft.Windows.CppWinRT Versions (jthysell@microsoft.com)
+## 0.60.0-vnext.90
+Fri, 06 Dec 2019 21:56:22 GMT
+
+### Changes
+
+- Update E2ETest to use ReactApplication (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.89
+Fri, 06 Dec 2019 19:14:55 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.28 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.88
+Fri, 06 Dec 2019 17:14:06 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.26 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.87
+Thu, 05 Dec 2019 19:54:18 GMT
+
+### Changes
+
+- Add support for custom ViewManagers with children (jthysell@microsoft.com)
+## 0.60.0-vnext.86
+Tue, 03 Dec 2019 23:21:34 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+## 0.60.0-vnext.85
+Mon, 02 Dec 2019 17:34:30 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.24 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.84
+Tue, 26 Nov 2019 00:13:20 GMT
+
+### Changes
+
+- View Manager Event Support (jthysell@microsoft.com)
+## 0.60.0-vnext.83
+Mon, 25 Nov 2019 21:54:38 GMT
+
+### Changes
+
+- Properly support ScrollView KeyboardDismissMode (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.82
+Mon, 25 Nov 2019 21:23:52 GMT
+
+### Changes
+
+- Revert "Add Winui 2.2 framework package (#3622)" (licanhua@live.com)
+## 0.60.0-vnext.81
+Sat, 23 Nov 2019 08:02:20 GMT
+
+### Changes
+
+- Add WinUI (licanhua@live.com)
+- Support ScrollView pagingEnabled (dida@ntdev.microsoft.com)
+- Add react-native run-windows --info (licanhua@live.com)
+- manually bump to vnext.80 (kmelmon@microsoft.com)
+## 0.60.0-vnext.79
+Fri, 22 Nov 2019 20:45:17 GMT
+
+### Changes
+
+- Commit ecd4456c... was wrong. `ABI::Windows::ApplicationModel::IPackage::get_Current` will, when called without package identity, return `HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE)`, not just `APPMODEL_ERROR_NO_PACKAGE` (which is a win32 error code, not an hresult). 🤦‍♂️ (hpratt@microsoft.com)
+## 0.60.0-vnext.78
+Fri, 22 Nov 2019 04:47:41 GMT
+
+### Changes
+
+- remove ReleaseBundle and DebugBundle (licanhua@live.com)
+## 0.60.0-vnext.77
+Fri, 22 Nov 2019 00:48:20 GMT
+
+### Changes
+
+- Support keyboardDismissMode on-drag for ScrollView (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.76
+Thu, 21 Nov 2019 21:53:08 GMT
+
+### Changes
+
+- Merge remote-tracking branch 'upstream/master' (hpratt@microsoft.com)
+## 0.60.0-vnext.75
+Thu, 21 Nov 2019 01:46:31 GMT
+
+### Changes
+
+- Fix layout children position issue when outer border exists (dida@ntdev.microsoft.com)
+- Updating react-native to version: 0.60.0-microsoft.23 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.74
+Wed, 20 Nov 2019 18:56:27 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.22 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.73
+Tue, 19 Nov 2019 22:36:29 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.21 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.72
+Mon, 18 Nov 2019 22:41:41 GMT
+
+### Changes
+
+- Stop requiring Platform.cpp from MS/RN (acoates@microsoft.com)
+## 0.60.0-vnext.71
+Fri, 15 Nov 2019 18:17:47 GMT
+
+### Changes
+
+- Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native (zihanc@microsoft.com)
+## 0.60.0-vnext.70
+Tue, 12 Nov 2019 04:50:06 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.20 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.69
+Mon, 11 Nov 2019 22:01:18 GMT
+
+### Changes
+
+- Workaround for flyout centering problem (kenander@microsoft.com)
+## 0.60.0-vnext.68
+Sat, 09 Nov 2019 01:27:15 GMT
+
+### Changes
+
+- Native Module Setup Guide * Added NativeModuleSetup.md, #3623 * Added link to new guide in NativeModules.md, ViewManagers.md * Updated ProjectStructure.md with Microsoft.ReactNative projects * Removed PropertySheets in SampleApps and CLI solutions (jthysell@microsoft.com)
+## 0.60.0-vnext.67
+Fri, 08 Nov 2019 00:30:50 GMT
+
+### Changes
+
+- ViewManager Command Updates * Added command to CustomUserControlViewManagerCPP, #3600 * Added support for simpler C# view manager commands signatures * Added support for object properties for view managers, #3613 * Added documentation for C++ view manager * Added documentation for ViewManager commands, #3599 (jthysell@microsoft.com)
+## 0.60.0-vnext.66
+Thu, 07 Nov 2019 17:37:11 GMT
+
+### Changes
+
+- Support refreshControl (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.65
+Wed, 06 Nov 2019 13:58:14 GMT
+
+### Changes
+
+- Merging upstream changes (anandrag@microsoft.com)
+## 0.60.0-vnext.64
+Wed, 06 Nov 2019 06:59:22 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.16 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.63
+Wed, 06 Nov 2019 01:56:47 GMT
+
+### Changes
+
+- Native Modules: Updated samples and docs to show how to use events (jthysell@microsoft.com)
+## 0.60.0-vnext.62
+Tue, 05 Nov 2019 23:11:52 GMT
+
+### Changes
+
+- VM: Split up IViewManager into optional interfaces #3565 (jthysell@microsoft.com)
 ## 0.60.0-vnext.61
 Fri, 01 Nov 2019 23:40:12 GMT
 

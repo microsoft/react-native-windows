@@ -5,6 +5,7 @@
 #include "CustomUserControlViewManagerCPP.h"
 
 #include "CustomUserControlCPP.h"
+#include "DebugHelpers.h"
 
 using namespace winrt;
 using namespace Microsoft::ReactNative::Bridge;
@@ -17,20 +18,34 @@ using namespace Windows::UI::Xaml::Controls;
 
 namespace winrt::SampleLibraryCPP::implementation {
 
+CustomUserControlViewManagerCPP::CustomUserControlViewManagerCPP(IReactContext const &reactContext)
+    : m_reactContext{reactContext} {}
+
+IReactContext CustomUserControlViewManagerCPP::ReactContext() noexcept {
+  return m_reactContext;
+}
+
+// IViewManager
 hstring CustomUserControlViewManagerCPP::Name() noexcept {
   return L"CustomUserControlCPP";
 }
 
 FrameworkElement CustomUserControlViewManagerCPP::CreateView() noexcept {
-  auto view = winrt::SampleLibraryCPP::CustomUserControlCPP();
+  auto const &view = winrt::SampleLibraryCPP::CustomUserControlCPP();
+
+  view.RegisterPropertyChangedCallback(
+      winrt::SampleLibraryCPP::CustomUserControlCPP::LabelProperty(),
+      [this](
+          winrt::Windows::UI::Xaml::DependencyObject obj, winrt::Windows::UI::Xaml::DependencyProperty prop) noexcept {
+        if (auto c = obj.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
+          ReactContext().DispatchEvent(c, L"topLabelChanged", box_value(c.Label()));
+        }
+      });
+
   return view;
 }
 
-IMapView<hstring, IInspectable> CustomUserControlViewManagerCPP::ExportedViewConstants() noexcept {
-  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
-  return constants.GetView();
-}
-
+// IViewManagerWithNativeProperties
 IMapView<hstring, ViewManagerPropertyType> CustomUserControlViewManagerCPP::NativeProps() noexcept {
   auto nativeProps = winrt::single_threaded_map<hstring, ViewManagerPropertyType>();
 
@@ -73,14 +88,43 @@ void CustomUserControlViewManagerCPP::UpdateProperties(
   }
 }
 
+// IViewManagerWithCommands
 IMapView<hstring, int64_t> CustomUserControlViewManagerCPP::Commands() noexcept {
   auto commands = winrt::single_threaded_map<hstring, int64_t>();
+  commands.Insert(L"CustomCommand", 0);
   return commands.GetView();
 }
 
 void CustomUserControlViewManagerCPP::DispatchCommand(
     FrameworkElement const &view,
     int64_t commandId,
-    IVectorView<IInspectable> commandArgs) noexcept {}
+    IVectorView<IInspectable> commandArgs) noexcept {
+  if (auto control = view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
+    if (commandId == 0) {
+      std::string arg = std::to_string(winrt::unbox_value<int64_t>(view.Tag()));
+      arg.append(", \"");
+      arg.append(winrt::to_string(winrt::unbox_value<hstring>(commandArgs.GetAt(0))));
+      arg.append("\"");
+      ::SampleLibraryCPP::DebugWriteLine(to_string(Name()), "CustomCommand", arg);
+    }
+  }
+}
+
+// IViewManagerWithExportedEventTypeConstants
+IMapView<hstring, IInspectable> CustomUserControlViewManagerCPP::ExportedCustomBubblingEventTypeConstants() noexcept {
+  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
+  return constants.GetView();
+}
+
+IMapView<hstring, IInspectable> CustomUserControlViewManagerCPP::ExportedCustomDirectEventTypeConstants() noexcept {
+  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
+
+  auto registration = winrt::single_threaded_map<hstring, IInspectable>();
+  registration.Insert(L"registrationName", box_value(L"onLabelChanged"));
+
+  constants.Insert(L"topLabelChanged", registration.GetView());
+
+  return constants.GetView();
+}
 
 } // namespace winrt::SampleLibraryCPP::implementation

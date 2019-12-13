@@ -4,7 +4,7 @@
 #pragma once
 #include <wrl.h>
 
-#include <ReactControl.h>
+#include <ReactUWPABI.h>
 #include <windows.ui.xaml.h>
 
 #include <wrl\client.h>

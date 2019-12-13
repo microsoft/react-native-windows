@@ -66,17 +66,7 @@ TEST_METHOD(LoadApplicationScriptSucceeds) {
   // service.
   auto bigString = unique_ptr<JSBigString>(
       new JSBigStdString("http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=ios&dev=true"));
-  jse->loadApplicationScript(
-      std::move(bigString),
-#if !defined(OSS_RN)
-      0,
-#endif
-      ""
-#if !defined(OSS_RN)
-      ,
-      ""
-#endif
-  );
+  jse->loadApplicationScript(std::move(bigString), "");
 
   jsQueue->quitSynchronous();
 
@@ -97,17 +87,7 @@ TEST_METHOD(LoadApplicationScriptHandles404) {
   bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
   // Point to a non-existing path.
   auto bigString = unique_ptr<JSBigString>(new JSBigStdString("http://localhost:8081/showme404"));
-  jse->loadApplicationScript(
-      std::move(bigString),
-#if !defined(OSS_RN)
-      0,
-#endif
-      ""
-#if !defined(OSS_RN)
-      ,
-      ""
-#endif
-  );
+  jse->loadApplicationScript(std::move(bigString), "");
 
   jsThread->quitSynchronous();
 
@@ -128,17 +108,7 @@ TEST_METHOD(LoadApplicationScriptHandlesNonExistingBundle) {
   bool connected = jse->ConnectAsync("ws://localhost:8081/debugger-proxy?role=client", move(errorCallback)).get();
   // Point to a non-existing bundle.
   auto bigString = unique_ptr<JSBigString>(new JSBigStdString("http://localhost:8081/nonexisting.bundle"));
-  jse->loadApplicationScript(
-      std::move(bigString),
-#if !defined(OSS_RN)
-      0,
-#endif
-      ""
-#if !defined(OSS_RN)
-      ,
-      ""
-#endif
-  );
+  jse->loadApplicationScript(std::move(bigString), "");
 
   jsThread->quitSynchronous();
 

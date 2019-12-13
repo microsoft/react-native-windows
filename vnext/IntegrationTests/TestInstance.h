@@ -3,14 +3,12 @@
 
 #pragma once
 
-#include <cxxreact/CxxModule.h>
-#if !defined(OSS_RN)
-#include <cxxreact/Platform.h>
-#endif
 #include <INativeUIManager.h>
 #include <InstanceManager.h>
 #include <ShadowNode.h>
 #include <ViewManager.h>
+#include <cxxreact/CxxModule.h>
+#include <cxxreact/ReactMarker.h>
 #include <folly/dynamic.h>
 
 #include <queue>

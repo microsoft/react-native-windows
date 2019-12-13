@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <UseBundle Condition=" '$(Configuration)' == 'Debug' and '$(UseBundle)' == '' ">false</UseBundle>
+    <UseBundle Condition=" '$(Configuration)' == 'Release' and '$(UseBundle)' == '' ">true</UseBundle>
+    <BundleContentRoot Condition=" '$(BundleContentRoot)' == '' ">Bundle</BundleContentRoot>
+    <BundleContent Condition = " '$(BundleContent)' == '' and '$(BundleContentRoot)' != '' ">$(BundleContentRoot)\**\*</BundleContent>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants Condition=" '$(DefineConstants)' != ''  and '$(UseBundle)' == 'true' ">$(DefineConstants);BUNDLE</DefineConstants>
+    <DefineConstants Condition=" '$(DefineConstants)' == ''  and '$(UseBundle)' == 'true' ">BUNDLE</DefineConstants>
+  </PropertyGroup>
+
+</Project>

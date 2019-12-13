@@ -38,6 +38,12 @@ module.exports = {
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.60 when haste is removed
     blacklistRE: blacklist([
+      new RegExp(
+        `${'.*microsoft-reactnative-sampleapps/msbuild.*'.replace(
+          /[/\\\\]/g,
+          '[/\\\\]',
+        )}.*`,
+      ), // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
       new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '[/\\\\]')}.*`),
       new RegExp(
         `${path

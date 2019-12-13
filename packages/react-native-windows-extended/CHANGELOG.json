@@ -2,6 +2,160 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Thu, 12 Dec 2019 22:18:13 GMT",
+      "tag": "react-native-windows-extended_v0.60.43",
+      "version": "0.60.43",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.31",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "c30be94651aff8617b3b38e51414be5323abbfaa"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Dec 2019 19:14:55 GMT",
+      "tag": "react-native-windows-extended_v0.60.37",
+      "version": "0.60.37",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.28",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "aa155be9b8eceffd65212bde25b036d3d0b72d9b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Dec 2019 17:14:06 GMT",
+      "tag": "react-native-windows-extended_v0.60.36",
+      "version": "0.60.36",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.26",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "9369a6d9dce845949d33ea52b11c344caf3b8f62"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Dec 2019 17:34:30 GMT",
+      "tag": "react-native-windows-extended_v0.60.33",
+      "version": "0.60.33",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.24",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "227b368b47249d0cb4ac468a3a3152a18b6e296e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Nov 2019 01:46:31 GMT",
+      "tag": "react-native-windows-extended_v0.60.23",
+      "version": "0.60.23",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.23",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "bb9ecc2e30716aea89919b3adc69cb0580387bf1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Nov 2019 18:56:27 GMT",
+      "tag": "react-native-windows-extended_v0.60.22",
+      "version": "0.60.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.22",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "2201e843c18e9eff4f6e592250fc01956cb84df7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 19 Nov 2019 22:36:29 GMT",
+      "tag": "react-native-windows-extended_v0.60.21",
+      "version": "0.60.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.21",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "5a2565a07b863dd3649a82e2c45a02a2b63d761b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Nov 2019 18:17:47 GMT",
+      "tag": "react-native-windows-extended_v0.60.19",
+      "version": "0.60.19",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add TurboModule and JsCallInvoker files to ReactCommon only when targeting to microsoft/react-native",
+            "author": "zihanc@microsoft.com",
+            "commit": "8a97fed007dbf4516a2b414723a6dc908ad357bf"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2019 04:50:06 GMT",
+      "tag": "react-native-windows-extended_v0.60.18",
+      "version": "0.60.18",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.20",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "9adc8fa2bd113420f8551508203492295e26c236"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Nov 2019 13:58:14 GMT",
+      "tag": "react-native-windows-extended_v0.60.17",
+      "version": "0.60.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Build fixes",
+            "author": "anandrag@microsoft.com",
+            "commit": "04b58d679ba04baca23348928fad5250a34d31b9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Nov 2019 06:59:22 GMT",
+      "tag": "react-native-windows-extended_v0.60.16",
+      "version": "0.60.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Updating react-native to version: 0.60.0-microsoft.16",
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "commit": "d897496ecec7dd785e26d0bba8d0685cd54045f5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Nov 2019 23:40:12 GMT",
       "tag": "react-native-windows-extended_v0.60.15",
       "version": "0.60.15",

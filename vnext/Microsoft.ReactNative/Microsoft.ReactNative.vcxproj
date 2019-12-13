@@ -63,8 +63,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
+  <ImportGroup Label="Shared" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -115,10 +114,10 @@
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="HResult.h" />
-    <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="IReactModuleBuilder.h">
       <DependentUpon>IReactModuleBuilder.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="LifecycleState.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactApplication.h">
@@ -128,8 +127,8 @@
       <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ReactContext.h">
-      <DependentUpon>ReactContext.idl</DependentUpon>
+    <ClInclude Include="IReactContext.h">
+      <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactInstanceCreator.h" />
@@ -184,8 +183,8 @@
       <DependentUpon>ReactApplicationDelegate.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ReactContext.cpp">
-      <DependentUpon>ReactContext.idl</DependentUpon>
+    <ClCompile Include="IReactContext.cpp">
+      <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactInstanceCreator.cpp" />
@@ -218,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IBackgroundEventListener.idl" />
+    <Midl Include="IBoxedValue.idl" />
     <Midl Include="IJSValueReader.idl" />
     <Midl Include="IJSValueWriter.idl" />
     <Midl Include="ILifecycleEventListener.idl" />
@@ -229,7 +229,7 @@
     <Midl Include="ReactApplicationDelegate.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ReactContext.idl">
+    <Midl Include="IReactContext.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactInstance.idl">

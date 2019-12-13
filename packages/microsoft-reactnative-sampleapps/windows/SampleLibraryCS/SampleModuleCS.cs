@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
-
-using Microsoft.ReactNative.Managed;
+using Windows.System.Threading;
 
 namespace SampleLibraryCS
 {
@@ -22,6 +22,13 @@ namespace SampleLibraryCS
 
         [ReactConstant]
         public string StringConstant => "Hello World";
+
+        [ReactConstantProvider]
+        public void ConstantsViaConstantsProvider(ReactConstantProvider provider)
+        {
+            provider.Add("NumberConstantViaProvider", Math.PI);
+            provider.Add("StringConstantViaProvider", "Hello World");
+        }
 
         #endregion
 
@@ -72,35 +79,78 @@ namespace SampleLibraryCS
         }
 
         [ReactMethod]
-        public void ExplicitPromiseMethod(ReactCallback<double> resolve, ReactCallback<string> reject)
+        public void ExplicitPromiseMethod(IReactPromise<double> result)
         {
             Debug.WriteLine($"{Name}.{nameof(ExplicitPromiseMethod)}()");
 
             try
             {
-                resolve(Math.PI);
+                result.Resolve(Math.PI);
             }
             catch (Exception ex)
             {
-                reject(ex.Message);
+                result.Reject(new ReactError { Message = ex.Message });
             }
         }
 
         [ReactMethod]
-        public void ExplicitPromiseMethodWithArgs(double arg, ReactCallback<double> resolve, ReactCallback<string> reject)
+        public void ExplicitPromiseMethodWithArgs(double arg, IReactPromise<double> result)
         {
             Debug.WriteLine($"{Name}.{nameof(ExplicitPromiseMethodWithArgs)}({arg})");
 
             try
             {
-                resolve(Math.PI);
+                result.Resolve(Math.PI);
             }
             catch (Exception ex)
             {
-                reject(ex.Message);
+                result.Reject(new ReactError { Message = ex.Message });
             }
         }
 
         #endregion
+
+        #region Synchronous Methods
+
+        [ReactSyncMethod]
+        public double SyncReturnMethod()
+        {
+            Debug.WriteLine($"{Name}.{nameof(SyncReturnMethod)}()");
+            return Math.PI;
+        }
+
+        [ReactSyncMethod]
+        public double SyncReturnMethodWithArgs(double arg)
+        {
+            Debug.WriteLine($"{Name}.{nameof(SyncReturnMethodWithArgs)}({arg})");
+            return Math.PI;
+        }
+
+        #endregion
+
+        #region Events
+
+        [ReactEvent("TimedEventCS")]
+        public ReactEvent<int> TimedEvent { get; set; }
+
+        #endregion
+
+        public SampleModuleCS()
+        {
+            _timer = ThreadPoolTimer.CreatePeriodicTimer(new TimerElapsedHandler((timer) =>
+            {
+                TimedEvent?.Invoke(++_timerCount);
+            }),
+            TimeSpan.FromMilliseconds(TimedEventIntervalMS));
+        }
+
+        ~SampleModuleCS()
+        {
+            _timer?.Cancel();
+        }
+
+        private ThreadPoolTimer _timer;
+        private int _timerCount = 0;
+        private const int TimedEventIntervalMS = 5000;
     }
 }

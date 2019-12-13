@@ -301,8 +301,18 @@
     <ClCompile Include="Views\SliderViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
-    <ClCompile Include="Views\SIPEventHandler.cpp" />
+    <ClCompile Include="Views\RefreshControlManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\ResourceBrushUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\SIPEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Modules\DeviceInfoModule.h">
@@ -524,18 +534,6 @@
     <ClInclude Include="..\include\ReactUWP\Utils\AccessibilityUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\DynamicAutomationProperties.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\DynamicAutomationPeer.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\ViewControl.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\ViewPanel.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="Views\ViewControl.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -560,21 +558,6 @@
     <ClInclude Include="Views\Image\ImageViewManager.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\react.uwp.h">
-      <Filter>Views\cppwinrt\winrt</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.0.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.1.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\winrt\impl\react.uwp.2.h">
-      <Filter>Views\cppwinrt\winrt\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\cppwinrt\BorderEffect.g.h">
-      <Filter>Views\cppwinrt</Filter>
-    </ClInclude>
     <ClInclude Include="Views\Image\ReactImageBrush.h">
       <Filter>Views\Image</Filter>
     </ClInclude>
@@ -586,12 +569,6 @@
     </ClInclude>
     <ClInclude Include="Modules\ImageViewManagerModule.h">
       <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
-      <Filter>Views\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\Image\BorderEffect.h">
-      <Filter>Views\Image</Filter>
     </ClInclude>
     <ClInclude Include="Utils\Helpers.h">
       <Filter>Utils</Filter>
@@ -644,8 +621,21 @@
     <ClInclude Include="Modules\StatusBarModule.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
-    <ClInclude Include="Views\SIPEventHandler.h" />
+    <ClInclude Include="Views\RefreshControlManager.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\SIPEventHandler.h">
+      <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def">
@@ -657,57 +647,6 @@
     <None Include="EndPoints\dll\react-native-uwp.x86.def">
       <Filter>Endpoint\dll</Filter>
     </None>
-    <None Include="dirs" />
-    <None Include="ABI\lib\sources">
-      <Filter>ABI\lib</Filter>
-    </None>
-    <None Include="ABI\idl\sources">
-      <Filter>ABI\idl</Filter>
-    </None>
-    <None Include="EndPoints\dll\sources">
-      <Filter>Endpoint\dll</Filter>
-    </None>
-    <None Include="EndPoints\dirs">
-      <Filter>Endpoint</Filter>
-    </None>
-    <None Include="ABI\dirs">
-      <Filter>ABI</Filter>
-    </None>
-    <None Include="ABI\sources.inc">
-      <Filter>ABI</Filter>
-    </None>
-    <None Include="Base\sources">
-      <Filter>Base</Filter>
-    </None>
-    <None Include="CxxReactUWP\sources">
-      <Filter>CxxReactUwp</Filter>
-    </None>
-    <None Include="Executors\sources">
-      <Filter>Executors</Filter>
-    </None>
-    <None Include="Modules\sources">
-      <Filter>Modules</Filter>
-    </None>
-    <None Include="Pch\sources">
-      <Filter>Pch</Filter>
-    </None>
-    <None Include="Polyester\sources">
-      <Filter>Polyester</Filter>
-    </None>
-    <None Include="Sandbox\sources">
-      <Filter>Sandbox</Filter>
-    </None>
-    <None Include="Threading\sources">
-      <Filter>Threading</Filter>
-    </None>
-    <None Include="Utils\sources">
-      <Filter>Utils</Filter>
-    </None>
-    <None Include="Views\sources">
-      <Filter>Views</Filter>
-    </None>
-    <None Include="make.inc" />
-    <None Include="..\makewinrt.inc" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -768,26 +707,25 @@
     <Filter Include="Views\Image">
       <UniqueIdentifier>{6d877886-1c5c-45b8-8eae-2e1354cf673e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Views\cppwinrt\winrt">
-      <UniqueIdentifier>{e5234a36-e9ee-4ba3-9b11-02e7bd2ca6f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Views\cppwinrt\winrt\impl">
-      <UniqueIdentifier>{24ea7245-f460-4176-82b1-3cac4cd54621}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <MidlRT Include="ABI\idl\Module.idl">
-      <Filter>ABI\idl</Filter>
-    </MidlRT>
-    <MidlRT Include="ABI\idl\Instance.idl">
-      <Filter>ABI\idl</Filter>
-    </MidlRT>
-    <MidlRT Include="ABI\idl\ReactControl.idl">
-      <Filter>ABI\idl</Filter>
-    </MidlRT>
-    <MidlRT Include="ABI\idl\AccessibilityAction.idl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="ABI\idl\ReactUWPABI.idl">
+      <Filter>ABI\idl</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/ViewPanel.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/AccessibilityAction.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views/cppwinrt/DynamicAutomationPeer.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
+    <Midl Include="Views\cppwinrt\BorderEffect.idl">
+      <Filter>Views\cppwinrt</Filter>
+    </Midl>
   </ItemGroup>
 </Project>

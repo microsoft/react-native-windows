@@ -70,11 +70,7 @@ class SandboxJSExecutor : public JSExecutor {
   SandboxJSExecutor(std::shared_ptr<ExecutorDelegate> delegate, std::shared_ptr<MessageQueueThread> messageQueueThread);
   ~SandboxJSExecutor() override;
 
-  virtual void loadApplicationScript(
-      std::unique_ptr<const JSBigString> script,
-      uint64_t scriptVersion,
-      std::string sourceURL,
-      std::string &&bytecodeFileName) override;
+  virtual void loadApplicationScript(std::unique_ptr<const JSBigString> script, std::string sourceURL) override;
   virtual void setBundleRegistry(std::unique_ptr<RAMBundleRegistry> bundleRegistry) override;
   virtual void registerBundle(uint32_t bundleId, const std::string &bundlePath) override;
   virtual void callFunction(const std::string &moduleId, const std::string &methodId, const folly::dynamic &arguments)

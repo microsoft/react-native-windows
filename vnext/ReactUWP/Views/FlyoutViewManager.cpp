@@ -122,6 +122,17 @@ void FlyoutShadowNode::AddView(ShadowNode &child, int64_t index) {
 
   if (m_flyout != nullptr) {
     m_flyout.Content(childView.as<winrt::UIElement>());
+    if (winrt::FlyoutPlacementMode::Full == m_flyout.Placement()) {
+      // When using FlyoutPlacementMode::Full on a Flyout with an embedded
+      // Picker, the flyout is not centered correctly. Below is a temporary
+      // workaround that resolves the problem for flyouts with fixed size
+      // content by adjusting the flyout presenter max size settings prior to
+      // layout. This will unblock those scenarios while the work on a more
+      // exhaustive fix proceeds.  Tracked by Issue #2969
+      if (auto fe = m_flyout.Content().try_as<winrt::FrameworkElement>()) {
+        AdjustDefaultFlyoutStyle((float)fe.Width(), (float)fe.Height());
+      }
+    }
   }
 }
 

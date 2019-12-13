@@ -15,14 +15,10 @@ enum class ResizeMode { Cover = 0, Contain = 1, Stretch = 2, Repeat = 3, Center 
 struct ReactImageBrush : winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush> {
   using Super = winrt::Windows::UI::Xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>;
 
- private:
-  // Constructors
   ReactImageBrush() = default;
 
  public:
   static winrt::com_ptr<ReactImageBrush> Create();
-  template <typename D, typename... Args>
-  friend auto winrt::make_self(Args &&... args);
 
   // XamlCompositionBaseBrush Overrides
   void OnConnected();

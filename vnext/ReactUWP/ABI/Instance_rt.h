@@ -4,7 +4,7 @@
 #pragma once
 #include <wrl.h>
 
-#include <Instance.h>
+#include <ReactUWPABI.h>
 #include "ABIModuleLoader.h"
 
 #include <wrl\client.h>

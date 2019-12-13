@@ -1,5 +1,6 @@
 #pragma once
-#include <jsi/RuntimeHolder.h>
+#include <JSI/Shared/RuntimeHolder.h>
+
 #include <jsi/jsi.h>
 #include <thread>
 

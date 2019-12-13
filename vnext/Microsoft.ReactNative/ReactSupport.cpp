@@ -12,6 +12,14 @@ folly::dynamic ConvertToDynamic(IInspectable const &object) {
   if (object == nullptr)
     return nullptr;
 
+  if (auto const &map = object.try_as<IMapView<hstring, IInspectable>>()) {
+    folly::dynamic obj = folly::dynamic::object;
+    for (auto const &kvp : map) {
+      obj[to_string(kvp.Key())] = ConvertToDynamic(kvp.Value());
+    }
+    return obj;
+  }
+
   auto propValue = object.try_as<IPropertyValue>();
   if (!propValue) {
     auto stringable = object.try_as<IStringable>();
@@ -197,9 +205,9 @@ IInspectable ConvertToIInspectable(folly::dynamic const &object) {
     case folly::dynamic::INT64:
       return box_value(object.asInt());
     case folly::dynamic::OBJECT: {
-      auto objs = single_threaded_map<IInspectable, IInspectable>();
+      auto objs = single_threaded_map<hstring, IInspectable>();
       for (auto it : object.items()) {
-        objs.Insert(ConvertToIInspectable(it.first), ConvertToIInspectable(it.second));
+        objs.Insert(winrt::to_hstring(it.first.getString()), ConvertToIInspectable(it.second));
       }
       return objs.GetView();
     }

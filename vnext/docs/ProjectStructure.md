@@ -18,8 +18,11 @@ Sample applications are not covered.
 - [JSI\Shared\JSI.Shared.vcxitems](#JSI.Shared)
 - [JSI\Universal\JSI.Universal.vcxproj](#JSI.Universal)
 - [JSI.Desktop.UnitTests\JSI.Desktop.UnitTests](#JSI.Desktop.UnitTests)
+- **[Microsoft.ReactNative\Microsoft.ReactNative.vcxproj](#Microsoft.ReactNative)**
+- [Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems](#Microsoft.ReactNative.Cxx)
+- [Microsoft.ReactNative.SharedManaged\Microsoft.ReactNative.SharedManaged.projitems](#Microsoft.ReactNative.SharedManaged)
 - [ReactCommon\ReactCommon.vcxproj](#ReactCommon)
-- **[ReactUWP\ReactUWP.vcxproj](#ReactUWP)**
+- [ReactUWP\ReactUWP.vcxproj](#ReactUWP)
 - [ReactWindowsCore\ReactWindowsCore.vcxproj](#ReactWindowsCore)
 - [Shared\Shared.vcxitems](#Shared)
 - [Universal.IntegrationTests\React.Windows.Universal.IntegrationTests.vcxproj](#React.Windows.Universal.IntegrationTests)
@@ -58,6 +61,14 @@ ChakraCore bridging layer. May use different compiler flags between Windows vari
 ### JSI.Shared
 *Shared Items (no build artifact)*<br/>
 Code shared between [JSI\Desktop\JSI.Desktop.vcxproj](#JSI.Desktop) and [JSI\Universal\JSI.Universal.vcxproj](#JSI.Universal).
+
+### Microsoft.ReactNative.Cxx
+*Shared Items (no build artifact)*<br/>
+Contains helpers to simplify authoring C++/WinRT native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
+
+### Microsoft.ReactNative.SharedManaged
+*Shared Items (no build artifact)*<br/>
+Contains helpers to simplify authoring C# native modules on top of [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### React.Windows.IntegrationTests
 *Static Library*<br/>
@@ -105,10 +116,14 @@ Sources provided as part of the `react-native` Node dependency. Not part of this
 
 ## Windows Universal Projects
 
+### Microsoft.ReactNative
+*Windows Runtime Component*</br>
+The primary Windows Universal entry point and public API surface for React Native Windows. Currently depends on the implementation details in [ReactUWP](#ReactUWP).<br/>
+**Main artifact to use in Windows Universal applications.**
+
 ### ReactUWP
 *Dynamic Library*<br/>
-Set of Native Modules, View Managers and Executors for Windows Universal.<br/>
-**Main artifact to use in Windows Universal applications.**
+Set of Native Modules, View Managers and Executors for Windows Universal. Formerly the entry point and ABI surface for React Native Windows, it will eventually be subsumed by [Microsoft.ReactNative](#Microsoft.ReactNative).
 
 ### React.Windows.Universal.UnitTests
 *VSTest Dynamic Library*
