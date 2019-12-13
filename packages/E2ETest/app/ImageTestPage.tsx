@@ -61,10 +61,10 @@ export function ImageTestPage() {
         resizeMode={'center'}
         source={{uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg=='}}        
       />      
-      <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
+    </View >
+    <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
           onPress={onOressBorder} 
           testID={SHOW_IMAGE_BORDER}/> 
-    </View >
     <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':'ImageWithoutBorder'+clickCount} uiaID={IMAGE_CONTAINER} testID={TREE_DUMP_RESULT} />
   </View>);
 }

@@ -13,29 +13,21 @@ beforeAll(() => {
 });
 
 describe('ImageWithoutBorderTest', () => {
-  it('ImageWithoutBorderTest Success', () => {
+  it('ImageWithoutBorderTest', () => {
     const result = ImageTestPage.getTreeDumpResult();
-    assert.ok(
-      result.includes('TreeDump:Passed'),
-      'Dump comparison passed for image without border!'
-    );
+    assert(result, '#1. Dump comparison for image without border!');
   });
 
   it('ImageWithBorderTest', () => {
     ImageTestPage.toggleImageBorder();
     const result = ImageTestPage.getTreeDumpResult();
-    assert.ok(
-      result.includes('TreeDump:Passed'),
-      'Dump comparison passed for image with border!'
-    );
+    assert(result, '#2. Dump comparison for image with border!');
   });
 
   // toggle back to no border and verify border properties are reset
-  it('ImageWithoutBorderTest Success', () => {
+  it('ImageWithoutBorderTest', () => {
+    ImageTestPage.toggleImageBorder();
     const result = ImageTestPage.getTreeDumpResult();
-    assert.ok(
-      result.includes('TreeDump:Passed'),
-      'Second dump comparison passed for image without border!'
-    );
+    assert(result, '#3. Second dump comparison for image without border!');
   });
 });

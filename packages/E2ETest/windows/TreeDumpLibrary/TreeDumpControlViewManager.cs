@@ -171,6 +171,9 @@ namespace TreeDumpLibrary
                     StorageFile outFile = await storageFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
                     await Windows.Storage.FileIO.WriteTextAsync(outFile, dumpText);
                     UpdateResult(false /*matchDump*/, "Tree dump file does not match master! See output at " + outFile.Path);
+                    string fileNameError = "TreeDump\\" + m_dumpID + ".err";
+                    StorageFile errFile = await storageFolder.CreateFileAsync(fileNameError, CreationCollisionOption.ReplaceExisting);
+                    await Windows.Storage.FileIO.WriteTextAsync(errFile, m_errString);
                 }
                 catch (IOException)
                 {
