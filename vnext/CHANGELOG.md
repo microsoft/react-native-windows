@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 12 Dec 2019 22:18:13 GMT and should not be manually modified.
+This log was last generated on Fri, 13 Dec 2019 17:32:38 GMT and should not be manually modified.
 
+## 0.60.0-vnext.95
+Fri, 13 Dec 2019 17:32:38 GMT
+
+### Changes
+
+- Fix toggle debugger setting issue with ReactApplication (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.94
 Thu, 12 Dec 2019 22:18:13 GMT
 
