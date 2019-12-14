@@ -183,7 +183,7 @@ bool TryUpdateBorderProperties(
       element.ClearValue(T::BorderBrushProperty());
       UpdateControlBorderResourceBrushes(element, nullptr);
     }
-  } else{
+  } else {
     auto iter = edgeTypeMap.find(propertyName);
     if (iter != edgeTypeMap.end()) {
       if (propertyValue.isNumber()) {
