@@ -68,6 +68,7 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
+  winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
   winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
   winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;

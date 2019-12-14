@@ -36,8 +36,9 @@ namespace uwp {
 
 winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
   if (m_useCompositionBrush) {
-    auto brush{Background().as<ReactImageBrush>()};
-    brush->AvailableSize(finalSize);
+    if (auto brush{Background().try_as<ReactImageBrush>()}) {
+      brush->AvailableSize(finalSize);
+    }
   }
 
   return finalSize;
@@ -150,11 +151,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   if (auto strong_this{weak_this.get()}) {
     if (strong_this->m_useCompositionBrush) {
       const auto compositionBrush{ReactImageBrush::Create()};
-      compositionBrush->AvailableSize(strong_this->ActualSize());
       compositionBrush->ResizeMode(strong_this->m_resizeMode);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
                                       : winrt::LoadedImageSurface::StartLoadFromUri(uri);
+
+      m_sizeChangedRevoker = strong_this->SizeChanged(
+          winrt::auto_revoke, [compositionBrush](const auto &, const winrt::SizeChangedEventArgs &args) {
+            compositionBrush->AvailableSize(args.NewSize());
+        });
 
       strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
           winrt::auto_revoke,
@@ -176,6 +181,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
               if (fireLoadEndEvent) {
                 strong_this->m_onLoadEndEvent(*strong_this, succeeded);
               }
+
+              strong_this->m_sizeChangedRevoker.revoke();
             }
           });
     } else {
