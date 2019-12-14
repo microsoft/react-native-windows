@@ -159,7 +159,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       m_sizeChangedRevoker = strong_this->SizeChanged(
           winrt::auto_revoke, [compositionBrush](const auto &, const winrt::SizeChangedEventArgs &args) {
             compositionBrush->AvailableSize(args.NewSize());
-        });
+          });
 
       strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
           winrt::auto_revoke,
@@ -172,6 +172,13 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 winrt::Size size{surface.DecodedPhysicalSize()};
                 strong_this->m_imageSource.height = size.Height;
                 strong_this->m_imageSource.width = size.Width;
+
+                // If we are dynamically switching the resizeMode to 'repeat', then
+                // the SizeChanged event has already fired and the ReactImageBrush's
+                // size has not been set. Use ActualSize in that case.
+                if (compositionBrush->AvailableSize() == winrt::Size{0, 0}) {
+                  compositionBrush->AvailableSize(strong_this->ActualSize());
+                }
 
                 compositionBrush->Source(surface);
                 strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
