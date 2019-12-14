@@ -4,13 +4,25 @@ parameters:
   useRnFork: true
   yarnBuildCmd: build
   debug: false
-  forceVSDependencies: false
 
   # Visual Studio Installer
-  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
+  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
 
 steps:
+  - task: PowerShell@2
+    displayName: Display env
+    inputs:
+      targetType: "inline"
+      script:  gci env:* | sort-object name
+
+  - task: PowerShell@2
+    displayName: Display disksize
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        Get-WmiObject Win32_LogicalDisk
+
   - task: UseNode@1
     inputs:
       version: '10.x'
@@ -38,6 +50,11 @@ steps:
     condition: and(succeeded(), not('${{parameters.useRnFork}}'))
 
   - task: CmdLine@2
+    displayName: Install react-native-cli
+    inputs:
+      script: npm install -g react-native-cli
+      
+  - task: CmdLine@2
     displayName: yarn ${{ parameters.yarnBuildCmd }}
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}
@@ -55,10 +72,10 @@ steps:
         -InstallerUri ${{ parameters.vsInstallerUri }}
         -Components ${{ parameters.vsComponents }}
         -Collect:$${{ parameters.debug }}
-    condition: and(ne('${{parameters.vsComponents}}', ''), or(eq(variables['VmImage'], 'windows-2019'), ${{ parameters.forceVSDependencies }}))
+    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
   - task: PowerShell@2
-    displayName: List disksize by Get-WmiObject Win32_LogicalDisk
+    displayName: List disksize after prepare-env
     inputs:
       targetType: inline # filePath | inline
       script: |

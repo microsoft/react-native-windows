@@ -8,7 +8,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml
+  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
 
 jobs:
   - job: Setup
@@ -127,6 +127,7 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -142,7 +143,7 @@ jobs:
           command: restore
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
       - task: MSBuild@1
         displayName: MSBuild - SampleApps
@@ -155,15 +156,35 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), ne(variables['BuildPlatform'], 'x86'), false) # Disabled. issue #3670  Unable to resolve module `warnOnce`
+
+      # Possible related to https://social.msdn.microsoft.com/Forums/vstudio/en-US/23c8df57-9c50-476c-9f56-1fe058e75a9d/uwp-app-builds-on-local-machine-fails-on-build-agent-systemprivatecorelib-not-found
+      # use X86 msbuild to avoid ##[error]...Microsoft.AppXPackage.Targets(1248,5): Error MSB3816: Loading assembly "\runtime.win7-x86.microsoft.netcore.runtime.coreclr\1.0.2\runtimes\win7-x86\lib\netstandard1.0\mscorlib.dll" failed. 
+      # System.ArgumentException: A BadImageFormatException has been thrown while parsing the signature.
+      # This is likely due to lack of a generic context. Ensure genericTypeArguments and genericMethodArguments are provided and contain enough context.
+      - task: MSBuild@1
+        displayName: MSBuild - SampleApps
+        inputs:
+          solution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
+          msbuildVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
+          msbuildArchitecture: x86 # Optional. Options: x86, x64
+          platform: $(BuildPlatform) # Optional
+          configuration: $(BuildConfiguration) # Optional
+          msbuildArguments:
+            /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
+            /p:PlatformToolset=$(MSBuildPlatformToolset)
+            /p:BaseIntDir=$(BaseIntDir)
+          clean: true # Optional
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), eq(variables['BuildPlatform'], 'x86'), false) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
           workingDirectory: packages\microsoft-reactnative-sampleapps
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), False) # Disabled, out of space issues on CI machines
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
@@ -494,6 +515,8 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:TargetPlatformVersion=$(TargetPlatformVersion)
             /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
+            /p:BaseIntDir=$(BaseIntDir)
+
           #clean: true # Optional
           #maximumCpuCount: false # Optional
           #restoreNugetPackages: false # Optional
@@ -535,11 +558,8 @@ jobs:
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
       name: E2ETest
-      pool:
-        vmImage: windows-2019
       BuildPlatform: x64
       UseRNFork: true
-      vsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64, Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget

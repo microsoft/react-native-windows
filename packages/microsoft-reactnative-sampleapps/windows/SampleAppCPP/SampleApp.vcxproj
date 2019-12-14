@@ -175,7 +175,6 @@
 
   <PropertyGroup>
     <BundleCommand>
-      cd $(SolutionDir)..
       react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle
     </BundleCommand>
   </PropertyGroup>
