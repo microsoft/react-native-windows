@@ -18,8 +18,8 @@
   <PropertyGroup Label="Configuration">
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
     <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
-    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)\$(Platform)\$(Configuration)</BaseIntDir>
-    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)\x86\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)build\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)build\x86\$(Configuration)</BaseIntDir>
     <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(ReactNativeWindowsDir)target\$(Platform)\$(Configuration)</BaseOutDir>
     <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(ReactNativeWindowsDir)target\x86\$(Configuration)</BaseOutDir>
 
