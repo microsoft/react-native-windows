@@ -50,7 +50,7 @@ export class BasePage {
         wait(100);
         waitCount += 1;
       }
-    } while (waitCount <= maxWait && testResult == false);
+    } while (waitCount <= maxWait && !testResult);
 
     return testResult;
   }

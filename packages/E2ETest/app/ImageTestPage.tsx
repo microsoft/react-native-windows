@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 export function ImageTestPage() {
   const [imageWithBorder, setImageBorder] = useState(false);
   const [clickCount, setClickCount] = useState(0);
-  const onOressBorder = () => {
+  const onPressBorder = () => {
     var previousImageBorderState = imageWithBorder;
     setImageBorder(!previousImageBorderState);
     var previousClickCount = clickCount;
@@ -63,7 +63,7 @@ export function ImageTestPage() {
       />      
     </View >
     <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
-          onPress={onOressBorder} 
+          onPress={onPressBorder} 
           testID={SHOW_IMAGE_BORDER}/> 
     <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':'ImageWithoutBorder'+clickCount} uiaID={IMAGE_CONTAINER} testID={TREE_DUMP_RESULT} />
   </View>);

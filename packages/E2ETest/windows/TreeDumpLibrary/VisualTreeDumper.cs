@@ -91,9 +91,9 @@ namespace TreeDumpLibrary
                         {
                             value = property.GetValue(obj: node, index: null);
                         }
-                        catch (Exception)
+                        catch (Exception e)
                         {
-                            value = "Exception when read " + property.Name;
+                            value = "Exception when read " + property.Name + e.ToString();
                         }
                         visitor.VisitProperty(property.Name, value);
                     }
@@ -122,7 +122,7 @@ namespace TreeDumpLibrary
     }
     public sealed class DefaultFilter
     {
-        private List<string> _propertyNameWhiteList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
+        private List<string> _propertyNameAllowList = new List<string> {"Foreground", "Background", "Padding", "Margin", "RenderSize", "Visibility", "CornerRadius", "BorderThickness",
             "Width", "Height", "BorderBrush", "VerticalAlignment", "HorizontalAlignment", "Clip", /*"ActualOffset" 19h1*/};
 
         public bool ShouldVisitPropertyValue(string propertyValue)
@@ -132,7 +132,7 @@ namespace TreeDumpLibrary
 
         public bool ShouldVisitProperty(string propertyName)
         {
-            return (_propertyNameWhiteList.Contains(propertyName));
+            return (_propertyNameAllowList.Contains(propertyName));
         }
     }
     public sealed class DefaultPropertyValueTranslator

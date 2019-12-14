@@ -31,7 +31,7 @@ namespace TreeDumpLibrary
                 var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
                 if (bounds.Width != 800 || bounds.Height != 600)
                 {
-                    // Dump disabled when window size is not 1024x768!
+                    // Dump disabled when window size is not 800x600!
                     UpdateResult(false /*matchDump*/, "Window has been resized, dump comparison is only valid at default launch size: 800x600!, current size:" + bounds.ToString());
                 }
                 else
