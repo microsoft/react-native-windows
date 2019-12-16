@@ -1,0 +1,14 @@
+[react.uwp.ViewPanel]
+    Background=#FFFFFF00
+    BorderBrush=#00000000
+    BorderThickness=0,0,0,0
+    Clip=[NULL]
+    CornerRadius=0,0,0,0
+    Height=300
+    HorizontalAlignment=Stretch
+    Margin=0,0,0,0
+    RenderSize=500,300
+    VerticalAlignment=Stretch
+    Visibility=Visible
+    Width=500
+  [Windows.UI.Xaml.DependencyObject]

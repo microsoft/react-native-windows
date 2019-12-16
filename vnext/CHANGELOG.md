@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 13 Dec 2019 17:32:38 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Dec 2019 21:22:31 GMT and should not be manually modified.
 
+## 0.60.0-vnext.96
+Mon, 16 Dec 2019 21:22:31 GMT
+
+### Changes
+
+- TreeDump for E2E test and fix for image border issue (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.95
 Fri, 13 Dec 2019 17:32:38 GMT
 

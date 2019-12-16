@@ -5,3 +5,5 @@
 /windows/SampleLibraryCS/Generated Files/
 /build
 /msbuild*
+/windows/SampleAppCS/Bundle
+/windows/SampleAppCPP/Bundle

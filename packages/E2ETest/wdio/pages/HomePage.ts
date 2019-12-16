@@ -9,9 +9,11 @@ import {
   TEXTINPUT_TESTPAGE,
   LOGIN_TESTPAGE,
   DIRECT_MANIPULATION_TESTPAGE,
+  IMAGE_TESTPAGE,
 } from '../../app/Consts';
 import LoginPage from './LoginPage';
 import DirectManipulationPage from './DirectManipulationPage';
+import ImageTestPage from './ImageTestPage';
 
 class HomePage extends BasePage {
   backToHomePage() {
@@ -38,6 +40,11 @@ class HomePage extends BasePage {
     DirectManipulationPage.waitForPageLoaded();
   }
 
+  clickAndGotoImagePage() {
+    this.ImagePageButton.click();
+    ImageTestPage.waitForPageLoaded();
+  }
+
   private get testInputTestPageButton() {
     return By(TEXTINPUT_TESTPAGE);
   }
@@ -48,6 +55,10 @@ class HomePage extends BasePage {
 
   private get directManipulationPageButton() {
     return By(DIRECT_MANIPULATION_TESTPAGE);
+  }
+
+  private get ImagePageButton() {
+    return By(IMAGE_TESTPAGE);
   }
 }
 
