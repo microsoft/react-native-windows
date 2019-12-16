@@ -8,7 +8,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
+  - template: variables/vs2019.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
 
 jobs:
   - job: Setup
@@ -158,7 +158,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), ne(variables['BuildPlatform'], 'x86'), false) # Disabled. issue #3670  Unable to resolve module `warnOnce`
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), ne(variables['BuildPlatform'], 'x86'), true) # Disabled. issue #3670  Unable to resolve module `warnOnce`
 
       # Possible related to https://social.msdn.microsoft.com/Forums/vstudio/en-US/23c8df57-9c50-476c-9f56-1fe058e75a9d/uwp-app-builds-on-local-machine-fails-on-build-agent-systemprivatecorelib-not-found
       # use X86 msbuild to avoid ##[error]...Microsoft.AppXPackage.Targets(1248,5): Error MSB3816: Loading assembly "\runtime.win7-x86.microsoft.netcore.runtime.coreclr\1.0.2\runtimes\win7-x86\lib\netstandard1.0\mscorlib.dll" failed. 
@@ -177,7 +177,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), eq(variables['BuildPlatform'], 'x86'), false) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
+        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), eq(variables['BuildPlatform'], 'x86'), true) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
@@ -193,6 +193,13 @@ jobs:
           workingDirectory: vnext
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
 
   - job: RNWDesktopPR
     displayName: Desktop PR
@@ -327,6 +334,14 @@ jobs:
           contents: |
             React.Windows.Desktop.DLL\**
             React.Windows.Desktop.Test.DLL\**
+
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
 
   - job: CliInit
     displayName: Verify react-native init
@@ -555,6 +570,14 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
+        
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
       name: E2ETest
