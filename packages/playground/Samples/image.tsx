@@ -23,12 +23,14 @@ export default class Bootstrap extends React.Component<
       | 'repeat'
       | undefined;
     useLargeImage: boolean;
+    inlcudeBorder: boolean;
     imageUrl: string;
   }
 > {
   state = {
     selectedResizeMode: 'center' as 'center',
     useLargeImage: false,
+    inlcudeBorder: false,
     imageUrl: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
@@ -68,10 +70,20 @@ export default class Bootstrap extends React.Component<
             />
             <Text style={{marginRight: 5}}>Large</Text>
           </View>
+          <View style={styles.rowContainer}>
+            <Text style={{marginRight: 5}}>No Border</Text>
+            <Switch
+              value={this.state.inlcudeBorder}
+              onValueChange={value => this.setState({inlcudeBorder: value})}
+            />
+            <Text style={{marginRight: 5}}>Round Border</Text>
+          </View>
         </View>
         <View style={styles.imageContainer}>
           <Image
-            style={styles.image}
+            style={
+              this.state.inlcudeBorder ? styles.imageWithBorder : styles.image
+            }
             source={{uri: this.state.imageUrl}}
             resizeMode={this.state.selectedResizeMode}
           />
@@ -101,6 +113,14 @@ const styles = StyleSheet.create({
   image: {
     height: '100%',
     width: '100%',
+  },
+  imageWithBorder: {
+    height: '100%',
+    width: '100%',
+    borderRadius: 10.0,
+    borderWidth: 10,
+    borderColor: 'green',
+    backgroundColor: 'red',
   },
   title: {
     fontWeight: 'bold',
