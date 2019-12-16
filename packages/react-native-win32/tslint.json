@@ -1,0 +1,6 @@
+{
+  "extends": ["@office-iss/sdx-platform-tslint"],
+  "rules": {
+    "typedef": [false]
+  }
+}

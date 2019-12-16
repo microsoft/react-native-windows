@@ -8,6 +8,7 @@
 
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.UI.Core.h>
+#include <winrt/Windows.UI.Xaml.Navigation.h>
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;

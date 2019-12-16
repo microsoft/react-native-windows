@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
-
-using Microsoft.ReactNative.Bridge;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -390,9 +389,9 @@ namespace Microsoft.ReactNative.Managed
         return true;
       }
 
-      constantKey = default;
-      constantValue = default;
-      memberValue = default;
+      constantKey = default(string);
+      constantValue = default(string);
+      memberValue = default(Delegate);
 
       return false;
     }
@@ -445,9 +444,9 @@ namespace Microsoft.ReactNative.Managed
         return true;
       }
 
-      constantKey = default;
-      constantValue = default;
-      memberValue = default;
+      constantKey = default(string);
+      constantValue = default(object);
+      memberValue = default(Delegate);
 
       return false;
     }
@@ -466,7 +465,7 @@ namespace Microsoft.ReactNative.Managed
         }
       }
 
-      eventDataType = default;
+      eventDataType = default(Type);
       return false;
     }
 

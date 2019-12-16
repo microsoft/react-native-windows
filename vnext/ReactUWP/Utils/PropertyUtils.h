@@ -32,6 +32,16 @@ static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
 };
 
+static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
+    {"borderLeftWidth", ShadowEdges::Left},
+    {"borderTopWidth", ShadowEdges::Top},
+    {"borderRightWidth", ShadowEdges::Right},
+    {"borderBottomWidth", ShadowEdges::Bottom},
+    {"borderStartWidth", ShadowEdges::Start},
+    {"borderEndWidth", ShadowEdges::End},
+    {"borderWidth", ShadowEdges::AllEdges},
+};
+
 inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges], bool isRTL) {
   const double defaultWidth = std::max<double>(0, thicknesses[ShadowEdges::AllEdges]);
   double startWidth = DefaultOrOverride(thicknesses[ShadowEdges::Left], thicknesses[ShadowEdges::Start]);
@@ -173,29 +183,17 @@ bool TryUpdateBorderProperties(
       element.ClearValue(T::BorderBrushProperty());
       UpdateControlBorderResourceBrushes(element, nullptr);
     }
-  } else if (propertyName == "borderLeftWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
-  } else if (propertyName == "borderTopWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.asDouble());
-  } else if (propertyName == "borderRightWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.asDouble());
-  } else if (propertyName == "borderBottomWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
-  } else if (propertyName == "borderStartWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.asDouble());
-  } else if (propertyName == "borderEndWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.asDouble());
-  } else if (propertyName == "borderWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
   } else {
-    isBorderProperty = false;
+    auto iter = edgeTypeMap.find(propertyName);
+    if (iter != edgeTypeMap.end()) {
+      if (propertyValue.isNumber()) {
+        SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
+      } else if (propertyValue.isNull()) {
+        SetBorderThickness(node, element, iter->second, 0);
+      }
+    } else {
+      isBorderProperty = false;
+    }
   }
 
   return isBorderProperty;

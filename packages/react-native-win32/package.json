@@ -1,0 +1,69 @@
+{
+  "name": "@office-iss/react-native-win32",
+  "version": "0.25.8",
+  "description": "Implementation of react native on top of Office's Win32 platform.",
+  "main": "./Libraries/react-native/react-native-implementation.win32.js",
+  "typings": "./Libraries/react-native/typings-main.d.ts",
+  "scripts": {
+    "build": "just-scripts build",
+    "change": "beachball change",
+    "clean": "just-scripts clean",
+    "start": "react-native start",
+    "lint": "just-scripts eslint",
+    "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
+    "watch": "tsc -w",
+    "bundle": "react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/index.win32.bundle --assets-dest dist/win32/dev",
+    "run-win32": "rex-win32 --bundle RNTester.win32 --component RNTesterApp --basePath ./dist/win32/dev",
+    "run-win32-devmain": "rex-win32 --bundle RNTester.win32 --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
+    "run-win32-dev-web": "rex-win32 --bundle RNTester.win32 --component RNTesterApp --basePath ./dist/win32/dev --useWebDebugger"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.4.0",
+    "@react-native-community/cli": "^2.6.0",
+    "fbjs-scripts": "^1.1.0",
+    "abort-controller": "^3.0.0",
+    "stacktrace-parser": "^0.1.3",
+    "scheduler": "0.14.0",
+    "event-target-shim": "^5.0.1",
+    "create-react-class": "^15.6.3",
+    "base64-js": "^1.1.2",
+    "art": "^0.10.0",
+    "invariant": "^2.2.4",
+    "react-clone-referenced-element": "^1.0.1",
+    "react-devtools-core": "^3.6.0",
+    "regenerator-runtime": "^0.13.2",
+    "pretty-format": "^24.7.0",
+    "nullthrows": "^1.1.0",
+    "fbjs": "^1.0.0",
+    "promise": "^7.1.1",
+    "prop-types": "^15.7.2",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "@office-iss/rex-win32": "0.0.30",
+    "@types/es6-collections": "^0.5.29",
+    "@types/es6-promise": "0.0.32",
+    "@types/node": "^12.11.2",
+    "@types/prop-types": "15.5.1",
+    "@types/react": "16.9.11",
+    "@types/react-native": "~0.60.5",
+    "just-scripts": "^0.24.2",
+    "react": "16.8.6",
+    "rimraf": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react-native": "^0.60.0 || 0.60.0-microsoft.31 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
+  },
+  "nativeBundles": {
+    "sources": [
+      "RNTester"
+    ],
+    "targets": [
+      "win32.dev"
+    ],
+    "theseBundlesAreNotShippingBundlesAndAreNeverUsedOutsideThisRepo": true
+  }
+}
