@@ -27,8 +27,8 @@ struct ImageSource {
   bool packagerAsset = false;
 };
 
-struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
-  using Super = winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage>;
+struct ReactImage : winrt::Windows::UI::Xaml::Controls::GridT<ReactImage> {
+  using Super = winrt::Windows::UI::Xaml::Controls::GridT<ReactImage>;
 
   ReactImage();
 

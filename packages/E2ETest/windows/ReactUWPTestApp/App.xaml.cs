@@ -9,6 +9,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.ReactNative;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
+using Windows.Foundation;
 
 namespace ReactUWPTestApp
 {
@@ -42,6 +44,8 @@ namespace ReactUWPTestApp
 #endif
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
+            PackageProviders.Add(new TreeDumpLibrary.ReactPackageProvider());
+
             this.InitializeComponent();
         }
 
@@ -54,6 +58,7 @@ namespace ReactUWPTestApp
         {
             base.OnLaunched(e);
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            ApplicationView.GetForCurrentView().TryResizeView(new Size(800, 600));
         }
     }
 }
