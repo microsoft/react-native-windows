@@ -65,6 +65,6 @@ export function ImageTestPage() {
     <Button title= {imageWithBorder?"Hide Border":"Show Border"} 
           onPress={onPressBorder} 
           testID={SHOW_IMAGE_BORDER}/> 
-    <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':'ImageWithoutBorder'+clickCount} uiaID={IMAGE_CONTAINER} testID={TREE_DUMP_RESULT} />
+    <TreeDumpControl style={styles.treeDumpControl} dumpID={imageWithBorder?'ImageWithBorder':(clickCount == 0 ? 'ImageWithoutBorder':'ImageWithoutBorder-Subsequent')} uiaID={IMAGE_CONTAINER} testID={TREE_DUMP_RESULT} />
   </View>);
 }

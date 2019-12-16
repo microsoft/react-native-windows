@@ -117,6 +117,7 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
   if (grid == nullptr)
     return;
 
+  bool finalizeBorderRadius{false};
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName{pair.first.getString()};
     const folly::dynamic &propertyValue{pair.second};
@@ -128,15 +129,18 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
       auto reactImage{grid.as<ReactImage>()};
       reactImage->ResizeMode(resizeMode);
     } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
+      finalizeBorderRadius = true;
       continue;
     } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
-      UpdateCornerRadiusOnElement(nodeToUpdate, grid);
       continue;
     }
     // TODO: overflow
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+
+  if (finalizeBorderRadius)
+    UpdateCornerRadiusOnElement(nodeToUpdate, grid);
 }
 
 void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ImageSource &source) {
