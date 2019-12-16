@@ -719,13 +719,16 @@ struct BoxedValue : implements<BoxedValue<T>, IBoxedValue> {
     return reinterpret_cast<int64_t>(&m_value);
   }
 
-  static T &GetImpl(IBoxedValue &module) noexcept {
-    return *reinterpret_cast<T *>(module.GetPtr());
-  }
+  static T &GetImpl(IBoxedValue &module) noexcept;
 
  private:
   T m_value{};
 };
+
+template <class T>
+inline T &BoxedValue<T>::GetImpl(IBoxedValue &module) noexcept {
+  return *reinterpret_cast<T *>(module.GetPtr());
+}
 
 template <class TModule>
 inline ReactModuleProvider MakeModuleProvider() noexcept {
