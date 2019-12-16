@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include "DynamicReader.h"
-#include "Crash.h"
 
 namespace winrt::Microsoft::ReactNative::Bridge {
 
@@ -11,172 +10,137 @@ namespace winrt::Microsoft::ReactNative::Bridge {
 // DynamicReader implementation
 //===========================================================================
 
-DynamicReader::DynamicReader(const folly::dynamic &root) noexcept : m_root{&root} {}
-
-JSValueReaderState DynamicReader::ReadNext() noexcept {
-  switch (m_state) {
-    case JSValueReaderState::Error: {
-      // The Error state is the initial state if m_root is not null.
-      if (!m_stack.empty() && !m_root) {
-        return JSValueReaderState::Error;
-      }
-
-      folly::dynamic::Type type = m_root->type();
-      if (type == folly::dynamic::Type::OBJECT) {
-        m_stack.emplace_back(m_root);
-        return m_state = JSValueReaderState::ObjectBegin;
-      } else if (type == folly::dynamic::Type::ARRAY) {
-        m_stack.emplace_back(m_root);
-        return m_state = JSValueReaderState::ArrayBegin;
-      } else {
-        return JSValueReaderState::Error;
-      }
-    }
-    case JSValueReaderState::ObjectBegin: {
-      auto &entry = m_stack.back();
-      const auto &obj = entry.Value->items();
-      entry.Property = obj.begin();
-      if (entry.Property != obj.end()) {
-        return m_state = JSValueReaderState::PropertyName;
-      } else {
-        return m_state = JSValueReaderState::ObjectEnd;
-      }
-    }
-    case JSValueReaderState::ArrayBegin: {
-      VerifyElseCrash(!m_stack.empty());
-      auto &entry = m_stack.back();
-      const auto &arr = *entry.Value;
-      entry.Item = arr.begin();
-      if (entry.Item != arr.end()) {
-        return ReadValue(&*entry.Item);
-      } else {
-        return m_state = JSValueReaderState::ArrayEnd;
-      }
-    }
-    case JSValueReaderState::PropertyName: {
-      VerifyElseCrash(!m_stack.empty());
-      auto &entry = m_stack.back();
-      const auto &obj = entry.Value->items();
-      if (entry.Property != obj.end()) {
-        return ReadValue(&(entry.Property.value()->second));
-      } else {
-        return m_state = JSValueReaderState::Error;
-      }
-    }
-    case JSValueReaderState::ObjectEnd:
-    case JSValueReaderState::ArrayEnd:
-    case JSValueReaderState::NullValue:
-    case JSValueReaderState::BooleanValue:
-    case JSValueReaderState::Int64Value:
-    case JSValueReaderState::DoubleValue:
-    case JSValueReaderState::StringValue: {
-      VerifyElseCrash(!m_stack.empty());
-      m_stack.pop_back();
-      if (m_stack.empty()) {
-        return m_state = JSValueReaderState::Error;
-      }
-
-      auto &entry = m_stack.back();
-      folly::dynamic::Type type = entry.Value->type();
-      if (type == folly::dynamic::OBJECT) {
-        auto objIter = entry.Property.value();
-        entry.Property = ++objIter;
-        if (objIter != entry.Value->items().end()) {
-          return m_state = JSValueReaderState::PropertyName;
-        } else {
-          return m_state = JSValueReaderState::ObjectEnd;
-        }
-      } else if (type == folly::dynamic::ARRAY) {
-        if (++entry.Item != entry.Value->end()) {
-          return ReadValue(&*entry.Item);
-        } else {
-          return m_state = JSValueReaderState::ArrayEnd;
-        }
-      }
-    }
-    default:
-      return m_state = JSValueReaderState::Error;
-  }
+/*static*/ DynamicReader::StackEntry DynamicReader::StackEntry::ObjectProperty(
+    const folly::dynamic *value,
+    const folly::dynamic::const_item_iterator &property) noexcept {
+  StackEntry entry;
+  entry.Value = value;
+  entry.Property = property;
+  return entry;
 }
 
-JSValueReaderState DynamicReader::ReadValue(const folly::dynamic *value) noexcept {
-  m_stack.emplace_back(value);
-  switch (value->type()) {
+/*static*/ DynamicReader::StackEntry DynamicReader::StackEntry::ArrayItem(
+    const folly::dynamic *value,
+    const folly::dynamic::const_iterator &item) noexcept {
+  StackEntry entry;
+  entry.Value = value;
+  entry.Item = item;
+  return entry;
+}
+
+DynamicReader::DynamicReader(const folly::dynamic &root) noexcept : m_current{&root} {}
+
+JSValueType DynamicReader::ValueType() noexcept {
+  switch (m_current->type()) {
     case folly::dynamic::Type::NULLT:
-      return m_state = JSValueReaderState::NullValue;
-    case folly::dynamic::Type::BOOL:
-      return m_state = JSValueReaderState::BooleanValue;
-    case folly::dynamic::Type::INT64:
-      return m_state = JSValueReaderState::Int64Value;
-    case folly::dynamic::Type::DOUBLE:
-      return m_state = JSValueReaderState::DoubleValue;
-    case folly::dynamic::Type::STRING:
-      return m_state = JSValueReaderState::StringValue;
-    case folly::dynamic::Type::OBJECT:
-      return m_state = JSValueReaderState::ObjectBegin;
+      return JSValueType::Null;
     case folly::dynamic::Type::ARRAY:
-      return m_state = JSValueReaderState::ArrayBegin;
+      return JSValueType::Array;
+    case folly::dynamic::Type::BOOL:
+      return JSValueType::Boolean;
+    case folly::dynamic::Type::DOUBLE:
+      return JSValueType::Double;
+    case folly::dynamic::Type::INT64:
+      return JSValueType::Int64;
+    case folly::dynamic::Type::OBJECT:
+      return JSValueType::Object;
+    case folly::dynamic::Type::STRING:
+      return JSValueType::String;
     default:
-      return m_state = JSValueReaderState::Error;
+      return JSValueType::Null;
   }
 }
 
-_Success_(return ) bool DynamicReader::TryGetBoolean(_Out_ bool &value) noexcept {
-  if (m_state == JSValueReaderState::BooleanValue) {
-    VerifyElseCrash(!m_stack.empty());
-    value = m_stack.back().Value->asBool();
-    return true;
+bool DynamicReader::GetNextObjectProperty(hstring &propertyName) noexcept {
+  if (!m_isIterating) {
+    if (m_current->type() == folly::dynamic::Type::OBJECT) {
+      const auto &properties = m_current->items();
+      const auto &property = properties.begin();
+      if (property != properties.end()) {
+        m_stack.push_back(StackEntry::ObjectProperty(m_current, property));
+        SetCurrentValue(&(property->second));
+        propertyName = to_hstring(property->first.asString());
+        return true;
+      } else {
+        m_isIterating = !m_stack.empty();
+      }
+    }
+  } else if (!m_stack.empty()) {
+    auto &entry = m_stack.back();
+    if (entry.Value->type() == folly::dynamic::Type::OBJECT) {
+      auto &property = entry.Property.value();
+      if (++property != entry.Value->items().end()) {
+        SetCurrentValue(&(property->second));
+        propertyName = to_hstring(property->first.asString());
+        return true;
+      } else {
+        m_current = entry.Value;
+        m_stack.pop_back();
+        m_isIterating = !m_stack.empty();
+      }
+    }
   }
 
-  value = false;
+  propertyName = to_hstring(L"");
   return false;
 }
 
-_Success_(return ) bool DynamicReader::TryGetInt64(_Out_ int64_t &value) noexcept {
-  if (m_state == JSValueReaderState::Int64Value) {
-    VerifyElseCrash(!m_stack.empty());
-    value = m_stack.back().Value->asInt();
-    return true;
-  } else if (m_state == JSValueReaderState::DoubleValue) {
-    VerifyElseCrash(!m_stack.empty());
-    value = static_cast<int64_t>(m_stack.back().Value->asDouble());
-    return true;
+bool DynamicReader::GetNextArrayItem() noexcept {
+  if (!m_isIterating) {
+    if (m_current->type() == folly::dynamic::Type::ARRAY) {
+      const auto &item = m_current->begin();
+      if (item != m_current->end()) {
+        m_stack.push_back(StackEntry::ArrayItem(m_current, item));
+        SetCurrentValue(&*item);
+        return true;
+      } else {
+        m_isIterating = !m_stack.empty();
+      }
+    }
+  } else if (!m_stack.empty()) {
+    auto &entry = m_stack.back();
+    if (entry.Value->type() == folly::dynamic::Type::ARRAY) {
+      if (++entry.Item != entry.Value->end()) {
+        SetCurrentValue(&*entry.Item);
+        return true;
+      } else {
+        m_current = entry.Value;
+        m_stack.pop_back();
+        m_isIterating = !m_stack.empty();
+      }
+    }
   }
 
-  value = 0;
   return false;
 }
 
-_Success_(return ) bool DynamicReader::TryGetDouble(_Out_ double &value) noexcept {
-  if (m_state == JSValueReaderState::DoubleValue) {
-    VerifyElseCrash(!m_stack.empty());
-    value = m_stack.back().Value->asDouble();
-    return true;
-  } else if (m_state == JSValueReaderState::Int64Value) {
-    VerifyElseCrash(!m_stack.empty());
-    value = static_cast<double>(m_stack.back().Value->asInt());
-    return true;
+void DynamicReader::SetCurrentValue(const folly::dynamic *value) noexcept {
+  m_current = value;
+  switch (value->type()) {
+    case folly::dynamic::Type::OBJECT:
+    case folly::dynamic::Type::ARRAY:
+      m_isIterating = false;
+      break;
+    default:
+      m_isIterating = true;
+      break;
   }
-
-  value = 0;
-  return false;
 }
 
-_Success_(return ) bool DynamicReader::TryGetString(winrt::hstring &value) noexcept {
-  if (m_state == JSValueReaderState::StringValue) {
-    VerifyElseCrash(!m_stack.empty());
-    const std::string &str = m_stack.back().Value->asString();
-    value = winrt::to_hstring(str);
-    return true;
-  } else if (m_state == JSValueReaderState::PropertyName) {
-    VerifyElseCrash(!m_stack.empty());
-    const std::string &str = m_stack.back().Property.value()->first.getString();
-    value = winrt::to_hstring(str);
-    return true;
-  }
+hstring DynamicReader::GetString() noexcept {
+  return to_hstring((m_current->type() == folly::dynamic::Type::STRING) ? m_current->getString() : "");
+}
 
-  value = L"";
-  return false;
+bool DynamicReader::GetBoolean() noexcept {
+  return (m_current->type() == folly::dynamic::Type::BOOL) ? m_current->getBool() : false;
+}
+
+int64_t DynamicReader::GetInt64() noexcept {
+  return (m_current->type() == folly::dynamic::Type::INT64) ? m_current->getInt() : 0;
+}
+
+double DynamicReader::GetDouble() noexcept {
+  return (m_current->type() == folly::dynamic::Type::DOUBLE) ? m_current->getDouble() : 0;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Bridge

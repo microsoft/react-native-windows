@@ -6,6 +6,7 @@
 #include "ReactImage.h"
 
 #include <winrt/Windows.Security.Cryptography.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
 #include "Unicode.h"

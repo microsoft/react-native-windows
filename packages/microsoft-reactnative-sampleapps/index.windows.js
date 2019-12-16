@@ -24,6 +24,9 @@ const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModule
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
 
+const CircleCS = requireNativeComponent('CircleCS');
+const CircleCPP = requireNativeComponent('CircleCPP');
+
 var log = function(result) {
   console.log(result);
   NativeModules.DebugConsole.Log('' + result);
@@ -32,6 +35,12 @@ var log = function(result) {
 var getCallback = function(prefix) {
   return function(result) {
     log(prefix + result);
+  };
+};
+
+var getErrorCallback = function(prefix) {
+  return function(error) {
+    log(prefix + (error || {}).message);
   };
 };
 
@@ -74,10 +83,10 @@ class SampleApp extends Component {
     NativeModules.SampleModuleCS.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCS.ExplicitCallbackMethodWithArgs => '));
 
     var promise1 = NativeModules.SampleModuleCS.ExplicitPromiseMethod();
-    promise1.then(getCallback('SampleModuleCS.ExplicitPromiseMethod then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethod catch => '));
+    promise1.then(getCallback('SampleModuleCS.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCS.ExplicitPromiseMethod catch => '));
 
     var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
+    promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
 
     log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
 
@@ -112,10 +121,10 @@ class SampleApp extends Component {
     NativeModules.SampleModuleCPP.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ExplicitCallbackMethodWithArgs => '));
 
     var promise1 = NativeModules.SampleModuleCPP.ExplicitPromiseMethod();
-    promise1.then(getCallback('SampleModuleCPP.ExplicitPromiseMethod then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethod catch => '));
+    promise1.then(getCallback('SampleModuleCPP.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCPP.ExplicitPromiseMethod catch => '));
 
     var promise2 = NativeModules.SampleModuleCPP.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
+    promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
 
     log('SampleModuleCPP.SyncReturnMethod => ' + NativeModules.SampleModuleCPP.SyncReturnMethod());
 
@@ -177,6 +186,17 @@ class SampleApp extends Component {
         <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCPP(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
 
+        <CircleCS style={styles.circle}>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>CircleCS!</Text>
+          </View>
+        </CircleCS>
+
+        <CircleCPP style={styles.circle}>
+          <View style={styles.box}>
+            <Text style={styles.boxText}>CircleCPP!</Text>
+          </View>
+        </CircleCPP>
         <Text style={styles.instructions}>
           Hello from Microsoft!
         </Text>
@@ -208,6 +228,19 @@ const styles = StyleSheet.create({
     width: 200,
     height: 20,
     margin: 10,
+  },
+  circle: {
+    margin: 10,
+  },
+  box: {
+    backgroundColor: '#006666',
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  boxText: {
+    fontSize: 20,
   },
 });
 

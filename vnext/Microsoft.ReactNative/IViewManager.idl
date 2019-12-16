@@ -51,4 +51,16 @@ namespace Microsoft.ReactNative.Bridge
 
     Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomDirectEventTypeConstants { get; };
   };
+
+  [webhosthidden]
+  interface IViewManagerWithChildren
+  {
+    void AddView(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement child, Int64 index);
+
+    void RemoveAllChildren(Windows.UI.Xaml.FrameworkElement parent);
+
+    void RemoveChildAt(Windows.UI.Xaml.FrameworkElement parent, Int64 index);
+
+    void ReplaceChild(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement oldChild, Windows.UI.Xaml.UIElement newChild);
+  };
 }

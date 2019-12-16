@@ -14,36 +14,17 @@ parameters:
   yarnBuildCmd: build
 
   # Visual Studio Installer
-  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
+  vsInstallerUri: $(VsInstallerUri)
   vsComponents: ''
 
 steps:
-  - task: CmdLine@2
-    displayName: Modify package.json to use unforked RN
-    inputs:
-      script: node scripts/useUnForkedRN.js
-      workingDirectory: $(Build.SourcesDirectory)/vnext
-    condition: and(succeeded(), not('${{parameters.useRnFork}}'))
-
-  - task: CmdLine@2
-    displayName: yarn install (Using microsoft/react-native)
-    inputs:
-      script: yarn install --frozen-lockfile
-    condition: and(succeeded(), '${{parameters.useRnFork}}')
-
-    # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-    # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
-    # using the non fork version.
-  - task: CmdLine@2
-    displayName: yarn install (Using facebook/react-native)
-    inputs:
-      script: yarn install
-    condition: and(succeeded(), not('${{parameters.useRnFork}}'))
-
-  - task: CmdLine@2
-    displayName: yarn ${{ parameters.yarnBuildCmd }}
-    inputs:
-      script: yarn ${{ parameters.yarnBuildCmd }}
+  - template: prepare-env.yml
+    parameters:
+      useRnFork: ${{ parameters.useRnFork }}
+      vsInstallerUri: ${{ parameters.vsInstallerUri }}
+      vsComponents: ${{ parameters.vsComponents }}
+      yarnBuildCmd: ${{ parameters.yarnBuildCmd }}
+      debug: ${{ parameters.debug }}
 
   - task: NuGetCommand@2
     displayName: NuGet restore
@@ -54,21 +35,6 @@ steps:
       nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-  - template: install-SDK.yml
-    parameters:
-      sdkVersion: $(Win10Version)
-
-  - task: PowerShell@2
-    displayName: Install Visual Studio dependencies
-    inputs:
-      targetType: filePath
-      filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-      arguments:
-        -InstallerUri ${{ parameters.vsInstallerUri }}
-        -Components ${{ parameters.vsComponents }}
-        -Collect:$${{ parameters.debug }}
-    condition: and(ne('${{parameters.vsComponents}}', ''), eq(variables['VmImage'], 'windows-2019'))
 
   - task: MSBuild@1
     displayName: MSBuild ${{parameters.project}}
@@ -84,6 +50,7 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         ${{parameters.msbuildArguments}}
+        /p:BaseIntDir=$(BaseIntDir)
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()

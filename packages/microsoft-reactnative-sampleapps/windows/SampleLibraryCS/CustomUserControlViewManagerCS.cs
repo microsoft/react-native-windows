@@ -3,12 +3,13 @@
 
 using System;
 using System.Diagnostics;
+
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 
 using Microsoft.ReactNative.Managed;
 using Microsoft.ReactNative.Bridge;
-using Windows.UI.Xaml;
 
 namespace SampleLibraryCS
 {

@@ -1,0 +1,15 @@
+/.gitignore
+/config.js
+/dist
+/lib/tester.*.bundle
+/lib/tester.*.bundle.map
+/lib/tester/index.win32.bundle*
+/lib/tester/index.win32.dev.bundle*
+/scripts
+/src
+/temp
+/ts-api.json
+/tsconfig.json
+/webpack.config.js
+/webpack.serve.config.js
+node_modules
