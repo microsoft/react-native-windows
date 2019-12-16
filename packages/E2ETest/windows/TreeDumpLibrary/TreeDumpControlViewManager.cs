@@ -203,11 +203,12 @@ namespace TreeDumpLibrary
                 string fileNameError = "TreeDump\\" + m_dumpID + ".err";
                 try
                 {
-                    StorageFile errFile = await storageFolder.CreateFileAsync(fileNameError, CreationCollisionOption.ReplaceExisting);
+                    StorageFile errFile = await storageFolder.CreateFileAsync(fileNameError, CreationCollisionOption.GenerateUniqueName);
                     await Windows.Storage.FileIO.WriteTextAsync(errFile, m_errString);
                 }
-                catch (IOException)
+                catch (Exception e)
                 {
+                    UpdateTextBlockText("Creat err file failed: " + e.ToString());
                 }
             }
 
