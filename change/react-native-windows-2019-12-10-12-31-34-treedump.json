@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "TreeDump for E2E test and fix for image border issue",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "88f9b0eaecfe88e2243b66d969420131224f1c56",
+  "date": "2019-12-10T20:31:33.939Z"
+}
