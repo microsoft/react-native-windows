@@ -13,18 +13,20 @@ beforeAll(() => {
 });
 
 describe('ImageWithoutBorderTest', () => {
+  /* Test case #1: view and image displayed with no border and cornerRadius */
   it('ImageWithoutBorderTest', () => {
     const result = ImageTestPage.getTreeDumpResult();
     assert(result, '#1. Dump comparison for image without border!');
   });
 
+  /* Test case #2: Click button once, update view and image with round border*/
   it('ImageWithBorderTest', () => {
     ImageTestPage.toggleImageBorder();
     const result = ImageTestPage.getTreeDumpResult();
     assert(result, '#2. Dump comparison for image with border!');
   });
 
-  // toggle back to no border and verify border properties are reset
+/* Test case #3: Click button one more, remove border from view and image but tree sturcture is different from #1*/
   it('ImageWithoutBorderTest', () => {
     ImageTestPage.toggleImageBorder();
     const result = ImageTestPage.getTreeDumpResult();
