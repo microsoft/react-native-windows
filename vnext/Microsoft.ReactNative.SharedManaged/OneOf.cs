@@ -21,7 +21,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }
@@ -46,7 +46,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }
@@ -77,7 +77,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }
@@ -114,7 +114,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }
@@ -157,7 +157,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }
@@ -206,7 +206,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }
@@ -261,7 +261,7 @@ namespace Microsoft.ReactNative.Managed
     public bool TryGet<T>(out T value)
     {
       bool result = (Value != null && typeof(T) == Value.GetType());
-      value = result ? (T)Value : default;
+      value = result ? (T)Value : default(T);
       return result;
     }
   }

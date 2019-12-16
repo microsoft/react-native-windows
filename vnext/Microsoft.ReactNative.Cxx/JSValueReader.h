@@ -37,6 +37,11 @@ T ReadValue(IJSValueReader const &reader) noexcept;
 template <class T>
 T ReadValue(const JSValue &jsValue) noexcept;
 
+template <class T>
+void SkipValue(IJSValueReader const &reader) noexcept;
+template <class T>
+void SkipValue(const JSValue &jsValue) noexcept;
+
 template <class T, class TJSValueReader, std::enable_if_t<std::is_same_v<TJSValueReader, IJSValueReader>, int> = 1>
 void ReadValue(TJSValueReader const &reader, /*out*/ T &value) noexcept;
 
@@ -60,11 +65,11 @@ template <class T, std::enable_if_t<std::is_enum_v<T>, int> = 1>
 void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept;
 template <class T>
 void ReadValue(IJSValueReader const &reader, /*out*/ std::optional<T> &value) noexcept;
-template <class T, class TCompare = std::less<>, class TAlloc = std::allocator<pair<const std::string, T>>>
+template <class T, class TCompare = std::less<>, class TAlloc = std::allocator<std::pair<const std::string, T>>>
 void ReadValue(IJSValueReader const &reader, /*out*/ std::map<std::string, T, TCompare, TAlloc> &value) noexcept;
-template <class T, class TCompare = std::less<>, class TAlloc = std::allocator<pair<const std::string, T>>>
+template <class T, class TCompare = std::less<>, class TAlloc = std::allocator<std::pair<const std::string, T>>>
 void ReadValue(IJSValueReader const &reader, /*out*/ std::map<std::wstring, T, TCompare, TAlloc> &value) noexcept;
-template <class T, class TAlloc = allocator<T>>
+template <class T, class TAlloc = std::allocator<T>>
 void ReadValue(IJSValueReader const &reader, /*out*/ std::vector<T, TAlloc> &value) noexcept;
 template <class... Ts>
 void ReadValue(IJSValueReader const &reader, /*out*/ std::tuple<Ts...> &value) noexcept;
@@ -98,6 +103,20 @@ inline T ReadValue(const JSValue &jsValue) noexcept {
   T result;
   ReadValue(jsValue, /*out*/ result);
   return result;
+}
+
+// Call ReadValue for IJSValueReader and ignore result.
+template <class T>
+inline void SkipValue(IJSValueReader const &reader) noexcept {
+  T result;
+  ReadValue(reader, /*out*/ result);
+}
+
+// Call ReadValue for JSValue and ignore result.
+template <class T>
+inline void SkipValue(const JSValue &jsValue) noexcept {
+  T result;
+  ReadValue(jsValue, /*out*/ result);
 }
 
 // Try to call ReadValue for JSValue unless it is already called us with TypeWrapper parameter.
@@ -385,7 +404,7 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept {
       if (it != fieldMap.end()) {
         it->second.ReadField(reader, &value);
       } else {
-        ReadValue<JSValue>(reader); // Skip this property
+        SkipValue<JSValue>(reader); // Skip this property
       }
     }
   }
@@ -394,7 +413,7 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept {
 // It helps to read arguments from an array if there are more items than expected.
 inline bool SkipArrayToEnd(IJSValueReader const &reader) noexcept {
   while (reader.GetNextArrayItem()) {
-    ReadValue<JSValue>(reader); // Read and ignore the value
+    SkipValue<JSValue>(reader); // Read and ignore the value
   }
 
   return true;
