@@ -1,20 +1,28 @@
 #
 parameters:
   name: ''
-  pool:
   BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
-  vsComponents: ''
-  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
 
 jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    pool: ${{ parameters.pool }}
+
+    # E2ETest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
+    # E2ETest can only be executed on windows-2019 or above, so force to use windows-2019 image and override vs2017.yml variables
+    # so pool and variables are hard coded here.
+    pool:
+      vmImage: windows-2019
+    variables: 
+      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
+      BaseIntDir: $(BUILD_SOURCESDIRECTORY)\vnext\build
+      VmImage: windows-2019
+
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
     steps:
       - checkout: self
         clean: false
@@ -23,15 +31,8 @@ jobs:
       - template: prepare-env.yml
         parameters:
           useRnFork: ${{ parameters.UseRNFork }}
-          vsComponents: ${{ parameters.vsComponents }}
+          vsComponents: $(VsComponents)
           yarnBuildCmd: build
-          vsInstallerUri: ${{ parameters.vsInstallerUri }}
-          forceVSDependencies: true
-
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
@@ -39,12 +40,6 @@ jobs:
           command: restore
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: PowerShell@2
-        displayName: Install MUX framework package
-        inputs:
-          targetType: "inline"
-          script:  Add-AppxPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
 
       - task: CmdLine@2
         displayName: Create bundle
@@ -100,6 +95,21 @@ jobs:
         inputs:
           script: yarn run test
           workingDirectory: packages/E2ETest
+
+      - task: CopyFiles@2
+        displayName: Copy tree dump output files
+        inputs:
+          sourceFolder: $(LocalAppData)\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+          contents: TreeDump\**
+        condition: succeededOrFailed()   
+        
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
+        inputs:
+          artifactName: ReactUWPTestAppTreeDump
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+        condition: succeededOrFailed()       
 
       - task: PublishTestResults@2
         inputs:
