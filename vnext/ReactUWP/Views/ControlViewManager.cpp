@@ -38,6 +38,7 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
+  bool finalizeBorderRadius{false};
 
   if (control != nullptr) {
     for (const auto &pair : reactDiffMap.items()) {
@@ -49,6 +50,9 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
       } else if (TryUpdateBorderProperties(nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
+        continue;
+      } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, control, propertyName, propertyValue)) {
+        finalizeBorderRadius = true;
         continue;
       } else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
@@ -65,6 +69,10 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+
+  
+  if (finalizeBorderRadius)
+    UpdateCornerRadiusOnElement(nodeToUpdate, control);
 }
 
 } // namespace uwp
