@@ -32,7 +32,6 @@ module.exports = function (config, args, options) {
     if (template === '') {
       template = 'vnext'
     }
-    console.log(`you chose ${template}`);
   }
 
   return Common.getInstallPackage(version, template, true)
