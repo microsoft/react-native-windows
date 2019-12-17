@@ -71,7 +71,6 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 
-  
   if (finalizeBorderRadius)
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
 }
