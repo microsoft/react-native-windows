@@ -111,6 +111,8 @@
     <Content Include="Assets\TreeDump\ImageWithBorder.txt" />
     <Content Include="Assets\TreeDump\ImageWithoutBorder-Subsequent.txt" />
     <Content Include="Assets\TreeDump\ImageWithoutBorder.txt" />
+    <Content Include="Assets\TreeDump\TextInputWithoutRoundBorder.txt" />
+    <Content Include="Assets\TreeDump\TextInputWithRoundBorder.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

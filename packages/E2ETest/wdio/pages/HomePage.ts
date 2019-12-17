@@ -10,10 +10,12 @@ import {
   LOGIN_TESTPAGE,
   DIRECT_MANIPULATION_TESTPAGE,
   IMAGE_TESTPAGE,
+  TEXTINPUT_STYLE_TESTPAGE,
 } from '../../app/Consts';
 import LoginPage from './LoginPage';
 import DirectManipulationPage from './DirectManipulationPage';
 import ImageTestPage from './ImageTestPage';
+import TextInputStyleTestPage from './TextInputStylePage';
 
 class HomePage extends BasePage {
   backToHomePage() {
@@ -45,6 +47,11 @@ class HomePage extends BasePage {
     ImageTestPage.waitForPageLoaded();
   }
 
+  clickAndGotoTextInputStylePage() {
+    this.TextInputStylePageButton.click();
+    TextInputStyleTestPage.waitForPageLoaded();
+  }
+
   private get testInputTestPageButton() {
     return By(TEXTINPUT_TESTPAGE);
   }
@@ -59,6 +66,10 @@ class HomePage extends BasePage {
 
   private get ImagePageButton() {
     return By(IMAGE_TESTPAGE);
+  }
+
+  private get TextInputStylePageButton() {
+    return By(TEXTINPUT_STYLE_TESTPAGE);
   }
 }
 

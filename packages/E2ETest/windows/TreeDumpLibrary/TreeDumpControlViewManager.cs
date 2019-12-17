@@ -36,7 +36,10 @@ namespace TreeDumpLibrary
                 }
                 else
                 {
-                    await MatchTreeDumpFromLayoutUpdateAsync();
+                    if (VisualTreeHelper.GetParent(m_textBlock) != null)
+                    {
+                        await MatchTreeDumpFromLayoutUpdateAsync();
+                    }
                 }
             };
 

@@ -28,6 +28,7 @@ void ControlViewManager::TransferProperties(XamlView oldView, XamlView newView) 
   TransferProperty(oldView, newView, winrt::Control::BackgroundProperty());
   TransferProperty(oldView, newView, winrt::Control::BorderBrushProperty());
   TransferProperty(oldView, newView, winrt::Control::BorderThicknessProperty());
+  TransferProperty(oldView, newView, winrt::Control::CornerRadiusProperty());
   TransferProperty(oldView, newView, winrt::Control::PaddingProperty());
   TransferProperty(oldView, newView, winrt::Control::ForegroundProperty());
   TransferProperty(oldView, newView, winrt::Control::TabIndexProperty());
