@@ -194,7 +194,7 @@ namespace Microsoft.ReactNative.Managed
 
     // It cannot be an extension method because it would conflict with the generic
     // extension method that uses T value type.
-    public static void WriteEnum<TEnum>(IJSValueWriter writer, TEnum value) where TEnum : Enum
+    public static void WriteEnum<TEnum>(IJSValueWriter writer, TEnum value) /*TODO: Add in C# 7.3: where TEnum : Enum*/
     {
       writer.WriteValue((int)(object)value);
     }

@@ -167,6 +167,8 @@ inline auto JSValueArrayView::end() const noexcept {
 // JSValue inline implementation
 //===========================================================================
 
+#pragma warning(push)
+#pragma warning(disable : 26495) // False positive for union member not initialized
 inline JSValue::JSValue() noexcept : m_type{JSValueType::Null}, m_int64{0} {}
 inline JSValue::JSValue(std::nullptr_t) noexcept : m_type{JSValueType::Null}, m_int64{0} {}
 inline JSValue::JSValue(JSValueObject &&value) noexcept : m_type{JSValueType::Object}, m_object{std::move(value)} {}
@@ -179,6 +181,7 @@ inline JSValue::JSValue(TBool value) noexcept : m_type{JSValueType::Boolean}, m_
 template <class TInt, std::enable_if_t<std::is_integral_v<TInt> && !std::is_same_v<TInt, bool>, int>>
 inline JSValue::JSValue(TInt value) noexcept : m_type{JSValueType::Int64}, m_int64{static_cast<int64_t>(value)} {}
 inline JSValue::JSValue(double value) noexcept : m_type{JSValueType::Double}, m_double{value} {}
+#pragma warning(pop)
 
 inline JSValueType JSValue::Type() const noexcept {
   return m_type;
