@@ -1,0 +1,8 @@
+{
+  "type": "minor",
+  "comment": "add prompt to CLI",
+  "packageName": "rnpm-plugin-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "364e3cd867a026a9f57f0cb526be03bd5300a39d",
+  "date": "2019-12-16T23:28:08.121Z"
+}
