@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Tue, 17 Dec 2019 21:45:01 GMT",
+      "tag": "rnpm-plugin-windows_v0.3.9",
+      "version": "0.3.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "CLI detect project name from app.json",
+            "author": "licanhua@live.com",
+            "commit": "ed24ef5033bac55fb8f0db6ee727051521e4682c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Nov 2019 13:58:14 GMT",
       "tag": "rnpm-plugin-windows_v0.3.8",
       "version": "0.3.8",

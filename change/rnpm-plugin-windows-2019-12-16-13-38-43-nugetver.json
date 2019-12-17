@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "CLI detect project name from app.json",
-  "packageName": "rnpm-plugin-windows",
-  "email": "licanhua@live.com",
-  "commit": "ed24ef5033bac55fb8f0db6ee727051521e4682c",
-  "date": "2019-12-16T21:38:43.643Z"
-}
