@@ -122,7 +122,17 @@ const getReactNativeVersion = function () {
 
 const getReactNativeAppName = function () {
   console.log('Reading application name from package.json...');
-  return JSON.parse(fs.readFileSync('package.json', 'utf8')).name;
+  let name = JSON.parse(fs.readFileSync('package.json', 'utf8')).name;
+  if (!name) {
+    if (fs.existsSync('app.json')) {
+      console.log('Reading application name from app.json...');
+      name = JSON.parse(fs.readFileSync('app.json', 'utf8')).name;
+    }
+  }
+  if (!name) {
+    console.error('Please specify name in package.json or app.json');
+  }
+  return name;
 };
 
 /**
