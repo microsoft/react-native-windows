@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Tue, 17 Dec 2019 21:45:01 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Dec 2019 23:33:28 GMT and should not be manually modified.
 
+## 0.4.0
+Tue, 17 Dec 2019 23:33:28 GMT
+
+### Minor changes
+
+- add prompt to CLI (kmelmon@microsoft.com)
 ## 0.3.9
 Tue, 17 Dec 2019 21:45:01 GMT
 
