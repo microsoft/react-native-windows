@@ -116,6 +116,14 @@ jobs:
           restoreSolution: packages/playground/windows/Playground.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
+
       - task: MSBuild@1
         displayName: MSBuild - Playground
         inputs:
@@ -129,6 +137,14 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
 
       - task: CmdLine@2
         displayName: Create Playground bundle
@@ -144,6 +160,14 @@ jobs:
           verbosityRestore: Detailed # Options: quiet, normal, detailed
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
+        
       - task: MSBuild@1
         displayName: MSBuild - SampleApps
         inputs:
