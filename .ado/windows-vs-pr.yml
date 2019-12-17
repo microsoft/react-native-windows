@@ -127,7 +127,6 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
 
@@ -156,7 +155,6 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), ne(variables['BuildPlatform'], 'x86'), true) # Disabled. issue #3670  Unable to resolve module `warnOnce`
 
@@ -175,7 +173,6 @@ jobs:
           msbuildArguments:
             /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
             /p:PlatformToolset=$(MSBuildPlatformToolset)
-            /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
         condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), eq(variables['BuildPlatform'], 'x86'), true) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
 
@@ -530,7 +527,6 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:TargetPlatformVersion=$(TargetPlatformVersion)
             /p:WindowsTargetPlatformVersion=$(TargetPlatformVersion)
-            /p:BaseIntDir=$(BaseIntDir)
 
           #clean: true # Optional
           #maximumCpuCount: false # Optional
@@ -577,7 +573,7 @@ jobs:
           script: |
             Get-WmiObject Win32_LogicalDisk
         condition: succeededOrFailed()
-        
+
   - template: templates/e2e-test-job.yml # Template reference
     parameters:
       name: E2ETest

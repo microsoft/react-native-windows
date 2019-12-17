@@ -91,7 +91,6 @@ steps:
       msbuildArguments:
         /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
         /p:PlatformToolset=$(MSBuildPlatformToolset)
-        /p:BaseIntDir=$(BaseIntDir)
 
   - task: PublishBuildArtifacts@1
     condition:  succeededOrFailed()

@@ -108,3 +108,11 @@ jobs:
           targetType: "inline"
           script: "Get-Content packages/E2ETest/reports/appium.txt | foreach {Write-Output $_}"
         condition: failed()
+
+      - task: PowerShell@2
+        displayName: Display disksize
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
