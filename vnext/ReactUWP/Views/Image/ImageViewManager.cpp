@@ -143,7 +143,7 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
     UpdateCornerRadiusOnElement(nodeToUpdate, grid);
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ImageSource &source) {
+void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
   auto reactInstance{m_wkReactInstance.lock()};
   if (reactInstance == nullptr)
     return;
