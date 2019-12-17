@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!-- 
+    Due to the mono-repo setup in this repo, we should ensure that all the projects
+    are pointing to the same place for react-native and react-native-windows.
+    -->
+
+  <PropertyGroup>
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\vnext\</ReactNativeWindowsDir>
+    <ReactNativeDir>$(MSBuildThisFileDirectory)\node_modules\react-native\</ReactNativeDir>
+  </PropertyGroup>
+
+</Project>

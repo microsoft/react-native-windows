@@ -177,7 +177,6 @@
   <PropertyGroup>
     <BundleCommand>
       cd ..
-      react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle
     </BundleCommand>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.targets" />
