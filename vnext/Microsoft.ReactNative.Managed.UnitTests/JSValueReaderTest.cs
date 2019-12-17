@@ -136,7 +136,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     // Reading discriminating union requires using JSValue.
     public static void ReadValue(this JSValue jsValue, out OneOf2<T2Extra, R2D2Extra> value)
     {
-      value = default;
+      value = default(OneOf2<T2Extra, R2D2Extra>);
       if (jsValue.TryGetObjectProperty("Kind", out JSValue kind))
       {
         RobotModel modelType = kind.ReadValue<RobotModel>();

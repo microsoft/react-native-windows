@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Added new unit test projects to ReactWindows-Universal solution.",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "dac50d48f1dc58362e90084646d20bbffa003429",
+  "date": "2019-12-14T03:51:32.037Z"
+}

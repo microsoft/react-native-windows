@@ -413,10 +413,10 @@ namespace Microsoft.ReactNative.Managed
       return Assign(Property(propertyInfo.GetSetMethod().IsStatic ? null : instance, propertyInfo), value);
     }
 
-    public static TDelegate CompileLambda<TDelegate>(params object[] expressions) where TDelegate : Delegate
+    public static TDelegate CompileLambda<TDelegate>(params object[] expressions) /*TODO: add in C# v7.3: where TDelegate : Delegate*/
     {
       var typeWrapper = new TypeWrapper(typeof(TDelegate));
-      return (TDelegate)typeWrapper.CompileLambda(expressions);
+      return (TDelegate)(object)typeWrapper.CompileLambda(expressions);
     }
 
     public static VariableWrapper[] MethodArgs(
