@@ -3,17 +3,18 @@
  * Licensed under the MIT License.
  */
 
-import { TextInput, View, StyleSheet, Button } from 'react-native';
+import { Switch, CheckBox, TextInput, View, StyleSheet, Button } from 'react-native';
+import {DatePicker, Picker} from 'react-native-windows';
 import React, { useState } from 'react';
-import {SHOWBORDER_ON_TEXTINPUTSTYLE, TREE_DUMP_RESULT} from './Consts';
+import {SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT} from './Consts';
 import {TreeDumpControl} from './TreeDump'
 
 const styles = StyleSheet.create({
   container: {
     padding: 20
   },
-  input: {
-    height: 40,
+  regularBorder: {
+    height: 50,
     backgroundColor: 'rgba(225,225,225,0.2)',
     borderWidth:1,
     borderColor: '#ff00ff55',
@@ -21,8 +22,8 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#fff'
   },
-  inputWithRoundBorder: {
-    height: 40,
+  roundBorder: {
+    height: 50,
     backgroundColor: 'rgba(0,0,0,0.2)',
     marginBottom: 10,
     padding: 10,
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
     borderWidth:10,
     borderColor: '#00ff0055',
   },
-  
   buttonText: {
     color: '#fff',
     textAlign: 'center',
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export function TextInputStylePage() {
+export function ControlStylePage() {
   const [showRoundBorder, setShowRoundBorder] = useState(false);
 
   const onPressShowRoundBorder = () => {
@@ -55,24 +55,28 @@ export function TextInputStylePage() {
 
    return (
     <View>
-      <View testID={'TextInputView'}>
-        <TextInput style={showRoundBorder? styles.inputWithRoundBorder :styles.input}
+      <View testID={'ControlStyleView'}>
+        <Switch style={showRoundBorder? styles.roundBorder :styles.regularBorder} thumbColor='blue'/>
+        <CheckBox style={showRoundBorder? styles.roundBorder :styles.regularBorder} />
+        <TextInput style={showRoundBorder? styles.roundBorder :styles.regularBorder}
           placeholder='TextBox'
           placeholderTextColor='rgba(225,225,225,0.7)'
           editable={false} />
 
-        <TextInput style={showRoundBorder? styles.inputWithRoundBorder :styles.input}
+        <TextInput style={showRoundBorder? styles.roundBorder :styles.regularBorder}
           placeholder='Password'
           placeholderTextColor='rgba(225,225,225,0.7)'
           secureTextEntry = {true}
           editable={false}/>
+        <DatePicker style={showRoundBorder? styles.roundBorder :styles.regularBorder}/>
+        <Picker style={showRoundBorder? styles.roundBorder :styles.regularBorder}/>
       </View>
       
       <Button title= {showRoundBorder?"Hide Round Border":"Show Round Border"} 
         onPress={onPressShowRoundBorder} 
-        testID={SHOWBORDER_ON_TEXTINPUTSTYLE}/>
+        testID={SHOWBORDER_ON_CONTROLSTYLE}/>
 
-      <TreeDumpControl style={styles.treeDumpControl} dumpID={showRoundBorder?'TextInputWithRoundBorder':'TextInputWithoutRoundBorder'} uiaID={'TextInputView'} testID={TREE_DUMP_RESULT} />
+      <TreeDumpControl style={styles.treeDumpControl} dumpID={showRoundBorder?'ControlStyleRoundBorder':'ControlStyleRegularBorder'} uiaID={'ControlStyleView'} testID={TREE_DUMP_RESULT} />
       
     </View >);
 }

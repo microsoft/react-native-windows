@@ -22,8 +22,8 @@
       the application package. The asterisks are not wildcards.
     -->
     <Assembly Name="*Application*" Dynamic="Required All" />
-    <Namespace Name="Windows.UI.Xaml" Serialize="All"/>
-        
+    <Namespace Name="Windows.UI.Xaml" Serialize ="Required All"/>
+
     <!-- Add your application specific runtime directives here. -->
 
 

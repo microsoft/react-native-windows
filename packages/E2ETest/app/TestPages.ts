@@ -14,13 +14,13 @@ import {
   ACCESSBILITY_TESTPAGE,
   DIRECT_MANIPULATION_TESTPAGE,
   IMAGE_TESTPAGE,
-  TEXTINPUT_STYLE_TESTPAGE,
+  CONTROL_STYLE_TESTPAGE,
 } from './Consts';
 import { LoginTestPage } from './LoginTestPage';
 import { AccessibilityTestPage } from './AccessibilityTestPage';
 import { DirectManipulationTestPage } from './DirectManipulationPage';
 import { ImageTestPage } from './ImageTestPage';
-import { TextInputStylePage } from './TextInputStyle';
+import { ControlStylePage } from './ControlStyle';
 
 export interface ITestPage {
   testId: string;
@@ -55,9 +55,9 @@ const TestPages: ITestPage[] = [
     content: ImageTestPage,
   },
   {
-    testId: TEXTINPUT_STYLE_TESTPAGE,
-    description: 'TextInput Style Test Page',
-    content: TextInputStylePage,
+    testId: CONTROL_STYLE_TESTPAGE,
+    description: 'Control Style Test Page',
+    content: ControlStylePage,
   },
   {
     testId: UNKNOWN_TESTPAGE,

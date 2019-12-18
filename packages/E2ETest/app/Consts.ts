@@ -39,6 +39,6 @@ export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
 export const SHOW_IMAGE_BORDER = 'BorderButton';
 export const IMAGE_CONTAINER = 'ImageContainer';
 
-// TextInput Style Test Page
-export const TEXTINPUT_STYLE_TESTPAGE = 'TextInputStylePage';
-export const SHOWBORDER_ON_TEXTINPUTSTYLE = 'ShowBorder';
+// Control Style Test Page
+export const CONTROL_STYLE_TESTPAGE = 'ControlStylePage';
+export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';

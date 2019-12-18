@@ -4,7 +4,7 @@
  */
 
 import { BasePage, By } from './BasePage';
-import { SHOWBORDER_ON_TEXTINPUTSTYLE } from '../../app/Consts';
+import { SHOWBORDER_ON_CONTROLSTYLE } from '../../app/Consts';
 
 class TextInputStyleTestPage extends BasePage {
   backToHomePage() {
@@ -16,12 +16,12 @@ class TextInputStyleTestPage extends BasePage {
     return super.isPageLoaded();
   }
 
-  toggleTextInputBorder() {
-    this._textInputBorder.click();
+  toggleControlBorder() {
+    this._controlBorder.click();
   }
 
-  private get _textInputBorder() {
-    return By(SHOWBORDER_ON_TEXTINPUTSTYLE);
+  private get _controlBorder() {
+    return By(SHOWBORDER_ON_CONTROLSTYLE);
   }
 }
 

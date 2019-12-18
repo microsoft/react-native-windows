@@ -75,5 +75,13 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
     UpdateCornerRadiusOnElement(nodeToUpdate, control);
 }
 
+void ControlViewManager::InitializeDefaultProperties(XamlView view) {
+  // Set the default cornerRadius to 2 for controls, since WinUI usually default template the cornerRadius to 2
+  if (auto control = view.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()){
+    winrt::Windows::UI::Xaml::CornerRadius cornerRadius{0};
+    control.CornerRadius(cornerRadius);
+  }
+}
+
 } // namespace uwp
 } // namespace react

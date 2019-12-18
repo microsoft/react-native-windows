@@ -594,10 +594,6 @@ facebook::react::ShadowNode *TextInputViewManager::createShadow() const {
 
 XamlView TextInputViewManager::CreateViewCore(int64_t tag) {
   winrt::TextBox textBox;
-  // Set the default cornerRadius to 2 for TextBox, since it can be template binding to default control cornerRadius 2
-  winrt::Windows::UI::Xaml::CornerRadius cornerRadius{0};
-  textBox.CornerRadius(cornerRadius);
-
   return textBox;
 }
 
