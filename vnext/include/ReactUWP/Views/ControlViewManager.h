@@ -21,7 +21,7 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
   void TransferProperties(XamlView oldView, XamlView newView) override;
 
  protected:
-  void InitializeDefaultProperties(XamlView view) override;
+  void OnViewCreated(XamlView view) override;
 };
 
 } // namespace uwp

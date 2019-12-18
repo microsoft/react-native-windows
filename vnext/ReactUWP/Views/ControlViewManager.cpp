@@ -28,10 +28,14 @@ void ControlViewManager::TransferProperties(XamlView oldView, XamlView newView) 
   TransferProperty(oldView, newView, winrt::Control::BackgroundProperty());
   TransferProperty(oldView, newView, winrt::Control::BorderBrushProperty());
   TransferProperty(oldView, newView, winrt::Control::BorderThicknessProperty());
-  TransferProperty(oldView, newView, winrt::Control::CornerRadiusProperty());
   TransferProperty(oldView, newView, winrt::Control::PaddingProperty());
   TransferProperty(oldView, newView, winrt::Control::ForegroundProperty());
   TransferProperty(oldView, newView, winrt::Control::TabIndexProperty());
+  // Control.CornerRadius is only supported on >= RS5
+  if (oldView.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>() &&
+      newView.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+    TransferProperty(oldView, newView, winrt::Control::CornerRadiusProperty());
+  }
   Super::TransferProperties(oldView, newView);
 }
 
@@ -71,18 +75,17 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
 
-  if (finalizeBorderRadius) {
-    if (control.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
-      UpdateCornerRadiusOnElement(nodeToUpdate, control);
-    }
+  if (finalizeBorderRadius && control.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+    // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
+    UpdateCornerRadiusOnElement(nodeToUpdate, control);
   }
 }
 
-void ControlViewManager::InitializeDefaultProperties(XamlView view) {
+void ControlViewManager::OnViewCreated(XamlView view) {
   // Set the default cornerRadius to 0 for Control: WinUI usually default cornerRadius to 2
+  // Only works on >= RS5 becuase Control.CornerRadius is only supported >= RS5
   if (auto control = view.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
-    winrt::Windows::UI::Xaml::CornerRadius cornerRadius{0};
-    control.CornerRadius(cornerRadius);
+    control.CornerRadius({0});
   }
 }
 

@@ -20,7 +20,7 @@ import { LoginTestPage } from './LoginTestPage';
 import { AccessibilityTestPage } from './AccessibilityTestPage';
 import { DirectManipulationTestPage } from './DirectManipulationPage';
 import { ImageTestPage } from './ImageTestPage';
-import { ControlStylePage } from './ControlStyle';
+import { ControlStyleTestPage } from './ControlStyleTestPage';
 
 export interface ITestPage {
   testId: string;
@@ -57,7 +57,7 @@ const TestPages: ITestPage[] = [
   {
     testId: CONTROL_STYLE_TESTPAGE,
     description: 'Control Style Test Page',
-    content: ControlStylePage,
+    content: ControlStyleTestPage,
   },
   {
     testId: UNKNOWN_TESTPAGE,

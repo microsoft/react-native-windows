@@ -4,10 +4,10 @@
  */
 
 import { Switch, CheckBox, TextInput, View, StyleSheet, Button } from 'react-native';
-import {DatePicker, Picker} from 'react-native-windows';
+import { DatePicker, Picker } from 'react-native-windows';
 import React, { useState } from 'react';
-import {SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT} from './Consts';
-import {TreeDumpControl} from './TreeDump'
+import { SHOWBORDER_ON_CONTROLSTYLE, TREE_DUMP_RESULT } from './Consts';
+import { TreeDumpControl } from './TreeDumpControl'
 
 const styles = StyleSheet.create({
   container: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export function ControlStylePage() {
+export function ControlStyleTestPage() {
   const [showRoundBorder, setShowRoundBorder] = useState(false);
 
   const onPressShowRoundBorder = () => {

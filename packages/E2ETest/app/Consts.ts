@@ -40,5 +40,5 @@ export const SHOW_IMAGE_BORDER = 'BorderButton';
 export const IMAGE_CONTAINER = 'ImageContainer';
 
 // Control Style Test Page
-export const CONTROL_STYLE_TESTPAGE = 'ControlStylePage';
+export const CONTROL_STYLE_TESTPAGE = 'ControlStyleTestPage';
 export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';

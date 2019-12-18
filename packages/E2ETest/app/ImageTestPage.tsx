@@ -3,10 +3,10 @@
  * Licensed under the MIT License.
  */
 
-import {StyleSheet, View, Image, Button} from 'react-native'
+import { StyleSheet, View, Image, Button } from 'react-native'
 import React, { useState } from 'react';
 import { SHOW_IMAGE_BORDER, IMAGE_CONTAINER, TREE_DUMP_RESULT } from './Consts';
-import {TreeDumpControl} from './TreeDump'
+import { TreeDumpControl } from './TreeDumpControl'
 
 const styles = StyleSheet.create({
   container: {

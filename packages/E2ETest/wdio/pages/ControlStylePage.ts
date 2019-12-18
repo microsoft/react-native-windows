@@ -6,7 +6,7 @@
 import { BasePage, By } from './BasePage';
 import { SHOWBORDER_ON_CONTROLSTYLE } from '../../app/Consts';
 
-class TextInputStyleTestPage extends BasePage {
+class ControlStyleTestPage extends BasePage {
   backToHomePage() {
     this.homeButton.click();
     this.waitForPageLoaded();
@@ -25,4 +25,4 @@ class TextInputStyleTestPage extends BasePage {
   }
 }
 
-export default new TextInputStyleTestPage();
+export default new ControlStyleTestPage();
