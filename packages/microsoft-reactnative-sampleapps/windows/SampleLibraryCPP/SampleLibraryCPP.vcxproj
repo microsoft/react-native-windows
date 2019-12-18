@@ -6,8 +6,8 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{47eec7f3-40d3-49ba-82c1-eaf103b54215}</ProjectGuid>
-    <ProjectName>SampleLibraryCPP</ProjectName>
-    <RootNamespace>SampleLibraryCPP</RootNamespace>
+    <ProjectName>SampleLibraryCpp</ProjectName>
+    <RootNamespace>SampleLibraryCpp</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -90,7 +90,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>SampleLibraryCPP.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>SampleLibraryCpp.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -104,24 +104,24 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CustomUserControlCPP.h">
-      <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
+    <ClInclude Include="CustomUserControlCpp.h">
+      <DependentUpon>CustomUserControlCpp.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="CustomUserControlViewManagerCPP.h" />
-    <ClInclude Include="CircleViewManagerCPP.h" />
+    <ClInclude Include="CustomUserControlViewManagerCpp.h" />
+    <ClInclude Include="CircleViewManagerCpp.h" />
     <ClInclude Include="DebugHelpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ReactPackageProvider.h">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="SampleModuleCPP.h" />
+    <ClInclude Include="SampleModuleCpp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CustomUserControlCPP.cpp">
-      <DependentUpon>CustomUserControlCPP.idl</DependentUpon>
+    <ClCompile Include="CustomUserControlCpp.cpp">
+      <DependentUpon>CustomUserControlCpp.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="CustomUserControlViewManagerCPP.cpp" />
-    <ClCompile Include="CircleViewManagerCPP.cpp" />
+    <ClCompile Include="CustomUserControlViewManagerCpp.cpp" />
+    <ClCompile Include="CircleViewManagerCpp.cpp" />
     <ClCompile Include="DebugHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -132,12 +132,12 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="CustomUserControlCPP.idl" />
+    <Midl Include="CustomUserControlCpp.idl" />
     <Midl Include="ReactPackageProvider.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SampleLibraryCPP.def" />
+    <None Include="SampleLibraryCpp.def" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />

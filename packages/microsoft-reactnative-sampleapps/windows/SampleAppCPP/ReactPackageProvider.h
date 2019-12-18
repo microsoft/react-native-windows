@@ -6,11 +6,11 @@
 
 using namespace winrt::Microsoft::ReactNative::Bridge;
 
-namespace winrt::SampleApp::implementation {
+namespace winrt::SampleAppCpp::implementation {
 
 struct ReactPackageProvider : winrt::implements<ReactPackageProvider, IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
 };
 
-} // namespace winrt::SampleApp::implementation
+} // namespace winrt::SampleAppCpp::implementation

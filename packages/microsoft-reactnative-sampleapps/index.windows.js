@@ -19,13 +19,13 @@ import { NativeModules, NativeEventEmitter } from 'react-native';
 
 // Creating event emitters
 const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
-const SampleModuleCPPEmitter = new NativeEventEmitter(NativeModules.SampleModuleCPP);
+const SampleModuleCppEmitter = new NativeEventEmitter(NativeModules.SampleModuleCpp);
 
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
-const CustomUserControlCPP = requireNativeComponent('CustomUserControlCPP');
+const CustomUserControlCpp = requireNativeComponent('CustomUserControlCpp');
 
 const CircleCS = requireNativeComponent('CircleCS');
-const CircleCPP = requireNativeComponent('CircleCPP');
+const CircleCpp = requireNativeComponent('CircleCpp');
 
 var log = function(result) {
   console.log(result);
@@ -47,12 +47,12 @@ var getErrorCallback = function(prefix) {
 class SampleApp extends Component {
   componentDidMount() {
     this._TimedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
-    this._TimedEventCPPSub = SampleModuleCPPEmitter.addListener('TimedEventCPP', getCallback('SampleModuleCPP.TimedEventCPP() => '));
+    this._TimedEventCppSub = SampleModuleCppEmitter.addListener('TimedEventCpp', getCallback('SampleModuleCpp.TimedEventCpp() => '));
   }
 
   componentWillUnmount() {
     this._TimedEventCSSub.remove();
-    this._TimedEventCPPSub.remove();
+    this._TimedEventCppSub.remove();
   }
 
   onPressSampleModuleCS() {
@@ -93,42 +93,42 @@ class SampleApp extends Component {
     log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
   }
 
-  onPressSampleModuleCPP() {
-    log('SampleApp.onPressSampleModuleCPP()');
+  onPressSampleModuleCpp() {
+    log('SampleApp.onPressSampleModuleCpp()');
 
     var numberArg = 42;
 
-    // SampleModuleCPP constants
+    // SampleModuleCpp constants
 
-    log(`SampleModuleCPP.NumberConstant: ${NativeModules.SampleModuleCPP.NumberConstant}`);
-    log(`SampleModuleCPP.StringConstant: ${NativeModules.SampleModuleCPP.StringConstant}`);
+    log(`SampleModuleCpp.NumberConstant: ${NativeModules.SampleModuleCpp.NumberConstant}`);
+    log(`SampleModuleCpp.StringConstant: ${NativeModules.SampleModuleCpp.StringConstant}`);
 
-    log(`SampleModuleCPP.NumberConstantViaProvider: ${NativeModules.SampleModuleCPP.NumberConstantViaProvider}`);
-    log(`SampleModuleCPP.StringConstantViaProvider: ${NativeModules.SampleModuleCPP.StringConstantViaProvider}`);
+    log(`SampleModuleCpp.NumberConstantViaProvider: ${NativeModules.SampleModuleCpp.NumberConstantViaProvider}`);
+    log(`SampleModuleCpp.StringConstantViaProvider: ${NativeModules.SampleModuleCpp.StringConstantViaProvider}`);
 
-    // SampleModuleCPP method calls
+    // SampleModuleCpp method calls
 
-    NativeModules.SampleModuleCPP.VoidMethod();
+    NativeModules.SampleModuleCpp.VoidMethod();
 
-    NativeModules.SampleModuleCPP.VoidMethodWithArgs(numberArg);
+    NativeModules.SampleModuleCpp.VoidMethodWithArgs(numberArg);
 
-    NativeModules.SampleModuleCPP.ReturnMethod(getCallback('SampleModuleCPP.ReturnMethod => '));
+    NativeModules.SampleModuleCpp.ReturnMethod(getCallback('SampleModuleCpp.ReturnMethod => '));
 
-    NativeModules.SampleModuleCPP.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ReturnMethodWithArgs => '));
+    NativeModules.SampleModuleCpp.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ReturnMethodWithArgs => '));
 
-    NativeModules.SampleModuleCPP.ExplicitCallbackMethod(getCallback('SampleModuleCPP.ExplicitCallbackMethod => '));
+    NativeModules.SampleModuleCpp.ExplicitCallbackMethod(getCallback('SampleModuleCpp.ExplicitCallbackMethod => '));
 
-    NativeModules.SampleModuleCPP.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCPP.ExplicitCallbackMethodWithArgs => '));
+    NativeModules.SampleModuleCpp.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ExplicitCallbackMethodWithArgs => '));
 
-    var promise1 = NativeModules.SampleModuleCPP.ExplicitPromiseMethod();
-    promise1.then(getCallback('SampleModuleCPP.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCPP.ExplicitPromiseMethod catch => '));
+    var promise1 = NativeModules.SampleModuleCpp.ExplicitPromiseMethod();
+    promise1.then(getCallback('SampleModuleCpp.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCpp.ExplicitPromiseMethod catch => '));
 
-    var promise2 = NativeModules.SampleModuleCPP.ExplicitPromiseMethodWithArgs(numberArg);
-    promise2.then(getCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCPP.ExplicitPromiseMethodWithArgs catch => '));
+    var promise2 = NativeModules.SampleModuleCpp.ExplicitPromiseMethodWithArgs(numberArg);
+    promise2.then(getCallback('SampleModuleCpp.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCpp.ExplicitPromiseMethodWithArgs catch => '));
 
-    log('SampleModuleCPP.SyncReturnMethod => ' + NativeModules.SampleModuleCPP.SyncReturnMethod());
+    log('SampleModuleCpp.SyncReturnMethod => ' + NativeModules.SampleModuleCpp.SyncReturnMethod());
 
-    log('SampleModuleCPP.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCPP.SyncReturnMethodWithArgs(numberArg));
+    log('SampleModuleCpp.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCpp.SyncReturnMethodWithArgs(numberArg));
   }
 
   onPressCustomUserControlCS() {
@@ -144,16 +144,16 @@ class SampleApp extends Component {
     }
   }
 
-  onPressCustomUserControlCPP() {
-    log('SampleApp.onPressCustomUserControlCPP()');
+  onPressCustomUserControlCpp() {
+    log('SampleApp.onPressCustomUserControlCpp()');
 
     var strArg = 'Hello World!';
 
-    if (this._CustomUserControlCPPRef)
+    if (this._CustomUserControlCppRef)
     {
-      const tag = findNodeHandle(this._CustomUserControlCPPRef);
-      log(`UIManager.dispatchViewManagerCommand(${tag}, CustomUserControlCPP.CustomCommand, "${strArg}")`);
-      UIManager.dispatchViewManagerCommand(tag, UIManager.getViewManagerConfig('CustomUserControlCPP').Commands.CustomCommand, strArg);
+      const tag = findNodeHandle(this._CustomUserControlCppRef);
+      log(`UIManager.dispatchViewManagerCommand(${tag}, CustomUserControlCpp.CustomCommand, "${strArg}")`);
+      UIManager.dispatchViewManagerCommand(tag, UIManager.getViewManagerConfig('CustomUserControlCpp').Commands.CustomCommand, strArg);
     }
   }
 
@@ -162,9 +162,9 @@ class SampleApp extends Component {
     log(`SampleApp.onLabelChangedCustomUserControlCS("${label}")`);
   }
 
-  onLabelChangedCustomUserControlCPP(evt) {
+  onLabelChangedCustomUserControlCpp(evt) {
     var label = evt.nativeEvent;
-    log(`SampleApp.onLabelChangedCustomUserControlCPP("${label}")`);
+    log(`SampleApp.onLabelChangedCustomUserControlCpp("${label}")`);
   }
 
   render() {
@@ -178,13 +178,13 @@ class SampleApp extends Component {
         </Text>
 
         <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
-        <Button onPress={() => { this.onPressSampleModuleCPP(); }} title="Call SampleModuleCPP!" disabled={NativeModules.SampleModuleCPP == null} />
+        <Button onPress={() => { this.onPressSampleModuleCpp(); }} title="Call SampleModuleCpp!" disabled={NativeModules.SampleModuleCpp == null} />
 
         <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCS(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
 
-        <CustomUserControlCPP style={styles.customcontrol} label="CustomUserControlCPP!" ref={(ref) => { this._CustomUserControlCPPRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCPP(evt); }} />
-        <Button onPress={() => { this.onPressCustomUserControlCPP(); }} title="Call CustomUserControlCPP Commands!" />
+        <CustomUserControlCpp style={styles.customcontrol} label="CustomUserControlCpp!" ref={(ref) => { this._CustomUserControlCppRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCpp(evt); }} />
+        <Button onPress={() => { this.onPressCustomUserControlCpp(); }} title="Call CustomUserControlCpp Commands!" />
 
         <CircleCS style={styles.circle}>
           <View style={styles.box}>
@@ -192,11 +192,11 @@ class SampleApp extends Component {
           </View>
         </CircleCS>
 
-        <CircleCPP style={styles.circle}>
+        <CircleCpp style={styles.circle}>
           <View style={styles.box}>
-            <Text style={styles.boxText}>CircleCPP!</Text>
+            <Text style={styles.boxText}>CircleCpp!</Text>
           </View>
-        </CircleCPP>
+        </CircleCpp>
         <Text style={styles.instructions}>
           Hello from Microsoft!
         </Text>

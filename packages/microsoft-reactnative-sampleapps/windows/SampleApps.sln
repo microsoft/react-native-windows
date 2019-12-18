@@ -4,7 +4,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleAppCS", "SampleAppCS\SampleAppCS.csproj", "{09F4E6C1-2D12-4059-AA96-0B190861FD6A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleAppCPP", "SampleAppCPP\SampleApp.vcxproj", "{93F7572C-64B9-4096-9EF9-6BA0EDE2B50D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleAppCpp", "SampleAppCpp\SampleAppCpp.vcxproj", "{93F7572C-64B9-4096-9EF9-6BA0EDE2B50D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {F7D32BD0-2749-483E-9A0D-1635EF7E3136}
 	EndProjectSection
@@ -32,7 +32,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleLibraryCS", "SampleLibraryCS\SampleLibraryCS.csproj", "{C0A6BD9C-3EE5-4B12-8CE4-CEE95178539C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleLibraryCPP", "SampleLibraryCPP\SampleLibraryCPP.vcxproj", "{47EEC7F3-40D3-49BA-82C1-EAF103B54215}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleLibraryCpp", "SampleLibraryCpp\SampleLibraryCpp.vcxproj", "{47EEC7F3-40D3-49BA-82C1-EAF103B54215}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "JSI.Shared", "..\..\..\vnext\JSI\Shared\JSI.Shared.vcxitems", "{0CC28589-39E4-4288-B162-97B959F8B843}"
 EndProject

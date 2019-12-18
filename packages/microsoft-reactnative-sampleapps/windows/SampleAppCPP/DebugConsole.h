@@ -3,10 +3,9 @@
 
 #pragma once
 
-#include <functional>
 #include "NativeModules.h"
 
-namespace SampleApp {
+namespace SampleAppCpp {
 
 REACT_MODULE(DebugConsole);
 struct DebugConsole {
@@ -17,4 +16,4 @@ struct DebugConsole {
   }
 };
 
-} // namespace SampleApp
+} // namespace SampleAppCpp
