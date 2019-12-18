@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "port windowsbrush changes from Microsoft fork of react-native",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "a195ce0d079f30dcfd3b376e89240916891204bd",
+  "date": "2019-12-17T02:55:30.505Z"
+}
