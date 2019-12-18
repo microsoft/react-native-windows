@@ -99,10 +99,11 @@ namespace TreeDumpLibrary
             if (m_textBlock != null)
             {
                 m_textBlock.IsTextSelectionEnabled = false;
+                UpdateTextBlockText("");
             }
             m_timer = new DispatcherTimer();
             m_timer.Tick += dispatcherTimer_Tick;
-            m_timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            m_timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
         }
 
         public void SetUIAID(TextBlock view, string value)
