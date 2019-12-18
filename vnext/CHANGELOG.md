@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 Dec 2019 01:40:40 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Dec 2019 21:47:15 GMT and should not be manually modified.
 
+## 0.60.0-vnext.98
+Wed, 18 Dec 2019 21:47:15 GMT
+
+### Changes
+
+- port windowsbrush changes from Microsoft fork of react-native (kmelmon@microsoft.com)
 ## 0.60.0-vnext.97
 Wed, 18 Dec 2019 01:40:40 GMT
 
