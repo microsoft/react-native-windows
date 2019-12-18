@@ -49,6 +49,14 @@ steps:
       script: yarn install
     condition: and(succeeded(), not('${{parameters.useRnFork}}'))
 
+  - task: PowerShell@2
+    displayName: Display disksize
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        Get-WmiObject Win32_LogicalDisk
+    condition: succeededOrFailed()
+
   - task: CmdLine@2
     displayName: Install react-native-cli
     inputs:
@@ -59,10 +67,26 @@ steps:
     inputs:
       script: yarn ${{ parameters.yarnBuildCmd }}
 
+  - task: PowerShell@2
+    displayName: Display disksize
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        Get-WmiObject Win32_LogicalDisk
+    condition: succeededOrFailed()
+
   - template: install-SDK.yml
     parameters:
       sdkVersion: $(Win10Version)
 
+  - task: PowerShell@2
+    displayName: Display disksize
+    inputs:
+      targetType: inline # filePath | inline
+      script: |
+        Get-WmiObject Win32_LogicalDisk
+    condition: succeededOrFailed()
+    
   - task: PowerShell@2
     displayName: Install Visual Studio dependencies
     inputs:
