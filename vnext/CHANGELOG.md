@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 Dec 2019 21:22:31 GMT and should not be manually modified.
+This log was last generated on Wed, 18 Dec 2019 01:40:40 GMT and should not be manually modified.
 
+## 0.60.0-vnext.97
+Wed, 18 Dec 2019 01:40:40 GMT
+
+### Changes
+
+- Conditionally use BitmapImage (email not defined)
 ## 0.60.0-vnext.96
 Mon, 16 Dec 2019 21:22:31 GMT
 
