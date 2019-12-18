@@ -5,10 +5,10 @@
 
 #include "App.h"
 #include "ReactPackageProvider.h"
-#include "winrt/SampleLibraryCPP.h"
 #include "winrt/SampleLibraryCS.h"
+#include "winrt/SampleLibraryCpp.h"
 
-namespace winrt::SampleApp::implementation {
+namespace winrt::SampleAppCpp::implementation {
 
 /// <summary>
 /// Initializes the singleton application object.  This is the first line of
@@ -36,7 +36,7 @@ App::App() noexcept {
 #endif
 
   PackageProviders().Append(make<ReactPackageProvider>()); // Includes all modules in this project
-  PackageProviders().Append(winrt::SampleLibraryCPP::ReactPackageProvider());
+  PackageProviders().Append(winrt::SampleLibraryCpp::ReactPackageProvider());
   PackageProviders().Append(winrt::SampleLibraryCS::ReactPackageProvider());
 
   InitializeComponent();
@@ -47,4 +47,4 @@ App::App() noexcept {
   m_inner.as<::IUnknown>()->Release();
 }
 
-} // namespace winrt::SampleApp::implementation
+} // namespace winrt::SampleAppCpp::implementation

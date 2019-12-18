@@ -5,14 +5,14 @@
 
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 
-namespace winrt::SampleLibraryCPP::implementation {
+namespace winrt::SampleLibraryCpp::implementation {
 
-struct CircleViewManagerCPP : winrt::implements<
-                                  CircleViewManagerCPP,
+struct CircleViewManagerCpp : winrt::implements<
+                                  CircleViewManagerCpp,
                                   winrt::Microsoft::ReactNative::Bridge::IViewManager,
                                   winrt::Microsoft::ReactNative::Bridge::IViewManagerWithChildren> {
  public:
-  CircleViewManagerCPP();
+  CircleViewManagerCpp();
 
   // IViewManager
   winrt::hstring Name() noexcept;
@@ -68,4 +68,4 @@ struct HeightToCornerRadiusConverter
   // IValueConverter
 };
 
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation

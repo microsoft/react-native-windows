@@ -7,7 +7,7 @@
 
 #include <hstring.h>
 
-namespace SampleLibraryCPP {
+namespace SampleLibraryCpp {
 
 void DebugWriteLine(const std::string &name, const std::string &methodName, const std::string &arg);
 
@@ -15,4 +15,4 @@ void DebugWriteLine(const std::string &name, const std::string &methodName, doub
 
 void DebugWriteLine(const std::string &name, const std::string &methodName);
 
-} // namespace SampleLibraryCPP
+} // namespace SampleLibraryCpp

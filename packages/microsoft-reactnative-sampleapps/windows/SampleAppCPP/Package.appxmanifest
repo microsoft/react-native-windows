@@ -6,7 +6,7 @@
     Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="f7f3bd52-47fc-4b10-820c-d21716a92eff" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
   <Properties>
-    <DisplayName>SampleAppCPP</DisplayName>
+    <DisplayName>SampleAppCpp</DisplayName>
     <PublisherDisplayName>Microsoft</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -17,8 +17,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SampleApp.App">
-      <uap:VisualElements DisplayName="SampleAppCPP" Description="Project for a basic C++ React Native app based on the C++ implementation."
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SampleAppCpp.App">
+      <uap:VisualElements DisplayName="SampleAppCpp" Description="Project for a basic C++ React Native app based on the C++ implementation."
         Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
         </uap:DefaultTile>

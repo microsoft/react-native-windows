@@ -8,7 +8,7 @@
 
 using namespace winrt::Microsoft::ReactNative::Bridge;
 
-namespace winrt::SampleApp::implementation {
+namespace winrt::SampleAppCpp::implementation {
 
 //===========================================================================
 // ReactPackageProvider implementation
@@ -18,4 +18,4 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   AddAttributedModules(packageBuilder);
 }
 
-} // namespace winrt::SampleApp::implementation
+} // namespace winrt::SampleAppCpp::implementation

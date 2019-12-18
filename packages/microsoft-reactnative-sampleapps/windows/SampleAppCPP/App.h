@@ -4,10 +4,10 @@
 
 #include "App.xaml.g.h"
 
-namespace winrt::SampleApp::implementation {
+namespace winrt::SampleAppCpp::implementation {
 
 struct App : AppT<App> {
   App() noexcept;
 };
 
-} // namespace winrt::SampleApp::implementation
+} // namespace winrt::SampleAppCpp::implementation

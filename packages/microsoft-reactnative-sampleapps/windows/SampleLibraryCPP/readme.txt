@@ -1,5 +1,5 @@
 ========================================================================
-    C++/WinRT SampleLibraryCPP Project Overview
+    C++/WinRT SampleLibraryCpp Project Overview
 ========================================================================
 
 This project demonstrates how to get started authoring Windows Runtime 
