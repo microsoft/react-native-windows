@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "CustomUserControlCPP.g.h"
+#include "CustomUserControlCpp.g.h"
 
-namespace winrt::SampleLibraryCPP::implementation {
-struct CustomUserControlCPP : CustomUserControlCPPT<CustomUserControlCPP> {
-  CustomUserControlCPP();
+namespace winrt::SampleLibraryCpp::implementation {
+struct CustomUserControlCpp : CustomUserControlCppT<CustomUserControlCpp> {
+  CustomUserControlCpp();
 
   static Windows::UI::Xaml::DependencyProperty LabelProperty();
 
@@ -20,8 +20,8 @@ struct CustomUserControlCPP : CustomUserControlCPPT<CustomUserControlCPP> {
  private:
   static Windows::UI::Xaml::DependencyProperty m_labelProperty;
 };
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation
 
-namespace winrt::SampleLibraryCPP::factory_implementation {
-struct CustomUserControlCPP : CustomUserControlCPPT<CustomUserControlCPP, implementation::CustomUserControlCPP> {};
-} // namespace winrt::SampleLibraryCPP::factory_implementation
+namespace winrt::SampleLibraryCpp::factory_implementation {
+struct CustomUserControlCpp : CustomUserControlCppT<CustomUserControlCpp, implementation::CustomUserControlCpp> {};
+} // namespace winrt::SampleLibraryCpp::factory_implementation

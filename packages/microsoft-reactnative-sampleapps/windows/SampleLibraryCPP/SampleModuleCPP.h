@@ -12,13 +12,13 @@
 #include "DebugHelpers.h"
 #include "NativeModules.h"
 
-namespace SampleLibraryCPP {
+namespace SampleLibraryCpp {
 
 // Sample REACT_MODULE
 
-REACT_MODULE(SampleModuleCPP);
-struct SampleModuleCPP {
-  const std::string Name = "SampleModuleCPP";
+REACT_MODULE(SampleModuleCpp);
+struct SampleModuleCpp {
+  const std::string Name = "SampleModuleCpp";
 
 #pragma region Constants
 
@@ -118,13 +118,13 @@ struct SampleModuleCPP {
 
 #pragma region Events
 
-  REACT_EVENT(TimedEvent, L"TimedEventCPP");
+  REACT_EVENT(TimedEvent, L"TimedEventCpp");
   std::function<void(int)> TimedEvent;
 
 #pragma endregion
 
  public:
-  SampleModuleCPP() {
+  SampleModuleCpp() {
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
         [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           if (TimedEvent) {
@@ -134,7 +134,7 @@ struct SampleModuleCPP {
         std::chrono::milliseconds(TimedEventIntervalMS));
   }
 
-  ~SampleModuleCPP() {
+  ~SampleModuleCpp() {
     if (m_timer) {
       m_timer.Cancel();
     }
@@ -146,4 +146,4 @@ struct SampleModuleCPP {
   const int TimedEventIntervalMS = 5000;
 };
 
-} // namespace SampleLibraryCPP
+} // namespace SampleLibraryCpp

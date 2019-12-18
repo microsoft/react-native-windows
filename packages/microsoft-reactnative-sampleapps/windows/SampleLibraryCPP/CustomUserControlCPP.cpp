@@ -2,32 +2,32 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "CustomUserControlCPP.h"
-#include "CustomUserControlCPP.g.cpp"
+#include "CustomUserControlCpp.h"
+#include "CustomUserControlCpp.g.cpp"
 
-namespace winrt::SampleLibraryCPP::implementation {
+namespace winrt::SampleLibraryCpp::implementation {
 
-Windows::UI::Xaml::DependencyProperty CustomUserControlCPP::m_labelProperty =
+Windows::UI::Xaml::DependencyProperty CustomUserControlCpp::m_labelProperty =
     Windows::UI::Xaml::DependencyProperty::Register(
         L"Label",
         winrt::xaml_typename<winrt::hstring>(),
-        winrt::xaml_typename<winrt::SampleLibraryCPP::CustomUserControlCPP>(),
+        winrt::xaml_typename<winrt::SampleLibraryCpp::CustomUserControlCpp>(),
         Windows::UI::Xaml::PropertyMetadata{winrt::box_value(winrt::hstring())});
 
-CustomUserControlCPP::CustomUserControlCPP() {
-  DefaultStyleKey(winrt::box_value(L"SampleLibraryCPP.CustomUserControlCPP"));
+CustomUserControlCpp::CustomUserControlCpp() {
+  DefaultStyleKey(winrt::box_value(L"SampleLibraryCpp.CustomUserControlCpp"));
 }
 
-Windows::UI::Xaml::DependencyProperty CustomUserControlCPP::LabelProperty() {
+Windows::UI::Xaml::DependencyProperty CustomUserControlCpp::LabelProperty() {
   return m_labelProperty;
 }
 
-hstring CustomUserControlCPP::Label() {
+hstring CustomUserControlCpp::Label() {
   return winrt::unbox_value<winrt::hstring>(GetValue(m_labelProperty));
 }
 
-void CustomUserControlCPP::Label(hstring const &value) {
+void CustomUserControlCpp::Label(hstring const &value) {
   SetValue(m_labelProperty, winrt::box_value(value));
 }
 
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation

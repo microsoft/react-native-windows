@@ -5,17 +5,17 @@
 
 #include "winrt/Microsoft.ReactNative.Bridge.h"
 
-namespace winrt::SampleLibraryCPP::implementation {
+namespace winrt::SampleLibraryCpp::implementation {
 
-struct CustomUserControlViewManagerCPP
+struct CustomUserControlViewManagerCpp
     : winrt::implements<
-          CustomUserControlViewManagerCPP,
+          CustomUserControlViewManagerCpp,
           winrt::Microsoft::ReactNative::Bridge::IViewManager,
           winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties,
           winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands,
           winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedEventTypeConstants> {
  public:
-  CustomUserControlViewManagerCPP(winrt::Microsoft::ReactNative::Bridge::IReactContext const &reactContext);
+  CustomUserControlViewManagerCpp(winrt::Microsoft::ReactNative::Bridge::IReactContext const &reactContext);
 
   // IViewManager
   winrt::hstring Name() noexcept;
@@ -54,4 +54,4 @@ struct CustomUserControlViewManagerCPP
   winrt::Microsoft::ReactNative::Bridge::IReactContext m_reactContext{nullptr};
 };
 
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation

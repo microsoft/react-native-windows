@@ -4,7 +4,7 @@
 using Microsoft.ReactNative.Managed;
 using System.Diagnostics;
 
-namespace SampleApp
+namespace SampleAppCS
 {
     [ReactModule]
     class DebugConsole
