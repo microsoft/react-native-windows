@@ -24,9 +24,9 @@ using namespace Windows::UI::Xaml::Controls;
 
 // Such code is better to move to a seperate parser layer
 template <>
-struct json_type_traits<react::uwp::ImageSource> {
-  static react::uwp::ImageSource parseJson(const folly::dynamic &json) {
-    react::uwp::ImageSource source;
+struct json_type_traits<react::uwp::ReactImageSource> {
+  static react::uwp::ReactImageSource parseJson(const folly::dynamic &json) {
+    react::uwp::ReactImageSource source;
     for (auto &item : json.items()) {
       if (item.first == "uri")
         source.uri = item.second.asString();
@@ -81,7 +81,7 @@ class ImageShadowNode : public ShadowNodeBase {
 
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
                                               reactImage](const auto &, const bool &succeeded) {
-      ImageSource source{reactImage->Source()};
+      ReactImageSource source{reactImage->Source()};
 
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), succeeded ? "topLoad" : "topError", source);
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), "topLoadEnd", source);
@@ -143,7 +143,7 @@ void ImageViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const foll
     UpdateCornerRadiusOnElement(nodeToUpdate, grid);
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ImageSource &source) {
+void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
   auto reactInstance{m_wkReactInstance.lock()};
   if (reactInstance == nullptr)
     return;
@@ -161,8 +161,12 @@ void ImageViewManager::setSource(winrt::Grid grid, const folly::dynamic &data) {
   if (instance == nullptr)
     return;
 
-  auto sources{json_type_traits<std::vector<ImageSource>>::parseJson(data)};
+  auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
   sources[0].bundleRootPath = instance->GetBundleRootPath();
+
+  if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {
+    sources[0].uri.replace(0, 7, sources[0].bundleRootPath);
+  }
 
   auto reactImage{grid.as<ReactImage>()};
 
