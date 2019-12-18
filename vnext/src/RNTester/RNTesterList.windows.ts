@@ -216,6 +216,10 @@ const APIExamples: Array<IRNTesterExample> = [
     module: require('./ThemingExample'),
   },
   {
+    key: 'WindowsBrushExample',
+    module: require('./WindowsBrushExample'),
+  },
+  {
     key: 'TransformExample',
     module: require('react-native/RNTester/js/TransformExample'),
   },
