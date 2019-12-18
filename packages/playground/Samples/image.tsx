@@ -15,6 +15,9 @@ const smallImageUri =
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
 
+const svgImageUri =
+  'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg';
+
 export default class Bootstrap extends React.Component<
   {},
   {
@@ -48,6 +51,8 @@ export default class Bootstrap extends React.Component<
       imageUri = largeImageUri;
     } else if (value === 'data') {
       imageUri = dataImageUri;
+    } else if (value === 'svg') {
+      imageUri = svgImageUri;
     }
 
     this.setState({imageUri});
@@ -78,6 +83,7 @@ export default class Bootstrap extends React.Component<
             <Picker.Item label="small" value="small" />
             <Picker.Item label="large" value="large" />
             <Picker.Item label="data" value="data" />
+            <Picker.Item label="svg" value="svg" />
           </Picker>
         </View>
         <View style={styles.rowContainer}>

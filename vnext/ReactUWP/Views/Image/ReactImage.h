@@ -17,7 +17,7 @@
 namespace react {
 namespace uwp {
 
-enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
+enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, Svg = 3 };
 
 struct ReactImageSource {
   std::string uri;
@@ -73,6 +73,8 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::GridT<ReactImage> {
   winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
   winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;
   winrt::Windows::UI::Xaml::Media::ImageBrush::ImageFailed_revoker m_imageBrushFailedRevoker;
+  winrt::Windows::UI::Xaml::Media::Imaging::SvgImageSource::Opened_revoker m_svgImageSourceOpenedRevoker;
+  winrt::Windows::UI::Xaml::Media::Imaging::SvgImageSource::OpenFailed_revoker m_svgImageSourceOpenFailedRevoker;
 };
 
 // Helper functions
