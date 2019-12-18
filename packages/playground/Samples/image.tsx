@@ -18,14 +18,20 @@ const dataImageUri =
 export default class Bootstrap extends React.Component<
   {},
   {
-    selectedResizeMode: string;
+    selectedResizeMode:
+      | 'center'
+      | 'stretch'
+      | 'cover'
+      | 'contain'
+      | 'repeat'
+      | undefined;
     inlcudeBorder: boolean;
     selectedSource: string;
     imageUri: string;
   }
 > {
   state = {
-    selectedResizeMode: 'center',
+    selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
     inlcudeBorder: false,
     imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
