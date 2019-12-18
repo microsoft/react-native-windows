@@ -6,7 +6,7 @@ namespace SampleLibraryCpp
     [webhosthidden]
     [default_interface]
     runtimeclass ReactPackageProvider
-        : Microsoft.ReactNative.Bridge.IReactPackageProvider {
+        : Microsoft.ReactNative.IReactPackageProvider {
       ReactPackageProvider();
     };
 } // namespace CppModule

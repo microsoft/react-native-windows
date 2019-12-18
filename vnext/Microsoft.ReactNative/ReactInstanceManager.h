@@ -13,22 +13,17 @@
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/ReactUwp.h>
 
-using namespace winrt;
-using namespace Microsoft::ReactNative::Bridge;
-using namespace Windows::Foundation;
-using namespace Windows::Foundation::Collections;
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
   ReactInstanceManager() = default;
   ReactInstanceManager(
-      Microsoft::ReactNative::ReactInstanceSettings instanceSettings,
-      std::string jsBundleFile,
-      std::string jsMainModuleName,
-      IVectorView<IReactPackageProvider> &packageProviders,
+      ReactNative::ReactInstanceSettings const &instanceSettings,
+      std::string const &jsBundleFile,
+      std::string const &jsMainModuleName,
+      Windows::Foundation::Collections::IVectorView<IReactPackageProvider> const &packageProviders,
       bool useDeveloperSupport,
-      LifecycleState initialLifecycleState);
+      LifecycleState const &initialLifecycleState);
 
   IAsyncOperation<IReactContext> GetOrCreateReactContextAsync();
   IReactContext CurrentReactContext() {
@@ -52,7 +47,7 @@ struct ReactInstanceManager : ReactInstanceManagerT<ReactInstanceManager> {
 
  private:
   IReactContext m_currentReactContext{nullptr};
-  Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   std::string m_jsBundleFile{};
   std::string m_jsMainModuleName{};
   std::vector<IReactPackageProvider> m_packageProviders;

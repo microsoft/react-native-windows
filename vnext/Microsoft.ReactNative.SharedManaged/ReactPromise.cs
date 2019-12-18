@@ -12,7 +12,6 @@
 // LICENSE file in the root directory of this source tree.
 //
 
-using Microsoft.ReactNative.Bridge;
 using System.Collections.Generic;
 
 namespace Microsoft.ReactNative.Managed

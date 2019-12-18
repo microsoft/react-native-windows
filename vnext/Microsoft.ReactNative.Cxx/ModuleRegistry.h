@@ -4,7 +4,7 @@
 
 #include "ReactMemberInfo.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ModuleRegistry {
   template <class TClass, int I>
@@ -14,4 +14,4 @@ struct ModuleRegistry {
   void RegisterModule(wchar_t const *moduleName, wchar_t const *eventEmitterName, ReactMemberId<I>) noexcept;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

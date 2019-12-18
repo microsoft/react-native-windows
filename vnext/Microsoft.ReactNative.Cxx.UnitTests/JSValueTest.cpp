@@ -6,7 +6,7 @@
 #include "JsonJSValueReader.h"
 #include "catch.hpp"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 TEST_CASE("TestReadObject", "JSValueTest") {
   const wchar_t *json =
@@ -92,4 +92,4 @@ TEST_CASE("TestReadNestedArray", "JSValueTest") {
   REQUIRE(nestedArr[6].Double() == 4.5);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

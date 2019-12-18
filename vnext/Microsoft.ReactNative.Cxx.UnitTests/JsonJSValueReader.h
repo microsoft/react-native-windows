@@ -4,9 +4,9 @@
 #pragma once
 
 #include "JsonReader.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct JsonJSValueReader : implements<JsonJSValueReader, IJSValueReader> {
   JsonJSValueReader(std::wstring &&jsonText) noexcept;
@@ -39,4 +39,4 @@ struct JsonJSValueReader : implements<JsonJSValueReader, IJSValueReader> {
   };
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

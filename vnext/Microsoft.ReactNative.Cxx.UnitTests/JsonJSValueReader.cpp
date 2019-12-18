@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "JsonJSValueReader.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // JsonJSValueReader implementation
@@ -157,4 +157,4 @@ bool JsonJSValueReader::IsContainerOrValue(JsonParseState parseState) noexcept {
       parseState == JsonParseState::Value;
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

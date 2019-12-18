@@ -4,7 +4,7 @@
 #pragma once
 #include "ReactPackageProvider.g.h"
 
-using namespace winrt::Microsoft::ReactNative::Bridge;
+using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::SampleLibraryCpp::implementation {
 

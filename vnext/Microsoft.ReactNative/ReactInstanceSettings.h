@@ -88,17 +88,17 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   // TODO: Discuss whether this is where we should have these set by default
   //       versus in the new project template.  This makes it easier for a
   //       debug build to work out of the box.
-  bool m_useWebDebugger{TRUE};
-  bool m_useLiveReload{TRUE};
+  bool m_useWebDebugger{true};
+  bool m_useLiveReload{true};
 #else
-  bool m_useWebDebugger{FALSE};
-  bool m_useLiveReload{FALSE};
+  bool m_useWebDebugger{false};
+  bool m_useLiveReload{false};
 #endif
-  bool m_enableDeveloperMenu{FALSE};
-  bool m_useDirectDebugger{FALSE};
-  bool m_useJsi{TRUE};
-  bool m_enableJITCompilation{TRUE};
-  bool m_enableByteCodeCaching{FALSE};
+  bool m_enableDeveloperMenu{false};
+  bool m_useDirectDebugger{false};
+  bool m_useJsi{true};
+  bool m_enableJITCompilation{true};
+  bool m_enableByteCodeCaching{false};
 
   hstring m_byteCodeFileUri{};
   hstring m_debugHost{};

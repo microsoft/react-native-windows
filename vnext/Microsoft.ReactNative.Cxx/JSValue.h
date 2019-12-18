@@ -6,9 +6,9 @@
 #define MICROSOFT_REACTNATIVE_JSVALUE
 
 #include "Crash.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 // Forward declarations
 struct JSValue;
@@ -250,6 +250,6 @@ inline bool operator!=(const JSValue &left, const JSValue &right) noexcept {
   return !left.Equals(right);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUE

@@ -3,11 +3,11 @@
 // Licensed under the MIT License.
 
 #include "folly/dynamic.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
-struct DynamicWriter : winrt::implements<DynamicWriter, winrt::Microsoft::ReactNative::Bridge::IJSValueWriter> {
+struct DynamicWriter : winrt::implements<DynamicWriter, IJSValueWriter> {
   folly::dynamic TakeValue() noexcept;
 
  public: // IJSValueWriter
@@ -47,4 +47,4 @@ struct DynamicWriter : winrt::implements<DynamicWriter, winrt::Microsoft::ReactN
   folly::dynamic m_result;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

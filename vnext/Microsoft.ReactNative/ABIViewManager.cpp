@@ -7,11 +7,11 @@
 #include <ReactUWP/Utils/ValueUtils.h>
 #include "ReactSupport.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 ABIViewManager::ABIViewManager(
     const std::shared_ptr<react::uwp::IReactInstance> &reactInstance,
-    const winrt::Microsoft::ReactNative::Bridge::IViewManager &viewManager)
+    const ReactNative::IViewManager &viewManager)
     : Super(reactInstance),
       m_viewManager{viewManager},
       m_viewManagerWithExportedViewConstants{viewManager.try_as<IViewManagerWithExportedViewConstants>()},
@@ -222,4 +222,4 @@ void ABIViewManager::ReplaceChild(
   }
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

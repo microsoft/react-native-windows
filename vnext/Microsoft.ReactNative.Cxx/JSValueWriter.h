@@ -6,9 +6,9 @@
 #define MICROSOFT_REACTNATIVE_JSVALUEWRITER
 
 #include "StructInfo.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //==============================================================================
 // IJSValueWriter extensions
@@ -231,6 +231,6 @@ inline void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexc
   writer.WriteArrayEnd();
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUEWRITER

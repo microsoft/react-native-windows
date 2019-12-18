@@ -5,7 +5,7 @@
 #include "ReactPromise.h"
 #include "JSValueWriter.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 static const char *ErrorDefaultCode = "EUNSPECIFIED";
 static const char *ErrorDefaultMessage = "Error not specified.";
@@ -91,4 +91,4 @@ void ReactPromiseBase::Clear() noexcept {
   m_writer = nullptr;
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

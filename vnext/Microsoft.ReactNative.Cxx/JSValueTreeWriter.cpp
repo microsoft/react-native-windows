@@ -5,7 +5,7 @@
 #include "JSValueTreeWriter.h"
 #include "Crash.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // JSValueTreeWriter implementation
@@ -84,4 +84,4 @@ IJSValueWriter MakeJSValueTreeWriter(JSValue &resultValue) noexcept {
   return make<JSValueTreeWriter>(resultValue);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

@@ -5,7 +5,7 @@
 #include "DynamicWriter.h"
 #include "Crash.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // DynamicWriter implementation
@@ -135,4 +135,4 @@ void DynamicWriter::WriteValue(folly::dynamic &&value) noexcept {
   }
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

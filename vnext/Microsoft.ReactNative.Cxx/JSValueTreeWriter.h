@@ -8,7 +8,7 @@
 #include <stack>
 #include "JSValue.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 // Writes to a tree of JSValue objects.
 struct JSValueTreeWriter : implements<JSValueTreeWriter, IJSValueWriter> {
@@ -46,6 +46,6 @@ struct JSValueTreeWriter : implements<JSValueTreeWriter, IJSValueWriter> {
   JSValue &m_resultValue;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUETREEWRITER

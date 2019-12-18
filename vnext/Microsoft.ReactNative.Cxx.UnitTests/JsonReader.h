@@ -7,7 +7,7 @@
 #include <stack>
 #include <string_view>
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct JsonSource {
   static_assert(sizeof(wchar_t) == 2, "This code expects 2-byte wchars");
@@ -141,4 +141,4 @@ struct JsonReader {
   bool m_isStringContent = false;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
