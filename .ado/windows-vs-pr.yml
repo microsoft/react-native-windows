@@ -238,6 +238,13 @@ jobs:
             /p:RNW_PKG_VERSION_STR="Private Build"
             /p:RNW_PKG_VERSION="1000,0,0,0"
 
+      - task: CmdLine@2
+        displayName: Build react-native-win32 RNTester bundle
+        inputs:
+          script: yarn bundle
+          workingDirectory: packages/react-native-win32
+        condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
+
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
