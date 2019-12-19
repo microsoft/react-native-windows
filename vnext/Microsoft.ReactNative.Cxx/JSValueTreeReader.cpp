@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "JSValueTreeReader.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // JSValueTreeReader implementation
@@ -125,4 +125,4 @@ IJSValueReader MakeJSValueTreeReader(JSValue &&root) noexcept {
   return make<JSValueTreeReader>(std::move(root));
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

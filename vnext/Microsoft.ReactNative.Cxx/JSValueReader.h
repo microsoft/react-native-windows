@@ -8,9 +8,9 @@
 #include "JSValue.h"
 #include "JSValueTreeReader.h"
 #include "StructInfo.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 // A value can be read from IJSValueReader in one of three ways:
 // 1. Using a ReadValue standalone function with IJSValueReader& as a first argument.
@@ -434,6 +434,6 @@ inline void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &... args) noex
   success = success && SkipArrayToEnd(reader);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUEREADER

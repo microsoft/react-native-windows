@@ -3,11 +3,12 @@
 
 import "IReactPackageBuilder.idl";
 
-namespace Microsoft.ReactNative.Bridge {
+namespace Microsoft.ReactNative {
 
   // This interface is to be implemented by package creators.
+  [webhosthidden]
   interface IReactPackageProvider {
     void CreatePackage(IReactPackageBuilder packageBuilder);
   };
 
-} // namespace Microsoft.ReactNative.Bridge
+} // namespace Microsoft.ReactNative

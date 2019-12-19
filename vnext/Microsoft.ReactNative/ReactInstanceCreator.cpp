@@ -5,9 +5,6 @@
 #include "ReactInstanceCreator.h"
 #include <ReactUWP/ReactUwp.h>
 
-using namespace winrt;
-using namespace winrt::Microsoft::ReactNative::Bridge;
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
 void InitReactNative() {
@@ -20,11 +17,11 @@ void InitReactNative() {
 }
 
 ReactInstanceCreator::ReactInstanceCreator(
-    Microsoft::ReactNative::ReactInstanceSettings instanceSettings,
-    std::string jsBundleFile,
-    std::string jsMainModuleName,
-    std::shared_ptr<NativeModulesProvider> modulesProvider,
-    std::shared_ptr<ViewManagersProvider> viewManagersProvider)
+    ReactNative::ReactInstanceSettings const &instanceSettings,
+    std::string const &jsBundleFile,
+    std::string const &jsMainModuleName,
+    std::shared_ptr<NativeModulesProvider> const &modulesProvider,
+    std::shared_ptr<ViewManagersProvider> const &viewManagersProvider)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
@@ -86,4 +83,5 @@ void ReactInstanceCreator::markAsNeedsReload() {
   m_instance->SetAsNeedsReload();
   m_instance = nullptr;
 }
+
 } // namespace winrt::Microsoft::ReactNative::implementation

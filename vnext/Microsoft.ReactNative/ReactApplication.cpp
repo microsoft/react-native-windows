@@ -11,10 +11,10 @@
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 
 using namespace winrt;
-using namespace Microsoft::ReactNative;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
 using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Core;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
@@ -35,7 +35,7 @@ ReactApplication::ReactApplication() noexcept {
 #endif
 }
 
-Microsoft::ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
+ReactNative::ReactInstanceSettings ReactApplication::InstanceSettings() noexcept {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
     m_instanceSettings.UseWebDebugger(false);
@@ -55,7 +55,7 @@ IVector<IReactPackageProvider> ReactApplication::PackageProviders() noexcept {
   return m_packageProviders;
 }
 
-Microsoft::ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
+ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   if (!m_host) {
     m_host = make<ReactNativeHost>();
     m_host.InstanceSettings(InstanceSettings());
@@ -168,7 +168,7 @@ void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailed
 }
 
 ReactApplicationDelegate __stdcall ReactApplication::CreateReactApplicationDelegate() {
-  return winrt::Microsoft::ReactNative::ReactApplicationDelegate(*this);
+  return ReactApplicationDelegate(*this);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

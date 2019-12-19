@@ -7,7 +7,7 @@
 #include "ReactModuleBuilderMock.h"
 #include "catch.hpp"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 REACT_STRUCT(Point)
 struct Point {
@@ -772,4 +772,4 @@ TEST_CASE_METHOD(NativeModuleTestFixture, "TestEvent_EventField2", "NativeModule
   REQUIRE(eventRaised == true);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

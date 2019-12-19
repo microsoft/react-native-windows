@@ -5,7 +5,7 @@
 #include "ReactModuleBuilderMock.h"
 #include "JSValue.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // ReactModuleBuilderMock implementation
@@ -97,4 +97,4 @@ SyncMethodDelegate ReactModuleBuilderMock::GetSyncMethod(std::wstring const &met
   return MakeJSValueTreeReader(std::move(jsValue));
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

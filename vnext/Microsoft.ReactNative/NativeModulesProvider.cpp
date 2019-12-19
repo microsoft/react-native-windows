@@ -12,7 +12,7 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 /*-------------------------------------------------------------------------------
   NativeModulesProvider::GetModules
 -------------------------------------------------------------------------------*/
@@ -51,4 +51,4 @@ void NativeModulesProvider::AddModuleProvider(
   m_moduleProviders.emplace(to_string(moduleName), moduleProvider);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

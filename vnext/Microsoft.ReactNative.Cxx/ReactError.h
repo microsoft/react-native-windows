@@ -4,7 +4,7 @@
 #pragma once
 #include "JSValue.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ReactError {
   std::string Code;
@@ -12,4 +12,4 @@ struct ReactError {
   JSValueObject UserInfo;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

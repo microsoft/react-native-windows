@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "DynamicReader.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // DynamicReader implementation
@@ -143,4 +143,4 @@ double DynamicReader::GetDouble() noexcept {
   return (m_current->type() == folly::dynamic::Type::DOUBLE) ? m_current->getDouble() : 0;
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

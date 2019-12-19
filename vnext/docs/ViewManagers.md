@@ -283,15 +283,15 @@ Here is a sample view manager written in C++ called `CustomUserControlViewManage
 ```c++
 #pragma once
 
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::ViewManagerSample::implementation {
 
 struct CustomUserControlViewManager : winrt::implements<
                                              CustomUserControlViewManager,
-                                             winrt::Microsoft::ReactNative::Bridge::IViewManager,
-                                             winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties,
-                                             winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands> {
+                                             winrt::Microsoft::ReactNative::IViewManager,
+                                             winrt::Microsoft::ReactNative::IViewManagerWithNativeProperties,
+                                             winrt::Microsoft::ReactNative::IViewManagerWithCommands> {
  public:
   CustomUserControlViewManager() = default;
 
@@ -302,7 +302,7 @@ struct CustomUserControlViewManager : winrt::implements<
 
   // IViewManagerWithNativeProperties
   winrt::Windows::Foundation::Collections::
-      IMapView<winrt::hstring, winrt::Microsoft::ReactNative::Bridge::ViewManagerPropertyType>
+      IMapView<winrt::hstring, winrt::Microsoft::ReactNative::ViewManagerPropertyType>
       NativeProps() noexcept;
 
   void UpdateProperties(
@@ -328,7 +328,7 @@ struct CustomUserControlViewManager : winrt::implements<
 #include "CustomUserControlViewManager.h"
 
 using namespace winrt;
-using namespace Microsoft::ReactNative::Bridge;
+using namespace Microsoft::ReactNative;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 

@@ -9,7 +9,7 @@
 #include "JsonReader.h"
 #include "Crash.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 static bool IsSimpleWhitespace(wchar_t c) noexcept {
   return (c == ' ' || c == '\t' || c == '\r' || c == '\n');
@@ -376,4 +376,4 @@ bool JsonReader::IsNull() noexcept {
   return false;
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

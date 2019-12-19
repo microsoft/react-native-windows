@@ -15,7 +15,6 @@
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 #include <winrt/Windows.UI.Xaml.h>
 
-#include <winrt/Microsoft.ReactNative.Bridge.h>
 #include <winrt/Microsoft.ReactNative.h>
 
 #include <winrt/Microsoft.UI.Xaml.Automation.Peers.h>

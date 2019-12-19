@@ -7,7 +7,7 @@
 
 #include "JSValue.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct JSValueTreeReader : implements<JSValueTreeReader, IJSValueReader> {
   JSValueTreeReader(const JSValue &value) noexcept;
@@ -43,6 +43,6 @@ struct JSValueTreeReader : implements<JSValueTreeReader, IJSValueReader> {
   std::vector<StackEntry> m_stack;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUETREEREADER

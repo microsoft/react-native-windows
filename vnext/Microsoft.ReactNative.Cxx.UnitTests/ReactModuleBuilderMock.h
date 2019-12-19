@@ -6,7 +6,7 @@
 #include <functional>
 #include "JSValue.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ReactModuleBuilderMock {
   template <class... TArgs>
@@ -220,4 +220,4 @@ inline void ReactModuleBuilderImpl::AddEventHandlerSetter(
   m_mock.AddEventHandlerSetter(name, eventHandlerSetter);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

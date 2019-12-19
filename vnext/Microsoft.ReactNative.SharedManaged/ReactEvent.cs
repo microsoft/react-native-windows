@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative.Bridge;
-
 namespace Microsoft.ReactNative.Managed
 {
   // The ReactEvent<T> makes it explicit that a field is an event.

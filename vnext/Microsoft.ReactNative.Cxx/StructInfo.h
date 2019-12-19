@@ -5,25 +5,25 @@
 #ifndef MICROSOFT_REACTNATIVE_STRUCTINFO
 #define MICROSOFT_REACTNATIVE_STRUCTINFO
 
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-#define REACT_STRUCT(type)                                                                   \
-  struct type;                                                                               \
-  winrt::Microsoft::ReactNative::Bridge::FieldMap GetStructInfo(type *) noexcept {           \
-    winrt::Microsoft::ReactNative::Bridge::FieldMap fieldMap{};                              \
-    winrt::Microsoft::ReactNative::Bridge::CollectStructFields<type, __COUNTER__>(fieldMap); \
-    return fieldMap;                                                                         \
+#define REACT_STRUCT(type)                                                           \
+  struct type;                                                                       \
+  winrt::Microsoft::ReactNative::FieldMap GetStructInfo(type *) noexcept {           \
+    winrt::Microsoft::ReactNative::FieldMap fieldMap{};                              \
+    winrt::Microsoft::ReactNative::CollectStructFields<type, __COUNTER__>(fieldMap); \
+    return fieldMap;                                                                 \
   }
 
-#define REACT_FIELD(field)                                                         \
-  template <class TClass>                                                          \
-  static void RegisterField(                                                       \
-      winrt::Microsoft::ReactNative::Bridge::FieldMap &fieldMap,                   \
-      winrt::Microsoft::ReactNative::Bridge::ReactFieldId<__COUNTER__>) noexcept { \
-    fieldMap.emplace(L## #field, &TClass::field);                                  \
+#define REACT_FIELD(field)                                                 \
+  template <class TClass>                                                  \
+  static void RegisterField(                                               \
+      winrt::Microsoft::ReactNative::FieldMap &fieldMap,                   \
+      winrt::Microsoft::ReactNative::ReactFieldId<__COUNTER__>) noexcept { \
+    fieldMap.emplace(L## #field, &TClass::field);                          \
   }
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct FieldInfo;
 using FieldMap = std::map<std::wstring, FieldInfo, std::less<>>;
@@ -101,6 +101,6 @@ void CollectStructFields(FieldMap &fieldMap) noexcept {
   }
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_STRUCTINFO

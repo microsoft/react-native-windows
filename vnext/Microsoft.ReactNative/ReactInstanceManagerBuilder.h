@@ -6,9 +6,6 @@
 #include "ReactInstanceManager.h"
 #include "ReactInstanceSettings.h"
 
-using namespace winrt;
-using namespace Microsoft::ReactNative;
-
 namespace winrt::Microsoft::ReactNative::implementation {
 class ReactInstanceManagerBuilder {
  public:
@@ -22,11 +19,11 @@ class ReactInstanceManagerBuilder {
     m_useDeveloperSupport = useDevSupport;
   };
 
-  Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() {
+  ReactNative::ReactInstanceSettings InstanceSettings() {
     return m_instanceSettings;
   }
 
-  void InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &settings) {
+  void InstanceSettings(ReactNative::ReactInstanceSettings const &settings) {
     m_instanceSettings = settings;
   }
 
@@ -35,15 +32,15 @@ class ReactInstanceManagerBuilder {
     m_isLifecycleStateSet = TRUE;
   };
 
-  void PackageProviders(IVectorView<IReactPackageProvider> const &packageProviders) {
+  void PackageProviders(Windows::Foundation::Collections::IVectorView<IReactPackageProvider> const &packageProviders) {
     m_packageProviders = packageProviders;
   }
 
-  Microsoft::ReactNative::ReactInstanceManager Build();
+  ReactNative::ReactInstanceManager Build();
 
  private:
   Windows::Foundation::Collections::IVectorView<IReactPackageProvider> m_packageProviders;
-  Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   std::wstring m_jsBundleFile{};
   std::wstring m_jsMainModuleName{};
   bool m_useDeveloperSupport{false};

@@ -8,7 +8,7 @@
 #include "JsonJSValueReader.h"
 #include "catch.hpp"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 enum struct RobotModel {
   T2,
@@ -463,4 +463,4 @@ TEST_CASE("TestWriteValueDefaultExtensions", "JSValueReaderTest") {
   REQUIRE(jsValue["NullValue"] == JSValue::Null);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

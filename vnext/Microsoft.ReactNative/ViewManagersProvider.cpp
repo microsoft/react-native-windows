@@ -8,7 +8,8 @@
 
 #include "ABIViewManager.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
+
 /*-------------------------------------------------------------------------------
         ViewManagersProvider::GetViewManagers
 -------------------------------------------------------------------------------*/
@@ -36,4 +37,4 @@ void ViewManagersProvider::AddViewManagerProvider(
   m_viewManagerProviders.emplace(to_string(viewManagerName), viewManagerProvider);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

@@ -12,11 +12,11 @@
 // Registration of a method relies on a TLS context that is setup when object is
 // created. The advantage is that we do zero work during static initialization.
 // The disadvantage is that we require to have one bool field per registration.
-#define INTERNAL_REACT_METHOD_3_ARGS(methodType, method, methodName)                                     \
-  template <class TClass, class TRegistry>                                                               \
-  static void RegisterMember(                                                                            \
-      TRegistry &registry, winrt::Microsoft::ReactNative::Bridge::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.Register##methodType##Method<TClass>(&TClass::method, methodName);                          \
+#define INTERNAL_REACT_METHOD_3_ARGS(methodType, method, methodName)                             \
+  template <class TClass, class TRegistry>                                                       \
+  static void RegisterMember(                                                                    \
+      TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
+    registry.Register##methodType##Method<TClass>(&TClass::method, methodName);                  \
   }
 
 #define INTERNAL_REACT_METHOD_2_ARGS(methodType, method) INTERNAL_REACT_METHOD_3_ARGS(methodType, method, L## #method)
@@ -28,11 +28,11 @@
 #define INTERNAL_REACT_METHOD(...) \
   INTERNAL_REACT_MEMBER_RECOMPOSER((__VA_ARGS__, INTERNAL_REACT_METHOD_3_ARGS, INTERNAL_REACT_METHOD_2_ARGS, ))
 
-#define INTERNAL_REACT_CONSTANT_2_ARGS(field, constantName)                                              \
-  template <class TClass, class TRegistry>                                                               \
-  static void RegisterMember(                                                                            \
-      TRegistry &registry, winrt::Microsoft::ReactNative::Bridge::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.RegisterConstant<TClass>(&TClass::field, constantName);                                     \
+#define INTERNAL_REACT_CONSTANT_2_ARGS(field, constantName)                                      \
+  template <class TClass, class TRegistry>                                                       \
+  static void RegisterMember(                                                                    \
+      TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
+    registry.RegisterConstant<TClass>(&TClass::field, constantName);                             \
   }
 
 #define INTERNAL_REACT_CONSTANT_1_ARGS(field) INTERNAL_REACT_CONSTANT_2_ARGS(field, L## #field)
@@ -40,11 +40,11 @@
 #define INTERNAL_REACT_CONSTANT(...) \
   INTERNAL_REACT_MEMBER_RECOMPOSER((__VA_ARGS__, INTERNAL_REACT_CONSTANT_2_ARGS, INTERNAL_REACT_CONSTANT_1_ARGS, ))
 
-#define INTERNAL_REACT_EVENT_2_ARGS(field, eventName)                                                    \
-  template <class TClass, class TRegistry>                                                               \
-  static void RegisterMember(                                                                            \
-      TRegistry &registry, winrt::Microsoft::ReactNative::Bridge::ReactMemberId<__COUNTER__>) noexcept { \
-    registry.RegisterEvent<TClass>(&TClass::field, eventName);                                           \
+#define INTERNAL_REACT_EVENT_2_ARGS(field, eventName)                                            \
+  template <class TClass, class TRegistry>                                                       \
+  static void RegisterMember(                                                                    \
+      TRegistry &registry, winrt::Microsoft::ReactNative::ReactMemberId<__COUNTER__>) noexcept { \
+    registry.RegisterEvent<TClass>(&TClass::field, eventName);                                   \
   }
 
 #define INTERNAL_REACT_EVENT_1_ARGS(field) INTERNAL_REACT_EVENT_2_ARGS(field, L## #field)

@@ -4,28 +4,30 @@
 
 #include "ReactApplicationDelegate.g.h"
 
-using namespace winrt;
-using namespace Windows::UI::Xaml;
-using namespace Windows::ApplicationModel;
-using namespace Windows::ApplicationModel::Activation;
-
 namespace winrt::Microsoft::ReactNative::implementation {
+
 struct ReactApplicationDelegate : ReactApplicationDelegateT<ReactApplicationDelegate> {
   ReactApplicationDelegate() = default;
-  ReactApplicationDelegate(Application const &application);
+  ReactApplicationDelegate(Windows::UI::Xaml::Application const &application) noexcept;
 
-  void OnActivated(winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &args);
-  UIElement OnCreate(hstring const &args);
+  void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &args) noexcept;
+  Windows::UI::Xaml::UIElement OnCreate(hstring const &args) noexcept;
 
  private:
-  Application m_application{nullptr};
-  winrt::Microsoft::ReactNative::IReactApplication m_reactApplication{nullptr};
+  void OnResuming(IInspectable const &sender, IInspectable const &args) noexcept;
+  void OnSuspending(IInspectable const &sender, IInspectable const &args) noexcept;
+  void OnLeavingBackground(
+      IInspectable const &sender,
+      Windows::ApplicationModel::LeavingBackgroundEventArgs const &args) noexcept;
+  void OnEnteredBackground(
+      IInspectable const &sender,
+      Windows::ApplicationModel::EnteredBackgroundEventArgs const &args) noexcept;
 
-  void OnResuming(IInspectable sender, IInspectable args);
-  void OnSuspending(IInspectable sender, IInspectable args);
-  void OnLeavingBackground(IInspectable sender, winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs args);
-  void OnEnteredBackground(IInspectable sender, winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs args);
+ private:
+  Windows::UI::Xaml::Application m_application{nullptr};
+  IReactApplication m_reactApplication{nullptr};
 };
+
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {

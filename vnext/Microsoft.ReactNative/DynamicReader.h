@@ -4,9 +4,9 @@
 #pragma once
 
 #include "folly/dynamic.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct DynamicReader : implements<DynamicReader, IJSValueReader> {
   DynamicReader(const folly::dynamic &root) noexcept;
@@ -41,4 +41,4 @@ struct DynamicReader : implements<DynamicReader, IJSValueReader> {
   std::vector<StackEntry> m_stack;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative
