@@ -26,23 +26,23 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64
-          UseRNFork: true
-          LayoutHeaders: true
-        X64Release:
-          BuildConfiguration: Release
-          BuildPlatform: x64
-          UseRNFork: true
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: arm
-          UseRNFork: true
-        X86Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x86
-          UseRNFork: true
+        #X64Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x64
+        #  UseRNFork: true
+        #  LayoutHeaders: true
+        #X64Release:
+        #  BuildConfiguration: Release
+        #  BuildPlatform: x64
+        #  UseRNFork: true
+        #ArmDebug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: arm
+        #  UseRNFork: true
+        #X86Debug:
+        #  BuildConfiguration: Debug
+        #  BuildPlatform: x86
+        #  UseRNFork: true
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
@@ -580,5 +580,13 @@ jobs:
       - task: NuGetToolInstaller@0
         inputs:
           versionSpec: ">=4.6.0"
+
+      # Exclude ReactUWP from nuget because we didn't build all the flavours.
+      - task: PowerShell@2
+        displayName: Exclude ReactUWP from ReactUwp.nuspec
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            ((Get-Content -path vnext\Scripts\ReactUwp.nuspec -Raw) -replace ".*ReactUWP\\React.UWP.*","") | Set-Content -Path vnext\Scripts\ReactUwp.nuspec
 
       - template: templates/prep-and-pack-nuget.yml
