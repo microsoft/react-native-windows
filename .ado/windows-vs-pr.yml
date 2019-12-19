@@ -563,7 +563,7 @@ jobs:
 
       # Exclude ReactUWP from nuget because we didn't build all the flavours.
       - task: PowerShell@2
-        displayName: Download Winium
+        displayName: Exclude ReactUWP from ReactUwp.nuspec
         inputs:
           targetType: inline # filePath | inline
           script: |
