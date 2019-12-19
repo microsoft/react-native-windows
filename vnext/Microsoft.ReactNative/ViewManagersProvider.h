@@ -7,12 +7,12 @@
 #include <ReactUWP/ViewManagerProvider.h>
 #include <ReactWindowsCore/ViewManager.h>
 
-#include <winrt/Microsoft.ReactNative.Bridge.h>
 #include <winrt/Microsoft.ReactNative.h>
 
 #include "ReactSupport.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
+
 class ViewManagersProvider final : public react::uwp::ViewManagerProvider {
  public:
   virtual std::vector<react::uwp::NativeViewManager> GetViewManagers(
@@ -25,6 +25,6 @@ class ViewManagersProvider final : public react::uwp::ViewManagerProvider {
       ReactViewManagerProvider const &viewManagerProvider) noexcept;
 
  private:
-  std::unordered_map<std::string, Microsoft::ReactNative::Bridge::ReactViewManagerProvider> m_viewManagerProviders;
+  std::unordered_map<std::string, ReactViewManagerProvider> m_viewManagerProviders;
 };
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

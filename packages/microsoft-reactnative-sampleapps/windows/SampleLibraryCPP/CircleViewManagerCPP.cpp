@@ -5,7 +5,7 @@
 #include "CircleViewManagerCpp.h"
 
 using namespace winrt;
-using namespace Microsoft::ReactNative::Bridge;
+using namespace Microsoft::ReactNative;
 
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;

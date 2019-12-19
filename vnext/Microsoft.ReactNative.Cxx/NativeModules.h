@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 #include <type_traits>
 #include "JSValueReader.h"
@@ -53,7 +53,7 @@
 // Use with a field for events
 #define REACT_EVENT(/* field, [opt] eventName */...) INTERNAL_REACT_EVENT(__VA_ARGS__)(__VA_ARGS__)
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 namespace Internal {
 
@@ -653,10 +653,7 @@ struct ReactModuleBuilder {
       : m_module{module}, m_moduleBuilder{moduleBuilder} {}
 
   template <class TModule, int I>
-  void RegisterModule(
-      const wchar_t * /*moduleName*/,
-      const wchar_t *eventEmitterName,
-      winrt::Microsoft::ReactNative::Bridge::ReactMemberId<I>) noexcept {
+  void RegisterModule(const wchar_t * /*moduleName*/, const wchar_t *eventEmitterName, ReactMemberId<I>) noexcept {
     m_moduleBuilder.SetEventEmitterName(eventEmitterName);
     RegisterMembers<TModule, I>();
   }
@@ -741,4 +738,4 @@ inline ReactModuleProvider MakeModuleProvider() noexcept {
   };
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

@@ -3,18 +3,18 @@
 
 #include "pch.h"
 #include "ReactApplicationDelegate.h"
-#if __has_include("ReactApplicationDelegate.g.cpp")
 #include "ReactApplicationDelegate.g.cpp"
-#endif
 #include "ReactNativeHost.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::UI::Xaml;
+using namespace Windows::ApplicationModel;
+using namespace Windows::ApplicationModel::Activation;
 
-namespace {
+namespace winrt::Microsoft::ReactNative::implementation {
 
-static void ApplyArguments(winrt::Microsoft::ReactNative::ReactNativeHost host, std::wstring arguments) {
+static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
   // Microsoft::ReactNative::implementation::ReactNativeHost* hostImpl {
   // get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
   if (!arguments.empty() && host.HasInstance()) {
@@ -23,10 +23,9 @@ static void ApplyArguments(winrt::Microsoft::ReactNative::ReactNativeHost host, 
     // ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled flag
   }
 }
-} // namespace
 
-namespace winrt::Microsoft::ReactNative::implementation {
-ReactApplicationDelegate::ReactApplicationDelegate(Application const &application) : m_application(application) {
+ReactApplicationDelegate::ReactApplicationDelegate(Application const &application) noexcept
+    : m_application(application) {
   if (application == nullptr) {
     throw winrt::hresult_null_argument(); // ArgumentNullException
   }
@@ -42,8 +41,7 @@ ReactApplicationDelegate::ReactApplicationDelegate(Application const &applicatio
   m_application.EnteredBackground({this, &ReactApplicationDelegate::OnEnteredBackground});
 }
 
-void ReactApplicationDelegate::OnActivated(
-    winrt::Windows::ApplicationModel::Activation::IActivatedEventArgs const &args) {
+void ReactApplicationDelegate::OnActivated(IActivatedEventArgs const &args) noexcept {
   switch (args.Kind()) {
     case ActivationKind::Protocol:
       auto protocolArgs = args.as<IProtocolActivatedEventArgs>();
@@ -66,7 +64,7 @@ void ReactApplicationDelegate::OnActivated(
 }
 
 // Create the root view for the ReactNative app
-UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) {
+UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) noexcept {
   auto host = m_reactApplication.Host();
   host.OnResume([=]() { m_application.Exit(); });
 
@@ -74,28 +72,29 @@ UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) {
   return host.GetOrCreateRootView(nullptr);
 }
 
-void ReactApplicationDelegate::OnResuming(IInspectable sender, IInspectable args) {
+void ReactApplicationDelegate::OnResuming(IInspectable const &sender, IInspectable const &args) noexcept {
   m_reactApplication.Host().OnResume([=]() { m_application.Exit(); });
 
   OutputDebugStringW(L"ReactApplicationDelegate::OnResuming");
 }
 
-void ReactApplicationDelegate::OnSuspending(IInspectable sender, IInspectable args) {
+void ReactApplicationDelegate::OnSuspending(IInspectable const &sender, IInspectable const &args) noexcept {
   OutputDebugStringW(L"ReactApplicationDelegate::OnSuspending");
   m_reactApplication.Host().OnSuspend();
 }
 
 void ReactApplicationDelegate::OnLeavingBackground(
-    IInspectable sender,
-    winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs args) {
+    IInspectable const &sender,
+    LeavingBackgroundEventArgs const &args) noexcept {
   OutputDebugStringW(L"ReactApplicationDelegate::OnLeavingBackground");
   m_reactApplication.Host().OnLeavingBackground();
 }
 
 void ReactApplicationDelegate::OnEnteredBackground(
-    IInspectable sender,
-    winrt::Windows::ApplicationModel::EnteredBackgroundEventArgs args) {
+    IInspectable const &sender,
+    EnteredBackgroundEventArgs const &args) noexcept {
   OutputDebugStringW(L"ReactApplicationDelegate::OnEnteredBackground");
   m_reactApplication.Host().OnEnteredBackground();
 }
+
 } // namespace winrt::Microsoft::ReactNative::implementation

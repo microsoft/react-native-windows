@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ReactNative.Bridge {
+namespace Microsoft.ReactNative {
+
+  // Writer for JSON-like streams or tree structures
+  [webhosthidden]
   interface IJSValueWriter {
     void WriteNull();
     void WriteBoolean(Boolean value);
@@ -13,5 +16,5 @@ namespace Microsoft.ReactNative.Bridge {
     void WriteObjectEnd();
     void WriteArrayBegin();
     void WriteArrayEnd();
-  };
-} // namespace Microsoft.ReactNative.Bridge
+  }
+} // namespace Microsoft.ReactNative

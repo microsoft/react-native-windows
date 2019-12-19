@@ -16,6 +16,7 @@
 #include <ViewManagerProvider.h>
 
 using namespace winrt;
+using namespace Windows::Foundation::Collections;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Controls;
 
@@ -34,7 +35,7 @@ void ReactNativeHost::Init() noexcept {
 #endif
 }
 
-Microsoft::ReactNative::ReactInstanceManager ReactNativeHost::CreateReactInstanceManager() noexcept {
+ReactNative::ReactInstanceManager ReactNativeHost::CreateReactInstanceManager() noexcept {
   auto builder = ReactInstanceManagerBuilder();
   builder.InstanceSettings(InstanceSettings());
   builder.UseDeveloperSupport(UseDeveloperSupport());
@@ -51,7 +52,7 @@ std::shared_ptr<ReactRootView> ReactNativeHost::CreateRootView() noexcept {
   return rootView;
 }
 
-Microsoft::ReactNative::ReactInstanceManager ReactNativeHost::ReactInstanceManager() noexcept {
+ReactNative::ReactInstanceManager ReactNativeHost::ReactInstanceManager() noexcept {
   if (m_reactInstanceManager == nullptr) {
     m_reactInstanceManager = CreateReactInstanceManager();
   }
@@ -64,7 +65,7 @@ UIElement ReactNativeHost::GetOrCreateRootView(IInspectable initialProps) noexce
     return *m_reactRootView;
   }
 
-  folly::dynamic props = Microsoft::ReactNative::Bridge::ConvertToDynamic(initialProps);
+  folly::dynamic props = ConvertToDynamic(initialProps);
 
   m_reactRootView = CreateRootView();
   assert(m_reactRootView != nullptr);
@@ -75,7 +76,7 @@ UIElement ReactNativeHost::GetOrCreateRootView(IInspectable initialProps) noexce
   return *m_reactRootView;
 }
 
-auto ReactNativeHost::InstanceSettings() noexcept -> Microsoft::ReactNative::ReactInstanceSettings {
+ReactNative::ReactInstanceSettings ReactNativeHost::InstanceSettings() noexcept {
   if (!m_instanceSettings) {
     m_instanceSettings = make<ReactInstanceSettings>();
     m_instanceSettings.UseWebDebugger(false);
@@ -113,7 +114,7 @@ void ReactNativeHost::OnLeavingBackground() noexcept {
   }
 }
 
-void ReactNativeHost::OnResume(Microsoft::ReactNative::OnResumeAction const &action) noexcept {
+void ReactNativeHost::OnResume(OnResumeAction const &action) noexcept {
   if (HasInstance()) {
     ReactInstanceManager().OnResume(action);
   }

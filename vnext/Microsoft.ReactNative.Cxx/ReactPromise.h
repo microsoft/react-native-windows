@@ -3,9 +3,9 @@
 
 #pragma once
 #include "ReactError.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 // ReactPromise represents a JavaScript Promise
 // which can be passed to the native module as a method parameter.
@@ -53,4 +53,4 @@ void ReactPromise<T>::Resolve(T const &value) noexcept {
   }
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

@@ -12,13 +12,10 @@
 #include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/ReactUwp.h>
 
-using namespace winrt;
-using namespace Windows::UI::Core;
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
-static bool s_isShiftKeyDown;
-static bool s_isControlKeyDown;
+extern bool s_isShiftKeyDown;
+extern bool s_isControlKeyDown;
 
 struct ReactRootView : ReactRootViewT<ReactRootView> {
   ReactRootView() = default;
@@ -38,14 +35,14 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   static void OnBackRequested(
       ReactNative::ReactNativeHost const &host,
       IInspectable const &sender,
-      BackRequestedEventArgs const &e);
+      Windows::UI::Core::BackRequestedEventArgs const &e);
 
   static void OnAcceleratorKeyActivated(
       ReactNative::ReactNativeHost const &host,
-      CoreDispatcher const &sender,
-      AcceleratorKeyEventArgs const &e);
+      Windows::UI::Core::CoreDispatcher const &sender,
+      Windows::UI::Core::AcceleratorKeyEventArgs const &e);
 
-  static bool IsKeyDown(CoreAcceleratorKeyEventType t);
+  static bool IsKeyDown(Windows::UI::Core::CoreAcceleratorKeyEventType t);
 };
 } // namespace winrt::Microsoft::ReactNative::implementation
 

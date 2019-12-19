@@ -8,7 +8,7 @@
 
 using namespace facebook::xplat::module;
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 constexpr auto DefaultEventEmitterName = "RCTDeviceEventEmitter";
 
@@ -70,4 +70,4 @@ void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> eventH
   }
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

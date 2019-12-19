@@ -4,12 +4,9 @@
 #include "pch.h"
 #include "ReactInstanceManagerBuilder.h"
 
-using namespace winrt;
-using namespace Microsoft::ReactNative;
-
 namespace winrt::Microsoft::ReactNative::implementation {
 
-winrt::Microsoft::ReactNative::ReactInstanceManager ReactInstanceManagerBuilder::Build() {
+ReactNative::ReactInstanceManager ReactInstanceManagerBuilder::Build() {
   if (!m_isLifecycleStateSet) {
     throw hresult_invalid_operation(L"Initial lifecycle state was not set.");
   }

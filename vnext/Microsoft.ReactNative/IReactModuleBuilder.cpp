@@ -8,7 +8,7 @@
 
 using namespace facebook::xplat::module;
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // ReactModuleBuilder implementation
@@ -102,4 +102,4 @@ std::unique_ptr<CxxModule> ReactModuleBuilder::MakeCxxModule(
       nativeModule, name, m_eventEmitterName, m_methods, m_constants, m_eventHandlerSetters);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

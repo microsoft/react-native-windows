@@ -5,7 +5,7 @@
 
 // clang-format off
 
-using namespace winrt::Microsoft::ReactNative::Bridge;
+using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::<%=ns%>::implementation
 {

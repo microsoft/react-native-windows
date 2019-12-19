@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative.Bridge;
+using Microsoft.ReactNative;
 using Microsoft.ReactNative.Managed;
 
 namespace SampleLibraryCS

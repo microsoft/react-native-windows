@@ -5,8 +5,7 @@ using System.Diagnostics;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 
-using Microsoft.ReactNative.Managed;
-using Microsoft.ReactNative.Bridge;
+using Microsoft.ReactNative;
 using Windows.UI.Xaml;
 using Windows.UI.ViewManagement;
 using System.Threading.Tasks;

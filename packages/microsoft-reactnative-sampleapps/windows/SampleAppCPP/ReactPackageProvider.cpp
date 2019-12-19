@@ -6,7 +6,7 @@
 
 #include "DebugConsole.h"
 
-using namespace winrt::Microsoft::ReactNative::Bridge;
+using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::SampleAppCpp::implementation {
 
