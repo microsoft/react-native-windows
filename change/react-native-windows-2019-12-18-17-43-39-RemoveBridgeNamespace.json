@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed Bridge sub-namespace in favor of Microsoft.ReactNative",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "a547f8926dbcaf3c04b8c7a12c7a1e9b970acd6c",
-  "date": "2019-12-19T01:43:39.278Z"
-}
