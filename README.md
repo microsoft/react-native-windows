@@ -1,4 +1,4 @@
-﻿<h1 align="center"> React Native for Windows </h1>
+﻿<h1 align="center"> React Native for Windows is AWESOME</h1>
 
 <p align="center">
   Build native Windows apps with React.
