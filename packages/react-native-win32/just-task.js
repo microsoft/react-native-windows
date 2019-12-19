@@ -6,6 +6,7 @@
  */
 
 const path = require('path');
+const fs = require('fs');
 const {
   task,
   copyTask,
@@ -66,6 +67,18 @@ task('clean', () => {
       path.join(process.cwd(), p),
     ),
   );
+});
+
+function ensureDirectoryExists(filePath) {
+  const dir = path.dirname(filePath);
+  if (!fs.existsSync(dir)) {
+    ensureDirectoryExists(dir);
+    fs.mkdirSync(dir);
+  }
+}
+
+task('prepareBundle', () => {
+  ensureDirectoryExists(path.resolve(__dirname, 'dist/win32/dev'));
 });
 
 task(
