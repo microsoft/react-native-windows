@@ -3,8 +3,6 @@
 
 #pragma once
 
-//#include <SDKDDKVer.h>
-//
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
@@ -12,10 +10,6 @@
 #ifndef NOGDI
 #define NOGDI
 #endif
-//
-//#include <windows.h>
-//
-//#include <Unknwn.h>
 
 #include <hstring.h>
 #include <oaidl.h>
