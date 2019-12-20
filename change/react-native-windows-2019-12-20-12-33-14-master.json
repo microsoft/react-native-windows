@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Export ability to query native module names",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "commit": "5ff50e103744a589228c020ef0fad45d699458cd",
+  "date": "2019-12-20T20:33:14.307Z"
+}
