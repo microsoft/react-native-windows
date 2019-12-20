@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Dec 2019 21:51:17 GMT",
+      "tag": "react-native-windows_v0.59.0-vnext.203",
+      "version": "0.59.0-vnext.203",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Export ability to query native module names",
+            "author": "ngerlem@microsoft.com",
+            "commit": "809529a9862bd96aceaceb8858b45d4ad784a55a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Dec 2019 01:30:50 GMT",
       "tag": "react-native-windows_v0.59.0-vnext.202",
       "version": "0.59.0-vnext.202",

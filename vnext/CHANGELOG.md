@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 04 Dec 2019 01:30:50 GMT and should not be manually modified.
+This log was last generated on Fri, 20 Dec 2019 21:51:17 GMT and should not be manually modified.
 
+## 0.59.0-vnext.203
+Fri, 20 Dec 2019 21:51:17 GMT
+
+### Changes
+
+- Export ability to query native module names (ngerlem@microsoft.com)
 ## 0.59.0-vnext.202
 Wed, 04 Dec 2019 01:30:50 GMT
 
