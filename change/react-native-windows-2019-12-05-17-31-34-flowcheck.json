@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Get flow clean, and turn on flow check during build",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "52941d364d05f4608f9b0266c287e53cd904522f",
-  "date": "2019-12-06T01:31:34.909Z"
-}

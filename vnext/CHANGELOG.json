@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Dec 2019 18:19:02 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.101",
+      "version": "0.60.0-vnext.101",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Get flow clean, and turn on flow check during build",
+            "author": "acoates@microsoft.com",
+            "commit": "52941d364d05f4608f9b0266c287e53cd904522f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Nov 2019 01:13:19 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.70",
       "version": "0.60.0-vnext.70",
