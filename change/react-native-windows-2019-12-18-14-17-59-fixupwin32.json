@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Provide source uri in SourceCode module when using livereload",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "ee0de45b4e776cd6d110b6e5fdb94bfbae1c7133",
+  "date": "2019-12-18T22:17:59.673Z"
+}

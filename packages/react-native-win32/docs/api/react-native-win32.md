@@ -12,7 +12,7 @@ This package provides Win32 specific components and provides JS implementations 
 |  --- | --- |
 |  [ButtonWin32](./react-native-win32.buttonwin32.md) | React-native <Button> control with additional Win32-specific functionality. |
 |  [TextWin32](./react-native-win32.textwin32.md) |  |
-|  [TouchableWin32](./react-native-win32.touchablewin32.md) | TouchableWin32 is a 'compentantization' of the Touchable Mixin in React Native. This means that instead of implementing components such as TouchableHighlight via the mixin, they are merely implemented as wrappers around TouchableWin32, forwarding the correct set of props. Additionally, TouchableWin32 supports hover via onMouseEnter and onMouseLeave and focus/blur via onFocus/onBlur. TouchableWin32 also allows for functions as child components (that use the internal state of the touchable to conditionally render children) as well functions as styles (that use internal state to conditionally calculate styles) |
+|  [TouchableWin32](./react-native-win32.touchablewin32.md) | TouchableWin32 is a 'componentization' of the Touchable Mixin in React Native. This means that instead of implementing components such as TouchableHighlight via the mixin, they are merely implemented as wrappers around TouchableWin32, forwarding the correct set of props. Additionally, TouchableWin32 supports hover via onMouseEnter and onMouseLeave and focus/blur via onFocus/onBlur. TouchableWin32 also allows for functions as child components (that use the internal state of the touchable to conditionally render children) as well functions as styles (that use internal state to conditionally calculate styles) |
 |  [ViewWin32](./react-native-win32.viewwin32.md) |  |
 
 ## Enumerations
