@@ -14,11 +14,13 @@ import {
   ACCESSBILITY_TESTPAGE,
   DIRECT_MANIPULATION_TESTPAGE,
   IMAGE_TESTPAGE,
+  CONTROL_STYLE_TESTPAGE,
 } from './Consts';
 import { LoginTestPage } from './LoginTestPage';
 import { AccessibilityTestPage } from './AccessibilityTestPage';
 import { DirectManipulationTestPage } from './DirectManipulationPage';
 import { ImageTestPage } from './ImageTestPage';
+import { ControlStyleTestPage } from './ControlStyleTestPage';
 
 export interface ITestPage {
   testId: string;
@@ -51,6 +53,11 @@ const TestPages: ITestPage[] = [
     testId: IMAGE_TESTPAGE,
     description: 'Image Test Page',
     content: ImageTestPage,
+  },
+  {
+    testId: CONTROL_STYLE_TESTPAGE,
+    description: 'Control Style Test Page',
+    content: ControlStyleTestPage,
   },
   {
     testId: UNKNOWN_TESTPAGE,

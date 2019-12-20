@@ -108,9 +108,7 @@
     <None Include="ReactUWPTestApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\TreeDump\ImageWithBorder.txt" />
-    <Content Include="Assets\TreeDump\ImageWithoutBorder-Subsequent.txt" />
-    <Content Include="Assets\TreeDump\ImageWithoutBorder.txt" />
+    <Content Include="Assets\TreeDump\*.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

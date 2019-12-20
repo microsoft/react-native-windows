@@ -38,3 +38,7 @@ export const IMAGE_TESTPAGE = 'ImageTestPage';
 export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
 export const SHOW_IMAGE_BORDER = 'BorderButton';
 export const IMAGE_CONTAINER = 'ImageContainer';
+
+// Control Style Test Page
+export const CONTROL_STYLE_TESTPAGE = 'ControlStyleTestPage';
+export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';
