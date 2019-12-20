@@ -75,11 +75,7 @@ export type Props = $ReadOnly<{|
   acceptsKeyboardFocus?: ?boolean, // [TODO(macOS ISS#2323203)
   onMouseEnter?: ?Function,
   onMouseLeave?: ?Function,
-  onDragEnter?: ?Function,
   onMouseLeave?: ?Function,
-  onDragEnter?: ?Function,
-  onDragLeave?: ?Function,
-  onDrop?: ?Function,
   pressRetentionOffset?: ?EdgeInsetsProp,
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
@@ -140,18 +136,6 @@ const TouchableWithoutFeedback = ((createReactClass({
      * Called when the mouse exits the touchable element
      */
     onMouseLeave: PropTypes.func, // TODO(macOS ISS#2323203)
-    /**
-     * Fired when a dragged element enters a valid drop target
-     */
-    onDragEnter: PropTypes.func, // TODO(macOS ISS#2323203)
-    /**
-     * Fired when a dragged element leaves a valid drop target
-     */
-    onDragLeave: PropTypes.func, // TODO(macOS ISS#2323203)
-    /**
-     * Fired when an element is dropped on a valid drop target
-     */
-    onDrop: PropTypes.func, // TODO(macOS ISS#2323203)
     tooltip: PropTypes.string, // TODO(macOS/win ISS#2323203)
     /**
      * Called when the touch is released, but not if cancelled (e.g. by a scroll
@@ -340,9 +324,6 @@ const TouchableWithoutFeedback = ((createReactClass({
       onClick: this.touchableHandlePress, // TODO(android ISS)
       onMouseEnter: this.props.onMouseEnter, // [TODO(macOS ISS#2323203)
       onMouseLeave: this.props.onMouseLeave, // [TODO(macOS ISS#2323203)
-      onDragEnter: this.props.onDragEnter, // [TODO(macOS ISS#2323203)
-      onDragLeave: this.props.onDragLeave, // [TODO(macOS ISS#2323203)
-      onDrop: this.props.onDrop, // [TODO(macOS ISS#2323203)
       children,
     });
   },

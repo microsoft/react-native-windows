@@ -36,6 +36,10 @@ task('apiDocumenter', () => {
   );
 });
 
+task('flow-check', () => {
+  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
+});
+
 task('eslint', () => {
   return eslintTask();
 });
@@ -59,8 +63,8 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['jest', 'Libraries', 'RNTester', 'lib'].map(p =>
-      path.join(process.cwd(), p),
+    ['dist', 'flow', 'flow-typed', 'jest', 'Libraries', 'RNTester', 'lib'].map(
+      p => path.join(process.cwd(), p),
     ),
   );
 });
@@ -73,6 +77,7 @@ task(
     'initRNLibraries',
     'copyFlowFiles',
     'ts',
+    'flow-check',
     condition('apiExtractorVerify', () => argv().ci),
     'apiExtractorUpdate',
     'apiDocumenter',
