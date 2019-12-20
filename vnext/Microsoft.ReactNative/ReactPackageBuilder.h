@@ -4,9 +4,9 @@
 
 #include "NativeModulesProvider.h"
 #include "ViewManagersProvider.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackageBuilder> {
   ReactPackageBuilder(
@@ -22,4 +22,4 @@ struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackag
   std::shared_ptr<ViewManagersProvider> m_viewManagersProvider;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

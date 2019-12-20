@@ -1,87 +1,38 @@
 #
 parameters:
   name: ''
-  pool:
   BuildPlatform: x86 # ARM, x86, x64
   UseRNFork: true
-  vsComponents: ''
-  vsInstallerUri: 'https://download.visualstudio.microsoft.com/download/pr/c4fef23e-cc45-4836-9544-70e213134bc8/1ee5717e9a1e05015756dff77eb27d554a79a6db91f2716d836df368381af9a1/vs_Enterprise.exe'
 
 jobs:
   - job: ${{ parameters.name }}
     displayName: E2E Test
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
-    pool: ${{ parameters.pool }}
+
+    # E2ETest is in the pipeline of windows-vs-pr, but windows-vs-pr is still using vs2017.yml
+    # E2ETest can only be executed on windows-2019 or above, so force to use windows-2019 image and override vs2017.yml variables
+    # so pool and variables are hard coded here.
+    pool:
+      vmImage: windows-2019
+    variables: 
+      VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
+      BaseIntDir: $(BUILD_SOURCESDIRECTORY)\vnext\build
+      VmImage: windows-2019
+
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+
     steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        # fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+      - checkout: self
+        clean: false
+        submodules: false
 
-      - task: UseNode@1
-        inputs:
-          version: '10.x'
-          
-      - task: PowerShell@2
-        displayName: "Remove WebDriverIO Workaround"
-        inputs:
-          targetType: "inline"
-          script: '((Get-Content -path packages/E2ETest/package.json -Raw) -replace ".*webdriver.git.*","") | Set-Content -Path packages/E2ETest/package.json'
-
-      - task: CmdLine@2
-        displayName: Install react-native-cli
-        inputs:
-          script: npm install -g react-native-cli
-
-      - task: CmdLine@2
-        displayName: Modify package.json to use unforked RN
-        inputs:
-          script: node scripts/useUnForkedRN.js
-          workingDirectory: vnext
-        condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'false'))
-
-      - task: CmdLine@2
-        displayName: yarn install (Using microsoft/react-native)
-        inputs:
-          script: yarn install --frozen-lockfile
-        condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'true'))
-
-        # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
-        # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
-        # using the non fork version.
-      - task: CmdLine@2
-        displayName: yarn install (Using facebook/react-native)
-        inputs:
-          script: yarn install
-        condition: and(succeeded(), eq('${{ parameters.UseRNFork }}', 'false'))
-
-      - task: PowerShell@2
-        displayName: "Patch WebDriverIO"
-        inputs:
-          targetType: "inline"
-          script: '((Get-Content -path node_modules/webdriver/build/utils.js -Raw) -replace "if \(!body .*","if (!body) {") | Set-Content -Path node_modules/webdriver/build/utils.js'
-
-      - template: stop-packagers.yml
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: yarn build
-
-      - task: PowerShell@2
-        displayName: Install Visual Studio dependencies
-        inputs:
-          targetType: filePath
-          filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-          arguments:
-            -InstallerUri ${{ parameters.vsInstallerUri }}
-            -Components ${{ parameters.vsComponents }}
-        condition: ne('${{parameters.vsComponents}}', '')
+      - template: prepare-env.yml
+        parameters:
+          useRnFork: ${{ parameters.UseRNFork }}
+          vsComponents: $(VsComponents)
+          yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - ReactUWPTestApp
@@ -90,18 +41,12 @@ jobs:
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-      - task: PowerShell@2
-        displayName: Install MUX framework package
-        inputs:
-          targetType: "inline"
-          script:  Add-AppPackage -path $(Build.SourcesDirectory)/packages/E2ETest/windows/packages/Microsoft.UI.Xaml.2.3.191129002/tools/AppX/${{ parameters.BuildPlatform }}/Release/Microsoft.UI.Xaml.2.3.appx
-
       - task: CmdLine@2
         displayName: Create bundle
         inputs:
           script: yarn run bundle
           workingDirectory: packages/E2ETest
-
+          
       - task: CmdLine@2
         displayName: run-windows
         inputs:
@@ -115,7 +60,22 @@ jobs:
           pathtoPublish: packages/E2ETest/msbuild.binlog 
           artifactName: 'ReactUWPTestApp build log' 
           publishLocation: 'Container'
-                    
+
+      - task: CopyFiles@2
+        displayName: Copy ReactUWPTestApp artifacts
+        inputs:
+          sourceFolder: $(Build.SourcesDirectory)/packages/E2ETest/windows/ReactUWPTestApp
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
+          contents: AppPackages\**
+        condition: succeededOrFailed()
+
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact:ReactUWPTestApp"
+        inputs:
+          artifactName: ReactUWPTestApp
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestApp
+        condition: succeededOrFailed()
+
       # Wait for app to launch. A workaround to avoid WinAppDriver error: Failed to locate opened application window with appId
       - task: PowerShell@2
         displayName: Wait for app to launch
@@ -136,25 +96,26 @@ jobs:
           script: yarn run test
           workingDirectory: packages/E2ETest
 
+      - task: CopyFiles@2
+        displayName: Copy tree dump output files
+        inputs:
+          sourceFolder: $(LocalAppData)\Packages\ReactUWPTestApp_kc2bncckyf4ap\LocalState
+          targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+          contents: TreeDump\**
+        condition: succeededOrFailed()   
+        
+      - task: PublishBuildArtifacts@1
+        displayName: "Publish Artifact:ReactUWPTestAppTreeDump"
+        inputs:
+          artifactName: ReactUWPTestAppTreeDump
+          pathtoPublish: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
+        condition: succeededOrFailed()       
+
       - task: PublishTestResults@2
         inputs:
           testResultsFormat: "JUnit"
           testResultsFiles: "packages/E2ETest/reports/*.log"
         condition: succeededOrFailed()
-
-      - task: PowerShell@2
-        displayName: "Show package.json"
-        inputs:
-          targetType: "inline"
-          script: "Get-Content packages/E2ETest/package.json | foreach {Write-Output $_}"
-        condition: failed()
-
-      - task: PowerShell@2
-        displayName: "Show node_modules/webdriver/build/utils.js"
-        inputs:
-          targetType: "inline"
-          script: "Get-Content node_modules/webdriver/build/utils.js | foreach {Write-Output $_}"
-        condition: failed()
 
       - task: PowerShell@2
         displayName: "Show appium log"

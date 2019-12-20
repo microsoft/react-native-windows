@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "ReactPackageBuilder.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 //===========================================================================
 // ReactPackageBuilder implementation
@@ -25,4 +25,4 @@ void ReactPackageBuilder::AddViewManager(
   m_viewManagersProvider->AddViewManagerProvider(viewManagerName, viewManagerProvider);
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

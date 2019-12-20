@@ -14,19 +14,17 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/ModuleRegistry.h>
 
-using namespace winrt;
-using namespace winrt::Microsoft::ReactNative;
-using namespace winrt::Microsoft::ReactNative::Bridge;
 using namespace winrt::Windows::Foundation::Collections;
 
 namespace winrt::Microsoft::ReactNative::implementation {
+
 ReactInstanceManager::ReactInstanceManager(
-    Microsoft::ReactNative::ReactInstanceSettings instanceSettings,
-    std::string jsBundleFile,
-    std::string jsMainModuleName,
-    IVectorView<IReactPackageProvider> &packageProviders,
+    ReactNative::ReactInstanceSettings const &instanceSettings,
+    std::string const &jsBundleFile,
+    std::string const &jsMainModuleName,
+    IVectorView<IReactPackageProvider> const &packageProviders,
     bool useDeveloperSupport,
-    /*TODO*/ LifecycleState /*initialLifecycleState*/)
+    /*TODO*/ LifecycleState const & /*initialLifecycleState*/)
     : m_instanceSettings(instanceSettings),
       m_jsBundleFile(jsBundleFile),
       m_jsMainModuleName(jsMainModuleName),
@@ -175,8 +173,7 @@ auto ReactInstanceManager::CreateReactContextCoreAsync() -> IAsyncOperation<IRea
 
   auto reactInstance = InstanceCreator()->getInstance();
 
-  auto reactContext =
-      winrt::make<winrt::Microsoft::ReactNative::Bridge::ReactContext>(reactInstance).as<IReactContext>();
+  auto reactContext = winrt::make<ReactContext>(reactInstance).as<IReactContext>();
 
   // TODO: Investigate whether we need the equivalent of the
   // LimitedConcurrencyActionQueue from the C# implementation that is used to

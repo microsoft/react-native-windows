@@ -1,0 +1,1 @@
+This provides base Touchable functionality (press geometry, callbacks, and integration into the React Native gesture responder system), in addition to providing callbacks for desktop specific behavior (e.g. onMouseEnter, onMouseLeave)

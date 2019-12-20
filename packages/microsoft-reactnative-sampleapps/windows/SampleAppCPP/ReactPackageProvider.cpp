@@ -6,10 +6,9 @@
 
 #include "DebugConsole.h"
 
-using namespace Microsoft::ReactNative;
-using namespace winrt::Microsoft::ReactNative::Bridge;
+using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::SampleApp::implementation {
+namespace winrt::SampleAppCpp::implementation {
 
 //===========================================================================
 // ReactPackageProvider implementation
@@ -19,4 +18,4 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   AddAttributedModules(packageBuilder);
 }
 
-} // namespace winrt::SampleApp::implementation
+} // namespace winrt::SampleAppCpp::implementation

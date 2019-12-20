@@ -4,9 +4,9 @@
 
 #include "ABICxxModule.h"
 #include "cxxreact/CxxModule.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBuilder> {
   ReactModuleBuilder() noexcept;
@@ -33,4 +33,4 @@ struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBu
   std::vector<ABICxxModuleEventHandlerSetter> m_eventHandlerSetters;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

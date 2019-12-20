@@ -10,20 +10,17 @@
 #include <ReactUWP/ReactUwp.h>
 #include <winrt/Microsoft.ReactNative.h>
 
-using namespace winrt;
-using namespace Microsoft::ReactNative;
-using namespace Microsoft::ReactNative::Bridge;
-
 namespace winrt::Microsoft::ReactNative::implementation {
+
 void InitReactNative();
 
 struct ReactInstanceCreator : react::uwp::IReactInstanceCreator {
   ReactInstanceCreator(
-      Microsoft::ReactNative::ReactInstanceSettings instanceSettings,
-      std::string jsBundleFile,
-      std::string jsMainModuleName,
-      std::shared_ptr<NativeModulesProvider> modulesProvider,
-      std::shared_ptr<ViewManagersProvider> viewManagersProvider);
+      ReactNative::ReactInstanceSettings const &instanceSettings,
+      std::string const &jsBundleFile,
+      std::string const &jsMainModuleName,
+      std::shared_ptr<NativeModulesProvider> const &modulesProvider,
+      std::shared_ptr<ViewManagersProvider> const &viewManagersProvider);
 
   std::string m_jsMainModuleName{};
   std::string m_jsBundleFile{};
@@ -33,17 +30,16 @@ struct ReactInstanceCreator : react::uwp::IReactInstanceCreator {
   std::shared_ptr<react::uwp::IReactInstance> getInstance();
   void markAsNeedsReload();
 
-  // TODO: Remove this wart. AFAIK, it was only added for the
-  // Universal.SampleApp It's here because of the abstract base class.  The
-  // ReactInstanceSettings in this project has a UseWebDebugger property
-  // that should be used instead as it automatically "persists" by virtue
-  // of being attached to the ReactNativeHost.
-  void persistUseWebDebugger(bool /*useWebDebugger*/){};
-  // TODO: Remove too
-  void persistUseLiveReload(bool /*useliveReload*/){};
+  void persistUseWebDebugger(bool useWebDebugger) {
+    m_instanceSettings.UseWebDebugger(useWebDebugger);
+  };
+
+  void persistUseLiveReload(bool useliveReload) {
+    m_instanceSettings.UseLiveReload(useliveReload);
+  };
 
  private:
-  Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{};
+  ReactNative::ReactInstanceSettings m_instanceSettings{};
   std::shared_ptr<react::uwp::IReactInstance> m_instance;
 };
 } // namespace winrt::Microsoft::ReactNative::implementation

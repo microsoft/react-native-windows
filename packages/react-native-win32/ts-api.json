@@ -1,0 +1,5 @@
+{
+  "validTargets": ["win32.ship"],
+
+  "entryPoints": [{ "target": "win32.ship", "sourceFile": "./lib/Libraries/react-native/typings-main.d.ts" }]
+}

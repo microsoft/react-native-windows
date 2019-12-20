@@ -12,6 +12,9 @@ const largeImageUri =
 const smallImageUri =
   'http://facebook.github.io/react-native/img/header_logo.png';
 
+const dataImageUri =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
+
 export default class Bootstrap extends React.Component<
   {},
   {
@@ -22,57 +25,78 @@ export default class Bootstrap extends React.Component<
       | 'contain'
       | 'repeat'
       | undefined;
-    useLargeImage: boolean;
-    imageUrl: string;
+    inlcudeBorder: boolean;
+    selectedSource: string;
+    imageUri: string;
   }
 > {
   state = {
     selectedResizeMode: 'center' as 'center',
-    useLargeImage: false,
-    imageUrl: 'http://facebook.github.io/react-native/img/header_logo.png',
+    selectedSource: 'small',
+    inlcudeBorder: false,
+    imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
-  switchImageUrl = () => {
-    const useLargeImage = !this.state.useLargeImage;
-    this.setState({useLargeImage});
+  switchImageUri = (value: string) => {
+    this.setState({selectedSource: value});
 
-    const imageUrl = useLargeImage ? largeImageUri : smallImageUri;
-    this.setState({imageUrl});
+    let imageUri = '';
+
+    if (value === 'small') {
+      imageUri = smallImageUri;
+    } else if (value === 'large') {
+      imageUri = largeImageUri;
+    } else if (value === 'data') {
+      imageUri = dataImageUri;
+    }
+
+    this.setState({imageUri});
   };
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.rowContainer}>
-          <View style={styles.rowContainer}>
-            <Text style={styles.title}>ResizeMode</Text>
-            <Picker
-              style={{width: 125}}
-              selectedValue={this.state.selectedResizeMode}
-              onValueChange={value =>
-                this.setState({selectedResizeMode: value})
-              }>
-              <Picker.Item label="cover" value="cover" />
-              <Picker.Item label="contain" value="contain" />
-              <Picker.Item label="stretch" value="stretch" />
-              <Picker.Item label="center" value="center" />
-              <Picker.Item label="repeat" value="repeat" />
-            </Picker>
-          </View>
-          <View style={styles.rowContainer}>
-            <Text style={styles.title}>Image Size</Text>
-            <Text style={{marginRight: 5}}>Small</Text>
-            <Switch
-              value={this.state.useLargeImage}
-              onValueChange={this.switchImageUrl}
-            />
-            <Text style={{marginRight: 5}}>Large</Text>
-          </View>
+          <Text style={styles.title}>ResizeMode</Text>
+          <Picker
+            style={{width: 125}}
+            selectedValue={this.state.selectedResizeMode}
+            onValueChange={value => this.setState({selectedResizeMode: value})}>
+            <Picker.Item label="cover" value="cover" />
+            <Picker.Item label="contain" value="contain" />
+            <Picker.Item label="stretch" value="stretch" />
+            <Picker.Item label="center" value="center" />
+            <Picker.Item label="repeat" value="repeat" />
+          </Picker>
+        </View>
+        <View style={styles.rowContainer}>
+          <Text style={styles.title}>Image Source</Text>
+          <Picker
+            style={{width: 125}}
+            selectedValue={this.state.selectedSource}
+            onValueChange={value => this.switchImageUri(value)}>
+            <Picker.Item label="small" value="small" />
+            <Picker.Item label="large" value="large" />
+            <Picker.Item label="data" value="data" />
+          </Picker>
+        </View>
+        <View style={styles.rowContainer}>
+          <Text>No Border</Text>
+          <Switch
+            style={{marginLeft: 10}}
+            value={this.state.inlcudeBorder}
+            onValueChange={(value: boolean) =>
+              this.setState({inlcudeBorder: value})
+            }
+          />
+          <Text>Round Border</Text>
         </View>
         <View style={styles.imageContainer}>
           <Image
-            style={styles.image}
-            source={{uri: this.state.imageUrl}}
+            style={
+              this.state.inlcudeBorder ? styles.imageWithBorder : styles.image
+            }
+            source={{uri: this.state.imageUri}}
             resizeMode={this.state.selectedResizeMode}
           />
         </View>
@@ -91,6 +115,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 5,
   },
   imageContainer: {
     marginTop: 5,
@@ -102,10 +127,18 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  imageWithBorder: {
+    height: '100%',
+    width: '100%',
+    borderRadius: 10.0,
+    borderWidth: 10,
+    borderColor: 'green',
+    backgroundColor: 'red',
+  },
   title: {
     fontWeight: 'bold',
     margin: 5,
-    width: 80,
+    width: 100,
   },
 });
 

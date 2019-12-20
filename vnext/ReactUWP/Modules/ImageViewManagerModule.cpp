@@ -61,7 +61,7 @@ winrt::fire_and_forget GetImageSizeAsync(
   bool succeeded{false};
 
   try {
-    ImageSource source;
+    ReactImageSource source;
     source.uri = uriString;
 
     winrt::Uri uri{Microsoft::Common::Unicode::Utf8ToUtf16(uriString)};

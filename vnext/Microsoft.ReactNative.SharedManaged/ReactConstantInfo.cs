@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative.Bridge;
 using System;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
+using static Microsoft.ReactNative.Managed.JSValueGenerator;
+using static Microsoft.ReactNative.Managed.JSValueWriterGenerator;
+using static System.Linq.Expressions.Expression;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -14,41 +15,47 @@ namespace Microsoft.ReactNative.Managed
     public ReactConstantInfo(PropertyInfo propertyInfo, ReactConstantAttribute constantAttribute)
     {
       ConstantName = constantAttribute.ConstantName ?? propertyInfo.Name;
-      ConstantImpl = new Lazy<ReactConstantImpl>(() => MakePropertyConstant(propertyInfo), LazyThreadSafetyMode.PublicationOnly);
+      ConstantImpl = new Lazy<ReactConstantImpl>(() => MakeConstant(propertyInfo), LazyThreadSafetyMode.PublicationOnly);
     }
 
     public ReactConstantInfo(FieldInfo fieldInfo, ReactConstantAttribute constantAttribute)
     {
       ConstantName = constantAttribute.ConstantName ?? fieldInfo.Name;
-      ConstantImpl = new Lazy<ReactConstantImpl>(() => MakeFieldConstant(fieldInfo), LazyThreadSafetyMode.PublicationOnly);
+      ConstantImpl = new Lazy<ReactConstantImpl>(() => MakeConstant(fieldInfo), LazyThreadSafetyMode.PublicationOnly);
     }
 
-    private ReactConstantImpl MakePropertyConstant(PropertyInfo propertyInfo)
+    private ReactConstantImpl MakeConstant(PropertyInfo propertyInfo)
     {
-      ParameterExpression moduleParameter = Expression.Parameter(typeof(object), "module");
-      ParameterExpression writerParameter = Expression.Parameter(typeof(IJSValueWriter), "writer");
+      // Generate code that looks like:
+      //
+      // (object module, IJSValueWriter outputWriter) =>
+      // {
+      //   outputWriter.WriteValue((module as MyModule).constantProperty);
+      // };
 
       bool isStatic = propertyInfo.GetGetMethod().IsStatic;
-      Type propertyType = propertyInfo.PropertyType;
-      var constantProperty = Expression.Property(isStatic ? null : Expression.Convert(moduleParameter, propertyInfo.DeclaringType), propertyInfo);
-      var writeValueCall = Expression.Call(null, JSValueWriter.GetWriteValueMethod(propertyType), writerParameter, constantProperty);
-      var lambda = Expression.Lambda<ReactConstantImpl>(writeValueCall, moduleParameter, writerParameter);
-
-      return lambda.Compile();
+      return CompileLambda<ReactConstantImpl>(
+        Parameter(typeof(object), out var module),
+        Parameter(typeof(IJSValueWriter), out var outputWriter),
+          outputWriter.CallExt(WriteValueOf(propertyInfo.PropertyType),
+            Property(isStatic ? null : module.CastTo(propertyInfo.DeclaringType), propertyInfo)));
     }
 
-    private ReactConstantImpl MakeFieldConstant(FieldInfo fieldInfo)
+    private ReactConstantImpl MakeConstant(FieldInfo fieldInfo)
     {
-      ParameterExpression moduleParameter = Expression.Parameter(typeof(object), "module");
-      ParameterExpression writerParameter = Expression.Parameter(typeof(IJSValueWriter), "writer");
+      // Generate code that looks like:
+      //
+      // (object module, IJSValueWriter outputWriter) =>
+      // {
+      //   outputWriter.WriteValue((module as MyModule).constantField);
+      // });
 
       bool isStatic = fieldInfo.IsStatic;
-      Type fieldType = fieldInfo.FieldType;
-      var constantField = Expression.Field(isStatic ? null : Expression.Convert(moduleParameter, fieldInfo.DeclaringType), fieldInfo);
-      var writeValueCall = Expression.Call(null, JSValueWriter.GetWriteValueMethod(fieldType), writerParameter, constantField);
-      var lambda = Expression.Lambda<ReactConstantImpl>(writeValueCall, moduleParameter, writerParameter);
-
-      return lambda.Compile();
+      return CompileLambda<ReactConstantImpl>(
+        Parameter(typeof(object), out var module),
+        Parameter(typeof(IJSValueWriter), out var outputWriter),
+          outputWriter.CallExt(WriteValueOf(fieldInfo.FieldType),
+            Field(isStatic ? null : module.CastTo(fieldInfo.DeclaringType), fieldInfo)));
     }
 
     public delegate void ReactConstantImpl(object module, IJSValueWriter writer);

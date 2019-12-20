@@ -4,9 +4,9 @@
 #pragma once
 #include "ReactPackageProvider.g.h"
 
-using namespace winrt::Microsoft::ReactNative::Bridge;
+using namespace winrt::Microsoft::ReactNative;
 
-namespace winrt::SampleLibraryCPP::implementation {
+namespace winrt::SampleLibraryCpp::implementation {
 
 struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
   ReactPackageProvider() = default;
@@ -14,10 +14,10 @@ struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
 };
 
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation
 
-namespace winrt::SampleLibraryCPP::factory_implementation {
+namespace winrt::SampleLibraryCpp::factory_implementation {
 
 struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
 
-} // namespace winrt::SampleLibraryCPP::factory_implementation
+} // namespace winrt::SampleLibraryCpp::factory_implementation

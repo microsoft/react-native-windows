@@ -1,27 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 #pragma once
 
 #include "ReactApplication.g.h"
 #include "ReactNativeHost.h"
-
-using namespace winrt;
-using namespace Windows::ApplicationModel;
-using namespace Windows::UI::Xaml::Navigation;
-using namespace Microsoft::ReactNative;
-using namespace Microsoft::ReactNative::Bridge;
-using namespace Windows::Foundation::Collections;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 struct ReactApplication : ReactApplicationT<ReactApplication> {
   ReactApplication() noexcept;
 
-  Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
-  void InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept;
+  ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
+  void InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept;
 
-  IVector<IReactPackageProvider> PackageProviders() noexcept;
-  void PackageProviders(IVector<IReactPackageProvider> const &value) noexcept;
+  Windows::Foundation::Collections::IVector<IReactPackageProvider> PackageProviders() noexcept;
+  void PackageProviders(Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept;
 
   hstring MainComponentName() noexcept;
   void MainComponentName(hstring const &value) noexcept;
@@ -35,27 +29,29 @@ struct ReactApplication : ReactApplicationT<ReactApplication> {
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
-  Microsoft::ReactNative::ReactNativeHost Host() noexcept;
+  ReactNative::ReactNativeHost Host() noexcept;
 
-  virtual void OnLaunched(Activation::LaunchActivatedEventArgs const &);
-  virtual void OnSuspending(IInspectable const &, SuspendingEventArgs const &);
-  virtual void OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &);
+  virtual void OnLaunched(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &);
+  virtual void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
+  virtual void OnNavigationFailed(
+      IInspectable const &,
+      Windows::UI::Xaml::Navigation::NavigationFailedEventArgs const &);
 
  protected:
   virtual ReactApplicationDelegate __stdcall CreateReactApplicationDelegate();
 
  private:
-  Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  IVector<IReactPackageProvider> m_packageProviders{nullptr};
+  ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders{nullptr};
   hstring m_mainComponentName;
   bool m_useDeveloperSupport{REACT_DEFAULT_USE_DEVELOPER_SUPPORT};
   hstring m_javaScriptMainModuleName;
   hstring m_javaScriptBundleFile;
-  Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
+  ReactNative::ReactNativeHost m_host{nullptr};
 
   ReactApplicationDelegate m_delegate{nullptr};
 
-  void OnCreate(Activation::LaunchActivatedEventArgs const &e);
+  void OnCreate(Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &e);
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -72,11 +68,12 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // ReactApplication inline implementation
 //=============================================================================
 
-inline void ReactApplication::InstanceSettings(Microsoft::ReactNative::ReactInstanceSettings const &value) noexcept {
+inline void ReactApplication::InstanceSettings(ReactNative::ReactInstanceSettings const &value) noexcept {
   m_instanceSettings = value;
 }
 
-inline void ReactApplication::PackageProviders(IVector<IReactPackageProvider> const &value) noexcept {
+inline void ReactApplication::PackageProviders(
+    Windows::Foundation::Collections::IVector<IReactPackageProvider> const &value) noexcept {
   m_packageProviders = value;
 }
 
