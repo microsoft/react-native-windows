@@ -10,6 +10,9 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
+<PROJECT_ROOT>/Libraries/Color/normalizeColor.js
+<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicator.js
+<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/RCTActivityIndicatorViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
 <PROJECT_ROOT>/Libraries/Components/Flyout/Flyout.js
@@ -17,11 +20,13 @@
 <PROJECT_ROOT>/Libraries/Components/Keyboard/KeyboardExt.js
 <PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/Picker/PickerWindows.js
+<PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/Popup/Popup.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
 <PROJECT_ROOT>/Libraries/Components/Switch/Switch.js
+<PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
@@ -36,12 +41,18 @@
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<PROJECT_ROOT>/Libraries/ReactNative/getNativeComponentAttributes.js
+<PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
+<PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 
 
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
+
+; These files dont need to be checked and just increase the build time
+.*/node_modules/microsoft-reactnative-sampleapps/.*
 
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/template/.*
