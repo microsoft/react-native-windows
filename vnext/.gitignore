@@ -42,6 +42,8 @@ node_modules
 .nvm
 /bots/node_modules/
 
+/flow
+/flow-typed
 /dist
 /IntegrationTests/*.js
 /IntegrationTests/*.png

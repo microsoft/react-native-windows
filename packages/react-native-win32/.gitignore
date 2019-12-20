@@ -1,5 +1,6 @@
 /demo
 /dist
+/index.*
 /IntegrationTests
 /jest
 /lib

@@ -169,7 +169,7 @@ const LONG_PRESS_DELAY_MS = LONG_PRESS_THRESHOLD - HIGHLIGHT_DELAY_MS;
 const LONG_PRESS_ALLOWED_MOVEMENT = 10;
 
 /**
- * TouchableWin32 is a 'compentantization' of the Touchable Mixin in React Native.
+ * TouchableWin32 is a 'componentization' of the Touchable Mixin in React Native.
  * This means that instead of implementing components such as TouchableHighlight
  * via the mixin, they are merely implemented as wrappers around TouchableWin32,
  * forwarding the correct set of props. Additionally, TouchableWin32 supports hover

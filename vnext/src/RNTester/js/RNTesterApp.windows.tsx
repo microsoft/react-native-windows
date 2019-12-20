@@ -18,8 +18,7 @@ const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
 import RNTesterList from './RNTesterList.windows';
-import RNTesterNavigationReducer from './RNTesterNavigationReducer.windows';
-import {RNTesterAction} from './RNTesterActions.windows';
+const RNTesterNavigationReducer = require('react-native/RNTester/js/RNTesterNavigationReducer');
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -123,7 +122,7 @@ class RNTesterApp extends React.Component<
         const launchAction = exampleAction || urlAction;
      if (err || !storedString) {
       */
-    const initialAction: RNTesterAction = /*launchAction ||*/ {
+    const initialAction = /*launchAction ||*/ {
       type: 'InitialAction',
     };
     // eslint-disable-next-line react/no-did-mount-set-state
@@ -150,7 +149,7 @@ class RNTesterApp extends React.Component<
     this._handleAction(RNTesterActions.Back());
   };
 
-  private _handleAction = (action?: RNTesterAction) => {
+  private _handleAction = (action: any) => {
     if (!action) {
       return;
     }

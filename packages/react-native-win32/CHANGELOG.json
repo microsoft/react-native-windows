@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 20 Dec 2019 19:01:50 GMT",
+      "tag": "@office-iss/react-native-win32_v0.25.8",
+      "version": "0.25.8",
+      "comments": {
+        "none": [
+          {
+            "comment": "Dont checkin generated index files",
+            "author": "acoates@microsoft.com",
+            "commit": "ee0de45b4e776cd6d110b6e5fdb94bfbae1c7133"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Dec 2019 22:18:13 GMT",
       "tag": "@office-iss/react-native-win32_v0.25.8",
       "version": "0.25.8",

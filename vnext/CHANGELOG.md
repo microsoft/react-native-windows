@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Dec 2019 05:18:08 GMT and should not be manually modified.
+This log was last generated on Fri, 20 Dec 2019 19:01:50 GMT and should not be manually modified.
 
+## 0.60.0-vnext.102
+Fri, 20 Dec 2019 19:01:50 GMT
+
+### Changes
+
+- Provide source uri in SourceCode module when using livereload (acoates@microsoft.com)
+## 0.60.0-vnext.101
+Fri, 20 Dec 2019 18:19:02 GMT
+
+### Changes
+
+- Get flow clean, and turn on flow check during build (acoates@microsoft.com)
 ## 0.60.0-vnext.100
 Fri, 20 Dec 2019 05:18:08 GMT
 
