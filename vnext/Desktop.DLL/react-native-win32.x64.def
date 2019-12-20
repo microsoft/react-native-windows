@@ -39,6 +39,7 @@ EXPORTS
 ?get_ptrImpl@dynamic@folly@@AEGBAPEBU12@AEBU12@@Z
 ?hash@dynamic@folly@@QEBA_KXZ
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
+?moduleNames@ModuleRegistry@react@facebook@@QEAA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
 ?size@dynamic@folly@@QEBA_KXZ
 ?str_to_bool@detail@folly@@YA?AV?$Expected@_NW4ConversionCode@folly@@@2@PEAV?$Range@PEBD@2@@Z
