@@ -491,10 +491,6 @@ const TouchableHighlight = ((createReactClass({
         onMouseLeave={this.props.onMouseLeave}
         keyDownEvents={handledNativeKeyboardEvents}
         keyUpEvents={handledNativeKeyboardEvents}
-        onDragEnter={this.props.onDragEnter}
-        onDragLeave={this.props.onDragLeave}
-        onDrop={this.props.onDrop}
-        draggedTypes={this.props.draggedTypes} // ]TODO(macOS/win ISS#2323203)
         nativeID={this.props.nativeID}
         testID={this.props.testID}>
         {React.cloneElement(child, {

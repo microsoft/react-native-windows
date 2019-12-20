@@ -7,7 +7,7 @@
 import React = require('react');
 import {Button, CheckBox, Text, TextInput, View} from 'react-native';
 import {Flyout, Picker, Popup} from 'react-native-windows';
-import {Placement} from '../Libraries/Components/Flyout/FlyoutProps';
+import {Placement} from '../../Libraries/Components/Flyout/FlyoutProps';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;

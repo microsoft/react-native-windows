@@ -23,6 +23,12 @@ export interface Spec extends TurboModule {
   +openURL: (url: string) => Promise<void>;
   +openSettings: () => Promise<void>;
 
+  // Android only
+  +sendIntent: (
+    action: string,
+    extras: ?Array<{key: string, value: string | number | boolean}>,
+  ) => Promise<void>;
+
   // Events
   +addListener: (eventName: string) => void;
   +removeListeners: (count: number) => void;

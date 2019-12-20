@@ -173,7 +173,7 @@ var WebView = createReactClass({
     onError && onError(event);
     onLoadEnd && onLoadEnd(event);
     console.error('Encountered an error loading page', event.nativeEvent);
-
+    // $FlowFixMe : Not sure what the issue here is, disabling to get flow check turned on
     this.setState({
       lastErrorEvent: event.nativeEvent,
       viewState: WebViewState.ERROR,
@@ -191,7 +191,7 @@ var WebView = createReactClass({
   },
 });
 
-var RCTWebView = requireNativeComponent('RCTWebView', WebView);
+var RCTWebView = requireNativeComponent('RCTWebView');
 
 var styles = StyleSheet.create({
   container: {

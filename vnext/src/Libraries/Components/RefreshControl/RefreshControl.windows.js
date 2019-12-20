@@ -12,11 +12,9 @@
 
 const Platform = require('../../Utilities/Platform');
 const React = require('react');
-const {NativeComponent} = require('../../Renderer/shims/ReactNative');
 
 const AndroidSwipeRefreshLayoutNativeComponent = require('./AndroidSwipeRefreshLayoutNativeComponent');
 const RCTRefreshControlNativeComponent = require('./RCTRefreshControlNativeComponent');
-const nullthrows = require('nullthrows');
 
 import type {ColorValue} from '../../StyleSheet/StyleSheetTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
@@ -182,7 +180,14 @@ class RefreshControl extends React.Component<RefreshControlProps> {
         />
       );
     } else if (Platform.OS === 'windows') {
-      const {...props} = this.props;
+      const {
+        colors,
+        enabled,
+        progressBackgroundColor,
+        progressViewOffset,
+        size,
+        ...props
+      } = this.props;
       return (
         <RCTRefreshControlNativeComponent
           {...props}

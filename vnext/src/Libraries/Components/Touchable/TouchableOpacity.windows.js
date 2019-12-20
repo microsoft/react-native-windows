@@ -374,11 +374,7 @@ const TouchableOpacity = ((createReactClass({
         onMouseEnter={this.props.onMouseEnter} // [TODO(macOS ISS#2323203)
         onMouseLeave={this.props.onMouseLeave}
         keyDownEvents={handledNativeKeyboardEvents}
-        keyUpEvents={handledNativeKeyboardEvents}
-        onDragEnter={this.props.onDragEnter}
-        onDragLeave={this.props.onDragLeave}
-        onDrop={this.props.onDrop}
-        draggedTypes={this.props.draggedTypes}>
+        keyUpEvents={handledNativeKeyboardEvents}>
         {this.props.children}
         {Touchable.renderDebugView({
           color: 'cyan',
