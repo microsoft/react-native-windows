@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix cornerRadius issue for TextInput and some updates to TreeDump",
-  "packageName": "react-native-windows",
-  "email": "dida@ntdev.microsoft.com",
-  "commit": "d2ab5205ec27f1784a54a82236c54b9c13531412",
-  "date": "2019-12-17T21:09:02.950Z"
-}

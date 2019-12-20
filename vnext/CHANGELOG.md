@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 19 Dec 2019 18:44:51 GMT and should not be manually modified.
+This log was last generated on Fri, 20 Dec 2019 05:18:08 GMT and should not be manually modified.
 
+## 0.60.0-vnext.100
+Fri, 20 Dec 2019 05:18:08 GMT
+
+### Changes
+
+- Fix cornerRadius issue for TextInput and some updates to TreeDump (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.99
 Thu, 19 Dec 2019 18:44:51 GMT
 
