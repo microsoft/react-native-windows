@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Updating react-native to version: 0.60.0-microsoft.32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "53619745+rnbot@users.noreply.github.com",
+  "commit": "9568e58be8a94eb71722e88ebfc981db12a90eca",
+  "date": "2019-12-20T22:24:19.779Z"
+}
