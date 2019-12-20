@@ -6,6 +6,11 @@
 #include "DynamicAutomationPeer.h"
 #include "ViewControl.h"
 
+// Needed for latest versions of C++/WinRT
+#if __has_include("react.uwp.ViewControl.g.cpp")
+#include "react.uwp.ViewControl.g.cpp"
+#endif
+
 namespace winrt {
 using namespace Windows::UI::Xaml::Automation::Peers;
 using namespace Windows::UI::Xaml;
