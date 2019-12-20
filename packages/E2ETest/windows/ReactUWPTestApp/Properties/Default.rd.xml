@@ -22,8 +22,9 @@
       the application package. The asterisks are not wildcards.
     -->
     <Assembly Name="*Application*" Dynamic="Required All" />
-    <Namespace Name="Windows.UI.Xaml" Serialize="All"/>
-        
+    <!-- Needed on release build for TreeDump utility to work on XAML types. -->
+    <Namespace Name="Windows.UI.Xaml" Serialize ="Required All"/>
+
     <!-- Add your application specific runtime directives here. -->
 
 

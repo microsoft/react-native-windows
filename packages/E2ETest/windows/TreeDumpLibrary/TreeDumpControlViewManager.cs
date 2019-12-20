@@ -35,14 +35,23 @@ namespace TreeDumpLibrary
                 }
                 else
                 {
-                    await MatchTreeDumpFromLayoutUpdateAsync();
+                    // delay dumping tree by 100ms for layout to stablize
+                    if (m_timer != null)
+                    {
+                        m_timer.Stop();
+                        m_timer.Start();
+                    }
                 }
             };
 
             m_textBlock.PointerPressed += (soruce, e) =>
             {
-                if (!m_matchDump)
+                if (!m_dumpMatchExpected)
                 {
+                    if (m_timer != null)
+                    {
+                        m_timer.Stop();
+                    }
                     m_errStringShowing = true;
                     m_textBlock.Text = m_errString;
                     m_textBlock.IsTextSelectionEnabled = true;
@@ -82,14 +91,18 @@ namespace TreeDumpLibrary
         public void SetDumpID(TextBlock view, string value)
         {
             m_dumpID = value;
-            m_matchDump = false;
+            m_dumpMatchExpected = false;
             m_dumpExpectedText = null;
             m_errString = "";
             m_errStringShowing = false;
             if (m_textBlock != null)
             {
                 m_textBlock.IsTextSelectionEnabled = false;
+                UpdateTextBlockText("");
             }
+            m_timer = new DispatcherTimer();
+            m_timer.Tick += dispatcherTimer_Tick;
+            m_timer.Interval = new TimeSpan(0, 0, 0, 0, 200);
         }
 
         public void SetUIAID(TextBlock view, string value)
@@ -97,6 +110,14 @@ namespace TreeDumpLibrary
             m_uiaID = value;
         }
 
+        private async void dispatcherTimer_Tick(object sender, object e)
+        {
+            m_timer.Stop();
+            if (VisualTreeHelper.GetParent(m_textBlock) != null)
+            {
+                await MatchTreeDumpFromLayoutUpdateAsync();
+            }
+        }
         private DependencyObject FindChildWithMatchingUIAID(DependencyObject element)
         {
             string automationId = (string)element.GetValue(Windows.UI.Xaml.Automation.AutomationProperties.AutomationIdProperty);
@@ -211,7 +232,7 @@ namespace TreeDumpLibrary
                 }
             }
 
-            m_matchDump = matchDump;
+            m_dumpMatchExpected = matchDump;
         }
 
         private void UpdateTextBlockText(string text)
@@ -224,10 +245,12 @@ namespace TreeDumpLibrary
         private TextBlock m_textBlock = null;
         private string m_dumpID = "UnknownTest";
         private string m_dumpExpectedText;
-        private bool m_matchDump = false;
+        private bool m_dumpMatchExpected = false;
         private bool m_errStringShowing = false;
         private string m_errString = "";
         private string m_uiaID = null;
+
+        private DispatcherTimer m_timer = null;
 
     }
 }

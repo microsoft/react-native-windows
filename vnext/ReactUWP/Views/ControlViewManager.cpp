@@ -31,6 +31,11 @@ void ControlViewManager::TransferProperties(XamlView oldView, XamlView newView) 
   TransferProperty(oldView, newView, winrt::Control::PaddingProperty());
   TransferProperty(oldView, newView, winrt::Control::ForegroundProperty());
   TransferProperty(oldView, newView, winrt::Control::TabIndexProperty());
+  // Control.CornerRadius is only supported on >= RS5
+  if (oldView.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>() &&
+      newView.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+    TransferProperty(oldView, newView, winrt::Control::CornerRadiusProperty());
+  }
   Super::TransferProperties(oldView, newView);
 }
 
@@ -38,6 +43,7 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
   auto control(nodeToUpdate->GetView().as<winrt::Control>());
 
   bool implementsPadding = nodeToUpdate->ImplementsPadding();
+  bool finalizeBorderRadius{false};
 
   if (control != nullptr) {
     for (const auto &pair : reactDiffMap.items()) {
@@ -49,6 +55,9 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
       } else if (TryUpdateBorderProperties(nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
       } else if (TryUpdateForeground(control, propertyName, propertyValue)) {
+        continue;
+      } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, control, propertyName, propertyValue)) {
+        finalizeBorderRadius = true;
         continue;
       } else if (implementsPadding && TryUpdatePadding(nodeToUpdate, control, propertyName, propertyValue)) {
         continue;
@@ -65,6 +74,19 @@ void ControlViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const fo
   }
 
   Super::UpdateProperties(nodeToUpdate, reactDiffMap);
+
+  if (finalizeBorderRadius && control.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+    // Control.CornerRadius is only supported on >= RS5, setting borderRadius on Controls have no effect < RS5
+    UpdateCornerRadiusOnElement(nodeToUpdate, control);
+  }
+}
+
+void ControlViewManager::OnViewCreated(XamlView view) {
+  // Set the default cornerRadius to 0 for Control: WinUI usually default cornerRadius to 2
+  // Only works on >= RS5 becuase Control.CornerRadius is only supported >= RS5
+  if (auto control = view.try_as<winrt::Windows::UI::Xaml::Controls::IControl7>()) {
+    control.CornerRadius({0});
+  }
 }
 
 } // namespace uwp
