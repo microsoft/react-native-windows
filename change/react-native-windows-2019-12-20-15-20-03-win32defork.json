@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix RNTester bundle (#2728)",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "65167fb5e52f042879d00891e89ed951bdda84bc",
-  "date": "2019-12-20T23:20:03.026Z"
-}

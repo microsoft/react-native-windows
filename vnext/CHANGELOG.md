@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Dec 2019 19:01:50 GMT and should not be manually modified.
+This log was last generated on Sat, 21 Dec 2019 00:18:22 GMT and should not be manually modified.
 
+## 0.60.0-vnext.103
+Sat, 21 Dec 2019 00:18:22 GMT
+
+### Changes
+
+- Fix RNTester bundle (#2728) (acoates@microsoft.com)
 ## 0.60.0-vnext.102
 Fri, 20 Dec 2019 19:01:50 GMT
 
