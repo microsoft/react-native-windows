@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 21 Dec 2019 00:18:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.103",
+      "version": "0.60.0-vnext.103",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix RNTester bundle (#2728)",
+            "author": "acoates@microsoft.com",
+            "commit": "65167fb5e52f042879d00891e89ed951bdda84bc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Dec 2019 19:01:50 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.102",
       "version": "0.60.0-vnext.102",
