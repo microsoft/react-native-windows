@@ -147,14 +147,14 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Returns true if the TextInput is focused
    */
   public isFocused(): boolean {
-    return TextInputState.currentlyFocusedField === findNodeHandle(this);
+    return TextInputState.currentlyFocusedField() === findNodeHandle(this);
   }
 
   /**
    * Focuses the TextInput
    */
   public focus = (): void => {
-    TextInputState.currentlyFocusedField = findNodeHandle(this);
+    TextInputState.currentlyFocusedField() = findNodeHandle(this);
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.focus, null);
   }

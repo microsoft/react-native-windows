@@ -1,15 +1,34 @@
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ * @format
+ */
 'use strict';
+import React = require('react');
 
 interface IRNTesterExample {
   key: string;
   // tslint:disable-next-line no-reserved-keywords
-  module: Object;
+  module: IRNTesterModule;
+}
+
+interface IRNTesterModule {
+  title: string;
+  description: string;
+  external: boolean;
+  examples: [IRNTesterModuleExample];
+}
+
+interface IRNTesterModuleExample {
+  title: string;
+  description: string;
+  render(): React.Component;
 }
 
 const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'TouchableWin32Example',
-    module: require('../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
+    module: require('../../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
   },
   {
     key: 'ScrollViewSimpleExample',
@@ -25,22 +44,22 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'ViewWin32Test',
-    module: require('../Libraries/Components/View/Tests/ViewWin32Test'),
+    module: require('../../Libraries/Components/View/Tests/ViewWin32Test'),
   },
   {
     key: 'TextInputExample',
-    module: require('../Libraries/Components/TextInput/Tests/TextInputTest'),
+    module: require('../../Libraries/Components/TextInput/Tests/TextInputTest'),
   },
   {
     key: 'ImageWin32Test',
-    module: require('../Libraries/Image/Tests/ImageWin32Test'),
+    module: require('../../Libraries/Image/Tests/ImageWin32Test'),
   },
 ];
 
 const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'AccessibilityExampleWin32',
-    module: require('./APIExamples/AccessibilityExampleWin32'),
+    module: require('../APIExamples/AccessibilityExampleWin32'),
   },
   {
     key: 'AppStateExample',
@@ -60,13 +79,13 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'ThemingExample',
-    module: require('./APIExamples/ThemingModuleAPI'),
+    module: require('../APIExamples/ThemingModuleAPI'),
   },
 ];
 
-const Modules = {};
+const Modules: {[key: string]: IRNTesterModule} = {};
 
-APIExamples.concat(ComponentExamples).forEach(Example => {
+APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
 });
 

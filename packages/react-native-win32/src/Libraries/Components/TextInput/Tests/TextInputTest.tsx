@@ -1,6 +1,5 @@
 'use strict';
 import * as React from 'react';
-import { IRNTesterPage } from 'src/RNTester/RNTester.types';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use
@@ -38,7 +37,7 @@ const PlaceholderTextInputTest: React.FC<{}> = () => {
 const ControllingTextInputTest: React.FC<{}> = () => {
   const [value, setValue] = React.useState('');
 
-  return(
+  return (
     <View>
       <Text>This TextInput inserts spaces between characters</Text>
       <TextInput
@@ -53,7 +52,7 @@ const ControllingTextInputTest: React.FC<{}> = () => {
 
 const BlurringAndFocusingTextInputTest: React.FC<{}> = () => {
   const [isFocused, setIsFocused] = React.useState(false);
-  return(
+  return (
     <View>
       <Text>This TextInput is currently focused: + {isFocused ? 'true' : 'false'}</Text>
       <TextInput
@@ -69,7 +68,7 @@ const BlurringAndFocusingTextInputTest: React.FC<{}> = () => {
 const LayoutListeningTextInputTest: React.FC<{}> = () => {
   const [eventCounter, setEventCounter] = React.useState(0);
 
-  return(
+  return (
     <View>
       <Text>The number of onContentSizeChanges is listed here + {eventCounter}</Text>
       <TextInput
@@ -84,7 +83,7 @@ const LayoutListeningTextInputTest: React.FC<{}> = () => {
 const KeyPressListeningTextInputTest: React.FC<{}> = () => {
   const [value, setValue] = React.useState('');
 
-  return(
+  return (
     <View>
       <Text>This TextInput uses onKeyPress to maintain state: it is slow</Text>
       <TextInput
@@ -98,7 +97,7 @@ const KeyPressListeningTextInputTest: React.FC<{}> = () => {
 };
 
 const StyleTextInputTest: React.FC<{}> = () => {
-  return(
+  return (
     <View>
       <Text>This TextInput is styled differently</Text>
       <TextInput
@@ -109,70 +108,68 @@ const StyleTextInputTest: React.FC<{}> = () => {
   );
 };
 
-const TextInputTestPage: IRNTesterPage = {
-  title: '<TextInput>',
-  displayName: 'TextInput',
-  description: 'TextInput Examples and Tests',
-  examples: [
+export const title = '<TextInput>';
+export const displayName = 'TextInput';
+export const description = 'TextInput Examples and Tests';
+export const examples = [
     {
       title: 'Autofocus Example',
       description: 'autoFocus in action',
       render(): JSX.Element {
         return (<AutoFocusingTextInputTest />);
-      }
+      },
     },
     {
       title: 'Placeholders Example',
       description: 'placeholder in action',
       render(): JSX.Element {
         return (<PlaceholderTextInputTest />);
-      }
+      },
     },
     {
       title: 'Controlled Example',
       description: 'Controlling inputs in action',
       render(): JSX.Element {
         return (<ControllingTextInputTest />);
-      }
+      },
     },
     {
       title: 'Focus and Blur Example',
       description: 'onFocus/onBlur in action',
       render(): JSX.Element {
         return (<BlurringAndFocusingTextInputTest />);
-      }
+      },
     },
     {
       title: 'ContentSizeChange Example',
       description: 'onContentSizeChange in action',
       render(): JSX.Element {
         return (<LayoutListeningTextInputTest />);
-      }
+      },
     },
     {
       title: 'Control via onKeyPress Example',
       description: 'onKeyPress in action',
       render(): JSX.Element {
         return (<KeyPressListeningTextInputTest />);
-      }
+      },
     },
     {
       title: 'Super Styling Example',
       description: 'Styling in action',
       render(): JSX.Element {
         return (<StyleTextInputTest />);
-      }
-    }
-  ]
-};
+      },
+    },
+  ];
 
 const styles = StyleSheet.create({
   input: {
-    height: 20
+    height: 20,
   },
   blue: {
     color: 'blue',
-    height: 20
+    height: 20,
   },
   green: {
     color: 'green',
@@ -185,7 +182,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'times-new-roman',
     height: 100,
-  }
+  },
 });
-
-export = TextInputTestPage;

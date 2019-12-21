@@ -1,23 +1,29 @@
 /**
- * @providesModule Dimensions
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+
+ * @format
+ * @flow
  */
 'use strict';
-/* tslint:disable:no-any */
 
 class Dimensions {
-  // tslint:disable-next-line no-reserved-keywords function-name -- get name matching facebook implementation
-  public static get(dim: string) {
-    throw new Error('Having a global Dimensions object is too simplistic for Win32, so this API does not work');
+  public static get(dim: string): Object {
+    throw new Error(
+      'Having a global Dimensions object is too simplistic for Win32, so this API does not work',
+    );
   }
-  // tslint:disable-next-line no-reserved-keywords function-name -- type name matching facebook implementation
-  public static addEventListener(type: string, handler: any) {
-    throw new Error('Having a global Dimensions object is too simplistic for Win32, so this API does not work');
+  public static addEventListener(type: string, handler: Function) {
+    throw new Error(
+      'Having a global Dimensions object is too simplistic for Win32, so this API does not work',
+    );
   }
 
-  // tslint:disable-next-line no-reserved-keywords function-name -- type name matching facebook implementation
-  public static removeEventListener(type: string, handler: any) {
-    throw new Error('Having a global Dimensions object is too simplistic for Win32, so this API does not work');
+  public static removeEventListener(type: string, handler: Function) {
+    throw new Error(
+      'Having a global Dimensions object is too simplistic for Win32, so this API does not work',
+    );
   }
 }
 
-export = Dimensions;
+module.exports = Dimensions;

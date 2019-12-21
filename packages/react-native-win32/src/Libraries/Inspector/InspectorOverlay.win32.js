@@ -1,31 +1,50 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow
+ */
+
 'use strict';
 
-const ElementBox = require('ElementBox');
-const React = require('React');
-const StyleSheet = require('StyleSheet');
-const UIManager = require('UIManager');
-const View = require('View');
+const Dimensions = require('../Utilities/Dimensions');
+const ElementBox = require('./ElementBox');
+const React = require('react');
+const StyleSheet = require('../StyleSheet/StyleSheet');
+const UIManager = require('../ReactNative/UIManager');
+const View = require('../Components/View/View');
 
-import type { PressEvent } from 'CoreEventTypes';
-import type { ViewStyleProp } from 'StyleSheet';
+import type {PressEvent} from '../Types/CoreEventTypes';
+import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
 
 type Inspected = $ReadOnly<{|
   frame?: Object,
-  style?: ViewStyleProp
+  style?: ViewStyleProp,
 |}>;
 
 type Props = $ReadOnly<{|
   inspected?: Inspected,
   inspectedViewTag?: ?number,
-  onTouchViewTag: (tag: number, frame: Object, pointerY: number) => mixed
+  onTouchViewTag: (tag: number, frame: Object, pointerY: number) => mixed,
 |}>;
 
 class InspectorOverlay extends React.Component<Props> {
   findViewForTouchEvent = (e: PressEvent) => {
-    const { locationX, locationY } = e.nativeEvent.touches[0];
-    UIManager.findSubviewIn(this.props.inspectedViewTag, [locationX, locationY], (nativeViewTag, left, top, width, height) => {
-      this.props.onTouchViewTag(nativeViewTag, { left, top, width, height }, locationY);
-    });
+    const {locationX, locationY} = e.nativeEvent.touches[0];
+    UIManager.findSubviewIn(
+      this.props.inspectedViewTag,
+      [locationX, locationY],
+      (nativeViewTag, left, top, width, height) => {
+        this.props.onTouchViewTag(
+          nativeViewTag,
+          {left, top, width, height},
+          locationY,
+        );
+      },
+    );
   };
 
   shouldSetResponser = (e: PressEvent): boolean => {
@@ -36,15 +55,20 @@ class InspectorOverlay extends React.Component<Props> {
   render() {
     let content = null;
     if (this.props.inspected) {
-      content = <ElementBox frame={this.props.inspected.frame} style={this.props.inspected.style} />;
+      content = (
+        <ElementBox
+          frame={this.props.inspected.frame}
+          style={this.props.inspected.style}
+        />
+      );
     }
 
+    // [Win32, height replaced with 100% to avoid Dimensions call]
     return (
       <View
         onStartShouldSetResponder={this.shouldSetResponser}
         onResponderMove={this.findViewForTouchEvent}
-        style={[styles.inspector, { height: '100%' }]}
-      >
+        style={[styles.inspector, {height: '100%'}]}>
         {content}
       </View>
     );
@@ -57,8 +81,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    right: 0
-  }
+    right: 0,
+  },
 });
 
 module.exports = InspectorOverlay;

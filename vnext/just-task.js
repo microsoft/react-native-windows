@@ -47,7 +47,7 @@ task('copyFlowFiles', () => {
   return copyTask(['src/**/*.js'], '.');
 });
 task('initRNLibraries', () => {
-  require('./Scripts/copyRNLibraries').copyRNLibraries();
+  require('./Scripts/copyRNLibraries').copyRNLibraries(__dirname);
 });
 
 task('ts', () => {

@@ -3,27 +3,26 @@ import * as React from 'react';
 import { StyleSheet, Text, TouchableHighlight } from 'react-native';
 import { ViewWin32 } from '../ViewWin32';
 import { IKeyboardEvent, IHandledKeyboardEvent } from '../ViewWin32.Props';
-import { IRNTesterPage } from 'src/RNTester/RNTester.types';
 
 const styles = StyleSheet.create({
   border: {
     borderStyle: 'dotted',
-    borderColor: 'black'
+    borderColor: 'black',
   },
   keyComponentRoot: {
     borderWidth: 2,
     flexDirection: 'row',
     marginVertical: 5,
     backgroundColor: 'whitesmoke',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   keyEnterVisualizer: {
     margin: 5,
     alignItems: 'center',
     minWidth: 100,
-    minHeight: 30
+    minHeight: 30,
   },
-  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 }
+  blackbox: { height: 30, width: 30, borderColor: 'black', borderWidth: 3 },
 });
 
 interface IFocusableComponentState {
@@ -35,7 +34,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
   public constructor(props) {
     super(props);
     this.state = {
-      hasFocus: false
+      hasFocus: false,
     };
   }
   public render() {
@@ -69,13 +68,13 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
 
   private _onFocus = () => {
     this.setState({
-      hasFocus: true
+      hasFocus: true,
     });
   };
 
   private _onBlur = () => {
     this.setState({
-      hasFocus: false
+      hasFocus: false,
     });
   };
 }
@@ -90,7 +89,7 @@ const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
   { key: 'ArrowUp' },
   { key: 'ArrowLeft' },
   { key: 'ArrowRight' },
-  { key: 'Tab' }
+  { key: 'Tab' },
 ];
 
 class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState & IKeyboardableComponentState> {
@@ -99,7 +98,7 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
     this.state = {
       hasFocus: false,
       lastKeyDown: null,
-      lastKeyUp: null
+      lastKeyUp: null,
     };
   }
 
@@ -131,13 +130,13 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
 
   private _onFocus = () => {
     this.setState({
-      hasFocus: true
+      hasFocus: true,
     });
   };
 
   private _onBlur = () => {
     this.setState({
-      hasFocus: false
+      hasFocus: false,
     });
   };
 
@@ -157,7 +156,7 @@ class HoverTestComponent extends React.Component<IHoverComponentProps, IFocusabl
   public constructor(props) {
     super(props);
     this.state = {
-      hasFocus: false
+      hasFocus: false,
     };
   }
 
@@ -200,18 +199,17 @@ const ToolTipExample: React.FunctionComponent<{}> = () => {
       style={{
         backgroundColor: 'red',
         height: 100,
-        width: 100
+        width: 100,
       }}
       tooltip="Example tooltip"
     />
   );
 };
 
-const ViewWin32TestPage: IRNTesterPage = {
-  title: '<ViewWin32>',
-  displayName: 'ViewWin32 Example',
-  description: 'All the stock View props plus Win32 specific ones',
-  examples: [
+export const title = '<ViewWin32>';
+export const displayName = 'ViewWin32 Example';
+export const description = 'All the stock View props plus Win32 specific ones';
+export const examples = [
     {
       title: 'focus() method example',
       description: 'Each of these black boxes moves focus to the ViewWin32 on the right',
@@ -223,30 +221,27 @@ const ViewWin32TestPage: IRNTesterPage = {
             <FocusMoverTestComponent />
           </ViewWin32>
         );
-      }
+      },
     },
     {
       title: 'KeyboardEvents example',
       description: 'Native keyboarding has been prevented',
       render(): JSX.Element {
         return <KeyboardTestComponent />;
-      }
+      },
     },
     {
       title: 'Hover example',
       description: 'Hover a rainbow',
       render(): JSX.Element {
         return <HoverExample />;
-      }
+      },
     },
     {
       title: 'Tooltip example',
       description: 'Displays a tooltip on hover',
       render(): JSX.Element {
         return <ToolTipExample />;
-      }
-    }
-  ]
-};
-
-export = ViewWin32TestPage;
+      },
+    },
+  ];
