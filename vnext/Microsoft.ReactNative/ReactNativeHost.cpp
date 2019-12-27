@@ -8,7 +8,7 @@
 #include "ReactInstanceManager.h"
 #include "ReactInstanceManagerBuilder.h"
 #include "ReactInstanceSettings.h"
-#include "ReactRootView.h"
+#include "ReactRootView2.h"
 #include "ReactSupport.h"
 
 #include <NativeModuleProvider.h>

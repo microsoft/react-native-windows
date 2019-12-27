@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 #include "pch.h"
-#include "ReactRootView.h"
+#include "ReactRootView2.h"
 #include "ReactRootView.g.cpp"
 #include <winrt/Windows.UI.Core.h>
 
