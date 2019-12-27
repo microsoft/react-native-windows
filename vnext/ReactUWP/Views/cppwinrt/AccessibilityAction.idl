@@ -11,7 +11,8 @@
 namespace PROJECT_ROOT_NAMESPACE
 {
   [version(1)]
-  struct AccessibilityAction {		
+  struct AccessibilityAction
+  {		
       String Name;
       String Label;
   };

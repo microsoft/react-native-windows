@@ -599,18 +599,6 @@
     <ClInclude Include="..\ReactUWP\Views\WebViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\DynamicAutomationProperties.g.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewPanel.g.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\DynamicAutomationPeer.g.h">
-      <Filter>Views</Filter>
-    </ClInclude>
-    <ClInclude Include="Views\ViewControl.g.h">
-      <Filter>Views</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IBackgroundEventListener.idl" />

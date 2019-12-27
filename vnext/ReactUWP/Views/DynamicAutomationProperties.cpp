@@ -9,8 +9,8 @@
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
 // Needed for latest versions of C++/WinRT
-#if __has_include("react.uwp.DynamicAutomationProperties.g.cpp")
-#include "react.uwp.DynamicAutomationProperties.g.cpp"
+#if __has_include("DynamicAutomationProperties.g.cpp")
+#include "DynamicAutomationProperties.g.cpp"
 #endif
 
 namespace winrt {
@@ -20,7 +20,7 @@ using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Interop;
 } // namespace winrt
 
-namespace winrt::react::uwp::implementation {
+namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
 const winrt::TypeName dynamicAutomationTypeName{winrt::hstring{L"DynamicAutomationProperties"},
                                                 winrt::TypeKind::Metadata};
@@ -28,22 +28,23 @@ const winrt::TypeName dynamicAutomationTypeName{winrt::hstring{L"DynamicAutomati
 winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityRoleProperty() {
   static winrt::DependencyProperty s_AccessibilityRoleProperty = winrt::DependencyProperty::RegisterAttached(
       L"AccessibilityRole",
-      winrt::xaml_typename<winrt::react::uwp::AccessibilityRoles>(),
+      winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(),
       dynamicAutomationTypeName,
-      winrt::PropertyMetadata(winrt::box_value(winrt::react::uwp::AccessibilityRoles::Unknown)));
+      winrt::PropertyMetadata(winrt::box_value(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Unknown)));
 
   return s_AccessibilityRoleProperty;
 }
 
 void DynamicAutomationProperties::SetAccessibilityRole(
     winrt::Windows::UI::Xaml::UIElement const &element,
-    winrt::react::uwp::AccessibilityRoles const &value) {
-  element.SetValue(AccessibilityRoleProperty(), winrt::box_value<react::uwp::AccessibilityRoles>(value));
+    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles const &value) {
+  element.SetValue(AccessibilityRoleProperty(), winrt::box_value<PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(value));
 }
 
-winrt::react::uwp::AccessibilityRoles DynamicAutomationProperties::GetAccessibilityRole(
+winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles DynamicAutomationProperties::GetAccessibilityRole(
     winrt::Windows::UI::Xaml::UIElement const &element) {
-  return winrt::unbox_value<winrt::react::uwp::AccessibilityRoles>(element.GetValue(AccessibilityRoleProperty()));
+  return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(
+      element.GetValue(AccessibilityRoleProperty()));
 }
 
 winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateSelectedProperty() {
@@ -190,31 +191,32 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
   static winrt::DependencyProperty s_AccessibilityInvokeEventHandlerProperty =
       winrt::DependencyProperty::RegisterAttached(
           L"AccessibilityInvokeEventHandler",
-          winrt::xaml_typename<winrt::react::uwp::AccessibilityInvokeEventHandler>(),
+          winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(),
           dynamicAutomationTypeName,
-          winrt::PropertyMetadata(winrt::box_value<winrt::react::uwp::AccessibilityInvokeEventHandler>(nullptr)));
+          winrt::PropertyMetadata(
+              winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(nullptr)));
 
   return s_AccessibilityInvokeEventHandlerProperty;
 }
 
 void DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(
     winrt::Windows::UI::Xaml::UIElement const &element,
-    winrt::react::uwp::AccessibilityInvokeEventHandler const &value) {
+    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler const &value) {
   element.SetValue(
       AccessibilityInvokeEventHandlerProperty(),
-      winrt::box_value<winrt::react::uwp::AccessibilityInvokeEventHandler>(value));
+      winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(value));
 }
 
-winrt::react::uwp::AccessibilityInvokeEventHandler DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(
-    winrt::Windows::UI::Xaml::UIElement const &element) {
-  return winrt::unbox_value<winrt::react::uwp::AccessibilityInvokeEventHandler>(
+winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler
+DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(winrt::Windows::UI::Xaml::UIElement const &element) {
+  return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(
       element.GetValue(AccessibilityInvokeEventHandlerProperty()));
 }
 
 winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionsProperty() {
   static winrt::DependencyProperty s_AccessibilityActionsProperty = winrt::DependencyProperty::RegisterAttached(
       L"AccessibilityActions",
-      winrt::xaml_typename<Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction>>(),
+      winrt::xaml_typename<Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>>(),
       dynamicAutomationTypeName,
       winrt::PropertyMetadata(nullptr));
 
@@ -223,13 +225,13 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
 
 void DynamicAutomationProperties::SetAccessibilityActions(
     Windows::UI::Xaml::UIElement const &element,
-    Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> const &value) {
+    Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value) {
   return element.SetValue(AccessibilityActionsProperty(), winrt::box_value(value));
 }
 
-Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction>
+Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>
 DynamicAutomationProperties::GetAccessibilityActions(Windows::UI::Xaml::UIElement const &element) {
-  return winrt::unbox_value<Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction>>(
+  return winrt::unbox_value<Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>>(
       element.GetValue(AccessibilityActionsProperty()));
 }
 
@@ -256,24 +258,25 @@ winrt::Windows::UI::Xaml::DependencyProperty DynamicAutomationProperties::Access
   static winrt::DependencyProperty s_AccessibilityActionEventHandlerProperty =
       winrt::DependencyProperty::RegisterAttached(
           L"AccessibilityActionEventHandler",
-          winrt::xaml_typename<winrt::react::uwp::AccessibilityActionEventHandler>(),
+          winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(),
           dynamicAutomationTypeName,
-          winrt::PropertyMetadata(winrt::box_value<winrt::react::uwp::AccessibilityActionEventHandler>(nullptr)));
+          winrt::PropertyMetadata(
+              winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(nullptr)));
 
   return s_AccessibilityActionEventHandlerProperty;
 }
 
 void DynamicAutomationProperties::SetAccessibilityActionEventHandler(
     winrt::Windows::UI::Xaml::UIElement const &element,
-    winrt::react::uwp::AccessibilityActionEventHandler const &value) {
+    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value) {
   element.SetValue(
       AccessibilityActionEventHandlerProperty(),
-      winrt::box_value<winrt::react::uwp::AccessibilityActionEventHandler>(value));
+      winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(value));
 }
 
-winrt::react::uwp::AccessibilityActionEventHandler DynamicAutomationProperties::GetAccessibilityActionEventHandler(
-    winrt::Windows::UI::Xaml::UIElement const &element) {
-  return winrt::unbox_value<winrt::react::uwp::AccessibilityActionEventHandler>(
+winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler
+DynamicAutomationProperties::GetAccessibilityActionEventHandler(winrt::Windows::UI::Xaml::UIElement const &element) {
+  return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(
       element.GetValue(AccessibilityActionEventHandlerProperty()));
 }
-} // namespace winrt::react::uwp::implementation
+} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation

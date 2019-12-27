@@ -106,6 +106,7 @@
         WIN32=0;
         WINRT=1;
         _HAS_AUTO_PTR_ETC;
+        PROJECT_ROOT_NAMESPACE=Microsoft::ReactNative;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -131,6 +132,12 @@
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
+    <Midl>
+      <!-- Custom XAML types must be in the project namespace to be usable by XAML -->
+      <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace)</PreprocessorDefinitions>
+    </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\ReactUWP\Base\UwpReactInstance.h" />
@@ -282,10 +289,6 @@
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="ViewManagersProvider.h" />
-    <ClInclude Include="Views\DynamicAutomationPeer.g.h" />
-    <ClInclude Include="Views\DynamicAutomationProperties.g.h" />
-    <ClInclude Include="Views\ViewControl.g.h" />
-    <ClInclude Include="Views\ViewPanel.g.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ReactUWP\Base\InstanceFactory.cpp" />
@@ -440,15 +443,9 @@
     <ClCompile Include="ViewManagersProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl">
-      <!-- The AccessibilityAction must be in the project namespace to be usable by Xaml -->
-      <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace)</PreprocessorDefinitions>
-    </Midl>
+    <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\BorderEffect.idl" />
-    <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl">
-      <!-- The AccessibilityAction must be in the project namespace to be usable by Xaml -->
-      <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace)</PreprocessorDefinitions>
-    </Midl>
+    <Midl Include="..\ReactUWP\Views\cppwinrt\DynamicAutomationPeer.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl" />
     <Midl Include="IBackgroundEventListener.idl" />
     <Midl Include="IBoxedValue.idl" />

@@ -10,8 +10,8 @@
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
 // Needed for latest versions of C++/WinRT
-#if __has_include("react.uwp.ViewPanel.g.cpp")
-#include "react.uwp.ViewPanel.g.cpp"
+#if __has_include("ViewPanel.g.cpp")
+#include "ViewPanel.g.cpp"
 #endif
 
 namespace winrt {
@@ -24,7 +24,7 @@ using namespace Windows::UI::Xaml::Media;
 using namespace Windows::Foundation;
 } // namespace winrt
 
-namespace winrt::react::uwp::implementation {
+namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
 const winrt::TypeName viewPanelTypeName{winrt::hstring{L"ViewPanel"}, winrt::TypeKind::Metadata};
 
@@ -355,4 +355,4 @@ void ViewPanel::UpdateClip(winrt::Size &finalSize) {
   }
 }
 
-} // namespace winrt::react::uwp::implementation
+} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
