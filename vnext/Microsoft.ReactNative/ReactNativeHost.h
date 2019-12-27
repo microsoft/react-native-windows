@@ -6,7 +6,7 @@
 
 #include "ReactInstanceManager.h"
 #include "ReactInstanceSettings.h"
-#include "ReactRootView.h"
+#include "ReactRootView2.h"
 
 #include <ReactUWP/IReactInstance.h>
 #include <ReactUWP/IXamlRootView.h>
