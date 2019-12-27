@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 21 Dec 2019 03:41:33 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Dec 2019 17:01:20 GMT and should not be manually modified.
 
+## 0.60.0-vnext.105
+Fri, 27 Dec 2019 17:01:20 GMT
+
+### Changes
+
+- Changed Microsoft.ReactNative to be independent from ReactUWP project (vmorozov@microsoft.com)
 ## 0.60.0-vnext.104
 Sat, 21 Dec 2019 03:41:33 GMT
 

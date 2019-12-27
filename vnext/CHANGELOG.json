@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 Dec 2019 17:01:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Changed Microsoft.ReactNative to be independent from ReactUWP project",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a2053e778b68834fb64e18382dbc5328ce66b269"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Dec 2019 03:41:33 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.104",
       "version": "0.60.0-vnext.104",
