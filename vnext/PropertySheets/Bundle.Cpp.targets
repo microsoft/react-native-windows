@@ -8,7 +8,7 @@
 
   <Target Name="InjectBundleContent" BeforeTargets="PrepareForBuild" AfterTargets="MakeBundle">
     <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != '' and '$(BundleContentRoot)' != '' ">
-	    <BundleContentToBePackaged Include="$(BundleContent)" />
+      <BundleContentToBePackaged Include="$(BundleContent)" />
       <None Include="@(BundleContentToBePackaged)">
         <Link>$(BundleContentRoot)\%(RecursiveDir)%(Filename)%(Extension)</Link>
         <DeploymentContent>true</DeploymentContent>
