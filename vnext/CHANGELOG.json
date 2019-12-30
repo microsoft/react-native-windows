@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Dec 2019 22:14:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.106",
+      "version": "0.60.0-vnext.106",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid app crash because content is not bundled for the first time",
+            "author": "licanhua@live.com",
+            "commit": "703f7d4f116abbb7d40d74681f40e9d8d0a036ce"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Dec 2019 20:33:37 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.105",
       "version": "0.60.0-vnext.105",
