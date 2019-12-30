@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 27 Dec 2019 17:01:20 GMT and should not be manually modified.
+This log was last generated on Mon, 30 Dec 2019 22:14:37 GMT and should not be manually modified.
 
+## 0.60.0-vnext.106
+Mon, 30 Dec 2019 22:14:37 GMT
+
+### Changes
+
+- Avoid app crash because content is not bundled for the first time (licanhua@live.com)
 ## 0.60.0-vnext.105
 Fri, 27 Dec 2019 17:01:20 GMT
 
