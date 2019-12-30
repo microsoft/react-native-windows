@@ -6,9 +6,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildThisFileDirectory)\Bundle.Common.targets"/>
 
-  <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != ''">
-    <Content Include="$(BundleContent)">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+  <Target Name="InjectBundleContent" BeforeTargets="PrepareForBuild" AfterTargets="MakeBundle">
+    <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != ''">
+      <Content Include="$(BundleContent)">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
 </Project>

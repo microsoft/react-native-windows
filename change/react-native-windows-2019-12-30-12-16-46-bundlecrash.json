@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Avoid app crash because content is not bundled for the first time",
+  "packageName": "react-native-windows",
+  "email": "licanhua@live.com",
+  "commit": "703f7d4f116abbb7d40d74681f40e9d8d0a036ce",
+  "date": "2019-12-30T20:16:46.912Z"
+}
