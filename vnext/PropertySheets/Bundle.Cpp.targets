@@ -6,12 +6,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildThisFileDirectory)\Bundle.Common.targets"/>
 
-  <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != '' and '$(BundleContentRoot)' != '' ">
-    <None Include="$(BundleContent)">
-      <Link>$(BundleContentRoot)\%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <DeploymentContent>true</DeploymentContent>
-    </None>
-  </ItemGroup>
+  <Target Name="InjectBundleContent" BeforeTargets="PrepareForBuild" AfterTargets="MakeBundle">
+    <ItemGroup Condition="'$(UseBundle)' == 'true' and '$(BundleContent)' != '' and '$(BundleContentRoot)' != '' ">
+	    <BundleContentToBePackaged Include="$(BundleContent)" />
+      <None Include="@(BundleContentToBePackaged)">
+        <Link>$(BundleContentRoot)\%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <DeploymentContent>true</DeploymentContent>
+      </None>
+   </ItemGroup>
+  </Target>
+
   <ItemDefinitionGroup Condition=" '$(UseBundle)' == 'true' ">
     <ClCompile>
       <PreprocessorDefinitions>BUNDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>

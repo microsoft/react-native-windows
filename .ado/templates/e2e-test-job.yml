@@ -40,13 +40,7 @@ jobs:
           command: restore
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-      - task: CmdLine@2
-        displayName: Create bundle
-        inputs:
-          script: yarn run bundle
-          workingDirectory: packages/E2ETest
-          
+         
       - task: CmdLine@2
         displayName: run-windows
         inputs:
