@@ -20,6 +20,7 @@ const {
   newSuccess,
   newError,
 } = require('./commandWithProgress');
+const execSync = require('child_process').execSync;
 
 const MSBUILD_VERSIONS = ['16.0', '15.0', '14.0', '12.0', '4.0'];
 
@@ -244,6 +245,27 @@ module.exports.findAvailableVersion = function(buildArch, verbose) {
   return msbuildTools;
 };
 
+function getSDK10InstallationFolder() {
+  const folder = '';
+
+  const execString =
+    'reg query "HKLM\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows\\v10.0" /s /v InstallationFolder /reg:32';
+  let output;
+  try {
+    output = execSync(execString).toString();
+  } catch (e) {
+    return folder;
+  }
+
+  const re = /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
+  const match = re.exec(output);
+  if (match) {
+    return match[1];
+  }
+
+  return folder;
+}
+
 module.exports.getAllAvailableUAPVersions = function() {
   const results = [];
 
@@ -254,13 +276,22 @@ module.exports.getAllAvailableUAPVersions = function() {
     return results;
   }
 
-  const uapFolderPath = path.join(
+  let uapFolderPath = path.join(
     programFilesFolder,
     'Windows Kits',
     '10',
     'Platforms',
     'UAP',
   );
+
+  if (!shell.test('-e', uapFolderPath)) {
+    // Check other installation folder from reg
+    const sdkFolder = getSDK10InstallationFolder();
+    if (sdkFolder) {
+      uapFolderPath = path.join(sdkFolder, 'Platforms', 'UAP');
+    }
+  }
+
   // No UAP SDK exists on this machine
   if (!shell.test('-e', uapFolderPath)) {
     return results;
