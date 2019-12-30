@@ -3,24 +3,24 @@
 // Licensed under the MIT License.
 
 #include "folly/dynamic.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
-struct DynamicWriter : winrt::implements<DynamicWriter, winrt::Microsoft::ReactNative::Bridge::IJSValueWriter> {
+struct DynamicWriter : winrt::implements<DynamicWriter, IJSValueWriter> {
   folly::dynamic TakeValue() noexcept;
 
  public: // IJSValueWriter
-  bool WriteNull() noexcept;
-  bool WriteBoolean(bool value) noexcept;
-  bool WriteInt64(int64_t value) noexcept;
-  bool WriteDouble(double value) noexcept;
-  bool WriteString(const winrt::hstring &value) noexcept;
-  bool WriteObjectBegin() noexcept;
-  bool WritePropertyName(const winrt::hstring &name) noexcept;
-  bool WriteObjectEnd() noexcept;
-  bool WriteArrayBegin() noexcept;
-  bool WriteArrayEnd() noexcept;
+  void WriteNull() noexcept;
+  void WriteBoolean(bool value) noexcept;
+  void WriteInt64(int64_t value) noexcept;
+  void WriteDouble(double value) noexcept;
+  void WriteString(const winrt::hstring &value) noexcept;
+  void WriteObjectBegin() noexcept;
+  void WritePropertyName(const winrt::hstring &name) noexcept;
+  void WriteObjectEnd() noexcept;
+  void WriteArrayBegin() noexcept;
+  void WriteArrayEnd() noexcept;
 
  private:
   enum struct State { Start, PropertyName, PropertyValue, Array, Finish };
@@ -37,7 +37,7 @@ struct DynamicWriter : winrt::implements<DynamicWriter, winrt::Microsoft::ReactN
   };
 
  private:
-  bool WriteValue(folly::dynamic &&value) noexcept;
+  void WriteValue(folly::dynamic &&value) noexcept;
 
  private:
   State m_state{State::Start};
@@ -47,4 +47,4 @@ struct DynamicWriter : winrt::implements<DynamicWriter, winrt::Microsoft::ReactN
   folly::dynamic m_result;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

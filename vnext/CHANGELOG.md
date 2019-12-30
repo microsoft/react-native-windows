@@ -1,7 +1,97 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Dec 2019 21:56:22 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Dec 2019 17:01:20 GMT and should not be manually modified.
 
+## 0.60.0-vnext.105
+Fri, 27 Dec 2019 17:01:20 GMT
+
+### Changes
+
+- Changed Microsoft.ReactNative to be independent from ReactUWP project (vmorozov@microsoft.com)
+## 0.60.0-vnext.104
+Sat, 21 Dec 2019 03:41:33 GMT
+
+### Changes
+
+- Export ability to query native module names (ngerlem@microsoft.com)
+## 0.60.0-vnext.103
+Sat, 21 Dec 2019 00:18:22 GMT
+
+### Changes
+
+- Fix RNTester bundle (#2728) (acoates@microsoft.com)
+## 0.60.0-vnext.102
+Fri, 20 Dec 2019 19:01:50 GMT
+
+### Changes
+
+- Provide source uri in SourceCode module when using livereload (acoates@microsoft.com)
+## 0.60.0-vnext.101
+Fri, 20 Dec 2019 18:19:02 GMT
+
+### Changes
+
+- Get flow clean, and turn on flow check during build (acoates@microsoft.com)
+## 0.60.0-vnext.100
+Fri, 20 Dec 2019 05:18:08 GMT
+
+### Changes
+
+- Fix cornerRadius issue for TextInput and some updates to TreeDump (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.99
+Thu, 19 Dec 2019 18:44:51 GMT
+
+### Changes
+
+- Removed Bridge sub-namespace in favor of Microsoft.ReactNative (vmorozov@microsoft.com)
+## 0.60.0-vnext.98
+Wed, 18 Dec 2019 21:47:15 GMT
+
+### Changes
+
+- port windowsbrush changes from Microsoft fork of react-native (kmelmon@microsoft.com)
+## 0.60.0-vnext.97
+Wed, 18 Dec 2019 01:40:40 GMT
+
+### Changes
+
+- Conditionally use BitmapImage (email not defined)
+## 0.60.0-vnext.96
+Mon, 16 Dec 2019 21:22:31 GMT
+
+### Changes
+
+- TreeDump for E2E test and fix for image border issue (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.95
+Fri, 13 Dec 2019 17:32:38 GMT
+
+### Changes
+
+- Fix toggle debugger setting issue with ReactApplication (dida@ntdev.microsoft.com)
+## 0.60.0-vnext.94
+Thu, 12 Dec 2019 22:18:13 GMT
+
+### Changes
+
+- Updating react-native to version: 0.60.0-microsoft.31 (53619745+rnbot@users.noreply.github.com)
+## 0.60.0-vnext.93
+Thu, 12 Dec 2019 00:17:06 GMT
+
+### Changes
+
+- Strongly typed value serialization and deserialization using IJSValueReader, JSValue, and IJSValueWriter (vmorozov@microsoft.com)
+## 0.60.0-vnext.92
+Wed, 11 Dec 2019 23:31:47 GMT
+
+### Changes
+
+- Submitting the ETW schema resouce dll and the register script (anandrag@microsoft.com)
+## 0.60.0-vnext.91
+Mon, 09 Dec 2019 18:40:45 GMT
+
+### Changes
+
+- Aligning Microsoft.Windows.CppWinRT Versions (jthysell@microsoft.com)
 ## 0.60.0-vnext.90
 Fri, 06 Dec 2019 21:56:22 GMT
 

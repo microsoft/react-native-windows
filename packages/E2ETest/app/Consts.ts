@@ -4,6 +4,7 @@ export const APP_NAME = 'ReactUWPTestApp';
 export const SEARCH_BUTTON = 'SearchButton';
 export const HOME_BUTTON = '_HomeButton';
 export const REACT_CONTROL_ERROR_TEST_ID = 'ReactControlErrorMessage';
+export const TREE_DUMP_RESULT = 'TreeDump';
 
 // UnknownTestPage
 export const UNKNOWN_TESTPAGE = 'UnknownTestPage';
@@ -31,3 +32,13 @@ export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
 export const DIRECT_MANIPULATION_TESTPAGE = 'DirectManipulationTestPage';
 export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
 export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
+
+// Image Test Page
+export const IMAGE_TESTPAGE = 'ImageTestPage';
+export const IMAGE_CHANGE_BORDER = 'ChangeBorder';
+export const SHOW_IMAGE_BORDER = 'BorderButton';
+export const IMAGE_CONTAINER = 'ImageContainer';
+
+// Control Style Test Page
+export const CONTROL_STYLE_TESTPAGE = 'ControlStyleTestPage';
+export const SHOWBORDER_ON_CONTROLSTYLE = 'ShowBorder';

@@ -3,7 +3,7 @@
 
 using Microsoft.ReactNative;
 
-namespace SampleApp
+namespace SampleAppCS
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default
@@ -38,7 +38,7 @@ namespace SampleApp
 
             PackageProviders.Add(new Microsoft.ReactNative.Managed.ReactPackageProvider()); // Includes any modules in this project
             PackageProviders.Add(new SampleLibraryCS.ReactPackageProvider());
-            PackageProviders.Add(new SampleLibraryCPP.ReactPackageProvider());
+            PackageProviders.Add(new SampleLibraryCpp.ReactPackageProvider());
 
             InitializeComponent();
         }

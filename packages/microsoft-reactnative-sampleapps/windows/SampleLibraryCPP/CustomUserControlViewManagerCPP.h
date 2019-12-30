@@ -3,30 +3,30 @@
 
 #pragma once
 
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::SampleLibraryCPP::implementation {
+namespace winrt::SampleLibraryCpp::implementation {
 
-struct CustomUserControlViewManagerCPP
+struct CustomUserControlViewManagerCpp
     : winrt::implements<
-          CustomUserControlViewManagerCPP,
-          winrt::Microsoft::ReactNative::Bridge::IViewManager,
-          winrt::Microsoft::ReactNative::Bridge::IViewManagerWithNativeProperties,
-          winrt::Microsoft::ReactNative::Bridge::IViewManagerWithCommands,
-          winrt::Microsoft::ReactNative::Bridge::IViewManagerWithExportedEventTypeConstants> {
+          CustomUserControlViewManagerCpp,
+          winrt::Microsoft::ReactNative::IViewManager,
+          winrt::Microsoft::ReactNative::IViewManagerWithNativeProperties,
+          winrt::Microsoft::ReactNative::IViewManagerWithCommands,
+          winrt::Microsoft::ReactNative::IViewManagerWithExportedEventTypeConstants> {
  public:
-  CustomUserControlViewManagerCPP(winrt::Microsoft::ReactNative::Bridge::IReactContext const &reactContext);
+  CustomUserControlViewManagerCpp(winrt::Microsoft::ReactNative::IReactContext const &reactContext);
 
   // IViewManager
   winrt::hstring Name() noexcept;
 
-  winrt::Microsoft::ReactNative::Bridge::IReactContext ReactContext() noexcept;
+  winrt::Microsoft::ReactNative::IReactContext ReactContext() noexcept;
 
   winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
 
   // IViewManagerWithNativeProperties
   winrt::Windows::Foundation::Collections::
-      IMapView<winrt::hstring, winrt::Microsoft::ReactNative::Bridge::ViewManagerPropertyType>
+      IMapView<winrt::hstring, winrt::Microsoft::ReactNative::ViewManagerPropertyType>
       NativeProps() noexcept;
 
   void UpdateProperties(
@@ -51,7 +51,7 @@ struct CustomUserControlViewManagerCPP
   ExportedCustomDirectEventTypeConstants() noexcept;
 
  private:
-  winrt::Microsoft::ReactNative::Bridge::IReactContext m_reactContext{nullptr};
+  winrt::Microsoft::ReactNative::IReactContext m_reactContext{nullptr};
 };
 
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation

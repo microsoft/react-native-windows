@@ -157,7 +157,7 @@ namespace react {
 namespace {
 
 void runtimeInstaller(jsi::Runtime &runtime) {
-#ifdef ENABLE_JS_SYSTRACE
+#ifdef ENABLE_JS_SYSTRACE_TO_ETW
   facebook::react::tracing::initializeJSHooks(runtime);
 #endif
 }
@@ -362,7 +362,7 @@ InstanceImpl::InstanceImpl(
   // Temp set the logmarker here
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 
-#ifdef ENABLE_TRACING
+#ifdef ENABLE_ETW_TRACING
   // TODO :: Find a better place to initialize ETW once per process.
   facebook::react::tracing::initializeETW();
 #endif
@@ -730,13 +730,14 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
   // TODO - Encapsulate this in a helpers, and make sure callers add it to their
   // list
-  std::string bundleUrl = m_devSettings->useWebDebugger ? DevServerHelper::get_BundleUrl(
-                                                              m_devSettings->debugHost,
-                                                              m_devSettings->debugBundlePath,
-                                                              m_devSettings->platformName,
-                                                              "true" /*dev*/,
-                                                              "false" /*hot*/)
-                                                        : std::string();
+  std::string bundleUrl = (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback)
+      ? DevServerHelper::get_BundleUrl(
+            m_devSettings->debugHost,
+            m_devSettings->debugBundlePath,
+            m_devSettings->platformName,
+            "true" /*dev*/,
+            "false" /*hot*/)
+      : std::string();
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       facebook::react::SourceCodeModule::name,

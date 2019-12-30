@@ -3,8 +3,6 @@
 
 using System;
 
-using Microsoft.ReactNative.Bridge;
-
 namespace Microsoft.ReactNative.Managed
 {
   [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]

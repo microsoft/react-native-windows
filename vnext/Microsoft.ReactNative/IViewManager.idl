@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ReactNative.Bridge
+namespace Microsoft.ReactNative
 {
   [webhosthidden]
-  enum ViewManagerPropertyType
-  {
+  enum ViewManagerPropertyType {
     Boolean,
     Number,
     String,
@@ -20,7 +19,7 @@ namespace Microsoft.ReactNative.Bridge
     String Name { get; };
 
     Windows.UI.Xaml.FrameworkElement CreateView();
-  };
+  }
 
   [webhosthidden]
   interface IViewManagerWithExportedViewConstants
@@ -34,7 +33,7 @@ namespace Microsoft.ReactNative.Bridge
     Windows.Foundation.Collections.IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
     void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
-  };
+  }
 
   [webhosthidden]
   interface IViewManagerWithCommands
@@ -42,7 +41,7 @@ namespace Microsoft.ReactNative.Bridge
     Windows.Foundation.Collections.IMapView<String, Int64> Commands { get; };
 
     void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, Windows.Foundation.Collections.IVectorView<IInspectable> commandArgs);
-  };
+  }
 
   [webhosthidden]
   interface IViewManagerWithExportedEventTypeConstants
@@ -50,7 +49,7 @@ namespace Microsoft.ReactNative.Bridge
     Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomBubblingEventTypeConstants { get; };
 
     Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomDirectEventTypeConstants { get; };
-  };
+  }
 
   [webhosthidden]
   interface IViewManagerWithChildren
@@ -62,5 +61,5 @@ namespace Microsoft.ReactNative.Bridge
     void RemoveChildAt(Windows.UI.Xaml.FrameworkElement parent, Int64 index);
 
     void ReplaceChild(Windows.UI.Xaml.FrameworkElement parent, Windows.UI.Xaml.UIElement oldChild, Windows.UI.Xaml.UIElement newChild);
-  };
-}
+  }
+} // namespace Microsoft.ReactNative

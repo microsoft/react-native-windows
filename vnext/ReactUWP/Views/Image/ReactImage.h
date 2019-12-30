@@ -8,6 +8,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 
@@ -16,7 +17,9 @@
 namespace react {
 namespace uwp {
 
-struct ImageSource {
+enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
+
+struct ReactImageSource {
   std::string uri;
   std::string method;
   std::string bundleRootPath;
@@ -25,12 +28,13 @@ struct ImageSource {
   double height = 0;
   double scale = 1.0;
   bool packagerAsset = false;
+  ImageSourceType sourceType = ImageSourceType::Uri;
 };
 
-struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
-  using Super = winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage>;
+struct ReactImage : winrt::Windows::UI::Xaml::Controls::GridT<ReactImage> {
+  using Super = winrt::Windows::UI::Xaml::Controls::GridT<ReactImage>;
 
-  ReactImage();
+  ReactImage() = default;
 
  public:
   static winrt::com_ptr<ReactImage> Create();
@@ -43,29 +47,38 @@ struct ReactImage : winrt::Windows::UI::Xaml::Controls::CanvasT<ReactImage> {
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
-  ImageSource Source() {
+  ReactImageSource Source() {
     return m_imageSource;
   }
-  winrt::fire_and_forget Source(ImageSource source);
+  void Source(ReactImageSource source);
 
   react::uwp::ResizeMode ResizeMode() {
-    return m_brush->ResizeMode();
+    return m_resizeMode;
   }
-  void ResizeMode(react::uwp::ResizeMode value) {
-    m_brush->ResizeMode(value);
-  }
+  void ResizeMode(react::uwp::ResizeMode value);
 
  private:
-  ImageSource m_imageSource;
-  winrt::com_ptr<ReactImageBrush> m_brush;
+  winrt::Windows::UI::Xaml::Media::Stretch ResizeModeToStretch(react::uwp::ResizeMode value);
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+  GetImageMemoryStreamAsync(ReactImageSource source);
+  winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
+
+  bool m_useCompositionBrush{false};
+  ReactImageSource m_imageSource;
+  react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
+  winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::UI::Xaml::Media::LoadedImageSurface::LoadCompleted_revoker m_surfaceLoadedRevoker;
+  winrt::Windows::UI::Xaml::Media::Imaging::BitmapImage::ImageOpened_revoker m_bitmapImageOpened;
+  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageOpened_revoker m_imageBrushOpenedRevoker;
+  winrt::Windows::UI::Xaml::Media::ImageBrush::ImageFailed_revoker m_imageBrushFailedRevoker;
 };
 
 // Helper functions
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageStreamAsync(ImageSource source);
+GetImageStreamAsync(ReactImageSource source);
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageInlineDataAsync(ImageSource source);
+GetImageInlineDataAsync(ReactImageSource source);
 } // namespace uwp
 } // namespace react

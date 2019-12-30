@@ -1,27 +1,31 @@
-#pragma once
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma once
+
 #include "folly/dynamic.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
-struct DynamicReader : winrt::implements<DynamicReader, winrt::Microsoft::ReactNative::Bridge::IJSValueReader> {
+struct DynamicReader : implements<DynamicReader, IJSValueReader> {
   DynamicReader(const folly::dynamic &root) noexcept;
 
  public: // IJSValueReader
-  winrt::Microsoft::ReactNative::Bridge::JSValueReaderState ReadNext() noexcept;
-  _Success_(return ) bool TryGetBoolean(_Out_ bool &value) noexcept;
-  _Success_(return ) bool TryGetInt64(_Out_ int64_t &value) noexcept;
-  _Success_(return ) bool TryGetDouble(_Out_ double &value) noexcept;
-  _Success_(return ) bool TryGetString(winrt::hstring &value) noexcept;
+  JSValueType ValueType() noexcept;
+  bool GetNextObjectProperty(hstring &propertyName) noexcept;
+  bool GetNextArrayItem() noexcept;
+  hstring GetString() noexcept;
+  bool GetBoolean() noexcept;
+  int64_t GetInt64() noexcept;
+  double GetDouble() noexcept;
 
  private:
   struct StackEntry {
-    StackEntry(const folly::dynamic *value) noexcept : Value{value} {}
-
-    ~StackEntry() noexcept {}
+    static StackEntry ObjectProperty(
+        const folly::dynamic *value,
+        const folly::dynamic::const_item_iterator &property) noexcept;
+    static StackEntry ArrayItem(const folly::dynamic *value, const folly::dynamic::const_iterator &item) noexcept;
 
     const folly::dynamic *Value{nullptr};
     folly::dynamic::const_iterator Item;
@@ -29,15 +33,12 @@ struct DynamicReader : winrt::implements<DynamicReader, winrt::Microsoft::ReactN
   };
 
  private:
-  winrt::Microsoft::ReactNative::Bridge::JSValueReaderState ReadValue(const folly::dynamic *value) noexcept;
-  static std::u16string Utf8ToUtf16(const char *value, size_t size) noexcept;
+  void SetCurrentValue(const folly::dynamic *value) noexcept;
 
  private:
-  const folly::dynamic *m_root;
-  winrt::Microsoft::ReactNative::Bridge::JSValueReaderState m_state{
-      winrt::Microsoft::ReactNative::Bridge::JSValueReaderState::Error};
+  const folly::dynamic *m_current{nullptr};
+  bool m_isIterating{false};
   std::vector<StackEntry> m_stack;
-  std::u16string m_u16str; // Used for strings converted to UTF16
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

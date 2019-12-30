@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-using Windows.System.Threading;
-
-using Microsoft.ReactNative.Bridge;
 using Microsoft.ReactNative.Managed;
+using System;
+using System.Diagnostics;
+using Windows.System.Threading;
 
 namespace SampleLibraryCS
 {
@@ -83,32 +79,32 @@ namespace SampleLibraryCS
         }
 
         [ReactMethod]
-        public void ExplicitPromiseMethod(ReactCallback<double> resolve, ReactCallback<string> reject)
+        public void ExplicitPromiseMethod(IReactPromise<double> result)
         {
             Debug.WriteLine($"{Name}.{nameof(ExplicitPromiseMethod)}()");
 
             try
             {
-                resolve(Math.PI);
+                result.Resolve(Math.PI);
             }
             catch (Exception ex)
             {
-                reject(ex.Message);
+                result.Reject(new ReactError { Message = ex.Message });
             }
         }
 
         [ReactMethod]
-        public void ExplicitPromiseMethodWithArgs(double arg, ReactCallback<double> resolve, ReactCallback<string> reject)
+        public void ExplicitPromiseMethodWithArgs(double arg, IReactPromise<double> result)
         {
             Debug.WriteLine($"{Name}.{nameof(ExplicitPromiseMethodWithArgs)}({arg})");
 
             try
             {
-                resolve(Math.PI);
+                result.Resolve(Math.PI);
             }
             catch (Exception ex)
             {
-                reject(ex.Message);
+                result.Reject(new ReactError { Message = ex.Message });
             }
         }
 

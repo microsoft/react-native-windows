@@ -5,16 +5,14 @@ import "IReactContext.idl";
 import "IReactModuleBuilder.idl";
 import "IViewManager.idl";
 
-namespace Microsoft.ReactNative.Bridge {
+namespace Microsoft.ReactNative {
 
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
   delegate IViewManager ReactViewManagerProvider(IReactContext reactContext);
 
+  [webhosthidden]
   interface IReactPackageBuilder {
-    // TODO: Add message thread argument
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
-    void AddViewManager(
-        String viewManagerName, ReactViewManagerProvider viewManagerProvider);
-  };
-
-} // namespace Microsoft.ReactNative.Bridge
+    void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
+  }
+} // namespace Microsoft.ReactNative

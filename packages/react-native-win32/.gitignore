@@ -1,0 +1,10 @@
+/demo
+/dist
+/index.*
+/IntegrationTests
+/jest
+/lib
+/Libraries
+/RNTester
+/RNTester.*
+/temp

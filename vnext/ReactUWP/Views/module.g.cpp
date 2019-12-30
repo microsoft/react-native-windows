@@ -9,7 +9,7 @@
 
 #include <wrl\module.h>
 
-int32_t WINRT_CALL WINRT_CanUnloadNow() noexcept
+int32_t __stdcall WINRT_CanUnloadNow() noexcept
 {
     if (!::Microsoft::WRL::Module<::Microsoft::WRL::InProc>::GetModule().Terminate())
     {
@@ -25,8 +25,7 @@ int32_t WINRT_CALL WINRT_CanUnloadNow() noexcept
     return 0; // S_OK
 }
 
-int32_t WINRT_CALL WINRT_GetActivationFactory(void* classId, void** factory) noexcept
-{
+int32_t __stdcall WINRT_GetActivationFactory(void *classId, void **factory) noexcept {
     try
     {
         *factory = nullptr;

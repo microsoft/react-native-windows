@@ -4,17 +4,16 @@
 import "IReactPackageProvider.idl";
 import "ReactInstanceManager.idl";
 import "ReactInstanceSettings.idl";
-import "ReactRootView.idl";
+import "ReactRootView2.idl";
 
-namespace Microsoft.ReactNative
-{
+namespace Microsoft.ReactNative {
+
   [webhosthidden]
   delegate void OnResumeAction();
 
   [webhosthidden]
   [default_interface]
-  runtimeclass ReactNativeHost
-  {
+  runtimeclass ReactNativeHost {
     ReactNativeHost();
 
     ReactInstanceManager ReactInstanceManager{ get; };
@@ -22,7 +21,7 @@ namespace Microsoft.ReactNative
 
     Boolean HasInstance{ get; };
 
-    IVector<Microsoft.ReactNative.Bridge.IReactPackageProvider> PackageProviders { get; set; };
+    IVector<IReactPackageProvider> PackageProviders { get; set; };
 
     String MainComponentName{ get; set; };
     Boolean UseDeveloperSupport{ get; set; };
@@ -35,5 +34,5 @@ namespace Microsoft.ReactNative
     void OnEnteredBackground();
     void OnLeavingBackground();
     void OnResume(OnResumeAction action);
-  };
-}
+  }
+} // namespace Microsoft.ReactNative

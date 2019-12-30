@@ -175,6 +175,7 @@ dynamic ViewManagerBase::GetExportedCustomDirectEventTypeConstants() const {
 XamlView ViewManagerBase::CreateView(int64_t tag) {
   XamlView view = CreateViewCore(tag);
 
+  OnViewCreated(view);
   // Set the tag if the element type supports it
   SetTag(view, tag);
 

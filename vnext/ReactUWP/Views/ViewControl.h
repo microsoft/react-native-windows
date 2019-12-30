@@ -9,7 +9,8 @@
 #include <winrt/Windows.UI.Xaml.Automation.h>
 
 #include "ViewControl.g.h"
-namespace winrt::react::uwp::implementation {
+
+namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
 //
 // ViewControl is a ContentControl that ViewViewManager uses to wrap a ViewPanel
@@ -24,11 +25,11 @@ struct ViewControl : ViewControlT<ViewControl> {
 
   winrt::Windows::UI::Xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
-  winrt::react::uwp::ViewPanel GetPanel() const;
+  winrt::PROJECT_ROOT_NAMESPACE::ViewPanel GetPanel() const;
 };
 
-} // namespace winrt::react::uwp::implementation
+} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
 
-namespace winrt::react::uwp::factory_implementation {
+namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
 struct ViewControl : ViewControlT<ViewControl, implementation::ViewControl> {};
-} // namespace winrt::react::uwp::factory_implementation
+} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation

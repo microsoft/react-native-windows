@@ -3,15 +3,10 @@
 // Licensed under the MIT License.
 
 #include <NativeModuleProvider.h>
-#include <winrt/Microsoft.ReactNative.Bridge.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include "ReactSupport.h"
 
-using namespace winrt;
-using namespace Microsoft::ReactNative;
-using namespace Windows::Foundation;
-
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 class NativeModulesProvider final : public facebook::react::NativeModuleProvider {
  public:
@@ -23,9 +18,9 @@ class NativeModulesProvider final : public facebook::react::NativeModuleProvider
   void AddModuleProvider(winrt::hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
  private:
-  std::map<std::string, Microsoft::ReactNative::Bridge::ReactModuleProvider> m_moduleProviders;
+  std::map<std::string, ReactModuleProvider> m_moduleProviders;
   std::shared_ptr<facebook::react::MessageQueueThread> m_modulesWorkerQueue{nullptr};
-  Microsoft::ReactNative::Bridge::IReactPackageBuilder m_packageBuilder;
+  IReactPackageBuilder m_packageBuilder;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

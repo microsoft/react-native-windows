@@ -7,7 +7,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 
-using Microsoft.ReactNative.Bridge;
+using Microsoft.ReactNative;
 
 namespace SampleLibraryCS
 {

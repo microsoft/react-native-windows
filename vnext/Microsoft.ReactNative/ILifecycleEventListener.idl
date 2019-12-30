@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ReactNative.Bridge {
+namespace Microsoft.ReactNative {
 
-  [webhosthidden]
   // Listener for application life cycle events.
+  [webhosthidden]
   interface ILifecycleEventListener {
     // Called when the host receives the suspend event.
     void OnSuspend();
@@ -15,5 +15,4 @@ namespace Microsoft.ReactNative.Bridge {
     // Called when the host is shutting down.
     void OnDestroy();
   }
-
-} // namespace Microsoft.ReactNative.Bridge
+} // namespace Microsoft.ReactNative

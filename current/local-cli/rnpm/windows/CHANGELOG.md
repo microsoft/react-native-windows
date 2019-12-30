@@ -1,7 +1,19 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Wed, 06 Nov 2019 13:58:14 GMT and should not be manually modified.
+This log was last generated on Tue, 17 Dec 2019 23:33:28 GMT and should not be manually modified.
 
+## 0.4.0
+Tue, 17 Dec 2019 23:33:28 GMT
+
+### Minor changes
+
+- add prompt to CLI (kmelmon@microsoft.com)
+## 0.3.9
+Tue, 17 Dec 2019 21:45:01 GMT
+
+### Patches
+
+- CLI detect project name from app.json (licanhua@live.com)
 ## 0.3.8
 Wed, 06 Nov 2019 13:58:14 GMT
 

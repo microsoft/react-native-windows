@@ -11,9 +11,9 @@
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
 #include "cxxreact/CxxModule.h"
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ABICxxModuleEventHandlerSetter {
   std::string Name;
@@ -45,4 +45,4 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::vector<ConstantProvider> m_constants;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

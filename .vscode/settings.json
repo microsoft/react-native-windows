@@ -8,30 +8,32 @@
     "**/dist": true
   },
   "editor.formatOnSave": true,
-  // turn off formatting for JS and JSX, we will do this via eslint
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "[javascriptreact]": {
-    "editor.formatOnSave": false
-  },
-  "[typescript]": {
-    "editor.formatOnSave": false
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": false
-  },
+  "eslint.format.enable": true,
   "eslint.packageManager": "yarn",
-  "eslint.autoFixOnSave": true,
   "eslint.enable": true,
   "eslint.validate": [
-    {"language": "javascript", "autoFix": true},
-    {"language": "javascriptreact", "autoFix": true},
-    {"language": "typescript", "autoFix": true},
-    {"language": "typescriptreact", "autoFix": true}
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
   ],
   "eslint.options": {
     "configFile": "./vnext/.eslintrc.js"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   // These should run through eslint
   "prettier.disableLanguages": [
@@ -44,5 +46,8 @@
   "clang-format.language.typescript.enable": false,
   "clang-format.assumeFilename": "${workspaceFolder}/.clang-format",
   "clang-format.executable": "${workspaceRoot}/vnext/node_modules/.bin/clang-format",
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

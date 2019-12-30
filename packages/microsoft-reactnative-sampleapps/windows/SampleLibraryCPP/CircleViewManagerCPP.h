@@ -3,16 +3,16 @@
 
 #pragma once
 
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::SampleLibraryCPP::implementation {
+namespace winrt::SampleLibraryCpp::implementation {
 
-struct CircleViewManagerCPP : winrt::implements<
-                                  CircleViewManagerCPP,
-                                  winrt::Microsoft::ReactNative::Bridge::IViewManager,
-                                  winrt::Microsoft::ReactNative::Bridge::IViewManagerWithChildren> {
+struct CircleViewManagerCpp : winrt::implements<
+                                  CircleViewManagerCpp,
+                                  winrt::Microsoft::ReactNative::IViewManager,
+                                  winrt::Microsoft::ReactNative::IViewManagerWithChildren> {
  public:
-  CircleViewManagerCPP();
+  CircleViewManagerCpp();
 
   // IViewManager
   winrt::hstring Name() noexcept;
@@ -40,9 +40,9 @@ struct HeightToCornerRadiusConverter
 
   winrt::Windows::Foundation::IInspectable Convert(
       winrt::Windows::Foundation::IInspectable const &value,
-      winrt::Windows::UI::Xaml::Interop::TypeName const &targetType,
-      winrt::Windows::Foundation::IInspectable const &parameter,
-      winrt::hstring const &language) noexcept {
+      winrt::Windows::UI::Xaml::Interop::TypeName const & /*targetType*/,
+      winrt::Windows::Foundation::IInspectable const & /*parameter*/,
+      winrt::hstring const & /*language*/) noexcept {
     double d = winrt::unbox_value<double>(value);
 
     if (isnan(d)) {
@@ -54,9 +54,9 @@ struct HeightToCornerRadiusConverter
 
   winrt::Windows::Foundation::IInspectable ConvertBack(
       winrt::Windows::Foundation::IInspectable const &value,
-      winrt::Windows::UI::Xaml::Interop::TypeName const &targetType,
-      winrt::Windows::Foundation::IInspectable const &parameter,
-      winrt::hstring const &language) noexcept {
+      winrt::Windows::UI::Xaml::Interop::TypeName const & /*targetType*/,
+      winrt::Windows::Foundation::IInspectable const & /*parameter*/,
+      winrt::hstring const & /*language*/) noexcept {
     return value;
   }
 
@@ -68,4 +68,4 @@ struct HeightToCornerRadiusConverter
   // IValueConverter
 };
 
-} // namespace winrt::SampleLibraryCPP::implementation
+} // namespace winrt::SampleLibraryCpp::implementation

@@ -5,9 +5,9 @@
 
 #include <ReactUWP/IReactInstance.h>
 
-#include "winrt/Microsoft.ReactNative.Bridge.h"
+#include "winrt/Microsoft.ReactNative.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   ReactContext(std::weak_ptr<react::uwp::IReactInstance> instance) noexcept : m_instance(instance) {}
@@ -23,4 +23,4 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   std::weak_ptr<react::uwp::IReactInstance> m_instance;
 };
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

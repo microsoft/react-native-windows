@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "DebugHelpers.h"
 
-namespace SampleLibraryCPP {
+namespace SampleLibraryCpp {
 
 void DebugWriteLine(const std::string &name, const std::string &methodName, const std::string &arg) {
   std::string output = name + "::" + methodName + "(" + arg + ")\n";
@@ -19,4 +19,4 @@ void DebugWriteLine(const std::string &name, const std::string &methodName) {
   DebugWriteLine(name, methodName, "");
 }
 
-} // namespace SampleLibraryCPP
+} // namespace SampleLibraryCpp

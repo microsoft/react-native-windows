@@ -10,6 +10,8 @@ cd react-native-windows\current
 npm install
 ```
 
+Note that if you were previously working on vnext, and did not clone the repo with the --recursive flag, you'll need to add the required submodules for current to work correctly.  You can add submodules to your enlistment by doing a 'git submodule update --init --recursive'.
+
 Each pull request has the unit tests, code analysis, and a [Winium](https://github.com/2gis/Winium) integration test run in the AppVeyor CI service. To shorten the feedback cycle, please be sure to [run the unit tests in Visual Studio](#running-unit-tests-in-visual-studio) and verify they are passing before submitting pull requests. For extra credit, [verify the examples in RNTester](#using-rntester) continue to work properly.
 
 ## Running unit tests in Visual Studio

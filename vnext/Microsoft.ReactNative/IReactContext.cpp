@@ -6,7 +6,7 @@
 
 #include "ReactSupport.h"
 
-namespace winrt::Microsoft::ReactNative::Bridge {
+namespace winrt::Microsoft::ReactNative {
 
 void ReactContext::DispatchEvent(
     winrt::Windows::UI::Xaml::FrameworkElement const &view,
@@ -26,4 +26,4 @@ void ReactContext::CallJsFunction(
   }
 }
 
-} // namespace winrt::Microsoft::ReactNative::Bridge
+} // namespace winrt::Microsoft::ReactNative

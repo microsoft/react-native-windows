@@ -4,7 +4,8 @@
 import "IJSValueReader.idl";
 import "IJSValueWriter.idl";
 
-namespace Microsoft.ReactNative.Bridge {
+namespace Microsoft.ReactNative {
+
   enum MethodReturnType {
     Void,
     Callback,
@@ -18,21 +19,19 @@ namespace Microsoft.ReactNative.Bridge {
       IJSValueWriter outputWriter,
       MethodResultCallback resolve,
       MethodResultCallback reject);
-  delegate void SyncMethodDelegate(
-      IJSValueReader inputReader, IJSValueWriter outputWriter);
+  delegate void SyncMethodDelegate(IJSValueReader inputReader, IJSValueWriter outputWriter);
   delegate void ConstantProvider(IJSValueWriter constantWriter);
 
   delegate void ReactArgWriter(IJSValueWriter writer);
   delegate void ReactEventHandler(ReactArgWriter argWriter);
   delegate void ReactEventHandlerSetter(ReactEventHandler eventHandler);
 
+  [webhosthidden]
   interface IReactModuleBuilder {
     void SetEventEmitterName(String name);
-    void AddMethod(
-        String name, MethodReturnType returnType, MethodDelegate method);
+    void AddMethod(String name, MethodReturnType returnType, MethodDelegate method);
     void AddSyncMethod(String name, SyncMethodDelegate method);
     void AddConstantProvider(ConstantProvider constantProvider);
-    void AddEventHandlerSetter(
-        String name, ReactEventHandlerSetter eventHandlerSetter);
+    void AddEventHandlerSetter(String name, ReactEventHandlerSetter eventHandlerSetter);
   };
-} // namespace Microsoft.ReactNative.Bridge
+} // namespace Microsoft.ReactNative

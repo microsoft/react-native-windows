@@ -4,17 +4,16 @@
 import "ReactNativeHost.idl";
 import "IReactContext.idl";
 
-namespace Microsoft.ReactNative
-{
-    [webhosthidden]
-    runtimeclass ReactInstanceManager
-    {
-        ReactInstanceManager();
-        Microsoft.ReactNative.Bridge.IReactContext CurrentReactContext();
-        void OnSuspend();
-        void OnEnteredBackground();
-        void OnLeavingBackground();
-        void OnResume(OnResumeAction action);
-        void OnBackPressed();
-    }
-}
+namespace Microsoft.ReactNative {
+
+  [webhosthidden]
+  runtimeclass ReactInstanceManager {
+    ReactInstanceManager();
+    IReactContext CurrentReactContext();
+    void OnSuspend();
+    void OnEnteredBackground();
+    void OnLeavingBackground();
+    void OnResume(OnResumeAction action);
+    void OnBackPressed();
+  }
+} // namespace Microsoft.ReactNative

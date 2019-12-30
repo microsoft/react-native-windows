@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative.Bridge;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 
@@ -119,61 +119,46 @@ namespace Microsoft.ReactNative.Managed
 
     private List<ReactEventInfo> InitEventInfos()
     {
-      var result = new List<ReactEventInfo>();
-      foreach (var propertyInfo in ModuleType.GetProperties())
-      {
-        var eventAttribute = propertyInfo.GetCustomAttribute<ReactEventAttribute>();
-        if (eventAttribute != null)
-        {
-          var eventInfo = new ReactEventInfo(propertyInfo, eventAttribute);
-          result.Add(eventInfo);
-        }
-      }
-
-      return result;
+      var fieldEvents =
+        from field in ModuleType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+        let eventAttribute = field.GetCustomAttribute<ReactEventAttribute>()
+        where eventAttribute != null && !field.IsInitOnly
+        select new ReactEventInfo(field, eventAttribute);
+      var propertyEvents =
+        from property in ModuleType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+        let eventAttribute = property.GetCustomAttribute<ReactEventAttribute>()
+        where eventAttribute != null
+        let propertySetter = property.SetMethod
+        where propertySetter != null && propertySetter.IsPublic
+        select new ReactEventInfo(property, eventAttribute);
+      return fieldEvents.Concat(propertyEvents).ToList();
     }
 
     private List<ReactConstantInfo> InitConstantInfos()
     {
-      var result = new List<ReactConstantInfo>();
-      foreach (var propertyInfo in ModuleType.GetProperties())
-      {
-        var constantAttribute = propertyInfo.GetCustomAttribute<ReactConstantAttribute>();
-        if (constantAttribute != null)
-        {
-          var constantInfo = new ReactConstantInfo(propertyInfo, constantAttribute);
-          result.Add(constantInfo);
-        }
-      }
-
-      foreach (var fieldInfo in ModuleType.GetFields())
-      {
-        var constantAttribute = fieldInfo.GetCustomAttribute<ReactConstantAttribute>();
-        if (constantAttribute != null)
-        {
-          var constantInfo = new ReactConstantInfo(fieldInfo, constantAttribute);
-          result.Add(constantInfo);
-        }
-      }
-
-      return result;
+      var fieldConstants =
+        from field in ModuleType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+        let constantAttribute = field.GetCustomAttribute<ReactConstantAttribute>()
+        where constantAttribute != null
+        let constantInfo = new ReactConstantInfo(field, constantAttribute)
+        select constantInfo;
+      var propertyEvents =
+        from property in ModuleType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+        let constantAttribute = property.GetCustomAttribute<ReactConstantAttribute>()
+        where constantAttribute != null
+        let constantInfo = new ReactConstantInfo(property, constantAttribute)
+        select constantInfo;
+      return fieldConstants.Concat(propertyEvents).ToList();
     }
 
     private List<ReactConstantProviderInfo> InitConstantProviderInfos()
     {
-      var result = new List<ReactConstantProviderInfo>();
-
-      foreach (var methodInfo in ModuleType.GetMethods())
-      {
-        var constantProviderAttribute = methodInfo.GetCustomAttribute<ReactConstantProviderAttribute>();
-        if (constantProviderAttribute != null)
-        {
-          var constantInfo = new ReactConstantProviderInfo(methodInfo);
-          result.Add(constantInfo);
-        }
-      }
-
-      return result;
+      var constantProviders =
+        from method in ModuleType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static)
+        let constantProviderAttribute = method.GetCustomAttribute<ReactConstantProviderAttribute>()
+        where constantProviderAttribute != null
+        select new ReactConstantProviderInfo(method);
+      return constantProviders.ToList();
     }
 
     public string ModuleName { get; private set; }
