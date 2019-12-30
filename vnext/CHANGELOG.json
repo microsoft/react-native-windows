@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Dec 2019 20:33:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
+      "comments": {
+        "none": [
+          {
+            "comment": "supports SDK installed in other folder",
+            "author": "licanhua@live.com",
+            "commit": "9499a1d3b2f07a984e1dea233623cb06d8a47e6f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Dec 2019 17:01:20 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.105",
       "version": "0.60.0-vnext.105",
