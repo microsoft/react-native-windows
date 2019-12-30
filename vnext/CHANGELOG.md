@@ -1,7 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 20 Dec 2019 19:01:50 GMT and should not be manually modified.
+This log was last generated on Fri, 27 Dec 2019 17:01:20 GMT and should not be manually modified.
 
+## 0.60.0-vnext.105
+Fri, 27 Dec 2019 17:01:20 GMT
+
+### Changes
+
+- Changed Microsoft.ReactNative to be independent from ReactUWP project (vmorozov@microsoft.com)
+## 0.60.0-vnext.104
+Sat, 21 Dec 2019 03:41:33 GMT
+
+### Changes
+
+- Export ability to query native module names (ngerlem@microsoft.com)
+## 0.60.0-vnext.103
+Sat, 21 Dec 2019 00:18:22 GMT
+
+### Changes
+
+- Fix RNTester bundle (#2728) (acoates@microsoft.com)
 ## 0.60.0-vnext.102
 Fri, 20 Dec 2019 19:01:50 GMT
 

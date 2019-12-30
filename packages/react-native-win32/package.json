@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.25.8",
+  "version": "0.25.9",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",
@@ -12,10 +12,10 @@
     "lint": "just-scripts eslint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/index.win32.bundle --assets-dest dist/win32/dev",
-    "run-win32": "rex-win32 --bundle RNTester.win32 --component RNTesterApp --basePath ./dist/win32/dev",
-    "run-win32-devmain": "rex-win32 --bundle RNTester.win32 --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
-    "run-win32-dev-web": "rex-win32 --bundle RNTester.win32 --component RNTesterApp --basePath ./dist/win32/dev --useWebDebugger"
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev",
+    "run-win32": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev",
+    "run-win32-devmain": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
+    "run-win32-dev-web": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useWebDebugger"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",

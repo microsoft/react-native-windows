@@ -2,6 +2,48 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 Dec 2019 17:01:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Changed Microsoft.ReactNative to be independent from ReactUWP project",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a2053e778b68834fb64e18382dbc5328ce66b269"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Dec 2019 03:41:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.104",
+      "version": "0.60.0-vnext.104",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Export ability to query native module names",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5ff50e103744a589228c020ef0fad45d699458cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Dec 2019 00:18:22 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.103",
+      "version": "0.60.0-vnext.103",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix RNTester bundle (#2728)",
+            "author": "acoates@microsoft.com",
+            "commit": "65167fb5e52f042879d00891e89ed951bdda84bc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Dec 2019 19:01:50 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.102",
       "version": "0.60.0-vnext.102",
