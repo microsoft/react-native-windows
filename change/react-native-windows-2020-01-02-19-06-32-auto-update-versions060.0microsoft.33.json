@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Updating react-native to version: 0.60.0-microsoft.33",
+  "packageName": "react-native-windows",
+  "email": "53619745+rnbot@users.noreply.github.com",
+  "commit": "da0d540f6de6d67f4f37d5f153e085cf4c2b4441",
+  "date": "2020-01-02T19:06:32.651Z"
+}
