@@ -282,10 +282,12 @@ bool TryUpdateFontProperties(const T &element, const std::string &propertyName, 
     else if (propertyValue.isNull())
       element.ClearValue(T::FontSizeProperty());
   } else if (propertyName == "fontFamily") {
-    if (propertyValue.isString())
-      element.FontFamily(winrt::Windows::UI::Xaml::Media::FontFamily(asWStr(propertyValue)));
-    else if (propertyValue.isNull())
+    if (propertyValue.isString()) {
+      const auto fontFamily = FontFamilyFrom(propertyValue);
+      element.FontFamily(fontFamily);
+    } else if (propertyValue.isNull()) {
       element.ClearValue(T::FontFamilyProperty());
+    }
   } else if (propertyName == "fontWeight") {
     if (propertyValue.isString()) {
       const std::string &value = propertyValue.getString();

@@ -10,6 +10,7 @@
 #include "HostingPane.xaml.h"
 
 #include <ReactUWP/ReactUwp.h>
+#include <ReactUWP/Utils/ValueUtils.h>
 #include <ViewManager.h>
 
 #include <winrt/Windows.Storage.h>
@@ -173,6 +174,9 @@ HostingPane::HostingPane() {
   InitComboBoxes();
 
   LoadFilenameSettings();
+
+  // Configure paths for custom fonts
+  react::uwp::SetFontFamilyPaths({{L"CustomFont", L"ms-appx:///Assets/seguiemj.ttf#Segoe UI Emoji"}});
 
   m_instanceCreator = std::make_shared<HostingPaneReactInstanceCreator>(this);
 }

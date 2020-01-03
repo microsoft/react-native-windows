@@ -180,6 +180,33 @@ DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds) {
   return strDateTime;
 }
 
+// In UWP apps, the string provided to FontFamily must be either a system-installed font name or a
+// a special path string to a font file bundled with the app (e.g. "/Assets/MyFont.ttf#MyFont").
+// Since this convention for custom fonts is not portable, the following code provides a mechanism for
+// app developers to register their custom font paths with aliases and use those aliases in React for any
+// FontFamily styles.
+
+// Map of fontName -> UWP font path (e.g. "MyFont" -> "/Assets/MyFont.ttf#MyFont")
+static std::map<std::wstring, std::wstring> s_fontMap;
+
+REACTWINDOWS_API_(void)
+SetFontFamilyPaths(std::map<std::wstring, std::wstring> map) {
+  s_fontMap = map;
+}
+
+REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::FontFamily)
+FontFamilyFrom(const folly::dynamic &d) {
+  auto fontPath = asWStr(d);
+
+  // If the string is a registered alias, get the associated path to the font
+  auto it = s_fontMap.find(fontPath);
+  if (it != s_fontMap.end()) {
+    fontPath = it->second;
+  }
+
+  return winrt::Windows::UI::Xaml::Media::FontFamily(fontPath);
+}
+
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d) {
   return Microsoft::Common::Unicode::Utf8ToUtf16(d.getString());
 }
