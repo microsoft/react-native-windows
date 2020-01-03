@@ -40,7 +40,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz",
     "@office-iss/rex-win32": "0.0.30",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
@@ -53,7 +53,7 @@
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.60.0 || 0.60.0-microsoft.31 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react-native": "^0.60.0 || 0.60.0-microsoft.35 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz",
     "react": "16.8.6",
     "react-dom": "16.8.6"
   },
