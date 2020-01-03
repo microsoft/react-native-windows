@@ -110,10 +110,10 @@ void PropsAnimatedNode::StartAnimations() {
           uiElement.StartAnimation(m_translationCombined);
         } else if (anim.second.Target() == L"Scale.X") {
           m_subchannelPropertySet.StartAnimation(L"ScaleX", anim.second);
-          uiElement.StartAnimation(m_translationCombined);
+          uiElement.StartAnimation(m_scaleCombined);
         } else if (anim.second.Target() == L"Scale.Y") {
           m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
-          uiElement.StartAnimation(m_translationCombined);
+          uiElement.StartAnimation(m_scaleCombined);
         } else {
           uiElement.StartAnimation(anim.second);
         }
