@@ -1,4 +1,4 @@
-[react.uwp.ViewPanel]
+[Microsoft.ReactNative.ViewPanel]
     Background=[NULL]
     BorderBrush=#00000000
     BorderThickness=0,0,0,0

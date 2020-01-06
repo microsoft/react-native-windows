@@ -7,7 +7,16 @@
 
 #include "DynamicAutomationProperties.g.h"
 
-namespace winrt::react::uwp::implementation {
+#ifndef PROJECT_ROOT_NAMESPACE
+#define PROJECT_ROOT_NAMESPACE react::uwp
+#else
+namespace winrt::Microsoft::ReactNative {}
+namespace winrt::react::uwp {
+using namespace winrt::Microsoft::ReactNative;
+}
+#endif
+
+namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
 
 //
 // DynamicAutomationProperties provides attached properties for the various
@@ -25,7 +34,7 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityRoleProperty();
   static void SetAccessibilityRole(
       winrt::Windows::UI::Xaml::UIElement const &element,
-      winrt::react::uwp::AccessibilityRoles const &value);
+      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles const &value);
   static AccessibilityRoles GetAccessibilityRole(winrt::Windows::UI::Xaml::UIElement const &element);
 
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityStateSelectedProperty();
@@ -59,17 +68,17 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
   static void SetAccessibilityInvokeEventHandler(
       Windows::UI::Xaml::UIElement const &element,
-      winrt::react::uwp::AccessibilityInvokeEventHandler const &value);
-  static winrt::react::uwp::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(
+      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler const &value);
+  static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(
       winrt::Windows::UI::Xaml::UIElement const &element);
 
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionsProperty();
 
   static void SetAccessibilityActions(
       Windows::UI::Xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> const &value);
+      Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value);
 
-  static Windows::Foundation::Collections::IVector<react::uwp::AccessibilityAction> GetAccessibilityActions(
+  static Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> GetAccessibilityActions(
       Windows::UI::Xaml::UIElement const &element);
 
   static void DispatchAccessibilityAction(
@@ -79,17 +88,17 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static winrt::Windows::UI::Xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(
       Windows::UI::Xaml::UIElement const &element,
-      winrt::react::uwp::AccessibilityActionEventHandler const &value);
-  static winrt::react::uwp::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
+      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value);
+  static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
       winrt::Windows::UI::Xaml::UIElement const &element);
 };
 
-} // namespace winrt::react::uwp::implementation
+} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
 
-namespace winrt::react::uwp::factory_implementation {
+namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
 struct DynamicAutomationProperties
     : DynamicAutomationPropertiesT<DynamicAutomationProperties, implementation::DynamicAutomationProperties> {};
-} // namespace winrt::react::uwp::factory_implementation
+} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation
 
 namespace react::uwp {
 // Issue #2172: Calling static members on
@@ -99,5 +108,5 @@ namespace react::uwp {
 // using cppwinrt. This workaround is so that consumers in react::uwp can just
 // call DynamicAutomationProperties
 
-using DynamicAutomationProperties = winrt::react::uwp::implementation::DynamicAutomationProperties;
+using DynamicAutomationProperties = winrt::PROJECT_ROOT_NAMESPACE::implementation::DynamicAutomationProperties;
 } // namespace react::uwp

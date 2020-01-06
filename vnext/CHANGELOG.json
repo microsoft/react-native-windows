@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Jan 2020 21:29:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.107",
+      "version": "0.60.0-vnext.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Call StartAnimatiom on m_scaleCombined for ScaleX / ScaleY animations",
+            "author": "thshea@microsoft.com",
+            "commit": "0a4543017e3778a5436828340c675bbb13600a6a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Dec 2019 22:14:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.106",
+      "version": "0.60.0-vnext.106",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Avoid app crash because content is not bundled for the first time",
+            "author": "licanhua@live.com",
+            "commit": "703f7d4f116abbb7d40d74681f40e9d8d0a036ce"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Dec 2019 20:33:37 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
+      "comments": {
+        "none": [
+          {
+            "comment": "supports SDK installed in other folder",
+            "author": "licanhua@live.com",
+            "commit": "9499a1d3b2f07a984e1dea233623cb06d8a47e6f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Dec 2019 17:01:20 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.105",
+      "version": "0.60.0-vnext.105",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Changed Microsoft.ReactNative to be independent from ReactUWP project",
+            "author": "vmorozov@microsoft.com",
+            "commit": "a2053e778b68834fb64e18382dbc5328ce66b269"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Dec 2019 03:41:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.104",
+      "version": "0.60.0-vnext.104",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Export ability to query native module names",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5ff50e103744a589228c020ef0fad45d699458cd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Dec 2019 00:18:22 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.103",
       "version": "0.60.0-vnext.103",

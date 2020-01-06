@@ -1,7 +1,31 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 21 Dec 2019 00:18:22 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jan 2020 21:29:21 GMT and should not be manually modified.
 
+## 0.60.0-vnext.107
+Mon, 06 Jan 2020 21:29:21 GMT
+
+### Changes
+
+- Call StartAnimatiom on m_scaleCombined for ScaleX / ScaleY animations (thshea@microsoft.com)
+## 0.60.0-vnext.106
+Mon, 30 Dec 2019 22:14:37 GMT
+
+### Changes
+
+- Avoid app crash because content is not bundled for the first time (licanhua@live.com)
+## 0.60.0-vnext.105
+Fri, 27 Dec 2019 17:01:20 GMT
+
+### Changes
+
+- Changed Microsoft.ReactNative to be independent from ReactUWP project (vmorozov@microsoft.com)
+## 0.60.0-vnext.104
+Sat, 21 Dec 2019 03:41:33 GMT
+
+### Changes
+
+- Export ability to query native module names (ngerlem@microsoft.com)
 ## 0.60.0-vnext.103
 Sat, 21 Dec 2019 00:18:22 GMT
 
