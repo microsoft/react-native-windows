@@ -6,18 +6,11 @@
 'use strict';
 
 import * as React from 'react';
-import {
-  AsyncStorage,
-  Button,
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {Button, AppRegistry, StyleSheet, Text, View} from 'react-native';
 const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
-import RNTesterList from './RNTesterList.win32';
+const RNTesterList = require('./RNTesterList.win32');
 const RNTesterNavigationReducer = require('react-native/RNTester/js/RNTesterNavigationReducer');
 
 const styles = StyleSheet.create({
@@ -55,8 +48,6 @@ interface IRNTesterNavigationState {
 interface IRNTesterAppProps {
   exampleFromAppetizeParams: string;
 }
-
-const APP_STATE_KEY = 'RNTesterAppState.v2';
 
 const Header = ({onBack, title}: {onBack?: () => void; title: string}) => (
   <View style={styles.headerContainer}>
@@ -155,9 +146,7 @@ class RNTesterApp extends React.Component<
     }
     const newState = RNTesterNavigationReducer(this.state, action);
     if (this.state !== newState) {
-      this.setState(newState, () =>
-        AsyncStorage.setItem(APP_STATE_KEY, JSON.stringify(this.state)),
-      );
+      this.setState(newState);
     }
   };
 }
