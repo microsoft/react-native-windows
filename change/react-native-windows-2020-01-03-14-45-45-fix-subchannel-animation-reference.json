@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Call StartAnimatiom on m_scaleCombined for ScaleX / ScaleY animations",
+  "packageName": "react-native-windows",
+  "email": "thshea@microsoft.com",
+  "commit": "0a4543017e3778a5436828340c675bbb13600a6a",
+  "date": "2020-01-03T22:45:45.183Z",
+  "file": "D:\\projects\\react-native-windows\\change\\react-native-windows-2020-01-03-14-45-45-fix-subchannel-animation-reference.json"
+}
