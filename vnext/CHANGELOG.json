@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Jan 2020 21:29:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.107",
+      "version": "0.60.0-vnext.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Call StartAnimatiom on m_scaleCombined for ScaleX / ScaleY animations",
+            "author": "thshea@microsoft.com",
+            "commit": "0a4543017e3778a5436828340c675bbb13600a6a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Dec 2019 22:14:37 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.106",
       "version": "0.60.0-vnext.106",

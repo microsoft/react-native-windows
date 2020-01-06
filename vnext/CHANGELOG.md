@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Dec 2019 22:14:37 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jan 2020 21:29:21 GMT and should not be manually modified.
 
+## 0.60.0-vnext.107
+Mon, 06 Jan 2020 21:29:21 GMT
+
+### Changes
+
+- Call StartAnimatiom on m_scaleCombined for ScaleX / ScaleY animations (thshea@microsoft.com)
 ## 0.60.0-vnext.106
 Mon, 30 Dec 2019 22:14:37 GMT
 
