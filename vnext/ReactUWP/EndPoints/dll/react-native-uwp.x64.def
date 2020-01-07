@@ -83,5 +83,5 @@ xallocxWeak
 ??0TurboModule@react@facebook@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$shared_ptr@VJSCallInvoker@react@facebook@@@4@@Z
 ??1TurboModule@react@facebook@@UEAA@XZ
 ?get@TurboModule@react@facebook@@UEAA?AVValue@jsi@3@AEAVRuntime@53@AEBVPropNameID@53@@Z
-?GetFacebookReactInstance@uwp@react@@YA?AV?$shared_ptr@VInstance@react@facebook@@@std@@AEBUInstance@12winrt@@@Z
+?GetReactInstanceFromUwpInstance@uwp@react@@YA?AV?$shared_ptr@VInstance@react@facebook@@@std@@AEBUInstance@12winrt@@@Z
 ??0BridgeJSCallInvoker@react@facebook@@QEAA@V?$weak_ptr@VInstance@react@facebook@@@std@@@Z
