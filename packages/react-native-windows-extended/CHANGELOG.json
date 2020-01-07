@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Tue, 07 Jan 2020 22:43:44 GMT",
+      "tag": "react-native-windows-extended_v0.60.62",
+      "version": "0.60.62",
+      "comments": {
+        "none": [
+          {
+            "comment": "Split lint tasks into separate build task to speed general build times",
+            "author": "acoates@microsoft.com",
+            "commit": "c343616cc3e447f1edf02dd2d4c52e82c648ee72"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Dec 2019 22:18:13 GMT",
       "tag": "react-native-windows-extended_v0.60.43",
       "version": "0.60.43",

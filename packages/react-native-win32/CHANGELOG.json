@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 07 Jan 2020 22:43:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.25.10",
+      "version": "0.25.10",
+      "comments": {
+        "none": [
+          {
+            "comment": "Split lint tasks into separate build task to speed general build times",
+            "author": "acoates@microsoft.com",
+            "commit": "c343616cc3e447f1edf02dd2d4c52e82c648ee72"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2020 19:44:17 GMT",
       "tag": "@office-iss/react-native-win32_v0.25.10",
       "version": "0.25.10",

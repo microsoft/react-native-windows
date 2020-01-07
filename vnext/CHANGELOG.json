@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Jan 2020 22:43:44 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.108",
+      "version": "0.60.0-vnext.108",
+      "comments": {
+        "none": [
+          {
+            "comment": "Split lint tasks into separate build task to speed general build times",
+            "author": "acoates@microsoft.com",
+            "commit": "c343616cc3e447f1edf02dd2d4c52e82c648ee72"
+          },
+          {
+            "comment": "Remove Unneeded OSS_RN Special Path",
+            "author": "nick@nickgerleman.com",
+            "commit": "b912ff74d48ca8157c8006cf1391bf0178937679"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2020 19:44:17 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.108",
       "version": "0.60.0-vnext.108",

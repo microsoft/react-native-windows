@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Split lint tasks into separate build task to speed general build times",
-  "packageName": "react-native-windows-extended",
-  "email": "acoates@microsoft.com",
-  "commit": "c343616cc3e447f1edf02dd2d4c52e82c648ee72",
-  "date": "2020-01-07T20:49:00.419Z"
-}
