@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fixing bugs when using .NetNative",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "dc6063f921526cec1353e18da1f808ac2094250e",
+  "date": "2020-01-07T23:23:05.079Z"
+}
