@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 07 Jan 2020 19:44:17 GMT",
+      "tag": "@office-iss/react-native-win32_v0.25.10",
+      "version": "0.25.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove remaining need for fork of RN for win32 JS",
+            "author": "acoates@microsoft.com",
+            "commit": "b17624cd44d682c73db5ae17a3d10c8bed07c5f8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Dec 2019 00:18:22 GMT",
       "tag": "@office-iss/react-native-win32_v0.25.9",
       "version": "0.25.9",
