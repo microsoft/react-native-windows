@@ -12,13 +12,14 @@
 #include "DebugHelpers.h"
 #include "NativeModules.h"
 
+#define DEBUG_OUTPUT(...) DebugWriteLine("SampleModuleCppImpl", ##__VA_ARGS__);
+
 namespace SampleLibraryCpp {
 
 // Sample REACT_MODULE
 
-REACT_MODULE(SampleModuleCppImpl /*moduleClass*/, L"SampleModuleCpp" /*moduleName*/);
+REACT_MODULE(SampleModuleCppImpl, L"SampleModuleCpp");
 struct SampleModuleCppImpl {
-  const std::string ClassName = "SampleModuleCppImpl";
 
 #pragma region Constants
 
@@ -40,23 +41,23 @@ struct SampleModuleCppImpl {
 
   REACT_METHOD(VoidMethod);
   void VoidMethod() noexcept {
-    DebugWriteLine(ClassName, "VoidMethod");
+    DEBUG_OUTPUT("VoidMethod");
   }
 
   REACT_METHOD(VoidMethodWithArgs);
   void VoidMethodWithArgs(double arg) noexcept {
-    DebugWriteLine(ClassName, "VoidMethodWithArgs", arg);
+    DEBUG_OUTPUT("VoidMethodWithArgs", arg);
   }
 
   REACT_METHOD(ReturnMethod);
   double ReturnMethod() noexcept {
-    DebugWriteLine(ClassName, "ReturnMethod");
+    DEBUG_OUTPUT("ReturnMethod");
     return M_PI;
   }
 
   REACT_METHOD(ReturnMethodWithArgs);
   double ReturnMethodWithArgs(double arg) noexcept {
-    DebugWriteLine(ClassName, "ReturnMethodWithArgs", arg);
+    DEBUG_OUTPUT("ReturnMethodWithArgs", arg);
     return M_PI;
   }
 
@@ -66,19 +67,19 @@ struct SampleModuleCppImpl {
 
   REACT_METHOD(ExplicitCallbackMethod);
   void ExplicitCallbackMethod(std::function<void(double)> &&callback) noexcept {
-    DebugWriteLine(ClassName, "ExplicitCallbackMethod");
+    DEBUG_OUTPUT("ExplicitCallbackMethod");
     callback(M_PI);
   }
 
   REACT_METHOD(ExplicitCallbackMethodWithArgs);
   void ExplicitCallbackMethodWithArgs(double arg, std::function<void(double)> &&callback) noexcept {
-    DebugWriteLine(ClassName, "ExplicitCallbackMethodWithArgs", arg);
+    DEBUG_OUTPUT("ExplicitCallbackMethodWithArgs", arg);
     callback(M_PI);
   }
 
   REACT_METHOD(ExplicitPromiseMethod);
   void ExplicitPromiseMethod(winrt::Microsoft::ReactNative::ReactPromise<double> &&result) noexcept {
-    DebugWriteLine(ClassName, "ExplicitPromiseMethod");
+    DEBUG_OUTPUT("ExplicitPromiseMethod");
     try {
       result.Resolve(M_PI);
     } catch (const std::exception &ex) {
@@ -90,7 +91,7 @@ struct SampleModuleCppImpl {
   void ExplicitPromiseMethodWithArgs(
       double arg,
       winrt::Microsoft::ReactNative::ReactPromise<double> &&result) noexcept {
-    DebugWriteLine(ClassName, "ExplicitPromiseMethodWithArgs", arg);
+    DEBUG_OUTPUT("ExplicitPromiseMethodWithArgs", arg);
     try {
       result.Resolve(M_PI);
     } catch (const std::exception &ex) {
@@ -104,13 +105,13 @@ struct SampleModuleCppImpl {
 
   REACT_SYNC_METHOD(SyncReturnMethod);
   double SyncReturnMethod() noexcept {
-    DebugWriteLine(ClassName, "SyncReturnMethod");
+    DEBUG_OUTPUT("SyncReturnMethod");
     return M_PI;
   }
 
   REACT_SYNC_METHOD(SyncReturnMethodWithArgs);
   double SyncReturnMethodWithArgs(double arg) noexcept {
-    DebugWriteLine(ClassName, "SyncReturnMethodWithArgs", arg);
+    DEBUG_OUTPUT("SyncReturnMethodWithArgs", arg);
     return M_PI;
   }
 
