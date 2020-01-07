@@ -10,9 +10,8 @@ import {Button, AppRegistry, StyleSheet, Text, View} from 'react-native';
 const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
 const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
 const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
-import RNTesterList from './RNTesterList.win32';
-import RNTesterNavigationReducer from './RNTesterNavigationReducer.win32';
-import {RNTesterAction} from './RNTesterActions.win32';
+const RNTesterList = require('./RNTesterList.win32');
+const RNTesterNavigationReducer = require('react-native/RNTester/js/RNTesterNavigationReducer');
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -69,14 +68,16 @@ class RNTesterApp extends React.Component<
   IRNTesterAppProps,
   IRNTesterNavigationState
 > {
-  public render() {
+  public render(): JSX.Element {
     if (!this.state) {
       return <Text>null state</Text>;
     }
     if (this.state.openExample) {
       const Component = RNTesterList.Modules[this.state.openExample];
       if (Component.external) {
-        return <Component onExampleExit={this._handleBack} />;
+        // tslint:disable-next-line:no-any
+        const Comp = Component as any;
+        return <Comp onExampleExit={this._handleBack} />;
       } else {
         return (
           <View style={styles.exampleContainer}>
@@ -103,7 +104,7 @@ class RNTesterApp extends React.Component<
   }
   */
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     /*
     Linking.getInitialURL().then((url) => {
       AsyncStorage.getItem(APP_STATE_KEY, (err, storedString) => {
@@ -112,9 +113,10 @@ class RNTesterApp extends React.Component<
         const launchAction = exampleAction || urlAction;
      if (err || !storedString) {
       */
-    const initialAction: RNTesterAction = /*launchAction ||*/ {
+    const initialAction = /*launchAction ||*/ {
       type: 'InitialAction',
     };
+    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState(RNTesterNavigationReducer(undefined, initialAction));
     return;
     /*
@@ -138,7 +140,7 @@ class RNTesterApp extends React.Component<
     this._handleAction(RNTesterActions.Back());
   };
 
-  private _handleAction = (action?: RNTesterAction) => {
+  private _handleAction = (action: any) => {
     if (!action) {
       return;
     }

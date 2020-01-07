@@ -8,7 +8,6 @@ import { ViewWin32 } from '../../View/ViewWin32';
 import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewWin32.Props';
 import { TouchableWin32 } from '../TouchableWin32';
 import { IPressEvent, IRenderChild } from '../TouchableWin32.Types';
-import { IRNTesterPage } from 'src/RNTester/RNTester.types';
 import { ITouchableWin32State } from '../TouchableWin32.Props';
 
 /**
@@ -20,13 +19,13 @@ const styles = StyleSheet.create({
     width: 600,
     justifyContent: 'space-between',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   smallContainer: {
     height: 90,
     width: 90,
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
   },
   highlight: {
     height: 150,
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   outerTouch: {
     height: 150,
@@ -42,14 +41,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignContent: 'center',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   innerTouch: {
     height: 90,
     width: 90,
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
 
 /**
@@ -59,7 +58,7 @@ const PRESS_RETENTION_OFFSET: Insets = {
   top: 100,
   left: 100,
   right: 100,
-  bottom: 100
+  bottom: 100,
 };
 
 interface ITouchableWin32WithoutFeedbackProps extends IViewWin32Props {
@@ -165,7 +164,7 @@ class TouchableWin32WithoutFeedback extends React.Component<ITouchableWin32Witho
   private _generateStyle = (state: ITouchableWin32State): ViewStyle => {
     const finalStyle: ViewStyle = {
       borderWidth: state.isFocused ? 5 : 0,
-      borderColor: 'red'
+      borderColor: 'red',
     };
     return Object.assign({}, this.props.style, finalStyle);
   };
@@ -388,13 +387,13 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
           borderColor: state.isFocused ? 'green' : 'pink',
           borderWidth: state.isHovered ? 10 : 5,
           height: 70,
-          width: 70
+          width: 70,
         }}
       >
         <TextWin32
           style={{
             color: this._pickColor(state.isHovered, state.isPressed),
-            fontSize: state.isFocused ? 8 : 10
+            fontSize: state.isFocused ? 8 : 10,
           }}
           textStyle="None"
         >
@@ -425,26 +424,23 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
   };
 }
 
-const TouchableWin32TestPage: IRNTesterPage = {
-  title: '<TouchableWin32>',
-  displayName: 'TouchableWin32 Examples',
-  description: 'Demonstration of touchable + focus + hover behavior all in one component',
-  examples: [
+export const displayName = 'TouchableWin32 Examples';
+export const title = '<TouchableWin32>';
+export const description = 'Demonstration of touchable + focus + hover behavior all in one component';
+
+export const examples = [
     {
       title: 'TouchableWithoutFeedback Example',
       description: 'A simple example implementation of without feedback behavior',
       render(): JSX.Element {
         return <TouchableWithoutFeedbackExample />;
-      }
+      },
     },
     {
       title: 'TouchableHighlight Example',
       description: 'A simple example implementation of highlight behavior',
       render(): JSX.Element {
         return <TouchableHighlightExample />;
-      }
-    }
-  ]
-};
-
-export = TouchableWin32TestPage;
+      },
+    },
+  ];

@@ -1,6 +1,5 @@
 /**
  * @providesModule EnterString
- * @flow
  */
 'use strict';
 
@@ -72,14 +71,14 @@ class EnterStringNative extends React.Component<IEnterStringNativeProps, {}> {
     /**
      * Callback when text is changed
      */
-    onChanged: PropTypes.func
+    onChanged: PropTypes.func,
   };
 
   public static DefaultProps: IEnterStringNativeProps = {
     disabled: false,
     value: '',
     label: '',
-    onChanged: null
+    onChanged: null,
   };
 
   public render() {
@@ -94,7 +93,7 @@ export default class EnterString extends React.Component<IEnterStringProps, {}> 
     disabled: false,
     value: '',
     label: '',
-    onChanged: null
+    onChanged: null,
   };
 
   public render() {
