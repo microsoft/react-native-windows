@@ -59,14 +59,5 @@
     "react-native": "^0.60.0 || 0.60.0-microsoft.31 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
     "react": "16.8.6",
     "react-dom": "16.8.6"
-  },
-  "nativeBundles": {
-    "sources": [
-      "RNTester"
-    ],
-    "targets": [
-      "win32.dev"
-    ],
-    "theseBundlesAreNotShippingBundlesAndAreNeverUsedOutsideThisRepo": true
   }
 }
