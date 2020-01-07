@@ -119,6 +119,6 @@ TEST_CLASS(BaseWebSocketTest){
   }
 };
 
-// clange-format on
+// clang-format on
 
 } // namespace Microsoft::React::Test

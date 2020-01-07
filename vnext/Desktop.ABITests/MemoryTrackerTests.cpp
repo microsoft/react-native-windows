@@ -94,6 +94,6 @@ TEST_CLASS(MemoryTrackerTests) {
   }
 };
 
-// clange-format on
+// clang-format on
 
 } // namespace ABITests

@@ -37,7 +37,7 @@ static const string SAMPLE_VAL_2 =
 // async operation and then check the returnedValues.
 //
 // Do NOT call cv.wait(m) for synchronous operations. The
-// condition will never be signalled.
+// condition will never be signaled.
 void storeCallbackArgAndNotify(vector<folly::dynamic> args) {
   std::lock_guard<std::recursive_mutex> lock(m);
   returnedValues = args;

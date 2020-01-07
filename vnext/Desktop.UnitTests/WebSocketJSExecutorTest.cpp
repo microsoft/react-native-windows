@@ -20,6 +20,6 @@ TEST_CLASS(WebSocketJSExecutorTest) {
   }
 };
 
-// clange-format on
+// clang-format on
 
 } // namespace Microsoft::React::Test
