@@ -40,7 +40,6 @@ task('clean', () => {
   return cleanTask(['lib'].map(p => path.join(process.cwd(), p)));
 });
 
-task(
-  'build',
-  series(condition('clean', () => true || argv().clean), 'eslint', 'ts'),
-);
+task('build', series(condition('clean', () => true || argv().clean), 'ts'));
+
+task('lint', series('eslint'));

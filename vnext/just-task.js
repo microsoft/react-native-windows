@@ -73,13 +73,14 @@ task(
   'build',
   series(
     condition('clean', () => true || argv().clean),
-    'eslint',
     'initRNLibraries',
     'copyFlowFiles',
     'ts',
     'flow-check',
     condition('apiExtractorVerify', () => argv().ci),
-    'apiExtractorUpdate',
-    'apiDocumenter',
   ),
 );
+
+task('lint', series('eslint', 'flow-check'));
+
+task('api', series('apiExtractorUpdate', 'apiDocumenter'));
