@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Remove remanents of old doc format",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "commit": "c112e2bd48e7a2acd94aacb3f70ad760f3d1cd01",
+  "date": "2020-01-07T22:02:44.945Z"
+}
