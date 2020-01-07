@@ -499,9 +499,6 @@ void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> sc
 
   ChakraString jsSourceURL(sourceURL.c_str());
 
-#if defined(OSS_RN)
-  evaluateScript(std::move(script), jsSourceURL);
-#else
   auto bundleMetadata = folly::get_ptr(m_instanceArgs.BundleUrlMetadataMap, sourceURL);
 
   // when debugging is enabled, don't use bytecode caching because ChakraCore
@@ -512,7 +509,6 @@ void ChakraExecutor::loadApplicationScript(std::unique_ptr<const JSBigString> sc
     evaluateScriptWithBytecode(
         std::move(script), bundleMetadata->version, jsSourceURL, std::string(bundleMetadata->bytecodeFilename));
   }
-#endif
 
 #if !defined(USE_EDGEMODE_JSRT)
   if (needToRedirectConsoleToDebugger) {
