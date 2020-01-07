@@ -8,13 +8,10 @@
 
 #include <MemoryTracker.h>
 #include <ScriptStore.h>
-#include <cxxreact/MessageQueueThread.h>
 
 #include <cstring>
-#include <limits>
 #include <mutex>
 #include <set>
-#include <sstream>
 
 namespace Microsoft::JSI {
 

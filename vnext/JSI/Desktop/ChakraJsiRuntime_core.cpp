@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "ChakraRuntime.h"
-#include "ChakraRuntimeFactory.h"
 
 #include <cxxreact/MessageQueueThread.h>
 #include "ByteArrayBuffer.h"
