@@ -48,41 +48,38 @@ function copyJSFolderRecursiveSync(source, target) {
   }
 }
 
-exports.copyRNLibraries = () => {
+exports.copyRNLibraries = baseDir => {
   const rnPath = path.dirname(require.resolve('react-native/package.json'));
 
-  const rnCodeGenDest = path.resolve(
-    __dirname,
-    '../packages/react-native-codegen',
-  );
+  const rnCodeGenDest = path.resolve(baseDir, 'packages/react-native-codegen');
   if (fs.existsSync(rnCodeGenDest)) {
     rimraf.sync(rnCodeGenDest);
   }
-  const integrationTestsDest = path.resolve(__dirname, '../IntegrationTests');
+  const integrationTestsDest = path.resolve(baseDir, 'IntegrationTests');
   if (fs.existsSync(integrationTestsDest)) {
     rimraf.sync(integrationTestsDest + path.sep + '*.js');
   }
-  const librariesDest = path.resolve(__dirname, '../Libraries');
+  const librariesDest = path.resolve(baseDir, 'Libraries');
   if (fs.existsSync(librariesDest)) {
     rimraf.sync(librariesDest);
   }
-  const flowDest = path.resolve(__dirname, '../flow');
+  const flowDest = path.resolve(baseDir, 'flow');
   if (fs.existsSync(flowDest)) {
     rimraf.sync(flowDest);
   }
-  const flowTypedDest = path.resolve(__dirname, '../flow-typed');
+  const flowTypedDest = path.resolve(baseDir, 'flow-typed');
   if (fs.existsSync(flowTypedDest)) {
     rimraf.sync(flowTypedDest);
   }
-  const jestDest = path.resolve(__dirname, '../jest');
+  const jestDest = path.resolve(baseDir, 'jest');
   if (fs.existsSync(jestDest)) {
     rimraf.sync(jestDest);
   }
-  const rnTesterDest = path.resolve(__dirname, '../RNTester');
+  const rnTesterDest = path.resolve(baseDir, 'RNTester');
   if (fs.existsSync(rnTesterDest)) {
     rimraf.sync(rnTesterDest);
   }
-  const baseDir = path.resolve(__dirname, '..');
+
   if (fs.existsSync(path.resolve(rnPath, 'IntegrationTests'))) {
     copyJSFolderRecursiveSync(
       path.resolve(rnPath, 'IntegrationTests'),
@@ -90,13 +87,11 @@ exports.copyRNLibraries = () => {
     );
   }
 
-  if (!fs.existsSync(path.resolve(__dirname, '../packages'))) {
-    fs.mkdirSync(path.resolve(__dirname, '../packages'));
+  if (!fs.existsSync(path.resolve(baseDir, 'packages'))) {
+    fs.mkdirSync(path.resolve(baseDir, 'packages'));
   }
-  if (
-    !fs.existsSync(path.resolve(__dirname, '../packages/react-native-codegen'))
-  ) {
-    fs.mkdirSync(path.resolve(__dirname, '../packages/react-native-codegen'));
+  if (!fs.existsSync(path.resolve(baseDir, 'packages/react-native-codegen'))) {
+    fs.mkdirSync(path.resolve(baseDir, 'packages/react-native-codegen'));
   }
 
   copyJSFolderRecursiveSync(
@@ -110,7 +105,7 @@ exports.copyRNLibraries = () => {
   copyJSFolderRecursiveSync(path.resolve(baseDir, 'src/jest'), baseDir); // Copy js files from src/jest to jest
 
   fs.writeFileSync(
-    path.resolve(__dirname, '../rn-get-polyfills.js'),
+    path.resolve(baseDir, 'rn-get-polyfills.js'),
     fs.readFileSync(path.resolve(rnPath, 'rn-get-polyfills.js')),
   );
 
@@ -119,11 +114,11 @@ exports.copyRNLibraries = () => {
   }
 
   /*
-  if (!fs.existsSync(path.resolve(__dirname, '../lib/local-cli'))) {
-    fs.mkdirSync(path.resolve(__dirname, '../lib/local-cli'));
+  if (!fs.existsSync(path.resolve(baseDir, 'lib/local-cli'))) {
+    fs.mkdirSync(path.resolve(baseDir, 'lib/local-cli'));
   }
-  if (!fs.existsSync(path.resolve(__dirname, '../lib/local-cli/bundle'))) {
-    fs.mkdirSync(path.resolve(__dirname, '../lib/local-cli/bundle'));
+  if (!fs.existsSync(path.resolve(baseDir, 'lib/local-cli/bundle'))) {
+    fs.mkdirSync(path.resolve(baseDir, 'lib/local-cli/bundle'));
   }
   */
 };

@@ -3,4 +3,6 @@
  * Licensed under the MIT License.
  * @format
  */
-import './RNTester/js/RNTesterApp';
+'use strict';
+
+module.exports = require('UnimplementedView');

@@ -2,13 +2,12 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  *
  * @format
- * @flow strict-local
+ * @flow
  */
 
 'use strict';
 
-const Platform = require('../../Utilities/Platform');
-const UIManager = require('../../ReactNative/UIManager');
+const UIManager = require('UIManager');
 
 let currentlyFocusedID: ?number = null;
 const inputs = new Set();
@@ -28,25 +27,7 @@ function currentlyFocusedField(): ?number {
  */
 function focusTextInput(textFieldID: ?number) {
   if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
-    currentlyFocusedID = textFieldID;
-    if (Platform.OS === 'ios') {
-      UIManager.focus(textFieldID);
-    } else if (Platform.OS === 'android') {
-      UIManager.dispatchViewManagerCommand(
-        textFieldID,
-        UIManager.getViewManagerConfig('AndroidTextInput').Commands
-          .focusTextInput,
-        null,
-      );
-      // [Win32
-    } else if (Platform.OS === 'win32') {
-      UIManager.dispatchViewManagerCommand(
-        textFieldID,
-        UIManager.RCTView.Commands.focus,
-        null,
-      );
-    }
-    // Win32]
+    UIManager.focus(textFieldID);
   }
 }
 
@@ -58,26 +39,31 @@ function focusTextInput(textFieldID: ?number) {
 function blurTextInput(textFieldID: ?number) {
   if (currentlyFocusedID === textFieldID && textFieldID !== null) {
     currentlyFocusedID = null;
-    if (Platform.OS === 'ios') {
-      UIManager.blur(textFieldID);
-    } else if (Platform.OS === 'android') {
-      UIManager.dispatchViewManagerCommand(
-        textFieldID,
-        UIManager.getViewManagerConfig('AndroidTextInput').Commands
-          .blurTextInput,
-        null,
-      );
-      // [Win32
-    } else if (Platform.OS === 'win32') {
-      UIManager.dispatchViewManagerCommand(
-        textFieldID,
-        UIManager.RCTView.Commands.blur,
-        null,
-      );
-    }
-    // Win32]
+    UIManager.blur(textFieldID);
   }
 }
+
+/** [TODO(android ISS)
+ * @param {number} TextInputID id of the text field that has received focus
+ * Should be called after the view has received focus and fired the onFocus event
+ * noop if the focused text field is same
+ */
+function setFocusedTextInput(textFieldID: ?number) {
+  if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
+    currentlyFocusedID = textFieldID;
+  }
+}
+
+/**
+ * @param {number} TextInputID id of the text field whose focus has to be cleared
+ * Should be called after the view has cleared focus and fired the onFocus event
+ * noop if the focused text field is not same
+ */
+function clearFocusedTextInput(textFieldID: ?number) {
+  if (currentlyFocusedID === textFieldID && textFieldID !== null) {
+    currentlyFocusedID = null;
+  }
+} // ]TODO(android ISS)
 
 function registerInput(textFieldID: number) {
   inputs.add(textFieldID);
@@ -93,6 +79,8 @@ function isTextInput(textFieldID: number) {
 
 module.exports = {
   currentlyFocusedField,
+  setFocusedTextInput, // TODO(android ISS)
+  clearFocusedTextInput, // TODO(android ISS)
   focusTextInput,
   blurTextInput,
   registerInput,

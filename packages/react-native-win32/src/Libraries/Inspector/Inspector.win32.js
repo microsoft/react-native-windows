@@ -1,36 +1,58 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @format
+ * @flow
+ */
+
 'use strict';
 
-const InspectorOverlay = require('InspectorOverlay');
-const InspectorPanel = require('InspectorPanel');
-const React = require('React');
-const ReactNative = require('ReactNative');
-const StyleSheet = require('StyleSheet');
-const Touchable = require('Touchable');
-const UIManager = require('UIManager');
-const View = require('View');
+const Dimensions = require('../Utilities/Dimensions');
+const InspectorOverlay = require('./InspectorOverlay');
+const InspectorPanel = require('./InspectorPanel');
+const Platform = require('../Utilities/Platform');
+const React = require('react');
+const ReactNative = require('../Renderer/shims/ReactNative');
+const StyleSheet = require('../StyleSheet/StyleSheet');
+const Touchable = require('../Components/Touchable/Touchable');
+const UIManager = require('../ReactNative/UIManager');
+const View = require('../Components/View/View');
 
 const invariant = require('invariant');
 
 export type ReactRenderer = {
-  getInspectorDataForViewTag: (viewTag: number) => Object
+  getInspectorDataForViewTag: (viewTag: number) => Object,
 };
 
 const hook = window.__REACT_DEVTOOLS_GLOBAL_HOOK__;
 const renderers = findRenderers();
 
 // required for devtools to be able to edit react native styles
-hook.resolveRNStyle = require('flattenStyle');
+hook.resolveRNStyle = require('../StyleSheet/flattenStyle');
 
 function findRenderers(): $ReadOnlyArray<ReactRenderer> {
-  const allRenderers = Object.keys(hook._renderers).map(key => hook._renderers[key]);
-  invariant(allRenderers.length >= 1, 'Expected to find at least one React Native renderer on DevTools hook.');
+  const allRenderers = Object.keys(hook._renderers).map(
+    key => hook._renderers[key],
+  );
+  invariant(
+    allRenderers.length >= 1,
+    'Expected to find at least one React Native renderer on DevTools hook.',
+  );
   return allRenderers;
 }
 
 function getInspectorDataForViewTag(touchedViewTag: number) {
   for (let i = 0; i < renderers.length; i++) {
     const renderer = renderers[i];
-    if (Object.prototype.hasOwnProperty.call(renderer, 'getInspectorDataForViewTag')) {
+    if (
+      Object.prototype.hasOwnProperty.call(
+        renderer,
+        'getInspectorDataForViewTag',
+      )
+    ) {
       const inspectorData = renderer.getInspectorDataForViewTag(touchedViewTag);
       if (inspectorData.hierarchy.length > 0) {
         return inspectorData;
@@ -42,7 +64,7 @@ function getInspectorDataForViewTag(touchedViewTag: number) {
 class Inspector extends React.Component<
   {
     inspectedViewTag: ?number,
-    onRequestRerenderApp: (callback: (tag: ?number) => void) => void
+    onRequestRerenderApp: (callback: (tag: ?number) => void) => void,
   },
   {
     devtoolsAgent: ?Object,
@@ -53,8 +75,8 @@ class Inspector extends React.Component<
     perfing: boolean,
     inspected: any,
     inspectedViewTag: any,
-    networking: boolean
-  }
+    networking: boolean,
+  },
 > {
   _subs: ?Array<() => void>;
 
@@ -70,7 +92,7 @@ class Inspector extends React.Component<
       inspected: null,
       selection: null,
       inspectedViewTag: this.props.inspectedViewTag,
-      networking: false
+      networking: false,
     };
   }
 
@@ -90,12 +112,12 @@ class Inspector extends React.Component<
   }
 
   UNSAFE_componentWillReceiveProps(newProps: Object) {
-    this.setState({ inspectedViewTag: newProps.inspectedViewTag });
+    this.setState({inspectedViewTag: newProps.inspectedViewTag});
   }
 
   attachToDevtools = (agent: Object) => {
     let _hideWait = null;
-    const hlSub = agent.sub('highlight', ({ node, name, props }) => {
+    const hlSub = agent.sub('highlight', ({node, name, props}) => {
       clearTimeout(_hideWait);
 
       if (typeof node !== 'number') {
@@ -107,9 +129,9 @@ class Inspector extends React.Component<
         this.setState({
           hierarchy: [],
           inspected: {
-            frame: { left, top, width, height },
-            style: props ? props.style : {}
-          }
+            frame: {left, top, width, height},
+            style: props ? props.style : {},
+          },
         });
       });
     });
@@ -120,34 +142,36 @@ class Inspector extends React.Component<
       // we wait to actually hide in order to avoid flicker
       _hideWait = setTimeout(() => {
         this.setState({
-          inspected: null
+          inspected: null,
         });
       }, 100);
     });
     this._subs = [hlSub, hideSub];
 
     agent.on('shutdown', () => {
-      this.setState({ devtoolsAgent: null });
+      this.setState({devtoolsAgent: null});
       this._subs = null;
     });
     this.setState({
-      devtoolsAgent: agent
+      devtoolsAgent: agent,
     });
   };
 
   setSelection(i: number) {
     const hierarchyItem = this.state.hierarchy[i];
     // we pass in ReactNative.findNodeHandle as the method is injected
-    const { measure, props, source } = hierarchyItem.getInspectorData(ReactNative.findNodeHandle);
+    const {measure, props, source} = hierarchyItem.getInspectorData(
+      ReactNative.findNodeHandle,
+    );
 
     measure((x, y, width, height, left, top) => {
       this.setState({
         inspected: {
-          frame: { left, top, width, height },
+          frame: {left, top, width, height},
           style: props.style,
-          source
+          source,
         },
-        selection: i
+        selection: i,
       });
     });
   }
@@ -156,14 +180,21 @@ class Inspector extends React.Component<
     // Most likely the touched instance is a native wrapper (like RCTView)
     // which is not very interesting. Most likely user wants a composite
     // instance that contains it (like View)
-    const { hierarchy, props, selection, source } = getInspectorDataForViewTag(touchedViewTag);
+    const {hierarchy, props, selection, source} = getInspectorDataForViewTag(
+      touchedViewTag,
+    );
 
     if (this.state.devtoolsAgent) {
       // Skip host leafs
       const offsetFromLeaf = hierarchy.length - 1 - selection;
-      this.state.devtoolsAgent.selectFromDOMNode(touchedViewTag, true, offsetFromLeaf);
+      this.state.devtoolsAgent.selectFromDOMNode(
+        touchedViewTag,
+        true,
+        offsetFromLeaf,
+      );
     }
 
+    // [Win32 Avoid Dimensions call
     const node = ReactNative.findNodeHandle(this);
     UIManager.measure(node, (x, y, width, height, left, top) => {
       this.setState({
@@ -173,10 +204,11 @@ class Inspector extends React.Component<
         inspected: {
           style: props.style,
           frame,
-          source
-        }
+          source,
+        },
       });
     });
+    // ]Win32
   }
 
   setPerfing(val: boolean) {
@@ -184,21 +216,21 @@ class Inspector extends React.Component<
       perfing: val,
       inspecting: false,
       inspected: null,
-      networking: false
+      networking: false,
     });
   }
 
   setInspecting(val: boolean) {
     this.setState({
       inspecting: val,
-      inspected: null
+      inspected: null,
     });
   }
 
   setTouchTargeting(val: boolean) {
     Touchable.TOUCH_TARGET_DEBUG = val;
     this.props.onRequestRerenderApp(inspectedViewTag => {
-      this.setState({ inspectedViewTag });
+      this.setState({inspectedViewTag});
     });
   }
 
@@ -207,13 +239,15 @@ class Inspector extends React.Component<
       networking: val,
       perfing: false,
       inspecting: false,
-      inspected: null
+      inspected: null,
     });
   }
 
   render() {
-    const panelContainerStyle = this.state.panelPos === 'bottom' ? { bottom: 0 } : { top: 0 };
-
+    const panelContainerStyle =
+      this.state.panelPos === 'bottom'
+        ? {bottom: 0}
+        : {top: Platform.OS === 'ios' ? 20 : 0};
     return (
       <View style={styles.container} pointerEvents="box-none">
         {this.state.inspecting && (
@@ -252,13 +286,13 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
   panelContainer: {
     position: 'absolute',
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
 });
 
 module.exports = Inspector;

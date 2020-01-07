@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { IRNTesterPage } from 'src/RNTester/RNTester.types';
 import { Image } from 'react-native';
 
 const testImage = require('./img/dpitest.png');
 
-const ImageWin32TestPage: IRNTesterPage = {
-  title: '<ImageWin32Test>',
-  displayName: 'Image Win32 test',
-  description: 'Image Win32 test',
-  examples: [
+export const title = '<ImageWin32Test>';
+export const displayName = 'Image Win32 test';
+export const description = 'Image Win32 test';
+export const examples = [
     {
       title: 'Win32 Image control test',
       description: 'Test Image',
@@ -19,9 +17,6 @@ const ImageWin32TestPage: IRNTesterPage = {
             source={ testImage }
           />
         );
-      }
-    }
-  ]
-};
-
-export = ImageWin32TestPage;
+      },
+    },
+  ];

@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Remove remaining need for fork of RN for win32 JS",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "commit": "b17624cd44d682c73db5ae17a3d10c8bed07c5f8",
+  "date": "2019-12-20T19:19:05.418Z"
+}
