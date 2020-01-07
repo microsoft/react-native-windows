@@ -7,7 +7,7 @@
     "clean": "just-scripts clean",
     "postinstall": "node postinstall.js",
     "start": "react-native start",
-    "lint": "just-scripts eslint",
+    "lint": "just-scripts lint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w",
     "prettier": "prettier --write --loglevel warn \"**/**/*.ts\"",
