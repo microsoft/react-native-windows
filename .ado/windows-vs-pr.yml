@@ -68,7 +68,7 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           useRnFork: $(UseRNFork)
-          yarnBuildCmd: buildci
+          yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
 
@@ -107,7 +107,7 @@ jobs:
         parameters:
           useRnFork: $(UseRNFork)
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
-          yarnBuildCmd: buildci
+          yarnBuildCmd: build
 
       - task: NuGetCommand@2
         displayName: NuGet restore - Playground
@@ -232,7 +232,7 @@ jobs:
 
       - template: templates/build-rnw.yml
         parameters:
-          yarnBuildCmd: buildci
+          yarnBuildCmd: build
           project: vnext/ReactWindows-Desktop.sln
           msbuildArguments:
             /p:RNW_PKG_VERSION_STR="Private Build"
@@ -399,6 +399,11 @@ jobs:
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
+
+      - task: CmdLine@2
+        displayName: yarn buildci
+        inputs:
+          script: yarn buildci
 
       - task: CmdLine@2
         displayName: yarn lint
