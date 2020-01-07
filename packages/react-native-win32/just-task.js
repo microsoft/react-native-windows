@@ -91,17 +91,14 @@ task(
   'build',
   series(
     condition('clean', () => argv().clean),
-    'eslint',
     'initRNLibraries',
     'copyFlowFiles',
     'copyPngFiles',
-    // native-bundle:filtered
-    // trickle
-    // react-test
     'ts',
-    'flow-check',
     condition('apiExtractorVerify', () => argv().ci),
-    'apiExtractorUpdate',
-    'apiDocumenter',
   ),
 );
+
+task('lint', series('eslint', 'flow-check'));
+
+task('api', series('apiExtractorUpdate', 'apiDocumenter'));

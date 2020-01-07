@@ -39,4 +39,5 @@ task('prepareBundle', () => {
   }
 });
 
-task('build', series('eslint', 'ts'));
+task('build', series('ts'));
+task('lint', series('eslint'));

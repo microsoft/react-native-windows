@@ -370,7 +370,7 @@ jobs:
           vsComponents: $(VsComponents)
 
   - job: RNWFormatting
-    displayName: Verify change files + formatting
+    displayName: Verify change files + lint
     dependsOn: Setup
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
@@ -399,6 +399,16 @@ jobs:
         displayName: yarn format:verify
         inputs:
           script: yarn format:verify
+
+      - task: CmdLine@2
+        displayName: yarn lint
+        inputs:
+          script: yarn lint
+
+      - task: CmdLine@2
+        displayName: yarn api
+        inputs:
+          script: yarn api
 
   - job: CurrentPR
     dependsOn: Setup
