@@ -15,8 +15,13 @@ const smallImageUri =
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
 
-const svgImageUri =
-  'https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg';
+// const svgImageUri =
+//   'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg';
+
+// const svgImageUri =
+//   'https://visualstudio.microsoft.com/wp-content/uploads/2019/09/Microsoft-Account.svg';
+
+// const svgImageUri = require('../Samples/Microsoft-Logo.svg');
 
 export default class Bootstrap extends React.Component<
   {},
@@ -51,8 +56,6 @@ export default class Bootstrap extends React.Component<
       imageUri = largeImageUri;
     } else if (value === 'data') {
       imageUri = dataImageUri;
-    } else if (value === 'svg') {
-      imageUri = svgImageUri;
     }
 
     this.setState({imageUri});
@@ -102,7 +105,11 @@ export default class Bootstrap extends React.Component<
             style={
               this.state.inlcudeBorder ? styles.imageWithBorder : styles.image
             }
-            source={{uri: this.state.imageUri}}
+            source={
+              this.state.selectedSource === 'svg'
+                ? require('../Samples/Microsoft-Logo.svg')
+                : {uri: this.state.imageUri}
+            }
             resizeMode={this.state.selectedResizeMode}
           />
         </View>

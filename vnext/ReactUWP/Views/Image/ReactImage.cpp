@@ -82,7 +82,8 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
       // That is handled by the shouldUseCompositionBrush/switchBrushes code path.
       assert(value != ResizeMode::Repeat);
 
-      if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
+      if (m_imageSource.sourceType != ImageSourceType::Svg &&
+          (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth())) {
         return winrt::Stretch::None;
       } else {
         return winrt::Stretch::Uniform;
@@ -119,9 +120,9 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
     case ImageSourceType::Download:
       return co_await GetImageStreamAsync(source);
     case ImageSourceType::InlineData:
-      return co_await GetImageInlineDataAsync(source);
+      co_return co_await GetImageInlineDataAsync(source);
     default: // ImageSourceType::Uri
-      return nullptr;
+      co_return nullptr;
   }
 }
 
@@ -144,7 +145,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       if (auto strong_this{weak_this.get()}) {
         strong_this->m_onLoadEndEvent(*strong_this, false);
       }
-      return;
+      co_return;
     }
   } catch (winrt::hresult_error const &) {
     const auto strong_this{weak_this.get()};
@@ -237,11 +238,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           svgImageSource = winrt::SvgImageSource{};
 
           strong_this->m_svgImageSourceOpenedRevoker = svgImageSource.Opened(
-              winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto & sender, const auto &) {
+              winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &sender, const auto &) {
                 if (auto strong_this{weak_this.get()}) {
                   auto svg{sender.try_as<winrt::SvgImageSource>()};
-                  //strong_this->m_imageSource.height = svg.RasterizePixelHeight();
-                  //strong_this->m_imageSource.width = svg.RasterizePixelWidth();
+                  // strong_this->m_imageSource.height = svg.RasterizePixelHeight();
+                  // strong_this->m_imageSource.width = svg.RasterizePixelWidth();
 
                   if (fireLoadEndEvent) {
                     strong_this->m_onLoadEndEvent(*strong_this, true);
