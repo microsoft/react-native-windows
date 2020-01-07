@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Remove Unneeded OSS_RN Special Path",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "b912ff74d48ca8157c8006cf1391bf0178937679",
+  "date": "2020-01-07T21:47:46.478Z"
+}
