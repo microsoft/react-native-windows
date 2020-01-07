@@ -16,7 +16,8 @@
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "start": "react-native start",
-    "lint": "just-scripts eslint",
+    "lint": "just-scripts lint",
+    "api": "just-scripts api",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
