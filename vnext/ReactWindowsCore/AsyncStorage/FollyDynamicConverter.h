@@ -4,7 +4,6 @@
 #pragma once
 
 #include <cxxreact/CxxModule.h>
-#include <cxxreact/JsArgumentHelpers.h>
 #include <folly/dynamic.h>
 
 using namespace std;

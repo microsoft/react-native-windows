@@ -10,7 +10,6 @@
 
 #include <cassert>
 #include <cstring>
-#include <exception>
 #include <string>
 
 namespace Microsoft::Common::Unicode {

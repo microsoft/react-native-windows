@@ -155,11 +155,9 @@ JsErrorCode ChakraRuntime::enableDebugging(
     uint16_t port,
     std::unique_ptr<DebugProtocolHandler> &debugProtocolHandler,
     std::unique_ptr<DebugService> &debugService) {
-  JsErrorCode result = JsNoError;
   auto protocolHandler = std::make_unique<DebugProtocolHandler>(runtime);
   auto service = std::make_unique<DebugService>(runtime);
-
-  result = service->RegisterHandler(runtimeName, *protocolHandler, breakOnNextLine);
+  auto result = service->RegisterHandler(runtimeName, *protocolHandler, breakOnNextLine);
 
   if (result == JsNoError) {
     if (protocolHandler) {

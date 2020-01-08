@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <AsyncStorage/FollyDynamicConverter.h>
 #include <AsyncStorage/KeyValueStorage.h>
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
@@ -38,7 +37,6 @@ class AsyncStorageManager {
     xplat::module::CxxModule::Callback m_jsCallback;
   };
 
- private:
   std::atomic_bool m_stopConsumer;
   std::mutex m_setQueueMutex;
   std::condition_variable m_storageQueueConditionVariable;
@@ -46,7 +44,6 @@ class AsyncStorageManager {
   std::queue<std::unique_ptr<AsyncStorageManager::AsyncRequestQueueArguments>> m_asyncQueue;
   std::unique_ptr<KeyValueStorage> m_aofKVStorage;
 
- private:
   folly::dynamic makeError(std::string &&strErrorMessage) noexcept;
 
   void executeAsyncKVOperation(

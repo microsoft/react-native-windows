@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#include "FollyDynamicConverter.h"
+
 #include <AsyncStorage/AsyncStorageManager.h>
 
 using namespace std;

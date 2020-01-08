@@ -118,7 +118,7 @@ facebook::jsi::Value ChakraRuntime::evaluateJavaScript(
     return evaluateJavaScriptSimple(*buffer, sourceURL);
   }
 
-  uint64_t scriptVersion = 0;
+  uint64_t scriptVersion;
   std::shared_ptr<const facebook::jsi::Buffer> scriptBuffer;
 
   if (buffer) {
@@ -752,14 +752,13 @@ JsValueRef CALLBACK ChakraRuntime::HostFunctionCall(
 
   constexpr uint32_t maxStackArgCount = 8;
   facebook::jsi::Value stackArgs[maxStackArgCount];
-  std::unique_ptr<facebook::jsi::Value[]> heapArgs = nullptr;
-  facebook::jsi::Value *args = nullptr;
+  facebook::jsi::Value *args;
 
   // Accounting for 'this' object at 0
-  unsigned short argumentCount = argumentCountIncThis - 1;
+  const unsigned short argumentCount = argumentCountIncThis - 1;
 
   if (argumentCount > maxStackArgCount) {
-    heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
+    auto heapArgs = std::make_unique<facebook::jsi::Value[]>(argumentCount);
     for (size_t i = 1; i < argumentCountIncThis; i++) {
       heapArgs[i - 1] = runtime.ToJsiValue(ChakraObjectRef(argumentsIncThis[i]));
     }
