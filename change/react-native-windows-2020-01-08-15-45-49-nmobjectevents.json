@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Added unit tests for Events with JSValue args",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "commit": "53ebf5cd67cc8f3753a58ee27629e64e36910f92",
+  "date": "2020-01-08T23:45:49.067Z"
+}
