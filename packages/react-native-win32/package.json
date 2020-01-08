@@ -52,12 +52,12 @@
     "flow-bin": "^0.98.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.24.2",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.37.tar.gz",
     "react": "16.8.6",
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.60.0 || 0.60.0-microsoft.31 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react-native": "^0.60.0 || 0.60.0-microsoft.37 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.37.tar.gz",
     "react": "16.8.6",
     "react-dom": "16.8.6"
   },
