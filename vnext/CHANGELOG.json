@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2020 01:43:57 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.109",
+      "version": "0.60.0-vnext.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing bugs when using .NetNative",
+            "author": "jthysell@microsoft.com",
+            "commit": "dc6063f921526cec1353e18da1f808ac2094250e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2020 22:43:44 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.108",
       "version": "0.60.0-vnext.108",

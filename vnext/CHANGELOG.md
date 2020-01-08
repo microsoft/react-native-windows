@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Jan 2020 19:44:17 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jan 2020 01:43:57 GMT and should not be manually modified.
 
+## 0.60.0-vnext.109
+Wed, 08 Jan 2020 01:43:57 GMT
+
+### Changes
+
+- Fixing bugs when using .NetNative (jthysell@microsoft.com)
 ## 0.60.0-vnext.108
 Tue, 07 Jan 2020 19:44:17 GMT
 
