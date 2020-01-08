@@ -15,14 +15,6 @@ const smallImageUri =
 const dataImageUri =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==';
 
-// const svgImageUri =
-//   'http://thenewcode.com/assets/images/thumbnails/homer-simpson.svg';
-
-// const svgImageUri =
-//   'https://visualstudio.microsoft.com/wp-content/uploads/2019/09/Microsoft-Account.svg';
-
-// const svgImageUri = require('../Samples/Microsoft-Logo.svg');
-
 export default class Bootstrap extends React.Component<
   {},
   {
@@ -33,7 +25,7 @@ export default class Bootstrap extends React.Component<
       | 'contain'
       | 'repeat'
       | undefined;
-    inlcudeBorder: boolean;
+    includeBorder: boolean;
     selectedSource: string;
     imageUri: string;
   }
@@ -41,7 +33,7 @@ export default class Bootstrap extends React.Component<
   state = {
     selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
-    inlcudeBorder: false,
+    includeBorder: false,
     imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
@@ -93,9 +85,9 @@ export default class Bootstrap extends React.Component<
           <Text>No Border</Text>
           <Switch
             style={{marginLeft: 10}}
-            value={this.state.inlcudeBorder}
+            value={this.state.includeBorder}
             onValueChange={(value: boolean) =>
-              this.setState({inlcudeBorder: value})
+              this.setState({includeBorder: value})
             }
           />
           <Text>Round Border</Text>
@@ -103,7 +95,7 @@ export default class Bootstrap extends React.Component<
         <View style={styles.imageContainer}>
           <Image
             style={
-              this.state.inlcudeBorder ? styles.imageWithBorder : styles.image
+              this.state.includeBorder ? styles.imageWithBorder : styles.image
             }
             source={
               this.state.selectedSource === 'svg'

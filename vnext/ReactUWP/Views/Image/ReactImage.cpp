@@ -82,8 +82,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
       // That is handled by the shouldUseCompositionBrush/switchBrushes code path.
       assert(value != ResizeMode::Repeat);
 
-      if (m_imageSource.sourceType != ImageSourceType::Svg &&
-          (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth())) {
+      if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
         return winrt::Stretch::None;
       } else {
         return winrt::Stretch::Uniform;
@@ -238,15 +237,10 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           svgImageSource = winrt::SvgImageSource{};
 
           strong_this->m_svgImageSourceOpenedRevoker = svgImageSource.Opened(
-              winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &sender, const auto &) {
-                if (auto strong_this{weak_this.get()}) {
-                  auto svg{sender.try_as<winrt::SvgImageSource>()};
-                  // strong_this->m_imageSource.height = svg.RasterizePixelHeight();
-                  // strong_this->m_imageSource.width = svg.RasterizePixelWidth();
-
-                  if (fireLoadEndEvent) {
-                    strong_this->m_onLoadEndEvent(*strong_this, true);
-                  }
+              winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, true);
                 }
               });
 
