@@ -7,27 +7,48 @@ const fs = require('fs');
 const glob = require('glob');
 const rimraf = require('rimraf');
 
+function retryOnError(errorCode, func) {
+  let shouldLoop = true;
+
+  while (shouldLoop) {
+    try {
+      func();
+      shouldLoop = false;
+    } catch (ex) {
+      if (ex.code !== errorCode) {
+        throw ex;
+      }
+    }
+  }
+}
+
 function copyDirectories(srcPath, targetPath, dirSpecs) {
   dirSpecs.forEach(dirSpec => {
     if (dirSpec.mergeFiles !== true) {
-      if (dirSpec.rmFilter === undefined) {
-        rimraf.sync(path.resolve(targetPath, dirSpec.dest));
-      } else {
-        rimraf.sync(
-          path.resolve(targetPath, dirSpec.dest + path.sep + dirSpec.filter),
-        );
-      }
+      // rimraf issue 72: We will see ENOTEMPTY if Windows is still holding a
+      // lock to a file in our directory. E.g. if we get unlucky with timing
+      // and antivirus decides to run. Keep on spinning until we're able to
+      // delete the directory.
+      retryOnError('ENOTEMPTY', () => {
+        if (dirSpec.rmFilter === undefined) {
+          rimraf.sync(path.resolve(targetPath, dirSpec.dest));
+        } else {
+          rimraf.sync(
+            path.resolve(targetPath, dirSpec.dest + path.sep + dirSpec.filter),
+          );
+        }
+      });
     }
 
     const curSrcPath = path.resolve(srcPath, dirSpec.src);
     const curTargetPath = path.resolve(targetPath, dirSpec.dest);
 
-    glob.sync('**/*.{js,png,gif,h}', { cwd: curSrcPath }).forEach(file => {
+    glob.sync('**/*.{js,png,gif,h}', {cwd: curSrcPath}).forEach(file => {
       const dir = path.dirname(file);
       const targetDir = path.resolve(curTargetPath, dir);
       const targetFile = path.resolve(curTargetPath, file);
 
-      fs.mkdirSync(targetDir, { recursive: true });
+      fs.mkdirSync(targetDir, {recursive: true});
       fs.writeFileSync(
         targetFile,
         fs.readFileSync(path.join(curSrcPath, file)),
