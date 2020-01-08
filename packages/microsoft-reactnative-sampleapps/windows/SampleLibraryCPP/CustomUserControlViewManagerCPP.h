@@ -11,18 +11,22 @@ struct CustomUserControlViewManagerCpp
     : winrt::implements<
           CustomUserControlViewManagerCpp,
           winrt::Microsoft::ReactNative::IViewManager,
+          winrt::Microsoft::ReactNative::IViewManagerWithReactContext,
           winrt::Microsoft::ReactNative::IViewManagerWithNativeProperties,
           winrt::Microsoft::ReactNative::IViewManagerWithCommands,
           winrt::Microsoft::ReactNative::IViewManagerWithExportedEventTypeConstants> {
  public:
-  CustomUserControlViewManagerCpp(winrt::Microsoft::ReactNative::IReactContext const &reactContext);
+  CustomUserControlViewManagerCpp();
 
   // IViewManager
   winrt::hstring Name() noexcept;
 
+  winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
+
+  // IViewManagerWithReactContext
   winrt::Microsoft::ReactNative::IReactContext ReactContext() noexcept;
 
-  winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
+  void ReactContext(winrt::Microsoft::ReactNative::IReactContext reactContext) noexcept;
 
   // IViewManagerWithNativeProperties
   winrt::Windows::Foundation::Collections::

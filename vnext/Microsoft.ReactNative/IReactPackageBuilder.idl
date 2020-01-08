@@ -8,7 +8,7 @@ import "IViewManager.idl";
 namespace Microsoft.ReactNative {
 
   delegate Object ReactModuleProvider(IReactModuleBuilder moduleBuilder);
-  delegate IViewManager ReactViewManagerProvider(IReactContext reactContext);
+  delegate IViewManager ReactViewManagerProvider();
 
   [webhosthidden]
   interface IReactPackageBuilder {
