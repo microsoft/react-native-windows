@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Image - basic svg support",
-  "packageName": "react-native-windows",
-  "email": "mcota@microsoft.com",
-  "commit": "74e6ed91c0466fd9894aa6f0ee65bb3d4255088f",
-  "date": "2020-01-08T00:17:58.848Z"
-}

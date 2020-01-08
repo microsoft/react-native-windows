@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Jan 2020 01:43:57 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jan 2020 23:03:25 GMT and should not be manually modified.
 
+## 0.60.0-vnext.110
+Wed, 08 Jan 2020 23:03:25 GMT
+
+### Changes
+
+- Image - basic svg support (mcota@microsoft.com)
 ## 0.60.0-vnext.109
 Wed, 08 Jan 2020 01:43:57 GMT
 

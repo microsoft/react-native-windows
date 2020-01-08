@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2020 23:03:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.110",
+      "version": "0.60.0-vnext.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Image - basic svg support",
+            "author": "mcota@microsoft.com",
+            "commit": "74e6ed91c0466fd9894aa6f0ee65bb3d4255088f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jan 2020 01:43:57 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.109",
       "version": "0.60.0-vnext.109",
