@@ -12,14 +12,14 @@
 #include "DebugHelpers.h"
 #include "NativeModules.h"
 
+#define DEBUG_OUTPUT(...) DebugWriteLine("SampleModuleCppImpl", ##__VA_ARGS__);
+
 namespace SampleLibraryCpp {
 
 // Sample REACT_MODULE
 
-REACT_MODULE(SampleModuleCpp);
-struct SampleModuleCpp {
-  const std::string Name = "SampleModuleCpp";
-
+REACT_MODULE(SampleModuleCppImpl, L"SampleModuleCpp");
+struct SampleModuleCppImpl {
 #pragma region Constants
 
   REACT_CONSTANT(NumberConstant);
@@ -40,23 +40,23 @@ struct SampleModuleCpp {
 
   REACT_METHOD(VoidMethod);
   void VoidMethod() noexcept {
-    DebugWriteLine(Name, "VoidMethod");
+    DEBUG_OUTPUT("VoidMethod");
   }
 
   REACT_METHOD(VoidMethodWithArgs);
   void VoidMethodWithArgs(double arg) noexcept {
-    DebugWriteLine(Name, "VoidMethodWithArgs", arg);
+    DEBUG_OUTPUT("VoidMethodWithArgs", arg);
   }
 
   REACT_METHOD(ReturnMethod);
   double ReturnMethod() noexcept {
-    DebugWriteLine(Name, "ReturnMethod");
+    DEBUG_OUTPUT("ReturnMethod");
     return M_PI;
   }
 
   REACT_METHOD(ReturnMethodWithArgs);
   double ReturnMethodWithArgs(double arg) noexcept {
-    DebugWriteLine(Name, "ReturnMethodWithArgs", arg);
+    DEBUG_OUTPUT("ReturnMethodWithArgs", arg);
     return M_PI;
   }
 
@@ -66,19 +66,19 @@ struct SampleModuleCpp {
 
   REACT_METHOD(ExplicitCallbackMethod);
   void ExplicitCallbackMethod(std::function<void(double)> &&callback) noexcept {
-    DebugWriteLine(Name, "ExplicitCallbackMethod");
+    DEBUG_OUTPUT("ExplicitCallbackMethod");
     callback(M_PI);
   }
 
   REACT_METHOD(ExplicitCallbackMethodWithArgs);
   void ExplicitCallbackMethodWithArgs(double arg, std::function<void(double)> &&callback) noexcept {
-    DebugWriteLine(Name, "ExplicitCallbackMethodWithArgs", arg);
+    DEBUG_OUTPUT("ExplicitCallbackMethodWithArgs", arg);
     callback(M_PI);
   }
 
   REACT_METHOD(ExplicitPromiseMethod);
   void ExplicitPromiseMethod(winrt::Microsoft::ReactNative::ReactPromise<double> &&result) noexcept {
-    DebugWriteLine(Name, "ExplicitPromiseMethod");
+    DEBUG_OUTPUT("ExplicitPromiseMethod");
     try {
       result.Resolve(M_PI);
     } catch (const std::exception &ex) {
@@ -90,7 +90,7 @@ struct SampleModuleCpp {
   void ExplicitPromiseMethodWithArgs(
       double arg,
       winrt::Microsoft::ReactNative::ReactPromise<double> &&result) noexcept {
-    DebugWriteLine(Name, "ExplicitPromiseMethodWithArgs", arg);
+    DEBUG_OUTPUT("ExplicitPromiseMethodWithArgs", arg);
     try {
       result.Resolve(M_PI);
     } catch (const std::exception &ex) {
@@ -104,13 +104,13 @@ struct SampleModuleCpp {
 
   REACT_SYNC_METHOD(SyncReturnMethod);
   double SyncReturnMethod() noexcept {
-    DebugWriteLine(Name, "SyncReturnMethod");
+    DEBUG_OUTPUT("SyncReturnMethod");
     return M_PI;
   }
 
   REACT_SYNC_METHOD(SyncReturnMethodWithArgs);
   double SyncReturnMethodWithArgs(double arg) noexcept {
-    DebugWriteLine(Name, "SyncReturnMethodWithArgs", arg);
+    DEBUG_OUTPUT("SyncReturnMethodWithArgs", arg);
     return M_PI;
   }
 
@@ -124,7 +124,7 @@ struct SampleModuleCpp {
 #pragma endregion
 
  public:
-  SampleModuleCpp() {
+  SampleModuleCppImpl() {
     m_timer = winrt::Windows::System::Threading::ThreadPoolTimer::CreatePeriodicTimer(
         [this](const winrt::Windows::System::Threading::ThreadPoolTimer) noexcept {
           if (TimedEvent) {
@@ -134,7 +134,7 @@ struct SampleModuleCpp {
         std::chrono::milliseconds(TimedEventIntervalMS));
   }
 
-  ~SampleModuleCpp() {
+  ~SampleModuleCppImpl() {
     if (m_timer) {
       m_timer.Cancel();
     }
