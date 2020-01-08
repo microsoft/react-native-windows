@@ -36,7 +36,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeWindowsDir)Desktop;$(ReactNativeWindowsDir)IntegrationTests;$(MSBuildProjectDirectory);$(IncludePath)</IncludePath>
-    <LinkIncremental>true</LinkIncremental>
+    <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
