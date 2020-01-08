@@ -20,7 +20,6 @@ namespace SampleLibraryCpp {
 
 REACT_MODULE(SampleModuleCppImpl, L"SampleModuleCpp");
 struct SampleModuleCppImpl {
-
 #pragma region Constants
 
   REACT_CONSTANT(NumberConstant);
