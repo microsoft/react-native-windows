@@ -25,7 +25,7 @@ export default class Bootstrap extends React.Component<
       | 'contain'
       | 'repeat'
       | undefined;
-    inlcudeBorder: boolean;
+    includeBorder: boolean;
     selectedSource: string;
     imageUri: string;
   }
@@ -33,7 +33,7 @@ export default class Bootstrap extends React.Component<
   state = {
     selectedResizeMode: 'center' as 'center',
     selectedSource: 'small',
-    inlcudeBorder: false,
+    includeBorder: false,
     imageUri: 'http://facebook.github.io/react-native/img/header_logo.png',
   };
 
@@ -78,15 +78,16 @@ export default class Bootstrap extends React.Component<
             <Picker.Item label="small" value="small" />
             <Picker.Item label="large" value="large" />
             <Picker.Item label="data" value="data" />
+            <Picker.Item label="svg" value="svg" />
           </Picker>
         </View>
         <View style={styles.rowContainer}>
           <Text>No Border</Text>
           <Switch
             style={{marginLeft: 10}}
-            value={this.state.inlcudeBorder}
+            value={this.state.includeBorder}
             onValueChange={(value: boolean) =>
-              this.setState({inlcudeBorder: value})
+              this.setState({includeBorder: value})
             }
           />
           <Text>Round Border</Text>
@@ -94,9 +95,13 @@ export default class Bootstrap extends React.Component<
         <View style={styles.imageContainer}>
           <Image
             style={
-              this.state.inlcudeBorder ? styles.imageWithBorder : styles.image
+              this.state.includeBorder ? styles.imageWithBorder : styles.image
             }
-            source={{uri: this.state.imageUri}}
+            source={
+              this.state.selectedSource === 'svg'
+                ? require('../Samples/Microsoft-Logo.svg')
+                : {uri: this.state.imageUri}
+            }
             resizeMode={this.state.selectedResizeMode}
           />
         </View>
