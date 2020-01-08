@@ -236,8 +236,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         if (!svgImageSource) {
           svgImageSource = winrt::SvgImageSource{};
 
-          strong_this->m_svgImageSourceOpenedRevoker = svgImageSource.Opened(
-              winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+          strong_this->m_svgImageSourceOpenedRevoker =
+              svgImageSource.Opened(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
                   strong_this->m_onLoadEndEvent(*strong_this, true);
