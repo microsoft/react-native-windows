@@ -65,7 +65,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeDir)\ReactCommon\jscallinvoker;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeDir)\ReactCommon\jscallinvoker;$(ReactNativeDir)\ReactCommon\jsiexecutor;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ReactNativeWindowsDir)\WorkingHeaders;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>_WIN32;_CRT_SECURE_NO_WARNINGS;FOLLY_NO_CONFIG;NOMINMAX;RN_EXPORT=;JSI_EXPORT=;WIN32;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -153,8 +153,6 @@
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(OSS_RN)'!='true'">
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
@@ -162,8 +160,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(OSS_RN)'!='true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
