@@ -8,16 +8,20 @@ const glob = require('glob');
 const rimraf = require('rimraf');
 
 function retryOnError(errorCode, func) {
-  let shouldLoop = true;
+  const startTime = Date.now();
 
-  while (shouldLoop) {
+  while (true) {
     try {
       func();
-      shouldLoop = false;
+      return true;
     } catch (ex) {
       if (ex.code !== errorCode) {
         throw ex;
       }
+    }
+
+    if (Date.now() - startTime > 5000) {
+      return false;
     }
   }
 }
@@ -29,7 +33,7 @@ function copyDirectories(srcPath, targetPath, dirSpecs) {
       // lock to a file in our directory. E.g. if we get unlucky with timing
       // and antivirus decides to run. Keep on spinning until we're able to
       // delete the directory.
-      retryOnError('ENOTEMPTY', () => {
+      let deleted = retryOnError('ENOTEMPTY', () => {
         if (dirSpec.rmFilter === undefined) {
           rimraf.sync(path.resolve(targetPath, dirSpec.dest));
         } else {
@@ -38,6 +42,12 @@ function copyDirectories(srcPath, targetPath, dirSpecs) {
           );
         }
       });
+
+      if (!deleted) {
+        throw new Error(
+          'Timed out trying to delete directory. Ensure no locks are being held to project files and try again.',
+        );
+      }
     }
 
     const curSrcPath = path.resolve(srcPath, dirSpec.src);
@@ -64,13 +74,12 @@ function copyFile(srcPath, targetPath, filename) {
   );
 }
 
-exports.copyRNLibraries = () => {
+exports.copyRNLibraries = baseDir => {
   const reactNativePath = path.dirname(
     require.resolve('react-native/package.json'),
   );
-  const reactNativeWinPath = path.resolve(__dirname, '..');
 
-  copyDirectories(reactNativePath, reactNativeWinPath, [
+  copyDirectories(reactNativePath, baseDir, [
     {
       src: 'flow',
       dest: 'flow',
@@ -106,7 +115,7 @@ exports.copyRNLibraries = () => {
     },
   ]);
 
-  copyDirectories(reactNativeWinPath, reactNativeWinPath, [
+  copyDirectories(baseDir, baseDir, [
     {
       src: 'src/jest',
       dest: 'jest',
@@ -114,5 +123,5 @@ exports.copyRNLibraries = () => {
     },
   ]);
 
-  copyFile(reactNativePath, reactNativeWinPath, 'rn-get-polyfills.js');
+  copyFile(reactNativePath, baseDir, 'rn-get-polyfills.js');
 };
