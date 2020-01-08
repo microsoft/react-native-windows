@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Header Refactoring Around jsireact to Unblock ms/rn",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "442b022fd07a7d1712cdada56604b134df0b386f",
+  "date": "2020-01-08T04:46:51.192Z"
+}
