@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2020 22:06:05 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.111",
+      "version": "0.60.0-vnext.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add GetFacebookReactInstance :: uwpInstance -> react::Instance",
+            "author": "zihanc@microsoft.com",
+            "commit": "f35ed1c42cd2a1d9ed098082bf97babe3bc9c8e6"
+          },
+          {
+            "comment": "Added unit tests for Events with JSValue args",
+            "author": "jthysell@microsoft.com",
+            "commit": "53ebf5cd67cc8f3753a58ee27629e64e36910f92"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jan 2020 23:03:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.110",
+      "version": "0.60.0-vnext.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Image - basic svg support",
+            "author": "mcota@microsoft.com",
+            "commit": "74e6ed91c0466fd9894aa6f0ee65bb3d4255088f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jan 2020 01:43:57 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.109",
       "version": "0.60.0-vnext.109",

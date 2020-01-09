@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2020 22:06:05 GMT",
+      "tag": "react-native-windows-extended_v0.60.64",
+      "version": "0.60.64",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add GetFacebookReactInstance :: uwpInstance -> react::Instance",
+            "author": "zihanc@microsoft.com",
+            "commit": "f35ed1c42cd2a1d9ed098082bf97babe3bc9c8e6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2020 22:43:44 GMT",
       "tag": "react-native-windows-extended_v0.60.62",
       "version": "0.60.62",

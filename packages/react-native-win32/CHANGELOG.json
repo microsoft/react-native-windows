@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2020 22:06:05 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.0",
+      "version": "0.26.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add GetFacebookReactInstance :: uwp::Instance -> react::Instance",
+            "author": "zihanc@microsoft.com",
+            "commit": "f35ed1c42cd2a1d9ed098082bf97babe3bc9c8e6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2020 22:43:44 GMT",
       "tag": "@office-iss/react-native-win32_v0.25.10",
       "version": "0.25.10",

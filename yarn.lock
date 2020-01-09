@@ -3046,9 +3046,9 @@
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
 
 "@types/react-native@~0.60.5":
-  version "0.60.28"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.28.tgz#5982bc1e96defb033bc243adcb9ed315bdacd737"
-  integrity sha512-X9oC4gPoHhYbAUxaddeBRVHqq307zSR6SzaIoQFjghe7a/90mJ1bqXnv49AkisN1LKI66i8dkIrb5IOvQEJ/0Q==
+  version "0.60.29"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.29.tgz#3efe6b7d900129a7108acf869d15644304f0f069"
+  integrity sha512-VmfErwvd2bqGnsY8okUprKSzXoHtzxU5xKupFh+o0h7gPO3jQnN7wtLTbegAL4Es9H/3Gmmtpq3LRn/8RCpCpA==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
@@ -6171,9 +6171,9 @@ eslint-plugin-eslint-comments@^3.1.1:
     ignore "^5.0.5"
 
 eslint-plugin-eslint-plugin@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-eslint-plugin/-/eslint-plugin-eslint-plugin-2.1.0.tgz#a7a00f15a886957d855feacaafee264f039e62d5"
-  integrity sha512-kT3A/ZJftt28gbl/Cv04qezb/NQ1dwYIbi8lyf806XMxkus7DvOVCLIfTXMrorp322Pnoez7+zabXH29tADIDg==
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-eslint-plugin/-/eslint-plugin-eslint-plugin-2.2.0.tgz#6cac90a8085f658e892b155dda130deac54cfa51"
+  integrity sha512-X5+NT9a2GuwWyb3sHJdEEe6aD/30Fhi3/9XCmYHe/OSnWKUhmKOxFTfFM1AXZfJXjAoX7811bnoLI3fZr5AX5Q==
 
 eslint-plugin-flowtype@2.50.3:
   version "2.50.3"
@@ -11345,9 +11345,9 @@ resolve@^1.1.6, resolve@^1.10.0, resolve@^1.3.2, resolve@^1.5.0, resolve@^1.8.1:
     path-parse "^1.0.6"
 
 resolve@^1.13.1:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.14.1.tgz#9e018c540fcf0c427d678b9931cbf45e984bcaff"
-  integrity sha512-fn5Wobh4cxbLzuHaE+nphztHy43/b++4M6SsGFC2gB8uYwf0C8LcarfCz1un7UTW8OFQg9iNjZ4xpcFVGebDPg==
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.14.2.tgz#dbf31d0fa98b1f29aa5169783b9c290cb865fea2"
+  integrity sha512-EjlOBLBO1kxsUxsKjLt7TAECyKW6fOh1VRkykQkKGzcBbjjPIxBqGh0jf7GJ3k/f5mxMqW3htMD3WdTUVtW8HQ==
   dependencies:
     path-parse "^1.0.6"
 
