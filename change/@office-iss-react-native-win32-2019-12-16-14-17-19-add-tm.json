@@ -1,8 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add GetFacebookReactInstance :: uwp::Instance -> react::Instance",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "zihanc@microsoft.com",
-  "commit": "f35ed1c42cd2a1d9ed098082bf97babe3bc9c8e6",
-  "date": "2019-12-16T22:16:35.515Z"
-}

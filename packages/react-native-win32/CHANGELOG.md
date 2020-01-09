@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 07 Jan 2020 19:44:17 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jan 2020 22:06:05 GMT and should not be manually modified.
 
+## 0.26.0
+Thu, 09 Jan 2020 22:06:05 GMT
+
+### Minor changes
+
+- Add GetFacebookReactInstance :: uwp::Instance -> react::Instance (zihanc@microsoft.com)
 ## 0.25.10
 Tue, 07 Jan 2020 19:44:17 GMT
 

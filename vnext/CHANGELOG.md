@@ -1,7 +1,14 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Jan 2020 23:03:25 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jan 2020 22:06:05 GMT and should not be manually modified.
 
+## 0.60.0-vnext.111
+Thu, 09 Jan 2020 22:06:05 GMT
+
+### Changes
+
+- Add GetFacebookReactInstance :: uwpInstance -> react::Instance (zihanc@microsoft.com)
+- Added unit tests for Events with JSValue args (jthysell@microsoft.com)
 ## 0.60.0-vnext.110
 Wed, 08 Jan 2020 23:03:25 GMT
 

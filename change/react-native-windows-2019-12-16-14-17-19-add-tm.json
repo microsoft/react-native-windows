@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add GetFacebookReactInstance :: uwpInstance -> react::Instance",
-  "packageName": "react-native-windows",
-  "email": "zihanc@microsoft.com",
-  "commit": "f35ed1c42cd2a1d9ed098082bf97babe3bc9c8e6",
-  "date": "2019-12-16T22:17:19.866Z"
-}
