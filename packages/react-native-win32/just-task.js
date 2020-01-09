@@ -33,7 +33,7 @@ task('apiExtractorUpdate', apiExtractorUpdateTask());
 task('apiDocumenter', () => {
   require('child_process').execSync(
     'npx @microsoft/api-documenter markdown -i temp -o docs/api',
-    { stdio: 'inherit' },
+    {stdio: 'inherit'},
   );
 });
 
@@ -51,7 +51,7 @@ task('initRNLibraries', () => {
 });
 
 task('flow-check', () => {
-  require('child_process').execSync('npx flow check', { stdio: 'inherit' });
+  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
 });
 
 task('ts', () => {
