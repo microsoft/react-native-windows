@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2020 23:20:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove Unneeded OSS_RN Special Path",
+            "author": "nick@nickgerleman.com",
+            "commit": "b912ff74d48ca8157c8006cf1391bf0178937679"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Header Refactoring Around jsireact to Unblock ms/rn",
+            "author": "nick@nickgerleman.com",
+            "commit": "442b022fd07a7d1712cdada56604b134df0b386f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jan 2020 22:06:05 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.111",
       "version": "0.60.0-vnext.111",

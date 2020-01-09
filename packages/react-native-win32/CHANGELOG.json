@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2020 23:20:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.1",
+      "version": "0.26.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Header Refactoring Around jsireact to Unblock ms/rn",
+            "author": "nick@nickgerleman.com",
+            "commit": "442b022fd07a7d1712cdada56604b134df0b386f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jan 2020 22:06:05 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.0",
       "version": "0.26.0",
