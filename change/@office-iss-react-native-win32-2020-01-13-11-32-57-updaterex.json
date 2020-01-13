@@ -1,0 +1,8 @@
+{
+  "type": "none",
+  "comment": "Update rex-win32 to fix boot of RNTester",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "acoates@microsoft.com",
+  "commit": "edc0c937e419fbc12fd9f1d102271756d2bd859b",
+  "date": "2020-01-13T19:32:57.525Z"
+}
