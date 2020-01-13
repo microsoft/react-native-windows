@@ -2833,10 +2833,10 @@
     universal-user-agent "^3.0.0"
     url-template "^2.0.8"
 
-"@office-iss/rex-win32@0.0.30":
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.0.30.tgz#3ffe94f3cf07bae1c6ccb702d60413553a695841"
-  integrity sha512-SNiC+iv2uPdOLiyqNXBMbqED3Nbfsv8JIy1vZt3YAGUhdqgmXaiGgd4n+CQrplxskqV27dPI1xNMNv9puDbyng==
+"@office-iss/rex-win32@0.0.33":
+  version "0.0.33"
+  resolved "https://registry.yarnpkg.com/@office-iss/rex-win32/-/rex-win32-0.0.33.tgz#960ed52275c827df58aede4819d39927bdf2ae70"
+  integrity sha512-Eh4orZ3F4P03IJAn509H7rXPcA8/6iXIEJbBTrNdO0RK6gVIRQ/5GVVPg3BA3QrFN7GDJeXOqjN1/9daV4O8ag==
   dependencies:
     command-line-args "^5.0.2"
     command-line-usage "^5.0.5"
@@ -10841,7 +10841,6 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
 
 "react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz":
   version "0.60.0-microsoft.35"
-  uid "0ee1c6fd13eea3a9c885bd6d8de64bfb7d008a9a"
   resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz#0ee1c6fd13eea3a9c885bd6d8de64bfb7d008a9a"
   dependencies:
     "@babel/core" "^7.4.0"
