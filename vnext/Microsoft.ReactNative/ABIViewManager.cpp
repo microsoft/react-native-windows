@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "ABIViewManager.h"
+#include "DynamicWriter.h"
 
 #include "IReactContext.h"
 
@@ -44,11 +45,15 @@ folly::dynamic ABIViewManager::GetExportedViewConstants() const {
   folly::dynamic parent = Super::GetExportedViewConstants();
 
   if (m_viewManagerWithExportedViewConstants) {
-    auto outerChild = m_viewManagerWithExportedViewConstants.ExportedViewConstants();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value = ConvertToDynamic(pair.Value());
-      parent.insert(key, value);
+    auto constantProvider = m_viewManagerWithExportedViewConstants.ExportedViewConstants();
+
+    IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+    constantProvider(argWriter);
+
+    auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
+
+    if (!outerChild.isNull()) {
+      parent.update(outerChild);
     }
   }
 

@@ -31,34 +31,35 @@ namespace Microsoft.ReactNative.Managed
 
     #region Constants
 
-    public virtual IReadOnlyDictionary<string, object> ExportedViewConstants => _exportedViewConstants ?? (_exportedViewConstants = GetExportedViewConstants());
-    private IReadOnlyDictionary<string, object> _exportedViewConstants;
+    public virtual ConstantProvider ExportedViewConstants => _exportedViewConstantProvider ?? (_exportedViewConstantProvider = MakeExportedViewConstantProvider());
+    private ConstantProvider _exportedViewConstantProvider;
 
-    private IReadOnlyDictionary<string, object> GetExportedViewConstants()
+    private ConstantProvider MakeExportedViewConstantProvider()
     {
-      var typeInfo = GetType().GetTypeInfo();
-
-      var constants = new Dictionary<string, object>();
-
-      foreach (var fieldInfo in typeInfo.DeclaredFields)
+      return new ConstantProvider((IJSValueWriter constantWriter) =>
       {
-        var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
-        if (null != attribute)
-        {
-          constants.Add(attribute.ConstantName ?? fieldInfo.Name, IsEnum(fieldInfo.FieldType) ? Convert.ChangeType(fieldInfo.GetValue(this), typeof(long)) : fieldInfo.GetValue(this));
-        }
-      }
+        var typeInfo = GetType().GetTypeInfo();
 
-      foreach (var propertyInfo in typeInfo.DeclaredProperties)
-      {
-        var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
-        if (null != attribute)
-        {
-          constants.Add(attribute.ConstantName ?? propertyInfo.Name, IsEnum(propertyInfo.PropertyType) ? Convert.ChangeType(propertyInfo.GetMethod.Invoke(this, null), typeof(long)) : propertyInfo.GetMethod.Invoke(this, null));
-        }
-      }
+        var constants = new ReactConstantProvider(constantWriter);
 
-      return constants;
+        foreach (var fieldInfo in typeInfo.DeclaredFields)
+        {
+          var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
+          if (null != attribute)
+          {
+            constants.Add(attribute.ConstantName ?? fieldInfo.Name, IsEnum(fieldInfo.FieldType) ? Convert.ChangeType(fieldInfo.GetValue(this), typeof(long)) : fieldInfo.GetValue(this));
+          }
+        }
+
+        foreach (var propertyInfo in typeInfo.DeclaredProperties)
+        {
+          var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedViewConstantAttribute>();
+          if (null != attribute)
+          {
+            constants.Add(attribute.ConstantName ?? propertyInfo.Name, IsEnum(propertyInfo.PropertyType) ? Convert.ChangeType(propertyInfo.GetMethod.Invoke(this, null), typeof(long)) : propertyInfo.GetMethod.Invoke(this, null));
+          }
+        }
+      });
     }
 
     #endregion
