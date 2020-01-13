@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Jan 2020 18:48:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix RNTester",
+            "author": "acoates@microsoft.com",
+            "commit": "86bac76a5cff3b059b2a84d0f9767cf0fbbb50d3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jan 2020 23:20:10 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.112",
       "version": "0.60.0-vnext.112",
