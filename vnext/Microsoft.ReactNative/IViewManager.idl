@@ -56,9 +56,9 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithExportedEventTypeConstants
   {
-    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomBubblingEventTypeConstants { get; };
+    ConstantProvider ExportedCustomBubblingEventTypeConstants { get; };
 
-    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomDirectEventTypeConstants { get; };
+    ConstantProvider ExportedCustomDirectEventTypeConstants { get; };
   }
 
   [webhosthidden]

@@ -325,39 +325,40 @@ namespace Microsoft.ReactNative.Managed
 
     #region Events
 
-    public virtual IReadOnlyDictionary<string, object> ExportedCustomBubblingEventTypeConstants => _exportedCustomBubblingEventTypeConstants ?? (_exportedCustomBubblingEventTypeConstants = GetExportedCustomBubblingEventTypeConstants());
-    private IReadOnlyDictionary<string, object> _exportedCustomBubblingEventTypeConstants;
+    public virtual ConstantProvider ExportedCustomBubblingEventTypeConstants => _exportedCustomBubblingEventTypeConstantProvider ?? (_exportedCustomBubblingEventTypeConstantProvider = MakeExportedCustomBubblingEventTypeConstants());
+    private ConstantProvider _exportedCustomBubblingEventTypeConstantProvider;
 
-    public virtual IReadOnlyDictionary<string, object> ExportedCustomDirectEventTypeConstants => _exportedCustomDirectEventTypeConstants ?? (_exportedCustomDirectEventTypeConstants = GetExportedDirectEventTypeConstants());
-    private IReadOnlyDictionary<string, object> _exportedCustomDirectEventTypeConstants;
+    public virtual ConstantProvider ExportedCustomDirectEventTypeConstants => _exportedCustomDirectEventTypeConstantProvider ?? (_exportedCustomDirectEventTypeConstantProvider = MakeExportedDirectEventTypeConstants());
+    private ConstantProvider _exportedCustomDirectEventTypeConstantProvider;
 
-    private IReadOnlyDictionary<string, object> GetExportedCustomBubblingEventTypeConstants()
+    private ConstantProvider MakeExportedCustomBubblingEventTypeConstants()
     {
-      var typeInfo = GetType().GetTypeInfo();
-
-      var constants = new Dictionary<string, object>();
-
-      foreach (var fieldInfo in typeInfo.DeclaredFields)
+      return new ConstantProvider((IJSValueWriter constantWriter) =>
       {
-        var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
-        if (TryMakeBubblingEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
-        {
-          constants.Add(key, value);
-          fieldInfo.SetValue(this, memberValue);
-        }
-      }
+        var typeInfo = GetType().GetTypeInfo();
 
-      foreach (var propertyInfo in typeInfo.DeclaredProperties)
-      {
-        var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
-        if (TryMakeBubblingEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
-        {
-          constants.Add(key, value);
-          propertyInfo.SetValue(this, memberValue);
-        }
-      }
+        var constants = new ReactConstantProvider(constantWriter);
 
-      return constants;
+        foreach (var fieldInfo in typeInfo.DeclaredFields)
+        {
+          var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
+          if (TryMakeBubblingEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
+          {
+            constants.Add(key, value);
+            fieldInfo.SetValue(this, memberValue);
+          }
+        }
+
+        foreach (var propertyInfo in typeInfo.DeclaredProperties)
+        {
+          var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
+          if (TryMakeBubblingEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
+          {
+            constants.Add(key, value);
+            propertyInfo.SetValue(this, memberValue);
+          }
+        }
+      });
     }
 
     private bool TryMakeBubblingEvent(ViewManagerExportedBubblingEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, out string constantKey, out object constantValue, out Delegate memberValue)
@@ -392,33 +393,34 @@ namespace Microsoft.ReactNative.Managed
       return false;
     }
 
-    private IReadOnlyDictionary<string, object> GetExportedDirectEventTypeConstants()
+    private ConstantProvider MakeExportedDirectEventTypeConstants()
     {
-      var typeInfo = GetType().GetTypeInfo();
-
-      var constants = new Dictionary<string, object>();
-
-      foreach (var fieldInfo in typeInfo.DeclaredFields)
+      return new ConstantProvider((IJSValueWriter constantWriter) =>
       {
-        var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
-        if (TryMakeDirectEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
-        {
-          constants.Add(key, value);
-          fieldInfo.SetValue(this, memberValue);
-        }
-      }
+        var typeInfo = GetType().GetTypeInfo();
 
-      foreach (var propertyInfo in typeInfo.DeclaredProperties)
-      {
-        var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
-        if (TryMakeDirectEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
-        {
-          constants.Add(key, value);
-          propertyInfo.SetValue(this, memberValue);
-        }
-      }
+        var constants = new ReactConstantProvider(constantWriter);
 
-      return constants;
+        foreach (var fieldInfo in typeInfo.DeclaredFields)
+        {
+          var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
+          if (TryMakeDirectEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
+          {
+            constants.Add(key, value);
+            fieldInfo.SetValue(this, memberValue);
+          }
+        }
+
+        foreach (var propertyInfo in typeInfo.DeclaredProperties)
+        {
+          var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
+          if (TryMakeDirectEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
+          {
+            constants.Add(key, value);
+            propertyInfo.SetValue(this, memberValue);
+          }
+        }
+      });
     }
 
     private bool TryMakeDirectEvent(ViewManagerExportedDirectEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, out string constantKey, out object constantValue, out Delegate memberValue)

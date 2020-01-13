@@ -48,11 +48,9 @@ struct CustomUserControlViewManagerCpp
           commandArgs) noexcept;
 
   // IViewManagerWithExportedEventTypeConstants
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-  ExportedCustomBubblingEventTypeConstants() noexcept;
+  winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomBubblingEventTypeConstants() noexcept;
 
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-  ExportedCustomDirectEventTypeConstants() noexcept;
+  winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomDirectEventTypeConstants() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::IReactContext m_reactContext{nullptr};

@@ -45,15 +45,15 @@ folly::dynamic ABIViewManager::GetExportedViewConstants() const {
   folly::dynamic parent = Super::GetExportedViewConstants();
 
   if (m_viewManagerWithExportedViewConstants) {
-    auto constantProvider = m_viewManagerWithExportedViewConstants.ExportedViewConstants();
+    if (auto constantProvider = m_viewManagerWithExportedViewConstants.ExportedViewConstants()) {
+      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      constantProvider(argWriter);
 
-    IJSValueWriter argWriter = winrt::make<DynamicWriter>();
-    constantProvider(argWriter);
+      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
 
-    auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
-
-    if (!outerChild.isNull()) {
-      parent.update(outerChild);
+      if (!outerChild.isNull()) {
+        parent.update(outerChild);
+      }
     }
   }
 
@@ -168,11 +168,16 @@ folly::dynamic ABIViewManager::GetExportedCustomBubblingEventTypeConstants() con
   folly::dynamic parent = Super::GetExportedCustomBubblingEventTypeConstants();
 
   if (m_viewManagerWithExportedEventTypeConstants) {
-    auto outerChild = m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value = ConvertToDynamic(pair.Value());
-      parent.insert(key, value);
+    if (auto constantProvider =
+            m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants()) {
+      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      constantProvider(argWriter);
+
+      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
+
+      if (!outerChild.isNull()) {
+        parent.update(outerChild);
+      }
     }
   }
 
@@ -183,11 +188,15 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
   folly::dynamic parent = Super::GetExportedCustomDirectEventTypeConstants();
 
   if (m_viewManagerWithExportedEventTypeConstants) {
-    auto outerChild = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value = ConvertToDynamic(pair.Value());
-      parent.insert(key, value);
+    if (auto constantProvider = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants()) {
+      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      constantProvider(argWriter);
+
+      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
+
+      if (!outerChild.isNull()) {
+        parent.update(outerChild);
+      }
     }
   }
 

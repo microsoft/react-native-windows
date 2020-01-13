@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "CustomUserControlViewManagerCpp.h"
+#include "NativeModules.h"
 
 #include "CustomUserControlCpp.h"
 #include "DebugHelpers.h"
@@ -33,7 +34,12 @@ FrameworkElement CustomUserControlViewManagerCpp::CreateView() noexcept {
       [this](
           winrt::Windows::UI::Xaml::DependencyObject obj, winrt::Windows::UI::Xaml::DependencyProperty prop) noexcept {
         if (auto c = obj.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-          ReactContext().DispatchEvent(c, L"topLabelChanged", box_value(c.Label()));
+          ReactContext().DispatchEvent(
+              c,
+              L"topLabelChanged",
+              [ this, c ](winrt::Microsoft::ReactNative::IJSValueWriter const &eventDataWriter) noexcept {
+                eventDataWriter.WriteString(c.Label());
+              });
         }
       });
 
@@ -115,20 +121,21 @@ void CustomUserControlViewManagerCpp::DispatchCommand(
 }
 
 // IViewManagerWithExportedEventTypeConstants
-IMapView<hstring, IInspectable> CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTypeConstants() noexcept {
-  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
-  return constants.GetView();
+ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTypeConstants() noexcept {
+  return nullptr;
 }
 
-IMapView<hstring, IInspectable> CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
-  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
+ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
+  return [](winrt::Microsoft::ReactNative::IJSValueWriter const &constantWriter) {
+    constantWriter.WriteObjectBegin();
 
-  auto registration = winrt::single_threaded_map<hstring, IInspectable>();
-  registration.Insert(L"registrationName", box_value(L"onLabelChanged"));
+    constantWriter.WritePropertyName(L"topLabelChanged");
+    constantWriter.WriteObjectBegin();
+    WriteProperty(constantWriter, L"registrationName", L"onLabelChanged");
+    constantWriter.WriteObjectEnd();
 
-  constants.Insert(L"topLabelChanged", registration.GetView());
-
-  return constants.GetView();
+    constantWriter.WriteObjectEnd();
+  };
 }
 
 } // namespace winrt::SampleLibraryCpp::implementation
