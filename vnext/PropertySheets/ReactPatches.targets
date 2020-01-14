@@ -9,20 +9,20 @@
     <ReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
     <ReactSourceDestinationFiles Include="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
 
-    <PatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" />
-    <PatchDestinationFiles Include="@(PatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" />
+    <DeforkingPatchDesintationFiles Include="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
 
-    <JsiHeaderFiles Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\*.h" />
-    <JsiHeaderDestinationFiles Include="$(@JsiHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')" />
+    <JsiReactHeaderFiles Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\*.h" />
+    <JsiReactHeaderDestinationFiles Include="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')" />
 
-    <PatchInputs Include="@(ReactSourceFiles);@(PatchFiles);@(JsiHeaderFiles)" />
-    <PatchOutputs Include="@(ReactSourceDestinationFiles);@(PatchDestinationFiles);@(JsiHeaderDestinationFiles)" />
+    <PatchReactNativeInputs Include="@(ReactSourceFiles);@(DeforkingPatchFiles);@(JsiReactHeaderFiles)" />
+    <PatchReactNativeOutputs Include="@(ReactSourceDestinationFiles);@(DeforkingPatchDesintationFiles);@(JsiReactHeaderDestinationFiles)" />
   </ItemGroup>
 
   <!--
     Visual Studio has its own incremental build logic for simple cases that
     falls over here. Force use of MSBuild logic here. This has a minimal impact
-    on build time (~10s total to build a noop change on a six core machine).
+    on build time (~10s total to build desktop solution on a six core machine).
     -->
   <PropertyGroup>
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
@@ -30,19 +30,19 @@
 
   <Target Name="PatchReactNative"
           BeforeTargets="PrepareForBuild"
-          Inputs="@(PatchInputs)"
-          Outputs="@(PatchOutputs)">
+          Inputs="@(PatchReactNativeInputs)"
+          Outputs="@(PatchReactNativeOutputs)">
 
     <Copy SourceFiles="@(ReactSourceFiles)"
-          DestinationFiles="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-    <Copy SourceFiles="@(PatchFiles)"
-          DestinationFiles="@(PatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+          DestinationFiles="@(ReactSourceDestinationFiles)" />
+    <Copy SourceFiles="@(DeforkingPatchFiles)"
+          DestinationFiles="@(DeforkingPatchDesintationFiles)" />
     <!-- Special case to recreate BUCK header exports for JSI -->
-    <Copy SourceFiles="@(JsiHeaderFiles)"
-          DestinationFolder="$(ReactNativeDir)\ReactCommon\jsireact\"/>
+    <Copy SourceFiles="@(JsiReactHeaderFiles)"
+          DestinationFiles="@(JsiReactHeaderDestinationFiles)"/>
 
     <ItemGroup>
-      <FileWrites Include="@(PatchOutputs)" />
+      <FileWrites Include="@(PatchReactNativeOutputs)" />
     </ItemGroup>
 
   </Target>
