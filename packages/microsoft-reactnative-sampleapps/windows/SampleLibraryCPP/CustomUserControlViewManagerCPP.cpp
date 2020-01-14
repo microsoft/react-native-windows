@@ -127,13 +127,9 @@ ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTyp
 
 ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
   return [](winrt::Microsoft::ReactNative::IJSValueWriter const &constantWriter) {
-    constantWriter.WriteObjectBegin();
-
     constantWriter.WritePropertyName(L"topLabelChanged");
     constantWriter.WriteObjectBegin();
     WriteProperty(constantWriter, L"registrationName", L"onLabelChanged");
-    constantWriter.WriteObjectEnd();
-
     constantWriter.WriteObjectEnd();
   };
 }

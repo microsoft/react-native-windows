@@ -337,14 +337,11 @@ namespace Microsoft.ReactNative.Managed
       {
         var typeInfo = GetType().GetTypeInfo();
 
-        var constants = new ReactConstantProvider(constantWriter);
-
         foreach (var fieldInfo in typeInfo.DeclaredFields)
         {
           var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
-          if (TryMakeBubblingEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
+          if (TryMakeBubblingEvent(attribute, fieldInfo, fieldInfo.FieldType, constantWriter, out Delegate memberValue))
           {
-            constants.Add(key, value);
             fieldInfo.SetValue(this, memberValue);
           }
         }
@@ -352,16 +349,15 @@ namespace Microsoft.ReactNative.Managed
         foreach (var propertyInfo in typeInfo.DeclaredProperties)
         {
           var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedBubblingEventTypeConstantAttribute>();
-          if (TryMakeBubblingEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
+          if (TryMakeBubblingEvent(attribute, propertyInfo, propertyInfo.PropertyType, constantWriter, out Delegate memberValue))
           {
-            constants.Add(key, value);
             propertyInfo.SetValue(this, memberValue);
           }
         }
       });
     }
 
-    private bool TryMakeBubblingEvent(ViewManagerExportedBubblingEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, out string constantKey, out object constantValue, out Delegate memberValue)
+    private bool TryMakeBubblingEvent(ViewManagerExportedBubblingEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, IJSValueWriter constantWriter, out Delegate memberValue)
     {
       if (null != attribute && null != memberInfo && TryGetEventDataType(memberType, out Type eventDataType))
       {
@@ -369,25 +365,23 @@ namespace Microsoft.ReactNative.Managed
         var bubbleName = attribute.BubbleCallbackName ?? "on" + memberInfo.Name;
         var captureName = attribute.CaptureCallbackName ?? bubbleName + "Capture";
 
-        var registration = new Dictionary<string, object>
-        {
-          { "phasedRegistrationNames", new Dictionary<string, object>()
-            {
-              { "bubbled", bubbleName },
-              { "captured", captureName },
-            }
-          }
-        };
+        constantWriter.WritePropertyName(eventName);
 
-        constantKey = eventName;
-        constantValue = registration;
+        constantWriter.WriteObjectBegin();
+
+        constantWriter.WritePropertyName("phasedRegistrationNames");
+        constantWriter.WriteObjectBegin();
+        constantWriter.WriteObjectProperty("bubbled", bubbleName);
+        constantWriter.WriteObjectProperty("captured", captureName);
+        constantWriter.WriteObjectEnd();
+
+        constantWriter.WriteObjectEnd();
+
         memberValue = MakeEventDelegate(eventName, memberType, eventDataType);
 
         return true;
       }
 
-      constantKey = default(string);
-      constantValue = default(string);
       memberValue = default(Delegate);
 
       return false;
@@ -399,14 +393,11 @@ namespace Microsoft.ReactNative.Managed
       {
         var typeInfo = GetType().GetTypeInfo();
 
-        var constants = new ReactConstantProvider(constantWriter);
-
         foreach (var fieldInfo in typeInfo.DeclaredFields)
         {
           var attribute = fieldInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
-          if (TryMakeDirectEvent(attribute, fieldInfo, fieldInfo.FieldType, out string key, out object value, out Delegate memberValue))
+          if (TryMakeDirectEvent(attribute, fieldInfo, fieldInfo.FieldType, constantWriter, out Delegate memberValue))
           {
-            constants.Add(key, value);
             fieldInfo.SetValue(this, memberValue);
           }
         }
@@ -414,36 +405,31 @@ namespace Microsoft.ReactNative.Managed
         foreach (var propertyInfo in typeInfo.DeclaredProperties)
         {
           var attribute = propertyInfo.GetCustomAttribute<ViewManagerExportedDirectEventTypeConstantAttribute>();
-          if (TryMakeDirectEvent(attribute, propertyInfo, propertyInfo.PropertyType, out string key, out object value, out Delegate memberValue))
+          if (TryMakeDirectEvent(attribute, propertyInfo, propertyInfo.PropertyType, constantWriter, out Delegate memberValue))
           {
-            constants.Add(key, value);
             propertyInfo.SetValue(this, memberValue);
           }
         }
       });
     }
 
-    private bool TryMakeDirectEvent(ViewManagerExportedDirectEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, out string constantKey, out object constantValue, out Delegate memberValue)
+    private bool TryMakeDirectEvent(ViewManagerExportedDirectEventTypeConstantAttribute attribute, MemberInfo memberInfo, Type memberType, IJSValueWriter constantWriter, out Delegate memberValue)
     {
       if (null != attribute && null != memberInfo && TryGetEventDataType(memberType, out Type eventDataType))
       {
         var eventName = attribute.EventName ?? "top" + memberInfo.Name;
         var callbackName = attribute.CallbackName ?? "on" + memberInfo.Name;
 
-        var registration = new Dictionary<string, object>
-        {
-          { "registrationName", callbackName }
-        };
+        constantWriter.WritePropertyName(eventName);
+        constantWriter.WriteObjectBegin();
+        constantWriter.WriteObjectProperty("registrationName", callbackName);
+        constantWriter.WriteObjectEnd();
 
-        constantKey = eventName;
-        constantValue = registration;
         memberValue = MakeEventDelegate(eventName, memberType, eventDataType);
 
         return true;
       }
 
-      constantKey = default(string);
-      constantValue = default(object);
       memberValue = default(Delegate);
 
       return false;
@@ -472,7 +458,7 @@ namespace Microsoft.ReactNative.Managed
       //
       // (TFrameworkElement view, TEventData eventData) =>
       // {
-      //   ReactContext.DispatchEvent(view, eventName, eventData);
+      //   ReactContext.DispatchEvent(view, eventName, ReactEventHelpers.ArgWriter(eventData));
       // };
       //
 
@@ -480,10 +466,9 @@ namespace Microsoft.ReactNative.Managed
       ParameterExpression eventDataParameter = Expression.Parameter(eventDataType, "eventData");
 
       MemberExpression thisReactContext = Expression.Property(Expression.Constant(this), "ReactContext");
+      MethodCallExpression dispatchCall = Expression.Call(thisReactContext, typeof(IReactContext).GetMethod("DispatchEvent"), viewParameter, Expression.Constant(eventName, typeof(string)), Expression.Call(ReactEventInfo.ArgWriterOf(eventDataType), eventDataParameter));
 
-      MethodCallExpression body = Expression.Call(thisReactContext, typeof(IReactContext).GetMethod("DispatchEvent"), viewParameter, Expression.Constant(eventName, typeof(string)), eventDataParameter);
-
-      return Expression.Lambda(memberType, body, viewParameter, eventDataParameter).Compile();
+      return Expression.Lambda(memberType, dispatchCall, viewParameter, eventDataParameter).Compile();
     }
 
     #endregion

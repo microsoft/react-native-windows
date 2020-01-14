@@ -47,7 +47,9 @@ folly::dynamic ABIViewManager::GetExportedViewConstants() const {
   if (m_viewManagerWithExportedViewConstants) {
     if (auto constantProvider = m_viewManagerWithExportedViewConstants.ExportedViewConstants()) {
       IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      argWriter.WriteObjectBegin();
       constantProvider(argWriter);
+      argWriter.WriteObjectEnd();
 
       auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
 
@@ -171,7 +173,9 @@ folly::dynamic ABIViewManager::GetExportedCustomBubblingEventTypeConstants() con
     if (auto constantProvider =
             m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants()) {
       IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      argWriter.WriteObjectBegin();
       constantProvider(argWriter);
+      argWriter.WriteObjectEnd();
 
       auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
 
@@ -190,7 +194,9 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
   if (m_viewManagerWithExportedEventTypeConstants) {
     if (auto constantProvider = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants()) {
       IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      argWriter.WriteObjectBegin();
       constantProvider(argWriter);
+      argWriter.WriteObjectEnd();
 
       auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
 
