@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Jan 2020 17:57:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add React Native Source Patching Infrastructure",
+            "author": "nick@nickgerleman.com",
+            "commit": "8a144129746ab7057827a0ff7839475029a11c0b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jan 2020 18:48:12 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.112",
       "version": "0.60.0-vnext.112",
