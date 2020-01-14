@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 14 Jan 2020 17:12:43 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.2",
+      "version": "0.26.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove remanents of old doc format",
+            "author": "acoates@microsoft.com",
+            "commit": "c112e2bd48e7a2acd94aacb3f70ad760f3d1cd01"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update rex-win32 to fix boot of RNTester",
+            "author": "acoates@microsoft.com",
+            "commit": "edc0c937e419fbc12fd9f1d102271756d2bd859b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jan 2020 23:20:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.1",
       "version": "0.26.1",
