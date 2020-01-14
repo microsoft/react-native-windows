@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <ItemGroup>
+    <ReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
+    <ReactSourceDestinationFiles Include="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <PatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" />
+    <PatchDestinationFiles Include="@(PatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <JsiHeaderFiles Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\*.h" />
+    <JsiHeaderDestinationFiles Include="$(@JsiHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')" />
+
+    <PatchInputs Include="@(ReactSourceFiles);@(PatchFiles);@(JsiHeaderFiles)" />
+    <PatchOutputs Include="@(ReactSourceDestinationFiles);@(PatchDestinationFiles);@(JsiHeaderDestinationFiles)" />
+  </ItemGroup>
+
+  <!--
+    Visual Studio has its own incremental build logic for simple cases that
+    falls over here. Force use of MSBuild logic here. This has a minimal impact
+    on build time (~10s total to build a noop change on a six core machine).
+    -->
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
+  </PropertyGroup>
+
+  <Target Name="PatchReactNative"
+          BeforeTargets="PrepareForBuild"
+          Inputs="@(PatchInputs)"
+          Outputs="@(PatchOutputs)">
+
+    <Copy SourceFiles="@(ReactSourceFiles)"
+          DestinationFiles="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="@(PatchFiles)"
+          DestinationFiles="@(PatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <!-- Special case to recreate BUCK header exports for JSI -->
+    <Copy SourceFiles="@(JsiHeaderFiles)"
+          DestinationFolder="$(ReactNativeDir)\ReactCommon\jsireact\"/>
+
+    <ItemGroup>
+      <FileWrites Include="@(PatchOutputs)" />
+    </ItemGroup>
+
+  </Target>
+</Project>

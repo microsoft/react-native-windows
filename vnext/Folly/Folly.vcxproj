@@ -283,7 +283,4 @@
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
   -->
-  <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
-  </Target>
 </Project>
