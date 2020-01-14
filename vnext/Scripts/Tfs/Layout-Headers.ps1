@@ -5,7 +5,7 @@ param(
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
-	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
+	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\vnext\build\" + @(gci "$ReactWindowsRoot\build\" react-native-patched -Recurse -Directory -Name)[0],
 	[string] $FollyVersion = '2019.09.30.00',
 	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
