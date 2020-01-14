@@ -12,7 +12,8 @@
     <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" />
     <DeforkingPatchDesintationFiles Include="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
 
-    <JsiReactHeaderFiles Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\*.h" />
+    <!-- We use unpatched React Native as the input here since we may not have yet applied patches -->
+    <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
     <JsiReactHeaderDestinationFiles Include="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')" />
 
     <PatchReactNativeInputs Include="@(ReactSourceFiles);@(DeforkingPatchFiles);@(JsiReactHeaderFiles)" />
@@ -33,13 +34,10 @@
           Inputs="@(PatchReactNativeInputs)"
           Outputs="@(PatchReactNativeOutputs)">
 
-    <Copy SourceFiles="@(ReactSourceFiles)"
-          DestinationFiles="@(ReactSourceDestinationFiles)" />
-    <Copy SourceFiles="@(DeforkingPatchFiles)"
-          DestinationFiles="@(DeforkingPatchDesintationFiles)" />
+    <Copy SourceFiles="@(ReactSourceFiles)" DestinationFiles="@(ReactSourceDestinationFiles)" />
+    <Copy SourceFiles="@(DeforkingPatchFiles)" DestinationFiles="@(DeforkingPatchDesintationFiles)" />
     <!-- Special case to recreate BUCK header exports for JSI -->
-    <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderDestinationFiles)"/>
+    <Copy SourceFiles="@(JsiReactHeaderFiles)" DestinationFiles="@(JsiReactHeaderDestinationFiles)"/>
 
     <ItemGroup>
       <FileWrites Include="@(PatchReactNativeOutputs)" />
