@@ -2,8 +2,8 @@
 # Licensed under the MIT License.
 
 param(
-	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
+	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
 	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
 	[string] $FollyVersion = '2019.09.30.00',
