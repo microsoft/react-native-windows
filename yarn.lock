@@ -3058,9 +3058,9 @@
   integrity sha1-Hs9SYhKZ5luFU3Qzf7Ef0tEGb8E=
 
 "@types/react-native@~0.60.5":
-  version "0.60.29"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.29.tgz#3efe6b7d900129a7108acf869d15644304f0f069"
-  integrity sha512-VmfErwvd2bqGnsY8okUprKSzXoHtzxU5xKupFh+o0h7gPO3jQnN7wtLTbegAL4Es9H/3Gmmtpq3LRn/8RCpCpA==
+  version "0.60.30"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.30.tgz#33ab525194142a5e3b428e60f0e77e0d1dbd253d"
+  integrity sha512-Ho41o+6NBlv1K5q2Z+NREST3UsGahXn4V1to2D2U4bcn1hO5MGjzOdkruzsnN10WiP8hW33jvQE6eERClgwvJg==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
