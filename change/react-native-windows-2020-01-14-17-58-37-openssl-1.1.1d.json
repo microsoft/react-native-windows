@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade to OpenSSL 1.1.1d/0.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "8d35311dce1d65881a31e35887ea09eb25feeec9",
+  "date": "2020-01-15T01:58:36.928Z"
+}

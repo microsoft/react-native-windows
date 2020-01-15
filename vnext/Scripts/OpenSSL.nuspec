@@ -12,15 +12,15 @@
     <file src="OpenSSL.targets" target="build\native\$id$.targets" />
 
     <file src="$vcpkgroot$\installed\x86-windows-static\include\openssl\**\*.*" target="include\x86\openssl" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libeay32.lib" target="lib\x86\Debug" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\ssleay32.lib" target="lib\x86\Debug" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libeay32.lib" target="lib\x86\Release" />
-    <file src="$vcpkgroot$\installed\x86-windows-static\lib\ssleay32.lib" target="lib\x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libcrypto.lib" target="lib\x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\debug\lib\libssl.lib" target="lib\x86\Debug" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libcrypto.lib" target="lib\x86\Release" />
+    <file src="$vcpkgroot$\installed\x86-windows-static\lib\libssl.lib" target="lib\x86\Release" />
 
     <file src="$vcpkgroot$\installed\x64-windows-static\include\openssl\**\*.*" target="include\x64\openssl" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libeay32.lib" target="lib\x64\Debug" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\ssleay32.lib" target="lib\x64\Debug" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libeay32.lib" target="lib\x64\Release" />
-    <file src="$vcpkgroot$\installed\x64-windows-static\lib\ssleay32.lib" target="lib\x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libcrypto.lib" target="lib\x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\debug\lib\libssl.lib" target="lib\x64\Debug" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libcrypto.lib" target="lib\x64\Release" />
+    <file src="$vcpkgroot$\installed\x64-windows-static\lib\libssl.lib" target="lib\x64\Release" />
   </files>
 </package>
