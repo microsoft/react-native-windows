@@ -108,12 +108,12 @@ IMapView<hstring, int64_t> CustomUserControlViewManagerCpp::Commands() noexcept 
 void CustomUserControlViewManagerCpp::DispatchCommand(
     FrameworkElement const &view,
     int64_t commandId,
-    IVectorView<IInspectable> commandArgs) noexcept {
+    IJSValueReader const &commandArgsReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
     if (commandId == 0) {
       std::string arg = std::to_string(winrt::unbox_value<int64_t>(view.Tag()));
       arg.append(", \"");
-      arg.append(winrt::to_string(winrt::unbox_value<hstring>(commandArgs.GetAt(0))));
+      arg.append(winrt::to_string(commandArgsReader.GetString()));
       arg.append("\"");
       ::SampleLibraryCpp::DebugWriteLine(to_string(Name()), "CustomCommand", arg);
     }

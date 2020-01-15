@@ -243,13 +243,13 @@ namespace Microsoft.ReactNative.Managed
     }
     private IReadOnlyDictionary<string, long> _commands;
 
-    public virtual void DispatchCommand(FrameworkElement view, long commandId, IReadOnlyList<object> commandArgs)
+    public virtual void DispatchCommand(FrameworkElement view, long commandId, IJSValueReader commandArgsReader)
     {
       if (view is TFrameworkElement viewAsT)
       {
         if (ViewManagerCommands.TryGetValue(commandId, out ViewManagerCommand<TFrameworkElement> command))
         {
-          command.CommandMethod(viewAsT, commandArgs);
+          command.CommandMethod(viewAsT, commandArgsReader);
         }
       }
       else
@@ -290,32 +290,31 @@ namespace Microsoft.ReactNative.Managed
     {
       public string CommandName;
       public long CommandId;
-      public Action<U, IReadOnlyList<object>> CommandMethod;
+      public Action<U, IJSValueReader> CommandMethod;
     }
 
-    private Action<TFrameworkElement, IReadOnlyList<object>> MakeCommandMethod(MethodInfo methodInfo)
+    private Action<TFrameworkElement, IJSValueReader> MakeCommandMethod(MethodInfo methodInfo)
     {
       var parameters = methodInfo.GetParameters();
-      if (parameters.Length == 2
-        && parameters[0].ParameterType == typeof(TFrameworkElement)
-        && parameters[1].ParameterType == typeof(IReadOnlyList<object>))
+      if (parameters.Length == 2 && parameters[0].ParameterType == typeof(TFrameworkElement))
       {
-        return (view, commandArgs) =>
+        if (parameters[1].ParameterType == typeof(IJSValueReader))
         {
-          methodInfo.Invoke(this, new object[] { view, commandArgs });
-        };
-      }
-      else if (parameters.Length >= 2
-        && parameters[0].ParameterType == typeof(TFrameworkElement))
-      {
-        return (view, commandArgs) =>
+          return (view, commandArgsReader) =>
+          {
+            methodInfo.Invoke(this, new object[] { view, commandArgsReader });
+          };
+        }
+        else
         {
-          var invokeArgs = new List<object>(parameters.Length);
-          invokeArgs.Add(view);
-          invokeArgs.AddRange(commandArgs);
+          MethodInfo genericReadValue = ReadValueMethodInfo.MakeGenericMethod(parameters[1].ParameterType);
 
-          methodInfo.Invoke(this, invokeArgs.ToArray());
-        };
+          return (view, commandArgsReader) =>
+          {
+            var result = genericReadValue.Invoke(null, new object[] { commandArgsReader });
+            methodInfo.Invoke(this, new object[] { view, result });
+          };
+        }
       }
 
       throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
@@ -472,5 +471,31 @@ namespace Microsoft.ReactNative.Managed
     }
 
     #endregion
+
+    internal static MethodInfo ReadValueMethodInfo
+    {
+      get
+      {
+        if (null == _readValueMethodInfo)
+        {
+          foreach (var methodInfo in typeof(JSValueReader).GetMethods())
+          {
+            var parameters = methodInfo.GetParameters();
+            if (methodInfo.Name == "ReadValue"
+              && methodInfo.IsGenericMethodDefinition
+              && methodInfo.ReturnType.IsGenericParameter
+              && parameters.Length == 1
+              && parameters[0].ParameterType == typeof(IJSValueReader))
+            {
+              _readValueMethodInfo = methodInfo;
+              break;
+            }
+          }
+        }
+        return _readValueMethodInfo;
+      }
+    }
+    private static MethodInfo _readValueMethodInfo;
+
   }
 }

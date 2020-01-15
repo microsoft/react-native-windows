@@ -50,7 +50,7 @@ namespace Microsoft.ReactNative
   {
     Windows.Foundation.Collections.IMapView<String, Int64> Commands { get; };
 
-    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, Windows.Foundation.Collections.IVectorView<IInspectable> commandArgs);
+    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, IJSValueReader commandArgsReader);
   }
 
   [webhosthidden]

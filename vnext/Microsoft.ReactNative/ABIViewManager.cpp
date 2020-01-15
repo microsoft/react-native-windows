@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "ABIViewManager.h"
+#include "DynamicReader.h"
 #include "DynamicWriter.h"
 
 #include "IReactContext.h"
@@ -151,18 +152,8 @@ void ABIViewManager::DispatchCommand(
   if (m_viewManagerWithCommands) {
     auto view = viewToUpdate.as<winrt::FrameworkElement>();
 
-    auto iinspectableArgs = ConvertToIInspectable(commandArgs);
-
-    auto listArgs =
-        iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::IVectorView<winrt::IInspectable>>();
-
-    if (!listArgs) {
-      auto args = single_threaded_vector<winrt::IInspectable>();
-      args.Append(iinspectableArgs);
-      listArgs = args.GetView();
-    }
-
-    m_viewManagerWithCommands.DispatchCommand(view, commandId, listArgs);
+    IJSValueReader argReader = winrt::make<DynamicReader>(commandArgs);
+    m_viewManagerWithCommands.DispatchCommand(view, commandId, argReader);
   }
 }
 

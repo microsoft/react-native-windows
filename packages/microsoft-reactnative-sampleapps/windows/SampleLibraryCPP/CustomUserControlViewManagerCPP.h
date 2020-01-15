@@ -44,8 +44,7 @@ struct CustomUserControlViewManagerCpp
   void DispatchCommand(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
       int64_t commandId,
-      winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Foundation::IInspectable>
-          commandArgs) noexcept;
+      winrt::Microsoft::ReactNative::IJSValueReader const &commandArgsReader) noexcept;
 
   // IViewManagerWithExportedEventTypeConstants
   winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomBubblingEventTypeConstants() noexcept;
