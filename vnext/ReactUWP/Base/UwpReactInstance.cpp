@@ -74,12 +74,12 @@
 #include <Windows.ApplicationModel.h>
 #include <winrt/Windows.ApplicationModel.h>
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
 #endif
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif // USE_HERMES
@@ -377,7 +377,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 
     std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
     if (settings.UseJsi) {
       std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;
       std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;

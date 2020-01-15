@@ -15,7 +15,7 @@
 namespace facebook {
 namespace react {
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 // This should match with same #defines in MethodCall.cpp. If native method call
 // JSON format changes then this needs to be updated with parsing code below.
@@ -282,7 +282,7 @@ MethodCallResult SandboxJsToNativeBridge::callSerializableNativeHook(
   // std::move(args));
 }
 
-#endif // OSS_RN
+#endif // PATCH_RN
 
 } // namespace react
 } // namespace facebook

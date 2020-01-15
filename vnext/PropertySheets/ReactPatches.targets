@@ -5,43 +5,45 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <ItemGroup>
-    <ReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
-    <ReactSourceDestinationFiles Include="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-    <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" />
-    <DeforkingPatchDesintationFiles Include="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-    <!-- We use unpatched React Native as the input here since we may not have yet applied patches -->
-    <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
-    <JsiReactHeaderDestinationFiles Include="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')" />
-
-    <PatchReactNativeInputs Include="@(ReactSourceFiles);@(DeforkingPatchFiles);@(JsiReactHeaderFiles)" />
-    <PatchReactNativeOutputs Include="@(ReactSourceDestinationFiles);@(DeforkingPatchDesintationFiles);@(JsiReactHeaderDestinationFiles)" />
-  </ItemGroup>
+  <Target Name="EvaluatePatchReactInputsOutputs" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" Condition="'$(PATCH_RN)'=='true'"/>
+      <AllReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
+      <ReactSourceFiles Include="@(AllReactSourceFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(ReactNativeWindowsDir)\DeforkingPatches\%(AllReactSourceFiles.RecursiveDir)%(AllReactSourceFiles.Filename)%(AllReactSourceFiles.Extension)')" />
+      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
+    </ItemGroup>
+  </Target>
 
   <!--
     Visual Studio has its own incremental build logic for simple cases that
-    falls over here. Force use of MSBuild logic here. This has a minimal impact
-    on build time (~10s total to build desktop solution on a six core machine).
-    -->
+    falls over here. Force use of MSBuild logic here.
+  -->
   <PropertyGroup>
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-  <Target Name="PatchReactNative"
-          BeforeTargets="PrepareForBuild"
-          Inputs="@(PatchReactNativeInputs)"
-          Outputs="@(PatchReactNativeOutputs)">
-
-    <Copy SourceFiles="@(ReactSourceFiles)" DestinationFiles="@(ReactSourceDestinationFiles)" />
-    <Copy SourceFiles="@(DeforkingPatchFiles)" DestinationFiles="@(DeforkingPatchDesintationFiles)" />
-    <!-- Special case to recreate BUCK header exports for JSI -->
-    <Copy SourceFiles="@(JsiReactHeaderFiles)" DestinationFiles="@(JsiReactHeaderDestinationFiles)"/>
-
-    <ItemGroup>
-      <FileWrites Include="@(PatchReactNativeOutputs)" />
-    </ItemGroup>
-
+  <Target Name="CopyReactSources"
+          AfterTargets="EvaluatePatchInputsOutputs"
+          BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="@(ReactSourceFiles)"
+          DestinationFiles="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
   </Target>
+
+  <Target Name="CopyDeforkingPatches"
+          AfterTargets="EvaluatePatchInputsOutputs"
+          BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="@(DeforkingPatchFiles)"
+          DestinationFiles="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyJsiHeaders"
+          AfterTargets="EvaluatePatchInputsOutputs"
+          BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="@(JsiReactHeaderFiles)"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

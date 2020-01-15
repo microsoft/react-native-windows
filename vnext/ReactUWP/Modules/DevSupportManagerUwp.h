@@ -27,7 +27,7 @@ class DevSupportManager : public facebook::react::IDevSupportManager {
   ~DevSupportManager();
 
   virtual facebook::react::JSECreator LoadJavaScriptInProxyMode(const facebook::react::DevSettings &settings) override;
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
   virtual facebook::react::JSECreator LoadJavaScriptInSandboxMode(
       const facebook::react::DevSettings &settings) override;
 #endif
