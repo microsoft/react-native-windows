@@ -9,7 +9,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct XamlHelper : XamlHelperT<XamlHelper> {
   XamlHelper() = default;
 
-  static Windows::UI::Xaml::Media::Brush BrushFrom(Microsoft::ReactNative::ValueProvider const& valueProvider);
+  static Windows::UI::Xaml::Media::Brush BrushFrom(Microsoft::ReactNative::ValueProvider const &valueProvider);
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

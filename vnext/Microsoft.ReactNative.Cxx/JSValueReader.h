@@ -403,8 +403,8 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValueArray &value)
 
 inline void ReadValue(IJSValueReader const &reader, /*out*/ winrt::Windows::UI::Xaml::Media::Brush &value) noexcept {
   JSValue jsValue = JSValue::ReadFrom(reader);
-  value = winrt::Microsoft::ReactNative::XamlHelper::BrushFrom(
-      [&jsValue](winrt::Microsoft::ReactNative::IJSValueWriter writer) noexcept { jsValue.WriteTo(writer); });
+  value = winrt::Microsoft::ReactNative::XamlHelper::BrushFrom([&jsValue](
+      winrt::Microsoft::ReactNative::IJSValueWriter writer) noexcept { jsValue.WriteTo(writer); });
 }
 
 #endif

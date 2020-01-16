@@ -225,8 +225,8 @@ inline T JSValue::To() const noexcept {
 #ifndef CXXUNITTESTS
 template <>
 inline winrt::Windows::UI::Xaml::Media::Brush JSValue::To() const noexcept {
-  return winrt::Microsoft::ReactNative::XamlHelper::BrushFrom(
-             [this](winrt::Microsoft::ReactNative::IJSValueWriter writer) noexcept { this->WriteTo(writer); });
+  return winrt::Microsoft::ReactNative::XamlHelper::BrushFrom([this](
+      winrt::Microsoft::ReactNative::IJSValueWriter writer) noexcept { this->WriteTo(writer); });
 }
 #endif
 

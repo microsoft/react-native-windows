@@ -5,12 +5,12 @@
 #include "XamlHelper.h"
 #include "XamlHelper.g.cpp"
 
-#include "DynamicWriter.h"
 #include <Utils/ValueUtils.h>
+#include "DynamicWriter.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-Windows::UI::Xaml::Media::Brush XamlHelper::BrushFrom(Microsoft::ReactNative::ValueProvider const& valueProvider) {
+Windows::UI::Xaml::Media::Brush XamlHelper::BrushFrom(Microsoft::ReactNative::ValueProvider const &valueProvider) {
   IJSValueWriter writer = winrt::make<DynamicWriter>();
   valueProvider(writer);
 
