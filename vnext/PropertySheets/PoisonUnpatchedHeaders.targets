@@ -26,6 +26,7 @@ Ensure no React Native headers are directly or indirectly included, or import \
       ]]></PoisonedHeaderContent>
     </PropertyGroup>
 
+    <MakeDir Directories="@(PoisonedHeaders->'%(RootDir)\%(Directory)')" />
     <WriteLinesToFile
       File="%(PoisonedHeaders.FullPath)"
       Lines='$(PoisonedHeaderContent)'
