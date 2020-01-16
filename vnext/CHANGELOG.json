@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Jan 2020 03:02:14 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.114",
+      "version": "0.60.0-vnext.114",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "convert haste imports to use relative requires",
+            "author": "kmelmon@microsoft.com",
+            "commit": "471e17f2a840db67a47adaf32178a91db8bf2aad"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Jan 2020 21:22:45 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.113",
       "version": "0.60.0-vnext.113",
