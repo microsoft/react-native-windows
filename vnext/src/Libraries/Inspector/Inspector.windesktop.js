@@ -16,7 +16,7 @@ const Platform = require('../Utilities/Platform');
 const React = require('React');
 const ReactNative = require('ReactNative');
 const StyleSheet = require('../StyleSheet/StyleSheet');
-const Touchable = require('../Components/Touchable');
+const Touchable = require('../Components/Touchable/Touchable');
 const UIManager = require('../ReactNative/UIManager');
 const View = require('../Components/View/View');
 
