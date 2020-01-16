@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+    Projects trying to include headers from ReactNativeDir will fail unless
+    source patching is enabled. This is by-design to avoid conflicts with
+    patched and unpatched headers, but leads to an unintuitive error message.
+    Ensure we give a useful message when building by dyanmically generating
+    poisoned headers when patching is disabled.
+  -->
+  <Target Name="PoisonUnpatchedHeaders" Condition="'$(PatchTargetIncluded)' != 'true'" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <ReactNativeHeaders Include="$(ReactNativePackageDir)\ReactCommon\**\*.h" />
+      <PoisonedHeaders Include="@(ReactNativeHeaders->'$(ReactNativeDir)\ReactCommon\%(RecursiveDir)%(Filename)%(Extension)')" />
+    </ItemGroup>
+
+    <PropertyGroup>
+      <PoisonedHeaderContent><![CDATA[
+#error Facebook React Native headers may not be including without patches. \
+Ensure no React Native headers are directly or indirectly included, or import \
+"ReactPatches.targets" in your project.
+      ]]></PoisonedHeaderContent>
+    </PropertyGroup>
+
+    <WriteLinesToFile
+      File="%(PoisonedHeaders.FullPath)"
+      Lines='$(PoisonedHeaderContent)'
+      Overwrite="true"
+      WriteOnlyWhenDifferent="true"/>
+  </Target>
+
+</Project>

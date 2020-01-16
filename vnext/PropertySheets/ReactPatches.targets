@@ -5,12 +5,19 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="EvaluatePatchReactInputsOutputs" BeforeTargets="PrepareForBuild">
+  <PropertyGroup>
+    <PatchTargetIncluded>true</PatchTargetIncluded>
+    <ReactPackageCommon>$(ReactNativePackageDir)\ReactCommon\</ReactPackageCommon>
+    <ReactCommon>$(ReactNativeDir)\ReactCommon\</ReactCommon>
+    <DeforkingPatchesCommon>$(ReactNativeWindowsDir)\DeforkingPatches\ReactCommon\</DeforkingPatchesCommon>
+  </PropertyGroup>
+
+  <Target Name="EvaluatePatchReactInputsOutputs" BeforeTargets="PrepareForBuild;PoisonUnpatchedHeaders">
     <ItemGroup>
-      <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" Condition="'$(PATCH_RN)'=='true'"/>
-      <AllReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
-      <ReactSourceFiles Include="@(AllReactSourceFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(ReactNativeWindowsDir)\DeforkingPatches\%(AllReactSourceFiles.RecursiveDir)%(AllReactSourceFiles.Filename)%(AllReactSourceFiles.Extension)')" />
-      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
+      <DeforkingPatchFiles Include="$(DeforkingPatchesCommon)\**" Condition="'$(PATCH_RN)'=='true'"/>
+      <AllReactSourceFiles Include="$(ReactPackageCommon)\**\*.cpp;$(ReactPackageCommon)\**\*.h" />
+      <ReactSourceFiles Include="@(AllReactSourceFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(DeforkingPatchesCommon)\%(RecursiveDir)%(Filename)%(Extension)')" />
+      <JsiReactHeaderFiles Include="$(ReactPackageCommon)\turbomodule\core\*.h" />
     </ItemGroup>
   </Target>
 
@@ -26,7 +33,7 @@
           AfterTargets="EvaluatePatchInputsOutputs"
           BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="@(ReactSourceFiles)"
-          DestinationFiles="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')"
+          DestinationFiles="@(ReactSourceFiles->'$(ReactCommon)\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 
@@ -34,7 +41,7 @@
           AfterTargets="EvaluatePatchInputsOutputs"
           BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="@(DeforkingPatchFiles)"
-          DestinationFiles="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')"
+          DestinationFiles="@(DeforkingPatchFiles->'$(ReactCommon)\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 
@@ -42,7 +49,7 @@
           AfterTargets="EvaluatePatchInputsOutputs"
           BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommon)\jsireact\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

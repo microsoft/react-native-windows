@@ -86,4 +86,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\PoisonUnpatchedHeaders.targets" />
+
 </Project>
