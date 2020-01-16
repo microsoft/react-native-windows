@@ -47,6 +47,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x86
           UseRNFork: true
+          LayoutHeaders: true
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: arm
