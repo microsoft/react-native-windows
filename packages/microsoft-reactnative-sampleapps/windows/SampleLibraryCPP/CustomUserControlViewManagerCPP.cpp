@@ -71,8 +71,7 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
     FrameworkElement const &view,
     IJSValueReader const &propertyMapReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-
-      const JSValueObject &propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
+    const JSValueObject &propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
 
     for (auto const &pair : propertyMap) {
       auto const &propertyName = pair.first;
@@ -80,24 +79,24 @@ void CustomUserControlViewManagerCpp::UpdateProperties(
 
       if (propertyName == "label") {
         if (!propertyValue.IsNull()) {
-            auto const& value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
+          auto const &value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
           control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), value);
         } else {
           control.ClearValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty());
         }
-      } /*else if (propertyName == "color") {
-        if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::ForegroundProperty(), propertyValue);
+      } else if (propertyName == "color") {
+        if (auto value = propertyValue.To<Brush>()) {
+          control.SetValue(Control::ForegroundProperty(), value);
         } else {
           control.ClearValue(Control::ForegroundProperty());
         }
       } else if (propertyName == "backgroundColor") {
-        if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::BackgroundProperty(), propertyValue);
+        if (auto value = propertyValue.To<Brush>()) {
+          control.SetValue(Control::BackgroundProperty(), value);
         } else {
           control.ClearValue(Control::BackgroundProperty());
         }
-      }*/
+      }
     }
   }
 }

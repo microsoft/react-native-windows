@@ -8,6 +8,7 @@
 #include "JSValue.h"
 #include "JSValueTreeReader.h"
 #include "StructInfo.h"
+
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
@@ -77,6 +78,10 @@ void ReadValue(IJSValueReader const &reader, /*out*/ std::tuple<Ts...> &value) n
 void ReadValue(IJSValueReader const &reader, /*out*/ JSValue &value) noexcept;
 void ReadValue(IJSValueReader const &reader, /*out*/ JSValueObject &value) noexcept;
 void ReadValue(IJSValueReader const &reader, /*out*/ JSValueArray &value) noexcept;
+
+#ifndef CXXUNITTESTS
+void ReadValue(IJSValueReader const &reader, /*out*/ winrt::Windows::UI::Xaml::Media::Brush &value) noexcept;
+#endif
 
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int> = 1>
 void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept;
@@ -393,6 +398,16 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValueObject &value
 inline void ReadValue(IJSValueReader const &reader, /*out*/ JSValueArray &value) noexcept {
   value = JSValue::ReadArrayFrom(reader);
 }
+
+#ifndef CXXUNITTESTS
+
+inline void ReadValue(IJSValueReader const &reader, /*out*/ winrt::Windows::UI::Xaml::Media::Brush &value) noexcept {
+  JSValue jsValue = JSValue::ReadFrom(reader);
+  value = winrt::Microsoft::ReactNative::XamlHelper::BrushFrom(
+      [&jsValue](winrt::Microsoft::ReactNative::IJSValueWriter writer) noexcept { jsValue.WriteTo(writer); });
+}
+
+#endif
 
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
 inline void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept {
