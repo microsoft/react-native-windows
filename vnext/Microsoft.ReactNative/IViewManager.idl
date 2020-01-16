@@ -42,7 +42,7 @@ namespace Microsoft.ReactNative
   {
     Windows.Foundation.Collections.IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
-    void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
+    void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, IJSValueReader propertyMapReader);
   }
 
   [webhosthidden]

@@ -86,10 +86,11 @@ namespace Microsoft.ReactNative.Managed
     }
     private IReadOnlyDictionary<string, ViewManagerPropertyType> _nativeProps;
 
-    public virtual void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
+    public virtual void UpdateProperties(FrameworkElement view, IJSValueReader propertyMapReader)
     {
       if (view is TFrameworkElement viewAsT)
       {
+        propertyMapReader.ReadValue(out IEnumerable <KeyValuePair<string, JSValue>> propertyMap);
         foreach (var property in propertyMap)
         {
           if (ViewManagerProperties.TryGetValue(property.Key, out ViewManagerProperty<TFrameworkElement> setter))
@@ -120,7 +121,7 @@ namespace Microsoft.ReactNative.Managed
               var setter = new ViewManagerProperty<TFrameworkElement>();
               setter.Name = propertyAttribute.PropertyName ?? methodInfo.Name;
               setter.Type = propertyAttribute.PropertyType ?? TypeToViewManagerPropertyType(methodInfo.GetParameters()[1].ParameterType);
-              setter.Setter = MakePropertySetterMethod(methodInfo);
+              setter.Setter = MakeJSValueMethod(methodInfo);
 
               properties.Add(setter.Name, setter);
             }
@@ -138,42 +139,7 @@ namespace Microsoft.ReactNative.Managed
     {
       public string Name;
       public ViewManagerPropertyType Type;
-      public Action<U, object> Setter;
-    }
-
-    private Action<TFrameworkElement, object> MakePropertySetterMethod(MethodInfo methodInfo)
-    {
-      var parameters = methodInfo.GetParameters();
-
-      if (parameters.Length == 2
-        && parameters[0].ParameterType == typeof(TFrameworkElement))
-      {
-        Type typeOfPropertyValue = parameters[1].ParameterType;
-
-        if (IsNullableEnum(typeOfPropertyValue, out Type enumType))
-        {
-          return (view, propertyValue) =>
-          {
-            methodInfo.Invoke(this, new object[] { view, propertyValue != null ? Enum.Parse(enumType, propertyValue.ToString()) : null });
-          };
-        }
-        else if (IsEnum(typeOfPropertyValue))
-        {
-          return (view, propertyValue) =>
-          {
-            methodInfo.Invoke(this, new object[] { view, Enum.Parse(typeOfPropertyValue, propertyValue.ToString()) });
-          };
-        }
-        else
-        {
-          return (view, propertyValue) =>
-          {
-            methodInfo.Invoke(this, new object[] { view, propertyValue });
-          };
-        }
-      }
-
-      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
+      public Action<U, JSValue> Setter;
     }
 
     private static ViewManagerPropertyType TypeToViewManagerPropertyType(Type t)
@@ -274,7 +240,7 @@ namespace Microsoft.ReactNative.Managed
               var command = new ViewManagerCommand<TFrameworkElement>();
               command.CommandName = commandAttribute.CommandName ?? methodInfo.Name;
               command.CommandId = viewManagerCommands.Count;
-              command.CommandMethod = MakeCommandMethod(methodInfo);
+              command.CommandMethod = MakeReaderMethod(methodInfo);
               viewManagerCommands.Add(command.CommandId, command);
             }
           }
@@ -291,33 +257,6 @@ namespace Microsoft.ReactNative.Managed
       public string CommandName;
       public long CommandId;
       public Action<U, IJSValueReader> CommandMethod;
-    }
-
-    private Action<TFrameworkElement, IJSValueReader> MakeCommandMethod(MethodInfo methodInfo)
-    {
-      var parameters = methodInfo.GetParameters();
-      if (parameters.Length == 2 && parameters[0].ParameterType == typeof(TFrameworkElement))
-      {
-        if (parameters[1].ParameterType == typeof(IJSValueReader))
-        {
-          return (view, commandArgsReader) =>
-          {
-            methodInfo.Invoke(this, new object[] { view, commandArgsReader });
-          };
-        }
-        else
-        {
-          MethodInfo genericReadValue = ReadValueMethodInfo.MakeGenericMethod(parameters[1].ParameterType);
-
-          return (view, commandArgsReader) =>
-          {
-            var result = genericReadValue.Invoke(null, new object[] { commandArgsReader });
-            methodInfo.Invoke(this, new object[] { view, result });
-          };
-        }
-      }
-
-      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
     }
 
     #endregion
@@ -472,6 +411,8 @@ namespace Microsoft.ReactNative.Managed
 
     #endregion
 
+    #region ReadValue Helpers
+
     internal static MethodInfo ReadValueMethodInfo
     {
       get
@@ -497,5 +438,82 @@ namespace Microsoft.ReactNative.Managed
     }
     private static MethodInfo _readValueMethodInfo;
 
+    private Action<TFrameworkElement, IJSValueReader> MakeReaderMethod(MethodInfo methodInfo)
+    {
+      var parameters = methodInfo.GetParameters();
+      if (parameters.Length == 2 && parameters[0].ParameterType == typeof(TFrameworkElement))
+      {
+        if (parameters[1].ParameterType == typeof(IJSValueReader))
+        {
+          return (view, reader) =>
+          {
+            methodInfo.Invoke(this, new object[] { view, reader });
+          };
+        }
+        else
+        {
+          MethodInfo genericReadValue = ReadValueMethodInfo.MakeGenericMethod(parameters[1].ParameterType);
+
+          return (view, reader) =>
+          {
+            var result = genericReadValue.Invoke(null, new object[] { reader });
+            methodInfo.Invoke(this, new object[] { view, result });
+          };
+        }
+      }
+
+      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
+    }
+
+    internal static MethodInfo ToValueMethodInfo
+    {
+      get
+      {
+        if (null == _toValueMethodInfo)
+        {
+          foreach (var methodInfo in typeof(JSValue).GetMethods())
+          {
+            if (methodInfo.Name == "To"
+              && methodInfo.IsGenericMethodDefinition
+              && methodInfo.ReturnType.IsGenericParameter)
+            {
+              _toValueMethodInfo = methodInfo;
+              break;
+            }
+          }
+        }
+        return _toValueMethodInfo;
+      }
+    }
+    private static MethodInfo _toValueMethodInfo;
+
+    private Action<TFrameworkElement, JSValue> MakeJSValueMethod(MethodInfo methodInfo)
+    {
+      var parameters = methodInfo.GetParameters();
+      if (parameters.Length == 2 && parameters[0].ParameterType == typeof(TFrameworkElement))
+      {
+        if (parameters[1].ParameterType == typeof(JSValue))
+        {
+          return (view, value) =>
+          {
+            methodInfo.Invoke(this, new object[] { view, value });
+          };
+        }
+        else
+        {
+          MethodInfo genericToValue = ToValueMethodInfo.MakeGenericMethod(parameters[1].ParameterType);
+
+          return (view, value) =>
+          {
+            var result = genericToValue.Invoke(value, null);
+            methodInfo.Invoke(this, new object[] { view, result });
+          };
+        }
+      }
+
+      throw new ArgumentException($"Unable to parse parameters for {methodInfo.Name}.");
+    }
+
+    #endregion
   }
 }

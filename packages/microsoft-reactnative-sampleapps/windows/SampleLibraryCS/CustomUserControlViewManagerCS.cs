@@ -41,7 +41,7 @@ namespace SampleLibraryCS
             }
         }
 
-        [ViewManagerProperty("color")]
+        //[ViewManagerProperty("color")]
         public void SetColor(CustomUserControlCS view, Brush value)
         {
             if (null != value)
@@ -54,7 +54,7 @@ namespace SampleLibraryCS
             }
         }
 
-        [ViewManagerProperty("backgroundColor")]
+        //[ViewManagerProperty("backgroundColor")]
         public void SetBackgroundColor(CustomUserControlCS view, Brush value)
         {
             if (null != value)

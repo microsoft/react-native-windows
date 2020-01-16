@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "CustomUserControlViewManagerCpp.h"
+#include "JSValueReader.h"
 #include "NativeModules.h"
 
 #include "CustomUserControlCpp.h"
@@ -68,32 +69,35 @@ IMapView<hstring, ViewManagerPropertyType> CustomUserControlViewManagerCpp::Nati
 
 void CustomUserControlViewManagerCpp::UpdateProperties(
     FrameworkElement const &view,
-    IMapView<hstring, IInspectable> const &propertyMap) {
+    IJSValueReader const &propertyMapReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-    for (auto const &pair : propertyMap) {
-      auto const &propertyName = pair.Key();
-      auto const &propertyValue = pair.Value();
 
-      if (propertyName == L"label") {
-        if (propertyValue != nullptr) {
-          auto value = winrt::unbox_value<hstring>(propertyValue);
-          control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), propertyValue);
+      const JSValueObject &propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
+
+    for (auto const &pair : propertyMap) {
+      auto const &propertyName = pair.first;
+      auto const &propertyValue = pair.second;
+
+      if (propertyName == "label") {
+        if (!propertyValue.IsNull()) {
+            auto const& value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
+          control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), value);
         } else {
           control.ClearValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty());
         }
-      } else if (propertyName == L"color") {
+      } /*else if (propertyName == "color") {
         if (auto value = propertyValue.try_as<Brush>()) {
           control.SetValue(Control::ForegroundProperty(), propertyValue);
         } else {
           control.ClearValue(Control::ForegroundProperty());
         }
-      } else if (propertyName == L"backgroundColor") {
+      } else if (propertyName == "backgroundColor") {
         if (auto value = propertyValue.try_as<Brush>()) {
           control.SetValue(Control::BackgroundProperty(), propertyValue);
         } else {
           control.ClearValue(Control::BackgroundProperty());
         }
-      }
+      }*/
     }
   }
 }

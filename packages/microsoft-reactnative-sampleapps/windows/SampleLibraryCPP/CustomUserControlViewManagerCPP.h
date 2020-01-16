@@ -35,8 +35,7 @@ struct CustomUserControlViewManagerCpp
 
   void UpdateProperties(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
-      winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable> const
-          &propertyMap);
+      winrt::Microsoft::ReactNative::IJSValueReader const &propertyMapReader) noexcept;
 
   // IViewManagerWithCommands
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, int64_t> Commands() noexcept;

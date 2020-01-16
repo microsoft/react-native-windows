@@ -103,27 +103,10 @@ void ABIViewManager::UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, 
   if (m_viewManagerWithNativeProperties) {
     auto view = nodeToUpdate->GetView().as<winrt::FrameworkElement>();
 
-    auto propertyMap = winrt::single_threaded_map<hstring, IInspectable>();
+    IJSValueReader propertyMapReader = winrt::make<DynamicReader>(reactDiffMap);
 
-    for (const auto &pair : reactDiffMap.items()) {
-      auto propertyName = pair.first.getString();
-      auto propertyNameHstring = react::uwp::asHstring(propertyName);
-
-      if (const auto &propertyType = m_nativeProps.TryLookup(propertyNameHstring)) {
-        IInspectable propertyValue = nullptr;
-
-        if (propertyType.value() == ViewManagerPropertyType::Color && react::uwp::IsValidColorValue(pair.second)) {
-          propertyValue = react::uwp::BrushFrom(pair.second);
-        } else {
-          propertyValue = ConvertToIInspectable(pair.second);
-        }
-
-        propertyMap.Insert(react::uwp::asHstring(propertyName), propertyValue);
-      }
-    }
-
-    if (propertyMap.Size() > 0) {
-      m_viewManagerWithNativeProperties.UpdateProperties(view, propertyMap.GetView());
+    if (reactDiffMap.size() > 0) {
+      m_viewManagerWithNativeProperties.UpdateProperties(view, propertyMapReader);
     }
   }
 
