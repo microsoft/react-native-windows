@@ -20,7 +20,7 @@
 
     <PropertyGroup>
       <PoisonedHeaderContent><![CDATA[
-#error Facebook React Native headers may not be including without patches. \
+#error Facebook React Native headers may not be included without patches. \
 Ensure no React Native headers are directly or indirectly included, or import \
 "ReactPatches.targets" in your project.
       ]]></PoisonedHeaderContent>
