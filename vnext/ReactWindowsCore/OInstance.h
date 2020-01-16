@@ -46,7 +46,7 @@ class InstanceImpl : public InstanceWrapper, private ::std::enable_shared_from_t
       std::shared_ptr<IDevSupportManager> devManager) noexcept;
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
   static std::shared_ptr<InstanceImpl> MakeSandbox(
       std::string &&jsString,
       std::string &&configsString,

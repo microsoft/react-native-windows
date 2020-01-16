@@ -24,7 +24,7 @@ JSECreator LazyDevSupportManager::LoadJavaScriptInProxyMode(const DevSettings &s
   return m_dsm->LoadJavaScriptInProxyMode(settings);
 }
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 JSECreator LazyDevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &settings) /*override*/
 {
   EnsureDevSupportManager();

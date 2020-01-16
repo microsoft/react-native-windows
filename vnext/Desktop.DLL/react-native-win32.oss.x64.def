@@ -17,7 +17,6 @@ EXPORTS
 ?GetConstants@ViewManagerBase@react@facebook@@UEBA?AUdynamic@folly@@XZ
 ?InitializeLogging@react@facebook@@YAX$$QEAV?$function@$$A6AXW4RCTLogLevel@react@facebook@@PEBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YAXPEAUINativeTraceHandler@12@@Z
-?Make@IHttpResource@react@facebook@@SA?AV?$unique_ptr@UIHttpResource@react@facebook@@U?$default_delete@UIHttpResource@react@facebook@@@std@@@std@@XZ
 ?Make@IWebSocket@React@Microsoft@@SA?AV?$unique_ptr@UIWebSocket@React@Microsoft@@U?$default_delete@UIWebSocket@React@Microsoft@@@std@@@std@@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?Make@JSBigStringResourceDll@react@facebook@@SA?AV?$unique_ptr@$$CBVJSBigStringResourceDll@react@facebook@@U?$default_delete@$$CBVJSBigStringResourceDll@react@facebook@@@std@@@std@@PEAUHINSTANCE__@@PEAUHRSRC__@@@Z

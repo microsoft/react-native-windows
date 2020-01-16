@@ -651,7 +651,7 @@ void *ChakraExecutor::getJavaScriptContext() {
   return m_context;
 }
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 int64_t ChakraExecutor::getPeakJsMemoryUsage() const noexcept {
   return tls_runtimeTracker.MemoryTracker->GetPeakMemoryUsage();
 }
