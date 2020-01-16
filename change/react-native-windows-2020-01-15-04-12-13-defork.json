@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add initial set of React Native Patches",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "4180ab2f648c5c3994e131b4a064e09c32f220a9",
-  "date": "2020-01-15T12:12:13.659Z"
-}
