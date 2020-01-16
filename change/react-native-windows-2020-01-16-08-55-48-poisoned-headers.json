@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Source Patching Improvements",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "a1efe72497a416ee6288d0f5748e5db572a838a1",
+  "date": "2020-01-16T16:55:48.229Z"
+}
