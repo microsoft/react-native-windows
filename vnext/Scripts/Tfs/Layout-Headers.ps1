@@ -12,14 +12,14 @@ param(
 )
 
 if (!$ReactNativeRoot) {
-    $intermediateBuildDir =  if ($env:BaseIntDir) { $env:BaseIntDir } else { "$SourceRoot\vnext\build" }
+    $intermediateBuildDir = if ($env:BaseIntDir) { $env:BaseIntDir } else { "$SourceRoot\vnext\build" }
     $relativeRnDir = @(gci $intermediateBuildDir react-native-patched -Recurse -Directory -Name)[0]
 
     if (!$relativeRnDir) {
         throw "Cannot find patched React Native Directory (has a project been built?)"
     }
 
-    $ReactNativeRoot = $intermediateBuildDir + "\" + $relativeRnDir
+    $ReactNativeRoot = Join-Path $intermediateBuildDir $relativeRnDir
 }
 
 Write-Host "Source root: [$SourceRoot]"
