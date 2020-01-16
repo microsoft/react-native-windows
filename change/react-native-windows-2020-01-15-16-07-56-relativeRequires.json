@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "convert haste imports to use relative requires",
+  "packageName": "react-native-windows",
+  "email": "kmelmon@microsoft.com",
+  "commit": "471e17f2a840db67a47adaf32178a91db8bf2aad",
+  "date": "2020-01-16T00:07:56.728Z"
+}
