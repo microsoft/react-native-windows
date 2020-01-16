@@ -5,14 +5,26 @@ param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
-	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\vnext\build\" + @(gci "$ReactWindowsRoot\build\" react-native-patched -Recurse -Directory -Name)[0],
+	[System.IO.DirectoryInfo] $ReactNativeRoot,
 	[string] $FollyVersion = '2019.09.30.00',
 	[System.IO.DirectoryInfo] $FollyRoot = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
+if (!$ReactNativeRoot) {
+    $intermediateBuildDir =  if ($env:BaseIntDir) { $env:BaseIntDir } else { "$SourceRoot\vnext\build\" }
+    $relativeRnDir = @(gci $intermediateBuildDir react-native-patched -Recurse -Directory -Name)[0]
+
+    if (!$relativeRnDir) {
+        throw "Cannot find patched React Native Directory (has a project been built?)"
+    }
+
+    $ReactNativeRoot = $intermediateBuildDir + $relativeRnDir
+}
+
 Write-Host "Source root: [$SourceRoot]"
 Write-Host "Destination root: [$TargetRoot]"
+Write-Host "React Native root: [$ReactNativeRoot]"
 
 $patterns = $Extensions| ForEach-Object {"*.$_"}
 
