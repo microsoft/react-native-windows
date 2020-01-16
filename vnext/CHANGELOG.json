@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Jan 2020 06:19:11 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.115",
+      "version": "0.60.0-vnext.115",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Layout-Headers on CI machines",
+            "author": "nick@nickgerleman.com",
+            "commit": "bc33f50c50fbed7fef86a94624d50379ec518996"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jan 2020 05:34:40 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.115",
       "version": "0.60.0-vnext.115",

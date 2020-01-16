@@ -1,8 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix Layout-Headers on CI machines",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "bc33f50c50fbed7fef86a94624d50379ec518996",
-  "date": "2020-01-16T04:42:29.828Z"
-}
