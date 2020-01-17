@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Jan 2020 21:36:10 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jan 2020 05:40:36 GMT and should not be manually modified.
 
+## 0.59.0-vnext.205
+Fri, 17 Jan 2020 05:40:36 GMT
+
+### Changes
+
+- Upgrade OpenSSL NuGet to 1.1.1-d.2. (julio.rocha@microsoft.com)
 ## 0.59.0-vnext.204
 Wed, 15 Jan 2020 21:36:10 GMT
 
