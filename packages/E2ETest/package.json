@@ -22,10 +22,10 @@
     "deploybundleapp": "react-native run-windows --no-launch --no-packager --no-build --bundle"
   },
   "dependencies": {
-    "react": "16.8.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz",
-    "react-native-windows": "0.60.0-vnext.115",
-    "react-native-windows-extended": "0.60.67-2",
+    "react": "16.9.0",
+    "react-native": "0.61.0",
+    "react-native-windows": "0.61.0-vnext.1",
+    "react-native-windows-extended": "0.61.0",
     "rnpm-plugin-windows": "^0.4.0"
   },
   "devDependencies": {
