@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Do not use ES6 Default Export Where Upstream Uses CommonJS Import",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "063e2f8915178fb07784ade9a7f85e355818ab14",
+  "dependentChangeType": "patch",
+  "date": "2020-01-17T12:22:20.480Z"
+}
