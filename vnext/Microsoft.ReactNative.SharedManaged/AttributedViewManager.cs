@@ -90,7 +90,7 @@ namespace Microsoft.ReactNative.Managed
     {
       if (view is TFrameworkElement viewAsT)
       {
-        propertyMapReader.ReadValue(out IEnumerable <KeyValuePair<string, JSValue>> propertyMap);
+        propertyMapReader.ReadValue(out IDictionary<string, JSValue> propertyMap);
         foreach (var property in propertyMap)
         {
           if (ViewManagerProperties.TryGetValue(property.Key, out ViewManagerProperty<TFrameworkElement> setter))
@@ -158,11 +158,11 @@ namespace Microsoft.ReactNative.Managed
       {
         return ViewManagerPropertyType.Number;
       }
-      else if (t == typeof(IReadOnlyList<object>))
+      else if (t == typeof(IList<JSValue>) || t == typeof(IReadOnlyList<JSValue>))
       {
         return ViewManagerPropertyType.Array;
       }
-      else if (t == typeof(IReadOnlyDictionary<string, object>))
+      else if (t == typeof(IDictionary<string, JSValue>) || t == typeof(IReadOnlyDictionary<string, JSValue>))
       {
         return ViewManagerPropertyType.Map;
       }
