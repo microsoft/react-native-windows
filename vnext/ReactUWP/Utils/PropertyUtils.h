@@ -32,7 +32,7 @@ static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
 };
 
-static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
+static const std::unordered_map<std::string, ShadowEdges> borderTypeMap = {
     {"borderLeftWidth", ShadowEdges::Left},
     {"borderTopWidth", ShadowEdges::Top},
     {"borderRightWidth", ShadowEdges::Right},
@@ -40,6 +40,30 @@ static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
     {"borderStartWidth", ShadowEdges::Start},
     {"borderEndWidth", ShadowEdges::End},
     {"borderWidth", ShadowEdges::AllEdges},
+};
+
+static const std::unordered_map<std::string, ShadowCorners> borderRadiusTypeMap = {
+    {"borderTopLeftRadius", ShadowCorners::TopLeft},
+    {"borderTopRightRadius", ShadowCorners::TopRight},
+    {"borderBottomLeftRadius", ShadowCorners::BottomLeft},
+    {"borderBottomRightRadius", ShadowCorners::BottomRight},
+    {"borderTopStartRadius", ShadowCorners::TopStart},
+    {"borderTopEndRadius", ShadowCorners::TopEnd},
+    {"borderBottomStartRadius", ShadowCorners::BottomStart},
+    {"borderBottomEndRadius", ShadowCorners::BottomEnd},
+    {"borderRadius", ShadowCorners::AllCorners},
+};
+
+static const std::unordered_map<std::string, ShadowEdges> paddingTypeMap = {
+    {"paddingLeft", ShadowEdges::Left},
+    {"paddingTop", ShadowEdges::Top},
+    {"paddingRight", ShadowEdges::Right},
+    {"paddingBottom", ShadowEdges::Bottom},
+    {"paddingStart", ShadowEdges::Start},
+    {"paddingEnd", ShadowEdges::End},
+    {"paddingHorizontal", ShadowEdges::Horizontal},
+    {"paddingVertical", ShadowEdges::Vertical},
+    {"padding", ShadowEdges::AllEdges},
 };
 
 inline winrt::Windows::UI::Xaml::Thickness GetThickness(double thicknesses[ShadowEdges::CountEdges], bool isRTL) {
@@ -95,16 +119,16 @@ inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(
 }
 
 template <class T>
-void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
-  node->m_padding[edge] = margin;
+void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, const folly::dynamic &propertyValue) {
+  node->m_padding[edge] = propertyValue.isDouble() ? propertyValue.asDouble() : c_UndefinedEdge;
   winrt::Thickness thickness =
       GetThickness(node->m_padding, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.Padding(thickness);
 }
 
 template <class T>
-void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, double margin) {
-  node->m_border[edge] = margin;
+void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, const folly::dynamic &propertyValue) {
+  node->m_border[edge] = propertyValue.isDouble() ? propertyValue.asDouble() : c_UndefinedEdge;
   winrt::Thickness thickness =
       GetThickness(node->m_border, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.BorderThickness(thickness);
@@ -184,13 +208,9 @@ bool TryUpdateBorderProperties(
       UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else {
-    auto iter = edgeTypeMap.find(propertyName);
-    if (iter != edgeTypeMap.end()) {
-      if (propertyValue.isNumber()) {
-        SetBorderThickness(node, element, iter->second, propertyValue.asDouble());
-      } else if (propertyValue.isNull()) {
-        SetBorderThickness(node, element, iter->second, 0);
-      }
+    auto iter = borderTypeMap.find(propertyName);
+    if (iter != borderTypeMap.end()) {
+      SetBorderThickness(node, element, iter->second, propertyValue);
     } else {
       isBorderProperty = false;
     }
@@ -205,35 +225,12 @@ bool TryUpdatePadding(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
+
   bool isPaddingProperty = true;
 
-  if (propertyName == "paddingLeft") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Left, propertyValue.asDouble());
-  } else if (propertyName == "paddingTop") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Top, propertyValue.asDouble());
-  } else if (propertyName == "paddingRight") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Right, propertyValue.asDouble());
-  } else if (propertyName == "paddingBottom") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
-  } else if (propertyName == "paddingStart") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Start, propertyValue.asDouble());
-  } else if (propertyName == "paddingEnd") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::End, propertyValue.asDouble());
-  } else if (propertyName == "paddingHorizontal") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Horizontal, propertyValue.asDouble());
-  } else if (propertyName == "paddingVertical") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::Vertical, propertyValue.asDouble());
-  } else if (propertyName == "padding") {
-    if (propertyValue.isNumber())
-      UpdatePadding(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
+  auto iter = paddingTypeMap.find(propertyName);
+  if (iter != paddingTypeMap.end()) {
+    UpdatePadding(node, element, iter->second, propertyValue);
   } else {
     isPaddingProperty = false;
   }
@@ -247,29 +244,16 @@ bool TryUpdateCornerRadiusOnNode(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-  if (propertyName == "borderTopLeftRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopLeft, propertyValue);
-  } else if (propertyName == "borderTopRightRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopRight, propertyValue);
-  } else if (propertyName == "borderTopStartRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopStart, propertyValue);
-  } else if (propertyName == "borderTopEndRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::TopEnd, propertyValue);
-  } else if (propertyName == "borderBottomRightRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomRight, propertyValue);
-  } else if (propertyName == "borderBottomLeftRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomLeft, propertyValue);
-  } else if (propertyName == "borderBottomStartRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomStart, propertyValue);
-  } else if (propertyName == "borderBottomEndRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::BottomEnd, propertyValue);
-  } else if (propertyName == "borderRadius") {
-    UpdateCornerRadiusValueOnNode(node, ShadowCorners::AllCorners, propertyValue);
+  bool isCornerRadiusProperty = true;
+
+  auto iter = borderRadiusTypeMap.find(propertyName);
+  if (iter != borderRadiusTypeMap.end()) {
+    UpdateCornerRadiusValueOnNode(node, iter->second, propertyValue);
   } else {
-    return false;
+    isCornerRadiusProperty = false;
   }
 
-  return true;
+  return isCornerRadiusProperty;
 }
 
 template <class T>

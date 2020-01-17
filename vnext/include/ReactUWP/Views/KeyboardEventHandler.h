@@ -131,7 +131,7 @@ class HandledKeyboardEventHandler {
 };
 
 struct KeyboardHelper {
-  static std::vector<HandledKeyboardEvent> FromJS(folly::dynamic const &obj);
+  static std::vector<HandledKeyboardEvent> GetHandledEvents(folly::dynamic const &obj);
   static HandledKeyboardEvent CreateKeyboardEvent(HandledEventPhase phase, winrt::KeyRoutedEventArgs const &args);
   static std::string FromVirtualKey(winrt::VirtualKey key, bool shiftDown, bool capLocked);
   static std::string CodeFromVirtualKey(winrt::VirtualKey key);

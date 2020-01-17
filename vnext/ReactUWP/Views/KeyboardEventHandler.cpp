@@ -51,8 +51,12 @@ struct json_type_traits<react::uwp::HandledKeyboardEvent> {
 namespace react {
 namespace uwp {
 
-std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(folly::dynamic const &obj) {
-  return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
+std::vector<HandledKeyboardEvent> KeyboardHelper::GetHandledEvents(folly::dynamic const &obj) {
+  if (obj.isArray()) {
+    return json_type_traits<std::vector<HandledKeyboardEvent>>::parseJson(obj);
+  } else {
+    return std::vector<HandledKeyboardEvent>{};
+  }
 }
 
 static folly::dynamic ToEventData(ReactKeyboardEvent event) {
@@ -123,9 +127,9 @@ void HandledKeyboardEventHandler::UpdateHandledKeyboardEvents(
     std::string const &propertyName,
     folly::dynamic const &value) {
   if (propertyName == "keyDownEvents") {
-    m_handledKeyDownKeyboardEvents = KeyboardHelper::FromJS(value);
+    m_handledKeyDownKeyboardEvents = KeyboardHelper::GetHandledEvents(value);
   } else if (propertyName == "keyUpEvents")
-    m_handledKeyUpKeyboardEvents = KeyboardHelper::FromJS(value);
+    m_handledKeyUpKeyboardEvents = KeyboardHelper::GetHandledEvents(value);
 }
 
 void HandledKeyboardEventHandler::hook(XamlView xamlView) {

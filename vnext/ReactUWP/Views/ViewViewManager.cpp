@@ -253,31 +253,13 @@ bool TryUpdateBorderProperties(
       element.BorderBrush(BrushFrom(propertyValue));
     else if (propertyValue.isNull())
       element.ClearValue(ViewPanel::BorderBrushProperty());
-  } else if (propertyName == "borderLeftWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Left, propertyValue.asDouble());
-  } else if (propertyName == "borderTopWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Top, propertyValue.asDouble());
-  } else if (propertyName == "borderRightWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Right, propertyValue.asDouble());
-  } else if (propertyName == "borderBottomWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Bottom, propertyValue.asDouble());
-  } else if (propertyName == "borderStartWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::Start, propertyValue.asDouble());
-  } else if (propertyName == "borderEndWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::End, propertyValue.asDouble());
-  } else if (propertyName == "borderWidth") {
-    if (propertyValue.isNumber())
-      SetBorderThickness(node, element, ShadowEdges::AllEdges, propertyValue.asDouble());
-    else if (propertyValue.isNull())
-      element.ClearValue(ViewPanel::BorderThicknessProperty());
   } else {
-    isBorderProperty = false;
+    auto iter = borderTypeMap.find(propertyName);
+    if (iter != borderTypeMap.end()) {
+      SetBorderThickness(node, element, iter->second, propertyValue);
+    } else {
+      isBorderProperty = false;
+    }
   }
 
   return isBorderProperty;
@@ -349,11 +331,15 @@ void ViewViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
         if (propertyValue.isString()) {
           bool clipChildren = propertyValue.getString() == "hidden";
           pPanel.ClipChildren(clipChildren);
+        } else if (propertyValue.isNull()) {
+          pPanel.ClearValue(ViewPanel::ClipChildrenProperty());
         }
       } else if (propertyName == "pointerEvents") {
         if (propertyValue.isString()) {
           bool hitTestable = propertyValue.getString() != "none";
           pPanel.IsHitTestVisible(hitTestable);
+        } else if (propertyValue.isNull()) {
+          pPanel.ClearValue(winrt::UIElement::IsHitTestVisibleProperty());
         }
       } else if (propertyName == "acceptsKeyboardFocus") {
         if (propertyValue.isBool())

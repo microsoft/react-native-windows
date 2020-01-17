@@ -285,8 +285,12 @@ void FlyoutShadowNode::updateProperties(const folly::dynamic &&props) {
         }
       }
     } else if (propertyName == "placement") {
-      auto placement = json_type_traits<winrt::FlyoutPlacementMode>::parseJson(propertyValue);
-      m_flyout.Placement(placement);
+      if (propertyValue.isString()) {
+        auto placement = json_type_traits<winrt::FlyoutPlacementMode>::parseJson(propertyValue);
+        m_flyout.Placement(placement);
+      } else if (propertyValue.isNull()) {
+        m_flyout.ClearValue(winrt::FlyoutBase::PlacementProperty());
+      }
     } else if (propertyName == "target") {
       if (propertyValue.isNumber()) {
         m_targetTag = static_cast<int64_t>(propertyValue.asDouble());

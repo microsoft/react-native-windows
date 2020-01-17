@@ -284,8 +284,13 @@ void FrameworkElementViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate,
         AnnounceLiveRegionChangedIfNeeded(element);
       } else if (propertyName == "accessible") {
         if (propertyValue.isBool()) {
-          if (!propertyValue.asBool())
+          if (propertyValue.asBool()) {
+            winrt::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Control);
+          } else {
             winrt::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Raw);
+          }
+        } else if (propertyValue.isNull()) {
+          element.ClearValue(winrt::AutomationProperties::AccessibilityViewProperty());
         }
       } else if (propertyName == "accessibilityLiveRegion") {
         if (propertyValue.isString()) {
