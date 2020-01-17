@@ -1,24 +1,26 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ReactNative
-{
-    [webhosthidden]
-    runtimeclass ReactInstanceSettings 
-    {
-        ReactInstanceSettings();
+import "NoExceptionAttribute.idl";
 
-        Boolean UseWebDebugger { get; set; };
-        Boolean UseLiveReload { get; set; };
-        Boolean UseDirectDebugger { get; set; };
-        Boolean UseJsi { get; set; };
-        Boolean EnableJITCompilation { get; set; };
-        Boolean EnableByteCodeCaching { get; set; };
-        Boolean EnableDeveloperMenu { get; set; };
+namespace Microsoft.ReactNative {
 
-        String ByteCodeFileUri { get; set; };
-        String DebugHost { get; set; };
-        String DebugBundlePath { get; set; };
-        String BundleRootPath { get; set; };
-    }
+  [webhosthidden]
+  runtimeclass ReactInstanceSettings 
+  {
+    [noexcept2] ReactInstanceSettings();
+
+    [noexcept2] Boolean UseWebDebugger { get; set; };
+    [noexcept2] Boolean UseLiveReload { get; set; };
+    [noexcept2] Boolean UseDirectDebugger { get; set; };
+    [noexcept2] Boolean UseJsi { get; set; };
+    [noexcept2] Boolean EnableJITCompilation { get; set; };
+    [noexcept2] Boolean EnableByteCodeCaching { get; set; };
+    [noexcept2] Boolean EnableDeveloperMenu { get; set; };
+
+    [noexcept2] String ByteCodeFileUri { get; set; };
+    [noexcept2] String DebugHost { get; set; };
+    [noexcept2] String DebugBundlePath { get; set; };
+    [noexcept2] String BundleRootPath { get; set; };
+  }
 }
