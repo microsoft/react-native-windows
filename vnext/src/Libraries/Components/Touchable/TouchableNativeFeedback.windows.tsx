@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 
 class DummyTouchableNativeFeedback extends React.Component<
   TouchableNativeFeedbackProps
-> {
+  > {
   public static SelectableBackground = () => ({});
   public static SelectableBackgroundBorderless = () => ({});
   public static Ripple = () => ({});
@@ -49,4 +49,4 @@ class DummyTouchableNativeFeedback extends React.Component<
   }
 }
 
-export default DummyTouchableNativeFeedback;
+module.exports = DummyTouchableNativeFeedback;

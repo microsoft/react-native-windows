@@ -105,7 +105,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'TextExample',
-    module: require('./TextExample.windows').default,
+    module: require('./TextExample.windows'),
   },
   {
     key: 'TextInputExample',
@@ -238,7 +238,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },*/
 ];
 
-const Modules: {[key: string]: IRNTesterModule} = {};
+const Modules: { [key: string]: IRNTesterModule } = {};
 
 APIExamples.concat(ComponentExamples).forEach((Example: IRNTesterExample) => {
   Modules[Example.key] = Example.module;
