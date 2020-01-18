@@ -406,8 +406,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl_win.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)future\readMe.md">
+    <None Include="$(MSBuildThisFileDirectory)future\README.md">
       <Filter>future</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)dispatchQueue\README.md">
+      <Filter>dispatchQueue</Filter>
     </None>
   </ItemGroup>
 </Project>

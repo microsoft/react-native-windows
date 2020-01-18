@@ -122,6 +122,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryLeakScope_EmptyImpl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)future\readMe.md" />
+    <None Include="$(MSBuildThisFileDirectory)dispatchQueue\README.md" />
+    <None Include="$(MSBuildThisFileDirectory)future\README.md" />
   </ItemGroup>
 </Project>
