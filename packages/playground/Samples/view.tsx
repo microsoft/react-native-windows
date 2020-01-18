@@ -5,177 +5,186 @@
  */
 
 import * as React from 'react';
-import {AppRegistry, CheckBox, StyleSheet, Text, View} from 'react-native';
+import { AppRegistry, CheckBox, Text, View } from 'react-native';
 
-export default class Bootstrap extends React.Component<
-  {},
-  {
-    focusable: boolean;
-    hasStyle: boolean;
-    hasBorder: boolean;
-    radius: boolean;
-    alignSelfCenter: boolean;
-    largeBorder: boolean;
-    largePadding: boolean;
-  }
-> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      focusable: true,
-      hasStyle: true,
-      hasBorder: true,
-      radius: true,
-      alignSelfCenter: true,
-      largeBorder: true,
-      largePadding: true,
-    };
-  }
-
-  render() {
-    const styles = StyleSheet.create({
-      noBorder: {
-        width: 200,
-        margin: 20,
-        padding: this.state.largePadding ? 15 : 0,
-        backgroundColor: 'orange',
-      },
-      innerBorder: {
-        width: 200,
-        margin: 20,
-        padding: this.state.largePadding ? 15 : 0,
+const styles: any = {
+    testRow: {
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    controlsView: {
+        flex: 1,
+        flexDirection: 'column',
+        width: 250,
+        backgroundColor: 'azure',
+        padding: 20,
+    },
+    styledView: {
+        flex: 1,
+        width: 250,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ccc',
+    },
+    hoverView: {
+        flex: 1,
+        width: 250,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         backgroundColor: 'lime',
-        borderColor: 'navy',
-        borderWidth: this.state.largeBorder ? 20 : 1,
-      },
-      outerBorder: {
+    },
+    baseView: {
         width: 200,
         margin: 20,
-        padding: this.state.largePadding ? 15 : 0,
-        backgroundColor: 'pink',
-        borderColor: 'crimson',
-        borderWidth: this.state.largeBorder ? 20 : 1,
-        borderRadius: 10,
-      },
-      radial: {
-        width: 200,
-        margin: 20,
-        padding: this.state.largePadding ? 15 : 0,
-        backgroundColor: 'magenta',
-        borderRadius: 10,
-        borderWidth: this.state.largeBorder ? 20 : 1,
-      },
-      child: {
-        backgroundColor: 'yellow',
-        alignSelf: this.state.alignSelfCenter ? 'center' : 'flex-start',
+        backgroundColor: 'orange',
+    },
+    child: {
         width: 100,
         height: 50,
         fontSize: 20,
-      },
-    });
+        backgroundColor: 'yellow',
+        color: 'blue',
+    },
+};
 
-    return (
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'column',
-          alignSelf: 'center',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 250,
-          backgroundColor: 'azure',
-          paddingHorizontal: 20,
-        }}>
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
-            onValueChange={value => this.setState({focusable: value})}
-            value={this.state.focusable}
-          />
-          <Text>acceptsKeyboardFocus</Text>
-        </View>
+export default class Bootstrap extends React.Component<
+    {},
+    {
+        focusable: boolean;
+        hasStyle: boolean;
+        hasBorder: boolean;
+        hasRadius: boolean;
+        alignCenter: boolean;
+        largeBorder: boolean;
+        largePadding: boolean;
+        enablePointerEvents: boolean;
+        isMouseOver: boolean;
+        lastPressedKey?: string;
+    }
+    > {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            focusable: true,
+            hasStyle: true,
+            hasBorder: true,
+            hasRadius: true,
+            alignCenter: true,
+            largeBorder: true,
+            largePadding: true,
+            enablePointerEvents: true,
+            isMouseOver: false,
+        };
+    }
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
-            onValueChange={value => this.setState({hasStyle: value})}
-            value={this.state.hasStyle}
-          />
-          <Text>hasStyle</Text>
-        </View>
+    render(): JSX.Element {
+        return (
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+                {this._renderStyledView()}
+                {this._renderHoverView()}
+            </View>
+        );
+    }
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
-            onValueChange={value => this.setState({hasBorder: value})}
-            value={this.state.hasBorder}
-          />
-          <Text>hasBorder</Text>
-        </View>
+    private _renderOption(name: string, checked: boolean, onChange: (value: any) => void): JSX.Element {
+        return (<View style={{ flexDirection: 'row' }}>
+            <CheckBox
+                onValueChange={onChange}
+                value={checked}
+            />
+            <Text>{name}</Text>
+        </View>);
+    }
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
-            onValueChange={value => this.setState({radius: value})}
-            value={this.state.radius}
-          />
-          <Text>hasRadius</Text>
-        </View>
+    private _renderStyledView(): JSX.Element {
+        const viewStyle: any = { ...styles.baseView };
 
-        <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
-          <CheckBox
-            onValueChange={value => this.setState({largeBorder: value})}
-            value={this.state.largeBorder}
-          />
-          <Text>largeBorder</Text>
-        </View>
+        if (this.state.largePadding) {
+            viewStyle.padding = 15;
+        }
 
-        <View
-          style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
-          <CheckBox
-            onValueChange={value => this.setState({alignSelfCenter: value})}
-            value={this.state.alignSelfCenter}
-          />
-          <Text>alignCenter</Text>
-        </View>
+        if (this.state.hasRadius) {
+            viewStyle.borderRadius = 10;
+            viewStyle.borderTopRightRadius = 30;
+            viewStyle.backgroundColor = 'magenta';
+        }
 
-        <View
-          style={{flexDirection: 'row', alignSelf: 'flex-start', width: 100}}>
-          <CheckBox
-            onValueChange={value => this.setState({largePadding: value})}
-            value={this.state.largePadding}
-          />
-          <Text>largePadding</Text>
-        </View>
+        if (this.state.hasBorder) {
+            viewStyle.borderWidth = 1;
+            viewStyle.borderColor = 'navy';
+            viewStyle.backgroundColor = 'lime';
 
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 250,
-            backgroundColor: 'azure',
-          }}>
-          <View
-            acceptsKeyboardFocus={this.state.focusable ? true : false}
-            style={
-              this.state.hasStyle
-                ? this.state.hasBorder
-                  ? this.state.radius
-                    ? styles.outerBorder
-                    : styles.innerBorder
-                  : this.state.radius
-                    ? styles.radial
-                    : styles.noBorder
-                : null
+            if (this.state.largeBorder) {
+                viewStyle.borderWidth = 20;
             }
-            {...{
-              // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-              acceptsKeyboardFocus: true,
-            }}>
-            <Text style={styles.child}>The Text</Text>
-          </View>
-        </View>
-      </View>
-    );
-  }
+
+            if (this.state.hasRadius) {
+                viewStyle.borderColor = 'crimson';
+                viewStyle.backgroundColor = 'pink';
+            }
+        }
+
+        const viewProps: any = {
+            style: this.state.hasStyle ? viewStyle : undefined,
+        };
+
+        return (
+            <View style={styles.testRow}>
+                <View
+                    style={styles.controlsView}>
+                    {this._renderOption('hasStyle', this.state.hasStyle, value => this.setState({ hasStyle: value }))}
+                    {this._renderOption('hasBorder', this.state.hasBorder, value => this.setState({ hasBorder: value }))}
+                    {this._renderOption('hasRadius', this.state.hasRadius, value => this.setState({ hasRadius: value }))}
+                    {this._renderOption('largeBorder', this.state.largeBorder, value => this.setState({ largeBorder: value }))}
+                    {this._renderOption('largePadding', this.state.largePadding, value => this.setState({ largePadding: value }))}
+                    {this._renderOption('alignCenter', this.state.alignCenter, value => this.setState({ alignCenter: value }))}
+                </View>
+                <View
+                    style={styles.styledView}>
+                    <View {...viewProps}>
+                        <Text style={[styles.child, { alignSelf: this.state.alignCenter ? 'center' : 'flex-start' }]}>The Text</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    private _renderHoverView(): JSX.Element {
+        const viewProps: any = {
+            acceptsKeyboardFocus: this.state.focusable,
+            pointerEvents: this.state.enablePointerEvents ? undefined : 'none',
+            onMouseEnter: this._onMouseEnter,
+            onMouseLeave: this._onMouseLeave,
+            onKeyDown: this._onKeyDown,
+        };
+
+        return (
+            <View style={styles.testRow}>
+                <View
+                    style={styles.controlsView}>
+                    {this._renderOption('acceptsKeyboardFocus', this.state.focusable, value => this.setState({ focusable: value }))}
+                    {this._renderOption('enablePointerEvents', this.state.enablePointerEvents, value => this.setState({ enablePointerEvents: value }))}
+                </View>
+                <View style={styles.hoverView} {...viewProps}>
+                    <Text>{this.state.isMouseOver ? "Mouse is over" : "Mouse is not over"}</Text>
+                    <Text>{this.state.lastPressedKey !== undefined ? `lastKey = '${this.state.lastPressedKey}'` : ''}</Text>
+                </View>
+            </View>
+        );
+    }
+
+    private _onMouseEnter = (e: any) => {
+        this.setState({ isMouseOver: true });
+    }
+
+    private _onMouseLeave = (e: any) => {
+        this.setState({ isMouseOver: false });
+    }
+
+    private _onKeyDown = (e: any) => {
+        this.setState({ lastPressedKey: e.nativeEvent.key });
+    }
 }
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

@@ -120,7 +120,7 @@ inline winrt::Windows::UI::Xaml::CornerRadius GetCornerRadius(
 
 template <class T>
 void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, const folly::dynamic &propertyValue) {
-  node->m_padding[edge] = propertyValue.isDouble() ? propertyValue.asDouble() : c_UndefinedEdge;
+  node->m_padding[edge] = propertyValue.isNumber() ? propertyValue.asDouble() : c_UndefinedEdge;
   winrt::Thickness thickness =
       GetThickness(node->m_padding, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.Padding(thickness);
@@ -128,7 +128,7 @@ void UpdatePadding(ShadowNodeBase *node, const T &element, ShadowEdges edge, con
 
 template <class T>
 void SetBorderThickness(ShadowNodeBase *node, const T &element, ShadowEdges edge, const folly::dynamic &propertyValue) {
-  node->m_border[edge] = propertyValue.isDouble() ? propertyValue.asDouble() : c_UndefinedEdge;
+  node->m_border[edge] = propertyValue.isNumber() ? propertyValue.asDouble() : c_UndefinedEdge;
   winrt::Thickness thickness =
       GetThickness(node->m_border, element.FlowDirection() == winrt::FlowDirection::RightToLeft);
   element.BorderThickness(thickness);
