@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Apply React Native Patches for All Consumers of ReackPackageDirectories",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "e185a5259428c4d172660765628d11b10cac2112",
+  "dependentChangeType": "patch",
+  "date": "2020-01-19T07:31:34.774Z"
+}
