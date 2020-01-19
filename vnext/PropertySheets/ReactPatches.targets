@@ -6,19 +6,19 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <ReactCommonSrc>$(ReactNativePackageDir)\ReactCommon\</ReactCommonSrc>
-    <ReactCommonDest>$(ReactNativeDir)\ReactCommon\</ReactCommonDest>
-    <PatchedReactCommonDest>$(ReactNativeWindowsDir)\\DeforkingPatches\ReactCommon\</PatchedReactCommonDest>
+    <ReactCommonSrcPath>$(ReactNativePackageDir)\ReactCommon\</ReactCommonSrcPath>
+    <ReactCommonDestPath>$(ReactNativeDir)\ReactCommon\</ReactCommonDestPath>
+    <ReactCommonPatchesPath>$(ReactNativeWindowsDir)\DeforkingPatches\ReactCommon\</ReactCommonPatchesPath>
   </PropertyGroup>
 
   <Target Name="EvaluateReactPatchInputs" BeforeTargets="PrepareForBuild">
     <ItemGroup>
-      <ReactCommonSrc Include="$(ReactCommonSrc)\**\*.cpp;$(ReactCommonSrc)\**\*.h" />
-      <UnpatchedReactCommonSrc Include="@(ReactCommonSrc)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(PatchedReactCommonDest)\%(RecursiveDir)%(Filename)%(Extension)')" />
-      <PatchedReactCommonSrc Include="$(PatchedReactCommonDest)\**" Condition="'$(PATCH_RN)'=='true'"/>
-
+      <DeforkingPatchFiles Include="$(ReactCommonPatchesPath)\**" Condition="'$(PATCH_RN)'=='true'"/>
+      <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)\**\*.cpp;$(ReactCommonSrcPath)\**\*.h" />
+      <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(ReactCommonPatchesPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
+      
       <!-- Special case to recreate custom header exports in Facebook BUCK logic -->
-      <JsiReactHeaderFiles Include="$(ReactCommonSrc)\turbomodule\core\*.h" />
+      <JsiReactHeaderFiles Include="$(ReactCommonSrcPath)\turbomodule\core\*.h" />
     </ItemGroup>
   </Target>
 
@@ -30,27 +30,27 @@
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-  <Target Name="CopyReactSources"
-          AfterTargets="EvaluatePatchInputsOutputs"
+  <Target Name="CopyUnpatchedReactSources"
+          AfterTargets="EvaluateReactPatchInputs"
           BeforeTargets="PrepareForBuild">
-    <Copy SourceFiles="@(UnpatchedReactCommonSrc)"
-          DestinationFiles="@(UnpatchedReactCommonSrc->'$(ReactCommonDest)\%(RecursiveDir)%(Filename)%(Extension)')"
+    <Copy SourceFiles="@(UnpatchedReactCommonSrcFiles)"
+          DestinationFiles="@(UnpatchedReactCommonSrcFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 
-  <Target Name="CopyPatchedReactCommonSrc"
-          AfterTargets="EvaluatePatchInputsOutputs"
+  <Target Name="CopyDeforkingPatches"
+          AfterTargets="EvaluateReactPatchInputs"
           BeforeTargets="PrepareForBuild">
-    <Copy SourceFiles="@(PatchedReactCommonSrc)"
-          DestinationFiles="@(PatchedReactCommonSrc->'$(ReactCommonDest)\%(RecursiveDir)%(Filename)%(Extension)')"
+    <Copy SourceFiles="@(DeforkingPatchFiles)"
+          DestinationFiles="@(DeforkingPatchFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name="CopyJsiReactHeaders"
-          AfterTargets="EvaluatePatchInputsOutputs"
+          AfterTargets="EvaluateReactPatchInputs"
           BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDest)\jsireact\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\jsireact\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

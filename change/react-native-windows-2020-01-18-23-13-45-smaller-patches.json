@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Reduce React Patching Disk Space Usage",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "e331384689c30df28286cefa73e74159357b7d48",
+  "dependentChangeType": "patch",
+  "date": "2020-01-19T07:13:45.041Z"
+}
