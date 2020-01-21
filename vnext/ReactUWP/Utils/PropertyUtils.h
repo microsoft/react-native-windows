@@ -225,7 +225,6 @@ bool TryUpdatePadding(
     const T &element,
     const std::string &propertyName,
     const folly::dynamic &propertyValue) {
-
   bool isPaddingProperty = true;
 
   auto iter = paddingTypeMap.find(propertyName);
