@@ -84,7 +84,7 @@ class ChakraExecutor : public JSExecutor {
 
   virtual void *getJavaScriptContext() override;
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
   virtual int64_t getPeakJsMemoryUsage() const noexcept override;
 #endif
 

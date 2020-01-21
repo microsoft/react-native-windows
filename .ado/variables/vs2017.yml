@@ -3,3 +3,4 @@ variables:
   MSBuildVersion: 15.0
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\drknwe51.xnq'
   BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir # redirect to C:
+  runCodesignValidationInjection: false

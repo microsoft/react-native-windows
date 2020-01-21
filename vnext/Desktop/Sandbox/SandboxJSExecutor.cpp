@@ -25,7 +25,7 @@ using namespace Concurrency;
 namespace facebook {
 namespace react {
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 std::unique_ptr<ExecutorDelegate> SandboxDelegateFactory::createExecutorDelegate(
     std::shared_ptr<ModuleRegistry> registry,
@@ -326,7 +326,7 @@ void SandboxJSExecutor::OnNativeModuleCallMessage(folly::dynamic &&calls) {
   m_delegate->callNativeModules(*this, std::move(calls), false);
 }
 
-#endif // OSS_RN
+#endif // PATCH_RN
 } // namespace react
 } // namespace facebook
 #pragma warning(pop)

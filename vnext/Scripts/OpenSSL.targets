@@ -20,9 +20,15 @@
         $(MSBuildThisFileDirectory)..\..\lib\x86\$(Configuration);
         %(AdditionalLibraryDirectories)
       </AdditionalLibraryDirectories>
+      <!--
+        libcrypto.lib - Provided by this package
+        libssl.lib    - Provided by this package
+        Crypt32.lib   - Provided by Windows API
+      -->
       <AdditionalDependencies>
-        libeay32.lib;
-        ssleay32.lib;
+        libcrypto.lib;
+        libssl.lib;
+        Crypt32.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
     </Link>

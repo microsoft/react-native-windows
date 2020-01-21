@@ -43,7 +43,7 @@
 
 #include <cxxreact/JSExecutor.h>
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 #include <JSI/Shared/RuntimeHolder.h>
 #include <jsi/jsi.h>
 #include <jsiexecutor/jsireact/JSIExecutor.h>
@@ -153,7 +153,7 @@ using namespace facebook;
 namespace facebook {
 namespace react {
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 namespace {
 
 void runtimeInstaller(jsi::Runtime &runtime) {
@@ -288,7 +288,7 @@ struct BridgeTestInstanceCallback : public InstanceCallback {
 }
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 /*static*/ std::shared_ptr<InstanceImpl> InstanceImpl::MakeSandbox(
     std::string &&jsString,
@@ -379,7 +379,7 @@ InstanceImpl::InstanceImpl(
 
   // choose ExecutorDelegate and JSExecutor
   std::shared_ptr<JSExecutorFactory> jsef;
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
   std::shared_ptr<ExecutorDelegateFactory> edf;
   if (m_devSettings->useSandbox) {
 #if (defined(_MSC_VER) && !defined(WINRT))
@@ -404,7 +404,7 @@ InstanceImpl::InstanceImpl(
       return;
     }
   } else {
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
     // If the consumer gives us a JSI runtime, then  use it.
     if (m_devSettings->jsiRuntimeHolder) {
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
@@ -489,7 +489,7 @@ InstanceImpl::InstanceImpl(
 
   m_innerInstance->initializeBridge(
       std::make_unique<BridgeUIBatchInstanceCallback>(m_innerInstance, m_uimanager, m_nativeQueue),
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
       edf,
 #endif
       jsef,
@@ -593,7 +593,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 // For sandbox process.
 InstanceImpl::InstanceImpl(

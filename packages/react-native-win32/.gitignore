@@ -1,4 +1,3 @@
-/demo
 /dist
 /flow
 /flow-typed
@@ -10,3 +9,4 @@
 /RNTester
 /RNTester.*
 /temp
+/WorkingHeaders

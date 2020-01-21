@@ -13,7 +13,7 @@
  */
 'use strict';
 
-var RCTDeviceEventEmitter = require('RCTDeviceEventEmitter');
+var RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter');
 
 var TOUCH_EXPLORATION_EVENT = 'touchExplorationDidChange';
 

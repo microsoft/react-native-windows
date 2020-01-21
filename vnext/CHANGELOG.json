@@ -2,6 +2,111 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Jan 2020 06:19:11 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.115",
+      "version": "0.60.0-vnext.115",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Layout-Headers on CI machines",
+            "author": "nick@nickgerleman.com",
+            "commit": "bc33f50c50fbed7fef86a94624d50379ec518996"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Jan 2020 05:34:40 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.115",
+      "version": "0.60.0-vnext.115",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add initial set of React Native Patches",
+            "author": "nick@nickgerleman.com",
+            "commit": "4180ab2f648c5c3994e131b4a064e09c32f220a9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Jan 2020 03:02:14 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.114",
+      "version": "0.60.0-vnext.114",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "convert haste imports to use relative requires",
+            "author": "kmelmon@microsoft.com",
+            "commit": "471e17f2a840db67a47adaf32178a91db8bf2aad"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Jan 2020 21:22:45 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.113",
+      "version": "0.60.0-vnext.113",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade to OpenSSL 1.1.1d/0.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "8d35311dce1d65881a31e35887ea09eb25feeec9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Jan 2020 17:57:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add React Native Source Patching Infrastructure",
+            "author": "nick@nickgerleman.com",
+            "commit": "8a144129746ab7057827a0ff7839475029a11c0b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 Jan 2020 18:48:12 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix RNTester",
+            "author": "acoates@microsoft.com",
+            "commit": "86bac76a5cff3b059b2a84d0f9767cf0fbbb50d3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Jan 2020 23:20:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove Unneeded OSS_RN Special Path",
+            "author": "nick@nickgerleman.com",
+            "commit": "b912ff74d48ca8157c8006cf1391bf0178937679"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Header Refactoring Around jsireact to Unblock ms/rn",
+            "author": "nick@nickgerleman.com",
+            "commit": "442b022fd07a7d1712cdada56604b134df0b386f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jan 2020 22:06:05 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.111",
       "version": "0.60.0-vnext.111",

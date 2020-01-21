@@ -250,4 +250,4 @@ const RNTesterList = {
   Modules,
 };
 
-export default RNTesterList;
+export = RNTesterList;

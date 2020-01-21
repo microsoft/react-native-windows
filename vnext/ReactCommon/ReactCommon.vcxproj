@@ -43,6 +43,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPatches.targets" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -57,7 +58,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup Condition="'$(OSS_RN)'=='true'">
     <ClCompile>
-      <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup>
@@ -153,8 +154,6 @@
     <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\Yoga.cpp" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(OSS_RN)'!='true'">
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\JSCallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.h" />
@@ -162,8 +161,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboModuleUtils.h" />
-  </ItemGroup>
-  <ItemGroup Condition="'$(OSS_RN)'!='true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jscallinvoker\jsireact\BridgeJSCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\turbomodule\core\TurboCxxModule.cpp" />
@@ -181,7 +178,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
   </Target>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="!Exists('$(ReactNativeDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
+    <Error Condition="!Exists('$(ReactNativePackageDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
     <Error Condition="!Exists('$(YogaDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
   </Target>
 </Project>

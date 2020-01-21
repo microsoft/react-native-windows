@@ -71,7 +71,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
 }
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 std::shared_ptr<InstanceWrapper> CreateReactInstanceForSandbox(
     std::string &&jsString,
     std::string &&configsString,

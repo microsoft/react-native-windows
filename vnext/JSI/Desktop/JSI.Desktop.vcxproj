@@ -30,6 +30,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPatches.targets" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -68,7 +69,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ChakraJsiRuntime_core.cpp" Condition="'$(PATCH_RN)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

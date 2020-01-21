@@ -10,11 +10,11 @@
 
 'use strict';
 
-const ElementBox = require('ElementBox');
+const ElementBox = require('./ElementBox');
 const React = require('React');
-const StyleSheet = require('StyleSheet');
-const UIManager = require('UIManager');
-const View = require('View');
+const StyleSheet = require('../StyleSheet/StyleSheet');
+const UIManager = require('../ReactNative/UIManager');
+const View = require('../Components/View/View');
 
 import type {PressEvent} from 'CoreEventTypes';
 import type {ViewStyleProp} from 'StyleSheet';

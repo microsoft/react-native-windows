@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 12 Dec 2019 22:18:13 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jan 2020 23:20:10 GMT and should not be manually modified.
 
+## 0.60.65
+Thu, 09 Jan 2020 23:20:10 GMT
+
+### Patches
+
+- Header Refactoring Around jsireact to Unblock ms/rn (nick@nickgerleman.com)
 ## 0.60.43
 Thu, 12 Dec 2019 22:18:13 GMT
 

@@ -27,7 +27,7 @@ class DevSupportManager : public IDevSupportManager {
   ~DevSupportManager();
 
   virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) override;
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
   virtual JSECreator LoadJavaScriptInSandboxMode(const DevSettings &settings) override;
 #endif
   virtual std::string GetJavaScriptFromServer(
