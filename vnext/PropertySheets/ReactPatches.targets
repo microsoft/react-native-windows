@@ -42,7 +42,7 @@
           AfterTargets="EvaluatePatchInputsOutputs"
           BeforeTargets="PrepareForBuild">
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\ReactCommon\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 
