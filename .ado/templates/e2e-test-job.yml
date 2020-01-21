@@ -25,8 +25,9 @@ jobs:
 
     steps:
       - checkout: self
-        clean: false
-        submodules: false
+        clean: true # whether to fetch clean each time
+        fetchDepth: 1 # the depth of commits to ask Git to fetch (reduces size)
+        submodules: true # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
 
       - template: prepare-env.yml
         parameters:
