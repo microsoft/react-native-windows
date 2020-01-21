@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Fix #3863 and clean up a few other property setters",
+  "packageName": "react-native-windows",
+  "email": "aschultz@microsoft.com",
+  "commit": "8cc3255e4f8fd3b00d5219177b58ae28a5269865",
+  "date": "2020-01-21T19:22:41.373Z"
+}
