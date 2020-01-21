@@ -17,6 +17,8 @@ jobs:
       vmImage: windows-2019
     variables: 
       VsComponents: Microsoft.VisualStudio.Component.VC.v141.x86.x64,Microsoft.VisualStudio.ComponentGroup.UWP.VC.v141
+      BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir
+      runCodesignValidationInjection: false
       VmImage: windows-2019
 
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
