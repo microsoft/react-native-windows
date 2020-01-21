@@ -76,6 +76,17 @@
     <DefineConstants>
     </DefineConstants>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <OutputPath>bin\ARM64\Debug\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <PlatformTarget>ARM64</PlatformTarget>
+    <OutputPath>bin\ARM64\Release\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBundle|x86'">
     <OutputPath>bin\x86\ReleaseBundle\</OutputPath>
     <DefineConstants>TRACE;NET46;BUNDLE</DefineConstants>
@@ -99,6 +110,13 @@
     <OutputPath>bin\ARM\ReleaseBundle\</OutputPath>
     <DefineConstants>TRACE;NET46;BUNDLE</DefineConstants>
     <PlatformTarget>ARM</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBundle|ARM64'">
+    <OutputPath>bin\ARM64\ReleaseBundle\</OutputPath>
+    <DefineConstants>TRACE;NET46;BUNDLE</DefineConstants>
+    <PlatformTarget>ARM64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
@@ -127,6 +145,15 @@
     <DefineConstants>TRACE;DEBUG;NET46;BUNDLE</DefineConstants>
     <DefineConstants>DEBUG</DefineConstants>
     <PlatformTarget>ARM</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugBundle|ARM64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM64\DebugBundle\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET46;BUNDLE</DefineConstants>
+    <DefineConstants>DEBUG</DefineConstants>
+    <PlatformTarget>ARM64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
