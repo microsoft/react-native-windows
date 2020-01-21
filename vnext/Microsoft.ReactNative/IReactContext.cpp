@@ -4,8 +4,6 @@
 #include "pch.h"
 #include "IReactContext.h"
 
-#include "ReactSupport.h"
-
 namespace winrt::Microsoft::ReactNative {
 
 void ReactContext::DispatchEvent(

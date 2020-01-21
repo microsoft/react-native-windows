@@ -9,7 +9,6 @@
 #include "IReactContext.h"
 
 #include <ReactUWP/Utils/ValueUtils.h>
-#include "ReactSupport.h"
 
 namespace winrt::Microsoft::ReactNative {
 
