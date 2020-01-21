@@ -154,7 +154,7 @@ namespace ReactNative.Tests.Modules.Core
                 ids.AddRange((IList<int>)args[0]);
                 if (countdown.CurrentCount > 0)
                 {
-                    var t = ThreadPool.RunAsync(_ => countdown.Signal());
+                    var t = Windows.System.Threading.ThreadPool.RunAsync(_ => countdown.Signal());
                 }
             }));
 
