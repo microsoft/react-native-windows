@@ -47,7 +47,11 @@ task('copyPngFiles', () => {
   return copyTask(['src/**/*.png'], '.');
 });
 task('initRNLibraries', () => {
-  require('./scripts/copyRNLibraries').copyRNLibraries();
+  require('../../vnext/scripts/copyRNLibraries').copyRNLibraries(__dirname);
+});
+
+task('flow-check', () => {
+  require('child_process').execSync('npx flow check', {stdio: 'inherit'});
 });
 
 task('ts', () => {
@@ -63,8 +67,8 @@ task('ts', () => {
 });
 task('clean', () => {
   return cleanTask(
-    ['jest', 'Libraries', 'RNTester', 'lib'].map(p =>
-      path.join(process.cwd(), p),
+    ['dist', 'flow', 'flow-typed', 'jest', 'Libraries', 'RNTester', 'lib'].map(
+      p => path.join(process.cwd(), p),
     ),
   );
 });
@@ -87,16 +91,14 @@ task(
   'build',
   series(
     condition('clean', () => argv().clean),
-    'eslint',
     'initRNLibraries',
     'copyFlowFiles',
     'copyPngFiles',
-    // native-bundle:filtered
-    // trickle
-    // react-test
     'ts',
     condition('apiExtractorVerify', () => argv().ci),
-    'apiExtractorUpdate',
-    'apiDocumenter',
   ),
 );
+
+task('lint', series('eslint', 'flow-check'));
+
+task('api', series('apiExtractorUpdate', 'apiDocumenter'));

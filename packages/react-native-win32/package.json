@@ -1,21 +1,23 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.25.9",
+  "version": "0.26.1",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",
   "scripts": {
     "build": "just-scripts build",
+    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev",
     "change": "beachball change",
     "clean": "just-scripts clean",
-    "start": "react-native start",
-    "lint": "just-scripts eslint",
+    "flow-check": "flow check",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
-    "watch": "tsc -w",
-    "bundle": "just-scripts prepareBundle && react-native bundle --platform win32 --entry-file RNTester.js --bundle-output dist/win32/dev/RNTester.bundle --assets-dest dist/win32/dev",
-    "run-win32": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev",
+    "lint": "just-scripts lint",
+    "api": "just-scripts api",
+    "run-win32-dev-web": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useWebDebugger",
     "run-win32-devmain": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useDevMain",
-    "run-win32-dev-web": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev --useWebDebugger"
+    "run-win32": "rex-win32 --bundle RNTester --component RNTesterApp --basePath ./dist/win32/dev",
+    "start": "react-native start",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
@@ -40,20 +42,22 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz",
     "@office-iss/rex-win32": "0.0.30",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
     "@types/node": "^12.11.2",
     "@types/prop-types": "15.5.1",
-    "@types/react": "16.9.11",
     "@types/react-native": "~0.60.5",
+    "@types/react": "16.9.11",
+    "flow-bin": "^0.98.0",
+    "jscodeshift": "^0.6.2",
     "just-scripts": "^0.24.2",
     "react": "16.8.6",
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.60.0 || 0.60.0-microsoft.31 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
+    "react-native": "^0.60.0 || 0.60.0-microsoft.35 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz",
     "react": "16.8.6",
     "react-dom": "16.8.6"
   },

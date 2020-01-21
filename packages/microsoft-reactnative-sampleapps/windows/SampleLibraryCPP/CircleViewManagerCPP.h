@@ -25,8 +25,11 @@ struct CircleViewManagerCpp : winrt::implements<
       winrt::Windows::UI::Xaml::FrameworkElement const &parent,
       winrt::Windows::UI::Xaml::UIElement const &child,
       int64_t index) noexcept;
+
   void RemoveAllChildren(winrt::Windows::UI::Xaml::FrameworkElement const &parent) noexcept;
+
   void RemoveChildAt(winrt::Windows::UI::Xaml::FrameworkElement const &parent, int64_t index) noexcept;
+
   void ReplaceChild(
       winrt::Windows::UI::Xaml::FrameworkElement const &parent,
       winrt::Windows::UI::Xaml::UIElement const &oldChild,

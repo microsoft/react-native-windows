@@ -324,6 +324,9 @@ struct SimpleNativeModule {
   REACT_EVENT(OnPointResult2, L"onPointResult2")
   std::function<void(const Point &)> OnPointResult2;
 
+  REACT_EVENT(OnObjectResult3)
+  std::function<void(const JSValue &)> OnObjectResult3;
+
   std::string Message;
   static std::string StaticMessage;
 };
@@ -769,6 +772,26 @@ TEST_CASE_METHOD(NativeModuleTestFixture, "TestEvent_EventField2", "NativeModule
       }));
 
   m_module->OnPointResult2(Point{/*X =*/4, /*Y =*/2});
+  REQUIRE(eventRaised == true);
+}
+
+TEST_CASE_METHOD(NativeModuleTestFixture, "TestEvent_EventField3", "NativeModuleTest") {
+  bool eventRaised = false;
+  m_builderMock.SetEventHandler(
+      L"OnObjectResult3", std::function<void(const JSValue &)>([&eventRaised](const JSValue &eventArg) noexcept {
+        REQUIRE(eventArg.Object().at("X").Int64() == 4);
+        REQUIRE(eventArg.Object().at("Y").Int64() == 2);
+        eventRaised = true;
+      }));
+
+  JSValue data = JSValue();
+  auto writer = MakeJSValueTreeWriter(data);
+  writer.WriteObjectBegin();
+  WriteProperty(writer, "X", 4);
+  WriteProperty(writer, "Y", 2);
+  writer.WriteObjectEnd();
+
+  m_module->OnObjectResult3(data);
   REQUIRE(eventRaised == true);
 }
 

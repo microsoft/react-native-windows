@@ -166,6 +166,7 @@
     <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
+    <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h" />
     <ClInclude Include="Utils\ResourceBrushUtils.h" />
     <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
+    <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />

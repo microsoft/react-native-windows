@@ -100,11 +100,14 @@ void ReactImage::Source(ReactImageSource source) {
 
   winrt::Uri uri{Utf8ToUtf16(m_imageSource.uri)};
   winrt::hstring scheme{uri.SchemeName()};
+  winrt::hstring ext{uri.Extension()};
 
   if (((scheme == L"http") || (scheme == L"https")) && !m_imageSource.headers.empty()) {
     m_imageSource.sourceType = ImageSourceType::Download;
   } else if (scheme == L"data") {
     m_imageSource.sourceType = ImageSourceType::InlineData;
+  } else if (ext == L".svg" || ext == L".svgz") {
+    m_imageSource.sourceType = ImageSourceType::Svg;
   }
 
   SetBackground(true);
@@ -116,16 +119,17 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
     case ImageSourceType::Download:
       return co_await GetImageStreamAsync(source);
     case ImageSourceType::InlineData:
-      return co_await GetImageInlineDataAsync(source);
+      co_return co_await GetImageInlineDataAsync(source);
     default: // ImageSourceType::Uri
-      return nullptr;
+      co_return nullptr;
   }
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
   const winrt::Uri uri{Utf8ToUtf16(source.uri)};
-  const bool fromStream{source.sourceType != ImageSourceType::Uri};
+  const bool fromStream{source.sourceType == ImageSourceType::Download ||
+                        source.sourceType == ImageSourceType::InlineData};
 
   winrt::InMemoryRandomAccessStream memoryStream{nullptr};
 
@@ -140,7 +144,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       if (auto strong_this{weak_this.get()}) {
         strong_this->m_onLoadEndEvent(*strong_this, false);
       }
-      return;
+      co_return;
     }
   } catch (winrt::hresult_error const &) {
     const auto strong_this{weak_this.get()};
@@ -204,9 +208,10 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         strong_this->m_imageBrushOpenedRevoker = imageBrush.ImageOpened(
             winrt::auto_revoke, [weak_this, imageBrush, fireLoadEndEvent](const auto &, const auto &) {
               if (auto strong_this{weak_this.get()}) {
-                const auto bitmap{imageBrush.ImageSource().as<winrt::BitmapImage>()};
-                strong_this->m_imageSource.height = bitmap.PixelHeight();
-                strong_this->m_imageSource.width = bitmap.PixelWidth();
+                if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
+                  strong_this->m_imageSource.height = bitmap.PixelHeight();
+                  strong_this->m_imageSource.width = bitmap.PixelWidth();
+                }
 
                 imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
 
@@ -225,29 +230,58 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
             });
       }
 
-      winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
+      if (source.sourceType == ImageSourceType::Svg) {
+        winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
 
-      if (!bitmapImage) {
-        bitmapImage = winrt::BitmapImage{};
+        if (!svgImageSource) {
+          svgImageSource = winrt::SvgImageSource{};
 
-        strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
-            winrt::auto_revoke, [imageBrush](const auto &, const auto &) { imageBrush.Opacity(1); });
+          strong_this->m_svgImageSourceOpenedRevoker =
+              svgImageSource.Opened(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                }
+              });
 
-        imageBrush.ImageSource(bitmapImage);
+          strong_this->m_svgImageSourceOpenFailedRevoker =
+              svgImageSource.OpenFailed(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+                auto strong_this{weak_this.get()};
+                if (strong_this && fireLoadEndEvent) {
+                  strong_this->m_onLoadEndEvent(*strong_this, false);
+                }
+              });
+
+          imageBrush.ImageSource(svgImageSource);
+        }
+
+        svgImageSource.UriSource(uri);
+
+      } else {
+        winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
+
+        if (!bitmapImage) {
+          bitmapImage = winrt::BitmapImage{};
+
+          strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
+              winrt::auto_revoke, [imageBrush](const auto &, const auto &) { imageBrush.Opacity(1); });
+
+          imageBrush.ImageSource(bitmapImage);
+        }
+
+        if (fromStream) {
+          co_await bitmapImage.SetSourceAsync(memoryStream);
+        } else {
+          bitmapImage.UriSource(uri);
+
+          // TODO: When we change the source of a BitmapImage, we're getting a flicker of the old image
+          // being resized to the size of the new image. This is a temporary workaround.
+          imageBrush.Opacity(0);
+        }
       }
 
       if (createImageBrush) {
         strong_this->Background(imageBrush);
-      }
-
-      if (fromStream) {
-        co_await bitmapImage.SetSourceAsync(memoryStream);
-      } else {
-        bitmapImage.UriSource(uri);
-
-        // TODO: When we change the source of a BitmapImage, we're getting a flicker of the old image
-        // being resized to the size of the new image. This is a temporary workaround.
-        imageBrush.Opacity(0);
       }
     }
   }

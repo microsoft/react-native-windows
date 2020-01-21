@@ -1,5 +1,7 @@
 /demo
 /dist
+/flow
+/flow-typed
 /index.*
 /IntegrationTests
 /jest
@@ -8,3 +10,4 @@
 /RNTester
 /RNTester.*
 /temp
+/WorkingHeaders

@@ -1,10 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.ReactNative.Managed;
 using System;
 using System.Diagnostics;
+
 using Windows.System.Threading;
+
+using Microsoft.ReactNative.Managed;
 
 namespace SampleLibraryCS
 {

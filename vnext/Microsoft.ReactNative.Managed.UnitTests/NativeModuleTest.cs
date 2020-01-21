@@ -3,6 +3,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -347,6 +348,9 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     [ReactEvent("onPointResult4")]
     public static Action<Point> OnPointResult4 { get; set; }
+
+    [ReactEvent]
+    public Action<JSValue> OnObjectResult5 { get; set; }
 
     public string Message { get; set; }
     public static string StaticMessage { get; set; }
@@ -821,6 +825,23 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       });
 
       SimpleNativeModule.OnPointResult4(new Point { X = 32, Y = 42 });
+      Assert.IsTrue(eventRaised);
+    }
+
+    [TestMethod]
+    public void TestEvent_ObjectEventProperty()
+    {
+      bool eventRaised = false;
+      m_moduleBuilder.SetEventHandler(nameof(SimpleNativeModule.OnObjectResult5), (JSValue eventArg) =>
+      {
+        Assert.AreEqual(32, eventArg.Object["X"].Int64);
+        Assert.AreEqual(42, eventArg.Object["Y"].Int64);
+        eventRaised = true;
+      });
+
+      JSValue data = new JSValue(new Dictionary<string, JSValue>() { { "X", new JSValue(32) }, { "Y", new JSValue(42) }, });
+
+      m_module.OnObjectResult5(data);
       Assert.IsTrue(eventRaised);
     }
   }

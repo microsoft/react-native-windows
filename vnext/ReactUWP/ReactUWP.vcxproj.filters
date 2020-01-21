@@ -307,6 +307,9 @@
     <ClCompile Include="Utils\ResourceBrushUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="TurboModule\TurboModuleUtils.cpp">
+      <Filter>TurboModule</Filter>
+    </ClCompile>
     <ClCompile Include="Views\SIPEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -627,6 +630,10 @@
     <ClInclude Include="Utils\ResourceBrushUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
+    <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -706,6 +713,9 @@
     </Filter>
     <Filter Include="Views\Image">
       <UniqueIdentifier>{6d877886-1c5c-45b8-8eae-2e1354cf673e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TurboModule">
+      <UniqueIdentifier>{174cd180-bab8-464e-9f7a-d2fac567f899}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

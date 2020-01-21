@@ -2,6 +2,121 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2020 23:20:10 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.112",
+      "version": "0.60.0-vnext.112",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove Unneeded OSS_RN Special Path",
+            "author": "nick@nickgerleman.com",
+            "commit": "b912ff74d48ca8157c8006cf1391bf0178937679"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Header Refactoring Around jsireact to Unblock ms/rn",
+            "author": "nick@nickgerleman.com",
+            "commit": "442b022fd07a7d1712cdada56604b134df0b386f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Jan 2020 22:06:05 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.111",
+      "version": "0.60.0-vnext.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add GetFacebookReactInstance :: uwpInstance -> react::Instance",
+            "author": "zihanc@microsoft.com",
+            "commit": "f35ed1c42cd2a1d9ed098082bf97babe3bc9c8e6"
+          },
+          {
+            "comment": "Added unit tests for Events with JSValue args",
+            "author": "jthysell@microsoft.com",
+            "commit": "53ebf5cd67cc8f3753a58ee27629e64e36910f92"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jan 2020 23:03:25 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.110",
+      "version": "0.60.0-vnext.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Image - basic svg support",
+            "author": "mcota@microsoft.com",
+            "commit": "74e6ed91c0466fd9894aa6f0ee65bb3d4255088f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jan 2020 01:43:57 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.109",
+      "version": "0.60.0-vnext.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixing bugs when using .NetNative",
+            "author": "jthysell@microsoft.com",
+            "commit": "dc6063f921526cec1353e18da1f808ac2094250e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Jan 2020 22:43:44 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.108",
+      "version": "0.60.0-vnext.108",
+      "comments": {
+        "none": [
+          {
+            "comment": "Split lint tasks into separate build task to speed general build times",
+            "author": "acoates@microsoft.com",
+            "commit": "c343616cc3e447f1edf02dd2d4c52e82c648ee72"
+          },
+          {
+            "comment": "Remove Unneeded OSS_RN Special Path",
+            "author": "nick@nickgerleman.com",
+            "commit": "b912ff74d48ca8157c8006cf1391bf0178937679"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Jan 2020 19:44:17 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.108",
+      "version": "0.60.0-vnext.108",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix RNTester bundle (#2728)",
+            "author": "acoates@microsoft.com",
+            "commit": "65167fb5e52f042879d00891e89ed951bdda84bc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Jan 2020 21:29:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.107",
+      "version": "0.60.0-vnext.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Call StartAnimatiom on m_scaleCombined for ScaleX / ScaleY animations",
+            "author": "thshea@microsoft.com",
+            "commit": "0a4543017e3778a5436828340c675bbb13600a6a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Dec 2019 22:14:37 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.106",
       "version": "0.60.0-vnext.106",

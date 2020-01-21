@@ -147,14 +147,14 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Returns true if the TextInput is focused
    */
   public isFocused(): boolean {
-    return TextInputState.currentlyFocusedField === findNodeHandle(this);
+    return TextInputState.currentlyFocusedField() === findNodeHandle(this);
   }
 
   /**
    * Focuses the TextInput
    */
   public focus = (): void => {
-    TextInputState.currentlyFocusedField = findNodeHandle(this);
+    TextInputState.setFocusedTextInput(findNodeHandle(this));
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.focus, null);
   }
@@ -163,7 +163,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
    * Blurs the TextInput
    */
   public blur = (): void => {
-    TextInputState.currentlyFocusedField = null;
+    TextInputState.blurTextInput(findNodeHandle(this));
     NativeModules.UIManager.
       dispatchViewManagerCommand(findNodeHandle(this), TextInputViewManager.Commands.blur, null);
   }
@@ -207,7 +207,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
   }
 
   private _onFocus = (e: IFocusEvent): void => {
-    TextInputState.currentlyFocusedField = findNodeHandle(this);
+    this.focus();
     this.props.onFocus && this.props.onFocus(e);
   }
 

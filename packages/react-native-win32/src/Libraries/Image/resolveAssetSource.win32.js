@@ -1,45 +1,52 @@
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ *
+ * @flow strict-local
+ * @format
+ */
+
 'use strict';
 
 const resolveAssetSource = require('./resolveAssetSource.js'); // Get base impl
-const Platform = require('Platform');
+const Platform = require('../Utilities/Platform');
 
-interface IPackagerAsset {
-  __packager_asset: boolean;
-  fileSystemLocation: string;
-  httpServerLocation: string;
-  width?: number;
-  height?: number;
-  scales: Array<number>;
-  hash: string;
-  name: string;
-  // tslint:disable-next-line no-reserved-keywords - type variable name used by facebook
-  type: string;
-}
+type IPackagerAsset = {
+  __packager_asset: boolean,
+  fileSystemLocation: string,
+  httpServerLocation: string,
+  width?: ?number,
+  height?: ?number,
+  scales: Array<number>,
+  hash: string,
+  name: string,
+  type: string,
+};
 
-interface IAssetResolver {
-  serverUrl?: string;
+type IAssetResolver = {
+  serverUrl?: ?string,
   // where the bundle is being run from
-  bundleUrl?: string;
+  bundleUrl?: ?string,
   // the asset to resolve
-  asset: IPackagerAsset;
-}
+  asset: IPackagerAsset,
+};
 
-// Wrapper on top of facebooks Asset resolver that keeps scaling info in the returned asset so that the native side can do the resolution
+// Wrapper on top of Facebook's Asset resolver that keeps scaling info in the returned asset so that the native side can do the resolution
 class AssetResolverLateScaleResolution {
-  private _resolver: IAssetResolver;
+  _resolver: IAssetResolver;
 
   constructor(resolver: IAssetResolver) {
     this._resolver = resolver;
   }
 
-  public defaultAsset() {
+  defaultAsset() {
     if (this._isLoadedFromServer()) {
       return this._assetServerURL();
     }
     return this._scaledAssetURLInBundle();
   }
 
-  private _isLoadedFromServer(): boolean {
+  _isLoadedFromServer(): boolean {
     return !!this._resolver.serverUrl;
   }
 
@@ -47,7 +54,7 @@ class AssetResolverLateScaleResolution {
    * Resolves to where the bundle is running from, with a asset filename
    * E.g. 'file:///sdcard/bundle/assets/AwesomeModule/icon.png'
    */
-  private _scaledAssetURLInBundle() {
+  _scaledAssetURLInBundle() {
     const path = this._resolver.bundleUrl || 'file://';
     return this._fromSource(path + this._getAssetPath());
   }
@@ -56,21 +63,32 @@ class AssetResolverLateScaleResolution {
    * Returns an absolute URL which can be used to fetch the asset
    * from the devserver
    */
-  private _assetServerURL() {
+  _assetServerURL() {
     return this._fromSource(
-      this._resolver.serverUrl + this._getAssetPath() + '?platform=' + Platform.OS + '&hash=' + this._resolver.asset.hash
+      this._resolver.serverUrl +
+        this._getAssetPath() +
+        '?platform=' +
+        Platform.OS +
+        '&hash=' +
+        this._resolver.asset.hash,
     );
   }
 
   /**
    * Returns a path like 'assets/AwesomeModule/icon.png'
    */
-  private _getAssetPath(): string {
+  _getAssetPath(): string {
     const assetDir = this._getBasePath();
-    return assetDir + '/' + this._resolver.asset.name + '.' + this._resolver.asset.type;
+    return (
+      assetDir +
+      '/' +
+      this._resolver.asset.name +
+      '.' +
+      this._resolver.asset.type
+    );
   }
 
-  private _getBasePath() {
+  _getBasePath() {
     let basePath = this._resolver.asset.httpServerLocation;
     if (basePath[0] === '/') {
       basePath = basePath.substr(1);
@@ -78,7 +96,7 @@ class AssetResolverLateScaleResolution {
     return basePath;
   }
 
-  private _fromSource(source: string) {
+  _fromSource(source: string) {
     return {
       __packager_asset: true,
       width: this._resolver.asset.width,
@@ -98,4 +116,4 @@ resolveAssetSource.setCustomSourceTransformer(resolver => {
   return lsrResolver.defaultAsset();
 });
 
-export = resolveAssetSource;
+module.exports = resolveAssetSource;

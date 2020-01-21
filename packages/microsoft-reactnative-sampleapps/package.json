@@ -1,21 +1,21 @@
 {
   "name": "microsoft-reactnative-sampleapps",
-  "version": "0.0.45",
+  "version": "0.0.52",
   "private": true,
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "postinstall": "node postinstall.js",
     "start": "react-native start",
-    "lint": "just-scripts eslint",
+    "lint": "just-scripts lint",
     "lint:fix": "eslint ./**/*.js ./**/*.ts? --fix",
     "watch": "tsc -w"
   },
   "dependencies": {
     "react": "16.8.6",
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.31.tar.gz",
-    "react-native-windows": "0.60.0-vnext.106",
-    "react-native-windows-extended": "0.60.60",
+    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.35.tar.gz",
+    "react-native-windows": "0.60.0-vnext.112",
+    "react-native-windows-extended": "0.60.65",
     "rnpm-plugin-windows": "^0.4.0"
   },
   "devDependencies": {

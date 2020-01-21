@@ -28,14 +28,7 @@ namespace Microsoft.ReactNative.Managed
       {
         if (!typeInfo.IsAbstract && typeInfo.ImplementedInterfaces.Contains(typeof(IViewManager)))
         {
-          if (typeInfo.DeclaredConstructors.Any(cInfo => cInfo.GetParameters().Length == 1 && cInfo.GetParameters()[0].ParameterType == typeof(IReactContext)))
-          {
-            packageBuilder.AddViewManager(typeInfo.Name, (reactContext) => (IViewManager)Activator.CreateInstance(typeInfo.AsType(), reactContext));
-          }
-          else if (typeInfo.DeclaredConstructors.Any(cInfo => cInfo.GetParameters().Length == 0))
-          {
-            packageBuilder.AddViewManager(typeInfo.Name, (reactContext) => (IViewManager)Activator.CreateInstance(typeInfo.AsType()));
-          }
+          packageBuilder.AddViewManager(typeInfo.Name, () => (IViewManager)Activator.CreateInstance(typeInfo.AsType()));
         }
       }
     }

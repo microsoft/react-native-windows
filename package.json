@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "lerna run build --stream -- --color",
+    "lint": "lerna run lint --stream -- --color",
+    "api": "lerna run api --stream -- --color",
     "buildci": "lerna run build --stream -- --ci",
     "change": "beachball change",
     "clean": "lerna run clean --stream -- --color",

@@ -1,7 +1,6 @@
 'use strict';
 import * as React from 'react';
 import { View, Text, StyleSheet, TextInput, NativeModules, ScrollView } from 'react-native';
-import { IRNTesterPage } from 'src/RNTester/RNTester.types';
 // import { ViewWin32 } from '../../Libraries/Components/View/ViewWin32';
 
 const styles = StyleSheet.create({
@@ -91,11 +90,10 @@ const ThemingConstants: React.FunctionComponent<{}> = props => {
   );
 };
 
-const ThemingModuleTestPage: IRNTesterPage = {
-  title: 'Theming Module APIs',
-  displayName: 'Theming Module APIs',
-  description: 'Tests shape of Theming Native Module',
-  examples: [
+export const title = 'Theming Module APIs';
+export const displayName =  'Theming Module APIs';
+export const description = 'Tests shape of Theming Native Module';
+export const examples = [
     {
       title: 'Theming Module Constants',
       description: 'All constants',
@@ -106,7 +104,4 @@ const ThemingModuleTestPage: IRNTesterPage = {
       description: 'Method invoker',
       render: () => ifModuleAvailable(<ThemingMethods />),
     },
-  ],
-};
-
-export = ThemingModuleTestPage;
+  ];

@@ -1,7 +1,25 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 21 Dec 2019 00:18:22 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jan 2020 23:20:10 GMT and should not be manually modified.
 
+## 0.26.1
+Thu, 09 Jan 2020 23:20:10 GMT
+
+### Patches
+
+- Header Refactoring Around jsireact to Unblock ms/rn (nick@nickgerleman.com)
+## 0.26.0
+Thu, 09 Jan 2020 22:06:05 GMT
+
+### Minor changes
+
+- Add GetFacebookReactInstance :: uwp::Instance -> react::Instance (zihanc@microsoft.com)
+## 0.25.10
+Tue, 07 Jan 2020 19:44:17 GMT
+
+### Patches
+
+- Remove remaining need for fork of RN for win32 JS (acoates@microsoft.com)
 ## 0.25.9
 Sat, 21 Dec 2019 00:18:22 GMT
 
