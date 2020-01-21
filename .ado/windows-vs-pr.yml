@@ -47,10 +47,11 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x86
           UseRNFork: true
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: arm
-          UseRNFork: true
+        # Temporarily omitting to save disk space.
+        # ArmRelease:
+        #   BuildConfiguration: Release
+        #   BuildPlatform: arm
+        #   UseRNFork: true
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: arm64
