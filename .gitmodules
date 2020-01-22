@@ -28,3 +28,6 @@
 [submodule "vnext/Modules/boostorg/mpl"]
 	path = vnext/Modules/boostorg/mpl
 	url = https://github.com/boostorg/mpl.git
+[submodule "vnext/Modules/boostorg/range"]
+	path = vnext/Modules/boostorg/range
+	url = https://github.com/boostorg/range.git

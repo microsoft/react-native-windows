@@ -10,6 +10,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\mpl\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
         %(AdditionalIncludeDirectories)
