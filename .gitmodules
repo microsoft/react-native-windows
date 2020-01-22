@@ -64,3 +64,6 @@
 [submodule "vnext/Modules/boostorg/type_index"]
 	path = vnext/Modules/boostorg/type_index
 	url = https://github.com/boostorg/type_index.git
+[submodule "vnext/Modules/boostorg/container_hash"]
+	path = vnext/Modules/boostorg/container_hash
+	url = https://github.com/boostorg/container_hash.git

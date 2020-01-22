@@ -10,6 +10,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\beast\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\concept_check\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\container_hash\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\detail\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\function\include;
