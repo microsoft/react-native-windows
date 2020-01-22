@@ -10,6 +10,3 @@
 [submodule "vnext/Modules/boostorg/system"]
 	path = vnext/Modules/boostorg/system
 	url = https://github.com/boostorg/system.git
-[submodule "vnext/Modules/boostorg/asio"]
-	path = vnext/Modules/boostorg/asio
-	url = https://github.com/boostorg/asio.git
