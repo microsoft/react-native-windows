@@ -13,6 +13,4 @@ namespace winrt::Microsoft::ReactNative {
 // Convert a WinRT IInspectable into a folly::dynamic object
 folly::dynamic ConvertToDynamic(Windows::Foundation::IInspectable const &object);
 
-Windows::Foundation::IInspectable ConvertToIInspectable(folly::dynamic const &object);
-
 } // namespace winrt::Microsoft::ReactNative

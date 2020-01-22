@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include "CustomUserControlViewManagerCpp.h"
+#include "JSValueReader.h"
+#include "NativeModules.h"
 
 #include "CustomUserControlCpp.h"
 #include "DebugHelpers.h"
@@ -33,7 +35,12 @@ FrameworkElement CustomUserControlViewManagerCpp::CreateView() noexcept {
       [this](
           winrt::Windows::UI::Xaml::DependencyObject obj, winrt::Windows::UI::Xaml::DependencyProperty prop) noexcept {
         if (auto c = obj.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-          ReactContext().DispatchEvent(c, L"topLabelChanged", box_value(c.Label()));
+          ReactContext().DispatchEvent(
+              c,
+              L"topLabelChanged",
+              [ this, c ](winrt::Microsoft::ReactNative::IJSValueWriter const &eventDataWriter) noexcept {
+                eventDataWriter.WriteString(c.Label());
+              });
         }
       });
 
@@ -62,28 +69,30 @@ IMapView<hstring, ViewManagerPropertyType> CustomUserControlViewManagerCpp::Nati
 
 void CustomUserControlViewManagerCpp::UpdateProperties(
     FrameworkElement const &view,
-    IMapView<hstring, IInspectable> const &propertyMap) {
+    IJSValueReader const &propertyMapReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-    for (auto const &pair : propertyMap) {
-      auto const &propertyName = pair.Key();
-      auto const &propertyValue = pair.Value();
+    const JSValueObject &propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
 
-      if (propertyName == L"label") {
-        if (propertyValue != nullptr) {
-          auto value = winrt::unbox_value<hstring>(propertyValue);
-          control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), propertyValue);
+    for (auto const &pair : propertyMap) {
+      auto const &propertyName = pair.first;
+      auto const &propertyValue = pair.second;
+
+      if (propertyName == "label") {
+        if (!propertyValue.IsNull()) {
+          auto const &value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
+          control.SetValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty(), value);
         } else {
           control.ClearValue(winrt::SampleLibraryCpp::CustomUserControlCpp::LabelProperty());
         }
-      } else if (propertyName == L"color") {
-        if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::ForegroundProperty(), propertyValue);
+      } else if (propertyName == "color") {
+        if (auto value = propertyValue.To<Brush>()) {
+          control.SetValue(Control::ForegroundProperty(), value);
         } else {
           control.ClearValue(Control::ForegroundProperty());
         }
-      } else if (propertyName == L"backgroundColor") {
-        if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::BackgroundProperty(), propertyValue);
+      } else if (propertyName == "backgroundColor") {
+        if (auto value = propertyValue.To<Brush>()) {
+          control.SetValue(Control::BackgroundProperty(), value);
         } else {
           control.ClearValue(Control::BackgroundProperty());
         }
@@ -102,12 +111,12 @@ IMapView<hstring, int64_t> CustomUserControlViewManagerCpp::Commands() noexcept 
 void CustomUserControlViewManagerCpp::DispatchCommand(
     FrameworkElement const &view,
     int64_t commandId,
-    IVectorView<IInspectable> commandArgs) noexcept {
+    IJSValueReader const &commandArgsReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
     if (commandId == 0) {
       std::string arg = std::to_string(winrt::unbox_value<int64_t>(view.Tag()));
       arg.append(", \"");
-      arg.append(winrt::to_string(winrt::unbox_value<hstring>(commandArgs.GetAt(0))));
+      arg.append(winrt::to_string(commandArgsReader.GetString()));
       arg.append("\"");
       ::SampleLibraryCpp::DebugWriteLine(to_string(Name()), "CustomCommand", arg);
     }
@@ -115,20 +124,17 @@ void CustomUserControlViewManagerCpp::DispatchCommand(
 }
 
 // IViewManagerWithExportedEventTypeConstants
-IMapView<hstring, IInspectable> CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTypeConstants() noexcept {
-  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
-  return constants.GetView();
+ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomBubblingEventTypeConstants() noexcept {
+  return nullptr;
 }
 
-IMapView<hstring, IInspectable> CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
-  auto constants = winrt::single_threaded_map<hstring, IInspectable>();
-
-  auto registration = winrt::single_threaded_map<hstring, IInspectable>();
-  registration.Insert(L"registrationName", box_value(L"onLabelChanged"));
-
-  constants.Insert(L"topLabelChanged", registration.GetView());
-
-  return constants.GetView();
+ConstantProvider CustomUserControlViewManagerCpp::ExportedCustomDirectEventTypeConstants() noexcept {
+  return [](winrt::Microsoft::ReactNative::IJSValueWriter const &constantWriter) {
+    constantWriter.WritePropertyName(L"topLabelChanged");
+    constantWriter.WriteObjectBegin();
+    WriteProperty(constantWriter, L"registrationName", L"onLabelChanged");
+    constantWriter.WriteObjectEnd();
+  };
 }
 
 } // namespace winrt::SampleLibraryCpp::implementation

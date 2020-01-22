@@ -290,6 +290,10 @@
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="XamlHelper.h">
+      <DependentUpon>XamlHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ReactUWP\Base\InstanceFactory.cpp" />
@@ -442,6 +446,10 @@
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="XamlHelper.cpp">
+      <DependentUpon>XamlHelper.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl" />
@@ -479,6 +487,7 @@
     <Midl Include="ReactRootView2.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="XamlHelper.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
