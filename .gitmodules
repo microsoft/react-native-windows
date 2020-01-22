@@ -46,3 +46,6 @@
 [submodule "vnext/Modules/boostorg/static_assert"]
 	path = vnext/Modules/boostorg/static_assert
 	url = https://github.com/boostorg/static_assert.git
+[submodule "vnext/Modules/boostorg/detail"]
+	path = vnext/Modules/boostorg/detail
+	url = https://github.com/boostorg/detail.git
