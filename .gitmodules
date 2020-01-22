@@ -85,3 +85,6 @@
 [submodule "vnext/Modules/boostorg/optional"]
 	path = vnext/Modules/boostorg/optional
 	url = https://github.com/boostorg/optional.git
+[submodule "vnext/Modules/boostorg/intrusive"]
+	path = vnext/Modules/boostorg/intrusive
+	url = https://github.com/boostorg/intrusive.git
