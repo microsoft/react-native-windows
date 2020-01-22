@@ -16,6 +16,10 @@ const Platform = {
     const constants = NativeModules.PlatformConstants;
     return constants && constants.Version;
   },
+  get constants() {
+    const constants = NativeModules.PlatformConstants;
+    return constants;
+  },
   get isTesting(): boolean {
     const constants = NativeModules.PlatformConstants;
     return constants && constants.isTesting;
