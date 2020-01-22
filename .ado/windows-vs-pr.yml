@@ -47,9 +47,14 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x86
           UseRNFork: true
-        ArmRelease:
+        # Temporarily omitting to save disk space.
+        # ArmRelease:
+        #   BuildConfiguration: Release
+        #   BuildPlatform: arm
+        #   UseRNFork: true
+        Arm64Release:
           BuildConfiguration: Release
-          BuildPlatform: arm
+          BuildPlatform: arm64
           UseRNFork: true
         PublicRNX86Debug:
           BuildConfiguration: Debug
@@ -70,7 +75,7 @@ jobs:
           useRnFork: $(UseRNFork)
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -106,7 +111,7 @@ jobs:
       - template: templates/prepare-env.yml
         parameters:
           useRnFork: $(UseRNFork)
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
           yarnBuildCmd: build
 
       - task: NuGetCommand@2
