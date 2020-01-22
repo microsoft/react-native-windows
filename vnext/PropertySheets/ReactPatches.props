@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+ Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!--
+    Visual Studio has its own incremental build logic for simple cases that
+    falls over for patching. Force use of MSBuild logic.
+  -->
+  <PropertyGroup>
+    <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!--
+      Do not patch facebook/react-native by default until we make the switch
+      off of microsoft/react-native.
+    -->
+    <PATCH_RN Condition="'$(OSS_RN)'!='true'">true</PATCH_RN>
+
+    <ReactNativeDir Condition="'$(BaseIntDir)'!=''">$(BaseIntDir)\PatchedReactNative\react-native</ReactNativeDir>
+    <ReactNativeDir Condition="'$(BaseIntDir)'==''">$(BaseIntermediateOutputPath)\$(Platform)\$(Configuration)\PatchedReactNative\react-native</ReactNativeDir>
+    <YogaDir Condition="'$(YogaDir)'==''">$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
+
+    <ReactNativeDir>$([MSBuild]::NormalizeDirectory($(ReactNativeDir)))</ReactNativeDir>
+    <YogaDir>$([MSBuild]::NormalizeDirectory($(YogaDir)))</YogaDir>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(ProjectGuid)'!='{F68DF4DD-06F4-4971-A7A5-8D2CEF3A5CFE}'">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\PatchedReactNative\PatchedReactNative.vcxproj">
+      <Project>{F68DF4DD-06F4-4971-A7A5-8D2CEF3A5CFE}</Project>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>
