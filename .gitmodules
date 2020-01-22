@@ -79,3 +79,6 @@
 [submodule "vnext/Modules/boostorg/winapi"]
 	path = vnext/Modules/boostorg/winapi
 	url = https://github.com/boostorg/winapi.git
+[submodule "vnext/Modules/boostorg/date_time"]
+	path = vnext/Modules/boostorg/date_time
+	url = https://github.com/boostorg/date_time.git

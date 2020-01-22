@@ -13,6 +13,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\container_hash\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\date_time\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\detail\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\function\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\integer\include;
