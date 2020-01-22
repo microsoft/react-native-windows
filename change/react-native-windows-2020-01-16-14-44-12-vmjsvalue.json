@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "VM: Adding support for JSValue for ViewManager APIs",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "commit": "a6aefe518949e1cfe5b9a530f1be57e1fafc1725",
-  "date": "2020-01-16T22:44:12.532Z"
-}
