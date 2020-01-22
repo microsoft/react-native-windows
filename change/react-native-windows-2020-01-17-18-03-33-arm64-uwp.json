@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Added ARM64 variant to Universal projects.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "11386aab48341e3c57029cbd6934349bff0b9595",
+  "dependentChangeType": "patch",
+  "date": "2020-01-18T02:03:33.212Z"
+}

@@ -130,6 +130,9 @@ void DynamicWriter::WriteValue(folly::dynamic &&value) noexcept {
     m_state = State::PropertyName;
   } else if (m_state == State::Array) {
     m_dynamic.push_back(std::move(value));
+  } else if (m_state == State::Start) {
+    m_result = std::move(value);
+    m_state = State::Finish;
   } else {
     VerifyElseCrash(false);
   }

@@ -2,6 +2,32 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Jan 2020 01:31:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.116",
+      "version": "0.60.0-vnext.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Layout-Headers for Publish Try 2",
+            "author": "nick@nickgerleman.com",
+            "commit": "46f4396665eea22b8d2342dd4a8e64f420c499be"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "VM: Adding support for JSValue for ViewManager APIs",
+            "author": "jthysell@microsoft.com",
+            "commit": "a6aefe518949e1cfe5b9a530f1be57e1fafc1725"
+          },
+          {
+            "comment": "Upgrade OpenSSL NuGet to 1.1.1-d.2.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "552ea344815cb8af3ad4d426facdb3b621446762"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jan 2020 06:19:11 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.115",
       "version": "0.60.0-vnext.115",
