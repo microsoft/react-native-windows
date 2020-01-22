@@ -41,7 +41,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "react-native": "^0.61.0",
+    "react-native": "0.61.5",
     "@office-iss/rex-win32": "0.0.33",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
@@ -56,7 +56,7 @@
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.61.0",
+    "react-native": "0.61.5",
     "react": "16.9.0",
     "react-dom": "16.8.6"
   }

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.61.0-vnext.1",
+  "version": "0.61.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -51,13 +51,13 @@
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.24.2",
     "prettier": "1.17.0",
+    "react-native": "0.61.5",
     "react": "16.9.0",
-    "react-native": "0.61.0",
     "typescript": "3.5.3"
   },
   "peerDependencies": {
     "react": "16.9.0",
-    "react-native": "^0.61.0"
+    "react-native": "0.61.5"
   },
   "beachball": {
     "defaultNpmTag": "vnext",
