@@ -52,3 +52,6 @@
 [submodule "vnext/Modules/boostorg/concept_check"]
 	path = vnext/Modules/boostorg/concept_check
 	url = https://github.com/boostorg/concept_check.git
+[submodule "vnext/Modules/boostorg/function"]
+	path = vnext/Modules/boostorg/function
+	url = https://github.com/boostorg/function.git
