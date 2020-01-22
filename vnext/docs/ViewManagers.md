@@ -162,7 +162,7 @@ namespace ViewManagerSample
         }
 
         [ViewManagerCommand]
-        public void CustomCommand(CustomUserControl view, IReadonlyList<object> commandArgs)
+        public void CustomCommand(CustomUserControl view, IReadonlyList<JSValue> commandArgs)
         {
             // Execute command
         }
@@ -307,16 +307,15 @@ struct CustomUserControlViewManager : winrt::implements<
 
   void UpdateProperties(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
-      winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable> const
-          &propertyMap);
+      winrt::Microsoft::ReactNative::IJSValueReader const &propertyMapReader) noexcept;
    
    // IViewManagerWithCommands
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, int64_t> Commands() noexcept;
 
   void DispatchCommand(
-          winrt::Windows::UI::Xaml::FrameworkElement const &view,
-          int64_t commandId,
-          winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Foundation::IInspectable> commandArgs) noexcept;
+      winrt::Windows::UI::Xaml::FrameworkElement const &view,
+      int64_t commandId,
+      winrt::Microsoft::ReactNative::IJSValueReader const &commandArgsReader) noexcept;
 };
 
 }
@@ -326,6 +325,9 @@ struct CustomUserControlViewManager : winrt::implements<
 ```c++
 #include "pch.h"
 #include "CustomUserControlViewManager.h"
+
+#include "JSValueReader.h"
+#include "NativeModules.h"
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
@@ -360,28 +362,31 @@ IMapView<hstring, ViewManagerPropertyType> CustomUserControlViewManager::NativeP
 
 void CustomUserControlViewManager::UpdateProperties(
     FrameworkElement const &view,
-    IMapView<hstring, IInspectable> const &propertyMap) {
+    IJSValueReader const &propertyMapReader) noexcept {
   if (auto control = view.try_as<winrt::ViewManagerSample::CustomUserControl>()) {
-    for (auto const &pair : propertyMap) {
-      auto const &propertyName = pair.Key();
-      auto const &propertyValue = pair.Value();
 
-      if (propertyName == L"label") {
+    const JSValueObject &propertyMap = JSValue::ReadObjectFrom(propertyMapReader);
+
+    for (auto const &pair : propertyMap) {
+      auto const &propertyName = pair.first;
+      auto const &propertyValue = pair.second;
+
+      if (propertyName == "label") {
         if (propertyValue != nullptr) {
-          auto value = winrt::unbox_value<hstring>(propertyValue);
+          auto const &value = winrt::box_value(winrt::to_hstring(propertyValue.String()));
           control.SetValue(winrt::ViewManagerSample::CustomUserControl::LabelProperty(), propertyValue);
         } else {
           control.ClearValue(winrt::ViewManagerSample::CustomUserControl::LabelProperty());
         }
-      } else if (propertyName == L"color") {
-        if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::ForegroundProperty(), propertyValue);
+      } else if (propertyName == "color") {
+        if (auto value = propertyValue.To<Brush>()) {
+          control.SetValue(Control::ForegroundProperty(), value);
         } else {
           control.ClearValue(Control::ForegroundProperty());
         }
-      } else if (propertyName == L"backgroundColor") {
-        if (auto value = propertyValue.try_as<Brush>()) {
-          control.SetValue(Control::BackgroundProperty(), propertyValue);
+      } else if (propertyName == "backgroundColor") {
+        if (auto value = propertyValue.To<Brush>()) {
+          control.SetValue(Control::BackgroundProperty(), value);
         } else {
           control.ClearValue(Control::BackgroundProperty());
         }
@@ -400,9 +405,10 @@ IMapView<hstring, int64_t> CustomUserControlViewManager::Commands() noexcept {
 void CustomUserControlViewManager::DispatchCommand(
     FrameworkElement const &view,
     int64_t commandId,
-    IVectorView<IInspectable> commandArgs) noexcept {
+    winrt::Microsoft::ReactNative::IJSValueReader const &commandArgsReader) noexcept {
   if (auto control = view.try_as<winrt::SampleLibraryCPP::CustomUserControlCPP>()) {
     if (commandId == 0) {
+      const JSValueArray &commandArgs = JSValue::ReadArrayFrom(commandArgsReader);
       // Execute command
     }
   }

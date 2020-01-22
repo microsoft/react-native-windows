@@ -28,10 +28,10 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   interface IReactModuleBuilder {
-    void SetEventEmitterName(String name);
-    void AddMethod(String name, MethodReturnType returnType, MethodDelegate method);
-    void AddSyncMethod(String name, SyncMethodDelegate method);
-    void AddConstantProvider(ConstantProvider constantProvider);
-    void AddEventHandlerSetter(String name, ReactEventHandlerSetter eventHandlerSetter);
+    [noexcept2] void SetEventEmitterName(String name);
+    [noexcept2] void AddMethod(String name, MethodReturnType returnType, MethodDelegate method);
+    [noexcept2] void AddSyncMethod(String name, SyncMethodDelegate method);
+    [noexcept2] void AddConstantProvider(ConstantProvider constantProvider);
+    [noexcept2] void AddEventHandlerSetter(String name, ReactEventHandlerSetter eventHandlerSetter);
   };
 } // namespace Microsoft.ReactNative

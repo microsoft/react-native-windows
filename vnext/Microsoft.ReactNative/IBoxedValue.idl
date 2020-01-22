@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import "NoExceptionAttribute.idl";
+
 namespace Microsoft.ReactNative {
 
   // Helps to wrap up a simple C++ struct into an IInspectable object
   [webhosthidden]
   interface IBoxedValue {
-    Int64 GetPtr();
+    [noexcept2] Int64 GetPtr();
   }
 } // namespace Microsoft.ReactNative

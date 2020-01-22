@@ -1,7 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 16 Jan 2020 05:34:40 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Jan 2020 07:24:31 GMT and should not be manually modified.
 
+## 0.60.0-vnext.118
+Wed, 22 Jan 2020 07:24:31 GMT
+
+### Changes
+
+- Remove OSS_RN Specialization in unistd.h Stub (nick@nickgerleman.com)
+## 0.60.0-vnext.117
+Wed, 22 Jan 2020 03:15:49 GMT
+
+### Changes
+
+- Added ARM64 variant to Universal projects. (julio.rocha@microsoft.com)
+- Added Mso library required for ReactHost (vmorozov@microsoft.com)
+## 0.60.0-vnext.116
+Wed, 22 Jan 2020 01:31:33 GMT
+
+### Changes
+
+- VM: Adding support for JSValue for ViewManager APIs (jthysell@microsoft.com)
+- Upgrade OpenSSL NuGet to 1.1.1-d.2. (julio.rocha@microsoft.com)
 ## 0.60.0-vnext.115
 Thu, 16 Jan 2020 05:34:40 GMT
 

@@ -107,10 +107,11 @@ namespace NativeModuleSample
           IJSValueWriter outputWriter,
           MethodResultCallback resolve,
           MethodResultCallback reject) => {
-           object[] args = inputReader.ReadArgs();
-           double result = module.Add((double)args[0], (double)args[1]);
-           writer.WriteArgs(result);
-           resolve(writer);
+           double[] args;
+           inputReader.ReadArgs(out args[0], out args[1]);
+           double result = module.Add(args[0], args[1]);
+           outputWriter.WriteArgs(result);
+           resolve(outputWriter);
           });
         return module;
       });

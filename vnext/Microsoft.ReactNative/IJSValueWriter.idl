@@ -1,20 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import "NoExceptionAttribute.idl";
+
 namespace Microsoft.ReactNative {
 
   // Writer for JSON-like streams or tree structures
   [webhosthidden]
   interface IJSValueWriter {
-    void WriteNull();
-    void WriteBoolean(Boolean value);
-    void WriteInt64(Int64 value);
-    void WriteDouble(Double value);
-    void WriteString(String value);
-    void WriteObjectBegin();
-    void WritePropertyName(String name);
-    void WriteObjectEnd();
-    void WriteArrayBegin();
-    void WriteArrayEnd();
+    [noexcept2] void WriteNull();
+    [noexcept2] void WriteBoolean(Boolean value);
+    [noexcept2] void WriteInt64(Int64 value);
+    [noexcept2] void WriteDouble(Double value);
+    [noexcept2] void WriteString(String value);
+    [noexcept2] void WriteObjectBegin();
+    [noexcept2] void WritePropertyName(String name);
+    [noexcept2] void WriteObjectEnd();
+    [noexcept2] void WriteArrayBegin();
+    [noexcept2] void WriteArrayEnd();
   }
 } // namespace Microsoft.ReactNative

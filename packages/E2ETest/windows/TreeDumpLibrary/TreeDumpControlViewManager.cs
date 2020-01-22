@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Controls;
 
 using Microsoft.ReactNative;
+using Microsoft.ReactNative.Managed;
 using Windows.UI.Xaml;
 using Windows.UI.ViewManagement;
 using System.Threading.Tasks;
@@ -61,17 +62,18 @@ namespace TreeDumpLibrary
             return m_textBlock;
         }
 
-        public void UpdateProperties(FrameworkElement view, IReadOnlyDictionary<string, object> propertyMap)
+        public void UpdateProperties(FrameworkElement view, IJSValueReader propertyMapReader)
         {
-            foreach (KeyValuePair<string, object> kvp in propertyMap)
+            var propertyMap = JSValue.ReadObjectPropertiesFrom(propertyMapReader);
+            foreach (KeyValuePair<string, JSValue> kvp in propertyMap)
             {
                 if (kvp.Key == "dumpID")
                 {
-                    SetDumpID((TextBlock)view, (string)kvp.Value);
+                    SetDumpID((TextBlock)view, kvp.Value.String);
                 }
                 else if (kvp.Key == "uiaID")
                 {
-                    SetUIAID((TextBlock)view, (string)kvp.Value);
+                    SetUIAID((TextBlock)view, kvp.Value.String);
                 }
             }
         }

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "pch.h"
-
 #include "SnapPointManagingContentControl.h"
 
 #include <Utils/PropertyUtils.h>
