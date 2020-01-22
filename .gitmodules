@@ -91,3 +91,6 @@
 [submodule "vnext/Modules/boostorg/numeric_conversion"]
 	path = vnext/Modules/boostorg/numeric_conversion
 	url = https://github.com/boostorg/numeric_conversion.git
+[submodule "vnext/Modules/boostorg/endian"]
+	path = vnext/Modules/boostorg/endian
+	url = https://github.com/boostorg/endian.git
