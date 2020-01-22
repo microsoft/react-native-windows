@@ -61,3 +61,6 @@
 [submodule "vnext/Modules/boostorg/integer"]
 	path = vnext/Modules/boostorg/integer
 	url = https://github.com/boostorg/integer.git
+[submodule "vnext/Modules/boostorg/type_index"]
+	path = vnext/Modules/boostorg/type_index
+	url = https://github.com/boostorg/type_index.git
