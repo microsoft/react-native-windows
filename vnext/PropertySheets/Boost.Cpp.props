@@ -17,6 +17,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\function\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\integer\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\iterator\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\move\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\mpl\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\preprocessor\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
