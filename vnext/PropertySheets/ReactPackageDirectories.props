@@ -36,8 +36,6 @@
     <!-- Normalize the directory names -->
     <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory($(ReactNativeWindowsDir)))</ReactNativeWindowsDir>
     <ReactNativePackageDir>$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)))</ReactNativePackageDir>
-    <ReactNativeDir>$([MSBuild]::NormalizeDirectory($(ReactNativeDir)))</ReactNativeDir>
-    <YogaDir>$([MSBuild]::NormalizeDirectory($(YogaDir)))</YogaDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
   </PropertyGroup>
 
