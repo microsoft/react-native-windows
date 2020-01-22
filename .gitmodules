@@ -40,3 +40,6 @@
 [submodule "vnext/Modules/boostorg/iterator"]
 	path = vnext/Modules/boostorg/iterator
 	url = https://github.com/boostorg/iterator.git
+[submodule "vnext/Modules/boostorg/assert"]
+	path = vnext/Modules/boostorg/assert
+	url = https://github.com/boostorg/assert.git
