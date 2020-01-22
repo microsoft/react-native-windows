@@ -67,3 +67,6 @@
 [submodule "vnext/Modules/boostorg/container_hash"]
 	path = vnext/Modules/boostorg/container_hash
 	url = https://github.com/boostorg/container_hash.git
+[submodule "vnext/Modules/boostorg/bind"]
+	path = vnext/Modules/boostorg/bind
+	url = https://github.com/boostorg/bind.git

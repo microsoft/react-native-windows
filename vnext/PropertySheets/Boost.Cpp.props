@@ -8,6 +8,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\asio\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\assert\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\beast\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\bind\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\concept_check\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\container_hash\include;
