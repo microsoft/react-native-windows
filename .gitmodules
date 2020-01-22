@@ -55,3 +55,6 @@
 [submodule "vnext/Modules/boostorg/function"]
 	path = vnext/Modules/boostorg/function
 	url = https://github.com/boostorg/function.git
+[submodule "vnext/Modules/boostorg/throw_exception"]
+	path = vnext/Modules/boostorg/throw_exception
+	url = https://github.com/boostorg/throw_exception.git

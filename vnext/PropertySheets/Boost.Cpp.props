@@ -19,6 +19,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\static_assert\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\throw_exception\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\type_traits\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
         %(AdditionalIncludeDirectories)
