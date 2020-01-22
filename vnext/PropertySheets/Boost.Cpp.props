@@ -24,6 +24,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\predef\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\preprocessor\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\smart_ptr\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\static_assert\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\throw_exception\include;
