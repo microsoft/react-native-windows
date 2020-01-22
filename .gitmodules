@@ -58,3 +58,6 @@
 [submodule "vnext/Modules/boostorg/throw_exception"]
 	path = vnext/Modules/boostorg/throw_exception
 	url = https://github.com/boostorg/throw_exception.git
+[submodule "vnext/Modules/boostorg/integer"]
+	path = vnext/Modules/boostorg/integer
+	url = https://github.com/boostorg/integer.git
