@@ -34,3 +34,6 @@
 [submodule "vnext/Modules/boostorg/preprocessor"]
 	path = vnext/Modules/boostorg/preprocessor
 	url = https://github.com/boostorg/preprocessor.git
+[submodule "vnext/Modules/boostorg/type_traits"]
+	path = vnext/Modules/boostorg/type_traits
+	url = https://github.com/boostorg/type_traits.git

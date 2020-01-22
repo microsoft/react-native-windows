@@ -13,6 +13,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\preprocessor\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\type_traits\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
