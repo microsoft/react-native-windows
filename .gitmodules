@@ -88,3 +88,6 @@
 [submodule "vnext/Modules/boostorg/intrusive"]
 	path = vnext/Modules/boostorg/intrusive
 	url = https://github.com/boostorg/intrusive.git
+[submodule "vnext/Modules/boostorg/numeric_conversion"]
+	path = vnext/Modules/boostorg/numeric_conversion
+	url = https://github.com/boostorg/numeric_conversion.git
