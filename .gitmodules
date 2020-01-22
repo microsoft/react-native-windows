@@ -73,3 +73,6 @@
 [submodule "vnext/Modules/boostorg/move"]
 	path = vnext/Modules/boostorg/move
 	url = https://github.com/boostorg/move.git
+[submodule "vnext/Modules/boostorg/predef"]
+	path = vnext/Modules/boostorg/predef
+	url = https://github.com/boostorg/predef.git

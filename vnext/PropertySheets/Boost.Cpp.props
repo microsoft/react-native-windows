@@ -19,6 +19,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\iterator\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\move\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\mpl\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\predef\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\preprocessor\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\static_assert\include;
@@ -29,15 +30,18 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
+
       <!--
         BOOST_ALL_NO_LIB              - Don't require prebuilt Boost DateTime LIB.
-        BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
+        BOOST_ASIO_HAS_IOCP           - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
         BOOST_ERROR_CODE_HEADER_ONLY  - Compile Boost error_code members inline. Requires BOOST_SYSTEM_SOURCE.
+        BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
       -->
       <PreprocessorDefinitions>
         BOOST_ALL_NO_LIB=1;
-        BOOST_SYSTEM_SOURCE;
+        BOOST_ASIO_HAS_IOCP;
         BOOST_ERROR_CODE_HEADER_ONLY;
+        BOOST_SYSTEM_SOURCE;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
     </ClCompile>
