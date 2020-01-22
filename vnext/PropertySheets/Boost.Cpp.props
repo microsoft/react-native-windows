@@ -28,6 +28,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\type_index\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\type_traits\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\winapi\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
 

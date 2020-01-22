@@ -76,3 +76,6 @@
 [submodule "vnext/Modules/boostorg/predef"]
 	path = vnext/Modules/boostorg/predef
 	url = https://github.com/boostorg/predef.git
+[submodule "vnext/Modules/boostorg/winapi"]
+	path = vnext/Modules/boostorg/winapi
+	url = https://github.com/boostorg/winapi.git
