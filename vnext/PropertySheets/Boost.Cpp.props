@@ -4,6 +4,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
