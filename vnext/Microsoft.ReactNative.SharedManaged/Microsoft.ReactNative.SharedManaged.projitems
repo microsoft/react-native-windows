@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AttributedViewManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IJSValueTreeReader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactContextExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IReactPromise.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JSValue.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)JSValueGenerator.cs" />

@@ -4,6 +4,7 @@
 #pragma once
 
 #include <ReactUWP/IReactInstance.h>
+#include "DynamicWriter.h"
 
 #include "winrt/Microsoft.ReactNative.h"
 
@@ -16,8 +17,8 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   void DispatchEvent(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
       hstring const &eventName,
-      IInspectable const &eventData) noexcept;
-  void CallJsFunction(hstring const &moduleName, hstring const &method, IInspectable const &params) noexcept;
+      ReactArgWriter const &eventDataArgWriter) noexcept;
+  void CallJsFunction(hstring const &moduleName, hstring const &method, ReactArgWriter const &paramsArgWriter) noexcept;
 
  private:
   std::weak_ptr<react::uwp::IReactInstance> m_instance;
