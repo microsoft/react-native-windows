@@ -442,10 +442,6 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: ARM
           UTTestOutputConfigDir: Debug
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-          UTTestOutputConfigDir: Debug
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
