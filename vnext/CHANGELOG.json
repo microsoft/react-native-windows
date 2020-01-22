@@ -2,6 +2,25 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Jan 2020 03:15:49 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.117",
+      "version": "0.60.0-vnext.117",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added ARM64 variant to Universal projects.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "11386aab48341e3c57029cbd6934349bff0b9595"
+          },
+          {
+            "comment": "Added Mso library required for ReactHost",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c3ee2ff9a6eb70d59e452d1eb81ce77e9bded43a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jan 2020 01:31:33 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.116",
       "version": "0.60.0-vnext.116",
