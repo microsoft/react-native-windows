@@ -5,6 +5,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\asio\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\beast\include;
         %(AdditionalIncludeDirectories)

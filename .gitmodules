@@ -16,3 +16,6 @@
 [submodule "vnext/Modules/boostorg/utility"]
 	path = vnext/Modules/boostorg/utility
 	url = https://github.com/boostorg/utility.git
+[submodule "vnext/Modules/boostorg/config"]
+	path = vnext/Modules/boostorg/config
+	url = https://github.com/boostorg/config.git
