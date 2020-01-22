@@ -22,3 +22,6 @@
 [submodule "vnext/Modules/boostorg/core"]
 	path = vnext/Modules/boostorg/core
 	url = https://github.com/boostorg/core.git
+[submodule "vnext/Modules/boostorg/algorithm"]
+	path = vnext/Modules/boostorg/algorithm
+	url = https://github.com/boostorg/algorithm.git

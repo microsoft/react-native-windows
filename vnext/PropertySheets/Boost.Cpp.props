@@ -4,12 +4,13 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>
-        $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
-        $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
-        $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
-        $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\algorithm\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\asio\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\beast\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\system\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\utility\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <!--
