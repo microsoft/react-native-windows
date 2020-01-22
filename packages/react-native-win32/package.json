@@ -21,7 +21,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
-    "@react-native-community/cli": "^3.0.4",
     "fbjs-scripts": "^1.1.0",
     "abort-controller": "^3.0.0",
     "stacktrace-parser": "^0.1.3",

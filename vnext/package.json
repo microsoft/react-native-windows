@@ -23,7 +23,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.4.0",
-    "@react-native-community/cli": "^2.6.0",
     "cli-spinners": "^2.2.0",
     "create-react-class": "^15.6.3",
     "fbjs": "^1.0.0",
