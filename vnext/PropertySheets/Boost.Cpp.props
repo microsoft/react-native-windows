@@ -9,6 +9,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\beast\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\config\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\core\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\iterator\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\mpl\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\preprocessor\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;

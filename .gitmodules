@@ -37,3 +37,6 @@
 [submodule "vnext/Modules/boostorg/type_traits"]
 	path = vnext/Modules/boostorg/type_traits
 	url = https://github.com/boostorg/type_traits.git
+[submodule "vnext/Modules/boostorg/iterator"]
+	path = vnext/Modules/boostorg/iterator
+	url = https://github.com/boostorg/iterator.git
