@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove OSS_RN Specific Warnings",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "bf4dd0c6555b3f50e61a7d7f6c2f3d593a5bf5c6",
-  "dependentChangeType": "patch",
-  "date": "2020-01-21T19:07:50.676Z"
-}

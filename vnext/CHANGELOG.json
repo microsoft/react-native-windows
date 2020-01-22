@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Jan 2020 07:24:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.118",
+      "version": "0.60.0-vnext.118",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove OSS_RN Specific Warnings",
+            "author": "nick@nickgerleman.com",
+            "commit": "bf4dd0c6555b3f50e61a7d7f6c2f3d593a5bf5c6"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Remove OSS_RN Specialization in unistd.h Stub",
+            "author": "nick@nickgerleman.com",
+            "commit": "e77ad6640e5c76b31acc508fa8ed2a6c75640085"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jan 2020 03:15:49 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.117",
       "version": "0.60.0-vnext.117",
