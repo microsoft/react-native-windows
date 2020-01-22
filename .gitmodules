@@ -82,3 +82,6 @@
 [submodule "vnext/Modules/boostorg/date_time"]
 	path = vnext/Modules/boostorg/date_time
 	url = https://github.com/boostorg/date_time.git
+[submodule "vnext/Modules/boostorg/optional"]
+	path = vnext/Modules/boostorg/optional
+	url = https://github.com/boostorg/optional.git

@@ -20,6 +20,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\iterator\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\move\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\mpl\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\optional\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\predef\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\preprocessor\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\range\include;
