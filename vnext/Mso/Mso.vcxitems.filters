@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="future">
+      <UniqueIdentifier>{4a2ca748-edd3-4161-a833-233130d84d4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="future\details">
+      <UniqueIdentifier>{2bc12fa0-5c4b-4e40-b11e-55255a57563d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{033e12d7-1f40-4a14-acfa-60f36eea382a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\future">
+      <UniqueIdentifier>{03058037-67b8-46b4-83e9-840c842c82ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functional">
+      <UniqueIdentifier>{845fa0e8-c713-40af-9df6-37dad44bf694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{989d1f5a-d479-415e-9a59-86f48557b77b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="errorCode">
+      <UniqueIdentifier>{156d3fdb-639c-40ba-ad2e-97c7c86901d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dispatchQueue">
+      <UniqueIdentifier>{8942a768-f0d2-41de-9c1d-87ea1db017c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="compilerAdapters">
+      <UniqueIdentifier>{44224e12-db3c-4385-a116-b5a283f9cdf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="smartPtr">
+      <UniqueIdentifier>{f65bdddd-bf87-4b56-a859-a5f89f463755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="crash">
+      <UniqueIdentifier>{91057e66-3cce-4746-93b2-47a871ae54de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debugAssertApi">
+      <UniqueIdentifier>{905143b5-1985-41c5-958b-060b2fa268ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="eventWaitHandle">
+      <UniqueIdentifier>{eacfd5c4-9a04-4095-b8b3-cb014047e5d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tagUtils">
+      <UniqueIdentifier>{a8ea6a4b-4057-4db9-9f2b-8949adf19d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="guid">
+      <UniqueIdentifier>{dadc0e85-dc07-4b40-81b7-9c6608dda51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="memoryApi">
+      <UniqueIdentifier>{0a02dfe8-3214-42d9-953a-1132d595643e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="typeTraits">
+      <UniqueIdentifier>{471eea32-6f4f-4622-97dc-0641ab098310}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\crash">
+      <UniqueIdentifier>{21224dab-d69a-43d4-842c-ae48e45e7349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="platformAdapters">
+      <UniqueIdentifier>{1d7640c9-c622-41ed-8f1c-08fc37562887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\memoryApi">
+      <UniqueIdentifier>{863002ac-75c1-4e69-982f-3649d9925abc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\errorCode">
+      <UniqueIdentifier>{99ba3322-6edc-4189-b0b0-6af64fac684b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="comUtil">
+      <UniqueIdentifier>{6ece220a-3e66-46c7-8ee1-8b36620b5799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\eventWaitHandle">
+      <UniqueIdentifier>{c94ff3f5-c1f7-43c8-a00f-70a8d9a63563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="motifCpp">
+      <UniqueIdentifier>{008dc0d0-008b-4f1d-ad57-274a806038d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\dispatchQueue">
+      <UniqueIdentifier>{3c0a0114-4119-4945-b2af-6b667fdf73c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="span">
+      <UniqueIdentifier>{146ff65f-2493-40b7-8ab7-54edfbced8a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\debugAssertApi">
+      <UniqueIdentifier>{b0b13bde-cb4b-4dde-9c9a-445e5f80626c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cppExtensions">
+      <UniqueIdentifier>{d7ab47c6-b52d-43d1-9bfc-865e7d6923e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="oacr">
+      <UniqueIdentifier>{357b2064-d878-456d-8b2c-786c5b9f4f6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="activeObject">
+      <UniqueIdentifier>{055cc235-278e-4500-9245-f25f85d507ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\activeObject">
+      <UniqueIdentifier>{b8e026da-ebd9-4031-8fe9-c0cbd12eb549}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\errorCode.h">
+      <Filter>errorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)dispatchQueue\dispatchQueue.h">
+      <Filter>dispatchQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\cppMacrosDebug.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\declspecDefinitions.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\functionDecorations.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)crash\verifyElseCrash.h">
+      <Filter>crash</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)debugAssertApi\debugAssertApi.h">
+      <Filter>debugAssertApi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)debugAssertApi\debugAssertDetails.h">
+      <Filter>debugAssertApi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\cppMacros.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)eventWaitHandle\eventWaitHandle.h">
+      <Filter>eventWaitHandle</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)tagUtils\tagTypes.h">
+      <Filter>tagUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)guid\msoGuid.h">
+      <Filter>guid</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)guid\msoGuidDetails.h">
+      <Filter>guid</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\compilerFeatures.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\make.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\objectRefCount.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\objectWithWeakRef.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\exceptionErrorProvider.h">
+      <Filter>errorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\errorProvider.h">
+      <Filter>errorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\maybe.h">
+      <Filter>errorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)memoryApi\memoryApi.h">
+      <Filter>memoryApi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)memoryApi\memoryLeakScope.h">
+      <Filter>memoryApi</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)smartPtr\smartPointerBase.h">
+      <Filter>smartPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\queryCast.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\compilerWarnings.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\compilerWarnings_impl.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\managedCpp.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\intrinsics.h">
+      <Filter>compilerAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)platformAdapters\windowsFirst.h">
+      <Filter>platformAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\hresultErrorProvider.h">
+      <Filter>errorCode</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)comUtil\IUnknownShim.h">
+      <Filter>comUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\assert_IgnorePlat_emptyImpl.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\assert_motifApi.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\gTestAdapter.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\libletAwareMemLeakDetection.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\motifCppTest.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\motifCppTestBase.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\testCheck.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\testInfo.h">
+      <Filter>motifCpp</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\refCountedObject.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)comUtil\qiCast.h">
+      <Filter>comUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)comUtil\qiCastCore.h">
+      <Filter>comUtil</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)span\span.h">
+      <Filter>span</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)cppExtensions\autoRestore.h">
+      <Filter>cppExtensions</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\threadMutex.h">
+      <Filter>src\dispatchQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)functional\functorRef.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)functional\functor.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\unknownObject.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\weakPtr.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskBatch.h">
+      <Filter>src\dispatchQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\typeTraits.h">
+      <Filter>typeTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)oacr\oacr.h">
+      <Filter>oacr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskQueue.h">
+      <Filter>src\dispatchQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\queueService.h">
+      <Filter>src\dispatchQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\arrayView.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\cancellationErrorProvider.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\cancellationException.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\executor.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureFuncInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureTask.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureWeakPtrInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\ifuture.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\maybeInvoker.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\promiseGroupInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\promiseInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\resultTraits.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\sharedFutureInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\timeoutException.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\whenAllInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\whenAnyInl.h">
+      <Filter>future\details</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\cancellationToken.h">
+      <Filter>future</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\future.h">
+      <Filter>future</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\futureForwardDecl.h">
+      <Filter>future</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\futureWait.h">
+      <Filter>future</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskContext.h">
+      <Filter>src\dispatchQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\future\futureImpl.h">
+      <Filter>src\future</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)activeObject\activeObject.h">
+      <Filter>activeObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\sfinae.h">
+      <Filter>typeTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\tags.h">
+      <Filter>typeTraits</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)smartPtr\cntPtr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryApi.cpp">
+      <Filter>src\memoryApi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\errorCode\errorCode.cpp">
+      <Filter>src\errorCode</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\crash\crash_min.cpp">
+      <Filter>src\crash</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\debugAssertApi\debugAssertApi.cpp">
+      <Filter>src\debugAssertApi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryLeakScope_EmptyImpl.cpp">
+      <Filter>src\memoryApi</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\mainUIScheduler_winrt.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\looperScheduler.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\threadPoolScheduler_win.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskBatch.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskQueue.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\queueService.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskContext.cpp">
+      <Filter>src\dispatchQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\cancellationTokenImpl.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\executor.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\futureImpl.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\futureTask.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\promise.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\promiseGroup.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\whenAll.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\whenAny.cpp">
+      <Filter>src\future</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\activeObject\activeObject.cpp">
+      <Filter>src\activeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl_win.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)future\README.md">
+      <Filter>future</Filter>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)dispatchQueue\README.md">
+      <Filter>dispatchQueue</Filter>
+    </None>
+  </ItemGroup>
+</Project>

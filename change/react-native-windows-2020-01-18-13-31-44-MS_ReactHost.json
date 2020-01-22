@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Added Mso library required for ReactHost",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "c3ee2ff9a6eb70d59e452d1eb81ce77e9bded43a",
+  "dependentChangeType": "patch",
+  "date": "2020-01-18T21:31:43.875Z"
+}

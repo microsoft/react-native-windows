@@ -3,10 +3,7 @@
 
 #pragma once
 
-#include "pch.h"
-#include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
-#include <folly/json.h>
 
 namespace winrt::Microsoft::ReactNative {
 

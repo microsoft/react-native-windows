@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="activeObject">
+      <UniqueIdentifier>{50fef318-b0d8-4d29-bcbc-b73bc4e33db3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="errorCode">
+      <UniqueIdentifier>{d9328db1-4a4c-44e0-bf75-8dfcf1d47448}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="eventWaitHandle">
+      <UniqueIdentifier>{3fbde551-6305-4522-a372-f0cfb08bd312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functional">
+      <UniqueIdentifier>{addd4ed7-ddcb-486a-b9e4-c967c55efaa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="future">
+      <UniqueIdentifier>{83d980d8-d762-4902-86e4-8ee14029bc6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="guid">
+      <UniqueIdentifier>{c57e3756-1c62-4042-8169-f1463f0def19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object">
+      <UniqueIdentifier>{23127842-a753-4d07-b1c9-7f593a105091}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="pch">
+      <UniqueIdentifier>{c1f49da1-d949-4a14-a312-36dd851d3f85}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="activeObject\activeObjectTest.cpp">
+      <Filter>activeObject</Filter>
+    </ClCompile>
+    <ClCompile Include="errorCode\errorProviderTest.cpp">
+      <Filter>errorCode</Filter>
+    </ClCompile>
+    <ClCompile Include="errorCode\maybeTest.cpp">
+      <Filter>errorCode</Filter>
+    </ClCompile>
+    <ClCompile Include="eventWaitHandle\eventWaitHandleTest.cpp">
+      <Filter>eventWaitHandle</Filter>
+    </ClCompile>
+    <ClCompile Include="functional\functorRefTest.cpp">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="functional\functorTest.cpp">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="future\arrayViewTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\cancellationTokenTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\executorTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\futureFuncTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\futureTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\futureTestEx.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\futureWeakPtrTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\maybeInvokerTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\promiseGroupTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\promiseTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\whenAllTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="future\whenAnyTest.cpp">
+      <Filter>future</Filter>
+    </ClCompile>
+    <ClCompile Include="guid\guidTest.cpp">
+      <Filter>guid</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="object\objectRefCountTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\objectWithWeakRefTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\queryCastTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\refCountedObjectTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\TCntPtrRefTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\TCntPtrTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\unknownObjectTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="object\weakPtrTest.cpp">
+      <Filter>object</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>pch</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="functional\functorTest.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="future\testCheck.h">
+      <Filter>future</Filter>
+    </ClInclude>
+    <ClInclude Include="future\testExecutor.h">
+      <Filter>future</Filter>
+    </ClInclude>
+    <ClInclude Include="object\testAllocators.h">
+      <Filter>object</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>pch</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="future\futureTest.tt">
+      <Filter>future</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>
