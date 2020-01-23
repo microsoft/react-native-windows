@@ -21,7 +21,7 @@ namespace react {
 
 class MessageQueueThread;
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 // Used by sandbox process to handle NativeModule calls from JS.
 class SandboxDelegateFactory : public ExecutorDelegateFactory {
@@ -129,7 +129,7 @@ class SandboxJSExecutor : public JSExecutor {
   std::atomic<int64_t> m_requestId{1}; // RequestId starting from 1
 };
 
-#endif // OSS_RN
+#endif // PATCH_RN
 
 } // namespace react
 } // namespace facebook

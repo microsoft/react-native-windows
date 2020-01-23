@@ -17,7 +17,7 @@ using namespace std;
 
 namespace facebook {
 namespace react {
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 JSECreator DevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &settings) {
   return [this, settings](shared_ptr<ExecutorDelegate> delegate, shared_ptr<MessageQueueThread> jsQueue) {
@@ -27,6 +27,6 @@ JSECreator DevSupportManager::LoadJavaScriptInSandboxMode(const DevSettings &set
     return sandboxJSE;
   };
 }
-#endif // OSS_RN
+#endif // PATCH_RN
 } // namespace react
 } // namespace facebook

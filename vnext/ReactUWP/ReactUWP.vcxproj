@@ -10,6 +10,14 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -33,6 +41,7 @@
     <Keyword>DynamicLibrary</Keyword>
     <RootNamespace>react.uwp</RootNamespace>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -117,9 +126,14 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x64.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'=='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.patched.x64.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
@@ -130,9 +144,14 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x86.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'=='true'">
+    <Link>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.patched.x86.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'!='true'">
@@ -172,8 +191,8 @@
     <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="Utils\FontManager.h" />
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
-    <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(OSS_RN)' != 'true'" />
+    <ClInclude Include="Utils\UwpPreparedScriptStore.h" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClInclude Include="Utils\UwpScriptStore.h" Condition="'$(PATCH_RN)' == 'true'" />
     <ClInclude Include="Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="Modules\Animated\AdditionAnimatedNode.h" />
     <ClInclude Include="Modules\Animated\AnimatedNode.h" />
@@ -272,8 +291,8 @@
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
-    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
-    <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(OSS_RN)' != 'true'" />
+    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" Condition="'$(PATCH_RN)' == 'true'" />
+    <ClCompile Include="Utils\UwpScriptStore.cpp" Condition="'$(PATCH_RN)' == 'true'" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="EndPoints\dll\dllmain.cpp" />
     <ClCompile Include="EndPoints\dll\JSCGlue.cpp" />
@@ -384,10 +403,10 @@
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'!='true'">
+    <ProjectReference Include="..\JSI\Universal\JSI.Universal.vcxproj" Condition="'$(PATCH_RN)' == 'true' AND '$(CHAKRACOREUWP)'!='true'">
       <Project>{a62d504a-16b8-41d2-9f19-e2e86019e5e4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(OSS_RN)' != 'true' AND '$(CHAKRACOREUWP)'=='true'">
+    <ProjectReference Include="..\JSI\Desktop\JSI.Desktop.vcxproj" Condition="'$(PATCH_RN)' == 'true' AND '$(CHAKRACOREUWP)'=='true'">
       <Project>{17DD1B17-3094-40DD-9373-AC2497932ECA}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">

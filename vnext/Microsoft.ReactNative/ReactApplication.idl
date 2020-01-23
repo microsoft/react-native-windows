@@ -9,17 +9,17 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   [default_interface]
   unsealed runtimeclass ReactApplication : Windows.UI.Xaml.Application {
-    ReactApplication();
+    [noexcept2] ReactApplication();
      
-    ReactInstanceSettings InstanceSettings { get; set; };
+    [noexcept2] ReactInstanceSettings InstanceSettings { get; set; };
      
-    IVector<IReactPackageProvider> PackageProviders { get; set; };
+    [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
      
-    String MainComponentName { get; set; };
-    Boolean UseDeveloperSupport { get; set; };
-    String JavaScriptMainModuleName { get; set; };
-    String JavaScriptBundleFile { get; set; };
+    [noexcept2] String MainComponentName { get; set; };
+    [noexcept2] Boolean UseDeveloperSupport { get; set; };
+    [noexcept2] String JavaScriptMainModuleName { get; set; };
+    [noexcept2] String JavaScriptBundleFile { get; set; };
 
-    ReactNativeHost Host { get; };
+    [noexcept2] ReactNativeHost Host { get; };
   }
 } // namespace Microsoft.ReactNative

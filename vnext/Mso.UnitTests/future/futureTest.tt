@@ -1,0 +1,854 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cpp" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+#include "testCheck.h"
+#include "testExecutor.h"
+#include "future/future.h"
+#include "future/futureWait.h"
+#include "motifCpp/libletAwareMemLeakDetection.h"
+#include "motifCpp/skipSEHUT.h"
+#include "cppExtensions/autoRestore.h"
+
+#define NOTHING(x) x
+
+namespace FutureTests {
+
+TEST_CLASS_EX(Future2Test, LibletAwareMemLeakDetection)
+{
+	MemoryLeakDetectionHook::TrackPerTest m_trackLeakPerTest;
+
+<#
+TypeParamEntry[] notSharedParamEntries = new TypeParamEntry[]
+{
+	new TypeParamEntry
+	{
+		IsValue = true,
+		Type = "int",
+		Complete = "SetValue(5)",
+		DeclValue = "int& value",
+		CheckValue = "TestCheck(value == 5);",
+		ReturnValue = "return value;",
+		CheckValue2 = "TestCheck(value == 7);",
+		ReturnValue2 = "return value + 2;",
+		ExecParam = "RefParam",
+		Const = "",
+	},
+	new TypeParamEntry
+	{
+		IsValue = false,
+		Type = "void",
+		Complete = "SetValue()",
+		DeclValue = "",
+		CheckValue = "",
+		ReturnValue = "",
+		CheckValue2 = "",
+		ReturnValue2 = "",
+		ExecParam = "NoParam",
+		Const = "",
+	},
+};
+
+TypeParamEntry[] sharedParamEntries = new TypeParamEntry[]
+{
+	new TypeParamEntry
+	{
+		IsValue = true,
+		Type = "int",
+		Complete = "SetValue(5)",
+		DeclValue = "const int& value",
+		CheckValue = "TestCheck(value == 5);",
+		ReturnValue = "return value;",
+		CheckValue2 = "TestCheck(value == 7);",
+		ReturnValue2 = "return value + 2;",
+		ExecParam = "ConstRefParam",
+		Const = "const ",
+	},
+	new TypeParamEntry
+	{
+		IsValue = false,
+		Type = "void",
+		Complete = "SetValue()",
+		DeclValue = "",
+		CheckValue = "",
+		ReturnValue = "",
+		CheckValue2 = "",
+		ReturnValue2 = "",
+		ExecParam = "NoParam",
+		Const = "",
+	},
+};
+
+ThenEntry[] notSharedThenEntries = new ThenEntry[]
+{
+	new ThenEntry
+	{
+		TestName = "Then",
+		Name = "Then",
+		Executor = "Mso::Executor()",
+		TInlineExecutor = "Mso::Executors::Inline",
+		TInlineThrowExecutor = "Mso::Executors::Inline::Throw",
+		TConcurrentExecutor = "Mso::Executors::Concurrent",
+		TConcurrentThrowExecutor = "Mso::Executors::Concurrent::Throw",
+		MockExecutor = "MockExecutor",
+		MockExecutorOnCancel = "MockExecutorOnCancel",
+		MockInlineExecutor = "MockInlineExecutor",
+		Optional = false,
+		TestMethod = "TESTMETHOD_REQUIRES_SEH",
+		TestCheckCrash = "TestCheckCrash",
+		DisableLeakDetection = "TEST_DISABLE_MEMORY_LEAK_DETECTION();",
+		ShouldVEC = false,
+		AbandonCheck = "TestCheckIgnore",
+		IsFailedCheck = "TestCheckIgnore",
+		CheckSecond = "TestCheck",
+	},
+};
+
+ThenEntry[] sharedThenEntries = new ThenEntry[]
+{
+	new ThenEntry
+	{
+		TestName = "Then",
+		Name = "Then",
+		Executor = "Mso::Executor()",
+		TInlineExecutor = "Mso::Executors::Inline",
+		TInlineThrowExecutor = "Mso::Executors::Inline::Throw",
+		TConcurrentExecutor = "Mso::Executors::Concurrent",
+		TConcurrentThrowExecutor = "Mso::Executors::Concurrent::Throw",
+		MockExecutor = "MockExecutor",
+		MockExecutorOnCancel = "MockExecutorOnCancel",
+		MockInlineExecutor = "MockInlineExecutor",
+		Optional = false,
+		TestMethod = "TESTMETHOD_REQUIRES_SEH",
+		TestCheckCrash = "TestCheckCrash",
+		DisableLeakDetection = "TEST_DISABLE_MEMORY_LEAK_DETECTION();",
+		ShouldVEC = false,
+		AbandonCheck = "TestCheckIgnore",
+		IsFailedCheck = "TestCheckIgnore",
+		CheckSecond = "TestCheckIgnore",
+	},
+};
+
+TypeEntry[] entries = new TypeEntry[]
+{
+	new TypeEntry
+	{
+		Type = "Future",
+		Create = "AsFuture()",
+		Executor = "Mso::Executor()",
+		Optional = false,
+		Shared = false,
+		TypeParams = notSharedParamEntries,
+		ThenEntries = notSharedThenEntries,
+	},
+};
+
+
+foreach (var entry in entries) { #>
+<# foreach (var paramEntry in entry.TypeParams) { #>
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_ctor_Default)
+	{
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1;
+		TestCheck(!f1);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_ctor_nullptr)
+	{
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1(nullptr);
+		TestCheck(!f1);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_ctor_copy)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2(f1);
+		TestCheck(f1);
+		TestCheck(f1 == f2);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_ctor_move)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2(f1); // copy of f1
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f3(std::move(f1));
+		TestCheck(!f1);
+		TestCheck(f3);
+		TestCheck(f3 == f2);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_CreateMultiple)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2 = p1.<#=entry.Create#>;
+
+		TestCheck(f1);
+		TestCheck(f2);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_Assign_nullptr)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		f1 = nullptr;
+		TestCheck(!f1);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_Assign_copy)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::Promise<<#=paramEntry.Type#>> p2;
+		p2.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2 = p2.<#=entry.Create#>;
+		TestCheck(f1 != f2);
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f3(f1); // copy of p1
+		f1 = f2;
+		TestCheck(f2);
+		TestCheck(f1 == f2);
+		TestCheck(f1 != f3);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_Assign_move)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::Promise<<#=paramEntry.Type#>> p2;
+		p2.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2 = p2.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f3(f1); // copy of f1
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f4(f2); // copy of f2
+		f1 = std::move(f2);
+		TestCheck(f1);
+		TestCheck(!f2);
+		TestCheck(f1 != f3);
+		TestCheck(f1 == f4);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_Assign_EmptyInit)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		f1 = {}; // Assigns empty future which has null state.
+		TestCheck(!f1);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_Swap)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::Promise<<#=paramEntry.Type#>> p2;
+		p2.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2 = p2.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f3(f1); // copy of f1
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f4(f2); // copy of f2
+		f1.Swap(f2);
+		TestCheck(f1 == f4);
+		TestCheck(f2 == f3);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_std_swap)
+	{
+		using std::swap; // The typical pattern how to call the swap method.
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::Promise<<#=paramEntry.Type#>> p2;
+		p2.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2 = p2.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f3(f1); // copy of f1
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f4(f2); // copy of f2
+		swap(f1, f2); // Never use the std::swap call. The swap can be overridden in the custom namespace for a entry.Type T.
+		TestCheck(f1 == f4);
+		TestCheck(f2 == f3);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_Get)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2;
+		TestCheck(Mso::GetIFuture(f1) != nullptr);
+		TestCheck(Mso::GetIFuture(f2) == nullptr);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_operator_bool)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2;
+		TestCheck(f1);
+		TestCheck(!f2);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_operator_Equal)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		Mso::Promise<<#=paramEntry.Type#>> p3;
+		p3.<#=paramEntry.Complete#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1 = p1.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f2(f1); // copy
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f3 = p3.<#=entry.Create#>;
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f4;
+		TestCheck(f1 == f2);
+		TestCheck(f2 == f1);
+		TestCheck(f1 != f3);
+		TestCheck(f3 != f1);
+		TestCheck(f4 != f1);
+		TestCheck(f1 != f4);
+		TestCheck(f4 == nullptr);
+		TestCheck(nullptr == f4);
+		TestCheck(f1 != nullptr);
+		TestCheck(nullptr != f1);
+	}
+
+<# foreach (var thenEntry in entry.ThenEntries) { #>
+<# if (thenEntry.Optional || !entry.Optional) { #>
+	TESTMETHOD_REQUIRES_SEH(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_EmptyFails)
+	{
+		Mso::<#=entry.Type#><<#=paramEntry.Type#>> f1;
+		TestCheckCrash(f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [](<#=paramEntry.Type#> /*value*/) noexcept {}));
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+<# if (paramEntry.IsValue && !entry.Shared) { #>
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_Moves)
+	{
+		Mso::Promise<std::unique_ptr<<#=paramEntry.Type#>>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](std::unique_ptr<<#=paramEntry.Type#>>& value) noexcept
+		{
+			std::unique_ptr<<#=paramEntry.Type#>> v = std::move(value); // We can move value because only one continuation is allowed.
+			TestCheck(*v == 5);
+		});
+
+		p1.SetValue(std::unique_ptr<<#=paramEntry.Type#>>(new <#=paramEntry.Type#>(5)));
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+<# } #>
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_AfterCompletion)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_DestroyLambdaAfterInvoke)
+	{
+		// See that lambda's destructor is called even if we still hold the future f1 alive.
+		// To observe that the lambda is deleted we move observer to its capture.
+		// When the observed Mso::TRestorer<bool> is deleted it will reset isDestroyed to true.
+		// Creation of Mso::TRestorer<bool> sets it to false.
+		bool isDestroyed = true;
+		auto observer = std::make_shared<Mso::TRestorer<bool>>(isDestroyed, false);
+
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&, ob = std::move(observer)](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+
+		TestCheck(isDestroyed);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_TDefaultExecutor)
+	{
+		// See that we can skip passing executor when we want to use the default Concurrent executor.
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		bool isInvoked = false;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>([&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>
+			isInvoked = true;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(isInvoked);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_TInlineExecutor)
+	{
+		// See that we can pass Mso::Executors::Inline or Mso::Executors::Inline::Optional as TExecutor parameter.
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		bool isInvoked = false;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#><<#=thenEntry.TInlineExecutor#>>([&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>
+			isInvoked = true;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(isInvoked);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_TInlineThrowExecutor)
+	{
+		// See that we can pass Mso::Executors::Inline::Throw or Mso::Executors::Inline::Optional::Throw as TExecutor parameter.
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		bool isInvoked = false;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#><<#=thenEntry.TInlineThrowExecutor#>>([&](<#=paramEntry.DeclValue#>)
+		{
+			<#=paramEntry.CheckValue#>
+			isInvoked = true;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(isInvoked);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_TConcurrentExecutor)
+	{
+		// See that we can pass Mso::Executors::Concurrent or Mso::Executors::Concurrent::Optional as TExecutor parameter.
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		bool isInvoked = false;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#><<#=thenEntry.TConcurrentExecutor#>>([&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>
+			isInvoked = true;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(isInvoked);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_TConcurrentThrowExecutor)
+	{
+		// See that we can pass Mso::Executors::Concurrent::Throw or Mso::Executors::Concurrent::Optional::Throw as TExecutor parameter.
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		bool isInvoked = false;
+
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#><<#=thenEntry.TConcurrentThrowExecutor#>>([&](<#=paramEntry.DeclValue#>)
+		{
+			<#=paramEntry.CheckValue#>
+			isInvoked = true;
+		});
+
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(isInvoked);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=thenEntry.TestName#>)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.ReturnValue#>
+		})
+		.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>;
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+<# if (paramEntry.IsValue && !entry.Shared) { #>
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=thenEntry.TestName#>_Moves)
+	{
+		Mso::Promise<std::unique_ptr<<#=paramEntry.Type#>>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](std::unique_ptr<<#=paramEntry.Type#>>& value) noexcept
+		{
+			return std::move(value);
+		})
+		.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](std::unique_ptr<<#=paramEntry.Type#>>& value) noexcept
+		{
+			std::unique_ptr<<#=paramEntry.Type#>> v = std::move(value); // We can move value because only one continuation is allowed.
+			TestCheck(*v == 5);
+		});
+
+		p1.SetValue(std::unique_ptr<<#=paramEntry.Type#>>(new <#=paramEntry.Type#>(5)));
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+<# } #>
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_ExecutorInvoke)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.MockExecutor#>(ExecutorInvoke::<#=paramEntry.ExecParam#>), [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_UnfulfilledPromise)
+	{
+		bool isFutureCompleted = false;
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+			isFutureCompleted = true;
+		});
+
+		// Move p1 to the local variable p2 which should destroy the promise when goes out of scope.
+		{
+			Mso::Promise<<#=paramEntry.Type#>> p2(std::move(p1));
+		}
+
+		auto result = Mso::TestOnly::FutureWait(f1);
+		TestCheck(result.IsError());
+		TestCheck(!isFutureCompleted);
+		TestCheck(!Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_AbandonPromise)
+	{
+		bool isFutureCompleted = false;
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+			isFutureCompleted = true;
+		});
+
+		// Move p1 to the local variable p2 which should destroy the promise when goes out of scope.
+		p1.TrySetError(Mso::CancellationErrorProvider().MakeErrorCode(true));
+		auto result = Mso::TestOnly::FutureWait(f1);
+		TestCheck(result.IsError());
+		TestCheck(!isFutureCompleted);
+		TestCheck(!Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	<#=thenEntry.TestMethod#>(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_ExecutorOnCancel)
+	{
+		bool isFutureCompleted = false;
+		bool isCancelCalled = false;
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.MockExecutorOnCancel#>(/*shouldVEC:*/<#=AsString(thenEntry.ShouldVEC)#>, &isCancelCalled), [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+			isFutureCompleted = true;
+		});
+		p1.<#=paramEntry.Complete#>; // MockExecutorOnCancel will check synchronously VEC for OnCancel.
+		auto result = Mso::TestOnly::FutureWait(f1);
+		TestCheck(result.IsError());
+		TestCheck(!isFutureCompleted);
+		TestCheck(isCancelCalled);
+		TestCheck(!Mso::GetIFuture(f1)->IsSucceeded());
+		<#if (!thenEntry.ShouldVEC) {#>TestCheck(Mso::GetIFuture(f1)->IsFailed());<#}#> 
+	}
+
+<# foreach (var thenEntry2 in entry.ThenEntries) { #>
+<# if (!thenEntry.Optional || thenEntry2.Optional) { #>
+<# if (!entry.Shared) { #>
+	TESTMETHOD_REQUIRES_SEH(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_Second<#=thenEntry2.TestName#>Fails)
+	{
+		TEST_DISABLE_MEMORY_LEAK_DETECTION();
+
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>;
+		f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept {});
+		TestCheckCrash(f1.<#=thenEntry2.Name#>(<#=thenEntry2.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept {}));
+		p1.<#=paramEntry.Complete#>;
+	}
+
+	TESTMETHOD_REQUIRES_SEH(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_AfterCompletion_Second<#=thenEntry2.TestName#>Fails)
+	{
+		TEST_DISABLE_MEMORY_LEAK_DETECTION();
+
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		auto f1 = p1.<#=entry.Create#>;
+		f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept {});
+		TestCheckCrash(f1.<#=thenEntry2.Name#>(<#=thenEntry2.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept {}));
+	}
+
+	TESTMETHOD_REQUIRES_SEH(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_Observed_Second<#=thenEntry2.TestName#>Fails)
+	{
+		TEST_DISABLE_MEMORY_LEAK_DETECTION();
+
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		auto f1 = p1.<#=entry.Create#>;
+
+		auto fr = f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue#>
+		});
+
+		Mso::TestOnly::FutureWait(fr);
+		TestCheckCrash(f1.<#=thenEntry2.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept {}));
+	}
+<# } else { /* if (!entry.Shared) */ #>
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_Second<#=thenEntry2.TestName#>Success)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>;
+		auto fr1 = f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+		auto fr2 = f1.<#=thenEntry2.Name#>(<#=thenEntry2.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+		p1.<#=paramEntry.Complete#>;
+		Mso::TestOnly::FutureWait(fr1);
+		Mso::TestOnly::FutureWait(fr2);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_AfterCompletion_Second<#=thenEntry2.TestName#>Success)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>;
+		p1.<#=paramEntry.Complete#>;
+		auto fr1 = f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+		auto fr2 = f1.<#=thenEntry2.Name#>(<#=thenEntry2.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+		Mso::TestOnly::FutureWait(fr1);
+		Mso::TestOnly::FutureWait(fr2);
+	}
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_Observed_Second<#=thenEntry2.TestName#>Success)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		p1.<#=paramEntry.Complete#>;
+		auto f1 = p1.<#=entry.Create#>;
+		auto fr1 = f1.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+		Mso::TestOnly::FutureWait(fr1);
+		auto fr2 = f1.<#=thenEntry2.Name#>(<#=thenEntry2.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+		});
+		Mso::TestOnly::FutureWait(fr2);
+	}
+<# } /* if (!entry.Shared) */ #>
+<# } #>
+<# } #>
+
+<# foreach (var entry2 in entries.Where(e => !e.Shared)) { #>
+<# if (entry.Optional || !entry2.Optional) { #>
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=entry2.Type#>)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			return Mso::PostFuture(<#=entry2.Executor#>, [&]() noexcept
+			{
+				<#=paramEntry.ReturnValue2#>
+			});
+		})
+		.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.DeclValue#>) noexcept
+		{
+			<#=paramEntry.CheckValue2#>
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+<# if (paramEntry.IsValue) { #>
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=entry2.Type#>UniquePtr)
+	{
+		Mso::Promise<std::unique_ptr<<#=paramEntry.Type#>>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Const#>std::unique_ptr<<#=paramEntry.Type#>>& ptr) noexcept
+		{
+			return Mso::PostFuture(<#=entry2.Executor#>, [&]() noexcept
+			{
+				// We can capture ptr by reference because the outer future is in progress until this future finishes.
+				return *ptr + 2;
+			});
+		})
+		.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> value) noexcept
+		{
+			TestCheck(value == 7);
+		});
+
+		p1.EmplaceValue(new <#=paramEntry.Type#>(5));
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+<# } #>
+
+	TEST_METHOD(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=entry2.Type#>Void)
+	{
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+			return Mso::PostFuture(<#=entry2.Executor#>, []() noexcept
+			{
+			});
+		})
+		.<#=thenEntry.Name#>(<#=thenEntry.Executor#>, [&]() noexcept
+		{
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(!Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	<#=thenEntry.TestMethod#>(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=entry2.Type#>_TryCancel)
+	{
+		<#=thenEntry.DisableLeakDetection#>
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		Mso::Promise<int> p2;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.MockInlineExecutor#>(), [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+			return p2.<#=entry2.Create#>;
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		p2.TrySetError(Mso::CancellationErrorProvider().MakeErrorCode(true));
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(!Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(Mso::GetIFuture(f1)->IsFailed());
+	}
+
+	<#=thenEntry.TestMethod#>(<#=entry.Type#><#=paramEntry.Type#>_<#=thenEntry.TestName#>_<#=entry2.Type#>Void_TryCancel)
+	{
+		<#=thenEntry.DisableLeakDetection#>
+		Mso::Promise<<#=paramEntry.Type#>> p1;
+		Mso::Promise<void> p2;
+		auto f1 = p1.<#=entry.Create#>.<#=thenEntry.Name#>(<#=thenEntry.MockInlineExecutor#>(), [&](<#=paramEntry.Type#> /*value*/) noexcept
+		{
+			return p2.<#=entry2.Create#>;
+		});
+
+		p1.<#=paramEntry.Complete#>;
+		p2.TrySetError(Mso::CancellationErrorProvider().MakeErrorCode(true));
+		Mso::TestOnly::FutureWait(f1);
+		TestCheck(!Mso::GetIFuture(f1)->IsSucceeded());
+		TestCheck(Mso::GetIFuture(f1)->IsFailed());
+	}
+<# } #>
+<# } #>
+
+<# } #>
+<# } #>
+<# } #>
+<# } #>
+};
+
+} // namespace FutureTests
+
+
+<#+
+
+public struct TypeEntry
+{
+	public string Type;
+	public string Create;
+	public string Executor;
+	public bool Optional;
+	public bool Shared;
+	public TypeParamEntry[] TypeParams;
+	public ThenEntry[] ThenEntries;
+}
+
+public struct TypeParamEntry
+{
+	public bool IsValue;
+	public string Type;
+	public string Complete;
+	public string DeclValue;
+	public string CheckValue;
+	public string ReturnValue;
+	public string CheckValue2;
+	public string ReturnValue2;
+	public string ExecParam;
+	public string Const;
+}
+
+public struct ThenEntry
+{
+	public string TestName;
+	public string Name;
+	public string Executor;
+	public string TInlineExecutor;
+	public string TInlineThrowExecutor;
+	public string TConcurrentExecutor;
+	public string TConcurrentThrowExecutor;
+	public string MockExecutor;
+	public string MockExecutorOnCancel;
+	public string MockInlineExecutor;
+	public bool Optional;
+	public string TestMethod;
+	public string TestCheckCrash;
+	public string DisableLeakDetection;
+	public bool ShouldVEC;
+	public string AbandonCheck;
+	public string IsFailedCheck;
+	public string CheckSecond;
+}
+
+public string AsString(bool value)
+{
+	return value ? "true" : "false";
+}
+
+#>

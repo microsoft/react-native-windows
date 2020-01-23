@@ -109,10 +109,6 @@ exports.copyRNLibraries = baseDir => {
       src: 'RNTester',
       dest: 'RNTester',
     },
-    {
-      src: 'ReactCommon/turbomodule/core',
-      dest: 'WorkingHeaders/jsireact',
-    },
   ]);
 
   copyDirectories(baseDir, baseDir, [

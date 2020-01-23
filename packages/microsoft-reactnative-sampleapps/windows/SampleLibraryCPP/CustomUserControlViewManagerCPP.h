@@ -35,8 +35,7 @@ struct CustomUserControlViewManagerCpp
 
   void UpdateProperties(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
-      winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable> const
-          &propertyMap);
+      winrt::Microsoft::ReactNative::IJSValueReader const &propertyMapReader) noexcept;
 
   // IViewManagerWithCommands
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, int64_t> Commands() noexcept;
@@ -44,15 +43,12 @@ struct CustomUserControlViewManagerCpp
   void DispatchCommand(
       winrt::Windows::UI::Xaml::FrameworkElement const &view,
       int64_t commandId,
-      winrt::Windows::Foundation::Collections::IVectorView<winrt::Windows::Foundation::IInspectable>
-          commandArgs) noexcept;
+      winrt::Microsoft::ReactNative::IJSValueReader const &commandArgsReader) noexcept;
 
   // IViewManagerWithExportedEventTypeConstants
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-  ExportedCustomBubblingEventTypeConstants() noexcept;
+  winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomBubblingEventTypeConstants() noexcept;
 
-  winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-  ExportedCustomDirectEventTypeConstants() noexcept;
+  winrt::Microsoft::ReactNative::ConstantProvider ExportedCustomDirectEventTypeConstants() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::IReactContext m_reactContext{nullptr};

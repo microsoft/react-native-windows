@@ -4,7 +4,8 @@
 #include "pch.h"
 
 #include <Modules/NativeUIManager.h>
-#include <winrt\Windows.Foundation.Metadata.h>
+#include <winrt/Windows.Foundation.Metadata.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 #include "Helpers.h"
 
 namespace winrt {

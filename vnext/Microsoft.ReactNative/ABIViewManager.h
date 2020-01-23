@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include <pch.h>
-
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
 

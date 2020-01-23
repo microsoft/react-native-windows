@@ -22,7 +22,7 @@ class LazyDevSupportManager : public IDevSupportManager {
 #pragma region IDevSupportManager
 
   JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings) override;
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
   JSECreator LoadJavaScriptInSandboxMode(const DevSettings &settings) override;
 #endif
   std::string GetJavaScriptFromServer(
