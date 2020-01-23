@@ -29,13 +29,21 @@
     
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
-    
-    <!-- Enables routing Systrace events from native code to our ETW provider -->
-    <ENABLE_NATIVE_SYSTRACE_TO_ETW Condition="'$(ENABLE_NATIVE_SYSTRACE_TO_ETW)' == ''">true</ENABLE_NATIVE_SYSTRACE_TO_ETW>
 
     <!-- Enables routing Systrace events from JavaScript code to our ETW provider -->
     <ENABLE_JS_SYSTRACE_TO_ETW Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)' == ''">true</ENABLE_JS_SYSTRACE_TO_ETW>
   </PropertyGroup>
+
+  <!--
+    Tracing definitions may be checked in Facebook headers. Make sure they get
+    defined for anything with the potential to include them.
+  -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true' AND '$PATCH_RN'=='true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
 
   <PropertyGroup>
     <JSI_Source Condition="'$(JSI_Source)' == ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_Source>
