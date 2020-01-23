@@ -48,6 +48,11 @@ module.exports = {
       ),
       new RegExp(
         `${path
+          .resolve(rnwPath, 'RNTesterFork')
+          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+      ),
+      new RegExp(
+        `${path
           .resolve(rnwePath, 'node_modules/react-native')
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),
@@ -67,7 +72,6 @@ module.exports = {
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),
     ]),
-    hasteImplModulePath: path.resolve(__dirname, 'hasteImpl.js'),
   },
   transformer: {
     getTransformOptions: async () => ({

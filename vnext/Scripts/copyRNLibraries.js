@@ -79,6 +79,13 @@ exports.copyRNLibraries = baseDir => {
     require.resolve('react-native/package.json'),
   );
 
+  copyDirectories(baseDir, baseDir, [
+    {
+      src: 'RNTesterFork',
+      dest: 'RNTester',
+    },
+  ]);
+
   copyDirectories(reactNativePath, baseDir, [
     {
       src: 'flow',
@@ -104,10 +111,6 @@ exports.copyRNLibraries = baseDir => {
     {
       src: 'packages/react-native-codegen/src',
       dest: 'packages/react-native-codegen/src',
-    },
-    {
-      src: 'RNTester',
-      dest: 'RNTester',
     },
   ]);
 
