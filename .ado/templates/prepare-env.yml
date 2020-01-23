@@ -30,7 +30,7 @@ steps:
     displayName: yarn install
     inputs:
       script: yarn install --frozen-lockfile
-    condition: and(succeeded())
+    condition: succeeded()
 
   - task: CmdLine@2
     displayName: Install react-native-cli
