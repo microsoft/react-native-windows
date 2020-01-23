@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <Utils/FontManager.h>
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include "Unicode.h"
@@ -186,25 +187,23 @@ DateTimeToDynamic(winrt::DateTime dateTime, int64_t timeZoneOffsetInSeconds) {
 // app developers to register their custom font paths with aliases and use those aliases in React for any
 // FontFamily styles.
 
-// Map of fontName -> UWP font path (e.g. "MyFont" -> "/Assets/MyFont.ttf#MyFont")
-static std::map<std::wstring, std::wstring> s_fontMap;
+static FontManager s_FontManager{};
 
 REACTWINDOWS_API_(void)
-SetFontFamilyPaths(std::map<std::wstring, std::wstring> map) {
-  s_fontMap = map;
+SetFontPath(
+    const std::wstring &fontFamily,
+    winrt::Windows::UI::Text::FontWeight weight,
+    winrt::Windows::UI::Text::FontStyle style,
+    const std::wstring &filePath) {
+  s_FontManager.SetFont(fontFamily, weight, style, filePath);
 }
 
 REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::FontFamily)
-FontFamilyFrom(const folly::dynamic &d) {
-  auto fontPath = asWStr(d);
-
-  // If the string is a registered alias, get the associated path to the font
-  auto it = s_fontMap.find(fontPath);
-  if (it != s_fontMap.end()) {
-    fontPath = it->second;
-  }
-
-  return winrt::Windows::UI::Xaml::Media::FontFamily(fontPath);
+FontFamilyFrom(
+    const std::wstring &fontFamily,
+    winrt::Windows::UI::Text::FontWeight weight,
+    winrt::Windows::UI::Text::FontStyle style) {
+  return s_FontManager.GetFont(fontFamily, weight, style);
 }
 
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d) {

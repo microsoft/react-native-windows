@@ -12,6 +12,7 @@ export default class Bootstrap extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.customFont}>{"\uE735"}</Text>
       </View>
     );
   }
@@ -25,10 +26,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#C5CCFF',
   },
   welcome: {
-    fontFamily: 'CustomFont',
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  customFont: {
+      fontFamily: 'CustomFont',
+      fontSize: 20,
+      textAlign: 'center',
   },
 });
 

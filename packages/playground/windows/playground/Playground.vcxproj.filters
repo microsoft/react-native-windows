@@ -76,5 +76,8 @@
     <Font Include="Assets\seguiemj.ttf">
       <Filter>Assets</Filter>
     </Font>
+    <Font Include="Assets\SegMDL2.ttf">
+      <Filter>Assets</Filter>
+    </Font>
   </ItemGroup>
 </Project>

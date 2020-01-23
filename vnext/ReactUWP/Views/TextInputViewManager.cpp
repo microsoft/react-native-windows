@@ -374,14 +374,14 @@ void TextInputShadowNode::updateProperties(const folly::dynamic &&props) {
   auto textBox = control.try_as<winrt::TextBox>();
   auto passwordBox = control.try_as<winrt::PasswordBox>();
 
+  TryUpdateFontProperties(control, props);
+
   for (auto &pair : props.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
 
     // Applicable properties for both TextBox and PasswordBox
-    if (TryUpdateFontProperties(control, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateCharacterSpacing(control, propertyName, propertyValue)) {
+    if (TryUpdateCharacterSpacing(control, propertyName, propertyValue)) {
       continue;
     } else if (propertyName == "allowFontScaling") {
       if (propertyValue.isBool())

@@ -90,13 +90,13 @@ void TextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, const folly
   if (textBlock == nullptr)
     return;
 
+  TryUpdateFontProperties(textBlock, reactDiffMap);
+
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
 
     if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
       continue;
     } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
       continue;

@@ -176,7 +176,11 @@ HostingPane::HostingPane() {
   LoadFilenameSettings();
 
   // Configure paths for custom fonts
-  react::uwp::SetFontFamilyPaths({{L"CustomFont", L"ms-appx:///Assets/seguiemj.ttf#Segoe UI Emoji"}});
+  react::uwp::SetFontPath(
+      L"CustomFont",
+      winrt::Windows::UI::Text::FontWeights::Normal(),
+      winrt::Windows::UI::Text::FontStyle::Normal,
+      L"/Assets/SegMDL2.ttf#Segoe MDL2 Assets");
 
   m_instanceCreator = std::make_shared<HostingPaneReactInstanceCreator>(this);
 }

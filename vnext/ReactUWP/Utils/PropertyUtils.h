@@ -273,69 +273,142 @@ bool TryUpdateCornerRadiusOnNode(
 }
 
 template <class T>
-bool TryUpdateFontProperties(const T &element, const std::string &propertyName, const folly::dynamic &propertyValue) {
-  bool isFontProperty = true;
+winrt::Windows::UI::Text::FontWeight SetFontWeight(const T &element, const folly::dynamic &propertyValue) {
+  winrt::Windows::UI::Text::FontWeight fontWeight;
 
-  if (propertyName == "fontSize") {
-    if (propertyValue.isNumber())
-      element.FontSize(propertyValue.asDouble());
-    else if (propertyValue.isNull())
-      element.ClearValue(T::FontSizeProperty());
-  } else if (propertyName == "fontFamily") {
-    if (propertyValue.isString()) {
-      const auto fontFamily = FontFamilyFrom(propertyValue);
-      element.FontFamily(fontFamily);
-    } else if (propertyValue.isNull()) {
-      element.ClearValue(T::FontFamilyProperty());
-    }
-  } else if (propertyName == "fontWeight") {
-    if (propertyValue.isString()) {
-      const std::string &value = propertyValue.getString();
-      winrt::Windows::UI::Text::FontWeight fontWeight;
-      if (value == "normal")
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
-      else if (value == "bold")
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Bold();
-      else if (value == "100")
-        fontWeight.Weight = 100;
-      else if (value == "200")
-        fontWeight.Weight = 200;
-      else if (value == "300")
-        fontWeight.Weight = 300;
-      else if (value == "400")
-        fontWeight.Weight = 400;
-      else if (value == "500")
-        fontWeight.Weight = 500;
-      else if (value == "600")
-        fontWeight.Weight = 600;
-      else if (value == "700")
-        fontWeight.Weight = 700;
-      else if (value == "800")
-        fontWeight.Weight = 800;
-      else if (value == "900")
-        fontWeight.Weight = 900;
-      else
-        fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
+  if (propertyValue.isString()) {
+    const std::string &value = propertyValue.getString();
 
-      element.FontWeight(fontWeight);
-    } else if (propertyValue.isNull()) {
-      element.ClearValue(T::FontWeightProperty());
-    }
+    if (value == "normal")
+      fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
+    else if (value == "bold")
+      fontWeight = winrt::Windows::UI::Text::FontWeights::Bold();
+    else if (value == "100")
+      fontWeight.Weight = 100;
+    else if (value == "200")
+      fontWeight.Weight = 200;
+    else if (value == "300")
+      fontWeight.Weight = 300;
+    else if (value == "400")
+      fontWeight.Weight = 400;
+    else if (value == "500")
+      fontWeight.Weight = 500;
+    else if (value == "600")
+      fontWeight.Weight = 600;
+    else if (value == "700")
+      fontWeight.Weight = 700;
+    else if (value == "800")
+      fontWeight.Weight = 800;
+    else if (value == "900")
+      fontWeight.Weight = 900;
+    else
+      fontWeight = winrt::Windows::UI::Text::FontWeights::Normal();
 
-  } else if (propertyName == "fontStyle") {
-    if (propertyValue.isString()) {
-      element.FontStyle(
-          (propertyValue.getString() == "italic") ? winrt::Windows::UI::Text::FontStyle::Italic
-                                                  : winrt::Windows::UI::Text::FontStyle::Normal);
-    } else if (propertyValue.isNull()) {
-      element.ClearValue(T::FontStyleProperty());
-    }
-
+    element.FontWeight(fontWeight);
+  } else if (propertyValue.isNull()) {
+    element.ClearValue(T::FontWeightProperty());
+    fontWeight = element.FontWeight();
   } else {
-    isFontProperty = false;
+    fontWeight = element.FontWeight();
   }
 
-  return isFontProperty;
+  return fontWeight;
+}
+
+template <class T>
+winrt::Windows::UI::Text::FontStyle SetFontStyle(const T &element, const folly::dynamic &propertyValue) {
+  winrt::Windows::UI::Text::FontStyle fontStyle;
+
+  if (propertyValue.isString()) {
+    if (propertyValue.getString() == "italic") {
+      fontStyle = winrt::Windows::UI::Text::FontStyle::Italic;
+    } else {
+      fontStyle = winrt::Windows::UI::Text::FontStyle::Normal;
+    }
+
+    element.FontStyle(fontStyle);
+  } else if (propertyValue.isNull()) {
+    element.ClearValue(T::FontStyleProperty());
+    fontStyle = element.FontStyle();
+  } else {
+    fontStyle = element.FontStyle();
+  }
+
+  return fontStyle;
+}
+
+// A "font family" (or "typeface") is composed of individual fonts. Each font is a set of glyphs with a specific weight
+// and style. For example, "Arial" is a font family that contains the fonts "Arial", "Arial Italic", "Arial Bold", and
+// "Arial Bold Italic". Each font is stored in a separate font file on disk.
+//
+// When using system fonts, FontFamily is set to the name of the typeface. Setting FontWeight or FontStyle is then
+// sufficient to select the correct font file from the family.
+//
+// When using custom fonts, however, FontFamily is set to a specific font file path. This XAML limitation means a custom
+// FontFamily can only have one font. Thus to support weights and styles for custom fonts, we need to do some juggling
+// of FontFamily.
+template <class T>
+void TryUpdateFontProperties(const T &element, const folly::dynamic &reactDiffMap) {
+  const folly::dynamic *fontFamilyProp = nullptr;
+  const folly::dynamic *fontWeightProp = nullptr;
+  const folly::dynamic *fontStyleProp = nullptr;
+
+  for (const auto &pair : reactDiffMap.items()) {
+    const std::string &propertyName = pair.first.getString();
+    const folly::dynamic &propertyValue = pair.second;
+
+    if (propertyName == "fontSize") {
+      if (propertyValue.isNumber())
+        element.FontSize(propertyValue.asDouble());
+      else if (propertyValue.isNull())
+        element.ClearValue(T::FontSizeProperty());
+    } else if (propertyName == "fontFamily") {
+      fontFamilyProp = &propertyValue;
+    } else if (propertyName == "fontWeight") {
+      fontWeightProp = &propertyValue;
+    } else if (propertyName == "fontStyle") {
+      fontStyleProp = &propertyValue;
+    }
+  }
+
+  // Any time the fontFamily, fontWeight, or fontStyle props change, we need to update FontFamily to match
+  // the new values.
+  if (nullptr != fontFamilyProp || nullptr != fontWeightProp || nullptr != fontStyleProp) {
+    winrt::Windows::UI::Text::FontWeight fontWeight;
+    winrt::Windows::UI::Text::FontStyle fontStyle;
+
+    if (nullptr != fontWeightProp) {
+      fontWeight = SetFontWeight(element, *fontWeightProp);
+    } else {
+      // FontWeight didn't change, but may have been set previously
+      fontWeight = element.FontWeight();
+    }
+
+    if (nullptr != fontStyleProp) {
+      fontStyle = SetFontStyle(element, *fontStyleProp);
+    } else {
+      // FontStyle didn't change, but may have been set previously
+      fontStyle = element.FontStyle();
+    }
+
+    if (nullptr != fontFamilyProp) {
+      if (fontFamilyProp->isString()) {
+        std::wstring fontFamily = asWStr(*fontFamilyProp);
+        if (fontFamily.size() > 0) {
+          element.FontFamily(FontFamilyFrom(fontFamily, fontWeight, fontStyle));
+        }
+      } else if (fontFamilyProp->isNull()) {
+        element.ClearValue(T::FontFamilyProperty());
+      }
+    } else {
+      // FontFamily didn't change, but may have been set previously
+      winrt::hstring fontFamily = element.FontFamily().Source();
+      if (fontFamily.size() > 0) {
+        std::wstring f{fontFamily};
+        element.FontFamily(FontFamilyFrom(f, fontWeight, fontStyle));
+      }
+    }
+  }
 }
 
 template <class T>

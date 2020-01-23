@@ -4,6 +4,7 @@
 #pragma once
 
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Text.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.h>
@@ -35,9 +36,16 @@ REACTWINDOWS_API_(folly::dynamic)
 DateTimeToDynamic(winrt::Windows::Foundation::DateTime dateTime, int64_t timeZoneOffsetInSeconds);
 
 REACTWINDOWS_API_(void)
-SetFontFamilyPaths(std::map<std::wstring, std::wstring> namesToPaths);
+SetFontPath(
+    const std::wstring &fontFamily,
+    winrt::Windows::UI::Text::FontWeight weight,
+    winrt::Windows::UI::Text::FontStyle style,
+    const std::wstring &filePath);
 REACTWINDOWS_API_(winrt::Windows::UI::Xaml::Media::FontFamily)
-FontFamilyFrom(const folly::dynamic &d);
+FontFamilyFrom(
+    const std::wstring &fontFamily,
+    winrt::Windows::UI::Text::FontWeight weight,
+    winrt::Windows::UI::Text::FontStyle style);
 
 REACTWINDOWS_API_(std::wstring) asWStr(const folly::dynamic &d);
 REACTWINDOWS_API_(winrt::hstring) asHstring(const folly::dynamic &d);

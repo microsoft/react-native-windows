@@ -38,6 +38,8 @@ void VirtualTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, cons
   if (span == nullptr)
     return;
 
+  TryUpdateFontProperties<winrt::TextElement>(span, reactDiffMap);
+
   for (const auto &pair : reactDiffMap.items()) {
     const std::string &propertyName = pair.first.getString();
     const folly::dynamic &propertyValue = pair.second;
@@ -45,8 +47,6 @@ void VirtualTextViewManager::UpdateProperties(ShadowNodeBase *nodeToUpdate, cons
     // FUTURE: In the future cppwinrt will generate code where static methods on
     // base types can be called.  For now we specify the base type explicitly
     if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
-      continue;
-    } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
       continue;
     } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
       continue;
