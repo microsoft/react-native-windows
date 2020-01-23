@@ -100,3 +100,6 @@
 [submodule "vnext/Modules/boostorg/serialization"]
 	path = vnext/Modules/boostorg/serialization
 	url = https://github.com/boostorg/serialization.git
+[submodule "vnext/Modules/boostorg/exception"]
+	path = vnext/Modules/boostorg/exception
+	url = https://github.com/boostorg/exception.git

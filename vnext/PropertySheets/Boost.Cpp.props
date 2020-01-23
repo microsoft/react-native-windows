@@ -18,6 +18,7 @@
         $(MSBuildThisFileDirectory)..\Modules\boostorg\date_time\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\detail\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\endian\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\exception\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\function\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\integer\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\intrusive\include;
