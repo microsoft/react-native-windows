@@ -56,7 +56,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm64
           applyRnPatches: true
-        PublicRNX86Debug:
+        UnpatchedRNX86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
           applyRnPatches: false
