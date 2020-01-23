@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Thu, 23 Jan 2020 00:16:13 GMT",
+      "tag": "react-native-windows-extended_v0.60.67",
+      "version": "0.60.67",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Apply React Native Patches for All Consumers of ReackPackageDirectories",
+            "author": "nick@nickgerleman.com",
+            "commit": "e185a5259428c4d172660765628d11b10cac2112"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Jan 2020 17:57:10 GMT",
       "tag": "react-native-windows-extended_v0.60.66",
       "version": "0.60.66",

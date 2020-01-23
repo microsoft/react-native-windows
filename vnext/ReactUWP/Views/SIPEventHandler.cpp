@@ -7,9 +7,10 @@
 
 #include <Modules/NativeUIManager.h>
 
-#include <ReactUWP\Utils\Helpers.h>
+#include <ReactUWP/Utils/Helpers.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 
 namespace winrt {
 using namespace Windows::Foundation;

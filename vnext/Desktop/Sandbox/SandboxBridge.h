@@ -17,7 +17,7 @@ struct dynamic;
 namespace facebook {
 namespace react {
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 
 struct InstanceCallback;
 class JSModulesUnbundle;
@@ -78,7 +78,7 @@ class SandboxJsToNativeBridge : public react::ExecutorDelegate {
   bool m_batchHadNativeModuleCalls = false;
 };
 
-#endif // OSS_RN
+#endif // PATCH_RN
 
 } // namespace react
 } // namespace facebook

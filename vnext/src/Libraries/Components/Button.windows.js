@@ -8,10 +8,10 @@
 'use strict';
 
 const React = require('React');
-const StyleSheet = require('StyleSheet');
-const Text = require('Text');
-const TouchableHighlight = require('TouchableHighlight'); // [TODO(windows ISS)
-const View = require('View');
+const StyleSheet = require('../StyleSheet/StyleSheet');
+const Text = require('../Text/Text');
+const TouchableHighlight = require('./Touchable/TouchableHighlight'); // [TODO(windows ISS)
+const View = require('./View/View');
 
 const invariant = require('invariant');
 

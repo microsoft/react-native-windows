@@ -301,6 +301,7 @@
     <ClCompile Include="..\ReactUWP\Views\ReactRootView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="XamlHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -599,6 +600,7 @@
     <ClInclude Include="..\ReactUWP\Views\WebViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
+    <ClInclude Include="XamlHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IBackgroundEventListener.idl" />
@@ -630,6 +632,7 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
+    <Midl Include="XamlHelper.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,43 +5,50 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <ItemGroup>
-    <ReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
-    <ReactSourceDestinationFiles Include="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-    <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" />
-    <DeforkingPatchDesintationFiles Include="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-    <!-- We use unpatched React Native as the input here since we may not have yet applied patches -->
-    <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
-    <JsiReactHeaderDestinationFiles Include="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')" />
-
-    <PatchReactNativeInputs Include="@(ReactSourceFiles);@(DeforkingPatchFiles);@(JsiReactHeaderFiles)" />
-    <PatchReactNativeOutputs Include="@(ReactSourceDestinationFiles);@(DeforkingPatchDesintationFiles);@(JsiReactHeaderDestinationFiles)" />
-  </ItemGroup>
-
   <!--
     Visual Studio has its own incremental build logic for simple cases that
-    falls over here. Force use of MSBuild logic here. This has a minimal impact
-    on build time (~10s total to build desktop solution on a six core machine).
-    -->
+    falls over for patching. Force use of MSBuild logic.
+  -->
   <PropertyGroup>
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-  <Target Name="PatchReactNative"
-          BeforeTargets="PrepareForBuild"
-          Inputs="@(PatchReactNativeInputs)"
-          Outputs="@(PatchReactNativeOutputs)">
+    <!--
+      Do not patch facebook/react-native by default until we make the switch
+      off of microsoft/react-native.
+    -->
+  <PropertyGroup Condition="'$(OSS_RN)'!='true'">
+    <PATCH_RN>true</PATCH_RN>
+  </PropertyGroup>
 
-    <Copy SourceFiles="@(ReactSourceFiles)" DestinationFiles="@(ReactSourceDestinationFiles)" />
-    <Copy SourceFiles="@(DeforkingPatchFiles)" DestinationFiles="@(DeforkingPatchDesintationFiles)" />
-    <!-- Special case to recreate BUCK header exports for JSI -->
-    <Copy SourceFiles="@(JsiReactHeaderFiles)" DestinationFiles="@(JsiReactHeaderDestinationFiles)"/>
+  <Target Name="EvaluateReactPatchInputs" BeforeTargets="CopyReactPatches">
+    <PropertyGroup>
+      <ReactCommonSrcPath>$(ReactNativePackageDir)\ReactCommon\</ReactCommonSrcPath>
+      <ReactCommonDestPath>$(ReactNativeDir)\ReactCommon\</ReactCommonDestPath>
+      <DeforkingPatchCommonPath>$(ReactNativeWindowsDir)\DeforkingPatches\ReactCommon\</DeforkingPatchCommonPath>
+    </PropertyGroup>
 
     <ItemGroup>
-      <FileWrites Include="@(PatchReactNativeOutputs)" />
-    </ItemGroup>
+      <DeforkingPatchCommonFiles Include="$(DeforkingPatchCommonPath)\**" Condition="'$(PATCH_RN)'=='true'"/>
+      <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)\**\*.cpp;$(ReactCommonSrcPath)\**\*.h" />
+      <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(DeforkingPatchCommonPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
 
+      <!-- Special case to recreate custom header exports in Facebook BUCK logic -->
+      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
+    </ItemGroup>
   </Target>
+
+
+  <Target Name="CopyReactPatches" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="@(UnpatchedReactCommonSrcFiles)"
+          DestinationFiles="@(UnpatchedReactCommonSrcFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DeforkingPatchCommonFiles)"
+          DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(JsiReactHeaderFiles)"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\jsireact\%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

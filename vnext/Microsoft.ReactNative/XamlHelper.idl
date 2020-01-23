@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+import "IJSValueWriter.idl";
+
+namespace Microsoft.ReactNative {
+
+  delegate void ValueProvider(IJSValueWriter valueWriter);
+
+  [webhosthidden]
+  [default_interface]
+  runtimeclass XamlHelper {
+    XamlHelper();
+    static Windows.UI.Xaml.Media.Brush BrushFrom(ValueProvider valueProvider);
+  };
+
+} // namespace Microsoft.ReactNative
