@@ -134,6 +134,10 @@
 	path = vnext/Modules/boostorg/serialization
 	url = https://github.com/boostorg/serialization.git
 	shallow = true
+[submodule "vnext/Modules/boostorg/smart_ptr"]
+	path = vnext/Modules/boostorg/smart_ptr
+	url = https://github.com/boostorg/smart_ptr.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/exception"]
 	path = vnext/Modules/boostorg/exception
 	url = https://github.com/boostorg/exception.git
