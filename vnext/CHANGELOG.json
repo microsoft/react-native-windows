@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Jan 2020 00:16:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.119",
+      "version": "0.60.0-vnext.119",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Apply React Native Patches for All Consumers of ReackPackageDirectories",
+            "author": "nick@nickgerleman.com",
+            "commit": "e185a5259428c4d172660765628d11b10cac2112"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jan 2020 07:24:31 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.118",
       "version": "0.60.0-vnext.118",

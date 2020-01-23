@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Jan 2020 07:24:31 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jan 2020 00:16:13 GMT and should not be manually modified.
 
+## 0.60.0-vnext.119
+Thu, 23 Jan 2020 00:16:13 GMT
+
+### Changes
+
+- Apply React Native Patches for All Consumers of ReackPackageDirectories (nick@nickgerleman.com)
 ## 0.60.0-vnext.118
 Wed, 22 Jan 2020 07:24:31 GMT
 
