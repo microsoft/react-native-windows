@@ -41,14 +41,12 @@ static double nativePerformanceNow() {
   return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();
 }
 
-#if !defined(OSS_RN)
 void logMarker(const ReactMarker::ReactMarkerId id, const char *tag) {
   std::cout << "Marker: " << id;
   if (tag)
     std::cout << " Tag: " << tag;
   std::cout << std::endl;
 }
-#endif
 
 } // end anonymous namespace
 
@@ -56,9 +54,7 @@ namespace Microsoft::React {
 
 void InitializeLogging(NativeLoggingHook &&hook) {
   g_nativeLogHook = std::move(hook);
-#if !defined(OSS_RN)
   ReactMarker::logTaggedMarker = logMarker;
-#endif
 }
 
 namespace Test {

@@ -3,17 +3,20 @@
 
 #include "pch.h"
 
-#include <OInstance.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/ReactMarker.h>
+#include <jsi/jsi.h>
+#include <jsiexecutor/jsireact/JSIExecutor.h>
+#include "OInstance.h"
 #include "Unicode.h"
 
-#include "../Chakra/ChakraExecutor.h"
-#include "../Chakra/ChakraUtils.h"
+#include "Chakra/ChakraExecutor.h"
+#include "Chakra/ChakraUtils.h"
+#include "JSI/Shared/RuntimeHolder.h"
 
 #if (defined(_MSC_VER) && !defined(WINRT))
 #include "Sandbox/SandboxJSExecutor.h"
@@ -41,12 +44,7 @@
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 
-#include <cxxreact/JSExecutor.h>
-
 #ifdef PATCH_RN
-#include <JSI/Shared/RuntimeHolder.h>
-#include <jsi/jsi.h>
-#include <jsiexecutor/jsireact/JSIExecutor.h>
 #if defined(USE_HERMES)
 #include "HermesRuntimeHolder.h"
 #endif
@@ -55,18 +53,13 @@
 #include "V8JSIRuntimeHolder.h"
 #endif
 #include "ChakraRuntimeHolder.h"
+#endif
 
-// foreward declaration.
-namespace facebook {
-namespace react {
-namespace tracing {
+// forward declaration.
+namespace facebook::react::tracing {
 void initializeETW();
 void initializeJSHooks(facebook::jsi::Runtime &runtime);
-} // namespace tracing
-} // namespace react
-} // namespace facebook
-
-#endif
+} // namespace facebook::react::tracing
 
 namespace {
 
