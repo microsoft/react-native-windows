@@ -5,8 +5,6 @@
 
 #include "Utils/FontManager.h"
 
-#include <winrt/Windows.UI.Xaml.Media.h>
-
 namespace react {
 namespace uwp {
 

@@ -4,6 +4,7 @@
 #pragma once
 
 #include <winrt/Windows.UI.Text.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
 
 #include <stdint.h>
 #include <string>
