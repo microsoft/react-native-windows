@@ -36,7 +36,7 @@ steps:
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
   - task: MSBuild@1
-    displayName: "MSBuild ${{parameters.project}} Patches:${{paramters.applyRnPatches}}"
+    displayName: "MSBuild ${{parameters.project}} Patches:${{parameters.applyRnPatches}}"
     inputs:
       solution: ${{parameters.project }}
       msbuildVersion: ${{parameters.msbuildVersion}}
