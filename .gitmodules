@@ -103,3 +103,6 @@
 [submodule "vnext/Modules/boostorg/exception"]
 	path = vnext/Modules/boostorg/exception
 	url = https://github.com/boostorg/exception.git
+[submodule "vnext/Modules/boostorg/tuple"]
+	path = vnext/Modules/boostorg/tuple
+	url = https://github.com/boostorg/tuple.git
