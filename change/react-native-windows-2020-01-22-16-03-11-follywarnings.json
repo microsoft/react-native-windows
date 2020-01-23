@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Folly Build Logic",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "76f4e8fe3171188db922bb94c8b3b778d0db5f5e",
-  "dependentChangeType": "patch",
-  "date": "2020-01-23T00:03:11.046Z"
-}

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Jan 2020 06:39:59 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.120",
+      "version": "0.60.0-vnext.120",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do not use ES6 Default Export Where Upstream Uses CommonJS Import",
+            "author": "nick@nickgerleman.com",
+            "commit": "063e2f8915178fb07784ade9a7f85e355818ab14"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update Folly Build Logic",
+            "author": "nick@nickgerleman.com",
+            "commit": "76f4e8fe3171188db922bb94c8b3b778d0db5f5e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2020 05:29:39 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.119",
       "version": "0.60.0-vnext.119",
