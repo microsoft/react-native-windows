@@ -68,7 +68,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: false
+        submodules: true
 
       - template: templates/build-rnw.yml
         parameters:
@@ -106,8 +106,8 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: false
-        
+        submodules: true
+
       - template: templates/prepare-env.yml
         parameters:
           useRnFork: $(UseRNFork)
@@ -229,7 +229,7 @@ jobs:
     steps:
       - checkout: self
         clean: false
-        submodules: false
+        submodules: true
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:

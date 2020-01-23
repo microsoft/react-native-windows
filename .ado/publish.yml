@@ -87,6 +87,9 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
+      - checkout: self
+        submodules: true
+
       - task: DownloadBuildArtifacts@0
         displayName: Download VersionEnvVars
         inputs:
@@ -145,6 +148,9 @@ jobs:
       vmImage: $(VmImage)
 
     steps:
+      - checkout: self
+        submodules: true
+
       - task: DownloadBuildArtifacts@0
         displayName: Download VersionEnvVars
         inputs:
