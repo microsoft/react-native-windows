@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "[Do not check in] Move off of microsoft/react-native",
+  "packageName": "react-native-windows-extended",
+  "email": "nick@nickgerleman.com",
+  "commit": "2307b18cd7cd448bdb3f1bba4b2e5cd7649c4f2c",
+  "dependentChangeType": "patch",
+  "date": "2020-01-23T22:41:39.014Z"
+}
