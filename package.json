@@ -24,6 +24,10 @@
       "vnext"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git"
+  },
   "devDependencies": {
     "beachball": "^1.13.4",
     "husky": "^3.0.9",
