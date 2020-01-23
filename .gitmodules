@@ -1,108 +1,144 @@
 [submodule "RNTester"]
 	path = current/RNTester
 	url = https://github.com/microsoft/react-native-windows
+	shallow = true
 [submodule "Yoga"]
 	path = current/Yoga
 	url = https://github.com/ReactWindows/yoga
+	shallow = true
 [submodule "vnext/Modules/boostorg/beast"]
 	path = vnext/Modules/boostorg/beast
 	url = https://github.com/boostorg/beast.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/system"]
 	path = vnext/Modules/boostorg/system
 	url = https://github.com/boostorg/system.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/asio"]
 	path = vnext/Modules/boostorg/asio
 	url = https://github.com/boostorg/asio.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/utility"]
 	path = vnext/Modules/boostorg/utility
 	url = https://github.com/boostorg/utility.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/config"]
 	path = vnext/Modules/boostorg/config
 	url = https://github.com/boostorg/config.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/core"]
 	path = vnext/Modules/boostorg/core
 	url = https://github.com/boostorg/core.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/algorithm"]
 	path = vnext/Modules/boostorg/algorithm
 	url = https://github.com/boostorg/algorithm.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/mpl"]
 	path = vnext/Modules/boostorg/mpl
 	url = https://github.com/boostorg/mpl.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/range"]
 	path = vnext/Modules/boostorg/range
 	url = https://github.com/boostorg/range.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/preprocessor"]
 	path = vnext/Modules/boostorg/preprocessor
 	url = https://github.com/boostorg/preprocessor.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/type_traits"]
 	path = vnext/Modules/boostorg/type_traits
 	url = https://github.com/boostorg/type_traits.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/iterator"]
 	path = vnext/Modules/boostorg/iterator
 	url = https://github.com/boostorg/iterator.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/assert"]
 	path = vnext/Modules/boostorg/assert
 	url = https://github.com/boostorg/assert.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/static_assert"]
 	path = vnext/Modules/boostorg/static_assert
 	url = https://github.com/boostorg/static_assert.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/detail"]
 	path = vnext/Modules/boostorg/detail
 	url = https://github.com/boostorg/detail.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/concept_check"]
 	path = vnext/Modules/boostorg/concept_check
 	url = https://github.com/boostorg/concept_check.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/function"]
 	path = vnext/Modules/boostorg/function
 	url = https://github.com/boostorg/function.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/throw_exception"]
 	path = vnext/Modules/boostorg/throw_exception
 	url = https://github.com/boostorg/throw_exception.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/integer"]
 	path = vnext/Modules/boostorg/integer
 	url = https://github.com/boostorg/integer.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/type_index"]
 	path = vnext/Modules/boostorg/type_index
 	url = https://github.com/boostorg/type_index.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/container_hash"]
 	path = vnext/Modules/boostorg/container_hash
 	url = https://github.com/boostorg/container_hash.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/bind"]
 	path = vnext/Modules/boostorg/bind
 	url = https://github.com/boostorg/bind.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/move"]
 	path = vnext/Modules/boostorg/move
 	url = https://github.com/boostorg/move.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/predef"]
 	path = vnext/Modules/boostorg/predef
 	url = https://github.com/boostorg/predef.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/winapi"]
 	path = vnext/Modules/boostorg/winapi
 	url = https://github.com/boostorg/winapi.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/date_time"]
 	path = vnext/Modules/boostorg/date_time
 	url = https://github.com/boostorg/date_time.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/optional"]
 	path = vnext/Modules/boostorg/optional
 	url = https://github.com/boostorg/optional.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/intrusive"]
 	path = vnext/Modules/boostorg/intrusive
 	url = https://github.com/boostorg/intrusive.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/numeric_conversion"]
 	path = vnext/Modules/boostorg/numeric_conversion
 	url = https://github.com/boostorg/numeric_conversion.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/endian"]
 	path = vnext/Modules/boostorg/endian
 	url = https://github.com/boostorg/endian.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/align"]
 	path = vnext/Modules/boostorg/align
 	url = https://github.com/boostorg/align.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/serialization"]
 	path = vnext/Modules/boostorg/serialization
 	url = https://github.com/boostorg/serialization.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/exception"]
 	path = vnext/Modules/boostorg/exception
 	url = https://github.com/boostorg/exception.git
+	shallow = true
 [submodule "vnext/Modules/boostorg/tuple"]
 	path = vnext/Modules/boostorg/tuple
 	url = https://github.com/boostorg/tuple.git
+	shallow = true
