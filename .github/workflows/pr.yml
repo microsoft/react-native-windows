@@ -4,10 +4,9 @@ on:
     branches:
       - none # Disable GitHub Actions CI
 jobs:
-  # This job is much the same as UWPPR, but runs after replacing the version of react-native
-  # we are using with facebook/react-native instead of microsoft/react-native
-  UWPPublicRN:
-    name: vnext with facebook/react-native
+  # This job is much the same as UWPPR, but does not apply patches to facebook/react-native
+  UWPUnpatchedRN:
+    name: vnext with unpatched facebook/react-native
     # todo switch to windows-2019 (to get VS 2019, but will need to remove dependency on v141 tools)
     runs-on: windows-2016
     timeout-minutes: 45
@@ -18,9 +17,6 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v1
-
-      - name: Switch to facebook/react-native
-        run: cd vnext && node scripts/useUnForkedRN.js
 
         # We can't use a frozen lockfile for both the fork and non-fork, since they install different dependencies
         # We don't want to force devs to update/create two lock files on every change, so just don't freeze when
@@ -43,7 +39,7 @@ jobs:
         run: nuget.exe restore vnext\ReactWindows-UWP.sln -PackagesDirectory vnext/packages/ -Verbosity Detailed -NonInteractive
 
       - name: Build ReactWindows-UWP.sln
-        run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug"
+        run: msbuild vnext\ReactWindows-UWP.sln /nologo /nr:false /p:PreferredToolArchitecture=x64 /p:platform="x86" /p:configuration="Debug" /p:PATCH_RN="true"
 
       - name: NuGet restore Playground.sln
         run: nuget.exe restore packages/playground/windows/Playground.sln -Verbosity Detailed -NonInteractive
@@ -74,7 +70,7 @@ jobs:
     timeout-minutes: 45
     # Can't appear to enable matrix right now:
     # https://github.community/t5/How-to-use-Git-and-GitHub/GitHub-Actions-Matrix-options-dont-work-as-documented/m-p/29558
-    # Ideally we'd share more of the build def between UWPPublicRN and this job, but due to the issues with matrix right now
+    # Ideally we'd share more of the build def between UWPUnpatchedRN and this job, but due to the issues with matrix right now
     # it was easier to just duplicate the job logic somewhat
     strategy:
       matrix:
@@ -137,7 +133,7 @@ jobs:
 
       # todo work out how to specify working-directory for run command
       - name: Create RNTester bundle
-        #  if: ${{ matrix.UseRNFork }} == 'true'
+        #  if: ${{ matrix.applyRnPatches }} == 'true'
         run: cd vnext && node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
 
   # This job verifies creating a new react-native app, installing react-native-windows, applying the vnext template, and building it

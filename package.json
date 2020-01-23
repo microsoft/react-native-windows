@@ -17,10 +17,6 @@
       "pre-commit": "yarn format"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git"
-  },
   "license": "MIT",
   "workspaces": {
     "packages": [
