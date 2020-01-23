@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Jan 2020 18:42:26 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.121",
+      "version": "0.60.0-vnext.121",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Logging and Tracing OSS_RN Removal",
+            "author": "nick@nickgerleman.com",
+            "commit": "6cd6ced7ca2de1aa9d8686d59545457535236798"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2020 06:39:59 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.120",
       "version": "0.60.0-vnext.120",
