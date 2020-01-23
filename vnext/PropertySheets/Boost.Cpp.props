@@ -6,6 +6,7 @@
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory)..\Modules\boostorg\algorithm\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\align\include;
+        $(MSBuildThisFileDirectory)..\Modules\boostorg\serialization\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\asio\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\assert\include;
         $(MSBuildThisFileDirectory)..\Modules\boostorg\beast\include;

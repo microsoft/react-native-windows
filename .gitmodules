@@ -97,3 +97,6 @@
 [submodule "vnext/Modules/boostorg/align"]
 	path = vnext/Modules/boostorg/align
 	url = https://github.com/boostorg/align.git
+[submodule "vnext/Modules/boostorg/serialization"]
+	path = vnext/Modules/boostorg/serialization
+	url = https://github.com/boostorg/serialization.git
