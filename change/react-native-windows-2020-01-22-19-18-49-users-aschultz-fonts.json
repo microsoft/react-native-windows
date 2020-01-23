@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Add custom font registration system",
+  "packageName": "react-native-windows",
+  "email": "aschultz@microsoft.com",
+  "commit": "0f36d9ebd3ddfe4ac6759b8106d9e57d9a6e1138",
+  "date": "2020-01-23T03:18:49.526Z"
+}
