@@ -16,6 +16,8 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
 
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ReactPatches.targets" />
+
   <PropertyGroup>
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
     <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.1.6</HERMES_Version>

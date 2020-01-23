@@ -3,11 +3,12 @@
 
 #include "pch.h"
 #include "ABIViewManager.h"
+#include "DynamicReader.h"
+#include "DynamicWriter.h"
 
 #include "IReactContext.h"
 
 #include <ReactUWP/Utils/ValueUtils.h>
-#include "ReactSupport.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -44,11 +45,17 @@ folly::dynamic ABIViewManager::GetExportedViewConstants() const {
   folly::dynamic parent = Super::GetExportedViewConstants();
 
   if (m_viewManagerWithExportedViewConstants) {
-    auto outerChild = m_viewManagerWithExportedViewConstants.ExportedViewConstants();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value = ConvertToDynamic(pair.Value());
-      parent.insert(key, value);
+    if (auto constantProvider = m_viewManagerWithExportedViewConstants.ExportedViewConstants()) {
+      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      argWriter.WriteObjectBegin();
+      constantProvider(argWriter);
+      argWriter.WriteObjectEnd();
+
+      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
+
+      if (!outerChild.isNull()) {
+        parent.update(outerChild);
+      }
     }
   }
 
@@ -95,27 +102,10 @@ void ABIViewManager::UpdateProperties(react::uwp::ShadowNodeBase *nodeToUpdate, 
   if (m_viewManagerWithNativeProperties) {
     auto view = nodeToUpdate->GetView().as<winrt::FrameworkElement>();
 
-    auto propertyMap = winrt::single_threaded_map<hstring, IInspectable>();
+    IJSValueReader propertyMapReader = winrt::make<DynamicReader>(reactDiffMap);
 
-    for (const auto &pair : reactDiffMap.items()) {
-      auto propertyName = pair.first.getString();
-      auto propertyNameHstring = react::uwp::asHstring(propertyName);
-
-      if (const auto &propertyType = m_nativeProps.TryLookup(propertyNameHstring)) {
-        IInspectable propertyValue = nullptr;
-
-        if (propertyType.value() == ViewManagerPropertyType::Color && react::uwp::IsValidColorValue(pair.second)) {
-          propertyValue = react::uwp::BrushFrom(pair.second);
-        } else {
-          propertyValue = ConvertToIInspectable(pair.second);
-        }
-
-        propertyMap.Insert(react::uwp::asHstring(propertyName), propertyValue);
-      }
-    }
-
-    if (propertyMap.Size() > 0) {
-      m_viewManagerWithNativeProperties.UpdateProperties(view, propertyMap.GetView());
+    if (reactDiffMap.size() > 0) {
+      m_viewManagerWithNativeProperties.UpdateProperties(view, propertyMapReader);
     }
   }
 
@@ -144,18 +134,8 @@ void ABIViewManager::DispatchCommand(
   if (m_viewManagerWithCommands) {
     auto view = viewToUpdate.as<winrt::FrameworkElement>();
 
-    auto iinspectableArgs = ConvertToIInspectable(commandArgs);
-
-    auto listArgs =
-        iinspectableArgs.try_as<winrt::Windows::Foundation::Collections::IVectorView<winrt::IInspectable>>();
-
-    if (!listArgs) {
-      auto args = single_threaded_vector<winrt::IInspectable>();
-      args.Append(iinspectableArgs);
-      listArgs = args.GetView();
-    }
-
-    m_viewManagerWithCommands.DispatchCommand(view, commandId, listArgs);
+    IJSValueReader argReader = winrt::make<DynamicReader>(commandArgs);
+    m_viewManagerWithCommands.DispatchCommand(view, commandId, argReader);
   }
 }
 
@@ -163,11 +143,18 @@ folly::dynamic ABIViewManager::GetExportedCustomBubblingEventTypeConstants() con
   folly::dynamic parent = Super::GetExportedCustomBubblingEventTypeConstants();
 
   if (m_viewManagerWithExportedEventTypeConstants) {
-    auto outerChild = m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value = ConvertToDynamic(pair.Value());
-      parent.insert(key, value);
+    if (auto constantProvider =
+            m_viewManagerWithExportedEventTypeConstants.ExportedCustomBubblingEventTypeConstants()) {
+      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      argWriter.WriteObjectBegin();
+      constantProvider(argWriter);
+      argWriter.WriteObjectEnd();
+
+      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
+
+      if (!outerChild.isNull()) {
+        parent.update(outerChild);
+      }
     }
   }
 
@@ -178,11 +165,17 @@ folly::dynamic ABIViewManager::GetExportedCustomDirectEventTypeConstants() const
   folly::dynamic parent = Super::GetExportedCustomDirectEventTypeConstants();
 
   if (m_viewManagerWithExportedEventTypeConstants) {
-    auto outerChild = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants();
-    for (const auto &pair : outerChild) {
-      std::string key = to_string(pair.Key());
-      folly::dynamic value = ConvertToDynamic(pair.Value());
-      parent.insert(key, value);
+    if (auto constantProvider = m_viewManagerWithExportedEventTypeConstants.ExportedCustomDirectEventTypeConstants()) {
+      IJSValueWriter argWriter = winrt::make<DynamicWriter>();
+      argWriter.WriteObjectBegin();
+      constantProvider(argWriter);
+      argWriter.WriteObjectEnd();
+
+      auto outerChild = argWriter.as<DynamicWriter>()->TakeValue();
+
+      if (!outerChild.isNull()) {
+        parent.update(outerChild);
+      }
     }
   }
 

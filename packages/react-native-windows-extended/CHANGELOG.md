@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Thu, 09 Jan 2020 23:20:10 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jan 2020 00:16:13 GMT and should not be manually modified.
 
+## 0.60.67
+Thu, 23 Jan 2020 00:16:13 GMT
+
+### Patches
+
+- Apply React Native Patches for All Consumers of ReackPackageDirectories (nick@nickgerleman.com)
 ## 0.60.65
 Thu, 09 Jan 2020 23:20:10 GMT
 

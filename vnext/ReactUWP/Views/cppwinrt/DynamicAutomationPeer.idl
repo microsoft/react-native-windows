@@ -111,8 +111,8 @@ namespace PROJECT_ROOT_NAMESPACE
 		static AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(Windows.UI.Xaml.UIElement element);
 
 		static Windows.UI.Xaml.DependencyProperty AccessibilityActionsProperty { get; };
-		static void SetAccessibilityActions(Windows.UI.Xaml.UIElement element, Windows.Foundation.Collections.IVector<AccessibilityAction> value);
-		static Windows.Foundation.Collections.IVector<AccessibilityAction> GetAccessibilityActions(Windows.UI.Xaml.UIElement element);
+		static void SetAccessibilityActions(Windows.UI.Xaml.UIElement element, Windows.Foundation.Collections.IVector<PROJECT_ROOT_NAMESPACE.AccessibilityAction> value);
+		static Windows.Foundation.Collections.IVector<PROJECT_ROOT_NAMESPACE.AccessibilityAction> GetAccessibilityActions(Windows.UI.Xaml.UIElement element);
 
 		static Windows.UI.Xaml.DependencyProperty AccessibilityActionEventHandlerProperty { get; };
 		static void SetAccessibilityActionEventHandler(Windows.UI.Xaml.UIElement element, AccessibilityActionEventHandler value);

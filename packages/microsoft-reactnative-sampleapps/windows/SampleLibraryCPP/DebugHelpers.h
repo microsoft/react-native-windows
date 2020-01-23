@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include "pch.h"
-
 #include <hstring.h>
 
 namespace SampleLibraryCpp {

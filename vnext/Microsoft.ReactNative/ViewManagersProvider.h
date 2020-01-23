@@ -9,8 +9,6 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 
-#include "ReactSupport.h"
-
 namespace winrt::Microsoft::ReactNative {
 
 class ViewManagersProvider final : public react::uwp::ViewManagerProvider {

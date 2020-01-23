@@ -5,44 +5,49 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="EvaluatePatchReactInputsOutputs" BeforeTargets="PrepareForBuild">
-    <ItemGroup>
-      <DeforkingPatchFiles Include="$(ReactNativeWindowsDir)\DeforkingPatches\**" Condition="'$(PATCH_RN)'=='true'"/>
-      <AllReactSourceFiles Include="$(ReactNativePackageDir)\**\*.cpp;$(ReactNativePackageDir)\**\*.h" />
-      <ReactSourceFiles Include="@(AllReactSourceFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(ReactNativeWindowsDir)\DeforkingPatches\%(AllReactSourceFiles.RecursiveDir)%(AllReactSourceFiles.Filename)%(AllReactSourceFiles.Extension)')" />
-      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
-    </ItemGroup>
-  </Target>
-
   <!--
     Visual Studio has its own incremental build logic for simple cases that
-    falls over here. Force use of MSBuild logic here.
+    falls over for patching. Force use of MSBuild logic.
   -->
   <PropertyGroup>
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-  <Target Name="CopyReactSources"
-          AfterTargets="EvaluatePatchInputsOutputs"
-          BeforeTargets="PrepareForBuild">
-    <Copy SourceFiles="@(ReactSourceFiles)"
-          DestinationFiles="@(ReactSourceFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
+    <!--
+      Do not patch facebook/react-native by default until we make the switch
+      off of microsoft/react-native.
+    -->
+  <PropertyGroup Condition="'$(OSS_RN)'!='true'">
+    <PATCH_RN>true</PATCH_RN>
+  </PropertyGroup>
+
+  <Target Name="EvaluateReactPatchInputs" BeforeTargets="CopyReactPatches">
+    <PropertyGroup>
+      <ReactCommonSrcPath>$(ReactNativePackageDir)\ReactCommon\</ReactCommonSrcPath>
+      <ReactCommonDestPath>$(ReactNativeDir)\ReactCommon\</ReactCommonDestPath>
+      <DeforkingPatchCommonPath>$(ReactNativeWindowsDir)\DeforkingPatches\ReactCommon\</DeforkingPatchCommonPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <DeforkingPatchCommonFiles Include="$(DeforkingPatchCommonPath)\**" Condition="'$(PATCH_RN)'=='true'"/>
+      <ReactCommonSrcFiles Include="$(ReactCommonSrcPath)\**\*.cpp;$(ReactCommonSrcPath)\**\*.h" />
+      <UnpatchedReactCommonSrcFiles Include="@(ReactCommonSrcFiles)" Condition="'$(PATCH_RN)'!='true' OR !Exists('$(DeforkingPatchCommonPath)\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+      <!-- Special case to recreate custom header exports in Facebook BUCK logic -->
+      <JsiReactHeaderFiles Include="$(ReactNativePackageDir)\ReactCommon\turbomodule\core\*.h" />
+    </ItemGroup>
   </Target>
 
-  <Target Name="CopyDeforkingPatches"
-          AfterTargets="EvaluatePatchInputsOutputs"
-          BeforeTargets="PrepareForBuild">
-    <Copy SourceFiles="@(DeforkingPatchFiles)"
-          DestinationFiles="@(DeforkingPatchFiles->'$(ReactNativeDir)\%(RecursiveDir)%(Filename)%(Extension)')"
-          SkipUnchangedFiles="true" />
-  </Target>
 
-  <Target Name="CopyJsiHeaders"
-          AfterTargets="EvaluatePatchInputsOutputs"
-          BeforeTargets="PrepareForBuild">
+  <Target Name="CopyReactPatches" BeforeTargets="PrepareForBuild">
+    <Copy SourceFiles="@(UnpatchedReactCommonSrcFiles)"
+          DestinationFiles="@(UnpatchedReactCommonSrcFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DeforkingPatchCommonFiles)"
+          DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactNativeDir)\ReactCommon\jsireact\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\jsireact\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

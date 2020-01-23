@@ -126,6 +126,9 @@ jobs:
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: arm
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: arm64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -135,6 +138,9 @@ jobs:
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: arm
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: arm64
     pool:
       vmImage: $(VmImage)
 
@@ -152,7 +158,7 @@ jobs:
       - template: templates/build-rnw.yml
         parameters:
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM
+          vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:

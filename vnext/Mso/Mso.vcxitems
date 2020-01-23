@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)activeObject\activeObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\compilerFeatures.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\compilerWarnings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\compilerWarnings_impl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\cppMacros.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\cppMacrosDebug.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\declspecDefinitions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\functionDecorations.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\intrinsics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)compilerAdapters\managedCpp.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)comUtil\IUnknownShim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)comUtil\qiCast.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)comUtil\qiCastCore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)cppExtensions\autoRestore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)crash\verifyElseCrash.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)debugAssertApi\debugAssertApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)debugAssertApi\debugAssertDetails.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)dispatchQueue\dispatchQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\errorCode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\errorProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\exceptionErrorProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\hresultErrorProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)errorCode\maybe.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)eventWaitHandle\eventWaitHandle.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)functional\functor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)functional\functorRef.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\cancellationToken.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\arrayView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\cancellationErrorProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\cancellationException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\executor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureFuncInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureTask.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\futureWeakPtrInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\ifuture.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\maybeInvoker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\promiseGroupInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\promiseInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\resultTraits.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\sharedFutureInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\timeoutException.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\whenAllInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\details\whenAnyInl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\future.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\futureForwardDecl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)future\futureWait.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)guid\msoGuid.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)guid\msoGuidDetails.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)memoryApi\memoryApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)memoryApi\memoryLeakScope.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\assert_IgnorePlat_emptyImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\assert_motifApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\gTestAdapter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\libletAwareMemLeakDetection.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\motifCppTest.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\motifCppTestBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\testCheck.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)motifCpp\testInfo.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)oacr\oacr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\make.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\objectRefCount.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\objectWithWeakRef.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\queryCast.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\refCountedObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\unknownObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)object\weakPtr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)platformAdapters\windowsFirst.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)smartPtr\smartPointerBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)smartPtr\cntPtr.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)span\span.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\queueService.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskBatch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\dispatchQueue\threadMutex.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\future\futureImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tagUtils\tagTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\sfinae.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\tags.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\typeTraits.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\activeObject\activeObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\crash\crash_min.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\debugAssertApi\debugAssertApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\queueService.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskBatch.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\looperScheduler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\mainUIScheduler_winrt.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskContext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\threadPoolScheduler_win.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\errorCode\errorCode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl_win.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\cancellationTokenImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\executor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\futureImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\futureTask.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\promise.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\promiseGroup.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\whenAll.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\future\whenAny.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryLeakScope_EmptyImpl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)dispatchQueue\README.md" />
+    <None Include="$(MSBuildThisFileDirectory)future\README.md" />
+  </ItemGroup>
+</Project>

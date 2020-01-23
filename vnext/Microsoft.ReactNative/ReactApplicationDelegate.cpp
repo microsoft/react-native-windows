@@ -2,7 +2,12 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+
+#include <winrt/Windows.ApplicationModel.Activation.h>
+
+// ReactApplicationDelegate.h must be included before ReactApplicationDelegate.g.cpp
 #include "ReactApplicationDelegate.h"
+
 #include "ReactApplicationDelegate.g.cpp"
 #include "ReactNativeHost.h"
 
