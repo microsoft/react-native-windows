@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Jan 2020 21:21:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.122",
+      "version": "0.60.0-vnext.122",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.40",
+            "author": "acoates@microsoft.com",
+            "commit": "807e14dc8d30691438bbdecc9ec26e268bfd5dac"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2020 18:42:26 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.121",
       "version": "0.60.0-vnext.121",
