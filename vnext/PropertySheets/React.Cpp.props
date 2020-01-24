@@ -82,6 +82,7 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ControlFlowGuard Condition="'$(Configuration)' != 'Debug'">Guard</ControlFlowGuard>
     </ClCompile>
+  </ItemDefinitionGroup>
 
   <ItemDefinitionGroup Condition="'$(ConfigurationType)' == 'Application' OR '$(ConfigurationType)' == 'DynamicLibrary'">
     <Link>
