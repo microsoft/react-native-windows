@@ -13,6 +13,7 @@
 #include <INativeUIManager.h>
 #include <Views/KeyboardEventHandler.h>
 #include <Views/ShadowNodeBase.h>
+#include "ReactNativeHost.h"
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
@@ -158,8 +159,10 @@ void ReactControl::AttachRoot() noexcept {
   if (m_isAttached)
     return;
 
-  if (!m_reactInstance)
-    m_reactInstance = m_instanceCreator->getInstance();
+  if (!m_reactInstance) {
+     auto reactNativeHostImpl{winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeHost>(m_viewHost)};
+    m_reactInstance = reactNativeHostImpl->Instance();
+  }
 
   // Handle any errors that occurred during creation before we add our callback
   if (m_reactInstance->IsInError())
@@ -191,7 +194,7 @@ void ReactControl::AttachRoot() noexcept {
     });
   });
 
-  // Register callback from instance for degugger attaching
+  // Register callback from instance for debugger attaching
   m_debuggerAttachCallbackCookie =
       m_reactInstance->RegisterDebuggerAttachCallback([this]() { HandleDebuggerAttach(); });
 
@@ -285,7 +288,7 @@ void ReactControl::Reload(bool shouldRetireCurrentInstance) {
   m_uiDispatcher.RunAsync(
       winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [this, shouldRetireCurrentInstance]() {
         if (shouldRetireCurrentInstance && m_reactInstance != nullptr)
-          m_instanceCreator->markAsNeedsReload();
+          //TODO: m_instanceCreator->markAsNeedsReload();
 
         // Detach ourselves from the instance
         DetachInstance();
@@ -307,9 +310,9 @@ void ReactControl::SetJSComponentName(std::string &&jsComponentName) noexcept {
     m_reactInstance->SetAsNeedsReload();
 }
 
-void ReactControl::SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept {
+void ReactControl::SetViewHost(winrt::Microsoft::ReactNative::ReactNativeHost const& viewHost) noexcept {
   // TODO - Handle swapping this out after the control is running
-  m_instanceCreator = instanceCreator;
+  m_viewHost = viewHost;
 }
 
 void ReactControl::SetInitialProps(folly::dynamic &&initialProps) noexcept {
@@ -432,7 +435,7 @@ void ReactControl::ShowDeveloperMenu() {
   m_remoteDebugJSRevoker = remoteDebugJSButton.Click(
       winrt::auto_revoke, [this, useWebDebugger](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
-        m_instanceCreator->persistUseWebDebugger(!useWebDebugger);
+        //TODO: [vmorozov] m_instanceCreator->persistUseWebDebugger(!useWebDebugger);
         Reload(true);
       });
   m_cancelRevoker = cancelButton.Click(
@@ -454,7 +457,7 @@ void ReactControl::ShowDeveloperMenu() {
   m_liveReloadRevoker = liveReloadButton.Click(
       winrt::auto_revoke, [this, supportLiveReload](const auto &sender, const winrt::RoutedEventArgs &args) {
         DismissDeveloperMenu();
-        m_instanceCreator->persistUseLiveReload(!supportLiveReload);
+        //TODO: [vmorozov] implement  m_instanceCreator->persistUseLiveReload(!supportLiveReload);
         Reload(true);
       });
 

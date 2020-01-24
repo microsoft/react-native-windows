@@ -50,8 +50,8 @@ void ReactRootView::SetJSComponentName(std::string &&jsComponentName) noexcept {
   m_pimpl->SetJSComponentName(std::move(jsComponentName));
 }
 
-void ReactRootView::SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept {
-  m_pimpl->SetInstanceCreator(instanceCreator);
+void ReactRootView::SetViewHost(winrt::Microsoft::ReactNative::ReactNativeHost const& viewHost) noexcept {
+  m_pimpl->SetViewHost(viewHost);
 }
 
 void ReactRootView::SetInitialProps(folly::dynamic &&initialProps) noexcept {

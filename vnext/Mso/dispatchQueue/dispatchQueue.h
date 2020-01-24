@@ -441,12 +441,15 @@ struct DispatchTaskImpl final
     : Mso::UnknownObject<Mso::QueryCastHidden<Mso::IVoidFunctor>, Mso::ICancellationListener> {
   template <typename TInvokeArg, typename TOnCancelArg>
   DispatchTaskImpl(TInvokeArg &&invoke, TOnCancelArg &&onCancel) noexcept;
+  ~DispatchTaskImpl() noexcept override;
+
   void Invoke() noexcept override;
   void OnCancel() noexcept override;
 
  private:
   TInvoke m_invoke;
   TOnCancel m_onCancel;
+  std::atomic<bool> m_isCalled{false};
 };
 
 //! Dispatch task implementation that runs the same lambda for Invoke() and OnCancel().
@@ -711,6 +714,13 @@ template <typename TInvokeArg, typename TOnCancelArg>
 inline DispatchTaskImpl<TInvoke, TOnCancel>::DispatchTaskImpl(TInvokeArg &&invoke, TOnCancelArg &&onCancel) noexcept
     : m_invoke{std::forward<TInvokeArg>(invoke)}, m_onCancel{std::forward<TOnCancelArg>(onCancel)} {}
 
+template <typename TInvoke, typename TOnCancel>
+inline DispatchTaskImpl<TInvoke, TOnCancel>::~DispatchTaskImpl() noexcept {
+  if (!m_isCalled) {
+    m_onCancel();
+  }
+}
+
 template <typename T>
 inline void MustBeNoExceptVoidFunctor() {
   static_assert(false, __FUNCTION__ ": not a noexcept callable functor returning void");
@@ -720,6 +730,7 @@ template <typename TInvoke, typename TOnCancel>
 inline void DispatchTaskImpl<TInvoke, TOnCancel>::Invoke() noexcept {
   if constexpr (std::is_nothrow_invocable_r_v<void, decltype(m_invoke)>) {
     m_invoke();
+    m_isCalled = true;
   } else {
     MustBeNoExceptVoidFunctor<decltype(m_invoke)>();
   }
@@ -729,6 +740,7 @@ template <typename TInvoke, typename TOnCancel>
 inline void DispatchTaskImpl<TInvoke, TOnCancel>::OnCancel() noexcept {
   if constexpr (std::is_nothrow_invocable_r_v<void, decltype(m_onCancel)>) {
     m_onCancel();
+    m_isCalled = true;
   } else {
     MustBeNoExceptVoidFunctor<decltype(m_onCancel)>();
   }

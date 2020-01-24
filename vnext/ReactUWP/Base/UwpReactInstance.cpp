@@ -7,7 +7,6 @@
 
 // ReactUWP
 #include <ReactUWP/IXamlRootView.h>
-#include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
@@ -64,14 +63,12 @@
 #include <Modules/WebSocketModuleUwp.h>
 #include <ReactUWP/Modules/I18nModule.h>
 #include <ReactWindowsCore/IUIManager.h>
-#include <Threading/JSQueueThread.h>
-#include <Threading/UIMessageQueueThread.h>
-#include <Threading/WorkerMessageQueueThread.h>
+#include <Threading/MessageQueueThreadFactory.h>
 
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
-#include <Windows.ApplicationModel.h>
+//#include <Windows.ApplicationModel.h>
 #include <winrt/Windows.ApplicationModel.h>
 
 #ifdef PATCH_RN
@@ -107,13 +104,12 @@ bool HasPackageIdentity() noexcept {
   static const bool hasPackageIdentity = []() noexcept {
     auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
         winrt::name_of<winrt::Windows::ApplicationModel::Package>());
-    auto abiPackageStatics =
-        static_cast<ABI::Windows::ApplicationModel::IPackageStatics *>(winrt::get_abi(packageStatics));
-    winrt::com_ptr<ABI::Windows::ApplicationModel::IPackage> dummy;
-    return abiPackageStatics->get_Current(reinterpret_cast<ABI::Windows::ApplicationModel::IPackage **>(
-               winrt::put_abi(dummy))) != HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE);
-  }
-  ();
+    auto abiPackageStatics = static_cast<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackageStatics> *>(
+        winrt::get_abi(packageStatics));
+    winrt::com_ptr<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackage>> dummy;
+    return abiPackageStatics->get_Current(winrt::put_abi(dummy)) !=
+        winrt::impl::hresult_from_win32(APPMODEL_ERROR_NO_PACKAGE);
+  }();
 
   return hasPackageIdentity;
 }
@@ -192,12 +188,10 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       react::uwp::WebSocketModule::name,
       []() { return std::make_unique<react::uwp::WebSocketModule>(); },
-      std::make_shared<WorkerMessageQueueThread>());
+      MakeSerialQueueThread());
 
   modules.emplace_back(
-      NetworkingModule::name,
-      []() { return std::make_unique<NetworkingModule>(); },
-      std::make_shared<WorkerMessageQueueThread>());
+      NetworkingModule::name, []() { return std::make_unique<NetworkingModule>(); }, MakeSerialQueueThread());
 
   modules.emplace_back(
       "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);
@@ -216,15 +210,14 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
   modules.emplace_back(
       LocationObserverModule::name,
       [messageQueue]() { return std::make_unique<LocationObserverModule>(messageQueue); },
-      std::make_shared<WorkerMessageQueueThread>()); // TODO: figure out
-                                                     // threading
+      MakeSerialQueueThread()); // TODO: figure out threading
 
   modules.emplace_back(
       facebook::react::AppStateModule::name,
       [appstate = std::move(appstate)]() mutable {
         return std::make_unique<facebook::react::AppStateModule>(std::move(appstate));
       },
-      std::make_shared<WorkerMessageQueueThread>());
+      MakeSerialQueueThread());
 
   modules.emplace_back(
       react::windows::AppThemeModule::name,
@@ -233,11 +226,14 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
       },
       messageQueue);
 
-  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
+  modules.emplace_back(
+      AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
 
-  modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
+  modules.emplace_back(
+      ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
 
-  modules.emplace_back(StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
+  modules.emplace_back(
+      StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
 
   modules.emplace_back(
       NativeAnimatedModule::name,
@@ -259,7 +255,7 @@ std::vector<facebook::react::NativeModuleDescription> GetModules(
     modules.emplace_back(
         "AsyncLocalStorage",
         []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
-        std::make_shared<WorkerMessageQueueThread>());
+        MakeSerialQueueThread());
   }
 
   return modules;
@@ -276,9 +272,8 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
-  m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
-  m_batchingNativeThread = std::make_shared<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher);
+  m_defaultNativeThread = MakeUIQueueThread();
+  m_batchingNativeThread = MakeBatchingQueueThread(m_defaultNativeThread);
 
   // Objects that must be created on the UI thread
   m_deviceInfo = std::make_shared<DeviceInfo>(spThis);
@@ -288,7 +283,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
 
   // TODO: Figure out threading. What thread should this really be on?
-  m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
+  m_initThread = MakeSerialQueueThread();
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
@@ -375,7 +370,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
-    std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+    std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = MakeJSQueueThread();
 
 #ifdef PATCH_RN
     if (settings.UseJsi) {
@@ -500,7 +495,7 @@ void UwpReactInstance::CallJsFunction(
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> UwpReactInstance::GetNewUIMessageQueue() const {
-  return std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
+  return MakeUIQueueThread();
 }
 
 const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::JSMessageQueueThread() const noexcept {

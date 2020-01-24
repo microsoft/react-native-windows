@@ -3,17 +3,11 @@
 
 #pragma once
 
+#include <cxxreact/MessageQueueThread.h>
 #include <memory>
 
-namespace facebook {
-namespace react {
-class CxxMessageQueue;
-}
-} // namespace facebook
+namespace react::uwp {
 
-namespace react {
-namespace uwp {
+std::shared_ptr<facebook::react::MessageQueueThread> CreateAndStartJSQueueThread() noexcept;
 
-std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread();
-}
-} // namespace react
+} // namespace react::uwp

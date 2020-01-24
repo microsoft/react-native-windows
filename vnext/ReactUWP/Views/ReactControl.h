@@ -37,7 +37,7 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
   XamlView GetXamlView() const noexcept;
   std::shared_ptr<IReactInstance> GetReactInstance() const noexcept;
   void SetJSComponentName(std::string &&mainComponentName) noexcept;
-  void SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept;
+  void SetViewHost(winrt::Microsoft::ReactNative::ReactNativeHost const& viewHost) noexcept;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept;
 
   void AttachRoot() noexcept;
@@ -92,7 +92,7 @@ class ReactControl : public std::enable_shared_from_this<ReactControl>, public I
   XamlView m_xamlRootView{nullptr};
   XamlView m_rootView;
 
-  ReactInstanceCreator m_instanceCreator;
+  winrt::Microsoft::ReactNative::ReactNativeHost m_viewHost;
   std::shared_ptr<IReactInstance> m_reactInstance;
   bool m_isAttached{false};
   LiveReloadCallbackCookie m_liveReloadCallbackCookie{0};

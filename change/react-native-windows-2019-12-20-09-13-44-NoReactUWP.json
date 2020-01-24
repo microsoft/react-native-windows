@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "comment": "Changed Microsoft.ReactNative to be independent from ReactUWP project",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "a2053e778b68834fb64e18382dbc5328ce66b269",
+  "date": "2019-12-20T17:13:44.280Z"
+}

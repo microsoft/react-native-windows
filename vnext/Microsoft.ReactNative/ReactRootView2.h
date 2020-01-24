@@ -1,10 +1,9 @@
-#pragma once
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+#pragma once
 
 #include "ReactRootView.g.h"
 
-#include "ReactInstanceManager.h"
 #include "ReactNativeHost.h"
 #include "ViewManagerProvider.h"
 
@@ -22,7 +21,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
 
   void OnCreate(ReactNative::ReactNativeHost const &host);
   fire_and_forget StartReactApplicationAsync(
-      ReactNative::ReactInstanceManager const &instanceManager,
+      ReactNative::ReactNativeHost const &reactNativeHost,
       hstring componentName,
       folly::dynamic initialProps);
 
@@ -30,7 +29,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView> {
   std::shared_ptr<react::uwp::IXamlRootView> m_xamlView;
   hstring m_moduleName{};
   folly::dynamic m_initialProps{};
-  ReactNative::ReactInstanceManager m_reactInstanceManager{nullptr};
+  ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
 
   static void OnBackRequested(
       ReactNative::ReactNativeHost const &host,

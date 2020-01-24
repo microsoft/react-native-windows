@@ -33,29 +33,22 @@ void ReactRootView::OnCreate(ReactNative::ReactNativeHost const &host) {
 }
 
 fire_and_forget ReactRootView::StartReactApplicationAsync(
-    ReactNative::ReactInstanceManager const &instanceManager,
+    ReactNative::ReactNativeHost const &reactNativeHost,
     hstring componentName,
     folly::dynamic initialProps) {
   if (!Dispatcher().HasThreadAccess()) {
     throw hresult_invalid_operation(L"Thread does not have dispatcher access.");
   }
 
-  if (m_reactInstanceManager != nullptr) {
-    throw hresult_invalid_operation(L"This root view has already been attached to an instance manager.");
+  if (m_reactNativeHost != nullptr) {
+    throw hresult_invalid_operation(L"This root view has already been attached to a react host.");
   }
 
-  m_reactInstanceManager = instanceManager;
+  m_reactNativeHost = reactNativeHost;
   m_moduleName = componentName;
   m_initialProps = initialProps;
 
-  // Nudge the ReactInstanceManager to create the instance and wrapping context
-  ReactInstanceManager *instanceManagerImpl{get_self<ReactInstanceManager>(instanceManager)};
-
-  auto context = co_await instanceManagerImpl->GetOrCreateReactContextAsync();
-
-  auto instanceCreator = instanceManagerImpl->InstanceCreator();
-
-  m_xamlView = react::uwp::CreateReactRootView(*this, componentName.c_str(), instanceCreator);
+  m_xamlView = react::uwp::CreateReactRootView(*this, componentName.c_str(), reactNativeHost);
 
   if (m_xamlView == nullptr)
     co_return;
@@ -67,14 +60,15 @@ fire_and_forget ReactRootView::StartReactApplicationAsync(
 }
 
 void ReactRootView::OnBackRequested(
-    ReactNative::ReactNativeHost const &host,
+    ReactNative::ReactNativeHost const & /*host*/,
     IInspectable const & /*sender*/,
-    BackRequestedEventArgs const &e) {
-  auto hostImpl = host.as<ReactNativeHost>();
+    BackRequestedEventArgs const & /*e*/) {
+  // TODO: implement
+  /*auto hostImpl = host.as<ReactNativeHost>();
   if (hostImpl->HasInstance()) {
     hostImpl->ReactInstanceManager().OnBackPressed();
     e.Handled(TRUE);
-  }
+  }*/
 }
 
 void ReactRootView::OnAcceleratorKeyActivated(
@@ -87,32 +81,33 @@ void ReactRootView::OnAcceleratorKeyActivated(
   // accessed in debug via the Shift+F10 key.  Consider what was done in
   // https://github.com/microsoft/react-native-windows/pull/2862/files
   // and the C# DevSupportManager.
-  if (host.HasInstance()) {
-    // auto reactInstanceManager = host.ReactInstanceManager();
-    // if (reactInstanceManager.DevSupportManager().IsEnabled()) {
-
-    //  auto virtualKey = e.VirtualKey();
-    //  auto eventType = e.EventType();
-
-    //  if (virtualKey == Windows::System::VirtualKey::Shift) {
-    //    s_isShiftKeyDown = IsKeyDown(eventType);
-    //  }
-    //  else if (virtualKey == Windows::System::VirtualKey::Control) {
-    //    s_isControlKeyDown = IsKeyDown(eventType);
-    //  }
-    //  else if (IsKeyDown(eventType)
-    //    && s_isShiftKeyDown
-    //    && virtualKey == Windows::System::VirtualKey::F10) {
-    //    reactInstanceManager.DevSupportManager().ShowDevOptionsDialog();
-    //  }
-    //  else if (
-    //    eventType == CoreAcceleratorKeyEventType::KeyUp
-    //    && s_isControlKeyDown
-    //    && e.VirtualKey == Windows::System::VirtualKey::R) {
-    //    reactInstanceManager.DevSupportManager().HandleReloadJavaScript();
-    //  }
-    //}
-  }
+  // TODO:
+  // if (host.HasInstance()) {
+  //   auto reactInstanceManager = host.ReactInstanceManager();
+  //   if (reactInstanceManager.DevSupportManager().IsEnabled()) {
+      
+  //    auto virtualKey = e.VirtualKey();
+  //    auto eventType = e.EventType();
+      
+  //    if (virtualKey == Windows::System::VirtualKey::Shift) {
+  //      s_isShiftKeyDown = IsKeyDown(eventType);
+  //    }
+  //    else if (virtualKey == Windows::System::VirtualKey::Control) {
+  //      s_isControlKeyDown = IsKeyDown(eventType);
+  //    }
+  //    else if (IsKeyDown(eventType)
+  //      && s_isShiftKeyDown
+  //      && virtualKey == Windows::System::VirtualKey::F10) {
+  //      reactInstanceManager.DevSupportManager().ShowDevOptionsDialog();
+  //    }
+  //    else if (
+  //      eventType == CoreAcceleratorKeyEventType::KeyUp
+  //      && s_isControlKeyDown
+  //      && e.VirtualKey == Windows::System::VirtualKey::R) {
+  //      reactInstanceManager.DevSupportManager().HandleReloadJavaScript();
+  //    }
+  //  }
+  //}
 }
 
 bool ReactRootView::IsKeyDown(CoreAcceleratorKeyEventType t) {

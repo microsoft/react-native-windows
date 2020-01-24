@@ -336,8 +336,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)typeTraits\tags.h">
       <Filter>typeTraits</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)smartPtr\cntPtr.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)smartPtr\cntPtr.h">
+      <Filter>smartPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl.h">
+      <Filter>src\eventWaitHandle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)src\memoryApi\memoryApi.cpp">
@@ -403,7 +407,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\activeObject\activeObject.cpp">
       <Filter>src\activeObject</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl_win.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl_win.cpp">
+      <Filter>src\eventWaitHandle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)future\README.md">

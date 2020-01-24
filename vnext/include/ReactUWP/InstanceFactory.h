@@ -29,7 +29,10 @@ CreateReactInstance(
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
 REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>)
-CreateReactRootView(XamlView parentView, const wchar_t *pJsComponentName, const ReactInstanceCreator &instanceCreator);
+CreateReactRootView(
+    XamlView parentView,
+    const wchar_t *pJsComponentName,
+    winrt::Microsoft::ReactNative::ReactNativeHost const &viewHost);
 
 // The method return the instance pointer directly, the caller own the lifetime
 REACTWINDOWS_API_(IReactInstance *)

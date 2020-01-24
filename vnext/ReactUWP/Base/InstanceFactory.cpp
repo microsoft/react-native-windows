@@ -11,6 +11,10 @@
 
 #include "Unicode.h"
 
+#include "Threading/MessageQueueThreadFactory.h"
+
+#include "ReactNativeHost.h"
+
 namespace react {
 namespace uwp {
 
@@ -44,13 +48,13 @@ UnSafeCreateReactInstance(
 }
 
 REACTWINDOWS_API_(std::shared_ptr<IXamlRootView>)
-CreateReactRootView(XamlView parentView, const wchar_t *pJsComponentName, const ReactInstanceCreator &instanceCreator) {
+CreateReactRootView(XamlView parentView, const wchar_t *pJsComponentName, winrt::Microsoft::ReactNative::ReactNativeHost const& viewHost) {
   // Convert input strings to std::string
   std::string jsComponentName = Microsoft::Common::Unicode::Utf16ToUtf8(pJsComponentName, wcslen(pJsComponentName));
 
   auto rootView = std::make_shared<react::uwp::ReactRootView>(parentView);
   rootView->SetJSComponentName(std::move(jsComponentName));
-  rootView->SetInstanceCreator(instanceCreator);
+  rootView->SetViewHost(viewHost);
 
   return rootView;
 }
@@ -59,7 +63,7 @@ CreateReactRootView(XamlView parentView, const wchar_t *pJsComponentName, const 
 // order
 REACTWINDOWS_API_(std::shared_ptr<facebook::react::MessageQueueThread>)
 CreateWorkerMessageQueue() {
-  return std::make_shared<WorkerMessageQueueThread>();
+  return MakeSerialQueueThread();
 }
 
 } // namespace uwp

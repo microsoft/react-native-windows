@@ -25,7 +25,7 @@ class ReactRootView : public IXamlRootView {
   XamlView GetXamlView() const noexcept override;
   void SetJSComponentName(std::string &&mainComponentName) noexcept override;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept override;
-  void SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept;
+  void SetViewHost(winrt::Microsoft::ReactNative::ReactNativeHost const &viewHost) noexcept;
   void AttachRoot() noexcept override;
   void DetachRoot() noexcept override;
   std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl() const noexcept override;
