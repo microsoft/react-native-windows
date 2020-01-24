@@ -579,4 +579,4 @@ export const styles = StyleSheet.create({
   },
 });
 
-export default TextExample;
+module.exports = TextExample;

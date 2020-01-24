@@ -1,7 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 23 Jan 2020 00:16:13 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jan 2020 18:42:26 GMT and should not be manually modified.
 
+## 0.60.0-vnext.121
+Thu, 23 Jan 2020 18:42:26 GMT
+
+### Changes
+
+- Logging and Tracing OSS_RN Removal (nick@nickgerleman.com)
+## 0.60.0-vnext.120
+Thu, 23 Jan 2020 06:39:59 GMT
+
+### Changes
+
+- Update Folly Build Logic (nick@nickgerleman.com)
 ## 0.60.0-vnext.119
 Thu, 23 Jan 2020 00:16:13 GMT
 
