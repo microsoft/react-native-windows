@@ -40,6 +40,7 @@ jobs:
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
           command: restore
+          noCache: true
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
          
