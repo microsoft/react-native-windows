@@ -90,11 +90,4 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)' == 'x86' OR '$(Platform)' == 'Win32'">
-    <ClCompile>
-      <!-- MSVC macros -->
-      <PreprocessorDefinitions>WITH_OFFICE_TRACING=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-
 </Project>
