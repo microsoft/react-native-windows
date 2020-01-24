@@ -115,55 +115,38 @@
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'=='true'">
     <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x64.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x64.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.patched.x64.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'=='true'">
     <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x86.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x86.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.patched.x86.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
     </Link>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup>
     <ClCompile>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.arm.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
+
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
