@@ -583,6 +583,7 @@ jobs:
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
   - template: templates/e2e-test-job.yml # Template reference
+    condition: false
     parameters:
       name: E2ETest
       BuildPlatform: x64
