@@ -132,7 +132,8 @@ void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, b
 
   if (m_timerQueue.IsEmpty()) {
     m_rendering.revoke();
-    m_rendering = winrt::CompositionTarget::Rendering(winrt::auto_revoke, {this, &Timing::OnRendering});
+    m_rendering =
+        winrt::Windows::UI::Xaml::Media::CompositionTarget::Rendering(winrt::auto_revoke, {this, &Timing::OnRendering});
   }
 
   // Convert double duration in ms to TimeSpan

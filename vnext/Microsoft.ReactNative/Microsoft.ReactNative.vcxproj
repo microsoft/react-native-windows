@@ -78,6 +78,7 @@
   <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
   <Import Project="..\JSI\Shared\JSI.Shared.vcxitems" Label="Shared" />
   <Import Project="..\Shared\Shared.vcxitems" Label="Shared" />
+  <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -90,6 +91,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
@@ -245,7 +247,6 @@
     <ClInclude Include="..\ReactUWP\Views\WebViewManager.h" />
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
-    <ClInclude Include="Crash.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>

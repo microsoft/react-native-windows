@@ -5,7 +5,7 @@
 #include <cassert>
 #include <string>
 
-enum FacadeType {
+enum class FacadeType {
   Opacity,
   Rotation,
   RotationX,
@@ -19,7 +19,7 @@ enum FacadeType {
   Progress
 };
 
-static FacadeType StringToFacadeType(const std::string &string) {
+inline FacadeType StringToFacadeType(const std::string &string) {
   if (string == "opacity")
     return FacadeType::Opacity;
   if (string == "rotate")
