@@ -17,16 +17,16 @@
       "pre-commit": "yarn format"
     }
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:microsoft/react-native-windows.git"
+  },
   "license": "MIT",
   "workspaces": {
     "packages": [
       "packages/*",
       "vnext"
     ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:microsoft/react-native-windows.git"
   },
   "devDependencies": {
     "beachball": "^1.13.4",
