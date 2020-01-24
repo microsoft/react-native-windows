@@ -582,11 +582,11 @@ jobs:
       #    workingDirectory: current
       #  condition: and(succeeded(), or(eq(variables['BuildConfiguration'], 'DebugBundle'), eq(variables['BuildConfiguration'], 'ReleaseBundle')))
 
-  - template: templates/e2e-test-job.yml # Template reference
-    parameters:
-      name: E2ETest
-      BuildPlatform: x64
-      UseRNFork: true
+#  - template: templates/e2e-test-job.yml # Template reference
+#    parameters:
+#      name: E2ETest
+#      BuildPlatform: x64
+#      UseRNFork: true
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget
