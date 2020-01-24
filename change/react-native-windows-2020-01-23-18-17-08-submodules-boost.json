@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Merge branch 'master' of github.com:microsoft/react-native-windows into submodules/boost",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "commit": "2ac23cd4f6921a20645db7a4f42d37f7435eb40d",
+  "dependentChangeType": "patch",
+  "date": "2020-01-24T02:17:08.218Z"
+}
