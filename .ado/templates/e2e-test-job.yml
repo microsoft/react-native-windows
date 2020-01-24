@@ -40,7 +40,7 @@ jobs:
         inputs:
           targetType: inline # filePath | inline
           script: |
-            Remove-Item –path C:\Program Files (x86)\Android\android-sdk\build-tools –recurse -force
+            Remove-Item –path "C:\Program Files (x86)\Android\android-sdk\build-tools" –recurse -force
 
       - task: PowerShell@2
         displayName: List disksize after E2E
