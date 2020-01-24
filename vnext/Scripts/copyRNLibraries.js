@@ -79,7 +79,11 @@ exports.copyRNLibraries = baseDir => {
     require.resolve('react-native/package.json'),
   );
 
-  copyDirectories(baseDir, baseDir, [
+  const reactNativeWindowsPath = path.dirname(
+    require.resolve('react-native-windows/package.json'),
+  );
+
+  copyDirectories(reactNativeWindowsPath, baseDir, [
     {
       src: 'RNTesterCopy',
       dest: 'RNTester',
