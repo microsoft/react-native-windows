@@ -41,7 +41,15 @@ jobs:
           command: restore
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-         
+      
+      - task: PowerShell@2
+        condition:  succeededOrFailed()
+        displayName: List disksize after restore
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+
       - task: CmdLine@2
         displayName: run-windows
         inputs:
@@ -111,6 +119,14 @@ jobs:
           testResultsFormat: "JUnit"
           testResultsFiles: "packages/E2ETest/reports/*.log"
         condition: succeededOrFailed()
+
+      - task: PowerShell@2
+        condition:  succeededOrFailed()
+        displayName: List disksize after E2E
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
 
       - task: PowerShell@2
         displayName: "Show appium log"
