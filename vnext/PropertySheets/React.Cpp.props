@@ -70,11 +70,14 @@
         WIN32_LEAN_AND_MEAN           - Reduces the Windows API included surface.
       -->
       <PreprocessorDefinitions>
-        BOOST_ALL_NO_LIB=1;
-        WIN32_LEAN_AND_MEAN;
         _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;
-        BOOST_SYSTEM_SOURCE;
+        BOOST_ALL_NO_LIB=1;
         BOOST_ERROR_CODE_HEADER_ONLY;
+        BOOST_NO_RTTI; 
+        BOOST_NO_TYPEID;
+        BOOST_SYSTEM_SOURCE;
+        GTEST_HAS_RTTI=0;
+        WIN32_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
