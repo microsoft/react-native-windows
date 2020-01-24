@@ -140,13 +140,6 @@
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
-  </ItemDefinitionGroup>
-
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />
