@@ -47,7 +47,7 @@ module.exports = {
       new RegExp(`${path.resolve(rnPath).replace(/[/\\\\]/g, '[/\\\\]')}.*`),
       new RegExp(
         `${path
-          .resolve(rnwPath, 'RNTesterFork')
+          .resolve(rnwPath, 'RNTesterCopy')
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),
       new RegExp(

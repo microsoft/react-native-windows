@@ -81,7 +81,7 @@ exports.copyRNLibraries = baseDir => {
 
   copyDirectories(baseDir, baseDir, [
     {
-      src: 'RNTesterFork',
+      src: 'RNTesterCopy',
       dest: 'RNTester',
     },
   ]);
