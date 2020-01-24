@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 24 Jan 2020 21:21:47 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.3",
+      "version": "0.26.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.40",
+            "author": "acoates@microsoft.com",
+            "commit": "807e14dc8d30691438bbdecc9ec26e268bfd5dac"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Jan 2020 17:12:43 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.2",
       "version": "0.26.2",

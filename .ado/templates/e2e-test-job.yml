@@ -26,7 +26,8 @@ jobs:
 
     steps:
       - checkout: self
-        clean: false
+        clean: true
+        fetchDepth: 1 # the depth of commits to ask Git to fetch
         submodules: false
 
       - template: prepare-env.yml
@@ -39,6 +40,7 @@ jobs:
         displayName: NuGet restore - ReactUWPTestApp
         inputs:
           command: restore
+          noCache: true
           restoreSolution: packages/E2ETest/windows/ReactUWPTestApp.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
          
@@ -118,3 +120,11 @@ jobs:
           targetType: "inline"
           script: "Get-Content packages/E2ETest/reports/appium.txt | foreach {Write-Output $_}"
         condition: failed()
+
+      - task: PowerShell@2
+        displayName: List disksize at end of job
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+        condition: succeededOrFailed()
