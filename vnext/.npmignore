@@ -23,7 +23,7 @@ ReactWindows-Universal.sln
 ReactWindows-Desktop.sln
 RNTester.*
 RNTester/
-RNTesterFork/
+RNTesterCopy/
 src/
 target
 temp
