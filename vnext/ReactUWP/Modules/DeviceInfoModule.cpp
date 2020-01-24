@@ -20,25 +20,35 @@ DeviceInfo::DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance) : m
 
 void DeviceInfo::update() {
   auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
   auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
-
+  m_width = window.Bounds().Width;
+  m_height = window.Bounds().Height;
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
-      folly::dynamic::object("width", window.Bounds().Width)("height", window.Bounds().Height)(
-          "scale", static_cast<int>(displayInfo.ResolutionScale()) / 100)("fontScale", uiSettings.TextScaleFactor())(
-          "densityDpi", displayInfo.LogicalDpi()))(
+      folly::dynamic::object("width", m_width * m_scale)("height", m_height * m_scale)(
+          "scale", m_scale)("fontScale", uiSettings.TextScaleFactor())("densityDpi", displayInfo.LogicalDpi()))(
       "screenPhysicalPixels",
       folly::dynamic::object("width", displayInfo.ScreenWidthInRawPixels())(
-          "height", displayInfo.ScreenHeightInRawPixels())(
-          "scale", static_cast<int>(displayInfo.ResolutionScale()) / 100)("fontScale", uiSettings.TextScaleFactor())(
+          "height", displayInfo.ScreenHeightInRawPixels())("scale", m_scale)("fontScale", uiSettings.TextScaleFactor())(
           "densityDpi", displayInfo.LogicalDpi()));
+
+    m_dpiChangedRevoker = displayInfo.DpiChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
+        auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+        m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+        m_dimensions["windowPhysicalPixels"]["scale"] = m_scale;
+        m_dimensions["windowPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
+        m_dimensions["screenPhysicalPixels"]["scale"] = m_scale;
+        m_dimensions["screenPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
+        updateRootElementSize(m_width, m_height);
+  });
 }
 
 void DeviceInfo::updateRootElementSize(float width, float height) {
-  m_dimensions["windowPhysicalPixels"]["width"] = width;
-  m_dimensions["windowPhysicalPixels"]["height"] = height;
+  m_dimensions["windowPhysicalPixels"]["width"] = width * m_scale;
+  m_dimensions["windowPhysicalPixels"]["height"] = height * m_scale;
   fireEvent();
 }
 
@@ -64,6 +74,7 @@ void DeviceInfo::attachRoot(winrt::FrameworkElement rootElement) {
 void DeviceInfo::detachRoot() {
   m_sizeChangedRevoker = {};
   m_rootElement = {};
+  m_dpiChangedRevoker = {};
 }
 
 //

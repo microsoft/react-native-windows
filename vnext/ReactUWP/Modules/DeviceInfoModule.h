@@ -7,6 +7,7 @@
 #include <cxxreact/CxxModule.h>
 #include <folly/dynamic.h>
 #include <winrt/Windows.UI.Xaml.h>
+#include <winrt/Windows.Graphics.Display.h>
 #include <memory>
 #include <vector>
 
@@ -32,6 +33,10 @@ class DeviceInfo {
   winrt::weak_ref<winrt::Windows::UI::Xaml::FrameworkElement> m_rootElement{};
   winrt::Windows::UI::Xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
+  float m_scale{1.0f};
+  float m_width{0.0f};
+  float m_height{0.0f};
+  winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
 };
 
 class DeviceInfoModule : public facebook::xplat::module::CxxModule {
