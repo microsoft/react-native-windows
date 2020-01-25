@@ -69,7 +69,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <!--
@@ -130,6 +131,7 @@
     <ClInclude Include="Modules\UIManagerModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Sandbox\SandboxEndpoint.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
@@ -159,6 +161,9 @@
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="tracing\tracing.cpp" />
