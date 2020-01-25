@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removed pch.h from shared items projects",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "94d00e39bb189e17b7d0df3f570306e7f7dea1d1",
-  "dependentChangeType": "patch",
-  "date": "2020-01-24T21:55:58.315Z"
-}
