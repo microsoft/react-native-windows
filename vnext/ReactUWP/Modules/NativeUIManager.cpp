@@ -31,7 +31,7 @@ static YogaNodePtr make_yoga_node() {
 static int YogaLog(const YGConfigRef config, const YGNodeRef node, YGLogLevel level, const char *format, va_list args) {
   int len = _scprintf(format, args);
   std::string buffer(len + 1, '\0');
-  [[maybe_unused]] int c = vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
+  vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
   buffer.resize(len);
 
   // OutputDebugString will truncate output around 4k, here

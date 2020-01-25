@@ -19,28 +19,28 @@ enum class FacadeType {
   Progress
 };
 
-inline FacadeType StringToFacadeType(const std::string &string) {
-  if (string == "opacity")
+inline FacadeType StringToFacadeType(const std::string &value) noexcept {
+  if (value == "opacity")
     return FacadeType::Opacity;
-  if (string == "rotate")
+  if (value == "rotate")
     return FacadeType::Rotation;
-  if (string == "rotateX")
+  if (value == "rotateX")
     return FacadeType::RotationX;
-  if (string == "rotateY")
+  if (value == "rotateY")
     return FacadeType::RotationY;
-  if (string == "scale")
+  if (value == "scale")
     return FacadeType::Scale;
-  if (string == "scaleX")
+  if (value == "scaleX")
     return FacadeType::ScaleX;
-  if (string == "scaleY")
+  if (value == "scaleY")
     return FacadeType::ScaleY;
-  if (string == "translateX")
+  if (value == "translateX")
     return FacadeType::TranslateX;
-  if (string == "translateY")
+  if (value == "translateY")
     return FacadeType::TranslateY;
-  if (string == "perspective")
+  if (value == "perspective")
     return FacadeType::Perspective;
 
-  assert(string == "progress");
+  assert(value == "progress");
   return FacadeType::Progress;
 }
