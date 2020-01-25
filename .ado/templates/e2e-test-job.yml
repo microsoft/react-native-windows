@@ -30,6 +30,27 @@ jobs:
         fetchDepth: 1 # the depth of commits to ask Git to fetch
         submodules: false
 
+      - task: PowerShell@2
+        displayName: List disksize after checkout
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+
+      - task: PowerShell@2
+        displayName: Delete Android SDK folder
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Remove-Item –path "C:\Program Files (x86)\Android\android-sdk" –recurse -force
+
+      - task: PowerShell@2
+        displayName: List disksize after deleting software on C:
+        inputs:
+          targetType: inline # filePath | inline
+          script: |
+            Get-WmiObject Win32_LogicalDisk
+            
       - template: prepare-env.yml
         parameters:
           useRnFork: ${{ parameters.UseRNFork }}
