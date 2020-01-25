@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 24 Jan 2020 22:33:56 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.123",
+      "version": "0.60.0-vnext.123",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fork RNTester script and update 'React' to 'react'",
+            "author": "email not defined",
+            "commit": "5bcb9706ce65c8c074db8fa3d189b1dfe18fe3df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jan 2020 21:21:47 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.122",
       "version": "0.60.0-vnext.122",

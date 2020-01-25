@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fork RNTester script and update 'React' to 'react'",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "commit": "5bcb9706ce65c8c074db8fa3d189b1dfe18fe3df",
-  "dependentChangeType": "patch",
-  "date": "2020-01-24T00:20:36.164Z"
-}
