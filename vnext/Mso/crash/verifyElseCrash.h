@@ -5,8 +5,8 @@
 #ifndef MSO_CRASH_VERIFYELSECRASH_H
 #define MSO_CRASH_VERIFYELSECRASH_H
 
-#include "compilerAdapters/declspecDefinitions.h"
-#include "debugAssertApi/debugAssertApi.h"
+#include <compilerAdapters/declspecDefinitions.h>
+#include <debugAssertApi/debugAssertApi.h>
 
 DECLSPEC_NORETURN void CrashWithRecovery(uint32_t tag) noexcept;
 
