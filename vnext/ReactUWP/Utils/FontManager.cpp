@@ -43,8 +43,7 @@ winrt::Windows::UI::Xaml::Media::FontFamily FontManager::GetFont(
 
   // FontFamily ctor throws if name is empty, so use a default
   if (fontFamily.size() == 0) {
-    static auto defaultFont = winrt::Windows::UI::Xaml::Media::FontFamily(L"Segoe UI");
-    return defaultFont;
+    return winrt::Windows::UI::Xaml::Media::FontFamily::XamlAutoFontFamily();
   }
 
   return winrt::Windows::UI::Xaml::Media::FontFamily(fontFamily);
