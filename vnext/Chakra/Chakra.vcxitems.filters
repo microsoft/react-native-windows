@@ -57,7 +57,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utf8DebugExtensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)pch.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

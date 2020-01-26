@@ -90,11 +90,27 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION /wd4100 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP;$(ReactNativeWindowsDir)ReactUWP\Views;$(ReactNativeWindowsDir)Microsoft.ReactNative\Views;$(FollyDir);$(ReactNativeDir)ReactCommon;$(ReactNativeDir)ReactCommon\jsi;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(ReactNativeWindowsDir)ReactUWP;
+        $(ReactNativeWindowsDir)ReactUWP\Views;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
+        $(FollyDir);
+        $(ReactNativeDir)ReactCommon;
+        $(ReactNativeDir)ReactCommon\jsi;
+        $(ReactNativeWindowsDir);
+        $(ReactNativeWindowsDir)Common;
+        $(ReactNativeWindowsDir)stubs;
+        $(ReactNativeWindowsDir)include;
+        $(ReactNativeWindowsDir)ReactWindowsCore;
+        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)include\ReactWindowsCore;
+        $(YogaDir);
+        %(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports

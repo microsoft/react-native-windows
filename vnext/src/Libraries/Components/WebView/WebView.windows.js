@@ -14,7 +14,7 @@
 
 'use strict';
 
-var React = require('React');
+var React = require('react');
 var ReactNative = require('ReactNative');
 var StyleSheet = require('../../StyleSheet/StyleSheet');
 var UIManager = require('../../ReactNative/UIManager');

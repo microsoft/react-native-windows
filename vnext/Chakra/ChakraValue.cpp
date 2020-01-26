@@ -92,7 +92,6 @@ ChakraObject ChakraValue::asObject() {
 }
 
 ChakraValue ChakraValue::makeError(const char *error) {
-  JsValueRef exn = nullptr;
   JsValueRef message = ChakraValue(ChakraString(error));
 
   JsValueRef value;
