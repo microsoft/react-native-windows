@@ -205,6 +205,7 @@
     <ClInclude Include="..\ReactUWP\Threading\UIMessageQueueThread.h" />
     <ClInclude Include="..\ReactUWP\Threading\WorkerMessageQueueThread.h" />
     <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="..\ReactUWP\Utils\FontManager.h" />
     <ClInclude Include="..\ReactUWP\Utils\Helpers.h" />
     <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h" />
     <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="..\ReactUWP\Threading\UIMessageQueueThread.cpp" />
     <ClCompile Include="..\ReactUWP\Threading\WorkerMessageQueueThread.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
+    <ClCompile Include="..\ReactUWP\Utils\FontManager.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\ResourceBrushUtils.cpp" />

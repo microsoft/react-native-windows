@@ -31,6 +31,9 @@
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\FontManager.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -322,6 +325,9 @@
       <Filter>Executors</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\FontManager.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Utils\Helpers.h">
