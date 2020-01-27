@@ -62,7 +62,7 @@ See the official [React Native website](https://facebook.github.io/react-native/
 
 Want to develop a React Native Windows app? Head over to our [Getting Started Guide - current](current/docs/GettingStarted.md).
 
-You can also begin to prototype or try out the **vnext** version under development by checking out the [Getting Started Guide - vnext](https://microsoft.github.io/react-native-desktop/docs/getting-started)
+You can also begin to prototype or try out the **vnext** version under development by checking out the [Getting Started Guide - vnext](https://microsoft.github.io/react-native-windows/docs/getting-started)
 
 ## Getting Help
 
@@ -73,7 +73,7 @@ You can also begin to prototype or try out the **vnext** version under developme
 
 [React Native already has great documentation](https://facebook.github.io/react-native/docs/getting-started.html), and we're working to ensure the React Native Windows is part of that documentation story. Check out the [React documentation](https://reactjs.org/docs/getting-started.html) for further details about the React API in general.
 
-For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation and [here](https://microsoft.github.io/react-native-desktop/docs/parity-status) for `vnext`.
+For information on parity status with Android and iOS, including details on implemented and missing components and modules, along with related issues for missing features from partial implementations, go [here](current/docs/CoreParityStatus.md) for the current `react-native-windows` implementation and [here](https://microsoft.github.io/react-native-windows/docs/parity-status) for `vnext`.
 
 ## Extending React Native
 
@@ -82,7 +82,7 @@ For information on parity status with Android and iOS, including details on impl
 - Third party modules may be missing Windows support, so reach out to the project owners directly.
 - Making modules helps grow the React Native ecosystem and community. We recommend writing modules for your use cases and sharing them on npm.
 - You should almost never need to modify or fork React Native Windows itself (the ReactNative and ReactNative.Shared project/sources) to create custom controls. The extension points should already exist to do just about anything!
-- Read the guides on [Native Modules for Windows](https://microsoft.github.io/react-native-desktop/docs/native-modules).
+- Read the guides on [Native Modules for Windows](https://microsoft.github.io/react-native-windows/docs/native-modules).
 
 ## Opening Issues
 
