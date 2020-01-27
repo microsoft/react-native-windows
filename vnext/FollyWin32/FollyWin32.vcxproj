@@ -61,7 +61,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
-    <Error Condition="!Exists('$(FollyDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />
-  </Target>
+
+  <!-- Make sure we've downloaded Folly -->
+  <ItemGroup>
+    <ProjectReference Include="..\Folly\Folly.vcxproj" Project="{A990658C-CE31-4BCC-976F-0FC6B1AF693D}" />
+  </ItemGroup>
 </Project>

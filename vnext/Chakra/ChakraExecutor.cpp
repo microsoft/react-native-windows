@@ -250,7 +250,7 @@ void ChakraExecutor::initOnJSVMThread() {
   SystraceSection s("ChakraExecutor.initOnJSVMThread");
 
   bool enableDebugging = m_instanceArgs.EnableDebugging;
-  bool breakOnNextLine = m_instanceArgs.DebuggerBreakOnNextLine;
+  [[maybe_unused]] bool breakOnNextLine = m_instanceArgs.DebuggerBreakOnNextLine;
   bool enableNativePerformanceNow = m_instanceArgs.EnableNativePerformanceNow;
 
   // if there's not already a runtime
@@ -651,7 +651,7 @@ void *ChakraExecutor::getJavaScriptContext() {
   return m_context;
 }
 
-#if !defined(OSS_RN)
+#ifdef PATCH_RN
 int64_t ChakraExecutor::getPeakJsMemoryUsage() const noexcept {
   return tls_runtimeTracker.MemoryTracker->GetPeakMemoryUsage();
 }

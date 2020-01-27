@@ -10,21 +10,21 @@
 
 'use strict';
 
-const DeprecatedEdgeInsetsPropType = require('DeprecatedEdgeInsetsPropType');
-const React = require('React');
+const DeprecatedEdgeInsetsPropType = require('../../DeprecatedPropTypes/DeprecatedEdgeInsetsPropType');
+const React = require('react');
 const PropTypes = require('prop-types');
-const Touchable = require('Touchable');
-const View = require('View');
+const Touchable = require('./Touchable');
+const View = require('../View/View');
 
 const createReactClass = require('create-react-class');
-const ensurePositiveDelayProps = require('ensurePositiveDelayProps');
+const ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 
 const {
   DeprecatedAccessibilityComponentTypes,
   DeprecatedAccessibilityRoles,
   DeprecatedAccessibilityStates,
   DeprecatedAccessibilityTraits,
-} = require('DeprecatedViewAccessibility');
+} = require('../../DeprecatedPropTypes/DeprecatedViewAccessibility');
 
 import type {SyntheticEvent, LayoutEvent, PressEvent} from 'CoreEventTypes';
 import type {EdgeInsetsProp} from 'EdgeInsetsPropType';

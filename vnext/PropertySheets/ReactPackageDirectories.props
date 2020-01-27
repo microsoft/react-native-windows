@@ -13,24 +13,21 @@
 
   <PropertyGroup>
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)\..\</ReactNativeWindowsDir>
-    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativeDir>
+    <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$(IntDir)\react-native-patched\</ReactNativeDir>
     <YogaDir Condition="'$(YogaDir)' == ''">$(ReactNativeDir)\ReactCommon\yoga</YogaDir>
+    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)..\..\node_modules))')">$(ReactNativePackageDir)..\..\node_modules\.folly\folly-2019.09.30.00</FollyDir>
   </PropertyGroup>
 
-  <PropertyGroup Condition="!Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
+  <!-- Determine whether we are using Facebook or Microsoft RN by file presence -->
+  <PropertyGroup Condition="!Exists('$(ReactNativePackageDir)\stubs\glog\logging.h')">
     <OSS_RN>true</OSS_RN>
-    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-2019.09.30.00</FollyDir>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="Exists('$(ReactNativeDir)\stubs\glog\logging.h')">
-    <FollyDir Condition="'$(FollyDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.folly\folly-2019.09.30.00</FollyDir>
   </PropertyGroup>
 
   <PropertyGroup>
     <!-- Normalize the directory names -->
     <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory($(ReactNativeWindowsDir)))</ReactNativeWindowsDir>
-    <ReactNativeDir>$([MSBuild]::NormalizeDirectory($(ReactNativeDir)))</ReactNativeDir>
-    <YogaDir>$([MSBuild]::NormalizeDirectory($(YogaDir)))</YogaDir>
+    <ReactNativePackageDir>$([MSBuild]::NormalizeDirectory($(ReactNativePackageDir)))</ReactNativePackageDir>
     <FollyDir>$([MSBuild]::NormalizeDirectory($(FollyDir)))</FollyDir>
   </PropertyGroup>
 

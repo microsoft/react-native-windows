@@ -14,25 +14,25 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   [default_interface]
   runtimeclass ReactNativeHost {
-    ReactNativeHost();
+    [noexcept2] ReactNativeHost();
 
-    ReactInstanceManager ReactInstanceManager{ get; };
-    ReactInstanceSettings InstanceSettings{ get; set; };
+    [noexcept2] ReactInstanceManager ReactInstanceManager{ get; };
+    [noexcept2] ReactInstanceSettings InstanceSettings{ get; set; };
 
-    Boolean HasInstance{ get; };
+    [noexcept2] Boolean HasInstance { get; };
 
-    IVector<IReactPackageProvider> PackageProviders { get; set; };
+    [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
 
-    String MainComponentName{ get; set; };
-    Boolean UseDeveloperSupport{ get; set; };
-    String JavaScriptMainModuleName{ get; set; };
-    String JavaScriptBundleFile{ get; set; };
+    [noexcept2] String MainComponentName{ get; set; };
+    [noexcept2] Boolean UseDeveloperSupport{ get; set; };
+    [noexcept2] String JavaScriptMainModuleName{ get; set; };
+    [noexcept2] String JavaScriptBundleFile{ get; set; };
 
-    Windows.UI.Xaml.UIElement GetOrCreateRootView(IInspectable initialProps);
+    [noexcept2] Windows.UI.Xaml.UIElement GetOrCreateRootView(IInspectable initialProps);
 
-    void OnSuspend();
-    void OnEnteredBackground();
-    void OnLeavingBackground();
-    void OnResume(OnResumeAction action);
+    [noexcept2] void OnSuspend();
+    [noexcept2] void OnEnteredBackground();
+    [noexcept2] void OnLeavingBackground();
+    [noexcept2] void OnResume(OnResumeAction action);
   }
 } // namespace Microsoft.ReactNative

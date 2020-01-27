@@ -14,15 +14,15 @@
 
 'use strict';
 
-var React = require('React');
+var React = require('react');
 var ReactNative = require('ReactNative');
-var StyleSheet = require('StyleSheet');
-var UIManager = require('UIManager');
-var View = require('View');
+var StyleSheet = require('../../StyleSheet/StyleSheet');
+var UIManager = require('../../ReactNative/UIManager');
+var View = require('../View/View');
 
 var keyMirror = require('fbjs/lib/keyMirror');
-var requireNativeComponent = require('requireNativeComponent');
-var resolveAssetSource = require('resolveAssetSource');
+var requireNativeComponent = require('../../ReactNative/requireNativeComponent');
+var resolveAssetSource = require('../../Image/resolveAssetSource');
 
 const createReactClass = require('create-react-class');
 

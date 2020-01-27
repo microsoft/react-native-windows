@@ -4,7 +4,7 @@
 
 This is a targeted summary of setup React Native setup for specifically React Native Windows. See the [React Native Getting Started Guide](http://facebook.github.io/react-native/docs/getting-started.html) for full details.
 
-*Note*: The Linux commands in the offical React Native Getting Started Guide should work on the Windows Subsystem for Linux bash shell, but this scenario is not currently officially supported. PowerShell or the Visual Studio Developer Command Prompt are recommended.
+*Note*: The Linux commands in the official React Native Getting Started Guide should work on the Windows Subsystem for Linux bash shell, but this scenario is not currently officially supported. PowerShell or the Visual Studio Developer Command Prompt are recommended.
 
 #### Dependencies: Node
 

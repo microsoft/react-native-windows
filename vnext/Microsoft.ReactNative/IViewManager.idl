@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import "IReactModuleBuilder.idl";
 import "IReactContext.idl";
 
 namespace Microsoft.ReactNative
@@ -33,7 +34,7 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   interface IViewManagerWithExportedViewConstants
   {
-    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedViewConstants { get; };
+    ConstantProvider ExportedViewConstants { get; };
   }
 
   [webhosthidden]
@@ -41,7 +42,7 @@ namespace Microsoft.ReactNative
   {
     Windows.Foundation.Collections.IMapView<String, ViewManagerPropertyType> NativeProps { get; };
 
-    void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, Windows.Foundation.Collections.IMapView<String, IInspectable> propertyMap);
+    void UpdateProperties(Windows.UI.Xaml.FrameworkElement view, IJSValueReader propertyMapReader);
   }
 
   [webhosthidden]
@@ -49,15 +50,15 @@ namespace Microsoft.ReactNative
   {
     Windows.Foundation.Collections.IMapView<String, Int64> Commands { get; };
 
-    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, Windows.Foundation.Collections.IVectorView<IInspectable> commandArgs);
+    void DispatchCommand(Windows.UI.Xaml.FrameworkElement view, Int64 commandId, IJSValueReader commandArgsReader);
   }
 
   [webhosthidden]
   interface IViewManagerWithExportedEventTypeConstants
   {
-    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomBubblingEventTypeConstants { get; };
+    ConstantProvider ExportedCustomBubblingEventTypeConstants { get; };
 
-    Windows.Foundation.Collections.IMapView<String, IInspectable> ExportedCustomDirectEventTypeConstants { get; };
+    ConstantProvider ExportedCustomDirectEventTypeConstants { get; };
   }
 
   [webhosthidden]

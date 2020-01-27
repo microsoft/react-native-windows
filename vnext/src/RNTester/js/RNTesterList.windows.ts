@@ -105,7 +105,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'TextExample',
-    module: require('./TextExample.windows').default,
+    module: require('./TextExample.windows'),
   },
   {
     key: 'TextInputExample',
@@ -250,4 +250,4 @@ const RNTesterList = {
   Modules,
 };
 
-export default RNTesterList;
+export = RNTesterList;

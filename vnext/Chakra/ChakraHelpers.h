@@ -89,7 +89,7 @@ void installGlobalFunction(const char *name, JsNativeFunction callback);
 
 void removeGlobal(const char *name);
 
-static JsSourceContext getNextSourceContext();
+JsSourceContext getNextSourceContext();
 
 JsValueRef evaluateScript(JsValueRef script, JsValueRef sourceURL);
 

@@ -2,6 +2,48 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Fri, 24 Jan 2020 21:21:47 GMT",
+      "tag": "react-native-windows-extended_v0.60.68",
+      "version": "0.60.68",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.40",
+            "author": "acoates@microsoft.com",
+            "commit": "807e14dc8d30691438bbdecc9ec26e268bfd5dac"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jan 2020 00:16:13 GMT",
+      "tag": "react-native-windows-extended_v0.60.67",
+      "version": "0.60.67",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Apply React Native Patches for All Consumers of ReackPackageDirectories",
+            "author": "nick@nickgerleman.com",
+            "commit": "e185a5259428c4d172660765628d11b10cac2112"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Jan 2020 17:57:10 GMT",
+      "tag": "react-native-windows-extended_v0.60.66",
+      "version": "0.60.66",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add React Native Source Patching Infrastructure",
+            "author": "nick@nickgerleman.com",
+            "commit": "8a144129746ab7057827a0ff7839475029a11c0b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jan 2020 23:20:10 GMT",
       "tag": "react-native-windows-extended_v0.60.65",
       "version": "0.60.65",

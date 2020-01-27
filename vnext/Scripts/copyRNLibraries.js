@@ -79,6 +79,17 @@ exports.copyRNLibraries = baseDir => {
     require.resolve('react-native/package.json'),
   );
 
+  const reactNativeWindowsPath = path.dirname(
+    require.resolve('react-native-windows/package.json'),
+  );
+
+  copyDirectories(reactNativeWindowsPath, baseDir, [
+    {
+      src: 'RNTesterCopy',
+      dest: 'RNTester',
+    },
+  ]);
+
   copyDirectories(reactNativePath, baseDir, [
     {
       src: 'flow',
@@ -104,14 +115,6 @@ exports.copyRNLibraries = baseDir => {
     {
       src: 'packages/react-native-codegen/src',
       dest: 'packages/react-native-codegen/src',
-    },
-    {
-      src: 'RNTester',
-      dest: 'RNTester',
-    },
-    {
-      src: 'ReactCommon/turbomodule/core',
-      dest: 'WorkingHeaders/jsireact',
     },
   ]);
 
