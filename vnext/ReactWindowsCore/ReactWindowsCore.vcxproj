@@ -69,7 +69,8 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <!--
@@ -78,9 +79,6 @@
       <PreprocessorDefinitions>REACTWINDOWS_BUILD;NOMINMAX;FOLLY_NO_CONFIG;WIN32=0;RN_EXPORT=;CHAKRACORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(ReactNativeDir)\ReactCommon;$(JSI_Source);$(ReactNativeWindowsDir)stubs;$(FollyDir);$(ReactNativeWindowsDir)\ReactWindowsCore\tracing;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_HERMES)'=='true'">$(HERMES_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories Condition="'$(USE_V8)'=='true'">$(V8_Package)\installed\$(VcpkgTriplet)\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -133,6 +131,7 @@
     <ClInclude Include="Modules\UIManagerModule.h" />
     <ClInclude Include="NativeModuleProvider.h" />
     <ClInclude Include="OInstance.h" />
+    <ClInclude Include="pch.h" />
     <ClInclude Include="Sandbox\SandboxEndpoint.h" />
     <ClInclude Include="ShadowNode.h" />
     <ClInclude Include="ShadowNodeRegistry.h" />
@@ -162,6 +161,9 @@
     <ClCompile Include="Modules\I18nModule.cpp" />
     <ClCompile Include="Modules\SourceCodeModule.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="tracing\tracing.cpp" />

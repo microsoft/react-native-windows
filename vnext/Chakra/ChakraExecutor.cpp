@@ -250,7 +250,7 @@ void ChakraExecutor::initOnJSVMThread() {
   SystraceSection s("ChakraExecutor.initOnJSVMThread");
 
   bool enableDebugging = m_instanceArgs.EnableDebugging;
-  bool breakOnNextLine = m_instanceArgs.DebuggerBreakOnNextLine;
+  [[maybe_unused]] bool breakOnNextLine = m_instanceArgs.DebuggerBreakOnNextLine;
   bool enableNativePerformanceNow = m_instanceArgs.EnableNativePerformanceNow;
 
   // if there's not already a runtime

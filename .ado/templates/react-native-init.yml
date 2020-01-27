@@ -35,6 +35,13 @@ steps:
       script: rd /S /Q node_modules
       workingDirectory: vnext
 
+  # Remove directory ignored by npm
+  - task: CmdLine@2
+    displayName: Remove RNTesterCopy
+    inputs:
+      script: rd /S /Q RNTesterCopy
+      workingDirectory: vnext
+
   - task: CmdLine@2
     displayName: Install react-native cli
     inputs:

@@ -90,11 +90,27 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION /wd4100 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)ReactUWP;$(ReactNativeWindowsDir)ReactUWP\Views;$(ReactNativeWindowsDir)Microsoft.ReactNative\Views;$(FollyDir);$(ReactNativeDir)ReactCommon;$(ReactNativeDir)ReactCommon\jsi;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir)stubs;$(ReactNativeWindowsDir)include;$(ReactNativeWindowsDir)ReactWindowsCore;$(ReactNativeWindowsDir)ReactWindowsCore\tracing;$(ReactNativeWindowsDir)include\ReactWindowsCore;$(YogaDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>
+        $(ReactNativeWindowsDir)ReactUWP;
+        $(ReactNativeWindowsDir)ReactUWP\Views;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
+        $(FollyDir);
+        $(ReactNativeDir)ReactCommon;
+        $(ReactNativeDir)ReactCommon\jsi;
+        $(ReactNativeWindowsDir);
+        $(ReactNativeWindowsDir)Common;
+        $(ReactNativeWindowsDir)stubs;
+        $(ReactNativeWindowsDir)include;
+        $(ReactNativeWindowsDir)ReactWindowsCore;
+        $(ReactNativeWindowsDir)ReactWindowsCore\tracing;
+        $(ReactNativeWindowsDir)include\ReactWindowsCore;
+        $(YogaDir);
+        %(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
@@ -104,9 +120,6 @@
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
