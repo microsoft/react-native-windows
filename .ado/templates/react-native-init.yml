@@ -37,16 +37,9 @@ steps:
 
   # Remove directory ignored by npm
   - task: CmdLine@2
-    displayName: Remove RNTesterCopy
+    displayName: Remove ReactCopies
     inputs:
-      script: rd /S /Q RNTesterCopy
-      workingDirectory: vnext
-
-  # Remove directory ignored by npm
-  - task: CmdLine@2
-    displayName: Remove IntegrationTestsCopy
-    inputs:
-      script: rd /S /Q IntegrationTestsCopy
+      script: rd /S /Q ReactCopies
       workingDirectory: vnext
 
   - task: CmdLine@2

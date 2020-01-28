@@ -62,7 +62,6 @@ Generated Files/
 /AppPackages/
 /build/
 /ipch/
-/packages/
 /ReactWin32SandboxSample/x64/
 /WindowsSampleCSharpApp/obj/
 /target/
@@ -81,8 +80,8 @@ ReactUWP/Folly/Generated Files/
 *.swp
 
 temp
+/packages
 
 /coverage
 /third-party
-/packages/
 /WorkingHeaders/

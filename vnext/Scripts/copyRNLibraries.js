@@ -85,13 +85,18 @@ exports.copyRNLibraries = baseDir => {
 
   copyDirectories(reactNativeWindowsPath, baseDir, [
     {
-      src: 'RNTesterCopy',
+      src: 'ReactCopies/RNTester',
       dest: 'RNTester',
     },
     {
-      src: 'IntegrationTestsCopy',
+      src: 'ReactCopies/IntegrationTests',
       dest: 'IntegrationTests',
       rmFilter: '*.js',
+    },
+    {
+      src: 'ReactCopies/packages',
+      dest: 'packages',
+      mergeFiles: true,
     },
   ]);
 
