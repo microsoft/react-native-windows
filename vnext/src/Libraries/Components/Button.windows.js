@@ -7,7 +7,7 @@
 
 'use strict';
 
-const React = require('React');
+const React = require('react');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const Text = require('../Text/Text');
 const TouchableHighlight = require('./Touchable/TouchableHighlight'); // [TODO(windows ISS)

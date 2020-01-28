@@ -2,6 +2,76 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jan 2020 16:46:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.126",
+      "version": "0.60.0-vnext.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Yoga Patch from microsoft/react-native",
+            "author": "nick@nickgerleman.com",
+            "commit": "937f8f2ceec70cc99448c99b820286ce1bcff2a1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jan 2020 06:50:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.125",
+      "version": "0.60.0-vnext.125",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "copy IntegrationTests from fork",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ad9a6de447290f91c2997845d87908050cedd8df"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jan 2020 21:45:06 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.124",
+      "version": "0.60.0-vnext.124",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Removed pch.h from shared items projects",
+            "author": "vmorozov@microsoft.com",
+            "commit": "94d00e39bb189e17b7d0df3f570306e7f7dea1d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Jan 2020 22:33:56 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.123",
+      "version": "0.60.0-vnext.123",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fork RNTester script and update 'React' to 'react'",
+            "author": "email not defined",
+            "commit": "5bcb9706ce65c8c074db8fa3d189b1dfe18fe3df"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Jan 2020 21:21:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.122",
+      "version": "0.60.0-vnext.122",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.40",
+            "author": "acoates@microsoft.com",
+            "commit": "807e14dc8d30691438bbdecc9ec26e268bfd5dac"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jan 2020 18:42:26 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.121",
       "version": "0.60.0-vnext.121",

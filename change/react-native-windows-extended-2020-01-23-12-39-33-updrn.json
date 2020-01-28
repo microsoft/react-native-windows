@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update to react-native@0.60.0-microsoft.40",
-  "packageName": "react-native-windows-extended",
-  "email": "acoates@microsoft.com",
-  "commit": "807e14dc8d30691438bbdecc9ec26e268bfd5dac",
-  "date": "2020-01-23T20:39:31.905Z"
-}

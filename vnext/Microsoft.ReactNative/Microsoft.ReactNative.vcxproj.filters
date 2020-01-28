@@ -4,15 +4,7 @@
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABICxxModule.cpp" />
-    <ClCompile Include="NativeModulesProvider.cpp" />
-    <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="ReactInstanceCreator.cpp" />
-    <ClCompile Include="ReactInstanceManagerBuilder.cpp" />
-    <ClCompile Include="ReactSupport.cpp" />
-    <ClCompile Include="ViewManagersProvider.cpp" />
-    <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Base\InstanceFactory.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -28,59 +20,8 @@
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp">
       <Filter>Executors</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\ResourceBrushUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\UwpPreparedScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\UwpScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Utils\ValueUtils.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\ButtonViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\ContentControlViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp">
-      <Filter>Polyester</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp">
-      <Filter>Sandbox</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Threading\AsyncWorkQueue.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Threading\BatchingUIMessageQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Threading\JSQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Threading\UIMessageQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ReactUWP\Threading\WorkerMessageQueueThread.cpp">
-      <Filter>Threading</Filter>
+    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
@@ -145,9 +86,6 @@
     <ClCompile Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Modules\AlertModuleUwp.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Modules\AppStateModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -190,20 +128,59 @@
     <ClCompile Include="..\ReactUWP\Modules\WebSocketModuleUwp.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.cpp">
-      <Filter>Views\Impl</Filter>
+    <ClCompile Include="..\ReactUWP\Polyester\ButtonContentViewManager.cpp">
+      <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.cpp">
-      <Filter>Views\Impl</Filter>
+    <ClCompile Include="..\ReactUWP\Polyester\ButtonViewManager.cpp">
+      <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Image\ImageViewManager.cpp">
-      <Filter>Views\Image</Filter>
+    <ClCompile Include="..\ReactUWP\Polyester\ContentControlViewManager.cpp">
+      <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Image\ReactImage.cpp">
-      <Filter>Views\Image</Filter>
+    <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp">
+      <Filter>Polyester</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\Image\ReactImageBrush.cpp">
-      <Filter>Views\Image</Filter>
+    <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp">
+      <Filter>Polyester</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp">
+      <Filter>Sandbox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Threading\AsyncWorkQueue.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Threading\BatchingUIMessageQueueThread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Threading\JSQueueThread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Threading\UIMessageQueueThread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Threading\WorkerMessageQueueThread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\ResourceBrushUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\UwpPreparedScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\UwpScriptStore.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Utils\ValueUtils.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\ActivityIndicatorViewManager.cpp">
       <Filter>Views</Filter>
@@ -232,6 +209,21 @@
     <ClCompile Include="..\ReactUWP\Views\FrameworkElementViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\Image\ImageViewManager.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\Image\ReactImage.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\Image\ReactImageBrush.cpp">
+      <Filter>Views\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.cpp">
+      <Filter>Views\Impl</Filter>
+    </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\KeyboardEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -245,6 +237,9 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\ReactControl.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ReactUWP\Views\ReactRootView.cpp">
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="..\ReactUWP\Views\RefreshControlManager.cpp">
@@ -298,88 +293,24 @@
     <ClCompile Include="..\ReactUWP\Views\WebViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Views\ReactRootView.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
-    <ClCompile Include="XamlHelpers.cpp" />
+    <ClCompile Include="ABICxxModule.cpp" />
+    <ClCompile Include="ABIViewManager.cpp" />
+    <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ReactInstanceCreator.cpp" />
+    <ClCompile Include="ReactInstanceManagerBuilder.cpp" />
+    <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="ViewManagersProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABICxxModule.h" />
-    <ClInclude Include="Crash.h" />
-    <ClInclude Include="HResult.h" />
-    <ClInclude Include="LifecycleState.h" />
-    <ClInclude Include="NativeModulesProvider.h" />
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="ReactInstanceCreator.h" />
-    <ClInclude Include="ReactInstanceManagerBuilder.h" />
-    <ClInclude Include="ReactSupport.h" />
-    <ClInclude Include="ViewManagersProvider.h" />
-    <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="..\ReactUWP\Base\UwpReactInstance.h">
       <Filter>Base</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h">
       <Filter>Executors</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\Helpers.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\ButtonViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
-      <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\AsyncWorkQueue.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\AsyncWorkQueue_Priv.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\BatchingUIMessageQueueThread.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\JSQueueThread.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\UIMessageQueueThread.h">
-      <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\WorkerMessageQueueThread.h">
-      <Filter>Threading</Filter>
+    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
+      <Filter>Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
@@ -456,9 +387,6 @@
     <ClInclude Include="..\ReactUWP\Modules\Animated\ValueAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\ReactUWP\Modules\AppStateModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
@@ -501,26 +429,65 @@
     <ClInclude Include="..\ReactUWP\Modules\WebSocketModuleUwp.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.h">
-      <Filter>Views\Impl</Filter>
+    <ClInclude Include="..\ReactUWP\Polyester\ButtonContentViewManager.h">
+      <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.h">
-      <Filter>Views\Impl</Filter>
+    <ClInclude Include="..\ReactUWP\Polyester\ButtonViewManager.h">
+      <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\BorderEffect.h">
-      <Filter>Views\Image</Filter>
+    <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h">
+      <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\ImageViewManager.h">
-      <Filter>Views\Image</Filter>
+    <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h">
+      <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
-      <Filter>Views\Image</Filter>
+    <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
+      <Filter>Polyester</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\ReactImage.h">
-      <Filter>Views\Image</Filter>
+    <ClInclude Include="..\ReactUWP\Threading\AsyncWorkQueue.h">
+      <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="..\ReactUWP\Views\Image\ReactImageBrush.h">
-      <Filter>Views\Image</Filter>
+    <ClInclude Include="..\ReactUWP\Threading\AsyncWorkQueue_Priv.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Threading\BatchingUIMessageQueueThread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Threading\JSQueueThread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Threading\UIMessageQueueThread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Threading\WorkerMessageQueueThread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\Helpers.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\PropertyHandlerUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\PropertyUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\ResourceBrushUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\StandardControlResourceKeyNames.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\UwpPreparedScriptStore.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Utils\UwpScriptStore.h">
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\ActivityIndicatorViewManager.h">
       <Filter>Views</Filter>
@@ -542,6 +509,27 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\FlyoutViewManager.h">
       <Filter>Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Image\BorderEffect.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Image\ImageViewManager.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Image\Microsoft.UI.Composition.Effects_Impl.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Image\ReactImage.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Image\ReactImageBrush.h">
+      <Filter>Views\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Impl\ScrollViewUWPImplementation.h">
+      <Filter>Views\Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ReactUWP\Views\Impl\SnapPointManagingContentControl.h">
+      <Filter>Views\Impl</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Views\PickerViewManager.h">
       <Filter>Views</Filter>
@@ -600,26 +588,19 @@
     <ClInclude Include="..\ReactUWP\Views\WebViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="XamlHelpers.h" />
+    <ClInclude Include="ABICxxModule.h" />
+    <ClInclude Include="ABIViewManager.h" />
+    <ClInclude Include="Crash.h" />
+    <ClInclude Include="HResult.h" />
+    <ClInclude Include="LifecycleState.h" />
+    <ClInclude Include="NativeModulesProvider.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="ReactInstanceCreator.h" />
+    <ClInclude Include="ReactInstanceManagerBuilder.h" />
+    <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="ViewManagersProvider.h" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="IBackgroundEventListener.idl" />
-    <Midl Include="IJSValueReader.idl" />
-    <Midl Include="IJSValueWriter.idl" />
-    <Midl Include="ILifecycleEventListener.idl" />
-    <Midl Include="IReactModuleBuilder.idl" />
-    <Midl Include="IReactPackageBuilder.idl" />
-    <Midl Include="IReactPackageProvider.idl" />
-    <Midl Include="IViewManager.idl" />
-    <Midl Include="ReactApplication.idl" />
-    <Midl Include="ReactApplicationDelegate.idl" />
-    <Midl Include="ReactInstance.idl" />
-    <Midl Include="ReactInstanceManager.idl" />
-    <Midl Include="ReactInstanceSettings.idl" />
-    <Midl Include="ReactNativeHost.idl" />
-    <Midl Include="IBoxedValue.idl" />
-    <Midl Include="IReactContext.idl" />
-    <Midl Include="ReactRootView2.idl" />
     <Midl Include="..\ReactUWP\Views\cppwinrt\AccessibilityAction.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
@@ -632,22 +613,43 @@
     <Midl Include="..\ReactUWP\Views\cppwinrt\ViewPanel.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>
+    <Midl Include="IBackgroundEventListener.idl" />
+    <Midl Include="IBoxedValue.idl" />
+    <Midl Include="IJSValueReader.idl" />
+    <Midl Include="IJSValueWriter.idl" />
+    <Midl Include="ILifecycleEventListener.idl" />
+    <Midl Include="IReactContext.idl" />
+    <Midl Include="IReactModuleBuilder.idl" />
+    <Midl Include="IReactPackageBuilder.idl" />
+    <Midl Include="IReactPackageProvider.idl" />
+    <Midl Include="IViewManager.idl" />
+    <Midl Include="NoExceptionAttribute.idl" />
+    <Midl Include="ReactApplication.idl" />
+    <Midl Include="ReactApplicationDelegate.idl" />
+    <Midl Include="ReactInstance.idl" />
+    <Midl Include="ReactInstanceManager.idl" />
+    <Midl Include="ReactInstanceSettings.idl" />
+    <Midl Include="ReactNativeHost.idl" />
+    <Midl Include="ReactRootView2.idl" />
     <Midl Include="XamlHelper.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="microsoft.reactnative.def" />
+    <None Include="packages.config" />
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Threading">
-      <UniqueIdentifier>{72fbc00f-4a01-4363-8807-378641b7a17c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base">
       <UniqueIdentifier>{eaf2746e-5458-40cd-ae5c-38254eee1b4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CxxReactUWP">
+      <UniqueIdentifier>{3b861ea5-e87b-4783-a4b1-ce28548c1985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Executors">
+      <UniqueIdentifier>{c3b4164c-f768-4259-9ef1-ceeaa04ce57a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Modules">
       <UniqueIdentifier>{2c78db3b-c1c1-4951-870e-02e0964bcb00}</UniqueIdentifier>
@@ -655,32 +657,29 @@
     <Filter Include="Modules\Animated">
       <UniqueIdentifier>{1fe62423-356b-44a9-a97c-79950d299afe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Views">
-      <UniqueIdentifier>{6b91c1d6-19ab-4e90-b1fc-117882a865b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Views\Impl">
-      <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Views\Image">
-      <UniqueIdentifier>{6aa1c8f1-0381-4981-af8b-2053dec9c135}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Views\cppwinrt">
-      <UniqueIdentifier>{0bbf2d47-533d-4daf-8102-4334e786ac65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{7d98959f-0655-4d14-b73a-68f001ff9d12}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Polyester">
       <UniqueIdentifier>{c7bc39da-51b4-4410-846f-ffc20dfa57cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Executors">
-      <UniqueIdentifier>{c3b4164c-f768-4259-9ef1-ceeaa04ce57a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sandbox">
       <UniqueIdentifier>{a78b93f6-3e91-4fac-a33c-ba1d1a6662c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CxxReactUWP">
-      <UniqueIdentifier>{3b861ea5-e87b-4783-a4b1-ce28548c1985}</UniqueIdentifier>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{72fbc00f-4a01-4363-8807-378641b7a17c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{7d98959f-0655-4d14-b73a-68f001ff9d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views">
+      <UniqueIdentifier>{6b91c1d6-19ab-4e90-b1fc-117882a865b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\cppwinrt">
+      <UniqueIdentifier>{0bbf2d47-533d-4daf-8102-4334e786ac65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Image">
+      <UniqueIdentifier>{6aa1c8f1-0381-4981-af8b-2053dec9c135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Impl">
+      <UniqueIdentifier>{b0b76275-4a16-4939-87ee-f777cb189114}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
