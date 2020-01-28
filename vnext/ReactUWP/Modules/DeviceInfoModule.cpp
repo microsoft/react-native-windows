@@ -28,25 +28,17 @@ void DeviceInfo::update() {
   m_height = window.Bounds().Height;
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
-      folly::dynamic::object("width", m_width * m_scale)("height", m_height * m_scale)(
-          "scale", m_scale)("fontScale", uiSettings.TextScaleFactor())("densityDpi", displayInfo.LogicalDpi()))(
+      folly::dynamic::object("width", m_width * m_scale)("height", m_height * m_scale)("scale", m_scale)(
+          "fontScale", uiSettings.TextScaleFactor())("densityDpi", displayInfo.LogicalDpi()))(
       "screenPhysicalPixels",
       folly::dynamic::object("width", displayInfo.ScreenWidthInRawPixels())(
           "height", displayInfo.ScreenHeightInRawPixels())("scale", m_scale)("fontScale", uiSettings.TextScaleFactor())(
           "densityDpi", displayInfo.LogicalDpi()));
-
-    m_dpiChangedRevoker = displayInfo.DpiChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
-        auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-        m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
-        m_dimensions["windowPhysicalPixels"]["scale"] = m_scale;
-        m_dimensions["windowPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
-        m_dimensions["screenPhysicalPixels"]["scale"] = m_scale;
-        m_dimensions["screenPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
-        updateRootElementSize(m_width, m_height);
-  });
 }
 
 void DeviceInfo::updateRootElementSize(float width, float height) {
+  m_width = width;
+  m_height = height;
   m_dimensions["windowPhysicalPixels"]["width"] = width * m_scale;
   m_dimensions["windowPhysicalPixels"]["height"] = height * m_scale;
   fireEvent();
@@ -68,6 +60,15 @@ void DeviceInfo::attachRoot(winrt::FrameworkElement rootElement) {
     if (const auto root = m_rootElement.get()) {
       updateRootElementSize(static_cast<float>(root.ActualWidth()), static_cast<float>(root.ActualHeight()));
     }
+  });
+  auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  m_dpiChangedRevoker = displayInfo.DpiChanged(winrt::auto_revoke, [this, displayInfo](const auto &, const auto &) {
+    m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+    m_dimensions["windowPhysicalPixels"]["scale"] = m_scale;
+    m_dimensions["windowPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
+    m_dimensions["screenPhysicalPixels"]["scale"] = m_scale;
+    m_dimensions["screenPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
+    updateRootElementSize(m_width, m_height);
   });
 }
 
