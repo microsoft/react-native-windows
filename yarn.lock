@@ -2734,12 +2734,12 @@
     "@microsoft/tsdoc" "0.12.14"
 
 "@microsoft/api-extractor@^7.3.8":
-  version "7.7.6"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.7.6.tgz#2ace76c268d7124d1a2cfb83a8fd5edc143d9f6d"
-  integrity sha512-VeqOS7HnlPG6TRK70O3oC10y9mKZK0gWjEl1W+1FoaRSOTXerqByG0eLKwszd1WqyvdFQmMokDLgbG8YcN4nQg==
+  version "7.7.8"
+  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor/-/api-extractor-7.7.8.tgz#19b0bca8a2113d4ded55a270266bc2b802de1a43"
+  integrity sha512-XNO6Dk6ByfJq24Cn1/j0B0F16ZtwYnEC/sxgB/M0wTphBdBlHjRXZmxofmjirBBj9f7vG4UJ18IOIZRLbhGFPw==
   dependencies:
-    "@microsoft/api-extractor-model" "7.7.5"
-    "@microsoft/node-core-library" "3.19.1"
+    "@microsoft/api-extractor-model" "7.7.7"
+    "@microsoft/node-core-library" "3.19.3"
     "@microsoft/ts-command-line" "4.3.10"
     "@microsoft/tsdoc" "0.12.14"
     colors "~1.2.1"
