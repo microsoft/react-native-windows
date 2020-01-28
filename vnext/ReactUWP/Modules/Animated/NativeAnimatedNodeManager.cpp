@@ -164,7 +164,7 @@ void NativeAnimatedNodeManager::StartTrackingAnimatedNode(
           updatedAnimationConfig.insert(
               static_cast<folly::StringPiece>(s_framesName), [animationConfig, activeFrames = item.second->Frames()]() {
                 auto frames = folly::dynamic::array();
-                for (auto const &frame : animationConfig.find("frames").dereference().second) {
+                for ([[maybe_unused]] auto const &frame : animationConfig.find("frames").dereference().second) {
                   frames.push_back(0.0);
                 }
                 for (auto const &frame : activeFrames) {
