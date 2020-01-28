@@ -1,4 +1,4 @@
-# Monorepo Details for react-native-windows
+# Monorepo details for react-native-windows
 react-native-windows is a monorepo with several [packages](https://github.com/microsoft/react-native-windows/tree/master/packages) and uses monorepo management tools to install, build, and publish.  This page is all about what tools we use to manage this monorepo and some technical details, aimed at folks who are contributing to react-native-windows.
 
 # Installation of npm dependencies
