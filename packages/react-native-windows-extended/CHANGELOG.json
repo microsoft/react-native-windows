@@ -2,6 +2,20 @@
   "name": "react-native-windows-extended",
   "entries": [
     {
+      "date": "Tue, 28 Jan 2020 18:08:35 GMT",
+      "tag": "react-native-windows-extended_v0.60.69-4",
+      "version": "0.60.69-4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make the native build oblivous to the differences between microsoft/react-native and facebook/react-native with patches",
+            "author": "nick@nickgerleman.com",
+            "commit": "68f3a147f6116de5112a8944ef9a37668b52df80"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jan 2020 21:21:47 GMT",
       "tag": "react-native-windows-extended_v0.60.68",
       "version": "0.60.68",

@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make the native build oblivous to the differences between microsoft/react-native and facebook/react-native with patches",
-  "packageName": "react-native-windows-extended",
-  "email": "nick@nickgerleman.com",
-  "commit": "68f3a147f6116de5112a8944ef9a37668b52df80",
-  "dependentChangeType": "patch",
-  "date": "2020-01-24T13:46:12.067Z"
-}

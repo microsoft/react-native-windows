@@ -1,7 +1,13 @@
 # Change Log - react-native-windows-extended
 
-This log was last generated on Fri, 24 Jan 2020 21:21:47 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jan 2020 18:08:35 GMT and should not be manually modified.
 
+## 0.60.69-4
+Tue, 28 Jan 2020 18:08:35 GMT
+
+### Changes
+
+- Make the native build oblivous to the differences between microsoft/react-native and facebook/react-native with patches (nick@nickgerleman.com)
 ## 0.60.68
 Fri, 24 Jan 2020 21:21:47 GMT
 
