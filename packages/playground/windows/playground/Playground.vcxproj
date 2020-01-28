@@ -153,8 +153,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Font Include="Assets\SegMDL2.ttf" />
-    <Font Include="Assets\seguiemj.ttf" />
+    <Font Include="Assets\Cascadia.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

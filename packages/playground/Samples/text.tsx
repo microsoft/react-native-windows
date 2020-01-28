@@ -12,7 +12,7 @@ export default class Bootstrap extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.customFont}>{'\uE735'}</Text>
+        <Text style={styles.customFont}>{'\u2713 Custom fonts supported'}</Text>
       </View>
     );
   }

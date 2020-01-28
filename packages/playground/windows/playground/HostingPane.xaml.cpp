@@ -180,7 +180,7 @@ HostingPane::HostingPane() {
       L"CustomFont",
       winrt::Windows::UI::Text::FontWeights::Normal(),
       winrt::Windows::UI::Text::FontStyle::Normal,
-      L"/Assets/SegMDL2.ttf#Segoe MDL2 Assets");
+      L"/Assets/Cascadia.ttf#Cascadia Code");
 
   m_instanceCreator = std::make_shared<HostingPaneReactInstanceCreator>(this);
 }
