@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Jan 2020 06:50:47 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jan 2020 16:46:27 GMT and should not be manually modified.
 
+## 0.60.0-vnext.126
+Tue, 28 Jan 2020 16:46:27 GMT
+
+### Changes
+
+- Add Yoga Patch from microsoft/react-native (nick@nickgerleman.com)
 ## 0.60.0-vnext.125
 Tue, 28 Jan 2020 06:50:47 GMT
 

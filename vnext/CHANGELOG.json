@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jan 2020 16:46:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.126",
+      "version": "0.60.0-vnext.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Yoga Patch from microsoft/react-native",
+            "author": "nick@nickgerleman.com",
+            "commit": "937f8f2ceec70cc99448c99b820286ce1bcff2a1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jan 2020 06:50:47 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.125",
       "version": "0.60.0-vnext.125",
