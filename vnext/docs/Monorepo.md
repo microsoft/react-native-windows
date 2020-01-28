@@ -6,3 +6,6 @@ react-native-windows uses [yarn workspaces](https://legacy.yarnpkg.com/en/docs/w
 
 # Lerna Build
 react-native-windows uses [lerna](https://github.com/lerna/lerna) to build all the "non-native" parts of react-native-windows.  See "scripts" props inside  [package.json](https://github.com/microsoft/react-native-windows/blob/master/package.json), and [lerna.json](https://github.com/microsoft/react-native-windows/blob/master/lerna.json).
+
+# Beachball publishing
+TODO - add details
