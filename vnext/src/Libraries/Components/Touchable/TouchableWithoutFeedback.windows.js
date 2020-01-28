@@ -11,7 +11,7 @@
 'use strict';
 
 const DeprecatedEdgeInsetsPropType = require('../../DeprecatedPropTypes/DeprecatedEdgeInsetsPropType');
-const React = require('React');
+const React = require('react');
 const PropTypes = require('prop-types');
 const Touchable = require('./Touchable');
 const View = require('../View/View');

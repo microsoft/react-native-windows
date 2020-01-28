@@ -1,7 +1,31 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 23 Jan 2020 18:42:26 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Jan 2020 06:50:47 GMT and should not be manually modified.
 
+## 0.60.0-vnext.125
+Tue, 28 Jan 2020 06:50:47 GMT
+
+### Changes
+
+- copy IntegrationTests from fork (kmelmon@microsoft.com)
+## 0.60.0-vnext.124
+Sat, 25 Jan 2020 21:45:06 GMT
+
+### Changes
+
+- Removed pch.h from shared items projects (vmorozov@microsoft.com)
+## 0.60.0-vnext.123
+Fri, 24 Jan 2020 22:33:56 GMT
+
+### Changes
+
+- Fork RNTester script and update 'React' to 'react' (email not defined)
+## 0.60.0-vnext.122
+Fri, 24 Jan 2020 21:21:47 GMT
+
+### Changes
+
+- Update to react-native@0.60.0-microsoft.40 (acoates@microsoft.com)
 ## 0.60.0-vnext.121
 Thu, 23 Jan 2020 18:42:26 GMT
 
