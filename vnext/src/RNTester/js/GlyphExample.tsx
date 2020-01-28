@@ -16,20 +16,20 @@ class GlyphExamples extends React.Component {
         <Glyph
           style={{width: 32, height: 32}}
           emSize={24}
-          fontUri="ms-appx:///Assets/seguiemj.ttf"
+          fontUri="ms-appx:///Assets/Cascadia.ttf"
           glyph="300"
         />
         <Text>Glyph: red</Text>
         <Glyph
           style={{width: 32, height: 32, color: 'red'}}
-          fontUri="ms-appx:///Assets/seguiemj.ttf"
+          fontUri="ms-appx:///Assets/Cascadia.ttf"
           glyph="300"
         />
         <Text>Multiple glyphs: red</Text>
         <Glyph
           style={{width: 150, height: 32, color: 'red'}}
           emSize={24}
-          fontUri="ms-appx:///Assets/seguiemj.ttf"
+          fontUri="ms-appx:///Assets/Cascadia.ttf"
           glyph="300;304;703;802;803"
         />
         <Text>Multiple glyphs</Text>
@@ -37,7 +37,7 @@ class GlyphExamples extends React.Component {
           style={{width: 150, height: 32, color: 'red'}}
           emSize={24}
           colorEnabled={true}
-          fontUri="ms-appx:///Assets/seguiemj.ttf"
+          fontUri="ms-appx:///Assets/Cascadia.ttf"
           glyph="804;805;806;807;808;809"
         />
       </View>
