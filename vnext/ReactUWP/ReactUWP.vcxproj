@@ -115,15 +115,6 @@
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
-  <ItemDefinitionGroup Condition="'$(PATCH_RN)'!='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
-    </Link>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
-  </ItemDefinitionGroup>
-
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
@@ -149,13 +140,6 @@
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemDefinitionGroup>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
-  </ItemDefinitionGroup>
-
   <ItemGroup>
     <ClInclude Include="..\include\ReactUWP\InstanceFactory.h" />
     <ClInclude Include="..\include\ReactUWP\Utils\ValueUtils.h" />

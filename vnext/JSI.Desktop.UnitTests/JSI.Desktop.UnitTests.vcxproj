@@ -50,6 +50,8 @@
         wchar_t* str = L"hello";
       from compiling. -->
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
+      <!-- JSI Unit tests are copied from Facebook and rely on dynamic_pointer_cast -->
+      <RunTimeTypeInfo>true</RunTimeTypeInfo>
     </ClCompile>
     <Link>
       <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
