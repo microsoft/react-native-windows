@@ -53,6 +53,11 @@ module.exports = {
       ),
       new RegExp(
         `${path
+          .resolve(rnwPath, 'IntegrationTestsCopy')
+          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+      ),
+      new RegExp(
+        `${path
           .resolve(rnwePath, 'node_modules/react-native')
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),

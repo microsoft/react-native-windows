@@ -39,6 +39,11 @@ module.exports = {
       ),
       new RegExp(
         `${path
+          .resolve(rnwPath, 'IntegrationTestsCopy')
+          .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
+      ),
+      new RegExp(
+        `${path
           .resolve(
             require.resolve('@react-native-community/cli/package.json'),
             '../node_modules/react-native',
