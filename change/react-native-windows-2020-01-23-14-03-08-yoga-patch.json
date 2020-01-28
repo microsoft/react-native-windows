@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Add Yoga Patch from microsoft/react-native",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "937f8f2ceec70cc99448c99b820286ce1bcff2a1",
+  "dependentChangeType": "patch",
+  "date": "2020-01-23T22:03:08.089Z"
+}
