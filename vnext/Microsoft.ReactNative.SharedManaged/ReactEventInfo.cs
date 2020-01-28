@@ -92,7 +92,7 @@ namespace Microsoft.ReactNative.Managed
         (ReactEventHandler eventHandler) => EventImpl.Value(module, eventHandler));
     }
 
-    static MethodInfo ArgWriterOf(Type typeArg) =>
+    internal static MethodInfo ArgWriterOf(Type typeArg) =>
       typeof(ReactEventHelper).GetMethod(nameof(ReactEventHelper.ArgWriter)).MakeGenericMethod(typeArg);
   }
 }

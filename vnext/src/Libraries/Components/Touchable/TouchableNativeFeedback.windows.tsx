@@ -49,4 +49,4 @@ class DummyTouchableNativeFeedback extends React.Component<
   }
 }
 
-export default DummyTouchableNativeFeedback;
+module.exports = DummyTouchableNativeFeedback;

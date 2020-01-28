@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
+using Windows.UI.Xaml.Media;
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -124,6 +125,12 @@ namespace Microsoft.ReactNative.Managed
     public static void ReadValue(this IJSValueReader reader, out JSValue value)
     {
       value = JSValue.ReadFrom(reader);
+    }
+
+    public static void ReadValue(this IJSValueReader reader, out Brush value)
+    {
+      JSValue jsValue = JSValue.ReadFrom(reader);
+      value = XamlHelper.BrushFrom((writer) => jsValue.WriteTo(writer));
     }
 
     public static void ReadValue(this IJSValueReader reader, out Dictionary<string, JSValue> value)

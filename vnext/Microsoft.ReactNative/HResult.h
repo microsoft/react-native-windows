@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "pch.h"
+#include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt {
 inline constexpr hresult error_null_argument{static_cast<hresult>(0x80004003)}; // ArgumentNullException

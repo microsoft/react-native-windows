@@ -5,3 +5,8 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
 #include "winrt/Microsoft.ReactNative.h"
+
+#ifndef CXXUNITTESTS
+#define CXXUNITTESTS
+
+#endif // CXXUNITTESTS

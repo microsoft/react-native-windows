@@ -2,6 +2,219 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jan 2020 18:08:35 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.127",
+      "version": "0.60.0-vnext.127",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make the native build oblivous to the differences between microsoft/react-native and facebook/react-native with patches",
+            "author": "nick@nickgerleman.com",
+            "commit": "c9aa61950c011c7c94cabb589ea3bed8f720441d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jan 2020 16:46:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.126",
+      "version": "0.60.0-vnext.126",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Yoga Patch from microsoft/react-native",
+            "author": "nick@nickgerleman.com",
+            "commit": "937f8f2ceec70cc99448c99b820286ce1bcff2a1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jan 2020 06:50:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.125",
+      "version": "0.60.0-vnext.125",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "copy IntegrationTests from fork",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ad9a6de447290f91c2997845d87908050cedd8df"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jan 2020 21:45:06 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.124",
+      "version": "0.60.0-vnext.124",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Removed pch.h from shared items projects",
+            "author": "vmorozov@microsoft.com",
+            "commit": "94d00e39bb189e17b7d0df3f570306e7f7dea1d1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Jan 2020 22:33:56 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.123",
+      "version": "0.60.0-vnext.123",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fork RNTester script and update 'React' to 'react'",
+            "author": "email not defined",
+            "commit": "5bcb9706ce65c8c074db8fa3d189b1dfe18fe3df"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Jan 2020 21:21:47 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.122",
+      "version": "0.60.0-vnext.122",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Update to react-native@0.60.0-microsoft.40",
+            "author": "acoates@microsoft.com",
+            "commit": "807e14dc8d30691438bbdecc9ec26e268bfd5dac"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jan 2020 18:42:26 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.121",
+      "version": "0.60.0-vnext.121",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Logging and Tracing OSS_RN Removal",
+            "author": "nick@nickgerleman.com",
+            "commit": "6cd6ced7ca2de1aa9d8686d59545457535236798"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jan 2020 06:39:59 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.120",
+      "version": "0.60.0-vnext.120",
+      "comments": {
+        "none": [
+          {
+            "comment": "Do not use ES6 Default Export Where Upstream Uses CommonJS Import",
+            "author": "nick@nickgerleman.com",
+            "commit": "063e2f8915178fb07784ade9a7f85e355818ab14"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Update Folly Build Logic",
+            "author": "nick@nickgerleman.com",
+            "commit": "76f4e8fe3171188db922bb94c8b3b778d0db5f5e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jan 2020 05:29:39 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.119",
+      "version": "0.60.0-vnext.119",
+      "comments": {
+        "none": [
+          {
+            "comment": "Don't normalize ReactNativeDir and YogaDir; it's unneeded and it breaks on my machine for some reason",
+            "author": "hpratt@microsoft.com",
+            "commit": "a0443e733802c36571309a44e55eccc9be4ef95a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jan 2020 00:16:13 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.119",
+      "version": "0.60.0-vnext.119",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Apply React Native Patches for All Consumers of ReackPackageDirectories",
+            "author": "nick@nickgerleman.com",
+            "commit": "e185a5259428c4d172660765628d11b10cac2112"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Jan 2020 07:24:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.118",
+      "version": "0.60.0-vnext.118",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove OSS_RN Specific Warnings",
+            "author": "nick@nickgerleman.com",
+            "commit": "bf4dd0c6555b3f50e61a7d7f6c2f3d593a5bf5c6"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Remove OSS_RN Specialization in unistd.h Stub",
+            "author": "nick@nickgerleman.com",
+            "commit": "e77ad6640e5c76b31acc508fa8ed2a6c75640085"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Jan 2020 03:15:49 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.117",
+      "version": "0.60.0-vnext.117",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Added ARM64 variant to Universal projects.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "11386aab48341e3c57029cbd6934349bff0b9595"
+          },
+          {
+            "comment": "Added Mso library required for ReactHost",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c3ee2ff9a6eb70d59e452d1eb81ce77e9bded43a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Jan 2020 01:31:33 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.116",
+      "version": "0.60.0-vnext.116",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fix Layout-Headers for Publish Try 2",
+            "author": "nick@nickgerleman.com",
+            "commit": "46f4396665eea22b8d2342dd4a8e64f420c499be"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "VM: Adding support for JSValue for ViewManager APIs",
+            "author": "jthysell@microsoft.com",
+            "commit": "a6aefe518949e1cfe5b9a530f1be57e1fafc1725"
+          },
+          {
+            "comment": "Upgrade OpenSSL NuGet to 1.1.1-d.2.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "552ea344815cb8af3ad4d426facdb3b621446762"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jan 2020 06:19:11 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.115",
       "version": "0.60.0-vnext.115",

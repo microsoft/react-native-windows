@@ -79,6 +79,22 @@ exports.copyRNLibraries = baseDir => {
     require.resolve('react-native/package.json'),
   );
 
+  const reactNativeWindowsPath = path.dirname(
+    require.resolve('react-native-windows/package.json'),
+  );
+
+  copyDirectories(reactNativeWindowsPath, baseDir, [
+    {
+      src: 'RNTesterCopy',
+      dest: 'RNTester',
+    },
+    {
+      src: 'IntegrationTestsCopy',
+      dest: 'IntegrationTests',
+      rmFilter: '*.js',
+    },
+  ]);
+
   copyDirectories(reactNativePath, baseDir, [
     {
       src: 'flow',
@@ -87,11 +103,6 @@ exports.copyRNLibraries = baseDir => {
     {
       src: 'flow-typed',
       dest: 'flow-typed',
-    },
-    {
-      src: 'IntegrationTests',
-      dest: 'IntegrationTests',
-      rmFilter: '*.js',
     },
     {
       src: 'jest',
@@ -104,10 +115,6 @@ exports.copyRNLibraries = baseDir => {
     {
       src: 'packages/react-native-codegen/src',
       dest: 'packages/react-native-codegen/src',
-    },
-    {
-      src: 'RNTester',
-      dest: 'RNTester',
     },
   ]);
 

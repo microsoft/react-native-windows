@@ -8,12 +8,12 @@ namespace Microsoft.ReactNative {
 
   [webhosthidden]
   runtimeclass ReactInstanceManager {
-    ReactInstanceManager();
-    IReactContext CurrentReactContext();
-    void OnSuspend();
-    void OnEnteredBackground();
-    void OnLeavingBackground();
-    void OnResume(OnResumeAction action);
-    void OnBackPressed();
+    [noexcept2] ReactInstanceManager();
+    [noexcept2] IReactContext CurrentReactContext();
+    [noexcept2] void OnSuspend();
+    [noexcept2] void OnEnteredBackground();
+    [noexcept2] void OnLeavingBackground();
+    [noexcept2] void OnResume(OnResumeAction action);
+    [noexcept2] void OnBackPressed();
   }
 } // namespace Microsoft.ReactNative

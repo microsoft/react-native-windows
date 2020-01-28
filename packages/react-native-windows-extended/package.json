@@ -38,8 +38,8 @@
     "typescript": "3.5.3"
   },
   "peerDependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.5"
+    "react": "16.8.6",
+    "react-native": "^0.60.0 || 0.60.0-microsoft.40 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz"
   },
   "beachball": {
     "disallowedChangeTypes": [

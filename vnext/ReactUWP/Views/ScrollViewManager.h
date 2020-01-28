@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include "pch.h"
-
 #include <Views/ControlViewManager.h>
 #include "Impl/ScrollViewUWPImplementation.h"
 

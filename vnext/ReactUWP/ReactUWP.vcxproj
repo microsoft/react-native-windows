@@ -10,6 +10,14 @@
       <Configuration>Release</Configuration>
       <Platform>ARM</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
@@ -33,6 +41,7 @@
     <Keyword>DynamicLibrary</Keyword>
     <RootNamespace>react.uwp</RootNamespace>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
@@ -51,7 +60,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPatches.targets" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
@@ -77,9 +85,6 @@
       <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_HERMES)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(USE_V8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_ETW_TRACING)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_ETW_TRACING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_NATIVE_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_NATIVE_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)'=='true' AND '$(OSS_RN)' != 'true'">ENABLE_JS_SYSTRACE_TO_ETW;WITH_FBSYSTRACE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
@@ -110,53 +115,29 @@
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x64.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(PATCH_RN)'=='true'">
     <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x64.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x64.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.patched.x64.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'!='true'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.x86.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(PATCH_RN)'=='true'">
     <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.x86.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.patched.x86.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true' AND '$(PATCH_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.patched.x86.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM'">
     <Link>
       <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.arm.def</ModuleDefinitionFile>
-    </Link>
-    <ClCompile>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM' AND '$(OSS_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>Endpoints\dll\react-native-uwp.oss.arm.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

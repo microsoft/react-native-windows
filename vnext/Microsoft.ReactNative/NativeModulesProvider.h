@@ -4,7 +4,6 @@
 
 #include <NativeModuleProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include "ReactSupport.h"
 
 namespace winrt::Microsoft::ReactNative {
 

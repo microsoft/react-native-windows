@@ -32,7 +32,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactPatches.targets" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared" />
@@ -72,24 +71,14 @@
       <DelayLoadDLLs>api-ms-win-core-winrt-error-l1-1-0.dll;api-ms-win-core-winrt-error-l1-1-1.dll;api-ms-win-core-winrt-string-l1-1-0.dll;ChakraCore.Debugger.DLL</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <Link>
-      <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>	
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Platform)'=='x64' AND '$(OSS_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>react-native-win32.oss.x64.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'!='true'">
+  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">
     <Link>
       <ModuleDefinitionFile>react-native-win32.x86.def</ModuleDefinitionFile>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86') AND '$(OSS_RN)'=='true'">
-    <Link>
-      <ModuleDefinitionFile>react-native-win32.oss.x86.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -140,7 +129,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.1\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.1\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
+    <Import Project="$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets" Condition="Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" />
     <Import Project="$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" />
     <Import Project="$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.42\build\native\ChakraCore.Debugger.targets" Condition="Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.42\build\native\ChakraCore.Debugger.targets')" />
@@ -149,7 +138,7 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.1\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.1\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
+    <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.1.1-d.2\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.68.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.ChakraCore.vc140.1.11.13\build\native\Microsoft.ChakraCore.vc140.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.42\build\native\ChakraCore.Debugger.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ChakraCore.Debugger.0.0.0.42\build\native\ChakraCore.Debugger.targets'))" />
