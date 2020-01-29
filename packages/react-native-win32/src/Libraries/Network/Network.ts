@@ -20,9 +20,9 @@ declare module 'react-native' {
 }
 
 import { NativeEventEmitter as NativeEventEmitter_TypeCarrier } from 'react-native';
-export const NativeEventEmitter: typeof NativeEventEmitter_TypeCarrier = require('NativeEventEmitter');
+export const NativeEventEmitter: typeof NativeEventEmitter_TypeCarrier = require('../EventEmitter/NativeEventEmitter');
 
-const NativeModules = require('NativeModules');
+const NativeModules = require('../BatchedBridge/NativeModules');
 
 const RCTNetworkingNative = NativeModules.Networking;
 
