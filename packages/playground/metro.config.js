@@ -76,7 +76,6 @@ module.exports = {
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),
     ]),
-    hasteImplModulePath: path.resolve(__dirname, 'hasteImpl.js'),
   },
   transformer: {
     getTransformOptions: async () => ({
