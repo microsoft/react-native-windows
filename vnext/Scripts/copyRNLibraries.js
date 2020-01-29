@@ -53,12 +53,12 @@ function copyDirectories(srcPath, targetPath, dirSpecs) {
     const curSrcPath = path.resolve(srcPath, dirSpec.src);
     const curTargetPath = path.resolve(targetPath, dirSpec.dest);
 
-    glob.sync('**/*.{js,png,gif,h}', {cwd: curSrcPath}).forEach(file => {
+    glob.sync('**/*.{js,png,gif,h}', { cwd: curSrcPath }).forEach(file => {
       const dir = path.dirname(file);
       const targetDir = path.resolve(curTargetPath, dir);
       const targetFile = path.resolve(curTargetPath, file);
 
-      fs.mkdirSync(targetDir, {recursive: true});
+      fs.mkdirSync(targetDir, { recursive: true });
       fs.writeFileSync(
         targetFile,
         fs.readFileSync(path.join(curSrcPath, file)),
@@ -116,10 +116,6 @@ exports.copyRNLibraries = baseDir => {
     {
       src: 'Libraries',
       dest: 'Libraries',
-    },
-    {
-      src: 'packages/react-native-codegen/src',
-      dest: 'packages/react-native-codegen/src',
     },
   ]);
 
