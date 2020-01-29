@@ -69,6 +69,7 @@
         BOOST_NO_RTTI                 - Configure Boost not to use dynamic_cast
         BOOST_NO_TYPEID               - Configure boost not to check typeid (not to use RTTI)
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
+        ENUM_BITFIELDS_NOT_SUPPORTED  - Instruct Yoga not to use bitfield sized enums, which confuses MSVC and leads to runtime crashes
         GTEST_HAS_RTTI                - Let GTest know not to use RTTI
         WIN32_LEAN_AND_MEAN           - Reduce the Windows API included surface.
         WINRT_LEAN_AND_MEAN           - Disable rarely used cppwinrt templates that impact compile-time/PCH size.
@@ -80,6 +81,7 @@
         BOOST_NO_RTTI;
         BOOST_NO_TYPEID;
         BOOST_SYSTEM_SOURCE;
+        ENUM_BITFIELDS_NOT_SUPPORTED;
         GTEST_HAS_RTTI=0;
         WIN32_LEAN_AND_MEAN;
         WINRT_LEAN_AND_MEAN;
