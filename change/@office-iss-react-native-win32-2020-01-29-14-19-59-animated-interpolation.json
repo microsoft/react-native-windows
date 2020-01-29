@@ -1,0 +1,8 @@
+{
+  "comment": "Add win32 override of AnimatedInterpolation",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "nick@nickgerleman.com",
+  "commit": "9b0fc7bcdaf03b3902fc1aa1755f44ba5fe2eb98",
+  "dependentChangeType": "patch",
+  "date": "2020-01-29T22:19:59.646Z"
+}
