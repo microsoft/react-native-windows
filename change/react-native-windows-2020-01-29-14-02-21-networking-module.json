@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Share RCTNetworking Library Between windows and windesktop",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "d7f70938cf8aa42098e51f1c62ba3a7b6266e505",
+  "dependentChangeType": "patch",
+  "date": "2020-01-29T22:02:20.909Z"
+}
