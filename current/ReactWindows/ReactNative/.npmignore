@@ -1,3 +1,0 @@
-# Make sure we never publish ReactNative build to NPM
-bin/
-obj/
