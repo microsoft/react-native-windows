@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Updating react-native to version: 16.0.0-microsoft.234",
-  "packageName": "react-native-windows-extended",
-  "email": "acoates@microsoft.com",
-  "commit": "ea50ca90fdb2dff0a8faf4e30ddb8f08f39777d9",
-  "dependentChangeType": "patch",
-  "date": "2020-01-24T21:36:50.298Z"
-}
