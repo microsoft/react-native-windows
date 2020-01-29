@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "comment": "Updating react-native to version: 0.60.0-microsoft.47",
+  "packageName": "react-native-windows-extended",
+  "email": "53619745+rnbot@users.noreply.github.com",
+  "commit": "c91b17f04596f06633e23baa57b26da1f9e14960",
+  "dependentChangeType": "patch",
+  "date": "2020-01-29T23:38:48.348Z"
+}
