@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Jan 2020 18:46:55 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.128",
+      "version": "0.60.0-vnext.128",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade OpenSSL NuGet to 1.1.1-d.3",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b0c7029f3261b3d386c22c9c803fc860e30f9b40"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jan 2020 01:55:04 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.128",
       "version": "0.60.0-vnext.128",

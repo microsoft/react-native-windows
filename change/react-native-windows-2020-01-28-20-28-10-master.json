@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Upgrade OpenSSL NuGet to 1.1.1-d.3",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "commit": "b0c7029f3261b3d386c22c9c803fc860e30f9b40",
-  "dependentChangeType": "patch",
-  "date": "2020-01-29T04:28:10.341Z"
-}
