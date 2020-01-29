@@ -94,8 +94,8 @@ exports.copyRNLibraries = baseDir => {
       rmFilter: '*.js',
     },
     {
-      src: 'ReactCopies/packages',
-      dest: 'packages',
+      src: 'ReactCopies/packages/react-native-codegen/src',
+      dest: 'packages/react-native-codegen/src',
       mergeFiles: true,
     },
   ]);
