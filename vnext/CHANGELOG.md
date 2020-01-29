@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Jan 2020 18:08:35 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jan 2020 01:55:04 GMT and should not be manually modified.
 
+## 0.60.0-vnext.128
+Wed, 29 Jan 2020 01:55:04 GMT
+
+### Changes
+
+- Fix Crash When Running CLI Projects (nick@nickgerleman.com)
 ## 0.60.0-vnext.127
 Tue, 28 Jan 2020 18:08:35 GMT
 

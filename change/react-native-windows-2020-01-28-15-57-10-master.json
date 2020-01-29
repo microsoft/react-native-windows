@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Crash When Running CLI Projects",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "793ea817033c556cc28210961fd71726823a1b59",
-  "dependentChangeType": "patch",
-  "date": "2020-01-28T23:57:09.899Z"
-}
