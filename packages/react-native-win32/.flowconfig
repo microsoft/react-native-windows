@@ -12,7 +12,6 @@
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/Color/normalizeColor.js
 <PROJECT_ROOT>/Libraries/Color/normalizeColorObject.js
-<PROJECT_ROOT>/Libraries/Color/NativeOrDynamicColorType.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/StatusBar/StatusBar.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
@@ -34,6 +33,10 @@
 ; This example currently uses mac dynamic colors
 <PROJECT_ROOT>/RNTester/js/DarkModeExample.js
 
+; This file is present in the microsoft/react-native fork, but not upstream.
+; Blacklist it if using microsoft/react-native so we don't see duplicate
+; modules when combined with out local patch. RNW #3995
+<PROJECT_ROOT>/Libraries/Color/NativeOrDynamicColorType.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*

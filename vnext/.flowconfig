@@ -47,6 +47,10 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 
+; This file is present in the microsoft/react-native fork, but not upstream.
+; Blacklist it if using microsoft/react-native so we don't see duplicate
+; modules when combined with out local patch. RNW #3995
+<PROJECT_ROOT>/Libraries/Color/NativeOrDynamicColorType.js
 
 
 ; Ignore react-native files in node_modules since they are copied into project root
