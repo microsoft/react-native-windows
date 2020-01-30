@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add as Windows Overrides",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "1683435db9fe8ec57c835e7b5c0acb1d17190e15",
-  "dependentChangeType": "patch",
-  "date": "2020-01-30T06:33:01.821Z"
-}

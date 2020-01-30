@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2020 09:17:27 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Add win32 override of AnimatedInterpolation",
+            "author": "nick@nickgerleman.com",
+            "commit": "9b0fc7bcdaf03b3902fc1aa1755f44ba5fe2eb98"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jan 2020 20:47:03 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.4",
       "version": "0.26.4",

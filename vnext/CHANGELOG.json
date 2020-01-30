@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2020 09:17:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.130",
+      "version": "0.60.0-vnext.130",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add as Windows Overrides",
+            "author": "nick@nickgerleman.com",
+            "commit": "1683435db9fe8ec57c835e7b5c0acb1d17190e15"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 01:22:53 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.129",
       "version": "0.60.0-vnext.129",
