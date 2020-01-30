@@ -190,6 +190,16 @@ inline void WriteValue(IJSValueWriter const &writer, JSValueArray const &value) 
   JSValue::WriteArrayTo(writer, value);
 }
 
+inline void WriteCustomDirectEventTypeConstant(
+    IJSValueWriter const &writer,
+    std::wstring_view propertyName,
+    std::wstring_view registrationName) noexcept {
+	writer.WritePropertyName(propertyName);
+  writer.WriteObjectBegin();
+  WriteProperty(writer, L"registrationName", registrationName);
+  writer.WriteObjectEnd();
+}
+
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
 inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
   writer.WriteObjectBegin();
