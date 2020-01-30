@@ -209,7 +209,7 @@ static
   AssertDetails_Statement_End
 
 #define FAssertDoSucceededTag(expr, tag)                                              \
-  [&]() noexcept -> bool {                                                            \
+  [&]() noexcept->bool {                                                              \
     HRESULT _hr_ = (expr);                                                            \
     if (FAILED(_hr_)) {                                                               \
       if (MsoAssertSzTagProcInline(                                                   \
@@ -222,7 +222,8 @@ static
     }                                                                                 \
     return SUCCEEDED(_hr_);                                                           \
     OACR_WARNING_SUPPRESS(NOEXCEPT_FUNC_THROWS, "Ignore whether expr throws.");       \
-  }()
+  }                                                                                   \
+  ()
 
 #else
 
