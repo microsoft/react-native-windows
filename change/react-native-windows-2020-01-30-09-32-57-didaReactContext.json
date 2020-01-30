@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Simple fixes to IReactContext.cpp and add a writer helper function for direct event type constant",
+  "packageName": "react-native-windows",
+  "email": "dida@ntdev.microsoft.com",
+  "commit": "e5d49e832d0b4449bb08093445864264601d1ae2",
+  "dependentChangeType": "patch",
+  "date": "2020-01-30T17:32:57.576Z"
+}
