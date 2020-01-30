@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include "DynamicWriter.h"
-#include "Crash.h"
+#include <crash/verifyElseCrash.h>
 
 namespace winrt::Microsoft::ReactNative {
 
