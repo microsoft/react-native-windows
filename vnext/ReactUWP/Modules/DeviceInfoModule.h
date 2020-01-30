@@ -23,16 +23,13 @@ class DeviceInfo {
     return m_dimensions;
   }
   void update();
-  void updateWindowSize(float width, float height);
+  void listenToUpdates();
 
  private:
   void fireEvent();
   folly::dynamic m_dimensions;
-  winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
   std::weak_ptr<IReactInstance> m_wkReactInstance;
-  float m_scale{1.0f};
-  float m_width{0.0f};
-  float m_height{0.0f};
+  winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
 };
 

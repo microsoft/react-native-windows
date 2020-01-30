@@ -16,47 +16,40 @@ namespace uwp {
 //
 DeviceInfo::DeviceInfo(const std::shared_ptr<IReactInstance> &reactInstance) : m_wkReactInstance(reactInstance) {
   update();
+  listenToUpdates();
+}
+
+void DeviceInfo::listenToUpdates() {
+  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
+
+  m_sizeChangedRevoker = window.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
+    update();
+    fireEvent();
+  });
+
+  m_dpiChangedRevoker = displayInfo.DpiChanged(winrt::auto_revoke, [this](const auto &, const auto &) {
+    update();
+    fireEvent();
+  });
 }
 
 void DeviceInfo::update() {
-  auto displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
-  m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+  auto const &displayInfo = winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView();
+  auto scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
+
   winrt::Windows::UI::ViewManagement::UISettings uiSettings;
 
   auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow();
-  m_width = window.Bounds().Width;
-  m_height = window.Bounds().Height;
+
   m_dimensions = folly::dynamic::object(
       "windowPhysicalPixels",
-      folly::dynamic::object("width", m_width * m_scale)("height", m_height * m_scale)("scale", m_scale)(
-          "fontScale", uiSettings.TextScaleFactor())("densityDpi", displayInfo.LogicalDpi()))(
+      folly::dynamic::object("width", window.Bounds().Width * scale)("height", window.Bounds().Height * scale)(
+          "scale", scale)("fontScale", uiSettings.TextScaleFactor())("densityDpi", displayInfo.LogicalDpi()))(
       "screenPhysicalPixels",
       folly::dynamic::object("width", displayInfo.ScreenWidthInRawPixels())(
-          "height", displayInfo.ScreenHeightInRawPixels())("scale", m_scale)("fontScale", uiSettings.TextScaleFactor())(
+          "height", displayInfo.ScreenHeightInRawPixels())("scale", scale)("fontScale", uiSettings.TextScaleFactor())(
           "densityDpi", displayInfo.LogicalDpi()));
-
-  m_sizeChangedRevoker = window.SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) {
-    if (auto const &window = winrt::Windows::UI::Xaml::Window::Current().CoreWindow()) {
-      updateWindowSize(window.Bounds().Width, window.Bounds().Height);
-    }
-  });
-
-  m_dpiChangedRevoker = displayInfo.DpiChanged(winrt::auto_revoke, [this, displayInfo](const auto &, const auto &) {
-    m_scale = static_cast<float>(displayInfo.ResolutionScale()) / 100;
-    m_dimensions["windowPhysicalPixels"]["scale"] = m_scale;
-    m_dimensions["windowPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
-    m_dimensions["screenPhysicalPixels"]["scale"] = m_scale;
-    m_dimensions["screenPhysicalPixels"]["densityDpi"] = displayInfo.LogicalDpi();
-    updateWindowSize(m_width, m_height);
-  });
-}
-
-void DeviceInfo::updateWindowSize(float width, float height) {
-  m_width = width;
-  m_height = height;
-  m_dimensions["windowPhysicalPixels"]["width"] = width * m_scale;
-  m_dimensions["windowPhysicalPixels"]["height"] = height * m_scale;
-  fireEvent();
 }
 
 void DeviceInfo::fireEvent() {
