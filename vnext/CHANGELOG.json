@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2020 21:10:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.131",
+      "version": "0.60.0-vnext.131",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add callstack to the error message when a JS error occurs.",
+            "author": "kinhln@microsoft.com",
+            "commit": "cd10882748a53fe4eb0550eb45b60f9f482c0a8d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 09:17:27 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.130",
       "version": "0.60.0-vnext.130",
