@@ -200,6 +200,21 @@ inline void WriteCustomDirectEventTypeConstant(
   writer.WriteObjectEnd();
 }
 
+inline void WriteCustomDirectEventTypeConstant(
+    IJSValueWriter const &writer,
+    std::string_view propertyName,
+    std::string_view registrationName) noexcept {
+  WriteCustomDirectEventTypeConstant(writer, to_hstring(propertyName), to_hstring(registrationName));
+}
+
+inline void WriteCustomDirectEventTypeConstant(IJSValueWriter const &writer, std::wstring_view eventName) noexcept {
+  WriteCustomDirectEventTypeConstant(writer, L"top" + eventName, L"on" + eventName);
+}
+
+inline void WriteCustomDirectEventTypeConstant(IJSValueWriter const &writer, std::string_view eventName) noexcept {
+  WriteCustomDirectEventTypeConstant(writer, L"top" + to_hstring(eventName), L"on" + to_hstring(eventName));
+}
+
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
 inline void WriteValue(IJSValueWriter const &writer, T const &value) noexcept {
   writer.WriteObjectBegin();
