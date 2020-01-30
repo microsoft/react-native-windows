@@ -149,7 +149,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AlertExample',
-    module: require('react-native/RNTester/js/AlertExample').AlertExample,
+    module: require('./AlertExample.windows'),
   },
   {
     key: 'AnimatedExample',
