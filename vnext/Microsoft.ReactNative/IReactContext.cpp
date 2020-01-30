@@ -12,8 +12,7 @@ void ReactContext::DispatchEvent(
     ReactArgWriter const &eventDataArgWriter) noexcept {
   if (auto instance = m_instance.lock()) {
     folly::dynamic eventData; // default to NULLT
-    if (eventDataArgWriter != nullptr)
-    {
+    if (eventDataArgWriter != nullptr) {
       IJSValueWriter eventDataWriter = winrt::make<DynamicWriter>();
       eventDataArgWriter(eventDataWriter);
       eventData = eventDataWriter.as<DynamicWriter>()->TakeValue();

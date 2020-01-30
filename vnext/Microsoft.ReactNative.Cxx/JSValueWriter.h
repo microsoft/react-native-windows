@@ -194,7 +194,7 @@ inline void WriteCustomDirectEventTypeConstant(
     IJSValueWriter const &writer,
     std::wstring_view propertyName,
     std::wstring_view registrationName) noexcept {
-	writer.WritePropertyName(propertyName);
+  writer.WritePropertyName(propertyName);
   writer.WriteObjectBegin();
   WriteProperty(writer, L"registrationName", registrationName);
   writer.WriteObjectEnd();
