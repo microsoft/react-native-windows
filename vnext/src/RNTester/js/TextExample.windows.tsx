@@ -9,6 +9,7 @@
 
 import React = require('react');
 import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
+const RNTesterBlock = require('./RNTesterBlock');
 
 export class Entity extends React.Component<{}> {
   public render() {
@@ -69,74 +70,6 @@ export class AttributeToggler extends React.Component<
     );
   }
 }
-
-interface IRNTesterBlockProps {
-  children?: React.ReactNode;
-  title?: string;
-  description?: string;
-}
-
-interface IRNTesterBlockState {
-  description?: string;
-}
-
-class RNTesterBlock extends React.Component<
-  IRNTesterBlockProps,
-  IRNTesterBlockState
-> {
-  state = {description: undefined};
-
-  render() {
-    const description = this.props.description ? (
-      <Text style={containerStyles.descriptionText}>
-        {this.props.description}
-      </Text>
-    ) : (
-      undefined
-    );
-
-    return (
-      <View style={containerStyles.container}>
-        <View style={containerStyles.titleContainer}>
-          <Text style={containerStyles.titleText}>{this.props.title}</Text>
-          {description}
-        </View>
-        <View style={containerStyles.children}>{this.props.children}</View>
-      </View>
-    );
-  }
-}
-
-const containerStyles = StyleSheet.create({
-  container: {
-    borderRadius: 3,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-    backgroundColor: '#ffffff',
-    margin: 10,
-    marginVertical: 5,
-    overflow: 'hidden',
-  },
-  titleContainer: {
-    borderBottomWidth: 0.5,
-    borderTopLeftRadius: 3,
-    borderTopRightRadius: 2.5,
-    borderBottomColor: '#d6d7da',
-    backgroundColor: '#f6f7f8',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-  },
-  titleText: {
-    fontSize: 14,
-    fontWeight: '500',
-  },
-  descriptionText: {
-    fontSize: 14,
-  },
-  children: {
-    margin: 10,
-  },
-});
 
 class TextExample extends React.Component<{}> {
   public render() {
