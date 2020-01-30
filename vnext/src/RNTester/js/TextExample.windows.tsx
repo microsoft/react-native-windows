@@ -9,8 +9,6 @@
 
 import React = require('react');
 import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
-const RNTesterBlock = require('react-native/RNTester/js/RNTesterBlock');
-const RNTesterPage = require('react-native/RNTester/js/RNTesterPage');
 
 export class Entity extends React.Component<{}> {
   public render() {
@@ -72,16 +70,81 @@ export class AttributeToggler extends React.Component<
   }
 }
 
-export class TextExample extends React.Component<{}> {
-  public static title = '<Text>';
-  public static description = 'Base component for rendering styled text.';
+interface IRNTesterBlockProps {
+  children?: React.ReactNode;
+  title?: string;
+  description?: string;
+}
 
+interface IRNTesterBlockState {
+  description?: string;
+}
+
+class RNTesterBlock extends React.Component<
+  IRNTesterBlockProps,
+  IRNTesterBlockState
+> {
+  state = {description: undefined};
+
+  render() {
+    const description = this.props.description ? (
+      <Text style={containerStyles.descriptionText}>
+        {this.props.description}
+      </Text>
+    ) : (
+      undefined
+    );
+
+    return (
+      <View style={containerStyles.container}>
+        <View style={containerStyles.titleContainer}>
+          <Text style={containerStyles.titleText}>{this.props.title}</Text>
+          {description}
+        </View>
+        <View style={containerStyles.children}>{this.props.children}</View>
+      </View>
+    );
+  }
+}
+
+const containerStyles = StyleSheet.create({
+  container: {
+    borderRadius: 3,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    backgroundColor: '#ffffff',
+    margin: 10,
+    marginVertical: 5,
+    overflow: 'hidden',
+  },
+  titleContainer: {
+    borderBottomWidth: 0.5,
+    borderTopLeftRadius: 3,
+    borderTopRightRadius: 2.5,
+    borderBottomColor: '#d6d7da',
+    backgroundColor: '#f6f7f8',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  titleText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  descriptionText: {
+    fontSize: 14,
+  },
+  children: {
+    margin: 10,
+  },
+});
+
+class TextExample extends React.Component<{}> {
   public render() {
     const lorumIpsum =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.';
 
     return (
-      <RNTesterPage title="<Text>">
+      <View>
         <RNTesterBlock title="Wrap">
           <Text>
             The text should wrap if it goes on multiple lines. See, this is
@@ -559,7 +622,7 @@ export class TextExample extends React.Component<{}> {
             make text look slightly misaligned when centered vertically.
           </Text>
         </RNTesterBlock>
-      </RNTesterPage>
+      </View>
     );
   }
 }
@@ -579,4 +642,14 @@ export const styles = StyleSheet.create({
   },
 });
 
-module.exports = TextExample;
+export const displayName = (_undefined?: string) => {};
+export const title = 'Text';
+export const description = 'Base component for rendering styled text.';
+export const examples = [
+  {
+    title: 'Text examples',
+    render: function(): JSX.Element {
+      return <TextExample />;
+    },
+  },
+];
