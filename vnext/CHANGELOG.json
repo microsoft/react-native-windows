@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2020 22:08:51 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.132",
+      "version": "0.60.0-vnext.132",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simple fixes to IReactContext.cpp and add a writer helper function for direct event type constant",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e5d49e832d0b4449bb08093445864264601d1ae2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 21:10:31 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.131",
       "version": "0.60.0-vnext.131",

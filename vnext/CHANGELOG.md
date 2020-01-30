@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Jan 2020 21:10:31 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Jan 2020 22:08:51 GMT and should not be manually modified.
 
+## 0.60.0-vnext.132
+Thu, 30 Jan 2020 22:08:51 GMT
+
+### Changes
+
+- Simple fixes to IReactContext.cpp and add a writer helper function for direct event type constant (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.131
 Thu, 30 Jan 2020 21:10:31 GMT
 
