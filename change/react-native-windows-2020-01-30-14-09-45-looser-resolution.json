@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow Any Prerelease Version 0f 0.60 as Peer Dependency",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "0461a6f5689e2c8fe99a05d5cef6ee263a070803",
-  "dependentChangeType": "patch",
-  "date": "2020-01-30T22:09:45.535Z"
-}

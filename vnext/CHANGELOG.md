@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Jan 2020 22:08:51 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Jan 2020 23:29:21 GMT and should not be manually modified.
 
+## 0.60.0-vnext.133
+Thu, 30 Jan 2020 23:29:21 GMT
+
+### Changes
+
+- Allow Any Prerelease Version 0f 0.60 as Peer Dependency (nick@nickgerleman.com)
 ## 0.60.0-vnext.132
 Thu, 30 Jan 2020 22:08:51 GMT
 
