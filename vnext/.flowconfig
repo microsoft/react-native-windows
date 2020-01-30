@@ -89,6 +89,10 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
+; Ignore RN copies, which cause duplicate violations to be shown
+.*/vnext/IntegrationTestsCopy/.*
+.*/vnext/RNTesterCopy/.*
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
