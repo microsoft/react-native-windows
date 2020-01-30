@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Jan 2020 01:55:04 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Jan 2020 01:22:53 GMT and should not be manually modified.
 
+## 0.60.0-vnext.129
+Thu, 30 Jan 2020 01:22:53 GMT
+
+### Changes
+
+- Share RCTNetworking Library Between windows and windesktop (nick@nickgerleman.com)
 ## 0.60.0-vnext.128
 Wed, 29 Jan 2020 01:55:04 GMT
 
