@@ -58,7 +58,7 @@
   },
   "peerDependencies": {
     "react": "16.8.6",
-    "react-native": "^0.60.0 || 0.60.0-microsoft.40 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz"
+    "react-native": "^0.60.0-0 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz"
   },
   "beachball": {
     "defaultNpmTag": "vnext",
