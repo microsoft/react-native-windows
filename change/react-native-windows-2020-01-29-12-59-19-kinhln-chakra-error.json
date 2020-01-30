@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Add callstack to the error message when a JS error occurs.",
+  "packageName": "react-native-windows",
+  "email": "kinhln@microsoft.com",
+  "commit": "cd10882748a53fe4eb0550eb45b60f9f482c0a8d",
+  "dependentChangeType": "patch",
+  "date": "2020-01-29T20:59:19.502Z"
+}
