@@ -554,18 +554,18 @@ ReactViewInstance::ReactViewInstance(
 Mso::Future<void> ReactViewInstance::InitRootView(
     Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
     Mso::React::ReactViewOptions &&viewOptions) noexcept {
-  return PostInUIQueue([reactInstance{std::move(reactInstance)},
-                        viewOptions{std::move(viewOptions)}](ReactRootControl &rootControl) mutable noexcept {
+  return PostInUIQueue([ reactInstance{std::move(reactInstance)}, viewOptions{std::move(viewOptions)} ](
+      ReactRootControl & rootControl) mutable noexcept {
     rootControl.InitRootView(std::move(reactInstance), std::move(viewOptions));
   });
 }
 
 Mso::Future<void> ReactViewInstance::UpdateRootView() noexcept {
-  return PostInUIQueue([](ReactRootControl &rootControl) mutable noexcept { rootControl.UpdateRootView(); });
+  return PostInUIQueue([](ReactRootControl & rootControl) mutable noexcept { rootControl.UpdateRootView(); });
 }
 
 Mso::Future<void> ReactViewInstance::UninitRootView() noexcept {
-  return PostInUIQueue([](ReactRootControl &rootControl) mutable noexcept { rootControl.UninitRootView(); });
+  return PostInUIQueue([](ReactRootControl & rootControl) mutable noexcept { rootControl.UninitRootView(); });
 }
 
 } // namespace react::uwp
