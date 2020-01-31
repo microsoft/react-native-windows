@@ -2,6 +2,20 @@
   "name": "rnpm-plugin-windows",
   "entries": [
     {
+      "date": "Fri, 31 Jan 2020 19:14:06 GMT",
+      "tag": "rnpm-plugin-windows_v0.4.0",
+      "version": "0.4.0",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Fix CLI dependency",
+            "author": "acoates@microsoft.com",
+            "commit": "33f9509e627c111fa5582e11c78d0b00a3b6ce05"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Dec 2019 23:33:28 GMT",
       "tag": "rnpm-plugin-windows_v0.4.0",
       "version": "0.4.0",

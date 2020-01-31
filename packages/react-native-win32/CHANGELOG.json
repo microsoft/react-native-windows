@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 31 Jan 2020 19:14:06 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "none": [
+          {
+            "comment": "update beachball commands for the stable branch",
+            "author": "acoates@microsoft.com",
+            "commit": "d6541b929ec847698a986ffa435f1d8b1cb24824"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 23:29:21 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.4",
       "version": "0.26.4",
