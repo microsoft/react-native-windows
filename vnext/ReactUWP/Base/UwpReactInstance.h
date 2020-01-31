@@ -5,7 +5,6 @@
 
 #include <IReactInstance.h>
 
-#include <Modules/DeviceInfoModule.h>
 #include <Threading/WorkerMessageQueueThread.h>
 #include <Views/ExpressionAnimationStore.h>
 
@@ -123,7 +122,6 @@ class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from
 
   std::string m_bundleRootPath;
   ReactInstanceSettings m_reactInstanceSettings;
-  std::shared_ptr<DeviceInfo> m_deviceInfo;
 };
 
 } // namespace uwp
