@@ -124,6 +124,8 @@ After you've added the reference, you need to make sure it doesn't copy itself i
 1. Select `Properties`.
 1. Under `Build`, Change `Copy Local` to `False`.
 
+Also make sure your library project is targeting the same version of C++/WinRT as Microsoft.ReactNative. You can check the version by opening `Microsoft.ReactNative.vcxproj` file located at `node_modules\react-native-windows\Microsoft.ReactNative`. Update the versions in `MyLibrary.vcxproj` if necessary.
+
 Now, you're technically ready to go, but in order to improve the developer experience, it's also **highly recommended** to also add a reference to the appropriate helper shared project. These projects contain the attributes (C#) and macros (C++) as described in the [Native Modules](./NativeModules.md) and [View Managers](./ViewManagers.md).
 
 If you're writing in C#, you'll want to add `Microsoft.ReactNative.SharedManaged`:
