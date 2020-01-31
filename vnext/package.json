@@ -12,7 +12,6 @@
   "typings": "Libraries/react-native/typings-index.d.ts",
   "scripts": {
     "build": "just-scripts build",
-    "change": "beachball change",
     "clean": "just-scripts clean",
     "flow-check": "flow check",
     "start": "react-native start",
