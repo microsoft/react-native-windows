@@ -8,10 +8,10 @@ trigger:
   batch: true
   branches:
     include:
-      - master
-      - 0.58-vnext-stable
+    # Avoid publishing master builds until we're on 0.61 to avoid version collisions with 0.60-stable
+    # - master
       - 0.59-vnext-stable
-      - fabric
+      - 0.60-stable
 
 pr: none
 
