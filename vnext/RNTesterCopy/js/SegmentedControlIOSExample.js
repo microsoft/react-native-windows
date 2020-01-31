@@ -173,7 +173,6 @@ exports.examples = [
     render(): React.Element<any> {
       return <ColorSegmentedControlExample />;
     },
-    platform: 'ios',
   },
   {
     title: 'Change events can be detected',
