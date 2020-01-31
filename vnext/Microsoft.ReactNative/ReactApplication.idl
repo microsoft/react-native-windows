@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import "ReactNativeHost.idl";
-import "ReactApplicationDelegate.idl";
 
 namespace Microsoft.ReactNative {
 
@@ -10,16 +9,9 @@ namespace Microsoft.ReactNative {
   [default_interface]
   unsealed runtimeclass ReactApplication : Windows.UI.Xaml.Application {
     [noexcept2] ReactApplication();
-     
-    [noexcept2] ReactInstanceSettings InstanceSettings { get; set; };
-     
-    [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
-     
-    [noexcept2] String MainComponentName { get; set; };
-    [noexcept2] Boolean UseDeveloperSupport { get; set; };
-    [noexcept2] String JavaScriptMainModuleName { get; set; };
-    [noexcept2] String JavaScriptBundleFile { get; set; };
 
+    [noexcept2] ReactInstanceSettings InstanceSettings { get; set; };
+    [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
     [noexcept2] ReactNativeHost Host { get; };
   }
 } // namespace Microsoft.ReactNative

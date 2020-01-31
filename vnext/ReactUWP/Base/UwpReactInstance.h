@@ -5,7 +5,6 @@
 
 #include <IReactInstance.h>
 
-#include <Threading/WorkerMessageQueueThread.h>
 #include <Views/ExpressionAnimationStore.h>
 
 #include <winrt/Windows.UI.Core.h>
@@ -99,7 +98,7 @@ class UwpReactInstance : public IReactInstance, public ::std::enable_shared_from
 #if defined(USE_V8)
   static std::string getApplicationLocalFolder();
 #endif
-  std::shared_ptr<WorkerMessageQueueThread> m_initThread;
+  std::shared_ptr<facebook::react::MessageQueueThread> m_initThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_defaultNativeThread;
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingNativeThread;

@@ -18,14 +18,14 @@ namespace SampleAppCS
         /// </summary>
         public App()
         {
-            MainComponentName = "SampleApp";
+            InstanceSettings.MainComponentName = "SampleApp";
 
 #if BUNDLE
-            JavaScriptBundleFile = "index.windows";
+            InstanceSettings.JavaScriptBundleFile = "index.windows";
             InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseLiveReload = false;
 #else
-            JavaScriptMainModuleName = "index";
+            InstanceSettings.JavaScriptMainModuleName = "index";
             InstanceSettings.UseWebDebugger = true;
             InstanceSettings.UseLiveReload = true;
 #endif

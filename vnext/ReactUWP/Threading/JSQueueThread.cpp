@@ -3,12 +3,10 @@
 
 #include "pch.h"
 
+#include <CxxMessageQueue.h>
 #include "JSQueueThread.h"
 
-#include <CxxMessageQueue.h>
-
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
 // From https://msdn.microsoft.com/en-us/library/xcb2z8hs.aspx
 const DWORD MS_VC_EXCEPTION = 0x406D1388;
@@ -35,12 +33,12 @@ static void SetThreadName(DWORD dwThreadID, const char *threadName) {
 #pragma warning(pop)
 }
 
-static void SetThreadName(std::thread &thread, const char *threadName) {
+static void SetThreadName(std::thread &thread, const char *threadName) noexcept {
   DWORD threadId = ::GetThreadId(static_cast<HANDLE>(thread.native_handle()));
   SetThreadName(threadId, threadName);
 }
 
-std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread() {
+std::shared_ptr<facebook::react::MessageQueueThread> CreateAndStartJSQueueThread() noexcept {
   auto q = std::make_shared<facebook::react::CxxMessageQueue>();
   std::thread t([q]() mutable {
     auto loop = facebook::react::CxxMessageQueue::getRunLoop(q);
@@ -55,5 +53,4 @@ std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread() 
   return q;
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

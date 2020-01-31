@@ -9,35 +9,32 @@
 #include <atomic>
 #include "AsyncWorkQueue.h"
 
-namespace react {
-namespace uwp {
+namespace react::uwp {
 
-class AsyncCallback : public IAsyncCallback {
- public:
-  AsyncCallback(std::function<void()> &&func);
+struct AsyncCallback final : IAsyncCallback {
+  AsyncCallback(std::function<void()> &&func) noexcept;
 
-  // IUnknown
-  STDMETHOD_(ULONG, AddRef)();
-  STDMETHOD_(ULONG, Release)();
-  STDMETHOD(QueryInterface)(REFIID riid, _Outptr_ void **ppvObject);
+ public: // IUnknown
+  ULONG __stdcall AddRef() noexcept override;
+  ULONG __stdcall Release() noexcept override;
+  HRESULT __stdcall QueryInterface(REFIID riid, _COM_Outptr_ void **ppvObject) noexcept override;
 
-  // IAsyncCallback
-  STDMETHOD(ProcessWorkItem)(_In_opt_ IUnknown *pUserData);
-  STDMETHOD(CancelWorkItem)(_In_opt_ IUnknown *pUserData);
+ public: // IAsyncCallback
+  HRESULT __stdcall ProcessWorkItem(_In_opt_ IUnknown *pUserData) noexcept override;
+  HRESULT __stdcall CancelWorkItem(_In_opt_ IUnknown *pUserData) noexcept override;
 
  private:
   std::atomic<ULONG> m_cRef{0};
-
   std::function<void()> m_func;
 };
 
-AsyncCallback::AsyncCallback(std::function<void()> &&func) : m_func(std::move(func)) {}
+AsyncCallback::AsyncCallback(std::function<void()> &&func) noexcept : m_func{std::move(func)} {}
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP_(ULONG) AsyncCallback::AddRef() {
+ULONG __stdcall AsyncCallback::AddRef() noexcept {
   return ++m_cRef;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP_(ULONG) AsyncCallback::Release() {
+ULONG __stdcall AsyncCallback::AsyncCallback::Release() noexcept {
   ULONG cRef = --m_cRef;
 
   if (cRef == 0) {
@@ -47,7 +44,7 @@ COM_DECLSPEC_NOTHROW STDMETHODIMP_(ULONG) AsyncCallback::Release() {
   return cRef;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::QueryInterface(REFIID riid, _Outptr_ void **ppvObject) {
+HRESULT __stdcall AsyncCallback::QueryInterface(REFIID riid, _COM_Outptr_ void **ppvObject) noexcept {
   if (IsEqualIID(riid, __uuidof(IAsyncCallback))) {
     *ppvObject = static_cast<IAsyncCallback *>(this);
     ((IAsyncCallback *)(*ppvObject))->AddRef();
@@ -62,7 +59,7 @@ COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::QueryInterface(REFIID riid, _Ou
   return S_OK;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::ProcessWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
+HRESULT __stdcall AsyncCallback::ProcessWorkItem(_In_opt_ IUnknown * /*pUserData*/) noexcept {
   try {
     m_func();
   } catch (...) {
@@ -72,74 +69,74 @@ COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::ProcessWorkItem(_In_opt_ IUnkno
   return S_OK;
 }
 
-COM_DECLSPEC_NOTHROW STDMETHODIMP AsyncCallback::CancelWorkItem(_In_opt_ IUnknown * /*pUserData*/) {
+HRESULT __stdcall AsyncCallback::CancelWorkItem(_In_opt_ IUnknown * /*pUserData*/) noexcept {
   return S_OK;
 }
 
 struct WorkerMessageQueueThread::Impl {
-  Impl();
-  ~Impl();
-  void runOnQueue(std::function<void()> &&func);
-  void runOnQueueSync(std::function<void()> &&func);
-  void quitSynchronous();
+  Impl() noexcept;
+  ~Impl() noexcept;
+  void runOnQueue(std::function<void()> &&func) noexcept;
+  void runOnQueueSync(std::function<void()> &&func) noexcept;
+  void quitSynchronous() noexcept;
 
-  Microsoft::WRL::ComPtr<IAsyncWorkQueue> queue;
-  std::atomic_bool stopped{false};
+ private:
+  Microsoft::WRL::ComPtr<IAsyncWorkQueue> m_queue;
+  std::atomic_bool m_stopped{false};
 };
 
-WorkerMessageQueueThread::Impl::Impl() {
-  /*HRESULT hr =*/CreateAsyncWorkQueue(&queue);
+WorkerMessageQueueThread::Impl::Impl() noexcept {
+  /*HRESULT hr =*/CreateAsyncWorkQueue(&m_queue);
   // TODO: Asserts
   // Assert(SUCCEEDED(hr))
 }
 
-WorkerMessageQueueThread::Impl::~Impl() {
-  if (!stopped) {
+WorkerMessageQueueThread::Impl::~Impl() noexcept {
+  if (!m_stopped) {
     quitSynchronous();
   }
 }
 
-void WorkerMessageQueueThread::Impl::runOnQueue(std::function<void()> &&func) {
+void WorkerMessageQueueThread::Impl::runOnQueue(std::function<void()> &&func) noexcept {
   // TODO: Asserts
   // Assert(!stopped)
 
   Microsoft::WRL::ComPtr<AsyncCallback> callback(new AsyncCallback(std::move(func)));
-  queue->QueueWorkItem(callback.Get(), nullptr /*pUserData*/);
+  m_queue->QueueWorkItem(callback.Get(), nullptr /*pUserData*/);
 }
 
-void WorkerMessageQueueThread::Impl::runOnQueueSync(std::function<void()> &&func) {
+void WorkerMessageQueueThread::Impl::runOnQueueSync(std::function<void()> &&func) noexcept {
   // TODO: Asserts
   // Assert(!stopped)
 
   Microsoft::WRL::ComPtr<AsyncCallback> callback(new AsyncCallback(std::move(func)));
-  queue->QueueWorkItem(callback.Get(), nullptr /*pUserData*/);
-  queue->WaitForCallbacksToComplete();
+  m_queue->QueueWorkItem(callback.Get(), nullptr /*pUserData*/);
+  m_queue->WaitForCallbacksToComplete();
 }
 
-void WorkerMessageQueueThread::Impl::quitSynchronous() {
+void WorkerMessageQueueThread::Impl::quitSynchronous() noexcept {
   // TODO: Asserts
   // Assert(!stopped)
-  queue->ShutDown();
-  stopped = true;
+  m_queue->ShutDown();
+  m_stopped = true;
 }
 
-WorkerMessageQueueThread::WorkerMessageQueueThread() {
+WorkerMessageQueueThread::WorkerMessageQueueThread() noexcept {
   m_pimpl = std::make_unique<WorkerMessageQueueThread::Impl>();
 }
 
-WorkerMessageQueueThread::~WorkerMessageQueueThread() {}
+WorkerMessageQueueThread::~WorkerMessageQueueThread() noexcept {}
 
-void WorkerMessageQueueThread::runOnQueue(std::function<void()> &&func) {
+void WorkerMessageQueueThread::runOnQueue(std::function<void()> &&func) noexcept {
   m_pimpl->runOnQueue(std::move(func));
 }
 
-void WorkerMessageQueueThread::runOnQueueSync(std::function<void()> &&func) {
+void WorkerMessageQueueThread::runOnQueueSync(std::function<void()> &&func) noexcept {
   m_pimpl->runOnQueueSync(std::move(func));
 }
 
-void WorkerMessageQueueThread::quitSynchronous() {
+void WorkerMessageQueueThread::quitSynchronous() noexcept {
   m_pimpl->quitSynchronous();
 }
 
-} // namespace uwp
-} // namespace react
+} // namespace react::uwp

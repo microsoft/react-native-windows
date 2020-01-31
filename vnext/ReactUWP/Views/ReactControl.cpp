@@ -13,6 +13,7 @@
 #include <INativeUIManager.h>
 #include <Views/KeyboardEventHandler.h>
 #include <Views/ShadowNodeBase.h>
+#include "Threading/MessageQueueThreadFactory.h"
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
@@ -191,7 +192,7 @@ void ReactControl::AttachRoot() noexcept {
     });
   });
 
-  // Register callback from instance for degugger attaching
+  // Register callback from instance for debugger attaching
   m_debuggerAttachCallbackCookie =
       m_reactInstance->RegisterDebuggerAttachCallback([this]() { HandleDebuggerAttach(); });
 
@@ -268,7 +269,8 @@ void ReactControl::DetachInstance() {
     // This extends the lifetime of NativeModules which may have
     // pending calls in these queues.
     // TODO prevent or check if even more is queued while these drain.
-    CreateWorkerMessageQueue()->runOnQueue([instance]() {});
+    // TODO: [vmorozov] We must remove this 'engineering workaround'
+    MakeSerialQueueThread()->runOnQueue([instance]() {});
     m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [instance]() {});
 
     // Clear members with a dependency on the reactInstance

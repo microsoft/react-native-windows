@@ -55,12 +55,5 @@ CreateReactRootView(XamlView parentView, const wchar_t *pJsComponentName, const 
   return rootView;
 }
 
-// Creates a background thread message queue whose tasks will run in serialized
-// order
-REACTWINDOWS_API_(std::shared_ptr<facebook::react::MessageQueueThread>)
-CreateWorkerMessageQueue() {
-  return std::make_shared<WorkerMessageQueueThread>();
-}
-
 } // namespace uwp
 } // namespace react

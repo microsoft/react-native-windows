@@ -83,6 +83,7 @@ struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCoun
   static DispatchQueueStatic *Instance() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeLooperScheduler() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeMainUIScheduler() noexcept;
+  static Mso::CntPtr<IDispatchQueueScheduler> MakeCurrentThreadUIScheduler() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeThreadPoolScheduler(uint32_t maxThreads) noexcept;
 
  public: // IDispatchQueueStatic
@@ -91,6 +92,7 @@ struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCoun
   DispatchQueue const &MainUIQueue() noexcept override;
   DispatchQueue MakeSerialQueue() noexcept override;
   DispatchQueue MakeLooperQueue() noexcept override;
+  DispatchQueue MakeCurrentThreadUIQueue() noexcept override;
   DispatchQueue MakeConcurrentQueue(uint32_t maxThreads) noexcept override;
   DispatchQueue MakeCustomQueue(Mso::CntPtr<IDispatchQueueScheduler> &&scheduler) noexcept override;
 };
