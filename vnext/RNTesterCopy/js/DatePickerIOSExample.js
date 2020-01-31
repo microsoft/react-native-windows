@@ -32,13 +32,7 @@ class WithDatePickerData extends React.Component<Props, State> {
 
   render() {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'gray',
-        }}>
+      <View>
         <WithLabel label="Value:">
           <Text testID="date-indicator">
             {this.state.date.toLocaleDateString()}
