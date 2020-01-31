@@ -70,8 +70,8 @@ node_modules
 ipch/
 [Oo]bj/
 [Bb]in
-[Dd]ebug*/
-[Rr]elease*/
+[Dd]ebug/
+[Rr]elease/
 *.tlog/
 Ankh.NoLoad
 UpgradeLog.htm
