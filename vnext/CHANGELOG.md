@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Jan 2020 23:29:21 GMT and should not be manually modified.
+This log was last generated on Fri, 31 Jan 2020 21:14:20 GMT and should not be manually modified.
 
+## 0.60.0-vnext.134
+Fri, 31 Jan 2020 21:14:20 GMT
+
+### Changes
+
+- Export loadScriptFromString from react-native-win32 (acoates@microsoft.com)
 ## 0.60.0-vnext.133
 Thu, 30 Jan 2020 23:29:21 GMT
 
