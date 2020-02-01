@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 31 Jan 2020 21:14:20 GMT and should not be manually modified.
+This log was last generated on Sat, 01 Feb 2020 00:30:27 GMT and should not be manually modified.
 
+## 0.60.0-vnext.135
+Sat, 01 Feb 2020 00:30:27 GMT
+
+### Changes
+
+- Fix Dimension returning DIP instead of physical pixels (dida@ntdev.microsoft.com)
 ## 0.60.0-vnext.134
 Fri, 31 Jan 2020 21:14:20 GMT
 

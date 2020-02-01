@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 01 Feb 2020 00:30:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.135",
+      "version": "0.60.0-vnext.135",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Dimension returning DIP instead of physical pixels",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "640d46b3d4d1a383c0373969c04d8e16102c2edb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jan 2020 21:14:20 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.134",
       "version": "0.60.0-vnext.134",
