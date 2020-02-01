@@ -10954,9 +10954,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz":
-  version "0.60.0-microsoft.40"
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz#ce39a3d9368de1cee08e261e4fe92d86299ded08"
+react-native@0.60.6:
+  version "0.60.6"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.60.6.tgz#8a13dece1c3f6e01db0833db14d2b01b2d8ccba5"
+  integrity sha512-eIoHh0fncrmw2WUs42D1KwLfatOuLFLFLOKzJJJ8mOOQtbo9i2rOOa0+2iWjefDoAy8BJH88bQGvDvlrexmhow==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^2.6.0"
