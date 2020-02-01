@@ -8,6 +8,7 @@
 ; These modules have base components and windows versions.
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
+<PROJECT_ROOT>/IntegrationTests/AsyncStorageTest.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
@@ -46,6 +47,11 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/RNTester/js/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/TouchableExample.js
+<PROJECT_ROOT>/RNTester/js/ViewExample.js
 
 ; This file is present in the microsoft/react-native fork, but not upstream.
 ; Blacklist it if using microsoft/react-native so we don't see duplicate
