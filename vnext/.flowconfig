@@ -46,6 +46,11 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/RNTester/js/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/TouchableExample.js
+<PROJECT_ROOT>/RNTester/js/ViewExample.js
 
 ; This file is present in the microsoft/react-native fork, but not upstream.
 ; Blacklist it if using microsoft/react-native so we don't see duplicate

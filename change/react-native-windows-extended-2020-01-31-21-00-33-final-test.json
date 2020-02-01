@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Use unforked react-native 0.60.6",
+  "packageName": "react-native-windows-extended",
+  "email": "nick@nickgerleman.com",
+  "commit": "a5f9cd30df0ab49c4c4fbc03fe5794dd42fabf37",
+  "dependentChangeType": "patch",
+  "date": "2020-02-01T05:00:33.272Z"
+}
