@@ -2,6 +2,20 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 01 Feb 2020 04:40:02 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.136",
+      "version": "0.60.0-vnext.136",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Export Instance->getModuleRegistry from react-native-win32.dll",
+            "author": "acoates@microsoft.com",
+            "commit": "c559fcfc31c1219f4873351f936d148a962c28ab"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Feb 2020 00:30:27 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.135",
       "version": "0.60.0-vnext.135",

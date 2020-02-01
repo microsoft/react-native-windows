@@ -1,7 +1,13 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 01 Feb 2020 00:30:27 GMT and should not be manually modified.
+This log was last generated on Sat, 01 Feb 2020 04:40:02 GMT and should not be manually modified.
 
+## 0.60.0-vnext.136
+Sat, 01 Feb 2020 04:40:02 GMT
+
+### Changes
+
+- Export Instance->getModuleRegistry from react-native-win32.dll (acoates@microsoft.com)
 ## 0.60.0-vnext.135
 Sat, 01 Feb 2020 00:30:27 GMT
 
