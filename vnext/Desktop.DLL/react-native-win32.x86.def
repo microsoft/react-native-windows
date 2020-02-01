@@ -36,6 +36,7 @@ EXPORTS
 ?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEX_JABUdynamic@folly@@@Z
+?getModuleRegistry@Instance@react@facebook@@QAEAAVModuleRegistry@23@XZ
 ?getPeakJsMemoryUsage@Instance@react@facebook@@QBE_JXZ
 ?get_ptr@dynamic@folly@@QGBEPBU12@V?$Range@PBD@2@@Z
 ?get_ptrImpl@dynamic@folly@@AGBEPBU12@ABU12@@Z
