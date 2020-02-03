@@ -8,7 +8,7 @@ pr:
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml # when using vs2019.yml, please remove workaround in e2e-test-job which is forced to use windows-2019 image.
+  - template: variables/vs2019.yml
 
 jobs:
   - job: Setup

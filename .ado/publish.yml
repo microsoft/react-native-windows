@@ -2,7 +2,7 @@ name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 variables:
   - template: variables/msbuild.yml
-  - template: variables/vs2017.yml
+  - template: variables/vs2019.yml
 
 trigger:
   batch: true
