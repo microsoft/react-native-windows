@@ -259,10 +259,10 @@ namespace NativeModuleSample
         REACT_CONSTANT(E);
         const double E = M_E;
 
-        REACT_CONSTANT(PI, "Pi");
+        REACT_CONSTANT(PI, L"Pi");
         const double PI = M_PI;
 
-        REACT_METHOD(Add, "add");
+        REACT_METHOD(Add, L"add");
         double Add(double a, double b) noexcept
         {
             double result = a + b;

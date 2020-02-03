@@ -29,11 +29,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     supportsTVOS: true,
   },
   {
-    key: 'DarkModeExample',
-    module: require('./DarkModeExample'),
-    supportsTVOS: false,
-  },
-  {
     key: 'DatePickerIOSExample',
     module: require('./DatePickerIOSExample'),
     supportsTVOS: false,
@@ -43,12 +38,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('./FlatListExample'),
     supportsTVOS: true,
   },
-  // [TODO(OSS Candidate ISS#2710739)
-  {
-    key: 'FocusEvents',
-    module: require('./FocusEventsExample'),
-    supportsTVOS: true,
-  }, // ]TODO(OSS Candidate ISS#2710739)
   {
     key: 'ImageExample',
     module: require('./ImageExample'),
