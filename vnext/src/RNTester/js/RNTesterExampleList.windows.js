@@ -130,10 +130,9 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
     return curr.item !== prev.item;
   }
 
-  _renderItem = ({item, isSelected, separators}) => (
+  _renderItem = ({item, separators}) => (
     <RowComponent
       item={item}
-      isSelected={isSelected}
       onNavigate={this.props.onNavigate}
       onShowUnderlay={separators.highlight}
       onHideUnderlay={separators.unhighlight}
