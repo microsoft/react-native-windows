@@ -13,7 +13,10 @@
  *
  * This class is responsible for coordinating the "focused"
  * state for TextInputs. All calls relating to the keyboard
- * should be funneled through here.
+ * should be funneled through here
+ *
+ * @format
+ * @flow strict-local
  */
 
 'use strict';
@@ -54,28 +57,6 @@ function blurTextInput(textFieldID: ?number) {
   }
 }
 
-/** [TODO(android ISS)
- * @param {number} TextInputID id of the text field that has received focus
- * Should be called after the view has received focus and fired the onFocus event
- * noop if the focused text field is same
- */
-function setFocusedTextInput(textFieldID: ?number) {
-  if (currentlyFocusedID !== textFieldID && textFieldID !== null) {
-    currentlyFocusedID = textFieldID;
-  }
-}
-
-/**
- * @param {number} TextInputID id of the text field whose focus has to be cleared
- * Should be called after the view has cleared focus and fired the onFocus event
- * noop if the focused text field is not same
- */
-function clearFocusedTextInput(textFieldID: ?number) {
-  if (currentlyFocusedID === textFieldID && textFieldID !== null) {
-    currentlyFocusedID = null;
-  }
-} // ]TODO(android ISS)
-
 function registerInput(textFieldID: number) {
   inputs.add(textFieldID);
 }
@@ -84,14 +65,12 @@ function unregisterInput(textFieldID: number) {
   inputs.delete(textFieldID);
 }
 
-function isTextInput(textFieldID: number) {
+function isTextInput(textFieldID: number): boolean {
   return inputs.has(textFieldID);
 }
 
 module.exports = {
   currentlyFocusedField,
-  setFocusedTextInput, // TODO(android ISS)
-  clearFocusedTextInput, // TODO(android ISS)
   focusTextInput,
   blurTextInput,
   registerInput,

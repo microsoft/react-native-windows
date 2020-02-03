@@ -9,6 +9,7 @@
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
 <PROJECT_ROOT>/Libraries/Color/normalizeColor.js
 <PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicator.js
@@ -46,7 +47,21 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 
+; This file is present in the microsoft/react-native fork, but not upstream.
+; Blacklist it if using microsoft/react-native so we don't see duplicate
+; modules when combined with out local patch. RNW #3995
+<PROJECT_ROOT>/Libraries/Color/NativeOrDynamicColorType.js
 
+; Schema files are used for turbo-module code generation, but are not bundled.
+; We don't yet have the react-native-codegen package they rely on, so supress
+; checks for now.
+<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicatorSchema.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/AndroidSwipeRefreshLayoutSchema.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/PullToRefreshViewSchema.js
+<PROJECT_ROOT>/Libraries/Components/Slider/SliderSchema.js
+<PROJECT_ROOT>/Libraries/Components/Switch/SwitchSchema.js
+<PROJECT_ROOT>/Libraries/Components/UnimplementedViews/UnimplementedNativeViewSchema.js
+<PROJECT_ROOT>/Libraries/Modal/ModalSchema.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -84,7 +99,12 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
+; Ignore RN copies, which cause duplicate violations to be shown
+.*/vnext/IntegrationTestsCopy/.*
+.*/vnext/RNTesterCopy/.*
+
 [untyped]
+<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
 
 [include]

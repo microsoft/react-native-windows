@@ -2,6 +2,48 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2020 23:29:21 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Allow Any Prerelease Version 0f 0.60 as Peer Dependency",
+            "author": "nick@nickgerleman.com",
+            "commit": "0461a6f5689e2c8fe99a05d5cef6ee263a070803"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 09:17:27 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Add win32 override of AnimatedInterpolation",
+            "author": "nick@nickgerleman.com",
+            "commit": "9b0fc7bcdaf03b3902fc1aa1755f44ba5fe2eb98"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Jan 2020 20:47:03 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Dont use haste imports",
+            "author": "acoates@microsoft.com",
+            "commit": "b3d1a2e6ee9102f9db468865ae2ace2d6bacd704"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jan 2020 21:21:47 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.3",
       "version": "0.26.3",

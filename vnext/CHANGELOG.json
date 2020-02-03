@@ -2,6 +2,104 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Jan 2020 23:29:21 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.133",
+      "version": "0.60.0-vnext.133",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow Any Prerelease Version 0f 0.60 as Peer Dependency",
+            "author": "nick@nickgerleman.com",
+            "commit": "0461a6f5689e2c8fe99a05d5cef6ee263a070803"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 22:08:51 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.132",
+      "version": "0.60.0-vnext.132",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Simple fixes to IReactContext.cpp and add a writer helper function for direct event type constant",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "e5d49e832d0b4449bb08093445864264601d1ae2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 21:10:31 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.131",
+      "version": "0.60.0-vnext.131",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add callstack to the error message when a JS error occurs.",
+            "author": "kinhln@microsoft.com",
+            "commit": "cd10882748a53fe4eb0550eb45b60f9f482c0a8d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 09:17:27 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.130",
+      "version": "0.60.0-vnext.130",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add as Windows Overrides",
+            "author": "nick@nickgerleman.com",
+            "commit": "1683435db9fe8ec57c835e7b5c0acb1d17190e15"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 01:22:53 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.129",
+      "version": "0.60.0-vnext.129",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Share RCTNetworking Library Between windows and windesktop",
+            "author": "nick@nickgerleman.com",
+            "commit": "d7f70938cf8aa42098e51f1c62ba3a7b6266e505"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Jan 2020 18:46:55 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.128",
+      "version": "0.60.0-vnext.128",
+      "comments": {
+        "none": [
+          {
+            "comment": "Upgrade OpenSSL NuGet to 1.1.1-d.3",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b0c7029f3261b3d386c22c9c803fc860e30f9b40"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Jan 2020 01:55:04 GMT",
+      "tag": "react-native-windows_v0.60.0-vnext.128",
+      "version": "0.60.0-vnext.128",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Crash When Running CLI Projects",
+            "author": "nick@nickgerleman.com",
+            "commit": "793ea817033c556cc28210961fd71726823a1b59"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jan 2020 18:08:35 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.127",
       "version": "0.60.0-vnext.127",

@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Merge IntegrationTests and RNTester with Stock React Native 60.0.6",
+  "packageName": "react-native-windows",
+  "email": "nick@nickgerleman.com",
+  "commit": "6619df5e5efcbc5394e4dcf6bb88b5bc4114e03b",
+  "dependentChangeType": "patch",
+  "date": "2020-01-31T06:38:27.242Z"
+}

@@ -15,6 +15,7 @@
 #include "Unicode.h"
 
 #include "Chakra/ChakraExecutor.h"
+#include "Chakra/ChakraHelpers.h"
 #include "Chakra/ChakraUtils.h"
 #include "JSI/Shared/RuntimeHolder.h"
 
@@ -579,6 +580,10 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
 
+#if defined(_CHAKRACORE_H_)
+    } catch (const facebook::react::ChakraJSException &e) {
+      m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
+#endif
     } catch (std::exception &e) {
       m_devSettings->errorCallback(e.what());
     }
