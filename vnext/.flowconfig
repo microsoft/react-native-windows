@@ -46,6 +46,12 @@
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/RNTester/js/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/RNTesterExampleList.js
+<PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/TouchableExample.js
+<PROJECT_ROOT>/RNTester/js/ViewExample.js
 
 ; Schema files are used for turbo-module code generation, but are not bundled.
 ; We don't yet have the react-native-codegen package they rely on, so supress

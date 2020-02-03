@@ -22,15 +22,19 @@
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
+<PROJECT_ROOT>/Libraries/ReactNative/getNativeComponentAttributes.js
+<PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 <PROJECT_ROOT>/Libraries/YellowBox/UI/YellowBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/YellowBox/UI/YellowBoxInspectorSourceMapStatus.js
 <PROJECT_ROOT>/Libraries/YellowBox/UI/YellowBoxList.js
-; This example currently uses mac dynamic colors
+<PROJECT_ROOT>/RNTester/js/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+
+; These examples currently uses mac dynamic colors
 <PROJECT_ROOT>/RNTester/js/ActivityIndicatorExample.js
-; This example currently uses mac dynamic colors
 <PROJECT_ROOT>/RNTester/js/DarkModeExample.js
 
 ; Schema files are used for turbo-module code generation, but are not bundled.
