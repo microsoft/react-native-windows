@@ -48,6 +48,7 @@
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 <PROJECT_ROOT>/RNTester/js/FlatListExample.js
 <PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/RNTesterExampleList.js
 <PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
 <PROJECT_ROOT>/RNTester/js/TouchableExample.js
 <PROJECT_ROOT>/RNTester/js/ViewExample.js
