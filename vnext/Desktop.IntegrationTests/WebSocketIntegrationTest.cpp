@@ -88,7 +88,7 @@ TEST_METHOD(WaitForBundlerResponseNoClose) {
   // string url = "ws://localhost:5555/";
   auto ws = IWebSocket::Make(url);
   string json =
-      "{\"inject\":{},\"id\":1,\"method\":\"executeApplicationScript\",\"url\":\"http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=ios&dev=true\"}";
+      "{\"inject\":{},\"id\":1,\"method\":\"executeApplicationScript\",\"url\":\"http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=ios&dev=true\"}";
   // string json = "{}";
   std::mutex mutex;
   condition_variable condition;
