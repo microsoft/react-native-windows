@@ -36,6 +36,7 @@ type Props = {
 
 class RowComponent extends React.PureComponent<{
   item: Object,
+  isSelected?: ?boolean,
   onNavigate: Function,
   onPress?: Function,
   onShowUnderlay?: Function,
@@ -50,12 +51,15 @@ class RowComponent extends React.PureComponent<{
   };
   render() {
     const {item} = this.props;
+    const rowStyle = this.props.isSelected ? styles.selectedRow : styles.row;
     return (
       <TouchableHighlight
         onShowUnderlay={this.props.onShowUnderlay}
         onHideUnderlay={this.props.onHideUnderlay}
+        onAccessibilityTap={this._onPress}
+        acceptsKeyboardFocus={false} // TODO(macOS ISS#2323203)
         onPress={this._onPress}>
-        <View style={styles.row}>
+        <View style={rowStyle}>
           <Text style={styles.rowTitleText}>{item.module.title}</Text>
           <Text style={styles.rowDetailText}>{item.module.description}</Text>
         </View>
@@ -104,6 +108,9 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
               enableEmptySections={true}
               itemShouldUpdate={this._itemShouldUpdate}
               keyboardShouldPersistTaps="handled"
+              acceptsKeyboardFocus={true} // TODO(macOS ISS#2323203)
+              onSelectionEntered={this._handleOnSelectionEntered} // TODO(macOS ISS#2323203)
+              enableSelectionOnKeyPress={true} // TODO(macOS ISS#2323203)
               automaticallyAdjustContentInsets={false}
               keyboardDismissMode="on-drag"
               renderSectionHeader={renderSectionHeader}
@@ -114,13 +121,19 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
     );
   }
 
+  _handleOnSelectionEntered = item => {
+    const {key} = item;
+    this.props.onNavigate(RNTesterActions.ExampleAction(key));
+  };
+
   _itemShouldUpdate(curr, prev) {
     return curr.item !== prev.item;
   }
 
-  _renderItem = ({item, separators}) => (
+  _renderItem = ({item, isSelected, separators}) => (
     <RowComponent
       item={item}
+      isSelected={isSelected}
       onNavigate={this.props.onNavigate}
       onShowUnderlay={separators.highlight}
       onHideUnderlay={separators.unhighlight}
@@ -168,12 +181,19 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     backgroundColor: '#eeeeee',
+    color: 'black',
     padding: 5,
     fontWeight: '500',
     fontSize: 11,
   },
   row: {
     backgroundColor: 'white',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+  },
+  selectedRow: {
+    backgroundColor: '#DDECF8',
     justifyContent: 'center',
     paddingHorizontal: 15,
     paddingVertical: 8,
@@ -187,12 +207,15 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     backgroundColor: 'rgb(217, 217, 217)',
   },
-  sectionListContentContainer: {
-    backgroundColor: 'white',
-  },
+  sectionListContentContainer: Platform.select({
+    macos: {backgroundColor: {semantic: 'separatorColor'}},
+    ios: {backgroundColor: {semantic: 'separatorColor'}},
+    default: {backgroundColor: 'white'},
+  }),
   rowTitleText: {
     fontSize: 17,
     fontWeight: '500',
+    color: 'black',
   },
   rowDetailText: {
     fontSize: 15,
