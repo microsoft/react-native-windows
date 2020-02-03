@@ -1,6 +1,5 @@
 variables:
   VmImage: windows-2019
-  VsComponents: ''
   MSBuildVersion: 16.0
   GoogleTestAdapterPath: 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\pemwd5jw.szc'
   BaseIntDir: $(Agent.HomeDirectory)\BaseIntDir # redirect to C:
