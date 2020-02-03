@@ -30,37 +30,37 @@ jobs:
         #X64Debug:
         #  BuildConfiguration: Debug
         #  BuildPlatform: x64
-        #  UseRNFork: true
+        #  applyRnPatches: true
         #  LayoutHeaders: true
         #X64Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x64
-        #  UseRNFork: true
+        #  applyRnPatches: true
         #ArmDebug:
         #  BuildConfiguration: Debug
         #  BuildPlatform: arm
-        #  UseRNFork: true
+        #  applyRnPatches: true
         #X86Debug:
         #  BuildConfiguration: Debug
         #  BuildPlatform: x86
-        #  UseRNFork: true
+        #  applyRnPatches: true
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-          UseRNFork: true
+          applyRnPatches: true
         # Temporarily omitting to save disk space.
         # ArmRelease:
         #   BuildConfiguration: Release
         #   BuildPlatform: arm
-        #   UseRNFork: true
+        #   applyRnPatches: true
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: arm64
-          UseRNFork: true
-        PublicRNX86Debug:
+          applyRnPatches: true
+        UnpatchedRNX86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-          UseRNFork: false
+          applyRnPatches: false
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -73,7 +73,7 @@ jobs:
 
       - template: templates/build-rnw.yml
         parameters:
-          useRnFork: $(UseRNFork)
+          applyRnPatches: $(applyRnPatches)
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
@@ -94,11 +94,11 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-          UseRNFork: true
+          applyRnPatches: true
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          UseRNFork: true
+          applyRnPatches: true
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -111,7 +111,7 @@ jobs:
         
       - template: templates/prepare-env.yml
         parameters:
-          useRnFork: $(UseRNFork)
+          applyRnPatches: $(applyRnPatches)
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
           yarnBuildCmd: build
 
@@ -135,7 +135,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
       - task: CmdLine@2
         displayName: Create Playground bundle
@@ -149,7 +149,7 @@ jobs:
           command: restore
           restoreSolution: packages/microsoft-reactnative-sampleapps/windows/SampleApps.sln
           verbosityRestore: Detailed # Options: quiet, normal, detailed
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
       - task: MSBuild@1
         displayName: MSBuild - SampleApps
@@ -164,7 +164,7 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), ne(variables['BuildPlatform'], 'x86'), false) # Disabled. issue #3670  Unable to resolve module `warnOnce`
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'), ne(variables['BuildPlatform'], 'x86'), false) # Disabled. issue #3670  Unable to resolve module `warnOnce`
 
       # Possible related to https://social.msdn.microsoft.com/Forums/vstudio/en-US/23c8df57-9c50-476c-9f56-1fe058e75a9d/uwp-app-builds-on-local-machine-fails-on-build-agent-systemprivatecorelib-not-found
       # use X86 msbuild to avoid ##[error]...Microsoft.AppXPackage.Targets(1248,5): Error MSB3816: Loading assembly "\runtime.win7-x86.microsoft.netcore.runtime.coreclr\1.0.2\runtimes\win7-x86\lib\netstandard1.0\mscorlib.dll" failed. 
@@ -183,21 +183,21 @@ jobs:
             /p:PlatformToolset=$(MSBuildPlatformToolset)
             /p:BaseIntDir=$(BaseIntDir)
           clean: true # Optional
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'), eq(variables['BuildPlatform'], 'x86'), false) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'), eq(variables['BuildPlatform'], 'x86'), false) # Disabled. [error]vnext\Microsoft.ReactNative.SharedManaged\JSValue.cs(100,36): Error CS8107: Feature 'readonly references' is not available in C# 7.0. Please use language version 7.2 or greater.
 
       - task: CmdLine@2
         displayName: Create SampleApp bundle
         inputs:
           script: node node_modules/react-native/local-cli/cli.js bundle --entry-file index.windows.js --bundle-output SampleApp.bundle
           workingDirectory: packages\microsoft-reactnative-sampleapps
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
       - task: CmdLine@2
         displayName: Create RNTester bundle
         inputs:
           script: node ../node_modules/react-native/local-cli/cli.js bundle --entry-file .\RNTester.js --bundle-output RNTester.windows.bundle --platform windows
           workingDirectory: vnext
-        condition: and(succeeded(), eq(variables['UseRNFork'], 'true'))
+        condition: and(succeeded(), eq(variables['applyRnPatches'], 'true'))
 
 
   - job: RNWDesktopPR
@@ -329,7 +329,7 @@ jobs:
         displayName: Check the metro bundle server
         inputs:
           targetType: 'inline'
-          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsAppWin.bundle?platform=windesktop&dev=true"
+          script: Invoke-WebRequest -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windesktop&dev=true"
         condition: failed()
 
       - template: templates/stop-packagers.yml
@@ -587,7 +587,7 @@ jobs:
     parameters:
       name: E2ETest
       BuildPlatform: x64
-      UseRNFork: true
+      applyRnPatches: true
 
   - job: RNWNugetPR
     displayName: Build and Pack Nuget
