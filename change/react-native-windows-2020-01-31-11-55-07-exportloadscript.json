@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Export loadScriptFromString from react-native-win32",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "commit": "6dec85a42e5f918b344680fe693b50c0b02ae761",
+  "dependentChangeType": "patch",
+  "date": "2020-01-31T19:55:07.196Z"
+}

@@ -7,7 +7,7 @@
 
 'use strict';
 
-const UIManager = require('UIManager');
+const UIManager = require('../../ReactNative/UIManager');
 
 let currentlyFocusedID: ?number = null;
 const inputs = new Set();

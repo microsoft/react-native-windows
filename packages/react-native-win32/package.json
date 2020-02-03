@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.26.3",
+  "version": "0.26.4",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",
@@ -20,7 +20,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@babel/runtime": "^7.4.0",
+    "@babel/runtime": "^7.0.0",
     "@react-native-community/cli": "^2.6.0",
     "fbjs-scripts": "^1.1.0",
     "abort-controller": "^3.0.0",
@@ -42,7 +42,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz",
+    "react-native": "0.60.6",
     "@office-iss/rex-win32": "0.0.33",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
@@ -57,8 +57,7 @@
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.60.0 || 0.60.0-microsoft.40 || https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz",
-    "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react-native": "^0.60.0-0",
+    "react": "16.8.6"
   }
 }

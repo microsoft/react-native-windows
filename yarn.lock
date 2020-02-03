@@ -2717,14 +2717,6 @@
     js-yaml "~3.13.1"
     resolve "1.8.1"
 
-"@microsoft/api-extractor-model@7.7.5":
-  version "7.7.5"
-  resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.7.5.tgz#ddf6eb87d723361204d77d3570a2e7cb7743ec62"
-  integrity sha512-zMk+iqG7AVPYwAn2S/KgtRLnFLd66+XJx1ld86RT36z3zHcrr1Xg/PbHGfaXr4m+4nT/MASGRJV6/xf7wnaa0A==
-  dependencies:
-    "@microsoft/node-core-library" "3.19.1"
-    "@microsoft/tsdoc" "0.12.14"
-
 "@microsoft/api-extractor-model@7.7.7":
   version "7.7.7"
   resolved "https://registry.yarnpkg.com/@microsoft/api-extractor-model/-/api-extractor-model-7.7.7.tgz#1d15eae7a19b72abbfca9053f200fe79b6f9d755"
@@ -2747,19 +2739,6 @@
     resolve "1.8.1"
     source-map "~0.6.1"
     typescript "~3.7.2"
-
-"@microsoft/node-core-library@3.19.1":
-  version "3.19.1"
-  resolved "https://registry.yarnpkg.com/@microsoft/node-core-library/-/node-core-library-3.19.1.tgz#cc881d9a3ccb21857ecc71bfc2df92e52fe82907"
-  integrity sha512-CTlTX3goPe2HUWg+n5w/cYUFI+qTx2gv4XVycjpPRi5KqwrowZ+wfSWkaM7AQ8RaMZ7d4AXVXeRm+2k6eW261g==
-  dependencies:
-    "@types/node" "10.17.13"
-    colors "~1.2.1"
-    fs-extra "~7.0.1"
-    jju "~1.4.0"
-    semver "~5.3.0"
-    timsort "~0.3.0"
-    z-schema "~3.18.3"
 
 "@microsoft/node-core-library@3.19.3":
   version "3.19.3"
@@ -10975,10 +10954,10 @@ react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.9.0.tgz#21ca9561399aad0ff1a7701c01683e8ca981edcb"
   integrity sha512-tJBzzzIgnnRfEm046qRcURvwQnZVXmuCbscxUO5RWrGTXpon2d4c8mI0D8WE6ydVIm29JiLB6+RslkIvym9Rjw==
 
-"react-native@https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz":
-  version "0.60.0-microsoft.40"
-  uid ce39a3d9368de1cee08e261e4fe92d86299ded08
-  resolved "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz#ce39a3d9368de1cee08e261e4fe92d86299ded08"
+react-native@0.60.6:
+  version "0.60.6"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.60.6.tgz#8a13dece1c3f6e01db0833db14d2b01b2d8ccba5"
+  integrity sha512-eIoHh0fncrmw2WUs42D1KwLfatOuLFLFLOKzJJJ8mOOQtbo9i2rOOa0+2iWjefDoAy8BJH88bQGvDvlrexmhow==
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^2.6.0"
