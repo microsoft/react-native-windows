@@ -358,12 +358,12 @@ const ReactNativeViewConfig = {
     accessibilitySetSize: true,
     tooltip: true,
     accessibilityPosInSet: true,
-    onMouseEnter: true, 
+    onMouseEnter: true,
     enableFocusRing: true,
     onClick: true,
     onMouseLeave: true,
     acceptsKeyboardFocus: true,
-    tabIndex: true,   
+    tabIndex: true,
   },
 };
 

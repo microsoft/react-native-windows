@@ -877,8 +877,8 @@ const TextInput = createReactClass({
     return typeof this.props.value === 'string'
       ? this.props.value
       : typeof this.props.defaultValue === 'string'
-      ? this.props.defaultValue
-      : '';
+        ? this.props.defaultValue
+        : '';
   },
 
   _setNativeRef: function(ref: any) {
