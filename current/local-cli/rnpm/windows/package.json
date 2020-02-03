@@ -25,6 +25,7 @@
     "extract-zip": "^1.6.7",
     "fs-extra": "^7.0.1",
     "npm-registry": "^0.1.13",
+    "prompts": "^2.3.0",
     "request": "^2.88.0",
     "semver": "^6.1.1",
     "valid-url": "^1.0.9"

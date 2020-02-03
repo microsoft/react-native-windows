@@ -11,7 +11,6 @@
 'use strict';
 
 const React = require('react');
-import Platform from '../../Libraries/Utilities/Platform'; // TODO(OSS Candidate ISS#2710739)
 const {ScrollView, StyleSheet, View} = require('react-native');
 
 const RNTesterTitle = require('./RNTesterTitle');
@@ -53,17 +52,7 @@ class RNTesterPage extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    ...Platform.select({
-      ios: {
-        backgroundColor: {semantic: 'secondarySystemBackgroundColor'},
-      },
-      macos: {
-        backgroundColor: {semantic: 'underPageBackgroundColor'},
-      },
-      default: {
-        backgroundColor: '#e9eaed',
-      },
-    }),
+    backgroundColor: '#e9eaed',
     flex: 1,
   },
   spacer: {
