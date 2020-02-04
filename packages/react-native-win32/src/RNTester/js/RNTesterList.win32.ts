@@ -54,6 +54,10 @@ const ComponentExamples: Array<IRNTesterExample> = [
     key: 'ImageWin32Test',
     module: require('../../Libraries/Image/Tests/ImageWin32Test'),
   },
+  {
+    key: 'PickerExample',
+    module: require('../../Libraries/Components/Picker/Tests/PickerWin32Example'),
+  }
 ];
 
 const APIExamples: Array<IRNTesterExample> = [
