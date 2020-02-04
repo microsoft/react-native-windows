@@ -10,6 +10,7 @@
 
 #include "ReactApplicationDelegate.g.cpp"
 #include "ReactNativeHost.h"
+#include "ReactSupport.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -22,7 +23,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstring const &arguments) noexcept {
   // Microsoft::ReactNative::implementation::ReactNativeHost* hostImpl {
   // get_self<Microsoft::ReactNative::implementation::ReactNativeHost>(host)};
-  if (!arguments.empty() && host.HasInstance()) {
+  if (!arguments.empty() /*&& host.HasInstance()*/) {
     // TODO: check for 'remoteDebugging'.  Return if not found.  Otherwise,
     // validate a value is provided and then parse it to set the
     // ReactInstanceManager.DevSupportManager.IsRemoteDebuggingEnabled flag
@@ -31,14 +32,10 @@ static void ApplyArguments(ReactNative::ReactNativeHost const &host, std::wstrin
 
 ReactApplicationDelegate::ReactApplicationDelegate(Application const &application) noexcept
     : m_application(application) {
-  if (application == nullptr) {
-    throw winrt::hresult_null_argument(); // ArgumentNullException
-  }
+  VerifyElseCrash(application);
 
   m_reactApplication = application.as<IReactApplication>();
-  if (m_reactApplication == nullptr) {
-    throw winrt::hresult_invalid_argument(L"Expected argument to implement 'IReactApplication' interface");
-  }
+  VerifyElseCrashSz(m_reactApplication, "Expected argument to implement 'IReactApplication' interface");
 
   m_application.Resuming({this, &ReactApplicationDelegate::OnResuming});
   m_application.Suspending({this, &ReactApplicationDelegate::OnSuspending});
@@ -52,13 +49,11 @@ void ReactApplicationDelegate::OnActivated(IActivatedEventArgs const &args) noex
       auto protocolArgs = args.as<IProtocolActivatedEventArgs>();
       // auto uri = protocolArgs.Uri;
 
-      // TODO: Need to support deep linking by integrating with the Linking
-      // module
+      // TODO: Need to support deep linking by integrating with the Linking module
       if (args.PreviousExecutionState() != ApplicationExecutionState::Running) {
-        // TODO... Figure out the right activation path for
-        // PreviousExecutionState
-        throw winrt::hresult_not_implemented(
-            L"ReactApplicationDelegate.OnActivated doesn't handle PreviousExecutionState other than Running");
+        // TODO... Figure out the right activation path for PreviousExecutionState
+        VerifyElseCrashSz(
+            false, "ReactApplicationDelegate.OnActivated doesn't handle PreviousExecutionState other than Running");
       } else {
         // TODO... Figure out the right activation path
         OutputDebugStringW(
@@ -74,7 +69,23 @@ UIElement ReactApplicationDelegate::OnCreate(hstring const &arguments) noexcept 
   host.OnResume([=]() { m_application.Exit(); });
 
   ApplyArguments(host, arguments.c_str());
-  return host.GetOrCreateRootView(nullptr);
+
+  if (m_reactRootView != nullptr) {
+    return *m_reactRootView;
+  }
+
+  // Nudge the ReactNativeHost to create the instance and wrapping context
+  host.ReloadInstance();
+
+  m_reactRootView = winrt::make_self<ReactRootView>();
+  m_reactRootView->ComponentName(host.InstanceSettings().MainComponentName());
+  m_reactRootView->ReactNativeHost(host);
+
+  auto resources = Application::Current().Resources();
+  auto brush = resources.Lookup(box_value(L"ApplicationPageBackgroundThemeBrush")).as<Media::SolidColorBrush>();
+  m_reactRootView->Background(brush);
+
+  return *m_reactRootView;
 }
 
 void ReactApplicationDelegate::OnResuming(IInspectable const &sender, IInspectable const &args) noexcept {

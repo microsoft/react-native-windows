@@ -104,10 +104,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\queueService.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskBatch.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\looperScheduler.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\mainUIScheduler_winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskContext.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\taskQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\threadPoolScheduler_win.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)src\dispatchQueue\uiScheduler_winrt.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\errorCode\errorCode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\eventWaitHandle\eventWaitHandleImpl_win.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)src\future\cancellationTokenImpl.cpp" />
