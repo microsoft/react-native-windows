@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 29 Jan 2020 20:47:03 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Feb 2020 21:15:58 GMT and should not be manually modified.
 
+## 0.27.0
+Tue, 04 Feb 2020 21:15:58 GMT
+
+### Minor changes
+
+- Add AccessibilityInfo native module to react-native-win32 (adrum@microsoft.com)
 ## 0.26.4
 Wed, 29 Jan 2020 20:47:03 GMT
 

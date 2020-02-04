@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 04 Feb 2020 21:15:58 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.0",
+      "version": "0.27.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Add AccessibilityInfo native module to react-native-win32",
+            "author": "adrum@microsoft.com",
+            "commit": "83fa0a4510d486b2f56617152971f2ea6be64242"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 31 Jan 2020 19:14:06 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.4",
       "version": "0.26.4",
