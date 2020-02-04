@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Replaced Catch2 unit tests with Motif GTest tests",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "0e178bd76c24434dcd527f79bad8e62fc6501ab7",
+  "dependentChangeType": "patch",
+  "date": "2020-02-04T23:46:48.999Z"
+}
