@@ -10,7 +10,10 @@
 
 'use strict';
 
+const RNTesterActions = require('../utils/RNTesterActions');
+const RNTesterExampleFilter = require('./RNTesterExampleFilter');
 const React = require('react');
+
 const {
   Platform,
   SectionList,
@@ -19,11 +22,9 @@ const {
   TouchableHighlight,
   View,
 } = require('react-native');
-const RNTesterActions = require('./RNTesterActions');
-const RNTesterExampleFilter = require('./RNTesterExampleFilter');
 
-import type {RNTesterExample} from './Shared/RNTesterTypes';
-import type {ViewStyleProp} from '../../Libraries/StyleSheet/StyleSheet';
+import type {ViewStyleProp} from '../../../Libraries/StyleSheet/StyleSheet';
+import type {RNTesterExample} from '../types/RNTesterTypes';
 
 type Props = {
   onNavigate: Function,
@@ -36,7 +37,6 @@ type Props = {
 
 class RowComponent extends React.PureComponent<{
   item: Object,
-  isSelected?: ?boolean,
   onNavigate: Function,
   onPress?: Function,
   onShowUnderlay?: Function,
@@ -51,7 +51,6 @@ class RowComponent extends React.PureComponent<{
   };
   render() {
     const {item} = this.props;
-    const rowStyle = this.props.isSelected ? styles.selectedRow : styles.row;
     return (
       <TouchableHighlight
         onShowUnderlay={this.props.onShowUnderlay}
@@ -59,7 +58,7 @@ class RowComponent extends React.PureComponent<{
         onAccessibilityTap={this._onPress}
         acceptsKeyboardFocus={false} // TODO(macOS ISS#2323203)
         onPress={this._onPress}>
-        <View style={rowStyle}>
+        <View style={styles.row}>
           <Text style={styles.rowTitleText}>{item.module.title}</Text>
           <Text style={styles.rowDetailText}>{item.module.description}</Text>
         </View>
@@ -73,7 +72,7 @@ const renderSectionHeader = ({section}) => (
 );
 
 class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
-  render() {
+  render(): React.Node {
     const filter = ({example, filterRegex}) =>
       filterRegex.test(example.module.title) &&
       (!Platform.isTV || example.supportsTVOS);
@@ -109,8 +108,6 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
               itemShouldUpdate={this._itemShouldUpdate}
               keyboardShouldPersistTaps="handled"
               acceptsKeyboardFocus={true} // TODO(macOS ISS#2323203)
-              onSelectionEntered={this._handleOnSelectionEntered} // TODO(macOS ISS#2323203)
-              enableSelectionOnKeyPress={true} // TODO(macOS ISS#2323203)
               automaticallyAdjustContentInsets={false}
               keyboardDismissMode="on-drag"
               renderSectionHeader={renderSectionHeader}
@@ -120,11 +117,6 @@ class RNTesterExampleList extends React.Component<Props, $FlowFixMeState> {
       </View>
     );
   }
-
-  _handleOnSelectionEntered = item => {
-    const {key} = item;
-    this.props.onNavigate(RNTesterActions.ExampleAction(key));
-  };
 
   _itemShouldUpdate(curr, prev) {
     return curr.item !== prev.item;
@@ -180,19 +172,12 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     backgroundColor: '#eeeeee',
-    color: 'black',
     padding: 5,
     fontWeight: '500',
     fontSize: 11,
   },
   row: {
     backgroundColor: 'white',
-    justifyContent: 'center',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-  },
-  selectedRow: {
-    backgroundColor: '#DDECF8',
     justifyContent: 'center',
     paddingHorizontal: 15,
     paddingVertical: 8,
@@ -206,15 +191,12 @@ const styles = StyleSheet.create({
     height: StyleSheet.hairlineWidth,
     backgroundColor: 'rgb(217, 217, 217)',
   },
-  sectionListContentContainer: Platform.select({
-    macos: {backgroundColor: {semantic: 'separatorColor'}},
-    ios: {backgroundColor: {semantic: 'separatorColor'}},
-    default: {backgroundColor: 'white'},
-  }),
+  sectionListContentContainer: {
+    backgroundColor: 'white',
+  },
   rowTitleText: {
     fontSize: 17,
     fontWeight: '500',
-    color: 'black',
   },
   rowDetailText: {
     fontSize: 15,
