@@ -345,6 +345,16 @@ void UIManager::measureInWindow(int64_t reactTag, facebook::xplat::module::CxxMo
   m_nativeUIManager->measureInWindow(node, callback);
 }
 
+void UIManager::measureLayout(
+    int64_t reactTag,
+    int64_t ancestorReactTag,
+    facebook::xplat::module::CxxModule::Callback errorCallback,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  auto &node = m_nodeRegistry.getNode(reactTag);
+  auto &ancestorNode = m_nodeRegistry.getNode(ancestorReactTag);
+  m_nativeUIManager->measureLayout(node, ancestorNode, errorCallback, callback);
+};
+
 void UIManager::findSubviewIn(
     int64_t reactTag,
     folly::dynamic &&coordinates,
@@ -493,6 +503,11 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
       Method(
           "measureInWindow",
           [manager](dynamic args, Callback cb) { manager->measureInWindow(jsArgAsInt(args, 0), cb); }),
+      Method(
+          "measureLayout",
+          [manager](dynamic args, Callback cbError) {
+            manager->measureLayout(jsArgAsInt(args, 0), jsArgAsInt(args, 1), cbError, cbError);
+          }),
       Method(
           "findSubviewIn",
           [manager](dynamic args, Callback cb) {

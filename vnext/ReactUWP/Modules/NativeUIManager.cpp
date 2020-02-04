@@ -11,6 +11,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Media.h>
+#include "Unicode.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -975,6 +976,36 @@ void NativeUIManager::measureInWindow(
   }
 
   callback(args);
+}
+
+void NativeUIManager::measureLayout(
+    facebook::react::ShadowNode &shadowNode,
+    facebook::react::ShadowNode &ancestorNode,
+    facebook::xplat::module::CxxModule::Callback errorCallback,
+    facebook::xplat::module::CxxModule::Callback callback) {
+  std::vector<folly::dynamic> args;
+  try {
+    auto &target = static_cast<ShadowNodeBase &>(shadowNode);
+    auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
+    auto targetView = target.GetView().as<winrt::FrameworkElement>();
+    auto ancenstorView = ancestor.GetView().as<winrt::FrameworkElement>();
+
+    auto ancestorViewtransform = targetView.TransformToVisual(ancenstorView);
+    auto relativePosition = ancestorViewtransform.TransformPoint({0, 0});
+
+    // x, y
+    args.push_back(relativePosition.X);
+    args.push_back(relativePosition.Y);
+
+    // Size
+    args.push_back(targetView.ActualWidth());
+    args.push_back(targetView.ActualHeight());
+    callback(args);
+  } catch (winrt::hresult_error const &e) {
+    const auto &msg = e.message();
+    args.push_back(Microsoft::Common::Unicode::Utf16ToUtf8(msg.c_str(), msg.size()));
+    errorCallback(args);
+  }
 }
 
 void NativeUIManager::findSubviewIn(

@@ -58,6 +58,11 @@ struct INativeUIManager {
   virtual void measureInWindow(
       facebook::react::ShadowNode &shadowNode,
       facebook::xplat::module::CxxModule::Callback callback) = 0;
+  virtual void measureLayout(
+      facebook::react::ShadowNode &shadowNode,
+      facebook::react::ShadowNode &ancestorShadowNode,
+      facebook::xplat::module::CxxModule::Callback errorCallback,
+      facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual void focus(int64_t reactTag) = 0;
   virtual void blur(int64_t reactTag) = 0;
   virtual void findSubviewIn(

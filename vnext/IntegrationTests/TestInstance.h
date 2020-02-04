@@ -74,6 +74,11 @@ class TestNativeUIManager : public facebook::react::INativeUIManager {
       facebook::xplat::module::CxxModule::Callback callback) override;
   void measureInWindow(facebook::react::ShadowNode &shadowNode, facebook::xplat::module::CxxModule::Callback callback)
       override;
+  void measureLayout(
+      facebook::react::ShadowNode &shadowNode,
+      facebook::react::ShadowNode &ancestorShadowNode,
+      facebook::xplat::module::CxxModule::Callback callbackFail,
+      facebook::xplat::module::CxxModule::Callback callbackSuccess) override;
   void findSubviewIn(
       facebook::react::ShadowNode &shadowNode,
       float x,

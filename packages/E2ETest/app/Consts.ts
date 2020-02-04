@@ -33,7 +33,8 @@ export const ACCESSBILITY_TESTPAGE = 'AccessiblityTestPage';
 // Direct Manipulation Page
 export const DIRECT_MANIPULATION_TESTPAGE = 'DirectManipulationTestPage';
 export const MEASURE_IN_WINDOW_BUTTON = 'MeasureInWindow';
-export const MEASURE_IN_WINDOW_RESULT = 'MeasureInWindowResult';
+export const MEASURE_LAYOUT_BUTTON = 'MeasureLayout';
+export const DIRECT_MANIPULATION_RESULT = 'DirectManipulationResult';
 
 // Image Test Page
 export const IMAGE_TESTPAGE = 'ImageTestPage';

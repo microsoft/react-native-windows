@@ -47,6 +47,11 @@ class IUIManager {
   virtual void replaceExistingNonRootView(int64_t oldTag, int64_t newTag) = 0;
   virtual void measure(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual void measureInWindow(int64_t reactTag, facebook::xplat::module::CxxModule::Callback callback) = 0;
+  virtual void measureLayout(
+      int64_t reactTag,
+      int64_t ancestorReactTag,
+      facebook::xplat::module::CxxModule::Callback errorCallback,
+      facebook::xplat::module::CxxModule::Callback callback) = 0;
   virtual INativeUIManager *getNativeUIManager() = 0;
 
   virtual void focus(int64_t tag) = 0;
