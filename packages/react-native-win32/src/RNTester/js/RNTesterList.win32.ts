@@ -56,7 +56,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'PickerExample',
-    module: require('../../Libraries/Components/Picker/Tests/PickerWin32Example'),
+    module: require('./PickerExample'),
   }
 ];
 
