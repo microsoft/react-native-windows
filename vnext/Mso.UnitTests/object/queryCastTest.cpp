@@ -372,8 +372,8 @@ inline TTarget *TraitsQueryCast(const TSource &source, const GUID &riid = __uuid
 }
 
 TestClassComponent(ObjectQueryCastTest, Mso.ObjectQueryCast)
-    TEST_CLASS(ObjectQueryCastTest){// Use GUID by default.
-                                    TEST_METHOD(QueryCastTraits_Guid){QueryCastTraitsSample1 obj;
+    TEST_CLASS (ObjectQueryCastTest){// Use GUID by default.
+                                     TEST_METHOD(QueryCastTraits_Guid){QueryCastTraitsSample1 obj;
 
 auto base1 = TraitsQueryCast<IQueryCastBase1, IQueryCastBase1 *>(&obj);
 TestAssert::IsNotNull(base1);

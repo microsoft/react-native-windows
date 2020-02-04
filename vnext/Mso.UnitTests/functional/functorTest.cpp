@@ -83,7 +83,7 @@ static void TestFreeFunction_Throw(int i) {
     throw std::runtime_error("test");
 }
 
-TEST_CLASS(FunctorTest) {
+TEST_CLASS (FunctorTest) {
   TEST_METHOD(Functor_ctor_Default) {
     Mso::Functor<int(int, int)> f1;
     TestCheck(f1.IsEmpty());
@@ -1166,7 +1166,7 @@ TEST_CLASS(FunctorTest) {
   }
 };
 
-TestClassComponent(FunctorNoexceptTest, Mso.Functor.Noexcept) TEST_CLASS(FunctorNoexceptTest) {
+TestClassComponent(FunctorNoexceptTest, Mso.Functor.Noexcept) TEST_CLASS (FunctorNoexceptTest) {
   TEST_METHOD(Functor_noexcept_ctor_Default) {
     Mso::Functor<int(int, int) noexcept> f1;
     TestCheck(f1.IsEmpty());
