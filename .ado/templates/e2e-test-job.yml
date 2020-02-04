@@ -42,7 +42,7 @@ jobs:
             
       - template: prepare-env.yml
         parameters:
-          vsComponents: $(VsComponents)
+          vsComponents: ''
           yarnBuildCmd: build
 
       - task: NuGetCommand@2
