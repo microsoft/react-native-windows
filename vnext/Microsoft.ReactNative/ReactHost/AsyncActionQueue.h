@@ -19,7 +19,6 @@ using AsyncAction = Mso::Functor<Mso::Future<void>()>;
 struct AsyncActionQueue final : Mso::RefCountedObjectNoVTable<Mso::RefCountStrategy::WeakRef, AsyncActionQueue> {
   //! Creates a new AsyncActionQueue that is based on the provided sequential queue.
   AsyncActionQueue(Mso::DispatchQueue const &queue) noexcept;
-  AsyncActionQueue() = delete;
   AsyncActionQueue(AsyncActionQueue const &other) = delete;
   AsyncActionQueue &operator=(AsyncActionQueue const &other) = delete;
 
@@ -48,9 +47,9 @@ struct AsyncActionQueue final : Mso::RefCountedObjectNoVTable<Mso::RefCountStrat
 
  private:
   const Mso::DispatchQueue m_queue;
-  const Mso::ActiveField<std::vector<Entry>> m_actions{m_queue};
-  const Mso::ActiveField<bool> m_isInvoking{m_queue};
   const Mso::InvokeElsePostExecutor m_executor{m_queue};
+  std::vector<Entry> m_actions;
+  bool m_isInvoking{false};
 };
 
 } // namespace Mso::React

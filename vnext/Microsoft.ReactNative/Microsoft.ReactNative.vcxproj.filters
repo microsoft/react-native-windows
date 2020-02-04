@@ -146,9 +146,6 @@
     <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp">
       <Filter>Sandbox</Filter>
     </ClCompile>
-    <ClCompile Include="..\ReactUWP\Threading\BatchingQueueThread.cpp">
-      <Filter>Threading</Filter>
-    </ClCompile>
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -313,6 +310,9 @@
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="Threading\BatchingQueueThread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
     <ClCompile Include="Threading\MessageDispatchQueue.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
@@ -465,9 +465,6 @@
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h">
       <Filter>Polyester</Filter>
-    </ClInclude>
-    <ClInclude Include="..\ReactUWP\Threading\BatchingQueueThread.h">
-      <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h">
       <Filter>Utils</Filter>
@@ -653,6 +650,9 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="Threading\BatchingQueueThread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
     <ClInclude Include="Threading\MessageDispatchQueue.h">
       <Filter>Threading</Filter>
     </ClInclude>

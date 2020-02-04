@@ -172,7 +172,7 @@
     <ClCompile Include="Threading\AsyncWorkQueue.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="Threading\BatchingQueueThread.cpp">
+    <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
     <ClCompile Include="Threading\JSQueueThread.cpp">
@@ -323,6 +323,9 @@
       <Filter>Views</Filter>
     </ClCompile>
     <ClCompile Include="Views\WebViewManager.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\XamlFeatures.cpp">
       <Filter>Views</Filter>
     </ClCompile>
   </ItemGroup>
@@ -522,7 +525,7 @@
     <ClInclude Include="Threading\AsyncWorkQueue_Priv.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="Threading\BatchingQueueThread.h">
+    <ClInclude Include="Threading\BatchingUIMessageQueueThread.h">
       <Filter>Threading</Filter>
     </ClInclude>
     <ClInclude Include="Threading\JSQueueThread.h">

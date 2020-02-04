@@ -48,16 +48,12 @@ void ReactNativeHost::InstanceSettings(ReactNative::ReactInstanceSettings const 
 }
 
 void ReactNativeHost::ReloadInstance() noexcept {
-  if (m_modulesProvider == nullptr) {
-    m_modulesProvider = std::make_shared<NativeModulesProvider>();
-  }
+  auto modulesProvider = std::make_shared<NativeModulesProvider>();
 
-  if (m_viewManagersProvider == nullptr) {
-    m_viewManagersProvider = std::make_shared<ViewManagersProvider>();
-  }
+  auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
 
   if (!m_packageBuilder) {
-    m_packageBuilder = make<ReactPackageBuilder>(m_modulesProvider, m_viewManagersProvider);
+    m_packageBuilder = make<ReactPackageBuilder>(modulesProvider, viewManagersProvider);
 
     for (auto const &packageProvider : m_packageProviders) {
       packageProvider.CreatePackage(m_packageBuilder);
@@ -87,8 +83,8 @@ void ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.LegacySettings = std::move(legacySettings);
 
-  reactOptions.ModuleProvider = m_modulesProvider;
-  reactOptions.ViewManagerProvider = m_viewManagersProvider;
+  reactOptions.ModuleProvider = modulesProvider;
+  reactOptions.ViewManagerProvider = viewManagersProvider;
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
   std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());

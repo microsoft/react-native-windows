@@ -9,11 +9,15 @@
 // ReactUWP
 #include <ReactUWP/CreateUwpModules.h>
 #include <ReactUWP/IXamlRootView.h>
+#include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
 
 // Modules
 #include <Modules/AppStateModuleUwp.h>
 #include <Modules/AppThemeModuleUwp.h>
 #include <Modules/NativeUIManager.h>
+#include <Threading/JSQueueThread.h>
+#include <Threading/UIMessageQueueThread.h>
+#include <Threading/WorkerMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
@@ -24,7 +28,6 @@
 #include <InstanceManager.h>
 #include <NativeModuleProvider.h>
 
-#include <Threading/MessageQueueThreadFactory.h>
 #include "Unicode.h"
 
 #include <Modules/DeviceInfoModule.h>
@@ -76,8 +79,9 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_defaultNativeThread = MakeUIQueueThread();
-  m_batchingNativeThread = MakeBatchingQueueThread(m_defaultNativeThread);
+  m_uiDispatcher = winrt::Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
+  m_batchingNativeThread = std::make_shared<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
   auto deviceInfo(std::make_shared<DeviceInfo>(spThis));
@@ -87,7 +91,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   std::pair<std::string, bool> i18nInfo = I18nModule::GetI18nInfo();
 
   // TODO: Figure out threading. What thread should this really be on?
-  m_initThread = MakeSerialQueueThread();
+  m_initThread = std::make_unique<react::uwp::WorkerMessageQueueThread>();
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
@@ -175,7 +179,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
-    std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = MakeJSQueueThread();
+    std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = CreateAndStartJSQueueThread();
 
 #ifdef PATCH_RN
     if (settings.UseJsi) {
@@ -295,7 +299,7 @@ void UwpReactInstance::CallJsFunction(
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> UwpReactInstance::GetNewUIMessageQueue() const {
-  return MakeUIQueueThread();
+  return std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
 }
 
 const std::shared_ptr<facebook::react::MessageQueueThread> &UwpReactInstance::JSMessageQueueThread() const noexcept {

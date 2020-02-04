@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 #include "MessageDispatchQueue.h"
-#include "Threading/BatchingQueueThread.h"
+#include "MessageQueueThreadFactory.h"
+#include "BatchingQueueThread.h"
 
 namespace react::uwp {
 

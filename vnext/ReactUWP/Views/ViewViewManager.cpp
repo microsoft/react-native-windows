@@ -122,8 +122,7 @@ class ViewShadowNode : public ShadowNodeBase {
     }
 
     if (HasOuterBorder()) {
-      auto border = current.try_as<winrt::Border>();
-      if (border) {
+      if (auto border = current.try_as<winrt::Border>()) {
         border.Child(nullptr);
       }
     }

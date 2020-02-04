@@ -16,14 +16,14 @@ namespace winrt::SampleAppCpp::implementation {
 /// WinMain().
 /// </summary>
 App::App() noexcept {
-  InstanceSettings().MainComponentName(L"SampleApp");
+  MainComponentName(L"SampleApp");
 
 #if BUNDLE
-  InstanceSettings().JavaScriptBundleFile(L"index.windows");
+  JavaScriptBundleFile(L"index.windows");
   InstanceSettings().UseWebDebugger(false);
   InstanceSettings().UseLiveReload(false);
 #else
-  InstanceSettings().JavaScriptMainModuleName(L"index");
+  JavaScriptMainModuleName(L"index");
   InstanceSettings().UseWebDebugger(true);
   InstanceSettings().UseLiveReload(true);
 #endif

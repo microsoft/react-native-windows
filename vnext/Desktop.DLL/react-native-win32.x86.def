@@ -36,10 +36,12 @@ EXPORTS
 ?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 ?destroy@dynamic@folly@@AAEXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UAEX_JABUdynamic@folly@@@Z
+?getModuleRegistry@Instance@react@facebook@@QAEAAVModuleRegistry@23@XZ
 ?getPeakJsMemoryUsage@Instance@react@facebook@@QBE_JXZ
 ?get_ptr@dynamic@folly@@QGBEPBU12@V?$Range@PBD@2@@Z
 ?get_ptrImpl@dynamic@folly@@AGBEPBU12@ABU12@@Z
 ?hash@dynamic@folly@@QBEIXZ
+?loadScriptFromString@Instance@react@facebook@@QAEXV?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N@Z
 ?makeConversionError@folly@@YG?AVConversionError@1@W4ConversionCode@1@V?$Range@PBD@1@@Z
 ?parseJson@folly@@YG?AUdynamic@1@V?$Range@PBD@1@@Z
 ?setGlobalVariable@Instance@react@facebook@@QAEXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z

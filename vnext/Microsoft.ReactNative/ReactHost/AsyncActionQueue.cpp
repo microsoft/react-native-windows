@@ -12,13 +12,14 @@ namespace Mso::React {
 AsyncActionQueue::AsyncActionQueue(Mso::DispatchQueue const &queue) noexcept : m_queue{queue} {}
 
 Mso::Future<void> AsyncActionQueue::PostAction(AsyncAction &&action) noexcept {
+  Mso::Internal::VerifyIsInQueueElseCrash(m_queue);
+
   Entry entry{std::move(action), Mso::Promise<void>{}};
   Mso::Future<void> result = entry.Result.AsFuture();
-  auto &actionQueue = m_actions.Load();
-  if (!m_isInvoking.Load() && actionQueue.empty()) {
+  if (!m_isInvoking && m_actions.empty()) {
     InvokeAction(std::move(entry));
   } else {
-    actionQueue.push_back(std::move(entry));
+    m_actions.push_back(std::move(entry));
   }
 
   return result;
@@ -40,9 +41,7 @@ Mso::Future<void> AsyncActionQueue::PostActions(std::initializer_list<AsyncActio
 }
 
 void AsyncActionQueue::InvokeAction(Entry &&entry) noexcept {
-  Mso::Internal::VerifyIsInQueueElseCrash(m_queue);
-
-  m_isInvoking.Store(true);
+  m_isInvoking = true;
   auto actionResult = entry.Action();
   actionResult.Then(
       m_executor,
@@ -57,13 +56,12 @@ void AsyncActionQueue::CompleteAction(Entry &&entry, Mso::Maybe<void> &&result) 
   entry = {nullptr, nullptr}; // Release the action before the next one starts
 
   // Start the next action from the queue.
-  auto &actionQueue = m_actions.Load();
-  if (!actionQueue.empty()) {
-    auto nextActionEntry = std::move(actionQueue[0]);
-    actionQueue.erase(actionQueue.begin());
+  if (!m_actions.empty()) {
+    auto nextActionEntry = std::move(m_actions[0]);
+    m_actions.erase(m_actions.begin());
     InvokeAction(std::move(nextActionEntry));
   } else {
-    m_isInvoking.Store(false);
+    m_isInvoking = false;
   }
 }
 

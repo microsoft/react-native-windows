@@ -6,23 +6,25 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.Core.h>
 
-namespace react::uwp {
+namespace react {
+namespace uwp {
 
 // Executes the function on the provided UI Dispatcher
-struct UIMessageQueueThread final : facebook::react::MessageQueueThread {
-  UIMessageQueueThread(winrt::Windows::UI::Core::CoreDispatcher const &dispatcher) noexcept;
-  ~UIMessageQueueThread() noexcept override;
-
+class UIMessageQueueThread : public facebook::react::MessageQueueThread {
+ public:
   UIMessageQueueThread() = delete;
   UIMessageQueueThread(const UIMessageQueueThread &other) = delete;
 
- public: // facebook::react::MessageQueueThread
-  void runOnQueue(std::function<void()> &&func) noexcept override;
-  void runOnQueueSync(std::function<void()> &&func) noexcept override;
-  void quitSynchronous() noexcept override;
+  UIMessageQueueThread(winrt::Windows::UI::Core::CoreDispatcher dispatcher);
+  virtual ~UIMessageQueueThread();
+
+  virtual void runOnQueue(std::function<void()> &&func);
+  virtual void runOnQueueSync(std::function<void()> &&func);
+  virtual void quitSynchronous();
 
  private:
   winrt::Windows::UI::Core::CoreDispatcher m_uiDispatcher{nullptr};
 };
 
-} // namespace react::uwp
+} // namespace uwp
+} // namespace react

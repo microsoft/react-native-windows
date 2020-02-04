@@ -65,7 +65,8 @@ Mso::CntPtr<AsyncActionQueue> ReactHost::ActionQueue() const noexcept {
 }
 
 size_t ReactHost::PendingUnloadActionId() const noexcept {
-  return m_pendingUnloadActionId.Load();
+  Mso::Internal::VerifyIsInQueueElseCrash(Queue());
+  return m_pendingUnloadActionId;
 }
 
 bool ReactHost::IsInstanceLoaded() const noexcept {
@@ -115,8 +116,9 @@ AsyncAction ReactHost::MakeLoadInstanceAction(ReactOptions &&options) noexcept {
 }
 
 AsyncAction ReactHost::MakeUnloadInstanceAction() noexcept {
-  size_t unloadActionId = ++m_nextUnloadActionId.Load();
-  m_pendingUnloadActionId.Store(Mso::Copy(unloadActionId));
+  Mso::Internal::VerifyIsInQueueElseCrash(Queue());
+  size_t unloadActionId = ++m_nextUnloadActionId;
+  m_pendingUnloadActionId = unloadActionId;
   return [ spThis = Mso::CntPtr{this}, unloadActionId ]() noexcept {
     return spThis->UnloadInQueue(unloadActionId);
   };
@@ -150,24 +152,39 @@ Mso::Future<void> ReactHost::LoadInQueue(ReactOptions &&options) noexcept {
     return Mso::MakeCanceledFuture();
   }
 
-  Mso::Promise<void> onLoaded;
-  m_reactInstance.Exchange(MakeReactInstance(*this, std::move(options), Mso::Copy(onLoaded)));
+  Mso::Promise<void> whenCreated;
+  Mso::Promise<void> whenLoaded;
+  m_reactInstance.Exchange(
+      MakeReactInstance(*this, std::move(options), Mso::Copy(whenCreated), Mso::Copy(whenLoaded), [this]() noexcept {
+        InvokeInQueue([this]() noexcept {
+          ForEachViewHost([](auto &viewHost) noexcept { viewHost.UpdateViewInstanceInQueue(); });
+        });
+      }));
 
-  // After the instance is loaded, we load the view instances.
-  // It is safe to capture 'this' because the Load action keeps a strong reference to ReactHost.
-  return onLoaded.AsFuture().Then(m_executor, [this](Mso::Maybe<void> && /*value*/) noexcept {
-    m_isInstanceLoaded.Store(true);
+  return whenCreated.AsFuture().Then(Mso::Executors::Inline{}, [ this, whenLoaded ]() noexcept {
+    std::vector<Mso::Future<void>> initCompletionList;
+    for (const auto &entry : m_viewHosts.Load()) {
+      if (auto viewHost = entry.second.GetStrongPtr()) {
+        viewHost->InitViewInstanceInQueue(viewHost->Options());
+      }
+    }
 
-    std::vector<Mso::Future<void>> loadCompletionList;
-    ForEachViewHost([&loadCompletionList](auto &viewHost) noexcept {
-      loadCompletionList.push_back(viewHost.LoadViewInstanceInQueue(viewHost.Options()));
+    return whenLoaded.AsFuture().Then(m_executor, [this](Mso::Maybe<void> && /*value*/) noexcept {
+      m_isInstanceLoaded.Store(true);
+
+      std::vector<Mso::Future<void>> loadCompletionList;
+      ForEachViewHost([&loadCompletionList](auto &viewHost) noexcept {
+        loadCompletionList.push_back(viewHost.UpdateViewInstanceInQueue());
+      });
+
+      return Mso::WhenAllCompleted(loadCompletionList);
     });
-
-    return Mso::WhenAllCompleted(loadCompletionList);
   });
 }
 
 Mso::Future<void> ReactHost::UnloadInQueue(size_t unloadActionId) noexcept {
+  Mso::Internal::VerifyIsInQueueElseCrash(Queue());
+
   // If the pending unload action Id does not match, then we have newer unload action,
   // and thus we should cancel this one.
   if (unloadActionId != PendingUnloadActionId()) {
@@ -175,11 +192,11 @@ Mso::Future<void> ReactHost::UnloadInQueue(size_t unloadActionId) noexcept {
   }
 
   // Clear the pending unload action Id
-  m_pendingUnloadActionId.Store(0);
+  m_pendingUnloadActionId = 0;
 
   std::vector<Mso::Future<void>> unloadCompletionList;
   ForEachViewHost([&unloadCompletionList](auto &viewHost) noexcept {
-    unloadCompletionList.push_back(viewHost.UnloadViewInstanceInQueue(0));
+    unloadCompletionList.push_back(viewHost.UninitViewInstanceInQueue(0));
   });
 
   // We unload ReactInstance after all view instances are unloaded.
@@ -253,20 +270,20 @@ void ReactViewHost::SetOptions(ReactViewOptions &&options) noexcept {
 
 Mso::Future<void> ReactViewHost::ReloadViewInstance() noexcept {
   return m_reactHost->PostInQueue([this]() noexcept {
-    return m_actionQueue.Load()->PostActions({MakeUnloadViewInstanceAction(), MakeLoadViewInstanceAction()});
+    return m_actionQueue.Load()->PostActions({MakeUninitViewInstanceAction(), MakeInitViewInstanceAction()});
   });
 }
 
 Mso::Future<void> ReactViewHost::ReloadViewInstanceWithOptions(ReactViewOptions &&options) noexcept {
   return m_reactHost->PostInQueue([ this, options = std::move(options) ]() mutable noexcept {
     return m_actionQueue.Load()->PostActions(
-        {MakeUnloadViewInstanceAction(), MakeLoadViewInstanceAction(std::move(options))});
+        {MakeUninitViewInstanceAction(), MakeInitViewInstanceAction(std::move(options))});
   });
 }
 
 Mso::Future<void> ReactViewHost::UnloadViewInstance() noexcept {
   return m_reactHost->PostInQueue([this]() noexcept {
-    return m_actionQueue.Load()->PostAction(MakeUnloadViewInstanceAction());
+    return m_actionQueue.Load()->PostAction(MakeUninitViewInstanceAction());
   });
 }
 
@@ -277,9 +294,10 @@ Mso::Future<void> ReactViewHost::AttachViewInstance(IReactViewInstance &viewInst
         !previousViewInstance, "ViewInstance must not be previously attached.", 0x028508d6 /* tag_c7q9w */);
     m_reactHost->AttachViewHost(*this);
 
-    // Schedule the viewInstance load in the action queue since there can be other load actions in the queue that need
-    // to be consolidated.
-    return m_actionQueue.Load()->PostAction(MakeLoadViewInstanceAction());
+    return InitViewInstanceInQueue();
+    //// Schedule the viewInstance load in the action queue since there can be other load actions in the queue that need
+    //// to be consolidated.
+    // return m_actionQueue.Load()->PostAction(MakeInitViewInstanceAction());
   });
 }
 
@@ -291,34 +309,34 @@ Mso::Future<void> ReactViewHost::DetachViewInstance() noexcept {
 
     // We unload the viewInstance here as soon as possible without using the action queue,
     // otherwise we would not have the viewInstance to call the Unload() later.
-    m_isViewInstanceLoaded.Store(false);
+    m_isViewInstanceInited.Store(false);
     return viewInstance->UninitRootView();
   });
 }
 
-AsyncAction ReactViewHost::MakeLoadViewInstanceAction() noexcept {
+AsyncAction ReactViewHost::MakeInitViewInstanceAction() noexcept {
   return [spThis = Mso::CntPtr{this}]() mutable noexcept {
-    return spThis->LoadViewInstanceInQueue();
+    return spThis->InitViewInstanceInQueue();
   };
 }
 
-AsyncAction ReactViewHost::MakeLoadViewInstanceAction(ReactViewOptions &&options) noexcept {
+AsyncAction ReactViewHost::MakeInitViewInstanceAction(ReactViewOptions &&options) noexcept {
   return [ spThis = Mso::CntPtr{this}, options = std::move(options) ]() mutable noexcept {
-    return spThis->LoadViewInstanceInQueue(std::move(options));
+    return spThis->InitViewInstanceInQueue(std::move(options));
   };
 }
 
-AsyncAction ReactViewHost::MakeUnloadViewInstanceAction() noexcept {
-  size_t unloadActionId = ++m_nextUnloadActionId.Load();
-  m_pendingUnloadActionId.Store(std::move(unloadActionId));
-  return [ spThis = Mso::CntPtr{this}, unloadActionId ]() noexcept {
-    return spThis->UnloadViewInstanceInQueue(unloadActionId);
+AsyncAction ReactViewHost::MakeUninitViewInstanceAction() noexcept {
+  size_t uninitActionId = ++m_nextUninitActionId.Load();
+  m_pendingUninitActionId.Store(std::move(uninitActionId));
+  return [ spThis = Mso::CntPtr{this}, uninitActionId ]() noexcept {
+    return spThis->UninitViewInstanceInQueue(uninitActionId);
   };
 }
 
-Mso::Future<void> ReactViewHost::LoadViewInstanceInQueue() noexcept {
+Mso::Future<void> ReactViewHost::InitViewInstanceInQueue() noexcept {
   // It is already loaded: nothing to do.
-  if (m_isViewInstanceLoaded.Load()) {
+  if (m_isViewInstanceInited.Load()) {
     return Mso::MakeSucceededFuture();
   }
 
@@ -328,14 +346,14 @@ Mso::Future<void> ReactViewHost::LoadViewInstanceInQueue() noexcept {
   }
 
   // If there is a pending unload action, then we cancel loading ReactViewInstance.
-  if (m_reactHost->PendingUnloadActionId() || m_pendingUnloadActionId.Load()) {
+  if (m_reactHost->PendingUnloadActionId() || m_pendingUninitActionId.Load()) {
     return Mso::MakeCanceledFuture();
   }
 
-  // We cannot load if instance is not loaded.
-  if (!m_reactHost->IsInstanceLoaded()) {
-    return Mso::MakeCanceledFuture();
-  }
+  //// We cannot load if instance is not loaded.
+  // if (!m_reactHost->IsInstanceLoaded()) {
+  //  return Mso::MakeCanceledFuture();
+  //}
 
   // Make sure that we have a ReactInstance
   if (!m_reactHost->Instance()) {
@@ -343,41 +361,74 @@ Mso::Future<void> ReactViewHost::LoadViewInstanceInQueue() noexcept {
   }
 
   if (auto viewInstance = m_viewInstance.Load().Get()) {
-    m_isViewInstanceLoaded.Store(true);
+    m_isViewInstanceInited.Store(true);
     return viewInstance->InitRootView(m_reactHost->Instance(), Mso::Copy(m_options.Load()));
   }
 
   return Mso::MakeCanceledFuture();
 }
 
-Mso::Future<void> ReactViewHost::LoadViewInstanceInQueue(ReactViewOptions &&options) noexcept {
+Mso::Future<void> ReactViewHost::UpdateViewInstanceInQueue() noexcept {
+  // Check if we already initialized.
+  if (!m_isViewInstanceInited.Load()) {
+    return Mso::MakeCanceledFuture();
+  }
+
+  // Cancel if the ReactHost is already closed.
+  if (m_reactHost->IsClosed()) {
+    return Mso::MakeCanceledFuture();
+  }
+
+  // If there is a pending unload action, then we cancel loading ReactViewInstance.
+  if (m_reactHost->PendingUnloadActionId() || m_pendingUninitActionId.Load()) {
+    return Mso::MakeCanceledFuture();
+  }
+
+  //// We cannot load if instance is not loaded.
+  // if (!m_reactHost->IsInstanceLoaded()) {
+  //  return Mso::MakeCanceledFuture();
+  //}
+
+  // Make sure that we have a ReactInstance
+  if (!m_reactHost->Instance()) {
+    return Mso::MakeCanceledFuture();
+  }
+
+  if (auto viewInstance = m_viewInstance.Load().Get()) {
+    return viewInstance->UpdateRootView();
+  }
+
+  return Mso::MakeCanceledFuture();
+}
+
+Mso::Future<void> ReactViewHost::InitViewInstanceInQueue(ReactViewOptions &&options) noexcept {
   // Make sure that we set new options even if we do not load due to the pending unload.
   m_options.Exchange(std::move(options));
 
   VerifyElseCrashSzTag(
-      !m_isViewInstanceLoaded.Load(),
+      !m_isViewInstanceInited.Load(),
       "The viewInstance must be unloaded before the load with new options.",
       0x0285411a /* tag_c7ue0 */);
 
-  return LoadViewInstanceInQueue();
+  return InitViewInstanceInQueue();
 }
 
-Mso::Future<void> ReactViewHost::UnloadViewInstanceInQueue(size_t unloadActionId) noexcept {
+Mso::Future<void> ReactViewHost::UninitViewInstanceInQueue(size_t unloadActionId) noexcept {
   // If the pending unload action Id does not match, then we have newer unload action,
   // and thus we should cancel this one.
-  if (unloadActionId != m_pendingUnloadActionId.Load()) {
+  if (unloadActionId != m_pendingUninitActionId.Load()) {
     return Mso::MakeCanceledFuture();
   }
 
   // Clear the pending unload action Id
-  m_pendingUnloadActionId.Store(0);
+  m_pendingUninitActionId.Store(0);
 
   if (m_reactHost->PendingUnloadActionId()) {
     return Mso::MakeCanceledFuture();
   }
 
   if (auto viewInstance = m_viewInstance.Load().Get()) {
-    m_isViewInstanceLoaded.Store(false);
+    m_isViewInstanceInited.Store(false);
     return viewInstance->UninitRootView();
   }
 

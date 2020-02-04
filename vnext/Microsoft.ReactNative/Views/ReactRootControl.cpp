@@ -314,7 +314,7 @@ void ReactRootControl::ShowInstanceWaiting(Mso::React::IReactInstance &reactInst
       m_greenBoxGrid = winrt::Grid{};
       m_greenBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
       m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Top);
+      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Center);
     }
 
     // Add box grid to root view
@@ -340,6 +340,30 @@ void ReactRootControl::ShowInstanceLoading(Mso::React::IReactInstance &reactInst
 
     // Remove existing children from root view (from the hosted app)
     xamlRootGrid.Children().Clear();
+
+    // Create Grid & TextBlock to hold text
+    if (m_waitingTextBlock == nullptr) {
+      m_waitingTextBlock = winrt::TextBlock();
+      m_greenBoxGrid = winrt::Grid{};
+      m_greenBoxGrid.Background(winrt::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0x03, 0x59, 0)));
+      m_greenBoxGrid.Children().Append(m_waitingTextBlock);
+      m_greenBoxGrid.VerticalAlignment(winrt::Windows::UI::Xaml::VerticalAlignment::Center);
+    }
+
+    // Add box grid to root view
+    xamlRootGrid.Children().Append(m_greenBoxGrid);
+
+    // Place message into TextBlock
+    std::wstring wstrMessage(L"Loading bundle.");
+    m_waitingTextBlock.Text(wstrMessage);
+
+    // Format TextBlock
+    m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
+    m_waitingTextBlock.TextWrapping(winrt::TextWrapping::Wrap);
+    m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Consolas"));
+    m_waitingTextBlock.Foreground(winrt::SolidColorBrush(winrt::Colors::White()));
+    winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
+    m_waitingTextBlock.Margin(margin);
   }
 }
 

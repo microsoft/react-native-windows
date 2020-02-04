@@ -13,7 +13,6 @@
 #include <INativeUIManager.h>
 #include <Views/KeyboardEventHandler.h>
 #include <Views/ShadowNodeBase.h>
-#include "Threading/MessageQueueThreadFactory.h"
 
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
@@ -269,8 +268,7 @@ void ReactControl::DetachInstance() {
     // This extends the lifetime of NativeModules which may have
     // pending calls in these queues.
     // TODO prevent or check if even more is queued while these drain.
-    // TODO: [vmorozov] We must remove this 'engineering workaround'
-    MakeSerialQueueThread()->runOnQueue([instance]() {});
+    CreateWorkerMessageQueue()->runOnQueue([instance]() {});
     m_uiDispatcher.RunAsync(winrt::Windows::UI::Core::CoreDispatcherPriority::Normal, [instance]() {});
 
     // Clear members with a dependency on the reactInstance
@@ -484,6 +482,5 @@ void ReactControl::ToggleInspector() {
   }
 }
 
-TriBit g_HasActualSizeProperty{TriBit::Undefined};
 } // namespace uwp
 } // namespace react

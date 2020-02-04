@@ -44,9 +44,6 @@ struct ReactNativeHost : ReactNativeHostT<ReactNativeHost> {
   ReactNative::ReactInstance m_reactInstance{nullptr};
   Windows::Foundation::Collections::IVector<IReactPackageProvider> m_packageProviders;
   ReactNative::IReactPackageBuilder m_packageBuilder;
-
-  std::shared_ptr<NativeModulesProvider> m_modulesProvider{nullptr};
-  std::shared_ptr<ViewManagersProvider> m_viewManagersProvider{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

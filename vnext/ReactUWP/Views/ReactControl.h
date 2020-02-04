@@ -25,9 +25,6 @@ using namespace Windows::UI::Xaml::Media;
 namespace react {
 namespace uwp {
 
-enum class TriBit { Undefined = -1, NotSet = 0, Set = 1 };
-extern TriBit g_HasActualSizeProperty;
-
 class ReactControl final : public std::enable_shared_from_this<ReactControl>, public IXamlReactControl {
  public:
   ReactControl(IXamlRootView *parent, XamlView rootView);

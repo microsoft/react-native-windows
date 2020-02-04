@@ -34,6 +34,19 @@ static_assert(
     static_cast<int32_t>(facebook::react::RCTLogLevel::Fatal) == static_cast<int32_t>(LogLevel::Fatal),
     "LogLevel::Fatal value must match");
 
+class ReactInstanceWin;
+
+class ReactContext final : public Mso::UnknownObject<IReactContext> {
+ public:
+  ReactContext(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept;
+
+ public: // IReactContext
+  void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept override;
+
+ private:
+  Mso::WeakPtr<ReactInstanceWin> m_reactInstance;
+};
+
 //! ReactInstance implementation for Windows that is managed by ReactHost.
 class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, ILegacyReactInstance> {
   using Super = ActiveObjectType;
@@ -63,11 +76,17 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   // UwpReactInstance(
   //    const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
   //    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider = nullptr);
-  ReactInstanceWin(IReactHost &reactHost, ReactOptions &&options, Mso::Promise<void> &&whenLoaded) noexcept;
+  ReactInstanceWin(
+      IReactHost &reactHost,
+      ReactOptions &&options,
+      Mso::Promise<void> &&whenCreated,
+      Mso::Promise<void> &&whenLoaded,
+      Mso::VoidFunctor &&updateUI) noexcept;
   void Initialize() noexcept override;
   ~ReactInstanceWin() override;
 
  private:
+  void LoadJSBundles() noexcept;
   void InitJSMessageThread() noexcept;
   void InitNativeMessageThread() noexcept;
   void InitUIMessageThread() noexcept;
@@ -87,16 +106,19 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal, 
   void OnWaitingForDebugger() noexcept;
   void OnDebuggerAttach() noexcept;
 
-  void LoadJSBundles() noexcept;
   friend struct LoadedCallbackGuard;
   void OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) noexcept;
 
  private: // immutable fields
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
   const ReactOptions m_options;
+  const Mso::Promise<void> m_whenCreated;
   const Mso::Promise<void> m_whenLoaded;
   const Mso::Promise<void> m_whenDestroyed;
   const std::shared_ptr<react::uwp::UwpReactInstanceProxy> m_legacyInstance;
+  const Mso::VoidFunctor m_updateUI;
+
+  const Mso::CntPtr<ReactContext> m_reactContext;
 
   std::atomic<bool> m_isLoaded{false};
   std::atomic<bool> m_isDestroyed{false};

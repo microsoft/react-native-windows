@@ -160,7 +160,7 @@
     <ClInclude Include="Modules\Animated\SpringAnimationDriver.h" />
     <ClInclude Include="Modules\Animated\TrackingAnimatedNode.h" />
     <ClInclude Include="..\include\ReactUWP\TurboModuleUtils.h" />
-    <ClInclude Include="Threading\BatchingQueueThread.h" />
+    <ClInclude Include="Threading\BatchingUIMessageQueueThread.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="Utils\ResourceBrushUtils.h" />
     <ClInclude Include="Utils\CppWinrtLessExceptions.h" />
@@ -264,7 +264,7 @@
     <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
     <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
-    <ClCompile Include="Threading\BatchingQueueThread.cpp" />
+    <ClCompile Include="Threading\BatchingUIMessageQueueThread.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="TurboModule\TurboModuleUtils.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
@@ -363,6 +363,7 @@
     <ClCompile Include="Views\WebViewManager.cpp" />
     <ClCompile Include="Views\module.g.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
+    <ClCompile Include="Views\XamlFeatures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="EndPoints\dll\react-native-uwp.arm.def" />

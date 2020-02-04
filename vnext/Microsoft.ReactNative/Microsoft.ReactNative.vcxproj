@@ -215,7 +215,6 @@
     <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Threading\BatchingQueueThread.h" />
     <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="..\ReactUWP\Utils\Helpers.h" />
     <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h" />
@@ -321,6 +320,7 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="Threading\BatchingQueueThread.h" />
     <ClInclude Include="Threading\MessageDispatchQueue.h" />
     <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="ViewManagersProvider.h" />
@@ -378,7 +378,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp" />
-    <ClCompile Include="..\ReactUWP\Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />
@@ -479,6 +478,7 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />

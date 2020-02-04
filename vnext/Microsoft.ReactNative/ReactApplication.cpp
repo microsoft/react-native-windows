@@ -70,6 +70,38 @@ ReactNative::ReactNativeHost ReactApplication::Host() noexcept {
   return m_host;
 }
 
+hstring ReactApplication::MainComponentName() noexcept {
+  return InstanceSettings().MainComponentName();
+}
+
+void ReactApplication::MainComponentName(hstring const &value) noexcept {
+  InstanceSettings().MainComponentName(value);
+}
+
+bool ReactApplication::UseDeveloperSupport() noexcept {
+  return InstanceSettings().UseDeveloperSupport();
+}
+
+void ReactApplication::UseDeveloperSupport(bool value) noexcept {
+  InstanceSettings().UseDeveloperSupport(value);
+}
+
+hstring ReactApplication::JavaScriptMainModuleName() noexcept {
+  return InstanceSettings().JavaScriptMainModuleName();
+}
+
+void ReactApplication::JavaScriptMainModuleName(hstring const &value) noexcept {
+  InstanceSettings().JavaScriptMainModuleName(value);
+}
+
+hstring ReactApplication::JavaScriptBundleFile() noexcept {
+  return InstanceSettings().JavaScriptBundleFile();
+}
+
+void ReactApplication::JavaScriptBundleFile(hstring const &value) noexcept {
+  InstanceSettings().JavaScriptBundleFile(value);
+}
+
 void ReactApplication::OnLaunched(LaunchActivatedEventArgs const &e) {
   __super::OnLaunched(e);
   // auto args = std::wstring(e.Arguments().c_str());

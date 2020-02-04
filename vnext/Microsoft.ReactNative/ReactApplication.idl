@@ -13,5 +13,10 @@ namespace Microsoft.ReactNative {
     [noexcept2] ReactInstanceSettings InstanceSettings { get; set; };
     [noexcept2] IVector<IReactPackageProvider> PackageProviders { get; set; };
     [noexcept2] ReactNativeHost Host { get; };
+
+    [noexcept2] String MainComponentName { get; set; };
+    [noexcept2] Boolean UseDeveloperSupport { get; set; };
+    [noexcept2] String JavaScriptMainModuleName { get; set; };
+    [noexcept2] String JavaScriptBundleFile { get; set; };
   }
 } // namespace Microsoft.ReactNative

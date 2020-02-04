@@ -23,7 +23,6 @@ namespace Mso::React {
 
 // Forward declarations
 struct IReactInstance;
-struct IReactRootView;
 struct IReactViewHost;
 struct ReactOptions;
 
@@ -61,8 +60,8 @@ enum class ReactInstanceState {
 /**An Office wrapper that extends FB's React Instance and makes it a 1:1 relationship with the bundle,
 such that each Office React Instance is capable of loading a single bundle and hosting js in an
 isolated JavaScript execution environment.*/
-MSO_STRUCT_GUID(IReactInstance, "085D524A-AF3B-4839-8056-E5D0E6FC64BC")
-struct IReactInstance : public IUnknown {
+MSO_GUID(IReactInstance, "085d524a-af3b-4839-8056-e5d0e6fc64bc")
+struct IReactInstance : IUnknown {
   //! Returns ReactOptions associated with the IReactInstance
   //! The ReactOptions are meant to immutable and give to IReactInstance at its creation.
   virtual const ReactOptions &Options() const noexcept = 0;
@@ -71,21 +70,9 @@ struct IReactInstance : public IUnknown {
   virtual std::string LastErrorMessage() const noexcept = 0;
 };
 
-//! An isolated UI control in the UI tree that is not owned (parented) by another React View.
-MSO_STRUCT_GUID(IReactRootView, "FF0FF21D-C760-48C2-98B9-E62DDAFE2BBF")
-struct IReactRootView : public IUnknown {
-  //! Returns the ReactInstance this rootView is part of.
-  virtual Mso::CntPtr<IReactInstance> GetReactInstance() const noexcept = 0;
-
-  //! Returns the name of the component. This name refers to the name of the component in the bundle
-  //! that is loaded by the React Instance.
-  virtual const std::string &JsComponentName() const noexcept = 0;
-
-  //! Start the JS component and starts rendering it.
-  virtual void Start() noexcept = 0;
-
-  //! Stop the JS component.
-  virtual void Stop() noexcept = 0;
+MSO_GUID(IReactContext, "a4309a29-8fc5-478e-abea-0ddb9ecc5e40")
+struct IReactContext : IUnknown {
+  virtual void CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) noexcept = 0;
 };
 
 //! Settings per each IReactViewHost associated with an IReactHost instance.
@@ -144,12 +131,18 @@ struct ReactDevOptions {
   std::string SourceBundleModuleName;
 };
 
+struct NativeModuleProvider2 {
+  virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
+      Mso::CntPtr<IReactContext> const &reactContext,
+      std::shared_ptr<facebook::react::MessageQueueThread> const &defaultQueueThread) = 0;
+};
+
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
   react::uwp::ReactInstanceSettings LegacySettings;
 
-  std::shared_ptr<facebook::react::NativeModuleProvider> ModuleProvider;
+  std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<react::uwp::ViewManagerProvider> ViewManagerProvider;
 
   //! Identity of the SDX. Must uniquely describe the SDX across the installed product.
@@ -204,24 +197,6 @@ struct ReactOptions {
   //! Javascript Exceptions which happen during initialization go through OnError callback.
   OnJSExceptionCallback OnJSException;
 
-  //! Path used for localhost loading.
-  //! e.g. for "index.ios" the RN runtime will create the url "http://localhost:8081/index.ios.bundle?platform=..."
-  //! If not set then localhost loading is not attempted.
-  std::string LocalHostPath; // DEPRECATED: use DeveloperSettings.SourceBundlePath
-
-  //! Module name used for localhost loading.
-  //! e.g. The modules name registered in the jsbundle via AppRegistry.registerComponent('ModuleName', () =>
-  //! ModuleName);
-  std::string ModuleName; // DEPRECATED: use DeveloperSettings.SourceBundleModuleName
-
-  //! Enable dev mode.
-  //! development tools such as the debug executors, dev menu, red box, etc. are available
-  bool IsDevModeEnabled{false}; // DEPRECATED: use DeveloperSettings.IsDevModeEnabled
-
-  //! Turns on remote debugging.  Remote debugging will start as soon
-  //! as the react native instance is loaded.
-  bool UseWebDebugger{false}; // DEPRECATED: use DeveloperSettings.UseWebDebugger
-
   //! Flag to suggest sdx owner's preference on enabling Bytecode caching in Javascript Engine for corresponding SDX.
   bool EnableBytecode{true};
 
@@ -265,7 +240,7 @@ struct ReactOptions {
 };
 
 //! IReactHost manages a RactNative instance.
-MSO_STRUCT_GUID(IReactHost, "2a2474ff-264f-449a-9852-0463e6ac6bbf")
+MSO_GUID(IReactHost, "2a2474ff-264f-449a-9852-0463e6ac6bbf")
 struct DECLSPEC_NOVTABLE IReactHost : IUnknown {
   //! Returns a copy of react options.
   virtual ReactOptions Options() const noexcept = 0;
@@ -308,7 +283,7 @@ struct DECLSPEC_NOVTABLE IReactHost : IUnknown {
 //! The IReactViewHost also provides an access to IReactHost associated with it.
 
 //! This interface is to be implemented by a platform specific ReactViewInstance that hosts React UI tree.
-MSO_STRUCT_GUID(IReactViewInstance, "29e04f14-9fc9-4dd7-a543-e59db0d57bd2")
+MSO_GUID(IReactViewInstance, "29e04f14-9fc9-4dd7-a543-e59db0d57bd2")
 struct IReactViewInstance : IUnknown {
   //! Initialize ReactRootView with the reactInstance and view-specific settings.
   virtual Mso::Future<void> InitRootView(
@@ -328,7 +303,7 @@ struct IReactViewInstance : IUnknown {
 //! Typically platform-specific implementation of IReactViewInstance is created using
 //! IReactViewHost instance options, and then attaches itself to the IReactViewHost.
 //! When IReactViewInstance is destroyed, it detaches itself from the IReactViewHost.
-MSO_STRUCT_GUID(IReactViewHost, "cc9f0c95-ad43-43af-a834-0ef9adc411c4")
+MSO_GUID(IReactViewHost, "cc9f0c95-ad43-43af-a834-0ef9adc411c4")
 struct IReactViewHost : IUnknown {
   //! Returns a copy of current react view options.
   virtual ReactViewOptions Options() const noexcept = 0;
