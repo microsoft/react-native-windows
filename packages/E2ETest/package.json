@@ -26,7 +26,7 @@
     "react-native": "https://github.com/microsoft/react-native/archive/v0.60.0-microsoft.40.tar.gz",
     "react-native-windows": "0.60.0-vnext.136",
     "react-native-windows-extended": "0.60.69-15",
-    "rnpm-plugin-windows": "^0.4.0"
+    "rnpm-plugin-windows": "^0.4.1"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",

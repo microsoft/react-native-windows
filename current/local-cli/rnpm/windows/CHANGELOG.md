@@ -1,7 +1,13 @@
 # Change Log - rnpm-plugin-windows
 
-This log was last generated on Tue, 17 Dec 2019 23:33:28 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Feb 2020 19:41:26 GMT and should not be manually modified.
 
+## 0.4.1
+Tue, 04 Feb 2020 19:41:26 GMT
+
+### Patches
+
+- rnpm-plugin-windows fails when using npm (#4003) (acoates@microsoft.com)
 ## 0.4.0
 Tue, 17 Dec 2019 23:33:28 GMT
 
