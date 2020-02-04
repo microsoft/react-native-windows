@@ -11,6 +11,7 @@
 'use strict';
 
 const React = require('react');
+
 const {
   Animated,
   Image,
@@ -60,7 +61,7 @@ class ItemComponent extends React.PureComponent<{
   _onPress = () => {
     this.props.onPress(this.props.item.key);
   };
-  render() {
+  render(): React.Node {
     const {fixedHeight, horizontal, item} = this.props;
     const itemHash = Math.abs(hashCode(item.title));
     const imgSource = THUMB_URLS[itemHash % THUMB_URLS.length];
@@ -93,7 +94,7 @@ class ItemComponent extends React.PureComponent<{
   }
 }
 
-const renderStackedItem = ({item}: {item: Item}) => {
+const renderStackedItem = ({item}: {item: Item}): React.Node => {
   const itemHash = Math.abs(hashCode(item.title));
   const imgSource = THUMB_URLS[itemHash % THUMB_URLS.length];
   return (
@@ -107,7 +108,7 @@ const renderStackedItem = ({item}: {item: Item}) => {
 };
 
 class FooterComponent extends React.PureComponent<{}> {
-  render() {
+  render(): React.Node {
     return (
       <View style={styles.headerFooterContainer}>
         <SeparatorComponent />
@@ -120,7 +121,7 @@ class FooterComponent extends React.PureComponent<{}> {
 }
 
 class HeaderComponent extends React.PureComponent<{}> {
-  render() {
+  render(): React.Node {
     return (
       <View style={styles.headerFooterContainer}>
         <View style={styles.headerFooter}>
@@ -133,7 +134,7 @@ class HeaderComponent extends React.PureComponent<{}> {
 }
 
 class ListEmptyComponent extends React.PureComponent<{}> {
-  render() {
+  render(): React.Node {
     return (
       <View style={styles.listEmpty}>
         <Text>The list is empty :o</Text>
@@ -143,13 +144,13 @@ class ListEmptyComponent extends React.PureComponent<{}> {
 }
 
 class SeparatorComponent extends React.PureComponent<{}> {
-  render() {
+  render(): React.Node {
     return <View style={styles.separator} />;
   }
 }
 
 class ItemSeparatorComponent extends React.PureComponent<$FlowFixMeProps> {
-  render() {
+  render(): React.Node {
     const style = this.props.highlighted
       ? [
           styles.itemSeparator,
@@ -161,7 +162,7 @@ class ItemSeparatorComponent extends React.PureComponent<$FlowFixMeProps> {
 }
 
 class Spindicator extends React.PureComponent<$FlowFixMeProps> {
-  render() {
+  render(): React.Node {
     return (
       <Animated.View
         style={[
@@ -184,18 +185,18 @@ class Spindicator extends React.PureComponent<$FlowFixMeProps> {
 }
 
 const THUMB_URLS = [
-  require('./Thumbnails/like.png'),
-  require('./Thumbnails/dislike.png'),
-  require('./Thumbnails/call.png'),
-  require('./Thumbnails/fist.png'),
-  require('./Thumbnails/bandaged.png'),
-  require('./Thumbnails/flowers.png'),
-  require('./Thumbnails/heart.png'),
-  require('./Thumbnails/liking.png'),
-  require('./Thumbnails/party.png'),
-  require('./Thumbnails/poke.png'),
-  require('./Thumbnails/superlike.png'),
-  require('./Thumbnails/victory.png'),
+  require('../assets/like.png'),
+  require('../assets/dislike.png'),
+  require('../assets/call.png'),
+  require('../assets/fist.png'),
+  require('../assets/bandaged.png'),
+  require('../assets/flowers.png'),
+  require('../assets/heart.png'),
+  require('../assets/liking.png'),
+  require('../assets/party.png'),
+  require('../assets/poke.png'),
+  require('../assets/superlike.png'),
+  require('../assets/victory.png'),
 ];
 
 const LOREM_IPSUM =
@@ -217,7 +218,11 @@ function hashCode(str: string): number {
 const HEADER = {height: 30, width: 100};
 const SEPARATOR_HEIGHT = StyleSheet.hairlineWidth;
 
-function getItemLayout(data: any, index: number, horizontal?: boolean) {
+function getItemLayout(
+  data: any,
+  index: number,
+  horizontal?: boolean,
+): $TEMPORARY$object<{|index: number, length: number, offset: number|}> {
   const [length, separator, header] = horizontal
     ? [HORIZ_WIDTH, 0, HEADER.width]
     : [ITEM_HEIGHT, SEPARATOR_HEIGHT, HEADER.height];
@@ -238,7 +243,10 @@ function pressItem(context: Object, key: string) {
   });
 }
 
-function renderSmallSwitchOption(context: Object, key: string) {
+function renderSmallSwitchOption(
+  context: Object,
+  key: string,
+): null | React.Node {
   if (Platform.isTV) {
     return null;
   }
@@ -254,7 +262,7 @@ function renderSmallSwitchOption(context: Object, key: string) {
   );
 }
 
-function PlainInput(props: Object) {
+function PlainInput(props: Object): React.Node {
   return (
     <TextInput
       autoCapitalize="none"
@@ -331,12 +339,6 @@ const styles = StyleSheet.create({
     },
     ios: {
       top: 4,
-      margin: -10,
-      transform: [{scale: 0.5}],
-    },
-    macos: {
-      top: 4,
-      left: 12,
       margin: -10,
       transform: [{scale: 0.5}],
     },
