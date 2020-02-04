@@ -163,9 +163,12 @@
       <!-- Custom XAML types must be in the project namespace to be usable by XAML -->
       <PreprocessorDefinitions>PROJECT_ROOT_NAMESPACE=$(RootNamespace)</PreprocessorDefinitions>
     </Midl>
+    <ClCompile>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</ForcedIncludeFiles>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\ReactUWP\Base\UwpReactInstance.h" />
+    <ClInclude Include="..\ReactUWP\Base\CoreNativeModules.h" />
     <ClInclude Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\AlertModuleUwp.h" />
     <ClInclude Include="..\ReactUWP\Modules\Animated\AdditionAnimatedNode.h" />
@@ -212,12 +215,6 @@
     <ClInclude Include="..\ReactUWP\Polyester\ContentControlViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\HyperlinkViewManager.h" />
     <ClInclude Include="..\ReactUWP\Polyester\IconViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Threading\AsyncWorkQueue.h" />
-    <ClInclude Include="..\ReactUWP\Threading\AsyncWorkQueue_Priv.h" />
-    <ClInclude Include="..\ReactUWP\Threading\BatchingUIMessageQueueThread.h" />
-    <ClInclude Include="..\ReactUWP\Threading\JSQueueThread.h" />
-    <ClInclude Include="..\ReactUWP\Threading\UIMessageQueueThread.h" />
-    <ClInclude Include="..\ReactUWP\Threading\WorkerMessageQueueThread.h" />
     <ClInclude Include="..\ReactUWP\Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="..\ReactUWP\Utils\Helpers.h" />
     <ClInclude Include="..\ReactUWP\Utils\LocalBundleReader.h" />
@@ -244,7 +241,6 @@
     <ClInclude Include="..\ReactUWP\Views\PickerViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\PopupViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\RawTextViewManager.h" />
-    <ClInclude Include="..\ReactUWP\Views\ReactControl.h" />
     <ClInclude Include="..\ReactUWP\Views\RefreshControlManager.h" />
     <ClInclude Include="..\ReactUWP\Views\RootViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\ScrollContentViewManager.h" />
@@ -260,6 +256,7 @@
     <ClInclude Include="..\ReactUWP\Views\ViewViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\VirtualTextViewManager.h" />
     <ClInclude Include="..\ReactUWP\Views\WebViewManager.h" />
+    <ClInclude Include="..\ReactUWP\Views\XamlFeatures.h" />
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="DynamicReader.h">
@@ -286,16 +283,27 @@
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ReactInstanceCreator.h" />
+    <ClInclude Include="ReactHost\AsyncActionQueue.h" />
+    <ClInclude Include="ReactHost\InstanceFactory.h" />
+    <ClInclude Include="ReactHost\IReactInstanceInternal.h" />
+    <ClInclude Include="ReactHost\JSBundle.h" />
+    <ClInclude Include="ReactHost\JSExceptionCallbackFactory.h" />
+    <ClInclude Include="ReactHost\JSExceptionInfo.h" />
+    <ClInclude Include="ReactHost\MoveOnCopy.h" />
+    <ClInclude Include="ReactHost\MsoUtils.h" />
+    <ClInclude Include="ReactHost\PropertyBag.h" />
+    <ClInclude Include="ReactHost\PropertyBag_internal.h" />
+    <ClInclude Include="ReactHost\React.h" />
+    <ClInclude Include="ReactHost\ReactErrorProvider.h" />
+    <ClInclude Include="ReactHost\ReactHost.h" />
+    <ClInclude Include="ReactHost\ReactInstanceWin.h" />
+    <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
+    <ClInclude Include="ReactHost\React_Win.h" />
+    <ClInclude Include="ReactHost\UwpReactInstanceProxy.h" />
     <ClInclude Include="ReactInstance.h">
       <DependentUpon>ReactInstance.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ReactInstanceManager.h">
-      <DependentUpon>ReactInstanceManager.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ReactInstanceManagerBuilder.h" />
     <ClInclude Include="ReactInstanceSettings.h">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -307,20 +315,24 @@
     <ClInclude Include="ReactPackageBuilder.h">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="ReactRootView2.h">
-      <DependentUpon>ReactRootView2.idl</DependentUpon>
+    <ClInclude Include="ReactRootView.h">
+      <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="Threading\BatchingQueueThread.h" />
+    <ClInclude Include="Threading\MessageDispatchQueue.h" />
+    <ClInclude Include="Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="ViewManagersProvider.h" />
+    <ClInclude Include="Views\ReactRootControl.h" />
     <ClInclude Include="XamlHelper.h">
       <DependentUpon>XamlHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\ReactUWP\Base\InstanceFactory.cpp" />
-    <ClCompile Include="..\ReactUWP\Base\UwpReactInstance.cpp" />
+    <ClCompile Include="..\ReactUWP\Base\CoreNativeModules.cpp" />
+    <ClCompile Include="..\ReactUWP\Base\CoreUIManagers.cpp" />
     <ClCompile Include="..\ReactUWP\CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="..\ReactUWP\Executors\WebSocketJSExecutorUwp.cpp" />
@@ -366,11 +378,6 @@
     <ClCompile Include="..\ReactUWP\Polyester\HyperlinkViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Polyester\IconViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Sandbox\DevSupportManagerUwpSandbox.cpp" />
-    <ClCompile Include="..\ReactUWP\Threading\AsyncWorkQueue.cpp" />
-    <ClCompile Include="..\ReactUWP\Threading\BatchingUIMessageQueueThread.cpp" />
-    <ClCompile Include="..\ReactUWP\Threading\JSQueueThread.cpp" />
-    <ClCompile Include="..\ReactUWP\Threading\UIMessageQueueThread.cpp" />
-    <ClCompile Include="..\ReactUWP\Threading\WorkerMessageQueueThread.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\Helpers.cpp" />
     <ClCompile Include="..\ReactUWP\Utils\LocalBundleReader.cpp" />
@@ -396,8 +403,6 @@
     <ClCompile Include="..\ReactUWP\Views\PickerViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\PopupViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\RawTextViewManager.cpp" />
-    <ClCompile Include="..\ReactUWP\Views\ReactControl.cpp" />
-    <ClCompile Include="..\ReactUWP\Views\ReactRootView.cpp" />
     <ClCompile Include="..\ReactUWP\Views\RefreshControlManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\RootViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\ScrollContentViewManager.cpp" />
@@ -415,6 +420,7 @@
     <ClCompile Include="..\ReactUWP\Views\ViewViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\VirtualTextViewManager.cpp" />
     <ClCompile Include="..\ReactUWP\Views\WebViewManager.cpp" />
+    <ClCompile Include="..\ReactUWP\Views\XamlFeatures.cpp" />
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="DynamicReader.cpp">
@@ -442,16 +448,20 @@
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ReactInstanceCreator.cpp" />
+    <ClCompile Include="ReactHost\AsyncActionQueue.cpp" />
+    <ClCompile Include="ReactHost\JSBundle.cpp" />
+    <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
+    <ClCompile Include="ReactHost\JSExceptionCallbackFactory.cpp" />
+    <ClCompile Include="ReactHost\MsoUtils.cpp" />
+    <ClCompile Include="ReactHost\PropertyBag.cpp" />
+    <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
+    <ClCompile Include="ReactHost\ReactHost.cpp" />
+    <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="ReactHost\UwpReactInstanceProxy.cpp" />
     <ClCompile Include="ReactInstance.cpp">
       <DependentUpon>ReactInstance.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="ReactInstanceManager.cpp">
-      <DependentUpon>ReactInstanceManager.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactInstanceManagerBuilder.cpp" />
     <ClCompile Include="ReactInstanceSettings.cpp">
       <DependentUpon>ReactInstanceSettings.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -463,12 +473,16 @@
     <ClCompile Include="ReactPackageBuilder.cpp">
       <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="ReactRootView2.cpp">
-      <DependentUpon>ReactRootView2.idl</DependentUpon>
+    <ClCompile Include="ReactRootView.cpp">
+      <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="Threading\BatchingQueueThread.cpp" />
+    <ClCompile Include="Threading\MessageDispatchQueue.cpp" />
+    <ClCompile Include="Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="ViewManagersProvider.cpp" />
+    <ClCompile Include="Views\ReactRootControl.cpp" />
     <ClCompile Include="XamlHelper.cpp">
       <DependentUpon>XamlHelper.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -499,16 +513,13 @@
     <Midl Include="ReactInstance.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ReactInstanceManager.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="ReactInstanceSettings.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactNativeHost.idl">
       <SubType>Designer</SubType>
     </Midl>
-    <Midl Include="ReactRootView2.idl">
+    <Midl Include="ReactRootView.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />

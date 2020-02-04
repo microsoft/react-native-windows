@@ -5,6 +5,7 @@
 #ifndef MSO_OBJECT_UNKNOWNOBJECT_H
 #define MSO_OBJECT_UNKNOWNOBJECT_H
 
+#include "comUtil/IUnknownShim.h"
 #include "compilerAdapters/compilerWarnings.h"
 #include "object/objectRefCount.h"
 #include "object/objectWithWeakRef.h"
@@ -333,8 +334,8 @@ struct QueryInterfaceHelper {
     const GUID &intfGuid =
         (riid == __uuidof(QueryCastBridge)) ? reinterpret_cast<QueryCastBridge *>(ppvObject)->ObjectId : riid;
 
-    if (intfGuid == __uuidof(IUnknown)) {
-      *ppvObject = obj->template StaticCastElseNull<IUnknown *>();
+    if (intfGuid == __uuidof(Mso::IUnknown)) {
+      *ppvObject = obj->template StaticCastElseNull<Mso::IUnknown *>();
     } else {
       *ppvObject = obj->QueryCast(intfGuid);
     }
@@ -624,9 +625,9 @@ class AgileUnknownObject : public UnknownObject<TBaseTypes...> {
     // Free threaded marshaler currently supported only for Windows and VC++
     if (riid == __uuidof(IMarshal) || riid == __uuidof(IAgileObject)) {
       if (m_ftm.IsEmpty()) {
-        Mso::CntPtr<IUnknown> ftm;
+        Mso::CntPtr<Mso::IUnknown> ftm;
         VerifySucceededElseCrashTag(
-            CoCreateFreeThreadedMarshaler(this->template StaticCastElseNull<IUnknown *>(), &ftm),
+            CoCreateFreeThreadedMarshaler(this->template StaticCastElseNull<Mso::IUnknown *>(), &ftm),
             0x01003719 /* tag_bad2z */);
         // Only assign ftm to m_ftm if its value is nullptr. Otherwise we will delete the new ftm and use the existing
         // m_ftm.
@@ -647,7 +648,7 @@ class AgileUnknownObject : public UnknownObject<TBaseTypes...> {
   using AgileUnknownObjectType = AgileUnknownObject;
 
  private:
-  Mso::CntPtr<IUnknown> m_ftm;
+  Mso::CntPtr<Mso::IUnknown> m_ftm;
 };
 
 } // namespace Mso

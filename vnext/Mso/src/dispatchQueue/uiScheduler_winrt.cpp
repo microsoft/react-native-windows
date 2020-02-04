@@ -14,24 +14,24 @@ using namespace Windows::UI::Core;
 
 namespace Mso {
 
-struct MainUISchdulerWinRT;
+struct UISchdulerWinRT;
 
 //! TaskDispatchedHandler is a DispatchedHandler delegate that we pass to CoreDispatcher.
 //! We use custom ref counting to avoid extra memory allocations and to handle reference to DispatchTask.
 struct TaskDispatchedHandler final : impl::abi_t<DispatchedHandler> {
-  TaskDispatchedHandler(MainUISchdulerWinRT *scheduler) noexcept;
+  TaskDispatchedHandler(UISchdulerWinRT *scheduler) noexcept;
   int32_t __stdcall QueryInterface(guid const &id, void **result) noexcept final;
   uint32_t __stdcall AddRef() noexcept final;
   uint32_t __stdcall Release() noexcept final;
   int32_t __stdcall Invoke() noexcept final;
 
  private:
-  MainUISchdulerWinRT *m_scheduler;
+  UISchdulerWinRT *m_scheduler;
 };
 
-struct MainUISchdulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler> {
-  MainUISchdulerWinRT() noexcept;
-  ~MainUISchdulerWinRT() noexcept override;
+struct UISchdulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler> {
+  UISchdulerWinRT(CoreDispatcher &&coreDispatcher) noexcept;
+  ~UISchdulerWinRT() noexcept override;
 
   uint32_t AddHandlerRef() noexcept;
   uint32_t ReleaseHandlerRef() noexcept;
@@ -49,13 +49,13 @@ struct MainUISchdulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, 
 
  private:
   struct CleanupContext {
-    CleanupContext(MainUISchdulerWinRT *scheduler) noexcept;
+    CleanupContext(UISchdulerWinRT *scheduler) noexcept;
     ~CleanupContext() noexcept;
     void CheckShutdown() noexcept;
     void CheckTermination() noexcept;
 
    private:
-    MainUISchdulerWinRT *m_scheduler;
+    UISchdulerWinRT *m_scheduler;
     bool m_isShutdown{false};
     bool m_isTerminated{false};
   };
@@ -66,7 +66,7 @@ struct MainUISchdulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, 
   ManualResetEvent m_terminationEvent;
   ThreadMutex m_mutex;
   Mso::WeakPtr<IDispatchQueueService> m_queue;
-  Mso::CntPtr<MainUISchdulerWinRT> m_self;
+  Mso::CntPtr<UISchdulerWinRT> m_self;
   uint32_t m_handlerRefCount{0};
   uint32_t m_taskCount{0};
   bool m_isShutdown{false};
@@ -76,7 +76,7 @@ struct MainUISchdulerWinRT : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, 
 // TaskDispatchedHandler implementation
 //=============================================================================
 
-TaskDispatchedHandler::TaskDispatchedHandler(MainUISchdulerWinRT *scheduler) noexcept : m_scheduler{scheduler} {}
+TaskDispatchedHandler::TaskDispatchedHandler(UISchdulerWinRT *scheduler) noexcept : m_scheduler{scheduler} {}
 
 int32_t __stdcall TaskDispatchedHandler::QueryInterface(guid const &id, void **result) noexcept {
   if (is_guid_of<DispatchedHandler>(id) || is_guid_of<Windows::Foundation::IUnknown>(id) ||
@@ -113,23 +113,23 @@ int32_t __stdcall TaskDispatchedHandler::Invoke() noexcept {
 }
 
 //=============================================================================
-// MainUISchdulerWinRT implementation
+// UISchdulerWinRT implementation
 //=============================================================================
 
-MainUISchdulerWinRT::MainUISchdulerWinRT() noexcept
-    : m_coreDispatcher{CoreApplication::MainView().CoreWindow().Dispatcher()} {}
+UISchdulerWinRT::UISchdulerWinRT(CoreDispatcher &&coreDispatcher) noexcept
+    : m_coreDispatcher{std::move(coreDispatcher)} {}
 
-MainUISchdulerWinRT::~MainUISchdulerWinRT() noexcept {
+UISchdulerWinRT::~UISchdulerWinRT() noexcept {
   AwaitTermination();
 }
 
-uint32_t MainUISchdulerWinRT::AddHandlerRef() noexcept {
+uint32_t UISchdulerWinRT::AddHandlerRef() noexcept {
   std::lock_guard lock{m_mutex};
   return ++m_handlerRefCount;
 }
 
-uint32_t MainUISchdulerWinRT::ReleaseHandlerRef() noexcept {
-  Mso::CntPtr<MainUISchdulerWinRT> self;
+uint32_t UISchdulerWinRT::ReleaseHandlerRef() noexcept {
+  Mso::CntPtr<UISchdulerWinRT> self;
   CleanupContext context{this};
 
   {
@@ -147,7 +147,7 @@ uint32_t MainUISchdulerWinRT::ReleaseHandlerRef() noexcept {
   }
 }
 
-bool MainUISchdulerWinRT::TryTakeTask(Mso::CntPtr<IDispatchQueueService> &queue, DispatchTask &task) noexcept {
+bool UISchdulerWinRT::TryTakeTask(Mso::CntPtr<IDispatchQueueService> &queue, DispatchTask &task) noexcept {
   {
     std::lock_guard lock{m_mutex};
     VerifyElseCrashSz(m_taskCount, "Task count cannot be negative");
@@ -161,7 +161,7 @@ bool MainUISchdulerWinRT::TryTakeTask(Mso::CntPtr<IDispatchQueueService> &queue,
   return false;
 }
 
-DispatchedHandler MainUISchdulerWinRT::MakeDispatchedHandler() noexcept {
+DispatchedHandler UISchdulerWinRT::MakeDispatchedHandler() noexcept {
   VerifyElseCrash(m_mutex.IsLockedByMe());
 
   if (m_handlerRefCount == 0) {
@@ -172,19 +172,19 @@ DispatchedHandler MainUISchdulerWinRT::MakeDispatchedHandler() noexcept {
   return {static_cast<void *>(&m_dispatchedHandler), take_ownership_from_abi};
 }
 
-void MainUISchdulerWinRT::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
+void UISchdulerWinRT::IntializeScheduler(Mso::WeakPtr<IDispatchQueueService> &&queue) noexcept {
   m_queue = std::move(queue);
 }
 
-bool MainUISchdulerWinRT::HasThreadAccess() noexcept {
+bool UISchdulerWinRT::HasThreadAccess() noexcept {
   return m_coreDispatcher.HasThreadAccess();
 }
 
-bool MainUISchdulerWinRT::IsSerial() noexcept {
+bool UISchdulerWinRT::IsSerial() noexcept {
   return true;
 }
 
-void MainUISchdulerWinRT::Post() noexcept {
+void UISchdulerWinRT::Post() noexcept {
   DispatchedHandler handler;
   {
     std::lock_guard lock{m_mutex};
@@ -199,7 +199,7 @@ void MainUISchdulerWinRT::Post() noexcept {
   }
 }
 
-void MainUISchdulerWinRT::Shutdown() noexcept {
+void UISchdulerWinRT::Shutdown() noexcept {
   CleanupContext context{this};
   {
     std::lock_guard lock{m_mutex};
@@ -208,18 +208,18 @@ void MainUISchdulerWinRT::Shutdown() noexcept {
   }
 }
 
-void MainUISchdulerWinRT::AwaitTermination() noexcept {
+void UISchdulerWinRT::AwaitTermination() noexcept {
   Shutdown();
   m_terminationEvent.Wait();
 }
 
 //=============================================================================
-// MainUISchdulerWinRT::CleanupContext implementation
+// UISchdulerWinRT::CleanupContext implementation
 //=============================================================================
 
-MainUISchdulerWinRT::CleanupContext::CleanupContext(MainUISchdulerWinRT *scheduler) noexcept : m_scheduler{scheduler} {}
+UISchdulerWinRT::CleanupContext::CleanupContext(UISchdulerWinRT *scheduler) noexcept : m_scheduler{scheduler} {}
 
-MainUISchdulerWinRT::CleanupContext::~CleanupContext() noexcept {
+UISchdulerWinRT::CleanupContext::~CleanupContext() noexcept {
   if (m_isTerminated) {
     m_scheduler->m_terminationEvent.Set();
   }
@@ -231,7 +231,7 @@ MainUISchdulerWinRT::CleanupContext::~CleanupContext() noexcept {
   }
 }
 
-void MainUISchdulerWinRT::CleanupContext::CheckShutdown() noexcept {
+void UISchdulerWinRT::CleanupContext::CheckShutdown() noexcept {
   // See if core dispatcher released all handlers without invoking them.
   if (m_scheduler->m_taskCount != 0 && m_scheduler->m_handlerRefCount == 0) {
     m_isShutdown = true;
@@ -240,7 +240,7 @@ void MainUISchdulerWinRT::CleanupContext::CheckShutdown() noexcept {
   }
 }
 
-void MainUISchdulerWinRT::CleanupContext::CheckTermination() noexcept {
+void UISchdulerWinRT::CleanupContext::CheckTermination() noexcept {
   m_isTerminated = m_scheduler->m_isShutdown && (m_scheduler->m_handlerRefCount == 0);
 }
 
@@ -249,7 +249,11 @@ void MainUISchdulerWinRT::CleanupContext::CheckTermination() noexcept {
 //=============================================================================
 
 /*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeMainUIScheduler() noexcept {
-  return Mso::Make<MainUISchdulerWinRT, IDispatchQueueScheduler>();
+  return Mso::Make<UISchdulerWinRT, IDispatchQueueScheduler>(CoreApplication::MainView().CoreWindow().Dispatcher());
+}
+
+/*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeCurrentThreadUIScheduler() noexcept {
+  return Mso::Make<UISchdulerWinRT, IDispatchQueueScheduler>(CoreWindow::GetForCurrentThread().Dispatcher());
 }
 
 } // namespace Mso
