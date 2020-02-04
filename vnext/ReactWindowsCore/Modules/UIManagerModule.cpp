@@ -5,6 +5,7 @@ using namespace std;
 #include <cxxreact/JsArgumentHelpers.h>
 #include <folly/json.h>
 #include <algorithm>
+#include <glog/logging.h>
 #include <iostream>
 
 #include "ShadowNode.h"
