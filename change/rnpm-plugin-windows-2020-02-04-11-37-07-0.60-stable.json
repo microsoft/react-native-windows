@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "comment": "rnpm-plugin-windows fails when using npm (#4003)",
-  "packageName": "rnpm-plugin-windows",
-  "email": "acoates@microsoft.com",
-  "commit": "fce1f12f245b241fbdd14f49500b0bdadcd07a07",
-  "dependentChangeType": "patch",
-  "date": "2020-02-04T19:37:07.676Z"
-}
