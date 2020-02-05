@@ -505,9 +505,10 @@ std::vector<facebook::xplat::module::CxxModule::Method> UIManagerModule::getMeth
           [manager](dynamic args, Callback cb) { manager->measureInWindow(jsArgAsInt(args, 0), cb); }),
       Method(
           "measureLayout",
-          [manager](dynamic args, Callback cbError) {
-            manager->measureLayout(jsArgAsInt(args, 0), jsArgAsInt(args, 1), cbError, cbError);
-          }),
+          [manager](dynamic args, Callback cbError, Callback cbSuccess) {
+            manager->measureLayout(jsArgAsInt(args, 0), jsArgAsInt(args, 1), cbError, cbSuccess);
+          },
+          AsyncTag),
       Method(
           "findSubviewIn",
           [manager](dynamic args, Callback cb) {

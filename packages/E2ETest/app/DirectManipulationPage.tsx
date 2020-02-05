@@ -30,10 +30,10 @@ const childViewRef = React.createRef<View>();
 export function DirectManipulationTestPage() {
     const [resultTextState, setResultTextState] = useState('');
 
-    const measureLayoutSucceed = (x:number,y:number,width:number,height:number) => {
-        setResultTextState(`x=${x};y=${y};width=${width};height=${height}`);
+    const measureLayoutSucceeded = (x: number, y: number, width: number, height: number) => {
+        setResultTextState(`x=${x};y=${y};width=${Math.trunc(width)};height=${Math.trunc(height)}`);
     }
-    
+
     const measureLayoutFailed = () => {
         setResultTextState('MeasureLayout failed');
     }
@@ -56,10 +56,10 @@ export function DirectManipulationTestPage() {
 
             <Button title='Call MeasureLayout'
                 onPress={() => {
-                    if(childViewRef.current) {
-                        const rootHandle = findNodeHandle(rootViewRef.current)
-                        if(rootHandle) {
-                            childViewRef.current.measureLayout(rootHandle, measureLayoutSucceed, measureLayoutFailed)
+                    if (childViewRef.current) {
+                        const rootViewHandle = findNodeHandle(rootViewRef.current);
+                        if (rootViewHandle) {
+                            childViewRef.current.measureLayout(rootViewHandle, measureLayoutSucceeded, measureLayoutFailed);
                         }
                     }
                 }}

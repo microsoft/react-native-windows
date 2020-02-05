@@ -985,13 +985,13 @@ void NativeUIManager::measureLayout(
     facebook::xplat::module::CxxModule::Callback callback) {
   std::vector<folly::dynamic> args;
   try {
-    auto &target = static_cast<ShadowNodeBase &>(shadowNode);
-    auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
-    auto targetView = target.GetView().as<winrt::FrameworkElement>();
-    auto ancenstorView = ancestor.GetView().as<winrt::FrameworkElement>();
+    const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
+    const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
+    const auto targetView = target.GetView().as<winrt::FrameworkElement>();
+    const auto ancenstorView = ancestor.GetView().as<winrt::FrameworkElement>();
 
-    auto ancestorViewtransform = targetView.TransformToVisual(ancenstorView);
-    auto relativePosition = ancestorViewtransform.TransformPoint({0, 0});
+    const auto ancestorViewtransform = targetView.TransformToVisual(ancenstorView);
+    const auto relativePosition = ancestorViewtransform.TransformPoint({0, 0});
 
     // x, y
     args.push_back(relativePosition.X);
