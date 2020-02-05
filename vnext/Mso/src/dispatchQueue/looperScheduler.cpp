@@ -22,10 +22,10 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
   void AwaitTermination() noexcept override;
 
  private:
-  std::thread m_looperThread;
   ManualResetEvent m_wakeUpEvent;
   Mso::WeakPtr<IDispatchQueueService> m_queue;
   std::atomic_bool m_isShutdown{false};
+  std::thread m_looperThread; // it must be last in the initialization list
 };
 
 //=============================================================================
@@ -33,10 +33,7 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
 //=============================================================================
 
 LooperScheduler::LooperScheduler() noexcept
-    : m_looperThread{[weakSelf = Mso::WeakPtr{this}]() noexcept {RunLoop(weakSelf);
-} // namespace Mso
-}
-{}
+    : m_looperThread([weakSelf = Mso::WeakPtr{this}]() noexcept { RunLoop(weakSelf); }) {}
 
 LooperScheduler::~LooperScheduler() noexcept {
   AwaitTermination();
@@ -50,15 +47,15 @@ LooperScheduler::~LooperScheduler() noexcept {
         while (queue->TryDequeTask(task)) {
           queue->InvokeTask(std::move(task), std::nullopt);
         }
-
-        if (self->m_isShutdown) {
-          break;
-        }
-
-        self->m_wakeUpEvent.Wait();
-        self->m_wakeUpEvent.Reset();
-        continue;
       }
+
+      if (self->m_isShutdown) {
+        break;
+      }
+
+      self->m_wakeUpEvent.Wait();
+      self->m_wakeUpEvent.Reset();
+      continue;
     }
 
     break;

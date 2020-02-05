@@ -20,21 +20,21 @@ class ReactRootView : public IXamlRootView {
   ReactRootView(XamlView rootView);
   virtual ~ReactRootView();
 
-  // IXamlRootView implementations
+ public: // IXamlRootView implementations
   std::shared_ptr<IReactInstance> GetReactInstance() const noexcept override;
   XamlView GetXamlView() const noexcept override;
   void SetJSComponentName(std::string &&mainComponentName) noexcept override;
   void SetInitialProps(folly::dynamic &&initialProps) noexcept override;
-  void SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept;
+  void SetInstanceCreator(const ReactInstanceCreator &instanceCreator) noexcept override;
   void AttachRoot() noexcept override;
   void DetachRoot() noexcept override;
   std::shared_ptr<::react::uwp::IXamlReactControl> GetXamlReactControl() const noexcept override;
 
-  // IReactRootView implementations
+ public: // IReactRootView implementations
   virtual void ResetView() override;
-  virtual std::string JSComponentName() const noexcept;
-  virtual int64_t GetActualHeight() const;
-  virtual int64_t GetActualWidth() const;
+  virtual std::string JSComponentName() const noexcept override;
+  virtual int64_t GetActualHeight() const override;
+  virtual int64_t GetActualWidth() const override;
   virtual int64_t GetTag() const override;
   virtual void SetTag(int64_t tag) override;
 
