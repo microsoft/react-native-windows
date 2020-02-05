@@ -1,19 +1,20 @@
-#pragma once
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+#pragma once
 
 #include <NativeModuleProvider.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include "ReactHost/React.h"
 
 namespace winrt::Microsoft::ReactNative {
 
-class NativeModulesProvider final : public facebook::react::NativeModuleProvider {
+class NativeModulesProvider final : public Mso::React::NativeModuleProvider2 {
  public:
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
-      const std::shared_ptr<facebook::react::MessageQueueThread> &defaultQueueThread) override;
+      Mso::CntPtr<Mso::React::IReactContext> const &reactContext,
+      std::shared_ptr<facebook::react::MessageQueueThread> const &defaultQueueThread) override;
 
  public:
-  NativeModulesProvider() noexcept;
   void AddModuleProvider(winrt::hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
  private:

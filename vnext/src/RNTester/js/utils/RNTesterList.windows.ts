@@ -41,15 +41,15 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'CustomViewExample',
-    module: require('./../CustomViewExample.windows'),
+    module: require('./../examples-win/CustomView/CustomViewExample.windows'),
   },
   {
     key: 'DatePickerExample',
-    module: require('./../DatePickerExample.windows'),
+    module: require('./../examples-win/DatePicker/DatePickerExample.windows'),
   },
   {
     key: 'FastTextExample',
-    module: require('./../FastTextExample'),
+    module: require('./../examples-win/FastText/FastTextExample'),
   },
   {
     key: 'FlatListExample',
@@ -57,11 +57,11 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'FlyoutExample',
-    module: require('./../FlyoutExample.windows'),
+    module: require('./../examples-win/Flyout/FlyoutExample.windows'),
   },
   {
     key: 'GlyphExample',
-    module: require('./../GlyphExample'),
+    module: require('./../examples-win/Glyph/GlyphExample'),
   },
   {
     key: 'ImageExample',
@@ -81,15 +81,15 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'PickerWindowsExample',
-    module: require('./../PickerWindowsExample'),
+    module: require('./../examples-win/Picker/PickerWindowsExample'),
   },
   {
     key: 'PopupExample',
-    module: require('./../PopupExample.windows'),
+    module: require('./../examples-win/Popup/PopupExample.windows'),
   },
   {
     key: 'KeyboardExtensionExample',
-    module: require('./../KeyboardExtensionExample.windows'),
+    module: require('./../examples-win/Keyboard/KeyboardExtensionExample.windows'),
   },
   {
     key: 'ScrollViewSimpleExample',
@@ -105,11 +105,11 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'TextExample',
-    module: require('./../TextExample.windows'),
+    module: require('./../examples-win/Text/TextExample.windows'),
   },
   {
     key: 'TextInputExample',
-    module: require('./../TextInputExample.windows'),
+    module: require('./../examples-win/TextInput/TextInputExample.windows'),
   },
   {
     key: 'TouchableExample',
@@ -117,7 +117,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'TransferProperties',
-    module: require('./../TransferProperties'),
+    module: require('./../examples-win/TransferProperties/TransferPropertiesExample'),
   },
   {
     key: 'TransparentHitTestExample',
@@ -132,7 +132,7 @@ const ComponentExamples: Array<IRNTesterExample> = [
 const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'KeyboardFocusExample',
-    module: require('./../KeyboardFocusExample.windows'),
+    module: require('./../examples-win/Keyboard/KeyboardFocusExample.windows'),
   },
   {
     key: 'AccessibilityExample',
@@ -140,7 +140,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'AccessibilityExampleWindows',
-    module: require('./../AccessibilityExampleWindows'),
+    module: require('./../examples-win/Accessibility/AccessibilityExampleWindows'),
   },
   {
     key: 'AlertExample',
@@ -176,7 +176,7 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'KeyboardExample',
-    module: require('./../KeyboardExample'),
+    module: require('./../examples-win/Keyboard/KeyboardExample'),
   },
   {
     key: 'LayoutEventsExample',
@@ -208,11 +208,11 @@ const APIExamples: Array<IRNTesterExample> = [
   },
   {
     key: 'ThemingExample',
-    module: require('./../ThemingExample'),
+    module: require('./../examples-win/Theming/ThemingExample'),
   },
   {
     key: 'WindowsBrushExample',
-    module: require('./../WindowsBrushExample'),
+    module: require('./../examples-win/WindowsBrush/WindowsBrushExample'),
   },
   {
     key: 'TransformExample',

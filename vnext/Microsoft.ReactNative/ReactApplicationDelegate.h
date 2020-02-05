@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include "ReactApplicationDelegate.g.h"
+#include "ReactRootView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -26,6 +27,7 @@ struct ReactApplicationDelegate : ReactApplicationDelegateT<ReactApplicationDele
  private:
   Windows::UI::Xaml::Application m_application{nullptr};
   IReactApplication m_reactApplication{nullptr};
+  winrt::com_ptr<ReactRootView> m_reactRootView{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

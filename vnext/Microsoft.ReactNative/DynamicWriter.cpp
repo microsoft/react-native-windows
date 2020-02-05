@@ -138,4 +138,14 @@ void DynamicWriter::WriteValue(folly::dynamic &&value) noexcept {
   }
 }
 
+/*static*/ folly::dynamic DynamicWriter::ToDynamic(JSValueArgWriter const &argWriter) noexcept {
+  if (argWriter) {
+    IJSValueWriter dynamicWriter = winrt::make<DynamicWriter>();
+    argWriter(dynamicWriter);
+    return dynamicWriter.as<DynamicWriter>()->TakeValue();
+  }
+
+  return {};
+}
+
 } // namespace winrt::Microsoft::ReactNative
