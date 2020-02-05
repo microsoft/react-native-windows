@@ -24,62 +24,62 @@ using namespace facebook::react;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace react::uwp;
 
-TEST_CLASS(CreateModulesTest){TEST_METHOD(CreateModules_AppStateModule){
+TEST_CLASS (CreateModulesTest) {
+  TEST_METHOD(CreateModules_AppStateModule) {
     auto appStateModule = std::make_unique<AppStateModule>(std::make_unique<AppState>());
 
-Assert::IsFalse(appStateModule == nullptr);
-}
+    Assert::IsFalse(appStateModule == nullptr);
+  }
 
-TEST_METHOD(CreateModules_DevSupportManager) {
-  auto devSupportManager = std::make_shared<DevSupportManager>();
-  Assert::IsFalse(devSupportManager == nullptr);
-}
+  TEST_METHOD(CreateModules_DevSupportManager) {
+    auto devSupportManager = std::make_shared<DevSupportManager>();
+    Assert::IsFalse(devSupportManager == nullptr);
+  }
 
-TEST_METHOD(CreateModules_DeviceInfoModule) {
-  auto reactInstance = react::uwp::CreateReactInstance(nullptr);
-  Assert::IsFalse(reactInstance == nullptr);
-  auto deviceInfoModule = std::make_unique<DeviceInfoModule>(std::make_unique<DeviceInfo>(reactInstance));
+  TEST_METHOD(CreateModules_DeviceInfoModule) {
+    auto reactInstance = react::uwp::CreateReactInstance(nullptr);
+    Assert::IsFalse(reactInstance == nullptr);
+    auto deviceInfoModule = std::make_unique<DeviceInfoModule>(std::make_unique<DeviceInfo>(reactInstance));
 
-  Assert::IsFalse(deviceInfoModule == nullptr);
-}
+    Assert::IsFalse(deviceInfoModule == nullptr);
+  }
 
-TEST_METHOD(CreateModules_LocationObserverModule) {
-  auto messageQueueThread = std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
+  TEST_METHOD(CreateModules_LocationObserverModule) {
+    auto messageQueueThread = std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
 
-  auto locationObserverModule = std::make_unique<LocationObserverModule>(messageQueueThread);
+    auto locationObserverModule = std::make_unique<LocationObserverModule>(messageQueueThread);
 
-  Assert::IsFalse(locationObserverModule == nullptr);
-}
+    Assert::IsFalse(locationObserverModule == nullptr);
+  }
 
-TEST_METHOD(CreateModules_NativeUIManager) {
-  auto nativeUIManager = std::make_unique<react::uwp::NativeUIManager>();
+  TEST_METHOD(CreateModules_NativeUIManager) {
+    auto nativeUIManager = std::make_unique<react::uwp::NativeUIManager>();
 
-  Assert::IsFalse(nativeUIManager == nullptr);
-}
+    Assert::IsFalse(nativeUIManager == nullptr);
+  }
 
-TEST_METHOD(CreateModules_TimingModule) {
-  auto messageQueueThread = std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
+  TEST_METHOD(CreateModules_TimingModule) {
+    auto messageQueueThread = std::shared_ptr<facebook::react::MessageQueueThread>(nullptr);
 
-  auto timingModule = CreateTimingModule(messageQueueThread);
+    auto timingModule = CreateTimingModule(messageQueueThread);
 
-  Assert::IsFalse(timingModule == nullptr);
-}
+    Assert::IsFalse(timingModule == nullptr);
+  }
 
-TEST_METHOD(CreateModules_UIManagerModule) {
-  auto reactInstance = react::uwp::CreateReactInstance(nullptr);
-  Assert::IsFalse(reactInstance == nullptr);
+  TEST_METHOD(CreateModules_UIManagerModule) {
+    auto reactInstance = react::uwp::CreateReactInstance(nullptr);
+    Assert::IsFalse(reactInstance == nullptr);
 
-  auto uiManager = CreateUIManager(reactInstance, nullptr);
-  Assert::IsFalse(uiManager == nullptr);
+    auto uiManager = CreateUIManager(reactInstance, nullptr);
+    Assert::IsFalse(uiManager == nullptr);
 
-  auto uiManagerModule = createUIManagerModule(std::move(uiManager));
-  Assert::IsFalse(uiManagerModule == nullptr);
-}
+    auto uiManagerModule = createUIManagerModule(std::move(uiManager));
+    Assert::IsFalse(uiManagerModule == nullptr);
+  }
 
-TEST_METHOD(CreateModules_WebSocketModule) {
-  auto webSocketModule = std::make_unique<WebSocketModule>();
+  TEST_METHOD(CreateModules_WebSocketModule) {
+    auto webSocketModule = std::make_unique<WebSocketModule>();
 
-  Assert::IsFalse(webSocketModule == nullptr);
-}
-}
-;
+    Assert::IsFalse(webSocketModule == nullptr);
+  }
+};
