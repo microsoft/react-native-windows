@@ -278,7 +278,7 @@
     <Unzip Condition="!Exists('$(FollyDir)')" ContinueOnError="true" SourceFiles="$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip" DestinationFolder="$([MSBuild]::NormalizePath($(FollyDir)..))" OverwriteReadOnlyFiles="true" />
   </Target>
   <ItemGroup>
-    <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*"/>
+    <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
   <!--

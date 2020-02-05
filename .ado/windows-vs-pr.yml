@@ -76,7 +76,7 @@ jobs:
           applyRnPatches: $(applyRnPatches)
           yarnBuildCmd: build
           project: vnext/ReactWindows-Universal.sln
-          vsComponents: ''
+          vsComponents: $(VsComponents)
 
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
@@ -112,7 +112,7 @@ jobs:
       - template: templates/prepare-env.yml
         parameters:
           applyRnPatches: $(applyRnPatches)
-          vsComponents: ''
+          vsComponents: $(VsComponents)
           yarnBuildCmd: build
 
       - task: NuGetCommand@2
@@ -373,7 +373,7 @@ jobs:
         parameters:
           version: 0.60.6
           platform: x64
-          vsComponents: ''
+          vsComponents: $(VsComponents)
 
   - job: RNWFormatting
     displayName: Verify change files + lint
