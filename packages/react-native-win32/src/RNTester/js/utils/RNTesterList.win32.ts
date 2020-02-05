@@ -28,58 +28,58 @@ interface IRNTesterModuleExample {
 const ComponentExamples: Array<IRNTesterExample> = [
   {
     key: 'TouchableWin32Example',
-    module: require('../../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
+    module: require('../../../Libraries/Components/Touchable/Tests/TouchableWin32Test'),
   },
   {
     key: 'ScrollViewSimpleExample',
-    module: require('react-native/RNTester/js/ScrollViewSimpleExample'),
+    module: require('react-native/RNTester/js/examples/ScrollView/ScrollViewSimpleExample'),
   },
   {
     key: 'TouchableExample',
-    module: require('react-native/RNTester/js/TouchableExample'),
+    module: require('react-native/RNTester/js/examples/Touchable/TouchableExample'),
   },
   {
     key: 'ViewExample',
-    module: require('react-native/RNTester/js/ViewExample'),
+    module: require('react-native/RNTester/js/examples/View/ViewExample'),
   },
   {
     key: 'ViewWin32Test',
-    module: require('../../Libraries/Components/View/Tests/ViewWin32Test'),
+    module: require('../../../Libraries/Components/View/Tests/ViewWin32Test'),
   },
   {
     key: 'TextInputExample',
-    module: require('../../Libraries/Components/TextInput/Tests/TextInputTest'),
+    module: require('../../../Libraries/Components/TextInput/Tests/TextInputTest'),
   },
   {
     key: 'ImageWin32Test',
-    module: require('../../Libraries/Image/Tests/ImageWin32Test'),
+    module: require('../../../Libraries/Image/Tests/ImageWin32Test'),
   },
 ];
 
 const APIExamples: Array<IRNTesterExample> = [
   {
     key: 'AccessibilityExampleWin32',
-    module: require('../APIExamples/AccessibilityExampleWin32'),
+    module: require('../../APIExamples/AccessibilityExampleWin32'),
   },
   {
     key: 'AppStateExample',
-    module: require('react-native/RNTester/js/AppStateExample'),
+    module: require('react-native/RNTester/js/examples/AppState/AppStateExample'),
   },
   {
     key: 'BorderExample',
-    module: require('react-native/RNTester/js/BorderExample'),
+    module: require('react-native/RNTester/js/examples/Border/BorderExample'),
   },
   {
     key: 'LayoutExample',
-    module: require('react-native/RNTester/js/LayoutExample'),
+    module: require('react-native/RNTester/js/examples/Layout/LayoutExample'),
   },
   {
     key: 'PointerEventsExample',
-    module: require('react-native/RNTester/js/PointerEventsExample'),
+    module: require('react-native/RNTester/js/examples/PointerEvents/PointerEventsExample'),
   },
   {
     key: 'ThemingExample',
-    module: require('../APIExamples/ThemingModuleAPI'),
+    module: require('../../APIExamples/ThemingModuleAPI'),
   },
 ];
 

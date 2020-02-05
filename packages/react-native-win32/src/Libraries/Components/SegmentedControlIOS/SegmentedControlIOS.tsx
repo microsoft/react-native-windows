@@ -3,7 +3,7 @@
  */
 
 'use strict';
-import UnimplementedView from './UnimplementedViews';
+import UnimplementedView from '../UnimplementedStubs/UnimplementedViews';
 import { SegmentedControlIOSProps } from 'react-native';
 
 class SegmentedControlIOS extends UnimplementedView<SegmentedControlIOSProps> {}

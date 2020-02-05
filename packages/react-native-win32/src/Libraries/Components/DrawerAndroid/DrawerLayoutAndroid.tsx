@@ -3,7 +3,7 @@
  */
 
 'use strict';
-import UnimplementedView from './UnimplementedViews';
+import UnimplementedView from '../UnimplementedStubs/UnimplementedViews';
 import { DrawerLayoutAndroidProps } from 'react-native';
 
 class DrawerLayoutAndroid extends UnimplementedView<DrawerLayoutAndroidProps> {}

@@ -3,7 +3,7 @@
  */
 
 'use strict';
-import UnimplementedView from './UnimplementedViews';
+import UnimplementedView from '../UnimplementedStubs/UnimplementedViews';
 import { ViewProps } from 'react-native';
 
 // ViewProperties should be CheckBoxProperties, but it doesn't exist in the typings yet

@@ -10,8 +10,8 @@
 
 'use strict';
 
-import Platform from '../../Libraries/Utilities/Platform'; // TODO(macOS ISS#2323203)
 const React = require('react');
+
 const {StyleSheet, TextInput, View} = require('react-native');
 
 type Props = {
@@ -27,9 +27,9 @@ type State = {
 };
 
 class RNTesterExampleFilter extends React.Component<Props, State> {
-  state = {filter: ''};
+  state: State = {filter: ''};
 
-  render() {
+  render(): React.Node {
     const filterText = this.state.filter;
     let filterRegex = /.*/;
 
@@ -73,13 +73,6 @@ class RNTesterExampleFilter extends React.Component<Props, State> {
             this.setState(() => ({filter: text}));
           }}
           placeholder="Search..."
-          placeholderTextColor={
-            Platform.select({
-              macos: {semantic: 'placeholderTextColor'},
-              ios: {semantic: 'placeholderTextColor'},
-              default: undefined,
-            }) /*TODO(macOS ISS#2323203)*/
-          }
           underlineColorAndroid="transparent"
           style={styles.searchTextInput}
           testID={this.props.testID}
@@ -92,40 +85,12 @@ class RNTesterExampleFilter extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
   searchRow: {
-    // [TODO(macOS ISS#2323203)
-    ...Platform.select({
-      macos: {
-        backgroundColor: {semantic: 'windowBackgroundColor'},
-      },
-      ios: {
-        backgroundColor: {semantic: 'systemGroupedBackgroundColor'},
-      },
-      default: {
-        // ]TODO(macOS ISS#2323203)
-        backgroundColor: '#eeeeee',
-      }, // [TODO(macOS ISS#2323203)
-    }), // ]TODO(macOS ISS#2323203)
+    backgroundColor: '#eeeeee',
     padding: 10,
   },
   searchTextInput: {
-    // [TODO(macOS ISS#2323203)
-    ...Platform.select({
-      macos: {
-        color: {semantic: 'textColor'},
-        backgroundColor: {semantic: 'textBackgroundColor'},
-        borderColor: {semantic: 'quaternaryLabelColor'},
-      },
-      ios: {
-        color: {semantic: 'labelColor'},
-        backgroundColor: {semantic: 'secondarySystemGroupedBackgroundColor'},
-        borderColor: {semantic: 'quaternaryLabelColor'},
-      },
-      default: {
-        // ]TODO(macOS ISS#2323203)
-        // backgroundColor: 'white', // [Win32 - TextInput doesn't support backgroundColor currently]
-        borderColor: '#cccccc',
-      }, // [TODO(macOS ISS#2323203)
-    }), // ]TODO(macOS ISS#2323203)
+    // backgroundColor: 'white', // [Win32 - TextInput doesn't support backgroundColor currently]
+    borderColor: '#cccccc',
     borderRadius: 3,
     borderWidth: 1,
     paddingLeft: 8,
