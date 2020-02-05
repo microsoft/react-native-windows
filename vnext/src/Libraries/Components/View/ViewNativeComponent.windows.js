@@ -46,10 +46,12 @@ let viewConfig:
     |}>;
 
 // Only use the JS view config in DEV
-//</T>if (__DEV__) {
+// [Windows
 // On Windows, always use the production code path.  The debug code path registers
 // a ViewConfig that the Windows fork doesn't support.
+//</T>if (__DEV__) {
 if (false) {
+  // Windows]
   // On Android, View extends the base component with additional view-only props
   // On iOS, the base component is View
   if (Platform.OS === 'android') {
