@@ -2,6 +2,20 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 05 Feb 2020 22:09:28 GMT",
+      "tag": "@office-iss/react-native-win32_v0.27.1",
+      "version": "0.27.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Implement Picker component for win32",
+            "author": "kinhln@microsoft.com",
+            "commit": "48e484fb749f77422aec10e9c0e5a74fc2deb076"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Feb 2020 21:15:58 GMT",
       "tag": "@office-iss/react-native-win32_v0.27.0",
       "version": "0.27.0",

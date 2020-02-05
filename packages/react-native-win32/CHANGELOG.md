@@ -1,7 +1,13 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 04 Feb 2020 21:15:58 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Feb 2020 22:09:28 GMT and should not be manually modified.
 
+## 0.27.1
+Wed, 05 Feb 2020 22:09:28 GMT
+
+### Patches
+
+- Implement Picker component for win32 (kinhln@microsoft.com)
 ## 0.27.0
 Tue, 04 Feb 2020 21:15:58 GMT
 
