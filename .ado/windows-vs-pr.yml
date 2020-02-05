@@ -27,11 +27,11 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
-        #  applyRnPatches: true
-        #  LayoutHeaders: true
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+          applyRnPatches: true
+          LayoutHeaders: true
         #X64Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x64
