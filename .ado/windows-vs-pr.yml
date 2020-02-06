@@ -31,7 +31,7 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x64
           applyRnPatches: true
-          LayoutHeaders: true
+        #  LayoutHeaders: true
         #X64Release:
         #  BuildConfiguration: Release
         #  BuildPlatform: x64
