@@ -94,8 +94,6 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj</AdditionalOptions>
-      <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
-      <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION /wd4100 %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(ReactNativeWindowsDir)ReactUWP;
         $(ReactNativeWindowsDir)ReactUWP\Views;
