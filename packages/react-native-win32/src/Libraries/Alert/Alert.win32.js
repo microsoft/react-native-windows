@@ -1,14 +1,26 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
- * @flow
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @format
+ * @flow
  */
+
 'use strict';
 
+// [Windows
 const NativeModules = require('../BatchedBridge/NativeModules');
 const PLYAlertManager = NativeModules.PLYAlertManager;
+// Windows]
 
+export type AlertType =
+  | 'default'
+  | 'plain-text'
+  | 'secure-text'
+  | 'login-password';
+export type AlertButtonStyle = 'default' | 'cancel' | 'destructive';
 export type Buttons = Array<{
   text?: string,
   onPress?: ?Function,
@@ -17,22 +29,14 @@ export type Buttons = Array<{
 
 type Options = {
   cancelable?: ?boolean,
-  onDismiss?: ?Function,
+  onDismiss?: ?() => void,
 };
 
-export type AlertType = $Keys<{
-  default: string,
-  'plain-text': string,
-  'secure-text': string,
-  'login-password': string,
-}>;
-
-export type AlertButtonStyle = $Keys<{
-  default: string,
-  cancel: string,
-  destructive: string,
-}>;
-
+/**
+ * Launches an alert dialog with the specified title and message.
+ *
+ * See http://facebook.github.io/react-native/docs/alert.html
+ */
 class Alert {
   static alert(
     title: ?string,
@@ -40,6 +44,7 @@ class Alert {
     buttons?: Buttons,
     options?: Options,
   ): void {
+    // [Windows
     PLYAlertManager.showAlert(
       title || '',
       message || '',
@@ -65,6 +70,7 @@ class Alert {
         }
       },
     );
+    // Windows]
   }
 
   static prompt(
@@ -75,9 +81,11 @@ class Alert {
     defaultValue?: string,
     keyboardType?: string,
   ): void {
+    // [Windows
     throw new Error(
       'Alert.prompt not currently implemented in react-native-win32',
     );
+    // Windows]
   }
 }
 
