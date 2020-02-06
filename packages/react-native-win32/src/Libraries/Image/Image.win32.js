@@ -1,13 +1,12 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License.
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @flow
  * @format
  */
-
-// TODO(macOS ISS#2323203) TODO(windows ISS): this file is Image.ios.js in facebook's repo.  Renamed to Image.js since it is shared here between ios, macos, and windows.
-
 'use strict';
 
 const DeprecatedImagePropType = require('../DeprecatedPropTypes/DeprecatedImagePropType');
@@ -21,9 +20,11 @@ const requireNativeComponent = require('../ReactNative/requireNativeComponent');
 const resolveAssetSource = require('./resolveAssetSource');
 
 const ImageViewManager = NativeModules.ImageViewManager;
-const ImageLoader = NativeModules.ImageLoader; // [Win32 uses ImageLoader for getSize]
 
+// [Windows
+const ImageLoader = NativeModules.ImageLoader; // [Win32 uses ImageLoader for getSize]
 const RCTImageView = requireNativeComponent('RCTImage'); // [Win32] Uses RCTImage instead of RCTImageView
+// Windows]
 
 import type {ImageProps as ImagePropsType} from './ImageProps';
 
@@ -65,7 +66,7 @@ function getSizeWithHeaders(
   headers: {[string]: string},
   success: (width: number, height: number) => void,
   failure?: (error: any) => void,
-) {
+): any {
   return ImageViewManager.getSizeWithHeaders({uri, headers})
     .then(function(sizes) {
       success(sizes.width, sizes.height);
@@ -78,7 +79,7 @@ function getSizeWithHeaders(
     );
 }
 
-function prefetch(url: string) {
+function prefetch(url: string): any {
   return ImageViewManager.prefetchImage(url);
 }
 
@@ -88,9 +89,7 @@ async function queryCache(
   return await ImageViewManager.queryCache(urls);
 }
 
-declare class ImageComponentType extends ReactNative.NativeComponent<
-  ImagePropsType,
-> {
+declare class ImageComponentType extends ReactNative.NativeComponent<ImagePropsType> {
   static getSize: typeof getSize;
   static getSizeWithHeaders: typeof getSizeWithHeaders;
   static prefetch: typeof prefetch;
