@@ -20,20 +20,24 @@ const createReactClass = require('create-react-class');
 const ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 
 const {
-  DeprecatedAccessibilityComponentTypes,
   DeprecatedAccessibilityRoles,
-  DeprecatedAccessibilityStates,
-  DeprecatedAccessibilityTraits,
 } = require('../../DeprecatedPropTypes/DeprecatedViewAccessibility');
 
-import type {SyntheticEvent, LayoutEvent, PressEvent} from 'CoreEventTypes';
-import type {EdgeInsetsProp} from 'EdgeInsetsPropType';
 import type {
-  AccessibilityComponentType,
+  SyntheticEvent,
+  LayoutEvent,
+  PressEvent,
+} from '../../Types/CoreEventTypes';
+import type {EdgeInsetsProp} from '../../StyleSheet/EdgeInsetsPropType';
+import type {
+  AccessibilityComponentType, // [Windows]
   AccessibilityRole,
   AccessibilityStates,
-  AccessibilityTraits,
-} from 'ViewAccessibility';
+  AccessibilityTraits,        // [Windows]
+  AccessibilityState,
+  AccessibilityActionInfo,
+  AccessibilityActionEvent,
+} from '../View/ViewAccessibility';
 
 type TargetEvent = SyntheticEvent<
   $ReadOnly<{|
@@ -46,6 +50,23 @@ type FocusEvent = TargetEvent;
 
 const PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
 
+const OVERRIDE_PROPS = [
+  'accessibilityLabel',
+  'accessibilityHint',
+  'accessibilityIgnoresInvertColors',
+  'accessibilityRole',
+  'accessibilityStates',
+  'accessibilityState',
+  'accessibilityActions',
+  'onAccessibilityAction',
+  'hitSlop',
+  'nativeID',
+  'onBlur',
+  'onFocus',
+  'onLayout',
+  'testID',
+];
+
 export type Props = $ReadOnly<{|
   accessible?: ?boolean,
   accessibilityComponentType?: ?AccessibilityComponentType,
@@ -54,7 +75,9 @@ export type Props = $ReadOnly<{|
   accessibilityIgnoresInvertColors?: ?boolean,
   accessibilityRole?: ?AccessibilityRole,
   accessibilityStates?: ?AccessibilityStates,
-  accessibilityTraits?: ?AccessibilityTraits,
+  accessibilityState?: ?AccessibilityState,
+  accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
+  accessibilityTraits?: ?AccessibilityTraits, // [Windows]
   accessibilityPosInSet?: ?number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
   accessibilitySetSize?: ?number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
   children?: ?React.Node,
@@ -64,6 +87,7 @@ export type Props = $ReadOnly<{|
   disabled?: ?boolean,
   hitSlop?: ?EdgeInsetsProp,
   nativeID?: ?string,
+  touchSoundDisabled?: ?boolean,
   onBlur?: ?(e: BlurEvent) => void,
   onFocus?: ?(e: FocusEvent) => void,
   onLayout?: ?(event: LayoutEvent) => mixed,
@@ -71,6 +95,7 @@ export type Props = $ReadOnly<{|
   onPress?: ?(event: PressEvent) => mixed,
   onPressIn?: ?(event: PressEvent) => mixed,
   onPressOut?: ?(event: PressEvent) => mixed,
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => void,
   onAccessibilityTap?: ?Function, // TODO(OSS Candidate ISS#2710739)
   acceptsKeyboardFocus?: ?boolean, // [TODO(macOS ISS#2323203)
   onMouseEnter?: ?Function,
@@ -96,22 +121,16 @@ const TouchableWithoutFeedback = ((createReactClass({
     accessible: PropTypes.bool,
     accessibilityLabel: PropTypes.node,
     accessibilityHint: PropTypes.string,
-    accessibilityComponentType: PropTypes.oneOf(
-      DeprecatedAccessibilityComponentTypes,
-    ),
+    accessibilityIgnoresInvertColors: PropTypes.bool,
     accessibilityRole: PropTypes.oneOf(DeprecatedAccessibilityRoles),
-    accessibilityStates: PropTypes.arrayOf(
-      PropTypes.oneOf(DeprecatedAccessibilityStates),
-    ),
-    accessibilityTraits: PropTypes.oneOfType([
-      PropTypes.oneOf(DeprecatedAccessibilityTraits),
-      PropTypes.arrayOf(PropTypes.oneOf(DeprecatedAccessibilityTraits)),
-    ]),
+    accessibilityStates: PropTypes.array,
+    accessibilityState: PropTypes.object,
+    accessibilityActions: PropTypes.array,
+    onAccessibilityAction: PropTypes.func,
     accessibilityPosInSet: PropTypes.number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
     accessibilitySetSize: PropTypes.number, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
     onAccessibilityTap: PropTypes.func, // TODO(OSS Candidate ISS#2710739)
     tabIndex: PropTypes.number, // TODO(macOS/win ISS#2323203)
-
     /**
      * When `accessible` is true (which is the default) this may be called when
      * the OS-specific concept of "focus" occurs. Some platforms may not have
@@ -157,6 +176,10 @@ const TouchableWithoutFeedback = ((createReactClass({
      *   `{nativeEvent: {layout: {x, y, width, height}}}`
      */
     onLayout: PropTypes.func,
+    /**
+     * If true, doesn't play system sound on touch (Android Only)
+     **/
+    touchSoundDisabled: PropTypes.bool,
 
     onLongPress: PropTypes.func,
 
@@ -249,6 +272,7 @@ const TouchableWithoutFeedback = ((createReactClass({
     return this.props.delayPressOut || 0;
   },
 
+// [Windows
   _onKeyUp: function(ev) {
     if (
       (ev.nativeEvent.code === 'Space' ||
@@ -271,6 +295,7 @@ const TouchableWithoutFeedback = ((createReactClass({
       this.touchableHandleActivePressIn(ev);
     }
   },
+// Windows]
 
   render: function(): React.Element<any> {
     // Note(avik): remove dynamic typecast once Flow has been upgraded
@@ -283,19 +308,17 @@ const TouchableWithoutFeedback = ((createReactClass({
         Touchable.renderDebugView({color: 'red', hitSlop: this.props.hitSlop}),
       );
     }
-    return (React: any).cloneElement(child, {
-      onKeyUp: this._onKeyUp,
-      onKeyDown: this._onKeyDown,
-      onFocus: this.props.onFocus,
-      onBlur: this.props.onBlur,
-      accessible: this.props.accessible !== false,
-      accessibilityLabel: this.props.accessibilityLabel,
-      accessibilityHint: this.props.accessibilityHint,
-      accessibilityComponentType: this.props.accessibilityComponentType,
-      accessibilityRole: this.props.accessibilityRole,
-      accessibilityStates: this.props.accessibilityStates,
-      accessibilityTraits: this.props.accessibilityTraits,
 
+    const overrides = {};
+    for (const prop of OVERRIDE_PROPS) {
+      if (this.props[prop] !== undefined) {
+        overrides[prop] = this.props[prop];
+      }
+    }
+
+    return (React: any).cloneElement(child, {
+      ...overrides,
+      accessible: this.props.accessible !== false,
       accessibilityPosInSet: this.props.accessibilityPosInSet, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
       accessibilitySetSize: this.props.accessibilitySetSize, // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
 
@@ -304,13 +327,12 @@ const TouchableWithoutFeedback = ((createReactClass({
         (this.props.acceptsKeyboardFocus === undefined ||
           this.props.acceptsKeyboardFocus) &&
         !this.props.disabled, // TODO(macOS ISS#2323203)
-      enableFocusRing:
-        this.props.enableFocusRing === true && !this.props.disabled, // TODO(macOS ISS#2323203)
       tabIndex: this.props.tabIndex, // TODO(win ISS#2323203)
-      nativeID: this.props.nativeID,
-      testID: this.props.testID,
-      onLayout: this.props.onLayout,
-      hitSlop: this.props.hitSlop,
+      nativeID: this.props.nativeID,  // [Windows]
+      testID: this.props.testID,      // [Windows]
+      focusable:
+        this.props.focusable !== false && this.props.onPress !== undefined,
+      onClick: this.touchableHandlePress,
       onStartShouldSetResponder: this.touchableHandleStartShouldSetResponder,
       onResponderTerminationRequest: this
         .touchableHandleResponderTerminationRequest,
@@ -318,6 +340,10 @@ const TouchableWithoutFeedback = ((createReactClass({
       onResponderMove: this.touchableHandleResponderMove,
       onResponderRelease: this.touchableHandleResponderRelease,
       onResponderTerminate: this.touchableHandleResponderTerminate,
+      onKeyUp: this._onKeyUp,
+      onKeyDown: this._onKeyDown,
+      onFocus: this.props.onFocus,
+      onBlur: this.props.onBlur,
       tooltip: this.props.tooltip, // TODO(macOS/win ISS#2323203)
       clickable:
         this.props.clickable !== false && this.props.onPress !== undefined, // TODO(android ISS)
