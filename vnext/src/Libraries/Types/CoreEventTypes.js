@@ -136,12 +136,6 @@ export type ScrollEvent = SyntheticEvent<
   |}>,
 >;
 
-export type SwitchChangeEvent = SyntheticEvent<
-  $ReadOnly<{|
-    value: boolean,
-  |}>,
->;
-
 // [Windows
 export type KeyEvent = SyntheticEvent<
   $ReadOnly<{|
