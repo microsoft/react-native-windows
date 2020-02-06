@@ -37,16 +37,6 @@ namespace Microsoft.ReactNative.Managed
         return false;
       }
 
-      bool isPromiseOfVoid(Type type)
-      {
-        var typeInfo = type?.GetTypeInfo();
-        if (typeInfo != null && !typeInfo.IsGenericType)
-        {
-          return typeof(IReactPromiseOfVoid).IsAssignableFrom(type);
-        }
-        return false;
-      }
-
       bool isCallback(Type type) => type != null && typeof(Delegate).IsAssignableFrom(type);
 
       if (returnType != typeof(void))
@@ -58,11 +48,6 @@ namespace Microsoft.ReactNative.Managed
       {
         MethodReturnType = MethodReturnType.Promise;
         createMethod = () => MakePromiseMethod(methodInfo, parameters);
-      }
-      else if (isPromiseOfVoid(lastParameterType))
-      {
-        MethodReturnType = MethodReturnType.Promise;
-        createMethod = () => MakePromiseOfVoidMethod(methodInfo, parameters);
       }
       else if (isCallback(lastParameterType))
       {
@@ -104,10 +89,6 @@ namespace Microsoft.ReactNative.Managed
 
     static ConstructorInfo ReactPromiseCtorOf(Type type) =>
       typeof(ReactPromise<>).MakeGenericType(type).GetConstructor(new Type[] {
-        typeof(IJSValueWriter), typeof(MethodResultCallback), typeof(MethodResultCallback) });
-
-    static ConstructorInfo ReactPromiseCtorOfVoid() =>
-      typeof(ReactPromiseOfVoid).GetConstructor(new Type[] {
         typeof(IJSValueWriter), typeof(MethodResultCallback), typeof(MethodResultCallback) });
 
     private ReactMethodImpl MakeFireAndForgetMethod(MethodInfo methodInfo, ParameterInfo[] parameters)
@@ -198,27 +179,6 @@ namespace Microsoft.ReactNative.Managed
         inputReader.CallExt(ReadArgsOf(argTypes), args),
         module.CastTo(methodInfo.DeclaringType).Call(methodInfo, args,
           New(ReactPromiseCtorOf(promiseResultType), outputWriter, resolve, reject)));
-    }
-
-    private ReactMethodImpl MakePromiseOfVoidMethod(MethodInfo methodInfo, ParameterInfo[] parameters)
-    {
-      // Generate code that looks like:
-      //
-      // (object module, IJSValueReader inputReader, IJSValueWriter outputWriter,
-      //    MethodResultCallback resolve, MethodResultCallback reject) =>
-      // {
-      //   inputReader.ReadArgs(out ArgType0 arg0, out ArgType1 arg1);
-      //   (module as ModuleType).Method(arg0, arg1,
-      //     new ReactPromise(outputWriter, resolve, reject));
-      // }
-
-      // The last two parameters in parameters are resolve and reject delegates
-      return CompileLambda<ReactMethodImpl>(
-        MethodParameters(out var module, out var inputReader, out var outputWriter, out var resolve, out var reject),
-        MethodArgs(parameters, out var argTypes, out var args, out var _),
-        inputReader.CallExt(ReadArgsOf(argTypes), args),
-        module.CastTo(methodInfo.DeclaringType).Call(methodInfo, args,
-          New(ReactPromiseCtorOfVoid(), outputWriter, resolve, reject)));
     }
 
     private ReactMethodImpl MakeReturningMethod(MethodInfo methodInfo, Type returnType, ParameterInfo[] parameters)

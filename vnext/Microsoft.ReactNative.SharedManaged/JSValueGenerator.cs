@@ -437,8 +437,7 @@ namespace Microsoft.ReactNative.Managed
     {
       argTypes = parameters.Take(parameters.Length - 1).Select(p => p.ParameterType).ToArray();
       args = argTypes.Select(t => Variable(t, out _)).ToArray();
-      var promiseParamType = parameters[parameters.Length - 1].ParameterType;
-      promiseResultType = promiseParamType.GetTypeInfo().IsGenericType ? promiseParamType.GetGenericArguments()[0] : typeof(int);
+      promiseResultType = parameters[parameters.Length - 1].ParameterType.GetGenericArguments()[0];
       return args;
     }
 

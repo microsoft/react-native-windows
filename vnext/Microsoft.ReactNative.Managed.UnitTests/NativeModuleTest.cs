@@ -227,7 +227,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     // Each attribute has an optional parameter: JS name.
     [ReactMethod("voidPromise")]
-    public void VoidPromise(int x, IReactPromiseOfVoid promise)
+    public void VoidPromise(int x, IReactPromise<JSValue.Void> promise)
     {
       if (x % 2 == 0)
       {
@@ -279,7 +279,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     // Each attribute has an optional parameter: JS name.
     [ReactMethod("staticVoidPromise")]
-    public static void StaticVoidPromise(int x, IReactPromiseOfVoid promise)
+    public static void StaticVoidPromise(int x, IReactPromise<JSValue.Void> promise)
     {
       if (x % 2 == 0)
       {
@@ -674,7 +674,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestMethodCall_VoidPromise()
     {
       m_moduleBuilder.Call2("voidPromise", 2,
-          () => { },
+          (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
       Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
     }
@@ -683,7 +683,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestMethodCall_VoidPromiseError()
     {
       m_moduleBuilder.Call2("voidPromise", 3,
-          () => { },
+          (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
       Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
     }
@@ -746,7 +746,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestMethodCall_StaticVoidPromise()
     {
       m_moduleBuilder.Call2("staticVoidPromise", 2,
-          () => { },
+          (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
       Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
     }
@@ -755,7 +755,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public void TestMethodCall_StaticVoidPromiseError()
     {
       m_moduleBuilder.Call2("staticVoidPromise", 3,
-          () => { },
+          (JSValue.Void result) => { },
           (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
       Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
     }

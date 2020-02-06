@@ -23,6 +23,15 @@ namespace Microsoft.ReactNative.Managed
   // will be marked as "promise" and will return a promise when invoked from JavaScript.
   class ReactPromise<T> : IReactPromise<T>
   {
+    private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
+    private static readonly string ErrorDefaultMessage = "Error not specified.";
+
+    // Keys for m_reject's Error object
+    private static readonly string ErrorMapKeyCode = "code";
+    private static readonly string ErrorMapKeyMessage = "message";
+    private static readonly string ErrorMapKeyUserInfo = "userInfo";
+    private static readonly string ErrorMapKeyNativeStack = "nativeStackWindows";
+
     private IJSValueWriter m_writer;
     private MethodResultCallback m_resolve;
     private MethodResultCallback m_reject;
@@ -42,6 +51,7 @@ namespace Microsoft.ReactNative.Managed
         m_writer.WriteArgs(value);
         m_resolve(m_writer);
       }
+
       Clear();
     }
 
@@ -50,9 +60,25 @@ namespace Microsoft.ReactNative.Managed
     {
       if (m_reject != null)
       {
-        ReactPromiseOfVoid.WriteError(m_writer, error);
+        var errorInfo = new Dictionary<string, JSValue>
+        {
+          [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
+          [ErrorMapKeyMessage] = new JSValue(error?.Message ?? error?.Exception?.Message ?? ErrorDefaultMessage),
+
+          // For consistency with iOS ensure userInfo key exists, even if we null it.
+          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+          [ErrorMapKeyUserInfo] = (error?.UserInfo != null) ? new JSValue(error.UserInfo) : new JSValue(),
+
+          // Attach a nativeStackWindows string if an exception was passed.
+          // This matches iOS behavior - iOS adds a `nativeStackIOS` property
+          // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
+          [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
+        };
+
+        m_writer.WriteArgs(errorInfo);
         m_reject(m_writer);
       }
+
       Clear();
     }
 
@@ -63,77 +89,4 @@ namespace Microsoft.ReactNative.Managed
       m_writer = null;
     }
   }
-
-  class ReactPromiseOfVoid : IReactPromiseOfVoid
-  {
-    private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
-    private static readonly string ErrorDefaultMessage = "Error not specified.";
-
-    // Keys for m_reject's Error object
-    private static readonly string ErrorMapKeyCode = "code";
-    private static readonly string ErrorMapKeyMessage = "message";
-    private static readonly string ErrorMapKeyUserInfo = "userInfo";
-    private static readonly string ErrorMapKeyNativeStack = "nativeStackWindows";
-
-    private IJSValueWriter m_writer;
-    private MethodResultCallback m_resolve;
-    private MethodResultCallback m_reject;
-
-    public ReactPromiseOfVoid(IJSValueWriter writer, MethodResultCallback resolve, MethodResultCallback reject)
-    {
-      m_writer = writer;
-      m_resolve = resolve;
-      m_reject = reject;
-    }
-
-    //  Successfully resolve the ReactPromise with an optional value.
-    public void Resolve()
-    {
-      if (m_resolve != null)
-      {
-        m_writer.WriteArgs(JSValue.Null);
-        m_resolve(m_writer);
-      }
-      Clear();
-    }
-
-    // Reject the ReactPromise and report an error.
-    public void Reject(ReactError error)
-    {
-      if (m_reject != null)
-      {
-        WriteError(m_writer, error);
-        m_reject(m_writer);
-      }
-      Clear();
-    }
-
-    public static void WriteError(IJSValueWriter writer, ReactError error)
-    {
-      var errorInfo = new Dictionary<string, JSValue>
-      {
-        [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
-        [ErrorMapKeyMessage] = new JSValue(error?.Message ?? error?.Exception?.Message ?? ErrorDefaultMessage),
-
-        // For consistency with iOS ensure userInfo key exists, even if we null it.
-        // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-        [ErrorMapKeyUserInfo] = (error?.UserInfo != null) ? new JSValue(error.UserInfo) : new JSValue(),
-
-        // Attach a nativeStackWindows string if an exception was passed.
-        // This matches iOS behavior - iOS adds a `nativeStackIOS` property
-        // iOS: /React/Base/RCTUtils.m -> RCTJSErrorFromCodeMessageAndNSError
-        [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
-      };
-
-      writer.WriteArgs(errorInfo);
-    }
-
-    private void Clear()
-    {
-      m_resolve = null;
-      m_reject = null;
-      m_writer = null;
-    }
-  }
-
 }

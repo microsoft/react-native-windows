@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Microsoft.ReactNative.Managed
@@ -77,6 +78,11 @@ namespace Microsoft.ReactNative.Managed
     public static void WriteValue(this IJSValueWriter writer, JSValue value)
     {
       value.WriteTo(writer);
+    }
+
+    public static void WriteValue(this IJSValueWriter writer, JSValue.Void value)
+    {
+      writer.WriteNull();
     }
 
     public static void WriteValue(this IJSValueWriter writer, Dictionary<string, JSValue> value)
