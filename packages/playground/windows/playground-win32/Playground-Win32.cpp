@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include <ReactUWP/InstanceFactory.h>
+#include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/ReactUwp.h>
 #include <Unicode.h>
 
@@ -14,11 +15,14 @@
 #undef GetCurrentTime
 
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 
 #pragma pop_macro("GetCurrentTime")
 
-namespace WUXH = winrt::Windows::UI::Xaml::Hosting;
+namespace WUX = winrt::Windows::UI::Xaml;
+namespace WUXC = WUX::Controls;
+namespace WUXH = WUX::Hosting;
 
 struct PlaygroundNativeModuleProvider final : facebook::react::NativeModuleProvider {
   virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
@@ -47,12 +51,36 @@ class PlaygroundViewManagerProvider final : public react::uwp::ViewManagerProvid
   }
 };
 
+struct HwndReactInstanceCreator : ::react::uwp::IReactInstanceCreator
+{
+    HwndReactInstanceCreator(HWND hwnd)
+    {
+        m_hwnd = hwnd;
+    }
+
+    void detach()
+    {
+        m_hwnd = nullptr;
+    }
+
+    std::shared_ptr<::react::uwp::IReactInstance> getInstance() override;
+    void markAsNeedsReload() override;
+    void persistUseWebDebugger(bool useWebDebugger) override;
+    void persistUseLiveReload(bool useLiveReload) override;
+
+private:
+    HWND m_hwnd;
+};
+
+
 struct WindowData {
   static HINSTANCE s_instance;
 
   std::wstring m_bundleFile;
   WUXH::DesktopWindowXamlSource m_desktopWindowXamlSource;
   std::shared_ptr<react::uwp::IReactInstance> m_instance;
+  std::shared_ptr<react::uwp::IXamlRootView> m_rootView;
+  std::shared_ptr<HwndReactInstanceCreator> m_instanceCreator;
 
   bool m_useWebDebugger{true};
   bool m_liveReloadEnabled{true};
@@ -98,6 +126,18 @@ struct WindowData {
 
           m_instance->Start(m_instance, settings);
           m_instance->loadBundle(Microsoft::Common::Unicode::Utf16ToUtf8(m_bundleFile));
+
+          folly::dynamic initialProps = folly::dynamic::object();
+
+          // Retrieve ABI pointer from C++/CX pointer
+          auto rootElement = m_desktopWindowXamlSource.Content().as<WUX::FrameworkElement>();
+
+          // Create the root view
+          m_rootView = react::uwp::CreateReactRootView(rootElement, m_bundleFile.c_str(), m_instanceCreator);
+
+          m_rootView->SetInitialProps(std::move(initialProps));
+          m_rootView->SetInstanceCreator(m_instanceCreator);
+          m_rootView->AttachRoot();
         }
 
         break;
@@ -127,6 +167,15 @@ struct WindowData {
     winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
 
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
+
+    try
+    {
+        m_instanceCreator = std::make_shared<HwndReactInstanceCreator>(hwnd);
+    }
+    catch (...)
+    {
+        return -1;
+    }
 
     return 0;
   }
@@ -240,6 +289,41 @@ struct WindowData {
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
+std::shared_ptr<::react::uwp::IReactInstance> HwndReactInstanceCreator::getInstance()
+{
+    if (!m_hwnd)
+        return nullptr;
+
+    return WindowData::GetFromWindow(m_hwnd)->m_instance;
+}
+
+void HwndReactInstanceCreator::markAsNeedsReload()
+{
+    if (!m_hwnd)
+        return;
+
+    auto instance = WindowData::GetFromWindow(m_hwnd)->m_instance;
+    if (instance)
+        instance->SetAsNeedsReload();
+}
+
+void HwndReactInstanceCreator::persistUseWebDebugger(bool useWebDebugger)
+{
+    if (!m_hwnd)
+        return;
+
+    WindowData::GetFromWindow(m_hwnd)->m_useWebDebugger = useWebDebugger;
+}
+
+void HwndReactInstanceCreator::persistUseLiveReload(bool useLiveReload)
+{
+    if (!m_hwnd)
+        return;
+
+    WindowData::GetFromWindow(m_hwnd)->m_liveReloadEnabled = useLiveReload;
+}
+
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   switch (message) {
     case WM_CREATE: {
@@ -291,6 +375,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   winrt::check_win32(!classId);
 
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
+
+  desktopXamlSource.Content(WUXC::Grid());
 
   HWND hwnd = CreateWindow(
       windowClassName,
