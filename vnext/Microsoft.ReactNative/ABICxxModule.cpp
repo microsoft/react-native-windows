@@ -57,7 +57,7 @@ std::vector<CxxModule::Method> ABICxxModule::getMethods() {
 
 void ABICxxModule::InitEvents(std::vector<ABICxxModuleEventHandlerSetter> const &eventHandlerSetters) noexcept {
   for (auto &eventHandler : eventHandlerSetters) {
-    eventHandler.EventHandlerSetter([this, name = eventHandler.Name](ReactArgWriter const &argWriter) noexcept {
+    eventHandler.EventHandlerSetter([ this, name = eventHandler.Name ](ReactArgWriter const &argWriter) noexcept {
       auto writer = make<DynamicWriter>();
       writer.WriteArrayBegin();
       writer.WriteString(winrt::to_hstring(name));
