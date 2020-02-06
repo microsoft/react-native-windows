@@ -27,7 +27,7 @@ function processColor(
   }
 
   if (typeof int32Color === 'object') {
-    const processColorObject = require('processColorObject'); // TODO(macOS ISS#2323203)
+    const processColorObject = require('./processColorObject'); // TODO(macOS ISS#2323203)
 
     const processedColorObj = processColorObject(int32Color);
 
