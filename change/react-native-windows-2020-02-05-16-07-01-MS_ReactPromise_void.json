@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Implemented ReactPromise<void>",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "c2bda6aa87fcf5307035cff49807cd6e89b06ab4",
+  "dependentChangeType": "patch",
+  "date": "2020-02-06T00:07:00.933Z"
+}

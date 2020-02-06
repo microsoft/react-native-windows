@@ -25,7 +25,7 @@ namespace Microsoft.ReactNative.Managed
   interface IReactPromise<T>
   {
     // Successfully resolve the IReactPromise with an optional value.
-    void Resolve(T value);
+    void Resolve(T value = default(T));
 
     // Report an Error.
     void Reject(ReactError error);

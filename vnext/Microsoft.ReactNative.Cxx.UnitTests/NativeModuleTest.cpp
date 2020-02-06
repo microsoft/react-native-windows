@@ -217,6 +217,16 @@ struct SimpleNativeModule {
     }
   }
 
+  // Each macro has second optional parameter: JS name.
+  REACT_METHOD(VoidPromise, L"voidPromise")
+  void VoidPromise(int x, ReactPromise<void> &&result) noexcept {
+    if (x % 2 == 0) {
+      result.Resolve();
+    } else {
+      result.Reject("Odd unexpected");
+    }
+  }
+
   REACT_METHOD(ResolveSayHelloPromise)
   void ResolveSayHelloPromise(ReactPromise<std::string> &&result) noexcept {
     result.Resolve("Hello_4");
@@ -248,6 +258,16 @@ struct SimpleNativeModule {
       ReactError error{};
       error.Message = "Already negative";
       result.Reject(std::move(error));
+    }
+  }
+
+  // Each macro has second optional parameter: JS name.
+  REACT_METHOD(StaticVoidPromise, L"staticVoidPromise")
+  void StaticVoidPromise(int x, ReactPromise<void> &&result) noexcept {
+    if (x % 2 == 0) {
+      result.Resolve();
+    } else {
+      result.Reject("Odd unexpected");
     }
   }
 
@@ -378,6 +398,7 @@ TEST_CLASS (NativeModuleTest) {
   TEST_METHOD(TestMethodCall_StaticSayHello) {
     m_builderMock.Call1(L"StaticSayHello", std::function<void(const std::string &)>([
                         ](const std::string &result) noexcept { TestCheck(result == "Hello"); }));
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
     TestCheck(m_builderMock.IsResolveCallbackCalled());
   }
 
@@ -613,6 +634,26 @@ TEST_CLASS (NativeModuleTest) {
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
 
+  TEST_METHOD(TestMethodCall_VoidPromise) {
+    m_builderMock.Call2(
+        L"voidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_VoidError) {
+    m_builderMock.Call2(
+        L"voidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        3);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
   TEST_METHOD(TestMethodCall_ResolveSayHelloPromise) {
     m_builderMock.Call2(
         L"ResolveSayHelloPromise",
@@ -672,6 +713,26 @@ TEST_CLASS (NativeModuleTest) {
         std::function<void(JSValue const &)>(
             [](JSValue const &error) noexcept { TestCheck(error["message"] == "Already negative"); }),
         -5);
+    TestCheck(m_builderMock.IsRejectCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticVoidPromise) {
+    m_builderMock.Call2(
+        L"staticVoidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        2);
+    TestCheck(m_builderMock.IsResolveCallbackCalled());
+  }
+
+  TEST_METHOD(TestMethodCall_StaticVoidPromiseError) {
+    m_builderMock.Call2(
+        L"staticVoidPromise",
+        std::function<void()>([]() noexcept {}),
+        std::function<void(JSValue const &)>(
+            [](JSValue const &error) noexcept { TestCheck(error["message"] == "Odd unexpected"); }),
+        3);
     TestCheck(m_builderMock.IsRejectCallbackCalled());
   }
 
