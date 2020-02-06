@@ -99,6 +99,25 @@ namespace Microsoft.ReactNative.Managed.UnitTests
         GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
             ResolveCallback(resolve), RejectCallback(reject));
 
+    public void Call2<TError>(string methodName, Action resolve, Action<TError> reject) =>
+    GetMethod2(methodName)?.Invoke(ArgReader(), ArgWriter(),
+        ResolveCallback(resolve), RejectCallback(reject));
+
+    public void Call2<T1, TError>(string methodName, T1 arg1,
+        Action resolve, Action<TError> reject) =>
+        GetMethod2(methodName)?.Invoke(ArgReader(arg1), ArgWriter(),
+            ResolveCallback(resolve), RejectCallback(reject));
+
+    public void Call2<T1, T2, TError>(string methodName, T1 arg1, T2 arg2,
+        Action resolve, Action<TError> reject) =>
+        GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2), ArgWriter(),
+            ResolveCallback(resolve), RejectCallback(reject));
+
+    public void Call2<T1, T2, T3, TError>(string methodName, T1 arg1, T2 arg2, T3 arg3,
+        Action resolve, Action<TError> reject) =>
+        GetMethod2(methodName)?.Invoke(ArgReader(arg1, arg2, arg3), ArgWriter(),
+            ResolveCallback(resolve), RejectCallback(reject));
+
     public void CallSync<TResult>(string methodName, out TResult result)
     {
       var writer = ArgWriter();
@@ -145,6 +164,15 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       return (IJSValueWriter writer) =>
       {
         resolve(GetResult<T>(writer));
+        IsResolveCallbackCalled = true;
+      };
+    }
+
+    private MethodResultCallback ResolveCallback(Action resolve)
+    {
+      return (IJSValueWriter writer) =>
+      {
+        resolve();
         IsResolveCallbackCalled = true;
       };
     }

@@ -23,15 +23,6 @@ namespace Microsoft.ReactNative.Managed
   // will be marked as "promise" and will return a promise when invoked from JavaScript.
   class ReactPromise<T> : IReactPromise<T>
   {
-    private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
-    private static readonly string ErrorDefaultMessage = "Error not specified.";
-
-    // Keys for m_reject's Error object
-    private static readonly string ErrorMapKeyCode = "code";
-    private static readonly string ErrorMapKeyMessage = "message";
-    private static readonly string ErrorMapKeyUserInfo = "userInfo";
-    private static readonly string ErrorMapKeyNativeStack = "nativeStackWindows";
-
     private IJSValueWriter m_writer;
     private MethodResultCallback m_resolve;
     private MethodResultCallback m_reject;
@@ -50,19 +41,75 @@ namespace Microsoft.ReactNative.Managed
       {
         m_writer.WriteArgs(value);
         m_resolve(m_writer);
-        Clear();
       }
+      Clear();
     }
 
     // Reject the ReactPromise and report an error.
     public void Reject(ReactError error)
     {
-      if (m_reject == null)
+      if (m_reject != null)
       {
-        Clear();
-        return;
+        ReactPromiseOfVoid.WriteError(m_writer, error);
+        m_reject(m_writer);
       }
+      Clear();
+    }
 
+    private void Clear()
+    {
+      m_resolve = null;
+      m_reject = null;
+      m_writer = null;
+    }
+  }
+
+  class ReactPromiseOfVoid : IReactPromiseOfVoid
+  {
+    private static readonly string ErrorDefaultCode = "EUNSPECIFIED";
+    private static readonly string ErrorDefaultMessage = "Error not specified.";
+
+    // Keys for m_reject's Error object
+    private static readonly string ErrorMapKeyCode = "code";
+    private static readonly string ErrorMapKeyMessage = "message";
+    private static readonly string ErrorMapKeyUserInfo = "userInfo";
+    private static readonly string ErrorMapKeyNativeStack = "nativeStackWindows";
+
+    private IJSValueWriter m_writer;
+    private MethodResultCallback m_resolve;
+    private MethodResultCallback m_reject;
+
+    public ReactPromiseOfVoid(IJSValueWriter writer, MethodResultCallback resolve, MethodResultCallback reject)
+    {
+      m_writer = writer;
+      m_resolve = resolve;
+      m_reject = reject;
+    }
+
+    //  Successfully resolve the ReactPromise with an optional value.
+    public void Resolve()
+    {
+      if (m_resolve != null)
+      {
+        m_writer.WriteArgs(JSValue.Null);
+        m_resolve(m_writer);
+      }
+      Clear();
+    }
+
+    // Reject the ReactPromise and report an error.
+    public void Reject(ReactError error)
+    {
+      if (m_reject != null)
+      {
+        WriteError(m_writer, error);
+        m_reject(m_writer);
+      }
+      Clear();
+    }
+
+    public static void WriteError(IJSValueWriter writer, ReactError error)
+    {
       var errorInfo = new Dictionary<string, JSValue>
       {
         [ErrorMapKeyCode] = new JSValue(error?.Code ?? ErrorDefaultCode),
@@ -78,9 +125,7 @@ namespace Microsoft.ReactNative.Managed
         [ErrorMapKeyNativeStack] = new JSValue(error?.Exception?.StackTrace ?? "")
       };
 
-      m_writer.WriteArgs(errorInfo);
-      m_reject(m_writer);
-      Clear();
+      writer.WriteArgs(errorInfo);
     }
 
     private void Clear()
@@ -90,4 +135,5 @@ namespace Microsoft.ReactNative.Managed
       m_writer = null;
     }
   }
+
 }

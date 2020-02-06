@@ -31,6 +31,15 @@ namespace Microsoft.ReactNative.Managed
     void Reject(ReactError error);
   }
 
+  interface IReactPromiseOfVoid
+  {
+    // Successfully resolve the IReactPromise with an optional value.
+    void Resolve();
+
+    // Report an Error.
+    void Reject(ReactError error);
+  }
+
   class ReactError
   {
     public string Code = null;
