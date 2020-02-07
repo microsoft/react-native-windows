@@ -19,6 +19,9 @@
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
+<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
+<PROJECT_ROOT>/Libraries/Core/ReactNativeVersionCheck.js
+<PROJECT_ROOT>/Libraries/Core/setupDeveloperTools.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
@@ -31,8 +34,9 @@
 <PROJECT_ROOT>/Libraries/YellowBox/UI/YellowBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/YellowBox/UI/YellowBoxInspectorSourceMapStatus.js
 <PROJECT_ROOT>/Libraries/YellowBox/UI/YellowBoxList.js
-<PROJECT_ROOT>/RNTester/js/FlatListExample.js
-<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/components/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/components/RNTesterExampleFilter.js
 
 ; These examples currently uses mac dynamic colors
 <PROJECT_ROOT>/RNTester/js/ActivityIndicatorExample.js
