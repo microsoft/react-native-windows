@@ -247,7 +247,8 @@ const TouchableOpacity = ((createReactClass({
    * defined on your component.
    */
   touchableHandleActivePressIn: function(e: PressEvent) {
-    if (e && e.dispatchConfig.registrationName === 'onResponderGrant') {  // [Windows]
+    if (e && e.dispatchConfig.registrationName === 'onResponderGrant') {
+      // [Windows]
       this._opacityActive(0);
     } else {
       this._opacityActive(150);
@@ -320,7 +321,7 @@ const TouchableOpacity = ((createReactClass({
     return childStyle.opacity == null ? 1 : childStyle.opacity;
   },
 
-// [Windows
+  // [Windows
   _onKeyUp: function(ev) {
     if (
       (ev.nativeEvent.code === 'Space' ||
@@ -343,15 +344,15 @@ const TouchableOpacity = ((createReactClass({
       this.touchableHandleActivePressIn(ev);
     }
   },
-// Windows]
+  // Windows]
 
   render: function() {
     return (
       <Animated.View
-        onKeyUp={this._onKeyUp}     // [Windows]
+        onKeyUp={this._onKeyUp} // [Windows]
         onKeyDown={this._onKeyDown} // [Windows]
         onFocus={this.touchableHandleFocus} // [Windows]
-        onBlur={this.touchableHandleBlur}   // [Windows]
+        onBlur={this.touchableHandleBlur} // [Windows]
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityHint={this.props.accessibilityHint}

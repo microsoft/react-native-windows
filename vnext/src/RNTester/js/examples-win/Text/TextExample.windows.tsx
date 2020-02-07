@@ -8,14 +8,14 @@
 // Image inline in Text removed
 
 import React = require('react');
-import {/*Image,*/ StyleSheet, Text, View, TextStyle } from 'react-native';
+import {/*Image,*/ StyleSheet, Text, View, TextStyle} from 'react-native';
 const RNTesterBlock = require('react-native/RNTester/js/components/RNTesterBlock');
 const RNTesterPage = require('react-native/RNTester/js/components/RNTesterPage');
 
 export class Entity extends React.Component<{}> {
   public render() {
     return (
-      <Text style={{ fontWeight: 'bold', color: '#527fe4' }}>
+      <Text style={{fontWeight: 'bold', color: '#527fe4'}}>
         {this.props.children}
       </Text>
     );
@@ -29,8 +29,8 @@ interface IAttributeTogglerState {
 export class AttributeToggler extends React.Component<
   {},
   IAttributeTogglerState
-  > {
-  public state: IAttributeTogglerState = { fontWeight: 'bold', fontSize: 15 };
+> {
+  public state: IAttributeTogglerState = {fontWeight: 'bold', fontSize: 15};
 
   public toggleWeight = () => {
     this.setState({
@@ -89,32 +89,32 @@ export class TextExample extends React.Component<{}> {
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Padding">
-          <Text style={{ padding: 10 }}>
+          <Text style={{padding: 10}}>
             This text is indented by 10px padding on all sides.
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Family">
-          <Text style={{ fontFamily: 'sans-serif' }}>Sans-Serif</Text>
-          <Text style={{ fontFamily: 'sans-serif', fontWeight: 'bold' }}>
+          <Text style={{fontFamily: 'sans-serif'}}>Sans-Serif</Text>
+          <Text style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}>
             Sans-Serif Bold
           </Text>
-          <Text style={{ fontFamily: 'serif' }}>Serif</Text>
-          <Text style={{ fontFamily: 'serif', fontWeight: 'bold' }}>
+          <Text style={{fontFamily: 'serif'}}>Serif</Text>
+          <Text style={{fontFamily: 'serif', fontWeight: 'bold'}}>
             Serif Bold
           </Text>
-          <Text style={{ fontFamily: 'monospace' }}>Monospace</Text>
-          <Text style={{ fontFamily: 'monospace', fontWeight: 'bold' }}>
+          <Text style={{fontFamily: 'monospace'}}>Monospace</Text>
+          <Text style={{fontFamily: 'monospace', fontWeight: 'bold'}}>
             Monospace Bold (After 5.0)
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Android Material Design fonts">
-          <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: 'sans-serif' }}>Roboto Regular</Text>
-              <Text style={{ fontFamily: 'sans-serif', fontStyle: 'italic' }}>
+          <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+            <View style={{flex: 1}}>
+              <Text style={{fontFamily: 'sans-serif'}}>Roboto Regular</Text>
+              <Text style={{fontFamily: 'sans-serif', fontStyle: 'italic'}}>
                 Roboto Italic
               </Text>
-              <Text style={{ fontFamily: 'sans-serif', fontWeight: 'bold' }}>
+              <Text style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}>
                 Roboto Bold
               </Text>
               <Text
@@ -125,19 +125,19 @@ export class TextExample extends React.Component<{}> {
                 }}>
                 Roboto Bold Italic
               </Text>
-              <Text style={{ fontFamily: 'sans-serif-light' }}>Roboto Light</Text>
+              <Text style={{fontFamily: 'sans-serif-light'}}>Roboto Light</Text>
               <Text
-                style={{ fontFamily: 'sans-serif-light', fontStyle: 'italic' }}>
+                style={{fontFamily: 'sans-serif-light', fontStyle: 'italic'}}>
                 Roboto Light Italic
               </Text>
-              <Text style={{ fontFamily: 'sans-serif-thin' }}>
+              <Text style={{fontFamily: 'sans-serif-thin'}}>
                 Roboto Thin (After 4.2)
               </Text>
               <Text
-                style={{ fontFamily: 'sans-serif-thin', fontStyle: 'italic' }}>
+                style={{fontFamily: 'sans-serif-thin', fontStyle: 'italic'}}>
                 Roboto Thin Italic (After 4.2)
               </Text>
-              <Text style={{ fontFamily: 'sans-serif-condensed' }}>
+              <Text style={{fontFamily: 'sans-serif-condensed'}}>
                 Roboto Condensed
               </Text>
               <Text
@@ -162,20 +162,20 @@ export class TextExample extends React.Component<{}> {
                 }}>
                 Roboto Condensed Bold Italic
               </Text>
-              <Text style={{ fontFamily: 'sans-serif-medium' }}>
+              <Text style={{fontFamily: 'sans-serif-medium'}}>
                 Roboto Medium (After 5.0)
               </Text>
               <Text
-                style={{ fontFamily: 'sans-serif-medium', fontStyle: 'italic' }}>
+                style={{fontFamily: 'sans-serif-medium', fontStyle: 'italic'}}>
                 Roboto Medium Italic (After 5.0)
               </Text>
             </View>
           </View>
         </RNTesterBlock>
         <RNTesterBlock title="Custom Fonts">
-          <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
-            <View style={{ flex: 1 }}>
-              <Text style={{ fontFamily: 'notoserif' }}>NotoSerif Regular</Text>
+          <View style={{flexDirection: 'row', alignItems: 'flex-start'}}>
+            <View style={{flex: 1}}>
+              <Text style={{fontFamily: 'notoserif'}}>NotoSerif Regular</Text>
               <Text
                 style={{
                   fontFamily: 'notoserif',
@@ -184,7 +184,7 @@ export class TextExample extends React.Component<{}> {
                 }}>
                 NotoSerif Bold Italic
               </Text>
-              <Text style={{ fontFamily: 'notoserif', fontStyle: 'italic' }}>
+              <Text style={{fontFamily: 'notoserif', fontStyle: 'italic'}}>
                 NotoSerif Italic (Missing Font file)
               </Text>
             </View>
@@ -192,29 +192,29 @@ export class TextExample extends React.Component<{}> {
         </RNTesterBlock>
 
         <RNTesterBlock title="Font Size">
-          <Text style={{ fontSize: 23 }}>Size 23</Text>
-          <Text style={{ fontSize: 8 }}>Size 8</Text>
+          <Text style={{fontSize: 23}}>Size 23</Text>
+          <Text style={{fontSize: 8}}>Size 8</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Color">
-          <Text style={{ color: 'red' }}>Red color</Text>
-          <Text style={{ color: 'blue' }}>Blue color</Text>
+          <Text style={{color: 'red'}}>Red color</Text>
+          <Text style={{color: 'blue'}}>Blue color</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Weight">
-          <Text style={{ fontWeight: 'bold' }}>Move fast and be bold</Text>
-          <Text style={{ fontWeight: 'normal' }}>Move fast and be bold</Text>
+          <Text style={{fontWeight: 'bold'}}>Move fast and be bold</Text>
+          <Text style={{fontWeight: 'normal'}}>Move fast and be bold</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Style">
-          <Text style={{ fontStyle: 'italic' }}>Move fast and be bold</Text>
-          <Text style={{ fontStyle: 'normal' }}>Move fast and be bold</Text>
+          <Text style={{fontStyle: 'italic'}}>Move fast and be bold</Text>
+          <Text style={{fontStyle: 'normal'}}>Move fast and be bold</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Style and Weight">
-          <Text style={{ fontStyle: 'italic', fontWeight: 'bold' }}>
+          <Text style={{fontStyle: 'italic', fontWeight: 'bold'}}>
             Move fast and be bold
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text Decoration">
-          <Text style={{ textDecorationLine: 'underline' }}>Solid underline</Text>
-          <Text style={{ textDecorationLine: 'none' }}>None textDecoration</Text>
+          <Text style={{textDecorationLine: 'underline'}}>Solid underline</Text>
+          <Text style={{textDecorationLine: 'none'}}>None textDecoration</Text>
           <Text
             style={{
               textDecorationLine: 'line-through',
@@ -222,13 +222,13 @@ export class TextExample extends React.Component<{}> {
             }}>
             Solid line-through
           </Text>
-          <Text style={{ textDecorationLine: 'underline line-through' }}>
+          <Text style={{textDecorationLine: 'underline line-through'}}>
             Both underline and line-through
           </Text>
           <Text>
             Mixed text with{' '}
-            <Text style={{ textDecorationLine: 'underline' }}>underline</Text> and{' '}
-            <Text style={{ textDecorationLine: 'line-through' }}>
+            <Text style={{textDecorationLine: 'underline'}}>underline</Text> and{' '}
+            <Text style={{textDecorationLine: 'line-through'}}>
               line-through
             </Text>{' '}
             text nodes
@@ -237,19 +237,19 @@ export class TextExample extends React.Component<{}> {
         <RNTesterBlock title="Nested">
           <Text onPress={() => console.log('1st')}>
             (Normal text,
-            <Text style={{ color: 'red', fontWeight: 'bold' }}>
+            <Text style={{color: 'red', fontWeight: 'bold'}}>
               (R)red
-              <Text style={{ color: 'green', fontWeight: 'normal' }}>
+              <Text style={{color: 'green', fontWeight: 'normal'}}>
                 (G)green
-                <Text style={{ color: 'blue', fontWeight: 'bold' }}>
+                <Text style={{color: 'blue', fontWeight: 'bold'}}>
                   (B)blue
-                  <Text style={{ color: 'cyan', fontWeight: 'normal' }}>
+                  <Text style={{color: 'cyan', fontWeight: 'normal'}}>
                     (C)cyan
-                    <Text style={{ color: 'magenta', fontWeight: 'bold' }}>
+                    <Text style={{color: 'magenta', fontWeight: 'bold'}}>
                       (M)magenta
-                      <Text style={{ color: 'yellow', fontWeight: 'normal' }}>
+                      <Text style={{color: 'yellow', fontWeight: 'normal'}}>
                         (Y)yellow
-                        <Text style={{ color: 'black', fontWeight: 'bold' }}>
+                        <Text style={{color: 'black', fontWeight: 'bold'}}>
                           (K)black
                         </Text>
                       </Text>
@@ -259,15 +259,15 @@ export class TextExample extends React.Component<{}> {
               </Text>
             </Text>
             <Text
-              style={{ fontWeight: 'bold' }}
+              style={{fontWeight: 'bold'}}
               onPress={() => console.log('2nd')}>
               (and bold
               <Text
-                style={{ fontStyle: 'italic', fontSize: 11, color: '#527fe4' }}
+                style={{fontStyle: 'italic', fontSize: 11, color: '#527fe4'}}
                 onPress={() => console.log('3rd')}>
                 (and tiny bold italic blue
                 <Text
-                  style={{ fontWeight: 'normal', fontStyle: 'normal' }}
+                  style={{fontWeight: 'normal', fontStyle: 'normal'}}
                   onPress={() => console.log('4th')}>
                   (and tiny normal blue)
                 </Text>
@@ -278,11 +278,11 @@ export class TextExample extends React.Component<{}> {
             )
           </Text>
           <Text
-            style={{ fontFamily: 'serif' }}
+            style={{fontFamily: 'serif'}}
             onPress={() => console.log('1st')}>
             (Serif
             <Text
-              style={{ fontStyle: 'italic', fontWeight: 'bold' }}
+              style={{fontStyle: 'italic', fontWeight: 'bold'}}
               onPress={() => console.log('2nd')}>
               (Serif Bold Italic
               <Text
@@ -294,11 +294,11 @@ export class TextExample extends React.Component<{}> {
                 onPress={() => console.log('3rd')}>
                 (Monospace Normal
                 <Text
-                  style={{ fontFamily: 'sans-serif', fontWeight: 'bold' }}
+                  style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}
                   onPress={() => console.log('4th')}>
                   (Sans-Serif Bold
                   <Text
-                    style={{ fontWeight: 'normal' }}
+                    style={{fontWeight: 'normal'}}
                     onPress={() => console.log('5th')}>
                     (and Sans-Serif Normal)
                   </Text>
@@ -310,45 +310,45 @@ export class TextExample extends React.Component<{}> {
             </Text>
             )
           </Text>
-          <Text style={{ fontSize: 12 }}>
+          <Text style={{fontSize: 12}}>
             <Entity>Entity Name</Entity>
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text Align">
           <Text>auto (default) - english LTR</Text>
           <Text>أحب اللغة العربية auto (default) - arabic RTL</Text>
-          <Text style={{ textAlign: 'left' }}>
+          <Text style={{textAlign: 'left'}}>
             left left left left left left left left left left left left left
             left left
           </Text>
-          <Text style={{ textAlign: 'center' }}>
+          <Text style={{textAlign: 'center'}}>
             center center center center center center center center center
             center center
           </Text>
-          <Text style={{ textAlign: 'right' }}>
+          <Text style={{textAlign: 'right'}}>
             right right right right right right right right right right right
             right right
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Unicode">
           <View>
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={{ backgroundColor: 'red' }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{backgroundColor: 'red'}}>
                 星际争霸是世界上最好的游戏。
               </Text>
             </View>
             <View>
-              <Text style={{ backgroundColor: 'red' }}>
+              <Text style={{backgroundColor: 'red'}}>
                 星际争霸是世界上最好的游戏。
               </Text>
             </View>
-            <View style={{ alignItems: 'center' }}>
-              <Text style={{ backgroundColor: 'red' }}>
+            <View style={{alignItems: 'center'}}>
+              <Text style={{backgroundColor: 'red'}}>
                 星际争霸是世界上最好的游戏。
               </Text>
             </View>
             <View>
-              <Text style={{ backgroundColor: 'red' }}>
+              <Text style={{backgroundColor: 'red'}}>
                 星际争霸是世界上最好的游戏。星际争霸是世界上最好的游戏。星际争霸是世界上最好的游戏。星际争霸是世界上最好的游戏。
               </Text>
             </View>
@@ -360,22 +360,22 @@ export class TextExample extends React.Component<{}> {
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Line Height">
-          <Text style={{ lineHeight: 35 }}>
+          <Text style={{lineHeight: 35}}>
             Holisticly formulate inexpensive ideas before best-of-breed
-            benefits. <Text style={{ fontSize: 20 }}>Continually</Text> expedite
+            benefits. <Text style={{fontSize: 20}}>Continually</Text> expedite
             magnetic potentialities rather than client-focused interfaces.
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Letter Spacing">
           <View>
-            <Text style={{ letterSpacing: 0 }}>letterSpacing = 0</Text>
-            <Text style={{ letterSpacing: 2, marginTop: 5 }}>
+            <Text style={{letterSpacing: 0}}>letterSpacing = 0</Text>
+            <Text style={{letterSpacing: 2, marginTop: 5}}>
               letterSpacing = 2
             </Text>
-            <Text style={{ letterSpacing: 9, marginTop: 5 }}>
+            <Text style={{letterSpacing: 9, marginTop: 5}}>
               letterSpacing = 9
             </Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{flexDirection: 'row'}}>
               <Text
                 style={{
                   fontSize: 12,
@@ -386,7 +386,7 @@ export class TextExample extends React.Component<{}> {
                 With size and background color
               </Text>
             </View>
-            <Text style={{ letterSpacing: -1, marginTop: 5 }}>
+            <Text style={{letterSpacing: -1, marginTop: 5}}>
               letterSpacing = -1
             </Text>
             <Text
@@ -396,10 +396,10 @@ export class TextExample extends React.Component<{}> {
                 marginTop: 5,
               }}>
               [letterSpacing = 3]
-              <Text style={{ letterSpacing: 0, backgroundColor: '#bbbbbb' }}>
+              <Text style={{letterSpacing: 0, backgroundColor: '#bbbbbb'}}>
                 [Nested letterSpacing = 0]
               </Text>
-              <Text style={{ letterSpacing: 6, backgroundColor: '#eeeeee' }}>
+              <Text style={{letterSpacing: 6, backgroundColor: '#eeeeee'}}>
                 [Nested letterSpacing = 6]
               </Text>
             </Text>
@@ -412,61 +412,61 @@ export class TextExample extends React.Component<{}> {
           <AttributeToggler />
         </RNTesterBlock>
         <RNTesterBlock title="backgroundColor attribute">
-          <Text style={{ backgroundColor: '#ffaaaa' }}>
+          <Text style={{backgroundColor: '#ffaaaa'}}>
             Red background,
-            <Text style={{ backgroundColor: '#aaaaff' }}>
+            <Text style={{backgroundColor: '#aaaaff'}}>
               {' '}
               blue background,
               <Text>
                 {' '}
                 inherited blue background,
-                <Text style={{ backgroundColor: '#aaffaa' }}>
+                <Text style={{backgroundColor: '#aaffaa'}}>
                   {' '}
                   nested green background.
                 </Text>
               </Text>
             </Text>
           </Text>
-          <Text style={{ backgroundColor: 'rgba(100, 100, 100, 0.3)' }}>
+          <Text style={{backgroundColor: 'rgba(100, 100, 100, 0.3)'}}>
             Same alpha as background,
             <Text>
               Inherited alpha from background,
-              <Text style={{ backgroundColor: 'rgba(100, 100, 100, 0.3)' }}>
+              <Text style={{backgroundColor: 'rgba(100, 100, 100, 0.3)'}}>
                 Reapply alpha
               </Text>
             </Text>
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="containerBackgroundColor attribute">
-          <View style={{ flexDirection: 'row', height: 85 }}>
-            <View style={{ backgroundColor: '#ffaaaa', width: 150 }} />
-            <View style={{ backgroundColor: '#aaaaff', width: 150 }} />
+          <View style={{flexDirection: 'row', height: 85}}>
+            <View style={{backgroundColor: '#ffaaaa', width: 150}} />
+            <View style={{backgroundColor: '#aaaaff', width: 150}} />
           </View>
-          <Text style={[styles.backgroundColorText, { top: -80 }]}>
+          <Text style={[styles.backgroundColorText, {top: -80}]}>
             Default containerBackgroundColor (inherited) + backgroundColor wash
           </Text>
           <Text
             style={[
               styles.backgroundColorText,
-              { top: -70, backgroundColor: 'transparent' },
+              {top: -70, backgroundColor: 'transparent'},
             ]}>
             {"containerBackgroundColor: 'transparent' + backgroundColor wash"}
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="numberOfLines attribute">
-          <Text style={{ marginTop: 0, fontStyle: 'italic' }}>1</Text>
+          <Text style={{marginTop: 0, fontStyle: 'italic'}}>1</Text>
           <Text numberOfLines={1}>
             Maximum of one line no matter now much I write here. If I keep
             writing it{"'"}ll just truncate after one line. {lorumIpsum}
           </Text>
 
-          <Text style={{ marginTop: 20, fontStyle: 'italic' }}>2</Text>
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>2</Text>
           <Text numberOfLines={2}>
             Maximum of two lines no matter now much I write here. If I keep
             writing it{"'"}ll just truncate after two lines. {lorumIpsum}
           </Text>
 
-          <Text style={{ marginTop: 20, fontStyle: 'italic' }}>
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>
             (default) infinity
           </Text>
           <Text>
@@ -497,7 +497,7 @@ export class TextExample extends React.Component<{}> {
           <Text
             style={{
               fontSize: 20,
-              textShadowOffset: { width: 2, height: 2 },
+              textShadowOffset: {width: 2, height: 2},
               textShadowRadius: 1,
               textShadowColor: '#00cccc',
             }}>
@@ -505,7 +505,7 @@ export class TextExample extends React.Component<{}> {
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Ellipsize mode">
-          <Text style={{ marginTop: 0, fontStyle: 'italic' }}>
+          <Text style={{marginTop: 0, fontStyle: 'italic'}}>
             (default) tail
           </Text>
           <Text numberOfLines={1}>
@@ -513,19 +513,19 @@ export class TextExample extends React.Component<{}> {
             {lorumIpsum}
           </Text>
 
-          <Text style={{ marginTop: 20, fontStyle: 'italic' }}>middle</Text>
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>middle</Text>
           <Text ellipsizeMode="middle" numberOfLines={1}>
             This very long text should be truncated with dots in the middle.{' '}
             {lorumIpsum}
           </Text>
 
-          <Text style={{ marginTop: 20, fontStyle: 'italic' }}>head</Text>
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>head</Text>
           <Text ellipsizeMode="head" numberOfLines={1}>
             This very long text should be truncated with dots in the beginning.{' '}
             {lorumIpsum}
           </Text>
 
-          <Text style={{ marginTop: 20, fontStyle: 'italic' }}>clip</Text>
+          <Text style={{marginTop: 20, fontStyle: 'italic'}}>clip</Text>
           <Text ellipsizeMode="clip" numberOfLines={1}>
             This very long text should be clipped and this will not be visible.{' '}
             {lorumIpsum}
@@ -538,15 +538,15 @@ export class TextExample extends React.Component<{}> {
               justifyContent: 'space-around',
               marginBottom: 10,
             }}>
-            <View style={{ alignItems: 'center' }}>
+            <View style={{alignItems: 'center'}}>
               <Text style={styles.includeFontPaddingText}>Ey</Text>
               <Text>Default</Text>
             </View>
-            <View style={{ alignItems: 'center' }}>
+            <View style={{alignItems: 'center'}}>
               <Text
                 style={[
                   styles.includeFontPaddingText,
-                  { includeFontPadding: false, marginLeft: 10 },
+                  {includeFontPadding: false, marginLeft: 10},
                 ]}>
                 Ey
               </Text>

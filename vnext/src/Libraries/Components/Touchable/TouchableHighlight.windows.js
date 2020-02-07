@@ -449,7 +449,7 @@ const TouchableHighlight = ((createReactClass({
     );
   },
 
-// [Windows
+  // [Windows
   _onKeyUp: function(ev) {
     if (
       (ev.nativeEvent.code === 'Space' ||
@@ -472,16 +472,16 @@ const TouchableHighlight = ((createReactClass({
       this.touchableHandleActivePressIn(ev);
     }
   },
-// Windows]
+  // Windows]
 
   render: function() {
     const child = React.Children.only(this.props.children);
     return (
       <View
-        onKeyUp={this._onKeyUp}     // [Windows]
+        onKeyUp={this._onKeyUp} // [Windows]
         onKeyDown={this._onKeyDown} // [Windows]
         onFocus={this.touchableHandleFocus} // [Windows]
-        onBlur={this.touchableHandleBlur}   // [Windows]
+        onBlur={this.touchableHandleBlur} // [Windows]
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityHint={this.props.accessibilityHint}
@@ -547,9 +547,8 @@ const TouchableHighlight = ((createReactClass({
         clickable={
           this.props.clickable !== false && this.props.onPress !== undefined
         } // TODO(android ISS)
-        onClick={this.touchableHandlePress} // TODO(android ISS)
         onMouseEnter={this.props.onMouseEnter} // [TODO(macOS/win ISS#2323203)
-        onMouseLeave={this.props.onMouseLeave}  // [Windows]
+        onMouseLeave={this.props.onMouseLeave} // [Windows]
         keyDownEvents={handledNativeKeyboardEvents} // [Windows]
         keyUpEvents={handledNativeKeyboardEvents} // [Windows]
         nativeID={this.props.nativeID}

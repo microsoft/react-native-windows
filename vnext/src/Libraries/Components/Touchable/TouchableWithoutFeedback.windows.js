@@ -33,7 +33,7 @@ import type {
   AccessibilityComponentType, // [Windows]
   AccessibilityRole,
   AccessibilityStates,
-  AccessibilityTraits,        // [Windows]
+  AccessibilityTraits, // [Windows]
   AccessibilityState,
   AccessibilityActionInfo,
   AccessibilityActionEvent,
@@ -272,7 +272,7 @@ const TouchableWithoutFeedback = ((createReactClass({
     return this.props.delayPressOut || 0;
   },
 
-// [Windows
+  // [Windows
   _onKeyUp: function(ev) {
     if (
       (ev.nativeEvent.code === 'Space' ||
@@ -295,7 +295,7 @@ const TouchableWithoutFeedback = ((createReactClass({
       this.touchableHandleActivePressIn(ev);
     }
   },
-// Windows]
+  // Windows]
 
   render: function(): React.Element<any> {
     // Note(avik): remove dynamic typecast once Flow has been upgraded
@@ -328,8 +328,8 @@ const TouchableWithoutFeedback = ((createReactClass({
           this.props.acceptsKeyboardFocus) &&
         !this.props.disabled, // TODO(macOS ISS#2323203)
       tabIndex: this.props.tabIndex, // TODO(win ISS#2323203)
-      nativeID: this.props.nativeID,  // [Windows]
-      testID: this.props.testID,      // [Windows]
+      nativeID: this.props.nativeID, // [Windows]
+      testID: this.props.testID, // [Windows]
       focusable:
         this.props.focusable !== false && this.props.onPress !== undefined,
       onClick: this.touchableHandlePress,
@@ -347,7 +347,6 @@ const TouchableWithoutFeedback = ((createReactClass({
       tooltip: this.props.tooltip, // TODO(macOS/win ISS#2323203)
       clickable:
         this.props.clickable !== false && this.props.onPress !== undefined, // TODO(android ISS)
-      onClick: this.touchableHandlePress, // TODO(android ISS)
       onMouseEnter: this.props.onMouseEnter, // [TODO(macOS ISS#2323203)
       onMouseLeave: this.props.onMouseLeave, // [TODO(macOS ISS#2323203)
       children,
