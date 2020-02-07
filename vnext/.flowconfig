@@ -39,7 +39,6 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
-<PROJECT_ROOT>/Libraries/Components/View/ViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
@@ -47,7 +46,6 @@
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
-<PROJECT_ROOT>/Libraries/ReactNative/getNativeComponentAttributes.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
