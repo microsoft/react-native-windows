@@ -71,6 +71,11 @@ jobs:
         clean: false
         submodules: false
 
+      - task: VisualStudioTestPlatformInstaller@1
+        inputs:
+          testPlatformVersion: 16.3.0
+        condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
+
       - template: templates/build-rnw.yml
         parameters:
           applyRnPatches: $(applyRnPatches)
