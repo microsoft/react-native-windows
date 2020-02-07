@@ -34,13 +34,8 @@ class MSBuildTools {
       '/nologo',
       `/p:Configuration=${buildType}`,
       `/p:Platform=${buildArch}`,
-      '/p:AppxBundle=Never'
+      '/p:AppxBundle=Never',
     ];
-
-    // Set platform toolset for VS2017 (this way we can keep the base sln file working for vs2015)
-    if (this.version === '15.0') {
-      args.push('/p:PlatformToolset=v141');
-    }
 
     if (config) {
       Object.keys(config).forEach(function (key) {
