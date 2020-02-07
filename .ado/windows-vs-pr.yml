@@ -31,6 +31,7 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x64
           applyRnPatches: true
+          RunUnitTests: true
         #  LayoutHeaders: true
         #X64Release:
         #  BuildConfiguration: Release
@@ -78,6 +79,23 @@ jobs:
           project: vnext/ReactWindows-Universal.sln
           vsComponents: $(VsComponents),Microsoft.VisualStudio.Component.VC.v141.ARM,Microsoft.VisualStudio.Component.VC.v141.ARM64
 
+      - task: VSTest@2
+        displayName: Run Universal Unit Tests
+        condition: $(RunUnitTests)
+        timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+        inputs:
+          testSelector: testAssemblies
+          testAssemblyVer2: |
+            Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe 
+          pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+          searchFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
+          runTestsInIsolation: true
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          publishRunAttachments: true
+          collectDumpOn: onAbortOnly
+          vsTestVersion: toolsInstaller
+          
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
           artifactName: ReactWindows
