@@ -23,21 +23,28 @@ const createReactClass = require('create-react-class');
 const ensurePositiveDelayProps = require('./ensurePositiveDelayProps');
 const flattenStyle = require('../../StyleSheet/flattenStyle');
 
-import type {Props as TouchableWithoutFeedbackProps} from 'TouchableWithoutFeedback';
-import type {ViewStyleProp} from 'StyleSheet';
-import type {TVParallaxPropertiesType} from 'TVViewPropTypes';
-import type {PressEvent} from 'CoreEventTypes';
+import type {Props as TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
+import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
+import type {TVParallaxPropertiesType} from '../AppleTV/TVViewPropTypes';
+import type {PressEvent} from '../../Types/CoreEventTypes';
 
 const PRESS_RETENTION_OFFSET = {top: 20, left: 20, right: 20, bottom: 30};
 
+// [Windows
 const handledNativeKeyboardEvents = [
   {code: 'Space'},
   {code: 'Enter'},
   {code: 'GamepadA'},
 ];
+// Windows]
 
 type TVProps = $ReadOnly<{|
   hasTVPreferredFocus?: ?boolean,
+  nextFocusDown?: ?number,
+  nextFocusForward?: ?number,
+  nextFocusLeft?: ?number,
+  nextFocusRight?: ?number,
+  nextFocusUp?: ?number,
   tvParallaxProperties?: ?TVParallaxPropertiesType,
 |}>;
 
@@ -53,7 +60,7 @@ type Props = $ReadOnly<{|
  * On press down, the opacity of the wrapped view is decreased, dimming it.
  *
  * Opacity is controlled by wrapping the children in an Animated.View, which is
- * added to the view hiearchy.  Be aware that this can affect layout.
+ * added to the view hierarchy.  Be aware that this can affect layout.
  *
  * Example:
  *
@@ -155,6 +162,36 @@ const TouchableOpacity = ((createReactClass({
      */
     hasTVPreferredFocus: PropTypes.bool,
     /**
+     * TV next focus down (see documentation for the View component).
+     *
+     * @platform android
+     */
+    nextFocusDown: PropTypes.number,
+    /**
+     * TV next focus forward (see documentation for the View component).
+     *
+     * @platform android
+     */
+    nextFocusForward: PropTypes.number,
+    /**
+     * TV next focus left (see documentation for the View component).
+     *
+     * @platform android
+     */
+    nextFocusLeft: PropTypes.number,
+    /**
+     * TV next focus right (see documentation for the View component).
+     *
+     * @platform android
+     */
+    nextFocusRight: PropTypes.number,
+    /**
+     * TV next focus up (see documentation for the View component).
+     *
+     * @platform android
+     */
+    nextFocusUp: PropTypes.number,
+    /**
      * Apple TV parallax effects
      */
     tvParallaxProperties: PropTypes.object,
@@ -211,6 +248,7 @@ const TouchableOpacity = ((createReactClass({
    */
   touchableHandleActivePressIn: function(e: PressEvent) {
     if (e && e.dispatchConfig.registrationName === 'onResponderGrant') {
+      // [Windows]
       this._opacityActive(0);
     } else {
       this._opacityActive(150);
@@ -283,6 +321,7 @@ const TouchableOpacity = ((createReactClass({
     return childStyle.opacity == null ? 1 : childStyle.opacity;
   },
 
+  // [Windows
   _onKeyUp: function(ev) {
     if (
       (ev.nativeEvent.code === 'Space' ||
@@ -305,19 +344,23 @@ const TouchableOpacity = ((createReactClass({
       this.touchableHandleActivePressIn(ev);
     }
   },
+  // Windows]
 
   render: function() {
     return (
       <Animated.View
-        onKeyUp={this._onKeyUp}
-        onKeyDown={this._onKeyDown}
-        onFocus={this.touchableHandleFocus}
-        onBlur={this.touchableHandleBlur}
+        onKeyUp={this._onKeyUp} // [Windows]
+        onKeyDown={this._onKeyDown} // [Windows]
+        onFocus={this.touchableHandleFocus} // [Windows]
+        onBlur={this.touchableHandleBlur} // [Windows]
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
-        accessibilityHint={this.props.accessibilityHint} // TODO(OSS Candidate ISS#2710739)
+        accessibilityHint={this.props.accessibilityHint}
         accessibilityRole={this.props.accessibilityRole}
         accessibilityStates={this.props.accessibilityStates}
+        accessibilityState={this.props.accessibilityState}
+        accessibilityActions={this.props.accessibilityActions}
+        onAccessibilityAction={this.props.onAccessibilityAction}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
         accessibilitySetSize={this.props.accessibilitySetSize} // https://github.com/ReactWindows/discussions-and-proposals/blob/harinik-accessibility/proposals/0000-accessibilityapis-lists.md
         onAccessibilityTap={this.props.onAccessibilityTap} // TODO(OSS Candidate ISS#2710739)
@@ -326,20 +369,24 @@ const TouchableOpacity = ((createReactClass({
             this.props.acceptsKeyboardFocus) &&
           !this.props.disabled
         } // TODO(macOS ISS#2323203)
-        enableFocusRing={
-          (this.props.enableFocusRing === undefined ||
-            this.props.enableFocusRing) &&
-          !this.props.disabled
-        } // TODO(macOS ISS#2323203)
         tabIndex={this.props.tabIndex} // TODO(win ISS#2323203)
         style={[this.props.style, {opacity: this.state.anim}]}
         nativeID={this.props.nativeID}
         testID={this.props.testID}
         onLayout={this.props.onLayout}
         isTVSelectable={true}
+        nextFocusDown={this.props.nextFocusDown}
+        nextFocusForward={this.props.nextFocusForward}
+        nextFocusLeft={this.props.nextFocusLeft}
+        nextFocusRight={this.props.nextFocusRight}
+        nextFocusUp={this.props.nextFocusUp}
         hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         tvParallaxProperties={this.props.tvParallaxProperties}
         hitSlop={this.props.hitSlop}
+        focusable={
+          this.props.focusable !== false && this.props.onPress !== undefined
+        }
+        onClick={this.touchableHandlePress}
         /* $FlowFixMe(>=0.89.0 site=react_native_fb) This comment suppresses an
          * error found when Flow v0.89 was deployed. To see the error, delete
          * this comment and run Flow. */
@@ -367,13 +414,9 @@ const TouchableOpacity = ((createReactClass({
          * this comment and run Flow. */
         onResponderTerminate={this.touchableHandleResponderTerminate}
         tooltip={this.props.tooltip} // TODO(macOS/win ISS#2323203)
-        clickable={
-          this.props.clickable !== false && this.props.onPress !== undefined
-        } // TODO(android ISS)
-        onClick={this.touchableHandlePress} // TODO(android ISS)
         onMouseEnter={this.props.onMouseEnter} // [TODO(macOS ISS#2323203)
-        onMouseLeave={this.props.onMouseLeave}
-        keyDownEvents={handledNativeKeyboardEvents}
+        onMouseLeave={this.props.onMouseLeave} // [Windows]
+        keyDownEvents={handledNativeKeyboardEvents} // [Windows]
         keyUpEvents={handledNativeKeyboardEvents}>
         {this.props.children}
         {Touchable.renderDebugView({

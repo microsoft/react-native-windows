@@ -23,6 +23,7 @@ const ReactNativeVersion = require('./ReactNativeVersion');
  */
 exports.checkVersions = function checkVersions(): void {
   // [Windows
+  // $FlowFixMe Platform.contstants doesn't exist yet
   if (!Platform.constants) {
     return;
   }
