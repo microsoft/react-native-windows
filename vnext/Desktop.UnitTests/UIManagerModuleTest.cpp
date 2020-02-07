@@ -12,7 +12,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(UIManagerModuleTests) {
+TEST_CLASS (UIManagerModuleTests) {
  protected:
   std::unique_ptr<EmptyUIManager> m_emptyUIManager;
   std::shared_ptr<NodeRegistry> m_nodeRegistry;

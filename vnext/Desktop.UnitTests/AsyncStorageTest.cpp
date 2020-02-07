@@ -9582,7 +9582,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(AsyncStorageTest) {
+TEST_CLASS (AsyncStorageTest) {
  public:
   const WCHAR *m_storageFileName = L"testdomain";
   virtual void SetUp() {

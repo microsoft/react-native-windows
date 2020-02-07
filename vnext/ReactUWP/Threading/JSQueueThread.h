@@ -7,13 +7,13 @@
 
 namespace facebook {
 namespace react {
-class CxxMessageQueue;
+class MessageQueueThread;
 }
 } // namespace facebook
 
 namespace react {
 namespace uwp {
 
-std::shared_ptr<facebook::react::CxxMessageQueue> CreateAndStartJSQueueThread();
+std::shared_ptr<facebook::react::MessageQueueThread> CreateAndStartJSQueueThread();
 }
 } // namespace react

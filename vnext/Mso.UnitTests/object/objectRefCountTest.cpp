@@ -202,7 +202,7 @@ class ObjectRefCountSample51InitThrow final
   bool *m_deleted{nullptr};
 };
 
-TEST_CLASS(ObjectRefCountTest) {
+TEST_CLASS (ObjectRefCountTest) {
   TEST_METHOD(ObjectRefCount_Make) {
     TestAssert::AreEqual(sizeof(uint32_t), sizeof(Mso::RefCountedObjectNoVTable<ObjectRefCountSample1>));
 

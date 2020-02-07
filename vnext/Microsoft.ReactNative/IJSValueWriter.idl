@@ -19,4 +19,8 @@ namespace Microsoft.ReactNative {
     [noexcept2] void WriteArrayBegin();
     [noexcept2] void WriteArrayEnd();
   }
+
+  // Use this delegate to pass arbitrary value to ABI API.
+  // In a function that implements the deleage use the provided writer to stream custom values.
+  delegate void JSValueArgWriter(IJSValueWriter writer);
 } // namespace Microsoft.ReactNative
