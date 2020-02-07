@@ -1,8 +1,8 @@
 param (
-	[Parameter(Mandatory=$true)]
+	[Parameter(Mandatory = $true)]
 	[string[]] $Components,
 
-	[Parameter(Mandatory=$true)]
+	[Parameter(Mandatory = $true)]
 	[uri] $InstallerUri,
 
 	[string] $VsInstaller = "${env:System_DefaultWorkingDirectory}\vs_Enterprise.exe",
@@ -20,28 +20,32 @@ $Components | ForEach-Object {
 	$componentList += '--add', $_
 }
 
+$LayoutDir = "${env:System_DefaultWorkingDirectory}\vs"
+
+New-Item -ItemType directory -Path $LayoutDir
+
 Start-Process `
 	-FilePath "$VsInstaller" `
 	-ArgumentList ( `
-		'--layout', "${env:System_DefaultWorkingDirectory}\vs",
-		'--wait',
-		'--norestart',
-		'--quiet' + `
+		'--layout', "`"$LayoutDir`"",
+	'--wait',
+	'--norestart',
+	'--quiet' + `
 		$componentList
-	) `
+) `
 	-Wait `
 	-PassThru
 
 Start-Process `
-	-FilePath "${env:System_DefaultWorkingDirectory}\vs\vs_Enterprise.exe" `
+	-FilePath "$LayoutDir\vs_Enterprise.exe" `
 	-ArgumentList (
-		'modify',
-		'--installPath', "`"$VsInstallPath`"" ,
-		'--wait',
-		'--quiet',
-		'--norestart' + `
+	'modify',
+	'--installPath', "`"$VsInstallPath`"" ,
+	'--wait',
+	'--quiet',
+	'--norestart' + `
 		$componentList
-	) `
+) `
 	-Wait `
 	-PassThru `
 	-OutVariable returnCode
