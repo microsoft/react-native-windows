@@ -93,8 +93,6 @@
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
 .*/react-native-win32/Libraries/Image/resolveAssetSource.win32.js
-<PROJECT_ROOT>/Libraries/Share/Share.js
-<PROJECT_ROOT>/Libraries/ActionSheetIOS/ActionSheetIOS.js
 
 [include]
 ; Need to include hoisted modules
