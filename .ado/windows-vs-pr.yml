@@ -31,7 +31,6 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x64
           applyRnPatches: true
-          RunUnitTests: true
         #  LayoutHeaders: true
         #X64Release:
         #  BuildConfiguration: Release
@@ -81,7 +80,6 @@ jobs:
 
       - task: VSTest@2
         displayName: Run Universal Unit Tests
-        condition: $(RunUnitTests)
         timeoutInMinutes: 5 # Set smaller timeout , due to hangs
         inputs:
           testSelector: testAssemblies
@@ -95,6 +93,7 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: toolsInstaller
+        condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
         parameters:
