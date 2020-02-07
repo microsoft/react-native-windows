@@ -47,7 +47,7 @@
     "@types/react": "16.8.15",
     "eslint-plugin-prettier": "2.6.2",
     "eslint": "5.1.0",
-    "flow-bin": "^0.98.0",
+    "flow-bin": "^0.105.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.24.2",
     "prettier": "1.17.0",
