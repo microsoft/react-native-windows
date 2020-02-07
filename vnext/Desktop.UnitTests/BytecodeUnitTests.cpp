@@ -37,7 +37,7 @@ std::vector<char> ReadFile(const char *filename) {
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(BytecodeUnitTests) {
+TEST_CLASS (BytecodeUnitTests) {
  private:
   MinimalChakraRuntime m_chakraRuntime;
 

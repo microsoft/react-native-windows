@@ -87,7 +87,7 @@ MSO_DEFINE_GUID_TOKEN(MyProductId2, "AABFD353-B463-41A2-B04C-9A6AB7541D20")
 MSO_DEFINE_GUID_TOKEN(FailingToParseId, "A39D5FC8-0641-4EEE-8C97-DDEF114D487D")
 
 TestClassComponent(GuidTest, Mso.Guid)
-    TEST_CLASS(GuidTest){static std::string GuidToString(const GUID &guid){char str[37];
+    TEST_CLASS (GuidTest){static std::string GuidToString(const GUID &guid){char str[37];
 sprintf_s(
     str,
     _countof(str),
