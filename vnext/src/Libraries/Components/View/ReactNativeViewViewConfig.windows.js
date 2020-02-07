@@ -352,8 +352,8 @@ const ReactNativeViewConfig = {
     testID: true,
     top: true,
     transform: ((Platform.OS === 'ios' // from facebook:master d204541
-        ? {diff: require('../../Utilities/differ/matricesDiffer')}
-        : {process: require('../../StyleSheet/processTransform')}): any),
+      ? {diff: require('../../Utilities/differ/matricesDiffer')}
+      : {process: require('../../StyleSheet/processTransform')}): any),
     translateX: true,
     translateY: true,
     width: true,
