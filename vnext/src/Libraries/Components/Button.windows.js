@@ -1,7 +1,7 @@
 /**
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
- * 
+ *
  * @format
  * @flow
  */
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
       borderRadius: 2,
     },
     // Windows]
-}),
+  }),
   text: {
     textAlign: 'center',
     padding: 8,
