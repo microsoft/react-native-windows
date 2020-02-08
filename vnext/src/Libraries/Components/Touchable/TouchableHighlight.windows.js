@@ -544,9 +544,6 @@ const TouchableHighlight = ((createReactClass({
          * this comment and run Flow. */
         onResponderTerminate={this.touchableHandleResponderTerminate}
         tooltip={this.props.tooltip} // TODO(macOS/win ISS#2323203)
-        clickable={
-          this.props.clickable !== false && this.props.onPress !== undefined
-        } // TODO(android ISS)
         onMouseEnter={this.props.onMouseEnter} // [TODO(macOS/win ISS#2323203)
         onMouseLeave={this.props.onMouseLeave} // [Windows]
         keyDownEvents={handledNativeKeyboardEvents} // [Windows]
