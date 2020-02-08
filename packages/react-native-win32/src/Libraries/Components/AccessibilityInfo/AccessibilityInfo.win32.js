@@ -109,14 +109,14 @@ const AccessibilityInfo = {
 
     if (eventName === 'change' || eventName === 'screenReaderChanged') {
       listener = RCTDeviceEventEmitter.addListener(
-        SCREEN_READER_CHANGED_EVENT,
+        SCREEN_READER_CHANGED_EVENT, // Windows: Change from TOUCH_EXPLORATION_EVENT to SCREEN_READER_CHANGED_EVENT
         enabled => {
           handler(enabled);
         },
       );
     } else if (eventName === 'reduceMotionChanged') {
       listener = RCTDeviceEventEmitter.addListener(
-        REDUCE_MOTION_EVENT, // Windows: Change from TOUCH_EXPLORATION_EVENT to SCREEN_READER_CHANGED_EVENT
+        REDUCE_MOTION_EVENT,
         enabled => {
           handler(enabled);
         },
