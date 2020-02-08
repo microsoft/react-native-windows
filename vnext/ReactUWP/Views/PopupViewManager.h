@@ -19,8 +19,14 @@ class PopupViewManager : public FrameworkElementViewManager {
 
   facebook::react::ShadowNode *createShadow() const override;
 
-  void AddView(XamlView parent, XamlView child, int64_t index) override;
   folly::dynamic GetExportedCustomDirectEventTypeConstants() const override;
+  void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      XamlView viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
 
  protected:
   XamlView CreateViewCore(int64_t tag) override;
