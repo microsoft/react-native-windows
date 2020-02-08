@@ -12,4 +12,3 @@
 exports.checkVersions = function checkVersions(): void {
   return;
 };
-
