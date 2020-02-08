@@ -34,35 +34,35 @@ Mso::CntPtr<Mso::IErrorString> Mso::ErrorProvider<UtError, UtErrorProviderGuid>:
   return Mso::MakeErrorString(resultString.c_str());
 }
 
-TEST_CLASS(ErrorProviderTest){TEST_METHOD(ToStringApiTest){
+TEST_CLASS (ErrorProviderTest) {
+  TEST_METHOD(ToStringApiTest) {
     // UtSimpleError
     // Default Error Message
     Mso::ErrorCode utSimpleErrorCode = UtSimpleErrorProvider().MakeErrorCode(UtSimpleError{});
-TestCheckEqual("Error", utSimpleErrorCode.ToString()); // Default error message
+    TestCheckEqual("Error", utSimpleErrorCode.ToString()); // Default error message
 
-// Swap() Api
-Mso::ErrorCode utSimpleErrorCode2;
-utSimpleErrorCode.Swap(utSimpleErrorCode2);
-TestCheckEqual("Error", utSimpleErrorCode2.ToString()); // Default error message
-TestCheckEqual("Empty ErrorCode", utSimpleErrorCode.ToString()); // Default error message
+    // Swap() Api
+    Mso::ErrorCode utSimpleErrorCode2;
+    utSimpleErrorCode.Swap(utSimpleErrorCode2);
+    TestCheckEqual("Error", utSimpleErrorCode2.ToString()); // Default error message
+    TestCheckEqual("Empty ErrorCode", utSimpleErrorCode.ToString()); // Default error message
 
-// UtError
-Mso::ErrorCode utErrorCode = UtErrorProvider().MakeErrorCode(UtError{15});
-TestCheckEqual("UtError Value: 15", utErrorCode.ToString());
+    // UtError
+    Mso::ErrorCode utErrorCode = UtErrorProvider().MakeErrorCode(UtError{15});
+    TestCheckEqual("UtError Value: 15", utErrorCode.ToString());
 
-// HRESULT
-Mso::ErrorCode hresultErrorCode = Mso::HResultErrorProvider().MakeErrorCode(E_UNEXPECTED);
-TestCheckEqual("HRESULT: 0x8000FFFF", hresultErrorCode.ToString());
+    // HRESULT
+    Mso::ErrorCode hresultErrorCode = Mso::HResultErrorProvider().MakeErrorCode(E_UNEXPECTED);
+    TestCheckEqual("HRESULT: 0x8000FFFF", hresultErrorCode.ToString());
 
-// std::exception_ptr with arbitrary exception
-Mso::ErrorCode arbitraryExceptionErrorCode =
-    Mso::ExceptionErrorProvider().MakeErrorCode(std::make_exception_ptr(std::make_exception_ptr(12)));
-TestCheckEqual("Exception", arbitraryExceptionErrorCode.ToString());
+    // std::exception_ptr with arbitrary exception
+    Mso::ErrorCode arbitraryExceptionErrorCode =
+        Mso::ExceptionErrorProvider().MakeErrorCode(std::make_exception_ptr(std::make_exception_ptr(12)));
+    TestCheckEqual("Exception", arbitraryExceptionErrorCode.ToString());
 
-// std::exception_ptr with std exception
-Mso::ErrorCode stdExceptionErrorCode =
-    Mso::ExceptionErrorProvider().MakeErrorCode(std::make_exception_ptr(std::logic_error("LogicError")));
-TestCheckEqual("Exception: LogicError", stdExceptionErrorCode.ToString());
-}
-}
-;
+    // std::exception_ptr with std exception
+    Mso::ErrorCode stdExceptionErrorCode =
+        Mso::ExceptionErrorProvider().MakeErrorCode(std::make_exception_ptr(std::logic_error("LogicError")));
+    TestCheckEqual("Exception: LogicError", stdExceptionErrorCode.ToString());
+  }
+};

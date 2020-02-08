@@ -209,7 +209,7 @@ class ObjectWithWeakRefSample51InitThrow final
   bool *m_deleted{nullptr};
 };
 
-TEST_CLASS(ObjectWithWeakRefTest) {
+TEST_CLASS (ObjectWithWeakRefTest) {
   TEST_METHOD(ObjectWithWeakRef_Make) {
     bool deleted = false;
     {

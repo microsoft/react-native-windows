@@ -14,7 +14,7 @@ struct DECLSPEC_NOVTABLE ISimpleUnknown : public IUnknown {
 };
 
 TestClassComponent(CntPtrRefTest, Mso.CntPtrRef);
-TEST_CLASS(CntPtrRefTest) {
+TEST_CLASS (CntPtrRefTest) {
   struct ISimple : public Mso::IRefCounted {
     virtual void DoSomething() = 0;
   };

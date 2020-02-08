@@ -91,4 +91,13 @@ void ReactPromiseBase::Clear() noexcept {
   m_writer = nullptr;
 }
 
+// Successfully resolve the ReactPromise<void>.
+void ReactPromise<void>::Resolve() noexcept {
+  if (m_resolve) {
+    WriteArgs(m_writer, nullptr);
+    m_resolve(m_writer);
+    Clear();
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative

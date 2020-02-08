@@ -6,6 +6,7 @@
 #include "ExceptionsManagerModule.h"
 #include <assert.h>
 #include <cxxreact/JsArgumentHelpers.h>
+#include <sstream>
 
 namespace facebook {
 namespace react {

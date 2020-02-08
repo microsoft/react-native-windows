@@ -16,6 +16,8 @@ const RCTDeviceEventEmitter = require('../../EventEmitter/RCTDeviceEventEmitter'
 
 // [Windows
 //const UIManager = require('../../ReactNative/UIManager');
+
+const SCREEN_READER_CHANGED_EVENT = 'screenReaderChanged';
 // Windows]
 
 const REDUCE_MOTION_EVENT = 'reduceMotionDidChange';
@@ -81,7 +83,9 @@ const AccessibilityInfo = {
   isScreenReaderEnabled: function(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (NativeAccessibilityInfo) {
-        NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
+        // [Windows
+        NativeAccessibilityInfo.isScreenReaderEnabled(resolve);
+        // Windows]
       } else {
         reject(false);
       }
@@ -105,14 +109,14 @@ const AccessibilityInfo = {
 
     if (eventName === 'change' || eventName === 'screenReaderChanged') {
       listener = RCTDeviceEventEmitter.addListener(
-        TOUCH_EXPLORATION_EVENT,
+        SCREEN_READER_CHANGED_EVENT,
         enabled => {
           handler(enabled);
         },
       );
     } else if (eventName === 'reduceMotionChanged') {
       listener = RCTDeviceEventEmitter.addListener(
-        REDUCE_MOTION_EVENT,
+        REDUCE_MOTION_EVENT, // Windows: Change from TOUCH_EXPLORATION_EVENT to SCREEN_READER_CHANGED_EVENT
         enabled => {
           handler(enabled);
         },
@@ -153,9 +157,10 @@ const AccessibilityInfo = {
    *
    * See http://facebook.github.io/react-native/docs/accessibilityinfo.html#announceforaccessibility
    */
-  announceForAccessibility: function(announcement: string): void {
+  // [Windows] add reactTag
+  announceForAccessibility: function(announcement: string, reactTag?: ?number): void {
     if (NativeAccessibilityInfo) {
-      NativeAccessibilityInfo.announceForAccessibility(announcement);
+      NativeAccessibilityInfo.announceForAccessibility(announcement, reactTag);
     }
   },
 };

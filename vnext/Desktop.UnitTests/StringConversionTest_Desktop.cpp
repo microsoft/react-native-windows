@@ -13,7 +13,7 @@ using namespace std;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(StringConversionTest_Desktop) {
+TEST_CLASS (StringConversionTest_Desktop) {
  private:
   JsRuntimeHandle runtime;
 

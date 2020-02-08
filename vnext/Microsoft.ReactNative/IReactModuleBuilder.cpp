@@ -30,8 +30,8 @@ void ReactModuleBuilder::AddMethod(
       to_string(name),
       [method = std::move(method)](
           folly::dynamic args, CxxModule::Callback resolve, CxxModule::Callback reject) mutable noexcept {
-        DynamicReader argReader{args};
-        DynamicWriter resultWriter;
+        auto argReader = make<DynamicReader>(args);
+        auto resultWriter = make<DynamicWriter>();
         auto resolveCallback = MakeMethodResultCallback(std::move(resolve));
         auto rejectCallback = MakeMethodResultCallback(std::move(reject));
         method(argReader, resultWriter, resolveCallback, rejectCallback);
@@ -62,10 +62,10 @@ void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate c
   CxxModule::Method cxxMethod(
       to_string(name),
       [method = std::move(method)](folly::dynamic args) mutable noexcept {
-        DynamicReader argReader{args};
-        DynamicWriter resultWriter;
+        auto argReader = make<DynamicReader>(args);
+        auto resultWriter = make<DynamicWriter>();
         method(argReader, resultWriter);
-        return resultWriter.TakeValue();
+        return get_self<DynamicWriter>(resultWriter)->TakeValue();
       },
       CxxModule::SyncTag);
 
