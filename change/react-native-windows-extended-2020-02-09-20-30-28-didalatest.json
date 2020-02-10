@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "comment": "upgrade to 61",
+  "packageName": "react-native-windows-extended",
+  "email": "kmelmon@microsoft.com",
+  "commit": "b156ea72264e6b7b4f0ae2f73cb8f21ab5724b36",
+  "dependentChangeType": "patch",
+  "date": "2020-02-10T04:30:28.713Z"
+}
