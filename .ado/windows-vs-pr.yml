@@ -97,7 +97,7 @@ jobs:
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
-          vsTestVersion: 15.9.2
+          vsTestVersion: 15.0
         condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
           
       - template: templates/publish-build-artifacts-for-nuget.yml
