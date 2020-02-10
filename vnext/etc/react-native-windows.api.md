@@ -12,7 +12,7 @@ import { ViewProps } from 'react-native';
 import { ViewStyle } from 'react-native';
 
 // Warning: (ae-forgotten-export) The symbol "AppThemeModule" needs to be exported by the entry point typings-index.d.ts
-// 
+//
 // @public (undocumented)
 export const AppTheme: AppThemeModule;
 
@@ -65,7 +65,7 @@ export class Flyout extends React.Component<IFlyoutProps> {
 }
 
 // Warning: (ae-forgotten-export) The symbol "GlyphProps" needs to be exported by the entry point typings-index.d.ts
-// 
+//
 // @public (undocumented)
 export class Glyph extends React.PureComponent<GlyphProps> {
     // (undocumented)
@@ -220,15 +220,14 @@ export interface INativeKeyboardEvent {
 
 // @public (undocumented)
 export interface IPopupProps extends ViewProps {
+    autoFocus?: boolean;
     // (undocumented)
     horizontalOffset?: number;
-    // (undocumented)
     isLightDismissEnabled?: boolean;
     // (undocumented)
     isOpen?: boolean;
     // (undocumented)
-    onDismiss?: (isOpen: boolean) => void;
-    // (undocumented)
+    onDismiss?: () => void;
     target?: React.ReactNode;
     // (undocumented)
     verticalOffset?: number;
@@ -245,11 +244,11 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
 }
 
 // Warning: (ae-forgotten-export) The symbol "IPickerProps" needs to be exported by the entry point typings-index.d.ts
-// 
+//
 // @public (undocumented)
 export class Picker extends React.Component<IPickerProps> {
     // Warning: (ae-forgotten-export) The symbol "PickerItem" needs to be exported by the entry point typings-index.d.ts
-    // 
+    //
     // (undocumented)
     static Item: typeof PickerItem;
     // (undocumented)
@@ -297,7 +296,7 @@ export const supportKeyboard: <P extends object>(_Component: React.ComponentType
 };
 
 // Warning: (ae-forgotten-export) The symbol "ViewWindowsType" needs to be exported by the entry point typings-index.d.ts
-// 
+//
 // @public
 export const ViewWindows: ViewWindowsType;
 

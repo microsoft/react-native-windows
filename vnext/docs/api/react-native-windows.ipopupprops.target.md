@@ -4,6 +4,8 @@
 
 ## IPopupProps.target property
 
+Sets a React element to use as an anchor point. When set, the popup will be positioned relative to it.
+
 <b>Signature:</b>
 
 ```typescript
