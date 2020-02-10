@@ -73,7 +73,7 @@ jobs:
 
       - task: VisualStudioTestPlatformInstaller@1
         inputs:
-          testPlatformVersion: 16.5.0
+          testPlatformVersion: 15.9.2
         condition: and(eq(variables.BuildPlatform, 'x64'), eq(variables.BuildConfiguration, 'Debug'))
 
       - template: templates/build-rnw.yml
