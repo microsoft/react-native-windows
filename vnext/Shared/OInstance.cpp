@@ -27,10 +27,11 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #if (defined(_MSC_VER) && !defined(WINRT))
-#include <WebSocketModule.h>
+#include <Modules/WebSocketModule.h>
 #endif
 #include <Modules/ExceptionsManagerModule.h>
-#include <SourceCodeModule.h>
+#include <Modules/PlatformConstantsModule.h>
+#include <Modules/SourceCodeModule.h>
 
 #if (defined(_MSC_VER) && (defined(WINRT)))
 #include <Utils/LocalBundleReader.h>
@@ -747,10 +748,15 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "ExceptionsManager",
-      [&]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return std::make_unique<facebook::react::ExceptionsManagerModule>(
-            std::move(m_devSettings->jsExceptionCallback));
+      [callback{std::move(m_devSettings->jsExceptionCallback)}]() mutable {
+        return std::make_unique<ExceptionsManagerModule>(std::move(callback));
       },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      PlatformConstantsModule::name,
+      []() { return std::make_unique<PlatformConstantsModule>(); },
       nativeQueue));
 
   return modules;

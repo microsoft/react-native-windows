@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#include <ReactWindowsCore/SourceCodeModule.h>
+#include "SourceCodeModule.h"
 
 using namespace folly;
 using namespace facebook::xplat;

@@ -96,6 +96,9 @@
     <ClCompile Include="ViewManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\PlatformConstantsModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ReactWindowsCore\ReactWindowsAPI.h">
@@ -228,7 +231,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebSocketModule.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="PlatformConstantsModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
