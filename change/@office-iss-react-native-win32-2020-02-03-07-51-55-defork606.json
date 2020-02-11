@@ -1,4 +1,5 @@
 {
+  "type": "prerelease",
   "comment": "Use unforked react-native 0.60.6",
   "packageName": "@office-iss/react-native-win32",
   "email": "nick@nickgerleman.com",

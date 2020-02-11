@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "upgrade to 61",
   "packageName": "react-native-windows-extended",
   "email": "kmelmon@microsoft.com",

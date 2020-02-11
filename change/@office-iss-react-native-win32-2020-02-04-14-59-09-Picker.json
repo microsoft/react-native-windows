@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Implement Picker component for win32",
   "packageName": "@office-iss/react-native-win32",
   "email": "kinhln@microsoft.com",

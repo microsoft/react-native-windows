@@ -1,5 +1,5 @@
 {
-  "type": "minor",
+  "type": "prerelease",
   "comment": "Add AccessibilityInfo native module to react-native-win32",
   "packageName": "@office-iss/react-native-win32",
   "email": "adrum@microsoft.com",

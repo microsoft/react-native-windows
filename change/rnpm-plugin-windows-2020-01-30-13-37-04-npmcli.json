@@ -1,4 +1,5 @@
 {
+  "type": "prerelease",
   "comment": "Fix CLI dependency",
   "packageName": "rnpm-plugin-windows",
   "email": "acoates@microsoft.com",
