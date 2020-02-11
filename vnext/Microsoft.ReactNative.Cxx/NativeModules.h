@@ -108,8 +108,9 @@ struct IsPromise<ReactPromise<T>> : std::true_type {};
 template <class TFunc>
 struct ModuleMethodInfo;
 
-template <class TModule, class... TArgs>
-struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
+// Instance asynchronous method
+template <class TModule, class TResult, class... TArgs>
+struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   constexpr static bool HasPromise() noexcept {
     if constexpr (sizeof...(TArgs) > 0) {
       return Internal::IsPromise<std::remove_const_t<std::remove_reference_t<
@@ -121,7 +122,7 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
   constexpr static size_t CallbackCount =
       Internal::GetCallbackCount<std::tuple<std::remove_reference_t<TArgs>...>>::Value;
   using ModuleType = TModule;
-  using MethodType = void (TModule::*)(TArgs...) noexcept;
+  using MethodType = TResult (TModule::*)(TArgs...) noexcept;
   using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - (HasPromise() ? 1 : CallbackCount)>;
 
   template <class>
@@ -253,41 +254,12 @@ struct ModuleMethodInfo<void (TModule::*)(TArgs...) noexcept> {
         ArgsTuple typedArgs{};
         ReadArgs(argReader, std::get<I>(typedArgs)...);
         auto promise = PromiseCreator<PromiseArg>::Create(argWriter, resolve, reject);
-        (module->*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
+        (module->*method)(std::get<I>(std::move(typedArgs))..., promise);
       };
     }
-  };
 
-  static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
-    if constexpr (HasPromise()) {
-      returnType = MethodReturnType::Promise;
-    } else if constexpr (CallbackCount == 2) {
-      returnType = MethodReturnType::TwoCallbacks;
-    } else if constexpr (CallbackCount == 1) {
-      returnType = MethodReturnType::Callback;
-    } else {
-      returnType = MethodReturnType::Void;
-    }
-
-    constexpr int selector = HasPromise() ? 3 : CallbackCount;
-    return Invoker<IndexSequence>::GetFunc(
-        static_cast<ModuleType *>(module), method, std::integral_constant<size_t, selector>{});
-  }
-};
-
-template <class TModule, class TResult, class... TArgs>
-struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
-  using ModuleType = TModule;
-  using MethodType = TResult (TModule::*)(TArgs...) noexcept;
-  using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
-
-  template <class>
-  struct Invoker;
-
-  template <size_t... I>
-  struct Invoker<std::index_sequence<I...>> {
     // Async method with return value
-    static MethodDelegate GetFunc(ModuleType *module, MethodType method) noexcept {
+    static MethodDelegate GetFunc(ModuleType *module, MethodType method, std::integral_constant<size_t, 4>) noexcept {
       return [ module, method ](
           IJSValueReader const &argReader,
           IJSValueWriter const &argWriter,
@@ -304,13 +276,28 @@ struct ModuleMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   };
 
   static MethodDelegate GetMethodDelegate(void *module, MethodType method, MethodReturnType &returnType) noexcept {
-    returnType = MethodReturnType::Callback;
-    return Invoker<IndexSequence>::GetFunc(static_cast<ModuleType *>(module), method);
+    constexpr bool isVoidResult = std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
+    if constexpr (!isVoidResult) {
+      returnType = MethodReturnType::Callback;
+    } else if constexpr (HasPromise()) {
+      returnType = MethodReturnType::Promise;
+    } else if constexpr (CallbackCount == 2) {
+      returnType = MethodReturnType::TwoCallbacks;
+    } else if constexpr (CallbackCount == 1) {
+      returnType = MethodReturnType::Callback;
+    } else {
+      returnType = MethodReturnType::Void;
+    }
+
+    constexpr int selector = !isVoidResult ? 4 : HasPromise() ? 3 : CallbackCount;
+    return Invoker<IndexSequence>::GetFunc(
+        static_cast<ModuleType *>(module), method, std::integral_constant<size_t, selector>{});
   }
 };
 
-template <class... TArgs>
-struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
+// Static asynchronous method
+template <class TResult, class... TArgs>
+struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
   constexpr static bool HasPromise() noexcept {
     if constexpr (sizeof...(TArgs) > 0) {
       return Internal::IsPromise<std::remove_const_t<std::remove_reference_t<
@@ -321,7 +308,7 @@ struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
 
   constexpr static size_t CallbackCount =
       Internal::GetCallbackCount<std::tuple<std::remove_reference_t<TArgs>...>>::Value;
-  using MethodType = void (*)(TArgs...) noexcept;
+  using MethodType = TResult (*)(TArgs...) noexcept;
   using IndexSequence = std::make_index_sequence<sizeof...(TArgs) - (HasPromise() ? 1 : CallbackCount)>;
 
   template <class>
@@ -456,36 +443,9 @@ struct ModuleMethodInfo<void (*)(TArgs...) noexcept> {
         (*method)(std::get<I>(std::move(typedArgs))..., std::move(promise));
       };
     }
-  };
 
-  static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
-    if constexpr (HasPromise()) {
-      returnType = MethodReturnType::Promise;
-    } else if constexpr (CallbackCount == 2) {
-      returnType = MethodReturnType::TwoCallbacks;
-    } else if constexpr (CallbackCount == 1) {
-      returnType = MethodReturnType::Callback;
-    } else {
-      returnType = MethodReturnType::Void;
-    }
-
-    constexpr int selector = HasPromise() ? 3 : CallbackCount;
-    return Invoker<IndexSequence>::GetFunc(method, std::integral_constant<size_t, selector>{});
-  }
-};
-
-template <class TResult, class... TArgs>
-struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
-  using MethodType = TResult (*)(TArgs...) noexcept;
-  using IndexSequence = std::make_index_sequence<sizeof...(TArgs)>;
-
-  template <class>
-  struct Invoker;
-
-  template <size_t... I>
-  struct Invoker<std::index_sequence<I...>> {
     // Async method with return value
-    static MethodDelegate GetFunc(MethodType method) noexcept {
+    static MethodDelegate GetFunc(MethodType method, std::integral_constant<size_t, 4>) noexcept {
       return [method](
           IJSValueReader const &argReader,
           IJSValueWriter const &argWriter,
@@ -502,14 +462,28 @@ struct ModuleMethodInfo<TResult (*)(TArgs...) noexcept> {
   };
 
   static MethodDelegate GetMethodDelegate(void * /*module*/, MethodType method, MethodReturnType &returnType) noexcept {
-    returnType = MethodReturnType::Callback;
-    return Invoker<IndexSequence>::GetFunc(method);
+    constexpr bool isVoidResult = std::is_void_v<TResult> || std::is_same_v<TResult, winrt::fire_and_forget>;
+    if constexpr (!isVoidResult) {
+      returnType = MethodReturnType::Callback;
+    } else if constexpr (HasPromise()) {
+      returnType = MethodReturnType::Promise;
+    } else if constexpr (CallbackCount == 2) {
+      returnType = MethodReturnType::TwoCallbacks;
+    } else if constexpr (CallbackCount == 1) {
+      returnType = MethodReturnType::Callback;
+    } else {
+      returnType = MethodReturnType::Void;
+    }
+
+    constexpr int selector = !isVoidResult ? 4 : HasPromise() ? 3 : CallbackCount;
+    return Invoker<IndexSequence>::GetFunc(method, std::integral_constant<size_t, selector>{});
   }
 };
 
 template <class TFunc>
 struct ModuleSyncMethodInfo;
 
+// Instance synchronous method
 template <class TModule, class TResult, class... TArgs>
 struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   using ModuleType = TModule;
@@ -537,6 +511,7 @@ struct ModuleSyncMethodInfo<TResult (TModule::*)(TArgs...) noexcept> {
   }
 };
 
+// Static synchronous method
 template <class TResult, class... TArgs>
 struct ModuleSyncMethodInfo<TResult (*)(TArgs...) noexcept> {
   using MethodType = TResult (*)(TArgs...) noexcept;

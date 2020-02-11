@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "ReactModuleBuilderMock.h"
 #include "JSValue.h"
+#include "JSValueTreeWriter.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -36,27 +37,25 @@ void ReactModuleBuilderMock::AddEventHandlerSetter(
   eventHandlerSetter([ this, name = std::wstring{name} ](ReactArgWriter const &argWriter) noexcept {
     auto it = m_eventHandlers.find(name);
     if (it != m_eventHandlers.end()) {
-      JSValue jsValue;
-      auto writer = MakeJSValueTreeWriter(jsValue);
-      writer.WriteArrayBegin();
-      argWriter(writer);
-      writer.WriteArrayEnd();
-      auto reader = MakeJSValueTreeReader(jsValue);
+      auto writer = make_self<JSValueTreeWriter>();
+      writer->WriteArrayBegin();
+      argWriter(*writer);
+      writer->WriteArrayEnd();
+      auto reader = MakeJSValueTreeReader(writer->TakeValue());
       it->second(reader);
     }
   });
 }
 
 JSValueObject ReactModuleBuilderMock::GetConstants() noexcept {
-  JSValue jsValue;
-  auto constantWriter = MakeJSValueTreeWriter(jsValue);
+  auto constantWriter = MakeJSValueTreeWriter();
   constantWriter.WriteObjectBegin();
   for (const auto &constantProvider : m_constProviders) {
     constantProvider(constantWriter);
   }
 
   constantWriter.WriteObjectEnd();
-  return jsValue.TakeObject();
+  return TakeJSValue(constantWriter).TakeObject();
 }
 
 MethodDelegate ReactModuleBuilderMock::GetMethod0(std::wstring const &methodName) const noexcept {
@@ -85,16 +84,15 @@ SyncMethodDelegate ReactModuleBuilderMock::GetSyncMethod(std::wstring const &met
   return (it != m_syncMethods.end()) ? it->second : nullptr;
 }
 
-/*static*/ IJSValueWriter ReactModuleBuilderMock::ArgWriter(JSValue &jsValue) noexcept {
-  return MakeJSValueTreeWriter(jsValue);
+/*static*/ IJSValueWriter ReactModuleBuilderMock::ArgWriter() noexcept {
+  return MakeJSValueTreeWriter();
 }
 
 /*static*/ IJSValueReader ReactModuleBuilderMock::CreateArgReader(
     std::function<void(IJSValueWriter const &)> const &argWriter) noexcept {
-  JSValue jsValue;
-  auto writer = MakeJSValueTreeWriter(jsValue);
+  auto writer = MakeJSValueTreeWriter();
   argWriter(writer);
-  return MakeJSValueTreeReader(std::move(jsValue));
+  return MakeJSValueTreeReader(TakeJSValue(writer));
 }
 
 } // namespace winrt::Microsoft::ReactNative

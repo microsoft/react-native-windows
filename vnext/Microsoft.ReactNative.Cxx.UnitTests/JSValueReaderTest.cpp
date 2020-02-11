@@ -238,9 +238,9 @@ TEST_CLASS (JSValueReaderTest) {
         RobotPoint{/*X =*/5, /*Y =*/6}, RobotPoint{/*X =*/45, /*Y =*/90}, RobotPoint{/*X =*/15, /*Y =*/16}};
     robot.Extra = R2D2Extra{/*MovieSeries =*/"Episode 2"};
 
-    JSValue jsValue;
-    auto writer = MakeJSValueTreeWriter(jsValue);
+    auto writer = MakeJSValueTreeWriter();
     WriteValue(writer, robot);
+    auto jsValue = TakeJSValue(writer);
 
     TestCheck(jsValue["Model"] == (int)RobotModel::R2D2);
     TestCheck(jsValue["Name"] == "Bob");
@@ -437,8 +437,7 @@ TEST_CLASS (JSValueReaderTest) {
   }
 
   TEST_METHOD(TestWriteValueDefaultExtensions) {
-    JSValue jsValue;
-    auto writer = MakeJSValueTreeWriter(jsValue);
+    auto writer = MakeJSValueTreeWriter();
     writer.WriteObjectBegin();
     WriteProperty(writer, L"StringValue1", "");
     WriteProperty(writer, L"StringValue2", "5");
@@ -451,6 +450,7 @@ TEST_CLASS (JSValueReaderTest) {
     WriteProperty(writer, L"NullValue", nullptr);
     writer.WriteObjectEnd();
 
+    auto jsValue = TakeJSValue(writer);
     TestCheck(jsValue["StringValue1"] == "");
     TestCheck(jsValue["StringValue2"] == "5");
     TestCheck(jsValue["StringValue3"] == "Hello");

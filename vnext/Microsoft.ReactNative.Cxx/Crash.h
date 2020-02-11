@@ -3,6 +3,7 @@
 
 #pragma once
 
+#ifndef VerifyElseCrash
 #define VerifyElseCrash(condition) \
   do {                             \
     if (!(condition)) {            \
@@ -10,7 +11,9 @@
       std::terminate();            \
     }                              \
   } while (false)
+#endif
 
+#ifndef VerifyElseCrashSz
 #define VerifyElseCrashSz(condition, message) \
   do {                                        \
     if (!(condition)) {                       \
@@ -18,3 +21,4 @@
       std::terminate();                       \
     }                                         \
   } while (false)
+#endif

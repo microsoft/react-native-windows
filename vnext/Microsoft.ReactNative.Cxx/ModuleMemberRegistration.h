@@ -9,9 +9,9 @@
 #include "ReactMemberInfo.h"
 
 // Internal implementation details.
-// Registration of a method relies on a TLS context that is setup when object is
-// created. The advantage is that we do zero work during static initialization.
-// The disadvantage is that we require to have one bool field per registration.
+// For each registered member we create a static method that can register it.
+// The member id is generated as a ReactMemberId<__COUNTER__> type.
+// To invoke the static registration methods, we just try next ReactMemberId until static member exists.
 #define INTERNAL_REACT_METHOD_3_ARGS(methodType, method, methodName)                             \
   template <class TClass, class TRegistry>                                                       \
   static void RegisterMember(                                                                    \
