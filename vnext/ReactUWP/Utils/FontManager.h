@@ -57,7 +57,8 @@ class FontManager {
   /// <param name="fontFamilyName">The name of the font family</param>
   /// <param name="weight">The weight of the font</param>
   /// <param name="style">The style of the font, such as italic</param>
-  /// <param name="filePath">Either a path-like string in the form of "ms-appx:///Assets/Fonts/FontFile.ttf#Font Name" or a system font name.</param>
+  /// <param name="filePath">Either a path-like string in the form of "ms-appx:///Assets/Fonts/FontFile.ttf#Font Name"
+  /// or a system font name.</param>
   void SetFont(
       const std::wstring &fontFamilyName,
       winrt::Windows::UI::Text::FontWeight weight,
