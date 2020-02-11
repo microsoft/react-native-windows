@@ -1,0 +1,136 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Milestone 4 Updates · React Native for Windows &amp; Mac</title><meta name="viewport" content="width=device-width"/><meta name="generator" content="Docusaurus"/><meta name="description" content="Announcing React Native for Windows v0.61, now on the high performance common core across iOS and Android!"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Milestone 4 Updates · React Native for Windows &amp; Mac"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/blog/2020/02/07/m4updates"/><meta property="og:description" content="Announcing React Native for Windows v0.61, now on the high performance common core across iOS and Android!"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="alternate" type="application/atom+xml" href="https://microsoft.github.io/react-native-windows/blog/atom.xml" title="React Native for Windows &amp; Mac Blog ATOM Feed"/><link rel="alternate" type="application/rss+xml" href="https://microsoft.github.io/react-native-windows/blog/feed.xml" title="React Native for Windows &amp; Mac Blog RSS Feed"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows &amp; Mac"/><h2 class="headerTitleWithLogo">React Native for Windows &amp; Mac</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/react-native-windows/versions" target="_self">v0.61</a></li><li class=""><a href="/react-native-windows/docs/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/flyout-component" target="_self">APIs</a></li><li class="siteNavGroupActive"><a href="/react-native-windows/blog/" target="_self">Blog</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_self">Samples</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Recent Posts</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle">Recent Posts</h3><ul class=""><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/blog/2020/02/07/m4updates">Milestone 4 Updates</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/blog/2019/12/3/m3updates">Milestone 3 Updates</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/blog/2019/07/22/roadmap">Roadmap for vnext</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/blog/2019/07/21/updates">July 2019 Updates</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer postContainer blogContainer"><div class="wrapper"><div class="lonePost"><div class="post"><header class="postHeader"><h1 class="postHeaderTitle"><a href="/react-native-windows/blog/2020/02/07/m4updates">Milestone 4 Updates</a></h1><p class="post-meta">February 7, 2020</p><div class="authorBlock"></div></header><div><span><p>Announcing React Native for Windows v0.61, now on the high performance common core across iOS and Android!</p>
+<!--truncate-->
+<p>This milestone is a huge one for us on the React Native for Windows team and we're super excited to officially announce that the work we have been doing in our C++ overhaul (formerly dubbed vnext) is now the new default framework installed when you integrate Windows into your React Native project.</p>
+<p>The work in this latest release doesn't stop there though, check out all the other cool stuff we've released below!</p>
+<h2><a class="anchor" aria-hidden="true" id="were-on-version-061"></a><a href="#were-on-version-061" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>We're on version 0.61</h2>
+<p>That's right! React Native for Windows is now fully up-to-date with React Native core's latest version - and we're planning to keep updated with their latest version with as little latency as possible.</p>
+<p>We've updated the <a href="https://microsoft.github.io/react-native-windows/docs/getting-started">Getting Started Guide</a> to reflect these changes and when you install the <a href="https://www.npmjs.com/package/react-native-windows">ReactNative for Windows npmjs package</a> you will get these updates in that package.</p>
+<h2><a class="anchor" aria-hidden="true" id="fewer-steps-to-get-started"></a><a href="#fewer-steps-to-get-started" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Fewer steps to get started</h2>
+<p>With the convergence of vnext into our default React Native for Windows framework, you no longer need to specify a vnext template in the setup CLI steps.</p>
+<p>This means after you <a href="https://microsoft.github.io/react-native-windows/docs/getting-started">setup your React Native project</a>, all you have to do is add our plugin:</p>
+<pre><code class="hljs">yarn <span class="hljs-keyword">add</span><span class="bash"> rnpm-plugin-windows</span>
+</code></pre>
+<p>And install the Windows extension:</p>
+<pre><code class="hljs">react-<span class="hljs-keyword">native</span> windows
+</code></pre>
+<p>Now you're ready to start developing for Windows!</p>
+<h2><a class="anchor" aria-hidden="true" id="our-documentation-is-expanding"></a><a href="#our-documentation-is-expanding" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Our documentation is expanding</h2>
+<p>In addition to reducing the steps needed to get started <strong>developing</strong> in React Native for Windows - we're also expanding the docs to make it easier to access relevant information around <strong>how to develop</strong> for Windows using React Native.</p>
+<p>One really big way we know we can help accelerate developers is through thorough and related documentation. That's why we've added two whole new sections this site:</p>
+<ul>
+<li><a href="https://microsoft.github.io/react-native-windows/versions">Versions</a>
+With versions we will now be tracking our release changelogs, older documentation so changes to certain APIs or components can be tracked, and stable versus latest releases so as a developer you can know exactly when to upgrade to ensure your app's performance and features are safe.</li>
+<li><a href="https://microsoft.github.io/react-native-windows/docs/flyout-component">APIs</a>
+The APIs section is now available to reference! All Windows and Mac API and Components will be listed there with a familiar layout to help you know which properties do what you need and what's available to you on the Windows and Mac components.</li>
+</ul>
+<p><strong>But wait, did you say Mac?</strong></p>
+<p>That wasn't a typo!</p>
+<p>We've actually begun investing in <a href="https://www.aka.ms/react-native-mac">React Native for Mac</a>. Although this progress is still in its early stages, a lot of the functionality and features we implemented for Windows are also shared on the Mac, so this gives us a nice head start here and is one of the many reasons we decided to undertake this effort.</p>
+<p>You may also notice that we've added Mac to the this site and as we expand in the React Native for Mac area, we will continue to add documentation and support for developers right here.</p>
+<h2><a class="anchor" aria-hidden="true" id="improved-performance"></a><a href="#improved-performance" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Improved performance</h2>
+<p>A large improvement to performance happened in this last release that had to due with our threading model. You might have also heard us calling this the &quot;confident instancing programming model&quot;.</p>
+<p>What we did was update the host and instance infrastructure in React Native for Windows to have a more robust and consistent threading model. While this change helps increase thread stability today, it will also enable us to support more complex scenarios like hosting multiple RN instances within the same app in the future.</p>
+<h2><a class="anchor" aria-hidden="true" id="svg-image-support"></a><a href="#svg-image-support" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>SVG Image support</h2>
+<p>As of this latest release we now natively support svg files. No separate component or module is needed - just simply use the Image component in your React Native app and when you target Windows your svg files will be loaded and used just as they should.</p>
+<h2><a class="anchor" aria-hidden="true" id="coming-up-next"></a><a href="#coming-up-next" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Coming up next</h2>
+<p><img src="/react-native-windows/blog/assets/m1-5roadmap_m4release.png" alt="Roadmap_M1_Future"></p>
+<p>If you're curious about our immediate and future plans, feel free to check out our <a href="https://github.com/microsoft/react-native-windows/milestones">milestone progress on our repo</a>, but there are also some other cool things to get excited about that we'll be focusing on between now and April 2020. Check them out below!</p>
+<h3><a class="anchor" aria-hidden="true" id="february"></a><a href="#february" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>February</h3>
+<ul>
+<li><p><strong>Dual-screen support</strong></p>
+<p>We're bringing <a href="https://docs.microsoft.com/en-us/uwp/api/microsoft.ui.xaml.controls.twopaneview?view=winui-2.2">TwoPaneView</a> to React Native for Windows as a component! This means React Native developers will have the ability to be easily conscious of when their app is displaying on one of the screens or expanding across both - with the API automatically adjusting for the hinge seam allowance in the center - so no app information is lost.</p>
+<p>You can participate in the conversation on these modules here: <a href="https://github.com/react-native-community/discussions-and-proposals/issues/197">TwoPaneView</a> and <a href="https://github.com/react-native-community/discussions-and-proposals/issues/189">ExtendedDeviceInfo</a></p></li>
+<li><p><strong>API parity</strong>
+We are investing in tooling to comprehensively measure API parity of react-native-windows with all react-native APIs. This will help set us up for complete API parity in March and April milestones to follow.</p></li>
+<li><p><strong>Community modules updates to support Windows</strong></p>
+<p>We know that community modules and extensions are an important part of building a great React Native app. We’re currently working on adding support to <strong>react-native-video</strong> and will be starting work on migrating <strong>Picker</strong> and <strong>WebView</strong> modules to the corresponding community repos in February.</p>
+<p>A lot more are planned for future months, you can find the native modules on our radar on this <a href="https://github.com/microsoft/react-native-windows/projects/23">project board</a>.</p>
+<p>Feel free to file issues if there are more you would like to see Windows add support for.
+For getting starting building native modules, <a href="https://microsoft.github.io/react-native-windows/docs/native-modules">the guide can be found here</a>.</p></li>
+<li><p><strong>Upgrade helper</strong></p></li>
+<li><p><strong>Alleviate disk space issues with CI</strong></p></li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="march"></a><a href="#march" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>March</h3>
+<ul>
+<li><a href="https://github.com/react-native-community/discussions-and-proposals/blob/master/proposals/0002-Turbo-Modules.md">Turbo Modules</a></li>
+<li>Lottie</li>
+<li>Upgrade to 0.62</li>
+<li>API completion (Accessibility, View Style)</li>
+<li>Integration with react-native init</li>
+<li>Integration with Facebook documentation</li>
+<li>Turbo Modules investigation</li>
+<li>Transition keyboard changes into RN core</li>
+</ul>
+<h3><a class="anchor" aria-hidden="true" id="april"></a><a href="#april" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>April</h3>
+<ul>
+<li>AsyncStorage/FS modules</li>
+<li>Helix for downlevel testing</li>
+<li>API completion (TouchableWithoutFeedback, AppState, LayoutAnimatoin, ScrollView)</li>
+<li>Keyboarding improvements (autofocus, focus lost, tabbing, etc.)</li>
+<li>Community module directory</li>
+<li>VSCode integration, TypeScript, direct debugging, Windows config</li>
+<li>Targetting WinUI 3.0</li>
+</ul>
+</span></div></div><div class="blogSocialSection"></div></div><div class="blog-recent"><a class="button" href="/react-native-windows/blog/">Recent Posts</a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#were-on-version-061">We're on version 0.61</a></li><li><a href="#fewer-steps-to-get-started">Fewer steps to get started</a></li><li><a href="#our-documentation-is-expanding">Our documentation is expanding</a></li><li><a href="#improved-performance">Improved performance</a></li><li><a href="#svg-image-support">SVG Image support</a></li><li><a href="#coming-up-next">Coming up next</a><ul class="toc-headings"><li><a href="#february">February</a></li><li><a href="#march">March</a></li><li><a href="#april">April</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="http://facebook.github.io/react-native/docs/getting-started.html">Getting Started</a><a href="http://facebook.github.io/react-native/docs/tutorial.html">Tutorial</a><a href="http://facebook.github.io/react-native/docs/components-and-apis.html">Components and APIs</a><a href="http://facebook.github.io/react-native/docs/more-resources.html">More Resources</a></div><div><h5>React Native for Windows Docs</h5><a href="/react-native-windows/docs/getting-started">Getting Started</a><a href="/react-native-windows/docs/parity-status">API parity with React Native</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a><a href="/react-native-windows/docs/windowsbrush-and-theme">Windows Brushes and Themes</a></div><div><h5>More Resources</h5><a href="/react-native-windows/blog/">Blog</a><a href="https://twitter.com/reactwindows" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/master/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

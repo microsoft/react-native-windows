@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
     <channel>
-        <title>React Native for Windows Blog</title>
+        <title>React Native for Windows &amp; Mac Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
-        <description>The best place to stay up-to-date with the latest React Native for Windows news and events.</description>
-        <lastBuildDate>Thu, 01 Jan 1970 00:00:00 GMT</lastBuildDate>
-        <docs>http://blogs.law.harvard.edu/tech/rss</docs>
+        <description>The best place to stay up-to-date with the latest React Native for Windows &amp; Mac news and events.</description>
+        <lastBuildDate>Fri, 07 Feb 2020 06:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
-            <title>React Native for Windows Blog</title>
+            <title>React Native for Windows &amp; Mac Blog</title>
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[Milestone 4 Updates]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2020/02/07/m4updates.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2020/02/07/m4updates.html</guid>
+            <pubDate>Fri, 07 Feb 2020 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>Announcing React Native for Windows v0.61, now on the high performance common core across iOS and Android!</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Milestone 3 Updates]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2019/12/3/m3updates.html</link>
