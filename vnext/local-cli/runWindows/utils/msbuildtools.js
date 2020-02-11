@@ -171,6 +171,8 @@ function checkMSBuildVersion(version, buildArch, verbose) {
     'Bin/MSBuild.exe',
   );
 
+  console.log('Looking for ' + msBuildPath);
+
   toolsPath = fs.existsSync(msBuildPath) ? path.dirname(msBuildPath) : null;
 
   // We found something so return MSBuild Tools.
