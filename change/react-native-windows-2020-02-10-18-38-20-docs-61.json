@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "comment": "Update docs with 0.61 info",
+  "packageName": "react-native-windows",
+  "email": "mcota@microsoft.com",
+  "commit": "cd8655a3a57b8d7a1ceacd9c38a95a60ebc8353a",
+  "dependentChangeType": "patch",
+  "date": "2020-02-11T02:38:19.908Z"
+}
