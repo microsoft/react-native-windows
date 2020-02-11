@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Flow Check Suppressions",
-  "packageName": "react-native-windows",
-  "email": "nick@nickgerleman.com",
-  "commit": "6a4242355e9c8d96f4a95aedbdff53ba07224a9a",
-  "dependentChangeType": "patch",
-  "date": "2020-01-31T10:51:25.215Z"
-}

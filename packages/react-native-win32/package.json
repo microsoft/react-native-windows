@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.26.4",
+  "version": "0.61.0-beta.1",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "main": "./Libraries/react-native/react-native-implementation.win32.js",
   "typings": "./Libraries/react-native/typings-main.d.ts",
@@ -20,8 +20,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "@react-native-community/cli": "^2.6.0",
+    "@babel/runtime": "^7.4.0",
     "fbjs-scripts": "^1.1.0",
     "abort-controller": "^3.0.0",
     "stacktrace-parser": "^0.1.3",
@@ -42,7 +41,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "react-native": "0.60.6",
+    "react-native": "0.61.5",
     "@office-iss/rex-win32": "0.0.33",
     "@types/es6-collections": "^0.5.29",
     "@types/es6-promise": "0.0.32",
@@ -50,14 +49,23 @@
     "@types/prop-types": "15.5.1",
     "@types/react-native": "~0.60.5",
     "@types/react": "16.9.11",
-    "flow-bin": "^0.98.0",
+    "flow-bin": "^0.105.0",
     "jscodeshift": "^0.6.2",
     "just-scripts": "^0.24.2",
-    "react": "16.8.6",
+    "react": "16.9.0",
     "rimraf": "^3.0.0"
   },
   "peerDependencies": {
-    "react-native": "^0.60.0-0",
-    "react": "16.8.6"
+    "react-native": "0.61.5",
+    "react": "16.9.0",
+    "react-dom": "16.8.6"
+  },
+  "beachball": {
+    "defaultNpmTag": "beta",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
   }
 }

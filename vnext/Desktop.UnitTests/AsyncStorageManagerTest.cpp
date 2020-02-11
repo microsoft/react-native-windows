@@ -61,7 +61,7 @@ void throwLastErrorMessage() {
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS(AsyncStorageManagerTest) {
+TEST_CLASS (AsyncStorageManagerTest) {
   const WCHAR *m_storageFileName = L"testdomain";
 
   inline void cleanupStorageFiles() {

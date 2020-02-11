@@ -2,6 +2,111 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 11 Feb 2020 04:04:11 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "none": [
+          {
+            "comment": "Update docs with 0.61 info",
+            "author": "mcota@microsoft.com",
+            "commit": "cd8655a3a57b8d7a1ceacd9c38a95a60ebc8353a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Feb 2020 01:21:44 GMT",
+      "tag": "react-native-windows_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix Dimension returning DIP instead of physical pixels",
+            "author": "dida@ntdev.microsoft.com",
+            "commit": "640d46b3d4d1a383c0373969c04d8e16102c2edb"
+          },
+          {
+            "comment": "Added Microsoft.ReactNative dependency on Mso",
+            "author": "vmorozov@microsoft.com",
+            "commit": "ba8164a8bbdf2aad160120cf8c04692774b03576"
+          },
+          {
+            "comment": "Merge IntegrationTests and RNTester with Stock React Native 60.0.6",
+            "author": "nick@nickgerleman.com",
+            "commit": "6619df5e5efcbc5394e4dcf6bb88b5bc4114e03b"
+          },
+          {
+            "comment": "Add Flow Check Suppressions",
+            "author": "nick@nickgerleman.com",
+            "commit": "6a4242355e9c8d96f4a95aedbdff53ba07224a9a"
+          },
+          {
+            "comment": "Export loadScriptFromString from react-native-win32",
+            "author": "acoates@microsoft.com",
+            "commit": "6dec85a42e5f918b344680fe693b50c0b02ae761"
+          },
+          {
+            "comment": "Export Instance->getModuleRegistry from react-native-win32.dll",
+            "author": "acoates@microsoft.com",
+            "commit": "c559fcfc31c1219f4873351f936d148a962c28ab"
+          },
+          {
+            "comment": "More Patches, IntegrationTests and RNTester Cleanup",
+            "author": "nick@nickgerleman.com",
+            "commit": "abf3a584449a7e33b280f094e7a62a39ce0a6832"
+          },
+          {
+            "comment": "Use unforked react-native 0.60.6",
+            "author": "nick@nickgerleman.com",
+            "commit": "da8b7814a8d32b35a7765d43a8f1b7fac6ac0a5e"
+          },
+          {
+            "comment": "Implemented ReactHost for Microsoft.ReactNative",
+            "author": "vmorozov@microsoft.com",
+            "commit": "950a5d9ffaeb26d76f774f0a611566c28ac477f8"
+          },
+          {
+            "comment": "Implemented ReactPromise<void>",
+            "author": "vmorozov@microsoft.com",
+            "commit": "c2bda6aa87fcf5307035cff49807cd6e89b06ab4"
+          },
+          {
+            "comment": "Enable screen reader announcements for accessibilityLiveRegion",
+            "author": "jagorrin@microsoft.com",
+            "commit": "4571c3c9445b1e31fbb623393644aef9e9fe6c09"
+          },
+          {
+            "comment": "Enabled C++/WinRT heap enforcement",
+            "author": "vmorozov@microsoft.com",
+            "commit": "0eb4d076e3fe339ec92445ada236607e6bd89ebd"
+          },
+          {
+            "comment": "upgrade to 61",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ad2efd6b1785ce42b55f35742f81eb9cf0e7ec87"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Fixed Mso.UnitTests Release compilation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "6ef3f2e1250bbc4ca8f12a09cbeab495f0a4854d"
+          },
+          {
+            "comment": "Replaced Catch2 unit tests with Motif GTest tests",
+            "author": "vmorozov@microsoft.com",
+            "commit": "0e178bd76c24434dcd527f79bad8e62fc6501ab7"
+          },
+          {
+            "comment": "Fix compilation errors with LLVM9.0.1/clang",
+            "author": "chpurrer@fb.com",
+            "commit": "7a2fe1f7b3c29ab8b2707c0db760ed43a492bad7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Jan 2020 23:29:21 GMT",
       "tag": "react-native-windows_v0.60.0-vnext.133",
       "version": "0.60.0-vnext.133",

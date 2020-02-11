@@ -41,7 +41,7 @@ uint32_t GetPageSize() noexcept {
 
 namespace Microsoft::JSI::Test {
 
-TEST_CLASS(MemoryMappedBufferUnitTests) {
+TEST_CLASS (MemoryMappedBufferUnitTests) {
  private:
   std::wstring m_testFileName;
 

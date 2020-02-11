@@ -480,7 +480,7 @@ class BadRefCountedObject2 final : public SomeVirtualClass,
 };
 #endif
 
-TEST_CLASS(RefCountedObjectTest) {
+TEST_CLASS (RefCountedObjectTest) {
   TEST_METHOD(RefCountedObject_SimpleRefCount) {
     bool deleted = false;
     {

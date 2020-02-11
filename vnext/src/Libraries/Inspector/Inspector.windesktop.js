@@ -13,8 +13,8 @@
 const InspectorOverlay = require('./InspectorOverlay');
 const InspectorPanel = require('./InspectorPanel');
 const Platform = require('../Utilities/Platform');
-const React = require('React');
-const ReactNative = require('ReactNative');
+const React = require('react');
+const ReactNative = require('../Renderer/shims/ReactNative');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const Touchable = require('../Components/Touchable/Touchable');
 const UIManager = require('../ReactNative/UIManager');
@@ -114,7 +114,7 @@ class Inspector extends React.Component<
     this.setState({inspectedViewTag: newProps.inspectedViewTag});
   }
 
-  attachToDevtools = (agent: Object) => {
+  attachToDevtools: (agent: any) => void = (agent: Object) => {
     let _hideWait = null;
     const hlSub = agent.sub('highlight', ({node, name, props}) => {
       clearTimeout(_hideWait);
@@ -237,7 +237,7 @@ class Inspector extends React.Component<
     });
   }
 
-  render() {
+  render(): React.Node {
     const panelContainerStyle =
       this.state.panelPos === 'bottom'
         ? {bottom: 0}

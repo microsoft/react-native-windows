@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fixed Mso.UnitTests Release compilation",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "6ef3f2e1250bbc4ca8f12a09cbeab495f0a4854d",
-  "dependentChangeType": "patch",
-  "date": "2020-01-31T05:53:47.603Z"
-}

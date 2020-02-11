@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implemented ReactHost for Microsoft.ReactNative",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "commit": "950a5d9ffaeb26d76f774f0a611566c28ac477f8",
-  "dependentChangeType": "patch",
-  "date": "2020-02-04T18:53:41.810Z"
-}

@@ -16,7 +16,7 @@ struct IUnkSample : public IUnknown {
   virtual void DoAnything() = 0;
 };
 
-TestClassComponent(CntPtrTest, Mso.CntPtr) TEST_CLASS(CntPtrTest) {
+TestClassComponent(CntPtrTest, Mso.CntPtr) TEST_CLASS (CntPtrTest) {
   struct ISimple : public Mso::IRefCounted {
     virtual void DoSomething() = 0;
   };

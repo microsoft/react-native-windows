@@ -14,7 +14,7 @@ namespace ABITests {
 
 #ifdef PERF_TESTS
 
-TEST_CLASS(PerfTests) {
+TEST_CLASS (PerfTests) {
   static const uint32_t iterations = 100000000;
 
   static void HandleLogEvents(::winrt::facebook::react::LogLevel l, hstring const &m) {}
