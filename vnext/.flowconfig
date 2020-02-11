@@ -9,9 +9,11 @@
 ; Ideally we'd delete the base versions of files that had .windows overrides as part of the
 ; initRNLibraries build step
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
+<PROJECT_ROOT>/Libraries/Animated/src/nodes/AnimatedInterpolation.js
 <PROJECT_ROOT>/Libraries/AppTheme/AppTheme.js
 <PROJECT_ROOT>/Libraries/Color/normalizeColor.js
-<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicator.js
+<PROJECT_ROOT>/Libraries/Core/setUpDeveloperTools.js
+<PROJECT_ROOT>/Libraries/Core/ReactNativeVersionCheck.js
 <PROJECT_ROOT>/Libraries/Components/ActivityIndicator/RCTActivityIndicatorViewNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/DatePicker/DatePicker.js
@@ -29,24 +31,44 @@
 <PROJECT_ROOT>/Libraries/Components/Switch/SwitchNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
+<PROJECT_ROOT>/Libraries/Components/TimePickerAndroid/TimePickerAndroid.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
+<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
-<PROJECT_ROOT>/Libraries/Linking/NativeLinking.js
+<PROJECT_ROOT>/Libraries/Lists/VirtualizedList.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
-<PROJECT_ROOT>/Libraries/ReactNative/getNativeComponentAttributes.js
 <PROJECT_ROOT>/Libraries/StyleSheet/processColor.js
+<PROJECT_ROOT>/Libraries/StyleSheet/processColorArray.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheetTypes.js
-<PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
+<PROJECT_ROOT>/RNTester/js/components/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/components/RNTesterExampleList.js
+<PROJECT_ROOT>/RNTester/js/examples/ScrollView/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/examples/View/ViewExample.js
+<PROJECT_ROOT>/RNTester/js/FlatListExample.js
+<PROJECT_ROOT>/RNTester/js/ListExampleShared.js
+<PROJECT_ROOT>/RNTester/js/RNTesterExampleList.js
+<PROJECT_ROOT>/RNTester/js/ScrollViewExample.js
+<PROJECT_ROOT>/RNTester/js/TouchableExample.js
+<PROJECT_ROOT>/RNTester/js/ViewExample.js
 
-
+; Schema files are used for turbo-module code generation, but are not bundled.
+; We don't yet have the react-native-codegen package they rely on, so supress
+; checks for now.
+<PROJECT_ROOT>/Libraries/Components/ActivityIndicator/ActivityIndicatorSchema.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/AndroidSwipeRefreshLayoutSchema.js
+<PROJECT_ROOT>/Libraries/Components/RefreshControl/PullToRefreshViewSchema.js
+<PROJECT_ROOT>/Libraries/Components/Slider/SliderSchema.js
+<PROJECT_ROOT>/Libraries/Components/Switch/SwitchSchema.js
+<PROJECT_ROOT>/Libraries/Components/UnimplementedViews/UnimplementedNativeViewSchema.js
+<PROJECT_ROOT>/Libraries/Modal/ModalSchema.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
@@ -71,9 +93,6 @@
 ; "node_modules/react-native" but in the source repo it is in the root
 .*/Libraries/react-native/React.js
 
-; Ignore polyfills
-.*/Libraries/polyfills/.*
-
 ; These should not be required directly
 ; require from fbjs/lib instead: require('fbjs/lib/warning')
 .*/node_modules/warning/.*
@@ -84,8 +103,16 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
+; Ignore RN copies, which cause duplicate violations to be shown
+.*/vnext/IntegrationTestsCopy/.*
+.*/vnext/RNTesterCopy/.*
+
 [untyped]
+<PROJECT_ROOT>/Libraries/DeprecatedPropTypes/.*
 .*/node_modules/@react-native-community/cli/.*/.*
+<PROJECT_ROOT>/Libraries/ActionSheetIOS/ActionSheetIOS.js
+<PROJECT_ROOT>/Libraries/Components/StatusBar/StatusBar.js
+<PROJECT_ROOT>/Libraries/Share/Share.js
 
 [include]
 ; Need to include hoisted modules
@@ -138,6 +165,7 @@ suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
 suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
+suppress_type=$FlowFixMeEmpty
 
 suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe\\($\\|[^(]\\|(\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)
 suppress_comment=\\(.\\|\n\\)*\\$FlowIssue\\((\\(<VERSION>\\)? *\\(site=[a-z,_]*react_native\\(_ios\\)?_\\(oss\\|fb\\)[a-z,_]*\\)?)\\)?:? #[0-9]+
@@ -166,4 +194,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.98.0
+^0.105.0

@@ -855,7 +855,7 @@ class MyMemHeapUnknownSample2 final : public Mso::UnknownObject<StatefulAllocWea
   bool &m_deleted;
 };
 
-TEST_CLASS(UnknownObjectTest) {
+TEST_CLASS (UnknownObjectTest) {
   TEST_METHOD(UnknownObject_SimpleRefCount_OneBaseInterface) {
     bool deleted = false;
     {

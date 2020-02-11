@@ -13,11 +13,7 @@
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-    <!--
-      Do not patch facebook/react-native by default until we make the switch
-      off of microsoft/react-native.
-    -->
-  <PropertyGroup Condition="'$(OSS_RN)'!='true'">
+  <PropertyGroup Condition="'$(PATCH_RN)'==''">
     <PATCH_RN>true</PATCH_RN>
   </PropertyGroup>
 
@@ -47,7 +43,7 @@
           DestinationFiles="@(DeforkingPatchCommonFiles->'$(ReactCommonDestPath)\%(RecursiveDir)%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
     <Copy SourceFiles="@(JsiReactHeaderFiles)"
-          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\jsireact\%(Filename)%(Extension)')"
+          DestinationFiles="@(JsiReactHeaderFiles->'$(ReactCommonDestPath)\ReactCommon\%(Filename)%(Extension)')"
           SkipUnchangedFiles="true" />
   </Target>
 

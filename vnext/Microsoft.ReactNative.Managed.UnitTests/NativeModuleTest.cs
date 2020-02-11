@@ -225,6 +225,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       }
     }
 
+    // Each attribute has an optional parameter: JS name.
+    [ReactMethod("voidPromise")]
+    public void VoidPromise(int x, IReactPromise<JSValue.Void> promise)
+    {
+      if (x % 2 == 0)
+      {
+        promise.Resolve();
+      }
+      else
+      {
+        promise.Reject(new ReactError { Message = "Odd unexpected" });
+      }
+    }
+
     [ReactMethod]
     public void ResolveSayHelloPromise(IReactPromise<string> promise)
     {
@@ -260,6 +274,20 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       else
       {
         promise.Reject(new ReactError { Message = "Already negative" });
+      }
+    }
+
+    // Each attribute has an optional parameter: JS name.
+    [ReactMethod("staticVoidPromise")]
+    public static void StaticVoidPromise(int x, IReactPromise<JSValue.Void> promise)
+    {
+      if (x % 2 == 0)
+      {
+        promise.Resolve();
+      }
+      else
+      {
+        promise.Reject(new ReactError { Message = "Odd unexpected" });
       }
     }
 
@@ -643,6 +671,24 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     }
 
     [TestMethod]
+    public void TestMethodCall_VoidPromise()
+    {
+      m_moduleBuilder.Call2("voidPromise", 2,
+          (JSValue.Void result) => { },
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_VoidPromiseError()
+    {
+      m_moduleBuilder.Call2("voidPromise", 3,
+          (JSValue.Void result) => { },
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+    }
+
+    [TestMethod]
     public void TestMethodCall_ResolveSayHelloPromise()
     {
       m_moduleBuilder.Call2(nameof(SimpleNativeModule.ResolveSayHelloPromise),
@@ -695,6 +741,25 @@ namespace Microsoft.ReactNative.Managed.UnitTests
           (JSValue error) => Assert.AreEqual("Already negative", error.Object["message"].String));
       Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
     }
+
+    [TestMethod]
+    public void TestMethodCall_StaticVoidPromise()
+    {
+      m_moduleBuilder.Call2("staticVoidPromise", 2,
+          (JSValue.Void result) => { },
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsResolveCallbackCalled);
+    }
+
+    [TestMethod]
+    public void TestMethodCall_StaticVoidPromiseError()
+    {
+      m_moduleBuilder.Call2("staticVoidPromise", 3,
+          (JSValue.Void result) => { },
+          (JSValue error) => Assert.AreEqual("Odd unexpected", error.Object["message"].String));
+      Assert.IsTrue(m_moduleBuilder.IsRejectCallbackCalled);
+    }
+
 
     [TestMethod]
     public void TestMethodCall_StaticResolveSayHelloPromise()

@@ -59,7 +59,9 @@ Next you'll be prompted to select the versions of Windows you'll support. This s
 1. Set the `Target version` to `Windows 10, version 1903 (10.0; Build 18362)`.
 1. Set the `Minimum version` to `Windows 10 Creators Update (10.0; Build 15063)`.
 
-You should now have a new `MyLibrary` solution file at `.\MyLibrary\MyLibrary.sln` and a `MyLibrary` project at `.\MyLibrary\MyLibrary\MyLibrary.csproj` for C# or `.\MyLibrary\MyLibrary\MyLibrary.vcxproj` for C++.
+You should now have a new `MyLibrary` solution file at `.\MyLibrary\MyLibrary.sln` and a `MyLibrary` project at `.\MyLibrary\MyLibrary\MyLibrary.csproj` for C# or `.\MyLibrary\MyLibrary\MyLibrary.vcxproj` for C++. 
+
+For C++/WinRT project, right click on the project and choose `Manage Nuget Packages...`, select version 2.0.190730.2 for Microsoft.Windows.CppWinRT pacakge.
 
 Now, we want to rename the root directory of the Windows native code to `windows` to match the peer `android` and `ios` directories:
 

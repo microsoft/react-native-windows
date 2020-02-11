@@ -22,6 +22,9 @@ struct DynamicWriter : winrt::implements<DynamicWriter, IJSValueWriter> {
   void WriteArrayBegin() noexcept;
   void WriteArrayEnd() noexcept;
 
+ public:
+  static folly::dynamic ToDynamic(JSValueArgWriter const &argWriter) noexcept;
+
  private:
   enum struct State { Start, PropertyName, PropertyValue, Array, Finish };
 

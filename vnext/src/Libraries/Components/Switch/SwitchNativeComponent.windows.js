@@ -13,10 +13,14 @@ const ReactNative = require('../../Renderer/shims/ReactNative');
 
 const requireNativeComponent = require('../../ReactNative/requireNativeComponent');
 
-import type {SwitchChangeEvent} from '../../Types/CoreEventTypes';
 import type {ColorValue} from '../../StyleSheet/StyleSheetTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
+
 import type {NativeOrDynamicColorType} from '../../Color/NativeOrDynamicColorType'; // TODO(macOS ISS#2323203)
+
+type SwitchChangeEvent = $ReadOnly<{|
+  value: boolean,
+|}>;
 
 type SwitchProps = $ReadOnly<{|
   ...ViewProps,

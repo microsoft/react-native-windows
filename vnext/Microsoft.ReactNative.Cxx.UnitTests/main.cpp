@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "motifCpp/gTestAdapter.h"
 
-#define CATCH_CONFIG_RUNNER
-#include "catch.hpp"
-
-int __cdecl main(int argc, char *argv[]) {
-  winrt::init_apartment();
-  return Catch::Session().run(argc, argv);
+int main(int argc, char **argv) {
+  Mso::UnitTests::GTest::RegisterUnitTests();
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

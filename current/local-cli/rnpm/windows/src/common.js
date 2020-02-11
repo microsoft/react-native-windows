@@ -103,7 +103,7 @@ const getInstallPackage = function (version, tag, useStable) {
   }
 
   if (validVersion) {
-    return Promise.resolve(`${packageToInstall}@${resultVersion}`);
+    return Promise.resolve(`${packageToInstall}@${version}`);
   } else if (validRange) {
     return getMatchingVersion(version, tag, useStable)
       .then(resultVersion => `${packageToInstall}@${resultVersion}`);
@@ -150,5 +150,5 @@ module.exports = {
   getInstallPackage,
   getReactNativeVersion,
   getReactNativeAppName,
-  isGlobalCliUsingYarn
+  isGlobalCliUsingYarn,
 };

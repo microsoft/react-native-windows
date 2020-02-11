@@ -10,6 +10,7 @@
 
 #include "DynamicReader.h"
 #include "DynamicWriter.h"
+#include "ReactHost/React.h"
 #include "cxxreact/CxxModule.h"
 #include "winrt/Microsoft.ReactNative.h"
 
@@ -23,11 +24,12 @@ struct ABICxxModuleEventHandlerSetter {
 struct ABICxxModule : facebook::xplat::module::CxxModule {
   ABICxxModule(
       winrt::Windows::Foundation::IInspectable &nativeModule,
-      std::string name,
-      std::string eventEmitterName,
-      std::vector<facebook::xplat::module::CxxModule::Method> methods,
+      std::string &&name,
+      std::string &&eventEmitterName,
+      std::vector<facebook::xplat::module::CxxModule::Method> &&methods,
       std::vector<ConstantProvider> constants,
-      std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept;
+      std::vector<ABICxxModuleEventHandlerSetter> &&eventHandlerSetters,
+      Mso::CntPtr<Mso::React::IReactContext> &&reactContext) noexcept;
 
  public: // CxxModule implementation
   std::string getName() override;
@@ -35,7 +37,7 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
  private:
-  void InitEvents(std::vector<ABICxxModuleEventHandlerSetter> eventHandlerSetters) noexcept;
+  void InitEvents(std::vector<ABICxxModuleEventHandlerSetter> const &eventHandlerSetters) noexcept;
 
  private:
   winrt::Windows::Foundation::IInspectable m_nativeModule;
@@ -43,6 +45,7 @@ struct ABICxxModule : facebook::xplat::module::CxxModule {
   std::string m_eventEmitterName;
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
   std::vector<ConstantProvider> m_constants;
+  Mso::CntPtr<Mso::React::IReactContext> m_reactContext;
 };
 
 } // namespace winrt::Microsoft::ReactNative

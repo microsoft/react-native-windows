@@ -15,7 +15,7 @@ using namespace Windows::Foundation;
 namespace react {
 namespace uwp {
 
-typedef winrt::DependencyObject XamlView;
+using XamlView = winrt::DependencyObject;
 
 inline int64_t GetTag(XamlView view) {
   return view.GetValue(winrt::FrameworkElement::TagProperty()).as<winrt::IPropertyValue>().GetInt64();

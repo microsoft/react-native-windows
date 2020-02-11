@@ -252,7 +252,6 @@
       <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4018;4146;4244;4251;4267;4293;4305;4800;4804;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -271,7 +270,7 @@
   </Target>
   <Target Name="DownloadFolly" BeforeTargets="PrepareForBuild">
     <Message Importance="High" Text="Downloading folly..." Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" />
-    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.09.30.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
+    <DownloadFile Condition="!Exists('$(FollyDir)..\.follyzip\folly-2019.09.30.00.zip')" SourceUrl="https://github.com/facebook/folly/archive/v2019.09.30.00.zip" DestinationFileName="folly-2019.09.30.00.zip" DestinationFolder="$(FollyDir)..\.follyzip" />
   </Target>
   <Target Name="UnzipFolly" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly">
     <Message Importance="High" Text="Unzipping folly to $([MSBuild]::NormalizePath($(FollyDir)..))." Condition="!Exists('$(FollyDir)folly\dynamic.h')" />

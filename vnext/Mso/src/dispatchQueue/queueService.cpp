@@ -282,6 +282,10 @@ DispatchQueue DispatchQueueStatic::MakeLooperQueue() noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeLooperScheduler());
 }
 
+DispatchQueue DispatchQueueStatic::MakeCurrentThreadUIQueue() noexcept {
+  return Mso::Make<QueueService, IDispatchQueueService>(MakeCurrentThreadUIScheduler());
+}
+
 DispatchQueue DispatchQueueStatic::MakeConcurrentQueue(uint32_t maxThreads) noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeThreadPoolScheduler(maxThreads));
 }

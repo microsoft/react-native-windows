@@ -22,11 +22,11 @@
     <USE_HERMES Condition="'$(USE_HERMES)' == ''">false</USE_HERMES>
     <HERMES_Version Condition="'$(HERMES_Version)' == ''">0.1.6</HERMES_Version>
     <HERMES_Package Condition="'$(HERMES_Package)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HERMES_Version)</HERMES_Package>
-    
+
     <USE_V8 Condition="'$(USE_V8)' == ''">false</USE_V8>
     <V8_Version Condition="'$(V8_Version)' == ''">0.1.6</V8_Version>
-    <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8JSI.Windows.$(HERMES_Version)</V8_Package>
-    
+    <V8_Package Condition="'$(V8_Package)' == ''">$(SolutionDir)packages\ReactNative.V8JSI.Windows.$(V8_Version)</V8_Package>
+
     <!-- Enables React-Native-Windows ETW Provider : React-Native-Windows-Provider  -->
     <ENABLE_ETW_TRACING Condition="'$(ENABLE_ETW_TRACING)' == ''">true</ENABLE_ETW_TRACING>
 
@@ -65,20 +65,29 @@
     <ClCompile>
       <!--
         BOOST_ALL_NO_LIB              - Don't require prebuilt Boost DateTime LIB.
-        BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         BOOST_ERROR_CODE_HEADER_ONLY  - Compile Boost error_code members inline. Requires BOOST_SYSTEM_SOURCE.
-        WIN32_LEAN_AND_MEAN           - Reduces the Windows API included surface.
+        BOOST_NO_RTTI                 - Configure Boost not to use dynamic_cast
+        BOOST_NO_TYPEID               - Configure boost not to check typeid (not to use RTTI)
+        BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
+        GTEST_HAS_RTTI                - Let GTest know not to use RTTI
+        WIN32_LEAN_AND_MEAN           - Reduce the Windows API included surface.
+        WINRT_LEAN_AND_MEAN           - Disable rarely used cppwinrt templates that impact compile-time/PCH size.
       -->
       <PreprocessorDefinitions>
-        BOOST_ALL_NO_LIB=1;
-        WIN32_LEAN_AND_MEAN;
         _SILENCE_ALL_CXX17_DEPRECATION_WARNINGS;
-        BOOST_SYSTEM_SOURCE;
+        BOOST_ALL_NO_LIB=1;
         BOOST_ERROR_CODE_HEADER_ONLY;
+        BOOST_NO_RTTI;
+        BOOST_NO_TYPEID;
+        BOOST_SYSTEM_SOURCE;
+        GTEST_HAS_RTTI=0;
+        WIN32_LEAN_AND_MEAN;
+        WINRT_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ControlFlowGuard Condition="'$(Configuration)' != 'Debug'">Guard</ControlFlowGuard>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -87,13 +96,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
-  </ItemDefinitionGroup>
-
-  <ItemDefinitionGroup Condition="'$(Platform)' == 'x64' OR '$(Platform)' == 'x86' OR '$(Platform)' == 'Win32'">
-    <ClCompile>
-      <!-- MSVC macros -->
-      <PreprocessorDefinitions>WITH_OFFICE_TRACING=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
   </ItemDefinitionGroup>
 
 </Project>

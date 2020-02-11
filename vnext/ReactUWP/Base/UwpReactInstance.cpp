@@ -3,75 +3,37 @@
 
 #include "pch.h"
 
+#include "CoreNativeModules.h"
 #include "UwpReactInstance.h"
 
 // ReactUWP
+#include <ReactUWP/CreateUwpModules.h>
 #include <ReactUWP/IXamlRootView.h>
 #include <ReactUWP/Threading/BatchingUIMessageQueueThread.h>
+
+// Modules
+#include <Modules/AppStateModuleUwp.h>
+#include <Modules/AppThemeModuleUwp.h>
+#include <Modules/NativeUIManager.h>
+#include <Threading/JSQueueThread.h>
+#include <Threading/UIMessageQueueThread.h>
+#include <Threading/WorkerMessageQueueThread.h>
 
 // ReactWindowsCore
 #include <CreateModules.h>
 #include <CxxMessageQueue.h>
 #include <DevServerHelper.h>
 #include <DevSettings.h>
+#include <IUIManager.h>
 #include <InstanceManager.h>
 #include <NativeModuleProvider.h>
 
 #include "Unicode.h"
 
-// Standard View Managers
-#include <Views/ActivityIndicatorViewManager.h>
-#include <Views/CheckboxViewManager.h>
-#include <Views/DatePickerViewManager.h>
-#include <Views/FlyoutViewManager.h>
-#include <Views/Image/ImageViewManager.h>
-#include <Views/PickerViewManager.h>
-#include <Views/PopupViewManager.h>
-#include <Views/RawTextViewManager.h>
-#include <Views/RefreshControlManager.h>
-#include <Views/RootViewManager.h>
-#include <Views/ScrollContentViewManager.h>
-#include <Views/ScrollViewManager.h>
-#include <Views/SliderViewManager.h>
-#include <Views/SwitchViewManager.h>
-#include <Views/TextInputViewManager.h>
-#include <Views/TextViewManager.h>
-#include <Views/ViewViewManager.h>
-#include <Views/VirtualTextViewManager.h>
-#include <Views/WebViewManager.h>
-
-// Polyester View Managers // TODO: Move Polyester implementations out of this
-// library and depot
-#include <Polyester/ButtonContentViewManager.h>
-#include <Polyester/ButtonViewManager.h>
-#include <Polyester/HyperlinkViewManager.h>
-#include <Polyester/IconViewManager.h>
-
-// Modules
-#include <AsyncStorageModule.h>
-#include <Modules/AlertModuleUwp.h>
-#include <Modules/Animated/NativeAnimatedModule.h>
-#include <Modules/AppStateModuleUwp.h>
-#include <Modules/AppThemeModuleUwp.h>
-#include <Modules/ClipboardModule.h>
-#include <Modules/ImageViewManagerModule.h>
-#include <Modules/LinkingManagerModule.h>
-#include <Modules/LocationObserverModule.h>
-#include <Modules/NativeUIManager.h>
-#include <Modules/NetworkingModule.h>
-#include <Modules/StatusBarModule.h>
-#include <Modules/UIManagerModule.h>
-#include <Modules/WebSocketModuleUwp.h>
-#include <ReactUWP/Modules/I18nModule.h>
-#include <ReactWindowsCore/IUIManager.h>
-#include <Threading/JSQueueThread.h>
-#include <Threading/UIMessageQueueThread.h>
-#include <Threading/WorkerMessageQueueThread.h>
-
+#include <Modules/DeviceInfoModule.h>
 #include <cxxreact/CxxNativeModule.h>
 #include <cxxreact/Instance.h>
 
-#include <Windows.ApplicationModel.h>
 #include <winrt/Windows.ApplicationModel.h>
 
 #ifdef PATCH_RN
@@ -101,169 +63,10 @@
 namespace react {
 namespace uwp {
 
-namespace {
-
-bool HasPackageIdentity() noexcept {
-  static const bool hasPackageIdentity = []() noexcept {
-    auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
-        winrt::name_of<winrt::Windows::ApplicationModel::Package>());
-    auto abiPackageStatics =
-        static_cast<ABI::Windows::ApplicationModel::IPackageStatics *>(winrt::get_abi(packageStatics));
-    winrt::com_ptr<ABI::Windows::ApplicationModel::IPackage> dummy;
-    return abiPackageStatics->get_Current(reinterpret_cast<ABI::Windows::ApplicationModel::IPackage **>(
-               winrt::put_abi(dummy))) != HRESULT_FROM_WIN32(APPMODEL_ERROR_NO_PACKAGE);
-  }
-  ();
-
-  return hasPackageIdentity;
-}
-
-} // namespace
-
-// TODO: This function is just a stand-in for a system that allows an individual
-// host to provide a
-//  different set of view managers and native ui manager. Having all of this in
-//  one place will simply make it easier to slot in that system when ready.
-
-REACTWINDOWS_API_(std::shared_ptr<facebook::react::IUIManager>)
-CreateUIManager(
-    std::shared_ptr<IReactInstance> instance,
-    const std::shared_ptr<ViewManagerProvider> &viewManagerProvider) {
-  std::vector<std::unique_ptr<facebook::react::IViewManager>> viewManagers;
-
-  // Custom view managers
-  if (viewManagerProvider) {
-    viewManagers = viewManagerProvider->GetViewManagers(instance);
-  }
-
-  // Standard view managers
-  viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(instance));
-  viewManagers.push_back(std::make_unique<CheckBoxViewManager>(instance));
-  viewManagers.push_back(std::make_unique<DatePickerViewManager>(instance));
-  viewManagers.push_back(std::make_unique<FlyoutViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ImageViewManager>(instance));
-  viewManagers.push_back(std::make_unique<PickerViewManager>(instance));
-  viewManagers.push_back(std::make_unique<PopupViewManager>(instance));
-  viewManagers.push_back(std::make_unique<RawTextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<RootViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ScrollContentViewManager>(instance));
-  viewManagers.push_back(std::make_unique<SliderViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ScrollViewManager>(instance));
-  viewManagers.push_back(std::make_unique<SwitchViewManager>(instance));
-  viewManagers.push_back(std::make_unique<TextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<TextInputViewManager>(instance));
-  viewManagers.push_back(std::make_unique<ViewViewManager>(instance));
-  viewManagers.push_back(std::make_unique<VirtualTextViewManager>(instance));
-  viewManagers.push_back(std::make_unique<WebViewManager>(instance));
-  viewManagers.push_back(std::make_unique<RefreshControlViewManager>(instance));
-
-  // Polyester view managers
-  viewManagers.push_back(std::make_unique<polyester::ButtonViewManager>(instance));
-  viewManagers.push_back(std::make_unique<polyester::ButtonContentViewManager>(instance));
-  viewManagers.push_back(std::make_unique<polyester::HyperlinkViewManager>(instance));
-  viewManagers.push_back(std::make_unique<polyester::IconViewManager>(instance));
-
-  // Create UIManager, passing in ViewManagers
-  return createIUIManager(std::move(viewManagers), new NativeUIManager());
-}
-
 UwpReactInstance::UwpReactInstance(
     const std::shared_ptr<facebook::react::NativeModuleProvider> &moduleProvider,
     const std::shared_ptr<ViewManagerProvider> &viewManagerProvider)
     : m_moduleProvider(moduleProvider), m_viewManagerProvider(viewManagerProvider) {}
-
-std::vector<facebook::react::NativeModuleDescription> GetModules(
-    std::shared_ptr<facebook::react::IUIManager> uiManager,
-    const std::shared_ptr<facebook::react::MessageQueueThread> &messageQueue,
-    std::shared_ptr<DeviceInfo> deviceInfo,
-    std::shared_ptr<facebook::react::DevSettings> devSettings,
-    const I18nModule::I18nInfo &&i18nInfo,
-    std::shared_ptr<facebook::react::AppState> appstate,
-    std::shared_ptr<react::windows::AppTheme> appTheme,
-    std::weak_ptr<IReactInstance> uwpInstance) {
-  // Modules
-  std::vector<facebook::react::NativeModuleDescription> modules;
-
-  modules.emplace_back(
-      "UIManager",
-      [uiManager = std::move(uiManager)]() { return facebook::react::createUIManagerModule(uiManager); },
-      messageQueue);
-
-  modules.emplace_back(
-      react::uwp::WebSocketModule::name,
-      []() { return std::make_unique<react::uwp::WebSocketModule>(); },
-      std::make_shared<WorkerMessageQueueThread>());
-
-  modules.emplace_back(
-      NetworkingModule::name,
-      []() { return std::make_unique<NetworkingModule>(); },
-      std::make_shared<WorkerMessageQueueThread>());
-
-  modules.emplace_back(
-      "Timing", [messageQueue]() { return facebook::react::CreateTimingModule(messageQueue); }, messageQueue);
-
-  modules.emplace_back(
-      DeviceInfoModule::name, [deviceInfo]() { return std::make_unique<DeviceInfoModule>(deviceInfo); }, messageQueue);
-
-  modules.emplace_back(
-      LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, messageQueue);
-
-  modules.emplace_back(
-      ImageViewManagerModule::name,
-      [messageQueue]() { return std::make_unique<ImageViewManagerModule>(messageQueue); },
-      messageQueue);
-
-  modules.emplace_back(
-      LocationObserverModule::name,
-      [messageQueue]() { return std::make_unique<LocationObserverModule>(messageQueue); },
-      std::make_shared<WorkerMessageQueueThread>()); // TODO: figure out
-                                                     // threading
-
-  modules.emplace_back(
-      facebook::react::AppStateModule::name,
-      [appstate = std::move(appstate)]() mutable {
-        return std::make_unique<facebook::react::AppStateModule>(std::move(appstate));
-      },
-      std::make_shared<WorkerMessageQueueThread>());
-
-  modules.emplace_back(
-      react::windows::AppThemeModule::name,
-      [appTheme = std::move(appTheme)]() mutable {
-        return std::make_unique<react::windows::AppThemeModule>(std::move(appTheme));
-      },
-      messageQueue);
-
-  modules.emplace_back(AlertModule::name, []() { return std::make_unique<AlertModule>(); }, messageQueue);
-
-  modules.emplace_back(ClipboardModule::name, []() { return std::make_unique<ClipboardModule>(); }, messageQueue);
-
-  modules.emplace_back(StatusBarModule::name, []() { return std::make_unique<StatusBarModule>(); }, messageQueue);
-
-  modules.emplace_back(
-      NativeAnimatedModule::name,
-      [uwpInstance = std::move(uwpInstance)]() mutable {
-        return std::make_unique<NativeAnimatedModule>(std::move(uwpInstance));
-      },
-      messageQueue);
-
-  modules.emplace_back(
-      "I18nManager",
-      [i18nInfo = std::move(i18nInfo)]() mutable {
-        return createI18nModule(std::make_unique<I18nModule>(std::move(i18nInfo)));
-      },
-      messageQueue);
-
-  // AsyncStorageModule doesn't work without package identity (it indirectly depends on
-  // Windows.Storage.StorageFile), so check for package identity before adding it.
-  if (HasPackageIdentity()) {
-    modules.emplace_back(
-        "AsyncLocalStorage",
-        []() { return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage"); },
-        std::make_shared<WorkerMessageQueueThread>());
-  }
-
-  return modules;
-}
 
 void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, const ReactInstanceSettings &settings) {
   if (m_started)
@@ -276,12 +79,12 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       m_jsThread == nullptr && m_initThread == nullptr && m_instanceWrapper == nullptr);
 
   m_started = true;
-  m_uiDispatcher = winrt::CoreWindow::GetForCurrentThread().Dispatcher();
+  m_uiDispatcher = winrt::Windows::UI::Core::CoreWindow::GetForCurrentThread().Dispatcher();
   m_defaultNativeThread = std::make_shared<react::uwp::UIMessageQueueThread>(m_uiDispatcher);
   m_batchingNativeThread = std::make_shared<react::uwp::BatchingUIMessageQueueThread>(m_uiDispatcher);
 
   // Objects that must be created on the UI thread
-  m_deviceInfo = std::make_shared<DeviceInfo>(spThis);
+  auto deviceInfo(std::make_shared<DeviceInfo>(spThis));
   std::shared_ptr<facebook::react::AppState> appstate = std::make_shared<react::uwp::AppState>(spThis);
   std::shared_ptr<react::windows::AppTheme> appTheme =
       std::make_shared<react::uwp::AppTheme>(spThis, m_defaultNativeThread);
@@ -292,6 +95,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
   m_jsThread = std::static_pointer_cast<facebook::react::MessageQueueThread>(m_initThread);
   m_initThread->runOnQueueSync([this,
                                 spThis,
+                                deviceInfo,
                                 settings,
                                 i18nInfo = std::move(i18nInfo),
                                 appstate = std::move(appstate),
@@ -359,10 +163,10 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
     m_uiManager = CreateUIManager(spThis, m_viewManagerProvider);
 
     // Acquire default modules and then populate with custom modules
-    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetModules(
+    std::vector<facebook::react::NativeModuleDescription> cxxModules = GetCoreModules(
         m_uiManager,
         m_batchingNativeThread,
-        m_deviceInfo,
+        deviceInfo,
         devSettings,
         std::move(i18nInfo),
         std::move(appstate),
@@ -375,7 +179,7 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
       cxxModules.insert(std::end(cxxModules), std::begin(customCxxModules), std::end(customCxxModules));
     }
 
-    std::shared_ptr<facebook::react::CxxMessageQueue> jsQueue = CreateAndStartJSQueueThread();
+    std::shared_ptr<facebook::react::MessageQueueThread> jsQueue = CreateAndStartJSQueueThread();
 
 #ifdef PATCH_RN
     if (settings.UseJsi) {
@@ -424,15 +228,10 @@ void UwpReactInstance::Start(const std::shared_ptr<IReactInstance> &spThis, cons
 void UwpReactInstance::AttachMeasuredRootView(IXamlRootView *pRootView, folly::dynamic &&initProps) {
   if (!IsInError()) {
     m_instanceWrapper->AttachMeasuredRootView(pRootView, std::move(initProps));
-    auto rootView = pRootView->GetXamlView().try_as<winrt::FrameworkElement>();
-    if (rootView) {
-      m_deviceInfo->attachRoot(rootView);
-    }
   }
 }
 
 void UwpReactInstance::DetachRootView(IXamlRootView *pRootView) {
-  m_deviceInfo->detachRoot();
   m_instanceWrapper->DetachRootView(pRootView);
 }
 

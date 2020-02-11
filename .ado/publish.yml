@@ -9,9 +9,8 @@ trigger:
   branches:
     include:
       - master
-      - 0.58-vnext-stable
       - 0.59-vnext-stable
-      - fabric
+      - 0.60-stable
 
 pr: none
 

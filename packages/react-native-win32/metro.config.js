@@ -35,7 +35,6 @@ module.exports = {
       'macos',
       'win32',
     ],
-    providesModuleNodeModules: ['@office-iss/react-native-win32'],
     // Since there are multiple copies of react-native, we need to ensure that metro only sees one of them
     // This should go away after RN 0.61 when haste is removed
     blacklistRE: blacklist([
@@ -49,7 +48,6 @@ module.exports = {
           .replace(/[/\\\\]/g, '[/\\\\]')}.*`,
       ),
     ]),
-    hasteImplModulePath: path.resolve(__dirname, 'jest/hasteImpl.js'),
   },
   transformer: {
     getTransformOptions: async () => ({

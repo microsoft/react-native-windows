@@ -68,7 +68,7 @@ namespace Mso {
 template <typename T>
 struct CntPtr {
   CntPtr() = default;
-  explicit CntPtr(std::nullptr_t) noexcept;
+  CntPtr(std::nullptr_t) noexcept;
   CntPtr(int) = delete; //!< Do not construct from NULL, use nullptr
   explicit CntPtr(_In_opt_ T *ptr) noexcept;
   explicit CntPtr(_In_opt_ T *ptr, AttachTagType) noexcept;
@@ -102,6 +102,8 @@ struct CntPtr {
   void Clear() noexcept;
 
   T *Get() const noexcept;
+
+  T *Attach(T *ptr) noexcept; //! Take object ownership, deletes previously owned object if any
   T *Detach() noexcept; //!< Release ownership and return pointer without calling Release() object
 
   T &operator*() const noexcept;
@@ -382,6 +384,20 @@ inline void CntPtr<T>::Clear() noexcept {
 template <typename T>
 inline T *CntPtr<T>::Get() const noexcept {
   return const_cast<CntPtr *>(this)->m_ptr;
+}
+
+template <typename T>
+inline T *CntPtr<T>::Attach(T *ptr) noexcept {
+  if (m_ptr != ptr) {
+    T *oldPtr = m_ptr;
+    m_ptr = ptr;
+
+    if (oldPtr) {
+      const_cast<std::remove_const_t<T> *>(oldPtr)->Release();
+    }
+  }
+
+  return m_ptr;
 }
 
 template <typename T>

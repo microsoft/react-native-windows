@@ -125,7 +125,7 @@ var WebView = createReactClass({
   goForward: function() {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
-      UIManager.RCTWebView.Commands.goForward,
+      UIManager.getViewManagerConfig('RCTWebView').Commands.goForward,
       null,
     );
   },
@@ -133,7 +133,7 @@ var WebView = createReactClass({
   goBack: function() {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
-      UIManager.RCTWebView.Commands.goBack,
+      UIManager.getViewManagerConfig('RCTWebView').Commands.goBack,
       null,
     );
   },
@@ -141,7 +141,7 @@ var WebView = createReactClass({
   reload: function() {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
-      UIManager.RCTWebView.Commands.reload,
+      UIManager.getViewManagerConfig('RCTWebView').Commands.reload,
       null,
     );
   },

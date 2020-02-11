@@ -3,13 +3,14 @@
 // Licensed under the MIT License.
 
 #include "ABICxxModule.h"
+#include "ReactHost/React.h"
 #include "cxxreact/CxxModule.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
 
 struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBuilder> {
-  ReactModuleBuilder() noexcept;
+  ReactModuleBuilder(Mso::CntPtr<Mso::React::IReactContext> &&reactContext) noexcept;
 
  public: // IReactModuleBuilder
   void SetEventEmitterName(hstring const &name) noexcept;
@@ -31,6 +32,7 @@ struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBu
   std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
   std::vector<ConstantProvider> m_constants;
   std::vector<ABICxxModuleEventHandlerSetter> m_eventHandlerSetters;
+  Mso::CntPtr<Mso::React::IReactContext> m_reactContext;
 };
 
 } // namespace winrt::Microsoft::ReactNative

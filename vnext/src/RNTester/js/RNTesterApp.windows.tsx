@@ -14,11 +14,11 @@ import {
   Text,
   View,
 } from 'react-native';
-const RNTesterActions = require('react-native/RNTester/js/RNTesterActions');
-const RNTesterExampleContainer = require('react-native/RNTester/js/RNTesterExampleContainer');
-const RNTesterExampleList = require('react-native/RNTester/js/RNTesterExampleList');
-const RNTesterList = require('./RNTesterList.windows');
-const RNTesterNavigationReducer = require('react-native/RNTester/js/RNTesterNavigationReducer');
+const RNTesterActions = require('react-native/RNTester/js/utils/RNTesterActions');
+const RNTesterExampleContainer = require('react-native/RNTester/js/components/RNTesterExampleContainer');
+const RNTesterExampleList = require('react-native/RNTester/js/components/RNTesterExampleList');
+const RNTesterList = require('react-native/RNTester/js/utils/RNTesterList.windows');
+const RNTesterNavigationReducer = require('react-native/RNTester/js/utils/RNTesterNavigationReducer');
 
 const styles = StyleSheet.create({
   headerContainer: {

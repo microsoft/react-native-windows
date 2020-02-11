@@ -2,6 +2,87 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 11 Feb 2020 01:21:44 GMT",
+      "tag": "@office-iss/react-native-win32_v0.61.0-beta.1",
+      "version": "0.61.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add Flow Check Suppressions",
+            "author": "nick@nickgerleman.com",
+            "commit": "6a4242355e9c8d96f4a95aedbdff53ba07224a9a"
+          },
+          {
+            "comment": "More Patches, IntegrationTests and RNTester Cleanup",
+            "author": "nick@nickgerleman.com",
+            "commit": "abf3a584449a7e33b280f094e7a62a39ce0a6832"
+          },
+          {
+            "comment": "Use unforked react-native 0.60.6",
+            "author": "nick@nickgerleman.com",
+            "commit": "da8b7814a8d32b35a7765d43a8f1b7fac6ac0a5e"
+          },
+          {
+            "comment": "Add AccessibilityInfo native module to react-native-win32",
+            "author": "adrum@microsoft.com",
+            "commit": "f3db1f409a128a83d68451bb921d95dec99c1837"
+          },
+          {
+            "comment": "Implement Picker component for win32",
+            "author": "kinhln@microsoft.com",
+            "commit": "48e484fb749f77422aec10e9c0e5a74fc2deb076"
+          },
+          {
+            "comment": "upgrade to 61",
+            "author": "kmelmon@microsoft.com",
+            "commit": "ad2efd6b1785ce42b55f35742f81eb9cf0e7ec87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 23:29:21 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Allow Any Prerelease Version 0f 0.60 as Peer Dependency",
+            "author": "nick@nickgerleman.com",
+            "commit": "0461a6f5689e2c8fe99a05d5cef6ee263a070803"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Jan 2020 09:17:27 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "undefined": [
+          {
+            "comment": "Add win32 override of AnimatedInterpolation",
+            "author": "nick@nickgerleman.com",
+            "commit": "9b0fc7bcdaf03b3902fc1aa1755f44ba5fe2eb98"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Jan 2020 20:47:03 GMT",
+      "tag": "@office-iss/react-native-win32_v0.26.4",
+      "version": "0.26.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Dont use haste imports",
+            "author": "acoates@microsoft.com",
+            "commit": "b3d1a2e6ee9102f9db468865ae2ace2d6bacd704"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Jan 2020 21:21:47 GMT",
       "tag": "@office-iss/react-native-win32_v0.26.3",
       "version": "0.26.3",

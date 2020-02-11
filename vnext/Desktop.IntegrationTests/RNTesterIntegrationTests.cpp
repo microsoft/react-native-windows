@@ -16,11 +16,11 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
-TEST_CLASS(RNTesterIntegrationTests) {
+TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
   void TestComponent(std::string && testComponent) {
-    auto result = m_runner.RunTest("IntegrationTests/IntegrationTestsAppWin", std::move(testComponent));
+    auto result = m_runner.RunTest("IntegrationTests/IntegrationTestsApp", std::move(testComponent));
     Assert::AreNotEqual(TestStatus::Pending, result.Status, result.Message.c_str());
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }

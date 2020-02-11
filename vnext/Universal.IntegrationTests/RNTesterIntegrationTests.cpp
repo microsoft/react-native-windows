@@ -17,7 +17,7 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
-TEST_CLASS(RNTesterIntegrationTests) {
+TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
   TEST_METHOD(Dummy) {
