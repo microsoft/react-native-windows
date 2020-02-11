@@ -18,7 +18,7 @@ describe('First', () => {
     assert.ok(TextInputTestPage.getTextInputCurText().includes('onFocus'));
   });
 
-  it('Click on multiline TextInput to move focus away', () => {
+  it('Click on multiline TextInput to move focus away from single line TextInput', () => {
     TextInputTestPage.clickMultilineTextInput();
     assert.ok(TextInputTestPage.getTextInputPrevText().includes('onBlur'));
   });
@@ -26,6 +26,7 @@ describe('First', () => {
   it('Type abc on TextInput', () => {
     TextInputTestPage.clearAndTypeOnTextInput('abc');
     assert.equal(TextInputTestPage.getTextInputText(), 'abc');
+    assert.ok(TextInputTestPage.getTextInputPrev2Text().includes('onKeyPress'));
   });
 
   it('Type def on TextInput', () => {
