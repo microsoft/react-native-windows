@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "comment": "Added async code to native module test methods",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "commit": "67bea149d386d9429e95587745b6c2f972480636",
+  "dependentChangeType": "patch",
+  "date": "2020-02-11T18:24:02.802Z"
+}
